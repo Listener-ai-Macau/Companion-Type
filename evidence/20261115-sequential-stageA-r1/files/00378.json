@@ -1,0 +1,32 @@
+[
+  {
+    "meeting": "ES2003b",
+    "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ordinary-english-r1\\ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "features": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\speaker-r1\\ES2003b\\features.npy",
+    "featuresSha256": "4ed68a2514f3f884c796929d9dd9c296a5f625903fb806dc387c3459c84d3daa",
+    "frames": 210982,
+    "validFrames": 210981,
+    "samples": 33757014,
+    "blockFrames": 3000,
+    "globalPreemphasis": true,
+    "onlyGlobalEdgePadding": true,
+    "originalMaskUnchanged": true,
+    "globalCMVN": false
+  },
+  {
+    "meeting": "EN2001a",
+    "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\sources\\EN2001a.Array1-01.wav",
+    "audioSha256": "20cf2243fff84361cc5c755529350d23c544580d58f00959e71945d8fdc8a8f7",
+    "features": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\speaker-r1\\EN2001a\\features.npy",
+    "featuresSha256": "01516ad389ceb54cc063d600e070e57381fd5e8cc4f57a8c122b0c25096bdc2a",
+    "frames": 525026,
+    "validFrames": 525025,
+    "samples": 84004012,
+    "blockFrames": 3000,
+    "globalPreemphasis": true,
+    "onlyGlobalEdgePadding": true,
+    "originalMaskUnchanged": true,
+    "globalCMVN": false
+  }
+]

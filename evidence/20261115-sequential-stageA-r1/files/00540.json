@@ -1,0 +1,102 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00289920-final",
+    "recordingId": "23d95c6a-c54c-576f-9b74-950a49e63cae",
+    "configSha256": "c81b352c3d924b2a3c7e99e9cd7bcef6da85a4da5f6b8dcb8214c8eae76701bd",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 289920,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-116\\audio.pcm",
+    "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f",
+    "language": "English",
+    "blockFinal": true,
+    "publishedAtMonotonic": 10224.9836595,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "English",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "Once we start doing it, it will become more and more obvious, I think. Anyway, it's just stuff going through the wrong time, but this one just freaks me out. Yes. What time is it?",
+    "rawGeneratedIds": [
+      [
+        12522,
+        582,
+        1191,
+        3730,
+        432,
+        11,
+        432,
+        686,
+        3635,
+        803,
+        323,
+        803,
+        8036,
+        11,
+        358,
+        1744,
+        13,
+        41569,
+        11,
+        432,
+        594,
+        1101,
+        6259,
+        2087,
+        1526,
+        279,
+        4969,
+        882,
+        11,
+        714,
+        419,
+        825,
+        1101,
+        29205,
+        82,
+        752,
+        700,
+        13,
+        7414,
+        13,
+        3555,
+        882,
+        374,
+        432,
+        30,
+        151645
+      ]
+    ],
+    "language": "English",
+    "accepted": true,
+    "seconds": 10.21014710000054,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 9.19383740000012,
+    "allKnownDecodeSecondsIncludingFailedParents": 9.19383740000012,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 289920
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

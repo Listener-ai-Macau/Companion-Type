@@ -1,0 +1,292 @@
+{
+  "sourceState": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\baseline-state.json",
+  "sourceStateSha256": "52acb5ae15b61b3fd6aa5641d7ad0c286ee1cc95de660f42b1342dc083b6d29b",
+  "completed": [
+    {
+      "id": "20200707_L_R001S08C01-seq-000",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200707_L_R001S08C01-seq-000\\document.json",
+      "documentSha256": "9bbbc58ddae45b84913c0172e54b9cab457f0c077b35704cbe3f9c106711155b",
+      "pcmSha256": "813bf3673b909105e54fe5277232578dadf14f2e18ff48989ad99ed199078500",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200707_L_R001S08C01-seq-000\\results\\00000000-00438229-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 14.906075599999895
+    },
+    {
+      "id": "20200707_L_R001S08C01-seq-004",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200707_L_R001S08C01-seq-004\\document.json",
+      "documentSha256": "60d2a65813a710392be65fd2075c5ef6dd4b8c6e7ea082ba86ca53757d488008",
+      "pcmSha256": "4f3252d4456ba2aa6d16fb6df6cc1962462fc97afc1a42d52311a75187134f75",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200707_L_R001S08C01-seq-004\\results\\00000000-00438281-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 12.289265200000955
+    },
+    {
+      "id": "20200707_L_R001S08C01-seq-008",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200707_L_R001S08C01-seq-008\\document.json",
+      "documentSha256": "bd2e91cdd063c00eff91bbcf1d5d377225b8bca954204d7751c361d93ecdc66d",
+      "pcmSha256": "bcaeb79824692d7e9c156eb248b4df36e4900f2090bb02ffb11c1054f8bb2485",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200707_L_R001S08C01-seq-008\\results\\00000000-00449081-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 13.142121400000178
+    },
+    {
+      "id": "20200707_L_R001S08C01-seq-013",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200707_L_R001S08C01-seq-013\\document.json",
+      "documentSha256": "8aa0e01bc9145baf8a3d0fa935e4c67b2ebb8091e98ecb1ae7f2834b281bc7c9",
+      "pcmSha256": "c7ba1c8b9d5c98df404e0553a77849354cfbd5de98c19d56948eb1e4cd6a7429",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200707_L_R001S08C01-seq-013\\results\\00000000-00356405-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 10.400476699998762
+    },
+    {
+      "id": "20200708_L_R002S01C01-seq-000",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200708_L_R002S01C01-seq-000\\document.json",
+      "documentSha256": "a416d651c8b315a933de46096f7d45c1b381cd0605fb643f22ebba07d191d704",
+      "pcmSha256": "201dc991d7359db6b24750f8367689d5f14a86e1f1a7ffde55fc43d15d329c72",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200708_L_R002S01C01-seq-000\\results\\00000000-00448924-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 15.673783599999297
+    },
+    {
+      "id": "20200708_L_R002S01C01-seq-005",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200708_L_R002S01C01-seq-005\\document.json",
+      "documentSha256": "e31281cbdc316328e4e0cd7a99cd10dbca1b5de5dc07b50d311142bd301b270e",
+      "pcmSha256": "b6296b00a7de8ed98239b3c7cc2f4a179d7c7101592fcf5fe699c0b9cbfe8bfd",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200708_L_R002S01C01-seq-005\\results\\00000000-00403587-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 15.678379599999971
+    },
+    {
+      "id": "20200708_L_R002S01C01-seq-010",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200708_L_R002S01C01-seq-010\\document.json",
+      "documentSha256": "afe798599eaf0451ff2950d80e6af1e549bf0c975d40ea15d48a7fce6be6c2e4",
+      "pcmSha256": "8a110c476c84bf63a053cf640d0e4a69a1651e5cae103e924dab048d28e9a0ce",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200708_L_R002S01C01-seq-010\\results\\00000000-00246043-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 8.211889300000621
+    },
+    {
+      "id": "20200708_L_R002S01C01-seq-015",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200708_L_R002S01C01-seq-015\\document.json",
+      "documentSha256": "0a32e1ae5057dec39b521bfa2f8abb68596a02b774f1814d3905225b7721f3d0",
+      "pcmSha256": "55666181c83c17141992fc1975180395d0478732b5873fde82aabfff0b6c0b50",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200708_L_R002S01C01-seq-015\\results\\00000000-00282021-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 4.037837500000023
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-000",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200709_L_R002S01C01-seq-000\\document.json",
+      "documentSha256": "860126b41441080df65a53f348a7fe4318c837c28908c552ebfd16e0397de47e",
+      "pcmSha256": "1693f208b2d6103a4cfc69b36b47a833fb913bd3becd2e42c02c6db4a5f10a30",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200709_L_R002S01C01-seq-000\\results\\00000000-00436001-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 14.091719500000181
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-003",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200709_L_R002S01C01-seq-003\\document.json",
+      "documentSha256": "2e88bf04ab56773b858a4adcde198017af99b3fdd00187ee261c198af4ace4c5",
+      "pcmSha256": "59a5853e6cd1235b2c77b461806f2186fde768f07b90cc4e656b454799795c6f",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200709_L_R002S01C01-seq-003\\results\\00000000-00357561-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 13.963924099998621
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-006",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200709_L_R002S01C01-seq-006\\document.json",
+      "documentSha256": "d16953dc1453c3a8685daf897c5844eddca6e2509e8002d6c55369f4495acf03",
+      "pcmSha256": "368d97c811872198cd344b845c35e8b2fb1c71eaa2bf33c12a2a838ef9ffd3b4",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200709_L_R002S01C01-seq-006\\results\\00000000-00367600-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 13.73811999999998
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-009",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200709_L_R002S01C01-seq-009\\document.json",
+      "documentSha256": "da92db5b77c1c734d8cd464766e3bbdc3cf57a29850a0752e81a77b2af718084",
+      "pcmSha256": "3a9b28cb9b183bd8f93e51ef2a85fff2bd96c3f68f674024db8c951bd76da179",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200709_L_R002S01C01-seq-009\\results\\00000000-00444561-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 16.08680529999947
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-012",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200709_L_R002S01C01-seq-012\\document.json",
+      "documentSha256": "82dc62e234d734092de9704af72c6006886a158de5568b794eb4241a34b1c382",
+      "pcmSha256": "c0ed8b3964eb7fe8f096cf20ae1967aa15f76e5f1e2a17699cf16b99c3908bb7",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200709_L_R002S01C01-seq-012\\results\\00000000-00439120-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 18.469870400000218
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-016",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200709_L_R002S01C01-seq-016\\document.json",
+      "documentSha256": "94d85e24c63db927469174ac3f6349b5a56243a66122c0ef1263970256dac48f",
+      "pcmSha256": "76ef981586fce2f41b31b1ca68a7a72bb68e3116e1181b9648b0c56a01bd2231",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200709_L_R002S01C01-seq-016\\results\\00000000-00473887-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 18.227461100001165
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-000",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-000\\document.json",
+      "documentSha256": "471936decb6d9da92c48fa76ad394791db5519cd5968549802f9cefb567071af",
+      "pcmSha256": "2fd5e1492ae266f668ec7d665ade16aca1f7c8a07b4a08f0087f5fe661ef3935",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-000\\results\\00000000-00399261-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 12.522574600001462
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-002",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-002\\document.json",
+      "documentSha256": "1e5697c4366e317b7aa7890e1f692a1877839cb979ed0cc318d1d0b64ee94106",
+      "pcmSha256": "916d8a53c3e18b5a92b2aa282099ce93c78fc61d7410ed88db72934b546b626e",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-002\\results\\00000000-00347300-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 16.34135690000039
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-004",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-004\\document.json",
+      "documentSha256": "dd9660353b59db74e16123d07f995047ff39ce493518b6326f1c4c9f6a41e326",
+      "pcmSha256": "bd9e80cc5752015b0c405264aac434fb7b003c222e5e74eb98b5dcaa97d044d8",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-004\\results\\00000000-00456807-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 15.101411599998755
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-006",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-006\\document.json",
+      "documentSha256": "2def09156a2f09476c29b06e12417517e5c909c59a5f044f3313586bda5ae1de",
+      "pcmSha256": "6424262715a7b43c8aa89e1e6a829cdb0019915affabac1cf04fae4d934f6368",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-006\\results\\00000000-00318401-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 9.39284189999853
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-008",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-008\\document.json",
+      "documentSha256": "9844c3c3f38065c7a54316113064721b45434dc6a776a4fe5fb75065d4c8d462",
+      "pcmSha256": "e3dd3a9849bd0d6515af65df219f40a7cceaa57f28ea97c9b9b5f708dda82784",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-008\\results\\00000000-00169343-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 5.597934400000668
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-011",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-011\\document.json",
+      "documentSha256": "88e745e1239c9391c76fbb36b951a0d28ac3a2558fb79b5d992fdc070db5e20a",
+      "pcmSha256": "bc930b017232565c34029ac52a9f5e75f80b26dd1cc2cfb8b4a9b6604c9b4576",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-011\\results\\00000000-00306820-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 11.176666299999852
+    },
+    {
+      "id": "ES2003b-seq-000",
+      "language": "English",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-000\\document.json",
+      "documentSha256": "b9d5774fa27451bd207dcb554734c0cb9747899dd5427830ac3584422c08682a",
+      "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-000\\results\\00000000-00192800-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 7.961722000000009
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "language": "English",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-005\\document.json",
+      "documentSha256": "f1a5dd4d1b56c749199d0a0d02b277c4d18f1667deea6efdcd4cc682b7610239",
+      "pcmSha256": "ec8c4c16829d1d95404cb3fd3fcd8ee32cc310edaaf7b8901d562a90696b04e7",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-005\\results\\00000000-00476000-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 24.243745599998874
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "language": "English",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-010\\document.json",
+      "documentSha256": "80dfae06266a3292c31ac00a071a945d279302e14c51e886e783d8b17d1c8151",
+      "pcmSha256": "e087cf4e22224bfc9c3ad810c56bd3595ad7343c30b6d53fc5c1ce00d445b32f",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-010\\results\\00000000-00475520-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 5.392046899998604
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "language": "English",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-016\\document.json",
+      "documentSha256": "7e37262d15d08e6c8db17fbe68ffa4a9c0870630ebb2a99b43bc9e4927dcad85",
+      "pcmSha256": "7e8c174955670b930e9b657a8fdcbea730374845ac6668f4a916ddc867ee7f6e",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-016\\results\\00000000-00473280-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 15.842903099999603
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "language": "English",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-021\\document.json",
+      "documentSha256": "671ed684609241df98d0b5d6212ef35107bb375060f26f85be4aabfda8a329ca",
+      "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-021\\results\\00000000-00203840-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 9.211049800000183
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "language": "English",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-027\\document.json",
+      "documentSha256": "53b169f221c9165142e1d1051de448e4ea23e8351bdd160c6b5466029d63add9",
+      "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-027\\results\\00000000-00162401-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 4.577327999999397
+    }
+  ]
+}

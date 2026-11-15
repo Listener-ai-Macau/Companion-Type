@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-07T19:28:38+08:00",
+  "state": "FROZEN_BEFORE_NATIVE_ALIGNMENT_INFERENCE",
+  "workerSourceSha256": "1b9c9a04350bad74087366020f7919d06059f97d6c03b100d1f2106f7df9a99a",
+  "helperSources": {
+    "practical_alignment_loader_20261107.py": "5f31f7dece1798af66982dfcf9583f20d770dd487cb124842c66f96f1976d0f8",
+    "practical_alignment_text_20261107.py": "006aed03ba02ae339dd75ca75771614aa53fc407f5229774b70cf8692bec59bd",
+    "moss_streamed_weights_20261104.py": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f"
+  },
+  "runtimeSources": {
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\processing_qwen3_asr.py": "5ff7ace057ae959fb0cd551775cbbfdad8c003eb731bf0f1f39bfc6452ce86fa",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\modeling_qwen3_asr.py": "f6247469bc82ee40aa83909c530053d6bfbb1cfa8d34e74ff842f81f6c0bb2a4"
+  },
+  "modelSourceSha256": "f132d8d82dd5a0d5d1809349f01629431de317022bc3e31797f5158e91539508",
+  "inputPlanSha256": "4e2ac70c7a417b19b710d3c25669dff7bac7ff02fe2d4827ecb00afe914af6e4",
+  "inputSelection": "All frozen stage-A raw ASR leaves, per-corpus language, no gold/reference/person labels",
+  "inference": "Official native timestamp classifier, BF16/eager/batch1/use_cache=False. No text/reference/person count/hotwords supplied except unchanged recognized raw text.",
+  "pilotRule": "First nonempty recognized source leaf; preserve original characters and valid onsets",
+  "fullRule": "Every original source leaf, complete original audio timeline; no text correction",
+  "timeAccuracyNotAutomaticallyQualified": true,
+  "referencePassedToWorker": false,
+  "speakerLabelsPassedToWorker": false,
+  "cpuPercentMaximum": 5,
+  "privateCommitLimitBytes": 2147483648,
+  "qualityQualified": false,
+  "defaultProductChanged": false
+}

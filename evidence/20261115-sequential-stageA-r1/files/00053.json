@@ -1,0 +1,41 @@
+{
+  "state": "INCOMPLETE_STAGE_A_ASR_RETAINED_NO_RETRY",
+  "startedAt": "2026-11-15T20:50:57.086383+08:00",
+  "completed": [],
+  "controls": [],
+  "newTraining": false,
+  "parameterUpdates": 0,
+  "validationReferenceRead": false,
+  "qualityQualified": false,
+  "automaticRetries": 0,
+  "workerSourceSha256": "f1289bd9c4b8fee43e0778854bdb61fd6ccc8495c5e36af5638b5e39846d07b7",
+  "blas": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "neuralCalls": 0,
+  "inferenceSeconds": 0.0,
+  "modelLoads": 0,
+  "limits": {
+    "pid": 16460,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 12988416,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "observedAt": "2026-11-15T20:50:57.160719+08:00",
+  "error": "FileNotFoundError(2, 'No such file or directory')",
+  "seconds": 0.07474910000019008,
+  "finishedAt": "2026-11-15T20:50:57.160719+08:00"
+}

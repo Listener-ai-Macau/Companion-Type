@@ -1,0 +1,134 @@
+{
+  "state": "COMPLETE_STAGE_A_RAW_ASR_UNQUALIFIED",
+  "startedAt": "2026-11-15T21:04:39.209742+08:00",
+  "completed": [
+    {
+      "id": "EN2001a-a2-000",
+      "language": "English",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-000\\document.json",
+      "documentSha256": "855323e513ab89b7cb2471b6c9b732b1f788745495417463ae7ad5055d0ab812",
+      "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-000\\results\\00000000-00187360-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 5.6723703000006935
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "language": "English",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-023\\document.json",
+      "documentSha256": "e761949a64662beab39f0d5a293986b430dde66326dc9d00f162aa7f61996408",
+      "pcmSha256": "490510a15ef6f46ebac736fb41e975068df6e61349ac7f589c257fe724ae9d33",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-023\\results\\00000000-00475520-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 24.37869839999985
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "language": "English",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-046\\document.json",
+      "documentSha256": "69f89d08d418c32234c150ff1974473e816a5fc45fddbd39aa85b82b744a050a",
+      "pcmSha256": "7c06b4b1859d19da0fe23e80c043ebb406245e57d456d2776536102c041cc8a4",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-046\\results\\00000000-00362720-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 14.47827849999885
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "language": "English",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-069\\document.json",
+      "documentSha256": "8b09d7827b9d0d4496e93f950b9221259fce57b2347978392e4ae2a6c563e98b",
+      "pcmSha256": "01439b3125f9e794a9ffae891fd0cccc470ae701397a2b889487dc87d166bb39",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-069\\results\\00000000-00476000-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 18.62155840000014
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "language": "English",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-092\\document.json",
+      "documentSha256": "b97d8fee135c57f56e0ecd1ca321f0241cb9f7f70944769b10f73f038740debb",
+      "pcmSha256": "14091b430e04787c3694b572f922d0a4da22a3ce4f10cc7978dde91fa4797bb7",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-092\\results\\00000000-00473600-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 23.201429099999586
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "language": "English",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-116\\document.json",
+      "documentSha256": "d9c693914a84741095d2e5b0d84efb14f43b2f8772e47acd61baee1928086e9a",
+      "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-116\\results\\00000000-00289920-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 9.19383740000012
+    }
+  ],
+  "controls": [
+    {
+      "id": "control-before",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\control-before\\document.json",
+      "documentSha256": "5c5cd8a48c9b80564e441db074c92bdb7f5c6bf56567e942471dbe7409046507",
+      "pcmSha256": "60cc4ff5cd1a28ee47dd41ff6e677ca720cde097b5c0d5aeadc51172a179681a",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\control-before\\results\\00000000-00458640-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 20.509151300000667,
+      "generatedIdsExact": true
+    },
+    {
+      "id": "control-after-english",
+      "language": "Chinese",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\control-after-english\\document.json",
+      "documentSha256": "5c5cd8a48c9b80564e441db074c92bdb7f5c6bf56567e942471dbe7409046507",
+      "pcmSha256": "60cc4ff5cd1a28ee47dd41ff6e677ca720cde097b5c0d5aeadc51172a179681a",
+      "rawResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\control-after-english\\results\\00000000-00458640-final.json",
+      "reviewRequired": false,
+      "neuralCalls": 1,
+      "inferenceSeconds": 19.06685920000018,
+      "generatedIdsExact": true
+    }
+  ],
+  "newTraining": false,
+  "parameterUpdates": 0,
+  "validationReferenceRead": false,
+  "qualityQualified": false,
+  "automaticRetries": 0,
+  "workerSourceSha256": "492de19ab8da57e82718c604d79651477bfc575a696269286c939061628db645",
+  "blas": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "neuralCalls": 8,
+  "inferenceSeconds": 135.1221826000001,
+  "modelLoads": 1,
+  "limits": {
+    "pid": 20340,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1285120000,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "observedAt": "2026-11-15T21:07:57.649588+08:00",
+  "language": "Chinese",
+  "modelLoadSeconds": 50.68032040000071,
+  "seconds": 198.43843279999965,
+  "finishedAt": "2026-11-15T21:07:57.649588+08:00"
+}

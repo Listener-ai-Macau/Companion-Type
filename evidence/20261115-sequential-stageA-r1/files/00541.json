@@ -1,0 +1,57 @@
+{
+  "state": "COMPLETE_STAGE_A_ORIGINAL_WHOLE_SPEAKER_UNQUALIFIED",
+  "startedAt": "2026-11-15T21:00:59.846717+08:00",
+  "completed": [
+    {
+      "meeting": "ES2003b",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "featuresSha256": "4ed68a2514f3f884c796929d9dd9c296a5f625903fb806dc387c3459c84d3daa",
+      "probabilities": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\speaker-r1\\ES2003b\\probabilities.npy",
+      "probabilitiesSha256": "0c1adaa728b2c242c51f8853c1d7948ce90b72f246a21a9629f21d1e6ce25ad5",
+      "frames": 210982,
+      "validFrames": 210981
+    },
+    {
+      "meeting": "EN2001a",
+      "audioSha256": "20cf2243fff84361cc5c755529350d23c544580d58f00959e71945d8fdc8a8f7",
+      "featuresSha256": "01516ad389ceb54cc063d600e070e57381fd5e8cc4f57a8c122b0c25096bdc2a",
+      "probabilities": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\speaker-r1\\EN2001a\\probabilities.npy",
+      "probabilitiesSha256": "e7223b6e4b8ad0214c22ca68ccd38f0d3049b9ddc004ea65e20159a07726f5e2",
+      "frames": 525026,
+      "validFrames": 525025
+    }
+  ],
+  "goldRead": false,
+  "newTraining": false,
+  "qualityQualified": false,
+  "automaticRetries": 0,
+  "limits": {
+    "pid": 9324,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1536585728,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "blas": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "activeMeeting": "EN2001a",
+  "completedFrames": 525026,
+  "seconds": 77.22288899999876,
+  "finishedAt": "2026-11-15T21:02:17.069257+08:00",
+  "reusedCompleteAudioOnlyRun": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\speaker-r1\\speaker-state.json",
+  "reusedCompleteRunSha256": "8ecbfa7d2341a7ca466171853949b97e4e1a57d52e8aef74d284c746c53a0f89",
+  "newNeuralCallsDuringReuse": 0
+}

@@ -1,0 +1,69 @@
+{
+  "state": "R1_ENGLISH_AGGREGATE_INVALID_WITHDRAWN_NOT_A_MODEL_SCORE",
+  "at": "2026-11-15T21:04:28.315701+08:00",
+  "rootCause": "New AMI reader hardcoded A-D and omitted E of five-person EN2001a. Audio/model outputs unchanged. Full official metadata and all matching word files are now required.",
+  "originalInvalidScoreSha256": "7cbd6f7d2fa024c38cc33fbb5c460a3e0bbf9f879a45258c2b25ab1dae0f5ca9",
+  "omittedSpeaker": "E",
+  "omittedEvents": 9444,
+  "officialSpeakers": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+  ],
+  "wordFiles": [
+    "words/EN2001a.D.words.xml",
+    "words/EN2001a.B.words.xml",
+    "words/EN2001a.C.words.xml",
+    "words/EN2001a.E.words.xml",
+    "words/EN2001a.A.words.xml"
+  ],
+  "cases": [
+    {
+      "id": "EN2001a-seq-000",
+      "omittedSpeakerReferenceEvents": 11,
+      "actualOverlapByAllOfficialSpeakers": true,
+      "referenceBoundaryCrossings": 0
+    },
+    {
+      "id": "EN2001a-seq-015",
+      "omittedSpeakerReferenceEvents": 86,
+      "actualOverlapByAllOfficialSpeakers": true,
+      "referenceBoundaryCrossings": 1
+    },
+    {
+      "id": "EN2001a-seq-031",
+      "omittedSpeakerReferenceEvents": 54,
+      "actualOverlapByAllOfficialSpeakers": true,
+      "referenceBoundaryCrossings": 1
+    },
+    {
+      "id": "EN2001a-seq-047",
+      "omittedSpeakerReferenceEvents": 0,
+      "actualOverlapByAllOfficialSpeakers": false,
+      "referenceBoundaryCrossings": 0
+    },
+    {
+      "id": "EN2001a-seq-063",
+      "omittedSpeakerReferenceEvents": 1,
+      "actualOverlapByAllOfficialSpeakers": false,
+      "referenceBoundaryCrossings": 0
+    },
+    {
+      "id": "EN2001a-seq-079",
+      "omittedSpeakerReferenceEvents": 33,
+      "actualOverlapByAllOfficialSpeakers": true,
+      "referenceBoundaryCrossings": 1
+    }
+  ],
+  "manualReferenceEdits": false,
+  "preserveAllOriginalInputsOutputsAndScores": true,
+  "affected": "EN2001a scenario classification/reference completeness and aggregated English score; Chinese and ES2003b exact outputs unaffected.",
+  "preparationFailuresBeforeNeural": [
+    "Initial clean scoring environment lacked soundfile.",
+    "First guessed praatio path absent; corrected to existing pinned scoring packages.",
+    "ASR r1 decoder output subdirectory absent; fixed before any model load or neural inference."
+  ],
+  "repair": "Metadata-discovered all-speaker references, corrected annotation-only uniform selection in same recording; reuse26 exact unaffected cases, run only six replacement audio inputs plus original numeric controls."
+}

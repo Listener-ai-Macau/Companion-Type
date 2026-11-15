@@ -1,0 +1,62 @@
+{
+  "binding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "English",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter",
+    "jobId": "00000000-00283040-final",
+    "pcmSha256": "886316b19cbc3081c9843e195828e410d4bf7a8fc4a447af4630b01cc749e505",
+    "configSha256": "c91763170416211983e88ffa145e83c06139caed3a85c78f872209100b6e10a4"
+  },
+  "raw": {
+    "startSample": 0,
+    "endSample": 283040,
+    "text": "Look at it. That makes sense for which one? Okay. So have you already extracted from all the files? Yeah, I mean.",
+    "language": "English",
+    "languageHeaderPresent": false,
+    "generatedIds": [
+      10380,
+      518,
+      432,
+      13,
+      2938,
+      3643,
+      5530,
+      369,
+      892,
+      825,
+      30,
+      35439,
+      13,
+      2055,
+      614,
+      498,
+      2669,
+      27432,
+      504,
+      678,
+      279,
+      3542,
+      30,
+      21607,
+      11,
+      358,
+      3076,
+      13,
+      151645
+    ],
+    "rawDecoded": "Look at it. That makes sense for which one? Okay. So have you already extracted from all the files? Yeah, I mean.<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 6.003144399999655
+  },
+  "rawSha256": "bf017b33609d79db4bdce10604840aed0b002532952eaff4d92b1bb154c473c7"
+}

@@ -1,0 +1,54 @@
+{
+  "state": "COMPLETE_STAGE_A_ORIGINAL_WHOLE_SPEAKER_UNQUALIFIED",
+  "startedAt": "2026-11-15T21:17:24.224498+08:00",
+  "completed": [
+    {
+      "meeting": "IS1000a",
+      "audioSha256": "d6d0732cba33a59397954da72ec7c5c3eeaa9f05cdf5c872aedacdc3b13ff83d",
+      "featuresSha256": "1bd66362e0e7fe8f37d28ce74262baedafdefe936df77a15f1d02b0e599d686b",
+      "probabilities": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\activity-cal-r1\\model-r1\\IS1000a\\probabilities.npy",
+      "probabilitiesSha256": "44ba66f98e8a51f5bab562009a2277bce9051ee8bc589c04807d70eed85f05c1",
+      "frames": 158277,
+      "validFrames": 158276
+    },
+    {
+      "meeting": "TS3005a",
+      "audioSha256": "0cab1db168fd7ba6cb15ce514aae779c0a1dab429c74c14b1aef29d50612b947",
+      "featuresSha256": "df047d3e68ca6379b1130c4286a265ecaa35dee38ac187f78d49a4714d7e4a69",
+      "probabilities": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\activity-cal-r1\\model-r1\\TS3005a\\probabilities.npy",
+      "probabilitiesSha256": "b415f1818d023f9ca42f3eca4fe98c1e3c5a638f2c45b30f39453f90548b319a",
+      "frames": 131885,
+      "validFrames": 131884
+    }
+  ],
+  "goldRead": false,
+  "newTraining": false,
+  "qualityQualified": false,
+  "automaticRetries": 0,
+  "limits": {
+    "pid": 17036,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1310748672,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "blas": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "activeMeeting": "TS3005a",
+  "completedFrames": 131885,
+  "seconds": 29.7881182000001,
+  "finishedAt": "2026-11-15T21:17:54.012758+08:00"
+}

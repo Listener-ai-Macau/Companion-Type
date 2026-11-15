@@ -1,0 +1,17 @@
+{
+  "checkpoint": "E:/CodexData/Companion/.model-cache/nemotron-speaker-20261107/Nemotron-3-Diarization.nemo",
+  "checkpointSha256": "867c53f552998f772e5b5e5c082962ae85ee7ca5669c2bc17d7f615133d4e96d",
+  "extractedCheckpoint": "E:/CodexData/Companion/product-d1d2-20261114/official-native-parity-r1/new-ordinary-run-r2/model_weights.ckpt",
+  "converter": "E:\\CodexData\\Companion\\product-d1d2-20261114\\official-native-parity-r1\\source\\convert_nemotron3_diarization_to_hf.py",
+  "converterSha256": "6a4de669f624642eb723d5361900f0e6c6c07d1d7153edf645e2fae0e0c71da1",
+  "extractedCheckpointSha256": "9930e1719c85b35da083c557cdbd6503072c311ffe8bc9cbd3371d2609e21d0f",
+  "audioOnlySha256": "2f974779f2385e8b4907af631da460cb9cedb1ac50efdb5f4168893e53d9c11c",
+  "blas": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+  "blasSha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+  "newTraining": false,
+  "speakerCountHintProvided": false,
+  "qualityQualified": false,
+  "frontendRule": "Direct upstream bitwise control before whole-meeting inference, original preemphasis/global padding/mask/no-CMVN, disk-backed blocks3000frames.",
+  "inference": "Original FP32 whole-meeting AOSC340/right40/FIFO40/cache264/update300/8 native slots, no reset at selected clips.",
+  "purpose": "Original model diagnostics on the two predesignated training meetings; calibrate attribution repair only, not validation or a new model trial."
+}

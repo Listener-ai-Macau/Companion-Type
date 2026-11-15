@@ -1,0 +1,206 @@
+{
+  "at": "2026-11-15T21:04:28.624393+08:00",
+  "sources": [
+    {
+      "role": "train",
+      "meeting": "20200707_L_R001S08C01",
+      "sourcePath": "train_L/wav/20200707_L_R001S08C01.flac",
+      "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200707_L_R001S08C01.flac",
+      "repositoryRevision": "aada72727856313b19d4a030383c426364931dbf",
+      "fileSize": 240679407,
+      "expectedWholeFileLfsSha256": "35cec60f5279217cbd21e473408c349a1775c7651efd28f7d4a8ecf468601a03",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S08C01.TextGrid",
+      "referenceSha256": "489f7597d1953e0d488e55b1edf79f575d87b1fa5b69883aab4399e9cae8d3de",
+      "mirrorReferenceRawSha256": "f8fca6b81557206bf3f8941f64b26abe809cab01693f28a6120cdcd6ca1b0efd",
+      "referenceBytesEqualOfficialArchivePrefix": false,
+      "referenceTextEqualOfficialArchiveIgnoringOnlyLineEndings": true,
+      "sourceSubset": "train_L",
+      "roomTagForBookkeepingOnly": "R001",
+      "localFlac": "E:\\CodexData\\Companion\\.model-cache\\joint-neural-spatial-20261108\\training-pairs\\sources\\20200707_L_R001S08C01.flac",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\joint-neural-spatial-20261108\\training-pairs\\sources\\20200707_L_R001S08C01.flac",
+      "audioSha256": "35cec60f5279217cbd21e473408c349a1775c7651efd28f7d4a8ecf468601a03",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "referenceGranularity": "complete TextGrid intervals"
+    },
+    {
+      "role": "train",
+      "meeting": "20200708_L_R002S01C01",
+      "sourcePath": "train_L/wav/20200708_L_R002S01C01.flac",
+      "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200708_L_R002S01C01.flac",
+      "repositoryRevision": "aada72727856313b19d4a030383c426364931dbf",
+      "fileSize": 226430788,
+      "expectedWholeFileLfsSha256": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
+      "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200708_L_R002S01C01.TextGrid",
+      "referenceSha256": "16e65eb5938f0b3e750b755d04abe7586dcd46c5edab5bef52d9225699188b4c",
+      "mirrorReferenceRawSha256": "b03f7b4e83b6e5f91735b86f2e2aa344a2357b0604b7a3b4839b529e53815fd3",
+      "referenceBytesEqualOfficialArchivePrefix": false,
+      "referenceTextEqualOfficialArchiveIgnoringOnlyLineEndings": true,
+      "sourceSubset": "train_L",
+      "roomTagForBookkeepingOnly": "R002",
+      "localFlac": "E:\\CodexData\\Companion\\.model-cache\\joint-neural-spatial-20261108\\training-pairs\\sources\\20200708_L_R002S01C01.flac",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\joint-neural-spatial-20261108\\training-pairs\\sources\\20200708_L_R002S01C01.flac",
+      "audioSha256": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "referenceGranularity": "complete TextGrid intervals"
+    },
+    {
+      "role": "validation",
+      "meeting": "20200709_L_R002S01C01",
+      "sourcePath": "train_L/wav/20200709_L_R002S01C01.flac",
+      "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200709_L_R002S01C01.flac",
+      "repositoryRevision": "aada72727856313b19d4a030383c426364931dbf",
+      "fileSize": 243610901,
+      "expectedWholeFileLfsSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+      "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200709_L_R002S01C01.TextGrid",
+      "referenceSha256": "b6a1e716db42766dca61fcf14d15212855dcf87389d7ef1b5e0a9ad9baf412f3",
+      "referenceTextEqualOfficialArchiveIgnoringOnlyLineEndings": true,
+      "mirrorReferenceRawSha256": "d86fc53f83f5f2b2a7c1bda4550fc55800dd6dd52c1872ac8a8d95640beab370",
+      "localFlac": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\sources\\20200709_L_R002S01C01.flac",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\sources\\20200709_L_R002S01C01.flac",
+      "audioSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "referenceGranularity": "complete TextGrid intervals"
+    },
+    {
+      "role": "validation",
+      "meeting": "20200805_S_R001S01C01",
+      "sourcePath": "train_S/wav/20200805_S_R001S01C01.flac",
+      "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/wav/20200805_S_R001S01C01.flac",
+      "repositoryRevision": "aada72727856313b19d4a030383c426364931dbf",
+      "fileSize": 262578592,
+      "expectedWholeFileLfsSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+      "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200805_S_R001S01C01.TextGrid",
+      "referenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+      "referenceTextEqualOfficialArchiveIgnoringOnlyLineEndings": true,
+      "mirrorReferenceRawSha256": "c1b4a6226b1c63ac0633c8b6dc47b5f8460c3a13bea17f2f4cce0b591a0adeec",
+      "localFlac": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\sources\\20200805_S_R001S01C01.flac",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\sources\\20200805_S_R001S01C01.flac",
+      "audioSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "referenceGranularity": "complete TextGrid intervals"
+    },
+    {
+      "meeting": "ES2003b",
+      "role": "validation",
+      "language": "English",
+      "corpus": "AMI",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ordinary-english-r1\\ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/ES2003b/audio/ES2003b.Array1-01.wav",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "annotationUrl": "https://groups.inf.ed.ac.uk/ami/AMICorpusAnnotations/ami_public_manual_1.6.2.zip",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "referenceGranularity": "complete manually transcribed words, official forced-aligned word times; nonverbal activity also retained"
+    },
+    {
+      "meeting": "EN2001a",
+      "role": "validation",
+      "language": "English",
+      "corpus": "AMI",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\sources\\EN2001a.Array1-01.wav",
+      "audioSha256": "20cf2243fff84361cc5c755529350d23c544580d58f00959e71945d8fdc8a8f7",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/EN2001a/audio/EN2001a.Array1-01.wav",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "annotationUrl": "https://groups.inf.ed.ac.uk/ami/AMICorpusAnnotations/ami_public_manual_1.6.2.zip",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "referenceGranularity": "complete manually transcribed words, official forced-aligned word times; nonverbal activity also retained"
+    }
+  ],
+  "sceneCounts": [
+    {
+      "meeting": "20200707_L_R001S08C01",
+      "role": "train",
+      "referenceEvents": 302,
+      "overlapComponents": 88,
+      "nonoverlapRuns": 35,
+      "eligibleDisjointPlans": 14
+    },
+    {
+      "meeting": "20200708_L_R002S01C01",
+      "role": "train",
+      "referenceEvents": 301,
+      "overlapComponents": 52,
+      "nonoverlapRuns": 30,
+      "eligibleDisjointPlans": 16
+    },
+    {
+      "meeting": "20200709_L_R002S01C01",
+      "role": "validation",
+      "referenceEvents": 330,
+      "overlapComponents": 68,
+      "nonoverlapRuns": 44,
+      "eligibleDisjointPlans": 17
+    },
+    {
+      "meeting": "20200805_S_R001S01C01",
+      "role": "validation",
+      "referenceEvents": 358,
+      "overlapComponents": 87,
+      "nonoverlapRuns": 52,
+      "eligibleDisjointPlans": 12
+    },
+    {
+      "meeting": "ES2003b",
+      "role": "validation",
+      "referenceEvents": 5740,
+      "overlapComponents": 135,
+      "nonoverlapRuns": 125,
+      "eligibleDisjointPlans": 28
+    },
+    {
+      "meeting": "EN2001a",
+      "role": "validation",
+      "referenceEvents": 6735,
+      "overlapComponents": 144,
+      "nonoverlapRuns": 136,
+      "eligibleDisjointPlans": 80
+    }
+  ],
+  "newAmiSelection": [
+    {
+      "meeting": "EN2001a",
+      "referenceEvents": 6735,
+      "overlapComponents": 144,
+      "nonoverlapRuns": 136,
+      "eligibleDisjointPlans": 80,
+      "audioAvailability": "HTTP200"
+    }
+  ],
+  "correctedSourceCoverage": {
+    "meeting": "EN2001a",
+    "officialSpeakers": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+    ],
+    "wordFiles": [
+      "words/EN2001a.D.words.xml",
+      "words/EN2001a.B.words.xml",
+      "words/EN2001a.C.words.xml",
+      "words/EN2001a.E.words.xml",
+      "words/EN2001a.A.words.xml"
+    ],
+    "referenceEvents": 16179,
+    "overlapComponents": 501,
+    "nonoverlapRuns": 459,
+    "eligibleDisjointPlans": 117
+  }
+}

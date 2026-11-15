@@ -1,0 +1,50 @@
+{
+  "binding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "English",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter",
+    "jobId": "00000000-00203360-final",
+    "pcmSha256": "4c120d10ec5695b80b5dbf2b6579c251d408716b50fbe804d21722ac8ff6b3f7",
+    "configSha256": "ee5e1e7da6be4178ad9ef9de60e3dd2002b0453e1f48e48615af9de99d73c801"
+  },
+  "raw": {
+    "startSample": 0,
+    "endSample": 203360,
+    "text": "Does anyone want to see Steve's feedback from the specification? I'm ready.",
+    "language": "English",
+    "languageHeaderPresent": false,
+    "generatedIds": [
+      21468,
+      5489,
+      1366,
+      311,
+      1490,
+      13809,
+      594,
+      11055,
+      504,
+      279,
+      25128,
+      30,
+      358,
+      2776,
+      5527,
+      13,
+      151645
+    ],
+    "rawDecoded": "Does anyone want to see Steve's feedback from the specification? I'm ready.<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 3.4578760000003967
+  },
+  "rawSha256": "657ecbdf86e01d73d65824b2ada1ac17f61040acbe9c3f76ad505b81b610b67d"
+}

@@ -1,0 +1,5939 @@
+[
+  {
+    "id": "20200707_L_R001S08C01-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "20200707_L_R001S08C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200707_L_R001S08C01-seq-000.wav",
+    "wavSha256": "ea5f237972b723e7fb35b5b344fd9b2dde16d57441b5998c1d12a07c43611285",
+    "pcmSha256": "813bf3673b909105e54fe5277232578dadf14f2e18ff48989ad99ed199078500",
+    "frames": 438229,
+    "audioSeconds": 27.3893125,
+    "language": "Chinese",
+    "role": "train",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 1291379,
+    "sourceEndFrame": 1729608,
+    "sourceAudioSha256": "35cec60f5279217cbd21e473408c349a1775c7651efd28f7d4a8ecf468601a03",
+    "referenceEvents": [
+      {
+        "start": 80.71115076774687,
+        "end": 82.3443387382159,
+        "speaker": "002-M",
+        "text": "零二二我是法律顾问",
+        "unscorable": false
+      },
+      {
+        "start": 82.36542,
+        "end": 84.27543,
+        "speaker": "003-M",
+        "text": "零二六我是动画制作",
+        "unscorable": false
+      },
+      {
+        "start": 84.35793,
+        "end": 86.31293,
+        "speaker": "004-M",
+        "text": "零幺三我是画师",
+        "unscorable": false
+      },
+      {
+        "start": 86.38543,
+        "end": 88.41043,
+        "speaker": "005-F",
+        "text": "零二三我是角色设计",
+        "unscorable": false
+      },
+      {
+        "start": 88.51543,
+        "end": 91.07543,
+        "speaker": "006-F",
+        "text": "零二四我是剧本",
+        "unscorable": false
+      },
+      {
+        "start": 91.18543,
+        "end": 95.28691437515853,
+        "speaker": "007-M",
+        "text": "零二五我是呃制片监监制。",
+        "unscorable": false
+      },
+      {
+        "start": 95.28691437515853,
+        "end": 108.02045,
+        "speaker": "001-M",
+        "text": "嗯行好的嗯我受邀来到咱们参加咱们本次的一个这个会议，是这样的咱们这个监督这一这个制片这一块儿是",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "零二二我是法律顾问零二六我是动画制作零幺三我是画师零二三我是角色设计零二四我是剧本零二五我是呃制片监监制。嗯行好的嗯我受邀来到咱们参加咱们本次的一个这个会议，是这样的咱们这个监督这一这个制片这一块儿是",
+    "speakers": [
+      "002-M",
+      "003-M",
+      "004-M",
+      "005-F",
+      "006-F",
+      "007-M",
+      "001-M"
+    ],
+    "turns": [
+      "002-M",
+      "003-M",
+      "004-M",
+      "005-F",
+      "006-F",
+      "007-M",
+      "001-M"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 0,
+    "addedNoise": false
+  },
+  {
+    "id": "20200707_L_R001S08C01-seq-004",
+    "condition": "sequential-original-room",
+    "meeting": "20200707_L_R001S08C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200707_L_R001S08C01-seq-004.wav",
+    "wavSha256": "168c0cc748630c2607bdfe1504dd2dba6ff303fc0aec23fdfc99019271d424bd",
+    "pcmSha256": "4f3252d4456ba2aa6d16fb6df6cc1962462fc97afc1a42d52311a75187134f75",
+    "frames": 438281,
+    "audioSeconds": 27.3925625,
+    "language": "Chinese",
+    "role": "train",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 14814779,
+    "sourceEndFrame": 15253060,
+    "sourceAudioSha256": "35cec60f5279217cbd21e473408c349a1775c7651efd28f7d4a8ecf468601a03",
+    "referenceEvents": [
+      {
+        "start": 925.96117,
+        "end": 934.12118,
+        "speaker": "004-M",
+        "text": "但是嗯马上可能也会有一个干嘛的嗯我觉得我们还是应该涉及一个自己的公式吧。就是",
+        "unscorable": false
+      },
+      {
+        "start": 934.26618,
+        "end": 940.45619,
+        "speaker": "004-M",
+        "text": "可以是肯定不是教育学的方面我们在写作，但是过程呢",
+        "unscorable": false
+      },
+      {
+        "start": 941.07119,
+        "end": 946.09619,
+        "speaker": "004-M",
+        "text": "可以一波几折之类的可以反转反转",
+        "unscorable": false
+      },
+      {
+        "start": 947.8400549030109,
+        "end": 949.7322235333289,
+        "speaker": "003-M",
+        "text": "过程需要反转，啊",
+        "unscorable": false
+      },
+      {
+        "start": 949.7322235333289,
+        "end": 953.2362,
+        "speaker": "004-M",
+        "text": "这样才有看点才有卖点啊",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "但是嗯马上可能也会有一个干嘛的嗯我觉得我们还是应该涉及一个自己的公式吧。就是可以是肯定不是教育学的方面我们在写作，但是过程呢可以一波几折之类的可以反转反转过程需要反转，啊这样才有看点才有卖点啊",
+    "speakers": [
+      "004-M",
+      "003-M"
+    ],
+    "turns": [
+      "004-M",
+      "003-M",
+      "004-M"
+    ],
+    "speakerReturn": true,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 4,
+    "addedNoise": false
+  },
+  {
+    "id": "20200707_L_R001S08C01-seq-008",
+    "condition": "sequential-original-room",
+    "meeting": "20200707_L_R001S08C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200707_L_R001S08C01-seq-008.wav",
+    "wavSha256": "888b24daa7347cc951ecca6411a0d541d1330839a73cc5947cf412bbfa9b26f5",
+    "pcmSha256": "bcaeb79824692d7e9c156eb248b4df36e4900f2090bb02ffb11c1054f8bb2485",
+    "frames": 449081,
+    "audioSeconds": 28.0675625,
+    "language": "Chinese",
+    "role": "train",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 22807586,
+    "sourceEndFrame": 23256667,
+    "sourceAudioSha256": "35cec60f5279217cbd21e473408c349a1775c7651efd28f7d4a8ecf468601a03",
+    "referenceEvents": [
+      {
+        "start": 1425.55412,
+        "end": 1442.93413,
+        "speaker": "002-M",
+        "text": "呃我们需要和他们公司取得联系，然后告诉他们我们就是会以他们的原型人物原型做一些小彩蛋，看他们是否同意，然后需要一个签字一个合同。",
+        "unscorable": false
+      },
+      {
+        "start": 1443.23163,
+        "end": 1453.46164,
+        "speaker": "007-M",
+        "text": "是这样，所以像淘宝一样才能获得咱们就是这方面的话就需要把细节的话就是处理好",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "呃我们需要和他们公司取得联系，然后告诉他们我们就是会以他们的原型人物原型做一些小彩蛋，看他们是否同意，然后需要一个签字一个合同。是这样，所以像淘宝一样才能获得咱们就是这方面的话就需要把细节的话就是处理好",
+    "speakers": [
+      "002-M",
+      "007-M"
+    ],
+    "turns": [
+      "002-M",
+      "007-M"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 8,
+    "addedNoise": false
+  },
+  {
+    "id": "20200707_L_R001S08C01-seq-013",
+    "condition": "sequential-original-room",
+    "meeting": "20200707_L_R001S08C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200707_L_R001S08C01-seq-013.wav",
+    "wavSha256": "942ca9597f57fd3fb73a63f17e5c33487ae41a6ed9e015e77238c3db2885f698",
+    "pcmSha256": "c7ba1c8b9d5c98df404e0553a77849354cfbd5de98c19d56948eb1e4cd6a7429",
+    "frames": 356405,
+    "audioSeconds": 22.2753125,
+    "language": "Chinese",
+    "role": "train",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 29321468,
+    "sourceEndFrame": 29677873,
+    "sourceAudioSha256": "35cec60f5279217cbd21e473408c349a1775c7651efd28f7d4a8ecf468601a03",
+    "referenceEvents": [
+      {
+        "start": 1832.61948,
+        "end": 1837.40948,
+        "speaker": "007-M",
+        "text": "阐述吧对然后但是咱们节奏是一定要快的",
+        "unscorable": false
+      },
+      {
+        "start": 1837.61198,
+        "end": 1845.68199,
+        "speaker": "002-M",
+        "text": "就是第一，因为并没有这个公司的话是以拓展方法为那个切入点的。",
+        "unscorable": false
+      },
+      {
+        "start": 1847.26449,
+        "end": 1854.7895,
+        "speaker": "003-M",
+        "text": "对，就是相当于就是很很简短的一个日常，就直接放到",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "阐述吧对然后但是咱们节奏是一定要快的就是第一，因为并没有这个公司的话是以拓展方法为那个切入点的。对，就是相当于就是很很简短的一个日常，就直接放到",
+    "speakers": [
+      "007-M",
+      "002-M",
+      "003-M"
+    ],
+    "turns": [
+      "007-M",
+      "002-M",
+      "003-M"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 13,
+    "addedNoise": false
+  },
+  {
+    "id": "20200708_L_R002S01C01-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "20200708_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200708_L_R002S01C01-seq-000.wav",
+    "wavSha256": "578326a4a343479a8f0221196fce3f13fce2e6bec1ce7cb3145ac2d206d6e1cc",
+    "pcmSha256": "201dc991d7359db6b24750f8367689d5f14a86e1f1a7ffde55fc43d15d329c72",
+    "frames": 448924,
+    "audioSeconds": 28.05775,
+    "language": "Chinese",
+    "role": "train",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 4163875,
+    "sourceEndFrame": 4612799,
+    "sourceAudioSha256": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
+    "referenceEvents": [
+      {
+        "start": 260.24217571721783,
+        "end": 260.5827683091937,
+        "speaker": "002-M",
+        "text": "对",
+        "unscorable": false
+      },
+      {
+        "start": 260.5827683091937,
+        "end": 269.02489,
+        "speaker": "001-M",
+        "text": "所以刚才这个副校长这边儿把这个嗯问题抛在咱们会上，嗯所以大家对这个问题都怎么看的？",
+        "unscorable": false
+      },
+      {
+        "start": 269.61989,
+        "end": 276.55489,
+        "speaker": "001-M",
+        "text": "刚才副副校长说的这个你可以说一下这个，你对这个事件的一个看法。",
+        "unscorable": false
+      },
+      {
+        "start": 277.23989,
+        "end": 283.50489,
+        "speaker": "002-M",
+        "text": "我对这个事件的看法就先说一下弊端吧，像一些大公司之类的。",
+        "unscorable": false
+      },
+      {
+        "start": 283.83989,
+        "end": 288.21989,
+        "speaker": "002-M",
+        "text": "大公司如果你是学计算机的，可能你去那儿起步特别的低。",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "对所以刚才这个副校长这边儿把这个嗯问题抛在咱们会上，嗯所以大家对这个问题都怎么看的？刚才副副校长说的这个你可以说一下这个，你对这个事件的一个看法。我对这个事件的看法就先说一下弊端吧，像一些大公司之类的。大公司如果你是学计算机的，可能你去那儿起步特别的低。",
+    "speakers": [
+      "002-M",
+      "001-M"
+    ],
+    "turns": [
+      "002-M",
+      "001-M",
+      "002-M"
+    ],
+    "speakerReturn": true,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 0,
+    "addedNoise": false
+  },
+  {
+    "id": "20200708_L_R002S01C01-seq-005",
+    "condition": "sequential-original-room",
+    "meeting": "20200708_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200708_L_R002S01C01-seq-005.wav",
+    "wavSha256": "0efe4e31877020e65c55f8d9839256c144f46311a5b7bf85d0e53edf9fbbbed1",
+    "pcmSha256": "b6296b00a7de8ed98239b3c7cc2f4a179d7c7101592fcf5fe699c0b9cbfe8bfd",
+    "frames": 403587,
+    "audioSeconds": 25.2241875,
+    "language": "Chinese",
+    "role": "train",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 13215355,
+    "sourceEndFrame": 13618942,
+    "sourceAudioSha256": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
+    "referenceEvents": [
+      {
+        "start": 826.03966,
+        "end": 834.65718,
+        "speaker": "002-M",
+        "text": "说不定会审核一下大公司谁会管你这种个人情绪，它只会管理一个公司的整体运营，它会以团队协作为主",
+        "unscorable": false
+      },
+      {
+        "start": 835.79218,
+        "end": 840.10719,
+        "speaker": "002-M",
+        "text": "他不会考虑到你的个人情绪，因为你的能力没有那么突出",
+        "unscorable": false
+      },
+      {
+        "start": 841.7497,
+        "end": 843.7570333361089,
+        "speaker": "002-M",
+        "text": "以上你们有什么看法？",
+        "unscorable": false
+      },
+      {
+        "start": 843.9462514427621,
+        "end": 851.1554613062505,
+        "speaker": "007-F",
+        "text": "其实每个公司肯定都是有利有弊的。举一个比较现实的例子，就比如说我上初中的时候，两个兄弟班，",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "说不定会审核一下大公司谁会管你这种个人情绪，它只会管理一个公司的整体运营，它会以团队协作为主他不会考虑到你的个人情绪，因为你的能力没有那么突出以上你们有什么看法？其实每个公司肯定都是有利有弊的。举一个比较现实的例子，就比如说我上初中的时候，两个兄弟班，",
+    "speakers": [
+      "002-M",
+      "007-F"
+    ],
+    "turns": [
+      "002-M",
+      "007-F"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 5,
+    "addedNoise": false
+  },
+  {
+    "id": "20200708_L_R002S01C01-seq-010",
+    "condition": "sequential-original-room",
+    "meeting": "20200708_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200708_L_R002S01C01-seq-010.wav",
+    "wavSha256": "d16e7dbc916ffec0b3b9c4cb19035552597bb61e894e05ca9128c1d3e64fd40d",
+    "pcmSha256": "8a110c476c84bf63a053cf640d0e4a69a1651e5cae103e924dab048d28e9a0ce",
+    "frames": 246043,
+    "audioSeconds": 15.3776875,
+    "language": "Chinese",
+    "role": "train",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 19677889,
+    "sourceEndFrame": 19923932,
+    "sourceAudioSha256": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
+    "referenceEvents": [
+      {
+        "start": 1229.94805,
+        "end": 1234.54806,
+        "speaker": "002-M",
+        "text": "房贷啊车贷啊之类的这方面的压力，他会怎么选择",
+        "unscorable": false
+      },
+      {
+        "start": 1235.02056,
+        "end": 1245.1657025075633,
+        "speaker": "004-M",
+        "text": "我觉得一开始作为过渡还是小公司更好，因为在小公司的话你有更多的机会去施施展自己的能力对不对",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "房贷啊车贷啊之类的这方面的压力，他会怎么选择我觉得一开始作为过渡还是小公司更好，因为在小公司的话你有更多的机会去施施展自己的能力对不对",
+    "speakers": [
+      "002-M",
+      "004-M"
+    ],
+    "turns": [
+      "002-M",
+      "004-M"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 10,
+    "addedNoise": false
+  },
+  {
+    "id": "20200708_L_R002S01C01-seq-015",
+    "condition": "sequential-original-room",
+    "meeting": "20200708_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200708_L_R002S01C01-seq-015.wav",
+    "wavSha256": "f17dc9b21bee0242e44cc69f3ea78f76a9b7625bb1620b5c6ddb0114ed24e14c",
+    "pcmSha256": "55666181c83c17141992fc1975180395d0478732b5873fde82aabfff0b6c0b50",
+    "frames": 282021,
+    "audioSeconds": 17.6263125,
+    "language": "Chinese",
+    "role": "train",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 30713933,
+    "sourceEndFrame": 30995954,
+    "sourceAudioSha256": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
+    "referenceEvents": [
+      {
+        "start": 1919.64956,
+        "end": 1923.3027867015878,
+        "speaker": "001-M",
+        "text": "那咱本次会议就先到此结束，散会",
+        "unscorable": false
+      },
+      {
+        "start": 1934.67709,
+        "end": 1937.16709,
+        "speaker": "003-M",
+        "text": "还是啥也不懂这个",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "那咱本次会议就先到此结束，散会还是啥也不懂这个",
+    "speakers": [
+      "001-M",
+      "003-M"
+    ],
+    "turns": [
+      "001-M",
+      "003-M"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 15,
+    "addedNoise": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-000.wav",
+    "wavSha256": "0e3615a5dc8437ca3129e82d269dbf3419fefd5871dde831d8898eb01b4f85bf",
+    "pcmSha256": "1693f208b2d6103a4cfc69b36b47a833fb913bd3becd2e42c02c6db4a5f10a30",
+    "frames": 436001,
+    "audioSeconds": 27.2500625,
+    "language": "Chinese",
+    "role": "validation",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 1386167,
+    "sourceEndFrame": 1822168,
+    "sourceAudioSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+    "referenceEvents": [
+      {
+        "start": 86.71543,
+        "end": 94.08543,
+        "speaker": "006-F",
+        "text": "嗯今天呢把大家叫来，咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的",
+        "unscorable": false
+      },
+      {
+        "start": 94.21293,
+        "end": 102.82966382518043,
+        "speaker": "006-F",
+        "text": "呃汇报和总结，因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程",
+        "unscorable": false
+      },
+      {
+        "start": 102.93533971968648,
+        "end": 109.43295,
+        "speaker": "006-F",
+        "text": "然后现在咱们就先从教练部这边儿简单的总结一下上半年的情况",
+        "unscorable": false
+      },
+      {
+        "start": 109.67045,
+        "end": 113.80545,
+        "speaker": "002-M",
+        "text": "上半年的情况主要是有像一些",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "嗯今天呢把大家叫来，咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的呃汇报和总结，因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程然后现在咱们就先从教练部这边儿简单的总结一下上半年的情况上半年的情况主要是有像一些",
+    "speakers": [
+      "006-F",
+      "002-M"
+    ],
+    "turns": [
+      "006-F",
+      "002-M"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 0,
+    "addedNoise": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-seq-003",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-003.wav",
+    "wavSha256": "e64a93b033e9102767a10d49040eabe4d96085c5c8076aabd6b0727a8886766e",
+    "pcmSha256": "59a5853e6cd1235b2c77b461806f2186fde768f07b90cc4e656b454799795c6f",
+    "frames": 357561,
+    "audioSeconds": 22.3475625,
+    "language": "Chinese",
+    "role": "validation",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 3717009,
+    "sourceEndFrame": 4074570,
+    "sourceAudioSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+    "referenceEvents": [
+      {
+        "start": 232.39305,
+        "end": 238.39306,
+        "speaker": "002-M",
+        "text": "然后调动顾客积极性，还有就是毕竟是健身房嘛这些教练是吧？",
+        "unscorable": false
+      },
+      {
+        "start": 238.58806,
+        "end": 245.90307,
+        "speaker": "002-M",
+        "text": "他们肯定会以安全为目的，像什么哑铃儿一些维修啊砸到脚面之类这方面是绝对不会发生",
+        "unscorable": false
+      },
+      {
+        "start": 246.91557,
+        "end": 254.58057,
+        "speaker": "006-F",
+        "text": "然后咱们这边儿其实呢有那个意见反馈，就是说然后孩子在学游泳啊学游泳的时候，因为以前没有接触过",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "然后调动顾客积极性，还有就是毕竟是健身房嘛这些教练是吧？他们肯定会以安全为目的，像什么哑铃儿一些维修啊砸到脚面之类这方面是绝对不会发生然后咱们这边儿其实呢有那个意见反馈，就是说然后孩子在学游泳啊学游泳的时候，因为以前没有接触过",
+    "speakers": [
+      "002-M",
+      "006-F"
+    ],
+    "turns": [
+      "002-M",
+      "006-F"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 3,
+    "addedNoise": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-seq-006",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-006.wav",
+    "wavSha256": "c8740be429bd68fbec8bb283c04c15ca40797f461626fdb02e0afab2d09788ac",
+    "pcmSha256": "368d97c811872198cd344b845c35e8b2fb1c71eaa2bf33c12a2a838ef9ffd3b4",
+    "frames": 367600,
+    "audioSeconds": 22.975,
+    "language": "Chinese",
+    "role": "validation",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 6861292,
+    "sourceEndFrame": 7228892,
+    "sourceAudioSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+    "referenceEvents": [
+      {
+        "start": 428.90073,
+        "end": 436.18573,
+        "speaker": "002-M",
+        "text": "这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作",
+        "unscorable": false
+      },
+      {
+        "start": 436.31073,
+        "end": 443.94574,
+        "speaker": "006-F",
+        "text": "嗯好。那咱们这个保安部这边儿呢上一个季度的情况怎么样？就是安全情况各种",
+        "unscorable": false
+      },
+      {
+        "start": 444.13574,
+        "end": 451.72575,
+        "speaker": "006-F",
+        "text": "比如说车棚的检查，然后咱们的管理设施有没有遭到损坏，这个说一下吧简单汇报一下",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作嗯好。那咱们这个保安部这边儿呢上一个季度的情况怎么样？就是安全情况各种比如说车棚的检查，然后咱们的管理设施有没有遭到损坏，这个说一下吧简单汇报一下",
+    "speakers": [
+      "002-M",
+      "006-F"
+    ],
+    "turns": [
+      "002-M",
+      "006-F"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 6,
+    "addedNoise": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-seq-009",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-009.wav",
+    "wavSha256": "988829118527d42a1b014f640471dd23b3ad281b1d88922d84b61bb11717b30f",
+    "pcmSha256": "3a9b28cb9b183bd8f93e51ef2a85fff2bd96c3f68f674024db8c951bd76da179",
+    "frames": 444561,
+    "audioSeconds": 27.7850625,
+    "language": "Chinese",
+    "role": "validation",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 14898539,
+    "sourceEndFrame": 15343100,
+    "sourceAudioSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+    "referenceEvents": [
+      {
+        "start": 931.21616,
+        "end": 937.37117,
+        "speaker": "004-F",
+        "text": "不管任何一个班儿发现问题，及时汇报给当班儿的领导，维修人员",
+        "unscorable": false
+      },
+      {
+        "start": 937.44117,
+        "end": 949.36118,
+        "speaker": "004-F",
+        "text": "维修人员，如果是一些小问题就是当场处理，如果说呃处理不了的一些器械的一些损坏会及时的上报，呃这边儿他们的配合还是做得蛮好的",
+        "unscorable": false
+      },
+      {
+        "start": 949.9322063149685,
+        "end": 958.91369,
+        "speaker": "006-F",
+        "text": "嗯咱们就是咱们这儿前一段时间不是一直下雨，然后咱们这边儿我想问一下咱们这边儿这个设施有没有受到",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "不管任何一个班儿发现问题，及时汇报给当班儿的领导，维修人员维修人员，如果是一些小问题就是当场处理，如果说呃处理不了的一些器械的一些损坏会及时的上报，呃这边儿他们的配合还是做得蛮好的嗯咱们就是咱们这儿前一段时间不是一直下雨，然后咱们这边儿我想问一下咱们这边儿这个设施有没有受到",
+    "speakers": [
+      "004-F",
+      "006-F"
+    ],
+    "turns": [
+      "004-F",
+      "006-F"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 9,
+    "addedNoise": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-seq-012",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-012.wav",
+    "wavSha256": "725bcd016d924bed76085f504cfed325f25c10fb53a2548c07ad31e34191ecdf",
+    "pcmSha256": "c0ed8b3964eb7fe8f096cf20ae1967aa15f76e5f1e2a17699cf16b99c3908bb7",
+    "frames": 439120,
+    "audioSeconds": 27.445,
+    "language": "Chinese",
+    "role": "validation",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 20263384,
+    "sourceEndFrame": 20702504,
+    "sourceAudioSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+    "referenceEvents": [
+      {
+        "start": 1266.54146,
+        "end": 1286.73148,
+        "speaker": "006-F",
+        "text": "好，咱们前台这边儿啊就是主要就是给顾客解答疑问，我想问一下咱们前台就遇到那些就大家在咨询有意有意愿有意志就在咱们在报名参加活动的这些人，但是他们就一直在犹犹豫，游游移你在这时候会怎么跟他们说跟顾客说，然后让他们参加咱们这个课程？",
+        "unscorable": false
+      },
+      {
+        "start": 1286.97148,
+        "end": 1293.82648,
+        "speaker": "007-F",
+        "text": "嗯首先我们是肯定会先让这个顾客了解一下，我们这个是十分优惠的",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "好，咱们前台这边儿啊就是主要就是给顾客解答疑问，我想问一下咱们前台就遇到那些就大家在咨询有意有意愿有意志就在咱们在报名参加活动的这些人，但是他们就一直在犹犹豫，游游移你在这时候会怎么跟他们说跟顾客说，然后让他们参加咱们这个课程？嗯首先我们是肯定会先让这个顾客了解一下，我们这个是十分优惠的",
+    "speakers": [
+      "006-F",
+      "007-F"
+    ],
+    "turns": [
+      "006-F",
+      "007-F"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 12,
+    "addedNoise": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-seq-016",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-016.wav",
+    "wavSha256": "d08df775867bd3aeb82b4e24ed7a14488dc935c46169e5e54c0602c641f5a090",
+    "pcmSha256": "76ef981586fce2f41b31b1ca68a7a72bb68e3116e1181b9648b0c56a01bd2231",
+    "frames": 473887,
+    "audioSeconds": 29.6179375,
+    "language": "Chinese",
+    "role": "validation",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 30869773,
+    "sourceEndFrame": 31343660,
+    "sourceAudioSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+    "referenceEvents": [
+      {
+        "start": 1929.39704,
+        "end": 1939.47705,
+        "speaker": "004-F",
+        "text": "所以我告诉每一个保洁人员，我们的工作其实是很重要，我们就是什么？我们就是这个健身中心的美容师",
+        "unscorable": false
+      },
+      {
+        "start": 1939.53205,
+        "end": 1946.05705,
+        "speaker": "004-F",
+        "text": "我们给他在做美容，如果我们这个工作做的不到位的话，那我们就在给他抹黑了。",
+        "unscorable": false
+      },
+      {
+        "start": 1946.64205,
+        "end": 1951.78706,
+        "speaker": "004-F",
+        "text": "所以他们都知道自己的工作非常重要，所以每个人的积极性还是蛮高",
+        "unscorable": false
+      },
+      {
+        "start": 1951.85206,
+        "end": 1958.97706,
+        "speaker": "006-F",
+        "text": "嗯好。后勤部这边儿这个情况是这样，那咱们来听一下前台这边儿下半年的计划",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "所以我告诉每一个保洁人员，我们的工作其实是很重要，我们就是什么？我们就是这个健身中心的美容师我们给他在做美容，如果我们这个工作做的不到位的话，那我们就在给他抹黑了。所以他们都知道自己的工作非常重要，所以每个人的积极性还是蛮高嗯好。后勤部这边儿这个情况是这样，那咱们来听一下前台这边儿下半年的计划",
+    "speakers": [
+      "004-F",
+      "006-F"
+    ],
+    "turns": [
+      "004-F",
+      "006-F"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 16,
+    "addedNoise": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-000.wav",
+    "wavSha256": "6c1818fbe8f564715e6cbcb498a7ea3ef91e7dd38449f25ce802c4ed367d4094",
+    "pcmSha256": "2fd5e1492ae266f668ec7d665ade16aca1f7c8a07b4a08f0087f5fe661ef3935",
+    "frames": 399261,
+    "audioSeconds": 24.9538125,
+    "language": "Chinese",
+    "role": "validation",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 550283,
+    "sourceEndFrame": 949544,
+    "sourceAudioSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+    "referenceEvents": [
+      {
+        "start": 34.43014,
+        "end": 42.47016,
+        "speaker": "006-F",
+        "text": "上半年的一些情况以及下半年怎么做，然后接下来由我们的主管来主持一下这场会议。",
+        "unscorable": false
+      },
+      {
+        "start": 44.99516,
+        "end": 53.96018,
+        "speaker": "004-F",
+        "text": "嗯上半年呢嗯大家嗯待会儿先嗯说一下各个岗位的上半年的情况，",
+        "unscorable": false
+      },
+      {
+        "start": 54.01143,
+        "end": 59.26644,
+        "speaker": "004-F",
+        "text": "因为毕竟我们这个物业跟其它物业不一样，我们是全国一级资质的，",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "上半年的一些情况以及下半年怎么做，然后接下来由我们的主管来主持一下这场会议。嗯上半年呢嗯大家嗯待会儿先嗯说一下各个岗位的上半年的情况，因为毕竟我们这个物业跟其它物业不一样，我们是全国一级资质的，",
+    "speakers": [
+      "006-F",
+      "004-F"
+    ],
+    "turns": [
+      "006-F",
+      "004-F"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 0,
+    "addedNoise": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-seq-002",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-002.wav",
+    "wavSha256": "c71881acc5ca1293b41190421f61f8af4106d1acbe9a3f216aca263e66cbe130",
+    "pcmSha256": "916d8a53c3e18b5a92b2aa282099ce93c78fc61d7410ed88db72934b546b626e",
+    "frames": 347300,
+    "audioSeconds": 21.70625,
+    "language": "Chinese",
+    "role": "validation",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 4285470,
+    "sourceEndFrame": 4632770,
+    "sourceAudioSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+    "referenceEvents": [
+      {
+        "start": 267.92182,
+        "end": 278.31684,
+        "speaker": "005-M",
+        "text": "那些想要去当空乘的，或者说是动车动车是个动保儿，他们最后没有选上的，就是最后有好好大一部分人来咱们这儿",
+        "unscorable": false
+      },
+      {
+        "start": 278.60309,
+        "end": 289.51311,
+        "speaker": "004-F",
+        "text": "像在门口儿站岗的这个保安呢其实是很重要的，因为来来往往咱们小区，你大门口守着是一条大路，是以邢台是是市区一条主路，",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "那些想要去当空乘的，或者说是动车动车是个动保儿，他们最后没有选上的，就是最后有好好大一部分人来咱们这儿像在门口儿站岗的这个保安呢其实是很重要的，因为来来往往咱们小区，你大门口守着是一条大路，是以邢台是是市区一条主路，",
+    "speakers": [
+      "005-M",
+      "004-F"
+    ],
+    "turns": [
+      "005-M",
+      "004-F"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 2,
+    "addedNoise": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-seq-004",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-004.wav",
+    "wavSha256": "3294e64009f3fd81af0ad2afb0949bb97ce215601aa9ffc0914ea2c1cda7b2a7",
+    "pcmSha256": "bd9e80cc5752015b0c405264aac434fb7b003c222e5e74eb98b5dcaa97d044d8",
+    "frames": 456807,
+    "audioSeconds": 28.5504375,
+    "language": "Chinese",
+    "role": "validation",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 14859063,
+    "sourceEndFrame": 15315870,
+    "sourceAudioSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+    "referenceEvents": [
+      {
+        "start": 928.74804,
+        "end": 941.66806,
+        "speaker": "004-F",
+        "text": "或者说根本就不让它萌芽，这是我们的工作的目的，这才是我们收费或者说我们的金牌的为什么是金牌？ 我们为的是一级的资质，",
+        "unscorable": false
+      },
+      {
+        "start": 941.72806,
+        "end": 948.34807,
+        "speaker": "004-F",
+        "text": "为什么人家要要掏比别人小区贵一倍的物业费接受我们的服务，他们是愿意的。",
+        "unscorable": false
+      },
+      {
+        "start": 948.91182,
+        "end": 957.16184,
+        "speaker": "002-F",
+        "text": "是还有宠物方面，我也就是提醒各个业主都注意一下安全，不要让它们到处乱跑。",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "或者说根本就不让它萌芽，这是我们的工作的目的，这才是我们收费或者说我们的金牌的为什么是金牌？ 我们为的是一级的资质，为什么人家要要掏比别人小区贵一倍的物业费接受我们的服务，他们是愿意的。是还有宠物方面，我也就是提醒各个业主都注意一下安全，不要让它们到处乱跑。",
+    "speakers": [
+      "004-F",
+      "002-F"
+    ],
+    "turns": [
+      "004-F",
+      "002-F"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 4,
+    "addedNoise": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-seq-006",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-006.wav",
+    "wavSha256": "8bb395e6a992c0d5de8de3b1d5dae910102055c8f51303a95c992aeb8e2bbfe1",
+    "pcmSha256": "6424262715a7b43c8aa89e1e6a829cdb0019915affabac1cf04fae4d934f6368",
+    "frames": 318401,
+    "audioSeconds": 19.9000625,
+    "language": "Chinese",
+    "role": "validation",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 16617532,
+    "sourceEndFrame": 16935933,
+    "sourceAudioSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+    "referenceEvents": [
+      {
+        "start": 1038.67574,
+        "end": 1045.73075,
+        "speaker": "004-F",
+        "text": "那嗯下半年的话你们有什么计划或者说有什么想改进的地方，",
+        "unscorable": false
+      },
+      {
+        "start": 1046.15075,
+        "end": 1058.41577,
+        "speaker": "002-F",
+        "text": "下半年就是效率再提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对跟他们交流结果进行分析。",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "那嗯下半年的话你们有什么计划或者说有什么想改进的地方，下半年就是效率再提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对跟他们交流结果进行分析。",
+    "speakers": [
+      "004-F",
+      "002-F"
+    ],
+    "turns": [
+      "004-F",
+      "002-F"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 6,
+    "addedNoise": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-seq-008",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-008.wav",
+    "wavSha256": "ec6cb287103798a2424f839fb40522da652b8677f162aa9d05a5aa1c743d6b0b",
+    "pcmSha256": "e3dd3a9849bd0d6515af65df219f40a7cceaa57f28ea97c9b9b5f708dda82784",
+    "frames": 169343,
+    "audioSeconds": 10.5839375,
+    "language": "Chinese",
+    "role": "validation",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 21942805,
+    "sourceEndFrame": 22112148,
+    "sourceAudioSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+    "referenceEvents": [
+      {
+        "start": 1371.4252741001171,
+        "end": 1373.3703097620935,
+        "speaker": "005-M",
+        "text": "请了一个张师傅是么，",
+        "unscorable": false
+      },
+      {
+        "start": 1374.45011,
+        "end": 1376.2640729594916,
+        "speaker": "004-F",
+        "text": "不管他姓什么，干好了就行。",
+        "unscorable": false
+      },
+      {
+        "start": 1376.5850982629245,
+        "end": 1381.0794525109861,
+        "speaker": "001-M",
+        "text": "嗯反正这个维修这边儿我已经换人员了",
+        "unscorable": false
+      },
+      {
+        "start": 1381.0794525109861,
+        "end": 1381.9292253730148,
+        "speaker": "005-M",
+        "text": "哎",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "请了一个张师傅是么，不管他姓什么，干好了就行。嗯反正这个维修这边儿我已经换人员了哎",
+    "speakers": [
+      "005-M",
+      "004-F",
+      "001-M"
+    ],
+    "turns": [
+      "005-M",
+      "004-F",
+      "001-M",
+      "005-M"
+    ],
+    "speakerReturn": true,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 8,
+    "addedNoise": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-seq-011",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-011.wav",
+    "wavSha256": "e1e2c4f404122a496adfe671d095180c18a968ba59c284c97a71e29796d0f829",
+    "pcmSha256": "bc930b017232565c34029ac52a9f5e75f80b26dd1cc2cfb8b4a9b6604c9b4576",
+    "frames": 306820,
+    "audioSeconds": 19.17625,
+    "language": "Chinese",
+    "role": "validation",
+    "corpus": "AISHELL-4",
+    "sourceStartFrame": 34249765,
+    "sourceEndFrame": 34556585,
+    "sourceAudioSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+    "referenceEvents": [
+      {
+        "start": 2140.69026,
+        "end": 2153.07654,
+        "speaker": "004-F",
+        "text": "因为这个这个工作是一个长期的，又又要耐心的工作，不要说哎呀没事儿没事儿，千万不要存在这种侥幸的心理，因为业主安全是我们的工作的重中之重，",
+        "unscorable": false
+      },
+      {
+        "start": 2153.14154,
+        "end": 2159.70655,
+        "speaker": "006-F",
+        "text": "那你们下去记着就是给我发给我发一个下半下半年的一个计划表儿什么的。",
+        "unscorable": false
+      }
+    ],
+    "rawReferenceText": "因为这个这个工作是一个长期的，又又要耐心的工作，不要说哎呀没事儿没事儿，千万不要存在这种侥幸的心理，因为业主安全是我们的工作的重中之重，那你们下去记着就是给我发给我发一个下半下半年的一个计划表儿什么的。",
+    "speakers": [
+      "004-F",
+      "006-F"
+    ],
+    "turns": [
+      "004-F",
+      "006-F"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 11,
+    "addedNoise": false
+  },
+  {
+    "id": "ES2003b-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+    "wavSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+    "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92",
+    "frames": 192800,
+    "audioSeconds": 12.05,
+    "language": "English",
+    "role": "validation",
+    "corpus": "AMI",
+    "sourceStartFrame": 68320,
+    "sourceEndFrame": 261120,
+    "sourceAudioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "referenceEvents": [
+      {
+        "start": 4.35,
+        "end": 4.56,
+        "speaker": "C",
+        "text": "Just",
+        "index": 0,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 4.56,
+        "end": 4.68,
+        "speaker": "C",
+        "text": "put",
+        "index": 1,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 4.68,
+        "end": 4.74,
+        "speaker": "C",
+        "text": "it",
+        "index": 2,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 4.74,
+        "end": 4.81,
+        "speaker": "C",
+        "text": "on",
+        "index": 3,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 4.81,
+        "end": 4.89,
+        "speaker": "C",
+        "text": "the",
+        "index": 4,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 4.89,
+        "end": 5.93,
+        "speaker": "C",
+        "text": "deskt",
+        "index": 5,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 5.93,
+        "end": 6.51,
+        "speaker": "C",
+        "text": "desktop",
+        "index": 7,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 7.05,
+        "end": 7.3,
+        "speaker": "B",
+        "text": "No",
+        "index": 0,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 7.3,
+        "end": 7.45,
+        "speaker": "B",
+        "text": "on",
+        "index": 1,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 7.45,
+        "end": 7.55,
+        "speaker": "B",
+        "text": "the",
+        "index": 2,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 7.55,
+        "end": 8.04,
+        "speaker": "B",
+        "text": "desktop",
+        "index": 3,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 8.04,
+        "end": 8.19,
+        "speaker": "B",
+        "text": "you'll",
+        "index": 4,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 8.19,
+        "end": 8.65,
+        "speaker": "B",
+        "text": "find",
+        "index": 5,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 8.65,
+        "end": 8.71,
+        "speaker": "B",
+        "text": "you",
+        "index": 6,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 8.71,
+        "end": 8.91,
+        "speaker": "B",
+        "text": "should",
+        "index": 7,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 8.91,
+        "end": 9.15,
+        "speaker": "B",
+        "text": "find",
+        "index": 8,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 9.15,
+        "end": 9.26,
+        "speaker": "B",
+        "text": "that",
+        "index": 9,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 9.26,
+        "end": 9.39,
+        "speaker": "B",
+        "text": "there's",
+        "index": 10,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 9.39,
+        "end": 9.48,
+        "speaker": "B",
+        "text": "a",
+        "index": 11,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 9.48,
+        "end": 9.97,
+        "speaker": "B",
+        "text": "project",
+        "index": 12,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 9.97,
+        "end": 11.1,
+        "speaker": "B",
+        "text": "documents",
+        "index": 13,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 11.1,
+        "end": 11.59,
+        "speaker": "B",
+        "text": "link",
+        "index": 14,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 15.29,
+        "end": 15.55,
+        "speaker": "B",
+        "text": "A",
+        "index": 16,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 15.55,
+        "end": 15.81,
+        "speaker": "B",
+        "text": "well",
+        "index": 17,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 15.81,
+        "end": 16.1,
+        "speaker": "B",
+        "text": "actually",
+        "index": 18,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 16.1,
+        "end": 16.32,
+        "speaker": "B",
+        "text": "just",
+        "index": 19,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      }
+    ],
+    "rawReferenceText": "Just put it on the deskt desktop No on the desktop you'll find you should find that there's a project documents link A well actually just",
+    "speakers": [
+      "C",
+      "B"
+    ],
+    "turns": [
+      "C",
+      "B"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 0,
+    "addedNoise": false
+  },
+  {
+    "id": "ES2003b-seq-005",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-005.wav",
+    "wavSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+    "pcmSha256": "ec8c4c16829d1d95404cb3fd3fcd8ee32cc310edaaf7b8901d562a90696b04e7",
+    "frames": 476000,
+    "audioSeconds": 29.75,
+    "language": "English",
+    "role": "validation",
+    "corpus": "AMI",
+    "sourceStartFrame": 6553760,
+    "sourceEndFrame": 7029760,
+    "sourceAudioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "referenceEvents": [
+      {
+        "start": 409.61,
+        "end": 409.71,
+        "speaker": "C",
+        "text": "and",
+        "index": 874,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 409.71,
+        "end": 409.77,
+        "speaker": "C",
+        "text": "the",
+        "index": 875,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 409.77,
+        "end": 410.13,
+        "speaker": "C",
+        "text": "remote's",
+        "index": 876,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 410.13,
+        "end": 410.32,
+        "speaker": "C",
+        "text": "only",
+        "index": 877,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 410.32,
+        "end": 410.58,
+        "speaker": "C",
+        "text": "trained",
+        "index": 878,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 410.58,
+        "end": 410.68,
+        "speaker": "C",
+        "text": "for",
+        "index": 879,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 410.68,
+        "end": 411.16,
+        "speaker": "C",
+        "text": "you",
+        "index": 880,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 411.16,
+        "end": 411.26,
+        "speaker": "C",
+        "text": "it's",
+        "index": 882,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 411.26,
+        "end": 411.29,
+        "speaker": "C",
+        "text": "a",
+        "index": 883,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 411.29,
+        "end": 411.39,
+        "speaker": "C",
+        "text": "bit",
+        "index": 884,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 411.39,
+        "end": 411.91,
+        "speaker": "C",
+        "text": "impractical",
+        "index": 885,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 411.91,
+        "end": 412.07,
+        "speaker": "C",
+        "text": "to",
+        "index": 886,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 412.07,
+        "end": 412.31,
+        "speaker": "C",
+        "text": "have",
+        "index": 887,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 412.31,
+        "end": 412.68,
+        "speaker": "C",
+        "text": "just",
+        "index": 888,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 412.68,
+        "end": 412.88,
+        "speaker": "C",
+        "text": "voice",
+        "index": 889,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 412.88,
+        "end": 413.32,
+        "speaker": "C",
+        "text": "recognition",
+        "index": 890,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 413.32,
+        "end": 413.42,
+        "speaker": "C",
+        "text": "by",
+        "index": 891,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 413.42,
+        "end": 414.18,
+        "speaker": "C",
+        "text": "itself",
+        "index": 892,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 414.18,
+        "end": 414.32,
+        "speaker": "C",
+        "text": "So",
+        "index": 894,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 414.32,
+        "end": 414.42,
+        "speaker": "C",
+        "text": "you",
+        "index": 895,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 414.42,
+        "end": 414.54,
+        "speaker": "C",
+        "text": "can",
+        "index": 896,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 414.54,
+        "end": 414.68,
+        "speaker": "C",
+        "text": "have",
+        "index": 897,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 414.68,
+        "end": 414.92,
+        "speaker": "C",
+        "text": "voice",
+        "index": 898,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 414.92,
+        "end": 415.58,
+        "speaker": "C",
+        "text": "recognition",
+        "index": 899,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 415.58,
+        "end": 416.11,
+        "speaker": "C",
+        "text": "and",
+        "index": 900,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 416.11,
+        "end": 416.18,
+        "speaker": "C",
+        "text": "a",
+        "index": 901,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 416.18,
+        "end": 416.48,
+        "speaker": "C",
+        "text": "regular",
+        "index": 902,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 416.48,
+        "end": 418.02,
+        "speaker": "C",
+        "text": "remote",
+        "index": 903,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 418.02,
+        "end": 418.16,
+        "speaker": "C",
+        "text": "But",
+        "index": 905,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 418.16,
+        "end": 418.54,
+        "speaker": "C",
+        "text": "imagine",
+        "index": 906,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 418.54,
+        "end": 418.64,
+        "speaker": "C",
+        "text": "you",
+        "index": 907,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 418.64,
+        "end": 418.81,
+        "speaker": "C",
+        "text": "got",
+        "index": 908,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 418.81,
+        "end": 418.94,
+        "speaker": "C",
+        "text": "rid",
+        "index": 909,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 418.94,
+        "end": 419.03,
+        "speaker": "C",
+        "text": "of",
+        "index": 910,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 419.03,
+        "end": 419.12,
+        "speaker": "C",
+        "text": "the",
+        "index": 911,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 419.12,
+        "end": 419.39,
+        "speaker": "C",
+        "text": "regular",
+        "index": 912,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 419.39,
+        "end": 419.7,
+        "speaker": "C",
+        "text": "remote",
+        "index": 913,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 419.7,
+        "end": 420.74,
+        "speaker": "C",
+        "text": "part",
+        "index": 914,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 420.74,
+        "end": 421.29,
+        "speaker": "C",
+        "text": "then",
+        "index": 916,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 421.29,
+        "end": 421.45,
+        "speaker": "C",
+        "text": "you",
+        "index": 917,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 421.45,
+        "end": 421.55,
+        "speaker": "C",
+        "text": "can",
+        "index": 918,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 421.55,
+        "end": 422.52,
+        "speaker": "C",
+        "text": "design",
+        "index": 919,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 422.52,
+        "end": 422.61,
+        "speaker": "C",
+        "text": "the",
+        "index": 920,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 422.61,
+        "end": 422.9,
+        "speaker": "C",
+        "text": "remote",
+        "index": 921,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 422.9,
+        "end": 422.99,
+        "speaker": "C",
+        "text": "to",
+        "index": 922,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 422.99,
+        "end": 423.21,
+        "speaker": "C",
+        "text": "look",
+        "index": 923,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 423.21,
+        "end": 423.45,
+        "speaker": "C",
+        "text": "any",
+        "index": 924,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 423.45,
+        "end": 423.67,
+        "speaker": "C",
+        "text": "way",
+        "index": 925,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 423.67,
+        "end": 423.78,
+        "speaker": "C",
+        "text": "you",
+        "index": 926,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 423.78,
+        "end": 424.03,
+        "speaker": "C",
+        "text": "want",
+        "index": 927,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 424.03,
+        "end": 424.13,
+        "speaker": "C",
+        "text": "it",
+        "index": 928,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 424.13,
+        "end": 424.34,
+        "speaker": "C",
+        "text": "to",
+        "index": 929,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 424.34,
+        "end": 424.61,
+        "speaker": "C",
+        "text": "look",
+        "index": 930,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 424.61,
+        "end": 424.88,
+        "speaker": "C",
+        "text": "because",
+        "index": 932,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 424.88,
+        "end": 424.97,
+        "speaker": "C",
+        "text": "there",
+        "index": 933,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 424.97,
+        "end": 425.0,
+        "speaker": "C",
+        "text": "are",
+        "index": 934,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 425.0,
+        "end": 425.14,
+        "speaker": "C",
+        "text": "no",
+        "index": 935,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 425.14,
+        "end": 425.77,
+        "speaker": "C",
+        "text": "restrictions",
+        "index": 936,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 425.77,
+        "end": 426.16,
+        "speaker": "C",
+        "text": "on",
+        "index": 937,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 426.16,
+        "end": 426.75,
+        "speaker": "C",
+        "text": "physical",
+        "index": 938,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 426.75,
+        "end": 427.85,
+        "speaker": "C",
+        "text": "size",
+        "index": 939,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 427.85,
+        "end": 428.22,
+        "speaker": "C",
+        "text": "or",
+        "index": 941,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 428.22,
+        "end": 429.26,
+        "speaker": "C",
+        "text": "shape",
+        "index": 942,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 429.26,
+        "end": 429.66,
+        "speaker": "C",
+        "text": "it",
+        "index": 944,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 429.66,
+        "end": 429.79,
+        "speaker": "C",
+        "text": "it",
+        "index": 945,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 429.79,
+        "end": 429.92,
+        "speaker": "C",
+        "text": "could",
+        "index": 946,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 429.92,
+        "end": 430.09,
+        "speaker": "C",
+        "text": "be",
+        "index": 947,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 430.09,
+        "end": 430.25,
+        "speaker": "C",
+        "text": "as",
+        "index": 948,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 430.25,
+        "end": 430.73,
+        "speaker": "C",
+        "text": "fancy",
+        "index": 949,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 430.73,
+        "end": 430.84,
+        "speaker": "C",
+        "text": "as",
+        "index": 950,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 430.84,
+        "end": 430.93,
+        "speaker": "C",
+        "text": "you",
+        "index": 951,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 430.93,
+        "end": 431.12,
+        "speaker": "C",
+        "text": "want",
+        "index": 952,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 431.12,
+        "end": 431.21,
+        "speaker": "C",
+        "text": "it",
+        "index": 953,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 431.21,
+        "end": 431.35,
+        "speaker": "C",
+        "text": "to",
+        "index": 954,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 431.35,
+        "end": 431.57,
+        "speaker": "C",
+        "text": "be",
+        "index": 955,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 431.57,
+        "end": 431.63,
+        "speaker": "C",
+        "text": "you",
+        "index": 957,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 431.63,
+        "end": 431.74,
+        "speaker": "C",
+        "text": "know",
+        "index": 958,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 431.74,
+        "end": 431.83,
+        "speaker": "C",
+        "text": "it",
+        "index": 960,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 431.83,
+        "end": 431.93,
+        "speaker": "C",
+        "text": "could",
+        "index": 961,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 431.93,
+        "end": 432.04,
+        "speaker": "C",
+        "text": "be",
+        "index": 962,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 432.04,
+        "end": 432.21,
+        "speaker": "C",
+        "text": "like",
+        "index": 963,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 432.21,
+        "end": 432.29,
+        "speaker": "C",
+        "text": "a",
+        "index": 964,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 432.29,
+        "end": 433.06,
+        "speaker": "C",
+        "text": "lollipop",
+        "index": 965,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 433.06,
+        "end": 433.09,
+        "speaker": "C",
+        "text": "or",
+        "index": 966,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 433.09,
+        "end": 433.3,
+        "speaker": "C",
+        "text": "something",
+        "index": 967,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 433.3,
+        "end": 433.45,
+        "speaker": "C",
+        "text": "like",
+        "index": 968,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 433.45,
+        "end": 433.61,
+        "speaker": "C",
+        "text": "that",
+        "index": 969,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 433.61,
+        "end": 433.9,
+        "speaker": "C",
+        "text": "something",
+        "index": 971,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 433.9,
+        "end": 434.25,
+        "speaker": "C",
+        "text": "weird",
+        "index": 972,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 434.25,
+        "end": 434.46,
+        "speaker": "C",
+        "text": "like",
+        "index": 973,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 434.46,
+        "end": 435.33,
+        "speaker": "C",
+        "text": "that",
+        "index": 974,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 435.33,
+        "end": 435.49,
+        "speaker": "C",
+        "text": "As",
+        "index": 976,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 435.49,
+        "end": 435.66,
+        "speaker": "C",
+        "text": "long",
+        "index": 977,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 435.66,
+        "end": 435.79,
+        "speaker": "C",
+        "text": "as",
+        "index": 978,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 435.79,
+        "end": 435.86,
+        "speaker": "C",
+        "text": "the",
+        "index": 979,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 435.86,
+        "end": 436.14,
+        "speaker": "C",
+        "text": "voice",
+        "index": 980,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 436.14,
+        "end": 436.66,
+        "speaker": "C",
+        "text": "recognition",
+        "index": 981,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 436.66,
+        "end": 436.98,
+        "speaker": "C",
+        "text": "stuff",
+        "index": 982,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 436.98,
+        "end": 437.43,
+        "speaker": "C",
+        "text": "works",
+        "index": 983,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 437.43,
+        "end": 437.77,
+        "speaker": "C",
+        "text": "that's",
+        "index": 985,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 437.77,
+        "end": 438.01,
+        "speaker": "C",
+        "text": "that's",
+        "index": 986,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 438.01,
+        "end": 438.42,
+        "speaker": "C",
+        "text": "fine",
+        "index": 987,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 438.88,
+        "end": 439.36,
+        "speaker": "B",
+        "text": "Okay",
+        "index": 370,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      }
+    ],
+    "rawReferenceText": "and the remote's only trained for you it's a bit impractical to have just voice recognition by itself So you can have voice recognition and a regular remote But imagine you got rid of the regular remote part then you can design the remote to look any way you want it to look because there are no restrictions on physical size or shape it it could be as fancy as you want it to be you know it could be like a lollipop or something like that something weird like that As long as the voice recognition stuff works that's that's fine Okay",
+    "speakers": [
+      "C",
+      "B"
+    ],
+    "turns": [
+      "C",
+      "B"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 5,
+    "addedNoise": false
+  },
+  {
+    "id": "ES2003b-seq-010",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-010.wav",
+    "wavSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+    "pcmSha256": "e087cf4e22224bfc9c3ad810c56bd3595ad7343c30b6d53fc5c1ce00d445b32f",
+    "frames": 475520,
+    "audioSeconds": 29.72,
+    "language": "English",
+    "role": "validation",
+    "corpus": "AMI",
+    "sourceStartFrame": 13854400,
+    "sourceEndFrame": 14329920,
+    "sourceAudioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "referenceEvents": [
+      {
+        "start": 865.9,
+        "end": 866.18,
+        "speaker": "C",
+        "text": "yeah",
+        "index": 1337,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 866.18,
+        "end": 866.49,
+        "speaker": "C",
+        "text": "and",
+        "index": 1339,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 866.49,
+        "end": 866.61,
+        "speaker": "C",
+        "text": "you",
+        "index": 1340,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 866.61,
+        "end": 866.79,
+        "speaker": "C",
+        "text": "just",
+        "index": 1341,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 866.79,
+        "end": 867.04,
+        "speaker": "C",
+        "text": "click",
+        "index": 1342,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 867.04,
+        "end": 867.32,
+        "speaker": "C",
+        "text": "file",
+        "index": 1343,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 867.32,
+        "end": 867.55,
+        "speaker": "C",
+        "text": "save",
+        "index": 1344,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 867.55,
+        "end": 867.86,
+        "speaker": "C",
+        "text": "as",
+        "index": 1345,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 876.52,
+        "end": 876.62,
+        "speaker": "D",
+        "text": "Oh",
+        "index": 95,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 876.62,
+        "end": 877.77,
+        "speaker": "D",
+        "text": "right",
+        "index": 96,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 877.77,
+        "end": 877.969,
+        "speaker": "D",
+        "text": "",
+        "index": 98,
+        "unscorable": false,
+        "annotationElement": "vocalsound",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 879.22,
+        "end": 879.56,
+        "speaker": "B",
+        "text": "Okay",
+        "index": 524,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 886.28,
+        "end": 887.36,
+        "speaker": "D",
+        "text": "Uh",
+        "index": 99,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 887.36,
+        "end": 887.48,
+        "speaker": "D",
+        "text": "right",
+        "index": 101,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 887.48,
+        "end": 887.6,
+        "speaker": "D",
+        "text": "I'm",
+        "index": 102,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 887.6,
+        "end": 888.04,
+        "speaker": "D",
+        "text": "responsible",
+        "index": 103,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 888.04,
+        "end": 888.28,
+        "speaker": "D",
+        "text": "for",
+        "index": 104,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 888.28,
+        "end": 888.55,
+        "speaker": "D",
+        "text": "working",
+        "index": 105,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 888.55,
+        "end": 889.5,
+        "speaker": "D",
+        "text": "design",
+        "index": 106,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 889.5,
+        "end": 889.79,
+        "speaker": "D",
+        "text": "uh",
+        "index": 108,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 889.79,
+        "end": 890.07,
+        "speaker": "D",
+        "text": "this",
+        "index": 110,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 890.07,
+        "end": 890.6,
+        "speaker": "D",
+        "text": "is",
+        "index": 111,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 890.6,
+        "end": 891.08,
+        "speaker": "D",
+        "text": "basically",
+        "index": 112,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 891.08,
+        "end": 891.86,
+        "speaker": "D",
+        "text": "the",
+        "index": 113,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 891.86,
+        "end": 892.46,
+        "speaker": "D",
+        "text": "inside",
+        "index": 114,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 892.46,
+        "end": 892.7,
+        "speaker": "D",
+        "text": "going",
+        "index": 115,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 892.7,
+        "end": 892.88,
+        "speaker": "D",
+        "text": "on",
+        "index": 116,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 892.88,
+        "end": 893.04,
+        "speaker": "D",
+        "text": "of",
+        "index": 117,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 893.04,
+        "end": 893.39,
+        "speaker": "D",
+        "text": "the",
+        "index": 118,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 894.66,
+        "end": 894.91,
+        "speaker": "D",
+        "text": "the",
+        "index": 119,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 894.91,
+        "end": 895.37,
+        "speaker": "D",
+        "text": "uh",
+        "index": 120,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 895.37,
+        "end": 895.62,
+        "speaker": "D",
+        "text": "remote",
+        "index": 121,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      }
+    ],
+    "rawReferenceText": "yeah and you just click file save as Oh right Okay Uh right I'm responsible for working design uh this is basically the inside going on of the the uh remote",
+    "speakers": [
+      "C",
+      "D",
+      "B"
+    ],
+    "turns": [
+      "C",
+      "D",
+      "B",
+      "D"
+    ],
+    "speakerReturn": true,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 10,
+    "addedNoise": false
+  },
+  {
+    "id": "ES2003b-seq-016",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-016.wav",
+    "wavSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+    "pcmSha256": "7e8c174955670b930e9b657a8fdcbea730374845ac6668f4a916ddc867ee7f6e",
+    "frames": 473280,
+    "audioSeconds": 29.58,
+    "language": "English",
+    "role": "validation",
+    "corpus": "AMI",
+    "sourceStartFrame": 23521760,
+    "sourceEndFrame": 23995040,
+    "sourceAudioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "referenceEvents": [
+      {
+        "start": 1470.11,
+        "end": 1470.52,
+        "speaker": "B",
+        "text": "So",
+        "index": 1286,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1470.52,
+        "end": 1470.57,
+        "speaker": "B",
+        "text": "I",
+        "index": 1287,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1470.57,
+        "end": 1470.74,
+        "speaker": "B",
+        "text": "can",
+        "index": 1288,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1470.74,
+        "end": 1471.2,
+        "speaker": "B",
+        "text": "understand",
+        "index": 1289,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1471.2,
+        "end": 1471.31,
+        "speaker": "B",
+        "text": "your",
+        "index": 1290,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1471.31,
+        "end": 1471.91,
+        "speaker": "B",
+        "text": "point",
+        "index": 1291,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1471.91,
+        "end": 1472.26,
+        "speaker": "B",
+        "text": "and",
+        "index": 1293,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1472.26,
+        "end": 1472.34,
+        "speaker": "B",
+        "text": "I",
+        "index": 1294,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1472.34,
+        "end": 1472.54,
+        "speaker": "B",
+        "text": "would",
+        "index": 1295,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1472.54,
+        "end": 1472.8,
+        "speaker": "B",
+        "text": "agree",
+        "index": 1296,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1472.8,
+        "end": 1472.95,
+        "speaker": "B",
+        "text": "with",
+        "index": 1297,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1472.95,
+        "end": 1473.37,
+        "speaker": "B",
+        "text": "you",
+        "index": 1298,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1473.37,
+        "end": 1474.95,
+        "speaker": "B",
+        "text": "but",
+        "index": 1300,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1474.95,
+        "end": 1475.1,
+        "speaker": "B",
+        "text": "this",
+        "index": 1301,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1475.1,
+        "end": 1475.21,
+        "speaker": "B",
+        "text": "is",
+        "index": 1302,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1475.21,
+        "end": 1475.33,
+        "speaker": "B",
+        "text": "our",
+        "index": 1303,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1475.33,
+        "end": 1475.66,
+        "speaker": "B",
+        "text": "design",
+        "index": 1304,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1475.66,
+        "end": 1475.97,
+        "speaker": "B",
+        "text": "spec",
+        "index": 1305,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1475.97,
+        "end": 1476.1,
+        "speaker": "B",
+        "text": "for",
+        "index": 1306,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1476.1,
+        "end": 1477.81,
+        "speaker": "B",
+        "text": "now",
+        "index": 1307,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1477.81,
+        "end": 1478.03,
+        "speaker": "B",
+        "text": "'Fraid",
+        "index": 1309,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1478.03,
+        "end": 1478.14,
+        "speaker": "B",
+        "text": "to",
+        "index": 1310,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1478.14,
+        "end": 1479.29,
+        "speaker": "B",
+        "text": "say",
+        "index": 1311,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1479.29,
+        "end": 1479.93,
+        "speaker": "B",
+        "text": "Um",
+        "index": 1313,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1479.93,
+        "end": 1479.984,
+        "speaker": "B",
+        "text": "",
+        "index": 1314,
+        "unscorable": false,
+        "annotationElement": "disfmarker",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1480.82,
+        "end": 1481.09,
+        "speaker": "A",
+        "text": "Does",
+        "index": 1185,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1481.09,
+        "end": 1481.51,
+        "speaker": "A",
+        "text": "that",
+        "index": 1186,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1481.51,
+        "end": 1482.2,
+        "speaker": "A",
+        "text": "um",
+        "index": 1187,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1482.2,
+        "end": 1482.33,
+        "speaker": "A",
+        "text": "would",
+        "index": 1188,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1482.33,
+        "end": 1482.52,
+        "speaker": "A",
+        "text": "that",
+        "index": 1189,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1482.52,
+        "end": 1483.05,
+        "speaker": "A",
+        "text": "include",
+        "index": 1190,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1483.05,
+        "end": 1483.37,
+        "speaker": "A",
+        "text": "um",
+        "index": 1191,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1483.37,
+        "end": 1483.71,
+        "speaker": "A",
+        "text": "access",
+        "index": 1192,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1483.71,
+        "end": 1483.84,
+        "speaker": "A",
+        "text": "to",
+        "index": 1193,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1483.84,
+        "end": 1485.15,
+        "speaker": "A",
+        "text": "say",
+        "index": 1194,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1485.15,
+        "end": 1485.69,
+        "speaker": "A",
+        "text": "interactive",
+        "index": 1196,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1485.69,
+        "end": 1486.07,
+        "speaker": "A",
+        "text": "functions",
+        "index": 1197,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1486.07,
+        "end": 1486.19,
+        "speaker": "A",
+        "text": "on",
+        "index": 1198,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1486.19,
+        "end": 1486.62,
+        "speaker": "A",
+        "text": "digital",
+        "index": 1199,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1486.62,
+        "end": 1486.68,
+        "speaker": "A",
+        "text": "or",
+        "index": 1200,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1486.68,
+        "end": 1487.22,
+        "speaker": "A",
+        "text": "cable",
+        "index": 1201,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1487.42,
+        "end": 1487.88,
+        "speaker": "C",
+        "text": "Yeah",
+        "index": 1478,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 1489.5,
+        "end": 1489.64,
+        "speaker": "B",
+        "text": "I",
+        "index": 1315,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1489.64,
+        "end": 1489.87,
+        "speaker": "B",
+        "text": "would",
+        "index": 1316,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1489.87,
+        "end": 1490.51,
+        "speaker": "B",
+        "text": "say",
+        "index": 1317,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1490.51,
+        "end": 1490.85,
+        "speaker": "B",
+        "text": "so",
+        "index": 1318,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1490.85,
+        "end": 1491.18,
+        "speaker": "B",
+        "text": "yes",
+        "index": 1320,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1491.18,
+        "end": 1491.72,
+        "speaker": "B",
+        "text": "because",
+        "index": 1322,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1491.72,
+        "end": 1492.03,
+        "speaker": "B",
+        "text": "then",
+        "index": 1323,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1492.03,
+        "end": 1492.12,
+        "speaker": "B",
+        "text": "we",
+        "index": 1324,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1492.12,
+        "end": 1492.35,
+        "speaker": "B",
+        "text": "have",
+        "index": 1325,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1492.35,
+        "end": 1492.44,
+        "speaker": "B",
+        "text": "to",
+        "index": 1326,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1492.44,
+        "end": 1492.56,
+        "speaker": "B",
+        "text": "be",
+        "index": 1327,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1492.56,
+        "end": 1492.72,
+        "speaker": "B",
+        "text": "able",
+        "index": 1328,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1492.72,
+        "end": 1492.83,
+        "speaker": "B",
+        "text": "to",
+        "index": 1329,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1492.83,
+        "end": 1493.23,
+        "speaker": "B",
+        "text": "control",
+        "index": 1330,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1493.23,
+        "end": 1493.34,
+        "speaker": "B",
+        "text": "the",
+        "index": 1331,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1493.34,
+        "end": 1493.67,
+        "speaker": "B",
+        "text": "remote",
+        "index": 1332,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1493.67,
+        "end": 1494.48,
+        "speaker": "B",
+        "text": "boxes",
+        "index": 1333,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1494.48,
+        "end": 1494.8,
+        "speaker": "B",
+        "text": "and",
+        "index": 1335,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1494.8,
+        "end": 1494.98,
+        "speaker": "B",
+        "text": "that",
+        "index": 1336,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1494.98,
+        "end": 1495.07,
+        "speaker": "B",
+        "text": "is",
+        "index": 1337,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1495.07,
+        "end": 1495.14,
+        "speaker": "B",
+        "text": "a",
+        "index": 1338,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1495.14,
+        "end": 1495.53,
+        "speaker": "B",
+        "text": "separate",
+        "index": 1339,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1495.53,
+        "end": 1497.12,
+        "speaker": "B",
+        "text": "unit",
+        "index": 1340,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1497.12,
+        "end": 1497.81,
+        "speaker": "B",
+        "text": "Um",
+        "index": 1342,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1497.81,
+        "end": 1497.96,
+        "speaker": "B",
+        "text": "I",
+        "index": 1343,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1497.96,
+        "end": 1498.24,
+        "speaker": "B",
+        "text": "think",
+        "index": 1344,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1498.24,
+        "end": 1498.38,
+        "speaker": "B",
+        "text": "that",
+        "index": 1345,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1498.38,
+        "end": 1498.74,
+        "speaker": "B",
+        "text": "it",
+        "index": 1346,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1498.74,
+        "end": 1498.83,
+        "speaker": "B",
+        "text": "I",
+        "index": 1348,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1498.83,
+        "end": 1498.97,
+        "speaker": "B",
+        "text": "would",
+        "index": 1349,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1498.97,
+        "end": 1499.17,
+        "speaker": "B",
+        "text": "say",
+        "index": 1350,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1499.17,
+        "end": 1499.33,
+        "speaker": "B",
+        "text": "that",
+        "index": 1351,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1499.33,
+        "end": 1499.4,
+        "speaker": "B",
+        "text": "the",
+        "index": 1352,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1499.4,
+        "end": 1499.69,
+        "speaker": "B",
+        "text": "design",
+        "index": 1353,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      }
+    ],
+    "rawReferenceText": "So I can understand your point and I would agree with you but this is our design spec for now 'Fraid to say Um Does that um would that include um access to say interactive functions on digital or cable Yeah I would say so yes because then we have to be able to control the remote boxes and that is a separate unit Um I think that it I would say that the design",
+    "speakers": [
+      "B",
+      "A",
+      "C"
+    ],
+    "turns": [
+      "B",
+      "A",
+      "C",
+      "B"
+    ],
+    "speakerReturn": true,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 16,
+    "addedNoise": false
+  },
+  {
+    "id": "ES2003b-seq-021",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-021.wav",
+    "wavSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+    "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f",
+    "frames": 203840,
+    "audioSeconds": 12.74,
+    "language": "English",
+    "role": "validation",
+    "corpus": "AMI",
+    "sourceStartFrame": 30005600,
+    "sourceEndFrame": 30209440,
+    "sourceAudioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "referenceEvents": [
+      {
+        "start": 1875.35,
+        "end": 1875.56,
+        "speaker": "A",
+        "text": "Plus",
+        "index": 1454,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1875.56,
+        "end": 1875.75,
+        "speaker": "A",
+        "text": "that's",
+        "index": 1455,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1875.75,
+        "end": 1875.78,
+        "speaker": "A",
+        "text": "a",
+        "index": 1456,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1875.78,
+        "end": 1876.04,
+        "speaker": "A",
+        "text": "nice",
+        "index": 1457,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1876.04,
+        "end": 1876.12,
+        "speaker": "A",
+        "text": "wee",
+        "index": 1458,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1876.12,
+        "end": 1876.52,
+        "speaker": "A",
+        "text": "design",
+        "index": 1459,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1876.52,
+        "end": 1876.96,
+        "speaker": "A",
+        "text": "touch",
+        "index": 1460,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.A.words.xml"
+      },
+      {
+        "start": 1877.24,
+        "end": 1877.53,
+        "speaker": "C",
+        "text": "Yeah",
+        "index": 1781,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.C.words.xml"
+      },
+      {
+        "start": 1877.86,
+        "end": 1878.11,
+        "speaker": "B",
+        "text": "So",
+        "index": 2120,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1878.11,
+        "end": 1878.22,
+        "speaker": "B",
+        "text": "by",
+        "index": 2121,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1878.22,
+        "end": 1878.34,
+        "speaker": "B",
+        "text": "the",
+        "index": 2122,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1878.34,
+        "end": 1878.65,
+        "speaker": "B",
+        "text": "sounds",
+        "index": 2123,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1878.65,
+        "end": 1878.71,
+        "speaker": "B",
+        "text": "of",
+        "index": 2124,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1878.71,
+        "end": 1878.84,
+        "speaker": "B",
+        "text": "it",
+        "index": 2125,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1878.84,
+        "end": 1879.03,
+        "speaker": "B",
+        "text": "with",
+        "index": 2127,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1879.03,
+        "end": 1879.19,
+        "speaker": "B",
+        "text": "what",
+        "index": 2128,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1879.19,
+        "end": 1879.31,
+        "speaker": "B",
+        "text": "we're",
+        "index": 2129,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1879.31,
+        "end": 1879.79,
+        "speaker": "B",
+        "text": "suggesting",
+        "index": 2130,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1879.79,
+        "end": 1880.0,
+        "speaker": "B",
+        "text": "so",
+        "index": 2131,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1880.0,
+        "end": 1880.38,
+        "speaker": "B",
+        "text": "far",
+        "index": 2132,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1880.38,
+        "end": 1882.13,
+        "speaker": "B",
+        "text": "your",
+        "index": 2134,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1882.13,
+        "end": 1883.06,
+        "speaker": "B",
+        "text": "design",
+        "index": 2135,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1883.06,
+        "end": 1883.54,
+        "speaker": "B",
+        "text": "um",
+        "index": 2136,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1883.54,
+        "end": 1883.81,
+        "speaker": "B",
+        "text": "the",
+        "index": 2137,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1883.81,
+        "end": 1884.11,
+        "speaker": "B",
+        "text": "user",
+        "index": 2138,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1884.11,
+        "end": 1884.58,
+        "speaker": "B",
+        "text": "interface",
+        "index": 2139,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1884.58,
+        "end": 1884.66,
+        "speaker": "B",
+        "text": "is",
+        "index": 2140,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1884.66,
+        "end": 1884.89,
+        "speaker": "B",
+        "text": "still",
+        "index": 2141,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1884.89,
+        "end": 1885.12,
+        "speaker": "B",
+        "text": "quite",
+        "index": 2142,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1885.12,
+        "end": 1885.44,
+        "speaker": "B",
+        "text": "open",
+        "index": 2143,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1885.44,
+        "end": 1885.55,
+        "speaker": "B",
+        "text": "you",
+        "index": 2145,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1885.55,
+        "end": 1885.68,
+        "speaker": "B",
+        "text": "could",
+        "index": 2146,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1885.68,
+        "end": 1885.82,
+        "speaker": "B",
+        "text": "go",
+        "index": 2147,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1885.82,
+        "end": 1885.97,
+        "speaker": "B",
+        "text": "for",
+        "index": 2148,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1885.97,
+        "end": 1886.22,
+        "speaker": "B",
+        "text": "quite",
+        "index": 2149,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1886.22,
+        "end": 1886.32,
+        "speaker": "B",
+        "text": "an",
+        "index": 2150,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1886.32,
+        "end": 1886.84,
+        "speaker": "B",
+        "text": "interesting",
+        "index": 2151,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 1886.84,
+        "end": 1888.09,
+        "speaker": "B",
+        "text": "design",
+        "index": 2152,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      }
+    ],
+    "rawReferenceText": "Plus that's a nice wee design touch Yeah So by the sounds of it with what we're suggesting so far your design um the user interface is still quite open you could go for quite an interesting design",
+    "speakers": [
+      "A",
+      "C",
+      "B"
+    ],
+    "turns": [
+      "A",
+      "C",
+      "B"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 21,
+    "addedNoise": false
+  },
+  {
+    "id": "ES2003b-seq-027",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-027.wav",
+    "wavSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+    "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+    "frames": 162401,
+    "audioSeconds": 10.1500625,
+    "language": "English",
+    "role": "validation",
+    "corpus": "AMI",
+    "sourceStartFrame": 32770080,
+    "sourceEndFrame": 32932481,
+    "sourceAudioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "referenceEvents": [
+      {
+        "start": 2048.13,
+        "end": 2048.32,
+        "speaker": "B",
+        "text": "I'm",
+        "index": 2493,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2048.32,
+        "end": 2048.74,
+        "speaker": "B",
+        "text": "pointing",
+        "index": 2494,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2048.74,
+        "end": 2048.87,
+        "speaker": "B",
+        "text": "at",
+        "index": 2495,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2048.87,
+        "end": 2048.98,
+        "speaker": "B",
+        "text": "my",
+        "index": 2496,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2048.98,
+        "end": 2049.72,
+        "speaker": "B",
+        "text": "laptop",
+        "index": 2497,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2049.72,
+        "end": 2049.88,
+        "speaker": "B",
+        "text": "what",
+        "index": 2499,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2049.88,
+        "end": 2050.14,
+        "speaker": "B",
+        "text": "in",
+        "index": 2500,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2050.14,
+        "end": 2051.2,
+        "speaker": "B",
+        "text": "God",
+        "index": 2501,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2051.2,
+        "end": 2051.44,
+        "speaker": "B",
+        "text": "",
+        "index": 2502,
+        "unscorable": false,
+        "annotationElement": "disfmarker",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2053.22,
+        "end": 2053.51,
+        "speaker": "B",
+        "text": "Real",
+        "index": 2503,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2053.51,
+        "end": 2055.0,
+        "speaker": "B",
+        "text": "reaction",
+        "index": 2504,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2055.0,
+        "end": 2055.17,
+        "speaker": "B",
+        "text": "and",
+        "index": 2506,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2055.17,
+        "end": 2055.62,
+        "speaker": "B",
+        "text": "such",
+        "index": 2507,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2055.62,
+        "end": 2055.99,
+        "speaker": "B",
+        "text": "So",
+        "index": 2509,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2055.99,
+        "end": 2056.55,
+        "speaker": "B",
+        "text": "um",
+        "index": 2510,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2056.55,
+        "end": 2056.608,
+        "speaker": "B",
+        "text": "",
+        "index": 2511,
+        "unscorable": false,
+        "annotationElement": "disfmarker",
+        "annotationFile": "words/ES2003b.B.words.xml"
+      },
+      {
+        "start": 2057.23,
+        "end": 2057.3,
+        "speaker": "D",
+        "text": "The",
+        "index": 633,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 2057.3,
+        "end": 2057.58,
+        "speaker": "D",
+        "text": "slogan",
+        "index": 634,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      },
+      {
+        "start": 2057.58,
+        "end": 2058.28,
+        "speaker": "D",
+        "text": "is",
+        "index": 635,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/ES2003b.D.words.xml"
+      }
+    ],
+    "rawReferenceText": "I'm pointing at my laptop what in God Real reaction and such So um The slogan is",
+    "speakers": [
+      "B",
+      "D"
+    ],
+    "turns": [
+      "B",
+      "D"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 27,
+    "addedNoise": false
+  },
+  {
+    "id": "EN2001a-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\EN2001a-seq-000.wav",
+    "wavSha256": "bd455ca6c286c2f7aa96ffb23086716424e7778159f3531a916dd5a3fd36e876",
+    "pcmSha256": "4c120d10ec5695b80b5dbf2b6579c251d408716b50fbe804d21722ac8ff6b3f7",
+    "frames": 203360,
+    "audioSeconds": 12.71,
+    "language": "English",
+    "role": "validation",
+    "corpus": "AMI",
+    "sourceStartFrame": 87840,
+    "sourceEndFrame": 291200,
+    "sourceAudioSha256": "20cf2243fff84361cc5c755529350d23c544580d58f00959e71945d8fdc8a8f7",
+    "referenceEvents": [
+      {
+        "start": 5.57,
+        "end": 5.94,
+        "speaker": "A",
+        "text": "Okay",
+        "index": 0,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 11.09,
+        "end": 11.25,
+        "speaker": "A",
+        "text": "Does",
+        "index": 2,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 11.25,
+        "end": 11.5,
+        "speaker": "A",
+        "text": "anyone",
+        "index": 3,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 11.5,
+        "end": 11.65,
+        "speaker": "A",
+        "text": "want",
+        "index": 4,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 11.65,
+        "end": 11.71,
+        "speaker": "A",
+        "text": "to",
+        "index": 5,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 11.71,
+        "end": 12.15,
+        "speaker": "A",
+        "text": "see",
+        "index": 6,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 12.15,
+        "end": 12.42,
+        "speaker": "A",
+        "text": "uh",
+        "index": 7,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 12.42,
+        "end": 12.94,
+        "speaker": "A",
+        "text": "Steve's",
+        "index": 8,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 12.94,
+        "end": 13.5,
+        "speaker": "A",
+        "text": "feedback",
+        "index": 9,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 13.5,
+        "end": 13.71,
+        "speaker": "A",
+        "text": "from",
+        "index": 10,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 13.71,
+        "end": 14.73,
+        "speaker": "A",
+        "text": "the",
+        "index": 11,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 14.73,
+        "end": 15.53,
+        "speaker": "A",
+        "text": "specification",
+        "index": 12,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 17.08,
+        "end": 17.34,
+        "speaker": "D",
+        "text": "I",
+        "index": 0,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 17.34,
+        "end": 17.47,
+        "speaker": "D",
+        "text": "I",
+        "index": 1,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 17.47,
+        "end": 17.92,
+        "speaker": "D",
+        "text": "dry-read",
+        "index": 2,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 17.92,
+        "end": 18.13,
+        "speaker": "D",
+        "text": "it",
+        "index": 3,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 18.13,
+        "end": 18.2,
+        "speaker": "D",
+        "text": "the",
+        "index": 4,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      }
+    ],
+    "rawReferenceText": "Okay Does anyone want to see uh Steve's feedback from the specification I I dry-read it the",
+    "speakers": [
+      "A",
+      "D"
+    ],
+    "turns": [
+      "A",
+      "D"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 0,
+    "addedNoise": false
+  },
+  {
+    "id": "EN2001a-seq-015",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\EN2001a-seq-015.wav",
+    "wavSha256": "5cc045f334c74ea7aea26ca8ae9795dce0403cf2c4dad9fcf4c3378f81c3cc00",
+    "pcmSha256": "9c7be20b2bc0a715426e943f3327235e34e873085a947caffad22cd724f048b3",
+    "frames": 475520,
+    "audioSeconds": 29.72,
+    "language": "English",
+    "role": "validation",
+    "corpus": "AMI",
+    "sourceStartFrame": 13008800,
+    "sourceEndFrame": 13484320,
+    "sourceAudioSha256": "20cf2243fff84361cc5c755529350d23c544580d58f00959e71945d8fdc8a8f7",
+    "referenceEvents": [
+      {
+        "start": 813.05,
+        "end": 813.26,
+        "speaker": "C",
+        "text": "what",
+        "index": 39,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 813.26,
+        "end": 813.54,
+        "speaker": "C",
+        "text": "it",
+        "index": 40,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 813.54,
+        "end": 813.66,
+        "speaker": "C",
+        "text": "did",
+        "index": 42,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 813.66,
+        "end": 813.75,
+        "speaker": "C",
+        "text": "you",
+        "index": 43,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 813.75,
+        "end": 813.92,
+        "speaker": "C",
+        "text": "want",
+        "index": 44,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 813.92,
+        "end": 814.01,
+        "speaker": "C",
+        "text": "to",
+        "index": 45,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 814.01,
+        "end": 814.12,
+        "speaker": "C",
+        "text": "do",
+        "index": 46,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 814.12,
+        "end": 814.26,
+        "speaker": "C",
+        "text": "it",
+        "index": 47,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 814.26,
+        "end": 814.37,
+        "speaker": "C",
+        "text": "i",
+        "index": 49,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 814.37,
+        "end": 814.49,
+        "speaker": "C",
+        "text": "you",
+        "index": 50,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 814.49,
+        "end": 815.33,
+        "speaker": "C",
+        "text": "just",
+        "index": 51,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 815.33,
+        "end": 815.59,
+        "speaker": "C",
+        "text": "wanted",
+        "index": 52,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 815.59,
+        "end": 815.72,
+        "speaker": "C",
+        "text": "to",
+        "index": 53,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 815.72,
+        "end": 816.31,
+        "speaker": "C",
+        "text": "assign",
+        "index": 54,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 822.9,
+        "end": 823.29,
+        "speaker": "C",
+        "text": "Uh",
+        "index": 56,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 823.29,
+        "end": 823.49,
+        "speaker": "C",
+        "text": "I",
+        "index": 57,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 823.49,
+        "end": 823.74,
+        "speaker": "C",
+        "text": "thought",
+        "index": 58,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 823.74,
+        "end": 824.0,
+        "speaker": "C",
+        "text": "about",
+        "index": 59,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 824.0,
+        "end": 824.36,
+        "speaker": "C",
+        "text": "words",
+        "index": 60,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 833.96,
+        "end": 834.38,
+        "speaker": "C",
+        "text": "Mm",
+        "index": 62,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 842.15,
+        "end": 842.69,
+        "speaker": "B",
+        "text": "Yeah",
+        "index": 312,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      }
+    ],
+    "rawReferenceText": "what it did you want to do it i you just wanted to assign Uh I thought about words Mm Yeah",
+    "speakers": [
+      "C",
+      "B"
+    ],
+    "turns": [
+      "C",
+      "B"
+    ],
+    "speakerReturn": false,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 15,
+    "addedNoise": false
+  },
+  {
+    "id": "EN2001a-seq-031",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\EN2001a-seq-031.wav",
+    "wavSha256": "14181a80a92e5ee5e4c38f70d7ca9ca02d121fd6a04c4ace42b3ab6b15a6bc93",
+    "pcmSha256": "2ad14e0b0063b18854d5b75b23fe572398ad06354a0a64a57dbf20b0ce364701",
+    "frames": 351840,
+    "audioSeconds": 21.99,
+    "language": "English",
+    "role": "validation",
+    "corpus": "AMI",
+    "sourceStartFrame": 36880160,
+    "sourceEndFrame": 37232000,
+    "sourceAudioSha256": "20cf2243fff84361cc5c755529350d23c544580d58f00959e71945d8fdc8a8f7",
+    "referenceEvents": [
+      {
+        "start": 2305.09,
+        "end": 2305.22,
+        "speaker": "D",
+        "text": "It",
+        "index": 1567,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2305.22,
+        "end": 2305.43,
+        "speaker": "D",
+        "text": "would",
+        "index": 1568,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2305.43,
+        "end": 2305.58,
+        "speaker": "D",
+        "text": "be",
+        "index": 1569,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2305.58,
+        "end": 2306.03,
+        "speaker": "D",
+        "text": "useful",
+        "index": 1570,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2306.03,
+        "end": 2306.16,
+        "speaker": "D",
+        "text": "to",
+        "index": 1571,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2306.16,
+        "end": 2306.94,
+        "speaker": "D",
+        "text": "know",
+        "index": 1572,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2306.94,
+        "end": 2307.44,
+        "speaker": "D",
+        "text": "how",
+        "index": 1573,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2307.44,
+        "end": 2307.79,
+        "speaker": "D",
+        "text": "everyone's",
+        "index": 1574,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2307.79,
+        "end": 2308.02,
+        "speaker": "D",
+        "text": "gonna",
+        "index": 1575,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2308.02,
+        "end": 2308.33,
+        "speaker": "D",
+        "text": "store",
+        "index": 1576,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2308.33,
+        "end": 2309.16,
+        "speaker": "D",
+        "text": "their",
+        "index": 1577,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2309.16,
+        "end": 2309.52,
+        "speaker": "D",
+        "text": "things",
+        "index": 1578,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2309.52,
+        "end": 2309.7,
+        "speaker": "D",
+        "text": "though",
+        "index": 1579,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2311.17,
+        "end": 2311.49,
+        "speaker": "A",
+        "text": "Hmm",
+        "index": 396,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 2315.51,
+        "end": 2315.88,
+        "speaker": "D",
+        "text": "Yeah",
+        "index": 1581,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2324.66,
+        "end": 2325.62,
+        "speaker": "D",
+        "text": "Yeah",
+        "index": 1583,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2325.62,
+        "end": 2325.74,
+        "speaker": "D",
+        "text": "Well",
+        "index": 1585,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2325.74,
+        "end": 2325.89,
+        "speaker": "D",
+        "text": "I've",
+        "index": 1586,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2325.89,
+        "end": 2326.12,
+        "speaker": "D",
+        "text": "got",
+        "index": 1587,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2326.12,
+        "end": 2326.33,
+        "speaker": "D",
+        "text": "like",
+        "index": 1588,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2326.33,
+        "end": 2326.44,
+        "speaker": "D",
+        "text": "a",
+        "index": 1589,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2326.44,
+        "end": 2326.68,
+        "speaker": "D",
+        "text": "few",
+        "index": 1590,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2326.68,
+        "end": 2327.0,
+        "speaker": "D",
+        "text": "hours",
+        "index": 1591,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      }
+    ],
+    "rawReferenceText": "It would be useful to know how everyone's gonna store their things though Hmm Yeah Yeah Well I've got like a few hours",
+    "speakers": [
+      "D",
+      "A"
+    ],
+    "turns": [
+      "D",
+      "A",
+      "D"
+    ],
+    "speakerReturn": true,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 31,
+    "addedNoise": false
+  },
+  {
+    "id": "EN2001a-seq-047",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\EN2001a-seq-047.wav",
+    "wavSha256": "7de4056094d20cdc15c6a4a8871bf25fd576d5772bedc3d2dc2a67fc742697e8",
+    "pcmSha256": "6445a10b64e1fd1294054a363ef16f6a3583e3e35166caafb65aee23547b82a4",
+    "frames": 286880,
+    "audioSeconds": 17.93,
+    "language": "English",
+    "role": "validation",
+    "corpus": "AMI",
+    "sourceStartFrame": 47460000,
+    "sourceEndFrame": 47746880,
+    "sourceAudioSha256": "20cf2243fff84361cc5c755529350d23c544580d58f00959e71945d8fdc8a8f7",
+    "referenceEvents": [
+      {
+        "start": 2966.25,
+        "end": 2966.37,
+        "speaker": "C",
+        "text": "you",
+        "index": 739,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2966.37,
+        "end": 2966.59,
+        "speaker": "C",
+        "text": "sure",
+        "index": 741,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2966.59,
+        "end": 2966.72,
+        "speaker": "C",
+        "text": "we",
+        "index": 743,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2966.72,
+        "end": 2966.89,
+        "speaker": "C",
+        "text": "could",
+        "index": 744,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2966.89,
+        "end": 2967.07,
+        "speaker": "C",
+        "text": "do",
+        "index": 745,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2967.07,
+        "end": 2967.27,
+        "speaker": "C",
+        "text": "that",
+        "index": 746,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2967.27,
+        "end": 2967.41,
+        "speaker": "C",
+        "text": "but",
+        "index": 748,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2967.41,
+        "end": 2967.48,
+        "speaker": "C",
+        "text": "I",
+        "index": 749,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2967.48,
+        "end": 2967.96,
+        "speaker": "C",
+        "text": "don't",
+        "index": 750,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2967.96,
+        "end": 2968.14,
+        "speaker": "C",
+        "text": "that",
+        "index": 751,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2968.14,
+        "end": 2968.4,
+        "speaker": "C",
+        "text": "makes",
+        "index": 752,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2968.4,
+        "end": 2969.37,
+        "speaker": "C",
+        "text": "sense",
+        "index": 753,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2969.55,
+        "end": 2969.72,
+        "speaker": "D",
+        "text": "'Cause",
+        "index": 1874,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2969.72,
+        "end": 2969.91,
+        "speaker": "D",
+        "text": "if",
+        "index": 1875,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2969.91,
+        "end": 2970.09,
+        "speaker": "D",
+        "text": "what",
+        "index": 1876,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2970.09,
+        "end": 2970.23,
+        "speaker": "D",
+        "text": "we're",
+        "index": 1877,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2970.23,
+        "end": 2970.54,
+        "speaker": "D",
+        "text": "looking",
+        "index": 1878,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2970.54,
+        "end": 2970.83,
+        "speaker": "D",
+        "text": "for",
+        "index": 1879,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2970.83,
+        "end": 2970.98,
+        "speaker": "D",
+        "text": "is",
+        "index": 1880,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2970.98,
+        "end": 2971.34,
+        "speaker": "D",
+        "text": "the",
+        "index": 1881,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2971.34,
+        "end": 2971.78,
+        "speaker": "D",
+        "text": "um",
+        "index": 1882,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2971.78,
+        "end": 2972.38,
+        "speaker": "D",
+        "text": "frequency",
+        "index": 1883,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2972.38,
+        "end": 2973.05,
+        "speaker": "D",
+        "text": "statistics",
+        "index": 1884,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2973.05,
+        "end": 2973.09,
+        "speaker": "D",
+        "text": "I",
+        "index": 1886,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2973.09,
+        "end": 2973.26,
+        "speaker": "D",
+        "text": "don't",
+        "index": 1887,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2973.26,
+        "end": 2973.42,
+        "speaker": "D",
+        "text": "see",
+        "index": 1888,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2973.42,
+        "end": 2973.55,
+        "speaker": "D",
+        "text": "how",
+        "index": 1889,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2973.55,
+        "end": 2973.67,
+        "speaker": "D",
+        "text": "that",
+        "index": 1890,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2973.67,
+        "end": 2973.78,
+        "speaker": "D",
+        "text": "would",
+        "index": 1891,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2973.78,
+        "end": 2973.9,
+        "speaker": "D",
+        "text": "be",
+        "index": 1892,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2973.9,
+        "end": 2974.32,
+        "speaker": "D",
+        "text": "changed",
+        "index": 1893,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2974.32,
+        "end": 2974.43,
+        "speaker": "D",
+        "text": "by",
+        "index": 1894,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2974.43,
+        "end": 2974.51,
+        "speaker": "D",
+        "text": "the",
+        "index": 1895,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2974.51,
+        "end": 2975.45,
+        "speaker": "D",
+        "text": "classification",
+        "index": 1896,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 2978.15,
+        "end": 2978.87,
+        "speaker": "C",
+        "text": "If",
+        "index": 756,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2978.87,
+        "end": 2979.39,
+        "speaker": "C",
+        "text": "we",
+        "index": 757,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2979.39,
+        "end": 2979.9,
+        "speaker": "C",
+        "text": "need",
+        "index": 758,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2979.9,
+        "end": 2980.22,
+        "speaker": "C",
+        "text": "just",
+        "index": 759,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2980.22,
+        "end": 2981.1,
+        "speaker": "C",
+        "text": "frequencies",
+        "index": 760,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2981.1,
+        "end": 2981.43,
+        "speaker": "C",
+        "text": "maybe",
+        "index": 762,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2981.43,
+        "end": 2981.6,
+        "speaker": "C",
+        "text": "we",
+        "index": 763,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2981.6,
+        "end": 2981.87,
+        "speaker": "C",
+        "text": "should",
+        "index": 764,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2981.87,
+        "end": 2983.26,
+        "speaker": "C",
+        "text": "just",
+        "index": 765,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2983.26,
+        "end": 2983.8,
+        "speaker": "C",
+        "text": "calculate",
+        "index": 766,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 2983.8,
+        "end": 2984.18,
+        "speaker": "C",
+        "text": "them",
+        "index": 767,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      }
+    ],
+    "rawReferenceText": "you sure we could do that but I don't that makes sense 'Cause if what we're looking for is the um frequency statistics I don't see how that would be changed by the classification If we need just frequencies maybe we should just calculate them",
+    "speakers": [
+      "C",
+      "D"
+    ],
+    "turns": [
+      "C",
+      "D",
+      "C"
+    ],
+    "speakerReturn": true,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 47,
+    "addedNoise": false
+  },
+  {
+    "id": "EN2001a-seq-063",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\EN2001a-seq-063.wav",
+    "wavSha256": "a7cae831d5294e3dd222315eb4cd9283d2bbb86b4b708018c1c08107943060d8",
+    "pcmSha256": "886316b19cbc3081c9843e195828e410d4bf7a8fc4a447af4630b01cc749e505",
+    "frames": 283040,
+    "audioSeconds": 17.69,
+    "language": "English",
+    "role": "validation",
+    "corpus": "AMI",
+    "sourceStartFrame": 69408480,
+    "sourceEndFrame": 69691520,
+    "sourceAudioSha256": "20cf2243fff84361cc5c755529350d23c544580d58f00959e71945d8fdc8a8f7",
+    "referenceEvents": [
+      {
+        "start": 4338.03,
+        "end": 4338.06,
+        "speaker": "B",
+        "text": "a",
+        "index": 1297,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4338.06,
+        "end": 4338.21,
+        "speaker": "B",
+        "text": "look",
+        "index": 1298,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4338.21,
+        "end": 4338.38,
+        "speaker": "B",
+        "text": "at",
+        "index": 1299,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4338.38,
+        "end": 4338.95,
+        "speaker": "B",
+        "text": "it",
+        "index": 1300,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4338.95,
+        "end": 4339.11,
+        "speaker": "B",
+        "text": "will",
+        "index": 1302,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4339.11,
+        "end": 4339.54,
+        "speaker": "B",
+        "text": "it",
+        "index": 1303,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4339.54,
+        "end": 4339.76,
+        "speaker": "B",
+        "text": "make",
+        "index": 1304,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4339.76,
+        "end": 4340.12,
+        "speaker": "B",
+        "text": "sense",
+        "index": 1305,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4340.12,
+        "end": 4340.52,
+        "speaker": "B",
+        "text": "for",
+        "index": 1306,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4340.52,
+        "end": 4340.68,
+        "speaker": "B",
+        "text": "what",
+        "index": 1307,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4340.68,
+        "end": 4340.78,
+        "speaker": "B",
+        "text": "you",
+        "index": 1308,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4340.78,
+        "end": 4341.02,
+        "speaker": "B",
+        "text": "want",
+        "index": 1309,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4342.8,
+        "end": 4343.17,
+        "speaker": "C",
+        "text": "Okay",
+        "index": 1038,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 4344.559,
+        "end": 4345.267,
+        "speaker": "C",
+        "text": "",
+        "index": 1040,
+        "unscorable": false,
+        "annotationElement": "vocalsound",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 4351.34,
+        "end": 4351.46,
+        "speaker": "C",
+        "text": "So",
+        "index": 1041,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 4351.46,
+        "end": 4351.56,
+        "speaker": "C",
+        "text": "have",
+        "index": 1042,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 4351.56,
+        "end": 4351.64,
+        "speaker": "C",
+        "text": "we",
+        "index": 1043,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 4351.64,
+        "end": 4352.15,
+        "speaker": "C",
+        "text": "already",
+        "index": 1044,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 4352.15,
+        "end": 4352.58,
+        "speaker": "C",
+        "text": "extracted",
+        "index": 1045,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 4352.58,
+        "end": 4352.88,
+        "speaker": "C",
+        "text": "from",
+        "index": 1046,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 4352.88,
+        "end": 4353.08,
+        "speaker": "C",
+        "text": "all",
+        "index": 1047,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 4353.08,
+        "end": 4353.17,
+        "speaker": "C",
+        "text": "the",
+        "index": 1048,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 4353.17,
+        "end": 4353.82,
+        "speaker": "C",
+        "text": "files",
+        "index": 1049,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.C.words.xml"
+      },
+      {
+        "start": 4354.56,
+        "end": 4354.97,
+        "speaker": "B",
+        "text": "Yeah",
+        "index": 1311,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4354.97,
+        "end": 4355.06,
+        "speaker": "B",
+        "text": "uh",
+        "index": 1313,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4355.06,
+        "end": 4355.22,
+        "speaker": "B",
+        "text": "p",
+        "index": 1314,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4355.22,
+        "end": 4355.34,
+        "speaker": "B",
+        "text": "I",
+        "index": 1315,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 4355.34,
+        "end": 4355.72,
+        "speaker": "B",
+        "text": "mean",
+        "index": 1316,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      }
+    ],
+    "rawReferenceText": "a look at it will it make sense for what you want Okay So have we already extracted from all the files Yeah uh p I mean",
+    "speakers": [
+      "B",
+      "C"
+    ],
+    "turns": [
+      "B",
+      "C",
+      "B"
+    ],
+    "speakerReturn": true,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 63,
+    "addedNoise": false
+  },
+  {
+    "id": "EN2001a-seq-079",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\EN2001a-seq-079.wav",
+    "wavSha256": "8b5f186546a5f276a116b864e803eb15e76a208720506a8e1c56e29513398e2d",
+    "pcmSha256": "125df2e833eed79396b873058e7e73bf02b8176f246c8a827247b15d9b6c6068",
+    "frames": 411200,
+    "audioSeconds": 25.7,
+    "language": "English",
+    "role": "validation",
+    "corpus": "AMI",
+    "sourceStartFrame": 81082400,
+    "sourceEndFrame": 81493600,
+    "sourceAudioSha256": "20cf2243fff84361cc5c755529350d23c544580d58f00959e71945d8fdc8a8f7",
+    "referenceEvents": [
+      {
+        "start": 5067.65,
+        "end": 5067.7,
+        "speaker": "A",
+        "text": "b",
+        "index": 1031,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5067.7,
+        "end": 5067.84,
+        "speaker": "A",
+        "text": "I'd",
+        "index": 1032,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5067.84,
+        "end": 5067.9,
+        "speaker": "A",
+        "text": "be",
+        "index": 1033,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5067.9,
+        "end": 5068.33,
+        "speaker": "A",
+        "text": "surprised",
+        "index": 1034,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5068.33,
+        "end": 5068.46,
+        "speaker": "A",
+        "text": "if",
+        "index": 1035,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5068.46,
+        "end": 5068.55,
+        "speaker": "A",
+        "text": "we",
+        "index": 1036,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5068.55,
+        "end": 5068.87,
+        "speaker": "A",
+        "text": "can",
+        "index": 1037,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5068.87,
+        "end": 5069.15,
+        "speaker": "A",
+        "text": "get",
+        "index": 1038,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5069.15,
+        "end": 5070.54,
+        "speaker": "A",
+        "text": "anything",
+        "index": 1039,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5070.54,
+        "end": 5071.63,
+        "speaker": "A",
+        "text": "working",
+        "index": 1040,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5071.63,
+        "end": 5071.74,
+        "speaker": "A",
+        "text": "by",
+        "index": 1041,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5071.74,
+        "end": 5072.06,
+        "speaker": "A",
+        "text": "next",
+        "index": 1042,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5072.06,
+        "end": 5072.3,
+        "speaker": "A",
+        "text": "week",
+        "index": 1043,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5079.865,
+        "end": 5080.35,
+        "speaker": "B",
+        "text": "",
+        "index": 2006,
+        "unscorable": false,
+        "annotationElement": "vocalsound",
+        "annotationFile": "words/EN2001a.B.words.xml"
+      },
+      {
+        "start": 5081.07,
+        "end": 5081.24,
+        "speaker": "A",
+        "text": "Alright",
+        "index": 1045,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.A.words.xml"
+      },
+      {
+        "start": 5092.34,
+        "end": 5092.75,
+        "speaker": "D",
+        "text": "Yeah",
+        "index": 3766,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 5092.75,
+        "end": 5092.8,
+        "speaker": "D",
+        "text": "I",
+        "index": 3768,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      },
+      {
+        "start": 5092.8,
+        "end": 5093.27,
+        "speaker": "D",
+        "text": "know",
+        "index": 3769,
+        "unscorable": false,
+        "annotationElement": "w",
+        "annotationFile": "words/EN2001a.D.words.xml"
+      }
+    ],
+    "rawReferenceText": "b I'd be surprised if we can get anything working by next week Alright Yeah I know",
+    "speakers": [
+      "A",
+      "D"
+    ],
+    "turns": [
+      "A",
+      "B",
+      "A",
+      "D"
+    ],
+    "speakerReturn": true,
+    "overlapPresentByReference": false,
+    "eligiblePlanIndex": 79,
+    "addedNoise": false
+  }
+]

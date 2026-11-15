@@ -1,0 +1,7 @@
+{
+  "note": "Validation is this project diagnostic role. ES2003b is AMI full-corpus development; EN2001a is official full-corpus training but held out from our independent IS1000a/TS3005a calibration. This is not an official final test claim.",
+  "officialSource": "https://groups.inf.ed.ac.uk/ami/corpus/datasets.shtml",
+  "pretrainingDataIndependenceKnown": false,
+  "ChineseSourcePriorUse": "Existing AISHELL4 training-split sources with prior diagnostic use; original full-meeting/final holdouts are unchanged.",
+  "originalFinalHoldoutOpened": false
+}

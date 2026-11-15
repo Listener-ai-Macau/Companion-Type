@@ -1,0 +1,70 @@
+{
+  "state": "REJECT_ACTIVITY_HEAD_ROUTING_ON_TRAINING",
+  "at": "2026-11-15T21:25:19.163589+08:00",
+  "trainingBeforeDER": [
+    0.30884415477270843,
+    0.3095104633781802
+  ],
+  "trainingAfterDER": [
+    0.3079778896130679,
+    0.3081091180867004
+  ],
+  "detail": [
+    {
+      "meeting": "IS1000a",
+      "mode": "original",
+      "DER": 0.30884415477270843,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 69.50000000000023,
+      "falseAlarmSeconds": 3.7499999999996803,
+      "confusionSeconds": 1.6200000000000045,
+      "errorSeconds": 74.86999999999992,
+      "addedWholeMeetingSpeakerSeconds": 0.96,
+      "originalAuxiliaryLogitsSha256": "fc43de2dfb9d517228fa429e8c0cf7dbf1aaf07f177ef71a35c4908a1394e9c1"
+    },
+    {
+      "meeting": "IS1000a",
+      "mode": "candidate",
+      "DER": 0.3079778896130679,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 69.26000000000019,
+      "falseAlarmSeconds": 3.779999999999653,
+      "confusionSeconds": 1.6200000000000045,
+      "errorSeconds": 74.65999999999985,
+      "addedWholeMeetingSpeakerSeconds": 0.96,
+      "originalAuxiliaryLogitsSha256": "fc43de2dfb9d517228fa429e8c0cf7dbf1aaf07f177ef71a35c4908a1394e9c1"
+    },
+    {
+      "meeting": "TS3005a",
+      "mode": "original",
+      "DER": 0.3095104633781802,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 29.45000000000018,
+      "falseAlarmSeconds": 2.010000000000197,
+      "confusionSeconds": 1.6699999999999946,
+      "errorSeconds": 33.13000000000037,
+      "addedWholeMeetingSpeakerSeconds": 0.57,
+      "originalAuxiliaryLogitsSha256": "961961712a9a69c16afc1c74f1650b31e15f85524a5f408796373e60ce708300"
+    },
+    {
+      "meeting": "TS3005a",
+      "mode": "candidate",
+      "DER": 0.3081091180867004,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 29.28000000000018,
+      "falseAlarmSeconds": 2.0300000000002,
+      "confusionSeconds": 1.6699999999999946,
+      "errorSeconds": 32.98000000000037,
+      "addedWholeMeetingSpeakerSeconds": 0.57,
+      "originalAuxiliaryLogitsSha256": "961961712a9a69c16afc1c74f1650b31e15f85524a5f408796373e60ce708300"
+    }
+  ],
+  "validationRead": false,
+  "protocolSha256": "f4497347d60c5ef00a2654b363addbf2b282d1ac3d384eb00ea281a13db73c0d",
+  "helperSha256": "39be6845a6e32cce11e4aa85df0a4d6a74880d7ae04dcce94bf17e723ba778ff",
+  "newNeuralCalls": 0,
+  "weightsChanged": false,
+  "productDefaultChanged": false,
+  "qualityQualified": false,
+  "scriptSha256": "d355aa0bdc922f87cc99d906d735a246bb6357fad816fa4d668581f899b7c870"
+}

@@ -1,0 +1,102 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00411200-final",
+    "recordingId": "be9a695f-7e24-589f-93fd-68e0fba31231",
+    "configSha256": "0030c87278946551ec758bc169c4d541093812486c129e196f8f809098a5e9ed",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 411200,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\EN2001a-seq-079\\audio.pcm",
+    "pcmSha256": "125df2e833eed79396b873058e7e73bf02b8176f246c8a827247b15d9b6c6068",
+    "language": "English",
+    "blockFinal": true,
+    "publishedAtMonotonic": 9755.5536014,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "English",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "I'd be surprised if we can get anything working. Let's go. I feel like like hanging with air and not really like finding the point where you can get your teeth into and start working. Yeah, I know.",
+    "rawGeneratedIds": [
+      [
+        40,
+        4172,
+        387,
+        14453,
+        421,
+        582,
+        646,
+        633,
+        4113,
+        3238,
+        13,
+        6771,
+        594,
+        728,
+        13,
+        358,
+        2666,
+        1075,
+        1075,
+        20704,
+        448,
+        3720,
+        323,
+        537,
+        2167,
+        1075,
+        9271,
+        279,
+        1459,
+        1380,
+        498,
+        646,
+        633,
+        697,
+        17832,
+        1119,
+        323,
+        1191,
+        3238,
+        13,
+        21607,
+        11,
+        358,
+        1414,
+        13,
+        151645
+      ]
+    ],
+    "language": "English",
+    "accepted": true,
+    "seconds": 10.342322799999238,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 9.321592000000237,
+    "allKnownDecodeSecondsIncludingFailedParents": 9.321592000000237,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 411200
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

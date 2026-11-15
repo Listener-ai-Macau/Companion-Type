@@ -1,0 +1,52 @@
+{
+  "state": "FROZEN_STAGE_A_BEFORE_MODEL_OUTPUTS",
+  "at": "2026-11-15T20:50:19.098260+08:00",
+  "cases": 32,
+  "audioOnlyManifestSha256": "6db066dc27ba2387e3b74384aca031f4d5c212a1ccc55d5afeaee0b3f9b6bd38",
+  "scoringOnlyManifestSha256": "6c69c634a822ad23572b717fbd639107a7f6afc3c8c2dd9e66ec05003fddcf5e",
+  "sourceInventorySha256": "b72ce0fcf27bd61e60a3c55862ac8c2f0f3aeb013f6cd134d976a0836c4d70b1",
+  "nativeProtocol": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-runtime-r2\\source\\native-protocol.json",
+  "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+  "selection": "Annotation-only cross-speaker overlap components excluded as barriers. Greedy disjoint complete-reference runs, 10–29.84s, >=2 speakers. Four uniformly spaced plans per training meeting, six per validation meeting. Natural padding<=80ms capped at annotation midpoint. Original source first microphone bytes only.",
+  "curriculum": [
+    "A: sequential multi-speaker original room",
+    "B: overlap",
+    "C: noise robustness"
+  ],
+  "newTraining": false,
+  "qualityQualified": false,
+  "fullMeetingGatesChanged": false,
+  "finalHoldoutOpened": false,
+  "inference": "Existing native Qwen1.7B BF16 greedy512 unchanged, one resident model, explicit corpus language, no references/counts/activity input. No separation, denoising, gain, resampling or stitching.",
+  "targets": {
+    "ChineseCER": 0.05,
+    "EnglishWER": 0.05,
+    "perSpeakerError": 0.05,
+    "DERZeroCollar": 0.1
+  },
+  "limitations": [
+    "Annotation-assisted scene diagnostic, not final whole-recording acceptance.",
+    "AMI word times are forced-aligned estimates; boundaries and overlap absence have annotation uncertainty.",
+    "Chinese sources already used by prior diagnostic separator experiments, not a new blind holdout.",
+    "Original room acoustics retained; no added noise does not mean acoustically clean.",
+    "Speaker return is scored with a fixed meeting-level mapping, never optimal per-clip relabelling."
+  ],
+  "totalSeconds": 723.4321250000002,
+  "speakerReturnCases": 9,
+  "resourceLimits": {
+    "pid": 9504,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 48025600,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

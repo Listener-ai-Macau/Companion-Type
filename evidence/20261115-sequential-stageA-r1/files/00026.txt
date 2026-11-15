@@ -1,0 +1,22 @@
+{
+  "state": "STAGE_A_SPEAKER_BASELINE_SCORED_NOT_PRODUCT_QUALIFIED",
+  "scorerSourceSha256": "cd7066ab59e3b5ede24b5ef218bc9b7700abb78243a2f56f1ef16f9b12909470",
+  "protocolSha256": "ba3fea9b98ba11a2e30ed3ef3a5704a983e86f71aeb641229536115482c3f4fb",
+  "scoringManifestSha256": "1bd61c8c2b9438a520b0f16879d94d7e320f1a7ea7fec72d74ad7d1047909f83",
+  "alignmentProtocolSha256": "dd66a06389c3daf3cd24ac103ae4ac62b8b0aeb7039cdd50d6a5e257c439dad8",
+  "alignmentStateSha256": "1990162c995f9d3a3d743b22b711a1adef7da86e70caece1a2a5b712da494d1b",
+  "groups": [
+    {
+      "language": "Chinese",
+      "role": "train",
+      "cases": 8,
+      "speakerReturnCases": 2,
+      "views": {
+        "raw": {
+          "speakerAttributedErrors": 241,
+          "referenceUnits": 679,
+          "speakerAttributedErrorRate": 0.3549337260677467,
+          "unknownHypothesisUnits": 52,
+          "DERZeroCollar": 0.17258721975597516,
+          "speakerAttributedGatePass": false,
+          "DERGatePass": 

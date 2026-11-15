@@ -1,0 +1,84 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00169343-final",
+    "recordingId": "c11a2082-19c5-5c87-98a7-d0af24109d63",
+    "configSha256": "d981e6b52719545cf3c044ab591c1134e92f47c7ea3790944f3bfddff1280884",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 169343,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-008\\audio.pcm",
+    "pcmSha256": "e3dd3a9849bd0d6515af65df219f40a7cceaa57f28ea97c9b9b5f708dda82784",
+    "language": "Chinese",
+    "blockFinal": true,
+    "publishedAtMonotonic": 9596.4273709,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "Chinese",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "请了一个张师傅，是吗？不管姓什么，干好了就行。嗯，反正这个维修这边我已经换人员了。",
+    "rawGeneratedIds": [
+      [
+        14880,
+        104059,
+        86341,
+        105476,
+        3837,
+        20412,
+        101037,
+        11319,
+        101260,
+        101395,
+        99245,
+        3837,
+        99251,
+        104334,
+        103512,
+        1773,
+        106287,
+        3837,
+        105785,
+        99487,
+        104440,
+        106467,
+        108660,
+        71134,
+        99653,
+        34187,
+        1773,
+        151645
+      ]
+    ],
+    "language": "Chinese",
+    "accepted": true,
+    "seconds": 6.609624299999268,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 5.597934400000668,
+    "allKnownDecodeSecondsIncludingFailedParents": 5.597934400000668,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 169343
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

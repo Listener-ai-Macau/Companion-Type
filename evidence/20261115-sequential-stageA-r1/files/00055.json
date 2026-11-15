@@ -1,0 +1,20 @@
+{
+  "state": "INCOMPLETE_STAGE_A_ASR_RETAINED_NO_RETRY",
+  "startedAt": "2026-11-15T20:50:52+08:00",
+  "workerSha256": "f1289bd9c4b8fee43e0778854bdb61fd6ccc8495c5e36af5638b5e39846d07b7",
+  "newTraining": false,
+  "automaticRetries": 0,
+  "qualityQualified": false,
+  "privatePeakBytes": 1515520,
+  "pid": 21668,
+  "pidCreatedAt": 1794747056.9704015,
+  "gpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "error": "AssertionError('Frozen baseline failed; no automatic retry or variant')",
+  "finishedAt": "2026-11-15T20:50:57+08:00",
+  "seconds": 4.718999999999141
+}

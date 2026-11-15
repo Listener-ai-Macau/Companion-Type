@@ -1,0 +1,43 @@
+{
+  "state": "COMPLETE_NATIVE_ALIGNMENT_FULL_NOT_TIME_QUALIFIED",
+  "pid": 19872,
+  "startedAt": "2026-11-15T21:09:44+08:00",
+  "phase": "full",
+  "binding": {
+    "protocolSha256": "dd66a06389c3daf3cd24ac103ae4ac62b8b0aeb7039cdd50d6a5e257c439dad8",
+    "planSha256": "982d215bfebd0ac558c6b036ced41281f45c36244cbf4fcb924177d978005f9d",
+    "modelSourceSha256": "f132d8d82dd5a0d5d1809349f01629431de317022bc3e31797f5158e91539508"
+  },
+  "modelLoaded": true,
+  "newNeuralCalls": 31,
+  "reusedNodes": 1,
+  "completedLeaves": 32,
+  "referencePassedToWorker": false,
+  "speakerLabelsPassedToWorker": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 19872,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1173229568,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "totalLeaves": 32,
+  "meeting": "EN2001a-a2-116",
+  "leaf": "root",
+  "gpu": "AMD Radeon RX 6800 XT",
+  "modelLoadSeconds": 16.696885100000145,
+  "allOriginalCharactersPreserved": true,
+  "asrNeuralCalls": 0,
+  "finishedAt": "2026-11-15T21:10:51+08:00",
+  "wholeWorkerSeconds": 66.98143569999957
+}

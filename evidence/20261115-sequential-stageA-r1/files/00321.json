@@ -1,0 +1,59 @@
+{
+  "binding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "English",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter",
+    "jobId": "00000000-00475520-final",
+    "pcmSha256": "e087cf4e22224bfc9c3ad810c56bd3595ad7343c30b6d53fc5c1ce00d445b32f",
+    "configSha256": "bf6cb37176ee1ecc608086bc7f3d4766c42a790c15941134fc65b770d2467137"
+  },
+  "raw": {
+    "startSample": 0,
+    "endSample": 475520,
+    "text": "Okay. Uh, I'm responsible for working design. Uh, this is basically the inside going on of the the remote.",
+    "language": "English",
+    "languageHeaderPresent": false,
+    "generatedIds": [
+      32313,
+      13,
+      68049,
+      11,
+      358,
+      2776,
+      8480,
+      369,
+      3238,
+      2884,
+      13,
+      68049,
+      11,
+      419,
+      374,
+      13221,
+      279,
+      4766,
+      2087,
+      389,
+      315,
+      279,
+      279,
+      8699,
+      13,
+      151645
+    ],
+    "rawDecoded": "Okay. Uh, I'm responsible for working design. Uh, this is basically the inside going on of the the remote.<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 5.392046899998604
+  },
+  "rawSha256": "f5d6efc5d60ab58275c60d8a2089b94bf2461c6eca72a648d02cb4ef5e3d1d1f"
+}

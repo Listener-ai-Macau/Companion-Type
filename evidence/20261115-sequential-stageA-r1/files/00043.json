@@ -1,0 +1,58 @@
+{
+  "state": "FROZEN_STAGE_A_BEFORE_MODEL_OUTPUTS",
+  "at": "2026-11-15T21:04:28.639335+08:00",
+  "cases": 6,
+  "audioOnlyManifestSha256": "b8aa1359d6992033f93c63305f38ab8d06cae13f225147336d88e50680c63fbf",
+  "scoringOnlyManifestSha256": null,
+  "sourceInventorySha256": "5c9c5b7656aebc1436892b77ca56c8b0bf7b3901ddd02e39e586a30b0f335027",
+  "nativeProtocol": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-runtime-r2\\source\\native-protocol.json",
+  "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+  "selection": "Annotation-only cross-speaker overlap components excluded as barriers. Greedy disjoint complete-reference runs, 10–29.84s, >=2 speakers. Four uniformly spaced plans per training meeting, six per validation meeting. Natural padding<=80ms capped at annotation midpoint. Original source first microphone bytes only.",
+  "curriculum": [
+    "A: sequential multi-speaker original room",
+    "B: overlap",
+    "C: noise robustness"
+  ],
+  "newTraining": false,
+  "qualityQualified": false,
+  "fullMeetingGatesChanged": false,
+  "finalHoldoutOpened": false,
+  "inference": "Existing native Qwen1.7B BF16 greedy512 unchanged, one resident model, explicit corpus language, no references/counts/activity input. No separation, denoising, gain, resampling or stitching.",
+  "targets": {
+    "ChineseCER": 0.05,
+    "EnglishWER": 0.05,
+    "perSpeakerError": 0.05,
+    "DERZeroCollar": 0.1
+  },
+  "limitations": [
+    "Annotation-assisted scene diagnostic, not final whole-recording acceptance.",
+    "AMI word times are forced-aligned estimates; boundaries and overlap absence have annotation uncertainty.",
+    "Chinese sources already used by prior diagnostic separator experiments, not a new blind holdout.",
+    "Original room acoustics retained; no added noise does not mean acoustically clean.",
+    "Speaker return is scored with a fixed meeting-level mapping, never optimal per-clip relabelling."
+  ],
+  "totalSeconds": 739.2621250000001,
+  "speakerReturnCases": 10,
+  "resourceLimits": {
+    "pid": 9504,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 48025600,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "correctedReferenceCoverage": "All official AMI metadata speakers, matching complete set of word XML files. EN2001a A-E; r1 A-D selection retained as invalid, not used for Stage-A conclusions.",
+  "reuseRule": "26 byte-identical Chinese/ES2003b inputs, unchanged language/model/runtime binding; only six EN2001a replacements inferred.",
+  "previousInvalidCohort": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r1",
+  "previousFailureSha256": "d6583d31b3b35757c8f982cf0f1e6a99a37f60607c5c23e41e1952203683c811",
+  "fullCorrectedCohortProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\protocol.json",
+  "fullCorrectedCohortProtocolSha256": "ba3fea9b98ba11a2e30ed3ef3a5704a983e86f71aeb641229536115482c3f4fb"
+}

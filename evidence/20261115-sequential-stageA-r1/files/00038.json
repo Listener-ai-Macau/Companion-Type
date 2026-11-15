@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-15T21:21:55.671115+08:00",
+  "state": "FROZEN_TRAINING_ONLY_SAME_ID_GAP_CALIBRATION",
+  "hypothesis": "Original0.5 threshold retained. Training-only boundary audit found many misses near same-ID predicted speech. Close internal holes only between the same native identity, if no original speaker is active in the hole; reject competing fill proposals. No outward edge padding or new speaker IDs.",
+  "gapSeconds": [
+    0.0,
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "objective": "Minimize maximum training-meeting zero-collar raw DER. Tie choose the smallest gap.",
+  "adoptionRule": "Both independent training meetings DER<=10% and mean DER improvement>=1pp. Then evaluate exactly one selected policy on frozen development; otherwise reject without development search.",
+  "referenceSelection": "Exact same all-speaker complete nonoverlap training windows and0.5 whole-meeting fixed identity maps as activity-cal-r1.",
+  "trainingSourcesSha256": "ff9839994c3247093a9cea70b86ab04c75ee63e5ed004a308f014bd43297dcae",
+  "priorThresholdFailureSha256": "bfcf35364f1e015d4d3ba29bf7ad3e9d520bab2cf5e2145c3251fcda5fe7ccc0",
+  "boundaryAuditSha256": "af7977cf2353f55e684b6b785fc916694f2711991c76b874ea02bfee83b53c90",
+  "activityHelperSha256": "d4c3c43b0d0fde70f9e07c3919196f65d484568386f0914c4b8070d967faad02",
+  "gapHelperSha256": "d9dca18f75699d0de8050b37086be36fd1fde042fca700fc9b0a0f0ddbd93d07",
+  "inspiredByOfficialPostprocessing": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/main/include/nemo_speech/diar.h",
+  "validationThresholdOrGapSearch": false,
+  "qualityGatesChanged": false,
+  "noNewWeightsOrNeuralCalls": true
+}

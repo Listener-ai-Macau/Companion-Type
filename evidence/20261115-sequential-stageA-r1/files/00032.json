@@ -1,0 +1,702 @@
+{
+  "state": "REJECT_ACTIVITY_THRESHOLD_HYPOTHESIS_ON_TRAINING",
+  "at": "2026-11-15T21:18:28.132494+08:00",
+  "selectionRuleSha256": "7584e617c80a09536536420f645f2df2c89f4c35bb1335e60990f0de18a0dfc6",
+  "inputs": [
+    {
+      "meeting": "IS1000a",
+      "windows": 25,
+      "eligibleAudit": {
+        "referenceEvents": 3007,
+        "overlapComponents": 157,
+        "nonoverlapRuns": 144,
+        "eligibleDisjointPlans": 25
+      },
+      "sourcePosteriorSha256": "44ba66f98e8a51f5bab562009a2277bce9051ee8bc589c04807d70eed85f05c1",
+      "fixedWholeMeetingIdentityMapping": {
+        "0": "C",
+        "1": "A",
+        "2": "D",
+        "3": "B"
+      },
+      "trainingWindows": [
+        {
+          "start": 37.25,
+          "end": 51.42
+        },
+        {
+          "start": 70.02,
+          "end": 95.99
+        },
+        {
+          "start": 148.98,
+          "end": 163.89
+        },
+        {
+          "start": 189.32,
+          "end": 213.22
+        },
+        {
+          "start": 217.54,
+          "end": 227.984
+        },
+        {
+          "start": 443.55,
+          "end": 473.34
+        },
+        {
+          "start": 478.51,
+          "end": 508.31
+        },
+        {
+          "start": 508.31,
+          "end": 521.08
+        },
+        {
+          "start": 536.23,
+          "end": 555.59
+        },
+        {
+          "start": 602.83,
+          "end": 614.94
+        },
+        {
+          "start": 619.08,
+          "end": 640.87
+        },
+        {
+          "start": 641.93,
+          "end": 669.07
+        },
+        {
+          "start": 710.86,
+          "end": 729.23
+        },
+        {
+          "start": 768.96,
+          "end": 784.09
+        },
+        {
+          "start": 821.35,
+          "end": 831.8
+        },
+        {
+          "start": 834.0,
+          "end": 852.05
+        },
+        {
+          "start": 860.58,
+          "end": 887.31
+        },
+        {
+          "start": 891.03,
+          "end": 912.66
+        },
+        {
+          "start": 957.86,
+          "end": 971.26
+        },
+        {
+          "start": 1079.09,
+          "end": 1107.66
+        },
+        {
+          "start": 1190.93,
+          "end": 1202.12
+        },
+        {
+          "start": 1343.72,
+          "end": 1357.14
+        },
+        {
+          "start": 1397.03,
+          "end": 1410.46
+        },
+        {
+          "start": 1429.37,
+          "end": 1442.41
+        },
+        {
+          "start": 1470.26,
+          "end": 1486.8
+        }
+      ]
+    },
+    {
+      "meeting": "TS3005a",
+      "windows": 8,
+      "eligibleAudit": {
+        "referenceEvents": 3126,
+        "overlapComponents": 140,
+        "nonoverlapRuns": 125,
+        "eligibleDisjointPlans": 8
+      },
+      "sourcePosteriorSha256": "b415f1818d023f9ca42f3eca4fe98c1e3c5a638f2c45b30f39453f90548b319a",
+      "fixedWholeMeetingIdentityMapping": {
+        "0": "D",
+        "1": "C",
+        "2": "A",
+        "3": "B"
+      },
+      "trainingWindows": [
+        {
+          "start": 51.89,
+          "end": 76.14
+        },
+        {
+          "start": 76.63,
+          "end": 106.19
+        },
+        {
+          "start": 180.31,
+          "end": 193.78
+        },
+        {
+          "start": 194.44,
+          "end": 211.52
+        },
+        {
+          "start": 374.87,
+          "end": 404.15
+        },
+        {
+          "start": 500.25,
+          "end": 517.824
+        },
+        {
+          "start": 529.904,
+          "end": 550.86
+        },
+        {
+          "start": 1129.07,
+          "end": 1139.51
+        }
+      ]
+    }
+  ],
+  "selected": {
+    "threshold": 0.4,
+    "maxTrainingDER": 0.30904334828101726,
+    "meanTrainingDER": 0.3069513416596903,
+    "trainingDERs": [
+      0.30485933503836327,
+      0.30904334828101726
+    ]
+  },
+  "baseline": {
+    "threshold": 0.5,
+    "maxTrainingDER": 0.3095104633781802,
+    "meanTrainingDER": 0.30917730907544433,
+    "trainingDERs": [
+      0.30884415477270843,
+      0.3095104633781802
+    ]
+  },
+  "thresholdSweepTrainingOnly": [
+    {
+      "threshold": 0.1,
+      "maxTrainingDER": 0.3559417040358757,
+      "meanTrainingDER": 0.3408163268137476,
+      "trainingDERs": [
+        0.3256909495916195,
+        0.3559417040358757
+      ]
+    },
+    {
+      "threshold": 0.15,
+      "maxTrainingDER": 0.3330530642750379,
+      "meanTrainingDER": 0.3186468192425421,
+      "trainingDERs": [
+        0.3042405742100464,
+        0.3330530642750379
+      ]
+    },
+    {
+      "threshold": 0.2,
+      "maxTrainingDER": 0.32838191330343885,
+      "meanTrainingDER": 0.3140012033310352,
+      "trainingDERs": [
+        0.2996204933586315,
+        0.32838191330343885
+      ]
+    },
+    {
+      "threshold": 0.25,
+      "maxTrainingDER": 0.3198804185351278,
+      "meanTrainingDER": 0.30985358275159935,
+      "trainingDERs": [
+        0.29982674696807093,
+        0.3198804185351278
+      ]
+    },
+    {
+      "threshold": 0.3,
+      "maxTrainingDER": 0.3144618834080704,
+      "meanTrainingDER": 0.3076393238507228,
+      "trainingDERs": [
+        0.3008167642933752,
+        0.3144618834080704
+      ]
+    },
+    {
+      "threshold": 0.35,
+      "maxTrainingDER": 0.311285500747385,
+      "meanTrainingDER": 0.3073505302598415,
+      "trainingDERs": [
+        0.303415559772298,
+        0.311285500747385
+      ]
+    },
+    {
+      "threshold": 0.4,
+      "maxTrainingDER": 0.30904334828101726,
+      "meanTrainingDER": 0.3069513416596903,
+      "trainingDERs": [
+        0.30485933503836327,
+        0.30904334828101726
+      ]
+    },
+    {
+      "threshold": 0.45,
+      "maxTrainingDER": 0.30997757847533874,
+      "meanTrainingDER": 0.3083177224940005,
+      "trainingDERs": [
+        0.3066578665126623,
+        0.30997757847533874
+      ]
+    },
+    {
+      "threshold": 0.5,
+      "maxTrainingDER": 0.3095104633781802,
+      "meanTrainingDER": 0.30917730907544433,
+      "trainingDERs": [
+        0.30884415477270843,
+        0.3095104633781802
+      ]
+    },
+    {
+      "threshold": 0.55,
+      "maxTrainingDER": 0.31259342301943877,
+      "meanTrainingDER": 0.3120388119964784,
+      "trainingDERs": [
+        0.31148420097351803,
+        0.31259342301943877
+      ]
+    },
+    {
+      "threshold": 0.6,
+      "maxTrainingDER": 0.3162369207772846,
+      "meanTrainingDER": 0.31610872521827676,
+      "trainingDERs": [
+        0.3159805296592689,
+        0.3162369207772846
+      ]
+    },
+    {
+      "threshold": 0.65,
+      "maxTrainingDER": 0.32769573467535745,
+      "meanTrainingDER": 0.32374136509552875,
+      "trainingDERs": [
+        0.32769573467535745,
+        0.31978699551570006
+      ]
+    },
+    {
+      "threshold": 0.7,
+      "maxTrainingDER": 0.3366058906030867,
+      "meanTrainingDER": 0.3302050379771797,
+      "trainingDERs": [
+        0.3366058906030867,
+        0.3238041853512727
+      ]
+    },
+    {
+      "threshold": 0.75,
+      "maxTrainingDER": 0.3439897698209729,
+      "meanTrainingDER": 0.3364661106205027,
+      "trainingDERs": [
+        0.3439897698209729,
+        0.3289424514200324
+      ]
+    },
+    {
+      "threshold": 0.8,
+      "maxTrainingDER": 0.3562412342215986,
+      "meanTrainingDER": 0.34604849453979936,
+      "trainingDERs": [
+        0.3562412342215986,
+        0.33585575485800007
+      ]
+    },
+    {
+      "threshold": 0.85,
+      "maxTrainingDER": 0.37146275059813877,
+      "meanTrainingDER": 0.363094977690699,
+      "trainingDERs": [
+        0.37146275059813877,
+        0.35472720478325925
+      ]
+    },
+    {
+      "threshold": 0.9,
+      "maxTrainingDER": 0.5425074738415535,
+      "meanTrainingDER": 0.4699378388925626,
+      "trainingDERs": [
+        0.3973682039435717,
+        0.5425074738415535
+      ]
+    }
+  ],
+  "detail": [
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.1,
+      "DER": 0.3256909495916195,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 57.53000000000064,
+      "falseAlarmSeconds": 19.743999999999645,
+      "confusionSeconds": 1.6800000000000495,
+      "errorSeconds": 78.95400000000033
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.15,
+      "DER": 0.3042405742100464,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 59.41000000000002,
+      "falseAlarmSeconds": 12.663999999999383,
+      "confusionSeconds": 1.6799999999999997,
+      "errorSeconds": 73.7539999999994
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.2,
+      "DER": 0.2996204933586315,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 61.220000000000134,
+      "falseAlarmSeconds": 9.75399999999918,
+      "confusionSeconds": 1.6600000000000819,
+      "errorSeconds": 72.63399999999939
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.25,
+      "DER": 0.29982674696807093,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 62.66000000000025,
+      "falseAlarmSeconds": 8.343999999999383,
+      "confusionSeconds": 1.6800000000000637,
+      "errorSeconds": 72.6839999999997
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.3,
+      "DER": 0.3008167642933752,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 63.9800000000004,
+      "falseAlarmSeconds": 7.28399999999948,
+      "confusionSeconds": 1.6600000000000819,
+      "errorSeconds": 72.92399999999996
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.35,
+      "DER": 0.303415559772298,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 65.55000000000095,
+      "falseAlarmSeconds": 6.3639999999995,
+      "confusionSeconds": 1.6399999999999864,
+      "errorSeconds": 73.55400000000043
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.4,
+      "DER": 0.30485933503836327,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 66.75000000000031,
+      "falseAlarmSeconds": 5.523999999999667,
+      "confusionSeconds": 1.6299999999999955,
+      "errorSeconds": 73.90399999999997
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.45,
+      "DER": 0.3066578665126623,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 68.21999999999986,
+      "falseAlarmSeconds": 4.489999999999682,
+      "confusionSeconds": 1.6299999999999955,
+      "errorSeconds": 74.33999999999953
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.5,
+      "DER": 0.30884415477270843,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 69.50000000000023,
+      "falseAlarmSeconds": 3.7499999999996803,
+      "confusionSeconds": 1.6200000000000045,
+      "errorSeconds": 74.86999999999992
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.55,
+      "DER": 0.31148420097351803,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 70.95000000000047,
+      "falseAlarmSeconds": 3.039999999999843,
+      "confusionSeconds": 1.5199999999998681,
+      "errorSeconds": 75.51000000000019
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.6,
+      "DER": 0.3159805296592689,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 72.68000000000015,
+      "falseAlarmSeconds": 2.549999999999855,
+      "confusionSeconds": 1.3699999999998909,
+      "errorSeconds": 76.59999999999991
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.65,
+      "DER": 0.32769573467535745,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 76.01000000000028,
+      "falseAlarmSeconds": 2.089999999999904,
+      "confusionSeconds": 1.3399999999999181,
+      "errorSeconds": 79.4400000000001
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.7,
+      "DER": 0.3366058906030867,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 78.64000000000027,
+      "falseAlarmSeconds": 1.6600000000000037,
+      "confusionSeconds": 1.2999999999999545,
+      "errorSeconds": 81.60000000000022
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.75,
+      "DER": 0.3439897698209729,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 80.99000000000004,
+      "falseAlarmSeconds": 1.2200000000001836,
+      "confusionSeconds": 1.17999999999995,
+      "errorSeconds": 83.39000000000019
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.8,
+      "DER": 0.3562412342215986,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 84.70999999999981,
+      "falseAlarmSeconds": 0.8200000000001424,
+      "confusionSeconds": 0.8299999999999272,
+      "errorSeconds": 86.35999999999987
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.85,
+      "DER": 0.37146275059813877,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 88.8100000000004,
+      "falseAlarmSeconds": 0.6500000000001904,
+      "confusionSeconds": 0.5900000000001455,
+      "errorSeconds": 90.05000000000074
+    },
+    {
+      "meeting": "IS1000a",
+      "threshold": 0.9,
+      "DER": 0.3973682039435717,
+      "referenceSpeakerSeconds": 242.41999999999982,
+      "missSeconds": 95.4700000000006,
+      "falseAlarmSeconds": 0.4899999999999807,
+      "confusionSeconds": 0.37000000000000455,
+      "errorSeconds": 96.33000000000058
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.1,
+      "DER": 0.3559417040358757,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 24.909999999999826,
+      "falseAlarmSeconds": 12.350000000000428,
+      "confusionSeconds": 0.83999999999984,
+      "errorSeconds": 38.100000000000094
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.15,
+      "DER": 0.3330530642750379,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 25.759999999999835,
+      "falseAlarmSeconds": 8.76000000000024,
+      "confusionSeconds": 1.1299999999999386,
+      "errorSeconds": 35.65000000000001
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.2,
+      "DER": 0.32838191330343885,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 26.55999999999983,
+      "falseAlarmSeconds": 7.3500000000002785,
+      "confusionSeconds": 1.2399999999999451,
+      "errorSeconds": 35.150000000000055
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.25,
+      "DER": 0.3198804185351278,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 26.97999999999964,
+      "falseAlarmSeconds": 5.920000000000435,
+      "confusionSeconds": 1.3399999999999608,
+      "errorSeconds": 34.24000000000004
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.3,
+      "DER": 0.3144618834080704,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 27.399999999999615,
+      "falseAlarmSeconds": 4.7100000000002495,
+      "confusionSeconds": 1.5499999999999545,
+      "errorSeconds": 33.65999999999982
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.35,
+      "DER": 0.311285500747385,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 27.769999999999747,
+      "falseAlarmSeconds": 3.710000000000335,
+      "confusionSeconds": 1.8399999999999679,
+      "errorSeconds": 33.32000000000005
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.4,
+      "DER": 0.30904334828101726,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 28.169999999999895,
+      "falseAlarmSeconds": 2.960000000000157,
+      "confusionSeconds": 1.9499999999999957,
+      "errorSeconds": 33.08000000000005
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.45,
+      "DER": 0.30997757847533874,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 28.890000000000015,
+      "falseAlarmSeconds": 2.5700000000002348,
+      "confusionSeconds": 1.7199999999999704,
+      "errorSeconds": 33.18000000000022
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.5,
+      "DER": 0.3095104633781802,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 29.45000000000018,
+      "falseAlarmSeconds": 2.010000000000197,
+      "confusionSeconds": 1.6699999999999946,
+      "errorSeconds": 33.13000000000037
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.55,
+      "DER": 0.31259342301943877,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 30.100000000000428,
+      "falseAlarmSeconds": 1.7300000000002669,
+      "confusionSeconds": 1.6299999999999955,
+      "errorSeconds": 33.46000000000069
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.6,
+      "DER": 0.3162369207772846,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 30.880000000000223,
+      "falseAlarmSeconds": 1.3900000000002848,
+      "confusionSeconds": 1.5799999999999983,
+      "errorSeconds": 33.850000000000506
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.65,
+      "DER": 0.31978699551570006,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 32.110000000000284,
+      "falseAlarmSeconds": 0.7400000000002152,
+      "confusionSeconds": 1.3799999999999955,
+      "errorSeconds": 34.230000000000494
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.7,
+      "DER": 0.3238041853512727,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 33.12000000000016,
+      "falseAlarmSeconds": 0.6400000000000361,
+      "confusionSeconds": 0.8999999999999915,
+      "errorSeconds": 34.66000000000019
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.75,
+      "DER": 0.3289424514200324,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 34.03000000000009,
+      "falseAlarmSeconds": 0.520000000000131,
+      "confusionSeconds": 0.6600000000000037,
+      "errorSeconds": 35.21000000000023
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.8,
+      "DER": 0.33585575485800007,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 35.070000000000235,
+      "falseAlarmSeconds": 0.32000000000005,
+      "confusionSeconds": 0.5600000000000023,
+      "errorSeconds": 35.95000000000029
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.85,
+      "DER": 0.35472720478325925,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 37.32999999999998,
+      "falseAlarmSeconds": 0.19000000000005457,
+      "confusionSeconds": 0.44999999999999574,
+      "errorSeconds": 37.97000000000003
+    },
+    {
+      "meeting": "TS3005a",
+      "threshold": 0.9,
+      "DER": 0.5425074738415535,
+      "referenceSpeakerSeconds": 107.03999999999988,
+      "missSeconds": 57.65999999999974,
+      "falseAlarmSeconds": 0.16000000000008185,
+      "confusionSeconds": 0.25,
+      "errorSeconds": 58.06999999999982
+    }
+  ],
+  "selectedEnglishThreshold": null,
+  "ChineseThresholdUnchanged": 0.5,
+  "validationReadDuringCalibration": false,
+  "speakerWeightsChanged": false,
+  "speakerCountHintProvided": false,
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "productDefaultChanged": false,
+  "scriptSha256": "03d3372ec0bd2b05f5794b58525abf99b29c6c17fafa06e651d7f2080b74e786",
+  "activityHelperSha256": "d4c3c43b0d0fde70f9e07c3919196f65d484568386f0914c4b8070d967faad02"
+}

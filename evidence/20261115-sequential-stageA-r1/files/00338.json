@@ -1,0 +1,102 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00203840-final",
+    "recordingId": "d66e8851-1944-50d3-be06-d2bd859bf495",
+    "configSha256": "94b13cfcbbf74e7a9966f5115445a4c94e9d50ba398c5760d0f0311b4f629f47",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 203840,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-021\\audio.pcm",
+    "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f",
+    "language": "English",
+    "blockFinal": true,
+    "publishedAtMonotonic": 9673.392817,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "English",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "Plus, that's a nice redesign. So, by the sounds of it, with what we're suggesting so far, your design, the user interface, is still quite open. We could go for quite an interesting design.",
+    "rawGeneratedIds": [
+      [
+        21807,
+        11,
+        429,
+        594,
+        264,
+        6419,
+        55619,
+        13,
+        2055,
+        11,
+        553,
+        279,
+        10362,
+        315,
+        432,
+        11,
+        448,
+        1128,
+        582,
+        2299,
+        22561,
+        773,
+        3041,
+        11,
+        697,
+        2884,
+        11,
+        279,
+        1196,
+        3749,
+        11,
+        374,
+        2058,
+        5008,
+        1787,
+        13,
+        1205,
+        1410,
+        728,
+        369,
+        5008,
+        458,
+        7040,
+        2884,
+        13,
+        151645
+      ]
+    ],
+    "language": "English",
+    "accepted": true,
+    "seconds": 10.224154199999248,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 9.211049800000183,
+    "allKnownDecodeSecondsIncludingFailedParents": 9.211049800000183,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 203840
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

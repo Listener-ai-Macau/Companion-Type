@@ -1,0 +1,19 @@
+{
+  "state": "PASS_DISK_FRONTEND_WHOLE_65MIN_FEATURE_FILES_EXACT",
+  "cases": [
+    {
+      "meeting": "20200707_L_R001S08C01",
+      "audioSeconds": 1982.6698125,
+      "fullFeatureFileSha256": "b951676758f26bfa2d6d961877ea18d47864217c69274fd33174b92625cb117b",
+      "wholeFileBytesExact": true
+    },
+    {
+      "meeting": "20200708_L_R002S01C01",
+      "audioSeconds": 1943.7345,
+      "fullFeatureFileSha256": "37a024479db7e0d4f721b1368d6dd8d68fff5025e23d8886edd744d483de1950",
+      "wholeFileBytesExact": true
+    }
+  ],
+  "directUpstream61sControl": "sequential-meeting-stageA-r1/speaker-r1/frontend-control.json",
+  "weightsChanged": false
+}

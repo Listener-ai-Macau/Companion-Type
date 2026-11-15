@@ -1,0 +1,159 @@
+{
+  "state": "STAGE_A_MEASURED_NOT_QUALIFIED_CONTINUE_TEXT_AND_MISSED_SPEECH_REPAIR",
+  "at": "2026-11-15T21:27:10.614232+08:00",
+  "priority": "A sequential multi-speaker original room, then B overlap, then C noise",
+  "cases": 32,
+  "seconds": 739.2621250000001,
+  "speakerReturnCases": 10,
+  "rawTextGroups": [
+    {
+      "language": "Chinese",
+      "role": "train",
+      "metric": "CER",
+      "cases": 8,
+      "seconds": 191.41068750000002,
+      "errors": 133,
+      "referenceUnits": 679,
+      "rate": 0.1958762886597938,
+      "rawTextGatePass": false,
+      "speakerReturnCases": 2,
+      "substitutions": 81,
+      "deletions": 41,
+      "insertions": 11
+    },
+    {
+      "language": "Chinese",
+      "role": "validation",
+      "metric": "CER",
+      "cases": 12,
+      "seconds": 282.29137499999996,
+      "errors": 73,
+      "referenceUnits": 1258,
+      "rate": 0.05802861685214626,
+      "rawTextGatePass": false,
+      "speakerReturnCases": 1,
+      "substitutions": 36,
+      "deletions": 24,
+      "insertions": 13
+    },
+    {
+      "language": "English",
+      "role": "validation",
+      "metric": "WER",
+      "cases": 12,
+      "seconds": 265.56006249999996,
+      "errors": 141,
+      "referenceUnits": 709,
+      "rate": 0.19887165021156558,
+      "rawTextGatePass": false,
+      "speakerReturnCases": 7,
+      "substitutions": 54,
+      "deletions": 72,
+      "insertions": 15
+    }
+  ],
+  "speakerGroups": [
+    {
+      "language": "Chinese",
+      "role": "train",
+      "cases": 8,
+      "speakerReturnCases": 2,
+      "views": {
+        "raw": {
+          "speakerAttributedErrors": 241,
+          "referenceUnits": 679,
+          "speakerAttributedErrorRate": 0.3549337260677467,
+          "unknownHypothesisUnits": 52,
+          "DERZeroCollar": 0.17258721975597516,
+          "speakerAttributedGatePass": false,
+          "DERGatePass": false
+        },
+        "exclusive": {
+          "speakerAttributedErrors": 235,
+          "referenceUnits": 679,
+          "speakerAttributedErrorRate": 0.34609720176730485,
+          "unknownHypothesisUnits": 48,
+          "DERZeroCollar": 0.16526939637549154,
+          "speakerAttributedGatePass": false,
+          "DERGatePass": false
+        }
+      }
+    },
+    {
+      "language": "Chinese",
+      "role": "validation",
+      "cases": 12,
+      "speakerReturnCases": 1,
+      "views": {
+        "raw": {
+          "speakerAttributedErrors": 77,
+          "referenceUnits": 1258,
+          "speakerAttributedErrorRate": 0.06120826709062003,
+          "unknownHypothesisUnits": 3,
+          "DERZeroCollar": 0.023336510297020194,
+          "speakerAttributedGatePass": false,
+          "DERGatePass": true
+        },
+        "exclusive": {
+          "speakerAttributedErrors": 75,
+          "referenceUnits": 1258,
+          "speakerAttributedErrorRate": 0.05961844197138315,
+          "unknownHypothesisUnits": 2,
+          "DERZeroCollar": 0.02329972063301916,
+          "speakerAttributedGatePass": false,
+          "DERGatePass": true
+        }
+      }
+    },
+    {
+      "language": "English",
+      "role": "validation",
+      "cases": 12,
+      "speakerReturnCases": 7,
+      "views": {
+        "raw": {
+          "speakerAttributedErrors": 250,
+          "referenceUnits": 709,
+          "speakerAttributedErrorRate": 0.3526093088857546,
+          "unknownHypothesisUnits": 58,
+          "DERZeroCollar": 0.20901898161969404,
+          "speakerAttributedGatePass": false,
+          "DERGatePass": false
+        },
+        "exclusive": {
+          "speakerAttributedErrors": 244,
+          "referenceUnits": 709,
+          "speakerAttributedErrorRate": 0.3441466854724965,
+          "unknownHypothesisUnits": 51,
+          "DERZeroCollar": 0.20146351333459417,
+          "speakerAttributedGatePass": false,
+          "DERGatePass": false
+        }
+      }
+    }
+  ],
+  "invalidR1EnglishScoreWithdrawn": true,
+  "fifthSpeakerCoverageFixedAtSource": true,
+  "reusedExactCases": 26,
+  "replacementCases": 6,
+  "calibrationSources": [
+    "IS1000a",
+    "TS3005a"
+  ],
+  "calibrationPeopleDisjointFromValidation": true,
+  "rejectedWithoutDevelopmentTuning": [
+    "constant activity threshold",
+    "bounded same-identity gap filling",
+    "original auxiliary single-speech head fallback"
+  ],
+  "originalPublicTrainWordsPreserved": true,
+  "newWeightsTrained": false,
+  "productDefaultChanged": false,
+  "qualityQualified": false,
+  "D2Complete": false,
+  "next": "Keep Stage A first. Chinese: actual lexical losses including fillers/erhua and short responses, not person-slot identity. English: independently repair missed speech and verbatim recognition; simple threshold/gap/aux-head changes do not qualify on independent training sources. Prepare one source-grounded component repair with train/validation independence and original long bilingual controls; do not resume overlap/noise tuning or blind tiny LoRA.",
+  "originalFullMeetingGatesChanged": false,
+  "finalHoldoutOpened": false,
+  "rawTextSha256": "cc469e7acfda616f9dcc4775c722e6d5fbca3c77e7acccc6f750130099b2b8f4",
+  "speakerScoresSha256": "c885213117bc0f1ba344f98f08321232d1aef5b27ca24c6d4aeb17a97acacce8"
+}

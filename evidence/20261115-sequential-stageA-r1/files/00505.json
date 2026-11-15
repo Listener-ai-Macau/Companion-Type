@@ -1,0 +1,84 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00187360-final",
+    "recordingId": "c1a51ea3-39e3-5dfe-b6cc-6482b2201b03",
+    "configSha256": "e64cd8b80fc08d4a0bff10dd56a37a7cf3b5f90286b06ea1c7a24f370deef8ba",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 187360,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\new-asr-r1\\sessions\\EN2001a-a2-000\\audio.pcm",
+    "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f",
+    "language": "English",
+    "blockFinal": true,
+    "publishedAtMonotonic": 10132.9323321,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "English",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "Like duplication of effort and stuff, and yeah, saying that we should maybe think about having a prototype for week six, which is.",
+    "rawGeneratedIds": [
+      [
+        12949,
+        66533,
+        315,
+        5041,
+        323,
+        6259,
+        11,
+        323,
+        21639,
+        11,
+        5488,
+        429,
+        582,
+        1265,
+        7196,
+        1744,
+        911,
+        3432,
+        264,
+        24052,
+        369,
+        2003,
+        4743,
+        11,
+        892,
+        374,
+        13,
+        151645
+      ]
+    ],
+    "language": "English",
+    "accepted": true,
+    "seconds": 6.699647200000982,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 5.6723703000006935,
+    "allKnownDecodeSecondsIncludingFailedParents": 5.6723703000006935,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 187360
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

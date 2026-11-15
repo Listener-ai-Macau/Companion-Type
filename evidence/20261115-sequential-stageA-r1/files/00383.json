@@ -1,0 +1,20 @@
+{
+  "state": "COMPLETE_STAGE_A_SPEAKER_SCORING_PENDING",
+  "startedAt": "2026-11-15T21:00:55+08:00",
+  "workerSha256": "6e06d2b6ac07d938bfb871c16a1ae77c7badfd3a636dffc0303215661c3ec51d",
+  "newTraining": false,
+  "automaticRetries": 0,
+  "qualityQualified": false,
+  "privatePeakBytes": 1270677504,
+  "pid": 18016,
+  "pidCreatedAt": 1794747659.742619,
+  "gpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "exitCode": 0,
+  "finishedAt": "2026-11-15T21:02:19+08:00",
+  "seconds": 83.64099999999962
+}

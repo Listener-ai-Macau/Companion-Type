@@ -1,0 +1,102 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00318401-final",
+    "recordingId": "d122f6d1-9a22-52d8-87cc-70f1a1556372",
+    "configSha256": "e25c09d3503567527f0dad4e7498b43fc163320f7dd19af99f863f63753dc453",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 318401,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\20200805_S_R001S01C01-seq-006\\audio.pcm",
+    "pcmSha256": "6424262715a7b43c8aa89e1e6a829cdb0019915affabac1cf04fae4d934f6368",
+    "language": "Chinese",
+    "blockFinal": true,
+    "publishedAtMonotonic": 9585.9251707,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "Chinese",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "那呃下半年的话，你们有什么计划或者说有什么想改进的地方？下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对电商问卷的结果进行分析。",
+    "rawGeneratedIds": [
+      [
+        99212,
+        119108,
+        103262,
+        100363,
+        3837,
+        101900,
+        104139,
+        101039,
+        109165,
+        104139,
+        99172,
+        105023,
+        103958,
+        11319,
+        103262,
+        99486,
+        101991,
+        18493,
+        100627,
+        100003,
+        3837,
+        101889,
+        99487,
+        116502,
+        102173,
+        103977,
+        107685,
+        100370,
+        3837,
+        101889,
+        103939,
+        104477,
+        56007,
+        106287,
+        101066,
+        9370,
+        104009,
+        3837,
+        32664,
+        101215,
+        116502,
+        105369,
+        71817,
+        101042,
+        1773,
+        151645
+      ]
+    ],
+    "language": "Chinese",
+    "accepted": true,
+    "seconds": 10.408266800001002,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 9.39284189999853,
+    "allKnownDecodeSecondsIncludingFailedParents": 9.39284189999853,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 318401
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

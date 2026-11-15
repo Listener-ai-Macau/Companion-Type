@@ -1,0 +1,27 @@
+{
+  "isFinal": true,
+  "text": "I'm not really sure we could do that, but I don't know if that makes sense. Because if all we're looking for is the frequency statistics, I don't see how that would be changed by the classification. If we need just frequencies, maybe we should just calculate them.",
+  "utterances": [
+    {
+      "text": "I'm not really sure we could do that, but I don't know if that makes sense. Because if all we're looking for is the frequency statistics, I don't see how that would be changed by the classification. If we need just frequencies, maybe we should just calculate them.",
+      "startMs": 0.0,
+      "endMs": 17930.0,
+      "speaker": null,
+      "approximateTiming": true,
+      "block": 0,
+      "revision": "00000000-00286880-final",
+      "blockFinal": true,
+      "language": "English",
+      "decodeAccepted": true,
+      "reviewRequired": false,
+      "unconfirmedAudioIntervals": []
+    }
+  ],
+  "confirmedAudioFrames": 286880,
+  "finalDecodedFrames": 286880,
+  "audioSealed": true,
+  "speakerIdentityVerified": false,
+  "reviewRequired": false,
+  "wordTimingVerified": false,
+  "qualityQualified": false
+}

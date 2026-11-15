@@ -215,3 +215,27 @@ src/contextual_speaker_binding_worker_20261115.py -text -whitespace
 src/run_contextual_speaker_binding_20261115.py -text -whitespace
 
 evidence/20261115-context-supported-composition-r1/** -text -whitespace
+
+evidence/20261115-sequential-stageA-r1/** -text -whitespace
+
+src/ami_reference_coverage_20261115.py -text -whitespace
+
+src/disk_nemotron_frontend_20261115.py -text -whitespace
+
+src/meeting_activity_threshold_20261115.py -text -whitespace
+
+src/meeting_activity_gap_20261115.py -text -whitespace
+
+src/meeting_activity_head_20261115.py -text -whitespace
+
+src/run_sequential_meeting_asr_20261115.py -text -whitespace
+
+src/run_sequential_meeting_speaker_20261115.py -text -whitespace
+
+src/score_sequential_meetings_20261115.py -text -whitespace
+
+src/score_sequential_speakers_20261115.py -text -whitespace
+
+src/sequential_meeting_asr_worker_20261115.py -text -whitespace
+
+src/sequential_meeting_speaker_worker_20261115.py -text -whitespace

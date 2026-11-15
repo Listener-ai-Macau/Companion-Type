@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "Chinese",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter",
+    "jobId": "00000000-00282021-final",
+    "pcmSha256": "55666181c83c17141992fc1975180395d0478732b5873fde82aabfff0b6c0b50",
+    "configSha256": "94d4905fa56e0bfc5afc5913b3127e3edf2820d6d426c2b30ce06c03e9c387b5"
+  },
+  "raw": {
+    "startSample": 0,
+    "endSample": 282021,
+    "text": "那咱本次会议就先到此结束，散会。还是啥也不懂。",
+    "language": "Chinese",
+    "languageHeaderPresent": false,
+    "generatedIds": [
+      99212,
+      102177,
+      101184,
+      99903,
+      80158,
+      60726,
+      26939,
+      31991,
+      80565,
+      3837,
+      99632,
+      36993,
+      1773,
+      99998,
+      101417,
+      99744,
+      100272,
+      1773,
+      151645
+    ],
+    "rawDecoded": "那咱本次会议就先到此结束，散会。还是啥也不懂。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.037837500000023
+  },
+  "rawSha256": "7ca8670acfc19a250751fb4888ca4f04e24becfb7dab239f3bee0234ce368e70"
+}

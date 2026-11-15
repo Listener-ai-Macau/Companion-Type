@@ -1,0 +1,79 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00162401-final",
+    "recordingId": "91c68bf5-c289-51dc-b510-c24dbe41fad8",
+    "configSha256": "bf9918fb530b5e66b1ab214c0e35449268be1f427932e1caa87327ab0af0b406",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 162401,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\ES2003b-seq-027\\audio.pcm",
+    "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+    "language": "English",
+    "blockFinal": true,
+    "publishedAtMonotonic": 9683.7146578,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "English",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "We put the passion into real action and such. So that's the slogan. Is that not the name?",
+    "rawGeneratedIds": [
+      [
+        1654,
+        2182,
+        279,
+        11677,
+        1119,
+        1931,
+        1917,
+        323,
+        1741,
+        13,
+        2055,
+        429,
+        594,
+        279,
+        51537,
+        13,
+        2160,
+        429,
+        537,
+        279,
+        829,
+        30,
+        151645
+      ]
+    ],
+    "language": "English",
+    "accepted": true,
+    "seconds": 5.590590800000427,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 4.577327999999397,
+    "allKnownDecodeSecondsIncludingFailedParents": 4.577327999999397,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 162401
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "at": "2026-11-15T21:15:06.428716+08:00",
+  "hypothesis": "English missed speech dominates speaker DER. Calibrate one constant activity threshold on independent public training meetings; weights/cache/slots/frontends unchanged. Do not train on validation or consult its alternative-threshold scores.",
+  "sources": [
+    {
+      "meeting": "IS1000a",
+      "officialSpeakers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "globalPeople": [
+        "FIE081",
+        "MIO016",
+        "MIO050",
+        "MIO082"
+      ],
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/IS1000a/audio/IS1000a.Array1-01.wav",
+      "role": "calibration-training",
+      "license": "CC-BY-4.0",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+    },
+    {
+      "meeting": "TS3005a",
+      "officialSpeakers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "globalPeople": [
+        "FTD019UID",
+        "MTD017PM",
+        "MTD018ID",
+        "MTD020ME"
+      ],
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/TS3005a/audio/TS3005a.Array1-01.wav",
+      "role": "calibration-training",
+      "license": "CC-BY-4.0",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+    }
+  ],
+  "officialSplitSource": "https://groups.inf.ed.ac.uk/ami/corpus/datasets.shtml",
+  "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+  "thresholds": [
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4,
+    0.45,
+    0.5,
+    0.55,
+    0.6,
+    0.65,
+    0.7,
+    0.75,
+    0.8,
+    0.85,
+    0.9
+  ],
+  "referenceSelection": "All complete annotation-only greedy10–29.84s nonoverlap multi-speaker windows from both training meetings, using all official speakers, not model scores.",
+  "objective": "Minimize maximum of the two training-meeting zero-collar DERs. Tie choose value closest to0.5, then higher. Fixed whole-meeting identity mapping from original0.5 for every threshold.",
+  "adoptionRule": "Both training meetings must have DER<=10%, and mean DER must improve>=1 percentage point vs0.5. Otherwise reject without running alternative validation thresholds. If supported, evaluate only the chosen one on frozen development12 English windows, retain Chinese original0.5. No product adoption without original full-meeting bilingual controls.",
+  "qualityGatesUnchanged": true,
+  "newModelDownloads": false,
+  "newWeightTraining": false,
+  "finalHoldoutOpened": false
+}

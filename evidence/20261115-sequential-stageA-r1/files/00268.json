@@ -1,0 +1,73 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00203360-final",
+    "recordingId": "1176b394-716e-5c1a-a908-a6e6f80758a9",
+    "configSha256": "ee5e1e7da6be4178ad9ef9de60e3dd2002b0453e1f48e48615af9de99d73c801",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 203360,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\asr-r2\\sessions\\EN2001a-seq-000\\audio.pcm",
+    "pcmSha256": "4c120d10ec5695b80b5dbf2b6579c251d408716b50fbe804d21722ac8ff6b3f7",
+    "language": "English",
+    "blockFinal": true,
+    "publishedAtMonotonic": 9689.4066141,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "English",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "Does anyone want to see Steve's feedback from the specification? I'm ready.",
+    "rawGeneratedIds": [
+      [
+        21468,
+        5489,
+        1366,
+        311,
+        1490,
+        13809,
+        594,
+        11055,
+        504,
+        279,
+        25128,
+        30,
+        358,
+        2776,
+        5527,
+        13,
+        151645
+      ]
+    ],
+    "language": "English",
+    "accepted": true,
+    "seconds": 4.470808500000203,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 3.4578760000003967,
+    "allKnownDecodeSecondsIncludingFailedParents": 3.4578760000003967,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 203360
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

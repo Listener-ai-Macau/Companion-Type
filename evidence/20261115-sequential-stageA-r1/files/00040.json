@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-15T21:25:18.891703+08:00",
+  "state": "FROZEN_SINGLE_ACTIVITY_HEAD_ROUTING_BEFORE_TRAINING_SCORE",
+  "hypothesis": "Keep original native0.5 activities; only when no slot active, original pretrained3-class activity head predicts single speech with softmax>.5 and top slot has>=.8 of total native probability mass, assign that one original slot. No temporal padding or cache changes.",
+  "helperSha256": "39be6845a6e32cce11e4aa85df0a4d6a74880d7ae04dcce94bf17e723ba778ff",
+  "gridOrAlternativeSettings": false,
+  "gate": "Both independent training meetings zero-collar DER<=10% and mean>=1pp better; otherwise reject without development. Exactly one fixed setting, no tuning on validation.",
+  "reuseSameTrainingWindowsAndGlobalMappings": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\activity-cal-r1\\decision.json",
+  "newWeightsOrNeuralCalls": false,
+  "EnglishOnlyDiagnostic": true,
+  "ChineseDefaultUnchanged": true,
+  "referenceOrSpeakerCountsInInference": false
+}
