@@ -1,0 +1,39 @@
+{
+  "state": "FAILED_OR_STOPPED_STAGED_DECODE",
+  "meeting": "ES2003b",
+  "startedAt": "2026-11-16T07:36:35.719751+08:00",
+  "referenceRead": false,
+  "speakerCountsUsed": false,
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "automaticRetries": 0,
+  "limits": {
+    "pid": 20784,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1215438848,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "blas": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "generatedTokens": 5181,
+  "retainedPrefixTokens": 4064,
+  "decodeSeconds": 996.3236528999987,
+  "tokensPerSecond": 1.1211216313613037,
+  "error": "InterruptedError('Owned stop/deadline, original cache retained')",
+  "finishedAt": "2026-11-16T07:54:08.483652+08:00",
+  "seconds": 1052.764550900003
+}

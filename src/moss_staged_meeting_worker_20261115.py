@@ -105,12 +105,19 @@ def main():
      if len(token_times)<64:token_times.append({'tokens':n,'seconds':time.perf_counter()-tick})
      if n==1 or time.monotonic()-last[0]>15:
       state.update(state='DECODING_COMPLETE_CONTEXT_CPU_EOS',generatedTokens=n,retainedPrefixTokens=len(resume),
-       decodeSeconds=time.perf_counter()-tick,tokensPerSecond=(n-len(resume))/(time.perf_counter()-tick));save()
+       decodeSeconds=time.perf_counter()-tick,tokensPerSecond=(n-len(resume))/(time.perf_counter()-tick),
+       gpuAllocatedBytes=torch.cuda.memory_allocated(),gpuReservedBytes=torch.cuda.memory_reserved());save()
       atomic_json(a.run/(a.meeting+'-partial-ids.json'),{'generatedIds':generated,'audioSha256':case['audioSha256'],
        'notFinal':True,'qualityQualified':False});last[0]=time.monotonic()
+    def allocator_release(event):
+     event=dict(event,at=datetime.now().astimezone().isoformat(),meeting=a.meeting)
+     state['gpuLastUnusedCacheRelease']=event
+     with (a.run/(a.meeting+'-gpu-allocator-events.jsonl')).open('a',encoding='utf-8') as log:
+      log.write(json.dumps(event)+'\n')
     with torch.inference_mode():generated,restored=greedy(model,cache,logits,torch=torch,
      max_tokens=case.get('maxNewTokens',32768),expected_prefix=expected,resume_prefix=resume,checkpoint=checkpoint,progress=advance,
-     step_pause_seconds=B.get('decodeStepPauseSeconds',0.),synchronize_each_forward=B.get('synchronizeEachDecodeForward',False))
+     step_pause_seconds=B.get('decodeStepPauseSeconds',0.),synchronize_each_forward=B.get('synchronizeEachDecodeForward',False),
+     release_unused_interval=case.get('releaseUnusedInterval',B.get('decodeReleaseUnusedInterval',0)),on_memory_release=allocator_release)
     output=torch.tensor([generated],dtype=torch.long)
    else:
     with torch.inference_mode():output=model.generate(input_ids=ids,attention_mask=mask,past_key_values=cache,disable_compile=True,

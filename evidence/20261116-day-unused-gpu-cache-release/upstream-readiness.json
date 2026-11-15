@@ -1,0 +1,50 @@
+{
+  "at": "2026-11-16T07:42:16.020635+08:00",
+  "purpose": "Background preparation for the existing architecture comparison and later training decision; no new model/data/training launched.",
+  "model": {
+    "id": "OpenMOSS-Team/MOSS-Transcribe-Diarize",
+    "size": "0.9B",
+    "declaredLicense": "Apache-2.0",
+    "source": "https://huggingface.co/OpenMOSS-Team/MOSS-Transcribe-Diarize",
+    "sameModelFamilyAsExistingCandidate": true
+  },
+  "officialFineTuning": {
+    "source": "https://github.com/OpenMOSS/MOSS-Transcribe-Diarize/blob/main/FINETUNING.md",
+    "targetFormat": "[start][Sxx]text[end] with one audio/conversation per JSONL record",
+    "trainingNotStarted": true,
+    "documentationExampleNotAdoptedAsUnvalidatedHyperparameters": true
+  },
+  "potentialPublicCorpora": [
+    {
+      "name": "AMI",
+      "declaredDataLicense": "CC BY 4.0",
+      "source": "https://groups.inf.ed.ac.uk/ami/corpus/"
+    },
+    {
+      "name": "AISHELL-4",
+      "declaredDataLicense": "CC BY-SA 4.0",
+      "source": "https://www.openslr.org/111/",
+      "baselineCodeSeparatelyApache20": "https://github.com/felixfuyihui/AISHELL-4"
+    },
+    {
+      "name": "AliMeeting",
+      "declaredDataLicense": "CC BY-SA 4.0",
+      "source": "https://www.openslr.org/119/",
+      "newDownloadsPerformed": false
+    }
+  ],
+  "deployment": {
+    "officialSource": "https://github.com/OpenMOSS/MOSS-Transcribe-Diarize",
+    "recommendedServing": "SGLang Omni currently targets CUDA13; documented alternative vLLM CUDA12/13",
+    "currentWindowsAmdRuntimeNotEquivalentToPublishedH100ServingBenchmark": true,
+    "newServingStackInstalled": false
+  },
+  "evaluationBoundary": {
+    "upstreamHeadlineNumbersNotSubstitutedForOurWholeSingleMicScores": true,
+    "sameAudioScoringComparisonRequired": true,
+    "commercialReleaseNotCertifiedByLicenseLabels": true,
+    "newNeuralCalls": 0,
+    "factsGateStillOpen": true,
+    "finalHoldoutOpened": false
+  }
+}

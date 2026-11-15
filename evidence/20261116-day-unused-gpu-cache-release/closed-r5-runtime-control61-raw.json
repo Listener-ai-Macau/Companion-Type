@@ -1,0 +1,149 @@
+{
+  "meeting": "runtime-control61",
+  "audioSha256": "5fb4dbdbb6991475d382e7729dd72c954fa2fa6ac3ddb80d3dc287495c119817",
+  "audioSeconds": 61.003,
+  "generatedIds": [
+    58,
+    19,
+    19,
+    13,
+    16,
+    16,
+    60,
+    42474,
+    15,
+    16,
+    60,
+    56568,
+    104241,
+    99212,
+    99544,
+    100316
+  ],
+  "rawDecoded": "[44.11][S01]你还在那吸氧",
+  "parsedSegments": [],
+  "naturalEos": false,
+  "seconds": 3.577740000000631,
+  "inputTokens": 872,
+  "completeOriginalRecordingInput": false,
+  "noSpeakerResetOrContextTruncation": true,
+  "referenceUsed": false,
+  "speakerCountsUsed": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "stagedCacheRestoredBitExact": true,
+  "cacheManifestSha256": "81b78e2e766ba37337846fb847f5df61674e726d98b777c0f587c6164d14c670",
+  "cachedPrefillLogitsReplayedOnce": false,
+  "completedAcousticModulesRemovedBeforeRestore": true,
+  "prefixMatched": 16,
+  "generationLoop": "batch1-native-argmax-cpu-eos",
+  "resumeProof": {
+    "savedFirstLogitsUsedOrVerified": true,
+    "originalGeneratedPrefixTokensReplayed": 8,
+    "noReferenceTeacherForcing": true,
+    "allOriginalGeneratedPrefixIdsPreserved": true,
+    "cpuEosDecision": true,
+    "stepPauseSeconds": 0.05,
+    "synchronizeEachForward": true
+  },
+  "nativeParseError": null,
+  "first64TokenTiming": [
+    {
+      "tokens": 9,
+      "seconds": 2.0644677999989653
+    },
+    {
+      "tokens": 10,
+      "seconds": 2.2534608999994816
+    },
+    {
+      "tokens": 11,
+      "seconds": 2.430035900000803
+    },
+    {
+      "tokens": 12,
+      "seconds": 2.6059061999985715
+    },
+    {
+      "tokens": 13,
+      "seconds": 2.920290099998965
+    },
+    {
+      "tokens": 14,
+      "seconds": 3.126868600000307
+    },
+    {
+      "tokens": 15,
+      "seconds": 3.33501299999989
+    },
+    {
+      "tokens": 16,
+      "seconds": 3.5776086000005307
+    }
+  ],
+  "producer": {
+    "meeting": "runtime-control61",
+    "audioSha256": "5fb4dbdbb6991475d382e7729dd72c954fa2fa6ac3ddb80d3dc287495c119817",
+    "frames": 976048,
+    "audioSeconds": 61.003,
+    "prefillSeconds": 3.0465523999992,
+    "allOriginalWindows": 3,
+    "executionStats": {
+      "sdpaCalls": 196,
+      "blockedCalls": 0,
+      "maxQueryTokens": 128,
+      "maxKeyTokens": 872,
+      "keyStreamedCalls": 0,
+      "keyTiles": 0,
+      "maximumScoreTileElements": 0,
+      "encoderCalls": 1,
+      "encoderChunks": 3,
+      "queryBlock": 128,
+      "keyBlock": 1024,
+      "encoderBatch": 2
+    },
+    "prefillStats": {
+      "prefillCalls": 1,
+      "blocks": 7,
+      "maximumBlockTokens": 128,
+      "maximumRetainedTokens": 872,
+      "tokenBlock": 128,
+      "allKeysRetained": true,
+      "speakerOrAudioResets": 0
+    },
+    "nativeWeightProof": {
+      "state": "PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED",
+      "tensorCount": 683,
+      "dataBytesCopied": 1817026560,
+      "maximumTransferChunkBytes": 8388608,
+      "scratchBytes": 8388608,
+      "roundtripBufferBytes": 8388608,
+      "roundtripCpuBufferReused": true,
+      "fileSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+      "deviceRoundtripSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+      "selectedSourceBytesSha256": "35eadbca9e50d0ce71f21a67c38fe8a3f91a4dbbfb53ac70ea809048f39c1b31",
+      "selectedDeviceBytesSha256": "35eadbca9e50d0ce71f21a67c38fe8a3f91a4dbbfb53ac70ea809048f39c1b31",
+      "selectedPrefixes": null,
+      "sourceTensorCount": 683,
+      "skippedTensorCount": 0,
+      "targetDevice": "cuda:0",
+      "mmapUsed": false,
+      "wholeCpuStateDictCreated": false,
+      "seconds": 14.299881999999343,
+      "nativeClass": "MossTranscribeDiarizeForConditionalGeneration",
+      "nativePublishedCheckpointSha256": "2caea232f4ac46367ed97373542b92e4dc1fa11e4e30dfd5f6d874abb618d127",
+      "tensorReuseProofSha256": "df0788957882b55fb0c9025ab72a721c0e99740ae7589845c2d5f87eaf289e8d",
+      "allNativeKeysLoadedExceptTiedHead": [
+        "lm_head.weight"
+      ],
+      "deterministicBuffersPreserved": [
+        "model.language_model.rotary_emb.inv_freq",
+        "model.language_model.rotary_emb.original_inv_freq"
+      ],
+      "weightsChanged": false,
+      "remoteCodeUsed": false,
+      "loadSeconds": 14.550680500000453
+    }
+  },
+  "timestampOutOfBoundsSegments": []
+}

@@ -11,11 +11,25 @@ def install_prefix_replay_attention(*,torch):
  def scheduled(*args,**kwargs):return bounded_sdpa(keyed,*args,**kwargs,query_block=128)
  F.scaled_dot_product_attention=scheduled
 def greedy(model,cache,logits,*,torch,max_tokens,expected_prefix,resume_prefix,checkpoint,progress,
-           step_pause_seconds=0.,synchronize_each_forward=False):
+           step_pause_seconds=0.,synchronize_each_forward=False,release_unused_interval=0,on_memory_release=None):
  import time
  assert 0.<=step_pause_seconds<=.25
+ assert isinstance(release_unused_interval,int) and release_unused_interval>=0
+ forward_count=0;release_count=0
+ def release_allocator(reason):
+  nonlocal release_count
+  torch.cuda.synchronize()
+  event={'forwardCount':forward_count,'contextTokens':int(cache.get_seq_length()),'reason':reason,
+   'beforeAllocatedBytes':torch.cuda.memory_allocated(),'beforeReservedBytes':torch.cuda.memory_reserved()}
+  torch.cuda.empty_cache();release_count+=1
+  event.update(afterAllocatedBytes=torch.cuda.memory_allocated(),afterReservedBytes=torch.cuda.memory_reserved())
+  if on_memory_release:on_memory_release(event)
  def settle():
+  nonlocal forward_count
+  forward_count+=1
   if synchronize_each_forward:torch.cuda.synchronize()
+  if release_unused_interval and forward_count%release_unused_interval==0:
+   release_allocator('periodic-unused-allocation-release')
   if step_pause_seconds:time.sleep(step_pause_seconds)
   checkpoint()
  assert not model.training and not torch.is_grad_enabled()
@@ -39,6 +53,7 @@ def greedy(model,cache,logits,*,torch,max_tokens,expected_prefix,resume_prefix,c
    settle()
    assert result.past_key_values is cache;logits=result.logits
   assert int(cache.get_seq_length())==initial+len(generated)
+  if release_unused_interval:release_allocator('retained-prefix-replay-complete')
  while len(generated)<max_tokens:
   checkpoint();token=int(logits[0,-1].float().argmax().item())
   if len(generated)<len(expected_prefix):assert token==expected_prefix[len(generated)],('Native greedy prefix diverged',len(generated)+1)
@@ -49,4 +64,5 @@ def greedy(model,cache,logits,*,torch,max_tokens,expected_prefix,resume_prefix,c
   assert result.past_key_values is cache;logits=result.logits
  return generated,{'savedFirstLogitsUsedOrVerified':True,'originalGeneratedPrefixTokensReplayed':len(resume_prefix),
   'noReferenceTeacherForcing':True,'allOriginalGeneratedPrefixIdsPreserved':True,'cpuEosDecision':True,
-  'stepPauseSeconds':step_pause_seconds,'synchronizeEachForward':synchronize_each_forward}
+  'stepPauseSeconds':step_pause_seconds,'synchronizeEachForward':synchronize_each_forward,
+  'unusedAllocatorReleaseInterval':release_unused_interval,'unusedAllocatorReleaseCount':release_count}

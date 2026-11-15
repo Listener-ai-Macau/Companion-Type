@@ -1,0 +1,33 @@
+{
+  "state": "PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED",
+  "tensorCount": 683,
+  "dataBytesCopied": 1817026560,
+  "maximumTransferChunkBytes": 8388608,
+  "scratchBytes": 8388608,
+  "roundtripBufferBytes": 8388608,
+  "roundtripCpuBufferReused": true,
+  "fileSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+  "deviceRoundtripSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+  "selectedSourceBytesSha256": "35eadbca9e50d0ce71f21a67c38fe8a3f91a4dbbfb53ac70ea809048f39c1b31",
+  "selectedDeviceBytesSha256": "35eadbca9e50d0ce71f21a67c38fe8a3f91a4dbbfb53ac70ea809048f39c1b31",
+  "selectedPrefixes": null,
+  "sourceTensorCount": 683,
+  "skippedTensorCount": 0,
+  "targetDevice": "cuda:0",
+  "mmapUsed": false,
+  "wholeCpuStateDictCreated": false,
+  "seconds": 17.014961299999413,
+  "nativeClass": "MossTranscribeDiarizeForConditionalGeneration",
+  "nativePublishedCheckpointSha256": "2caea232f4ac46367ed97373542b92e4dc1fa11e4e30dfd5f6d874abb618d127",
+  "tensorReuseProofSha256": "df0788957882b55fb0c9025ab72a721c0e99740ae7589845c2d5f87eaf289e8d",
+  "allNativeKeysLoadedExceptTiedHead": [
+    "lm_head.weight"
+  ],
+  "deterministicBuffersPreserved": [
+    "model.language_model.rotary_emb.inv_freq",
+    "model.language_model.rotary_emb.original_inv_freq"
+  ],
+  "weightsChanged": false,
+  "remoteCodeUsed": false,
+  "loadSeconds": 17.24557300000015
+}
