@@ -1,0 +1,4 @@
+W1115 16:28:57.349000 10500 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1030: 找不到指定的模块。
+
+{"state": "COMPLETE_PUBLIC_INDEPENDENT_VOICE_EXTRACTOR_DIAGNOSIS_SCORE_PENDING", "error": null, "explicitForwardCalls": 8, "seconds": 67.34836159998667}

@@ -1,0 +1,114 @@
+[
+  {
+    "id": "clip-01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\wespeaker-public-20261115\\audio\\clip-01.wav",
+    "audioSha256": "d2c4614729182ac7738c1846f7f3ac1a25270eaf5e4e5fd15664065b9e9f560d",
+    "audioSeconds": 5.1658125,
+    "role": "profile",
+    "referenceSpeaker": "001-M",
+    "sourceStartFrame": 750240,
+    "sourceEndFrame": 832893,
+    "referenceUtterance": {
+      "start": 46.88996,
+      "end": 52.055792050583115,
+      "speaker": "001-M",
+      "text": "嗯我们现在面临，嗯<sil>人群比较广阔"
+    }
+  },
+  {
+    "id": "clip-02",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\wespeaker-public-20261115\\audio\\clip-02.wav",
+    "audioSha256": "b8520c36e0b159d1e8fd67c5f6c470eb54a8f72035d8bdd2fc9624813c855ae2",
+    "audioSeconds": 4.105,
+    "role": "profile",
+    "referenceSpeaker": "003-M",
+    "sourceStartFrame": 7140097,
+    "sourceEndFrame": 7205777,
+    "referenceUtterance": {
+      "start": 446.25606,
+      "end": 450.36106,
+      "speaker": "003-M",
+      "text": "目前还算比较好的，要。"
+    }
+  },
+  {
+    "id": "clip-03",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\wespeaker-public-20261115\\audio\\clip-03.wav",
+    "audioSha256": "4775abb6be954e2cc1cd522deb4ad256914f5f3499f7995f606059000b6e854a",
+    "audioSeconds": 7.4050625,
+    "role": "profile",
+    "referenceSpeaker": "004-M",
+    "sourceStartFrame": 3891437,
+    "sourceEndFrame": 4009918,
+    "referenceUtterance": {
+      "start": 243.21479,
+      "end": 250.6198561737946,
+      "speaker": "004-M",
+      "text": "然后整体贷的额度吧，啊每个人平均下来就是，呃十五万左右"
+    }
+  },
+  {
+    "id": "clip-04",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\wespeaker-public-20261115\\audio\\clip-04.wav",
+    "audioSha256": "79ce6d93279a27762e0da87cdf7ba902034b3b53a64ac28c0ffef2fd402ebd7a",
+    "audioSeconds": 3.995,
+    "role": "profile",
+    "referenceSpeaker": "006-M",
+    "sourceStartFrame": 412704,
+    "sourceEndFrame": 476624,
+    "referenceUtterance": {
+      "start": 25.79396,
+      "end": 29.78897,
+      "speaker": "006-M",
+      "text": "行，好的，今天把各位叫过来开一个咱那个<sil>"
+    }
+  },
+  {
+    "id": "clip-05",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\wespeaker-public-20261115\\audio\\clip-05.wav",
+    "audioSha256": "6bcea54e85a2bf5bb479754c4d2fe772dd814d153c7a23d59fcb86b290aa8d89",
+    "audioSeconds": 5.64,
+    "role": "query",
+    "referenceSpeaker": "003-M",
+    "sourceStartFrame": 24097820,
+    "sourceEndFrame": 24188060,
+    "referenceUtterance": {
+      "start": 1506.11371,
+      "end": 1511.75371,
+      "speaker": "003-M",
+      "text": "咱肯定是要把他如果不还的话，肯定是要哦列入失信名单的"
+    }
+  },
+  {
+    "id": "clip-06",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\wespeaker-public-20261115\\audio\\clip-06.wav",
+    "audioSha256": "bedd7b7b2b33926bc3351ab070e203195708175cd7b49f671512a4c34edd6896",
+    "audioSeconds": 3.3636875,
+    "role": "query",
+    "referenceSpeaker": "003-M",
+    "sourceStartFrame": 24459740,
+    "sourceEndFrame": 24513559,
+    "referenceUtterance": {
+      "start": 1528.7337,
+      "end": 1532.0973753582803,
+      "speaker": "003-M",
+      "text": "如果不还的话，他的损失可能会更大"
+    }
+  },
+  {
+    "id": "clip-07",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\wespeaker-public-20261115\\audio\\clip-07.wav",
+    "audioSha256": "0e99b44cd0e7f77b1db251e9c0153d5cbf61f428c547acbf453486dd49d10531",
+    "audioSeconds": 5.2999375,
+    "role": "query",
+    "referenceSpeaker": "003-M",
+    "sourceStartFrame": 24615260,
+    "sourceEndFrame": 24700059,
+    "referenceUtterance": {
+      "start": 1538.45369,
+      "end": 1543.75368,
+      "speaker": "003-M",
+      "text": "嗯<sil>像呃亲人的或者呃"
+    }
+  }
+]

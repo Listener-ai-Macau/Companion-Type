@@ -1,0 +1,203 @@
+{
+  "state": "FIXED_INDEPENDENT_PUBLIC_VOICE_PROBE_REJECTED_NO_DIRECT_COMBINATION_ADOPTION",
+  "at": "2026-11-15T16:34:59.774903+08:00",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\independent-voice-return-probe-r1\\annotation-source-cross-check.json",
+      "logicalPath": "control/annotation-source-cross-check.json",
+      "file": "files/00000.json",
+      "bytes": 1694,
+      "sha256": "d61bd081bae2a140969daceec9187eaa4eb3bef3f61f79404083a698bc0234a8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\independent-voice-return-probe-r1\\audio-only.json",
+      "logicalPath": "control/audio-only.json",
+      "file": "files/00001.json",
+      "bytes": 1777,
+      "sha256": "89cf474ce95831b3602673fb2eaa1835dfd05968d469d707f57f1f3a1cc4ea97"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\independent-voice-return-probe-r1\\decision.json",
+      "logicalPath": "control/decision.json",
+      "file": "files/00002.json",
+      "bytes": 2518,
+      "sha256": "b3c4dad983c96f7aab2a567a13f9c043de20a1983bbbbc3c8003ee538b41a986"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\independent-voice-return-probe-r1\\model-binding.json",
+      "logicalPath": "control/model-binding.json",
+      "file": "files/00003.json",
+      "bytes": 855,
+      "sha256": "61945f8132565aaa2548907c1bd6de1ec431ee4762f728e3bdd7637749902893"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\independent-voice-return-probe-r1\\owner-report-before-final-simplification.txt",
+      "logicalPath": "control/owner-report-before-final-simplification.txt",
+      "file": "files/00004.txt",
+      "bytes": 4302,
+      "sha256": "b3c361b9aacc21aeaf072074cceebe0f6845e4e48aac76019ee46780f4f4514b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\independent-voice-return-probe-r1\\planned-probe.json",
+      "logicalPath": "control/planned-probe.json",
+      "file": "files/00005.json",
+      "bytes": 2497,
+      "sha256": "51293e390f6d936a29e3bef6e32d8defdc93222b461de0855b189385db2fd100"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\independent-voice-return-probe-r1\\protocol.json",
+      "logicalPath": "control/protocol.json",
+      "file": "files/00006.json",
+      "bytes": 2396,
+      "sha256": "937e20d6602c8459c05a3a5d73b1745969a5b3ca82c6f4f4057d8261aeac8266"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\independent-voice-return-probe-r1\\public-model-metadata.json",
+      "logicalPath": "control/public-model-metadata.json",
+      "file": "files/00007.json",
+      "bytes": 6625,
+      "sha256": "dbda243ddbe5f66c0ec544211713fed7ec2964e99e0004b349560b5f6e6dc4d0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\independent-voice-return-probe-r1\\scoring-only.json",
+      "logicalPath": "control/scoring-only.json",
+      "file": "files/00008.json",
+      "bytes": 3990,
+      "sha256": "c27a33ec8b13ed2e77cd0edfe310febe72dc375804e1f13dd733dc742d7e4d1e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\independent-voice-return-probe-r1\\worker-binding.json",
+      "logicalPath": "control/worker-binding.json",
+      "file": "files/00009.json",
+      "bytes": 840,
+      "sha256": "66a5130790e0870fccc07125a3ce1c75ab7c722d726c0aca20243bc243eb5613"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\independent-voice-return-probe-r1\\probe-r1\\embeddings.npy",
+      "logicalPath": "runs/probe-r1/embeddings.npy",
+      "file": "files/00010.npy",
+      "bytes": 7296,
+      "sha256": "98408c5161aca8ceead1cb747976f43100ab3413b9cc163f98b423c8b3d354a9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\independent-voice-return-probe-r1\\probe-r1\\inventory.log",
+      "logicalPath": "runs/probe-r1/inventory.log",
+      "file": "files/00011.log",
+      "bytes": 579,
+      "sha256": "faaa99d5e16a811e90848c4c232fdaf6df14c7e87e4f77adaaa8b924cd355e4e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\independent-voice-return-probe-r1\\probe-r1\\run.json",
+      "logicalPath": "runs/probe-r1/run.json",
+      "file": "files/00012.json",
+      "bytes": 646,
+      "sha256": "2b4f3c7699f3179bff7c928914a19b5a81144dde80a5b63ea74bc33303685d26"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\independent-voice-return-probe-r1\\probe-r1\\state.json",
+      "logicalPath": "runs/probe-r1/state.json",
+      "file": "files/00013.json",
+      "bytes": 2293,
+      "sha256": "c4c5abb93101e9db132708c542ca4a18c9006f2a1b18a991b36b84178f94aed3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\independent-voice-return-probe-r1\\probe-r1\\worker.log",
+      "logicalPath": "runs/probe-r1/worker.log",
+      "file": "files/00014.log",
+      "bytes": 428,
+      "sha256": "5e545124726f30b83cfc8923cbf50a42daf9345dd63e11f10c5625e9b4965473"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\independent-voice-return-probe-r1\\probe-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "runs/probe-r1/inventory/hip-inventory.json",
+      "file": "files/00015.json",
+      "bytes": 1391,
+      "sha256": "6186c200e383cd20c7679d0b2763c41b6c316a33c4a0818b3a247114e01c4332"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\independent-voice-return-probe-r1\\probe-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "runs/probe-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00016.jsonl",
+      "bytes": 1960,
+      "sha256": "aa91419acafd5f2c76a5623be4027c0edd96728cd3a55033791e232c6d8a3324"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\independent-voice-return-probe-r1\\probe-r1\\inventory\\inventory-run.json",
+      "logicalPath": "runs/probe-r1/inventory/inventory-run.json",
+      "file": "files/00017.json",
+      "bytes": 610,
+      "sha256": "2598f74ff3b0ea7cf18227be1909b19be81141d6a8871a2dc08d31d9ac9d1901"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\independent-voice-return-probe-r1\\probe-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "runs/probe-r1/inventory/inventory-worker.log",
+      "file": "files/00018.log",
+      "bytes": 1210,
+      "sha256": "bda78aa1a72577250b3bd1a509a3356a29eb5225622661f07b6c491a69ffc112"
+    },
+    {
+      "source": "work\\prepare_independent_voice_return_probe_20261115.py",
+      "logicalPath": "continuation-tools/prepare_independent_voice_return_probe_20261115.py",
+      "file": "files/00019.py",
+      "bytes": 6487,
+      "sha256": "39ab750f25ca5d77dc0bb7f2eb352156e15593c378fe66822454379381aa369a"
+    },
+    {
+      "source": "work\\freeze_independent_voice_return_probe_20261115.py",
+      "logicalPath": "continuation-tools/freeze_independent_voice_return_probe_20261115.py",
+      "file": "files/00020.py",
+      "bytes": 4823,
+      "sha256": "b78d01877917f203dca4a4189739bfbe37f1ec449fde054463eb03c92d65e258"
+    },
+    {
+      "source": "work\\score_independent_voice_return_probe_20261115.py",
+      "logicalPath": "continuation-tools/score_independent_voice_return_probe_20261115.py",
+      "file": "files/00021.py",
+      "bytes": 3453,
+      "sha256": "9fe5f495a1e3556cf659c7fa28f10136a2385f928c5e511e2240fa88e3f7a775"
+    },
+    {
+      "source": "work\\record_independent_voice_return_probe_result_20261115.py",
+      "logicalPath": "continuation-tools/record_independent_voice_return_probe_result_20261115.py",
+      "file": "files/00022.py",
+      "bytes": 5384,
+      "sha256": "a049681b863922f42ab77d62596855394f47d79588e0177b397e59ab4b5820af"
+    },
+    {
+      "source": "work\\finalize_public_training_owner_report_20261115.py",
+      "logicalPath": "continuation-tools/finalize_public_training_owner_report_20261115.py",
+      "file": "files/00023.py",
+      "bytes": 5129,
+      "sha256": "fb57b28358a92e3ebb0dbb7ff461b16eee782ec9cb94f3cd9346f44a2ee1c900"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "logicalPath": "canonical-workpoint-snapshot.json",
+      "file": "files/00024.json",
+      "bytes": 133969,
+      "sha256": "ee4748feba7c8707db635c8c1823712b372e6b278d2a7991d3933732102f5082"
+    },
+    {
+      "source": "outputs\\Companion-公开会议训练实际结果-20261115.txt",
+      "logicalPath": "owner-notes/Companion-公开会议训练实际结果-20261115.txt",
+      "file": "files/00025.txt",
+      "bytes": 3809,
+      "sha256": "983b5a96c0f371951344e91e7757ce0d84f017a25560d4fd2356dbbae5c1d271"
+    },
+    {
+      "source": "outputs\\Companion-社区可行性与实际进度-20261115.txt",
+      "logicalPath": "owner-notes/Companion-社区可行性与实际进度-20261115.txt",
+      "file": "files/00026.txt",
+      "bytes": 7537,
+      "sha256": "af1f29029a7ccbb7d34c3cb6b4afb5c426c3f5a822d7f9849115de4dcf4462a8"
+    }
+  ],
+  "d1Complete": true,
+  "d2Complete": false,
+  "sourceAudioOrBaseWeightsCopied": false,
+  "newModelTraining": false,
+  "shippedDefaultChanged": false,
+  "referenceAssistedCutsDiagnosticOnly": true,
+  "sourceParentCommit": "61de93ac1a898cec044548eebb0c088462adddc5",
+  "ownerParticipationRequired": false
+}

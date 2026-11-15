@@ -1,0 +1,22 @@
+{
+  "state": "COMPLETE_INDEPENDENT_VOICE_PROBE_SCORING_PENDING",
+  "startedAt": "2026-11-15T16:26:46+08:00",
+  "phase": "trial",
+  "index": 0,
+  "workerSha256": "38d6a665bda6f0ae66d097d0d5577474b527eba420aa8aef2d94d33d1cbb2106",
+  "newTraining": false,
+  "automaticRetries": 0,
+  "qualityQualified": false,
+  "privatePeakBytes": 1165676544,
+  "pid": 28540,
+  "pidCreatedAt": 1794731215.9743948,
+  "gpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "exitCode": 0,
+  "finishedAt": "2026-11-15T16:29:21+08:00",
+  "seconds": 154.68799999999464
+}

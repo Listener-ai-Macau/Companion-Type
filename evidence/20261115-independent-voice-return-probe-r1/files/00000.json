@@ -1,0 +1,52 @@
+{
+  "state": "OFFICIAL_RTTM_AND_TEXTGRID_AGREE_ON_ALL_SEVEN_DIAGNOSTIC_LABELS",
+  "at": "2026-11-15T16:33:33+08:00",
+  "rttm": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S07C01.rttm",
+  "rttmSha256": "ac65b82e42e5cb3949822064f086c6dbd543ae7ad77f5869dcb456810a329884",
+  "cases": [
+    {
+      "id": "clip-01",
+      "textgridSpeaker": "001-M",
+      "rttmSpeaker": "001-M",
+      "matchingLabel": true
+    },
+    {
+      "id": "clip-02",
+      "textgridSpeaker": "003-M",
+      "rttmSpeaker": "003-M",
+      "matchingLabel": true
+    },
+    {
+      "id": "clip-03",
+      "textgridSpeaker": "004-M",
+      "rttmSpeaker": "004-M",
+      "matchingLabel": true
+    },
+    {
+      "id": "clip-04",
+      "textgridSpeaker": "006-M",
+      "rttmSpeaker": "006-M",
+      "matchingLabel": true
+    },
+    {
+      "id": "clip-05",
+      "textgridSpeaker": "003-M",
+      "rttmSpeaker": "003-M",
+      "matchingLabel": true
+    },
+    {
+      "id": "clip-06",
+      "textgridSpeaker": "003-M",
+      "rttmSpeaker": "003-M",
+      "matchingLabel": true
+    },
+    {
+      "id": "clip-07",
+      "textgridSpeaker": "003-M",
+      "rttmSpeaker": "003-M",
+      "matchingLabel": true
+    }
+  ],
+  "originalReferenceChanged": false,
+  "interpretation": "Two annotation formats agree but are not independent human identity verification. Independent pretrained voice representation also groups the late003-M examples nearer early004-M than early003-M. This remains unresolved model/profile/domain/annotation uncertainty, not grounds to relabel gold or claim the full model corrected."
+}
