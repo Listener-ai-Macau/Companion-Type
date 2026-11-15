@@ -2,7 +2,7 @@ import {meetingMapModel,type MeetingMapSection} from './meetingMap';
 import {meetingGlanceQualifier} from './meetingGlance';
 
 export type MeetingReaderItem={text:string;body:string;qualifier:string;section:string};
-export type MeetingReaderGroup={id:'decisions'|'questions'|'actions';label:string;items:MeetingReaderItem[]};
+export type MeetingReaderGroup={id:'decisions'|'questions'|'actions'|'discussionQuestions';label:string;items:MeetingReaderItem[]};
 
 /** Presentation of saved content only. No new summary, suggestion, or service call. */
 export function meetingReaderModel(markdown:string){
@@ -16,6 +16,7 @@ export function meetingReaderModel(markdown:string){
   {id:'decisions',label:'讨论结论',items:decisions.filter(item=>!item.qualifier)},
   {id:'questions',label:'待确认',items:[...items(model.questions),...pending]},
   {id:'actions',label:'后续安排',items:items(model.actions)},
+  {id:'discussionQuestions',label:'会中问题',items:items(model.discussionQuestions)},
  ];
  return {...model,groups:groups.filter(group=>group.items.length)};
 }

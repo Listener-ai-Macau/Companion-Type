@@ -6,7 +6,7 @@ import {meetingGlanceExcerpt,meetingGlanceLabels} from './meetingGlance';
 import './meetingMap.css';
 
 function ResultBranch({group,onLocate}:{group:MeetingReaderGroup;onLocate?:(section:string,text?:string)=>void}){
- const Icon={decisions:CheckCheck,actions:ListTodo,questions:MessageCircleQuestion}[group.id];
+ const Icon={decisions:CheckCheck,actions:ListTodo,questions:MessageCircleQuestion,discussionQuestions:MessageCircleQuestion}[group.id];
  return <section className={'meeting-map-result meeting-map-result-'+group.id} aria-label={group.label}>
   <h4><Icon size={15} aria-hidden="true"/>{group.label}</h4>
   <ul>{group.items.map((item,i)=>{const preview=meetingGlanceExcerpt(item.body,90);return <li key={i}><details>

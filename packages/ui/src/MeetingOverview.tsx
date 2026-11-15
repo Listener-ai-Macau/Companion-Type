@@ -49,6 +49,6 @@ export function MeetingOverview({markdown,onLocate,onRead}:{markdown:string;onLo
    </>}
    <button type="button" className="meeting-overview-read" onClick={onRead}><BookOpen size={15} aria-hidden="true"/><span>完整纪要</span><ArrowUpRight size={14} aria-hidden="true"/></button>
   </div>
-  {model.groups.length>0&&<aside className="meeting-reader-groups" aria-label="会议结果">{[...model.groups].sort((a,b)=>['decisions','actions','questions'].indexOf(a.id)-['decisions','actions','questions'].indexOf(b.id)).map(group=><Outcome key={group.id} group={group} onLocate={onLocate}/>)}</aside>}
+  {model.groups.length>0&&<aside className="meeting-reader-groups" aria-label="会议结果">{[...model.groups].sort((a,b)=>['decisions','actions','questions','discussionQuestions'].indexOf(a.id)-['decisions','actions','questions','discussionQuestions'].indexOf(b.id)).map(group=><Outcome key={group.id} group={group} onLocate={onLocate}/>)}</aside>}
  </section>;
 }
