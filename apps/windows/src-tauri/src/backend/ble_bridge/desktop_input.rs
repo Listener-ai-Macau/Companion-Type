@@ -291,12 +291,22 @@ mod hardware_test {
     #[test]
     #[ignore="Leased fixed UID only: real stale-ACK traffic probe, no MIC, no OS cursor, no physical-click acceptance"]
     fn real_fixed_board_pointer_ack_traffic_probe(){
+        fixed_board_motion_probe(false);
+    }
+    #[test]
+    #[ignore="Owner-labelled raw IMU metadata only; existing production receiver, no mapper/MIC/cursor/reset"]
+    fn real_fixed_board_labelled_raw_capture(){
+        fixed_board_motion_probe(true);
+    }
+    fn fixed_board_motion_probe(capture:bool){
         const DEVICE:&str="C8:ED:45:EB:95:B4";
-        assert_eq!(std::env::var("COMPANION_IMU_HARDWARE_LEASE").as_deref(),Ok("fixed-uid-ack-probe-no-mic-no-cursor"));
+        assert_eq!(std::env::var("COMPANION_IMU_HARDWARE_LEASE").as_deref(),Ok(if capture{"fixed-uid-labelled-raw-no-mic-no-cursor"}else{"fixed-uid-ack-probe-no-mic-no-cursor"}));
         let expected: u32=std::env::var("COMPANION_IMU_EXPECT_FIRMWARE").expect("explicit actual firmware").parse().unwrap();
         let pointer_options: u8=std::env::var("COMPANION_IMU_ACK_OPTIONS").ok().map(|s|s.parse().unwrap()).unwrap_or(8);
         let quiet_seconds:u64=std::env::var("COMPANION_IMU_ACK_QUIET_SECONDS").ok().map(|s|s.parse().unwrap()).unwrap_or(2);
-        assert!(matches!(pointer_options,8|72)&&matches!(quiet_seconds,2..=5));
+        assert!(matches!(pointer_options,8|24|72)&&matches!(quiet_seconds,2..=45));
+        let capture_stop=capture.then(||std::path::PathBuf::from(std::env::var("COMPANION_IMU_RAW_CAPTURE_STOP").expect("explicit capture stop path")));
+        if let Some(path)=&capture_stop{assert!(pointer_options==24&&path.is_absolute()&&!path.exists());}
         let result=run_native_blocking(async {
             let device=connect_recorder_device_with_clock(Some(DEVICE),false).await?;
             let run=on_native_link(&device,async {
@@ -322,6 +332,16 @@ mod hardware_test {
                 let stop=AtomicBool::new(false);let phase=std::sync::atomic::AtomicUsize::new(0);
                 let rows=Mutex::new(Vec::<(usize,u32,u128)>::new());let started=StdInstant::now();
                 let writer=async {
+                    if let Some(path)=&capture_stop {
+                        eprintln!("MOTION_CAPTURE_READY firmware={firmware} uid={uid} options={pointer_options} no_mapper=true no_mic=true no_cursor=true");
+                        // This engineering capture deliberately has no mouse
+                        // mapping. The original popup owns manual labels and
+                        // requests Stop; do not invent physical directions.
+                        while !path.exists()&&started.elapsed()<StdDuration::from_secs(450){
+                            tokio::time::sleep(StdDuration::from_millis(100)).await;
+                        }
+                        stop.store(true,Ordering::Release);return Ok(Vec::<u128>::new());
+                    }
                     tokio::time::sleep(StdDuration::from_secs(quiet_seconds)).await;phase.store(1,Ordering::Release);
                     let packet=recorder_input::pointer_ack(&peer,0xffff_ff00)?;
                     let mut times=Vec::new();let mut error=None;
@@ -336,7 +356,10 @@ mod hardware_test {
                     error.map_or(Ok(times),Err)
                 };
                 let observe=|u|{
-                    if let Update::Motion(s)=u{rows.lock().unwrap().push((phase.load(Ordering::Acquire),s.sequence,started.elapsed().as_micros()));}
+                    match u{
+                        Update::RawMotion(s,_)if pointer_options==24=>rows.lock().unwrap().push((phase.load(Ordering::Acquire),s.sequence,started.elapsed().as_micros())),
+                        Update::Motion(s)if pointer_options!=24=>rows.lock().unwrap().push((phase.load(Ordering::Acquire),s.sequence,started.elapsed().as_micros())),_=>{}
+                    }
                 };
                 let input_peer=&peer;let input_device=&device;let input_characteristic=&characteristic;
                 let receiver=input_stream::receive(&mut values,3,pointer_options,&peer,&stop,&observe,|sequence|async move {
@@ -354,12 +377,19 @@ mod hardware_test {
                 // Quiet phases last2s each. Ten writes spaced50ms may finish
                 // in about0.65s, so requiring100 samples there was impossible
                 // for a healthy100Hz stream (835 actually delivered64).
-                if samples[0]<100||samples[1]<25||samples[2]<100{return Err("Insufficient real motion for the actual probe phase duration".into());}
+                if samples[0]<100||(!capture&&(samples[1]<25||samples[2]<100)){return Err("Insufficient real motion for the actual probe phase duration".into());}
                 Ok(())
             }).await;
             close_native_device(&device).await;run
         });
         result.expect("actual same-owner control traffic and mode0 restoration; not shell-tap qualification");
+    }
+    #[test]
+    #[ignore="Fixed board retained diagnostic metadata only; no MIC/cursor/reset"]
+    fn real_fixed_board_retained_diagnostic_metadata(){
+        assert_eq!(std::env::var("COMPANION_IMU_HARDWARE_LEASE").as_deref(),Ok("fixed-uid-retained-diagnostics-no-mic"));
+        let page=pull_device_diagnostics("C8:ED:45:EB:95:B4").expect("actual diagnostic metadata");
+        eprintln!("retained_device_diagnostics={}",serde_json::to_string(&page).unwrap());
     }
 
     #[test]
