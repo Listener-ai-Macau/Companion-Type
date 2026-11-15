@@ -1,0 +1,498 @@
+[
+  {
+    "id": "validation--mixed-000",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "b61c66f5e8a5470f449b1a59ab18c1c09b65902c8dbe8c7118ca88448cf3086d",
+    "sourceFrames": 116561,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-000\\component-a.wav",
+        "sha256": "6fecaec6fc7475bb85ce44fd755df53e187ebc30d9986e70f83787909819c672"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-000\\component-b.wav",
+        "sha256": "0489a1a6469eb14c2dd47e1f485450b1fa50465bd1d170e18bf16ac19fb34e8e"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-001",
+    "role": "validation",
+    "meeting": "20200805_S_R001S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "a95ebdf0bdd492e6a241034782e3b4bdd394f2380956dcd8465a2cdc815c4cef",
+    "sourceFrames": 43041,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-001\\component-a.wav",
+        "sha256": "06e5177b538838b48b3197737fa66f629c58164f06873eb3ff20e1b60e0a5017"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-001\\component-b.wav",
+        "sha256": "fb220c613988d378d3f0d0528050ded68af40a06b444e7ff67cfcb61338e61bf"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-002",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "8bb446aef3db9ee464ca7940394026ef9195d566f73caf3084f349e34b56222a",
+    "sourceFrames": 95761,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-002\\component-a.wav",
+        "sha256": "8cac45e043e6c4ed74f733b87a21e21d6066fc96e0e7ff2d95af4e2c5f0ee52a"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-002\\component-b.wav",
+        "sha256": "ec8bb0a0014bc45827255548900d61d7b5d9af02f745c36af30b3fbbd79fee37"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-003",
+    "role": "validation",
+    "meeting": "20200805_S_R001S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "8fc16e694eebd2467bde2288f53a3cfe3df5a006ba38bdc213359088b6ae05a3",
+    "sourceFrames": 92361,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-003\\component-a.wav",
+        "sha256": "9356d2bdb60f893c3807e104f4953d6bc8a1073da6100eb258b0bb69197c6b7f"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-003\\component-b.wav",
+        "sha256": "1d7702a3416330c710bc217947e9d4e37fdb763288c57ecced474de5af5cd500"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-004",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "7daca191172f6915be2fc869d6a18def4537d5ff6761c4fba1cfb60b575e55f1",
+    "sourceFrames": 98402,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-004\\component-a.wav",
+        "sha256": "66ccbd373c745d0559e8d898ef1778917fd542f54faf73cd6ace1a5772d4806d"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-004\\component-b.wav",
+        "sha256": "b66a027c9d29d84716665e504e6f8338f3f70a32e9f39e1f55a6cda277059f9d"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-005",
+    "role": "validation",
+    "meeting": "20200805_S_R001S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "aae01888242f9965b498b7b38be58952d6f1313f80b14efdb475753ab0fb4740",
+    "sourceFrames": 82501,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-005\\component-a.wav",
+        "sha256": "f5696db1d0bb43961dd7c6d4a0a05566ff58e0e5e83acdd67b8b565577cf4317"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-005\\component-b.wav",
+        "sha256": "4e9307d5b2ea28698841a1659978cb1fee2b279d5df03cb157dba9e8f7d22609"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-006",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "63256943c73b11bdadb8b66309b2b0b554b047794b3041bd51e14e84fb4ce305",
+    "sourceFrames": 101401,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-006\\component-a.wav",
+        "sha256": "0e0e99c1a27bf34c9192f5c695572272da889ba615e5febf305101aa06ad23e5"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-006\\component-b.wav",
+        "sha256": "4e7f6b84300119ca99c091c7b78323fca5f0c96a9d4914b68ceb4c6986db9fd4"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-007",
+    "role": "validation",
+    "meeting": "20200805_S_R001S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "85e5e14ac80f16e730c09b5497adc4b15a1ab934bde4feb8e3d9d561752c7b28",
+    "sourceFrames": 138441,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-007\\component-a.wav",
+        "sha256": "e4cffc5d87440b923a2b326dbfdac695788fa6b6391784a302e3cd3f1d844ebd"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-007\\component-b.wav",
+        "sha256": "e8259dbcdaf93c6e434e9495f36ba47646ac2064181984eb08f0b02b9528f502"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-008",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "d218c2fa22e2a59a31b0b77382d58cb52d445ef6f2712a407820623b16a5915d",
+    "sourceFrames": 177161,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-008\\component-a.wav",
+        "sha256": "4d68b9af0d382b4fe8826bf37de7ac0544a12286e9bd7b00683be3b022407671"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-008\\component-b.wav",
+        "sha256": "6908a4e877a545a006143fd073f81bc1fd37586fcf2757e9e8f6707f21e0b3a6"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-009",
+    "role": "validation",
+    "meeting": "20200805_S_R001S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "4b7c94a6bd7abd8770a5191386207c278e2029ce58aa35eaf2f37c6125b7d8d5",
+    "sourceFrames": 89361,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-009\\component-a.wav",
+        "sha256": "5278467b7f1c6b77193d86058f17a07e6e03e8365740f063a61e84a5906f149d"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-009\\component-b.wav",
+        "sha256": "4e870d1a654d693ac496c1b97ea309d660ed2b176187ff15933edb16eefb91e6"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-010",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "024f41137a4cc69bececaa89c015b3ca5b9d16b86e03f2505aee01e95a373243",
+    "sourceFrames": 127601,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-010\\component-a.wav",
+        "sha256": "80040383fa03f13855af53ce5e3f38b28c1c2e98187bb1de9b8ab52027088f00"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-010\\component-b.wav",
+        "sha256": "b27c188a0812a5ee8fe1f813e4a114472f35954b7faf1c00a51631bf928ebfc4"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-011",
+    "role": "validation",
+    "meeting": "20200805_S_R001S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "1d076404690cf658cf5d7a583b107760f53d4e4a3a431eba9c180c04d55b1afe",
+    "sourceFrames": 62801,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-011\\component-a.wav",
+        "sha256": "f95b519817f17bcf6818b2786fb161971fe58c936fd8c308b879bb7ddd76093b"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-011\\component-b.wav",
+        "sha256": "8510fc5b2e86e8a79484470f1275893fe8f017c14f38928a61c424dc8868ca28"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-012",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "e8d1c76b0b0d1e5e0e6398022c572882f71c4d4699545360c2a77e8fde39314c",
+    "sourceFrames": 123841,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-012\\component-a.wav",
+        "sha256": "c956d50b488eb10fe3154dcebdcb85661c85dd64c3466111b33e88d85f0cd221"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-012\\component-b.wav",
+        "sha256": "24ca84b0e4f820897976a17e1454ff6048390e87060de4892077d4c764644883"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-013",
+    "role": "validation",
+    "meeting": "20200805_S_R001S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "63128c47d55dc55a0e525b2987fe529d8d2c01070c640310cd0e779e5b7be389",
+    "sourceFrames": 123201,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-013\\component-a.wav",
+        "sha256": "8ae8ca6488bcfed7549e76d92a532a3943cd6a7f02bf83223c33ec5e33ab8f81"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-013\\component-b.wav",
+        "sha256": "e866e2f366afee933a2d0f91c6bf2c7ce0a42adc3bee5442416ccd9f4e099ede"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-014",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "b71215905876a1cfe98a195712c798294ba5769396b95e96ed69e1fd2f82e59c",
+    "sourceFrames": 129901,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-014\\component-a.wav",
+        "sha256": "a55e3dc61cd3769719173f13c3e75e1043edff0412c55f14b21b6967a560d577"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-014\\component-b.wav",
+        "sha256": "12ebf755118f4470900c45408f391b92ce7faeb1c8dcc1f09c390ebab2aac9b5"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--mixed-015",
+    "role": "validation",
+    "meeting": "20200805_S_R001S01C01",
+    "kind": "two-source",
+    "mixtureSha256": "2e1cd4333ed9f7835f732c9be5f02e9708d05eb97214d5cead11f4087253ef1f",
+    "sourceFrames": 85201,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-015\\component-a.wav",
+        "sha256": "deb16ff7366d579808eeb1dd98a4a029fcfe02e662043e7715df28dc45d0483f"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\mixed\\validation--mixed-015\\component-b.wav",
+        "sha256": "972bc9aebf30a030eb6d0efbf6a8d507a2f7675689d8bb36d91b5c25e1f62d8c"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--solo-000",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "single-source",
+    "mixtureSha256": "0601d224a25eae00f362f453e553c47a5a6c50a4748261fe1f938aab3d477972",
+    "sourceFrames": 37201,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200709_L_R002S01C01--001-M--component-001.wav",
+        "sha256": "0601d224a25eae00f362f453e553c47a5a6c50a4748261fe1f938aab3d477972"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--solo-001",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "single-source",
+    "mixtureSha256": "bc4058d64196f0a7aa6458c415cc1b0548391739726408777b3154cf0c77cf2c",
+    "sourceFrames": 62321,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200709_L_R002S01C01--002-M--component-014.wav",
+        "sha256": "bc4058d64196f0a7aa6458c415cc1b0548391739726408777b3154cf0c77cf2c"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--solo-002",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "single-source",
+    "mixtureSha256": "28a3e5be937c2cdc0875a2bfb5c2f2357d117e8fe883456c9454dc62c0f56dae",
+    "sourceFrames": 95681,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200709_L_R002S01C01--003-M--component-002.wav",
+        "sha256": "28a3e5be937c2cdc0875a2bfb5c2f2357d117e8fe883456c9454dc62c0f56dae"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--solo-003",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "single-source",
+    "mixtureSha256": "7662a31076acf58a2473c0c72b330965672c57507ac57467d849a3e31d2549cb",
+    "sourceFrames": 98481,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200709_L_R002S01C01--004-F--component-004.wav",
+        "sha256": "7662a31076acf58a2473c0c72b330965672c57507ac57467d849a3e31d2549cb"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--solo-004",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "single-source",
+    "mixtureSha256": "1f733c6ca71ef1533df5f46c87671b1e0f8c86d9934582d2b8b0d0604eb431a8",
+    "sourceFrames": 102961,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200709_L_R002S01C01--006-F--component-010.wav",
+        "sha256": "1f733c6ca71ef1533df5f46c87671b1e0f8c86d9934582d2b8b0d0604eb431a8"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--solo-005",
+    "role": "validation",
+    "meeting": "20200709_L_R002S01C01",
+    "kind": "single-source",
+    "mixtureSha256": "86d29423d3157d478545f3dc8f251847e04f79d19a1a0f4dd885c5035de0ad0d",
+    "sourceFrames": 127601,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200709_L_R002S01C01--007-F--component-005.wav",
+        "sha256": "86d29423d3157d478545f3dc8f251847e04f79d19a1a0f4dd885c5035de0ad0d"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--solo-006",
+    "role": "validation",
+    "meeting": "20200805_S_R001S01C01",
+    "kind": "single-source",
+    "mixtureSha256": "840f93fce0d16ee2f5565843b330999d04ec027df32b34bf592237e7278af792",
+    "sourceFrames": 43041,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200805_S_R001S01C01--001-M--component-007.wav",
+        "sha256": "840f93fce0d16ee2f5565843b330999d04ec027df32b34bf592237e7278af792"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  },
+  {
+    "id": "validation--solo-007",
+    "role": "validation",
+    "meeting": "20200805_S_R001S01C01",
+    "kind": "single-source",
+    "mixtureSha256": "24113768c6c116808fea898ec78366f381ad2a63a1c745fc06978c8cd60f0aca",
+    "sourceFrames": 97761,
+    "originalUnitManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\synthetic-validation-units.json",
+    "originalSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\tse-source-supervision-20261108\\components\\20200805_S_R001S01C01--002-F--component-001.wav",
+        "sha256": "24113768c6c116808fea898ec78366f381ad2a63a1c745fc06978c8cd60f0aca"
+      }
+    ],
+    "completeKnownAdditiveSum": true,
+    "notNaturalOverlap": true,
+    "physicalChannel": 0
+  }
+]

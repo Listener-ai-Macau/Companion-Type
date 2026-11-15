@@ -1,0 +1,24 @@
+{
+  "state": "INTERRUPTED_EXTERNAL_CONTROLLER_AND_WORKER_ABSENT",
+  "startedAt": "2026-11-15T18:16:24+08:00",
+  "phase": "candidate",
+  "index": 0,
+  "workerSha256": "f4cf965e60df8b1504ba23f80395a0603b5e3addf14a615caa8b7adef11680d5",
+  "newTraining": false,
+  "automaticRetries": 0,
+  "qualityQualified": false,
+  "privatePeakBytes": 0,
+  "pid": 10084,
+  "pidCreatedAt": 1794737789.9368203,
+  "gpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "terminationObservedAt": "2026-11-15T18:25:35.228441+08:00",
+  "finishedAt": null,
+  "exitCode": null,
+  "actualTerminationTimeUnknown": true,
+  "originalRunSnapshot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r2\\interrupted-run.json"
+}

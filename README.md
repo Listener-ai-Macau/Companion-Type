@@ -172,3 +172,6 @@ A reference-protocol audit corrects the physical interpretation of earlier Engli
 
 
 2026-11-15T18:00:28.884950+08:00 SUPERVISED_BLIND_SEPARATOR_SOURCE_CONTROL_AND_BASELINE_PROTECTED：同一55.7M盲分离核公开会议已知一/双源PIT源聚合SDR监督，固定1pass/319窗/80更新；原ASR与人物模型保持。原自然词评分和完整中英文人物门不变。源控制和84原模型源基线完成，训练进行中。
+
+
+2026-11-15T18:29:03.838876+08:00 FINAL_SUPERVISED_BLIND_SEPARATOR_AND_FIXED_SOURCE_GATE_PROTECTED：同一55.7M盲分离核公开会议已知一/双源PIT源聚合SDR监督，固定1pass/319窗/80更新；原ASR与人物模型保持。原自然词评分和完整中英文人物门不变。最终完整权重逐分片归档，优化器/RNG保留E盘恢复；合成源门结论见source-decision，不代表自然会议或售卖达标。

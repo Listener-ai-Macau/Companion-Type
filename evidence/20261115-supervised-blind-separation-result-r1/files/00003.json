@@ -1,0 +1,81 @@
+{
+  "state": "COMPLETE_CLOSED_SINGLE_AND_TWO_SOURCE_BLIND_SEPARATION_SUPERVISION",
+  "at": "2026-11-15T17:41:23.793948+08:00",
+  "summaries": {
+    "train": {
+      "originalConditionalUnits": 128,
+      "uniqueSourceUnits": 89,
+      "examples": 319,
+      "counts": {
+        "two-source": 64,
+        "single-source": 25
+      },
+      "excluded": {
+        "old-person-conditioned-absence-not-source-silence": 32,
+        "duplicate-mixture": 7
+      },
+      "fullUnitSeconds": 548.6614375,
+      "twoSecondTrainingExposureSeconds": 638,
+      "overlappingTailExamplesExplicit": true
+    },
+    "validation": {
+      "originalConditionalUnits": 32,
+      "uniqueSourceUnits": 24,
+      "examples": 84,
+      "counts": {
+        "two-source": 16,
+        "single-source": 8
+      },
+      "excluded": {
+        "old-person-conditioned-absence-not-source-silence": 8
+      },
+      "fullUnitSeconds": 147.0365625,
+      "twoSecondTrainingExposureSeconds": 168,
+      "overlappingTailExamplesExplicit": true
+    }
+  },
+  "meetings": {
+    "train": [
+      "20200707_L_R001S08C01",
+      "20200708_L_R002S01C01"
+    ],
+    "validation": [
+      "20200709_L_R002S01C01",
+      "20200805_S_R001S01C01"
+    ]
+  },
+  "sourceHashChecks": 273,
+  "allMixturesExactlyEqualBothTargetsSum": true,
+  "sourceAndValidationDisjointByMeeting": true,
+  "personProfilesOrIdentityLabelsUsed": false,
+  "inputAudioOnlyManifestNote": "Inference loader reads only array[0];array[1:3] are independent supervised source waveforms, never supplied to forward. Synthetic scorer reads them after prediction.",
+  "publicSource": "AISHELL4 official raw observed nonoverlap excerpts, first microphone. They contain real room background; these are exact artificial additive mixtures, not clean isolated speakers from natural overlapping meetings.",
+  "labelCorrection": "Exclude all old target-person-absent queries; do not turn unknown real voices into zeros. Single-source targets are the actual complete raw input plus a truly absent source zero.",
+  "zeroInput": "Exact whole digital silence bypasses the already-verified separator with zero outputs; not an undefined all-zero SA-SDR training target.",
+  "limitations": [
+    "Small public training subset, no claim of physical speaker/room or pretrained-model independence.",
+    "Validation sources were already used for earlier diagnostics; fixed original complex-word clips remain development, not final qualification.",
+    "Overlapping final2s windows increase exposure without increasing unique audio."
+  ],
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "ownerParticipationRequired": false,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 28892,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 535777280,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

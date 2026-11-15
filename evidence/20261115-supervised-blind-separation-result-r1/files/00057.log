@@ -1,0 +1,9 @@
+{"state": "FAILED_FIXED_BLIND_SEPARATOR_SUPERVISED_PHASE_RETAINED", "phase": "candidate", "error": "AssertionError()", "trainingExamples": 0, "optimizerUpdates": 0, "explicitNeuralCalls": 0, "seconds": 13.267556099999979}
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\blind_separator_validation_recovery_worker_20261115.py", line 153, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\blind_separator_validation_recovery_worker_20261115.py", line 129, in main
+    assert sha(item['file'])==item['sha256'] and item['referenceUsed'] is False
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

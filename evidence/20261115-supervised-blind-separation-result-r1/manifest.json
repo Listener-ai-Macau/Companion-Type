@@ -1,0 +1,1260 @@
+{
+  "state": "FINAL_SUPERVISED_BLIND_SEPARATOR_AND_FIXED_SOURCE_GATE_PROTECTED",
+  "at": "2026-11-15T18:29:03.838876+08:00",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\baseline-source-score.json",
+      "logicalPath": "supervised-blind-separation-r1/baseline-source-score.json",
+      "file": "files/00000.json",
+      "bytes": 56268,
+      "sha256": "13eff7567bfe07e9bd73d5b4b482081a1702bd0ab2e44badb833fa933d14ca0c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-execution.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-execution.json",
+      "file": "files/00001.json",
+      "bytes": 692,
+      "sha256": "9dcd47a7f9f3b3032e4e0170d12847e3573506471e5c5612e0073c12349d4a78"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-source-score.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-source-score.json",
+      "file": "files/00002.json",
+      "bytes": 56355,
+      "sha256": "3b0a8d09439b5d636af9943fec86d0565bf59e836a8aea0be491ef9ca3a25252"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\data-ready.json",
+      "logicalPath": "supervised-blind-separation-r1/data-ready.json",
+      "file": "files/00003.json",
+      "bytes": 3296,
+      "sha256": "6d2a27bafc9429e17a08db1a4b56335406e108dc4c4d47bb772ea49ed38fbe47"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\protocol.json",
+      "logicalPath": "supervised-blind-separation-r1/protocol.json",
+      "file": "files/00004.json",
+      "bytes": 25135,
+      "sha256": "87084b2aefd9dbccafebc32822e0a881ae6119ac0190b5dd5a8d76c6d042acc7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\source-decision.json",
+      "logicalPath": "supervised-blind-separation-r1/source-decision.json",
+      "file": "files/00005.json",
+      "bytes": 3430,
+      "sha256": "3d94699747f26bbce2fe7f0ed6a0bc6afe41dfbfe4e8c422ddf9e9ae161c1510"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\train-audio-only.json",
+      "logicalPath": "supervised-blind-separation-r1/train-audio-only.json",
+      "file": "files/00006.json",
+      "bytes": 140733,
+      "sha256": "7baaea3a26b96038fc5c5c3feb744ab240697bee8dab3e160f5c568313622216"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\train-examples.json",
+      "logicalPath": "supervised-blind-separation-r1/train-examples.json",
+      "file": "files/00007.json",
+      "bytes": 166413,
+      "sha256": "0ad038f6991322e38a89757697a037b5fd18254230ac0147076ec3c0e6e1568c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\train-units.json",
+      "logicalPath": "supervised-blind-separation-r1/train-units.json",
+      "file": "files/00008.json",
+      "bytes": 84050,
+      "sha256": "08210310596d39c88836c1bd18359a15e91d838ef7e31801ee98be4619760857"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\validation-audio-only.json",
+      "logicalPath": "supervised-blind-separation-r1/validation-audio-only.json",
+      "file": "files/00009.json",
+      "bytes": 40072,
+      "sha256": "9b31798c988e058d6a39ac3115d88594240e183354089d043d7cfdf0995a8dc8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\validation-before-input-file-split.json",
+      "logicalPath": "supervised-blind-separation-r1/validation-before-input-file-split.json",
+      "file": "files/00010.json",
+      "bytes": 39148,
+      "sha256": "479b573e2f7ce87d0cfc606ad674e24c633cdf478fcc34d476486d3873212057"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\validation-examples.json",
+      "logicalPath": "supervised-blind-separation-r1/validation-examples.json",
+      "file": "files/00011.json",
+      "bytes": 45918,
+      "sha256": "89447a0bbb8e9d48205aa451eba3e65a80a522231ef028a76bd64a0f2629faed"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\validation-units.json",
+      "logicalPath": "supervised-blind-separation-r1/validation-units.json",
+      "file": "files/00012.json",
+      "bytes": 23079,
+      "sha256": "4ea78735ad55ea44f61e911ea1269708cefdffcc7d697fc00929fe853fe9034a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\worker-binding.json",
+      "logicalPath": "supervised-blind-separation-r1/worker-binding.json",
+      "file": "files/00013.json",
+      "bytes": 1389,
+      "sha256": "d216251ba88ac5b922ad6eeed5eac44acda380629983d1e87d066e2e28fcde41"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r2\\interrupted-run.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r2/interrupted-run.json",
+      "file": "files/00014.json",
+      "bytes": 531,
+      "sha256": "d5f83a6b2d600960eafaf7afb79fe80dd403090e4a3a295c40a3c40517b8a104"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r2\\interrupted-state.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r2/interrupted-state.json",
+      "file": "files/00015.json",
+      "bytes": 84894,
+      "sha256": "fc1320a276d3b82eaca69c1750f346edd90230ed4863924fc515de0f1e4e2d6e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r2\\interrupted-worker.log",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r2/interrupted-worker.log",
+      "file": "files/00016.log",
+      "bytes": 130,
+      "sha256": "e55a5c27736a8761c8e96acec072102325e08cb2d0dbb4d4702cfe38f8ab0709"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r2\\original-protocol.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r2/original-protocol.json",
+      "file": "files/00017.json",
+      "bytes": 25135,
+      "sha256": "87084b2aefd9dbccafebc32822e0a881ae6119ac0190b5dd5a8d76c6d042acc7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r2\\original-worker-binding.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r2/original-worker-binding.json",
+      "file": "files/00018.json",
+      "bytes": 1389,
+      "sha256": "d216251ba88ac5b922ad6eeed5eac44acda380629983d1e87d066e2e28fcde41"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r2\\protocol.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r2/protocol.json",
+      "file": "files/00019.json",
+      "bytes": 25135,
+      "sha256": "87084b2aefd9dbccafebc32822e0a881ae6119ac0190b5dd5a8d76c6d042acc7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r2\\resume-source.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r2/resume-source.json",
+      "file": "files/00020.json",
+      "bytes": 2040,
+      "sha256": "8aa6945810eeb40ab059bf3499801e7ba1c1b3161c9056c046354b6083c4905a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r2\\validation-audio-only.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r2/validation-audio-only.json",
+      "file": "files/00021.json",
+      "bytes": 40072,
+      "sha256": "9b31798c988e058d6a39ac3115d88594240e183354089d043d7cfdf0995a8dc8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r2\\worker-binding.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r2/worker-binding.json",
+      "file": "files/00022.json",
+      "bytes": 1672,
+      "sha256": "9b63d4844f792211bdf54a09d3f08b0993f1f98cbdd383375b0bf48d1681cf72"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r3\\before-repair-blind_separator_validation_recovery_worker_20261115.py",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r3/before-repair-blind_separator_validation_recovery_worker_20261115.py",
+      "file": "files/00023.py",
+      "bytes": 11574,
+      "sha256": "9089163c04d7dd3df4c4da37b6a96f5ad9d4f4dbb3c414757c46cf5e33d45234"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r3\\before-repair-run_blind_separator_validation_recovery_20261115.py",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r3/before-repair-run_blind_separator_validation_recovery_20261115.py",
+      "file": "files/00024.py",
+      "bytes": 5141,
+      "sha256": "47cccb91ac7cc65b7acc72a041c3414b034f6db0d464496c5509d609804198a7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r3\\before-repair-worker-binding.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r3/before-repair-worker-binding.json",
+      "file": "files/00025.json",
+      "bytes": 1672,
+      "sha256": "9b63d4844f792211bdf54a09d3f08b0993f1f98cbdd383375b0bf48d1681cf72"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r3\\previous-candidate-execution.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r3/previous-candidate-execution.json",
+      "file": "files/00026.json",
+      "bytes": 626,
+      "sha256": "6eb8d90ab5d626b957960f2abbae0c576cebe54e1ac05306c8ffa4a66db13f71"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r3\\protocol.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r3/protocol.json",
+      "file": "files/00027.json",
+      "bytes": 25135,
+      "sha256": "87084b2aefd9dbccafebc32822e0a881ae6119ac0190b5dd5a8d76c6d042acc7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r3\\recovery-r2-run.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r3/recovery-r2-run.json",
+      "file": "files/00028.json",
+      "bytes": 727,
+      "sha256": "ac1098e6cc1a61227ade6bf3be918c83d5fcb05d22937f74a89ed3332fdc0583"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r3\\recovery-r2-state.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r3/recovery-r2-state.json",
+      "file": "files/00029.json",
+      "bytes": 83725,
+      "sha256": "1da7e00ed368bba09e6316e6b5365867368d9e8a7530346c8f2bc8587943ddeb"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r3\\recovery-r2-worker.log",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r3/recovery-r2-worker.log",
+      "file": "files/00030.log",
+      "bytes": 799,
+      "sha256": "37e53088a24a2bc41fcab8fe1338e1ec507adff1f10cf8a1b5ef750686341987"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r3\\resume-source.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r3/resume-source.json",
+      "file": "files/00031.json",
+      "bytes": 2542,
+      "sha256": "a3971b562757b2699ca96cfe9e2ba1c5262d1904c7536c3afaa3948f4203fbf0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r3\\validation-audio-only.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r3/validation-audio-only.json",
+      "file": "files/00032.json",
+      "bytes": 40072,
+      "sha256": "9b31798c988e058d6a39ac3115d88594240e183354089d043d7cfdf0995a8dc8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\candidate-recovery-r3\\worker-binding.json",
+      "logicalPath": "supervised-blind-separation-r1/candidate-recovery-r3/worker-binding.json",
+      "file": "files/00033.json",
+      "bytes": 1672,
+      "sha256": "53a86eded1b34a15ced492872c265be85d1cecc0c4d0c307c3f63d76942dc85c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-composition-r1\\asr-execution.json",
+      "logicalPath": "supervised-blind-separation-r1/natural-composition-r1/asr-execution.json",
+      "file": "files/00034.json",
+      "bytes": 378,
+      "sha256": "9205c3e948669d5925be45ce7d18811309ea1ae01ebe82f4195082e031914dc4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-composition-r1\\audio-only.json",
+      "logicalPath": "supervised-blind-separation-r1/natural-composition-r1/audio-only.json",
+      "file": "files/00035.json",
+      "bytes": 17701,
+      "sha256": "d7495c1ed2713cf193a07faba290ba4d29f13663d6755629b2940fe0d3c40eb8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-composition-r1\\model-binding.json",
+      "logicalPath": "supervised-blind-separation-r1/natural-composition-r1/model-binding.json",
+      "file": "files/00036.json",
+      "bytes": 918,
+      "sha256": "8a591bcdf158041a43624ad8911ac1c4e2d9ea7e4e13f158deeade07c484f2f5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-composition-r1\\protocol.json",
+      "logicalPath": "supervised-blind-separation-r1/natural-composition-r1/protocol.json",
+      "file": "files/00037.json",
+      "bytes": 17535,
+      "sha256": "6ab77ba4df0f507588c3fe949055bbd2f402da585d89ba7702512a8ca5d27498"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-composition-r1\\routed-composition-protocol.json",
+      "logicalPath": "supervised-blind-separation-r1/natural-composition-r1/routed-composition-protocol.json",
+      "file": "files/00038.json",
+      "bytes": 14634,
+      "sha256": "ef74916689e2d8ab87fbf33c59a9d4a04bc2754a45aba149ab6bcd2b4b145e1c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-composition-r1\\source-binding.json",
+      "logicalPath": "supervised-blind-separation-r1/natural-composition-r1/source-binding.json",
+      "file": "files/00039.json",
+      "bytes": 4707,
+      "sha256": "d10e24390ae894126dc9b5f63deb61be9ca3004ea553868e4cecdec66ee75c2d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-composition-r1\\worker-binding.json",
+      "logicalPath": "supervised-blind-separation-r1/natural-composition-r1/worker-binding.json",
+      "file": "files/00040.json",
+      "bytes": 5933,
+      "sha256": "45a323e8d19fa6ca3bb7a290a6e9634b500af78ab46dc5063eb6b4796cb9b212"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\inventory.log",
+      "logicalPath": "candidate-r1/inventory.log",
+      "file": "files/00041.log",
+      "bytes": 579,
+      "sha256": "6289e5442fd495bb3096a31397b7b548cc0f29f32ad328634699366a3441a366"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\run.json",
+      "logicalPath": "candidate-r1/run.json",
+      "file": "files/00042.json",
+      "bytes": 931,
+      "sha256": "5e62687dd7df6906d0452b6db1df1259a5505822143744f23ddcc86489d29590"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\state.json",
+      "logicalPath": "candidate-r1/state.json",
+      "file": "files/00043.json",
+      "bytes": 84894,
+      "sha256": "fc1320a276d3b82eaca69c1750f346edd90230ed4863924fc515de0f1e4e2d6e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\validation--mixed-000-window-00.npy",
+      "logicalPath": "candidate-r1/validation--mixed-000-window-00.npy",
+      "file": "files/00044.npy",
+      "bytes": 256128,
+      "sha256": "b789731a4e5f4854337b29dc3a3c62a2bb8d6e592a018b98beede44c041aa961"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\validation--mixed-000-window-01.npy",
+      "logicalPath": "candidate-r1/validation--mixed-000-window-01.npy",
+      "file": "files/00045.npy",
+      "bytes": 256128,
+      "sha256": "cade9623475aec955a31ec53de2498527f55b333dc1fa3957a33490c5db4f4f9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\validation--mixed-000-window-02.npy",
+      "logicalPath": "candidate-r1/validation--mixed-000-window-02.npy",
+      "file": "files/00046.npy",
+      "bytes": 256128,
+      "sha256": "bddb0520798b948ca5c7a023547950496b84795b787281155c0a6c44f3454346"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\validation--mixed-000-window-03.npy",
+      "logicalPath": "candidate-r1/validation--mixed-000-window-03.npy",
+      "file": "files/00047.npy",
+      "bytes": 256128,
+      "sha256": "bddb0520798b948ca5c7a023547950496b84795b787281155c0a6c44f3454346"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\validation--mixed-001-window-00.npy",
+      "logicalPath": "candidate-r1/validation--mixed-001-window-00.npy",
+      "file": "files/00048.npy",
+      "bytes": 256128,
+      "sha256": "bddb0520798b948ca5c7a023547950496b84795b787281155c0a6c44f3454346"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\worker.log",
+      "logicalPath": "candidate-r1/worker.log",
+      "file": "files/00049.log",
+      "bytes": 130,
+      "sha256": "e55a5c27736a8761c8e96acec072102325e08cb2d0dbb4d4702cfe38f8ab0709"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "candidate-r1/inventory/hip-inventory.json",
+      "file": "files/00050.json",
+      "bytes": 1393,
+      "sha256": "7969ec44ca3a72b037fb919d39deb5fb13d20a225fa43e08dec36439b92cabdb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "candidate-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00051.jsonl",
+      "bytes": 980,
+      "sha256": "cbe3434524dc22277618c3787053013590485bfe283a50fedfad1f403ccbc655"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\inventory\\inventory-run.json",
+      "logicalPath": "candidate-r1/inventory/inventory-run.json",
+      "file": "files/00052.json",
+      "bytes": 610,
+      "sha256": "0c21ec19e6710a03af521e955f278febde8aed93fba19af2563e77070ecb375a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "candidate-r1/inventory/inventory-worker.log",
+      "file": "files/00053.log",
+      "bytes": 1212,
+      "sha256": "47b1ebca8a0d3bd5b35e1510df53f6cfafdb6aa656c48d5b03736b2be1cb7520"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r2\\inventory.log",
+      "logicalPath": "candidate-r2/inventory.log",
+      "file": "files/00054.log",
+      "bytes": 579,
+      "sha256": "e9750c3025cb21ca507b14cb6aabb845eccf3d2f888e335f95d030e8594f4bcc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r2\\run.json",
+      "logicalPath": "candidate-r2/run.json",
+      "file": "files/00055.json",
+      "bytes": 727,
+      "sha256": "ac1098e6cc1a61227ade6bf3be918c83d5fcb05d22937f74a89ed3332fdc0583"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r2\\state.json",
+      "logicalPath": "candidate-r2/state.json",
+      "file": "files/00056.json",
+      "bytes": 83725,
+      "sha256": "1da7e00ed368bba09e6316e6b5365867368d9e8a7530346c8f2bc8587943ddeb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r2\\worker.log",
+      "logicalPath": "candidate-r2/worker.log",
+      "file": "files/00057.log",
+      "bytes": 799,
+      "sha256": "37e53088a24a2bc41fcab8fe1338e1ec507adff1f10cf8a1b5ef750686341987"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r2\\inventory\\hip-inventory.json",
+      "logicalPath": "candidate-r2/inventory/hip-inventory.json",
+      "file": "files/00058.json",
+      "bytes": 1393,
+      "sha256": "a6a5bc8c19b4e79d96c8813d8a2c9deb151df0d7daf5436dacdd0fea8e67909d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r2\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "candidate-r2/inventory/inventory-resources.jsonl",
+      "file": "files/00059.jsonl",
+      "bytes": 1958,
+      "sha256": "60217d8b619c429c3134244def71dcdddfcf94d8d468217c854e31378d8ea321"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r2\\inventory\\inventory-run.json",
+      "logicalPath": "candidate-r2/inventory/inventory-run.json",
+      "file": "files/00060.json",
+      "bytes": 610,
+      "sha256": "36e725d7cd9b809d1cdbfaa455b44cb4ca60466db3ec83b40a4a08a281c9cc88"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r2\\inventory\\inventory-worker.log",
+      "logicalPath": "candidate-r2/inventory/inventory-worker.log",
+      "file": "files/00061.log",
+      "bytes": 1212,
+      "sha256": "210a01fbdfc2085bc3ab1bf4eca300eee77f59c5ab7a8f58f35ccc4a2dc3228c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\inventory.log",
+      "logicalPath": "candidate-r3/inventory.log",
+      "file": "files/00062.log",
+      "bytes": 579,
+      "sha256": "3355e17985d65435e184404a1fec2878af5eee36253512acac634186c49d8782"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\run.json",
+      "logicalPath": "candidate-r3/run.json",
+      "file": "files/00063.json",
+      "bytes": 641,
+      "sha256": "2d310fffb101c98e93c9235732aa7943a204087b7b51f43853e3a8f9db209c5f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\state.json",
+      "logicalPath": "candidate-r3/state.json",
+      "file": "files/00064.json",
+      "bytes": 110871,
+      "sha256": "d30917347db636c6be53cd95db26082ef8181b1f6b10336536af9a487df29b00"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-000-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-000-window-02.npy",
+      "file": "files/00065.npy",
+      "bytes": 256128,
+      "sha256": "a327e616c3dfb74ce5195d064252801669ab90311500ef54c22317ce745230d8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-000-window-03.npy",
+      "logicalPath": "candidate-r3/validation--mixed-000-window-03.npy",
+      "file": "files/00066.npy",
+      "bytes": 256128,
+      "sha256": "6a8be38d028392230f5980b7071d045ca87e9bc873c55e8459b0b53b6f24331b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-001-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-001-window-00.npy",
+      "file": "files/00067.npy",
+      "bytes": 256128,
+      "sha256": "d173d98217260dd42deda469b2c767674c50aba13009ddf9293c9782322dcf97"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-001-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-001-window-01.npy",
+      "file": "files/00068.npy",
+      "bytes": 256128,
+      "sha256": "2cd07aa0f58710221b87337c5abd47061eee93b10dd5a1ab7788126442866880"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-002-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-002-window-00.npy",
+      "file": "files/00069.npy",
+      "bytes": 256128,
+      "sha256": "7a9ecc0cd97cb8bf066c262c331209997c27f8555e0697e94d592f641d037406"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-002-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-002-window-01.npy",
+      "file": "files/00070.npy",
+      "bytes": 256128,
+      "sha256": "f0fb5b0f23bb8591be313d749a8f9063e4e8579bf144e34984b818c72cc31c20"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-002-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-002-window-02.npy",
+      "file": "files/00071.npy",
+      "bytes": 256128,
+      "sha256": "f7b16320b72bdf9dee86b313e72090425b73aa20814ef396fc37ff8d7ff8a570"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-003-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-003-window-00.npy",
+      "file": "files/00072.npy",
+      "bytes": 256128,
+      "sha256": "ff7c97c227513b28293a6056eed3f5d9f8c496c44ffec08597a588da5b385a40"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-003-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-003-window-01.npy",
+      "file": "files/00073.npy",
+      "bytes": 256128,
+      "sha256": "0aa5cf86a9fd97fa88ddae6d0663a3687ba763bbdaf88fae401b352f7565f0c6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-003-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-003-window-02.npy",
+      "file": "files/00074.npy",
+      "bytes": 256128,
+      "sha256": "3c944f16d083156f8350de39441bbc732cd7bc697d312f0e6226cfbc5f97c080"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-004-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-004-window-00.npy",
+      "file": "files/00075.npy",
+      "bytes": 256128,
+      "sha256": "d290d18861f317f0b3a7620fbd79533ea870b282c91fcf830332eea930516b6a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-004-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-004-window-01.npy",
+      "file": "files/00076.npy",
+      "bytes": 256128,
+      "sha256": "0883c69ff6c0f715650e9c923f53b0b200e6fa61e2cee636ca18e01c963dc96e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-004-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-004-window-02.npy",
+      "file": "files/00077.npy",
+      "bytes": 256128,
+      "sha256": "646d7fea50415499aae6079ef132a7e2420c41e5774fe763dcd61a900f66395b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-004-window-03.npy",
+      "logicalPath": "candidate-r3/validation--mixed-004-window-03.npy",
+      "file": "files/00078.npy",
+      "bytes": 256128,
+      "sha256": "1952305160baebe4745effccf268c73fcbd7ff758e4623f8a3ba7f13bffe2bf9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-005-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-005-window-00.npy",
+      "file": "files/00079.npy",
+      "bytes": 256128,
+      "sha256": "06f21a3bdd4c1316c1f3e754b28129c94c623343abbbd999663f8e25c31ccbad"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-005-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-005-window-01.npy",
+      "file": "files/00080.npy",
+      "bytes": 256128,
+      "sha256": "a3c6cac1f665656927ff0698f1577c41496b7175c3e82976c9014b75a9b958b5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-005-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-005-window-02.npy",
+      "file": "files/00081.npy",
+      "bytes": 256128,
+      "sha256": "c3d653d7269188e3fc2177a45221fd1a43c0932cc9bab802a5ca06aed506d105"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-006-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-006-window-00.npy",
+      "file": "files/00082.npy",
+      "bytes": 256128,
+      "sha256": "11237541c98bf3ff7099ef6b9a3e4b5b2226c38c69c5b5e4964268350ea50475"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-006-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-006-window-01.npy",
+      "file": "files/00083.npy",
+      "bytes": 256128,
+      "sha256": "3e2d52bfcb325d40b7cecaadcc3b66aac59493ca455ebb1015c2266ce52d61a4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-006-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-006-window-02.npy",
+      "file": "files/00084.npy",
+      "bytes": 256128,
+      "sha256": "bcd4c54bdcce1036e91ae6b695cf6807b3e2e92e25ac111febda962344556afa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-006-window-03.npy",
+      "logicalPath": "candidate-r3/validation--mixed-006-window-03.npy",
+      "file": "files/00085.npy",
+      "bytes": 256128,
+      "sha256": "69f72e8c03ddf8c870ad05d9a9662529a5e561071538321005049543647d9f35"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-007-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-007-window-00.npy",
+      "file": "files/00086.npy",
+      "bytes": 256128,
+      "sha256": "b207d6eb98ec16eea25475d1a1502a9e9351da5772c3b40afd39a772549e0483"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-007-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-007-window-01.npy",
+      "file": "files/00087.npy",
+      "bytes": 256128,
+      "sha256": "0cdc245e5c5df9d7fd3a45420b48a9ed660e932d0fe23893fcc621319fb1e75d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-007-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-007-window-02.npy",
+      "file": "files/00088.npy",
+      "bytes": 256128,
+      "sha256": "0d46f5601739ff73f15f6d319945754fad9de5f6842b91a4b41fa53d36d33bca"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-007-window-03.npy",
+      "logicalPath": "candidate-r3/validation--mixed-007-window-03.npy",
+      "file": "files/00089.npy",
+      "bytes": 256128,
+      "sha256": "fcb2558f0ace0347b899a4b091d7f826ad4caf6ae99dce79d4848e0cf9fc0efe"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-007-window-04.npy",
+      "logicalPath": "candidate-r3/validation--mixed-007-window-04.npy",
+      "file": "files/00090.npy",
+      "bytes": 256128,
+      "sha256": "d003e2c811b129860a295c7ebeaa94429c73e5eecfb70a4cac971df7c9cbc2f3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-008-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-008-window-00.npy",
+      "file": "files/00091.npy",
+      "bytes": 256128,
+      "sha256": "548124868abf61dd3452369de807b24a60c69be607773d0043a78bf78a5782bc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-008-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-008-window-01.npy",
+      "file": "files/00092.npy",
+      "bytes": 256128,
+      "sha256": "d5128060233006157942d7229d29c90cf93d5ca0f2e22d469d8fc910bb061ba9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-008-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-008-window-02.npy",
+      "file": "files/00093.npy",
+      "bytes": 256128,
+      "sha256": "5166f8893dcd2c54a1d0be7a348f4a4beb1bb083ff0d7ea3660125663a4d1d90"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-008-window-03.npy",
+      "logicalPath": "candidate-r3/validation--mixed-008-window-03.npy",
+      "file": "files/00094.npy",
+      "bytes": 256128,
+      "sha256": "8872aea399b47a467a0bb3d21e45766d929f81b75ef29bdc6f88157f9dfc1703"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-008-window-04.npy",
+      "logicalPath": "candidate-r3/validation--mixed-008-window-04.npy",
+      "file": "files/00095.npy",
+      "bytes": 256128,
+      "sha256": "6a2f0e667080063f3b99829b0480c1d16849ca8563fc4aba02bdca76fc0a2a8f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-008-window-05.npy",
+      "logicalPath": "candidate-r3/validation--mixed-008-window-05.npy",
+      "file": "files/00096.npy",
+      "bytes": 256128,
+      "sha256": "02eecd50a01c74434344345e37cc63e63d28eb0985d34fa51f1ee87f9d078327"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-009-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-009-window-00.npy",
+      "file": "files/00097.npy",
+      "bytes": 256128,
+      "sha256": "0d9489170ad4f729c5524a34b5fd76259882adaa66402f9f492ce979d34dd52c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-009-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-009-window-01.npy",
+      "file": "files/00098.npy",
+      "bytes": 256128,
+      "sha256": "e6fa63f7508e32ea6737c69b656c0db7af43a136c948a04c1077962110a860d9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-009-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-009-window-02.npy",
+      "file": "files/00099.npy",
+      "bytes": 256128,
+      "sha256": "63f651b9d51a894ac2692bbf15611edf1f2a08e35d8c83b0f7ecac1a8cf76228"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-010-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-010-window-00.npy",
+      "file": "files/00100.npy",
+      "bytes": 256128,
+      "sha256": "d7321aa214b8464e2374313de328df1329524b5e08a2540d403f28b55cccf93b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-010-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-010-window-01.npy",
+      "file": "files/00101.npy",
+      "bytes": 256128,
+      "sha256": "6554b399bf4c07125df893aba97933c2ee86a68f1f9ce28298b98e6672c16cf3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-010-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-010-window-02.npy",
+      "file": "files/00102.npy",
+      "bytes": 256128,
+      "sha256": "96457bdb851ce7908d93917dbfdf9907c3d1f3b4a3642eb290ca7b904a773864"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-010-window-03.npy",
+      "logicalPath": "candidate-r3/validation--mixed-010-window-03.npy",
+      "file": "files/00103.npy",
+      "bytes": 256128,
+      "sha256": "60b44be8c21a6315b2626152a3450e3c13fecfa189393cd305c9ace788efce06"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-011-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-011-window-00.npy",
+      "file": "files/00104.npy",
+      "bytes": 256128,
+      "sha256": "451e2240cb6b96f801674d82ea92599cf7d841aa317d43debd098abc5c4bc754"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-011-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-011-window-01.npy",
+      "file": "files/00105.npy",
+      "bytes": 256128,
+      "sha256": "1c1307e49987067e5b285321d2de46077504cd542dc131b849dadb03823e64d8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-012-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-012-window-00.npy",
+      "file": "files/00106.npy",
+      "bytes": 256128,
+      "sha256": "cdafeba6876287bc7d73b98020a9f96727703bc0ced91ddfeaeee76308d99aaf"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-012-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-012-window-01.npy",
+      "file": "files/00107.npy",
+      "bytes": 256128,
+      "sha256": "2ae2dc89a986c502625f24755a7f79a4030eb6a7b5e0cef6246154c6bc37eb06"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-012-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-012-window-02.npy",
+      "file": "files/00108.npy",
+      "bytes": 256128,
+      "sha256": "928dcc877e2b05a4861308dae763bc4b16d0589537069092e4a388745cec394e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-012-window-03.npy",
+      "logicalPath": "candidate-r3/validation--mixed-012-window-03.npy",
+      "file": "files/00109.npy",
+      "bytes": 256128,
+      "sha256": "66ab8f1881f8c19fd211ce66735befd59f58277ca916b91b4a4658262f4ea76c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-013-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-013-window-00.npy",
+      "file": "files/00110.npy",
+      "bytes": 256128,
+      "sha256": "563e7c10a084d50e3f872097e9b716a7aa5eba297b45cb49ef152dba00306a5c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-013-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-013-window-01.npy",
+      "file": "files/00111.npy",
+      "bytes": 256128,
+      "sha256": "3af93b2f6fd7cc7b75f716b20ec448426bef510643ab53c35a6e94fda07ce38f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-013-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-013-window-02.npy",
+      "file": "files/00112.npy",
+      "bytes": 256128,
+      "sha256": "7326a59c5b13cbb6263a0ed00dbca359720d7152f2f07bb5d492b054e424dda2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-013-window-03.npy",
+      "logicalPath": "candidate-r3/validation--mixed-013-window-03.npy",
+      "file": "files/00113.npy",
+      "bytes": 256128,
+      "sha256": "c56fa3297ae5099a694b3fc7119d928f7b385ff23a804ae600c55194a7424724"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-014-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-014-window-00.npy",
+      "file": "files/00114.npy",
+      "bytes": 256128,
+      "sha256": "00c597aed1d6522b1d374216b052b39f2c97d8b8e7e8d2c857f8ad84316c44b8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-014-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-014-window-01.npy",
+      "file": "files/00115.npy",
+      "bytes": 256128,
+      "sha256": "671050621c8cc87822047f82697b5556faea0471e2d252706813405c1810d87d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-014-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-014-window-02.npy",
+      "file": "files/00116.npy",
+      "bytes": 256128,
+      "sha256": "4b2e8fcd6b8e099c608c988da2e0d446b2863cee7b8323fd93214a9ed897cbe9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-014-window-03.npy",
+      "logicalPath": "candidate-r3/validation--mixed-014-window-03.npy",
+      "file": "files/00117.npy",
+      "bytes": 256128,
+      "sha256": "cbbd754bcfe7b76e493fb94ce599880c40b242e5d02ab25e1fe50ba64f0f7fc3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-014-window-04.npy",
+      "logicalPath": "candidate-r3/validation--mixed-014-window-04.npy",
+      "file": "files/00118.npy",
+      "bytes": 256128,
+      "sha256": "2912c4b6a7db4fd5eedf84171d07e6427687bdbcb0589f3e7f95e2089a5e20eb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-015-window-00.npy",
+      "logicalPath": "candidate-r3/validation--mixed-015-window-00.npy",
+      "file": "files/00119.npy",
+      "bytes": 256128,
+      "sha256": "ae5fa9211962e63adc6931fb31f427799c5f8618466412c2a5d23abf585f0f0a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-015-window-01.npy",
+      "logicalPath": "candidate-r3/validation--mixed-015-window-01.npy",
+      "file": "files/00120.npy",
+      "bytes": 256128,
+      "sha256": "e2aec54e016d0ae0e9d9652bbd2ca0fd2967ed2aec8777933fe6384e04558ffd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--mixed-015-window-02.npy",
+      "logicalPath": "candidate-r3/validation--mixed-015-window-02.npy",
+      "file": "files/00121.npy",
+      "bytes": 256128,
+      "sha256": "a52bd5a44fffa22281418d63d39be9ef43f74e8a45d4c0e91bd8a6bb828c20ec"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-000-window-00.npy",
+      "logicalPath": "candidate-r3/validation--solo-000-window-00.npy",
+      "file": "files/00122.npy",
+      "bytes": 256128,
+      "sha256": "39a6c97c2020f3c52428293b8f179b3296b04e0f08bff487a0e38f686aee84f2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-000-window-01.npy",
+      "logicalPath": "candidate-r3/validation--solo-000-window-01.npy",
+      "file": "files/00123.npy",
+      "bytes": 256128,
+      "sha256": "34a79e9dbd31520c17b0bcd6ac1e198d107e48ccda4d5cf2fffcae29f9b39898"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-001-window-00.npy",
+      "logicalPath": "candidate-r3/validation--solo-001-window-00.npy",
+      "file": "files/00124.npy",
+      "bytes": 256128,
+      "sha256": "e937ace5fbb5ad9c9c50a489936a745d5daf1f58612024d1dda2e6910bd4c787"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-001-window-01.npy",
+      "logicalPath": "candidate-r3/validation--solo-001-window-01.npy",
+      "file": "files/00125.npy",
+      "bytes": 256128,
+      "sha256": "d1da57f37ac8da0a665e25cc8a2eba61006f906209562ff1052fa351d13013c1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-002-window-00.npy",
+      "logicalPath": "candidate-r3/validation--solo-002-window-00.npy",
+      "file": "files/00126.npy",
+      "bytes": 256128,
+      "sha256": "95cb37e5816f7bbe27095e863d759b974a10eed7819b9d2282af631739dcd5dc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-002-window-01.npy",
+      "logicalPath": "candidate-r3/validation--solo-002-window-01.npy",
+      "file": "files/00127.npy",
+      "bytes": 256128,
+      "sha256": "3b0e9e83465b40d4896199f9e5a45a1411028ad8911e6f62eca955283e766941"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-002-window-02.npy",
+      "logicalPath": "candidate-r3/validation--solo-002-window-02.npy",
+      "file": "files/00128.npy",
+      "bytes": 256128,
+      "sha256": "bcee00bda4750a126f173617a653ffa39d0760794404daf0511482d0552f20cd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-003-window-00.npy",
+      "logicalPath": "candidate-r3/validation--solo-003-window-00.npy",
+      "file": "files/00129.npy",
+      "bytes": 256128,
+      "sha256": "4bcd69e2616ff664d7e43a3844e2e15e351bcdd3c0027e4f6f4d66f2c5ddccfa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-003-window-01.npy",
+      "logicalPath": "candidate-r3/validation--solo-003-window-01.npy",
+      "file": "files/00130.npy",
+      "bytes": 256128,
+      "sha256": "0e0dd8704749507f40ce313371651f6b5f79803807c2f2e87d255d880e3af632"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-003-window-02.npy",
+      "logicalPath": "candidate-r3/validation--solo-003-window-02.npy",
+      "file": "files/00131.npy",
+      "bytes": 256128,
+      "sha256": "3172084ef4f25c75fc41ff6ca94f1709f2193ee2517c0f4ca4952541f61b9067"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-003-window-03.npy",
+      "logicalPath": "candidate-r3/validation--solo-003-window-03.npy",
+      "file": "files/00132.npy",
+      "bytes": 256128,
+      "sha256": "6bd86dab87d45fbf532007495c1cd09df434d24d9386d33359792cca69145533"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-004-window-00.npy",
+      "logicalPath": "candidate-r3/validation--solo-004-window-00.npy",
+      "file": "files/00133.npy",
+      "bytes": 256128,
+      "sha256": "9adcf2a817c41960eb1492f24117994f82060c8616bd9fd76f28eb40000221be"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-004-window-01.npy",
+      "logicalPath": "candidate-r3/validation--solo-004-window-01.npy",
+      "file": "files/00134.npy",
+      "bytes": 256128,
+      "sha256": "0ddbdbfac9984b9af9f25de47c136f6cead61bc24ee104f83ab98b6d9e28e77c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-004-window-02.npy",
+      "logicalPath": "candidate-r3/validation--solo-004-window-02.npy",
+      "file": "files/00135.npy",
+      "bytes": 256128,
+      "sha256": "75939af0c8962c575c94386892683c4e6cefcac18f95b29173dab3af0bd169a5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-004-window-03.npy",
+      "logicalPath": "candidate-r3/validation--solo-004-window-03.npy",
+      "file": "files/00136.npy",
+      "bytes": 256128,
+      "sha256": "89058dfdef8cf695a970912c01a9f7344ebddbefbc841ca34296078ece289dc5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-005-window-00.npy",
+      "logicalPath": "candidate-r3/validation--solo-005-window-00.npy",
+      "file": "files/00137.npy",
+      "bytes": 256128,
+      "sha256": "0ac70c3bd667121f2f7eefee9daa0285ad409135040fd103b0745804509a80c3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-005-window-01.npy",
+      "logicalPath": "candidate-r3/validation--solo-005-window-01.npy",
+      "file": "files/00138.npy",
+      "bytes": 256128,
+      "sha256": "9e66e59f3c08b542476c9c56e6617a3bb336f5af565b6ec3ae9d9520e0b60ea7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-005-window-02.npy",
+      "logicalPath": "candidate-r3/validation--solo-005-window-02.npy",
+      "file": "files/00139.npy",
+      "bytes": 256128,
+      "sha256": "cd7297a63393e44b5cec550b60a82532aa8bac1317eaa5b8fb908c269f47487c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-005-window-03.npy",
+      "logicalPath": "candidate-r3/validation--solo-005-window-03.npy",
+      "file": "files/00140.npy",
+      "bytes": 256128,
+      "sha256": "86706e8ceb575954ed214432fe97345f61588ce86fb32a024c91c02a550a8024"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-006-window-00.npy",
+      "logicalPath": "candidate-r3/validation--solo-006-window-00.npy",
+      "file": "files/00141.npy",
+      "bytes": 256128,
+      "sha256": "e493a36716706381dedef4c4dd9b6df2dbd4eb92aabd09544e285b9853cea7d9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-006-window-01.npy",
+      "logicalPath": "candidate-r3/validation--solo-006-window-01.npy",
+      "file": "files/00142.npy",
+      "bytes": 256128,
+      "sha256": "9e52c31836d6a953eb008550df0766be4278327a9ddd6921f3ddbc0029d78586"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-007-window-00.npy",
+      "logicalPath": "candidate-r3/validation--solo-007-window-00.npy",
+      "file": "files/00143.npy",
+      "bytes": 256128,
+      "sha256": "2d0fb83993c2b13729bed1a665d9cff797faa132890fabe7e0d47a22c0826438"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-007-window-01.npy",
+      "logicalPath": "candidate-r3/validation--solo-007-window-01.npy",
+      "file": "files/00144.npy",
+      "bytes": 256128,
+      "sha256": "27fe6dd93d92ec673b55ac0ae814529ecf272661b9f2e8818c6970ff8bfe2b03"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-007-window-02.npy",
+      "logicalPath": "candidate-r3/validation--solo-007-window-02.npy",
+      "file": "files/00145.npy",
+      "bytes": 256128,
+      "sha256": "6943a1c0a69842f9b1723043a6b9f0bbda01214ba97ffe70c829ce76b32bf063"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\validation--solo-007-window-03.npy",
+      "logicalPath": "candidate-r3/validation--solo-007-window-03.npy",
+      "file": "files/00146.npy",
+      "bytes": 256128,
+      "sha256": "ca3a13355ec6a846e63ae44e6952370114f3c6805d508472aa643c889476eafd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\worker.log",
+      "logicalPath": "candidate-r3/worker.log",
+      "file": "files/00147.log",
+      "bytes": 343,
+      "sha256": "09b7a18f8680c52ed3d7efd046e55a9775db644335e8452c0f9167e4d6190835"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\inventory\\hip-inventory.json",
+      "logicalPath": "candidate-r3/inventory/hip-inventory.json",
+      "file": "files/00148.json",
+      "bytes": 1394,
+      "sha256": "1b3755d1ffe4f3fef8a2b7486feb99c004371d132abb33e0c95f9a032a2a8c0a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "candidate-r3/inventory/inventory-resources.jsonl",
+      "file": "files/00149.jsonl",
+      "bytes": 734,
+      "sha256": "47e32e23ebb5f90df038e3b1be825e7a56d8fa1df0e80f58183fccc844355f47"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\inventory\\inventory-run.json",
+      "logicalPath": "candidate-r3/inventory/inventory-run.json",
+      "file": "files/00150.json",
+      "bytes": 610,
+      "sha256": "b7eb6e6f4265a3ccaaf3eeafaaec78b80db77e8c59554c801410c3dd3f71897e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r3\\inventory\\inventory-worker.log",
+      "logicalPath": "candidate-r3/inventory/inventory-worker.log",
+      "file": "files/00151.log",
+      "bytes": 1213,
+      "sha256": "b1480baabcd9149f3dec4d0bd7f8f793d5e49dfe2cc975a121b88a6d41a46b6f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\state.json",
+      "logicalPath": "train-r1/state.json",
+      "file": "files/00152.json",
+      "bytes": 2703466,
+      "sha256": "ab865a9e42f96b63ae07991dde4fb450055a84e2509e44c767fc065d630d3f96"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\run.json",
+      "logicalPath": "train-r1/run.json",
+      "file": "files/00153.json",
+      "bytes": 638,
+      "sha256": "ce61b9992b55f4323f7abb1da2e7e5f3e6954eeb88fe45c10ab56ffc6cfa315f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\worker.log",
+      "logicalPath": "train-r1/worker.log",
+      "file": "files/00154.log",
+      "bytes": 334,
+      "sha256": "cf0ba5a58387e21516f26c23ec42a9c49fe6ca0182739a00a6c72c6c64d5cceb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\history.jsonl",
+      "logicalPath": "train-r1/history.jsonl",
+      "file": "files/00155.jsonl",
+      "bytes": 44345,
+      "sha256": "ea038e81154d958f2a3efa70cc8e499cc3438f3ca825c0372a3e812f7ddfe8eb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\latest-checkpoint.json",
+      "logicalPath": "train-r1/latest-checkpoint.json",
+      "file": "files/00156.json",
+      "bytes": 453412,
+      "sha256": "69d0d09c5a3240cba8d163081a0a520175d95f8db8de6011bd307fd68c0353a4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\checkpoints\\update-080\\model-00.safetensors",
+      "logicalPath": "final-trained-model/model-00.safetensors",
+      "file": "files/00157.safetensors",
+      "bytes": 24753052,
+      "sha256": "380d513ffdcfce037a54b0d32c6263137f0b9f3e0522b69eee2c8020b69ef96c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\checkpoints\\update-080\\model-01.safetensors",
+      "logicalPath": "final-trained-model/model-01.safetensors",
+      "file": "files/00158.safetensors",
+      "bytes": 25040052,
+      "sha256": "bf86d3a686d61dd382b4aea95291391fc9b619e3907705090b20ad5601844b5e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\checkpoints\\update-080\\model-02.safetensors",
+      "logicalPath": "final-trained-model/model-02.safetensors",
+      "file": "files/00159.safetensors",
+      "bytes": 22623804,
+      "sha256": "2dfaf5486edf91e3f4eae6b0a1ae76532332571195f9aab7926da49748b9fecc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\checkpoints\\update-080\\model-03.safetensors",
+      "logicalPath": "final-trained-model/model-03.safetensors",
+      "file": "files/00160.safetensors",
+      "bytes": 24596232,
+      "sha256": "54255d0d3c26b5338f9e28b0bc0a060b4a7d7fb24e345b11cd2038e5e90a9907"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\checkpoints\\update-080\\model-04.safetensors",
+      "logicalPath": "final-trained-model/model-04.safetensors",
+      "file": "files/00161.safetensors",
+      "bytes": 22677220,
+      "sha256": "96cbf8135c4b559ec10efa1a1d6d19c28ed2cba12da67612ac6550c69d24bc38"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\checkpoints\\update-080\\model-05.safetensors",
+      "logicalPath": "final-trained-model/model-05.safetensors",
+      "file": "files/00162.safetensors",
+      "bytes": 24596224,
+      "sha256": "f494caafd532fe701765ce170da939588f39199445161c8af316dc2b01d5b594"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\checkpoints\\update-080\\model-06.safetensors",
+      "logicalPath": "final-trained-model/model-06.safetensors",
+      "file": "files/00163.safetensors",
+      "bytes": 22677220,
+      "sha256": "23a2d94cd244a872eb0a0ee28d10211feb4a4ae62bdd246e0499a719b61475a3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\checkpoints\\update-080\\model-07.safetensors",
+      "logicalPath": "final-trained-model/model-07.safetensors",
+      "file": "files/00164.safetensors",
+      "bytes": 24596192,
+      "sha256": "0ec71afd4e6c33d93542771f8afd5de49d9e3d2de4d4becc4c06e420899213f1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\checkpoints\\update-080\\model-08.safetensors",
+      "logicalPath": "final-trained-model/model-08.safetensors",
+      "file": "files/00165.safetensors",
+      "bytes": 22677164,
+      "sha256": "932836b39e9da3e7b397bc140d1f9dfde8592f4b216c21841b21ee9580d73d13"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\checkpoints\\update-080\\model-09.safetensors",
+      "logicalPath": "final-trained-model/model-09.safetensors",
+      "file": "files/00166.safetensors",
+      "bytes": 8856080,
+      "sha256": "5dccf3436e98dc4f8c6c67bef4134dd32df9f57e6be37db1816112baff47ec8a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\checkpoints\\update-080\\checkpoint.json",
+      "logicalPath": "final-trained-model/checkpoint.json",
+      "file": "files/00167.json",
+      "bytes": 453412,
+      "sha256": "69d0d09c5a3240cba8d163081a0a520175d95f8db8de6011bd307fd68c0353a4"
+    },
+    {
+      "source": "work\\prepare_blind_separator_supervision_20261115.py",
+      "logicalPath": "continuation-tools/prepare_blind_separator_supervision_20261115.py",
+      "file": "files/00168.py",
+      "bytes": 6966,
+      "sha256": "dca7338f9b87d89d50f277f09998b7355f74e5d4e7e95b1c9f20ca1e0dd6bb37"
+    },
+    {
+      "source": "work\\split_blind_separator_validation_inputs_20261115.py",
+      "logicalPath": "continuation-tools/split_blind_separator_validation_inputs_20261115.py",
+      "file": "files/00169.py",
+      "bytes": 1458,
+      "sha256": "48ec6b548e5732e7c23bf65e84f06a16fd82c6630299f2e08a9925b53f24448b"
+    },
+    {
+      "source": "work\\freeze_supervised_blind_separator_20261115.py",
+      "logicalPath": "continuation-tools/freeze_supervised_blind_separator_20261115.py",
+      "file": "files/00170.py",
+      "bytes": 8349,
+      "sha256": "382c00efda5880e0917027d2e5b26aac8e2b288540c927462c3aa9b9680569cf"
+    },
+    {
+      "source": "work\\record_supervised_blind_separator_result_20261115.py",
+      "logicalPath": "continuation-tools/record_supervised_blind_separator_result_20261115.py",
+      "file": "files/00171.py",
+      "bytes": 5816,
+      "sha256": "56633340a2f11881e605dadea8ea3b9e76f88cb5f8c5a31215227612a2365b51"
+    },
+    {
+      "source": "work\\prepare_supervised_separator_natural_validation_20261115.py",
+      "logicalPath": "continuation-tools/prepare_supervised_separator_natural_validation_20261115.py",
+      "file": "files/00172.py",
+      "bytes": 5902,
+      "sha256": "d6bb271427777f28145959ea1d50c80a5e73fb460c63f89871573ef28546b1dd"
+    },
+    {
+      "source": "work\\recover_supervised_separator_validation_20261115.py",
+      "logicalPath": "continuation-tools/recover_supervised_separator_validation_20261115.py",
+      "file": "files/00173.py",
+      "bytes": 4610,
+      "sha256": "b11680eec86c6e88341210d3a8b193d6db05c37f480bf937904111d391d99405"
+    },
+    {
+      "source": "work\\repair_interrupted_separator_prediction_durability_20261115.py",
+      "logicalPath": "continuation-tools/repair_interrupted_separator_prediction_durability_20261115.py",
+      "file": "files/00174.py",
+      "bytes": 3885,
+      "sha256": "5eb2ae0fa55b17df2531e50b97233e9a7180919c387f2b44866779070efb62fd"
+    },
+    {
+      "source": "work\\protect_supervised_blind_separator_20261115.py",
+      "logicalPath": "continuation-tools/protect_supervised_blind_separator_20261115.py",
+      "file": "files/00175.py",
+      "bytes": 7568,
+      "sha256": "bdb3ed7715dce530dfaead9834164fe663146cf0f27e9653e7a321f70b85bb8f"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "logicalPath": "canonical-workpoint-snapshot.json",
+      "file": "files/00176.json",
+      "bytes": 149651,
+      "sha256": "f2de498a96b667cad6f39d7ab433af2858afdf0eff16a78fec553d6bacadba68"
+    },
+    {
+      "source": "outputs\\Companion-分离组合模型进度-20261115.txt",
+      "logicalPath": "owner-separation-composition-note.txt",
+      "file": "files/00177.txt",
+      "bytes": 1847,
+      "sha256": "0ef9135680ec1658ec6ee6c83337266f2f3ac78c29e041b955ce399e16757906"
+    }
+  ],
+  "parentCommit": "59cea726b4adf0db0ec82a40c5803fcfc1ae6ee4",
+  "originalAudioOrBaseWeightsCopied": false,
+  "optimizerCopied": false,
+  "fullFinalSeparatorWeightsCopied": true,
+  "qualityQualified": false,
+  "d2Complete": false,
+  "productDefaultChanged": false,
+  "ownerParticipationRequired": false
+}

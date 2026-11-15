@@ -1,0 +1,37 @@
+{
+  "originalState": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\state.json",
+  "originalStateSha256": "fc1320a276d3b82eaca69c1750f346edd90230ed4863924fc515de0f1e4e2d6e",
+  "results": [
+    {
+      "id": "validation--mixed-000-window-00",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\validation--mixed-000-window-00.npy",
+      "sha256": "b789731a4e5f4854337b29dc3a3c62a2bb8d6e592a018b98beede44c041aa961",
+      "referenceUsed": false
+    },
+    {
+      "id": "validation--mixed-000-window-01",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\validation--mixed-000-window-01.npy",
+      "sha256": "cade9623475aec955a31ec53de2498527f55b333dc1fa3957a33490c5db4f4f9",
+      "referenceUsed": false
+    },
+    {
+      "id": "validation--mixed-000-window-02",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\validation--mixed-000-window-02.npy",
+      "sha256": "a327e616c3dfb74ce5195d064252801669ab90311500ef54c22317ce745230d8",
+      "referenceUsed": false
+    },
+    {
+      "id": "validation--mixed-000-window-03",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\validation--mixed-000-window-03.npy",
+      "sha256": "6a8be38d028392230f5980b7071d045ca87e9bc873c55e8459b0b53b6f24331b",
+      "referenceUsed": false
+    },
+    {
+      "id": "validation--mixed-001-window-00",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\validation--mixed-001-window-00.npy",
+      "sha256": "d173d98217260dd42deda469b2c767674c50aba13009ddf9293c9782322dcf97",
+      "referenceUsed": false
+    }
+  ],
+  "reason": "Tool call aborted externally; recorded PID absent. Exact termination time/exit code unknown. No RAM failure evidence; no training repeated."
+}

@@ -1,0 +1,94 @@
+{
+  "state": "PASS_SOURCE_GATE_NATURAL_WORD_EVALUATION_REQUIRED",
+  "checks": {
+    "overallImproves": true,
+    "noRegression:meeting:20200709_L_R002S01C01": true,
+    "noRegression:meeting:20200805_S_R001S01C01": true,
+    "noRegression:active:1": true,
+    "noRegression:active:2": true,
+    "beatsAllZero:active:1": true,
+    "beatsAllZero:active:2": true,
+    "inactiveOutputDoesNotRegress": true
+  },
+  "baseline": {
+    "all": {
+      "examples": 84,
+      "meanErrorRatio": 0.7066296293238468,
+      "aggregatedErrorRatio": 0.7372009854419199,
+      "meanSoftMaximumLossDb": -2.449347844386576,
+      "meanInactiveToMixtureEnergy": 0.026695514932249875
+    },
+    "meeting:20200709_L_R002S01C01": {
+      "examples": 53,
+      "meanErrorRatio": 0.8879407947330544,
+      "aggregatedErrorRatio": 1.023059025403388,
+      "meanSoftMaximumLossDb": -1.391573324037464,
+      "meanInactiveToMixtureEnergy": 0.04119607762745589
+    },
+    "meeting:20200805_S_R001S01C01": {
+      "examples": 31,
+      "meanErrorRatio": 0.39664602394681386,
+      "aggregatedErrorRatio": 0.40299414168932546,
+      "meanSoftMaximumLossDb": -4.257801056596349,
+      "meanInactiveToMixtureEnergy": 0.0008016529765248463
+    },
+    "active:1": {
+      "examples": 39,
+      "meanErrorRatio": 0.6113081636522244,
+      "aggregatedErrorRatio": 0.6107860453965135,
+      "meanSoftMaximumLossDb": -3.3688188009128703,
+      "meanInactiveToMixtureEnergy": 0.026695514932249875
+    },
+    "active:2": {
+      "examples": 45,
+      "meanErrorRatio": 0.7892415662392529,
+      "aggregatedErrorRatio": 0.7583944470247777,
+      "meanSoftMaximumLossDb": -1.6524730153971219,
+      "meanInactiveToMixtureEnergy": null
+    }
+  },
+  "candidate": {
+    "all": {
+      "examples": 84,
+      "meanErrorRatio": 0.3058160713826552,
+      "aggregatedErrorRatio": 0.42361425819316934,
+      "meanSoftMaximumLossDb": -7.313429621498025,
+      "meanInactiveToMixtureEnergy": 0.006412810936937742
+    },
+    "meeting:20200709_L_R002S01C01": {
+      "examples": 53,
+      "meanErrorRatio": 0.3341492080060988,
+      "aggregatedErrorRatio": 0.5400908547106736,
+      "meanSoftMaximumLossDb": -7.931153927490883,
+      "meanInactiveToMixtureEnergy": 0.00959973786034877
+    },
+    "meeting:20200805_S_R001S01C01": {
+      "examples": 31,
+      "meanErrorRatio": 0.2573755474780581,
+      "aggregatedErrorRatio": 0.2874373093188024,
+      "meanSoftMaximumLossDb": -6.257320324155396,
+      "meanInactiveToMixtureEnergy": 0.0007218700022751889
+    },
+    "active:1": {
+      "examples": 39,
+      "meanErrorRatio": 0.10588646645424081,
+      "aggregatedErrorRatio": 0.13557845183223918,
+      "meanSoftMaximumLossDb": -11.37747193805999,
+      "meanInactiveToMixtureEnergy": 0.006412810936937742
+    },
+    "active:2": {
+      "examples": 45,
+      "meanErrorRatio": 0.4790883956539477,
+      "aggregatedErrorRatio": 0.47190345403034817,
+      "meanSoftMaximumLossDb": -3.7912596138109884,
+      "meanInactiveToMixtureEnergy": null
+    }
+  },
+  "selectedCheckpoint": "fixed final update80 only",
+  "scorerSha256": "4d4fef694d238ca26e38ba70a8cf2936ea093aa970264abc9f2c9f74faf67674",
+  "syntheticSourcesAreNotNaturalIsolatedOverlap": true,
+  "noHyperparameterVariantsAuthorizedByThisGate": true,
+  "qualityQualified": false,
+  "d2Complete": false,
+  "productDefaultChanged": false
+}
