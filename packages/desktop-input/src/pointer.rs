@@ -298,7 +298,10 @@ impl Pointer {
         if gap {self.metrics.gaps+=1;self.release();self.reset_motion();}
         // Same fastest-arriving clock alignment as WatchPointer. Button DOWN
         // uses its sensor sample time, rather than an invented60ms rewind.
-        if gap||self.last.is_none(){self.sensor_clock=sensor_ms as f64/1000.;self.clock_offset=None;}else{self.sensor_clock+=dt;}
+        // Desktop radio backlog must not become a fresh clock baseline just
+        // because host arrivals paused. The monotonic sensor clock still
+        // advances across that gap; begin_stream owns actual stream resets.
+        if self.last.is_none()||(gap&&!self.settings.desktop_motion){self.sensor_clock=sensor_ms as f64/1000.;self.clock_offset=None;}else{self.sensor_clock+=dt;}
         self.clock_offset=Some(self.clock_offset.unwrap_or(f64::INFINITY).min(now-self.sensor_clock));
         let measured_at=self.sensor_clock+self.clock_offset.unwrap();
         self.last=Some((sequence,sensor_ms));self.arrival=Some(now);self.metrics.samples+=1;
@@ -326,14 +329,17 @@ impl Pointer {
     }
     pub fn sample_raw_gravity(&mut self,s:desktop::Raw,gravity:Option<[f64;3]>,now:f64){
         if self.settings.desktop_motion{
-            if self.observe_clock(s.sequence,s.sensor_ms,now).is_none(){return;}
+            let Some((_,_,measured_at))=self.observe_clock(s.sequence,s.sensor_ms,now)else{return;};
+            let delayed=now-measured_at>0.3; // Same existing pointer stale interval.
             self.contacts.sample(s);
             let surface=self.settings.relative_direct;
             if surface||self.settings.contact_regions{self.tap_motion.observe(s);}
             if self.desktop_device_ready==Some(false){self.metrics.calibrated=false;return;}
             let c=self.coarse.get_or_insert_with(||if surface{intent::Intent::surface_mouse()}else{intent::Intent::default()});c.settings=self.settings.clone();
             if self.desktop_device_ready==Some(true){c.desktop.enable_board_pose_prediction();}
-            c.sample_blocked_gravity(s,now,surface&&self.tap_motion.blocked(),gravity);
+            // Retain sensor-time pose propagation, but never emit an old
+            // displacement tail after the radio releases queued packets.
+            c.sample_blocked_gravity(s,now,delayed||(surface&&self.tap_motion.blocked()),gravity);
             self.metrics.calibrated=c.desktop.state.calibrated;
             self.metrics.surface_paused=c.desktop.state.surface.as_ref().is_some_and(|s|s.phase!=surface::Phase::Ready)||c.desktop.state.clutched;
             if self.metrics.paused||self.metrics.regripping{c.clear_motion();}
@@ -475,7 +481,8 @@ impl Pointer {
     pub fn frame(&mut self,now:f64,bounds:Bounds)->Frame {
         let dt=self.frame_at.map(|t|(now-t).clamp(0.,0.05)).unwrap_or(0.);self.frame_at=Some(now);
         if let Some(first)=self.first_arrival{if now>first{self.metrics.receive_hz=self.metrics.samples.saturating_sub(1)as f64/(now-first);}}
-        let stale=self.arrival.is_none_or(|at|now-at>0.3);
+        let stale=self.arrival.is_none_or(|at|now-at>0.3)||
+            (self.settings.desktop_motion&&self.clock_offset.is_some_and(|off|now-(self.sensor_clock+off)>0.3));
         self.metrics.stream_stale=stale;
         if stale {self.release();self.reset_motion();}
         if !stale&&!self.metrics.paused&&self.metrics.calibrated{

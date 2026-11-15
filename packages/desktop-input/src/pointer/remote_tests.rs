@@ -226,10 +226,13 @@ fn owner142_recorded_taps_and_impact_motion_replay(){
     let mut p=Pointer::new(settings,Point{x:960.,y:540.});
     let rows=rows.as_array().unwrap();let zero=rows[0]["hostUs"].as_u64().unwrap();
     let mut next_frame=0.;let mut clicks=vec![];let mut positions=vec![];let mut states=vec![];let mut sequence=None;let mut inferred_restarts=0;
+    let observe_frames=std::env::var_os("COMPANION_OBSERVE_FRAME_LATENCY").is_some();let mut deliveries=vec![];
     for row in rows{
         let at=(row["hostUs"].as_u64().unwrap()-zero)as f64/1e6;
         while next_frame<at{
-            let f=p.frame(next_frame,bounds());clicks.extend(f.buttons);positions.push((next_frame,p.shown));next_frame+=1./60.;
+            let f=p.frame(next_frame,bounds());
+            if observe_frames{deliveries.push(serde_json::json!({"at":next_frame,"emitted":f.position.is_some(),"stale":p.metrics.stream_stale,"sampleAgeS":p.clock_offset.map(|off|next_frame-p.sensor_clock-off)}));}
+            clicks.extend(f.buttons);positions.push((next_frame,p.shown));next_frame+=1./60.;
         }
         if row["kind"]=="motion"{
             let h=row["packet"].as_str().unwrap();let bytes=(0..h.len()).step_by(2).map(|i|u8::from_str_radix(&h[i..i+2],16).unwrap()).collect::<Vec<_>>();
@@ -243,7 +246,8 @@ fn owner142_recorded_taps_and_impact_motion_replay(){
         else{p.control(Control{sequence:row["sequence"].as_u64().unwrap()as u32,sensor_ms:row["sensorMs"].as_u64().unwrap()as u32,events:row["events"].as_u64().unwrap()as u16}).unwrap();}
     }
     let left=clicks.iter().filter(|x|matches!(x,Button::Click(_))).count();let right=clicks.iter().filter(|x|matches!(x,Button::RightClick(_))).count();
-    let report=serde_json::json!({"left":left,"right":right,"tapEvents":p.metrics.tap_events,"contacts":p.contact_status(),"positions":positions,"states":states,"inferredStreamRestartsFromSequenceReset":inferred_restarts,"labelsKnown":false,"boardDirectDiagnostic":board_direct,"scope":"Actual raw trace/core replay, fixed1920x1080 bounds and60Hz output; positions are predictions, not recorded OS coordinates. Planar stream restart inferred only from a backwards sequence. Board-direct, when explicitly enabled, is diagnostic, not shipped runtime."});
+    let mut report=serde_json::json!({"left":left,"right":right,"tapEvents":p.metrics.tap_events,"contacts":p.contact_status(),"positions":positions,"states":states,"inferredStreamRestartsFromSequenceReset":inferred_restarts,"labelsKnown":false,"boardDirectDiagnostic":board_direct,"scope":"Actual raw trace/core replay, fixed1920x1080 bounds and60Hz output; positions are predictions, not recorded OS coordinates. Planar stream restart inferred only from a backwards sequence. Board-direct, when explicitly enabled, is diagnostic, not shipped runtime."});
+    if observe_frames{report["frameDelivery"]=serde_json::json!(deliveries);}
     let output=std::env::var("COMPANION_CONTACT_REPLAY_OUT").expect("report destination");std::fs::write(output,serde_json::to_string_pretty(&report).unwrap()).unwrap();
     if std::env::var_os("COMPANION_EXPECT_DESK_REPAIR").is_some(){
         // Explicit Owner155 clarification: this capture was pushed on the

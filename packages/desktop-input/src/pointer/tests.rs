@@ -15,6 +15,20 @@ fn coarse_ready()->Pointer{
     for n in 0..121{p.sample_raw(raw_sample(n),n as f64/100.);p.frame(n as f64/100.,bounds());}
     assert!(p.metrics.calibrated);p
 }
+#[test]fn delayed_desktop_backlog_cannot_become_fresh_or_move_after_the_user_stopped(){
+    let mut p=coarse_ready();let origin=p.shown;
+    for n in 121..141{
+        let mut raw=raw_sample(n);raw.accel_mg[0]=200.;
+        p.sample_raw_gravity(raw,Some([0.,0.,1000.]),2.0);let f=p.frame(2.0,bounds());
+        assert!(p.metrics.stream_stale,"late sample reset the established clock");
+        assert!(f.position.is_none());assert_eq!(p.shown,origin);
+    }
+    // A genuinely current packet can resume without a manual reset. Missing
+    // sensor intervals still discard velocity through the existing core.
+    for n in 201..225{let mut raw=raw_sample(n);raw.accel_mg[0]=200.;
+        let at=n as f64/100.;p.sample_raw_gravity(raw,Some([0.,0.,1000.]),at);p.frame(at,bounds());}
+    assert!(!p.metrics.stream_stale);assert!(p.shown.x>origin.x);
+}
 #[test]fn raw_desktop_path_moves_and_keeps_ordinary_mouse_position_without_snapback(){
     let mut p=coarse_ready();
     for n in 121..131{let mut s=raw_sample(n);s.accel_mg[0]=100.;p.sample_raw(s,n as f64/100.);p.frame(n as f64/100.,bounds());}
