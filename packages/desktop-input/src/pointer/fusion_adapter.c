@@ -37,17 +37,24 @@ void companion_fusion_align(void *handle,const float accel[3]) {
     for(unsigned i=0;i<300;++i)FusionAhrsUpdateNoMagnetometer(&s->ahrs,zero,a);
     FusionAhrsSkipStartup(&s->ahrs);
 }
-void companion_fusion_step(void *handle,const float gyro[3],const float accel[3],float dt,float gravity[3],float corrected[3]) {
+static void step_rates(void *handle,const float gyro[3],const float accel[3],float dt,bool gyro_corrected,float gravity[3],float corrected[3]) {
     CompanionFusion *s=(CompanionFusion*)handle;
     FusionVector g={.array={gyro[0],gyro[1],gyro[2]}};
     const FusionVector a={.array={accel[0]*0.001f,accel[1]*0.001f,accel[2]*0.001f}};
-    g=FusionBiasUpdate(&s->bias,g);
+    /* Ready CIM6 rates were already corrected by the board's FusionBias.
+     * Re-learning them here absorbs slow real rotation and later invents
+     * rotation as the independent board bias estimate adapts. RAW5 and the
+     * original angular path still use this host estimator exactly once. */
+    if(!gyro_corrected)g=FusionBiasUpdate(&s->bias,g);
     FusionAhrsSetSamplePeriod(&s->ahrs,dt);
     FusionAhrsUpdateNoMagnetometer(&s->ahrs,g,a);
     const FusionVector up=FusionAhrsGetGravity(&s->ahrs);
     for(unsigned i=0;i<3;++i){gravity[i]=up.array[i];corrected[i]=g.array[i];}
 }
-void companion_fusion_desktop_step(void *handle,const float gyro[3],const float accel[3],float dt,bool correct_gravity,float earth[3],float gravity[3]) {
+void companion_fusion_step(void *handle,const float gyro[3],const float accel[3],float dt,float gravity[3],float corrected[3]) {
+    step_rates(handle,gyro,accel,dt,false,gravity,corrected);
+}
+void companion_fusion_desktop_step(void *handle,const float gyro[3],const float accel[3],float dt,bool correct_gravity,bool gyro_corrected,float earth[3],float gravity[3]) {
     CompanionFusion *s=(CompanionFusion*)handle;
     const float gain=correct_gravity?0.5f:0.0f;
     if(s->ahrs.gain!=gain){
@@ -55,7 +62,7 @@ void companion_fusion_desktop_step(void *handle,const float gyro[3],const float 
         a.gyroscopeRange=250.0f;a.accelerationRejection=10.0f;a.rejectionTimeout=5.0f;
         FusionAhrsSetSettings(&s->ahrs,&a);
     }
-    float corrected[3];companion_fusion_step(handle,gyro,accel,dt,gravity,corrected);
+    float corrected[3];step_rates(handle,gyro,accel,dt,gyro_corrected,gravity,corrected);
     const FusionVector acceleration=FusionAhrsGetEarthAcceleration(&s->ahrs);
     for(unsigned i=0;i<3;++i)earth[i]=acceleration.array[i]*9.80665f;
 }

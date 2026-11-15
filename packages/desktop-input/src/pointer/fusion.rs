@@ -6,7 +6,7 @@ unsafe extern "C" {
     fn companion_fusion_configure(handle:*mut c_void,sample_rate:f32);
     fn companion_fusion_align(handle:*mut c_void,accel:*const f32);
     fn companion_fusion_step(handle:*mut c_void,gyro:*const f32,accel:*const f32,dt:f32,gravity:*mut f32,corrected:*mut f32);
-    fn companion_fusion_desktop_step(handle:*mut c_void,gyro:*const f32,accel:*const f32,dt:f32,correct_gravity:bool,earth:*mut f32,gravity:*mut f32);
+    fn companion_fusion_desktop_step(handle:*mut c_void,gyro:*const f32,accel:*const f32,dt:f32,correct_gravity:bool,gyro_corrected:bool,earth:*mut f32,gravity:*mut f32);
 }
 pub struct Fusion {handle:NonNull<c_void>,configured:bool}
 // Upstream state has no thread affinity/global mutable state. Access is owned
@@ -16,8 +16,16 @@ impl Default for Fusion {fn default()->Self{Self{handle:NonNull::new(unsafe{comp
 impl Drop for Fusion {fn drop(&mut self){unsafe{companion_fusion_destroy(self.handle.as_ptr())}}}
 impl Fusion {
     pub fn desktop_step(&mut self,gyro:[f64;3],accel:[f64;3],dt:f64,correct_gravity:bool)->([f64;3],[f64;3]){
+        self.desktop_step_rates(gyro,accel,dt,correct_gravity,false)
+    }
+    /// Ready CIM6 rates have already passed the board's FusionBias. Keep
+    /// this explicit through the C boundary instead of estimating them twice.
+    pub fn desktop_step_corrected(&mut self,gyro:[f64;3],accel:[f64;3],dt:f64,correct_gravity:bool)->([f64;3],[f64;3]){
+        self.desktop_step_rates(gyro,accel,dt,correct_gravity,true)
+    }
+    fn desktop_step_rates(&mut self,gyro:[f64;3],accel:[f64;3],dt:f64,correct_gravity:bool,gyro_corrected:bool)->([f64;3],[f64;3]){
         let gyro=gyro.map(|v|v as f32);let accel=accel.map(|v|v as f32);let(mut earth,mut up)=([0f32;3],[0f32;3]);
-        unsafe{companion_fusion_desktop_step(self.handle.as_ptr(),gyro.as_ptr(),accel.as_ptr(),dt as f32,correct_gravity,earth.as_mut_ptr(),up.as_mut_ptr())};
+        unsafe{companion_fusion_desktop_step(self.handle.as_ptr(),gyro.as_ptr(),accel.as_ptr(),dt as f32,correct_gravity,gyro_corrected,earth.as_mut_ptr(),up.as_mut_ptr())};
         (earth.map(f64::from),up.map(f64::from))
     }
     pub fn align(&mut self,accel:[f64;3]){let a=accel.map(|v|v as f32);unsafe{companion_fusion_align(self.handle.as_ptr(),a.as_ptr())};}
@@ -34,6 +42,31 @@ impl Fusion {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn already_corrected_slow_rotation_is_not_learned_as_a_second_gyro_bias(){
+        let mut corrected=Fusion::default();let mut raw_reference=Fusion::default();
+        corrected.align([0.,0.,1000.]);raw_reference.align([0.,0.,1000.]);
+        // Warm up a stationary estimator, then provide an independently
+        // corrected, genuine0.25dps roll with matching measured gravity.
+        // Without the contract flag the host learns that real angular rate
+        // as bias and fails to rotate gravity out of a stationary location.
+        for _ in 0..500{
+            corrected.desktop_step_corrected([0.;3],[0.,0.,1000.],0.01,true);
+            raw_reference.desktop_step([0.;3],[0.,0.,1000.],0.01,true);
+        }
+        let(mut worst_corrected,mut worst_double)=(0_f64,0_f64);
+        for n in 1..=1000{
+            let angle=(n as f64*0.01*0.25).to_radians();
+            let accel=[0.,angle.sin()*1000.,angle.cos()*1000.];
+            let good=corrected.desktop_step_corrected([0.25,0.,0.],accel,0.01,false).0;
+            let double=raw_reference.desktop_step([0.25,0.,0.],accel,0.01,false).0;
+            worst_corrected=worst_corrected.max(good[0].hypot(good[1]));
+            worst_double=worst_double.max(double[0].hypot(double[1]));
+        }
+        eprintln!("Independent corrected-rate roll: single offset max{worst_corrected:.6}m/s2; duplicate-offset reference{worst_double:.6}m/s2");
+        assert!(worst_double>0.04,"regression stimulus did not expose duplicate correction");
+        assert!(worst_corrected<0.003,"already-corrected slow rotation created fake XY acceleration{worst_corrected}");
+    }
     #[test]
     fn measured_gyro_rebias_does_not_keep_a_previous_runtime_bias_after_alignment(){
         let mut f=Fusion::default();let accel=[90.,100.,970.];
