@@ -1,0 +1,16 @@
+{
+  "audioSha256": "dea1f9d47d753e6b626614a87ef163e48f21657d51303f4cffc182845dbd79a8",
+  "modelSha256": "5c7947680e6060e0d88cbbdd432bcee2b3edd2d3ea04c242326b067947e2027e",
+  "protocolSha256": "586137e164c206f2f10ebb5c1b7fa0e78409498419dfe8ce7f39ae266682f854",
+  "nativeLibrarySha256": "6cd9e60baa18668426a7f56a143c187278011609fe615914a1b6cd74483b3eb2",
+  "shape": [
+    10025,
+    8
+  ],
+  "dtype": "float32",
+  "committedFrames": 9001,
+  "submittedSample": 1440000,
+  "committedPrefixSha256": "52f81ab5dcf504b397c5a510e3be9ed39301eab271d68f2dfeb9020fc207abd3",
+  "stateContinuity": "One continuous native AOSC stream; no reset between chunks. Probabilities alone are not a restorable speaker cache.",
+  "neuralStateExported": false
+}

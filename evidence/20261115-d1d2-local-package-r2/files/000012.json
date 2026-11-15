@@ -1,0 +1,811 @@
+{
+  "state": "ANNOTATION_ONLY_SELECTION_FROZEN_AUDIO_NOT_YET_DOWNLOADED",
+  "policy": {
+    "minimumAnnotatedDurationSeconds": 1800,
+    "speakers": 4,
+    "maximumOverlapFractionOfWordSpeechUnionExclusive": 0.05,
+    "selection": "First lexicographic complete four-speaker meeting satisfying annotation-only ordinary conditions, before ASR; EN2002a already running is retained as complex development",
+    "audioPolicy": "One complete original 16kHz mono far-field Array1-01 microphone, no mixture, cutting, time masking or reference input",
+    "scope": "Development only; not independent of upstream pretraining and not final Chinese holdout"
+  },
+  "selected": {
+    "meeting": "ES2003b",
+    "lastAnnotatedEnd": 2100.45,
+    "wordSpeechUnion": 1867.0,
+    "wordOverlap": 88.52000000000083,
+    "overlapFraction": 0.04741296197107704,
+    "annotationFiles": [
+      {
+        "archivePath": "words/ES2003b.A.words.xml",
+        "sha256": "40d587031566d3e4a82c810728403b590df1852d9beecd50043742d4a8af18d5"
+      },
+      {
+        "archivePath": "words/ES2003b.B.words.xml",
+        "sha256": "89a94bfe0e8f3c25e396c3f717dec82137981b9e7a1bb888af4aa9c866fb8bf3"
+      },
+      {
+        "archivePath": "words/ES2003b.C.words.xml",
+        "sha256": "d9431cf57246544d02d2d441dd8112ded56cac6e53f4d62b4c34bdab7a1bed63"
+      },
+      {
+        "archivePath": "words/ES2003b.D.words.xml",
+        "sha256": "fc35e6ad74a58b8769163b8eb8fc586dbf19b8dd1b2dca17f057c4d04ab936f7"
+      }
+    ]
+  },
+  "scannedCompleteLongMeetings": 110,
+  "rows": [
+    {
+      "meeting": "EN2001b",
+      "lastAnnotatedEnd": 3441.98,
+      "wordSpeechUnion": 2904.4600000000005,
+      "wordOverlap": 227.47000000000173,
+      "overlapFraction": 0.07831748414507403
+    },
+    {
+      "meeting": "EN2002c",
+      "lastAnnotatedEnd": 2889.64,
+      "wordSpeechUnion": 2604.9300000000003,
+      "wordOverlap": 630.4600000000006,
+      "overlapFraction": 0.24202569742757024
+    },
+    {
+      "meeting": "EN2002d",
+      "lastAnnotatedEnd": 2207.85,
+      "wordSpeechUnion": 1928.6200000000008,
+      "wordOverlap": 579.0100000000014,
+      "overlapFraction": 0.3002198463149823
+    },
+    {
+      "meeting": "EN2003a",
+      "lastAnnotatedEnd": 2240.17,
+      "wordSpeechUnion": 1832.5200000000025,
+      "wordOverlap": 160.42999999999947,
+      "overlapFraction": 0.08754611136576913
+    },
+    {
+      "meeting": "EN2004a",
+      "lastAnnotatedEnd": 3445.63,
+      "wordSpeechUnion": 3100.1100000000006,
+      "wordOverlap": 550.4299999999954,
+      "overlapFraction": 0.17755176429223327
+    },
+    {
+      "meeting": "EN2005a",
+      "lastAnnotatedEnd": 5297.84,
+      "wordSpeechUnion": 5012.590000000005,
+      "wordOverlap": 480.4099999999969,
+      "overlapFraction": 0.09584067318491966
+    },
+    {
+      "meeting": "EN2006a",
+      "lastAnnotatedEnd": 3521.56,
+      "wordSpeechUnion": 2325.6460000000025,
+      "wordOverlap": 430.1749999999971,
+      "overlapFraction": 0.18497011153030024
+    },
+    {
+      "meeting": "EN2006b",
+      "lastAnnotatedEnd": 2990.04,
+      "wordSpeechUnion": 1954.859999999999,
+      "wordOverlap": 458.50999999999794,
+      "overlapFraction": 0.2345487656405053
+    },
+    {
+      "meeting": "EN2009b",
+      "lastAnnotatedEnd": 2230.62,
+      "wordSpeechUnion": 2122.5900000000006,
+      "wordOverlap": 435.81000000000074,
+      "overlapFraction": 0.20531991576328948
+    },
+    {
+      "meeting": "EN2009c",
+      "lastAnnotatedEnd": 2946.18,
+      "wordSpeechUnion": 2723.7499999999986,
+      "wordOverlap": 386.7399999999966,
+      "overlapFraction": 0.14198806792106353
+    },
+    {
+      "meeting": "EN2009d",
+      "lastAnnotatedEnd": 5122.06,
+      "wordSpeechUnion": 4638.500000000001,
+      "wordOverlap": 811.590000000001,
+      "overlapFraction": 0.174968200927024
+    },
+    {
+      "meeting": "ES2002b",
+      "lastAnnotatedEnd": 2165.82,
+      "wordSpeechUnion": 1938.7499999999995,
+      "wordOverlap": 222.15000000000003,
+      "overlapFraction": 0.11458413926499038
+    },
+    {
+      "meeting": "ES2002c",
+      "lastAnnotatedEnd": 2406.1,
+      "wordSpeechUnion": 2078.7399999999993,
+      "wordOverlap": 209.96999999999954,
+      "overlapFraction": 0.10100830310668944
+    },
+    {
+      "meeting": "ES2002d",
+      "lastAnnotatedEnd": 2400.86,
+      "wordSpeechUnion": 2104.1899999999964,
+      "wordOverlap": 307.37999999999784,
+      "overlapFraction": 0.14607996426178166
+    },
+    {
+      "meeting": "ES2003b",
+      "lastAnnotatedEnd": 2100.45,
+      "wordSpeechUnion": 1867.0,
+      "wordOverlap": 88.52000000000083,
+      "overlapFraction": 0.04741296197107704
+    },
+    {
+      "meeting": "ES2003c",
+      "lastAnnotatedEnd": 2251.55,
+      "wordSpeechUnion": 1983.0500000000018,
+      "wordOverlap": 86.55999999999796,
+      "overlapFraction": 0.04364993318373106
+    },
+    {
+      "meeting": "ES2003d",
+      "lastAnnotatedEnd": 2344.85,
+      "wordSpeechUnion": 1980.5099999999986,
+      "wordOverlap": 121.71000000000286,
+      "overlapFraction": 0.06145386794310705
+    },
+    {
+      "meeting": "ES2004b",
+      "lastAnnotatedEnd": 2341.97,
+      "wordSpeechUnion": 2014.2099999999973,
+      "wordOverlap": 203.15999999999985,
+      "overlapFraction": 0.1008633657860899
+    },
+    {
+      "meeting": "ES2004c",
+      "lastAnnotatedEnd": 2331.79,
+      "wordSpeechUnion": 2012.719999999999,
+      "wordOverlap": 215.00999999999857,
+      "overlapFraction": 0.10682558925235437
+    },
+    {
+      "meeting": "ES2004d",
+      "lastAnnotatedEnd": 2222.25,
+      "wordSpeechUnion": 1718.94,
+      "wordOverlap": 259.3100000000002,
+      "overlapFraction": 0.1508545964373394
+    },
+    {
+      "meeting": "ES2005b",
+      "lastAnnotatedEnd": 2298.89,
+      "wordSpeechUnion": 2025.3000000000004,
+      "wordOverlap": 233.80000000000058,
+      "overlapFraction": 0.11543968794746484
+    },
+    {
+      "meeting": "ES2005c",
+      "lastAnnotatedEnd": 2295.25,
+      "wordSpeechUnion": 2027.3700000000006,
+      "wordOverlap": 332.860000000001,
+      "overlapFraction": 0.16418315354375418
+    },
+    {
+      "meeting": "ES2006b",
+      "lastAnnotatedEnd": 2179.78,
+      "wordSpeechUnion": 1937.1599999999996,
+      "wordOverlap": 215.37999999999812,
+      "overlapFraction": 0.11118338185797672
+    },
+    {
+      "meeting": "ES2006c",
+      "lastAnnotatedEnd": 2181.64,
+      "wordSpeechUnion": 1924.8399999999995,
+      "wordOverlap": 274.6099999999988,
+      "overlapFraction": 0.14266640344132442
+    },
+    {
+      "meeting": "ES2006d",
+      "lastAnnotatedEnd": 1967.33,
+      "wordSpeechUnion": 1647.2899999999997,
+      "wordOverlap": 381.11,
+      "overlapFraction": 0.231355741854804
+    },
+    {
+      "meeting": "ES2007c",
+      "lastAnnotatedEnd": 2377.37,
+      "wordSpeechUnion": 1890.6800000000007,
+      "wordOverlap": 186.39999999999947,
+      "overlapFraction": 0.09858886749740801
+    },
+    {
+      "meeting": "ES2008b",
+      "lastAnnotatedEnd": 2229.18,
+      "wordSpeechUnion": 1742.0199999999998,
+      "wordOverlap": 100.43000000000083,
+      "overlapFraction": 0.05765146209572843
+    },
+    {
+      "meeting": "ES2008c",
+      "lastAnnotatedEnd": 2098.24,
+      "wordSpeechUnion": 1741.8499999999985,
+      "wordOverlap": 192.50999999999993,
+      "overlapFraction": 0.11052042368745879
+    },
+    {
+      "meeting": "ES2008d",
+      "lastAnnotatedEnd": 2622.63,
+      "wordSpeechUnion": 2113.8100000000004,
+      "wordOverlap": 215.41999999999965,
+      "overlapFraction": 0.10191076776058378
+    },
+    {
+      "meeting": "ES2009c",
+      "lastAnnotatedEnd": 1953.07,
+      "wordSpeechUnion": 1752.4300000000014,
+      "wordOverlap": 128.7200000000002,
+      "overlapFraction": 0.0734522919603066
+    },
+    {
+      "meeting": "ES2009d",
+      "lastAnnotatedEnd": 2114.9,
+      "wordSpeechUnion": 1834.300000000001,
+      "wordOverlap": 258.22999999999746,
+      "overlapFraction": 0.14077849860982244
+    },
+    {
+      "meeting": "ES2010c",
+      "lastAnnotatedEnd": 1832.44,
+      "wordSpeechUnion": 1530.7199999999998,
+      "wordOverlap": 164.63000000000164,
+      "overlapFraction": 0.10755069509773288
+    },
+    {
+      "meeting": "ES2011d",
+      "lastAnnotatedEnd": 1977.02,
+      "wordSpeechUnion": 1426.2500000000007,
+      "wordOverlap": 180.29000000000028,
+      "overlapFraction": 0.12640841367221747
+    },
+    {
+      "meeting": "ES2012b",
+      "lastAnnotatedEnd": 2228.25,
+      "wordSpeechUnion": 1780.3499999999995,
+      "wordOverlap": 112.70999999999906,
+      "overlapFraction": 0.06330777656078809
+    },
+    {
+      "meeting": "ES2012c",
+      "lastAnnotatedEnd": 2204.92,
+      "wordSpeechUnion": 1822.980000000001,
+      "wordOverlap": 204.35999999999825,
+      "overlapFraction": 0.11210216239344269
+    },
+    {
+      "meeting": "ES2013b",
+      "lastAnnotatedEnd": 2125.08,
+      "wordSpeechUnion": 1737.8100000000002,
+      "wordOverlap": 126.15000000000038,
+      "overlapFraction": 0.07259136499387181
+    },
+    {
+      "meeting": "ES2013c",
+      "lastAnnotatedEnd": 2357.69,
+      "wordSpeechUnion": 1960.4400000000005,
+      "wordOverlap": 126.12000000000242,
+      "overlapFraction": 0.06433249678643692
+    },
+    {
+      "meeting": "ES2013d",
+      "lastAnnotatedEnd": 1898.52,
+      "wordSpeechUnion": 1426.6399999999999,
+      "wordOverlap": 121.24000000000046,
+      "overlapFraction": 0.08498289687657747
+    },
+    {
+      "meeting": "ES2014b",
+      "lastAnnotatedEnd": 2317.39,
+      "wordSpeechUnion": 1831.13,
+      "wordOverlap": 156.63999999999737,
+      "overlapFraction": 0.08554280690065554
+    },
+    {
+      "meeting": "ES2014c",
+      "lastAnnotatedEnd": 2273.36,
+      "wordSpeechUnion": 1846.7820000000002,
+      "wordOverlap": 205.67899999999972,
+      "overlapFraction": 0.1113715641586282
+    },
+    {
+      "meeting": "ES2014d",
+      "lastAnnotatedEnd": 2911.32,
+      "wordSpeechUnion": 2338.839999999999,
+      "wordOverlap": 226.9300000000017,
+      "overlapFraction": 0.09702673120008287
+    },
+    {
+      "meeting": "ES2015b",
+      "lastAnnotatedEnd": 2290.55,
+      "wordSpeechUnion": 1998.8899999999996,
+      "wordOverlap": 270.08000000000106,
+      "overlapFraction": 0.135114988818795
+    },
+    {
+      "meeting": "ES2015c",
+      "lastAnnotatedEnd": 2135.81,
+      "wordSpeechUnion": 1785.9199999999985,
+      "wordOverlap": 265.60999999999746,
+      "overlapFraction": 0.14872446694140706
+    },
+    {
+      "meeting": "ES2015d",
+      "lastAnnotatedEnd": 1930.7,
+      "wordSpeechUnion": 1588.499999999997,
+      "wordOverlap": 410.06000000000006,
+      "overlapFraction": 0.2581429021089083
+    },
+    {
+      "meeting": "ES2016b",
+      "lastAnnotatedEnd": 2406.03,
+      "wordSpeechUnion": 1763.0099999999982,
+      "wordOverlap": 77.82999999999753,
+      "overlapFraction": 0.044146091060174135
+    },
+    {
+      "meeting": "ES2016c",
+      "lastAnnotatedEnd": 2305.15,
+      "wordSpeechUnion": 1737.440000000001,
+      "wordOverlap": 94.34000000000069,
+      "overlapFraction": 0.05429827792614458
+    },
+    {
+      "meeting": "IB4002",
+      "lastAnnotatedEnd": 1863.17,
+      "wordSpeechUnion": 1212.44,
+      "wordOverlap": 308.6999999999995,
+      "overlapFraction": 0.2546105374286558
+    },
+    {
+      "meeting": "IB4003",
+      "lastAnnotatedEnd": 1982.11,
+      "wordSpeechUnion": 1863.7899999999993,
+      "wordOverlap": 237.0300000000015,
+      "overlapFraction": 0.12717634497448832
+    },
+    {
+      "meeting": "IB4004",
+      "lastAnnotatedEnd": 2385.988,
+      "wordSpeechUnion": 2201.0700000000015,
+      "wordOverlap": 405.08999999999776,
+      "overlapFraction": 0.1840423066962875
+    },
+    {
+      "meeting": "IB4005",
+      "lastAnnotatedEnd": 2013.04,
+      "wordSpeechUnion": 1845.3400000000015,
+      "wordOverlap": 209.28000000000043,
+      "overlapFraction": 0.1134099949060879
+    },
+    {
+      "meeting": "IB4010",
+      "lastAnnotatedEnd": 2937.86,
+      "wordSpeechUnion": 2633.3800000000024,
+      "wordOverlap": 469.26999999999964,
+      "overlapFraction": 0.178200639482338
+    },
+    {
+      "meeting": "IB4011",
+      "lastAnnotatedEnd": 2386.49,
+      "wordSpeechUnion": 2128.770000000002,
+      "wordOverlap": 295.6800000000012,
+      "overlapFraction": 0.138897109598501
+    },
+    {
+      "meeting": "IN1001",
+      "lastAnnotatedEnd": 3442.98,
+      "wordSpeechUnion": 3057.580000000001,
+      "wordOverlap": 619.0699999999986,
+      "overlapFraction": 0.20247058130940104
+    },
+    {
+      "meeting": "IN1002",
+      "lastAnnotatedEnd": 2454.66,
+      "wordSpeechUnion": 2277.299999999999,
+      "wordOverlap": 347.02000000000186,
+      "overlapFraction": 0.15238220699951788
+    },
+    {
+      "meeting": "IN1005",
+      "lastAnnotatedEnd": 2769.21,
+      "wordSpeechUnion": 2626.95,
+      "wordOverlap": 265.7899999999996,
+      "overlapFraction": 0.10117817240526071
+    },
+    {
+      "meeting": "IN1007",
+      "lastAnnotatedEnd": 2375.27,
+      "wordSpeechUnion": 2290.4000000000005,
+      "wordOverlap": 532.2110000000026,
+      "overlapFraction": 0.23236596227733256
+    },
+    {
+      "meeting": "IN1008",
+      "lastAnnotatedEnd": 3388.12,
+      "wordSpeechUnion": 3073.550000000004,
+      "wordOverlap": 307.8699999999981,
+      "overlapFraction": 0.10016755868620901
+    },
+    {
+      "meeting": "IN1012",
+      "lastAnnotatedEnd": 3072.98,
+      "wordSpeechUnion": 2971.1000000000013,
+      "wordOverlap": 867.7199999999965,
+      "overlapFraction": 0.29205344821783047
+    },
+    {
+      "meeting": "IN1013",
+      "lastAnnotatedEnd": 3066.33,
+      "wordSpeechUnion": 2945.589999999999,
+      "wordOverlap": 813.8100000000019,
+      "overlapFraction": 0.276280813011995
+    },
+    {
+      "meeting": "IN1014",
+      "lastAnnotatedEnd": 3686.44,
+      "wordSpeechUnion": 3331.4800000000005,
+      "wordOverlap": 456.4000000000036,
+      "overlapFraction": 0.13699616987044905
+    },
+    {
+      "meeting": "IN1016",
+      "lastAnnotatedEnd": 3555.08,
+      "wordSpeechUnion": 3446.859999999999,
+      "wordOverlap": 648.2200000000041,
+      "overlapFraction": 0.18806101785393206
+    },
+    {
+      "meeting": "IS1000b",
+      "lastAnnotatedEnd": 2309.24,
+      "wordSpeechUnion": 1885.8389999999993,
+      "wordOverlap": 190.14499999999725,
+      "overlapFraction": 0.100827801312836
+    },
+    {
+      "meeting": "IS1000c",
+      "lastAnnotatedEnd": 2097.151,
+      "wordSpeechUnion": 1787.7799999999982,
+      "wordOverlap": 157.9400000000016,
+      "overlapFraction": 0.08834420342547838
+    },
+    {
+      "meeting": "IS1000d",
+      "lastAnnotatedEnd": 2571.51,
+      "wordSpeechUnion": 2103.620000000001,
+      "wordOverlap": 276.6599999999991,
+      "overlapFraction": 0.13151614835378966
+    },
+    {
+      "meeting": "IS1001b",
+      "lastAnnotatedEnd": 2096.14,
+      "wordSpeechUnion": 1731.9899999999984,
+      "wordOverlap": 143.65000000000074,
+      "overlapFraction": 0.08293927794040432
+    },
+    {
+      "meeting": "IS1002b",
+      "lastAnnotatedEnd": 2338.72,
+      "wordSpeechUnion": 2088.4299999999985,
+      "wordOverlap": 133.00999999999982,
+      "overlapFraction": 0.06368899125180155
+    },
+    {
+      "meeting": "IS1002c",
+      "lastAnnotatedEnd": 2056.31,
+      "wordSpeechUnion": 1802.26,
+      "wordOverlap": 150.68999999999963,
+      "overlapFraction": 0.08361168754785638
+    },
+    {
+      "meeting": "IS1003c",
+      "lastAnnotatedEnd": 1836.57,
+      "wordSpeechUnion": 1548.9600000000005,
+      "wordOverlap": 185.84000000000026,
+      "overlapFraction": 0.11997727507488909
+    },
+    {
+      "meeting": "IS1003d",
+      "lastAnnotatedEnd": 2085.7,
+      "wordSpeechUnion": 1769.0800000000013,
+      "wordOverlap": 506.42999999999904,
+      "overlapFraction": 0.28626743844257957
+    },
+    {
+      "meeting": "IS1004b",
+      "lastAnnotatedEnd": 2142.42,
+      "wordSpeechUnion": 1927.4500000000005,
+      "wordOverlap": 153.43000000000006,
+      "overlapFraction": 0.07960258372461025
+    },
+    {
+      "meeting": "IS1004c",
+      "lastAnnotatedEnd": 2250.62,
+      "wordSpeechUnion": 1927.4299999999976,
+      "wordOverlap": 228.84999999999957,
+      "overlapFraction": 0.11873323544823929
+    },
+    {
+      "meeting": "IS1004d",
+      "lastAnnotatedEnd": 1935.91,
+      "wordSpeechUnion": 1503.439999999999,
+      "wordOverlap": 221.84000000000023,
+      "overlapFraction": 0.14755494066939845
+    },
+    {
+      "meeting": "IS1005b",
+      "lastAnnotatedEnd": 2152.41,
+      "wordSpeechUnion": 1834.1299999999999,
+      "wordOverlap": 161.87000000000063,
+      "overlapFraction": 0.08825437673447391
+    },
+    {
+      "meeting": "IS1005c",
+      "lastAnnotatedEnd": 2006.82,
+      "wordSpeechUnion": 1685.0300000000007,
+      "wordOverlap": 138.41999999999922,
+      "overlapFraction": 0.0821469053963426
+    },
+    {
+      "meeting": "IS1006b",
+      "lastAnnotatedEnd": 2135.61,
+      "wordSpeechUnion": 1830.8200000000015,
+      "wordOverlap": 212.07999999999936,
+      "overlapFraction": 0.11583880447012769
+    },
+    {
+      "meeting": "IS1006c",
+      "lastAnnotatedEnd": 1921.25,
+      "wordSpeechUnion": 1659.3500000000008,
+      "wordOverlap": 279.98000000000275,
+      "overlapFraction": 0.1687287190767485
+    },
+    {
+      "meeting": "IS1006d",
+      "lastAnnotatedEnd": 1810.03,
+      "wordSpeechUnion": 1533.3399999999997,
+      "wordOverlap": 468.34999999999764,
+      "overlapFraction": 0.3054443241551109
+    },
+    {
+      "meeting": "IS1007c",
+      "lastAnnotatedEnd": 2067.05,
+      "wordSpeechUnion": 1773.7800000000009,
+      "wordOverlap": 235.66999999999797,
+      "overlapFraction": 0.1328631510108344
+    },
+    {
+      "meeting": "IS1007d",
+      "lastAnnotatedEnd": 1992.17,
+      "wordSpeechUnion": 1743.5099999999986,
+      "wordOverlap": 278.53999999999905,
+      "overlapFraction": 0.15975818894069965
+    },
+    {
+      "meeting": "IS1009b",
+      "lastAnnotatedEnd": 2026.9,
+      "wordSpeechUnion": 1777.9700000000016,
+      "wordOverlap": 179.44999999999857,
+      "overlapFraction": 0.10092971197489181
+    },
+    {
+      "meeting": "IS1009d",
+      "lastAnnotatedEnd": 1925.75,
+      "wordSpeechUnion": 1547.8200000000002,
+      "wordOverlap": 162.23999999999984,
+      "overlapFraction": 0.10481838973524042
+    },
+    {
+      "meeting": "TS3003b",
+      "lastAnnotatedEnd": 2149.36,
+      "wordSpeechUnion": 1739.2800000000004,
+      "wordOverlap": 74.35999999999902,
+      "overlapFraction": 0.042753323214203005
+    },
+    {
+      "meeting": "TS3003c",
+      "lastAnnotatedEnd": 2280.36,
+      "wordSpeechUnion": 1801.7699999999993,
+      "wordOverlap": 89.76000000000009,
+      "overlapFraction": 0.049817679282039395
+    },
+    {
+      "meeting": "TS3003d",
+      "lastAnnotatedEnd": 2591.56,
+      "wordSpeechUnion": 1853.5500000000018,
+      "wordOverlap": 198.73999999999646,
+      "overlapFraction": 0.1072212780879913
+    },
+    {
+      "meeting": "TS3004b",
+      "lastAnnotatedEnd": 2209.05,
+      "wordSpeechUnion": 1874.7700000000016,
+      "wordOverlap": 237.70000000000402,
+      "overlapFraction": 0.12678888610336406
+    },
+    {
+      "meeting": "TS3004c",
+      "lastAnnotatedEnd": 2452.69,
+      "wordSpeechUnion": 1938.0700000000002,
+      "wordOverlap": 293.6899999999996,
+      "overlapFraction": 0.1515373541719337
+    },
+    {
+      "meeting": "TS3004d",
+      "lastAnnotatedEnd": 2740.24,
+      "wordSpeechUnion": 1787.8899999999994,
+      "wordOverlap": 297.9799999999994,
+      "overlapFraction": 0.16666573446912253
+    },
+    {
+      "meeting": "TS3005b",
+      "lastAnnotatedEnd": 2405.3,
+      "wordSpeechUnion": 2073.169999999999,
+      "wordOverlap": 302.8599999999975,
+      "overlapFraction": 0.14608546332428005
+    },
+    {
+      "meeting": "TS3005c",
+      "lastAnnotatedEnd": 2369.52,
+      "wordSpeechUnion": 1841.2299999999984,
+      "wordOverlap": 267.6000000000034,
+      "overlapFraction": 0.14533762756418458
+    },
+    {
+      "meeting": "TS3005d",
+      "lastAnnotatedEnd": 2639.02,
+      "wordSpeechUnion": 2219.869999999998,
+      "wordOverlap": 589.9800000000025,
+      "overlapFraction": 0.26577232000072215
+    },
+    {
+      "meeting": "TS3006b",
+      "lastAnnotatedEnd": 2346.49,
+      "wordSpeechUnion": 2069.389999999998,
+      "wordOverlap": 430.6600000000004,
+      "overlapFraction": 0.20810963617297892
+    },
+    {
+      "meeting": "TS3006c",
+      "lastAnnotatedEnd": 2583.99,
+      "wordSpeechUnion": 2209.1099999999983,
+      "wordOverlap": 459.26000000000096,
+      "overlapFraction": 0.20789367663900907
+    },
+    {
+      "meeting": "TS3006d",
+      "lastAnnotatedEnd": 2949.5,
+      "wordSpeechUnion": 2451.54,
+      "wordOverlap": 599.5699999999986,
+      "overlapFraction": 0.24456872006983307
+    },
+    {
+      "meeting": "TS3007b",
+      "lastAnnotatedEnd": 2539.43,
+      "wordSpeechUnion": 2203.899999999999,
+      "wordOverlap": 164.4999999999956,
+      "overlapFraction": 0.07464041018194821
+    },
+    {
+      "meeting": "TS3007c",
+      "lastAnnotatedEnd": 2430.16,
+      "wordSpeechUnion": 2186.979999999999,
+      "wordOverlap": 316.69999999999965,
+      "overlapFraction": 0.14481156663526862
+    },
+    {
+      "meeting": "TS3007d",
+      "lastAnnotatedEnd": 2758.55,
+      "wordSpeechUnion": 2285.860000000005,
+      "wordOverlap": 434.62999999999835,
+      "overlapFraction": 0.19013850367038987
+    },
+    {
+      "meeting": "TS3008b",
+      "lastAnnotatedEnd": 2286.96,
+      "wordSpeechUnion": 2021.7999999999986,
+      "wordOverlap": 247.29999999999956,
+      "overlapFraction": 0.12231674745276473
+    },
+    {
+      "meeting": "TS3008c",
+      "lastAnnotatedEnd": 2329.04,
+      "wordSpeechUnion": 1972.41,
+      "wordOverlap": 347.3900000000002,
+      "overlapFraction": 0.17612463940053041
+    },
+    {
+      "meeting": "TS3008d",
+      "lastAnnotatedEnd": 2766.82,
+      "wordSpeechUnion": 2195.049999999998,
+      "wordOverlap": 415.50999999999993,
+      "overlapFraction": 0.18929409352862137
+    },
+    {
+      "meeting": "TS3009b",
+      "lastAnnotatedEnd": 2450.51,
+      "wordSpeechUnion": 2120.4199999999987,
+      "wordOverlap": 411.2599999999984,
+      "overlapFraction": 0.19395214155686075
+    },
+    {
+      "meeting": "TS3009c",
+      "lastAnnotatedEnd": 2458.0,
+      "wordSpeechUnion": 2067.1300000000033,
+      "wordOverlap": 432.1599999999984,
+      "overlapFraction": 0.209062806886842
+    },
+    {
+      "meeting": "TS3009d",
+      "lastAnnotatedEnd": 2054.0,
+      "wordSpeechUnion": 1788.5699999999993,
+      "wordOverlap": 434.5400000000013,
+      "overlapFraction": 0.24295386817401696
+    },
+    {
+      "meeting": "TS3010b",
+      "lastAnnotatedEnd": 1957.7,
+      "wordSpeechUnion": 1357.2899999999993,
+      "wordOverlap": 37.22999999999985,
+      "overlapFraction": 0.02742965762659407
+    },
+    {
+      "meeting": "TS3010c",
+      "lastAnnotatedEnd": 2051.51,
+      "wordSpeechUnion": 1386.239999999998,
+      "wordOverlap": 101.54999999999879,
+      "overlapFraction": 0.07325571329639813
+    },
+    {
+      "meeting": "TS3011b",
+      "lastAnnotatedEnd": 2178.15,
+      "wordSpeechUnion": 1901.3700000000006,
+      "wordOverlap": 234.299999999997,
+      "overlapFraction": 0.1232269363669338
+    },
+    {
+      "meeting": "TS3011c",
+      "lastAnnotatedEnd": 2316.35,
+      "wordSpeechUnion": 1973.9499999999994,
+      "wordOverlap": 213.54000000000048,
+      "overlapFraction": 0.10817903189037237
+    },
+    {
+      "meeting": "TS3011d",
+      "lastAnnotatedEnd": 2155.874,
+      "wordSpeechUnion": 1523.6799999999996,
+      "wordOverlap": 202.09999999999854,
+      "overlapFraction": 0.13263939934894373
+    },
+    {
+      "meeting": "TS3012b",
+      "lastAnnotatedEnd": 2456.704,
+      "wordSpeechUnion": 2173.9600000000023,
+      "wordOverlap": 353.4599999999971,
+      "overlapFraction": 0.16258808809729558
+    },
+    {
+      "meeting": "TS3012c",
+      "lastAnnotatedEnd": 2376.43,
+      "wordSpeechUnion": 2027.029999999999,
+      "wordOverlap": 346.1399999999965,
+      "overlapFraction": 0.1707621495488457
+    },
+    {
+      "meeting": "TS3012d",
+      "lastAnnotatedEnd": 2324.39,
+      "wordSpeechUnion": 1797.0199999999988,
+      "wordOverlap": 292.19000000000176,
+      "overlapFraction": 0.16259696608830282
+    }
+  ],
+  "newNeuralCalls": 0,
+  "qualityQualified": false
+}

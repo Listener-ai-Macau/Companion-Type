@@ -1,0 +1,20 @@
+{
+  "state": "COMPLETE_NATIVE8_BATCH_REVIEW_REQUIRED",
+  "pid": 27100,
+  "startedAt": "2026-11-15T08:49:42+08:00",
+  "results": [
+    {
+      "meeting": "local-ec3cdb575c641791",
+      "phase": "activity",
+      "exitCode": 0,
+      "workerState": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+      "wholeProcessFamilySeconds": 4.092073999985587,
+      "privatePeakBytes": 1775132672
+    }
+  ],
+  "automaticRetries": 0,
+  "referencePassedToWorker": false,
+  "protocolSha256": "586137e164c206f2f10ebb5c1b7fa0e78409498419dfe8ce7f39ae266682f854",
+  "workerSourceSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+  "finishedAt": "2026-11-15T08:49:47+08:00"
+}

@@ -1,0 +1,49 @@
+{
+  "state": "FROZEN_BEFORE_INFERENCE_ONE_REVIEW_TWO_COMPLETE_MEETINGS",
+  "policy": {
+    "minimumCleanQuerySeconds": 2.0,
+    "minimumCleanProfileSeconds": 3.0,
+    "maximumClipSeconds": 10.0,
+    "profileReferences": 3,
+    "profileSelection": "First three chronological predicted clean intervals per native ID; keep these enrollment intervals unchanged",
+    "profileVector": "Mean of unit-normalized vectors, normalized again; frozen for the complete meeting with no eviction",
+    "reassignment": "Original profile cosine distance >=0.5 AND exactly one other profile cosine distance <0.5; otherwise retain original anonymous ID",
+    "distanceThreshold": 0.5,
+    "shortOrAmbiguousIntervals": "Retain original native labels; do not infer missing speech or second overlapping voice",
+    "unchanged": "All original audio, text, original activity boundaries and speaker activity multiplicity; no time or threshold sweep",
+    "stopRule": "One fixed complete development run; retain failure without automatic variants. Promote only after full new+old ordinary DER<=10% and per-person regression checks",
+    "scope": "Research identity review only; existing fixed original diarizer and evidence remain available; not a trained diarization model"
+  },
+  "workerSha256": "f8196db518def548cbc4b68d4205a6e1f26ebe60c8520d21db3a9d91ae8c2ed8",
+  "embeddingModel": "E:\\CodexData\\Companion\\.model-cache\\practical-cpu-20261107-r1\\3dspeaker_speech_eres2net_base_sv_zh-cn_3dspeaker_16k.onnx",
+  "embeddingSha256": "1a331345f04805badbb495c775a6ddffcdd1a732567d5ec8b3d5749e3c7a5e4b",
+  "runtime": "sherpa-onnx1.13.4CPU1thread",
+  "cpuPercent": 5,
+  "privateBudgetBytes": 2147483648,
+  "newTraining": false,
+  "reason": "Returning speaker native2 has no activity after 17:21 despite 34 later reference turns; persist existing voice profiles for full meeting, conservatively verify only long clean predicted intervals",
+  "countsPreparedWithoutReferenceOrNeuralScores": {
+    "20200623_S_R001S07C01": {
+      "uniqueActivityRuns": 775,
+      "eligibleVoiceVectors": 354,
+      "nativeAnonymousIds": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "S_R004S03C01": {
+      "uniqueActivityRuns": 255,
+      "eligibleVoiceVectors": 188,
+      "nativeAnonymousIds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "qualityQualified": false
+}

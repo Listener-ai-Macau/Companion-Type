@@ -1,0 +1,39 @@
+{
+  "state": "COMPLETE_LOCAL_MEETING_CANDIDATE_NOT_QUALITY_QUALIFIED",
+  "startedAt": "2026-11-15T08:48:20+08:00",
+  "attempts": [
+    {
+      "stage": "align-inventory",
+      "exitCode": 0,
+      "seconds": 4.07187200000044,
+      "privatePeakBytes": 359010304,
+      "log": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r3\\jobs\\ec3cdb575c641791f0a11e543c81de042044807923ce47c5df536d956de3c253\\logs\\align-inventory-1794703700896739700.log"
+    },
+    {
+      "stage": "alignment",
+      "exitCode": 0,
+      "seconds": 77.74677350002457,
+      "privatePeakBytes": 1174228992,
+      "log": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r3\\jobs\\ec3cdb575c641791f0a11e543c81de042044807923ce47c5df536d956de3c253\\logs\\alignment-1794703704970358800.log"
+    },
+    {
+      "stage": "speaker",
+      "exitCode": 0,
+      "seconds": 5.625416099996073,
+      "privatePeakBytes": 1790676992,
+      "log": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r3\\jobs\\ec3cdb575c641791f0a11e543c81de042044807923ce47c5df536d956de3c253\\logs\\speaker-1794703782727607100.log"
+    }
+  ],
+  "binding": {
+    "inputSha256": "ac40122a09a4bb4283b2f0a2cee8ab63f71425f6bf9f9e958ca3188161b9afba",
+    "bundleSha256": "fef7808e3c5402d7c8119632fe569fad4292d6483c9ff7b59731897b7f5ef010"
+  },
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "asrSession": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\incremental-session",
+  "adoptedCompletedAsrCache": true,
+  "activeStage": "speaker",
+  "finishedAt": "2026-11-15T08:49:48+08:00",
+  "documentSha256": "678a9b60f305eac6a02347c00f2f4cd07b366ae133c05b5c89f224a212e4db51"
+}

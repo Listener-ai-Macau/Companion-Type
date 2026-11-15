@@ -1,0 +1,86 @@
+{
+  "schema": "companion.local-meeting-package.v1",
+  "program": "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+  "programSha256": "5f7b89a612c9b8af1d6456cdfcd1dbe5ca630849e79aebced9bee9a6694952ec",
+  "entryScript": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r3\\src\\companion_local_meeting_pipeline_20261115.py",
+  "entryScriptSha256": "b6eb1b8d9c439d5fdc1a5405db093798102edf0df99fb166d3e715d0652476a2",
+  "args": [
+    "-u",
+    "{entry}",
+    "--manifest",
+    "{manifest}",
+    "--bundle",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r3\\bundle.json"
+  ],
+  "workRoot": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r3\\jobs",
+  "assets": [
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\precision-r1\\higher-f16.gguf",
+      "bytes": 199018496
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\runtime-0.3.0-vulkan\\nemo-speech-0.3.0-windows-x86_64-vulkan\\bin\\nemo_speech_asr_c.dll",
+      "bytes": 60928
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\chat_template.jinja",
+      "bytes": 551
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\config.json",
+      "bytes": 248029
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\model.safetensors",
+      "bytes": 1835545960
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\processor_config.json",
+      "bytes": 487
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\README.md",
+      "bytes": 9419
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\tokenizer.json",
+      "bytes": 11429842
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native-aligner-20261107\\model\\tokenizer_config.json",
+      "bytes": 998
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\chat_template.jinja",
+      "bytes": 1434
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\config.json",
+      "bytes": 2399
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\generation_config.json",
+      "bytes": 165
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\model.safetensors",
+      "bytes": 4076193080
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\processor_config.json",
+      "bytes": 487
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\README.md",
+      "bytes": 16538
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\tokenizer.json",
+      "bytes": 11429653
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\tokenizer_config.json",
+      "bytes": 998
+    }
+  ]
+}

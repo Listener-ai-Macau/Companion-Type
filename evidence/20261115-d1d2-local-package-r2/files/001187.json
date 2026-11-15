@@ -1,0 +1,39 @@
+{
+  "state": "OFFICIAL_FULL_MEETING_WORD_REFERENCE_READY_NOT_PASSED_TO_INFERENCE",
+  "at": "2026-11-14T23:18:32+08:00",
+  "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusAnnotations/ami_public_manual_1.6.2.zip",
+  "license": "AMI Consortium CC-BY-4.0",
+  "modelInput": false,
+  "selectedMeeting": "EN2002a",
+  "finalChineseHoldoutOpened": false,
+  "responseHeaders": {
+    "Last-Modified": "Mon, 10 Apr 2017 09:24:42 GMT",
+    "ETag": "\"15d3db9-54ccc8b8f0a80\"",
+    "Content-Length": "22887865",
+    "Content-Type": "application/zip"
+  },
+  "archiveBytes": 22887865,
+  "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+  "files": [
+    {
+      "member": "words/EN2002a.C.words.xml",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\EN2002a.C.words.xml",
+      "sha256": "d15c35bac773b389763ded48df784133684806b5db37f9e3343fa29ec37ec6e0"
+    },
+    {
+      "member": "words/EN2002a.A.words.xml",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\EN2002a.A.words.xml",
+      "sha256": "a85a5b87b81b93e4d424fd6c6c8ab5b90df93a515f6d83aa37f7c7eb9d9a9492"
+    },
+    {
+      "member": "words/EN2002a.B.words.xml",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\EN2002a.B.words.xml",
+      "sha256": "b27dfc1d2854810bd5923ca3967b1df6167ef0eccce1b6308aa3e57725f9953a"
+    },
+    {
+      "member": "words/EN2002a.D.words.xml",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\EN2002a.D.words.xml",
+      "sha256": "d5f610babf78b48dad6d98357ca8cf2ca6bcb396690c079570c2ebb45eea4d5f"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "state": "COMPLETE",
+  "startedAt": "2026-11-15T08:49:10+08:00",
+  "command": [
+    "C:\\Windows\\system32\\cmd.exe",
+    "/d",
+    "/c",
+    "npm.cmd",
+    "run",
+    "build:windows"
+  ],
+  "privatePeakBytes": 939458560,
+  "pid": 21196,
+  "pidCreatedAt": 1794703750.6295953,
+  "exitCode": 0,
+  "finishedAt": "2026-11-15T08:49:51+08:00",
+  "seconds": 40.63502439999138,
+  "limits": {
+    "pid": 15952,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 960458752,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

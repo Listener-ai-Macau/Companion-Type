@@ -9,6 +9,7 @@ from companion_local_pcm_session_20261114 import PcmSession, atomic_json, read_j
 from moss_windows_resource_limits_20261104 import SystemRamPressure
 from practical_io_20261107 import stop_owned_family
 from run_paired_fixed_asr_20261109 import resume_resources
+from companion_windows_power_request_20261115 import PowerLease
 
 ROOT=Path('C:/Users/Billy/Desktop/Denzic/Companion')
 BASE=Path('E:/CodexData/Companion/.model-cache/paired-real-alimeeting-20261109/fixed-native-runtime-r2/source/native-protocol.json')
@@ -87,7 +88,7 @@ def main():
     # session. The OS releases ownership on crash; no stale PID can admit a
     # second model while the first adapter is alive. Legacy research runners
     # remain separately scheduled and are not claimed to share this lock.
-    with exclusive_file(Path('E:/CodexData/Companion/.model-cache/local-qwen-decoder.lock')):
+    with exclusive_file(Path('E:/CodexData/Companion/.model-cache/local-qwen-decoder.lock')), PowerLease():
         return run_one_decoder()
 
 if __name__=='__main__':raise SystemExit(main())

@@ -1,0 +1,15 @@
+{
+  "state": "LOCAL_PCM_SOURCE_SEALED",
+  "sourceAudio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+  "sourceAudioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+  "startFrame": 0,
+  "endFrame": 34283350,
+  "totalFrames": 34283350,
+  "packets": 2143,
+  "paced": false,
+  "seconds": 6.193701299984241,
+  "inferencePerformedByProducer": false,
+  "sourceUploaded": false,
+  "realCardTransferVerified": false,
+  "preparationFailureRetained": "Initial non-UUID recording_id rejected before session creation/inference; corrected to deterministic UUID5, no audio or model changes."
+}

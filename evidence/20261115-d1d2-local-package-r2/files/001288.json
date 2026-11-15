@@ -1,0 +1,66 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00080000-draft",
+    "recordingId": "ff20226a-a4b4-4fbe-8183-d315be40a444",
+    "configSha256": "27c43e6e2406729092fb47a17ff2d59ec1128aecab612c380b17763f859a72aa",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 80000,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r4\\jobs\\streams\\ff20226a-a4b4-4fbe-8183-d315be40a444\\session\\audio.pcm",
+    "pcmSha256": "0f27439a649726cfef91ba719f3c18024694d120befdbab40405ee1480c0d635",
+    "language": "auto",
+    "blockFinal": false,
+    "publishedAtMonotonic": 221851.6975996,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "auto",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "",
+    "rawGeneratedIds": [
+      [
+        11528,
+        2240,
+        151704,
+        151645
+      ]
+    ],
+    "language": "",
+    "accepted": true,
+    "seconds": 51.96130940000876,
+    "reviewRequired": true,
+    "unconfirmedAudioIntervals": [
+      {
+        "startFrame": 0,
+        "endFrame": 80000,
+        "reason": "Nonzero audio has no transcript and no identified language; speech absence unverified"
+      }
+    ],
+    "acceptedLeafInferenceSeconds": 1.918977299996186,
+    "allKnownDecodeSecondsIncludingFailedParents": 1.918977299996186,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 80000
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

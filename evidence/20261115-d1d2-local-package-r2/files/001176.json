@@ -1,0 +1,84 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000071-00203350-final",
+    "recordingId": "b2307f12-50ff-5a3a-8587-d65135da5aa0",
+    "configSha256": "708197a6516f2b78ddc7c0b3dd15cacf2982a182e9fc51643824867500456ecc",
+    "block": 71,
+    "startFrame": 34080000,
+    "endFrame": 34283350,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\english-full-r1\\session\\audio.pcm",
+    "pcmSha256": "aff70968f1f1902b8296fde1d6e0b605598dcb61b92292f6407c0a9653f80e1f",
+    "language": "auto",
+    "blockFinal": true,
+    "publishedAtMonotonic": 186822.5376409,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "auto",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "Should we turn these off or what? Third time now. Is she still here? Yes, you are. Yeah.",
+    "rawGeneratedIds": [
+      [
+        11528,
+        6364,
+        151704,
+        14996,
+        582,
+        2484,
+        1493,
+        1007,
+        476,
+        1128,
+        30,
+        20861,
+        882,
+        1431,
+        13,
+        2160,
+        1340,
+        2058,
+        1588,
+        30,
+        7414,
+        11,
+        498,
+        525,
+        13,
+        21607,
+        13,
+        151645
+      ]
+    ],
+    "language": "English",
+    "accepted": true,
+    "seconds": 6.483398600015789,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 5.455927999981213,
+    "allKnownDecodeSecondsIncludingFailedParents": 5.455927999981213,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 34080000,
+        "endFrame": 34283350
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

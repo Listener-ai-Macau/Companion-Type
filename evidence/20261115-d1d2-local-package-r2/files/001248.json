@@ -1,0 +1,27 @@
+{
+  "state": "PASS_ACTUAL_LOCAL_PACKAGE_PACED_PCM_PREVIEW_AND_EOS",
+  "startedAt": "2026-11-15T08:56:59.484421+08:00",
+  "source": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\public-probe90.wav",
+  "root": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r4\\jobs\\streams\\ff20226a-a4b4-4fbe-8183-d315be40a444",
+  "previewsDuringCapture": [
+    {
+      "elapsed": 73.0,
+      "frames": 1184000,
+      "text": "零零一超市主管，零零六A，零零七B，零零八C，零零九D。把各个区的这个咱那个负责人啊叫过来，来简单呃做一个交流。呃，咱超市啊近期的销售啊。"
+    }
+  ],
+  "qualityQualified": false,
+  "scope": "Constructed 90s bilingual technical integration only; no microphone, playback, board or cloud",
+  "pid": 14168,
+  "captureSealedAt": "2026-11-15T08:58:29.487037+08:00",
+  "frames": 1440000,
+  "pcmSha256": "46c1172d3b95d6d813c2d029c9bdc01f31be89ef031590b6d73665a33ad04790",
+  "recordingFinal": true,
+  "partialNeverPromotedToSpeakerFinal": true,
+  "exitCode": 0,
+  "noSamplesDroppedOrReplayed": true,
+  "sourceUploaded": false,
+  "finishedAt": "2026-11-15T08:58:52.011751+08:00",
+  "seconds": 112.53100000001723,
+  "budget": "Single unchanged model worker job CPU5%/private2GiB; packet intake stays outside nested CPU jobs"
+}

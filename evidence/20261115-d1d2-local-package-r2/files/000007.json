@@ -1,0 +1,52 @@
+{
+  "policy": {
+    "schema": "companion.english-full-word-scoring.v1",
+    "reference": "All <w> lexical content in all four official AMI word files, including fillers and partial words",
+    "normalization": "Unicode NFKC, lower case, curly apostrophe to ASCII, alphanumeric words with internal apostrophes; punctuation separates words",
+    "wordOrder": "All words sorted by original start time, original end time, speaker and XML order; overlap ordering is a limitation of single-stream WER",
+    "excluded": "Non-word XML nodes only; no manual synonym, abbreviation, numeral, filler or disfluency rewrites",
+    "wer": "(substitutions+deletions+insertions)/all reference words",
+    "englishQualityTarget": {
+      "strictWholeWerLessThan": 0.05,
+      "status": "explicit conservative extension for English ordinary-meeting development; not an existing Chinese CER definition"
+    },
+    "qualityQualificationRequires": "Complete final document, per-person words and activity, ordinary/complex conditions and original independent meeting coverage; raw WER alone cannot qualify product"
+  },
+  "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+  "audioSeconds": 2142.709375,
+  "referenceFiles": [
+    {
+      "path": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\EN2002a.A.words.xml",
+      "sha256": "a85a5b87b81b93e4d424fd6c6c8ab5b90df93a515f6d83aa37f7c7eb9d9a9492"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\EN2002a.B.words.xml",
+      "sha256": "b27dfc1d2854810bd5923ca3967b1df6167ef0eccce1b6308aa3e57725f9953a"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\EN2002a.C.words.xml",
+      "sha256": "d15c35bac773b389763ded48df784133684806b5db37f9e3343fa29ec37ec6e0"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\EN2002a.D.words.xml",
+      "sha256": "d5f610babf78b48dad6d98357ca8cf2ca6bcb396690c079570c2ebb45eea4d5f"
+    }
+  ],
+  "referenceWords": 7632,
+  "bySpeaker": {
+    "D": 1573,
+    "A": 1846,
+    "C": 2747,
+    "B": 1350
+  },
+  "condition": {
+    "wordActivityUnionSeconds": 1894.8999999999985,
+    "wordActivityOverlapSeconds": 519.5800000000005,
+    "overlapFractionOfSpeechUnion": 0.2741991661829125,
+    "referenceSpeakerSeconds": 2530.2599999999993,
+    "condition": "complex_overlap_development",
+    "conditionUsesReferencesOnlyForScoringNotInference": true
+  },
+  "qualityQualified": false,
+  "referencePassedToInference": false
+}

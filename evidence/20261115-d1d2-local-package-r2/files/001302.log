@@ -1,0 +1,186 @@
+   Compiling tokio v1.52.3
+   Compiling hyper v1.10.1
+   Compiling tokio-rustls v0.26.4
+   Compiling tower v0.5.3
+   Compiling hyper-util v0.1.20
+   Compiling hyper-rustls v0.27.9
+   Compiling tower-http v0.6.11
+   Compiling tokio-util v0.7.18
+   Compiling tauri v2.11.3
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> E:\CodexData\Companion\product-d1d2-20261114\app-source\third_party\denzic-platform\third_party\cpal\src\host\wasapi\device.rs:344:9
+    |
+344 |         &self,
+    |         ^^^^^ the lifetime is elided here
+345 |     ) -> Result<MutexGuard<Option<IAudioClientWrapper>>, windows::core::Error> {
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+345 |     ) -> Result<MutexGuard<'_, Option<IAudioClientWrapper>>, windows::core::Error> {
+    |                            +++
+
+warning: `cpal` (lib) generated 1 warning (run `cargo fix --lib -p cpal` to apply 1 suggestion)
+   Compiling reqwest v0.13.4
+   Compiling reqwest v0.12.28
+   Compiling tauri-plugin-fs v2.5.2
+   Compiling tokio-stream v0.1.18
+   Compiling btleplug v0.11.8 (E:\CodexData\Companion\product-d1d2-20261114\app-source\third_party\btleplug-0.11.8)
+warning: function `notifications_stream_from_broadcast_receiver` is never used
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\third_party\btleplug-0.11.8\src\common\util.rs:29:8
+   |
+29 | pub fn notifications_stream_from_broadcast_receiver<T: Clone + Send + 'static>(
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `unsubscribe` is never used
+   --> E:\CodexData\Companion\product-d1d2-20261114\app-source\third_party\btleplug-0.11.8\src\winrtble\ble\characteristic.rs:186:18
+    |
+ 95 | impl BLECharacteristic {
+    | ---------------------- method in this implementation
+...
+186 |     pub async fn unsubscribe(&mut self) -> Result<()> {
+    |                  ^^^^^^^^^^^
+
+warning: function `to_error` is never used
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\third_party\btleplug-0.11.8\src\winrtble\utils.rs:26:8
+   |
+26 | pub fn to_error(status: GattCommunicationStatus) -> Result<()> {
+   |        ^^^^^^^^
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\third_party\btleplug-0.11.8\src\common\adapter_manager.rs:79:9
+   |
+79 |         &self,
+   |         ^^^^^ the lifetime is elided here
+80 |         id: &PeripheralId,
+81 |     ) -> Option<RefMut<PeripheralId, PeripheralType>> {
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+81 |     ) -> Option<RefMut<'_, PeripheralId, PeripheralType>> {
+   |                        +++
+
+warning: `btleplug` (lib) generated 4 warnings (run `cargo fix --lib -p btleplug` to apply 1 suggestion)
+   Compiling tauri-plugin-updater v2.12.0
+   Compiling companion-type v0.1.121 (E:\CodexData\Companion\product-d1d2-20261114\app-source\apps\windows\src-tauri)
+   Compiling tauri-plugin-dialog v2.7.3
+warning: constant in pattern `UIA_EditControlTypeId` should have an upper case name
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\packages\desktop-input\src\selection\windows_uia.rs:72:33
+   |
+72 |     } else if matches!(control, UIA_EditControlTypeId | UIA_DocumentControlTypeId)
+   |                                 ^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper case: `UIA_EDIT_CONTROL_TYPE_ID`
+   |
+   = note: `#[warn(non_upper_case_globals)]` (part of `#[warn(nonstandard_style)]`) on by default
+
+warning: constant in pattern `UIA_DocumentControlTypeId` should have an upper case name
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\packages\desktop-input\src\selection\windows_uia.rs:72:57
+   |
+72 |     } else if matches!(control, UIA_EditControlTypeId | UIA_DocumentControlTypeId)
+   |                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper case: `UIA_DOCUMENT_CONTROL_TYPE_ID`
+
+warning: constant in pattern `UIA_ButtonControlTypeId` should have an upper case name
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\packages\desktop-input\src\selection\windows_uia.rs:77:34
+   |
+77 |             || matches!(control, UIA_ButtonControlTypeId | UIA_CheckBoxControlTypeId
+   |                                  ^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper case: `UIA_BUTTON_CONTROL_TYPE_ID`
+
+warning: constant in pattern `UIA_CheckBoxControlTypeId` should have an upper case name
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\packages\desktop-input\src\selection\windows_uia.rs:77:60
+   |
+77 |             || matches!(control, UIA_ButtonControlTypeId | UIA_CheckBoxControlTypeId
+   |                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper case: `UIA_CHECK_BOX_CONTROL_TYPE_ID`
+
+warning: constant in pattern `UIA_RadioButtonControlTypeId` should have an upper case name
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\packages\desktop-input\src\selection\windows_uia.rs:78:19
+   |
+78 |                 | UIA_RadioButtonControlTypeId | UIA_HyperlinkControlTypeId)) {
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper case: `UIA_RADIO_BUTTON_CONTROL_TYPE_ID`
+
+warning: constant in pattern `UIA_HyperlinkControlTypeId` should have an upper case name
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\packages\desktop-input\src\selection\windows_uia.rs:78:50
+   |
+78 |                 | UIA_RadioButtonControlTypeId | UIA_HyperlinkControlTypeId)) {
+   |                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper case: `UIA_HYPERLINK_CONTROL_TYPE_ID`
+
+warning: `companion-desktop-input` (lib) generated 6 warnings
+   Compiling denzic-host-audio-v1-core v0.1.0 (E:\CodexData\Companion\product-d1d2-20261114\app-source\third_party\denzic-platform\host_audio\host\rust)
+   Compiling tokio-tungstenite v0.24.0
+warning: unused import: `EvidenceKind`
+ --> src\backend\meeting_notes.rs:5:28
+  |
+5 | pub use context::{Evidence,EvidenceKind,NoteKind};
+  |                            ^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `PathBuf`
+ --> src\backend\library_export.rs:3:50
+  |
+3 | use std::{collections::HashSet, fs, path::{Path, PathBuf}};
+  |                                                  ^^^^^^^
+
+warning: unused import: `PathBuf`
+ --> src\backend\library_backup.rs:2:89
+  |
+2 | use std::{collections::HashSet,fs::{self,File,OpenOptions},io::{Read,Write},path::{Path,PathBuf}};
+  |                                                                                         ^^^^^^^
+
+warning: unused import: `RefCell`
+ --> src\backend\diagnostics\identity.rs:3:23
+  |
+3 | use std::{cell::{Cell,RefCell}, fs, io::{Read,Write}, marker::PhantomData,
+  |                       ^^^^^^^
+
+warning: unused import: `apply_fixture_control`
+   --> src\backend\mod.rs:178:23
+    |
+178 |     apply_control_at, apply_fixture_control, fixture_snapshot, seal_companion_v1_session_chunks,
+    |                       ^^^^^^^^^^^^^^^^^^^^^
+
+memory allocation of 18874384 bytes failed
+stack backtrace:
+   0:     0x7ffe51343d70 - <unknown>
+   1:     0x7ffe5136bc61 - <unknown>
+   2:     0x7ffe513540e4 - <unknown>
+   3:     0x7ffe51336f22 - <unknown>
+   4:     0x7ffe5131ca8c - <unknown>
+   5:     0x7ffe5131a14f - <unknown>
+   6:     0x7ffe51336fbb - <unknown>
+   7:     0x7ffe5131d9e8 - <unknown>
+   8:     0x7ffe555d4a69 - <unknown>
+   9:     0x7ffe555d20fe - <unknown>
+  10:     0x7ffe51136732 - <unknown>
+  11:     0x7ffe528c0a3f - <unknown>
+  12:     0x7ffe5291ef5e - <unknown>
+  13:     0x7ffe51c18fad - <unknown>
+  14:     0x7ffe51c2db98 - <unknown>
+  15:     0x7ffe521e400b - <unknown>
+  16:     0x7ffe50d5dee6 - <unknown>
+  17:     0x7ffe50e4f4ba - <unknown>
+  18:     0x7ffe524a0921 - <unknown>
+  19:     0x7ffe51b3ec0d - <unknown>
+  20:     0x7ffe51bf4259 - <unknown>
+  21:     0x7ffe51bacdc0 - <unknown>
+  22:     0x7ffe51b87d94 - <unknown>
+  23:     0x7ffe51b17929 - <unknown>
+  24:     0x7ffe51ab6b13 - <unknown>
+  25:     0x7ffe521d676b - <unknown>
+  26:     0x7ffe520f4001 - <unknown>
+  27:     0x7ffe521d67ef - <unknown>
+  28:     0x7ffe5139d06b - <unknown>
+  29:     0x7ffe50e57f9a - <unknown>
+  30:     0x7ffe50d1aaf0 - <unknown>
+  31:     0x7ffe50e58000 - <unknown>
+  32:     0x7ffe4e65ada7 - <unknown>
+  33:     0x7ffe4e654cb1 - <unknown>
+  34:     0x7ffe4e65fc1a - <unknown>
+  35:     0x7ffe5134109c - <unknown>
+  36:     0x7fff5224e957 - <unknown>
+  37:     0x7fff535cad6c - <unknown>

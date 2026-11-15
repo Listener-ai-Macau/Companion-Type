@@ -1,0 +1,210 @@
+
+> companion-type@0.1.121 build:windows
+> node tools/verify_third_party_notices.mjs && tsc -p apps/windows/tsconfig.json && vite build --config apps/windows/vite.config.ts
+
+{"result":"MATCHED_LOCKS_NOTICES_AND_CORRESPONDING_SOURCE","components":411,"sourceArchives":17}
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 1992 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/document-engine/cmaps/CNS2-V.bcmap                           0.09 kB
+dist/document-engine/cmaps/Roman.bcmap                            0.10 kB
+dist/document-engine/cmaps/Katakana.bcmap                         0.10 kB
+dist/document-engine/cmaps/ETenms-B5-H.bcmap                      0.10 kB
+dist/document-engine/cmaps/UniJIS-UCS2-HW-H.bcmap                 0.12 kB
+dist/document-engine/cmaps/Hiragana.bcmap                         0.12 kB
+dist/document-engine/cmaps/Hankaku.bcmap                          0.13 kB
+dist/document-engine/cmaps/B5-V.bcmap                             0.14 kB
+dist/document-engine/cmaps/CNS1-V.bcmap                           0.14 kB
+dist/document-engine/cmaps/B5pc-V.bcmap                           0.14 kB
+dist/document-engine/cmaps/HKdla-B5-V.bcmap                       0.15 kB
+dist/document-engine/cmaps/HKdlb-B5-V.bcmap                       0.15 kB
+dist/document-engine/cmaps/HKgccs-B5-V.bcmap                      0.15 kB
+dist/document-engine/cmaps/HKm314-B5-V.bcmap                      0.15 kB
+dist/document-engine/cmaps/HKm471-B5-V.bcmap                      0.15 kB
+dist/document-engine/cmaps/UniCNS-UCS2-V.bcmap                    0.16 kB
+dist/document-engine/cmaps/UniCNS-UTF16-V.bcmap                   0.16 kB
+dist/document-engine/cmaps/UniCNS-UTF8-V.bcmap                    0.16 kB
+dist/document-engine/cmaps/ETen-B5-V.bcmap                        0.16 kB
+dist/document-engine/cmaps/ETHK-B5-V.bcmap                        0.16 kB
+dist/document-engine/cmaps/HKscs-B5-V.bcmap                       0.16 kB
+dist/document-engine/cmaps/KSC-V.bcmap                            0.16 kB
+dist/document-engine/cmaps/UniCNS-UTF32-V.bcmap                   0.16 kB
+dist/document-engine/cmaps/KSC-EUC-V.bcmap                        0.16 kB
+dist/document-engine/cmaps/UniKS-UTF16-V.bcmap                    0.16 kB
+dist/document-engine/cmaps/KSC-Johab-V.bcmap                      0.17 kB
+dist/document-engine/cmaps/KSCms-UHC-V.bcmap                      0.17 kB
+dist/document-engine/cmaps/KSCpc-EUC-V.bcmap                      0.17 kB
+dist/document-engine/cmaps/V.bcmap                                0.17 kB
+dist/document-engine/cmaps/UniKS-UTF32-V.bcmap                    0.17 kB
+dist/document-engine/cmaps/78-V.bcmap                             0.17 kB
+dist/document-engine/cmaps/KSCms-UHC-HW-V.bcmap                   0.17 kB
+dist/document-engine/cmaps/UniKS-UTF8-V.bcmap                     0.17 kB
+dist/document-engine/cmaps/EUC-V.bcmap                            0.17 kB
+dist/document-engine/cmaps/RKSJ-V.bcmap                           0.17 kB
+dist/document-engine/cmaps/ETenms-B5-V.bcmap                      0.17 kB
+dist/document-engine/cmaps/78-EUC-V.bcmap                         0.17 kB
+dist/document-engine/cmaps/78-RKSJ-V.bcmap                        0.17 kB
+dist/document-engine/cmaps/GB-V.bcmap                             0.18 kB
+dist/document-engine/cmaps/GBT-V.bcmap                            0.18 kB
+dist/document-engine/cmaps/UniGB-UTF16-V.bcmap                    0.18 kB
+dist/document-engine/cmaps/UniKS-UCS2-V.bcmap                     0.18 kB
+dist/document-engine/cmaps/GB-EUC-V.bcmap                         0.18 kB
+dist/document-engine/cmaps/WP-Symbol.bcmap                        0.18 kB
+dist/document-engine/cmaps/GBK-EUC-V.bcmap                        0.18 kB
+dist/document-engine/cmaps/GBT-EUC-V.bcmap                        0.18 kB
+dist/document-engine/cmaps/GBKp-EUC-V.bcmap                       0.18 kB
+dist/document-engine/cmaps/GBpc-EUC-V.bcmap                       0.18 kB
+dist/document-engine/cmaps/UniGB-UTF8-V.bcmap                     0.18 kB
+dist/document-engine/cmaps/GBTpc-EUC-V.bcmap                      0.18 kB
+dist/document-engine/cmaps/UniGB-UTF32-V.bcmap                    0.18 kB
+dist/document-engine/cmaps/UniGB-UCS2-V.bcmap                     0.19 kB
+dist/document-engine/cmaps/Ext-V.bcmap                            0.22 kB
+dist/document-engine/cmaps/Adobe-GB1-0.bcmap                      0.22 kB
+dist/document-engine/cmaps/Ext-RKSJ-V.bcmap                       0.22 kB
+dist/document-engine/cmaps/GBK2K-V.bcmap                          0.22 kB
+dist/document-engine/cmaps/Adobe-Japan1-0.bcmap                   0.23 kB
+dist/document-engine/cmaps/Adobe-Japan1-1.bcmap                   0.23 kB
+dist/document-engine/cmaps/Adobe-Japan1-2.bcmap                   0.23 kB
+dist/document-engine/cmaps/Adobe-Korea1-0.bcmap                   0.24 kB
+dist/document-engine/cmaps/Adobe-Japan1-3.bcmap                   0.24 kB
+dist/document-engine/cmaps/Adobe-GB1-1.bcmap                      0.25 kB
+dist/document-engine/cmaps/NWP-V.bcmap                            0.25 kB
+dist/document-engine/cmaps/90pv-RKSJ-V.bcmap                      0.26 kB
+dist/document-engine/cmaps/Add-V.bcmap                            0.28 kB
+dist/document-engine/cmaps/Add-RKSJ-V.bcmap                       0.29 kB
+dist/document-engine/cmaps/78ms-RKSJ-V.bcmap                      0.29 kB
+dist/document-engine/cmaps/90ms-RKSJ-V.bcmap                      0.29 kB
+dist/document-engine/cmaps/90msp-RKSJ-V.bcmap                     0.29 kB
+dist/document-engine/cmaps/Adobe-CNS1-0.bcmap                     0.32 kB
+dist/document-engine/cmaps/Adobe-Japan1-4.bcmap                   0.34 kB
+dist/document-engine/cmaps/Adobe-CNS1-1.bcmap                     0.37 kB
+dist/document-engine/cmaps/Adobe-CNS1-2.bcmap                     0.38 kB
+dist/document-engine/cmaps/Adobe-Korea1-1.bcmap                   0.39 kB
+dist/document-engine/cmaps/Adobe-Korea1-2.bcmap                   0.39 kB
+dist/document-engine/cmaps/Adobe-CNS1-3.bcmap                     0.40 kB
+dist/document-engine/cmaps/Adobe-CNS1-4.bcmap                     0.41 kB
+dist/document-engine/cmaps/Adobe-CNS1-5.bcmap                     0.41 kB
+dist/document-engine/cmaps/Adobe-CNS1-6.bcmap                     0.41 kB
+dist/index.html                                                   0.41 kB │ gzip:   0.28 kB
+dist/document-engine/cmaps/Adobe-Japan1-5.bcmap                   0.43 kB
+dist/document-engine/cmaps/Adobe-GB1-2.bcmap                      0.47 kB
+dist/document-engine/cmaps/Adobe-GB1-3.bcmap                      0.47 kB
+dist/document-engine/cmaps/Adobe-Japan1-6.bcmap                   0.49 kB
+dist/document-engine/cmaps/CNS2-H.bcmap                           0.50 kB
+dist/document-engine/cmaps/GB-H.bcmap                             0.53 kB
+dist/document-engine/cmaps/RKSJ-H.bcmap                           0.53 kB
+dist/document-engine/cmaps/GB-EUC-H.bcmap                         0.55 kB
+dist/document-engine/cmaps/H.bcmap                                0.55 kB
+dist/document-engine/cmaps/GBpc-EUC-H.bcmap                       0.56 kB
+dist/document-engine/cmaps/EUC-H.bcmap                            0.58 kB
+dist/document-engine/cmaps/Adobe-GB1-4.bcmap                      0.60 kB
+dist/document-engine/cmaps/Adobe-GB1-5.bcmap                      0.63 kB
+dist/document-engine/cmaps/UniJIS-UTF16-V.bcmap                   0.64 kB
+dist/document-engine/cmaps/UniJIS2004-UTF16-V.bcmap               0.65 kB
+dist/document-engine/cmaps/UniJIS-UCS2-V.bcmap                    0.66 kB
+dist/document-engine/cmaps/UniJIS-UTF32-V.bcmap                   0.68 kB
+dist/document-engine/cmaps/UniJIS-UTF8-V.bcmap                    0.68 kB
+dist/document-engine/cmaps/UniJIS-UCS2-HW-V.bcmap                 0.68 kB
+dist/document-engine/cmaps/UniJIS2004-UTF32-V.bcmap               0.68 kB
+dist/document-engine/cmaps/UniJIS2004-UTF8-V.bcmap                0.68 kB
+dist/document-engine/cmaps/UniJISX0213-UTF32-V.bcmap              0.68 kB
+dist/document-engine/cmaps/UniJISX02132004-UTF32-V.bcmap          0.69 kB
+dist/document-engine/cmaps/UniJISPro-UCS2-V.bcmap                 0.69 kB
+dist/document-engine/cmaps/UniJISPro-UCS2-HW-V.bcmap              0.71 kB
+dist/document-engine/cmaps/CNS1-H.bcmap                           0.71 kB
+dist/document-engine/cmaps/90msp-RKSJ-H.bcmap                     0.72 kB
+dist/document-engine/cmaps/90ms-RKSJ-H.bcmap                      0.72 kB
+dist/document-engine/cmaps/UniJISPro-UTF8-V.bcmap                 0.73 kB
+dist/document-engine/cmaps/83pv-RKSJ-H.bcmap                      0.91 kB
+dist/document-engine/cmaps/90pv-RKSJ-H.bcmap                      0.98 kB
+dist/document-engine/cmaps/B5-H.bcmap                             1.09 kB
+dist/document-engine/cmaps/B5pc-H.bcmap                           1.10 kB
+dist/document-engine/cmaps/ETen-B5-H.bcmap                        1.13 kB
+dist/document-engine/standard_fonts/LICENSE_FOXIT                 1.55 kB
+dist/document-engine/cmaps/HKm314-B5-H.bcmap                      1.77 kB
+dist/document-engine/cmaps/CNS-EUC-H.bcmap                        1.78 kB
+dist/document-engine/cmaps/KSC-H.bcmap                            1.83 kB
+dist/document-engine/cmaps/KSC-EUC-H.bcmap                        1.85 kB
+dist/document-engine/cmaps/CNS-EUC-V.bcmap                        1.92 kB
+dist/document-engine/cmaps/KSCpc-EUC-H.bcmap                      2.02 kB
+dist/document-engine/cmaps/LICENSE                                2.08 kB
+dist/document-engine/cmaps/HKm471-B5-H.bcmap                      2.17 kB
+dist/document-engine/cmaps/HKgccs-B5-H.bcmap                      2.29 kB
+dist/document-engine/cmaps/78-H.bcmap                             2.38 kB
+dist/document-engine/cmaps/78-RKSJ-H.bcmap                        2.40 kB
+dist/document-engine/cmaps/78-EUC-H.bcmap                         2.40 kB
+dist/document-engine/cmaps/Add-RKSJ-H.bcmap                       2.41 kB
+dist/document-engine/cmaps/HKdlb-B5-H.bcmap                       2.41 kB
+dist/document-engine/cmaps/Add-H.bcmap                            2.42 kB
+dist/document-engine/cmaps/Ext-H.bcmap                            2.54 kB
+dist/document-engine/cmaps/Ext-RKSJ-H.bcmap                       2.54 kB
+dist/document-engine/cmaps/78ms-RKSJ-H.bcmap                      2.65 kB
+dist/document-engine/cmaps/HKdla-B5-H.bcmap                       2.65 kB
+dist/document-engine/cmaps/NWP-H.bcmap                            2.77 kB
+dist/document-engine/cmaps/KSCms-UHC-H.bcmap                      2.79 kB
+dist/document-engine/cmaps/KSCms-UHC-HW-H.bcmap                   2.79 kB
+dist/document-engine/cmaps/ETHK-B5-H.bcmap                        4.43 kB
+dist/document-engine/cmaps/HKscs-B5-H.bcmap                       4.44 kB
+dist/document-engine/cmaps/GBT-H.bcmap                            7.27 kB
+dist/document-engine/cmaps/GBT-EUC-H.bcmap                        7.29 kB
+dist/document-engine/cmaps/GBTpc-EUC-H.bcmap                      7.30 kB
+dist/document-engine/cmaps/GBKp-EUC-H.bcmap                      14.69 kB
+dist/document-engine/cmaps/GBK-EUC-H.bcmap                       14.69 kB
+dist/document-engine/standard_fonts/FoxitSymbol.pfb              16.73 kB
+dist/document-engine/cmaps/KSC-Johab-H.bcmap                     16.79 kB
+dist/document-engine/standard_fonts/FoxitFixed.pfb               17.60 kB
+dist/document-engine/standard_fonts/FoxitFixedBold.pfb           18.06 kB
+dist/document-engine/standard_fonts/FoxitFixedItalic.pfb         18.75 kB
+dist/document-engine/standard_fonts/FoxitFixedBoldItalic.pfb     19.15 kB
+dist/document-engine/standard_fonts/FoxitSerifBold.pfb           19.40 kB
+dist/document-engine/standard_fonts/FoxitSerif.pfb               19.47 kB
+dist/document-engine/cmaps/GBK2K-H.bcmap                         19.66 kB
+dist/document-engine/standard_fonts/FoxitSerifBoldItalic.pfb     20.73 kB
+dist/document-engine/standard_fonts/FoxitSerifItalic.pfb         21.23 kB
+dist/document-engine/standard_fonts/LICENSE_LIBERATION           22.15 kB
+dist/document-engine/cmaps/Adobe-Korea1-UCS2.bcmap               23.29 kB
+dist/document-engine/cmaps/UniJIS-UCS2-H.bcmap                   25.44 kB
+dist/document-engine/cmaps/UniKS-UCS2-H.bcmap                    25.78 kB
+dist/document-engine/cmaps/UniKS-UTF16-H.bcmap                   26.33 kB
+dist/document-engine/cmaps/UniKS-UTF32-H.bcmap                   26.45 kB
+dist/document-engine/cmaps/UniKS-UTF8-H.bcmap                    27.79 kB
+dist/document-engine/standard_fonts/FoxitDingbats.pfb            29.51 kB
+dist/document-engine/cmaps/Adobe-GB1-UCS2.bcmap                  33.97 kB
+dist/document-engine/cmaps/UniJIS-UTF16-H.bcmap                  39.44 kB
+dist/document-engine/cmaps/UniJIS2004-UTF16-H.bcmap              39.53 kB
+dist/document-engine/cmaps/UniJISX0213-UTF32-H.bcmap             40.52 kB
+dist/document-engine/cmaps/UniJIS-UTF32-H.bcmap                  40.54 kB
+dist/document-engine/cmaps/UniJISX02132004-UTF32-H.bcmap         40.61 kB
+dist/document-engine/cmaps/UniJIS2004-UTF32-H.bcmap              40.63 kB
+dist/document-engine/cmaps/Adobe-Japan1-UCS2.bcmap               40.95 kB
+dist/document-engine/cmaps/Adobe-CNS1-UCS2.bcmap                 41.19 kB
+dist/document-engine/cmaps/UniJIS-UTF8-H.bcmap                   41.70 kB
+dist/document-engine/cmaps/UniJIS2004-UTF8-H.bcmap               41.78 kB
+dist/document-engine/cmaps/UniGB-UCS2-H.bcmap                    43.37 kB
+dist/document-engine/cmaps/UniGB-UTF16-H.bcmap                   44.09 kB
+dist/document-engine/cmaps/UniGB-UTF32-H.bcmap                   45.74 kB
+dist/document-engine/cmaps/UniGB-UTF8-H.bcmap                    46.84 kB
+dist/document-engine/cmaps/UniCNS-UCS2-H.bcmap                   48.28 kB
+dist/document-engine/cmaps/UniCNS-UTF16-H.bcmap                  50.42 kB
+dist/document-engine/cmaps/UniCNS-UTF32-H.bcmap                  52.68 kB
+dist/document-engine/cmaps/UniCNS-UTF8-H.bcmap                   53.63 kB
+dist/document-engine/ThirdPartyNotices.txt                      127.15 kB │ gzip:  32.85 kB
+dist/document-engine/pdf.min.mjs                                537.77 kB
+dist/assets/reader.worker-Ddoon-K3.js                           782.98 kB
+dist/document-engine/pdf.worker.min.mjs                       1,327.59 kB
+dist/assets/index-Bw-NbFKB.css                                  172.58 kB │ gzip:  29.56 kB
+dist/assets/FusionMIT-Cg7c4zqs.js                                 1.12 kB │ gzip:   0.70 kB
+dist/assets/ShadcnDashboardMIT-BIeifDLG.js                        1.12 kB │ gzip:   0.68 kB
+dist/assets/WatchPointerMIT-BCQPYNzI.js                           1.14 kB │ gzip:   0.70 kB
+dist/assets/AirCursorMIT-kvAItFIU.js                              1.17 kB │ gzip:   0.71 kB
+dist/assets/OptionalSpeechModels-CBPYigDX.js                      3.30 kB │ gzip:   1.80 kB
+dist/assets/index-D4la30Tz.js                                   854.61 kB │ gzip: 274.33 kB
+dist/assets/ThirdPartyNotices-BwB_pWaL.js                     1,283.23 kB │ gzip: 178.64 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 15.83s

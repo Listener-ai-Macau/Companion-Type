@@ -1,0 +1,32 @@
+{
+  "state": "FAILED_OR_INTERRUPTED_PUBLIC_STREAM_RETAINED",
+  "startedAt": "2026-11-15T08:50:55.962007+08:00",
+  "source": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\public-probe90.wav",
+  "root": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r3\\jobs\\streams\\c08609a6-5f37-480b-9aa8-604ca8c9a1eb",
+  "previewsDuringCapture": [],
+  "qualityQualified": false,
+  "scope": "Constructed 90s bilingual technical integration only; no microphone, playback, board or cloud",
+  "pid": 31528,
+  "captureSealedAt": "2026-11-15T08:52:25.956155+08:00",
+  "frames": 1440000,
+  "pcmSha256": "46c1172d3b95d6d813c2d029c9bdc01f31be89ef031590b6d73665a33ad04790",
+  "error": "AssertionError('Package stream failed; retain console and all source')",
+  "finishedAt": "2026-11-15T08:52:37.965892+08:00",
+  "seconds": 102.01500000001397,
+  "limits": {
+    "pid": 12804,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 133971968,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

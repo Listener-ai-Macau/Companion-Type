@@ -1,0 +1,17 @@
+{
+  "state": "BILINGUAL_ALIGNMENT_PORT_SOURCE_CHECKED_ACTUAL_INPUT_PILOT_REQUIRED",
+  "oldWorker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_alignment_session_worker_20261114.py",
+  "oldWorkerSha256": "6d1ead6a07beea57436c59d12711b1ac6c96b2c079ddf3e7cb01ff6fb521917a",
+  "worker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_bilingual_alignment_worker_20261115.py",
+  "workerSha256": "1b9c9a04350bad74087366020f7919d06059f97d6c03b100d1f2106f7df9a99a",
+  "changes": {
+    "if args.phase=='pilot':selected=selected[:1]": "if args.phase=='pilot':selected=[next((c,l) for c,l in selected if l['text'].strip())]",
+    "language='Chinese',processor_kwargs": "language=leaf.get('alignmentLanguage','Chinese'),processor_kwargs",
+    "assert len(probe['units'])>1 and any": "assert len(probe['units'])>=1 and any"
+  },
+  "modelWeightsLoadingOrForwardChanged": false,
+  "chineseModelInputLanguageUnchanged": true,
+  "englishUsesRecognizedLeafLanguage": true,
+  "emptyLeadingTextDoesNotReplaceFirstActualPilot": true,
+  "controllerSupportsExplicitResumeAndCompletedNodeReuse": true
+}

@@ -1,0 +1,48 @@
+[
+  {
+    "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r3\\jobs\\ec3cdb575c641791f0a11e543c81de042044807923ce47c5df536d956de3c253\\input.wav",
+    "audioSeconds": 90.0,
+    "audioSha256": "dea1f9d47d753e6b626614a87ef163e48f21657d51303f4cffc182845dbd79a8",
+    "meeting": "local-ec3cdb575c641791",
+    "sourceDocument": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r3\\jobs\\ec3cdb575c641791f0a11e543c81de042044807923ce47c5df536d956de3c253\\source-asr.json",
+    "sourceDocumentSha256": "848bbb75212972160be5a8a17debfac626a1f3ff03a8f7f9c6a5ad90f9075bc6",
+    "leaves": [
+      {
+        "id": "000000-root",
+        "nodeFile": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\incremental-session\\decode\\00000000-00480000-final\\root.json",
+        "nodeSha256": "05b8f960a8c2dde7552d723985173e3776a091c618a34a2fc697a48496e7feb3",
+        "text": "零零一超市主管，零零六A，零零七B，零零八C，零零九D。把各个区的这个咱那个负责人啊叫过来，来简单呃做一个交流。呃，咱超市啊近期的销售啊。",
+        "startSample": 0,
+        "endSample": 480000,
+        "alignmentLanguage": "Chinese"
+      },
+      {
+        "id": "000001-root",
+        "nodeFile": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\incremental-session\\decode\\00000001-00480000-final\\root.json",
+        "nodeSha256": "488d830f1936232bde7e4186c5eb370d491e7bbf1d5e3f002f927ae770d323e1",
+        "text": "I wonder how much of the meetings is talking about the stuff at the meetings. Yeah, exactly. Yeah, yeah. Look at all this stuff. Welcome, start. Okay. Right. So, shall we need to talk about? Shall we just go around and everyone says what they what they've been doing? Has anybody done anything? No one. Oh, I'm sorry. Yeah. Okay. Sounds like you've done something.",
+        "startSample": 480000,
+        "endSample": 960000,
+        "alignmentLanguage": "English"
+      },
+      {
+        "id": "000002-roota",
+        "nodeFile": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\incremental-session\\decode\\00000002-00480000-final\\roota.json",
+        "nodeSha256": "011cf0cb59aa1dbdb6ca67d9697b0581d163af6417c31a2a6b1d2c0ecdc6a4b3",
+        "text": "零零一超市主管。零零六A。零零七",
+        "startSample": 960000,
+        "endSample": 1200000,
+        "alignmentLanguage": "Chinese"
+      },
+      {
+        "id": "000002-rootb",
+        "nodeFile": "E:\\CodexData\\Companion\\.model-cache\\local-bilingual-20261114\\incremental-session\\decode\\00000002-00480000-final\\rootb.json",
+        "nodeSha256": "18cd5212e8f6a26fd8120441abc779468174a3dae636e5b045186c07f9b86511",
+        "text": "I wonder how much of the meetings is talking about the stuff at the meetings. Yeah, exactly. Yeah, yeah. Look at all this stuff. Welcome, start. Okay. So, what do we need to talk about?",
+        "startSample": 1200000,
+        "endSample": 1440000,
+        "alignmentLanguage": "English"
+      }
+    ]
+  }
+]

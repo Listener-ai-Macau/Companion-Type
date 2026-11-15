@@ -1,0 +1,274 @@
+{
+  "state": "EXITED_ASR_OMISSION_DIAGNOSTIC_NO_NEW_INFERENCE",
+  "meeting": "20200623_S_R001S07C01",
+  "groups": {
+    ">=2s/006-M": {
+      "referenceCharacters": 1458,
+      "replace": 176,
+      "delete": 116,
+      "spans": 95
+    },
+    ">=2s/004-M": {
+      "referenceCharacters": 1212,
+      "replace": 40,
+      "delete": 20,
+      "spans": 68
+    },
+    "<2s/003-M": {
+      "referenceCharacters": 96,
+      "replace": 4,
+      "delete": 13,
+      "spans": 29
+    },
+    ">=2s/001-M": {
+      "referenceCharacters": 2771,
+      "replace": 94,
+      "delete": 101,
+      "spans": 167
+    },
+    "<2s/006-M": {
+      "referenceCharacters": 537,
+      "replace": 62,
+      "delete": 195,
+      "spans": 235
+    },
+    "<2s/001-M": {
+      "referenceCharacters": 477,
+      "replace": 19,
+      "delete": 31,
+      "spans": 103
+    },
+    "<2s/004-M": {
+      "referenceCharacters": 177,
+      "replace": 7,
+      "delete": 23,
+      "spans": 66
+    },
+    ">=2s/003-M": {
+      "referenceCharacters": 425,
+      "replace": 19,
+      "delete": 12,
+      "spans": 32
+    }
+  },
+  "worstReferenceSpansForDiagnosisOnly": [
+    {
+      "start": 1756.9935,
+      "end": 1771.91349,
+      "speaker": "006-M",
+      "text": "就是诚信问题的一些功能，就是这样。但是在别的方面咱们公司还是说很保密的，这方面的。咱们到时候可以跟这个呃用户儿去说，信息方面应该是安全的",
+      "normalized": "就是诚信问题的一些功能就是这样但是在别的方面咱们公司还是说很保密的这方面的咱们到时候可以跟这个呃用户儿去说信息方面应该是安全的",
+      "textOffset": 6107,
+      "replace": 13,
+      "delete": 5
+    },
+    {
+      "start": 1571.11366,
+      "end": 1573.68366,
+      "speaker": "006-M",
+      "text": "这边儿呢这边儿战略这边儿",
+      "normalized": "这边儿呢这边儿战略这边儿",
+      "textOffset": 5378,
+      "replace": 6,
+      "delete": 5
+    },
+    {
+      "start": 1719.3243685475204,
+      "end": 1724.6717420637337,
+      "speaker": "006-M",
+      "text": "咱们要履行这个行业的战略体系这个需要咱们各部门儿的",
+      "normalized": "咱们要履行这个行业的战略体系这个需要咱们各部门儿的",
+      "textOffset": 5968,
+      "replace": 8,
+      "delete": 2
+    },
+    {
+      "start": 1681.63357,
+      "end": 1684.3918984624922,
+      "speaker": "006-M",
+      "text": "那那个儿待待我们这儿的时候",
+      "normalized": "那那个儿待待我们这儿的时候",
+      "textOffset": 5834,
+      "replace": 8,
+      "delete": 2
+    },
+    {
+      "start": 1741.1767834100615,
+      "end": 1749.0617446868425,
+      "speaker": "006-M",
+      "text": "嗯还有咱们各公司，我们这这行业的大部分公司我们也都是是信息的一些这个嗯我们",
+      "normalized": "嗯还有咱们各公司我们这这行业的大部分公司我们也都是是信息的一些这个嗯我们",
+      "textOffset": 6055,
+      "replace": 4,
+      "delete": 5
+    },
+    {
+      "start": 1467.10375,
+      "end": 1473.14374,
+      "speaker": "006-M",
+      "text": "目前咱们这个呃刚才结算这边儿也说了，可能要去讲的一些方式",
+      "normalized": "目前咱们这个呃刚才结算这边儿也说了可能要去讲的一些方式",
+      "textOffset": 5092,
+      "replace": 7,
+      "delete": 2
+    },
+    {
+      "start": 1652.25359,
+      "end": 1654.3085448623408,
+      "speaker": "006-M",
+      "text": "高消费这就是高消费",
+      "normalized": "高消费这就是高消费",
+      "textOffset": 5711,
+      "replace": 4,
+      "delete": 5
+    },
+    {
+      "start": 1444.5679194462941,
+      "end": 1448.49376,
+      "speaker": "001-M",
+      "text": "别到时候儿你开着车跑山里头了，呱唧我们到给你锁住咯你",
+      "normalized": "别到时候儿你开着车跑山里头了呱唧我们到给你锁住咯你",
+      "textOffset": 5009,
+      "replace": 5,
+      "delete": 3
+    },
+    {
+      "start": 1933.12335,
+      "end": 1934.7419423307115,
+      "speaker": "006-M",
+      "text": "本来竞争给他们跟人家竞争",
+      "normalized": "本来竞争给他们跟人家竞争",
+      "textOffset": 6800,
+      "replace": 3,
+      "delete": 5
+    },
+    {
+      "start": 706.3677512905327,
+      "end": 708.1941120317024,
+      "speaker": "006-M",
+      "text": "目前都有一定的经验",
+      "normalized": "目前都有一定的经验",
+      "textOffset": 2341,
+      "replace": 2,
+      "delete": 6
+    },
+    {
+      "start": 1934.6481475417108,
+      "end": 1937.30335,
+      "speaker": "001-M",
+      "text": "呃对我们也不同意",
+      "normalized": "呃对我们也不同意",
+      "textOffset": 6812,
+      "replace": 0,
+      "delete": 8
+    },
+    {
+      "start": 223.16881,
+      "end": 231.47881,
+      "speaker": "004-M",
+      "text": "嗯<sil>上次业务吧啊经过这这一月的啊整体情况吧还是比较好的。",
+      "normalized": "嗯上次业务吧啊经过这这一月的啊整体情况吧还是比较好的",
+      "textOffset": 808,
+      "replace": 6,
+      "delete": 1
+    },
+    {
+      "start": 706.39338,
+      "end": 710.959994884916,
+      "speaker": "001-M",
+      "text": "咱们有有有这样儿有有这样儿的宏观战略，",
+      "normalized": "咱们有有有这样儿有有这样儿的宏观战略",
+      "textOffset": 2350,
+      "replace": 2,
+      "delete": 5
+    },
+    {
+      "start": 896.9095185510259,
+      "end": 899.8334518529946,
+      "speaker": "006-M",
+      "text": "还有咱们要看一下儿它这个偿还能力，",
+      "normalized": "还有咱们要看一下儿它这个偿还能力",
+      "textOffset": 3018,
+      "replace": 3,
+      "delete": 4
+    },
+    {
+      "start": 1996.2133,
+      "end": 2001.74329,
+      "speaker": "006-M",
+      "text": "不算太强，所以咱们需要呃<sil>我们的身份",
+      "normalized": "不算太强所以咱们需要呃我们的身份",
+      "textOffset": 7049,
+      "replace": 5,
+      "delete": 2
+    },
+    {
+      "start": 1392.7860049138935,
+      "end": 1401.0738,
+      "speaker": "004-M",
+      "text": "这个嘛当然两三十万以上的车都是已经是很好的车了，因为我们这呃有过一个也不是说没有他的也就是",
+      "normalized": "这个嘛当然两三十万以上的车都是已经是很好的车了因为我们这呃有过一个也不是说没有他的也就是",
+      "textOffset": 4795,
+      "replace": 4,
+      "delete": 2
+    },
+    {
+      "start": 175.41885,
+      "end": 182.00385,
+      "speaker": "001-M",
+      "text": "然后咯绑定他的手机号儿，因为人这个手机号他一用的话就可以用，甚至有的用户用了十年二十年。",
+      "normalized": "然后咯绑定他的手机号儿因为人这个手机号他一用的话就可以用甚至有的用户用了十年二十年",
+      "textOffset": 598,
+      "replace": 3,
+      "delete": 3
+    },
+    {
+      "start": 589.39129,
+      "end": 597.0936089428742,
+      "speaker": "001-M",
+      "text": "呃我们是这样的，因为呃国家呃瘟疫闹的，然后咯他确实还不了，我们没有办法，",
+      "normalized": "呃我们是这样的因为呃国家呃瘟疫闹的然后咯他确实还不了我们没有办法",
+      "textOffset": 1863,
+      "replace": 4,
+      "delete": 2
+    },
+    {
+      "start": 147.94787,
+      "end": 153.68287,
+      "speaker": "001-M",
+      "text": "呃呃多户儿很多客户儿都要找我们来进行一些小额，小额的贷款。",
+      "normalized": "呃呃多户儿很多客户儿都要找我们来进行一些小额小额的贷款",
+      "textOffset": 479,
+      "replace": 4,
+      "delete": 2
+    },
+    {
+      "start": 39.54497,
+      "end": 46.37996,
+      "speaker": "006-M",
+      "text": "在会上做一个这个嗯汇报，咱从这个嗯战略部儿。",
+      "normalized": "在会上做一个这个嗯汇报咱从这个嗯战略部儿",
+      "textOffset": 82,
+      "replace": 5,
+      "delete": 1
+    }
+  ],
+  "scope": "Character edit alignment against the exited whole chronological output. Overlap can change edit allocation; this is not word-time truth, an oracle inference input or a new acceptance metric.",
+  "newNeuralCalls": 0,
+  "limits": {
+    "pid": 5404,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 55734272,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

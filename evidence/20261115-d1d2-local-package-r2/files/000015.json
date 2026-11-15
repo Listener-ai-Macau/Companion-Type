@@ -1,0 +1,368 @@
+{
+  "state": "REJECT_FIXED_PERSISTENT_REVIEW_NO_IDENTITY_OR_QUALITY_IMPROVEMENT",
+  "results": [
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "actualVoiceVectors": 354,
+      "changedIntervals": 0,
+      "allOriginalActivitySegmentsExactlyEqual": true,
+      "derUnchangedByExactSegmentEquality": 0.1584147453575932,
+      "baselineQualityResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\combination-study-r1\\native8\\results\\20200623_S_R001S07C01\\review.json",
+      "profilePurityScoringOnly": [
+        {
+          "nativeId": 0,
+          "run": 2,
+          "sourceStart": 25.859999421983957,
+          "sourceEnd": 30.069999327883124,
+          "posthocReferenceSeconds": {
+            "006-M": 3.9289705780160418,
+            "004-M": 0.0,
+            "003-M": 0.0,
+            "001-M": 0.0
+          }
+        },
+        {
+          "nativeId": 0,
+          "run": 3,
+          "sourceStart": 30.469999318942428,
+          "sourceEnd": 33.60999924875796,
+          "posthocReferenceSeconds": {
+            "006-M": 3.1399999298155308,
+            "004-M": 0.0,
+            "003-M": 0.0,
+            "001-M": 0.0
+          }
+        },
+        {
+          "nativeId": 0,
+          "run": 4,
+          "sourceStart": 36.17999919131398,
+          "sourceEnd": 39.289999121800065,
+          "posthocReferenceSeconds": {
+            "006-M": 2.8100000000000023,
+            "004-M": 0.0,
+            "003-M": 0.0,
+            "001-M": 0.0
+          }
+        },
+        {
+          "nativeId": 3,
+          "run": 6,
+          "sourceStart": 47.11999894678593,
+          "sourceEnd": 52.08999883569777,
+          "posthocReferenceSeconds": {
+            "006-M": 0.03420678511465525,
+            "004-M": 0.0,
+            "003-M": 0.0,
+            "001-M": 4.935793103797188
+          }
+        },
+        {
+          "nativeId": 3,
+          "run": 9,
+          "sourceStart": 67.96999848075211,
+          "sourceEnd": 72.629998376593,
+          "posthocReferenceSeconds": {
+            "006-M": 0.0,
+            "004-M": 0.0,
+            "003-M": 0.0,
+            "001-M": 4.65205837659299
+          }
+        },
+        {
+          "nativeId": 3,
+          "run": 10,
+          "sourceStart": 75.99999830126762,
+          "sourceEnd": 80.28999820537865,
+          "posthocReferenceSeconds": {
+            "006-M": 0.010645532445295203,
+            "004-M": 0.0,
+            "003-M": 0.0,
+            "001-M": 4.2793543716657325
+          }
+        },
+        {
+          "nativeId": 1,
+          "run": 36,
+          "sourceStart": 223.24999500997365,
+          "sourceEnd": 231.3699948284775,
+          "posthocReferenceSeconds": {
+            "006-M": 0.0,
+            "004-M": 8.119999818503857,
+            "003-M": 0.0,
+            "001-M": 0.0
+          }
+        },
+        {
+          "nativeId": 1,
+          "run": 38,
+          "sourceStart": 237.76999468542635,
+          "sourceEnd": 241.14999460987747,
+          "posthocReferenceSeconds": {
+            "006-M": 0.0,
+            "004-M": 3.3799999244511127,
+            "003-M": 0.0,
+            "001-M": 0.0
+          }
+        },
+        {
+          "nativeId": 1,
+          "run": 39,
+          "sourceStart": 243.43999455869198,
+          "sourceEnd": 246.45999449118972,
+          "posthocReferenceSeconds": {
+            "006-M": 0.0,
+            "004-M": 3.01999993249774,
+            "003-M": 0.0,
+            "001-M": 0.0
+          }
+        },
+        {
+          "nativeId": 2,
+          "run": 69,
+          "sourceStart": 446.3099900241941,
+          "sourceEnd": 450.30998993478715,
+          "posthocReferenceSeconds": {
+            "006-M": 0.0,
+            "004-M": 0.0,
+            "003-M": 3.999999910593033,
+            "001-M": 0.0
+          }
+        },
+        {
+          "nativeId": 2,
+          "run": 70,
+          "sourceStart": 450.54998992942274,
+          "sourceEnd": 454.2599898464978,
+          "posthocReferenceSeconds": {
+            "006-M": 0.0,
+            "004-M": 0.0,
+            "003-M": 3.709999917075038,
+            "001-M": 0.0
+          }
+        },
+        {
+          "nativeId": 2,
+          "run": 72,
+          "sourceStart": 461.3799896873534,
+          "sourceEnd": 468.8799895197153,
+          "posthocReferenceSeconds": {
+            "006-M": 0.0,
+            "004-M": 0.0,
+            "003-M": 7.499999832361937,
+            "001-M": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "actualVoiceVectors": 188,
+      "changedIntervals": 0,
+      "allOriginalActivitySegmentsExactlyEqual": true,
+      "derUnchangedByExactSegmentEquality": 0.03855615562340746,
+      "baselineQualityResult": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\S_R004S03C01\\review.json",
+      "profilePurityScoringOnly": [
+        {
+          "nativeId": 0,
+          "run": 0,
+          "sourceStart": 26.109999304637313,
+          "sourceEnd": 36.10999930463731,
+          "posthocReferenceSeconds": {
+            "001-M": 9.927010000000003,
+            "002-F": 0.0,
+            "003-F": 0.0,
+            "004-F": 0.0,
+            "005-F": 0.0
+          }
+        },
+        {
+          "nativeId": 0,
+          "run": 1,
+          "sourceStart": 61.284998518414795,
+          "sourceEnd": 71.2849985184148,
+          "posthocReferenceSeconds": {
+            "001-M": 10.0,
+            "002-F": 0.0,
+            "003-F": 0.0,
+            "004-F": 0.0,
+            "005-F": 0.0
+          }
+        },
+        {
+          "nativeId": 0,
+          "run": 2,
+          "sourceStart": 110.70499741379172,
+          "sourceEnd": 120.70499741379172,
+          "posthocReferenceSeconds": {
+            "001-M": 9.91167,
+            "002-F": 0.0,
+            "003-F": 0.0,
+            "004-F": 0.0,
+            "005-F": 0.0
+          }
+        },
+        {
+          "nativeId": 2,
+          "run": 6,
+          "sourceStart": 289.1799934245646,
+          "sourceEnd": 299.1799934245646,
+          "posthocReferenceSeconds": {
+            "001-M": 0.0,
+            "002-F": 0.0,
+            "003-F": 0.0,
+            "004-F": 9.966000000000008,
+            "005-F": 0.0
+          }
+        },
+        {
+          "nativeId": 2,
+          "run": 7,
+          "sourceStart": 306.90499302838,
+          "sourceEnd": 316.90499302838,
+          "posthocReferenceSeconds": {
+            "001-M": 0.0,
+            "002-F": 0.0,
+            "003-F": 0.0,
+            "004-F": 9.97135000000003,
+            "005-F": 0.0
+          }
+        },
+        {
+          "nativeId": 2,
+          "run": 8,
+          "sourceStart": 317.1499927993864,
+          "sourceEnd": 327.1499927993864,
+          "posthocReferenceSeconds": {
+            "001-M": 0.0,
+            "002-F": 0.0,
+            "003-F": 0.0,
+            "004-F": 10.0,
+            "005-F": 0.0
+          }
+        },
+        {
+          "nativeId": 4,
+          "run": 38,
+          "sourceStart": 824.8999815620482,
+          "sourceEnd": 834.3399813510478,
+          "posthocReferenceSeconds": {
+            "001-M": 0.0,
+            "002-F": 0.0,
+            "003-F": 9.417708437951774,
+            "004-F": 0.0,
+            "005-F": 0.0
+          }
+        },
+        {
+          "nativeId": 4,
+          "run": 39,
+          "sourceStart": 842.6249810541049,
+          "sourceEnd": 852.6249810541049,
+          "posthocReferenceSeconds": {
+            "001-M": 0.0,
+            "002-F": 0.0,
+            "003-F": 9.948059999999941,
+            "004-F": 0.0,
+            "005-F": 0.0
+          }
+        },
+        {
+          "nativeId": 4,
+          "run": 40,
+          "sourceStart": 865.3049805471674,
+          "sourceEnd": 875.3049805471674,
+          "posthocReferenceSeconds": {
+            "001-M": 0.0,
+            "002-F": 0.0,
+            "003-F": 9.917979999999943,
+            "004-F": 0.0,
+            "005-F": 0.0
+          }
+        },
+        {
+          "nativeId": 3,
+          "run": 81,
+          "sourceStart": 1405.6499684695154,
+          "sourceEnd": 1415.6499684695154,
+          "posthocReferenceSeconds": {
+            "001-M": 0.0,
+            "002-F": 0.0,
+            "003-F": 0.0,
+            "004-F": 0.0,
+            "005-F": 9.913919999999962
+          }
+        },
+        {
+          "nativeId": 3,
+          "run": 82,
+          "sourceStart": 1416.5299683380872,
+          "sourceEnd": 1423.9699681717902,
+          "posthocReferenceSeconds": {
+            "001-M": 0.0,
+            "002-F": 0.0,
+            "003-F": 0.0,
+            "004-F": 0.0,
+            "005-F": 7.381099833703047
+          }
+        },
+        {
+          "nativeId": 3,
+          "run": 83,
+          "sourceStart": 1423.9999681711197,
+          "sourceEnd": 1432.2899679858238,
+          "posthocReferenceSeconds": {
+            "001-M": 0.0,
+            "002-F": 0.0,
+            "003-F": 0.0,
+            "004-F": 0.0,
+            "005-F": 8.25531981470408
+          }
+        },
+        {
+          "nativeId": 1,
+          "run": 142,
+          "sourceStart": 1839.3899588864297,
+          "sourceEnd": 1843.439958795905,
+          "posthocReferenceSeconds": {
+            "001-M": 0.0,
+            "002-F": 4.049999909475446,
+            "003-F": 0.0,
+            "004-F": 0.0,
+            "005-F": 0.0
+          }
+        },
+        {
+          "nativeId": 1,
+          "run": 143,
+          "sourceStart": 1844.4199587740004,
+          "sourceEnd": 1849.4399586617947,
+          "posthocReferenceSeconds": {
+            "001-M": 0.0,
+            "002-F": 5.019999887794256,
+            "003-F": 0.0,
+            "004-F": 0.0,
+            "005-F": 0.0
+          }
+        },
+        {
+          "nativeId": 1,
+          "run": 144,
+          "sourceStart": 1849.6899586562067,
+          "sourceEnd": 1853.009958581999,
+          "posthocReferenceSeconds": {
+            "001-M": 0.0,
+            "002-F": 3.3158985819989084,
+            "003-F": 0.0,
+            "004-F": 0.0,
+            "005-F": 0.0
+          }
+        }
+      ]
+    }
+  ],
+  "thresholdsOrProfilesRetunedAfterScores": false,
+  "newNeuralCallsForAudit": 0,
+  "qualityQualified": false,
+  "next": "Retain all542 feature vectors and the completed failed policy. No threshold or profile-count variants. Continue product integration and source ASR omission work."
+}

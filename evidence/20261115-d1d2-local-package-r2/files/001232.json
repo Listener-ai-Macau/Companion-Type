@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-15T08:52:36+08:00",
+  "state": "WAITING_UNCHANGED_LOCAL_MODEL_RESOURCE_RECOVERY",
+  "session": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r3\\jobs\\streams\\c08609a6-5f37-480b-9aa8-604ca8c9a1eb\\session",
+  "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+  "automaticRetries": 0,
+  "localOnly": true,
+  "sourceAudioUploaded": false,
+  "qualityQualified": false,
+  "availableBytesAtStart": 8076779520,
+  "resources": {
+    "ready": true,
+    "actualWindowsLowRam": false,
+    "availableBytes": 8076775424,
+    "existingRecoveryRequirementExclusiveBytes": null,
+    "rule": "No actual Windows low-memory signal; after a low-RAM stop, available > prior available + 2 * prior own private peak."
+  }
+}

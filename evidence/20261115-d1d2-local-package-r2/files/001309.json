@@ -1,0 +1,19 @@
+{
+  "state": "FAILED_RETAINED_RUST_TEST_COMPILATION_REACHED_OWN_2GIB_JOB_BUDGET",
+  "startedAt": "2026-11-15T08:52:51+08:00",
+  "command": [
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-source\\tools\\build_windows_local.py",
+    "test",
+    "--output",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-live-final-contract-test-r1",
+    "--filter",
+    "live_stop_contract_tests"
+  ],
+  "privatePeakBytes": 0,
+  "pid": 30324,
+  "pidCreatedAt": 1794703971.7696805,
+  "error": "Rust test compiler allocation failed; parent psutil observation also raised WinError1455 at own job cap. Actual Windows available RAM later8.2GB, no product/model result.",
+  "actualTestExecution": false,
+  "ownedProcessExitedConfirmed": true
+}

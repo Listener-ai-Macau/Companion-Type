@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "E:\CodexData\Companion\product-d1d2-20261114\local-package-r3\src\companion_local_meeting_pipeline_20261115.py", line 333, in <module>
+    main()
+  File "E:\CodexData\Companion\product-d1d2-20261114\local-package-r3\src\companion_local_meeting_pipeline_20261115.py", line 212, in main
+    run(manifest,bundle)
+  File "E:\CodexData\Companion\product-d1d2-20261114\local-package-r3\src\companion_local_meeting_stream_20261115.py", line 70, in run
+    assert child.returncode==0,'Local decoder stopped; original audio retained'
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: Local decoder stopped; original audio retained

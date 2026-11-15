@@ -1,0 +1,57 @@
+{
+  "binding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "auto",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter",
+    "jobId": "00000033-00480000-final",
+    "pcmSha256": "8d43564791e6be1d390d0887eb804fb4082030c6784fbabb47463ac6a830c37e",
+    "configSha256": "708197a6516f2b78ddc7c0b3dd15cacf2982a182e9fc51643824867500456ecc"
+  },
+  "raw": {
+    "startSample": 16080000,
+    "endSample": 16200000,
+    "text": "Trying to see if there's anything out there to use. Sort of, what were you doing?",
+    "language": "English",
+    "languageHeaderPresent": true,
+    "generatedIds": [
+      11528,
+      6364,
+      151704,
+      55862,
+      311,
+      1490,
+      421,
+      1052,
+      594,
+      4113,
+      700,
+      1052,
+      311,
+      990,
+      13,
+      15967,
+      315,
+      11,
+      1128,
+      1033,
+      498,
+      3730,
+      30,
+      151645
+    ],
+    "rawDecoded": "language English<asr_text>Trying to see if there's anything out there to use. Sort of, what were you doing?<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 4.749043799994979
+  },
+  "rawSha256": "011f817d05a5dad096560667aea17d21142d610992f0241d46570fe6ce113198"
+}

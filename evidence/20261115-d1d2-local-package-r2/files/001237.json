@@ -1,0 +1,18 @@
+{
+  "state": "STOPPED_OWN_NATIVE_CONTROL",
+  "at": "2026-11-15T08:51:03+08:00",
+  "pid": 14628,
+  "workerSourceSha256": "c7bdf59e86e26833450cf36ee7c8a3135d7ec0529eb93fb35001fb84f7e2b402",
+  "automaticRetries": 0,
+  "referencePassedToWorker": false,
+  "qualityQualified": false,
+  "priorOwnedProcessSeconds": 0.0,
+  "actualRecoveryObservation": null,
+  "reason": "bounded_short_control_deadline",
+  "exitCode": 15,
+  "wholeProcessFamilySeconds": 90.45828330001677,
+  "accumulatedOwnedProcessSeconds": 90.45828330001677,
+  "sampledPrivatePeakBytes": 48177152,
+  "sampledRssPeakBytes": 81420288,
+  "finishedAt": "2026-11-15T08:52:33+08:00"
+}

@@ -1,0 +1,27 @@
+{
+  "state": "STOPPED_INCOMPLETE_NO_AUTOMATIC_RETRY",
+  "startedAt": "2026-11-14T22:58:41+08:00",
+  "pid": 29180,
+  "results": [
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "exitCode": 1,
+      "workerState": "FAILED_RETAINED",
+      "wholeProcessFamilySeconds": 868.162075900007,
+      "privatePeakBytes": 968671232,
+      "rssPeakBytes": 897392640,
+      "output": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\pointer-normal-r1\\results\\20200623_S_R001S07C01"
+    }
+  ],
+  "protocolSha256": "cd96bd04fb122e1cc1a0cefdb3eb7622f2701b57b24ef41e7d3f3cd71492df2b",
+  "sourceSha256": {
+    "practical_cpu_pointer_worker_20261114.py": "be5a4961e7541d9a44e9cdefe626a4672b574dbce0dd0465d24b37aaebc93d60",
+    "run_practical_cpu_pointer_20261114.py": "b32e91eaef4f5366987b5d6ee523d9e7827907682147799e2ba348428708f403",
+    "moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "score_cross_corpus_diarization_20261103.py": "99756dd111ba154432604cf61236a7ad49e97274492bbc8c6737e6063fc8ccec",
+    "reference_textgrid_20261104.py": "8f43fd26b67851714feb5530c3b321d0cca0c650b63ab8b2e0ca78e15715dc60"
+  },
+  "referencePassedToInference": false,
+  "automaticRetries": 0,
+  "finishedAt": "2026-11-14T23:13:10+08:00"
+}
