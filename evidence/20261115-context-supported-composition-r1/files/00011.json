@@ -1,0 +1,745 @@
+{
+  "state": "COMPLETE_FIXED_BLIND_SEPARATION_ASR_PENDING",
+  "protocolSha256": "850e5156fc371b89752b328951a8b47d254e05d5d7f8ed3966bf73107658f607",
+  "results": [
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-01",
+      "sourceWavSha256": "c90320ac74efba04e8afa4deb4c4bedaf108e0836ed0f14e0d0c62d1a9bc2aed",
+      "frames": 458640,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-01\\stream-0.npy",
+          "sha256": "2e525b4f7cf685ab0c193ddf13a382637cd3cbb7868b0a3560e2ed03cf7c8054",
+          "frames": 458640
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-01\\stream-1.npy",
+          "sha256": "6bee6b7a1aa062b6878b11f12004492c55cb1eff871baeb757c136c57fdedf8c",
+          "frames": 458640
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-02",
+      "sourceWavSha256": "1edd536e4b974e3f3743e7a6d3a072983efb9a29095c0b4bf9ed5f7ea6108b97",
+      "frames": 461040,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-02\\stream-0.npy",
+          "sha256": "4d2c0e6396a097a464952b0894688f010bbe3492066c1282e70e907de92f694e",
+          "frames": 461040
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-02\\stream-1.npy",
+          "sha256": "193504c4a69e17424a6ea23fe2a9863a7445544044f09ecf5fa3bf12c687df2e",
+          "frames": 461040
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-03",
+      "sourceWavSha256": "02afe97da640fc7185b76273662c06822924824c9e6a795284bec345de7b65d1",
+      "frames": 400621,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-03\\stream-0.npy",
+          "sha256": "03a3f031045bb11bd97f494f33b0adaef480f8d0c62634d69303006617b94159",
+          "frames": 400621
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-03\\stream-1.npy",
+          "sha256": "8f83cfb33fc2c61c9fd39253818721019d921d418475d32d34bcd4e74ba8e89b",
+          "frames": 400621
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-04",
+      "sourceWavSha256": "692a256ab4f232779efb19db906757d743dba6495ab2b7bd67e41af31e5c3bbd",
+      "frames": 426440,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-04\\stream-0.npy",
+          "sha256": "89ab8dfa0b63c320648869c977dc0a421292907250e07e35ef30683ee52b6579",
+          "frames": 426440
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-04\\stream-1.npy",
+          "sha256": "d26f1eb90e35a37b3f062e3112e40569784a19c9f5d5329a65107c672acf8b93",
+          "frames": 426440
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-05",
+      "sourceWavSha256": "089e498d501cb0841b500f51813a94b3b5692d6e370d61e70c0ff5dc9554f4ec",
+      "frames": 414820,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-05\\stream-0.npy",
+          "sha256": "76a8d4ab509b6890862df469073011c956c31e7be947e645c299c112ea05d737",
+          "frames": 414820
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-05\\stream-1.npy",
+          "sha256": "51afedee2b1b0450e00153b383c77ad74e195f0525aad0e76c14f63e6987fa05",
+          "frames": 414820
+        }
+      ],
+      "reuseOriginal": false,
+      "predictedOverlapFrames": 2400,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-06",
+      "sourceWavSha256": "4e00212ad9b703ceb42cae0e57d7307cc0e5882566f91878ee7e7ba088e612ab",
+      "frames": 397114,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-06\\stream-0.npy",
+          "sha256": "16897432df605098cd1a6bf1dc3a55f5eb209a65682815e37243e856e99f117f",
+          "frames": 397114
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-06\\stream-1.npy",
+          "sha256": "c80ab8c61a47e984a8d72ee008b01716177451adc931d4ed03e6600a6cd6ab42",
+          "frames": 397114
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-01",
+      "sourceWavSha256": "1d76332bff4c12b36848613101845075d48736f640310a29c5de4d8fcf5d2ca4",
+      "frames": 28880,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-01\\stream-0.npy",
+          "sha256": "b41fe55ee99cdac1fe61d51915fe09fd4f922af870c00dd69d11c436057df4db",
+          "frames": 28880
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-01\\stream-1.npy",
+          "sha256": "236a534c3c00ec105c56d4667b24fdc3d0c5081a590b61784b120027eaba4d88",
+          "frames": 28880
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-02",
+      "sourceWavSha256": "173dce22a7ac51ab544022adbdce564ba71e1b2064e9fc3a58a4329f4852a89b",
+      "frames": 27440,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-02\\stream-0.npy",
+          "sha256": "c06168eb2b5760e535b00bd3a3af748727c1a4f94beb9cafe21fd81fb85a1d17",
+          "frames": 27440
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-02\\stream-1.npy",
+          "sha256": "aca3a4c41951d164924cafc4d23a194dbb3c7e102b8f7ba1a6842f57e4a18f40",
+          "frames": 27440
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-03",
+      "sourceWavSha256": "476c7273d9d1fd9f7f3c883c962da44e1ba45a5eb76c6457187e54d855618f35",
+      "frames": 25360,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-03\\stream-0.npy",
+          "sha256": "56a43038c5284e2b447583f7e0cb1e1e40562724b18e3e382bcb9156cac4773a",
+          "frames": 25360
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-03\\stream-1.npy",
+          "sha256": "9d6232f253a111596fd19e4ea4a223ec1f7077588f5645041834d5122071aad5",
+          "frames": 25360
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-04",
+      "sourceWavSha256": "9c319739b10df443b332513b84d92e4aa59c1df1af3374a86ae27af9e3b6c544",
+      "frames": 26880,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-04\\stream-0.npy",
+          "sha256": "42aaa7e8a10264788adf8c3914461afe00fda0bf01f8a21b32ada22584239b04",
+          "frames": 26880
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-04\\stream-1.npy",
+          "sha256": "fd71f4fa904d1d26a9389c746196795bcde94a1e284551c6eb4de855b5aaebd9",
+          "frames": 26880
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-05",
+      "sourceWavSha256": "114f596a4a4d0ecca0a4c5a73e549eaf3b81f5cf066e58c1fea9be5516a58ba6",
+      "frames": 26080,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-05\\stream-0.npy",
+          "sha256": "0111993ef3f1c690eb15434e7309e5855640c7f6b2359a72591a0e3c67eaa457",
+          "frames": 26080
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-05\\stream-1.npy",
+          "sha256": "24433d50b59c3b5f729d9fdb4be185d05e8fc1ac39ea07c9f0a6b4817f6feea7",
+          "frames": 26080
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-01",
+      "sourceWavSha256": "d14adcaddfc38b1110927585f601213b1c3caa3a61cc6b3ac4646e21595bf425",
+      "frames": 449191,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-01\\stream-0.npy",
+          "sha256": "a15e7a6b99827a8a7af333ebb9f5b40c2f03f04ba6dbc6ecacca6457a915efbc",
+          "frames": 449191
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-01\\stream-1.npy",
+          "sha256": "e7b3d662c705c009a6e9c43b9207bc787d3ca02e437c70406ff6298efc0d25b0",
+          "frames": 449191
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-02",
+      "sourceWavSha256": "bfbf02a9364cd4f95c3268d958414702205869aa3b430925b88837d79ed2f376",
+      "frames": 449651,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-02\\stream-0.npy",
+          "sha256": "cd17960a1a00a88f9fa2cb3439aa304c3a6169e8646702a3a86b8b764889e8fd",
+          "frames": 449651
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-02\\stream-1.npy",
+          "sha256": "ed9f64d682ab16616dddc693234aaa79b19bde7a453e9ab18de3ac73e54caea2",
+          "frames": 449651
+        }
+      ],
+      "reuseOriginal": false,
+      "predictedOverlapFrames": 1280,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-03",
+      "sourceWavSha256": "5c3dee4326765cd3a5dd61a6995059f531c89aad0e591703df82ca624629ca06",
+      "frames": 475581,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-03\\stream-0.npy",
+          "sha256": "ae0d24ed0eff625b0c9dc4e46b7bc1d21864cbff81c05aa7f780eec08911dd86",
+          "frames": 475581
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-03\\stream-1.npy",
+          "sha256": "ef3a6f7fe250fe5deb70a8e038466fc816c70fd04e0f8da7c64d88e85353de5f",
+          "frames": 475581
+        }
+      ],
+      "reuseOriginal": false,
+      "predictedOverlapFrames": 6080,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-04",
+      "sourceWavSha256": "6dec83f99500682d5d054ce8a0d4240b6b11244571dc09da8ae9db451fc76fe8",
+      "frames": 421241,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-04\\stream-0.npy",
+          "sha256": "5ebbbb0f2946c8ef9c882e2e8145459302fd5e2357121f87f1ab8cf5889e3c26",
+          "frames": 421241
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-04\\stream-1.npy",
+          "sha256": "f5f2fda8809e6e59b2ebf914bda959bf4e43ded97cc6943aba48015dd050608b",
+          "frames": 421241
+        }
+      ],
+      "reuseOriginal": false,
+      "predictedOverlapFrames": 47680,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-05",
+      "sourceWavSha256": "46a98022e67079c893f3f947fa30cd8c3ada7515610d6395ec378271b0deba3f",
+      "frames": 411541,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-05\\stream-0.npy",
+          "sha256": "5c541acc395794a3794f82c634d7f7598f4c0b2ad224046de2a0fa07319d1eff",
+          "frames": 411541
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-05\\stream-1.npy",
+          "sha256": "fd9668b21d073b10d7c0de71e88d81058910a4d2a8cf249cb8916079d2e29be1",
+          "frames": 411541
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-06",
+      "sourceWavSha256": "85898af5f6278c8aeaf548fa436cfeec4677440426b00fd207971812f944ddbf",
+      "frames": 397051,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-06\\stream-0.npy",
+          "sha256": "8ab96875276a124969da9ead27e5e00de062b3a9844c90b21373d8a6a8e40aeb",
+          "frames": 397051
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-06\\stream-1.npy",
+          "sha256": "2f32990f434a2d2a2e170b04ae840344c1e14668a34f849178223a3fca598a01",
+          "frames": 397051
+        }
+      ],
+      "reuseOriginal": false,
+      "predictedOverlapFrames": 45760,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-01",
+      "sourceWavSha256": "cc998bf62e7f33ba7b32188c7253adee4d9348e189cb88d273b12c862c34f9f0",
+      "frames": 33840,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-01\\stream-0.npy",
+          "sha256": "565959fa5bc0bc9ee4dd0715e639125d0fcfc70c5a2af5e0e1723eb791a723a8",
+          "frames": 33840
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-01\\stream-1.npy",
+          "sha256": "9766c39c83272e32137eb70b46daf02cf94213c81fb9b3e376348e99f4803891",
+          "frames": 33840
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-02",
+      "sourceWavSha256": "271c623507f6f215fb754eed25528f4b2f2b7d3ef28bda9cbdadfc1daadbb1cf",
+      "frames": 26880,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-02\\stream-0.npy",
+          "sha256": "f0591a2404e3c112a199a51dcdd296715dee1a1158e43906dd37365e06ab3823",
+          "frames": 26880
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-02\\stream-1.npy",
+          "sha256": "fd71f4fa904d1d26a9389c746196795bcde94a1e284551c6eb4de855b5aaebd9",
+          "frames": 26880
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-03",
+      "sourceWavSha256": "6514fae7e0f6154eb50520aa90373bd39e1dab9928217c5d7123e32566288fe4",
+      "frames": 31200,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-03\\stream-0.npy",
+          "sha256": "05da81a95f960bb0df9a7da247ebc73c020d3959b9722d6a9699e597106280f7",
+          "frames": 31200
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-03\\stream-1.npy",
+          "sha256": "33af8890a8021427c446984741d94fe6f81023d2fa32665374f70bbeab4e8cb5",
+          "frames": 31200
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-04",
+      "sourceWavSha256": "e9abaa5ec0896c6443310574053b76c7b2f7c4f934ece86bb1c244b2662b08b8",
+      "frames": 28720,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-04\\stream-0.npy",
+          "sha256": "8b2f7acbb6bec802963de8c2b8e9dbf842e63763b23739ad70647b3617a621a6",
+          "frames": 28720
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-04\\stream-1.npy",
+          "sha256": "d1e36e43208f1699cb76bb9b58506853c0cf7f44961d9f1f1142c73d8b8913d8",
+          "frames": 28720
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-05",
+      "sourceWavSha256": "90661f18376a78989f2a231fb565d3d8063b4bf4e162bf53b0594942b05c7742",
+      "frames": 16400,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-05\\stream-0.npy",
+          "sha256": "7cc9f9711940fe380cdc810093ddbbde3e3083276749801193623147c9c7ceab",
+          "frames": 16400
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-05\\stream-1.npy",
+          "sha256": "f043f96f705dd86a1f527e0f881389e73bc2a9773f5c8dfa968691fd1a5f196d",
+          "frames": 16400
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-06",
+      "sourceWavSha256": "88099221880b006322080c4503f99cddb8ee6864a4960e6076002818ae0f2c33",
+      "frames": 16480,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-06\\stream-0.npy",
+          "sha256": "53b843d65df81b458a705c0d2b8ea22befd41541383ed24d78e40dd587a53fdb",
+          "frames": 16480
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-06\\stream-1.npy",
+          "sha256": "7332083a1739a11b87a3ba3e58c53f640f58973a8f341992c2d756231061ad78",
+          "frames": 16480
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-07",
+      "sourceWavSha256": "b847b2c7c78e0727510372bd908a60382030c12a382d198c95e11b97fdf1f0cd",
+      "frames": 14574,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-07\\stream-0.npy",
+          "sha256": "6a41439eaecd4c6cc55e77a1b3717c750be0867dcc9694a42074835c9608db5d",
+          "frames": 14574
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-07\\stream-1.npy",
+          "sha256": "13a92f3d8708d685daffbd9cb757548b190e68883a297163f6bcf5d997b3c045",
+          "frames": 14574
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-08",
+      "sourceWavSha256": "55958adb34c971be117b5827bc07789f8950cbdfe8edc70aadaad15406829eed",
+      "frames": 32320,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-08\\stream-0.npy",
+          "sha256": "722ac7974a11e84fd590efec6fd86e93e24e9bfc9a2b32bcecef098176faade6",
+          "frames": 32320
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-08\\stream-1.npy",
+          "sha256": "191c765f25a59ebd63ed94776c68a22248a75a3b244509201d4fa139e35f835d",
+          "frames": 32320
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-09",
+      "sourceWavSha256": "b79058ef4d56f6fe3e85e8996fd870cb2f17acb34bf82994c5500cf860af0b0f",
+      "frames": 14876,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-09\\stream-0.npy",
+          "sha256": "efbcbefd79d38caa112483a01d665100a7417a4c8b29883b2b6b8c6665d7d1b7",
+          "frames": 14876
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-09\\stream-1.npy",
+          "sha256": "0e39703209c644fe30d83b8b01053011beb657f23fdd6bcb5d76f5971017e657",
+          "frames": 14876
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-10",
+      "sourceWavSha256": "7c8b4c4109f0db4584827d63edff2bcc40b6c291a129de841563e2f66c2e214c",
+      "frames": 23280,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-10\\stream-0.npy",
+          "sha256": "2f8f15c7a95ea6707adf1e2777a61c1b953996000f420fae0787091afd641096",
+          "frames": 23280
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-10\\stream-1.npy",
+          "sha256": "8021201637a78f84dbbc759422b169ba4098c0401361fcde763c02f9cdd66be6",
+          "frames": 23280
+        }
+      ],
+      "reuseOriginal": false,
+      "predictedOverlapFrames": 7360,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-11",
+      "sourceWavSha256": "deb43b210b4dd8eb8911f7149a614d21bd43a4ad6bc17a11aec6bd430317ffaa",
+      "frames": 12459,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-11\\stream-0.npy",
+          "sha256": "d09da8c4f552c1f40fd77458efaf9dd382bcb29612fd4788a8281dcd2d16a700",
+          "frames": 12459
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-11\\stream-1.npy",
+          "sha256": "b26a984e9176863db3ed2b75e8f05741e89a38574ad808caf07cd1eebcc4714a",
+          "frames": 12459
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-12",
+      "sourceWavSha256": "0c671c83b790c88ee2909ede3cd0e2c478916c67a24936125a7edc85cb006c16",
+      "frames": 16103,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-12\\stream-0.npy",
+          "sha256": "08a6a793da05fccb4cdffe15f120230ac3b46221b5591ab7d660dbe60462e6d5",
+          "frames": 16103
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-12\\stream-1.npy",
+          "sha256": "fc9bf857bb57af8e87f2b706a7fa1d0e4d3ab0c96d0c6dfca90f25346a573711",
+          "frames": 16103
+        }
+      ],
+      "reuseOriginal": false,
+      "predictedOverlapFrames": 640,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-13",
+      "sourceWavSha256": "eb4652e4ff65c73887905874d2fd0086f92cf419ecb6c26ddb513a67ee64b446",
+      "frames": 12157,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-13\\stream-0.npy",
+          "sha256": "506bf6acec6f671e7b9035a0ddecffd39fe7a245999d2df5068c0f492cc329d7",
+          "frames": 12157
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-13\\stream-1.npy",
+          "sha256": "169187fdbe3d4171ae0d7bba3ba75685d7742621ee6a0640e49bdc8afe29f926",
+          "frames": 12157
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-14",
+      "sourceWavSha256": "6f6dfbf3af1cc0e3309f5e109e02d048a57742d76e32d95b6e1bed93047f9c0a",
+      "frames": 7603,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-14\\stream-0.npy",
+          "sha256": "909c2ecc2b5977196e88b3fbc994d6cad70098ecd1d08d22ca30c12a0f06a49d",
+          "frames": 7603
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-14\\stream-1.npy",
+          "sha256": "de209574a5c91bdbc89dea49150fbabf8e80130e99acd651092981d5224371eb",
+          "frames": 7603
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-15",
+      "sourceWavSha256": "926bb0780922fffd0569f59cae825acbb65dc71e8a2a1bbfe9fbe478d5f9cc68",
+      "frames": 7704,
+      "streams": [
+        {
+          "index": 0,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-15\\stream-0.npy",
+          "sha256": "076b71e250d36d5f10f8b4ac7c37546a3e17b1f90e1f512ad7566cc732320e57",
+          "frames": 7704
+        },
+        {
+          "index": 1,
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\context-supported-composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-15\\stream-1.npy",
+          "sha256": "f5b2c93cb05f52cfcb92f5194056116e466afccebee22c02595665bcee3e6278",
+          "frames": 7704
+        }
+      ],
+      "reuseOriginal": true,
+      "predictedOverlapFrames": 0,
+      "allFramesPreserved": true,
+      "referenceOrSpeakerProfileUsed": false
+    }
+  ],
+  "waveformRoutingImplemented": true,
+  "newSeparatorNeuralCalls": 0,
+  "referenceRead": false
+}

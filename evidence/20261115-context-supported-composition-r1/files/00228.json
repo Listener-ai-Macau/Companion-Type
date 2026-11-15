@@ -1,0 +1,21 @@
+{
+  "state": "PASS_AUDIO_INTERVAL_COVERAGE_AND_ORIGINAL_MODEL_ID_CONTRACT_ONLY",
+  "at": "2026-11-15T20:07:08.835176+08:00",
+  "associationRun": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3",
+  "cases": 32,
+  "completeTimeCoverage": true,
+  "sourceWaveformsUnchanged": true,
+  "original64AsrResultsUnchanged": true,
+  "independentOriginalRttmMembershipConfirmed": true,
+  "predictedPairedAssociationSegments": 18,
+  "predictedPairedAssociationSeconds": 6.95,
+  "unconfirmedOverlapSeconds": 13.174375,
+  "predictedAssociationCoverage": 0.3453523401347868,
+  "physicalSpeakerIdentityAccuracyMeasured": false,
+  "wordSpeakerAlignmentImplemented": false,
+  "unknownIntervalsDropped": false,
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "d2Complete": false,
+  "boundary": "Original model-ID/time consistency and retention only. These6.95seconds are predictions, not verified human identities or a speaker accuracy rate. Existing whole-meeting DER/CER and independent identity tests still required."
+}
