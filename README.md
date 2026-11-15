@@ -178,3 +178,6 @@ A reference-protocol audit corrects the physical interpretation of earlier Engli
 
 
 2026-11-15T18:44:40.883571+08:00 固定盲分离完整核80更新后：84独立源门通过，原自然32/完整64路原ASR及原Nemotron固定路由结果：REJECT_FIXED_ROUTED_THREE_MODEL_COMPOSITION。所有实际使用路文字计分，未改参考/窗口/阈值；原整会中英文人物门与最终留出保持，不能据此称产品售卖合格。完整分离权重在父提交保护。
+
+
+2026-11-15T19:01:18.127899+08:00 固定盲分离完整核80更新后：84独立源门通过，原自然32/完整64路原ASR及原Nemotron固定路由结果：REJECT_FIXED_ROUTED_THREE_MODEL_COMPOSITION。所有实际使用路文字计分，未改参考/窗口/阈值；原整会中英文人物门与最终留出保持，不能据此称产品售卖合格。完整分离权重在父提交保护。

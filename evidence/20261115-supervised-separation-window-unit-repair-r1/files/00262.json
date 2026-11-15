@@ -1,0 +1,62 @@
+{
+  "id": "20200805_S_R001S01C01-multi-turn-context-06",
+  "stream": 0,
+  "sourceWavSha256": "85898af5f6278c8aeaf548fa436cfeec4677440426b00fd207971812f944ddbf",
+  "inputFloatSha256": "3059dc25ab0195dc7ed3c08fa814248baaa6786c4e654df7b5945a5611bf76d5",
+  "text": "因为秋千这方面，它如果在荡的时候螺丝会松的话，它就会把孩子甩出去。嗯，这方面，嗯。",
+  "frames": 397051,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 397051,
+        "text": "因为秋千这方面，它如果在荡的时候螺丝会松的话，它就会把孩子甩出去。嗯，这方面，嗯。",
+        "language": "Chinese",
+        "generatedIds": [
+          99519,
+          100057,
+          99320,
+          107742,
+          3837,
+          99652,
+          62244,
+          18493,
+          101456,
+          103920,
+          117888,
+          36993,
+          100180,
+          100363,
+          3837,
+          99652,
+          103939,
+          99360,
+          99657,
+          107001,
+          102057,
+          1773,
+          106287,
+          3837,
+          107742,
+          3837,
+          106287,
+          1773,
+          151645
+        ],
+        "rawDecoded": "因为秋千这方面，它如果在荡的时候螺丝会松的话，它就会把孩子甩出去。嗯，这方面，嗯。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 6.150753299999906
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

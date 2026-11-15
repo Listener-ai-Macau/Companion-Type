@@ -1,0 +1,14 @@
+{
+  "state": "FROZEN_SINGLE_TRAIN_INFERENCE_UNIT_ORDER_CORRECTION_BEFORE_FORWARD",
+  "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1",
+  "runRoot": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1",
+  "at": "2026-11-15T18:44:49.735085+08:00",
+  "trainingWorkerSha256": "f4cf965e60df8b1504ba23f80395a0603b5e3addf14a615caa8b7adef11680d5",
+  "failedNaturalWorkerSha256": "a93a4d3826670c25ed9356a0aadd1c72958ea83f0ee0a1f608801640bd035f31",
+  "repairedWorkerSha256": "44e9b3638c68f6a5e4560c4385de0ee6a559bb4ad5771ad3dd5bafd79e75d9e3",
+  "inferenceHelperUnchanged": true,
+  "weightsChanged": false,
+  "previousFailureRetained": true,
+  "neuralCalls": 0,
+  "qualityQualified": false
+}

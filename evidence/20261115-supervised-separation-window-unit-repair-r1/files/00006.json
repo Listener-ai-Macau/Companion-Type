@@ -1,0 +1,258 @@
+{
+  "state": "FROZEN_SINGLE_TRAIN_INFERENCE_UNIT_ORDER_CORRECTION_BEFORE_FORWARD",
+  "at": "2026-11-15T18:44:49.735085+08:00",
+  "sourceRoot": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\source\\clearvoice\\clearvoice",
+  "checkpoint": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\model\\last_best_checkpoint.pt",
+  "isolatedDependencies": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies",
+  "runtimeFiles": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\__init__.py",
+      "sha256": "3303dc6161872ac244d14c6585fed832ffd27fabeef56f58f7c872d6644ceb39"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\_backends.py",
+      "sha256": "bf8b2719deba7d559e2b433c7b794d27d8fbfea99df11311c895544d0079b257"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\_torch_specific.py",
+      "sha256": "41780b14b0c88036bf22ab6fe6072e704783dcb1c02d81c985a5d12a00b97f80"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\array_api.py",
+      "sha256": "ee643ee328655adaa6b6f71367223ea660ce4836e4deaa52084c65e3e566d7ea"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\einops.py",
+      "sha256": "be6c7921675efde3eeceb3c32d9655c3ffb442c6ab7b593c61145a2ade592fef"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\experimental\\__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\experimental\\indexing.py",
+      "sha256": "c8515f956dfe915ebfe4f3c953bfe3389b090425825a513874696ef60c123d7a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\layers\\__init__.py",
+      "sha256": "8e28f0118d3b62bdeb071f0de73c19fb9a9f6e5f8a5f605c4432bc3491436960"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\layers\\_einmix.py",
+      "sha256": "310afaaf299f330fa7cc59a1bda2c271e7b4a3b022f1ad659a5bb19dd5830235"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\layers\\flax.py",
+      "sha256": "1e4ecbdf5c11d811cbeb7f79d3ed21cb78afc38adcf0d920196f639f500ab3ef"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\layers\\keras.py",
+      "sha256": "8f10fd66060b5ac28c902230a236c1352ad8e9cd697d762113600c65ad293570"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\layers\\oneflow.py",
+      "sha256": "76370a119449ad6bf14ee4ac3b88c9559a2389e2a20cf754a4fe123a983fcd33"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\layers\\paddle.py",
+      "sha256": "6021df7d407885aef01bec4439e47d5dc4cf978f0aaf9ee4fe7044c7e27a1550"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\layers\\tensorflow.py",
+      "sha256": "323180a4c6e46ff83001d1b26bbb867cf67ba25c844ec4736f0ca67c91e28bd1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\layers\\torch.py",
+      "sha256": "055f8fce3a228c653d44679ad47085b88331e3271c89ccfbebb3348c90c81fa5"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\packing.py",
+      "sha256": "1197862e03110fbf2107ed1ef34b9b5ef587ba4874fceff02427f41db6ddca5a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\parsing.py",
+      "sha256": "bcd3d8700b39e3e28b5f546d6e4ca91a9b12a6e8f35648ff7509199548a72d8c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\tests\\__init__.py",
+      "sha256": "0a949dace1814aca53c2e1ba700b18306030913ab456e201ade84cecaf926305"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\tests\\run_tests.py",
+      "sha256": "79f2766a91cf3b0d4128d22fe6a6523631e98234afd2b278bfd85b3db13bc8d1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\tests\\test_einsum.py",
+      "sha256": "3727308386bee3f573ee5e5fee68f628843b415b3c3f6490232d6b9c370c386f"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\tests\\test_examples.py",
+      "sha256": "e955641e0a2fea1a44ca85066cccc5bd17e859374fd56afc44f8e2ec6e293e5c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\tests\\test_layers.py",
+      "sha256": "9bc46a981a23bd5320aff113ea685c1a96df60f6ac83ad23518bb1ed99578523"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\tests\\test_ops.py",
+      "sha256": "e27c441895ab9841ba71cb581c662e555744b399d437dce21fbba44186abe383"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\tests\\test_other.py",
+      "sha256": "be459226beec9fe08e7b092c8af4cf68b7be1809b32edec811917d4cc9eddfad"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\tests\\test_packing.py",
+      "sha256": "00804d8b2f117ed4e3f1d2efd4074d8a39135dfae308e4d2c38ddfb83e8f7e37"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops\\tests\\test_parsing.py",
+      "sha256": "f980097899610dbdd4eb16080d1aed9baa78312356a20787ea5dfe9e9d705020"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops-0.8.2.dist-info\\licenses\\LICENSE",
+      "sha256": "30d984364296f51ffaecad4b01ee127e95250c5068918d4b66fc96206723e434"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops-0.8.2.dist-info\\METADATA",
+      "sha256": "0bd65db043688a44f4a29608c1cba521c932f7ff76f238bbd869441e15012653"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops-0.8.2.dist-info\\RECORD",
+      "sha256": "139c100ba28a858f5fba1ba2dffca6aa6fb521ff13f71d7eee499ec2f3a44a11"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\einops-0.8.2.dist-info\\WHEEL",
+      "sha256": "aad0b0a12256807936d52d4a6f88a1773236ae527564a688bab4e3fe780e8724"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\rotary_embedding_torch\\__init__.py",
+      "sha256": "8ec84018dc9d8df95d94d8b8ba1b16579706cbd159ce719c2faca2bed1550d67"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\rotary_embedding_torch\\rotary_embedding_torch.py",
+      "sha256": "37c7560fd47121ff1bd51488f46e10cb399d62e6e439e6b18732902f526f59b6"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\rotary_embedding_torch-0.8.9.dist-info\\licenses\\LICENSE",
+      "sha256": "fe74654058fe2ba069808dbf36defd6e207baf8859f36366a6a3ceae5aa6ecc5"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\rotary_embedding_torch-0.8.9.dist-info\\METADATA",
+      "sha256": "5998ffc7e1e95f673d849c57eb64823f6a2e0aeb3d0cb631cf9f11669f8f5e19"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\rotary_embedding_torch-0.8.9.dist-info\\RECORD",
+      "sha256": "4748777ffd8bc5cf2b93f86121cc34110aed95572f6e9340e3a51e1cec836a0a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\rotary_embedding_torch-0.8.9.dist-info\\top_level.txt",
+      "sha256": "7cabb619ae526a8d311685fc8fd927b125e305fdbca17bab50062d89830897ea"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\rotary_embedding_torch-0.8.9.dist-info\\WHEEL",
+      "sha256": "ff309ddcdd65ebd02bc724dbf2bcc4a0ff53a5b61792a44548d383e4ebb19d3b"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\torchinfo\\__init__.py",
+      "sha256": "9938f4a3d0ee9407e171ee1f1127c61678e94257c02d5f6af55aa5843b42dbec"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\torchinfo\\enums.py",
+      "sha256": "a5484def4c55fa2723ef19f12bd263cac38610792259fdb2a77a45c223e46e30"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\torchinfo\\formatting.py",
+      "sha256": "d6207abde692e0ffd714949e1c56151d6e6174a99993da1d5a62d2adfe7b4097"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\torchinfo\\layer_info.py",
+      "sha256": "053e201fd7311e157a09f6275ac642e1f9d2b28454e2e498aec16ef2079cbe24"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\torchinfo\\model_statistics.py",
+      "sha256": "f35aca36bf97d348da48fa43cca3862825d997a714c3bd4ec6a67c2795fac6a6"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\torchinfo\\py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\torchinfo\\torchinfo.py",
+      "sha256": "0b7ba3b5277018e16df8100410e303e771e5665372324cd0908ba420ef8cf142"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\torchinfo-1.8.0.dist-info\\LICENSE",
+      "sha256": "c8da30aa0a2372cc30905f7bedb53513804d5d8cee513c0409c6726934c8457c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\torchinfo-1.8.0.dist-info\\METADATA",
+      "sha256": "af2659be213bfbdacfb412bb253b4677d003bd1f757b9cd0ee4383b4181896ad"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\torchinfo-1.8.0.dist-info\\RECORD",
+      "sha256": "443ff8d9c5227ceeefeebeda91ad8f0f2e1c22e410c8e83a6517cac2fd2a0cc4"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\torchinfo-1.8.0.dist-info\\top_level.txt",
+      "sha256": "47441069a71082b6437a3402d2f073ef17c6d4a4f64c92824053dbfc94c0e26f"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies\\torchinfo-1.8.0.dist-info\\WHEEL",
+      "sha256": "1b5e87e00dc87a84269cead8578b9e6462928e18a95f1f3373c9eef451a5bcc0"
+    }
+  ],
+  "audioOnlySha256": "d7495c1ed2713cf193a07faba290ba4d29f13663d6755629b2940fe0d3c40eb8",
+  "controlRun": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\control-r1",
+  "separationRun": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1",
+  "asrRun": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1",
+  "rocmBlasLibrary": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+  "rocmBlasLibrarySha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+  "nativeProtocol": "E:/CodexData/Companion/.model-cache/paired-real-alimeeting-20261109/fixed-native-runtime-r2/source/native-protocol.json",
+  "baselineNativeControl": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r3\\base-run-r1\\sessions\\20200709_L_R002S01C01-multi-turn-context-01\\decode\\00000000-00458640-final\\root.json",
+  "baselineScore": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\context-matched-baseline-r3\\baseline-score.json",
+  "scoringManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\context-matched-baseline-r3\\scoring-only.json",
+  "baselineScoreSha256": "2eb2b4b68ad557c44e3ac1e03587a05245b967d6682ef9082954739967a18320",
+  "scoringManifestSha256": "74b1a03202cd4646db29c078f5adb5befdba6b0492f3550b81d3852b327a860b",
+  "separation": "Same final80 weights, original core and CSS2s/1.5s. Apply the EXACT training/source-validation restore_common_units(torch,raw_two_outputs,input_window) inside every forward BEFORE permutation/OLA. Remove previous whole-clip post-stitch calibration. No per-stream normalization, clipping, gating or model/threshold/lr/window variant.",
+  "control": "Actual checkpoint CPU/GPU first4096samples maxabs<=.001/mean<=.0001; single2s core/CSS output bit-exact; alternating-channel toy all samples/tails recover<=1e-6, exact digital-zero bypass. No tolerance changes after results.",
+  "asr": "Separate process after separator exits; unchanged nativeQwen1.7B BF16 eager greedy512 and existing bounded recovery. One original prefix exact control, reuse original32 baseline. Both64float streams decoded/retained, no low-energy/source/profile/transcript filtering.",
+  "score": "Two-stream ORC-style CER: every complete reference utterance assigned exactly once to one of2anonymous streams, preserving within-stream reference time order. Min summed Levenshtein; every output word from both streams counted including duplicates/empty-target insertions. Diagnostic, not identity/cpCER/full meeting acceptance.",
+  "keepRule": "Original12multi-turn total diagnostic edits must reduce; neither source may regress. Original20single-voice total diagnostic edits and each source must not regress. Any unconfirmed/invalid ASR interval rejects. Passing permits original whole-meeting/identity integration testing only; not product adoption.",
+  "stop": "One operation-order correctness repair only. Preserve the previous failure and exact same natural word/whole-meeting/person gates. If still failing, no additional parameter/model/window/gain/gating variants. No final holdout.",
+  "ownerOriginal": "开始吧，那你继续吧继续吧，然后的话需要把，训练重点转移到分开这个东西，用这个模型组合来做这个会议复杂场景会议室里。",
+  "ownerParticipationRequired": false,
+  "newTraining": false,
+  "allInputPublic": true,
+  "finalHoldoutOpened": false,
+  "cpuPercentMaximum": 5,
+  "privateCommitLimitBytes": 2147483648,
+  "actualWindowsLowRamStop": true,
+  "qualityQualified": false,
+  "d2Complete": false,
+  "productDefaultChanged": false,
+  "trainedCheckpoint": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\train-r1\\latest-checkpoint.json",
+  "trainedCheckpointSha256": "69d0d09c5a3240cba8d163081a0a520175d95f8db8de6011bd307fd68c0353a4",
+  "sourceDecision": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\source-decision.json",
+  "sourceDecisionSha256": "3d94699747f26bbce2fe7f0ed6a0bc6afe41dfbfe4e8c422ddf9e9ae161c1510",
+  "trainingUpdatesBeforeValidation": 80,
+  "sourceValidationNumericalControl": {
+    "input": "E:\\CodexData\\Companion\\.model-cache\\supervised-blind-separation-20261115\\validation-audio-only\\validation--mixed-000-window-00.npy",
+    "inputSha256": "fd034dc9aa371bc7e4502b6b21c890b36dad98f03bf83cce6a2986ff063bd243",
+    "prediction": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\candidate-r1\\validation--mixed-000-window-00.npy",
+    "predictionSha256": "b789731a4e5f4854337b29dc3a3c62a2bb8d6e592a018b98beede44c041aa961"
+  },
+  "correctnessRepair": {
+    "trainingOrder": "window core -> same common-scale function -> source loss/validation output",
+    "failedNaturalOrder": "window core -> raw-scale permutation/OLA -> whole-clip common scale",
+    "repairedNaturalOrder": "window core -> identical common-scale function -> permutation/OLA",
+    "previousFailure": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-composition-r1\\routed-decision.json",
+    "previousFailureSha256": "ca29d4b9d558b0249c2be32a85e79b1d0ef9b7c7eceea9481cc631233c23c03e",
+    "selectionOrQualityCriteriaChanged": false,
+    "weightsChanged": false
+  }
+}

@@ -181,3 +181,11 @@ evidence/20261115-supervised-separation-natural-result-r1/** -text -whitespace
 src/supervised_separator_natural_worker_20261115.py -text -whitespace
 
 src/run_supervised_separator_natural_20261115.py -text -whitespace
+
+evidence/20261115-supervised-separation-window-unit-repair-r1/** -text -whitespace
+
+src/window_aligned_separator_worker_20261115.py -text -whitespace
+
+src/run_window_aligned_separator_20261115.py -text -whitespace
+
+src/compile_continuous_meeting_routing_20261115.py -text -whitespace

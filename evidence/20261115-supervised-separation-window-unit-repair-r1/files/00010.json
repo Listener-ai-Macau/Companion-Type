@@ -1,0 +1,517 @@
+{
+  "state": "COMPLETE_CPU_ONLY_WHOLE_WAVEFORM_REMIX_DIAGNOSTIC",
+  "at": "2026-11-15T18:50:24.454703+08:00",
+  "summary": {
+    "clean-short-response": {
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.24281425470755197,
+        "remixToInputRmsRatio": 1.0000000037667454,
+        "remixCosine": 0.8785928728244915
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.2428169462336227,
+        "remixToInputRmsRatio": 0.999948575005549,
+        "remixCosine": 0.8785729063093075
+      }
+    },
+    "multi-turn-context": {
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.11558615037355485,
+        "remixToInputRmsRatio": 1.0000000073735116,
+        "remixCosine": 0.9422069254182809
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.11323775997542589,
+        "remixToInputRmsRatio": 0.9974730375314226,
+        "remixCosine": 0.9432204603345781
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-01",
+      "condition": "multi-turn-context",
+      "meeting": "20200709_L_R002S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.05563428206966694,
+        "remixToInputRmsRatio": 1.0000000050809073,
+        "remixCosine": 0.972182859106503
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.050980238420382525,
+        "remixToInputRmsRatio": 0.9941158869241397,
+        "remixCosine": 0.9743764201418598
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-02",
+      "condition": "multi-turn-context",
+      "meeting": "20200709_L_R002S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.07731188559719654,
+        "remixToInputRmsRatio": 1.0000000166564151,
+        "remixCosine": 0.9613440578452711
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.08498680463513296,
+        "remixToInputRmsRatio": 1.0027871611951857,
+        "remixCosine": 0.9576285777999385
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-03",
+      "condition": "multi-turn-context",
+      "meeting": "20200709_L_R002S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.027240474559598184,
+        "remixToInputRmsRatio": 0.9999999972375375,
+        "remixCosine": 0.9863797626825754
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.020434181847723637,
+        "remixToInputRmsRatio": 0.9977142529530866,
+        "remixCosine": 0.9897621201923823
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-04",
+      "condition": "multi-turn-context",
+      "meeting": "20200709_L_R002S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.03027630454152522,
+        "remixToInputRmsRatio": 0.9999999847616823,
+        "remixCosine": 0.9848618474985572
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.02947638962109742,
+        "remixToInputRmsRatio": 0.9998860014249308,
+        "remixCosine": 0.9852601313632675
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-05",
+      "condition": "multi-turn-context",
+      "meeting": "20200709_L_R002S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.05397939890579573,
+        "remixToInputRmsRatio": 0.9999999888763696,
+        "remixCosine": 0.9730103002468785
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.046419568084063716,
+        "remixToInputRmsRatio": 1.0029817940392702,
+        "remixCosine": 0.9768636493383078
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-06",
+      "condition": "multi-turn-context",
+      "meeting": "20200709_L_R002S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.14962667248325906,
+        "remixToInputRmsRatio": 1.0000000506890874,
+        "remixCosine": 0.9251866675505915
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.13908307428916922,
+        "remixToInputRmsRatio": 0.9862796104165744,
+        "remixCosine": 0.9295864865643005
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-01",
+      "condition": "clean-short-response",
+      "meeting": "20200709_L_R002S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.04651948883750436,
+        "remixToInputRmsRatio": 1.0000000017840376,
+        "remixCosine": 0.9767402556227437
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.04651948259867683,
+        "remixToInputRmsRatio": 0.9999998709111899,
+        "remixCosine": 0.9767402556980973
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-02",
+      "condition": "clean-short-response",
+      "meeting": "20200709_L_R002S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.02889776408650216,
+        "remixToInputRmsRatio": 0.9999999684525386,
+        "remixCosine": 0.9855511175009236
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.028897762228472505,
+        "remixToInputRmsRatio": 0.999999902182851,
+        "remixCosine": 0.98555111747242
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-03",
+      "condition": "clean-short-response",
+      "meeting": "20200709_L_R002S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.012616952504365113,
+        "remixToInputRmsRatio": 1.0000000063646448,
+        "remixCosine": 0.9936915237879689
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.012616951705194683,
+        "remixToInputRmsRatio": 0.9999999376732226,
+        "remixCosine": 0.9936915237542173
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-04",
+      "condition": "clean-short-response",
+      "meeting": "20200709_L_R002S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.022075946622483834,
+        "remixToInputRmsRatio": 1.0000000101883726,
+        "remixCosine": 0.9889620268012171
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.022075946622483834,
+        "remixToInputRmsRatio": 1.0000000101883726,
+        "remixCosine": 0.9889620268012171
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-05",
+      "condition": "clean-short-response",
+      "meeting": "20200709_L_R002S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.02775118953565752,
+        "remixToInputRmsRatio": 0.9999999933482668,
+        "remixCosine": 0.9861244051398744
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.027751184093335966,
+        "remixToInputRmsRatio": 0.9999997993514749,
+        "remixCosine": 0.9861244051692344
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-01",
+      "condition": "multi-turn-context",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.1778589483710827,
+        "remixToInputRmsRatio": 1.0000000002528262,
+        "remixCosine": 0.9110705258369423
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.17705883288384192,
+        "remixToInputRmsRatio": 0.9962281787212007,
+        "remixCosine": 0.9111425424267039
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-02",
+      "condition": "multi-turn-context",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.1389079313552026,
+        "remixToInputRmsRatio": 0.9999999848093065,
+        "remixCosine": 0.9305460332673449
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.13891414138588914,
+        "remixToInputRmsRatio": 1.0007235149640377,
+        "remixCosine": 0.930593407752101
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-03",
+      "condition": "multi-turn-context",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.13594103184801992,
+        "remixToInputRmsRatio": 1.0000000169596814,
+        "remixCosine": 0.9320294852287485
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.13444821415031508,
+        "remixToInputRmsRatio": 0.9922561499063295,
+        "remixCosine": 0.9322814744213336
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-04",
+      "condition": "multi-turn-context",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.15611364501937675,
+        "remixToInputRmsRatio": 1.0000000547412213,
+        "remixCosine": 0.9219431817632389
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.15583476393064347,
+        "remixToInputRmsRatio": 1.0009735651617768,
+        "remixCosine": 0.922158875356347
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-05",
+      "condition": "multi-turn-context",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.19635187907019244,
+        "remixToInputRmsRatio": 0.9999999874473734,
+        "remixCosine": 0.9018240592325378
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.19518624663439224,
+        "remixToInputRmsRatio": 0.9985471714946448,
+        "remixCosine": 0.9022659412115847
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-06",
+      "condition": "multi-turn-context",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.1877913506617421,
+        "remixToInputRmsRatio": 1.000000000969732,
+        "remixCosine": 0.9061043247601827
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.1860306638224594,
+        "remixToInputRmsRatio": 0.9971831631758938,
+        "remixCosine": 0.9067258974468094
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-01",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.18555871242518124,
+        "remixToInputRmsRatio": 0.9999999981707235,
+        "remixCosine": 0.9072206436176904
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.1885426778496198,
+        "remixToInputRmsRatio": 1.0041313010816821,
+        "remixCosine": 0.9061250207030165
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-02",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.2546345809885294,
+        "remixToInputRmsRatio": 1.0000000532256343,
+        "remixCosine": 0.8726827162822799
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.2546345530058126,
+        "remixToInputRmsRatio": 0.9999999437997521,
+        "remixCosine": 0.8726827163418323
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-03",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.15110474206638178,
+        "remixToInputRmsRatio": 1.000000022431148,
+        "remixCosine": 0.9244476306615356
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.1511047332056822,
+        "remixToInputRmsRatio": 0.9999999627229338,
+        "remixCosine": 0.9244476305807887
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-04",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.16232651638484874,
+        "remixToInputRmsRatio": 1.0000000105209061,
+        "remixCosine": 0.9188367426614867
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.16232651638484874,
+        "remixToInputRmsRatio": 1.0000000105209061,
+        "remixCosine": 0.9188367426614867
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-05",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.7887844072082741,
+        "remixToInputRmsRatio": 0.9999999751756349,
+        "remixCosine": 0.6056077866053269
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.7887844622798796,
+        "remixToInputRmsRatio": 1.0000000445983124,
+        "remixCosine": 0.6056077864492884
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-06",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.2811715771406412,
+        "remixToInputRmsRatio": 1.0000000147522545,
+        "remixCosine": 0.8594142135036367
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.2811715771406412,
+        "remixToInputRmsRatio": 1.0000000147522545,
+        "remixCosine": 0.8594142135036367
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-07",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.2972983919854078,
+        "remixToInputRmsRatio": 1.0000000026022675,
+        "remixCosine": 0.8513508043941209
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.29729836571814433,
+        "remixToInputRmsRatio": 0.9999999149400609,
+        "remixCosine": 0.8513508044968398
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-08",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.3049974186237919,
+        "remixToInputRmsRatio": 0.9999999802697087,
+        "remixCosine": 0.8475012876792604
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.3020808085833155,
+        "remixToInputRmsRatio": 0.9948943549249585,
+        "remixCosine": 0.8481975802373177
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-09",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.1163117106111328,
+        "remixToInputRmsRatio": 1.000000011625268,
+        "remixCosine": 0.9418441453705111
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.11631025196307739,
+        "remixToInputRmsRatio": 0.999987467910133,
+        "remixCosine": 0.9418441452825903
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-10",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.35438151406079504,
+        "remixToInputRmsRatio": 0.9999999968924556,
+        "remixCosine": 0.8228092424189741
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.3543814810669928,
+        "remixToInputRmsRatio": 0.9999999041447968,
+        "remixCosine": 0.822809242481852
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-11",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.49989405219138966,
+        "remixToInputRmsRatio": 1.000000008282135,
+        "remixCosine": 0.7500529759744005
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.4998940178853496,
+        "remixToInputRmsRatio": 0.9999999411756978,
+        "remixCosine": 0.7500529763543679
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-12",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.22329458617071524,
+        "remixToInputRmsRatio": 1.0000000459982674,
+        "remixCosine": 0.8883527120502251
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.22329456044261997,
+        "remixToInputRmsRatio": 0.9999999323519029,
+        "remixCosine": 0.8883527122259657
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-13",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.40642434875877215,
+        "remixToInputRmsRatio": 1.0000000217338918,
+        "remixCosine": 0.7967878300372057
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.4064214708562733,
+        "remixToInputRmsRatio": 0.9999929391657164,
+        "remixCosine": 0.7967878297493325
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-14",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.42825324768307865,
+        "remixToInputRmsRatio": 0.9999999937940676,
+        "remixCosine": 0.7858733748296054
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.42825278815546575,
+        "remixToInputRmsRatio": 0.999998920134052,
+        "remixCosine": 0.7858733746947989
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-15",
+      "condition": "clean-short-response",
+      "meeting": "20200805_S_R001S01C01",
+      "oldWholeClipScale": {
+        "remixErrorEnergyRatio": 0.26398794626558714,
+        "remixToInputRmsRatio": 0.9999999597226817,
+        "remixCosine": 0.8680060215508436
+      },
+      "alignedWindowScale": {
+        "remixErrorEnergyRatio": 0.26397933288656733,
+        "remixToInputRmsRatio": 0.9999673275807135,
+        "remixCosine": 0.8680060215278519
+      }
+    }
+  ],
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "referencesUsed": false,
+  "wordsOrWaveformsModified": false,
+  "scope": "Only compares sum of two streams with original microphone mixture. This is not SI-SNR against clean targets, speaker identity, or a replacement for the frozen natural-word gate."
+}

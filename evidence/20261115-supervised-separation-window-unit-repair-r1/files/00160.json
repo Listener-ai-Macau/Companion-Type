@@ -1,0 +1,43 @@
+{
+  "id": "20200709_L_R002S01C01-multi-turn-context-01",
+  "stream": 1,
+  "sourceWavSha256": "c90320ac74efba04e8afa4deb4c4bedaf108e0836ed0f14e0d0c62d1a9bc2aed",
+  "inputFloatSha256": "3a940a5fb723e17b8756b1d924d1a9ea5e272509a11b6bd3a7996affb18bfb57",
+  "text": "心里产生不平衡，是吧？对。",
+  "frames": 458640,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 458640,
+        "text": "心里产生不平衡，是吧？对。",
+        "language": "Chinese",
+        "generatedIds": [
+          101998,
+          100394,
+          114628,
+          3837,
+          20412,
+          100003,
+          11319,
+          32664,
+          1773,
+          151645
+        ],
+        "rawDecoded": "心里产生不平衡，是吧？对。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 2.1661168000000544
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

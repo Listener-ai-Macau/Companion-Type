@@ -1,0 +1,37 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-05",
+  "stream": 0,
+  "sourceWavSha256": "90661f18376a78989f2a231fb565d3d8063b4bf4e162bf53b0594942b05c7742",
+  "inputFloatSha256": "035ece67f0982fcc9446f391bcdc160827e5d367197674ae7ac28117bf8bf486",
+  "text": "一个公主。",
+  "frames": 16400,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 16400,
+        "text": "一个公主。",
+        "language": "Chinese",
+        "generatedIds": [
+          46944,
+          105454,
+          1773,
+          151645
+        ],
+        "rawDecoded": "一个公主。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 0.993997600000057
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

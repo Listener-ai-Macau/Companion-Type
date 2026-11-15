@@ -1,0 +1,1978 @@
+{
+  "state": "FINAL_SUPERVISED_SEPARATOR_ALL32_NATURAL_TWO_STREAMS_AND64_ASR_WORDS_PROTECTED",
+  "at": "2026-11-15T19:01:18.127899+08:00",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-execution.json",
+      "logicalPath": "natural-window-unit-alignment-r1/asr-execution.json",
+      "file": "files/00000.json",
+      "bytes": 388,
+      "sha256": "2a4c5df60a816510c989841de21a17707d3f82076caa99427e4b0093831aec2d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\audio-only.json",
+      "logicalPath": "natural-window-unit-alignment-r1/audio-only.json",
+      "file": "files/00001.json",
+      "bytes": 17701,
+      "sha256": "d7495c1ed2713cf193a07faba290ba4d29f13663d6755629b2940fe0d3c40eb8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\decision.json",
+      "logicalPath": "natural-window-unit-alignment-r1/decision.json",
+      "file": "files/00002.json",
+      "bytes": 47239,
+      "sha256": "47468bc0830f0346692958518735053055bb56118089199dd76dab82cb454ee3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\insertion-attribution.json",
+      "logicalPath": "natural-window-unit-alignment-r1/insertion-attribution.json",
+      "file": "files/00003.json",
+      "bytes": 22623,
+      "sha256": "dae1373da202be0aca46b5ad857e78aec3b22abca442735536d51ec9bd9ca31b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\model-binding.json",
+      "logicalPath": "natural-window-unit-alignment-r1/model-binding.json",
+      "file": "files/00004.json",
+      "bytes": 918,
+      "sha256": "8a591bcdf158041a43624ad8911ac1c4e2d9ea7e4e13f158deeade07c484f2f5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\persisted-waveforms.json",
+      "logicalPath": "natural-window-unit-alignment-r1/persisted-waveforms.json",
+      "file": "files/00005.json",
+      "bytes": 20344,
+      "sha256": "ef8282b5960352c112a4246fc981721adfa5600f9918e330a263a3cc3ed4523f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\protocol.json",
+      "logicalPath": "natural-window-unit-alignment-r1/protocol.json",
+      "file": "files/00006.json",
+      "bytes": 18945,
+      "sha256": "7811eaf6c506ca8ecae461a856afdaf029d5f1561120a5b3377987c232462f80"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\routed-composition-protocol.json",
+      "logicalPath": "natural-window-unit-alignment-r1/routed-composition-protocol.json",
+      "file": "files/00007.json",
+      "bytes": 14603,
+      "sha256": "3f21575c76762e4aae82c527bdfe092c8698dc161c2aeb0b78454de93e53f399"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\routed-decision.json",
+      "logicalPath": "natural-window-unit-alignment-r1/routed-decision.json",
+      "file": "files/00008.json",
+      "bytes": 50012,
+      "sha256": "f60b9dbe061b16376aaf199bac510cedcef1e390fe3522e66356384d1a3b4f21"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\source-binding.json",
+      "logicalPath": "natural-window-unit-alignment-r1/source-binding.json",
+      "file": "files/00009.json",
+      "bytes": 4707,
+      "sha256": "d10e24390ae894126dc9b5f63deb61be9ca3004ea553868e4cecdec66ee75c2d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\waveform-unit-order-diagnostic.json",
+      "logicalPath": "natural-window-unit-alignment-r1/waveform-unit-order-diagnostic.json",
+      "file": "files/00010.json",
+      "bytes": 18707,
+      "sha256": "b7c92360d79fa955d83a0e1016386b2475b308ebcadce1ff681dca6b494e421f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\worker-binding.json",
+      "logicalPath": "natural-window-unit-alignment-r1/worker-binding.json",
+      "file": "files/00011.json",
+      "bytes": 6942,
+      "sha256": "ec0aaf7ff96a14fcd983234fd306129718ebb62a0ddc2135bdeb6b5291afc40e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\control-r1\\cpu-control.npy",
+      "logicalPath": "control-r1/cpu-control.npy",
+      "file": "files/00012.npy",
+      "bytes": 32896,
+      "sha256": "3b562f7e55ee246a293c985c423bd83bfc153cad41e3e584779917523332914f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\control-r1\\gpu-control.npy",
+      "logicalPath": "control-r1/gpu-control.npy",
+      "file": "files/00013.npy",
+      "bytes": 32896,
+      "sha256": "f491a24c0d3de9e1296bf05cd687305e935e5bf0a8c2abc99222d8093a121efa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\control-r1\\inventory.log",
+      "logicalPath": "control-r1/inventory.log",
+      "file": "files/00014.log",
+      "bytes": 581,
+      "sha256": "d215e83b0b7a27701876ec185af6a2762ba44258230324c1bb1525ab99e89364"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\control-r1\\run.json",
+      "logicalPath": "control-r1/run.json",
+      "file": "files/00015.json",
+      "bytes": 640,
+      "sha256": "af89620926a1c508b622e9f4920a9595b91c3819124c89334aae8f47a4afdf1e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\control-r1\\source-forward-equivalence.json",
+      "logicalPath": "control-r1/source-forward-equivalence.json",
+      "file": "files/00016.json",
+      "bytes": 285,
+      "sha256": "9ee935052d8c26fe5a813007aff4f541752bddbe0287afd9fe92737ba4dc8cd1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\control-r1\\state.json",
+      "logicalPath": "control-r1/state.json",
+      "file": "files/00017.json",
+      "bytes": 2561,
+      "sha256": "5430b17f6a2d027ef2a761f0bf7062d9bfb0a4baf571ed2e28b465f11aefb79a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\control-r1\\worker.log",
+      "logicalPath": "control-r1/worker.log",
+      "file": "files/00018.log",
+      "bytes": 288,
+      "sha256": "d5199a3b64d4fb82829e09c10c3a9caf36a92447bd33e32307da8bf062f82a85"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\control-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "control-r1/inventory/hip-inventory.json",
+      "file": "files/00019.json",
+      "bytes": 1394,
+      "sha256": "3b8ef3c0e84d8e256c11edfb56d7b576e76d6919177dd2b8529c84668a619fd6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\control-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "control-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00020.jsonl",
+      "bytes": 734,
+      "sha256": "e0d6c9924c3e9c0c08a91799e390c34723a3d4eeb594c874b7081aa43a853486"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\control-r1\\inventory\\inventory-run.json",
+      "logicalPath": "control-r1/inventory/inventory-run.json",
+      "file": "files/00021.json",
+      "bytes": 612,
+      "sha256": "c25aea1eadb855e9fa31c8c4b45ff402745de26fdc4e8f164623b92b6ebb7577"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\control-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "control-r1/inventory/inventory-worker.log",
+      "file": "files/00022.log",
+      "bytes": 1213,
+      "sha256": "756dc7a08c0b14395b8a36824a771de62d27a2374ffee9277b2fe25ecb20eef4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\inventory.log",
+      "logicalPath": "separate-r1/inventory.log",
+      "file": "files/00023.log",
+      "bytes": 581,
+      "sha256": "8f2e6c274864fcf005b6ae46c86a16c94505701694b2de574e3a8c87337a979e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\run.json",
+      "logicalPath": "separate-r1/run.json",
+      "file": "files/00024.json",
+      "bytes": 641,
+      "sha256": "8050598c2e82049e5bff43f0a38e52492563ddf4c0d14eb950a136cf5b21726d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\state.json",
+      "logicalPath": "separate-r1/state.json",
+      "file": "files/00025.json",
+      "bytes": 104557,
+      "sha256": "2adc1bc46255217c6f599c398772b99ed331f25c6e041130554f482f61f10a64"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\worker.log",
+      "logicalPath": "separate-r1/worker.log",
+      "file": "files/00026.log",
+      "bytes": 283,
+      "sha256": "cab98054c4743ec4ca3d6df549465847bb11d19f35813d5c0094976b3c4d3ea8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "separate-r1/inventory/hip-inventory.json",
+      "file": "files/00027.json",
+      "bytes": 1394,
+      "sha256": "c64907da11a6322c6ec06e5313f5b245979d093be9114d2874f3cf7c060e6477"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "separate-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00028.jsonl",
+      "bytes": 611,
+      "sha256": "0e32e52f2125c8617f424a9ee541f3d3fb2d71b20967ae5a7aaf56215cf8a6e5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\inventory\\inventory-run.json",
+      "logicalPath": "separate-r1/inventory/inventory-run.json",
+      "file": "files/00029.json",
+      "bytes": 612,
+      "sha256": "aa86e38b6a7f05b57b135ab756dacecc7a8450f368e0aed195203a0611582e4b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "separate-r1/inventory/inventory-worker.log",
+      "file": "files/00030.log",
+      "bytes": 1213,
+      "sha256": "8a3646004e078a152a214b46cde04481abeae4a60098c37ecc1ca12540239428"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-01\\result.json",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-01/result.json",
+      "file": "files/00031.json",
+      "bytes": 1491,
+      "sha256": "660ecdd7107c41181d9e34c576427d54a38336f86579f9287ce3660ce2897329"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-01\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-01/stream-0.npy",
+      "file": "files/00032.npy",
+      "bytes": 115648,
+      "sha256": "7466d8e8ec1996b361b2537c2792e2dbf2ac911169b390e589457916ab442cf3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-01\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-01/stream-1.npy",
+      "file": "files/00033.npy",
+      "bytes": 115648,
+      "sha256": "10311611b37476aa580fce7f17e25b57724a0b5c1dff8123a0d2f48fa8a8bf31"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-02\\result.json",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-02/result.json",
+      "file": "files/00034.json",
+      "bytes": 1489,
+      "sha256": "54febd22c18634b6de2fda9c7b8a7e3a3b55bcac97e01ab6056f65409530f2ec"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-02\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-02/stream-0.npy",
+      "file": "files/00035.npy",
+      "bytes": 109888,
+      "sha256": "3a7cf79a2f134711cedfd1926c1bffe17f3afc6b5dd4437fb06d41e494814a15"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-02\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-02/stream-1.npy",
+      "file": "files/00036.npy",
+      "bytes": 109888,
+      "sha256": "97e96f39ecf0402ddbd301980a816892166369d92308ba03686a7a126909dc3e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-03\\result.json",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-03/result.json",
+      "file": "files/00037.json",
+      "bytes": 1490,
+      "sha256": "4e605a9d4dfb6497ab9ba96763224ea353154278eb65ed34d5add26e3a2487af"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-03\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-03/stream-0.npy",
+      "file": "files/00038.npy",
+      "bytes": 101568,
+      "sha256": "762f5b33ef3cb5ca0956b8b3a652edca4c7477650874054d631cdb24e66fc692"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-03\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-03/stream-1.npy",
+      "file": "files/00039.npy",
+      "bytes": 101568,
+      "sha256": "9bf74e594233feae53de2d15aa3daaa228f04dd9b87ed1c4e7ad28c001d916c9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-04\\result.json",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-04/result.json",
+      "file": "files/00040.json",
+      "bytes": 1488,
+      "sha256": "03e1b9f9d6af6f9181a101f58e986cf61f700bd7d003b462e4a22cfc8dfa21e9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-04\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-04/stream-0.npy",
+      "file": "files/00041.npy",
+      "bytes": 107648,
+      "sha256": "72be7546ed3061a4252f7f05ab2a141530530a0980bbab51d7b9d619b3bbdd52"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-04\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-04/stream-1.npy",
+      "file": "files/00042.npy",
+      "bytes": 107648,
+      "sha256": "7fe6657d698222e662c4e3ffd5e646aad24f0d3bc02c31752dbacf09ca65a0d7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-05\\result.json",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-05/result.json",
+      "file": "files/00043.json",
+      "bytes": 1490,
+      "sha256": "682d18d53f2465d8f522bf924ed56f4c8ade142f771930f60f69cfe9d0c08b46"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-05\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-05/stream-0.npy",
+      "file": "files/00044.npy",
+      "bytes": 104448,
+      "sha256": "612c0ca05cb6ca14ca10650c431e9976ec1c1831cbb74d7d3f1d4788c854bff5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-05\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-clean-short-response-05/stream-1.npy",
+      "file": "files/00045.npy",
+      "bytes": 104448,
+      "sha256": "043cb7740fbd7f306ad5e310e9ae2c8bf9c7766519d441090ee651b283e4d9cf"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-01\\result.json",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-01/result.json",
+      "file": "files/00046.json",
+      "bytes": 5258,
+      "sha256": "dc9efa4ebe6b32ccbf9fc3ea96c35cccbb6d7165f11aa019fa8633661a671c65"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-01\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-01/stream-0.npy",
+      "file": "files/00047.npy",
+      "bytes": 1834688,
+      "sha256": "c952e7505236aba08b4bba7dcae414c6c6b71684453b3203331aedff7ceab2be"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-01\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-01/stream-1.npy",
+      "file": "files/00048.npy",
+      "bytes": 1834688,
+      "sha256": "3a940a5fb723e17b8756b1d924d1a9ea5e272509a11b6bd3a7996affb18bfb57"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-02\\result.json",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-02/result.json",
+      "file": "files/00049.json",
+      "bytes": 5255,
+      "sha256": "7a842f4d12df969ee22b2117c82eac716ac0e0d3b10d33f460858b49387ca415"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-02\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-02/stream-0.npy",
+      "file": "files/00050.npy",
+      "bytes": 1844288,
+      "sha256": "83dc29b20ca2111212015e1645f5d0d2559b1953cc26d6013b131fca9a572052"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-02\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-02/stream-1.npy",
+      "file": "files/00051.npy",
+      "bytes": 1844288,
+      "sha256": "dda747cc296ca75042a5772638b2e17d75ceb66af5e6a2f41aa73ce117456579"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-03\\result.json",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-03/result.json",
+      "file": "files/00052.json",
+      "bytes": 4838,
+      "sha256": "91426f6b17f87d65a2cc38df7fc317dbffd8cd9ce872fa7079d555b6eb2dcc19"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-03\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-03/stream-0.npy",
+      "file": "files/00053.npy",
+      "bytes": 1602612,
+      "sha256": "c29d895fa050e6cc6c7be0ab59fd89186c84ef537e44a2747c5775e57aeea7f4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-03\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-03/stream-1.npy",
+      "file": "files/00054.npy",
+      "bytes": 1602612,
+      "sha256": "2fa71185d4d95c777844bf86b8306bea1bfd1ebef42b01e12fdd3153bfdf66b0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-04\\result.json",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-04/result.json",
+      "file": "files/00055.json",
+      "bytes": 5050,
+      "sha256": "8f65a0cdd408e9ed6524903e68155301fbac1e9a93946feb65ec19955760b2b0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-04\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-04/stream-0.npy",
+      "file": "files/00056.npy",
+      "bytes": 1705888,
+      "sha256": "6ac843ff13599da8093185ab88090b46058795cb656ca94c9619c569594a3424"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-04\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-04/stream-1.npy",
+      "file": "files/00057.npy",
+      "bytes": 1705888,
+      "sha256": "801814b97b21f38055a6fb45f0f7247eecd9fbacbad1405cd92468ff7825e06f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-05\\result.json",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-05/result.json",
+      "file": "files/00058.json",
+      "bytes": 4838,
+      "sha256": "f9cd544bf43c6f47912f0c33bacacc5c18d2e72b8b0e71d08b5aba9c1ee58704"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-05\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-05/stream-0.npy",
+      "file": "files/00059.npy",
+      "bytes": 1659408,
+      "sha256": "4da500a926f4f25f75cad86d2dc207d611aa3e1b3b0bf767564142a1a864d370"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-05\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-05/stream-1.npy",
+      "file": "files/00060.npy",
+      "bytes": 1659408,
+      "sha256": "e171f6b6f1ffefa62f495d0231d0707513e924a8b986adcf45ff8a4161cb0cc5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-06\\result.json",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-06/result.json",
+      "file": "files/00061.json",
+      "bytes": 4841,
+      "sha256": "ba7e9522b78a7a33ec0c690efc1317e08c773a1c8bb796631858cd26d3794f15"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-06\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-06/stream-0.npy",
+      "file": "files/00062.npy",
+      "bytes": 1588584,
+      "sha256": "26fdc72c11be35c7e68df3d18869622d83bc30d3ada705fa63c3a3b8e28284b8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-06\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200709_L_R002S01C01-multi-turn-context-06/stream-1.npy",
+      "file": "files/00063.npy",
+      "bytes": 1588584,
+      "sha256": "9bc925f556e61aed3b3c52a9b307ab0f761ff5201cacc41cac08944fac55038b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-01\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-01/result.json",
+      "file": "files/00064.json",
+      "bytes": 1692,
+      "sha256": "ff653369701fd0d949e1e662d1da3a31085b493d955dfcce5dddb6c6d72457ef"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-01\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-01/stream-0.npy",
+      "file": "files/00065.npy",
+      "bytes": 135488,
+      "sha256": "7525b80b44870c4bf59f73a026eb4549a8e14d3bc8358405319cddb3f0dc9d90"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-01\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-01/stream-1.npy",
+      "file": "files/00066.npy",
+      "bytes": 135488,
+      "sha256": "4faa3b18295d4018132db264f38f75961deece6cd028b220f2bad7faf8d59f3f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-02\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-02/result.json",
+      "file": "files/00067.json",
+      "bytes": 1490,
+      "sha256": "d8594cb3b84b2cfa577c180984b2e0a87b92177bfbc10964b6946567292e67fb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-02\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-02/stream-0.npy",
+      "file": "files/00068.npy",
+      "bytes": 107648,
+      "sha256": "ad6ea180d9036640105b70a6f4ffaf58617750ed3826fbe7b6ce2d068e91fd2d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-02\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-02/stream-1.npy",
+      "file": "files/00069.npy",
+      "bytes": 107648,
+      "sha256": "edb9ef884097941641757770c2fa196b8b0ad8e0148d64ca19ab877ceadecf06"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-03\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-03/result.json",
+      "file": "files/00070.json",
+      "bytes": 1490,
+      "sha256": "0eace3ed3bb20e9b0c33eb4b9e5a53a5efff5ed807b3d2bce09f94dfe0174ce0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-03\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-03/stream-0.npy",
+      "file": "files/00071.npy",
+      "bytes": 124928,
+      "sha256": "b9ed8c6ae1167f779efbcebcfe168875138524814d76afb35404d648f34ac680"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-03\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-03/stream-1.npy",
+      "file": "files/00072.npy",
+      "bytes": 124928,
+      "sha256": "a25e676bf2dc86c4c811967b4d044de1ef96ffb072aa6d50bd358b5aea9c0cbe"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-04\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-04/result.json",
+      "file": "files/00073.json",
+      "bytes": 1491,
+      "sha256": "ec1319a32357a0ddb207c38b942b9d8e50aa970196c35bd1ecb80544e82b85d5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-04\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-04/stream-0.npy",
+      "file": "files/00074.npy",
+      "bytes": 115008,
+      "sha256": "987f930136fb5beef21367ec7d16d5f17d1a873d17b6a31199ba4df8606046e2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-04\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-04/stream-1.npy",
+      "file": "files/00075.npy",
+      "bytes": 115008,
+      "sha256": "5832a27c708a8a2175d413911262f20dd74dcd1afabd71cb2720c64aea26906b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-05\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-05/result.json",
+      "file": "files/00076.json",
+      "bytes": 1490,
+      "sha256": "3bc67fac003f8cd8b3311c511b35492625acc4361a4ef6a8da4ff86e1c057059"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-05\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-05/stream-0.npy",
+      "file": "files/00077.npy",
+      "bytes": 65728,
+      "sha256": "035ece67f0982fcc9446f391bcdc160827e5d367197674ae7ac28117bf8bf486"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-05\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-05/stream-1.npy",
+      "file": "files/00078.npy",
+      "bytes": 65728,
+      "sha256": "3c8a17398ae9bf5cd7bc87845620ff0cd57b197bafea99302d3aa76e278b8b1e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-06\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-06/result.json",
+      "file": "files/00079.json",
+      "bytes": 1490,
+      "sha256": "ca1182044c3dbeedc3203b83c2eb1590ad768a91c04bd435fa82d142b949a9f0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-06\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-06/stream-0.npy",
+      "file": "files/00080.npy",
+      "bytes": 66048,
+      "sha256": "31065d923d1be290834bea0f0b0d9509d7f2c8e948f54eb2c16a535cc66e6095"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-06\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-06/stream-1.npy",
+      "file": "files/00081.npy",
+      "bytes": 66048,
+      "sha256": "5f469d86eff17d613d11c735f88e6035a0f1a337e1b9a5799cff1fee65ba6d3c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-07\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-07/result.json",
+      "file": "files/00082.json",
+      "bytes": 1492,
+      "sha256": "17b8f9934cc719c417b9f4cd0852ca4f6320592d23eda4aa6850001080055ac1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-07\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-07/stream-0.npy",
+      "file": "files/00083.npy",
+      "bytes": 58424,
+      "sha256": "1fe472dc49d03ab7a54a764de0db5b7113a6df6c2a81b7930b6315b0346669d5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-07\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-07/stream-1.npy",
+      "file": "files/00084.npy",
+      "bytes": 58424,
+      "sha256": "5db9ef68371d6a48782d929672a17a71e6c61fa22965ce2b1bd3c107e3488607"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-08\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-08/result.json",
+      "file": "files/00085.json",
+      "bytes": 1699,
+      "sha256": "a2a665e8a84a869e8998ccaa248ae89f8eb8631a960f82b3883e2ca173f9b0d0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-08\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-08/stream-0.npy",
+      "file": "files/00086.npy",
+      "bytes": 129408,
+      "sha256": "123901005dc4d0bb133a810ad92d9e56b54fa97d05d86bfc5c2a04d3dd373e58"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-08\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-08/stream-1.npy",
+      "file": "files/00087.npy",
+      "bytes": 129408,
+      "sha256": "770b9ec5b64d4b21f270990337c6b5b103316397bf9f28472459763796f7357d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-09\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-09/result.json",
+      "file": "files/00088.json",
+      "bytes": 1489,
+      "sha256": "2db34e73c2e054e2af91d5c617626969e0848d52fe182b862d0347cf468fa316"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-09\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-09/stream-0.npy",
+      "file": "files/00089.npy",
+      "bytes": 59632,
+      "sha256": "b59373f2185209c9267f1b2109e23c9067e1d521c67dc870044803fc2d81cde2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-09\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-09/stream-1.npy",
+      "file": "files/00090.npy",
+      "bytes": 59632,
+      "sha256": "a4cb212d7e2edf4afd5938e9c33f1587a1a9afe8c6073ebe422300e9398c1948"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-10\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-10/result.json",
+      "file": "files/00091.json",
+      "bytes": 1486,
+      "sha256": "5ab2a3bfa1554e0577abc4c2dd7c49915798355732d16603d647b7514766a84f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-10\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-10/stream-0.npy",
+      "file": "files/00092.npy",
+      "bytes": 93248,
+      "sha256": "f7e9e12da51fcf006c4f2c20b6838f8699143a295772bad2c9be6c9c1b7f7e2d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-10\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-10/stream-1.npy",
+      "file": "files/00093.npy",
+      "bytes": 93248,
+      "sha256": "d56f5500c9eeb8aae512f7674631d64cb5e86290917485d9d506794f24c16db1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-11\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-11/result.json",
+      "file": "files/00094.json",
+      "bytes": 1490,
+      "sha256": "340551a556705c439d264b49583b4fa656f959e764a5bec0f66d6414a29f381c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-11\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-11/stream-0.npy",
+      "file": "files/00095.npy",
+      "bytes": 49964,
+      "sha256": "4756b1183761e462d4ccc36cacd89c27b16708aea25096f00714f014acda7a39"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-11\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-11/stream-1.npy",
+      "file": "files/00096.npy",
+      "bytes": 49964,
+      "sha256": "23715a556d7a805486a33b5e9629e7b476fc8abb3b90c4884becc09e86a9fceb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-12\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-12/result.json",
+      "file": "files/00097.json",
+      "bytes": 1490,
+      "sha256": "c9acdef3fa29f6cf2e6b61d994c3a23cd5328bcabaf3c3ac9c9ad4276536b9a6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-12\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-12/stream-0.npy",
+      "file": "files/00098.npy",
+      "bytes": 64540,
+      "sha256": "72c71ca237f23c69b5e2e59a6e0247d7c8c2036731025de9184cbbcff56abdf3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-12\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-12/stream-1.npy",
+      "file": "files/00099.npy",
+      "bytes": 64540,
+      "sha256": "82dfd1afbcfc39b9ece21aa13fc5269618eeae9e9e2a9130fd713bc4395a7ad1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-13\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-13/result.json",
+      "file": "files/00100.json",
+      "bytes": 1489,
+      "sha256": "ca079d5129a2f8396e12ee41348850045e99defffb9a24e8118e2635785baeb9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-13\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-13/stream-0.npy",
+      "file": "files/00101.npy",
+      "bytes": 48756,
+      "sha256": "db3692f2081b83b7e853eb04004a7075d252f0797d7674b36a1fc1636dd4dfa8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-13\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-13/stream-1.npy",
+      "file": "files/00102.npy",
+      "bytes": 48756,
+      "sha256": "6c179bf4b6d08592b21c6e5dd508e2624ebfe4c91420ef51a332da0231b6d70a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-14\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-14/result.json",
+      "file": "files/00103.json",
+      "bytes": 1487,
+      "sha256": "5b1f226cd2ff2e01d6613d2da0b5c41ca4aa292c50f9612d91d270e4045147ab"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-14\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-14/stream-0.npy",
+      "file": "files/00104.npy",
+      "bytes": 30540,
+      "sha256": "14eab01c25178aa98a2dad2c2fd80e5a5df71d1e6a91f88b2c2f48c0574b5244"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-14\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-14/stream-1.npy",
+      "file": "files/00105.npy",
+      "bytes": 30540,
+      "sha256": "66dac350b3568a61c7c8d90c778496db89386ddca49359955853379759a4bbf8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-15\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-15/result.json",
+      "file": "files/00106.json",
+      "bytes": 1487,
+      "sha256": "c51d4270f00fa0fbcd30b4483b7994036379993de436057c9728afc7f53fab1e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-15\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-15/stream-0.npy",
+      "file": "files/00107.npy",
+      "bytes": 30944,
+      "sha256": "f9233c0f2a5b34443d71e791895c7ab4af61c44dda37ded84061ff0deb2e0648"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-clean-short-response-15\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-clean-short-response-15/stream-1.npy",
+      "file": "files/00108.npy",
+      "bytes": 30944,
+      "sha256": "8a9537372432d01aa664aac692b2828bad876c2a2ae8f915661295918287d711"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-01\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-01/result.json",
+      "file": "files/00109.json",
+      "bytes": 5256,
+      "sha256": "c434bc1509bb5f8ba3092f93d01941a99433fc14efe51a8a65f87d4178a07e4a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-01\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-01/stream-0.npy",
+      "file": "files/00110.npy",
+      "bytes": 1796892,
+      "sha256": "2e0301ba1b9cec8e7ee02fb5684195ad67ca51c09a47f48350960c028af1b0ae"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-01\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-01/stream-1.npy",
+      "file": "files/00111.npy",
+      "bytes": 1796892,
+      "sha256": "1a624f0dc889f45be284150b3af35fd68f8348c395e4d16eea0d7a9345f87188"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-02\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-02/result.json",
+      "file": "files/00112.json",
+      "bytes": 5243,
+      "sha256": "3ad26600ff0050902f59b09629311776e4b7fd5ae19e609d17246507677f19de"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-02\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-02/stream-0.npy",
+      "file": "files/00113.npy",
+      "bytes": 1798732,
+      "sha256": "7815c2acce6647477ff65329aabf64aba9b9622716c0ab7e018aad3e7eaf5e65"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-02\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-02/stream-1.npy",
+      "file": "files/00114.npy",
+      "bytes": 1798732,
+      "sha256": "cb3e873e37cfd93783b0240a093882b5d92c75e70c4a4d896f8cf91f38308482"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-03\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-03/result.json",
+      "file": "files/00115.json",
+      "bytes": 5464,
+      "sha256": "6e4efcc85a21dac53fbdb9adfa0845c2510480bd5c5b3daa67a128bf5b2aeaf2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-03\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-03/stream-0.npy",
+      "file": "files/00116.npy",
+      "bytes": 1902452,
+      "sha256": "98a7aa9aa68064a22f40408f095d3d7028cac9a77424767d65bb2f79bf92b765"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-03\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-03/stream-1.npy",
+      "file": "files/00117.npy",
+      "bytes": 1902452,
+      "sha256": "db0331cb39e5a88cc59ae59adc20ec81d1dc507436800984857fc1554313a037"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-04\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-04/result.json",
+      "file": "files/00118.json",
+      "bytes": 5045,
+      "sha256": "84da6e4fa6d22214bd6dbc65372959bc918ba62c8e226f731ba1dadc5c8c97fb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-04\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-04/stream-0.npy",
+      "file": "files/00119.npy",
+      "bytes": 1685092,
+      "sha256": "6890b434bd90b82c09be18755fe91a14cf59739194c7168690718abcdc490da0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-04\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-04/stream-1.npy",
+      "file": "files/00120.npy",
+      "bytes": 1685092,
+      "sha256": "8a591bec9a0b98b4adf43a19d2b444b3fef2395a2bd3886d4aff01a8d07dcbc7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-05\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-05/result.json",
+      "file": "files/00121.json",
+      "bytes": 4836,
+      "sha256": "80eca797f22dd4d4a97d42449e44c2169731f73d78ac815e35b91e4a184cde90"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-05\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-05/stream-0.npy",
+      "file": "files/00122.npy",
+      "bytes": 1646292,
+      "sha256": "6c51b5c3a5f0f897c28dd587d5777587d7166981995c89fb83a532225b906266"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-05\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-05/stream-1.npy",
+      "file": "files/00123.npy",
+      "bytes": 1646292,
+      "sha256": "30e4ec1785b7a48de6613f448957a3388abb4ec947ef2a54fb85da35b4e1deff"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-06\\result.json",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-06/result.json",
+      "file": "files/00124.json",
+      "bytes": 4825,
+      "sha256": "048a6cc79f2db024ce189175caaca43b606036f7a29a03221e8b71f7d3f4b996"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-06\\stream-0.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-06/stream-0.npy",
+      "file": "files/00125.npy",
+      "bytes": 1588332,
+      "sha256": "3059dc25ab0195dc7ed3c08fa814248baaa6786c4e654df7b5945a5611bf76d5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\separate-r1\\streams\\20200805_S_R001S01C01-multi-turn-context-06\\stream-1.npy",
+      "logicalPath": "separate-r1/streams/20200805_S_R001S01C01-multi-turn-context-06/stream-1.npy",
+      "file": "files/00126.npy",
+      "bytes": 1588332,
+      "sha256": "a20d8fd5b9dc6870a2144465a5c4e5f9d5c3308c5c8330decc81950c8e3f248c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\inventory.log",
+      "logicalPath": "asr-r1/inventory.log",
+      "file": "files/00127.log",
+      "bytes": 579,
+      "sha256": "8785b1ddc9e7847d06df5dbe6a018320a3ab042c8fddd284d5bd1670d5fa8dd3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\original-native-control.json",
+      "logicalPath": "asr-r1/original-native-control.json",
+      "file": "files/00128.json",
+      "bytes": 2387,
+      "sha256": "def3baab64c4dbe774f882f5954d3e68fa555eefa21d6caa5051ab6596852eb7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\run.json",
+      "logicalPath": "asr-r1/run.json",
+      "file": "files/00129.json",
+      "bytes": 636,
+      "sha256": "ee4b9f0ea39df6253cc47857e23eca8a72a4e32489366c4b93ddecc5746ac91f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\state.json",
+      "logicalPath": "asr-r1/state.json",
+      "file": "files/00130.json",
+      "bytes": 29309,
+      "sha256": "945df5c81b653f567b02c18983543820e62484e7504909f13b73acd5f14ffbbc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\weight-roundtrip.json",
+      "logicalPath": "asr-r1/weight-roundtrip.json",
+      "file": "files/00131.json",
+      "bytes": 1634,
+      "sha256": "5eec7696aa9bee2bd51b80812639b34e79da8698fb76b351997a9853e48bb050"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\worker-state.json",
+      "logicalPath": "asr-r1/worker-state.json",
+      "file": "files/00132.json",
+      "bytes": 1058,
+      "sha256": "4828f87f4c4f0f4f3bc5c3e9cd64dbb17d82182676ccaef99e4b8a654b6f407f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\worker.log",
+      "logicalPath": "asr-r1/worker.log",
+      "file": "files/00133.log",
+      "bytes": 461,
+      "sha256": "4c41c225b7a1d08952777bcd27d7a8b6edd14c06e53ecb740c94f0d385813613"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "asr-r1/inventory/hip-inventory.json",
+      "file": "files/00134.json",
+      "bytes": 1394,
+      "sha256": "74052a09f23b298b0ba3ca7c5db2a59d1b7089a2882b04454f2e4c254c92d923"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "asr-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00135.jsonl",
+      "bytes": 611,
+      "sha256": "7d0a374c6251690fa6b522ea61685e0074596ea5de24bba9865693c486eca4c4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\inventory\\inventory-run.json",
+      "logicalPath": "asr-r1/inventory/inventory-run.json",
+      "file": "files/00136.json",
+      "bytes": 610,
+      "sha256": "ea2f253594008ce83661e2b43787a343c8454d9426ff594605820e56d198aa87"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "asr-r1/inventory/inventory-worker.log",
+      "file": "files/00137.log",
+      "bytes": 1213,
+      "sha256": "1493e0244f682f341e59353293fa0952e02fcd2c426caac03befee1804a454f5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-01\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-01/stream-0/result.json",
+      "file": "files/00138.json",
+      "bytes": 1156,
+      "sha256": "0e9b2e40bc19008f315d09529327fa1a1aa4f3873c938cf14ac10093b3c7e34a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-01\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-01/stream-0/root.json",
+      "file": "files/00139.json",
+      "bytes": 431,
+      "sha256": "c4f69fa923c62da26787b3a6cba2e5c2992340cd67a47cec1ecba50d32d84590"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-01\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-01/stream-1/result.json",
+      "file": "files/00140.json",
+      "bytes": 994,
+      "sha256": "3dd06bc4629ba3ed5b40ea64b5c15a2134cc0cc8f01bbef1c8dda0cc83ad0e68"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-01\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-01/stream-1/root.json",
+      "file": "files/00141.json",
+      "bytes": 323,
+      "sha256": "a11c7def3cdcd0c3a8b499f488fa3000174bd5d6f5721a26b9737cb23acb2706"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-02\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-02/stream-0/result.json",
+      "file": "files/00142.json",
+      "bytes": 1172,
+      "sha256": "34e4fb6d795a37954543b7d7202789c3fedcd6c265901ed72e8c1f0ffbc318e8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-02\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-02/stream-0/root.json",
+      "file": "files/00143.json",
+      "bytes": 441,
+      "sha256": "f534a8a3f573fa27f322e4e1e8cdd3000760447fcadb9e2e20e35780b227301a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-02\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-02/stream-1/result.json",
+      "file": "files/00144.json",
+      "bytes": 994,
+      "sha256": "2e2f2258d6dda8faa7e257fc64d8eba8937b6bf7d536c2ecb6c5ea0ccbc60a8e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-02\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-02/stream-1/root.json",
+      "file": "files/00145.json",
+      "bytes": 323,
+      "sha256": "0ffe1f936b1bc1f07891bd75acf723c0690581c801fcad72707f97e4a2fca500"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-03\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-03/stream-0/result.json",
+      "file": "files/00146.json",
+      "bytes": 1173,
+      "sha256": "6361f819ef1a3599ce7b868b1a2760dea2a4794c5bc3302b83ebdcb0adfcb901"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-03\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-03/stream-0/root.json",
+      "file": "files/00147.json",
+      "bytes": 442,
+      "sha256": "cfd2f7b793ec56452c98009a5555c2501bd17b729accaa61fc15ab322a3b0915"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-03\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-03/stream-1/result.json",
+      "file": "files/00148.json",
+      "bytes": 994,
+      "sha256": "d3503644da164bddb55299e7eeff0c652bd2d270bcae122c9fe3aa31115248a6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-03\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-03/stream-1/root.json",
+      "file": "files/00149.json",
+      "bytes": 323,
+      "sha256": "c2759d7dcd5a38c1ddd8f9b24376bfed68cb9b7c30d8d74badaff72f1d25f4f9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-04\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-04/stream-0/result.json",
+      "file": "files/00150.json",
+      "bytes": 1112,
+      "sha256": "36d5af36b883598701b1518f05e6707f7a0c73901433f50c59a41cfde3f8e93c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-04\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-04/stream-0/root.json",
+      "file": "files/00151.json",
+      "bytes": 402,
+      "sha256": "d3c3db583000fefe903f2b90a6800474f9603d627347e0bf71a2b0e08021f92d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-04\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-04/stream-1/result.json",
+      "file": "files/00152.json",
+      "bytes": 1137,
+      "sha256": "9b94d7ccb4c6e9270cebe3ec6d159478f0f63c3afc0ee66147aeb3394ad88a3d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-04\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-04/stream-1/root.json",
+      "file": "files/00153.json",
+      "bytes": 418,
+      "sha256": "2a6670bc2481e68fb3c55949910548ef08b5a7a14b9e4414099f464c190a51bf"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-05\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-05/stream-0/result.json",
+      "file": "files/00154.json",
+      "bytes": 1121,
+      "sha256": "ec4c461478f412422afabcce3b3bc480f5b25b73de1150460054c65c79c04393"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-05\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-05/stream-0/root.json",
+      "file": "files/00155.json",
+      "bytes": 408,
+      "sha256": "e1152e8690ed100fae3fa788a255e8999201274f0ca8fef11b1196951e8dda2a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-05\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-05/stream-1/result.json",
+      "file": "files/00156.json",
+      "bytes": 994,
+      "sha256": "5f6c1b535e2ac00b2b1415e0d40349dc00cfb3c7e9f3202c9511d3c9b7d01d5a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-05\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-05/stream-1/root.json",
+      "file": "files/00157.json",
+      "bytes": 323,
+      "sha256": "71f9840e4b90c8674a9d5e7746a2d096f3086cee593bf2831ee1509a86fe7265"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-01\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-01/stream-0/result.json",
+      "file": "files/00158.json",
+      "bytes": 3839,
+      "sha256": "8dbfc8bad06e5eedfeae310bc86a54c31529a092f2f0a801e63b36d179f12c64"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-01\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-01/stream-0/root.json",
+      "file": "files/00159.json",
+      "bytes": 2230,
+      "sha256": "9e06d0669e393e7894ff5341ed7749290ff66bffd25448911cdd3a530c00914f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-01\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-01/stream-1/result.json",
+      "file": "files/00160.json",
+      "bytes": 1221,
+      "sha256": "4e7de2667e2b45a772f667e9f4d32f73fbaeb95fa2f70c7db90df5e6bcb59d6f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-01\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-01/stream-1/root.json",
+      "file": "files/00161.json",
+      "bytes": 476,
+      "sha256": "5c9a8463b46188b71b701a1fd21341bf4277c63da1bbf412f0335114002904d8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-02\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-02/stream-0/result.json",
+      "file": "files/00162.json",
+      "bytes": 3620,
+      "sha256": "8f7cf4167d491ddb42eb659e08a2fe53098d30e8f080ac6e65c9f4b08861082f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-02\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-02/stream-0/root.json",
+      "file": "files/00163.json",
+      "bytes": 2086,
+      "sha256": "f6d49174d60ac1ac3013fc0314126dd9e9cfacf1796967135ef9c145a32656fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-02\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-02/stream-1/result.json",
+      "file": "files/00164.json",
+      "bytes": 1047,
+      "sha256": "de11e1db4c972bbf52b9976b4437f6564966fb9ce83d701c9eb094835fd889ca"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-02\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-02/stream-1/root.json",
+      "file": "files/00165.json",
+      "bytes": 359,
+      "sha256": "26956ba8a44ae0877c4797f0bcfbed7fb8316b15f34c2fa04b96c62487b435af"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-03\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-03/stream-0/result.json",
+      "file": "files/00166.json",
+      "bytes": 3321,
+      "sha256": "7cdb9850e6bf6a61660f8a4cba4e152ee781c2d2bff99eb39deafca50363e473"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-03\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-03/stream-0/root.json",
+      "file": "files/00167.json",
+      "bytes": 1880,
+      "sha256": "391d3148d25bee63a66fa928312c919ed7244fa126ac41ca537a5f85c6e29916"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-03\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-03/stream-1/result.json",
+      "file": "files/00168.json",
+      "bytes": 2431,
+      "sha256": "2c5b8df7f88591b01f217c84896ad0733e85983787a85673c029d2f06b06593e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-03\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-03/stream-1/root.json",
+      "file": "files/00169.json",
+      "bytes": 1284,
+      "sha256": "4d412d14a046c5809d10edd2bbc31a2e1d04443e2e63bc071edd5f466345d1f5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-04\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-04/stream-0/result.json",
+      "file": "files/00170.json",
+      "bytes": 3215,
+      "sha256": "af3fc082911a3a4d1ae1da0c593fa68e748206df721433a338a46fbe9c5f08c2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-04\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-04/stream-0/root.json",
+      "file": "files/00171.json",
+      "bytes": 1810,
+      "sha256": "d6ff100a539adeba7d6850aa7086444ea7fbaf13c28ac2768c872551cadb7a15"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-04\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-04/stream-1/result.json",
+      "file": "files/00172.json",
+      "bytes": 1747,
+      "sha256": "2541037e70ca29315b3858ec1c8647ad49031f525f3b8ebfbb0d455ddcb924d9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-04\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-04/stream-1/root.json",
+      "file": "files/00173.json",
+      "bytes": 828,
+      "sha256": "ac4e00925e10dc3b30b3ee169d98f56cb6e0da21ede22eaf19591033d0a308f6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-05\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-05/stream-0/result.json",
+      "file": "files/00174.json",
+      "bytes": 3058,
+      "sha256": "fd9b801372d2046c2d47b014291df5bba2cd160a670dd21b7dfb303f3603d7b2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-05\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-05/stream-0/root.json",
+      "file": "files/00175.json",
+      "bytes": 1704,
+      "sha256": "5e712088d809fe5dcf89219365bc5bec6d81392a04855a18a59681f440b9833e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-05\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-05/stream-1/result.json",
+      "file": "files/00176.json",
+      "bytes": 2568,
+      "sha256": "e993a784738a0f5c17a9ddb7b4873a95a7a472cf4a108a7b6bf81c54dc160a52"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-05\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-05/stream-1/root.json",
+      "file": "files/00177.json",
+      "bytes": 1376,
+      "sha256": "60216d2939f322fa869b81d6c3a3a7fd0befbfd2d10da44ce377b68be1e93485"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-06\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-06/stream-0/result.json",
+      "file": "files/00178.json",
+      "bytes": 3181,
+      "sha256": "1c6770f84956fa68722a1773a259db592c1c34bd075c3cbdb918a9d6412510c0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-06\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-06/stream-0/root.json",
+      "file": "files/00179.json",
+      "bytes": 1788,
+      "sha256": "a010544901d77e2c5601ea5d10be79cee805bed3b81264b4745cecd2f7f004fc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-06\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-06/stream-1/result.json",
+      "file": "files/00180.json",
+      "bytes": 1518,
+      "sha256": "dd589bd598aa2103089cd90f4f80508ecff82e74ccf1c14d3303e3dac6c62360"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-06\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-06/stream-1/root.json",
+      "file": "files/00181.json",
+      "bytes": 674,
+      "sha256": "9148341c74e75706018efacc41d0729f4cf76ad5b9006571b7a5b9710db32bfd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-01\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-01/stream-0/result.json",
+      "file": "files/00182.json",
+      "bytes": 1094,
+      "sha256": "027ee50faaea42292f8901e5f00b0af76f0d27820443d1575ea7cb0c47d42904"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-01\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-01/stream-0/root.json",
+      "file": "files/00183.json",
+      "bytes": 390,
+      "sha256": "6b41ad6815a51d4aef8a3a422e9da7869cbb2d9715418d02e6b6f5fdd3c1fef3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-01\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-01/stream-1/result.json",
+      "file": "files/00184.json",
+      "bytes": 994,
+      "sha256": "e2c60f0ebb1762f90cd44c3a5519dfb0b26a9709a57d292d9174bc4b87920a31"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-01\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-01/stream-1/root.json",
+      "file": "files/00185.json",
+      "bytes": 323,
+      "sha256": "0118a2028b5dcbf7fda6708cd9d4714831892b9bbe7e2e3e0550a2b4e27d6746"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-02\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-02/stream-0/result.json",
+      "file": "files/00186.json",
+      "bytes": 1110,
+      "sha256": "a47ddf89f3c612a41b3b9483668f600e2948eff4db42ddb1bfaee57e01fa8654"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-02\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-02/stream-0/root.json",
+      "file": "files/00187.json",
+      "bytes": 400,
+      "sha256": "f7db439003ad8d70141a1b621a71545f2600bdc556f4fd751ce2da2ccbfe61cb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-02\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-02/stream-1/result.json",
+      "file": "files/00188.json",
+      "bytes": 1047,
+      "sha256": "be0da730df7cdc92e0e6a3a26a565678e958d2b5e05e2a27c9c379145688ae00"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-02\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-02/stream-1/root.json",
+      "file": "files/00189.json",
+      "bytes": 358,
+      "sha256": "09314436c34fde4961edb636027bc0d496a369e6039ee07d6189ff3ad3d8ae71"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-03\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-03/stream-0/result.json",
+      "file": "files/00190.json",
+      "bytes": 1084,
+      "sha256": "15a35f90c9d855216fe5677745dc2889e47edfba8993843c9349ec8e56f84c2a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-03\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-03/stream-0/root.json",
+      "file": "files/00191.json",
+      "bytes": 383,
+      "sha256": "c7ccf23ebbaceefd4df6a01323c7e4b22ce7bcb2b5a55f60f3c8669c604266c8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-03\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-03/stream-1/result.json",
+      "file": "files/00192.json",
+      "bytes": 994,
+      "sha256": "55fedf5b1c86dbcb186281b13335e6c9410a44a82e12f172abdaa08d9d91bf34"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-03\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-03/stream-1/root.json",
+      "file": "files/00193.json",
+      "bytes": 323,
+      "sha256": "b77d6745c33e8ba54c91ea3568c43f5f1cd0a13596650cea3d482869bd23878f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-04\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-04/stream-0/result.json",
+      "file": "files/00194.json",
+      "bytes": 1099,
+      "sha256": "3f31362b5e089e69212309570674bdf8fa4ff983cfefa8b3e8e243ac9d65a769"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-04\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-04/stream-0/root.json",
+      "file": "files/00195.json",
+      "bytes": 392,
+      "sha256": "9aece2b6c8b4d29e523b399e55b2c009954bb37a35f1ba39e7b300330718310e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-04\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-04/stream-1/result.json",
+      "file": "files/00196.json",
+      "bytes": 994,
+      "sha256": "718e08fe3cd9b339d9226fb835df0495edae746f785a3b19086804931db3e6f0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-04\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-04/stream-1/root.json",
+      "file": "files/00197.json",
+      "bytes": 323,
+      "sha256": "d25904563ddb978649d04aa5072b81d6ecdbb86a020482cd1f7a3c636cd936d2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-05\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-05/stream-0/result.json",
+      "file": "files/00198.json",
+      "bytes": 1038,
+      "sha256": "3b7aa1310d4a8bd004a2e4774887b35fdd12f20d5cbdc7780f651c37dbb392ea"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-05\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-05/stream-0/root.json",
+      "file": "files/00199.json",
+      "bytes": 352,
+      "sha256": "cb7201380535b774475bcec39e55ad97fc4b20958731c850e6c86ba44e85e5b4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-05\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-05/stream-1/result.json",
+      "file": "files/00200.json",
+      "bytes": 994,
+      "sha256": "71144235e3c5e9ca67dc93d99af25030ab59f261b3377aa7b287e12c56787e80"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-05\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-05/stream-1/root.json",
+      "file": "files/00201.json",
+      "bytes": 323,
+      "sha256": "1e1a5e7ab3c5b8e604919ea2c0add33af92889570baecc2f417a56a58a2f975f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-06\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-06/stream-0/result.json",
+      "file": "files/00202.json",
+      "bytes": 1003,
+      "sha256": "64c4c3456def064f2e82b8e360c86e07993113591e5310fb4a25d7c51fb78f8e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-06\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-06/stream-0/root.json",
+      "file": "files/00203.json",
+      "bytes": 329,
+      "sha256": "3c948e1b13fa471b5778f34f4215d35edb02e14627345f630b567583b499ce61"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-06\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-06/stream-1/result.json",
+      "file": "files/00204.json",
+      "bytes": 993,
+      "sha256": "cc8d10c0a62c18535dddf18e6a9c201a45f7d01da9c821d6065cf5d0198f098e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-06\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-06/stream-1/root.json",
+      "file": "files/00205.json",
+      "bytes": 322,
+      "sha256": "2ed75a2e228e6240cfd7012614d5acf5f78e0c3e80a216a4b787f890306a38d9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-07\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-07/stream-0/result.json",
+      "file": "files/00206.json",
+      "bytes": 993,
+      "sha256": "ecbe08a2811533060a2ee8acdb4a7ec95f3953577b730321da94c8cfbd17045f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-07\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-07/stream-0/root.json",
+      "file": "files/00207.json",
+      "bytes": 322,
+      "sha256": "d2ffba8d4446ad5c20109328f34d612459f013bfe5c3828352c635171abde1be"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-07\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-07/stream-1/result.json",
+      "file": "files/00208.json",
+      "bytes": 994,
+      "sha256": "b5998149a67b973618fd511cfd33c30f2b357c8d7749219f20a006c1dd2a05d3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-07\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-07/stream-1/root.json",
+      "file": "files/00209.json",
+      "bytes": 323,
+      "sha256": "d61b40e6453c294fd9a5d0961823e109030eb4e144c984e746eda9fb5037ac8d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-08\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-08/stream-0/result.json",
+      "file": "files/00210.json",
+      "bytes": 1087,
+      "sha256": "cd3872a481ecf11923c5bd12eced2cfa34702da8a36115b79e92c47c69af134f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-08\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-08/stream-0/root.json",
+      "file": "files/00211.json",
+      "bytes": 386,
+      "sha256": "a2b249adea76c407e81405dcb7c95a4aad439baa8ced25f01cca6d1fbf82bce6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-08\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-08/stream-1/result.json",
+      "file": "files/00212.json",
+      "bytes": 994,
+      "sha256": "de721c95a895922b988370a57e8014628ce064f1774f256a8a2f0bd7ef76fecc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-08\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-08/stream-1/root.json",
+      "file": "files/00213.json",
+      "bytes": 323,
+      "sha256": "0ea3d76a3e1be6b2439872e0e706ce42ddbdb2b47f39e90015d7587c70dd5259"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-09\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-09/stream-0/result.json",
+      "file": "files/00214.json",
+      "bytes": 994,
+      "sha256": "f45694c4bae27181304124203f1523de39aca2e907ad37a611f180e6ad89cda8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-09\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-09/stream-0/root.json",
+      "file": "files/00215.json",
+      "bytes": 323,
+      "sha256": "3a5bbf42dc6313994df2571c001a6b5039adab7ed7e176c677988b75dceba306"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-09\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-09/stream-1/result.json",
+      "file": "files/00216.json",
+      "bytes": 994,
+      "sha256": "5bc6560e66bb245be8113ad4134f6d04d2971f21d06f1a7734e178488e215b72"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-09\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-09/stream-1/root.json",
+      "file": "files/00217.json",
+      "bytes": 323,
+      "sha256": "02af855e7f78155b16ca6a5ba4430097a98727ed69d75ab0f30e6e7f810788df"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-10\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-10/stream-0/result.json",
+      "file": "files/00218.json",
+      "bytes": 1056,
+      "sha256": "7d86f27f2aed15e28697daf94a71318f2c30af62308332d6ee8eb984e734aff2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-10\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-10/stream-0/root.json",
+      "file": "files/00219.json",
+      "bytes": 364,
+      "sha256": "263b4864c7fcaa71cfcefded6c658df0bd59373e4699f8e8637b1cb30efd2258"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-10\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-10/stream-1/result.json",
+      "file": "files/00220.json",
+      "bytes": 1039,
+      "sha256": "303d6175cbadbf764f611ddccb5614ea58907d584e2b7bff0f1e8613f1eb2db6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-10\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-10/stream-1/root.json",
+      "file": "files/00221.json",
+      "bytes": 353,
+      "sha256": "69cf6b08a3718a79dd149dfc0c84077757b10bc16f65b1baab077052e0e026b2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-11\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-11/stream-0/result.json",
+      "file": "files/00222.json",
+      "bytes": 994,
+      "sha256": "9c7b501f6855c17324340514d63e8f4db3d4b122f4db4ec8b10e83d167e001d3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-11\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-11/stream-0/root.json",
+      "file": "files/00223.json",
+      "bytes": 323,
+      "sha256": "10dbb15df7348ab8b93dc85690b1dfff6418e9edac51d6874cee1da85bf2ef40"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-11\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-11/stream-1/result.json",
+      "file": "files/00224.json",
+      "bytes": 993,
+      "sha256": "e11044e34106b460c02be6cbbe25c3cb5974a766aeae43b3f9038cd8e5c32ef8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-11\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-11/stream-1/root.json",
+      "file": "files/00225.json",
+      "bytes": 322,
+      "sha256": "c846edbb8e3cc29fadd26aa7dee687d8adcd1765293418ec2b9663b073087073"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-12\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-12/stream-0/result.json",
+      "file": "files/00226.json",
+      "bytes": 1040,
+      "sha256": "30501560481683bde858f06849be6522b4604446aface56fe09c7b712747a951"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-12\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-12/stream-0/root.json",
+      "file": "files/00227.json",
+      "bytes": 354,
+      "sha256": "faec69f82ad3f508a550ebccd336a972611313461da924f423c3d9d08d2d3570"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-12\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-12/stream-1/result.json",
+      "file": "files/00228.json",
+      "bytes": 994,
+      "sha256": "50669a8c88120a3611a373b6ed851c759957ca354a9d8497929e413d00da5941"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-12\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-12/stream-1/root.json",
+      "file": "files/00229.json",
+      "bytes": 323,
+      "sha256": "a155e2dc59c447f976afb1c2f7d7264930afe82442c6fb60e76ef8ec0a3f44fe"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-13\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-13/stream-0/result.json",
+      "file": "files/00230.json",
+      "bytes": 992,
+      "sha256": "bce0a74c3b53a7cd931c17ea27933617f7b0a9812f14cc766bc3cbceff210a72"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-13\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-13/stream-0/root.json",
+      "file": "files/00231.json",
+      "bytes": 321,
+      "sha256": "dc226187cce9ee598a7d728a9ec1d9b1bcb3ef704436deb98b217eba786b7820"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-13\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-13/stream-1/result.json",
+      "file": "files/00232.json",
+      "bytes": 994,
+      "sha256": "436cf0051b6568ce480fbf109ab85b9275c1c6df4b08de6bc94327e3505efa70"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-13\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-13/stream-1/root.json",
+      "file": "files/00233.json",
+      "bytes": 323,
+      "sha256": "7b217b9c0da4b812ae3c12e483917cd822fa51a6d8e7dbcebc286d975683cf86"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-14\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-14/stream-0/result.json",
+      "file": "files/00234.json",
+      "bytes": 1019,
+      "sha256": "1061543f88b5ffc48eecbf12b57db7d1e4a9834ece70641c360c1437c1ac89dd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-14\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-14/stream-0/root.json",
+      "file": "files/00235.json",
+      "bytes": 340,
+      "sha256": "99ae4f7d8d8b437b6ec842fa66e5175e208df0d65b07614949b55ea1ee05ca46"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-14\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-14/stream-1/result.json",
+      "file": "files/00236.json",
+      "bytes": 992,
+      "sha256": "8083a4f3e64f4416a465c73e8c33b29f013496b52ded049e663ccfe9629af63e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-14\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-14/stream-1/root.json",
+      "file": "files/00237.json",
+      "bytes": 322,
+      "sha256": "fa0e42e2a99f4a7762a7f1474fb864f4bf405aa0bfacd1dd1e6c98d422736743"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-15\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-15/stream-0/result.json",
+      "file": "files/00238.json",
+      "bytes": 1001,
+      "sha256": "d0cdb1777fc8c12ea4fcecf275a3fb6ddd5148f8e8fb27c62f577290ca7f6e7e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-15\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-15/stream-0/root.json",
+      "file": "files/00239.json",
+      "bytes": 328,
+      "sha256": "fee0366819fd476df24370a14e1df0d55e8ddd2f6025e5f3c309c4304a94d5d1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-15\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-15/stream-1/result.json",
+      "file": "files/00240.json",
+      "bytes": 992,
+      "sha256": "4d5d8c2e5ae1c1c4f4f090eb09f0549a7704253efd3ea37f2d6f0acc5788c54e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-15\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-15/stream-1/root.json",
+      "file": "files/00241.json",
+      "bytes": 322,
+      "sha256": "3a5015976d27ca1b9df11a246b96de8cdbdf84d22e68339c0b3bba7410ce58a7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-01\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-01/stream-0/result.json",
+      "file": "files/00242.json",
+      "bytes": 3340,
+      "sha256": "059dc033d20ef05eccb08df89dd4ccb81ab2fa1e645a74dc098c43c9c44440e0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-01\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-01/stream-0/root.json",
+      "file": "files/00243.json",
+      "bytes": 1896,
+      "sha256": "15b615ead937c64f72b4d62b55f51da33e3c0a20c045afef3a3d403ea7138f39"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-01\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-01/stream-1/result.json",
+      "file": "files/00244.json",
+      "bytes": 1264,
+      "sha256": "08cb7c912f4b000a271a72187ecea697123573b7829a3f88fdfe4cdd54d6c4d1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-01\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-01/stream-1/root.json",
+      "file": "files/00245.json",
+      "bytes": 504,
+      "sha256": "9d39f673dfdcee65841d8fe69883cd97d24b2163191f4b0270b200009a9b8494"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-02\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-02/stream-0/result.json",
+      "file": "files/00246.json",
+      "bytes": 1502,
+      "sha256": "3f31fd8f0721b97bba41915ca4dd93b6dd3309a4a7c76897f58bc66f0b5b16f0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-02\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-02/stream-0/root.json",
+      "file": "files/00247.json",
+      "bytes": 664,
+      "sha256": "cbb23c7d2edd41d1e7d22fc16df9dcf166f497e41724febfec43d1cc080f8f46"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-02\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-02/stream-1/result.json",
+      "file": "files/00248.json",
+      "bytes": 3736,
+      "sha256": "3c5322373286f2066581db4a8b719df1e3eeb2d9e0977f853b1eaf39fcb84e11"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-02\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-02/stream-1/root.json",
+      "file": "files/00249.json",
+      "bytes": 2160,
+      "sha256": "18c565785f49c2be46da77022b2f76fc9a32adc73dc2f15a3276a150fca0b837"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-03\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-03/stream-0/result.json",
+      "file": "files/00250.json",
+      "bytes": 3346,
+      "sha256": "718b4ab909e59bcf8fb17b516e23e65574381b59812d96ad5ff96b5e274b29fd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-03\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-03/stream-0/root.json",
+      "file": "files/00251.json",
+      "bytes": 1902,
+      "sha256": "791aeb015de55092775b47a26ec48021debb454265148b8ebc590f5eb25c7177"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-03\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-03/stream-1/result.json",
+      "file": "files/00252.json",
+      "bytes": 994,
+      "sha256": "584622e6c909efc134521bb2e60a8eab7b65c46228b1d3e5a3923ad262cf6944"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-03\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-03/stream-1/root.json",
+      "file": "files/00253.json",
+      "bytes": 324,
+      "sha256": "4a7eb9628c7bb29bdf2eeabe7377f38d27ec1ccfba697027489b0b0b63c39acd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-04\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-04/stream-0/result.json",
+      "file": "files/00254.json",
+      "bytes": 3759,
+      "sha256": "89a0284e109c8b6e6f247d631ff8d677982b915916c125e1ba962b3f8e6a7a5c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-04\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-04/stream-0/root.json",
+      "file": "files/00255.json",
+      "bytes": 2174,
+      "sha256": "59ac4036b0b09c69f55fdd3f3ee6cfd1b0aab1a5e1b0ac3d01f22c9c01fa8cc0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-04\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-04/stream-1/result.json",
+      "file": "files/00256.json",
+      "bytes": 1332,
+      "sha256": "29ca7c295f45f8ccf4c63353ea64cd33f1f6f5212baed5e3ba227525ddaedd85"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-04\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-04/stream-1/root.json",
+      "file": "files/00257.json",
+      "bytes": 551,
+      "sha256": "bf2289c11eb2c8c07087987b610bf325e558a97759baba853e0db1e306821555"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-05\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-05/stream-0/result.json",
+      "file": "files/00258.json",
+      "bytes": 3297,
+      "sha256": "1785cdd1bba2518209b8cbb9ac8d9796f04653495f6b8eff71c89ea72a3d36e4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-05\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-05/stream-0/root.json",
+      "file": "files/00259.json",
+      "bytes": 1868,
+      "sha256": "358a5afaa2ea36aaf7554279c1c40c847d43f62a69626c8e8d617f3c556c3866"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-05\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-05/stream-1/result.json",
+      "file": "files/00260.json",
+      "bytes": 994,
+      "sha256": "86e8df53d127bae7703dac4e3b550abfd97a2e2556d2efb376db84343b646cce"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-05\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-05/stream-1/root.json",
+      "file": "files/00261.json",
+      "bytes": 324,
+      "sha256": "8dae0ea2c3b238197cdf0b43a21cd31139e3e6d9dfe62649316910d3d19d0e92"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-06\\stream-0\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-06/stream-0/result.json",
+      "file": "files/00262.json",
+      "bytes": 1819,
+      "sha256": "6e93e2d6dca2a41a0aabb274ea4a3c067779d60b896e0cfe195aa5c9f6f8f5ac"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-06\\stream-0\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-06/stream-0/root.json",
+      "file": "files/00263.json",
+      "bytes": 876,
+      "sha256": "02ba6b95ea69537c61b388f0b7242c24ffe6902eebb8f178e6a9ba53e050af86"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-06\\stream-1\\result.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-06/stream-1/result.json",
+      "file": "files/00264.json",
+      "bytes": 2685,
+      "sha256": "2c3204161fd26838a0c7c954827d3b87af85ea80d6d7c48c0a1bd6f61065a49c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\natural-window-unit-alignment-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-06\\stream-1\\root.json",
+      "logicalPath": "asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-06/stream-1/root.json",
+      "file": "files/00265.json",
+      "bytes": 1457,
+      "sha256": "98c33ef6308498ec3042b3c4c9e97b22f2150f40c3e5e32f02cf38cb4c814ef0"
+    },
+    {
+      "source": "work\\prepare_supervised_separator_natural_validation_20261115.py",
+      "logicalPath": "continuation-tools/prepare_supervised_separator_natural_validation_20261115.py",
+      "file": "files/00266.py",
+      "bytes": 5902,
+      "sha256": "d6bb271427777f28145959ea1d50c80a5e73fb460c63f89871573ef28546b1dd"
+    },
+    {
+      "source": "work\\score_supervised_separator_natural_router_20261115.py",
+      "logicalPath": "continuation-tools/score_supervised_separator_natural_router_20261115.py",
+      "file": "files/00267.py",
+      "bytes": 4621,
+      "sha256": "9182f9fe6871624fa0177c504cac53fea4dfc90fa1851822fa59854d3850fb31"
+    },
+    {
+      "source": "work\\record_supervised_blind_separator_result_20261115.py",
+      "logicalPath": "continuation-tools/record_supervised_blind_separator_result_20261115.py",
+      "file": "files/00268.py",
+      "bytes": 6176,
+      "sha256": "00a3cc4eaf5df13df2209e7f61e96978a44df82de72e51c6b2061924c2c4dfc0"
+    },
+    {
+      "source": "work\\sync_supervised_separator_natural_waveforms_20261115.py",
+      "logicalPath": "continuation-tools/sync_supervised_separator_natural_waveforms_20261115.py",
+      "file": "files/00269.py",
+      "bytes": 1636,
+      "sha256": "f3e1ec7e463ce8379f80cb38b2587780bb109dd8f29378682f8886330f7d1703"
+    },
+    {
+      "source": "work\\protect_supervised_natural_composition_20261115.py",
+      "logicalPath": "continuation-tools/protect_supervised_natural_composition_20261115.py",
+      "file": "files/00270.py",
+      "bytes": 7424,
+      "sha256": "7758cada97897f6dafd6565c5847ffd407fd20d20d1070acc280082040197808"
+    },
+    {
+      "source": "work\\align_separator_training_inference_units_20261115.py",
+      "logicalPath": "continuation-tools/align_separator_training_inference_units_20261115.py",
+      "file": "files/00271.py",
+      "bytes": 7114,
+      "sha256": "be514b3b84745a4fe1466697fc5300769f376ba96292089db21d48da076bf7ff"
+    },
+    {
+      "source": "work\\score_window_aligned_separator_router_20261115.py",
+      "logicalPath": "continuation-tools/score_window_aligned_separator_router_20261115.py",
+      "file": "files/00272.py",
+      "bytes": 4631,
+      "sha256": "d8529dc109eae966c2a9ab8d6ef283363d48ec51d1331a36a6d86636236f9e11"
+    },
+    {
+      "source": "work\\analyze_separator_window_unit_alignment_20261115.py",
+      "logicalPath": "continuation-tools/analyze_separator_window_unit_alignment_20261115.py",
+      "file": "files/00273.py",
+      "bytes": 3112,
+      "sha256": "fa2c4a56ab6ab6029d1247c0ef0accd16893151558acf668755694257274afa3"
+    },
+    {
+      "source": "work\\attribute_separator_natural_insertions_20261115.py",
+      "logicalPath": "continuation-tools/attribute_separator_natural_insertions_20261115.py",
+      "file": "files/00274.py",
+      "bytes": 4035,
+      "sha256": "2a20065fdbb30fb57e37b8e4badd93d0124e8952c8f5c07120549fd5591708b7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\window-unit-repair.json",
+      "logicalPath": "window-unit-repair.json",
+      "file": "files/00275.json",
+      "bytes": 920,
+      "sha256": "c9f81a8de07398917db076568fd9559a105c4db368880fb7bd72c70df0b88288"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\natural-composition-r1\\insertion-attribution.json",
+      "logicalPath": "prior-failure-insertion-attribution.json",
+      "file": "files/00276.json",
+      "bytes": 22823,
+      "sha256": "c22c20d7981f0b6ecf4fa478779eb827a49a652f06ff1253cdbd330c711e8cff"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\continuous-routing-r1\\routing-plan.json",
+      "logicalPath": "continuous-routing-input-plan.json",
+      "file": "files/00277.json",
+      "bytes": 458707,
+      "sha256": "cea804320bf47628428be4efd94585652b8e52839ea169508a284f18c68b58a7"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "logicalPath": "canonical-workpoint-snapshot.json",
+      "file": "files/00278.json",
+      "bytes": 156602,
+      "sha256": "ce74603ba966e16306c4510c596832f457fb99bf6c7dab85af3d873fa576e4f9"
+    },
+    {
+      "source": "outputs\\Companion-分离组合模型进度-20261115.txt",
+      "logicalPath": "owner-separation-composition-note.txt",
+      "file": "files/00279.txt",
+      "bytes": 2293,
+      "sha256": "58c0a265b6e382fac9c37dea7d1b9a34927f377eae8cf9fe433d069797f59fc5"
+    }
+  ],
+  "parentCommit": "bc7f9888ac8222d5a146f4d82bde446a197a96c6",
+  "priorFullTrainedWeightProtection": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\protection-r17.json",
+  "originalAudioOrBaseWeightsCopied": false,
+  "allDerivedWaveformsAndRawAsrRetained": true,
+  "qualityQualified": false,
+  "d2Complete": false,
+  "productDefaultChanged": false,
+  "ownerParticipationRequired": false,
+  "correctnessRepair": "Identical per-window training/source-validation common-scale operation before CSS; previous whole-clip-order failure retained in parent.",
+  "trainingWeightsChanged": false,
+  "previousFailureProtection": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\protection-r18.json",
+  "sourceForwardEquivalenceSha256": "9ee935052d8c26fe5a813007aff4f541752bddbe0287afd9fe92737ba4dc8cd1"
+}

@@ -1,0 +1,706 @@
+{
+  "state": "COMPLETE_CPU_ONLY_INSERTION_ATTRIBUTION_ORIGINAL_SCORES_UNCHANGED",
+  "at": "2026-11-15T18:58:20.384476+08:00",
+  "summary": {
+    "multi-turn-context": {
+      "routedCases": 10,
+      "insertionCharactersInSeparatedUsedBranches": 177,
+      "insertionSpanCharactersAlsoInOtherOutputAtLeast2": 2,
+      "insertionSpanCharactersAlsoInOtherOutputAtLeast4": 0,
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    "clean-short-response": {
+      "routedCases": 4,
+      "insertionCharactersInSeparatedUsedBranches": 6,
+      "insertionSpanCharactersAlsoInOtherOutputAtLeast2": 0,
+      "insertionSpanCharactersAlsoInOtherOutputAtLeast4": 0,
+      "emptyAssignedReferenceOutputCharacters": 6
+    }
+  },
+  "cases": [
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-01",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 9,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 9,
+          "text": "心里产生不平衡是吧",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-02",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "啊",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-03",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 59,
+      "wholeInsertionSpans": [
+        {
+          "stream": 0,
+          "characters": 1,
+          "text": "嘛",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 0,
+          "characters": 2,
+          "text": "这个",
+          "exactFragmentAlsoInOtherOutput": true,
+          "otherStreamOffset": 5,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 0,
+          "characters": 41,
+          "text": "情况嗯因为这个受一些影响我们公司的接单的维修项目的比较少但这个工作量呢能够减少因为",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 0,
+          "characters": 10,
+          "text": "这个消毒的严格要求其",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 1,
+          "characters": 3,
+          "text": "这边要",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "措",
+          "exactFragmentAlsoInOtherOutput": true,
+          "otherStreamOffset": 28,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "来",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-04",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 33,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 33,
+          "text": "你不来吧我们就扔了它看着就是愿意停留在这儿如果呃顾客来到我们这里之",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-05",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 42,
+      "wholeInsertionSpans": [
+        {
+          "stream": 0,
+          "characters": 8,
+          "text": "呃甚至这个人他们",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 0,
+          "characters": 9,
+          "text": "立刻上去因为有些汉",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 0,
+          "characters": 9,
+          "text": "个人再用所以要求他",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 1,
+          "characters": 3,
+          "text": "一个月",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "再",
+          "exactFragmentAlsoInOtherOutput": true,
+          "otherStreamOffset": 55,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 1,
+          "characters": 12,
+          "text": "及时的去做一些清洁工作呃",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-06",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 23,
+      "wholeInsertionSpans": [
+        {
+          "stream": 0,
+          "characters": 1,
+          "text": "一",
+          "exactFragmentAlsoInOtherOutput": true,
+          "otherStreamOffset": 14,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 1,
+          "characters": 22,
+          "text": "对我们这个健身嗯他可能缺少一些了解或者他觉得",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-01",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-02",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-03",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-04",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 6,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 6,
+          "text": "零幺九不行的",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 6
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-05",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-01",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 13,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 13,
+          "text": "住户告诉他们是谁的车通知一",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-02",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 23,
+      "wholeInsertionSpans": [
+        {
+          "stream": 0,
+          "characters": 22,
+          "text": "不对一定要有人来投诉或者说有人来上门感谢我们",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "一",
+          "exactFragmentAlsoInOtherOutput": true,
+          "otherStreamOffset": 3,
+          "assignedReferenceIsEmpty": false
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-03",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 0,
+      "wholeInsertionSpans": [],
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-04",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 5,
+      "wholeInsertionSpans": [
+        {
+          "stream": 0,
+          "characters": 4,
+          "text": "比较显眼",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        },
+        {
+          "stream": 0,
+          "characters": 1,
+          "text": "又",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-05",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 0,
+          "characters": 1,
+          "text": "嘛",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-06",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 2,
+      "wholeInsertionSpans": [
+        {
+          "stream": 0,
+          "characters": 2,
+          "text": "把孩",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": false
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-01",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-02",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 3,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 3,
+          "text": "对对对",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 3
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-03",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-04",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-05",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 4,
+      "wholeInsertionSpans": [
+        {
+          "stream": 0,
+          "characters": 4,
+          "text": "一个公主",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 4
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-06",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-07",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-08",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-09",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": true,
+          "otherStreamOffset": 0,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-10",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 3,
+      "wholeInsertionSpans": [
+        {
+          "stream": 0,
+          "characters": 3,
+          "text": "嗯就是",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 3
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-11",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": true,
+          "otherStreamOffset": 0,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-12",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-13",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": false,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-14",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-15",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "usedByFrozenRoute": true,
+      "insertionCharacters": 1,
+      "wholeInsertionSpans": [
+        {
+          "stream": 1,
+          "characters": 1,
+          "text": "嗯",
+          "exactFragmentAlsoInOtherOutput": false,
+          "otherStreamOffset": -1,
+          "assignedReferenceIsEmpty": true
+        }
+      ],
+      "emptyAssignedReferenceOutputCharacters": 1
+    }
+  ],
+  "newNeuralCalls": 0,
+  "diagnosticReferenceAllocationOnly": true,
+  "originalDecisionUnchanged": true,
+  "wordsRemovedOrSelected": false,
+  "scope": "Exact text overlap between an insertion span and the other output shows lexical coincidence only; it does not prove identical time, acoustical leakage, source identity, or hallucination. Empty assigned reference uses the existing anonymous ORC diagnostic allocation, not a new true-speaker label."
+}
