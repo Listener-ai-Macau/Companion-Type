@@ -1,0 +1,45 @@
+{
+  "at": "2026-11-15T23:03:08.147022+08:00",
+  "meeting": "EN2002a",
+  "language": "English",
+  "audioSeconds": 2142.709375,
+  "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+  "baselineRawText": {
+    "referenceUnits": 7632,
+    "hypothesisUnits": 5665,
+    "errors": 2623,
+    "errorRate": 0.3436844863731656,
+    "counts": {
+      "replace": 546,
+      "delete": 2022,
+      "insert": 55
+    }
+  },
+  "baselinePersonErrorRate": null,
+  "baselineDER": 0.310766316505023,
+  "baselineEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\english-full-wer-r1.json",
+  "scoringManifestSha256": "7a6a4ceb9070338373abd0d688e10ac50f4e9f75afab48124a2d932924be4a53",
+  "scorerSha256": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "originalGatesChanged": false,
+  "recordingsArePreviouslySeenDevelopmentCasesNotBlindHoldout": true,
+  "newNeuralCalls": 0,
+  "state": "PASS_ORIGINAL_BASELINE_FULL_TEXT_REPRODUCED_ZERO_NEW_INFERENCE",
+  "limits": {
+    "pid": 17080,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 62521344,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

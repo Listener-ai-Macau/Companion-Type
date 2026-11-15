@@ -1,0 +1,21 @@
+{
+  "state": "PASS_NATIVE_CAUSAL_PREFILL_HIDDEN_KV_AND_NEXT_TOKEN_CPU_CONTROL",
+  "hiddenMaxAbsDifference": 1.1920928955078125e-07,
+  "cacheMaxAbsDifferences": [
+    0.0,
+    0.0,
+    1.1920928955078125e-07,
+    2.9802322387695312e-08
+  ],
+  "stats": {
+    "prefillCalls": 1,
+    "blocks": 4,
+    "maximumBlockTokens": 128,
+    "maximumRetainedTokens": 389,
+    "tokenBlock": 128,
+    "allKeysRetained": true,
+    "speakerOrAudioResets": 0
+  },
+  "all389InputPositionsRetained": true,
+  "nativePositionIdsPreserved": true
+}

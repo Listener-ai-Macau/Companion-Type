@@ -1,0 +1,23 @@
+{
+  "state": "OVERNIGHT_RUN_INCOMPLETE_FAILURE_RETAINED",
+  "startedAt": "2026-11-15T22:50:33.845072+08:00",
+  "neuralDeadline": "2026-11-16T07:20:00+08:00",
+  "reportDeadline": "2026-11-16T07:30:00+08:00",
+  "phases": [
+    {
+      "phase": "control",
+      "exitCode": 0,
+      "seconds": 31.9529999999977,
+      "privatePeakBytes": 1380192256
+    }
+  ],
+  "privatePeakBytes": 2149519360,
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "automaticRetries": 0,
+  "pid": 8900,
+  "pidCreatedAt": 1794754269.5202343,
+  "error": "MemoryError('Owned family reached2GiB; no limit increase')",
+  "finishedAt": "2026-11-15T22:52:08.079436+08:00",
+  "seconds": 94.23400000000038
+}

@@ -1,0 +1,778 @@
+{
+  "state": "COMPLETE_NATIVE_CAUSAL_PREFILL_CACHE_BIT_EXACT_TRANSFER",
+  "tokens": 872,
+  "layers": 28,
+  "capacity": 33640,
+  "files": [
+    {
+      "name": "0-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\0-keys.npy",
+      "sha256": "a564eacd61bddaee594733be8d67550434823e06440a6db8515abf2eb4848a81",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "0-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\0-values.npy",
+      "sha256": "dab9df9b15198419800db43f152d4b1a91af8ccca6a340933242e7018597ab61",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "1-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\1-keys.npy",
+      "sha256": "bdf67ef5560f916832973e381e18ddde259cb169c2ff8fbb47a6056bb0becfe9",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "1-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\1-values.npy",
+      "sha256": "33a705d2f34519bb4d3f593a35244ebeaadcaa15aec5acd52ed55067bf801fac",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "2-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\2-keys.npy",
+      "sha256": "0e397bc7cf748191337e47dfebcabc412bd9014fd6e7df864d08ac7cdbdf9e26",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "2-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\2-values.npy",
+      "sha256": "5439b116d13ca6f5543d8effe17bc85258a1d38c1c4116178ea9e3be5cf120e1",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "3-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\3-keys.npy",
+      "sha256": "662e9ddae9197c1996eefc47cd8510c3cf3bf0f9ddd599cff401ee43e48dcdb3",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "3-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\3-values.npy",
+      "sha256": "4e58c356cf7b5f8680934a3d44fd534b48ca079f50cc2f9dff33091df23cc690",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "4-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\4-keys.npy",
+      "sha256": "d98ff512eac08c772b1431e14ecb12272951262dafbc0a500b5145108e336881",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "4-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\4-values.npy",
+      "sha256": "937763cdb474e6aad4f3e1226740878ef0f5b0b2d37cf3a77b26029181deecff",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "5-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\5-keys.npy",
+      "sha256": "6646424ec1692e73ac1710c32731cfbadd62e4493f0aeb644d822fccaae32a0a",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "5-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\5-values.npy",
+      "sha256": "149e422d73680138c43ffa5f9e76f0910c458d687b42b4d78b57c0fb030ad7fa",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "6-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\6-keys.npy",
+      "sha256": "6441e6bcc288d29eef0065716194b6424c89bf0957e78c5267699dff587f6ecd",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "6-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\6-values.npy",
+      "sha256": "b0e4b4d857606fef1d9a900a635d0e1478e9cad17444f2e5f88fb6c1f2637b5b",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "7-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\7-keys.npy",
+      "sha256": "34731468ed8dd5a612875430029229eb0f203087d146e130a315a94119608165",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "7-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\7-values.npy",
+      "sha256": "f4c5877837b44bc06b8c10b85e8d541f0c4a3e07d0d2c33b08ad0330c8f96af2",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "8-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\8-keys.npy",
+      "sha256": "6990fa14151c955032250cdb7b3862ef02a5bd9fb0c63bf75b04db3126403369",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "8-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\8-values.npy",
+      "sha256": "96f19c6eae4e3baa3021a4c72635668ada5e9db2e8008276403dcd35a58966e8",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "9-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\9-keys.npy",
+      "sha256": "7e8111e62228520acfb21d134bf1521ee6b42eea61cee94b56045dae9fd41e75",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "9-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\9-values.npy",
+      "sha256": "0db0875237ffcc17380d609ca0b87ab278c465069077a14649e06c86efa39e7c",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "10-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\10-keys.npy",
+      "sha256": "6bdce9a3f850a9b876a7a4d0fc1226e534bafc1d3ab79bf90c5eb132c87e2639",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "10-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\10-values.npy",
+      "sha256": "335e1faf07e18a172e706263d1155447d9ca7a435c8669a693697d552c691e90",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "11-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\11-keys.npy",
+      "sha256": "6f3d52b7c163e388ab132f6cf7a407727f1083f1de9b7c69657d8c32f9ebefb3",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "11-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\11-values.npy",
+      "sha256": "74360dcf8d7648c7415017eb8752520f04d5cd407175cbc735f0aee70f96a117",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "12-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\12-keys.npy",
+      "sha256": "6328a596cdec9b1dbab7f39816dc59c71690e1339e550a80170800934990fcde",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "12-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\12-values.npy",
+      "sha256": "8618595cf026da4435d355a9f9392db3ea26610b366525ff2c252629b7316225",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "13-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\13-keys.npy",
+      "sha256": "6f9f57613d237313eeaf7fc0cf4c4762c09d5ab87a3fcc8ffb7bac2909ff4409",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "13-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\13-values.npy",
+      "sha256": "64f14ff82b8664c721d9995eaa538d51c3954bff8a1ec2f55488cf51236e5a3f",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "14-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\14-keys.npy",
+      "sha256": "f65491bb8692d4d8bf8f609ecb0142c559bef5dbb5903d02ed2c7995b7422c64",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "14-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\14-values.npy",
+      "sha256": "1ed4c81e00e9074ee8200c074e23ef417ffdf7d121a2bdd45edd7a54ea573d1c",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "15-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\15-keys.npy",
+      "sha256": "20bafe7e2776fea1635e846a8d17076b8367af9482754718867901acce578124",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "15-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\15-values.npy",
+      "sha256": "11474a7a7ab9355149da7b966efcd5a83ab9aec1197a69d71172426d53adb695",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "16-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\16-keys.npy",
+      "sha256": "0c985af540db975e0dcc36404e6b7d296742c7574f82c0860720abc089854ba4",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "16-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\16-values.npy",
+      "sha256": "338b803dd259dca0dc52bfa8784cb5731f6f1273a68941b5af9390bbcc9a507d",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "17-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\17-keys.npy",
+      "sha256": "d195d0d642d50e83828d7168af9d52ffa3db00988a104e7741fa28396466ab4e",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "17-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\17-values.npy",
+      "sha256": "f9bd2ad4feafcb76c9174330179e168678cf0e7fe7b4c4b80f6e2bc45dcb5c2a",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "18-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\18-keys.npy",
+      "sha256": "11480163424834d54bd3fa8c371e37eace050623c0b1a15b8a3230a347817e03",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "18-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\18-values.npy",
+      "sha256": "00b6bbf6d557506188491223cd1154a17003ac1d0e2316ec2c5b3f83823b0d70",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "19-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\19-keys.npy",
+      "sha256": "f8e1f12566cd582f8b609c1928bd955d7d21eb9e450ce2d1d03eafd2cd14694f",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "19-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\19-values.npy",
+      "sha256": "e3d41174dfaa5c87271eebcde271c5cf78b286cfe1459bb5197297823cbcb7ac",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "20-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\20-keys.npy",
+      "sha256": "d2e4ff4d34df8b2abf3b2bcbc4e56a8cafa5f568124031f73c4d6da63de8e9a6",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "20-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\20-values.npy",
+      "sha256": "8fab103815dedc2c3b75290daa85be17d5d981808de070d1300ffc491b6a0f07",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "21-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\21-keys.npy",
+      "sha256": "fc3a9dcfd27a0ba0e207a56af8b14d18eeea15a91471fe1083afaa6238a86250",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "21-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\21-values.npy",
+      "sha256": "adbaf84c63da6bbbbd9b2db1253fb949965b3c207694971d2d024bc0e6a2afcf",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "22-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\22-keys.npy",
+      "sha256": "4ac6cc4ed969606d8c3438cf5b990857d38eeab862606e38a8474a7d20bd8a41",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "22-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\22-values.npy",
+      "sha256": "da81d6063358e60bba0c5d0a9c5547811fff1b16eab2c1235c37643432e694b9",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "23-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\23-keys.npy",
+      "sha256": "bdf52d7ec87261577c32bcdd7609f081ed1d7e7e83199939aeb54e7399a9fe69",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "23-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\23-values.npy",
+      "sha256": "c1b56b6d199eee4be5ae10502c563180c67436ccc53383e5570d0d2886f6b361",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "24-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\24-keys.npy",
+      "sha256": "76dccde2600b003f7af3d71bae92485cabc106a0ab3a8f29e8c4e4d56a97bc1b",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "24-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\24-values.npy",
+      "sha256": "46f13ce3027887359b1f0c11293fab3cdccc2bbb6694bf8b48d719b27e9fc90a",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "25-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\25-keys.npy",
+      "sha256": "aed49f3b635a43640559ac029bbd34e4a0a46e4624801c9aecbe0652b55ee6a1",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "25-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\25-values.npy",
+      "sha256": "f0324099196591b146c9d08ef6311d1c4a776625b57441ae866159c1e2622bbe",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "26-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\26-keys.npy",
+      "sha256": "44e2411f56058ea5fa4640bac6898a08a1fdbd41ba7f08f81057606670d9db06",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "26-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\26-values.npy",
+      "sha256": "67eddfb7521cfd671f384595cc9d7269189d944ac116f559ffb48e38b3d15609",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "27-keys",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\27-keys.npy",
+      "sha256": "623921de6ac5ee6f53903cff08b11fcd5576a68690e91f0c0f1a0a7b619ba405",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "27-values",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\27-values.npy",
+      "sha256": "e5242b98a8aa7efc72bf3cc53b86c0bf59cd66906e40e20b7fca5f800bf18e84",
+      "shape": [
+        1,
+        8,
+        872,
+        128
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "logits",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\logits.npy",
+      "sha256": "bc330fbb53efe8ccd967b9965305b2c7de52710ed67256910347de5cca1a8dce",
+      "shape": [
+        1,
+        1,
+        151936
+      ],
+      "dtype": "torch.bfloat16"
+    },
+    {
+      "name": "input_ids",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\input_ids.npy",
+      "sha256": "c6a01f2ccdae9f988a2f64dd05c31cb8bc7967ff858c8ac05425e290f73c0d19",
+      "shape": [
+        1,
+        872
+      ],
+      "dtype": "torch.int64"
+    },
+    {
+      "name": "attention_mask",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\attention_mask.npy",
+      "sha256": "7d562f02f16b1eae582963ec657f5e5e328525eafe30a772dca5030654d7678e",
+      "shape": [
+        1,
+        872
+      ],
+      "dtype": "torch.int64"
+    }
+  ],
+  "metadata": {
+    "meeting": "runtime-control61",
+    "audioSha256": "5fb4dbdbb6991475d382e7729dd72c954fa2fa6ac3ddb80d3dc287495c119817",
+    "frames": 976048,
+    "audioSeconds": 61.003,
+    "prefillSeconds": 3.0465523999992,
+    "allOriginalWindows": 3,
+    "executionStats": {
+      "sdpaCalls": 196,
+      "blockedCalls": 0,
+      "maxQueryTokens": 128,
+      "maxKeyTokens": 872,
+      "keyStreamedCalls": 0,
+      "keyTiles": 0,
+      "maximumScoreTileElements": 0,
+      "encoderCalls": 1,
+      "encoderChunks": 3,
+      "queryBlock": 128,
+      "keyBlock": 1024,
+      "encoderBatch": 2
+    },
+    "prefillStats": {
+      "prefillCalls": 1,
+      "blocks": 7,
+      "maximumBlockTokens": 128,
+      "maximumRetainedTokens": 872,
+      "tokenBlock": 128,
+      "allKeysRetained": true,
+      "speakerOrAudioResets": 0
+    },
+    "nativeWeightProof": {
+      "state": "PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED",
+      "tensorCount": 683,
+      "dataBytesCopied": 1817026560,
+      "maximumTransferChunkBytes": 8388608,
+      "scratchBytes": 8388608,
+      "roundtripBufferBytes": 8388608,
+      "roundtripCpuBufferReused": true,
+      "fileSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+      "deviceRoundtripSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+      "selectedSourceBytesSha256": "35eadbca9e50d0ce71f21a67c38fe8a3f91a4dbbfb53ac70ea809048f39c1b31",
+      "selectedDeviceBytesSha256": "35eadbca9e50d0ce71f21a67c38fe8a3f91a4dbbfb53ac70ea809048f39c1b31",
+      "selectedPrefixes": null,
+      "sourceTensorCount": 683,
+      "skippedTensorCount": 0,
+      "targetDevice": "cuda:0",
+      "mmapUsed": false,
+      "wholeCpuStateDictCreated": false,
+      "seconds": 14.299881999999343,
+      "nativeClass": "MossTranscribeDiarizeForConditionalGeneration",
+      "nativePublishedCheckpointSha256": "2caea232f4ac46367ed97373542b92e4dc1fa11e4e30dfd5f6d874abb618d127",
+      "tensorReuseProofSha256": "df0788957882b55fb0c9025ab72a721c0e99740ae7589845c2d5f87eaf289e8d",
+      "allNativeKeysLoadedExceptTiedHead": [
+        "lm_head.weight"
+      ],
+      "deterministicBuffersPreserved": [
+        "model.language_model.rotary_emb.inv_freq",
+        "model.language_model.rotary_emb.original_inv_freq"
+      ],
+      "weightsChanged": false,
+      "remoteCodeUsed": false,
+      "loadSeconds": 14.550680500000453
+    }
+  },
+  "qualityQualified": false,
+  "audioOrSpeakerReset": false,
+  "quantizationUsed": false
+}

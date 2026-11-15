@@ -1,0 +1,20 @@
+{
+  "state": "PASS_RETAINED_ORIGINAL_DER_REPRODUCED_NO_NEURAL_CALLS",
+  "originalScore": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\ordinary-english-speaker-der-r1.json",
+  "originalScoreSha256": "97a8bcbda26e3618095b7d9472c4e6f43d16afcb5b82b294159e286aa3625bdd",
+  "oldDER": 0.26018102941320864,
+  "reproduced": {
+    "referenceSpeakerSeconds": 1958.649999999878,
+    "missSeconds": 488.3916319999852,
+    "falseAlarmSeconds": 13.661632000108053,
+    "confusionSeconds": 7.55031000000346,
+    "errorSeconds": 509.60357400009667,
+    "DER": 0.260181029790993,
+    "identityForScoringOnly": {
+      "speaker_0": "C",
+      "speaker_1": "B",
+      "speaker_2": "A",
+      "speaker_3": "D"
+    }
+  }
+}

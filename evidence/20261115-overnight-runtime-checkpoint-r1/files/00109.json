@@ -1,0 +1,98 @@
+{
+  "state": "COMPLETE_NATIVE_VS_TWO_EQUIVALENT_GQA_EXECUTION_SCHEDULES",
+  "rows": [
+    {
+      "length": 2053,
+      "method": "native",
+      "seconds": [
+        0.0007982000024640001,
+        0.0005171000011614524,
+        0.0005678999987139832
+      ],
+      "medianSeconds": 0.0005678999987139832,
+      "maxAbsDifference": 0.0,
+      "tolerance": {
+        "atol": 0.008,
+        "rtol": 0.008
+      }
+    },
+    {
+      "length": 2053,
+      "method": "grouped",
+      "seconds": [
+        0.0005009999986214098,
+        0.0004780000017490238,
+        0.000374399998690933
+      ],
+      "medianSeconds": 0.0004780000017490238,
+      "maxAbsDifference": 6.103515625e-05,
+      "tolerance": {
+        "atol": 0.008,
+        "rtol": 0.008
+      }
+    },
+    {
+      "length": 2053,
+      "method": "grouped128",
+      "seconds": [
+        0.0006825999989814591,
+        0.0006563000024470966,
+        0.000629599999228958
+      ],
+      "medianSeconds": 0.0006563000024470966,
+      "maxAbsDifference": 6.103515625e-05,
+      "tolerance": {
+        "atol": 0.008,
+        "rtol": 0.008
+      }
+    },
+    {
+      "length": 27924,
+      "method": "native",
+      "seconds": [
+        0.008220200001233025,
+        0.008240099999966333,
+        0.008178799998859176
+      ],
+      "medianSeconds": 0.008220200001233025,
+      "maxAbsDifference": 0.0,
+      "tolerance": {
+        "atol": 0.008,
+        "rtol": 0.008
+      }
+    },
+    {
+      "length": 27924,
+      "method": "grouped",
+      "seconds": [
+        0.004989400000340538,
+        0.004967799999576528,
+        0.0050579000017023645
+      ],
+      "medianSeconds": 0.004989400000340538,
+      "maxAbsDifference": 2.384185791015625e-07,
+      "tolerance": {
+        "atol": 0.008,
+        "rtol": 0.008
+      }
+    },
+    {
+      "length": 27924,
+      "method": "grouped128",
+      "seconds": [
+        0.007027299998298986,
+        0.007051299999147886,
+        0.007118300000001909
+      ],
+      "medianSeconds": 0.007051299999147886,
+      "maxAbsDifference": 2.384185791015625e-07,
+      "tolerance": {
+        "atol": 0.008,
+        "rtol": 0.008
+      }
+    }
+  ],
+  "modelLoaded": false,
+  "qualityQualified": false,
+  "scope": "Kernel execution timing/equivalence only, not model or decoding-parameter selection."
+}

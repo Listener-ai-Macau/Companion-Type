@@ -1,0 +1,14 @@
+W1115 23:21:23.473000 19784 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+[transformers] We set the attention implementation for the sub-config `audio_config` to `sdpa` without finding the associated sub-model. For this reason we could not check if the model supports it. You may encounter undefined behavior.
+[transformers] Output doesn't contain any `[start][S0N]text[end]` segments.
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_staged_meeting_worker_20261115.py", line 115, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_staged_meeting_worker_20261115.py", line 106, in main
+    'timestampOutOfBoundsSegments':[i for i,r in enumerate(parsed) if not 0<=r['Start']<r['End']<=case['audioSeconds']]}
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_staged_meeting_worker_20261115.py", line 106, in <listcomp>
+    'timestampOutOfBoundsSegments':[i for i,r in enumerate(parsed) if not 0<=r['Start']<r['End']<=case['audioSeconds']]}
+                                                                             ~^^^^^^^^^
+TypeError: string indices must be integers, not 'str'

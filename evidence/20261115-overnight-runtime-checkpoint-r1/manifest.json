@@ -1,0 +1,1585 @@
+{
+  "at": "2026-11-15T23:24:01.125469+08:00",
+  "state": "OVERNIGHT_FULL_PREFILL_MEMORY_FIX_AND_FAILURES_PROTECTED_STAGED_RUN_NOT_FINISHED",
+  "parentCommit": "e5dc9e661941dd0de581e798b2aa3bc05ac0609e",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r1\\failed-causal-control-source.py",
+      "logicalPath": "overnight-r1/control/failed-causal-control-source.py",
+      "file": "files/00000.py",
+      "bytes": 5487,
+      "sha256": "404c3569e918c0b0776b144d1a0c7f0d2e3414ca150a866898e3c3035d52a4bd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r1\\overnight-binding.json",
+      "logicalPath": "overnight-r1/control/overnight-binding.json",
+      "file": "files/00001.json",
+      "bytes": 6383,
+      "sha256": "ecf6711332c1c24bfe0b84d840abd9398c12e0963281f3e184dc91b02cfb64d4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r1\\runner-source.py",
+      "logicalPath": "overnight-r1/control/runner-source.py",
+      "file": "files/00002.py",
+      "bytes": 5651,
+      "sha256": "6d75fed82edb2965e170319a6c4a89873a43cf745abb7b616b038a9dfb1dca0d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r1\\worker-source.py",
+      "logicalPath": "overnight-r1/control/worker-source.py",
+      "file": "files/00003.py",
+      "bytes": 10043,
+      "sha256": "b78226db4a26f99c6b527d012a47108b4fd4f9bd6fa2f2ee3d1a57d906daaeb0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r1\\control-state.json",
+      "logicalPath": "overnight-r1/execution/control-state.json",
+      "file": "files/00004.json",
+      "bytes": 1343,
+      "sha256": "e7d2406415f69b863bfa69e32a781656c61c93221f4ebfdf25b4765d4c921c84"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r1\\control-worker.log",
+      "logicalPath": "overnight-r1/execution/control-worker.log",
+      "file": "files/00005.log",
+      "bytes": 4245,
+      "sha256": "22dfc9923af7ba639cab65fe0f0b780adb02e13cf8488211406fba2e58693b3e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r1\\inventory.log",
+      "logicalPath": "overnight-r1/execution/inventory.log",
+      "file": "files/00006.log",
+      "bytes": 578,
+      "sha256": "ab646d2b63f1f401173d68261b47c9a0e5952882bd726e4ef2870695d70875e4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r1\\run.json",
+      "logicalPath": "overnight-r1/execution/run.json",
+      "file": "files/00007.json",
+      "bytes": 709,
+      "sha256": "a9a089eced38d5e173098e856996e02461e1393c9bfc56d5b32d18899e7ce494"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "overnight-r1/execution/inventory/hip-inventory.json",
+      "file": "files/00008.json",
+      "bytes": 1392,
+      "sha256": "ef51ba8699f1cc56a8d8368a15ec9ac3d08c3a45ac2ab8404951083af1fecc83"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "overnight-r1/execution/inventory/inventory-resources.jsonl",
+      "file": "files/00009.jsonl",
+      "bytes": 731,
+      "sha256": "5756c76451f3bf1904f7d961eec9ed57e56eee2d5c1e2e6a60689e8e7e853677"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r1\\inventory\\inventory-run.json",
+      "logicalPath": "overnight-r1/execution/inventory/inventory-run.json",
+      "file": "files/00010.json",
+      "bytes": 609,
+      "sha256": "8cfebfa6597db508cbcec9343be4be7d3768d2ccf3f0710b5766bbc1c421221f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "overnight-r1/execution/inventory/inventory-worker.log",
+      "file": "files/00011.log",
+      "bytes": 1211,
+      "sha256": "9298f67357c78ed54285b9afa119c78f271d6ed363b907da8e31fab82f420057"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r2\\frozen-moss_causal_prefill_20261115.py",
+      "logicalPath": "overnight-r2/control/frozen-moss_causal_prefill_20261115.py",
+      "file": "files/00012.py",
+      "bytes": 5535,
+      "sha256": "077f15cd5bec5adb37a41bc4cbc6dbf1d5313a630aa3d26b5d117ebe875b9b45"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r2\\frozen-moss_overnight_worker_20261115.py",
+      "logicalPath": "overnight-r2/control/frozen-moss_overnight_worker_20261115.py",
+      "file": "files/00013.py",
+      "bytes": 10043,
+      "sha256": "b78226db4a26f99c6b527d012a47108b4fd4f9bd6fa2f2ee3d1a57d906daaeb0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r2\\frozen-run_moss_overnight_20261115.py",
+      "logicalPath": "overnight-r2/control/frozen-run_moss_overnight_20261115.py",
+      "file": "files/00014.py",
+      "bytes": 5651,
+      "sha256": "6d75fed82edb2965e170319a6c4a89873a43cf745abb7b616b038a9dfb1dca0d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r2\\overnight-binding.json",
+      "logicalPath": "overnight-r2/control/overnight-binding.json",
+      "file": "files/00015.json",
+      "bytes": 6383,
+      "sha256": "1def9fd623ab98ab4c6d3b9f91ce925bd482822b724687229f4f23796b55d667"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\ES2003b-input.json",
+      "logicalPath": "overnight-r2/execution/ES2003b-input.json",
+      "file": "files/00016.json",
+      "bytes": 947,
+      "sha256": "c2e6d0cae711634f5f73bf54687573b21a4ee354a9ce3cba2d401500c1754aa4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\control-input.json",
+      "logicalPath": "overnight-r2/execution/control-input.json",
+      "file": "files/00017.json",
+      "bytes": 931,
+      "sha256": "e28460f735365941d8e3ac63aab877c7348e0331adfcf339df3d03df57128ed7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\control-state.json",
+      "logicalPath": "overnight-r2/execution/control-state.json",
+      "file": "files/00018.json",
+      "bytes": 1859,
+      "sha256": "6b2b25a29337da8d60b4a0b3067a1a01df9ba9315d4b463b6a6a7496883feabb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\control-weight-roundtrip.json",
+      "logicalPath": "overnight-r2/execution/control-weight-roundtrip.json",
+      "file": "files/00019.json",
+      "bytes": 1412,
+      "sha256": "cbc2acf66a3f22bf2eaea8575f124ee8f22a4c451f96000badf4bbd1618b8e63"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\control-worker.log",
+      "logicalPath": "overnight-r2/execution/control-worker.log",
+      "file": "files/00020.log",
+      "bytes": 1956,
+      "sha256": "8f216d705b2ffd95ac65ca118a62e1b61f821751a01afea1e6748fc1e0ac5374"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\full-state.json",
+      "logicalPath": "overnight-r2/execution/full-state.json",
+      "file": "files/00021.json",
+      "bytes": 1539,
+      "sha256": "aee0ebc34de685c511b9cac46f4b6b9486bea12490a6a205e33ea5202c470d38"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\full-weight-roundtrip.json",
+      "logicalPath": "overnight-r2/execution/full-weight-roundtrip.json",
+      "file": "files/00022.json",
+      "bytes": 1410,
+      "sha256": "1e24fbf941b62588ccbe889490fb8b8ee2dbd50135eff8c3856800fb24964932"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\full-worker.log",
+      "logicalPath": "overnight-r2/execution/full-worker.log",
+      "file": "files/00023.log",
+      "bytes": 2362,
+      "sha256": "805e7781617522146ef3bb878f4ee37213b0614edb5fa133a3400d1340dd9d38"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\inventory.log",
+      "logicalPath": "overnight-r2/execution/inventory.log",
+      "file": "files/00024.log",
+      "bytes": 578,
+      "sha256": "a1e0fd0994fae58fcfc930fe5342de21e2aa7580c4b898bc4121994defbeb8ff"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\published-gpu-causal-control.json",
+      "logicalPath": "overnight-r2/execution/published-gpu-causal-control.json",
+      "file": "files/00025.json",
+      "bytes": 1461,
+      "sha256": "07c451b63abefe98d28e38cd0237f109bb89c8fa3fb3b37fe856f27b5be3413a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\run.json",
+      "logicalPath": "overnight-r2/execution/run.json",
+      "file": "files/00026.json",
+      "bytes": 709,
+      "sha256": "9fcfa7c4e7798280bc44e82af875359517de848fa00bd871034440e8fe531448"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\tiny-causal-control.json",
+      "logicalPath": "overnight-r2/execution/tiny-causal-control.json",
+      "file": "files/00027.json",
+      "bytes": 524,
+      "sha256": "a673062a51e0c295ff5f3dfca62deb8cf7c81c615c23be25ca4aab9cf68f09f2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\inventory\\hip-inventory.json",
+      "logicalPath": "overnight-r2/execution/inventory/hip-inventory.json",
+      "file": "files/00028.json",
+      "bytes": 1392,
+      "sha256": "f94513c9370ab9b9b8c439f17f48b64c616db6f36564631a2c8fb122505acb03"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "overnight-r2/execution/inventory/inventory-resources.jsonl",
+      "file": "files/00029.jsonl",
+      "bytes": 611,
+      "sha256": "18224baf4e7c4d1a0d57b6ea4cc11fb4020d8193b9161a62508e35536fc9f981"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\inventory\\inventory-run.json",
+      "logicalPath": "overnight-r2/execution/inventory/inventory-run.json",
+      "file": "files/00030.json",
+      "bytes": 609,
+      "sha256": "b49d30c88fdcc9ba7d98de1b0bdedd0688c24036af33df641acec8165bfa2ceb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\inventory\\inventory-worker.log",
+      "logicalPath": "overnight-r2/execution/inventory/inventory-worker.log",
+      "file": "files/00031.log",
+      "bytes": 1211,
+      "sha256": "f3af6c35419d9c41a1d280ad5edb5b971dbd1e090a44081fe7a0910fe570bc0a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r3\\frozen-moss_causal_prefill_20261115.py",
+      "logicalPath": "overnight-r3/control/frozen-moss_causal_prefill_20261115.py",
+      "file": "files/00032.py",
+      "bytes": 5965,
+      "sha256": "a315eebd25ee3a3fa2ef802b8b062eda3057c16427b94524d9f066e6b1a485f7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r3\\frozen-moss_overnight_worker_20261115.py",
+      "logicalPath": "overnight-r3/control/frozen-moss_overnight_worker_20261115.py",
+      "file": "files/00033.py",
+      "bytes": 11244,
+      "sha256": "59d918edfb7ab81190c1d0a87c0d2afc527fd67768518beb24b88fb35626e762"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r3\\frozen-run_moss_overnight_20261115.py",
+      "logicalPath": "overnight-r3/control/frozen-run_moss_overnight_20261115.py",
+      "file": "files/00034.py",
+      "bytes": 5651,
+      "sha256": "6d75fed82edb2965e170319a6c4a89873a43cf745abb7b616b038a9dfb1dca0d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r3\\overnight-binding.json",
+      "logicalPath": "overnight-r3/control/overnight-binding.json",
+      "file": "files/00035.json",
+      "bytes": 6441,
+      "sha256": "69eaef72feaaf7ec547b673af45930894b6a8e9a1b69bc4d59bc70a8d82cc7b3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\ES2003b-input.json",
+      "logicalPath": "overnight-r3/execution/ES2003b-input.json",
+      "file": "files/00036.json",
+      "bytes": 947,
+      "sha256": "c2e6d0cae711634f5f73bf54687573b21a4ee354a9ce3cba2d401500c1754aa4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\control-allocation-trace.jsonl",
+      "logicalPath": "overnight-r3/execution/control-allocation-trace.jsonl",
+      "file": "files/00037.jsonl",
+      "bytes": 144209,
+      "sha256": "43313beae1128ecd0c7417830166325ab86f9908c3bee93babee9ac14d2a22b6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\control-input.json",
+      "logicalPath": "overnight-r3/execution/control-input.json",
+      "file": "files/00038.json",
+      "bytes": 931,
+      "sha256": "e28460f735365941d8e3ac63aab877c7348e0331adfcf339df3d03df57128ed7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\control-state.json",
+      "logicalPath": "overnight-r3/execution/control-state.json",
+      "file": "files/00039.json",
+      "bytes": 1858,
+      "sha256": "a55bfc2f78adfa821d929a573d8ec3bb9705239af80eea1c04aa255634eb2a91"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\control-weight-roundtrip.json",
+      "logicalPath": "overnight-r3/execution/control-weight-roundtrip.json",
+      "file": "files/00040.json",
+      "bytes": 1411,
+      "sha256": "fb7c482104518105f7ed42ab86862ce980ffca0b274fc807ec197490f3845e90"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\control-worker.log",
+      "logicalPath": "overnight-r3/execution/control-worker.log",
+      "file": "files/00041.log",
+      "bytes": 1956,
+      "sha256": "888d3008fc47eb02cb17a34bc8dbc316f22c03a9ba6a423d0ebbc9fd4de81d92"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\full-allocation-trace.jsonl",
+      "logicalPath": "overnight-r3/execution/full-allocation-trace.jsonl",
+      "file": "files/00042.jsonl",
+      "bytes": 341989,
+      "sha256": "1a36707d74df73d430f3d9806cb3694a730f63ecfb60c36547eb6d36153f2d0c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\full-state.json",
+      "logicalPath": "overnight-r3/execution/full-state.json",
+      "file": "files/00043.json",
+      "bytes": 2099,
+      "sha256": "ab7a3bf734ef2d2416b1bd6bd619c329cbb1b585a53cc67f3f43635130ad7fa9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\full-weight-roundtrip.json",
+      "logicalPath": "overnight-r3/execution/full-weight-roundtrip.json",
+      "file": "files/00044.json",
+      "bytes": 1412,
+      "sha256": "d9e3339c1d3bbb85f854616874a6b1e4e40c366ed35993b29a7433ad1ce548c5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\full-worker.log",
+      "logicalPath": "overnight-r3/execution/full-worker.log",
+      "file": "files/00045.log",
+      "bytes": 5747,
+      "sha256": "ea2033cf783c5fe16dbc789cf085e4cf9d93fa6265563f11ed9a39deb93f4ea0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\inventory.log",
+      "logicalPath": "overnight-r3/execution/inventory.log",
+      "file": "files/00046.log",
+      "bytes": 577,
+      "sha256": "df61bf62beaeec056c894b48bf31c9c7e602c6659b0bf0879e62494a353ce631"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\published-gpu-causal-control.json",
+      "logicalPath": "overnight-r3/execution/published-gpu-causal-control.json",
+      "file": "files/00047.json",
+      "bytes": 1461,
+      "sha256": "07c451b63abefe98d28e38cd0237f109bb89c8fa3fb3b37fe856f27b5be3413a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\run.json",
+      "logicalPath": "overnight-r3/execution/run.json",
+      "file": "files/00048.json",
+      "bytes": 709,
+      "sha256": "f28ac120348b43010da4d4ed7e1b36d5d3912ea7e730868897b9bd9a08e59053"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\tiny-causal-control.json",
+      "logicalPath": "overnight-r3/execution/tiny-causal-control.json",
+      "file": "files/00049.json",
+      "bytes": 524,
+      "sha256": "a673062a51e0c295ff5f3dfca62deb8cf7c81c615c23be25ca4aab9cf68f09f2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\inventory\\hip-inventory.json",
+      "logicalPath": "overnight-r3/execution/inventory/hip-inventory.json",
+      "file": "files/00050.json",
+      "bytes": 1392,
+      "sha256": "a2a724a4c3620bebe59d440f25d32eab22898f0abf5308f5c74941bd3ff6da32"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "overnight-r3/execution/inventory/inventory-resources.jsonl",
+      "file": "files/00051.jsonl",
+      "bytes": 611,
+      "sha256": "395262fc8f7089ee6ed69b43b4c249baead95575b7a652810df8bbcd9fff9056"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\inventory\\inventory-run.json",
+      "logicalPath": "overnight-r3/execution/inventory/inventory-run.json",
+      "file": "files/00052.json",
+      "bytes": 608,
+      "sha256": "6efdd48151647d9f326bd20558390be9c730066e8611a9a571ad2b3cd9373ef8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\inventory\\inventory-worker.log",
+      "logicalPath": "overnight-r3/execution/inventory/inventory-worker.log",
+      "file": "files/00053.log",
+      "bytes": 1211,
+      "sha256": "c771dbfd5b8800a8b18e816642f072ee1cc1d0ec6053d71cef605b1b84857f39"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r4\\frozen-moss_causal_prefill_20261115.py",
+      "logicalPath": "overnight-r4/control/frozen-moss_causal_prefill_20261115.py",
+      "file": "files/00054.py",
+      "bytes": 6449,
+      "sha256": "4215d5fff1dfbd4a3d71f521e7b6658bd061f2fe20556e3b7b07dfe1371068d3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r4\\frozen-moss_overnight_worker_20261115.py",
+      "logicalPath": "overnight-r4/control/frozen-moss_overnight_worker_20261115.py",
+      "file": "files/00055.py",
+      "bytes": 12644,
+      "sha256": "c1eeb8297223f22c5bd8099623bcb5f702129c8b3cfe795b45d7a61f830d4478"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r4\\frozen-run_moss_overnight_20261115.py",
+      "logicalPath": "overnight-r4/control/frozen-run_moss_overnight_20261115.py",
+      "file": "files/00056.py",
+      "bytes": 5737,
+      "sha256": "83a82663742643ff19e2580e6fb4e99f92b78719111749dcfdf8ee802b3633f3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r4\\overnight-binding.json",
+      "logicalPath": "overnight-r4/control/overnight-binding.json",
+      "file": "files/00057.json",
+      "bytes": 6775,
+      "sha256": "7611cd446852a06ce7c6bed3eaf6e374c710ad595e27bf0985a3c65059b36222"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\allocation-control-state.json",
+      "logicalPath": "overnight-r4/execution/allocation-control-state.json",
+      "file": "files/00058.json",
+      "bytes": 1287,
+      "sha256": "791c2ffb45f896bafd432cf0982f8ce8c72ed5f54f1920a4be925c9ba29323fb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\allocation-control-worker.log",
+      "logicalPath": "overnight-r4/execution/allocation-control-worker.log",
+      "file": "files/00059.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\allocation-control.json",
+      "logicalPath": "overnight-r4/execution/allocation-control.json",
+      "file": "files/00060.json",
+      "bytes": 3235,
+      "sha256": "33c91da4c18f1b5f4349602141b9398a78c00c540170cd2ac206a7c5c9e6dfc1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\control-allocation-trace.jsonl",
+      "logicalPath": "overnight-r4/execution/control-allocation-trace.jsonl",
+      "file": "files/00061.jsonl",
+      "bytes": 29137,
+      "sha256": "1ad500484705b0e4d2ffb5aaffa6b4c89c6ec32c3217875e6128ea705d8952c7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\control-input.json",
+      "logicalPath": "overnight-r4/execution/control-input.json",
+      "file": "files/00062.json",
+      "bytes": 931,
+      "sha256": "e28460f735365941d8e3ac63aab877c7348e0331adfcf339df3d03df57128ed7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\control-state.json",
+      "logicalPath": "overnight-r4/execution/control-state.json",
+      "file": "files/00063.json",
+      "bytes": 1879,
+      "sha256": "3cc5f032e4b31fef7f3dbfdb3da0f87cfb339ead3efc5f65eda03d94706921c1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\control-weight-roundtrip.json",
+      "logicalPath": "overnight-r4/execution/control-weight-roundtrip.json",
+      "file": "files/00064.json",
+      "bytes": 1411,
+      "sha256": "19fbc9558965f9b406710b0dcf37410c35930db49a559ecf0a6b26e2c9a36085"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\control-worker.log",
+      "logicalPath": "overnight-r4/execution/control-worker.log",
+      "file": "files/00065.log",
+      "bytes": 848,
+      "sha256": "dd2a4f2a19e7dabb177c2999359dd0d3abc5c05b2a1cd2c9c348b6b66ad42b8d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\inventory.log",
+      "logicalPath": "overnight-r4/execution/inventory.log",
+      "file": "files/00066.log",
+      "bytes": 580,
+      "sha256": "508c0ce76563185ab9fcb49b02d20dc5bdbe35542a78fc16f258a026e12e3c26"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\run.json",
+      "logicalPath": "overnight-r4/execution/run.json",
+      "file": "files/00067.json",
+      "bytes": 860,
+      "sha256": "f39660e7859ef5c45c819a42431d382e9e11e32fcf5dec1cc36b0aa317c5a8ef"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\tiny-causal-control.json",
+      "logicalPath": "overnight-r4/execution/tiny-causal-control.json",
+      "file": "files/00068.json",
+      "bytes": 524,
+      "sha256": "a673062a51e0c295ff5f3dfca62deb8cf7c81c615c23be25ca4aab9cf68f09f2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\inventory\\hip-inventory.json",
+      "logicalPath": "overnight-r4/execution/inventory/hip-inventory.json",
+      "file": "files/00069.json",
+      "bytes": 1394,
+      "sha256": "e54429d59b4a9fb4810adf550338ff98c55a253bbd8b73b895ec90cdf14ff894"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "overnight-r4/execution/inventory/inventory-resources.jsonl",
+      "file": "files/00070.jsonl",
+      "bytes": 611,
+      "sha256": "708109ed30e40ff9d12f6aeef60f8c94d179f20deb4607f2dbad4975a8f39e9c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\inventory\\inventory-run.json",
+      "logicalPath": "overnight-r4/execution/inventory/inventory-run.json",
+      "file": "files/00071.json",
+      "bytes": 611,
+      "sha256": "8125ad8fcb39fa7c9b99500d11f0f0ba571f8960dab8225eaacb8316e1d270ca"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\inventory\\inventory-worker.log",
+      "logicalPath": "overnight-r4/execution/inventory/inventory-worker.log",
+      "file": "files/00072.log",
+      "bytes": 1213,
+      "sha256": "b4f9b9a2dc11143b144cae0f53de201b2f6b0d7f8ef20d131c3c36054df7b257"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\20200623_S_R001S07C01-original-reference-activity.json",
+      "logicalPath": "overnight-r5/control/20200623_S_R001S07C01-original-reference-activity.json",
+      "file": "files/00073.json",
+      "bytes": 55325,
+      "sha256": "ce15bba954beea5deeb84f6545131418ad133e7654a863e0573aac5a3960f628"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\EN2002a-original-der-control.json",
+      "logicalPath": "overnight-r5/control/EN2002a-original-der-control.json",
+      "file": "files/00074.json",
+      "bytes": 792,
+      "sha256": "019ae0a31200542ee37401c7739d7f86b476eb48107baca53be3c91790f558f5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\ES2003b-original-der-control.json",
+      "logicalPath": "overnight-r5/control/ES2003b-original-der-control.json",
+      "file": "files/00075.json",
+      "bytes": 810,
+      "sha256": "779de497d22ccbe8fc9cc793f588449b707a74d7ab71a78a4e8f86311b092758"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\S_R004S03C01-original-reference-activity.json",
+      "logicalPath": "overnight-r5/control/S_R004S03C01-original-reference-activity.json",
+      "file": "files/00076.json",
+      "bytes": 12941,
+      "sha256": "56295980c3dea79980c10279a24c1b218ae09c043ad6b439cfa3741fb456f263"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\baseline-control-20200623_S_R001S07C01.json",
+      "logicalPath": "overnight-r5/control/baseline-control-20200623_S_R001S07C01.json",
+      "file": "files/00077.json",
+      "bytes": 1683,
+      "sha256": "175057c8169d3206233c1707ecc30513067ff860009109534a9f7bcc88c162e7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\baseline-control-EN2002a.json",
+      "logicalPath": "overnight-r5/control/baseline-control-EN2002a.json",
+      "file": "files/00078.json",
+      "bytes": 1657,
+      "sha256": "0295ad40caec1a937e3b4df89e6c4cf2044231a62552de79476b9229d0f5d119"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\baseline-control-ES2003b.json",
+      "logicalPath": "overnight-r5/control/baseline-control-ES2003b.json",
+      "file": "files/00079.json",
+      "bytes": 1683,
+      "sha256": "f3cbe9594e675fdc50b6392c0b5526475a829b6f90ff79fabc829435fd3b7c86"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\baseline-control-S_R004S03C01.json",
+      "logicalPath": "overnight-r5/control/baseline-control-S_R004S03C01.json",
+      "file": "files/00080.json",
+      "bytes": 1682,
+      "sha256": "a056fc732bd3b2f6e7a64b8131bdcc755f61efb6007ace6c14d4d66b149c3d14"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\frozen-moss_causal_prefill_20261115.py",
+      "logicalPath": "overnight-r5/control/frozen-moss_causal_prefill_20261115.py",
+      "file": "files/00081.py",
+      "bytes": 7130,
+      "sha256": "474ad214027c02883af6afa322a5a311cbe1c69890f77367f1f384b410f04f39"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\frozen-moss_overnight_worker_20261115.py",
+      "logicalPath": "overnight-r5/control/frozen-moss_overnight_worker_20261115.py",
+      "file": "files/00082.py",
+      "bytes": 12644,
+      "sha256": "c1eeb8297223f22c5bd8099623bcb5f702129c8b3cfe795b45d7a61f830d4478"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\frozen-run_moss_overnight_20261115.py",
+      "logicalPath": "overnight-r5/control/frozen-run_moss_overnight_20261115.py",
+      "file": "files/00083.py",
+      "bytes": 6144,
+      "sha256": "930ca8f3d1503a868f6318f96f8fd12ac5319342ca4821ec2319e965e13144c0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\overnight-binding.json",
+      "logicalPath": "overnight-r5/control/overnight-binding.json",
+      "file": "files/00084.json",
+      "bytes": 6925,
+      "sha256": "a3df0b376dab15894cc4d10d2ea84e3c18dd79fc6cec9e5675edf586589e7e10"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5\\whole-scoring-only.json",
+      "logicalPath": "overnight-r5/control/whole-scoring-only.json",
+      "file": "files/00085.json",
+      "bytes": 10004,
+      "sha256": "7a6a4ceb9070338373abd0d688e10ac50f4e9f75afab48124a2d932924be4a53"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\ES2003b-input.json",
+      "logicalPath": "overnight-r5/execution/ES2003b-input.json",
+      "file": "files/00086.json",
+      "bytes": 947,
+      "sha256": "c2e6d0cae711634f5f73bf54687573b21a4ee354a9ce3cba2d401500c1754aa4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\ES2003b-partial-ids.json",
+      "logicalPath": "overnight-r5/execution/ES2003b-partial-ids.json",
+      "file": "files/00087.json",
+      "bytes": 348,
+      "sha256": "4b80f55697f1df01f329c4e82c2644e0289f0e8533d27a1830226012ea92b4e9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\control-allocation-trace.jsonl",
+      "logicalPath": "overnight-r5/execution/control-allocation-trace.jsonl",
+      "file": "files/00088.jsonl",
+      "bytes": 44975,
+      "sha256": "8c6ea3ecff23b1d4a03797ef54ab05a27f9ee849a64f3de4d50eccc48454262f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\control-input.json",
+      "logicalPath": "overnight-r5/execution/control-input.json",
+      "file": "files/00089.json",
+      "bytes": 931,
+      "sha256": "e28460f735365941d8e3ac63aab877c7348e0331adfcf339df3d03df57128ed7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\control-state.json",
+      "logicalPath": "overnight-r5/execution/control-state.json",
+      "file": "files/00090.json",
+      "bytes": 1859,
+      "sha256": "41ffca4ce8d011f88df2495ff4e41175a6ab039279bf1f47ee43593fbd8b8dc2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\control-weight-roundtrip.json",
+      "logicalPath": "overnight-r5/execution/control-weight-roundtrip.json",
+      "file": "files/00091.json",
+      "bytes": 1412,
+      "sha256": "b85a57e5c3e149cb67b9aa5f4241c4003f255fd5a40e753e087513c28fd2c1fe"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\control-worker.log",
+      "logicalPath": "overnight-r5/execution/control-worker.log",
+      "file": "files/00092.log",
+      "bytes": 1957,
+      "sha256": "a6b55c55f81c32fb9def831e5a66f59d42ed33acc73ab800e334ea3b16b239ba"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\full-allocation-trace.jsonl",
+      "logicalPath": "overnight-r5/execution/full-allocation-trace.jsonl",
+      "file": "files/00093.jsonl",
+      "bytes": 44975,
+      "sha256": "6279549bca8e85cbd457d0ab26da9411106434a64ccfa44653d21d54385b218a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\full-state.json",
+      "logicalPath": "overnight-r5/execution/full-state.json",
+      "file": "files/00094.json",
+      "bytes": 2035,
+      "sha256": "54ae644f7a92ee1fa624abdf712ffb648f2f7e9b2244ad6266665b71104d099b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\full-weight-roundtrip.json",
+      "logicalPath": "overnight-r5/execution/full-weight-roundtrip.json",
+      "file": "files/00095.json",
+      "bytes": 1411,
+      "sha256": "97a20140d1349c976dffcc3712b32bb3205e9d2d560fe37a6a02c90cfb79f8dc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\full-worker.log",
+      "logicalPath": "overnight-r5/execution/full-worker.log",
+      "file": "files/00096.log",
+      "bytes": 8394,
+      "sha256": "3917d4b51548e61cb9f143d7771df539ceb4c8565e975087e8aa3976e9e0243f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\inventory.log",
+      "logicalPath": "overnight-r5/execution/inventory.log",
+      "file": "files/00097.log",
+      "bytes": 581,
+      "sha256": "59482d7b7d735dfa362458c9fd23976f3dace5a93f2348faeec328f90f05860d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\published-gpu-causal-control.json",
+      "logicalPath": "overnight-r5/execution/published-gpu-causal-control.json",
+      "file": "files/00098.json",
+      "bytes": 1461,
+      "sha256": "07c451b63abefe98d28e38cd0237f109bb89c8fa3fb3b37fe856f27b5be3413a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\run.json",
+      "logicalPath": "overnight-r5/execution/run.json",
+      "file": "files/00099.json",
+      "bytes": 995,
+      "sha256": "3db7a750390b31d395c96ba93c3558f6271f5799968dedc1d3a941e9fe738e8c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\stop.request",
+      "logicalPath": "overnight-r5/execution/stop.request",
+      "file": "files/00100.request",
+      "bytes": 58,
+      "sha256": "a690f052561e9780efe458c214712face08876eb3515790dcce1c883c6a3067c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\tiny-causal-control.json",
+      "logicalPath": "overnight-r5/execution/tiny-causal-control.json",
+      "file": "files/00101.json",
+      "bytes": 524,
+      "sha256": "a673062a51e0c295ff5f3dfca62deb8cf7c81c615c23be25ca4aab9cf68f09f2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\inventory\\hip-inventory.json",
+      "logicalPath": "overnight-r5/execution/inventory/hip-inventory.json",
+      "file": "files/00102.json",
+      "bytes": 1394,
+      "sha256": "7ab0515d7dd26130d32b2c859a1b4bc626c03f098c172d40de63db806f526150"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "overnight-r5/execution/inventory/inventory-resources.jsonl",
+      "file": "files/00103.jsonl",
+      "bytes": 611,
+      "sha256": "05eb0374476cbed60cb700ef95bce4c745c5d3d3e4bac675adda8d8f411d15c5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\inventory\\inventory-run.json",
+      "logicalPath": "overnight-r5/execution/inventory/inventory-run.json",
+      "file": "files/00104.json",
+      "bytes": 612,
+      "sha256": "9938f3e6cdb1954c2a8683be6ec64e3e68e97b93ddb6005d202901d6e0983464"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\inventory\\inventory-worker.log",
+      "logicalPath": "overnight-r5/execution/inventory/inventory-worker.log",
+      "file": "files/00105.log",
+      "bytes": 1213,
+      "sha256": "c13edb3a8486b520fbafcdc274b34fa82c2478f97a97b65f10871bf038383553"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\decode-profile-r1\\overnight-binding.json",
+      "logicalPath": "decode-profile-r1/control/overnight-binding.json",
+      "file": "files/00106.json",
+      "bytes": 6945,
+      "sha256": "43bf01d509a5ddea5afa38bd8a3aa0ee69ebdae77d724b5925021a03f101ca3a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decode-profile-r1\\attention-profile-state.json",
+      "logicalPath": "decode-profile-r1/execution/attention-profile-state.json",
+      "file": "files/00107.json",
+      "bytes": 1241,
+      "sha256": "bc72a3b926deafd4a9075a4a9bc03bc15fbb8ed7a0c8492eaae053c6c9d8aa82"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decode-profile-r1\\attention-profile-worker.log",
+      "logicalPath": "decode-profile-r1/execution/attention-profile-worker.log",
+      "file": "files/00108.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decode-profile-r1\\attention-profile.json",
+      "logicalPath": "decode-profile-r1/execution/attention-profile.json",
+      "file": "files/00109.json",
+      "bytes": 2295,
+      "sha256": "f468c0b17a656e73737f58b854b5adf50cee9f89a790c38074ba2b8bdddbf985"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decode-profile-r1\\inventory.log",
+      "logicalPath": "decode-profile-r1/execution/inventory.log",
+      "file": "files/00110.log",
+      "bytes": 581,
+      "sha256": "db6cd383a184b61869f6e5767f97bb8046e9441801d20ebfd014f0e3aa9025e4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decode-profile-r1\\run.json",
+      "logicalPath": "decode-profile-r1/execution/run.json",
+      "file": "files/00111.json",
+      "bytes": 894,
+      "sha256": "fb4324bc497a7cb4b0f1e43ad9407004b0fc80c41ef6516ad5ed296b98f2aaf9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decode-profile-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "decode-profile-r1/execution/inventory/hip-inventory.json",
+      "file": "files/00112.json",
+      "bytes": 1393,
+      "sha256": "553e8b35a078805d2a57b29b648547e9f46986db5528838e2b39daeb1b342b4e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decode-profile-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "decode-profile-r1/execution/inventory/inventory-resources.jsonl",
+      "file": "files/00113.jsonl",
+      "bytes": 611,
+      "sha256": "f69350b4c5b004db4863cd0a56a6744d52dbc0d41ac667747ea449d5ab4b44e0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decode-profile-r1\\inventory\\inventory-run.json",
+      "logicalPath": "decode-profile-r1/execution/inventory/inventory-run.json",
+      "file": "files/00114.json",
+      "bytes": 612,
+      "sha256": "ca16e7fa22cadc7c2073705e07a1dbab74ca73b428f3a6d9bb629122f42deaa8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decode-profile-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "decode-profile-r1/execution/inventory/inventory-worker.log",
+      "file": "files/00115.log",
+      "bytes": 1212,
+      "sha256": "0f62d0503df29995dc037f650ec76d8c6980cb12f1189b74214b35618126b3c5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\decoder-profile-r1\\frozen-moss_overnight_worker_20261115.py",
+      "logicalPath": "decoder-profile-r1/control/frozen-moss_overnight_worker_20261115.py",
+      "file": "files/00116.py",
+      "bytes": 15192,
+      "sha256": "f265ba75e8f73b3e60c7c31664a9d3d7fa3d334995c6e4f023a4d93a433b842a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\decoder-profile-r1\\frozen-run_moss_overnight_20261115.py",
+      "logicalPath": "decoder-profile-r1/control/frozen-run_moss_overnight_20261115.py",
+      "file": "files/00117.py",
+      "bytes": 6489,
+      "sha256": "ac03e3f2a40e57630439496be7af7da5d9696f2413f48f0cba54eb35c7b02182"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\decoder-profile-r1\\overnight-binding.json",
+      "logicalPath": "decoder-profile-r1/control/overnight-binding.json",
+      "file": "files/00118.json",
+      "bytes": 6979,
+      "sha256": "e76f7e9261770427f1e4e9fe7731df89599966606a0f405907a4e32bf87080ef"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r1\\decoder-profile-state.json",
+      "logicalPath": "decoder-profile-r1/execution/decoder-profile-state.json",
+      "file": "files/00119.json",
+      "bytes": 1249,
+      "sha256": "a32fa213fb1dcaf47f4cde7531407ba9404a54973175ff17ee6f9e6c89c548cb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r1\\decoder-profile-weight-roundtrip.json",
+      "logicalPath": "decoder-profile-r1/execution/decoder-profile-weight-roundtrip.json",
+      "file": "files/00120.json",
+      "bytes": 1410,
+      "sha256": "9f955afb5b25713a255e2ddbe192a7452c31d6558dfff6d53ddd0be426916172"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r1\\decoder-profile-worker.log",
+      "logicalPath": "decoder-profile-r1/execution/decoder-profile-worker.log",
+      "file": "files/00121.log",
+      "bytes": 169,
+      "sha256": "4125d51eeb6720f4825c620005460c1e0c872e59bc1479f86217b70bf5d71704"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r1\\decoder-profile.json",
+      "logicalPath": "decoder-profile-r1/execution/decoder-profile.json",
+      "file": "files/00122.json",
+      "bytes": 8958,
+      "sha256": "3def159d631c7fcea5b8fdad589913099e2aa182360207d95e07950502d54b97"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r1\\inventory.log",
+      "logicalPath": "decoder-profile-r1/execution/inventory.log",
+      "file": "files/00123.log",
+      "bytes": 581,
+      "sha256": "6b3e88a1a1eb697af792818dfdcbd265bacd624a301add74825b91b15c95ad67"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r1\\run.json",
+      "logicalPath": "decoder-profile-r1/execution/run.json",
+      "file": "files/00124.json",
+      "bytes": 888,
+      "sha256": "20d1aab909934b1099ba2e5ff5aa6018c59aa677738c909788eb26b1a1550923"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "decoder-profile-r1/execution/inventory/hip-inventory.json",
+      "file": "files/00125.json",
+      "bytes": 1393,
+      "sha256": "890d1048422783b13a78061301d1717a1df2d561eb5b4f4bfe079b7aa22ef77e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "decoder-profile-r1/execution/inventory/inventory-resources.jsonl",
+      "file": "files/00126.jsonl",
+      "bytes": 611,
+      "sha256": "d7d856a2284990d0bea2bed67cce3e8cdbfcd1e6cd0eba2db470bbb112332d5c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r1\\inventory\\inventory-run.json",
+      "logicalPath": "decoder-profile-r1/execution/inventory/inventory-run.json",
+      "file": "files/00127.json",
+      "bytes": 612,
+      "sha256": "d3c651fb505702836971162b282c47e9abcc56bfb8de9f7c945fb98e3acd72df"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "decoder-profile-r1/execution/inventory/inventory-worker.log",
+      "file": "files/00128.log",
+      "bytes": 1212,
+      "sha256": "a592e0750dbf66fefe43d344cc7a5aee1ff9d8370d2f0496657fcea989efef8f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\decoder-profile-r2\\overnight-binding.json",
+      "logicalPath": "decoder-profile-r2/control/overnight-binding.json",
+      "file": "files/00129.json",
+      "bytes": 7019,
+      "sha256": "e271e281fa669a9b9404c8105191c2e0c5cf6e89f32e1b886beff86f6d9189dd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r2\\decoder-profile-state.json",
+      "logicalPath": "decoder-profile-r2/execution/decoder-profile-state.json",
+      "file": "files/00130.json",
+      "bytes": 1251,
+      "sha256": "a82e00799fc05e40098f0a51723e8a51199e72d2431703a9e3d884c001e87edb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r2\\decoder-profile-weight-roundtrip.json",
+      "logicalPath": "decoder-profile-r2/execution/decoder-profile-weight-roundtrip.json",
+      "file": "files/00131.json",
+      "bytes": 1411,
+      "sha256": "27384c44df8e9e39abb4d5b7ca4f172c1b9184e2a906d21120c0d6e4e59dcd2d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r2\\decoder-profile-worker.log",
+      "logicalPath": "decoder-profile-r2/execution/decoder-profile-worker.log",
+      "file": "files/00132.log",
+      "bytes": 171,
+      "sha256": "564689c77160fcb8c5fd9f45c594d9c8147a3aed4afdf617341f401b870ede08"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r2\\decoder-profile.json",
+      "logicalPath": "decoder-profile-r2/execution/decoder-profile.json",
+      "file": "files/00133.json",
+      "bytes": 52198,
+      "sha256": "f939bac32dbde2f487314670abc68b186c150a332c26c2e9420affafe4897084"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r2\\inventory.log",
+      "logicalPath": "decoder-profile-r2/execution/inventory.log",
+      "file": "files/00134.log",
+      "bytes": 581,
+      "sha256": "250e60a3b6b5429d88fb3c52cfc631231a63c3899b470870b88e6040d95895dd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r2\\run.json",
+      "logicalPath": "decoder-profile-r2/execution/run.json",
+      "file": "files/00135.json",
+      "bytes": 888,
+      "sha256": "24e9386ce17242a9bc3354013b2dc56b98aec0a85489faea78d85b2eaeaea463"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r2\\inventory\\hip-inventory.json",
+      "logicalPath": "decoder-profile-r2/execution/inventory/hip-inventory.json",
+      "file": "files/00136.json",
+      "bytes": 1393,
+      "sha256": "14770e85d8c58bfbd303e9aa659070659492deea7ca18a5e813e5b5ecfbaa677"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r2\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "decoder-profile-r2/execution/inventory/inventory-resources.jsonl",
+      "file": "files/00137.jsonl",
+      "bytes": 492,
+      "sha256": "b4443109a68872c05badc244426b6176adcd93f36725a09d4f4fc0455fdbd5a5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r2\\inventory\\inventory-run.json",
+      "logicalPath": "decoder-profile-r2/execution/inventory/inventory-run.json",
+      "file": "files/00138.json",
+      "bytes": 612,
+      "sha256": "803d7871e5d69e4e47d9745852e6c265003617ac8a2a1654118ecaad4658002f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\decoder-profile-r2\\inventory\\inventory-worker.log",
+      "logicalPath": "decoder-profile-r2/execution/inventory/inventory-worker.log",
+      "file": "files/00139.log",
+      "bytes": 1212,
+      "sha256": "e98a4a76198e8aac91d1594c88a67e368e0e2a3634dfb34706494abecec57b76"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r1\\frozen-moss_native_cache_store_20261115.py",
+      "logicalPath": "staged-r1/control/frozen-moss_native_cache_store_20261115.py",
+      "file": "files/00140.py",
+      "bytes": 4341,
+      "sha256": "6d5d8fcfd10e32da7e8695d202d8a71af3cb80aa09e45ce3cff110ceb8f92795"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r1\\frozen-moss_staged_meeting_worker_20261115.py",
+      "logicalPath": "staged-r1/control/frozen-moss_staged_meeting_worker_20261115.py",
+      "file": "files/00141.py",
+      "bytes": 9028,
+      "sha256": "5cbfb6d99c91f2526b5deadd89eb83d149635b2c9bf5d39ccbfd43e51f92e10b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r1\\frozen-run_moss_staged_meetings_20261115.py",
+      "logicalPath": "staged-r1/control/frozen-run_moss_staged_meetings_20261115.py",
+      "file": "files/00142.py",
+      "bytes": 6380,
+      "sha256": "d698da81a1ecf14b3a747f84820729e57752b36c658ecf85faa1e21686862241"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r1\\staged-binding.json",
+      "logicalPath": "staged-r1/control/staged-binding.json",
+      "file": "files/00143.json",
+      "bytes": 8703,
+      "sha256": "9f845dc42d0654c1fcd948e88ada92d4d5e77cf898b5b954a9f840bcc4abbf60"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\inventory-0.log",
+      "logicalPath": "staged-r1/execution/inventory-0.log",
+      "file": "files/00144.log",
+      "bytes": 578,
+      "sha256": "3d2cc0be42e06187b5c4fd65de1a712fc73782a727eb71c4242a9bbabe809c85"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\run.json",
+      "logicalPath": "staged-r1/execution/run.json",
+      "file": "files/00145.json",
+      "bytes": 1146,
+      "sha256": "306c702157faf8ca75e249ac69307f92ac7db01338fd196083dd461e501ab590"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\runtime-control61-decode-state.json",
+      "logicalPath": "staged-r1/execution/runtime-control61-decode-state.json",
+      "file": "files/00146.json",
+      "bytes": 1370,
+      "sha256": "e1cd2f89124b8188ccd8ea1d4bf26d80c32f177e6e056c1b73a0a584d12f5f92"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\runtime-control61-decode-weights.json",
+      "logicalPath": "staged-r1/execution/runtime-control61-decode-weights.json",
+      "file": "files/00147.json",
+      "bytes": 1412,
+      "sha256": "fe2a2e987f1e82c3c5a201542dcbbe9bbe84223b8107f62caeff03b69047a945"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\runtime-control61-decode-worker.log",
+      "logicalPath": "staged-r1/execution/runtime-control61-decode-worker.log",
+      "file": "files/00148.log",
+      "bytes": 1493,
+      "sha256": "18a5b4a4132107a78a78d501b1197cb71af1344da0db6fb3c1dfddf52bf503e8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\runtime-control61-input.json",
+      "logicalPath": "staged-r1/execution/runtime-control61-input.json",
+      "file": "files/00149.json",
+      "bytes": 931,
+      "sha256": "e28460f735365941d8e3ac63aab877c7348e0331adfcf339df3d03df57128ed7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\runtime-control61-partial-ids.json",
+      "logicalPath": "staged-r1/execution/runtime-control61-partial-ids.json",
+      "file": "files/00150.json",
+      "bytes": 169,
+      "sha256": "f1a902df84cb8a55fec2322becb173fb08482b3337f1e1d8bcd94bd0ac5c79cc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\runtime-control61-prefill-state.json",
+      "logicalPath": "staged-r1/execution/runtime-control61-prefill-state.json",
+      "file": "files/00151.json",
+      "bytes": 1645,
+      "sha256": "9ecc5dd43cd11cdc42297b64d82c325745512bfec58d92968138ee3128faa5bb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\runtime-control61-prefill-weights.json",
+      "logicalPath": "staged-r1/execution/runtime-control61-prefill-weights.json",
+      "file": "files/00152.json",
+      "bytes": 1412,
+      "sha256": "2628a3a13e47f7ff65ea4442f3864ea005b05a21d37de8373cfbf64278226bf9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\runtime-control61-prefill-worker.log",
+      "logicalPath": "staged-r1/execution/runtime-control61-prefill-worker.log",
+      "file": "files/00153.log",
+      "bytes": 1792,
+      "sha256": "9baa7be02682d611db4fe8080d5ab0a1c58bc462f3a37c988b8f34df36eb793c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\manifest.json",
+      "logicalPath": "staged-r1/execution/cache/runtime-control61/manifest.json",
+      "file": "files/00154.json",
+      "bytes": 24975,
+      "sha256": "81b78e2e766ba37337846fb847f5df61674e726d98b777c0f587c6164d14c670"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\inventory-0\\hip-inventory.json",
+      "logicalPath": "staged-r1/execution/inventory-0/hip-inventory.json",
+      "file": "files/00155.json",
+      "bytes": 1394,
+      "sha256": "1d54374b902de4282b310767d6163df8253bf81983db702f3351fd9834ed275a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\inventory-0\\inventory-resources.jsonl",
+      "logicalPath": "staged-r1/execution/inventory-0/inventory-resources.jsonl",
+      "file": "files/00156.jsonl",
+      "bytes": 616,
+      "sha256": "0eb4e29a4387b2a4421d3e80cf7ce815cd8d2944130734e26d94caaaae31646e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\inventory-0\\inventory-run.json",
+      "logicalPath": "staged-r1/execution/inventory-0/inventory-run.json",
+      "file": "files/00157.json",
+      "bytes": 609,
+      "sha256": "82824354b4543b25aec02ff8a215b2e04b627dc88e71f132ddb19b9458466403"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\inventory-0\\inventory-worker.log",
+      "logicalPath": "staged-r1/execution/inventory-0/inventory-worker.log",
+      "file": "files/00158.log",
+      "bytes": 1213,
+      "sha256": "d53cabd26222ef3ce38666626face20160f736fc837c0e5dc467d006476182c7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r2\\staged-binding.json",
+      "logicalPath": "active-staged-r2/frozen-binding-only.json",
+      "file": "files/00159.json",
+      "bytes": 9100,
+      "sha256": "7fb263f82cf2509224071c342f816062e31e927f5697a2b76098191d736aaf5c"
+    },
+    {
+      "source": "work\\prepare_moss_overnight_20261115.py",
+      "logicalPath": "continuation-tools/prepare_moss_overnight_20261115.py",
+      "file": "files/00160.py",
+      "bytes": 6037,
+      "sha256": "fcab965eaf3f5c2a75965aaac80df7e484c1e74ba93183a8c29f3e6571f00b6e"
+    },
+    {
+      "source": "work\\prepare_joint_whole_scoring_20261115.py",
+      "logicalPath": "continuation-tools/prepare_joint_whole_scoring_20261115.py",
+      "file": "files/00161.py",
+      "bytes": 6740,
+      "sha256": "96d7afb11bd4b85194a8d0b2068e92e23f5ad866a7ac95fe90bf0ca31c27ec4b"
+    },
+    {
+      "source": "work\\prepare_staged_moss_20261115.py",
+      "logicalPath": "continuation-tools/prepare_staged_moss_20261115.py",
+      "file": "files/00162.py",
+      "bytes": 6065,
+      "sha256": "ecf056145021c3f6836f4a858c9467ad967d708dacf7673cf49dbf52719db885"
+    },
+    {
+      "source": "work\\protect_moss_overnight_checkpoint_20261115.py",
+      "logicalPath": "continuation-tools/protect_moss_overnight_checkpoint_20261115.py",
+      "file": "files/00163.py",
+      "bytes": 6835,
+      "sha256": "a942d53d9a5a026f6b20453b9693ce2683b634e0f3a70fda70aad83fb1676caf"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "logicalPath": "canonical-workpoint-snapshot.json",
+      "file": "files/00164.json",
+      "bytes": 204186,
+      "sha256": "96832ca138c5f849cbc4b4a487d7fb6311ff7c8da82b853542ee670b38e4b74d"
+    }
+  ],
+  "bulkHashOnly": [
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\control-input\\original.f32",
+      "bytes": 3904192,
+      "sha256": "6437f5162c29e75c2ec9e12b05286d3b1438b0499d4f617053f632de73974bd9",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r2\\inputs\\ES2003b\\original.f32",
+      "bytes": 135028056,
+      "sha256": "0e6cb3bc135981e61cc40e46182e0ac37506ba64ab31c1993b2a321c5685b4c4",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\control-input\\original.f32",
+      "bytes": 3904192,
+      "sha256": "6437f5162c29e75c2ec9e12b05286d3b1438b0499d4f617053f632de73974bd9",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r3\\inputs\\ES2003b\\original.f32",
+      "bytes": 135028056,
+      "sha256": "0e6cb3bc135981e61cc40e46182e0ac37506ba64ab31c1993b2a321c5685b4c4",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\control-input\\original.f32",
+      "bytes": 3904192,
+      "sha256": "6437f5162c29e75c2ec9e12b05286d3b1438b0499d4f617053f632de73974bd9",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\control-input\\original.f32",
+      "bytes": 3904192,
+      "sha256": "6437f5162c29e75c2ec9e12b05286d3b1438b0499d4f617053f632de73974bd9",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r5\\inputs\\ES2003b\\original.f32",
+      "bytes": 135028056,
+      "sha256": "0e6cb3bc135981e61cc40e46182e0ac37506ba64ab31c1993b2a321c5685b4c4",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\0-keys.npy",
+      "bytes": 1785984,
+      "sha256": "a564eacd61bddaee594733be8d67550434823e06440a6db8515abf2eb4848a81",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\0-values.npy",
+      "bytes": 1785984,
+      "sha256": "dab9df9b15198419800db43f152d4b1a91af8ccca6a340933242e7018597ab61",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\1-keys.npy",
+      "bytes": 1785984,
+      "sha256": "bdf67ef5560f916832973e381e18ddde259cb169c2ff8fbb47a6056bb0becfe9",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\1-values.npy",
+      "bytes": 1785984,
+      "sha256": "33a705d2f34519bb4d3f593a35244ebeaadcaa15aec5acd52ed55067bf801fac",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\10-keys.npy",
+      "bytes": 1785984,
+      "sha256": "6bdce9a3f850a9b876a7a4d0fc1226e534bafc1d3ab79bf90c5eb132c87e2639",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\10-values.npy",
+      "bytes": 1785984,
+      "sha256": "335e1faf07e18a172e706263d1155447d9ca7a435c8669a693697d552c691e90",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\11-keys.npy",
+      "bytes": 1785984,
+      "sha256": "6f3d52b7c163e388ab132f6cf7a407727f1083f1de9b7c69657d8c32f9ebefb3",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\11-values.npy",
+      "bytes": 1785984,
+      "sha256": "74360dcf8d7648c7415017eb8752520f04d5cd407175cbc735f0aee70f96a117",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\12-keys.npy",
+      "bytes": 1785984,
+      "sha256": "6328a596cdec9b1dbab7f39816dc59c71690e1339e550a80170800934990fcde",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\12-values.npy",
+      "bytes": 1785984,
+      "sha256": "8618595cf026da4435d355a9f9392db3ea26610b366525ff2c252629b7316225",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\13-keys.npy",
+      "bytes": 1785984,
+      "sha256": "6f9f57613d237313eeaf7fc0cf4c4762c09d5ab87a3fcc8ffb7bac2909ff4409",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\13-values.npy",
+      "bytes": 1785984,
+      "sha256": "64f14ff82b8664c721d9995eaa538d51c3954bff8a1ec2f55488cf51236e5a3f",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\14-keys.npy",
+      "bytes": 1785984,
+      "sha256": "f65491bb8692d4d8bf8f609ecb0142c559bef5dbb5903d02ed2c7995b7422c64",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\14-values.npy",
+      "bytes": 1785984,
+      "sha256": "1ed4c81e00e9074ee8200c074e23ef417ffdf7d121a2bdd45edd7a54ea573d1c",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\15-keys.npy",
+      "bytes": 1785984,
+      "sha256": "20bafe7e2776fea1635e846a8d17076b8367af9482754718867901acce578124",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\15-values.npy",
+      "bytes": 1785984,
+      "sha256": "11474a7a7ab9355149da7b966efcd5a83ab9aec1197a69d71172426d53adb695",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\16-keys.npy",
+      "bytes": 1785984,
+      "sha256": "0c985af540db975e0dcc36404e6b7d296742c7574f82c0860720abc089854ba4",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\16-values.npy",
+      "bytes": 1785984,
+      "sha256": "338b803dd259dca0dc52bfa8784cb5731f6f1273a68941b5af9390bbcc9a507d",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\17-keys.npy",
+      "bytes": 1785984,
+      "sha256": "d195d0d642d50e83828d7168af9d52ffa3db00988a104e7741fa28396466ab4e",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\17-values.npy",
+      "bytes": 1785984,
+      "sha256": "f9bd2ad4feafcb76c9174330179e168678cf0e7fe7b4c4b80f6e2bc45dcb5c2a",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\18-keys.npy",
+      "bytes": 1785984,
+      "sha256": "11480163424834d54bd3fa8c371e37eace050623c0b1a15b8a3230a347817e03",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\18-values.npy",
+      "bytes": 1785984,
+      "sha256": "00b6bbf6d557506188491223cd1154a17003ac1d0e2316ec2c5b3f83823b0d70",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\19-keys.npy",
+      "bytes": 1785984,
+      "sha256": "f8e1f12566cd582f8b609c1928bd955d7d21eb9e450ce2d1d03eafd2cd14694f",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\19-values.npy",
+      "bytes": 1785984,
+      "sha256": "e3d41174dfaa5c87271eebcde271c5cf78b286cfe1459bb5197297823cbcb7ac",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\2-keys.npy",
+      "bytes": 1785984,
+      "sha256": "0e397bc7cf748191337e47dfebcabc412bd9014fd6e7df864d08ac7cdbdf9e26",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\2-values.npy",
+      "bytes": 1785984,
+      "sha256": "5439b116d13ca6f5543d8effe17bc85258a1d38c1c4116178ea9e3be5cf120e1",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\20-keys.npy",
+      "bytes": 1785984,
+      "sha256": "d2e4ff4d34df8b2abf3b2bcbc4e56a8cafa5f568124031f73c4d6da63de8e9a6",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\20-values.npy",
+      "bytes": 1785984,
+      "sha256": "8fab103815dedc2c3b75290daa85be17d5d981808de070d1300ffc491b6a0f07",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\21-keys.npy",
+      "bytes": 1785984,
+      "sha256": "fc3a9dcfd27a0ba0e207a56af8b14d18eeea15a91471fe1083afaa6238a86250",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\21-values.npy",
+      "bytes": 1785984,
+      "sha256": "adbaf84c63da6bbbbd9b2db1253fb949965b3c207694971d2d024bc0e6a2afcf",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\22-keys.npy",
+      "bytes": 1785984,
+      "sha256": "4ac6cc4ed969606d8c3438cf5b990857d38eeab862606e38a8474a7d20bd8a41",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\22-values.npy",
+      "bytes": 1785984,
+      "sha256": "da81d6063358e60bba0c5d0a9c5547811fff1b16eab2c1235c37643432e694b9",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\23-keys.npy",
+      "bytes": 1785984,
+      "sha256": "bdf52d7ec87261577c32bcdd7609f081ed1d7e7e83199939aeb54e7399a9fe69",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\23-values.npy",
+      "bytes": 1785984,
+      "sha256": "c1b56b6d199eee4be5ae10502c563180c67436ccc53383e5570d0d2886f6b361",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\24-keys.npy",
+      "bytes": 1785984,
+      "sha256": "76dccde2600b003f7af3d71bae92485cabc106a0ab3a8f29e8c4e4d56a97bc1b",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\24-values.npy",
+      "bytes": 1785984,
+      "sha256": "46f13ce3027887359b1f0c11293fab3cdccc2bbb6694bf8b48d719b27e9fc90a",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\25-keys.npy",
+      "bytes": 1785984,
+      "sha256": "aed49f3b635a43640559ac029bbd34e4a0a46e4624801c9aecbe0652b55ee6a1",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\25-values.npy",
+      "bytes": 1785984,
+      "sha256": "f0324099196591b146c9d08ef6311d1c4a776625b57441ae866159c1e2622bbe",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\26-keys.npy",
+      "bytes": 1785984,
+      "sha256": "44e2411f56058ea5fa4640bac6898a08a1fdbd41ba7f08f81057606670d9db06",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\26-values.npy",
+      "bytes": 1785984,
+      "sha256": "67eddfb7521cfd671f384595cc9d7269189d944ac116f559ffb48e38b3d15609",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\27-keys.npy",
+      "bytes": 1785984,
+      "sha256": "623921de6ac5ee6f53903cff08b11fcd5576a68690e91f0c0f1a0a7b619ba405",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\27-values.npy",
+      "bytes": 1785984,
+      "sha256": "e5242b98a8aa7efc72bf3cc53b86c0bf59cd66906e40e20b7fca5f800bf18e84",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\3-keys.npy",
+      "bytes": 1785984,
+      "sha256": "662e9ddae9197c1996eefc47cd8510c3cf3bf0f9ddd599cff401ee43e48dcdb3",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\3-values.npy",
+      "bytes": 1785984,
+      "sha256": "4e58c356cf7b5f8680934a3d44fd534b48ca079f50cc2f9dff33091df23cc690",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\4-keys.npy",
+      "bytes": 1785984,
+      "sha256": "d98ff512eac08c772b1431e14ecb12272951262dafbc0a500b5145108e336881",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\4-values.npy",
+      "bytes": 1785984,
+      "sha256": "937763cdb474e6aad4f3e1226740878ef0f5b0b2d37cf3a77b26029181deecff",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\5-keys.npy",
+      "bytes": 1785984,
+      "sha256": "6646424ec1692e73ac1710c32731cfbadd62e4493f0aeb644d822fccaae32a0a",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\5-values.npy",
+      "bytes": 1785984,
+      "sha256": "149e422d73680138c43ffa5f9e76f0910c458d687b42b4d78b57c0fb030ad7fa",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\6-keys.npy",
+      "bytes": 1785984,
+      "sha256": "6441e6bcc288d29eef0065716194b6424c89bf0957e78c5267699dff587f6ecd",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\6-values.npy",
+      "bytes": 1785984,
+      "sha256": "b0e4b4d857606fef1d9a900a635d0e1478e9cad17444f2e5f88fb6c1f2637b5b",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\7-keys.npy",
+      "bytes": 1785984,
+      "sha256": "34731468ed8dd5a612875430029229eb0f203087d146e130a315a94119608165",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\7-values.npy",
+      "bytes": 1785984,
+      "sha256": "f4c5877837b44bc06b8c10b85e8d541f0c4a3e07d0d2c33b08ad0330c8f96af2",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\8-keys.npy",
+      "bytes": 1785984,
+      "sha256": "6990fa14151c955032250cdb7b3862ef02a5bd9fb0c63bf75b04db3126403369",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\8-values.npy",
+      "bytes": 1785984,
+      "sha256": "96f19c6eae4e3baa3021a4c72635668ada5e9db2e8008276403dcd35a58966e8",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\9-keys.npy",
+      "bytes": 1785984,
+      "sha256": "7e8111e62228520acfb21d134bf1521ee6b42eea61cee94b56045dae9fd41e75",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\9-values.npy",
+      "bytes": 1785984,
+      "sha256": "0db0875237ffcc17380d609ca0b87ab278c465069077a14649e06c86efa39e7c",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\attention_mask.npy",
+      "bytes": 7104,
+      "sha256": "7d562f02f16b1eae582963ec657f5e5e328525eafe30a772dca5030654d7678e",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\input_ids.npy",
+      "bytes": 7104,
+      "sha256": "c6a01f2ccdae9f988a2f64dd05c31cb8bc7967ff858c8ac05425e290f73c0d19",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61\\logits.npy",
+      "bytes": 304000,
+      "sha256": "bc330fbb53efe8ccd967b9965305b2c7de52710ed67256910347de5cca1a8dce",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\inputs\\runtime-control61\\original.f32",
+      "bytes": 3904192,
+      "sha256": "6437f5162c29e75c2ec9e12b05286d3b1438b0499d4f617053f632de73974bd9",
+      "reason": "Reproducible original-wave map or bit-exact native KV state, manifest included; do not duplicate bulk."
+    }
+  ],
+  "sourceFiles": {
+    "moss_causal_prefill_20261115.py": "474ad214027c02883af6afa322a5a311cbe1c69890f77367f1f384b410f04f39",
+    "moss_decode_attention_20261115.py": "1f656bd48879e0d2e2f08b9e5535dae6d85d2ebad77a888f29006f6c79478c03",
+    "moss_overnight_worker_20261115.py": "b41d5181aee4f94193b8da9930a29dbecc79a619facc0f5cf631f517e8f3a094",
+    "run_moss_overnight_20261115.py": "ac03e3f2a40e57630439496be7af7da5d9696f2413f48f0cba54eb35c7b02182",
+    "score_joint_whole_meetings_20261115.py": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9",
+    "moss_native_cache_store_20261115.py": "6d5d8fcfd10e32da7e8695d202d8a71af3cb80aa09e45ce3cff110ceb8f92795",
+    "moss_staged_meeting_worker_20261115.py": "d4fe579c9b42ee5c591cc035e57b78ea7778e6529391d40e49b90ab23669cce3",
+    "run_moss_staged_meetings_20261115.py": "5ef6e165a40f690ba8f4c7f06e88d707cf4aebb55d3c3cad013dfcc29490db2e"
+  },
+  "fullPrefillTokensPassed": 27924,
+  "wholeMeetingTranscriptsCompletedAtCheckpoint": 0,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "D2Complete": false,
+  "productDefaultChanged": false,
+  "finalHoldoutOpened": false,
+  "activeRunExcludedFromSnapshot": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2",
+  "deadline": "2026-11-16T07:30:00+08:00"
+}

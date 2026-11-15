@@ -257,3 +257,21 @@ src/run_moss_native_full_20261115.py -text -whitespace
 src/cpp_joint_meeting_worker_20261115.py -text -whitespace
 
 src/run_cpp_joint_meetings_20261115.py -text -whitespace
+
+evidence/20261115-overnight-runtime-checkpoint-r1/** -text -whitespace
+
+src/moss_causal_prefill_20261115.py -text -whitespace
+
+src/moss_decode_attention_20261115.py -text -whitespace
+
+src/moss_overnight_worker_20261115.py -text -whitespace
+
+src/run_moss_overnight_20261115.py -text -whitespace
+
+src/score_joint_whole_meetings_20261115.py -text -whitespace
+
+src/moss_native_cache_store_20261115.py -text -whitespace
+
+src/moss_staged_meeting_worker_20261115.py -text -whitespace
+
+src/run_moss_staged_meetings_20261115.py -text -whitespace

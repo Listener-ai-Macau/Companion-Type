@@ -1,0 +1,27 @@
+{
+  "state": "OVERNIGHT_RUN_INCOMPLETE_FAILURE_RETAINED",
+  "startedAt": "2026-11-15T22:58:02.250148+08:00",
+  "neuralDeadline": "2026-11-16T07:20:00+08:00",
+  "reportDeadline": "2026-11-16T07:30:00+08:00",
+  "phases": [
+    {
+      "phase": "control",
+      "exitCode": 0,
+      "seconds": 36.07800000000134,
+      "privatePeakBytes": 1377173504
+    }
+  ],
+  "privatePeakBytes": 1442381824,
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "automaticRetries": 0,
+  "reusedAllocationControl": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\allocation-control-state.json",
+    "sha256": "791c2ffb45f896bafd432cf0982f8ce8c72ed5f54f1920a4be925c9ba29323fb"
+  },
+  "pid": 8892,
+  "pidCreatedAt": 1794754722.05749,
+  "error": "InterruptedError('Stopped owned inference at resource/deadline boundary; no automatic retry')",
+  "finishedAt": "2026-11-15T23:05:31.273210+08:00",
+  "seconds": 449.0149999999994
+}

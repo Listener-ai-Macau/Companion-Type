@@ -1,0 +1,35 @@
+{
+  "state": "INCOMPLETE_NATIVE_STAGED_FAILURE_OR_DEADLINE_RETAINED",
+  "startedAt": "2026-11-15T23:20:41.002411+08:00",
+  "phases": [
+    {
+      "meeting": "runtime-control61",
+      "phase": "prefill",
+      "exitCode": 0,
+      "state": "COMPLETE_FULL_AUDIO_PREFILL_STORED_NO_WORDS_GENERATED",
+      "seconds": 34.46900000000096,
+      "privatePeakBytes": 1320513536
+    },
+    {
+      "meeting": "runtime-control61",
+      "phase": "decode",
+      "exitCode": 1,
+      "state": "FAILED_OR_STOPPED_STAGED_DECODE",
+      "seconds": 29.92199999999866,
+      "privatePeakBytes": 1175883776
+    }
+  ],
+  "completed": [],
+  "privatePeakBytes": 1320513536,
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "automaticRetries": 0,
+  "neuralDeadline": "2026-11-16T07:20:00+08:00",
+  "reportDeadline": "2026-11-16T07:30:00+08:00",
+  "activeMeeting": "runtime-control61",
+  "pid": 15100,
+  "pidCreatedAt": 1794756079.169528,
+  "error": "AssertionError('Preserve failure and inspect source before changed continuation')",
+  "finishedAt": "2026-11-15T23:21:49.082204+08:00",
+  "seconds": 68.07800000000134
+}

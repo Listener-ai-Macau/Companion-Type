@@ -1,0 +1,385 @@
+{
+  "state": "COMPLETE_PUBLISHED_WEIGHTS_SYNTHETIC_ZERO_KV_RUNTIME_PROFILE_NOT_ASR",
+  "events": [
+    {
+      "name": "model.language_model.rotary_emb",
+      "seconds": 0.08998810000048252
+    },
+    {
+      "name": "model.language_model.layers.0.input_layernorm",
+      "seconds": 0.11107070000070962
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.q_proj",
+      "seconds": 0.37990089999948395
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.q_norm",
+      "seconds": 0.0004807999976037536
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.k_proj",
+      "seconds": 0.0006647000009252224
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.k_norm",
+      "seconds": 0.0004718000018328894
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.v_proj",
+      "seconds": 0.0006695000010950025
+    },
+    {
+      "name": "cache-layer-0",
+      "seconds": 0.02121379999880446
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.o_proj",
+      "seconds": 0.0008350999996764585
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn",
+      "seconds": 1.1418549999980314
+    },
+    {
+      "name": "model.language_model.layers.0.post_attention_layernorm",
+      "seconds": 0.000428999999712687
+    },
+    {
+      "name": "model.language_model.layers.0.mlp.gate_proj",
+      "seconds": 0.0007421000009344425
+    },
+    {
+      "name": "model.language_model.layers.0.mlp.act_fn",
+      "seconds": 0.01195479999660165
+    },
+    {
+      "name": "model.language_model.layers.0.mlp.up_proj",
+      "seconds": 0.0007750000004307367
+    },
+    {
+      "name": "model.language_model.layers.0.mlp.down_proj",
+      "seconds": 0.0010763000027509406
+    },
+    {
+      "name": "model.language_model.layers.0.mlp",
+      "seconds": 0.01984190000075614
+    },
+    {
+      "name": "model.language_model.layers.0",
+      "seconds": 1.2787074999978358
+    },
+    {
+      "name": "cache-layer-1",
+      "seconds": 0.00042069999835803173
+    },
+    {
+      "name": "cache-layer-2",
+      "seconds": 0.0006443000020226464
+    },
+    {
+      "name": "cache-layer-3",
+      "seconds": 0.0007373000007646624
+    },
+    {
+      "name": "cache-layer-4",
+      "seconds": 0.0007569000008516014
+    },
+    {
+      "name": "cache-layer-5",
+      "seconds": 0.0007408999990730081
+    },
+    {
+      "name": "cache-layer-6",
+      "seconds": 0.0006514000015158672
+    },
+    {
+      "name": "cache-layer-7",
+      "seconds": 0.0007537999990745448
+    },
+    {
+      "name": "cache-layer-8",
+      "seconds": 0.0006049000003258698
+    },
+    {
+      "name": "cache-layer-9",
+      "seconds": 0.0006379000005836133
+    },
+    {
+      "name": "cache-layer-10",
+      "seconds": 0.00042860000030486844
+    },
+    {
+      "name": "cache-layer-11",
+      "seconds": 0.0006192000000737607
+    },
+    {
+      "name": "cache-layer-12",
+      "seconds": 0.0006647000009252224
+    },
+    {
+      "name": "cache-layer-13",
+      "seconds": 0.0006584000002476387
+    },
+    {
+      "name": "cache-layer-14",
+      "seconds": 0.0007211999982246198
+    },
+    {
+      "name": "cache-layer-15",
+      "seconds": 0.0007813000011083204
+    },
+    {
+      "name": "cache-layer-16",
+      "seconds": 0.0007158000007621013
+    },
+    {
+      "name": "cache-layer-17",
+      "seconds": 0.0007679000009375159
+    },
+    {
+      "name": "cache-layer-18",
+      "seconds": 0.0007583000005979557
+    },
+    {
+      "name": "cache-layer-19",
+      "seconds": 0.0006337000013445504
+    },
+    {
+      "name": "cache-layer-20",
+      "seconds": 0.0007358000002568588
+    },
+    {
+      "name": "cache-layer-21",
+      "seconds": 0.0006629999988945201
+    },
+    {
+      "name": "cache-layer-22",
+      "seconds": 0.0007848000022931956
+    },
+    {
+      "name": "cache-layer-23",
+      "seconds": 0.0006809000005887356
+    },
+    {
+      "name": "cache-layer-24",
+      "seconds": 0.0007736999978078529
+    },
+    {
+      "name": "cache-layer-25",
+      "seconds": 0.0006673999996564817
+    },
+    {
+      "name": "cache-layer-26",
+      "seconds": 0.0007375000022875611
+    },
+    {
+      "name": "cache-layer-27",
+      "seconds": 0.000751499999751104
+    },
+    {
+      "name": "model.language_model",
+      "seconds": 1.8083262000000104
+    },
+    {
+      "name": "lm_head",
+      "seconds": 0.008794100001978222
+    },
+    {
+      "name": "COMPLETE_ONE_TOKEN_0",
+      "seconds": 1.9800673000027018
+    },
+    {
+      "name": "model.language_model.rotary_emb",
+      "seconds": 0.00036779999936698005
+    },
+    {
+      "name": "model.language_model.layers.0.input_layernorm",
+      "seconds": 0.0003830999994534068
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.q_proj",
+      "seconds": 0.0006787999991502147
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.q_norm",
+      "seconds": 0.0005514000004041009
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.k_proj",
+      "seconds": 0.0006425000028684735
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.k_norm",
+      "seconds": 0.0006331000004138332
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.v_proj",
+      "seconds": 0.0006412000002455898
+    },
+    {
+      "name": "cache-layer-0",
+      "seconds": 0.0003761000007216353
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn.o_proj",
+      "seconds": 0.000939599998673657
+    },
+    {
+      "name": "model.language_model.layers.0.self_attn",
+      "seconds": 0.022727700001269113
+    },
+    {
+      "name": "model.language_model.layers.0.post_attention_layernorm",
+      "seconds": 0.0003752000011445489
+    },
+    {
+      "name": "model.language_model.layers.0.mlp.gate_proj",
+      "seconds": 0.000671199999487726
+    },
+    {
+      "name": "model.language_model.layers.0.mlp.act_fn",
+      "seconds": 0.00031239999952958897
+    },
+    {
+      "name": "model.language_model.layers.0.mlp.up_proj",
+      "seconds": 0.0007110999977157917
+    },
+    {
+      "name": "model.language_model.layers.0.mlp.down_proj",
+      "seconds": 0.001005100002657855
+    },
+    {
+      "name": "model.language_model.layers.0.mlp",
+      "seconds": 0.007826199998817174
+    },
+    {
+      "name": "model.language_model.layers.0",
+      "seconds": 0.037176899997575674
+    },
+    {
+      "name": "cache-layer-1",
+      "seconds": 0.0005051999978604726
+    },
+    {
+      "name": "cache-layer-2",
+      "seconds": 0.0006326000002445653
+    },
+    {
+      "name": "cache-layer-3",
+      "seconds": 0.0007350999985646922
+    },
+    {
+      "name": "cache-layer-4",
+      "seconds": 0.0006728999978804495
+    },
+    {
+      "name": "cache-layer-5",
+      "seconds": 0.00065320000067004
+    },
+    {
+      "name": "cache-layer-6",
+      "seconds": 0.0006692999995721038
+    },
+    {
+      "name": "cache-layer-7",
+      "seconds": 0.0006509999984700698
+    },
+    {
+      "name": "cache-layer-8",
+      "seconds": 0.0006463000026997179
+    },
+    {
+      "name": "cache-layer-9",
+      "seconds": 0.0006576000014320016
+    },
+    {
+      "name": "cache-layer-10",
+      "seconds": 0.0007053999979689252
+    },
+    {
+      "name": "cache-layer-11",
+      "seconds": 0.000735100002202671
+    },
+    {
+      "name": "cache-layer-12",
+      "seconds": 0.0007442000023729634
+    },
+    {
+      "name": "cache-layer-13",
+      "seconds": 0.0006634000019403175
+    },
+    {
+      "name": "cache-layer-14",
+      "seconds": 0.0006541000002471264
+    },
+    {
+      "name": "cache-layer-15",
+      "seconds": 0.0008054999998421408
+    },
+    {
+      "name": "cache-layer-16",
+      "seconds": 0.0006615999991481658
+    },
+    {
+      "name": "cache-layer-17",
+      "seconds": 0.0006663000021944754
+    },
+    {
+      "name": "cache-layer-18",
+      "seconds": 0.0006674999967799522
+    },
+    {
+      "name": "cache-layer-19",
+      "seconds": 0.0006517000001622364
+    },
+    {
+      "name": "cache-layer-20",
+      "seconds": 0.0007675000015296973
+    },
+    {
+      "name": "cache-layer-21",
+      "seconds": 0.0007890000015322585
+    },
+    {
+      "name": "cache-layer-22",
+      "seconds": 0.0007092000014381483
+    },
+    {
+      "name": "cache-layer-23",
+      "seconds": 0.0005163999994692858
+    },
+    {
+      "name": "cache-layer-24",
+      "seconds": 0.0006408000008377712
+    },
+    {
+      "name": "cache-layer-25",
+      "seconds": 0.0006681000013486482
+    },
+    {
+      "name": "cache-layer-26",
+      "seconds": 0.0006184999983815942
+    },
+    {
+      "name": "cache-layer-27",
+      "seconds": 0.0006835999993199948
+    },
+    {
+      "name": "model.language_model",
+      "seconds": 0.5557034000012209
+    },
+    {
+      "name": "lm_head",
+      "seconds": 0.008752999998250743
+    },
+    {
+      "name": "COMPLETE_ONE_TOKEN_1",
+      "seconds": 0.5688066000002436
+    }
+  ],
+  "pastTokens": 27924,
+  "capacity": 60692,
+  "qualityQualified": false,
+  "noMeetingQualityOutput": true
+}

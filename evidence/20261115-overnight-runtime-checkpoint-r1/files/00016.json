@@ -1,0 +1,36 @@
+{
+  "frames": 33757014,
+  "audioSeconds": 2109.813375,
+  "allOriginalAudioWindows": 71,
+  "paddingRepresentation": "Boolean0/1, native sum unchanged; no sample/context truncation",
+  "inputShapes": {
+    "input_ids": [
+      1,
+      27924
+    ],
+    "attention_mask": [
+      1,
+      27924
+    ],
+    "input_features": [
+      71,
+      80,
+      3000
+    ],
+    "input_features_mask": [
+      71,
+      3000
+    ],
+    "padding_mask": [
+      1,
+      33757014
+    ]
+  },
+  "inputSha256": {
+    "input_ids": "2a8ff6547079893359409b8466e3e95e0790c75935bfab35d85eb54fb12ef475",
+    "attention_mask": "43e40b9f238173eb47158f1af71977d52d62e04bf0b60d0a7074944cc247709b",
+    "input_features": "baf84a81353aa1e282310afe4f906e257b87d5194b254a7b44a889404bbc3c8d",
+    "input_features_mask": "441c149e07af27844dccde67c1f5b382c0eb535a37e99e2c35f78c14ac860a65",
+    "padding_mask": "efa2d400c504cddffcfdb4dde8519048280505f91ba76673b9dd1306f3962099"
+  }
+}

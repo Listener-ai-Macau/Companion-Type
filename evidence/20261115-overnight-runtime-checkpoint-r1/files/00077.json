@@ -1,0 +1,45 @@
+{
+  "at": "2026-11-15T23:03:09.057399+08:00",
+  "meeting": "20200623_S_R001S07C01",
+  "language": "Chinese",
+  "audioSeconds": 2049.3615,
+  "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+  "baselineRawText": {
+    "referenceUnits": 7153,
+    "hypothesisUnits": 6747,
+    "errors": 1037,
+    "errorRate": 0.1449741367258493,
+    "counts": {
+      "replace": 421,
+      "delete": 511,
+      "insert": 105
+    }
+  },
+  "baselinePersonErrorRate": 0.27065566895009086,
+  "baselineDER": 0.1584147453575932,
+  "baselineEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\combination-study-r1\\batch-result.json",
+  "scoringManifestSha256": "7a6a4ceb9070338373abd0d688e10ac50f4e9f75afab48124a2d932924be4a53",
+  "scorerSha256": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "originalGatesChanged": false,
+  "recordingsArePreviouslySeenDevelopmentCasesNotBlindHoldout": true,
+  "newNeuralCalls": 0,
+  "state": "PASS_ORIGINAL_BASELINE_FULL_TEXT_REPRODUCED_ZERO_NEW_INFERENCE",
+  "limits": {
+    "pid": 2164,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 93696000,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

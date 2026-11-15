@@ -1,0 +1,35 @@
+{
+  "state": "COMPLETE_LONG_KV_DECODER_RUNTIME_PROFILE_NO_QUALITY_SCORE",
+  "startedAt": "2026-11-15T23:12:43.713934+08:00",
+  "completed": [],
+  "referenceRead": false,
+  "speakerCountHintUsed": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "automaticRetries": 0,
+  "deadline": "2026-11-16T07:20:00+08:00",
+  "limits": {
+    "pid": 15484,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1180794880,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "blas": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "finishedAt": "2026-11-15T23:13:13.561993+08:00",
+  "seconds": 29.848313400001643
+}

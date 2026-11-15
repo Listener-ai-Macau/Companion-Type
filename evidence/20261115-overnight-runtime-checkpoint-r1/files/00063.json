@@ -1,0 +1,63 @@
+{
+  "state": "FAILED_OR_STOPPED_CONTROL_RETAINED",
+  "startedAt": "2026-11-15T22:55:32.933851+08:00",
+  "completed": [],
+  "referenceRead": false,
+  "speakerCountHintUsed": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "automaticRetries": 0,
+  "deadline": "2026-11-16T07:20:00+08:00",
+  "limits": {
+    "pid": 956,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1325600768,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "blas": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "encoderDone": 3,
+  "encoderTotal": 3,
+  "executionStats": {
+    "sdpaCalls": 224,
+    "blockedCalls": 28,
+    "maxQueryTokens": 872,
+    "maxKeyTokens": 889,
+    "keyStreamedCalls": 0,
+    "keyTiles": 0,
+    "maximumScoreTileElements": 0,
+    "encoderCalls": 2,
+    "encoderChunks": 6,
+    "queryBlock": 128,
+    "keyBlock": 1024,
+    "encoderBatch": 2
+  },
+  "prefillDone": 872,
+  "prefillTotal": 872,
+  "prefillStats": {
+    "prefillCalls": 1,
+    "blocks": 7,
+    "maximumBlockTokens": 128,
+    "maximumRetainedTokens": 872,
+    "tokenBlock": 128,
+    "allKeysRetained": true,
+    "speakerOrAudioResets": 0
+  },
+  "error": "AssertionError(0.25)",
+  "finishedAt": "2026-11-15T22:56:00.496836+08:00",
+  "seconds": 27.562457899999572
+}

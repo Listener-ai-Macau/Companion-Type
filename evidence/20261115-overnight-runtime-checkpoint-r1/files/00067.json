@@ -1,0 +1,29 @@
+{
+  "state": "OVERNIGHT_RUN_INCOMPLETE_FAILURE_RETAINED",
+  "startedAt": "2026-11-15T22:55:26.077419+08:00",
+  "neuralDeadline": "2026-11-16T07:20:00+08:00",
+  "reportDeadline": "2026-11-16T07:30:00+08:00",
+  "phases": [
+    {
+      "phase": "allocation-control",
+      "exitCode": 0,
+      "seconds": 3.062999999998283,
+      "privatePeakBytes": 430186496
+    },
+    {
+      "phase": "control",
+      "exitCode": 1,
+      "seconds": 28.98400000000038,
+      "privatePeakBytes": 1316331520
+    }
+  ],
+  "privatePeakBytes": 1316331520,
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "automaticRetries": 0,
+  "pid": 15456,
+  "pidCreatedAt": 1794754532.8521762,
+  "error": "AssertionError('Inspect new evidence before any changed continuation')",
+  "finishedAt": "2026-11-15T22:56:01.833213+08:00",
+  "seconds": 35.75
+}

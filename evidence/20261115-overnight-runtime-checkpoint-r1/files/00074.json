@@ -1,0 +1,20 @@
+{
+  "state": "PASS_RETAINED_ORIGINAL_DER_REPRODUCED_NO_NEURAL_CALLS",
+  "originalScore": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-ami-r1\\results\\EN2002a\\review.json",
+  "originalScoreSha256": "0bf094e4efa0b0d6b1fb92f6d369fd08ab4166c56cd5218c42d21d15e908cde8",
+  "oldDER": 0.310766316505023,
+  "reproduced": {
+    "referenceSpeakerSeconds": 2530.26,
+    "missSeconds": 724.893519000002,
+    "falseAlarmSeconds": 29.963519000000858,
+    "confusionSeconds": 31.4625419999988,
+    "errorSeconds": 786.3195800000017,
+    "DER": 0.31076631650502384,
+    "identityForScoringOnly": {
+      "speaker_0": "MEE071",
+      "speaker_1": "MEE073",
+      "speaker_2": "FEO072",
+      "speaker_3": "FEO070"
+    }
+  }
+}

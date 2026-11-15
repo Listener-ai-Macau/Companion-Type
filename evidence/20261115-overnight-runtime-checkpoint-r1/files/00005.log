@@ -1,0 +1,84 @@
+W1115 22:44:17.751000 12068 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+[transformers] Can't set adaptor_input_dim with value 128 for MossTranscribeDiarizeConfig {
+  "audio_chunk_size": 480000,
+  "audio_config": {
+    "activation_dropout": 0.0,
+    "activation_function": "gelu",
+    "attention_dropout": 0.0,
+    "dropout": 0.0,
+    "hidden_size": 32,
+    "initializer_range": 0.02,
+    "intermediate_size": 64,
+    "max_source_positions": 4,
+    "model_type": "moss_transcribe_diarize_audio",
+    "num_attention_heads": 4,
+    "num_hidden_layers": 1,
+    "num_mel_bins": 4
+  },
+  "audio_merge_size": 4,
+  "audio_token_id": 151671,
+  "model_type": "moss_transcribe_diarize",
+  "projector_bias": true,
+  "projector_hidden_act": "silu",
+  "text_config": {
+    "attention_bias": false,
+    "attention_dropout": 0.0,
+    "bos_token_id": null,
+    "eos_token_id": null,
+    "head_dim": 8,
+    "hidden_act": "silu",
+    "hidden_size": 32,
+    "initializer_range": 0.02,
+    "intermediate_size": 64,
+    "layer_types": [
+      "full_attention",
+      "full_attention"
+    ],
+    "max_position_embeddings": 4096,
+    "max_window_layers": 28,
+    "model_type": "qwen3",
+    "num_attention_heads": 4,
+    "num_hidden_layers": 2,
+    "num_key_value_heads": 2,
+    "pad_token_id": null,
+    "rms_norm_eps": 1e-06,
+    "rope_parameters": {
+      "rope_theta": 10000.0,
+      "rope_type": "default"
+    },
+    "sliding_window": null,
+    "tie_word_embeddings": false,
+    "use_cache": true,
+    "use_sliding_window": false,
+    "vocab_size": 64
+  },
+  "tie_word_embeddings": true,
+  "transformers_version": "5.22.1"
+}
+
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_overnight_worker_20261115.py", line 134, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_overnight_worker_20261115.py", line 43, in main
+    atomic_json(a.run/'tiny-causal-control.json',tiny_cpu_control(torch=torch));gc.collect()
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_causal_prefill_20261115.py", line 59, in tiny_cpu_control
+    config=MossTranscribeDiarizeConfig(text_config=text,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\huggingface_hub\dataclasses.py", line 275, in init_with_validate
+    initial_init(self, *args, **kwargs)  # type: ignore [call-arg]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\configuration_utils.py", line 174, in __init__
+    self.__post_init__(**additional_kwargs)
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\configuration_utils.py", line 504, in __post_init__
+    raise err
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\configuration_utils.py", line 501, in __post_init__
+    setattr(self, key, value)
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\huggingface_hub\dataclasses.py", line 149, in __strict_setattr__
+    original_setattr(self, name, value)
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\huggingface_hub\dataclasses.py", line 149, in __strict_setattr__
+    original_setattr(self, name, value)
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\configuration_utils.py", line 653, in __setattr__
+    super().__setattr__(key, value)
+AttributeError: property 'adaptor_input_dim' of 'MossTranscribeDiarizeConfig' object has no setter

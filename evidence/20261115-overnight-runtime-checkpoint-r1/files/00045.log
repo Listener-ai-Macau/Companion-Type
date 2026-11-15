@@ -1,0 +1,65 @@
+W1115 22:51:14.987000 1252 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1030: 找不到指定的模块。
+
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_overnight_worker_20261115.py", line 152, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_overnight_worker_20261115.py", line 130, in main
+    with torch.inference_mode():ids=model.generate(**inputs,max_new_tokens=32768,do_sample=False,
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\utils\_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\generation\utils.py", line 3000, in generate
+    result = decoding_method(
+             ^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\generation\utils.py", line 3200, in _sample
+    outputs = self._prefill(
+              ^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\generation\utils.py", line 4312, in _prefill
+    return self(**model_inputs, return_dict=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\utils\generic.py", line 943, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\models\moss_transcribe_diarize\modeling_moss_transcribe_diarize.py", line 579, in forward
+    outputs = self.model(
+              ^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\utils\generic.py", line 943, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\models\moss_transcribe_diarize\modeling_moss_transcribe_diarize.py", line 502, in forward
+    outputs = self.language_model(
+              ^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1779, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1790, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_causal_prefill_20261115.py", line 44, in scheduled
+    result=original(inputs_embeds=inputs_embeds[:,start:stop],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\utils\generic.py", line 1081, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\utils\output_capturing.py", line 287, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\models\qwen3\modeling_qwen3.py", line 405, in forward
+    hidden_states = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\modeling_layers.py", line 111, in __call__

@@ -1,0 +1,64 @@
+{
+  "at": "2026-11-15T22:55:25.037294+08:00",
+  "modelControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1",
+  "workerSha256": "c1eeb8297223f22c5bd8099623bcb5f702129c8b3cfe795b45d7a61f830d4478",
+  "runnerSha256": "83a82663742643ff19e2580e6fb4e99f92b78719111749dcfdf8ee802b3633f3",
+  "helpers": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_native_architecture_20261115.py": "7e5e1e74cd5aac11c9663986c5803dd6a57f1310de6d37397712e6c213af705f",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_streamed_weights_20261104.py": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_community1_adapter_20261115.py": "a6905264e2787ac059c7500e0e87ef8b5bf7e8a57502fbad42e53eea6b4e189d",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\moss_transcribe_diarize\\configuration_moss_transcribe_diarize.py": "05aa72ba47f9875066e4676246b310c060550bba973ad2a4fa318e6666f31862",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\moss_transcribe_diarize\\modeling_moss_transcribe_diarize.py": "9bfd01d758669c639b10e010a35f2b805ef7a73892916318e760b618032d74d9",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\moss_transcribe_diarize\\processing_moss_transcribe_diarize.py": "1534e35adbd8af7a02d963655b7273b2b6657096ee921bec044533593dc92e70",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\moss_transcribe_diarize\\feature_extraction_moss_transcribe_diarize.py": "1ee417f78f9d1a16fe22bfc4dcab1d25373a01cd0ddbb9fe6745796c2c38a4ab",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_native_full_execution_20261115.py": "d4194254d44d61ae6d74b9ed67168b70ea2d98556be17effe46e58fba5007988",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_amd_execution_20261104.py": "a953c6d041c470aa11aa11ea070407136cf0b81d022b91d6f4ddd22778c42840",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_key_streamed_attention_20261104.py": "4fd60df0ee734000bdbd052e985d87b1b1dd5ec27169e10f04437a651f4feaf4",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_causal_prefill_20261115.py": "4215d5fff1dfbd4a3d71f521e7b6658bd061f2fe20556e3b7b07dfe1371068d3",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3\\modeling_qwen3.py": "63a6213c15d6fb04e58a1c64fd05a4cdfb49476443fbeef524f0e0486043824b",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\generation\\utils.py": "966f70ba83d94c9ce07b21150be49ff84b24eadbf9c47de052a1fb0f8ba38679",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\cache_utils.py": "a5cc09b2a16526d22910a67456aa9bc48c2b9ba8236c43d0d13da8bfe0a2ad97",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\masking_utils.py": "931b92cf0deeb7a4925259a30c905bbf4d645fda88c6eebbc9e61770f5abaa89"
+  },
+  "wholeManifestSha256": "13a02cd0f2a59e3359bb46250b74aeba41aa9138c05e7f7909afc441f17e6938",
+  "controlAudio": "E:/CodexData/Companion/product-d1d2-20261114/joint-architecture-r1/whole-run-r1/frontend-control.wav",
+  "controlAudioSha256": "5fb4dbdbb6991475d382e7729dd72c954fa2fa6ac3ddb80d3dc287495c119817",
+  "blas": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+  "blasSha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+  "gpuPython": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+  "neuralDeadline": "2026-11-16T07:20:00+08:00",
+  "reportDeadline": "2026-11-16T07:30:00+08:00",
+  "controlsFrozenBeforeRun": {
+    "cpuFP32Tolerance": {
+      "atol": 2e-05,
+      "rtol": 2e-05
+    },
+    "publishedGpuLogitTolerance": {
+      "atol": 0.125,
+      "rtol": 0.01
+    },
+    "publishedGpuCacheTolerance": {
+      "atol": 0.0625,
+      "rtol": 0.01
+    },
+    "publishedGpu16GreedyTokensMustMatch": true
+  },
+  "algorithmChange": "Native causal decoder prefill128tokens with full native fixed-capacity BF16 StaticCache; no growing torch.cat allocations, no quantization, no KV/context reset. Disable implicit compilation and pre-generation full4D mask construction via cache capability flag. First test10GiB device allocation independently, then native logit/KV/16token control, then same whole meetings.",
+  "whyPriorFailureNotRepeated": "r3 trace proves12032/27924tokens processed, not a first-layer-only failure: private commit grew1.28→2.14GB as dynamic KV grew and reserved GPU buffers reached5.44GB for3.44GB live tensors. One-time unused-cache release dropped GPU reservation3.69→2.08GB but not host private commit. The next causal change preallocates native fixed KV, eliminating repeated dynamic growth/fragmentation; exact host charge versus compiler caching remains unresolved, so allocation probe precedes any model run.",
+  "allocationProbeBytes": 10737418240,
+  "oneCandidateOnly": true,
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "automaticRetries": 0,
+  "productDefaultChanged": false,
+  "baselineResultsReused": true,
+  "finalHoldoutOpened": false,
+  "resourceLimits": {
+    "cpuPercent": 5,
+    "familyPrivateBytes": 2147483648,
+    "actualWindowsLowMemoryStop": true
+  },
+  "stopCriteria": "Control failure: no whole run. Resource or runtime failure: retain, inspect root before changed continuation. No same-path retry, parameter sweep or guard increase. Stop NN07:20 to reserve final scoring/protection until07:30."
+}

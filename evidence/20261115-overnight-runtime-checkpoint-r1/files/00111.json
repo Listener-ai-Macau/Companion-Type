@@ -1,0 +1,26 @@
+{
+  "state": "COMPLETE_SINGLE_QUERY_PROFILE_NO_MODEL",
+  "startedAt": "2026-11-15T23:07:26.876613+08:00",
+  "neuralDeadline": "2026-11-16T07:20:00+08:00",
+  "reportDeadline": "2026-11-16T07:30:00+08:00",
+  "phases": [
+    {
+      "phase": "attention-profile",
+      "exitCode": 0,
+      "seconds": 4.061999999998079,
+      "privatePeakBytes": 779005952
+    }
+  ],
+  "privatePeakBytes": 779005952,
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "automaticRetries": 0,
+  "reusedAllocationControl": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\overnight-r4\\allocation-control-state.json",
+    "sha256": "791c2ffb45f896bafd432cf0982f8ce8c72ed5f54f1920a4be925c9ba29323fb"
+  },
+  "pid": 3248,
+  "pidCreatedAt": 1794755250.5889504,
+  "finishedAt": "2026-11-15T23:07:34.661831+08:00",
+  "seconds": 7.7810000000026776
+}
