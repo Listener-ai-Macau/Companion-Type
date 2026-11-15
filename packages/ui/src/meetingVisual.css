@@ -46,9 +46,10 @@ body .ct-windows.ct-notebook .meeting-reading-frame,.mobile-app .meeting-reading
 .meeting-reading-content[hidden]{display:none!important}
 body .ct-windows.ct-notebook .meeting-reading-start,.mobile-app .meeting-reading-start{margin:8px 0 26px;padding-bottom:15px;border-bottom:1px solid var(--notebook-line)}
 .meeting-reading-intro{position:relative;display:flex;flex-flow:row wrap;align-items:center;justify-content:space-between;gap:10px}
-body .ct-windows.ct-notebook .meeting-reading-views,.mobile-app .meeting-reading-views{display:inline-flex;align-items:center;flex:0 1 auto;gap:4px;padding:3px;border:0;border-radius:9px;background:var(--notebook-soft)}
-body .ct-windows.ct-notebook .meeting-reading-views>button,.mobile-app .meeting-reading-views>button{display:flex;align-items:center;justify-content:center;gap:7px;min-height:34px;padding:6px 12px;border:1px solid transparent;border-radius:6px;background:transparent;color:var(--notebook-muted);font:400 12px/1.5 var(--notebook-font);white-space:nowrap;cursor:pointer}
-body .ct-windows.ct-notebook .meeting-reading-views>button[aria-pressed=true],.mobile-app .meeting-reading-views>button[aria-pressed=true]{background:var(--notebook-paper);border-color:var(--notebook-line);color:var(--notebook-ink);font-weight:500;box-shadow:0 1px 2px #10182806}
+body .ct-windows.ct-notebook .meeting-reading-views,.mobile-app .meeting-reading-views{display:inline-flex;align-items:center;flex:0 1 auto;gap:20px;padding:0;border:0;border-radius:0;background:transparent}
+body .ct-windows.ct-notebook .meeting-reading-views>button,.mobile-app .meeting-reading-views>button{position:relative;display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:12px 2px;border:0;border-radius:0;background:transparent;color:var(--notebook-muted);font:400 12px/1.5 var(--notebook-font);white-space:nowrap;cursor:pointer}
+body .ct-windows.ct-notebook .meeting-reading-views>button[aria-pressed=true],.mobile-app .meeting-reading-views>button[aria-pressed=true]{background:transparent;color:var(--notebook-ink);font-weight:500;box-shadow:none}
+.meeting-reading-views>button[aria-pressed=true]:after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--notebook-accent);border-radius:2px}
 body .ct-windows.ct-notebook .ct-minutes-article,.mobile-app .minutes-document{counter-reset:meeting-topic}
 body .ct-windows.ct-notebook .ct-overview-topic,.mobile-app .ct-overview-topic{position:relative;min-width:0;padding:16px 0 18px 40px;margin:0;border:0;border-radius:0;box-shadow:none;background:transparent;counter-increment:meeting-topic}
 body .ct-windows.ct-notebook .ct-overview-topic+.ct-overview-topic,.mobile-app .ct-overview-topic+.ct-overview-topic{border-top:1px solid var(--notebook-line)}
@@ -88,11 +89,12 @@ body .ct-windows.ct-notebook .meeting-action-source,.mobile-app .meeting-action-
 @media(pointer:coarse){.meeting-reading-views>button,.meeting-reading-formats>button,.meeting-action-source{min-height:44px!important}}
 .mobile-app .meeting-reading-views>button,.mobile-app .meeting-reading-formats>button,.mobile-app .meeting-action-source{min-height:44px}
 
-/* A single calm control and reading treatment across meeting perspectives. */
-.meeting-reading-formats{gap:2px;padding:2px;border:1px solid var(--notebook-line);border-radius:9px;background:var(--notebook-paper)}
+/* One view bar; display format is a secondary choice beside the perspectives. */
+.meeting-reading-formats{gap:2px;padding:2px;border:0;border-radius:7px;background:var(--notebook-soft)}
 body .ct-windows.ct-notebook .meeting-reading-formats>button,.mobile-app .meeting-reading-formats>button{min-height:30px;padding:5px 10px;border-radius:6px}
 body .ct-windows.ct-notebook .meeting-reading-formats>button[aria-pressed=true],.mobile-app .meeting-reading-formats>button[aria-pressed=true]{background:var(--notebook-soft);color:var(--notebook-ink);font-weight:500}
-.meeting-reading-views>button:hover:not([aria-pressed=true]),.meeting-reading-formats>button:hover:not([aria-pressed=true]){color:var(--notebook-ink);background:var(--notebook-paper)}
+.meeting-reading-views>button:hover:not([aria-pressed=true]){color:var(--notebook-ink);background:transparent}
+.meeting-reading-formats>button:hover:not([aria-pressed=true]){color:var(--notebook-ink);background:var(--notebook-paper)}
 .meeting-topic-controls{gap:8px}
 .meeting-speakers-empty{border-style:solid;background:var(--notebook-soft);gap:10px;padding:32px 24px}
 .meeting-speakers-empty>span{width:38px;height:38px;border:0;border-radius:10px;background:var(--notebook-paper)}
@@ -105,9 +107,7 @@ body .ct-windows.ct-notebook .meeting-reading-formats>button[aria-pressed=true],
 .meeting-action-group li p{font-size:14px!important}
 @media(pointer:coarse){.meeting-reading-formats>button{min-height:44px!important}}
 
-/* Original black/orange identity with clear primary and secondary controls. */
-body .ct-windows.ct-notebook .meeting-reading-views,.mobile-app .meeting-reading-views{border:1px solid var(--notebook-line);background:var(--notebook-soft);padding:3px;gap:4px;border-radius:11px}
-body .ct-windows.ct-notebook .meeting-reading-views>button[aria-pressed=true],.mobile-app .meeting-reading-views>button[aria-pressed=true]{background:var(--notebook-ink);border-color:var(--notebook-ink);color:var(--notebook-paper);box-shadow:0 1px 3px var(--notebook-shadow)}
+/* The original black/orange tokens remain the shared identity. */
 body .ct-windows.ct-notebook .meeting-reading-formats>button[aria-pressed=true],.mobile-app .meeting-reading-formats>button[aria-pressed=true]{background:var(--notebook-selection);color:var(--notebook-accent)}
 body .ct-windows.ct-notebook .meeting-topic-source,body .ct-windows.ct-notebook .meeting-topic-toggle,.mobile-app .meeting-topic-source,.mobile-app .meeting-topic-toggle{border:1px solid var(--notebook-line);border-radius:7px;background:var(--notebook-paper);color:var(--notebook-muted);padding:3px 7px}
 .meeting-topic-controls>:is(.meeting-topic-source,.meeting-topic-toggle):hover{border-color:var(--notebook-accent);background:var(--notebook-selection);color:var(--notebook-accent)}
@@ -115,8 +115,8 @@ body .ct-windows.ct-notebook .meeting-topic-source,body .ct-windows.ct-notebook 
 .meeting-map-purpose-heading strong{color:var(--notebook-accent)!important}
 .meeting-speaker-avatar{background:var(--notebook-selection);border-color:var(--notebook-line)}
 
-/* One compound control per topic instead of separate small outlined boxes. */
-.meeting-topic-controls{gap:0;padding:2px;border:1px solid var(--notebook-line);border-radius:8px;background:var(--notebook-paper);box-shadow:0 1px 2px var(--notebook-shadow)}
+/* Contextual links stay beside their question without framing every row. */
+.meeting-topic-controls{gap:0;padding:2px 0;border:0;border-radius:0;background:transparent;box-shadow:none}
 body .ct-windows.ct-notebook .meeting-topic-controls>.meeting-topic-source,body .ct-windows.ct-notebook .meeting-topic-controls>.meeting-topic-toggle,.mobile-app .meeting-topic-controls>.meeting-topic-source,.mobile-app .meeting-topic-controls>.meeting-topic-toggle{position:relative;border:0;border-radius:5px;background:transparent;padding:3px 7px}
 .meeting-topic-controls>button+button:before{content:'';position:absolute;left:0;top:calc(50% - 6px);height:12px;border-left:1px solid var(--notebook-line)}
 .meeting-topic-controls>:is(.meeting-topic-source,.meeting-topic-toggle):hover{background:var(--notebook-soft);color:var(--notebook-ink)}

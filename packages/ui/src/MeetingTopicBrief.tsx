@@ -14,10 +14,12 @@ export function MeetingTopicBrief({topic,onLocate,graphic=false}:{topic:MeetingM
    {hasDetails&&<button type="button" className="meeting-topic-toggle" aria-label={(expanded?'收起':'展开')+topic.label+'详情'} aria-expanded={expanded} aria-controls={id} onClick={()=>setExpandedFor(expanded?null:identity)}><span>{expanded?'收起':'补充'}</span><ChevronDown size={12} aria-hidden="true"/></button>}</div>
   </header>
   <div className="meeting-topic-branch-body">
+  <div className="meeting-topic-answer">
   {graphic?<ul className="meeting-topic-judgments meeting-topic-takeaway" aria-label="主要判断" data-fragments={judgments.length}>{judgments.map((text,index)=><li key={index}><span>{text}</span></li>)}</ul>:<p className="meeting-topic-takeaway">{topic.takeaway}</p>}
   {hasDetails&&<div id={id} className="meeting-topic-support" hidden={!expanded}>
    {!!topic.details?.length&&<ul>{topic.details.map((text,index)=><li key={index}>{text}</li>)}</ul>}
   </div>}
+  </div>
   </div>
  </article>;
 }

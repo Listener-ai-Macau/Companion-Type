@@ -32,7 +32,7 @@ body .ct-shell.ct-windows.ct-notebook .ct-meeting-navigation button[aria-current
 body .ct-shell.ct-windows.ct-notebook .ct-result-reading-toolbar{padding-top:12px;min-height:32px}
 body .ct-shell.ct-windows.ct-notebook .ct-recording-result{margin-top:0}
 body .ct-windows.ct-notebook .meeting-reading-frame,.mobile-app .meeting-reading-frame{--reader-body:14px}
-body .ct-windows.ct-notebook .meeting-reading-frame .meeting-reading-start,.mobile-app .meeting-reading-frame .meeting-reading-start{border:0;padding:3px 0 11px;margin:0 0 16px}
+body .ct-windows.ct-notebook .meeting-reading-frame .meeting-reading-start,.mobile-app .meeting-reading-frame .meeting-reading-start{border:0;border-bottom:1px solid var(--notebook-line);padding:0;margin:0 0 24px}
 body .ct-windows.ct-notebook .meeting-reading-frame .meeting-view-menu>summary,.mobile-app .meeting-reading-frame .meeting-view-menu>summary{font-size:14px;font-weight:600;gap:8px}
 body .ct-windows.ct-notebook .meeting-reading-frame .meeting-view-menu>summary>svg:first-child,.mobile-app .meeting-reading-frame .meeting-view-menu>summary>svg:first-child{color:var(--notebook-accent)}
 body .ct-windows.ct-notebook .meeting-reading-frame .meeting-reader .meeting-overview-topics>li,.mobile-app .meeting-reading-frame .meeting-reader .meeting-overview-topics>li{gap:13px;padding-bottom:24px;grid-template-columns:24px minmax(0,1fr)}
