@@ -205,6 +205,41 @@
       "file": "files/00028.json",
       "bytes": 211291,
       "sha256": "9e7805d3e4d60eb1b202561766b4080ab7438376411910b126ac2cf465b8bff8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-system-interruption-r1\\retained-integrity-check.json",
+      "logicalPath": "final-check/final-check-cache-integrity.json",
+      "file": "final-check-cache-integrity.json",
+      "bytes": 15548,
+      "sha256": "a907ec5cc77444b8a5e0bcbef4b7e71bb30c5c05f61bc42c28d9ed26a1bcf18e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-system-interruption-r1\\crash-evidence-availability.json",
+      "logicalPath": "final-check/final-check-dump-availability.json",
+      "file": "final-check-dump-availability.json",
+      "bytes": 576,
+      "sha256": "befba1f5a8a17c077d341df08a5133d4810a317d5448a7131ab0f96741205938"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\overnight-delivery-20261116.json",
+      "logicalPath": "final-check/owner-delivery-manifest.json",
+      "file": "owner-delivery-manifest.json",
+      "bytes": 2756,
+      "sha256": "6cc0c84ad53667801553b4944f71d869a28d265e6633a7cef3bf77718dc4f779"
+    },
+    {
+      "source": "work\\check_retained_overnight_20261116.py",
+      "logicalPath": "final-check/integrity-check-source.py",
+      "file": "integrity-check-source.py",
+      "bytes": 2439,
+      "sha256": "1e0215e9ce5da25d02b12b78fe0a8b198ab81173aee6c2d59a7412e4e264c922"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\close_overnight_delivery_20261116.py",
+      "logicalPath": "final-check/delivery-protection-source.py",
+      "file": "delivery-protection-source.py",
+      "bytes": 6375,
+      "sha256": "72ad5e1c8ac10896537ea126c19183d7e51bf33becf05e8b0da70a0fc7e32bf4"
     }
   ],
   "fullPromptTokens": 27924,
@@ -221,5 +256,15 @@
   "crashCauseNotAttributedToComponent": true,
   "privateMemoryDumpContentsExcluded": true,
   "bulkCacheHashManifestOnly": true,
-  "deadline": "2026-11-16T07:30:00+08:00"
+  "deadline": "2026-11-16T07:30:00+08:00",
+  "finalChecks": {
+    "at": "2026-11-16T07:22:46.466756+08:00",
+    "cacheFiles": 59,
+    "cacheBytes": 3203305920,
+    "unchangedPrefix": 2294,
+    "retainedTokens": 4064,
+    "wholeMeetingsCompleted": 0,
+    "dumpAvailableAtStandardConfiguredPaths": false,
+    "archiveSha256": "9d1a9946af1539c09ba43eeeb0714345b4dc343f9647c0bf4964f605954081f8"
+  }
 }

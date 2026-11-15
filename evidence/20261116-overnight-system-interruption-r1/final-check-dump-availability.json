@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-16T07:21:47.476167+08:00",
+  "os": "Windows-10-10.0.26200-SP0",
+  "memoryDumpContentsRead": false,
+  "systemConfigurationChanged": false,
+  "crashControl": {
+    "CrashDumpEnabled": 3,
+    "DumpFile": "%SystemRoot%\\MEMORY.DMP",
+    "MinidumpDir": "%SystemRoot%\\Minidump",
+    "LogEvent": 1,
+    "AutoReboot": 1
+  },
+  "knownDumpPaths": [
+    {
+      "path": "C:\\Windows\\MEMORY.DMP",
+      "exists": false,
+      "size": null
+    },
+    {
+      "path": "C:\\Windows\\Minidump",
+      "exists": true,
+      "size": null
+    }
+  ]
+}

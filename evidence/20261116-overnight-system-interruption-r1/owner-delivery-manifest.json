@@ -1,0 +1,54 @@
+{
+  "at": "2026-11-16T07:22:46.457346+08:00",
+  "archive": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜结果-20261116.zip",
+  "archiveSha256": "9d1a9946af1539c09ba43eeeb0714345b4dc343f9647c0bf4964f605954081f8",
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜会议模型结果-20261116\\07点30交付说明.txt",
+      "bytes": 3697,
+      "sha256": "d6c6e1cb90011c93763945554acfe5b66309db18904ded6e0344ba84523ac985"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜会议模型结果-20261116\\crash-evidence-availability.json",
+      "bytes": 576,
+      "sha256": "befba1f5a8a17c077d341df08a5133d4810a317d5448a7131ab0f96741205938"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜会议模型结果-20261116\\ES2003b-部分转写-可阅读.txt",
+      "bytes": 13818,
+      "sha256": "8cca770ef113ea16bc1b5b5c75119a6ffa1154dfaa6086c99d3851c6fcf44435"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜会议模型结果-20261116\\ES2003b-部分输出-原始文本.txt",
+      "bytes": 13012,
+      "sha256": "ee1629adc54d319141b9e0dbbcdc0cb120c5497b008510fe2b1ab1ac347e242e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜会议模型结果-20261116\\interruption.json",
+      "bytes": 812,
+      "sha256": "157df47e4695e972d8dd94e19184bf084b1a4c36549d5fa4d534ff4e92f17d5a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜会议模型结果-20261116\\retained-integrity-check.json",
+      "bytes": 15548,
+      "sha256": "a907ec5cc77444b8a5e0bcbef4b7e71bb30c5c05f61bc42c28d9ed26a1bcf18e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜会议模型结果-20261116\\恢复输入与中断核对.json",
+      "bytes": 3111,
+      "sha256": "a26b5628a9e3796d60ed6e13d37bb8ca3b3c14e26f7de685509acc67613592dc"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-整夜会议模型结果-20261116\\源码与原始输出保护.json",
+      "bytes": 374,
+      "sha256": "db8e1dc46befc79c893becbd74c0074fe8efc0ea9457322042e0bc1cc40c9288"
+    }
+  ],
+  "wholeMeetingResults": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "systemInterrupted": true,
+  "retainedCacheHashesPassed": true,
+  "noGpuInferenceAfterReboot": true,
+  "originalSourceCommit": "4a73d6cc7fd3591dc2099222db435bdee5e616f1"
+}
