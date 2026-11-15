@@ -1,0 +1,62 @@
+{
+  "state": "PASS_ORIGINAL_FUNCTION_AND_LOSS_FORWARD_AST_BODIES_EXACT",
+  "units": [
+    {
+      "sourceFile": "parts__utils__asr_multispeaker_utils.py.source.txt",
+      "unit": "find_first_nonzero",
+      "bodyAstSha256": "b674a568c6cf08be2838bf70700128b7c8b547d0d8d095f8ec2fb9e0308f3343"
+    },
+    {
+      "sourceFile": "parts__utils__asr_multispeaker_utils.py.source.txt",
+      "unit": "_validate_hungarian_target_inputs",
+      "bodyAstSha256": "990ac5e79d61cf0a2e148bb332f271149327a1fa9607d1af4e99ffe310bff8a8"
+    },
+    {
+      "sourceFile": "parts__utils__asr_multispeaker_utils.py.source.txt",
+      "unit": "get_pil_targets_hungarian",
+      "bodyAstSha256": "335c0ca4ef2853463aebf9596dadb3e68b809a793a61314955a095ab604b28aa"
+    },
+    {
+      "sourceFile": "parts__utils__asr_multispeaker_utils.py.source.txt",
+      "unit": "get_ats_targets_hungarian",
+      "bodyAstSha256": "6108310e64a9621b048ac80f00812d838b98f33ca6ef1c8698ae0f1be7e510a2"
+    },
+    {
+      "sourceFile": "data__audio_to_diar_label.py.source.txt",
+      "unit": "get_frame_targets_from_rttm",
+      "bodyAstSha256": "e0988e5387aef2a6b8b588723879eb9229095c3c102d7b2d7813e0eb931e3ca3"
+    },
+    {
+      "sourceFile": "losses__aux_diarization_loss.py.source.txt",
+      "unit": "ActivityLoss.__init__",
+      "forwardBodyAstSha256": "cdb905d08cbaec6463432a3cf252e5c471d49f22167c270e4fe1ea8679bb88dc"
+    },
+    {
+      "sourceFile": "losses__aux_diarization_loss.py.source.txt",
+      "unit": "ActivityLoss.forward",
+      "forwardBodyAstSha256": "95b14a70e2c3a1b4c52d83f709e354d5b0d3bdab09acdaf92ed0d5cdb7948432"
+    },
+    {
+      "sourceFile": "losses__aux_diarization_loss.py.source.txt",
+      "unit": "PhantomLoss.__init__",
+      "forwardBodyAstSha256": "976ac476120482606d43b7f26927088587006464ce4d1ac314d0b42c1fbc5860"
+    },
+    {
+      "sourceFile": "losses__aux_diarization_loss.py.source.txt",
+      "unit": "PhantomLoss.forward",
+      "forwardBodyAstSha256": "0f18c79428969cc097f7bcdd34c8b2dc77af0e66b66ed7a9b92fa0415f268772"
+    },
+    {
+      "sourceFile": "losses__bce_loss.py.source.txt",
+      "unit": "BCEWithLogitsLoss.__init__",
+      "forwardBodyAstSha256": "5ea7a8fd7e93dbf7c3f42b6e5ce0ad6a7707d007002ce831a3121186ca951d92"
+    },
+    {
+      "sourceFile": "losses__bce_loss.py.source.txt",
+      "unit": "BCEWithLogitsLoss.forward",
+      "forwardBodyAstSha256": "8ca2bba8265fb1f193c209a0414d5cd8545d7bc2033f379af4d6cc79e525dc0a"
+    }
+  ],
+  "portSha256": "508fe09b8fd623d100da72111e09144c47f52a57c2d3af0aa23176b8f5b5581b",
+  "neuralInferencePerformed": false
+}

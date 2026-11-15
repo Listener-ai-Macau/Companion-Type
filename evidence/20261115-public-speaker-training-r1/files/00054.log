@@ -1,0 +1,4 @@
+W1115 15:32:25.180000 23508 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1030: 找不到指定的模块。
+
+{"state": "COMPLETE_PUBLIC_SPEAKER_VALIDATION_SCORE_PENDING", "phase": "candidate", "optimizerUpdates": 0, "neuralChunkCalls": 163, "seconds": 20.174809999996796, "error": null}

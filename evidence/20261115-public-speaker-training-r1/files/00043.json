@@ -1,0 +1,17 @@
+{
+  "meeting": "20200709_L_R002S01C01",
+  "role": "validation",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200709_L_R002S01C01\\microphone0.wav",
+  "audioSha256": "7772a2f7106a3abfc306e4e638c452f8996e14083b86b6c11e6587e906690d35",
+  "audioSeconds": 2145.3378125,
+  "frames": 214534,
+  "validSupervisedFrames": 214533,
+  "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200709_L_R002S01C01\\features.npy",
+  "featuresSha256": "d18453b7dfa20a4301c951967b45f43a7ceb3ac2fc5098cc4ca146f9e13a28c4",
+  "probabilitySha256": "e2325fc328043522441f57e7179d97bf2cd93f0d391ebb4eecf656d552779df1",
+  "rttmSha256": "1eac0e315fb6d007fe7091c03b3171061e8cf316246634b43ca21b057e6145d0",
+  "originalThreshold": 0.5,
+  "noSpeakerCountHint": true,
+  "allFramesPreserved": true,
+  "qualityQualified": false
+}

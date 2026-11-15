@@ -1,0 +1,48 @@
+{
+  "state": "PASS_PUBLIC_SPEAKER_TRAINING_CONTROLS_BEFORE_UPDATES",
+  "phase": "control",
+  "startedAt": "2026-11-15T15:28:43.096875+08:00",
+  "optimizerUpdates": 0,
+  "neuralChunkCalls": 16,
+  "qualityQualified": false,
+  "referenceUsedForValidationInference": false,
+  "protocolSha256": "a812b58e6056ef03b9d96db4f4b6539d292e0ac6b0c7d53b8cf386d83917fbb3",
+  "workerSha256": "d1669a1a0234bf66892b8848de3ae2037080bfc2ac34d32e0b4b33a9c96cbb85",
+  "limits": {
+    "pid": 25956,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1352871936,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "observedAt": "2026-11-15T15:28:55.181309+08:00",
+  "gpu": "AMD Radeon RX 6800 XT",
+  "blas": {
+    "library": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "lastCompletedFrame": 6100,
+  "originalFullAndStreamingLogitsExact": true,
+  "cacheDetachForwardExact": true,
+  "zeroAdapterForwardExact": true,
+  "directVsTwoPassGradientMaxDifferences": [
+    7.450580596923828e-09,
+    1.4901161193847656e-08
+  ],
+  "realTrainableGradientNorm": 0.00027557765133678913,
+  "trainableParameters": 131072,
+  "allFrozenTensorsUnchanged": true,
+  "seconds": 12.083593399991514,
+  "finishedAt": "2026-11-15T15:28:55.181309+08:00"
+}

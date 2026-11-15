@@ -1,0 +1,511 @@
+{
+  "meeting": "20200708_L_R002S01C01",
+  "featuresSha256": "37a024479db7e0d4f721b1368d6dd8d68fff5025e23d8886edd744d483de1950",
+  "routes": [
+    {
+      "first": 0,
+      "last": 2720,
+      "offset": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000000000.npy",
+      "sha256": "765cb40e3a68bd99449d44da6fa5df2c69b570958eeffaeb9693e59cab5bdc09"
+    },
+    {
+      "first": 2720,
+      "last": 5440,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000002720.npy",
+      "sha256": "2f18e948dd7dfc6a7677912121e785b0b53c9b396f7aa5de727ccf57f93c4230"
+    },
+    {
+      "first": 5440,
+      "last": 8160,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000005440.npy",
+      "sha256": "64273634dfccf4a8edea686fd0bc8234b4f6e08fc1fd06fab435cb4d75de8069"
+    },
+    {
+      "first": 8160,
+      "last": 10880,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000008160.npy",
+      "sha256": "d8452384d3eba2e22740b33461e64f27d36295bde14359d6e26457dfb23881f1"
+    },
+    {
+      "first": 10880,
+      "last": 13600,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000010880.npy",
+      "sha256": "69077b632a79dcc4150782dcdfd5246890259b59fe1ca6a58fb917141a0ec36f"
+    },
+    {
+      "first": 13600,
+      "last": 16320,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000013600.npy",
+      "sha256": "6b6516a0f814665899f52403093b1008f33e06df63883d92f76b16e4a1535464"
+    },
+    {
+      "first": 16320,
+      "last": 19040,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000016320.npy",
+      "sha256": "9f2d0be1a1f79ea278486b94e4191d3a63b5b3452f475b02219f11f503361231"
+    },
+    {
+      "first": 19040,
+      "last": 21760,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000019040.npy",
+      "sha256": "2f189758b2ca35045600ea54da39a25ca6f172c03a1e5c0da0e7f8dfca60860a"
+    },
+    {
+      "first": 21760,
+      "last": 24480,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000021760.npy",
+      "sha256": "a4552bedceac8d2b4923f1308c1115e7494e9645a6094444030240563e9e71cb"
+    },
+    {
+      "first": 24480,
+      "last": 27200,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000024480.npy",
+      "sha256": "e7a13b83170bdf6cc74d6406bd56fbdfc1a79abe5bf540a508448047d91ae6e3"
+    },
+    {
+      "first": 27200,
+      "last": 29920,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000027200.npy",
+      "sha256": "e8c96d990fb52eb2f53896a9e32381f334a044368d3aca3d68fe02009d6bfe70"
+    },
+    {
+      "first": 29920,
+      "last": 32640,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000029920.npy",
+      "sha256": "a7d392cfb2ff4bb54b8f231d0d2b203abe695ac974f1fa9ba8b9173c6958db8f"
+    },
+    {
+      "first": 32640,
+      "last": 35360,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000032640.npy",
+      "sha256": "921b512d498ed1cbbbf82c59f31b1efc81261861286dfe641b16e26d46ac12ed"
+    },
+    {
+      "first": 35360,
+      "last": 38080,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000035360.npy",
+      "sha256": "2f8d0e429a21ddbeb47c430f471196e456bdda761e67fdf7d6e7cb04819f0492"
+    },
+    {
+      "first": 38080,
+      "last": 40800,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000038080.npy",
+      "sha256": "0dffb8165c20c85eea33d82d46b6ca2ba9aa4f6567d16d8879b6a072d66e22bb"
+    },
+    {
+      "first": 40800,
+      "last": 43520,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000040800.npy",
+      "sha256": "3a7b2120f9f98085b9189eb4c621372dc6e28aa53ba4e1965a40fe09572dbda4"
+    },
+    {
+      "first": 43520,
+      "last": 46240,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000043520.npy",
+      "sha256": "39938f29f9f2b2f3aa45c6aab4ac603ba6c913c4ff1126d004431b33a64f3f28"
+    },
+    {
+      "first": 46240,
+      "last": 48960,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000046240.npy",
+      "sha256": "5ea0b698f34514e427f6c1e4ce17a9a71fe3c5c15b8a2cbfb196cee1f2495428"
+    },
+    {
+      "first": 48960,
+      "last": 51680,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000048960.npy",
+      "sha256": "08bc9d316497522943bc76129b94fd48fb6c33071c7c12fead34cbb3303da727"
+    },
+    {
+      "first": 51680,
+      "last": 54400,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000051680.npy",
+      "sha256": "3d94e6b19bcb2a97a079675dc9633b0c556e22f95661b3122c912313eb15f8b1"
+    },
+    {
+      "first": 54400,
+      "last": 57120,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000054400.npy",
+      "sha256": "050ea17947758c28409ebb7630998d0ee4318e69f11ded093b2e981f4cf45d84"
+    },
+    {
+      "first": 57120,
+      "last": 59840,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000057120.npy",
+      "sha256": "302cdc51661532ea2f9bfe4e77cfb0da0fd39f391e2dae0bf74ec10919846b72"
+    },
+    {
+      "first": 59840,
+      "last": 62560,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000059840.npy",
+      "sha256": "b773afc97d5534bae366d7f274e191c18a998bb54cd449ccbee361cce5e0ee73"
+    },
+    {
+      "first": 62560,
+      "last": 65280,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000062560.npy",
+      "sha256": "c6b10fb02df420ce437534d883c724cdd0ce67b8a6c9671352b8c5bde3cb825d"
+    },
+    {
+      "first": 65280,
+      "last": 68000,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000065280.npy",
+      "sha256": "c25e83a95f988b445ee6fbc55b0cd78ba0be67f3e5ff5b22f73941dbba0a3e8f"
+    },
+    {
+      "first": 68000,
+      "last": 70720,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000068000.npy",
+      "sha256": "512194eef0bf5275819e7e32a982b577d2c13c9d51497f9778373f2c6f0f4ce0"
+    },
+    {
+      "first": 70720,
+      "last": 73440,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000070720.npy",
+      "sha256": "566e5f35522d1b7f9c29e879bfa7d32d9508dab24aa6adc9f1fd61606fab41c7"
+    },
+    {
+      "first": 73440,
+      "last": 76160,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000073440.npy",
+      "sha256": "35dd12019162bbaf1066ee395dbad50454a43e517ff3916884dc0f776d408adf"
+    },
+    {
+      "first": 76160,
+      "last": 78880,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000076160.npy",
+      "sha256": "5ceb648d98bc8dcde6a22aff6c6d86441743f8c9e415c592078fb9e9ee286397"
+    },
+    {
+      "first": 78880,
+      "last": 81600,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000078880.npy",
+      "sha256": "e154869ad99c95528c59875615d85ba9fda0aa1252cda3b3c1ff0eaf5393011e"
+    },
+    {
+      "first": 81600,
+      "last": 84320,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000081600.npy",
+      "sha256": "e39d65f7feeb201a3e6652e658da3a45ca799ddd5f5657dc074819c135e67a5c"
+    },
+    {
+      "first": 84320,
+      "last": 87040,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000084320.npy",
+      "sha256": "e2941e31b4b35a702d2b0db159f37d65cc4ef71135501f81f308119a9bd4f9f3"
+    },
+    {
+      "first": 87040,
+      "last": 89760,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000087040.npy",
+      "sha256": "31b6726213ecbc737417ed60af395bd1e974a5472ddce67879f971a789395575"
+    },
+    {
+      "first": 89760,
+      "last": 92480,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000089760.npy",
+      "sha256": "57e3dffdd0a1243aba0ac7016a6b457723ed4475a49b2b2f5b19fc21ed340fe2"
+    },
+    {
+      "first": 92480,
+      "last": 95200,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000092480.npy",
+      "sha256": "f89bd571c02544f3587860f9b78724e56a9e24dd3ebb6563fd089e3c4a8577ef"
+    },
+    {
+      "first": 95200,
+      "last": 97920,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000095200.npy",
+      "sha256": "1b5374d9d24c5791709c1acceb2823406cc21a586184ff7dc3665e2f9df2bd4f"
+    },
+    {
+      "first": 97920,
+      "last": 100640,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000097920.npy",
+      "sha256": "b72507ce330e3b4b012afe89ce52a7c688efba7a67035c103552378005612153"
+    },
+    {
+      "first": 100640,
+      "last": 103360,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000100640.npy",
+      "sha256": "074ef5afae4556c34924d86cd8c34e202378874007d0e1f779bd7921d35a7db4"
+    },
+    {
+      "first": 103360,
+      "last": 106080,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000103360.npy",
+      "sha256": "0654eccb29c0e8e7a7a9abe681a3727c17fe24ea16864ee0c8ad97693bcd4fb5"
+    },
+    {
+      "first": 106080,
+      "last": 108800,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000106080.npy",
+      "sha256": "9d32fdd961389653371cdec8c576ab40184695b36b9817da91fdb3fe8efe761b"
+    },
+    {
+      "first": 108800,
+      "last": 111520,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000108800.npy",
+      "sha256": "1d8efab16dbaaad6a7b872a184c91ac66689b20d77a3c7f9998b950b5155e117"
+    },
+    {
+      "first": 111520,
+      "last": 114240,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000111520.npy",
+      "sha256": "ca311bdca54c38d26b742d2955e73af6977d46bc0bc27e806ac6c6e1ab9676a3"
+    },
+    {
+      "first": 114240,
+      "last": 116960,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000114240.npy",
+      "sha256": "f6b56713d98fb3f4599be575038e58af71c1d178b4b4d39c3f730c88038581ab"
+    },
+    {
+      "first": 116960,
+      "last": 119680,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000116960.npy",
+      "sha256": "4dd492dd228e058b6d98554edcae58e7242fbd0d9fc23c4ac8f31b89995aee51"
+    },
+    {
+      "first": 119680,
+      "last": 122400,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000119680.npy",
+      "sha256": "e5db539265e057ded46787d1f1f08792098ed3ca4d9a7775f2e9f5bfa0d6748e"
+    },
+    {
+      "first": 122400,
+      "last": 125120,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000122400.npy",
+      "sha256": "4a5425c5ee043f9f4c9769d07f6bdf8907e2cf8824014460ff50e99ce81a3ba0"
+    },
+    {
+      "first": 125120,
+      "last": 127840,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000125120.npy",
+      "sha256": "68cded543724eef09c68208ed43378b88a0035368160bbfa02da1bc9cbb6ec45"
+    },
+    {
+      "first": 127840,
+      "last": 130560,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000127840.npy",
+      "sha256": "ff3a2817b2ac09e5c12f665166851a2c53c3f051945943ce0318ae6d8c0e3dcc"
+    },
+    {
+      "first": 130560,
+      "last": 133280,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000130560.npy",
+      "sha256": "129ee0665a2f8798f8d4015c0fdf7e2c0875c3162717dab1e8edbf8ff7e75241"
+    },
+    {
+      "first": 133280,
+      "last": 136000,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000133280.npy",
+      "sha256": "eca16ae029472cd9b1aff1e3b39c3a720c6672d47749b01d0264606b74f8dd6a"
+    },
+    {
+      "first": 136000,
+      "last": 138720,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000136000.npy",
+      "sha256": "397f5cb541ded42cca5f7058f3eb6477c41842b65cf3c654e1cdebe6fae957a6"
+    },
+    {
+      "first": 138720,
+      "last": 141440,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000138720.npy",
+      "sha256": "1b06388e22fed9da0a453521d1ebd66533b57040c8285f2b96a9b6fde750013d"
+    },
+    {
+      "first": 141440,
+      "last": 144160,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000141440.npy",
+      "sha256": "53eb51d1262c14211cdd8d35269929c7608a99357e33ea209fa2e112a1d9b4c7"
+    },
+    {
+      "first": 144160,
+      "last": 146880,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000144160.npy",
+      "sha256": "7596245b8144a077ad11cc8e4fe0a0ba4421c6af77852d456577daee5c240cb9"
+    },
+    {
+      "first": 146880,
+      "last": 149600,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000146880.npy",
+      "sha256": "d8b093329150072672e5d896ca93b7b1330799c747afa2d70ebf57ab10d95c92"
+    },
+    {
+      "first": 149600,
+      "last": 152320,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000149600.npy",
+      "sha256": "6823837e62b443396d89589ada4d0061edc3c89410e0c056bd30f9f6141a123c"
+    },
+    {
+      "first": 152320,
+      "last": 155040,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000152320.npy",
+      "sha256": "876131d7abd237373f30e6e296cdf977010b4eef4cc10f2318d00814c88bfee3"
+    },
+    {
+      "first": 155040,
+      "last": 157760,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000155040.npy",
+      "sha256": "478615ef42cd7fa854049513982b6b85ff65d8b37f595dcaf0b4a85a56f6a635"
+    },
+    {
+      "first": 157760,
+      "last": 160480,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000157760.npy",
+      "sha256": "fbf97c431c70c3a14c26f9115d9eb959cb322a59a8e253c6ee070505a36332d0"
+    },
+    {
+      "first": 160480,
+      "last": 163200,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000160480.npy",
+      "sha256": "df06376330d32f95ffc2350f308d11ab15c2ee1d1bc7883e0f15fa9e0390cb09"
+    },
+    {
+      "first": 163200,
+      "last": 165920,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000163200.npy",
+      "sha256": "93d8cfd56acf353c04293e9ad5f4286b0110c796f6a9c92af42b8e926d33ee0f"
+    },
+    {
+      "first": 165920,
+      "last": 168640,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000165920.npy",
+      "sha256": "eb9974fea76246528725ff8d5b096701d71f2eb7378ef3ccf9df6de00eee5744"
+    },
+    {
+      "first": 168640,
+      "last": 171360,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000168640.npy",
+      "sha256": "2354e91dfabda445fba614b0c47a3d59f4135b29dfba9772a3606f62f3d14f4d"
+    },
+    {
+      "first": 171360,
+      "last": 174080,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000171360.npy",
+      "sha256": "60b89927dd711a17eef30aafad2e99ad799901053b3e9e425000a662b2814887"
+    },
+    {
+      "first": 174080,
+      "last": 176800,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000174080.npy",
+      "sha256": "a038140eefd4a5a0396eb347b0f62f039bd38f50e95552eeb32c22b86ea80a1d"
+    },
+    {
+      "first": 176800,
+      "last": 179520,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000176800.npy",
+      "sha256": "abafa07ab4d52eaeb374b10a02e40d94dfc4be8eebefe22663fdfdc648cb1c0b"
+    },
+    {
+      "first": 179520,
+      "last": 182240,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000179520.npy",
+      "sha256": "3becbf7aa84d7af835b5872e163d7a14c3eecfbabb778acf8195e1d7e1f2d17a"
+    },
+    {
+      "first": 182240,
+      "last": 184960,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000182240.npy",
+      "sha256": "0bae47f41d412e3795c1ce4d090c8b223e6cd0a21d4f58553037c195110b3a40"
+    },
+    {
+      "first": 184960,
+      "last": 187680,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000184960.npy",
+      "sha256": "f4282de6fc545914cd1eaf1e1c28e656dbf5df565a98c672dd90e733b019db3a"
+    },
+    {
+      "first": 187680,
+      "last": 190400,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000187680.npy",
+      "sha256": "633976cc0542d8495c2df6bc14d334f4c1a384bc88351d1bd6116ad66b05d8d6"
+    },
+    {
+      "first": 190400,
+      "last": 193120,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000190400.npy",
+      "sha256": "956d8954cc6a35857e0cc2f74a976ec862b6b3461233c195cd69b89f4eed8f57"
+    },
+    {
+      "first": 193120,
+      "last": 194374,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\calibration-routes\\epoch2\\20200708_L_R002S01C01\\000193120.npy",
+      "sha256": "26dff048a4d1f38b36ca70d24273cde823968bc1b08ec097d0755558225fe3c3"
+    }
+  ],
+  "source": "Current-model calibration discrete cache paths, no target labels"
+}

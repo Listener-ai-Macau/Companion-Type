@@ -1,0 +1,18 @@
+{
+  "state": "ONE_PUBLIC_SPEAKER_ADAPTATION_DESIGN_BEFORE_ANY_NEURAL_BASELINE_OR_UPDATES",
+  "ownerSourceAdjudicationRequired": false,
+  "base": "Original locally pinned99M Nemotron3 Diarization .nemo, validated FP32 Transformers5.22.1 converter/reference. No Community1 access dependency.",
+  "data": "All original mono microphone0 from2existing AISHELL4 train-role sessions;2different existing validation-role sessions held out. Real multi-speaker overlap and long re-entry retained. No current development meeting or final holdout is used for training.",
+  "adaptation": "LoRA rank8 alpha16 dropout0 only q_proj/v_proj of final8audio-transformer layers23through30. Freeze every pretrained tensor including classifier, silence embedding and restored pretrained auxiliary LayerNorm192+Linear192to3 activity head. Model eval mode, no dropout/augmentation, FP32 eager.",
+  "training": "One fixed4epoch run,2whole train meetings/epoch, exactly8AdamW updates, lr0.0001 betas0.9/0.98 weight_decay0.001 gradclip1 seed20261115. Final adapter only, no epoch/lr/rank search or validation-selected checkpoint.",
+  "objective": "Use original public NeMo whole-sequence PIL0.75+ATS0.25+activity0.5+phantom0.1 with phantom threshold0.25 temperature0.5 and both-alignment empty channels. Official loss function forward bodies preserved; restore original auxiliary activity head from checkpoint.",
+  "boundedGlobalGradient": "Per training meeting first infer full current logits without gradients, compute exact whole-meeting losses and dLoss/dSpeakerLogits plus dLoss/dActivityLogits on CPU using global Hungarian assignments. Replay same complete sequence/chunks at unchanged weights, propagate saved output gradients per chunk and accumulate parameter gradients, update once at meeting end. No weight update within a meeting; cache update under no_grad only because selection is discrete and cached pre-encoder features/frozen silence contain no trainable tensors. Verify replay logits and original/upstream losses before accepting updates.",
+  "inferenceGeometry": "Preserve original offline chunk340/right40/FIFO40/cache264/update300/left0. Fresh cache only at start of each real meeting. All audio/features and original0.5postprocessing retained; no speaker count hints during validation.",
+  "controls": "Before updates: zero adapter yields exact original logits, cache-gradient detach leaves forward exact, official loss/global-gradient controls finite, baseline full validation scores. After updates: every frozen parameter byte unchanged; disabling adapters restores base control exact; saved/reloaded adapter tensors exact. Evaluate both complete held-session validations once after fixed final epoch.",
+  "keepRule": "Both held-session DERs must not regress and summed error seconds must decline, otherwise reject without variants. Only a retained candidate proceeds to original full development meetings and English protection. Original D2 raw/per-person words and other gates remain separate, no automatic product default adoption or sale pass.",
+  "resources": "5percent CPU and2GiB private job, actual Windows low-memory stop, freshHIP RX6800XT inventory, scoped ROCmBLAS1thread, one NN family, no display/system settings or other apps changed.",
+  "limitations": "Small speaker-only transfer trial, not full author pretraining recipe. No new ASR text training yet. Physical speaker/room independence of the4public source sessions is not established; held meetings and final qualification remain required.",
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "qualityQualified": false
+}

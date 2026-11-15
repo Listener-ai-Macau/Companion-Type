@@ -1,0 +1,27 @@
+{
+  "meeting": "20200709_L_R002S01C01",
+  "role": "validation",
+  "audio": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200709_L_R002S01C01\\microphone0.wav",
+  "audioSha256": "7772a2f7106a3abfc306e4e638c452f8996e14083b86b6c11e6587e906690d35",
+  "audioSeconds": 2145.3378125,
+  "frames": 214534,
+  "validSupervisedFrames": 214533,
+  "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200709_L_R002S01C01\\features.npy",
+  "featuresSha256": "d18453b7dfa20a4301c951967b45f43a7ceb3ac2fc5098cc4ca146f9e13a28c4",
+  "labels": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200709_L_R002S01C01\\labels.npy",
+  "labelsSha256": "37dbcc3ae9c83efbb74668633d67334a42b5e7eaaf337ce976d36f9d84155ff9",
+  "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200709_L_R002S01C01.TextGrid",
+  "referenceSha256": "b6a1e716db42766dca61fcf14d15212855dcf87389d7ef1b5e0a9ad9baf412f3",
+  "referenceKind": "textgrid_lexical",
+  "corpus": "AISHELL4-Train-source-held-session-adaptation",
+  "officialSourceFlacSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+  "targetSpeakersForTrainingAndScoringOnly": [
+    "001-M",
+    "002-M",
+    "003-M",
+    "004-F",
+    "006-F",
+    "007-F"
+  ],
+  "annotatedOverlapSecondsAt10ms": 94.03
+}

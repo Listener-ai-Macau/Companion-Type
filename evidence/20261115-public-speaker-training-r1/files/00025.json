@@ -1,0 +1,56 @@
+{
+  "at": "2026-11-15T14:56:59.811358+08:00",
+  "files": [
+    {
+      "url": "https://raw.githubusercontent.com/NVIDIA-NeMo/NeMo/main/nemo/collections/asr/models/sortformer_diar_models.py",
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-speaker-adaptation-r1\\upstream\\models__sortformer_diar_models.py.source.txt",
+      "bytes": 105992,
+      "sha256": "d50bb9448bec5cd8b35c18129e2c6a9ce0ac938ea3d7fea2a0668a540e4b6f16",
+      "executed": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NVIDIA-NeMo/NeMo/main/nemo/collections/asr/losses/aux_diarization_loss.py",
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-speaker-adaptation-r1\\upstream\\losses__aux_diarization_loss.py.source.txt",
+      "bytes": 8894,
+      "sha256": "f2d04c54ee3d4f6f509399f4ed228ddd1f052d1f55b092a134cb69c007d44a4b",
+      "executed": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NVIDIA-NeMo/NeMo/main/nemo/collections/asr/losses/bce_loss.py",
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-speaker-adaptation-r1\\upstream\\losses__bce_loss.py.source.txt",
+      "bytes": 6169,
+      "sha256": "a694027a017d2332216396b6dd6bbff6cd01010bf9f69623b4d31f3540b7c562",
+      "executed": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NVIDIA-NeMo/NeMo/main/nemo/collections/asr/parts/utils/asr_multispeaker_utils.py",
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-speaker-adaptation-r1\\upstream\\parts__utils__asr_multispeaker_utils.py.source.txt",
+      "bytes": 41898,
+      "sha256": "cfe4b1fcd9ccdb9e5b7295b93a91737acbfbb07ac811d2b40c5deda49370ece6",
+      "executed": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NVIDIA-NeMo/NeMo/main/nemo/collections/asr/data/audio_to_diar_label.py",
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\public-speaker-adaptation-r1\\upstream\\data__audio_to_diar_label.py.source.txt",
+      "bytes": 64423,
+      "sha256": "3d6c702bf94ee2bfd3d7a1c505e69a6011f35876b932362a9c7a2c9194d8fa6a",
+      "executed": false
+    }
+  ],
+  "limits": {
+    "pid": 30820,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 14462976,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

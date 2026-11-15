@@ -1,0 +1,23 @@
+{
+  "state": "REJECT_FIXED_PUBLIC_SPEAKER_ADAPTER_AT_ORIGINAL_DEVELOPMENT_GATE",
+  "at": "2026-11-15T15:55:54+08:00",
+  "baselineDer": 0.15841442437084555,
+  "candidateDer": 0.159245203574674,
+  "requiredDerAtMost": 0.1,
+  "originalDevelopmentGatePassed": false,
+  "heldAdaptationValidationKeepRulePassed": true,
+  "heldAdaptationValidationIsNotProductQualification": true,
+  "adapterFile": "E:/CodexData/Companion/product-d1d2-20261114/public-speaker-adaptation-r1/train-r2/adapter.safetensors",
+  "adapterSha256": "c19f8701b1fc514eaf49ea4dce575a38a0676a8a0471221a97d0145109701de3",
+  "automaticProductAdoption": false,
+  "originalProductDefaultsUnchanged": true,
+  "newTrainingUpdates": 0,
+  "additionalHyperparameterOrThresholdVariantsPlanned": false,
+  "remainingOldChineseAndEnglishAdapterInferenceSkippedBecauseHardGateAlreadyFailed": true,
+  "d1Complete": true,
+  "d2Complete": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "ownerAudioAdjudicationRequired": false,
+  "explanation": "Two held adaptation sources improved by only 2.2072 speaker-seconds; original difficult development meeting regressed and fails unchanged 10% gate. Retain weights/recovery/failures; reject this fixed adaptation for the product default."
+}

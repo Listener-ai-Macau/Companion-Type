@@ -1,0 +1,17 @@
+[
+  {
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "audioSeconds": 2049.3615,
+    "role": "validation",
+    "frames": 204937,
+    "validSupervisedFrames": 204936,
+    "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\original-development-r1\\features.npy",
+    "featuresSha256": "77e1859790cbffeac977dfb05a932ad78174c5055d4d424df4b68b814f5a1891",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200623_S_R001S07C01.TextGrid",
+    "referenceSha256": "d876d6c4b713ba3b0fb3bd189db0d753c09e66abbde616a6fa2d6ec63e80b04a",
+    "referenceKind": "textgrid_lexical",
+    "corpus": "AISHELL4-Train-development-only"
+  }
+]

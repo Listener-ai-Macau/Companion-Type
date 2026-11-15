@@ -1,0 +1,46 @@
+[
+  {
+    "meeting": "20200707_L_R001S08C01",
+    "role": "train",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200707_L_R001S08C01\\microphone0.wav",
+    "audioSha256": "a1bcb7e7519841d7a4929dc5c7cbb3ee17f87c35d6e00a07d086dc6ffc5defce",
+    "audioSeconds": 1982.6698125,
+    "frames": 198267,
+    "validSupervisedFrames": 198266,
+    "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200707_L_R001S08C01\\features.npy",
+    "featuresSha256": "b951676758f26bfa2d6d961877ea18d47864217c69274fd33174b92625cb117b"
+  },
+  {
+    "meeting": "20200708_L_R002S01C01",
+    "role": "train",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200708_L_R002S01C01\\microphone0.wav",
+    "audioSha256": "dc7581d1da27859b957fb968ce58e960d6162c9583edadb331ef7c5be1194c05",
+    "audioSeconds": 1943.7345,
+    "frames": 194374,
+    "validSupervisedFrames": 194373,
+    "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200708_L_R002S01C01\\features.npy",
+    "featuresSha256": "37a024479db7e0d4f721b1368d6dd8d68fff5025e23d8886edd744d483de1950"
+  },
+  {
+    "meeting": "20200709_L_R002S01C01",
+    "role": "validation",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200709_L_R002S01C01\\microphone0.wav",
+    "audioSha256": "7772a2f7106a3abfc306e4e638c452f8996e14083b86b6c11e6587e906690d35",
+    "audioSeconds": 2145.3378125,
+    "frames": 214534,
+    "validSupervisedFrames": 214533,
+    "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200709_L_R002S01C01\\features.npy",
+    "featuresSha256": "d18453b7dfa20a4301c951967b45f43a7ceb3ac2fc5098cc4ca146f9e13a28c4"
+  },
+  {
+    "meeting": "20200805_S_R001S01C01",
+    "role": "validation",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200805_S_R001S01C01\\microphone0.wav",
+    "audioSha256": "eb1bb3eec8f1984e9286dfb9daf5c0437573a2af40eba7ee4093501259ffe4e6",
+    "audioSeconds": 2195.362,
+    "frames": 219537,
+    "validSupervisedFrames": 219536,
+    "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200805_S_R001S01C01\\features.npy",
+    "featuresSha256": "8884deab17acb5c87b82b395237617e13672b863b6314865be2ae4dfbc224733"
+  }
+]

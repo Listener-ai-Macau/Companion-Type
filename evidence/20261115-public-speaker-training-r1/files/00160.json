@@ -1,0 +1,25 @@
+{
+  "state": "PASS_ORIGINAL_FULL_FEATURE_BYTES_EXACT_BASELINE_REUSED",
+  "at": "2026-11-15T15:41:21.147007+08:00",
+  "originalFeatureRawSha256": "601710333d5fc27450a88b7c96d6c016028bb6dd8e491dac3aabfd23eccda16a",
+  "originalBaselineDer": 0.15841442437084555,
+  "newNeuralCalls": 0,
+  "trainingOnDevelopment": false,
+  "finalHoldoutOpened": false,
+  "limits": {
+    "pid": 26480,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1739890688,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

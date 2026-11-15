@@ -1,0 +1,28 @@
+{
+  "meeting": "20200707_L_R001S08C01",
+  "featuresSha256": "94169006ebec59308d5b1e901947213e2ae3d7d64e985b7bd9903f0e61705bc0",
+  "routes": [
+    {
+      "first": 0,
+      "last": 2720,
+      "offset": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\control-r3\\control-calibration-routes\\000000000.npy",
+      "sha256": "71ff810b6dca8191f05be4ac4d874ad2b502a9f8d4f4718b3b2639ed4a956bb1"
+    },
+    {
+      "first": 2720,
+      "last": 5440,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\control-r3\\control-calibration-routes\\000002720.npy",
+      "sha256": "a243f52a544cf3529292403813a9cda32a698a38832db30f6241064dae5d8add"
+    },
+    {
+      "first": 5440,
+      "last": 6100,
+      "offset": 2432,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\control-r3\\control-calibration-routes\\000005440.npy",
+      "sha256": "058008e909f871fe599005a0d9d79770958503839baf22d723e435da4ec1b1fb"
+    }
+  ],
+  "source": "Current-model calibration discrete cache paths, no target labels"
+}

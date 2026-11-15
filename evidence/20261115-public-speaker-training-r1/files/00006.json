@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-15T15:05:01.331396+08:00",
+  "state": "PREPARATION_EXITED_OPENBLAS_ALLOCATION_ERROR_BEFORE_NEURAL_INFERENCE",
+  "processExitCode": 1,
+  "output": "OpenBLAS error: Memory allocation still failed after10retries, giving up. Repeated for worker pools.",
+  "newNeuralCalls": 0,
+  "completedSourceManifestExists": false,
+  "sourceAndPartialDataRetained": "E:/CodexData/Companion/.model-cache/public-speaker-adaptation-20261115/data-r1",
+  "fix": "Reuse already proven scoped rocm-openblas16to1 with original DLL SHA before frontend matrix operations, fresh data-r2; retain2GiB and5percent limits, no unchanged repeat."
+}

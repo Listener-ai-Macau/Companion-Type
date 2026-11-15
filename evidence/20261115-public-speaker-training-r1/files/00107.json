@@ -1,0 +1,187 @@
+[
+  {
+    "epoch": 1,
+    "meeting": "20200707_L_R001S08C01",
+    "wholeLossBeforeUpdate": {
+      "total": 0.3989408612251282,
+      "pil": 0.31813889741897583,
+      "ats": 0.31813889741897583,
+      "activity": 0.16160394251346588,
+      "phantom": 0.0,
+      "globalPilAssignment": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          -1
+        ]
+      ],
+      "globalAtsAssignment": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          -1
+        ]
+      ]
+    },
+    "globalGradientNormBeforeClip": 0.2171829640865326,
+    "calibrationReplayMaxAbsoluteDifference": 0.0
+  },
+  {
+    "epoch": 1,
+    "meeting": "20200708_L_R002S01C01",
+    "wholeLossBeforeUpdate": {
+      "total": 0.08159051090478897,
+      "pil": 0.021090460941195488,
+      "ats": 0.021090460941195488,
+      "activity": 0.09420295804738998,
+      "phantom": 0.1339857578277588,
+      "globalPilAssignment": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          -1
+        ]
+      ],
+      "globalAtsAssignment": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          -1
+        ]
+      ]
+    },
+    "globalGradientNormBeforeClip": 0.0347588025033474,
+    "calibrationReplayMaxAbsoluteDifference": 0.0
+  },
+  {
+    "epoch": 2,
+    "meeting": "20200707_L_R001S08C01",
+    "wholeLossBeforeUpdate": {
+      "total": 0.3851798474788666,
+      "pil": 0.29934921860694885,
+      "ats": 0.29934921860694885,
+      "activity": 0.16376787424087524,
+      "phantom": 0.039466798305511475,
+      "globalPilAssignment": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          -1
+        ]
+      ],
+      "globalAtsAssignment": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          -1
+        ]
+      ]
+    },
+    "globalGradientNormBeforeClip": 0.1654621660709381,
+    "calibrationReplayMaxAbsoluteDifference": 0.0
+  },
+  {
+    "epoch": 2,
+    "meeting": "20200708_L_R002S01C01",
+    "wholeLossBeforeUpdate": {
+      "total": 0.07322342693805695,
+      "pil": 0.020390305668115616,
+      "ats": 0.020390305668115616,
+      "activity": 0.09304098784923553,
+      "phantom": 0.06312623620033264,
+      "globalPilAssignment": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          -1
+        ]
+      ],
+      "globalAtsAssignment": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          -1
+        ]
+      ]
+    },
+    "globalGradientNormBeforeClip": 0.04833608120679855,
+    "calibrationReplayMaxAbsoluteDifference": 0.0
+  },
+  {
+    "epoch": 3,
+    "meeting": "20200707_L_R001S08C01",
+    "wholeLossBeforeUpdate": {
+      "total": 0.3900633156299591,
+      "pil": 0.308973103761673,
+      "ats": 0.308973103761673,
+      "activity": 0.16218042373657227,
+      "phantom": 0.0,
+      "globalPilAssignment": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          -1
+        ]
+      ],
+      "globalAtsAssignment": [
+        [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          -1
+        ]
+      ]
+    },
+    "globalGradientNormBeforeClip": 0.2197556048631668,
+    "calibrationReplayMaxAbsoluteDifference": 0.0
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "meeting": "20200707_L_R001S08C01",
+    "role": "train",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200707_L_R001S08C01\\microphone0.wav",
+    "audioSha256": "a1bcb7e7519841d7a4929dc5c7cbb3ee17f87c35d6e00a07d086dc6ffc5defce",
+    "audioSeconds": 1982.6698125,
+    "frames": 198267,
+    "validSupervisedFrames": 198266,
+    "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200707_L_R001S08C01\\features.npy",
+    "featuresSha256": "b951676758f26bfa2d6d961877ea18d47864217c69274fd33174b92625cb117b",
+    "labels": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200707_L_R001S08C01\\labels.npy",
+    "labelsSha256": "853710a8805252c2d0c41d8f7493e245071b649b49262569958e36d0c2c29a15",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200707_L_R001S08C01.TextGrid",
+    "referenceSha256": "489f7597d1953e0d488e55b1edf79f575d87b1fa5b69883aab4399e9cae8d3de",
+    "referenceKind": "textgrid_lexical",
+    "corpus": "AISHELL4-Train-source-held-session-adaptation",
+    "officialSourceFlacSha256": "35cec60f5279217cbd21e473408c349a1775c7651efd28f7d4a8ecf468601a03",
+    "targetSpeakersForTrainingAndScoringOnly": [
+      "001-M",
+      "002-M",
+      "003-M",
+      "004-M",
+      "005-F",
+      "006-F",
+      "007-M"
+    ],
+    "annotatedOverlapSecondsAt10ms": 279.32
+  },
+  {
+    "meeting": "20200708_L_R002S01C01",
+    "role": "train",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200708_L_R002S01C01\\microphone0.wav",
+    "audioSha256": "dc7581d1da27859b957fb968ce58e960d6162c9583edadb331ef7c5be1194c05",
+    "audioSeconds": 1943.7345,
+    "frames": 194374,
+    "validSupervisedFrames": 194373,
+    "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200708_L_R002S01C01\\features.npy",
+    "featuresSha256": "37a024479db7e0d4f721b1368d6dd8d68fff5025e23d8886edd744d483de1950",
+    "labels": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200708_L_R002S01C01\\labels.npy",
+    "labelsSha256": "f64539a657124e95d2725bc14a72d1e845a6f2c0ccbb038d024965cff6bf26ff",
+    "reference": "E:\\CodexData\\Companion\\.model-cache\\target-activity-adaptation-20261108\\official-annotations\\20200708_L_R002S01C01.TextGrid",
+    "referenceSha256": "16e65eb5938f0b3e750b755d04abe7586dcd46c5edab5bef52d9225699188b4c",
+    "referenceKind": "textgrid_lexical",
+    "corpus": "AISHELL4-Train-source-held-session-adaptation",
+    "officialSourceFlacSha256": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
+    "targetSpeakersForTrainingAndScoringOnly": [
+      "001-M",
+      "002-M",
+      "003-M",
+      "004-M",
+      "005-F",
+      "006-F",
+      "007-F"
+    ],
+    "annotatedOverlapSecondsAt10ms": 79.01
+  }
+]

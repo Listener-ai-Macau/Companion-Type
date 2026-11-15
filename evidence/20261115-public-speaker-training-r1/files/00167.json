@@ -1,0 +1,61 @@
+{
+  "state": "COMPLETE_PUBLIC_SPEAKER_VALIDATION_SCORE_PENDING",
+  "phase": "candidate",
+  "startedAt": "2026-11-15T15:44:45.678440+08:00",
+  "optimizerUpdates": 0,
+  "neuralChunkCalls": 79,
+  "qualityQualified": false,
+  "referenceUsedForValidationInference": false,
+  "protocolSha256": "faea09c9e1d29034e7a6a8d43563ec37adbe777c950a55ce0930f77998c43271",
+  "workerSha256": "d1669a1a0234bf66892b8848de3ae2037080bfc2ac34d32e0b4b33a9c96cbb85",
+  "limits": {
+    "pid": 21592,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1173065728,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "observedAt": "2026-11-15T15:45:07.570152+08:00",
+  "gpu": "AMD Radeon RX 6800 XT",
+  "blas": {
+    "library": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "adapterReloadedTensors": 32,
+  "disabledAdapterOriginalLogitsExact": true,
+  "adapterSha256": "c19f8701b1fc514eaf49ea4dce575a38a0676a8a0471221a97d0145109701de3",
+  "meeting": "20200623_S_R001S07C01",
+  "lastCompletedFrame": 204937,
+  "results": [
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "audioSeconds": 2049.3615,
+      "role": "validation",
+      "frames": 204937,
+      "validSupervisedFrames": 204936,
+      "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\original-development-r1\\features.npy",
+      "featuresSha256": "77e1859790cbffeac977dfb05a932ad78174c5055d4d424df4b68b814f5a1891",
+      "probabilitySha256": "024882faaa4a76644e991a0113ea00b5119062e9fa69743ac78371d1c8b30ded",
+      "rttmSha256": "3ca301cce4d52895a3bf6dc8cb21ada2fa89cf158f9331f64fdafc34080a2f48",
+      "originalThreshold": 0.5,
+      "noSpeakerCountHint": true,
+      "allFramesPreserved": true,
+      "qualityQualified": false
+    }
+  ],
+  "seconds": 21.8909822999849,
+  "finishedAt": "2026-11-15T15:45:07.570152+08:00"
+}

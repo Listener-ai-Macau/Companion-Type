@@ -1,0 +1,377 @@
+{
+  "state": "COMPLETE_FIXED_PUBLIC_SPEAKER_ADAPTER_TRAINING_UNQUALIFIED",
+  "phase": "train",
+  "startedAt": "2026-11-15T15:30:00.724727+08:00",
+  "optimizerUpdates": 8,
+  "neuralChunkCalls": 1160,
+  "qualityQualified": false,
+  "referenceUsedForValidationInference": false,
+  "protocolSha256": "a812b58e6056ef03b9d96db4f4b6539d292e0ac6b0c7d53b8cf386d83917fbb3",
+  "workerSha256": "d1669a1a0234bf66892b8848de3ae2037080bfc2ac34d32e0b4b33a9c96cbb85",
+  "limits": {
+    "pid": 15616,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1564168192,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "observedAt": "2026-11-15T15:31:55.746889+08:00",
+  "gpu": "AMD Radeon RX 6800 XT",
+  "blas": {
+    "library": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "epoch": 4,
+  "meeting": "20200708_L_R002S01C01",
+  "lastCompletedFrame": 194374,
+  "loss": {
+    "total": 0.06895676255226135,
+    "pil": 0.021809762343764305,
+    "ats": 0.021809762343764305,
+    "activity": 0.0942939966917038,
+    "phantom": 0.0,
+    "globalPilAssignment": [
+      [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        -1
+      ]
+    ],
+    "globalAtsAssignment": [
+      [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        -1
+      ]
+    ]
+  },
+  "adapterFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\train-r2\\adapter.safetensors",
+  "adapterSha256": "c19f8701b1fc514eaf49ea4dce575a38a0676a8a0471221a97d0145109701de3",
+  "savedReloadedTensors": 32,
+  "allFrozenParameterBytesUnchanged": true,
+  "trainableParameters": 131072,
+  "epochs": 4,
+  "wholeMeetingUpdates": 8,
+  "validationLabelsRead": false,
+  "history": [
+    {
+      "epoch": 1,
+      "meeting": "20200707_L_R001S08C01",
+      "wholeLossBeforeUpdate": {
+        "total": 0.3989408612251282,
+        "pil": 0.31813889741897583,
+        "ats": 0.31813889741897583,
+        "activity": 0.16160394251346588,
+        "phantom": 0.0,
+        "globalPilAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ],
+        "globalAtsAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ]
+      },
+      "globalGradientNormBeforeClip": 0.2171829640865326,
+      "calibrationReplayMaxAbsoluteDifference": 0.0
+    },
+    {
+      "epoch": 1,
+      "meeting": "20200708_L_R002S01C01",
+      "wholeLossBeforeUpdate": {
+        "total": 0.08159051090478897,
+        "pil": 0.021090460941195488,
+        "ats": 0.021090460941195488,
+        "activity": 0.09420295804738998,
+        "phantom": 0.1339857578277588,
+        "globalPilAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ],
+        "globalAtsAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ]
+      },
+      "globalGradientNormBeforeClip": 0.0347588025033474,
+      "calibrationReplayMaxAbsoluteDifference": 0.0
+    },
+    {
+      "epoch": 2,
+      "meeting": "20200707_L_R001S08C01",
+      "wholeLossBeforeUpdate": {
+        "total": 0.3851798474788666,
+        "pil": 0.29934921860694885,
+        "ats": 0.29934921860694885,
+        "activity": 0.16376787424087524,
+        "phantom": 0.039466798305511475,
+        "globalPilAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ],
+        "globalAtsAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ]
+      },
+      "globalGradientNormBeforeClip": 0.1654621660709381,
+      "calibrationReplayMaxAbsoluteDifference": 0.0
+    },
+    {
+      "epoch": 2,
+      "meeting": "20200708_L_R002S01C01",
+      "wholeLossBeforeUpdate": {
+        "total": 0.07248910516500473,
+        "pil": 0.020557768642902374,
+        "ats": 0.020557768642902374,
+        "activity": 0.09356941282749176,
+        "phantom": 0.051466286182403564,
+        "globalPilAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ],
+        "globalAtsAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ]
+      },
+      "globalGradientNormBeforeClip": 0.06670818477869034,
+      "calibrationReplayMaxAbsoluteDifference": 0.0
+    },
+    {
+      "epoch": 3,
+      "meeting": "20200707_L_R001S08C01",
+      "wholeLossBeforeUpdate": {
+        "total": 0.3900875151157379,
+        "pil": 0.308999240398407,
+        "ats": 0.308999240398407,
+        "activity": 0.16217653453350067,
+        "phantom": 0.0,
+        "globalPilAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ],
+        "globalAtsAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ]
+      },
+      "globalGradientNormBeforeClip": 0.2198552042245865,
+      "calibrationReplayMaxAbsoluteDifference": 0.0
+    },
+    {
+      "epoch": 3,
+      "meeting": "20200708_L_R002S01C01",
+      "wholeLossBeforeUpdate": {
+        "total": 0.07748408615589142,
+        "pil": 0.02104123681783676,
+        "ats": 0.02104123681783676,
+        "activity": 0.09425488859415054,
+        "phantom": 0.09315404295921326,
+        "globalPilAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ],
+        "globalAtsAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ]
+      },
+      "globalGradientNormBeforeClip": 0.05617566406726837,
+      "calibrationReplayMaxAbsoluteDifference": 0.0
+    },
+    {
+      "epoch": 4,
+      "meeting": "20200707_L_R001S08C01",
+      "wholeLossBeforeUpdate": {
+        "total": 0.3902982771396637,
+        "pil": 0.304951012134552,
+        "ats": 0.304951012134552,
+        "activity": 0.16217897832393646,
+        "phantom": 0.0425775945186615,
+        "globalPilAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ],
+        "globalAtsAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ]
+      },
+      "globalGradientNormBeforeClip": 0.17014998197555542,
+      "calibrationReplayMaxAbsoluteDifference": 0.0
+    },
+    {
+      "epoch": 4,
+      "meeting": "20200708_L_R002S01C01",
+      "wholeLossBeforeUpdate": {
+        "total": 0.06895676255226135,
+        "pil": 0.021809762343764305,
+        "ats": 0.021809762343764305,
+        "activity": 0.0942939966917038,
+        "phantom": 0.0,
+        "globalPilAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ],
+        "globalAtsAssignment": [
+          [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            -1
+          ]
+        ]
+      },
+      "globalGradientNormBeforeClip": 0.010642772540450096,
+      "calibrationReplayMaxAbsoluteDifference": 0.0
+    }
+  ],
+  "seconds": 115.02169049999793,
+  "finishedAt": "2026-11-15T15:31:55.746889+08:00"
+}

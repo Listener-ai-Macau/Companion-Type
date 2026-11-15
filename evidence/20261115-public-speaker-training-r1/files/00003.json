@@ -1,0 +1,8 @@
+{
+  "state": "CONTROL_PASSED_REPORTED_COUNTER_SCOPE_CORRECTED_WITHOUT_RERUN",
+  "reportedCoreChunks": 12,
+  "executedCoreChunksFromSource": 16,
+  "untrackedCalls": "3prefix gradient-calibration chunks plus1real backward-control chunk",
+  "optimizerUpdates": 0,
+  "fix": "Only account for those4control forwards in future worker state; model math/controls/training protocol unchanged. Keep original completed state unchanged."
+}

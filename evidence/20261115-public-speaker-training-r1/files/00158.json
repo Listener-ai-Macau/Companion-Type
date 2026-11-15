@@ -1,0 +1,97 @@
+{
+  "state": "COMPLETE_PUBLIC_HELD_MEETING_CANDIDATE_SCORES",
+  "at": "2026-11-15T15:50:40.040641+08:00",
+  "phase": "candidate",
+  "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-development-r1\\candidate-r1",
+  "reports": [
+    {
+      "at": "2026-11-15T15:50:40+08:00",
+      "corpus": "AISHELL4-Train-development-only",
+      "meeting": "20200623_S_R001S07C01",
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+      "audioSeconds": 2049.3615,
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "referenceSha256": "d876d6c4b713ba3b0fb3bd189db0d753c09e66abbde616a6fa2d6ec63e80b04a",
+      "referenceKind": "textgrid_lexical",
+      "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+      "referenceSpeakers": 4,
+      "predictedSpeakers": 4,
+      "components": {
+        "confusion": 126.17703665043265,
+        "total": 1833.909771017846,
+        "false alarm": 85.08726357751938,
+        "missed detection": 80.77703459536858,
+        "correct": 1626.955699772045,
+        "diarization error rate": 0.159245203574674
+      },
+      "perReferenceSpeakerForEvaluationOnly": {
+        "001-M": {
+          "referenceSeconds": 754.2531233501066,
+          "correctlyAttributedSeconds": 723.3264298469612,
+          "attributionRecall": 0.95899693014756,
+          "matchedAnonymousGroup": "group3"
+        },
+        "003-M": {
+          "referenceSeconds": 156.69216609686555,
+          "correctlyAttributedSeconds": 84.49670700402233,
+          "attributionRecall": 0.5392529129489939,
+          "matchedAnonymousGroup": "group2"
+        },
+        "004-M": {
+          "referenceSeconds": 389.96259450110284,
+          "correctlyAttributedSeconds": 330.8239293096525,
+          "attributionRecall": 0.8483478517545787,
+          "matchedAnonymousGroup": "group1"
+        },
+        "006-M": {
+          "referenceSeconds": 533.0018870697712,
+          "correctlyAttributedSeconds": 488.3086336114088,
+          "attributionRecall": 0.9161480389796219,
+          "matchedAnonymousGroup": "group0"
+        }
+      },
+      "macroReferenceAttributionRecall": 0.8156864334576887,
+      "uncoveredReferenceSpeakers": [],
+      "shortReferenceSpans": {
+        "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+        "count": 433,
+        "referenceSeconds": 382.4652804200073,
+        "correctSeconds": 303.90652124183174,
+        "zeroCorrectSpans": 82
+      },
+      "rttmSha256": "3ca301cce4d52895a3bf6dc8cb21ada2fa89cf158f9331f64fdafc34080a2f48"
+    }
+  ],
+  "totalReferenceSpeakerSeconds": 1833.909771017846,
+  "totalErrorSeconds": 292.04133482332065,
+  "aggregateDer": 0.159245203574674,
+  "bothSpeakerDerAtMost10Percent": false,
+  "originalReferenceAndScorerUnchanged": true,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "newNeuralCalls": 0,
+  "limits": {
+    "pid": 5700,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 101773312,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "baselineAggregateDer": 0.15841442437084555,
+  "perMeetingDerReduction": {
+    "20200623_S_R001S07C01": -0.0008307792038284578
+  },
+  "validationKeepRulePassed": false,
+  "decision": "REJECT_FIXED_SPEAKER_ADAPTER_NO_CONSISTENT_HELD_MEETING_GAIN",
+  "automaticProductAdoption": false,
+  "fullD2Qualification": false
+}

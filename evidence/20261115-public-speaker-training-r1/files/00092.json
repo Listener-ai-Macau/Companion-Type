@@ -1,0 +1,20 @@
+{
+  "state": "COMPLETE_PUBLIC_SPEAKER_PHASE",
+  "phase": "control",
+  "startedAt": "2026-11-15T15:28:37+08:00",
+  "automaticRetries": 0,
+  "privatePeakBytes": 1346269184,
+  "qualityQualified": false,
+  "trainingRequested": false,
+  "pid": 22752,
+  "pidCreatedAt": 1794727720.887575,
+  "gpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "exitCode": 0,
+  "finishedAt": "2026-11-15T15:28:56+08:00",
+  "seconds": 19.578000000008615
+}
