@@ -1,0 +1,4 @@
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1030: 找不到指定的模块。
+
+MIOpen: Error [EvaluateInvokers] DESKTOP-GRMMUN3:C:/home/runner/_work/rockrel/rockrel/rocm-libraries/projects/miopen/src/conv/solver_finders.cpp:373: Invalid elapsed time detected in EvaluateInvokers, failed condition: elapsed <= 0
+{"state": "PASS_BLIND_SEPARATOR_NUMERICAL_AND_LOSSLESS_STITCH_CONTROLS", "phase": "control", "error": null, "explicitNeuralCalls": 5, "seconds": 75.95457990001887}

@@ -1,0 +1,175 @@
+{
+  "id": "20200709_L_R002S01C01-multi-turn-context-04",
+  "sourceWavSha256": "692a256ab4f232779efb19db906757d743dba6495ab2b7bd67e41af31e5c3bbd",
+  "frames": 426440,
+  "streams": [
+    {
+      "index": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-04\\stream-0.npy",
+      "sha256": "6565f4726aaaaa881b82ebd5545f2801fc7d60eeb260d2645861a97d1a1d1f9d",
+      "frames": 426440,
+      "peak": 9.421285629272461,
+      "rms": 0.7741907238960266,
+      "samplesOutsideUnitRange": 48566
+    },
+    {
+      "index": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\separate-r1\\streams\\20200709_L_R002S01C01-multi-turn-context-04\\stream-1.npy",
+      "sha256": "ea910b1a3691b4b35bd6aafe17599f07e3fc4f3bf32ead816caa0cf80b82ea70",
+      "frames": 426440,
+      "peak": 2.8811354637145996,
+      "rms": 0.1822061389684677,
+      "samplesOutsideUnitRange": 2419
+    }
+  ],
+  "stitching": [
+    {
+      "startFrame": 0,
+      "validFrames": 32000,
+      "overlapFrames": 0,
+      "swapped": false,
+      "keepMse": null,
+      "swapMse": null
+    },
+    {
+      "startFrame": 24000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.008818198629790112,
+      "swapMse": 0.294745222998474
+    },
+    {
+      "startFrame": 48000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.02254965214744131,
+      "swapMse": 0.2100088920613372
+    },
+    {
+      "startFrame": 72000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.01835823045320386,
+      "swapMse": 0.06312157619886222
+    },
+    {
+      "startFrame": 96000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.34932110173601394,
+      "swapMse": 0.4621174761964842
+    },
+    {
+      "startFrame": 120000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.07010194973961871,
+      "swapMse": 0.13205231919025867
+    },
+    {
+      "startFrame": 144000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.08805206739323235,
+      "swapMse": 0.25846123952205574
+    },
+    {
+      "startFrame": 168000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.11105968328384255,
+      "swapMse": 2.5096908876873147
+    },
+    {
+      "startFrame": 192000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.02940851158039918,
+      "swapMse": 0.5201297043963693
+    },
+    {
+      "startFrame": 216000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.032401309935392836,
+      "swapMse": 1.4722520461390936
+    },
+    {
+      "startFrame": 240000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.21365661922684953,
+      "swapMse": 0.846188582890632
+    },
+    {
+      "startFrame": 264000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.21750505400427386,
+      "swapMse": 0.27103207823379705
+    },
+    {
+      "startFrame": 288000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.007077356232435612,
+      "swapMse": 1.0819537029194324
+    },
+    {
+      "startFrame": 312000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": false,
+      "keepMse": 0.2228619678346339,
+      "swapMse": 0.820395303974728
+    },
+    {
+      "startFrame": 336000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": true,
+      "keepMse": 0.07307488799628743,
+      "swapMse": 0.05401004825932222
+    },
+    {
+      "startFrame": 360000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": true,
+      "keepMse": 0.019194306202919988,
+      "swapMse": 0.007969850840395257
+    },
+    {
+      "startFrame": 384000,
+      "validFrames": 32000,
+      "overlapFrames": 8000,
+      "swapped": true,
+      "keepMse": 0.18185269029878373,
+      "swapMse": 0.002132509787391031
+    },
+    {
+      "startFrame": 394440,
+      "validFrames": 32000,
+      "overlapFrames": 21560,
+      "swapped": true,
+      "keepMse": 0.09125535667675792,
+      "swapMse": 0.015254693232153078
+    }
+  ],
+  "allFramesPreserved": true,
+  "perStreamGainApplied": false,
+  "referenceOrSpeakerProfileUsed": false,
+  "qualityQualified": false
+}

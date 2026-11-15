@@ -1,0 +1,39 @@
+{
+  "id": "20200709_L_R002S01C01-clean-short-response-04",
+  "sourceWavSha256": "9c319739b10df443b332513b84d92e4aa59c1df1af3374a86ae27af9e3b6c544",
+  "frames": 26880,
+  "streams": [
+    {
+      "index": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-04\\stream-0.npy",
+      "sha256": "5a44f40800bce43617544f073fd5c97f6d4c0a84911778734db0bbb4d74eed95",
+      "frames": 26880,
+      "peak": 3.215540647506714,
+      "rms": 0.45775285363197327,
+      "samplesOutsideUnitRange": 1192
+    },
+    {
+      "index": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\separate-r1\\streams\\20200709_L_R002S01C01-clean-short-response-04\\stream-1.npy",
+      "sha256": "b150a39e28d8cc0ad198964b91804d9913eaf6d1a76f6d49a177b852495cca88",
+      "frames": 26880,
+      "peak": 1.6940929889678955,
+      "rms": 0.2304510474205017,
+      "samplesOutsideUnitRange": 234
+    }
+  ],
+  "stitching": [
+    {
+      "startFrame": 0,
+      "validFrames": 26880,
+      "overlapFrames": 0,
+      "swapped": false,
+      "keepMse": null,
+      "swapMse": null
+    }
+  ],
+  "allFramesPreserved": true,
+  "perStreamGainApplied": false,
+  "referenceOrSpeakerProfileUsed": false,
+  "qualityQualified": false
+}

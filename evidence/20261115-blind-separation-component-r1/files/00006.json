@@ -1,0 +1,74 @@
+{
+  "metadata": {
+    "_id": "6735af4ca0d74cea7973e5a2",
+    "id": "alibabasglab/MossFormer2_SS_16K",
+    "private": false,
+    "tags": [
+      "license:apache-2.0",
+      "region:us"
+    ],
+    "downloads": 0,
+    "likes": 14,
+    "modelId": "alibabasglab/MossFormer2_SS_16K",
+    "author": "alibabasglab",
+    "sha": "407cb030cd66340918ebb6c8cc63b18f8592cdbe",
+    "lastModified": "2024-11-25T09:37:58.000Z",
+    "gated": false,
+    "disabled": false,
+    "model-index": null,
+    "config": {},
+    "cardData": {
+      "license": "apache-2.0"
+    },
+    "siblings": [
+      {
+        "rfilename": ".gitattributes"
+      },
+      {
+        "rfilename": "README.md"
+      },
+      {
+        "rfilename": "last_best_checkpoint"
+      },
+      {
+        "rfilename": "last_best_checkpoint.pt"
+      }
+    ],
+    "spaces": [],
+    "createdAt": "2024-11-14T08:05:32.000Z",
+    "usedStorage": 670353271
+  },
+  "tree": [
+    {
+      "type": "file",
+      "oid": "a6344aac8c09253b3b630fb776ae94478aa0275b",
+      "size": 1519,
+      "path": ".gitattributes"
+    },
+    {
+      "type": "file",
+      "oid": "5e4cb37744faefd9d9a6ff4a48c5108c323ee107",
+      "size": 345,
+      "path": "README.md"
+    },
+    {
+      "type": "file",
+      "oid": "98b04fb38c032a55f03f4a7583600e7e112b8e09",
+      "size": 24,
+      "path": "last_best_checkpoint"
+    },
+    {
+      "type": "file",
+      "oid": "e41d7ce28a13546151fc1525b37fa63c65b95426",
+      "size": 670353271,
+      "lfs": {
+        "oid": "00a3a48bda492db1e829b85dd443f8f43a43039a3e90f1a24962ea9caf14a11a",
+        "size": 670353271,
+        "pointerSize": 134
+      },
+      "xetHash": "2fc54652f292454c04cdd965cfd6bcb0cfadb901e44387e9fa1267402b779f7e",
+      "path": "last_best_checkpoint.pt"
+    }
+  ],
+  "accountOrTokenUsed": false
+}
