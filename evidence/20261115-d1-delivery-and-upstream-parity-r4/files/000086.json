@@ -1,0 +1,45 @@
+{
+  "state": "PASS_BIT_EXACT_FULL_VERSUS_BOUNDED_UPSTREAM_CPU_FRONTEND",
+  "newNeuralCalls": 0,
+  "gpuInitialized": false,
+  "at": "2026-11-15T11:49:09.858612+08:00",
+  "limits": {
+    "pid": 29508,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 760119296,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "shape": [
+    1,
+    6101,
+    128
+  ],
+  "maxAbsoluteDifference": 0.0,
+  "original61FeatureSha256": "5c3d85476bc94cab6c23e9b3615e42c7c55efc6e744e05f8de717aec8693d239",
+  "globalEdgesAndNonAlignedTails": [
+    {
+      "samples": 960057,
+      "exactFeaturesAndMask": true
+    },
+    {
+      "samples": 960160,
+      "exactFeaturesAndMask": true
+    },
+    {
+      "samples": 960511,
+      "exactFeaturesAndMask": true
+    }
+  ],
+  "framesPerBlock": 3000,
+  "helperSha256": "7dce172ca075c35cc83e56d9d0d6eec7fc9247007e2547ee6a824ff32951c714"
+}

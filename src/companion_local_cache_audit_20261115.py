@@ -15,21 +15,23 @@ def install():
     value = os.environ.get('COMPANION_LOCAL_ARTIFACT_ROOT')
     if not value or getattr(sys, '_companion_cache_audit', False):
         return
-    root = Path(value).absolute()
-    assert root.is_dir() and (root/'.owner').is_file(), 'Native cache ownership is required'
-    prefix = os.path.normcase(str(root))+os.sep
+    roots = [Path(p).absolute() for p in json.loads(os.environ.get('COMPANION_LOCAL_ARTIFACT_ROOTS', json.dumps([value])))]
+    assert roots and all(root.is_dir() and (root/'.owner').is_file() for root in roots), 'Native cache ownership is required'
+    prefixes = [(os.path.normcase(str(root))+os.sep, root) for root in roots]
     local, seen = threading.local(), set()
-    ledger, gate = root/'.artifact-writes.jsonl', root/'.artifact-writes.lock'
 
     def record(path):
         if not isinstance(path, (str, bytes, os.PathLike)):
             return
         path = os.path.abspath(os.fsdecode(path))
-        if not os.path.normcase(path).startswith(prefix):
+        root = next((root for prefix, root in prefixes if os.path.normcase(path).startswith(prefix)), None)
+        if root is None:
             return
         name = os.path.relpath(path, root).replace('\\', '/')
-        if name in {'.artifact-writes.jsonl', '.artifact-writes.lock'} or name in seen:
+        identity = (str(root), name)
+        if name in {'.artifact-writes.jsonl', '.artifact-writes.lock'} or identity in seen:
             return
+        ledger, gate = root/'.artifact-writes.jsonl', root/'.artifact-writes.lock'
         local.busy = True
         try:
             import msvcrt
@@ -44,7 +46,7 @@ def install():
                         output.flush(); os.fsync(output.fileno())
                 finally:
                     lock.seek(0); msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1)
-            seen.add(name)
+            seen.add(identity)
         finally:
             local.busy = False
 
@@ -62,8 +64,9 @@ def install():
     sys._companion_cache_audit = True
 
 
-def activate(root, hook_directory):
+def activate(root, hook_directory, *, owned_stream_roots=()):
     os.environ['COMPANION_LOCAL_ARTIFACT_ROOT'] = str(Path(root).absolute())
+    os.environ['COMPANION_LOCAL_ARTIFACT_ROOTS'] = json.dumps([str(Path(p).absolute()) for p in [root, *owned_stream_roots]])
     previous = os.environ.get('PYTHONPATH')
     os.environ['PYTHONPATH'] = str(hook_directory)+(os.pathsep+previous if previous else '')
     install()

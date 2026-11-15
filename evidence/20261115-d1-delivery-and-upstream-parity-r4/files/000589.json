@@ -1,0 +1,23 @@
+{
+  "state": "SOURCE_AND_CACHE_PREPARED_ACTUAL_PACKAGE_RUN_REQUIRED",
+  "sourceFiles": 403,
+  "entrySha256": "0562b9add319e96572f8d207848962cc995785932501229a4f5bd99221e51372",
+  "bundleSha256": "e7e16be3fb49486c66ad0140a95ded53b6251f903fc8044269ddc85ac0556a49",
+  "cachedActualPcmFrames": 1440000,
+  "cacheNeuralBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "auto",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "sampleScope": "90-second constructed bilingual technical control; not a natural meeting qualification",
+  "newNeuralInference": false,
+  "qualityQualified": false
+}

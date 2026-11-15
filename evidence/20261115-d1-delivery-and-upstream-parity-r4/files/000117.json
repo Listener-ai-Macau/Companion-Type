@@ -1,0 +1,32 @@
+{
+  "state": "PASS_OWN_ROCM_ONE_THREAD_FP32_GPU_MATMUL_EXACT_INDEPENDENT_INTEGER_REFERENCE",
+  "speechModelInferenceCalls": 0,
+  "gpuName": "AMD Radeon RX 6800 XT",
+  "at": "2026-11-15T11:34:24+08:00",
+  "limits": {
+    "pid": 26972,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 503230464,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "threadsBefore": 16,
+  "threadsAfter": 1,
+  "runtimeLibrary": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+  "runtimeLibrarySha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+  "threadsAfterContext": 1,
+  "threadsBeforeMatmul": 1,
+  "threadsAfterMatmul": 1,
+  "matmulSeconds": 0.75,
+  "globalEnvironmentChanged": false,
+  "expectedSha256": "f9562272417b274bb656ebee3f1ce50aa5ceb992b3b996f1b34a5c43a1b0aceb"
+}

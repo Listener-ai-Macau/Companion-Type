@@ -126,11 +126,16 @@ def asr_session(root, bundle, audio):
             if path.stat().st_size == audio['frames']*2 and sha(path) == audio['pcmSha256']:
                 candidate = PcmSession(path.parent/'session')
                 if candidate.meta.exists() and candidate.state()['config']['language'] == language:
-                    # Native ownership remains per job/session. Copy the exact
-                    # incremental cache into the leased finalization root;
-                    # private output never escapes into a calibration cache.
-                    if not session_path.exists():
-                        shutil.copytree(candidate.root, session_path)
+                    # Rust holds leases for these same-owner stream roots for
+                    # the entire finalization. Keep immutable absolute request
+                    # bindings and original decoder nodes; audit resumed writes
+                    # in that root's own ledger. No request/result is rewritten.
+                    session_path = candidate.root
+                    atomic_json(root/'stream-cache-lineage.json',{
+                        'session':str(candidate.root), 'pcmSha256':audio['pcmSha256'],
+                        'frames':audio['frames'], 'confirmedFramesBeforeResume':candidate.state()['confirmedFrames'],
+                        'completedFinalBlocksBeforeResume':sum(1 for p in (candidate.root/'results').glob('*.json') if read(p)['request']['blockFinal']),
+                        'immutableRequestsRewritten':False, 'sameOwnerNativeLeaseHeld':True})
                     break
     if session_path.exists():
         session = PcmSession(session_path)
@@ -222,7 +227,7 @@ def main():
     owned_root = manifest.get('artifactRoot')
     if owned_root:
         from companion_local_cache_audit_20261115 import activate
-        activate(owned_root, SRC/'cache-audit-hook')
+        activate(owned_root, SRC/'cache-audit-hook', owned_stream_roots=manifest.get('ownedStreamRoots', []))
         bundle = {**bundle, 'ownedStreamRoots':manifest.get('ownedStreamRoots', [])}
     if manifest['schema'] == 'companion.local-meeting-stream.v1':
         from companion_local_meeting_stream_20261115 import run

@@ -1,0 +1,19 @@
+{
+  "state": "PASS_ACTUAL_NATIVE_LIVE_STOP_RESUME_TRANSCRIPT_CACHE_CLEAR_AND_TRASH_PURGE",
+  "at": "2026-11-15T11:09:53+08:00",
+  "liveProbe": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\qa\\live-resume-privacy-r1\\actual-live-hub.json",
+  "finalizationAndBusyClearProof": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\qa\\live-resume-privacy-r2\\run.json",
+  "lastSteps": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\qa\\live-resume-privacy-r5",
+  "modelCacheFilesDeleted": 157,
+  "sameOwnerCacheDirectoriesDeleted": 3,
+  "busyCacheRefusedWithoutChangingSavedTranscript": true,
+  "transcriptClearPreservedOriginalAudio": true,
+  "permanentDeletionRequiredPriorTrash": true,
+  "otherImportedMeetingPreserved": true,
+  "originalPublicSourceUnchanged": true,
+  "neuralInferenceRepeatedForTrashPrerequisite": false,
+  "realBoardOrMicrophoneAccess": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "scope": "90-second public constructed bilingual technical input; actual native product paths. Cold first preview81.236s, not a realtime latency or natural meeting quality qualification."
+}

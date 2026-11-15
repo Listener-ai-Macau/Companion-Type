@@ -1,0 +1,36 @@
+{
+  "state": "PASS_REAL_HIDDEN_NATIVE_UI_READING_TRANSCRIPT_REVIEW_AND_LOCAL_BILINGUAL_SETTINGS",
+  "origin": "http://tauri.localhost/",
+  "realSavedMeeting": "ES2003b.Array1-01",
+  "sourceReviewVisible": true,
+  "minutesDraftVisible": true,
+  "provider": {
+    "value": "local-meeting",
+    "options": [
+      {
+        "value": "volcengine",
+        "label": "火山 Volcengine"
+      },
+      {
+        "value": "openai-compatible",
+        "label": "OpenAI 兼容"
+      },
+      {
+        "value": "local-paraformer",
+        "label": "电脑本地转写（中文）"
+      },
+      {
+        "value": "local-meeting",
+        "label": "电脑本地转写（中英文）"
+      }
+    ]
+  },
+  "nativeBackend": true,
+  "fixtureBackend": false,
+  "newInference": false,
+  "newRecording": false,
+  "playback": false,
+  "desktopFocusChanged": false,
+  "qualityQualified": false,
+  "pageErrors": []
+}

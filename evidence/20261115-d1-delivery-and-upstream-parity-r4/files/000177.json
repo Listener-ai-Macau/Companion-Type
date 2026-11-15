@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-15T11:13:56+08:00",
+  "state": "FIXED_SAME_CHECKPOINT_REFERENCE_COMPARISON",
+  "checkpoint": "E:/CodexData/Companion/.model-cache/nemotron-speaker-20261107/Nemotron-3-Diarization.nemo",
+  "checkpointSha256": "867c53f552998f772e5b5e5c082962ae85ee7ca5669c2bc17d7f615133d4e96d",
+  "converter": "E:\\CodexData\\Companion\\product-d1d2-20261114\\official-native-parity-r1\\source\\convert_nemotron3_diarization_to_hf.py",
+  "converterSha256": "6a4de669f624642eb723d5361900f0e6c6c07d1d7153edf645e2fae0e0c71da1",
+  "workerSha256": "c91a5f2ea917bb20412291f42f813e2652bf3a2105c92e90369f4f20f21e66cd",
+  "referenceBackend": "Installed upstream Transformers5.22.1,FP32,eager; original checkpoint strict tensor roundtrip, upstream frontend/offline geometry; no weights or cache settings tuned.",
+  "purpose": "Distinguish native Vulkan/FP16 implementation drift from pretrained-model limitations, including returning-speaker failure.",
+  "runOrder": [
+    "same61second original native smoke",
+    "new ordinary complete34minute returning-speaker case",
+    "old protected complete38minute case if meaningful comparison remains"
+  ],
+  "automaticVariants": false,
+  "trainingUpdates": 0,
+  "frozenFrameThreshold": 0.5,
+  "qualityQualified": false,
+  "sourceFix": "First reference load finished exact417-tensor roundtrip but process died in OpenBLAS allocation before features/inference. Avoid unused random CPU backbone via existing Accelerate meta-parameter/CPU-buffer init and exact assign; FP32 inference and2GiB budget unchanged.",
+  "sourceFix2": "Metadata source fix: no unused CPU parameter initialization. After that model+GPU was748MiB but librosa/SciPy startup again exited in OpenBLAS allocation before any inference. Load exact original trained mel/Hann constants, matching nativeC++; upstream feature/model forward unmodified, same2GiB/FP32/eager/geometry. This is not a claim of vanilla librosa frontend replication.",
+  "frontendBufferAudit": "Actual original mel bank and Hann buffers are BF16. Original Hann equals upstream periodic=False formula after exact BF16 roundtrip, maxFP32diff0.001937866; no tolerance sweep. C++ and upstream both rebuild HannFP32. Compare upstream core using original BF16-quantized mel bank held equal toC++, explicitly not vanilla librosa regenerated bank.",
+  "rocmBlasLibrary": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+  "rocmBlasLibrarySha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+  "runtimeResourceFix": "Pure CPU frontend import/generation passed409923584B. Actual pools: NumPy1/SciPy1/ROCm16; common env was insufficient. Scoped ROCm setter1 passed exact FP32 GPU integer-reference matmul at503230464B, no global change. Restore unmodified upstream frontend, retain meta load/strict tensor roundtrip and2GiB/5%.",
+  "shortDifferentialControl": "Predeclared before first neural result: only61s source gets a second forward with originalBF16 mel bank matchingC++. Compare probability drift, never select by labels; all full runs use upstream defaultFP32 frontend."
+}

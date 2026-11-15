@@ -1,0 +1,32 @@
+{
+  "state": "INCOMPLETE_ACTUAL_NATIVE_FLOW_RETAINED",
+  "startedAt": "2026-11-15T10:58:39+08:00",
+  "sessionId": "import-1ff38f4359bf44d898b1e3829fc547c8",
+  "steps": [
+    {
+      "step": "actual-live-hub",
+      "exitCode": 0,
+      "seconds": 90.51600000000326,
+      "privatePeakBytes": 1310732288
+    },
+    {
+      "step": "import-other",
+      "exitCode": 0,
+      "seconds": 0.514999999984866,
+      "privatePeakBytes": 1122304
+    },
+    {
+      "step": "finalize",
+      "exitCode": 0,
+      "seconds": 5.625,
+      "privatePeakBytes": 378904576
+    }
+  ],
+  "privateInputUsed": false,
+  "sourceUploaded": false,
+  "cloudTextOrMinutesRequested": false,
+  "qualityQualified": false,
+  "actualTestExecutableSha256": "4306ac3e5dc3cc1c5c30adf2faf5d271091588b7ef371deb34749f7c584e89ac",
+  "error": "AssertionError()",
+  "finishedAt": "2026-11-15T11:00:16+08:00"
+}

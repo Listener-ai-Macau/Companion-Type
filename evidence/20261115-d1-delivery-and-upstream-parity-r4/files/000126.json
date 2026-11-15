@@ -1,0 +1,33 @@
+{
+  "state": "PREPARING_SAME_CHECKPOINT_UPSTREAM_REFERENCE",
+  "startedAt": "2026-11-15T11:14:01+08:00",
+  "pid": 10468,
+  "case": {
+    "meeting": "public61-native8-control",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\public61-from-S.wav",
+    "audioSha256": "c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd",
+    "audioSeconds": 61.0
+  },
+  "completedChunks": 0,
+  "newNeuralCalls": 0,
+  "referenceRead": false,
+  "trainingUpdates": 0,
+  "qualityQualified": false,
+  "observedAt": "2026-11-15T11:14:02+08:00",
+  "limits": {
+    "pid": 10468,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 12402688,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

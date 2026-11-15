@@ -1,0 +1,23 @@
+{
+  "state": "PASS_ACTUAL_FULL_ENGLISH_BACKUP_RESTORE_SPEAKER_REVIEW_REOPEN_EXPORT_AND_RESTORE_ORIGINAL",
+  "at": "2026-11-15T11:18:34+08:00",
+  "sessionId": "import-3c3ce53e1d5f4789a09fedada81d555e",
+  "profile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\review-library",
+  "sourceProfileUnchanged": true,
+  "fullMeetingMilliseconds": 2109813,
+  "originalUtterancesPreserved": 852,
+  "unknownAudioRangesPreserved": [
+    {
+      "endMs": 2109814,
+      "source": "本地识别待核对",
+      "startMs": 2100000
+    }
+  ],
+  "manualNameAppearedInActualMarkdown": true,
+  "originalAnonymousSourceRestored": true,
+  "originalAudioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+  "newAsrOrSpeakerInferenceCalls": 0,
+  "newCloudTextOrMinutesCalls": 0,
+  "qualityQualified": false,
+  "saleQualified": false
+}

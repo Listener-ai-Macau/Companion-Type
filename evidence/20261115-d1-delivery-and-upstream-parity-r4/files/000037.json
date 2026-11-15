@@ -1,0 +1,53 @@
+{
+  "state": "COMPLETE_LOCAL_MEETING_CANDIDATE_NOT_QUALITY_QUALIFIED",
+  "startedAt": "2026-11-15T11:03:03+08:00",
+  "attempts": [
+    {
+      "stage": "asr-inventory",
+      "exitCode": 0,
+      "seconds": 8.256727100000717,
+      "privatePeakBytes": 361152512,
+      "log": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\.asr-chunk-cache\\local-meeting\\5d777ba6-1d85-43df-b214-b15645a69596\\logs\\asr-inventory-1794711784106954700.log"
+    },
+    {
+      "stage": "asr",
+      "exitCode": 0,
+      "seconds": 98.5498588999908,
+      "privatePeakBytes": 1265123328,
+      "log": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\.asr-chunk-cache\\local-meeting\\5d777ba6-1d85-43df-b214-b15645a69596\\logs\\asr-1794711792369154100.log"
+    },
+    {
+      "stage": "align-inventory",
+      "exitCode": 0,
+      "seconds": 7.164173199998913,
+      "privatePeakBytes": 359890944,
+      "log": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\.asr-chunk-cache\\local-meeting\\5d777ba6-1d85-43df-b214-b15645a69596\\logs\\align-inventory-1794711890958672800.log"
+    },
+    {
+      "stage": "alignment",
+      "exitCode": 0,
+      "seconds": 81.359094799991,
+      "privatePeakBytes": 1175998464,
+      "log": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\.asr-chunk-cache\\local-meeting\\5d777ba6-1d85-43df-b214-b15645a69596\\logs\\alignment-1794711898127722500.log"
+    },
+    {
+      "stage": "speaker",
+      "exitCode": 0,
+      "seconds": 5.605591800005641,
+      "privatePeakBytes": 1790455808,
+      "log": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\.asr-chunk-cache\\local-meeting\\5d777ba6-1d85-43df-b214-b15645a69596\\logs\\speaker-1794711979500695600.log"
+    }
+  ],
+  "binding": {
+    "inputSha256": "ce9af81f991faee1be2463c9e6f5967751b598db630dfdb1b2693645ffbba7c9",
+    "bundleSha256": "e7e16be3fb49486c66ad0140a95ded53b6251f903fc8044269ddc85ac0556a49"
+  },
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "asrSession": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\.asr-chunk-cache\\local-meeting\\fd64f650-188a-4327-9074-e53698d3c55f\\session",
+  "adoptedCompletedAsrCache": false,
+  "activeStage": "speaker",
+  "finishedAt": "2026-11-15T11:06:25+08:00",
+  "documentSha256": "bded1324faf2caa41e7b9d6d6ccd1629e46238aefd7dc610cc0579870981beab"
+}

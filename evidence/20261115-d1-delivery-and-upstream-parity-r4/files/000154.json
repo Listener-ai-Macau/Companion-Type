@@ -1,0 +1,12 @@
+{
+  "source": "Original same.nemo featurizer.fb/window; no librosa regeneration",
+  "melShape": [
+    128,
+    257
+  ],
+  "melSha256": "eb5cf9eb93b8038062ebc849b14ec85098abe1c915bc22262be8ad336bcf563a",
+  "checkpointWindowDtype": "torch.bfloat16",
+  "hannWindowMatchesUpstreamFormulaAfterCheckpointDtypeRoundtrip": true,
+  "upstreamAndNativeWindowRecomputedInFloat32": true,
+  "upstreamFeatureForwardUnmodified": true
+}

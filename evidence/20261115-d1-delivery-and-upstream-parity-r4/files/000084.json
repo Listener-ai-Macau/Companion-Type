@@ -1,0 +1,52 @@
+{
+  "windowShape": [
+    400
+  ],
+  "windowDtype": "torch.bfloat16",
+  "melShape": [
+    1,
+    128,
+    257
+  ],
+  "melDtype": "torch.bfloat16",
+  "lastWindowValues": [
+    0.00055694580078125,
+    0.000247955322265625,
+    6.198883056640625e-05,
+    0.0
+  ],
+  "firstWindowValues": [
+    0.0,
+    6.198883056640625e-05,
+    0.000247955322265625,
+    0.00055694580078125
+  ],
+  "comparison": {
+    "False": {
+      "maxAbsoluteError": 0.0019378662109375,
+      "equalAfterOriginalDtypeRoundtrip": true
+    },
+    "True": {
+      "maxAbsoluteError": 0.007347464561462402,
+      "equalAfterOriginalDtypeRoundtrip": false
+    }
+  },
+  "modelInferenceCalls": 0,
+  "cudaInitialized": false,
+  "limits": {
+    "pid": 23488,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 566730752,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "audioSha256": "c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd",
+  "frames": 6101,
+  "shape": [
+    6101,
+    8
+  ],
+  "sha256": "d842d5eeb835170d764d4d996ad11a37e3f796c17a35d84d42ace515b4549d2d",
+  "originalCheckpointSha256": "867c53f552998f772e5b5e5c082962ae85ee7ca5669c2bc17d7f615133d4e96d",
+  "sourceWorkerSha256": "c91a5f2ea917bb20412291f42f813e2652bf3a2105c92e90369f4f20f21e66cd",
+  "precision": "FP32 upstream model from original BF16/FP16 tensor values, exact strict roundtrip",
+  "noSpeakerCacheResetBetweenChunks": true,
+  "upstreamDefaultOfflineGeometry": true,
+  "frameThreshold": 0.5
+}

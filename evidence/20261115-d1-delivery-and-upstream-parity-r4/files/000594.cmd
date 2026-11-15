@@ -1,0 +1,20 @@
+@echo off
+setlocal
+set "COMPANION_TYPE_LOCAL_MEETING_CONFIG=E:\CodexData\Companion\product-d1d2-20261114\local-package-r8\package.json"
+set "COMPANION_TYPE_ASR_PROVIDER=local-meeting"
+set "COMPANION_TYPE_DISABLE_AUTO_RECOVERY=1"
+set "COMPANION_TYPE_DISABLE_AUTO_RECONNECT=1"
+set "COMPANION_TYPE_STATE_PATH=E:\CodexData\Companion\product-d1d2-20261114\app-candidate-r5\owner-library\sessions.json"
+set "COMPANION_TYPE_RECORDING_DIR=E:\CodexData\Companion\product-d1d2-20261114\app-candidate-r5\owner-library\recordings"
+set "COMPANION_TYPE_PRODUCT_SETTINGS_PATH=E:\CodexData\Companion\product-d1d2-20261114\app-candidate-r5\owner-library\settings.json"
+set "WEBVIEW2_USER_DATA_FOLDER=E:\CodexData\Companion\product-d1d2-20261114\app-candidate-r5\owner-library\webview"
+set "COMPANION_TYPE_TRANSCRIPT_TEXT="
+set "COMPANION_TYPE_ASR_COMMAND="
+set "COMPANION_TYPE_LIVE_ASR_MOCK="
+set "COMPANION_TYPE_LIVE_ASR_OFF="
+set "COMPANION_TYPE_BACKGROUND_WINDOW="
+set "COMPANION_TYPE_WEBVIEW_ARGS="
+set "COMPANION_LOCAL_ARTIFACT_ROOT="
+set "COMPANION_LOCAL_ARTIFACT_ROOTS="
+start "" /D "E:\CodexData\Companion\product-d1d2-20261114\app-candidate-r5" "E:\CodexData\Companion\product-d1d2-20261114\app-candidate-r5\companion-type.exe"
+endlocal

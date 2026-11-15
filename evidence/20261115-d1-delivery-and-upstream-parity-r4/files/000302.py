@@ -1,0 +1,12 @@
+"""Retain native checkpoint crash and pin a bounded-format recovery proof."""
+from pathlib import Path
+from datetime import datetime
+import hashlib,json
+from practical_io_20261107 import atomic_json
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');S=R/'model-research/src';C=R/'docs/handoffs/20261108-tse-supervised-adaptation';E=Path('E:/CodexData/Companion/.model-cache/tse-supervised-adaptation-20261108')
+read=lambda p:json.loads(Path(p).read_text(encoding='utf8'));sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+P=read(C/'training-protocol-r2.json');run=read(C/'train-memory-r1-controller.json');assert run['exitCode']==3221225477;latest=read(C/'latest-training-checkpoint.json');assert latest['completedSteps']==0
+files=list((E/'checkpoints-r2/step-0016').glob('*.safetensors'));assert len(files)==1
+atomic_json(C/'checkpoint-native-failure-r1.json',{'at':datetime.now().astimezone().isoformat(),'state':'RETAINED_NATIVE_SAFETENSORS_CPU_READ_ACCESS_VIOLATION','controller':run,'completedUpdatesBeforeCrash':16,'lastCompleteResumableStep':0,'partialWeightFile':str(files[0]),'partialWeightFileSha256':sha(files[0]),'partialWeightFileBytes':files[0].stat().st_size,'partialOptimizerSaved':False,'nativeStack':'torch_cpu.dll local_scalar_dense_cpu / safetensors_rust during save_checkpoint immediate load_file verification; no Python finally was run. Exact root inside native runtime unproven.','recovery':'Replace whole CPU archive materialization with standard bounded safetensors byte streaming for both weights and optimizer/RNG, verify next-update equality before restarting the identical trial at step0. Preserve partial step16 weights; never claim exact optimizer recovery from them.','qualityQualified':False})
+worker=S/'tse_supervised_checkpoint_proof_worker_20261108.py';sources=[worker,S/'companion_tse_checkpoint_streamed_20261108.py',S/'moss_streamed_weights_20261104.py',S/'moss_windows_resource_limits_20261104.py'];target=C/'checkpoint-proof-protocol-r1.json';assert not target.exists();atomic_json(target,{'state':'FROZEN_BOUNDED_ADAMW_RNG_CHECKPOINT_PROOF','workerSha256':sha(worker),'sourceFiles':[{'file':str(p),'sha256':sha(p)} for p in sources],'proofCheckpointRoot':str(E/'checkpoint-format-proof-r1'),'newMeetingTrainingUpdates':0,'qualityQualified':False})
+print(json.dumps({'state':'FROZEN_BOUNDED_ADAMW_RNG_CHECKPOINT_PROOF','protocol':str(target)}),flush=True)

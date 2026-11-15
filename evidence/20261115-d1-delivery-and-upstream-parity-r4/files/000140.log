@@ -1,0 +1,9 @@
+W1115 11:20:51.573000 23808 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\official_nemotron_reference_worker_20261115.py", line 119, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\official_nemotron_reference_worker_20261115.py", line 49, in main
+    assert torch.equal(original_window,torch.hann_window(400,periodic=False)), 'Original frontend window differs'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Original frontend window differs

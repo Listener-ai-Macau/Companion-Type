@@ -1,0 +1,29 @@
+{
+  "state": "OWN_HIDDEN_NATIVE_UI_CLOSED",
+  "port": 19338,
+  "startedAt": "2026-11-15T11:28:28.714833+08:00",
+  "nativeWindowVisible": false,
+  "automaticRecoveryDisabled": true,
+  "deviceReconnectDisabled": true,
+  "qualityQualified": false,
+  "pid": 12648,
+  "pidCreatedAt": 1794713308.716833,
+  "finishedAt": "2026-11-15T11:29:06.077588+08:00",
+  "seconds": 37.35999999998603,
+  "limits": {
+    "pid": 18188,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 420515840,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

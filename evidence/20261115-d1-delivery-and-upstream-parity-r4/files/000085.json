@@ -1,0 +1,91 @@
+{
+  "state": "COMPLETE_SAME_CHECKPOINT_SHORT_DIFFERENTIAL_PROBABILITY_REVIEW",
+  "results": {
+    "upstream-default": {
+      "frames": 6101,
+      "nativeFrames": 6101,
+      "comparedFrames": 6101,
+      "trailingFrameDifferenceOnly": 0,
+      "absoluteMean": 0.00014457751240115613,
+      "absoluteMax": 0.026547789573669434,
+      "absoluteP99": 0.0036322392988950014,
+      "activityDisagreementFramesByChannel": [
+        3,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "activityDisagreementOfActiveUnion": 0.0011208249271463797,
+      "perChannelMean": [
+        0.0005034774076193571,
+        0.00014422877575270832,
+        0.00023972761118784547,
+        0.00014486185682471842,
+        0.00011262398766120896,
+        9.763060006662272e-06,
+        1.538507945042511e-06,
+        3.998479485289863e-07
+      ],
+      "originalChannelOrderCompared": true,
+      "speakerPermutationApplied": false
+    },
+    "same-original-bank-control": {
+      "frames": 6101,
+      "nativeFrames": 6101,
+      "comparedFrames": 6101,
+      "trailingFrameDifferenceOnly": 0,
+      "absoluteMean": 0.00014496945368591696,
+      "absoluteMax": 0.026458263397216797,
+      "absoluteP99": 0.0036441925913095474,
+      "activityDisagreementFramesByChannel": [
+        3,
+        0,
+        1,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "activityDisagreementOfActiveUnion": 0.0011208249271463797,
+      "perChannelMean": [
+        0.0005077479290775955,
+        0.00014348352851811796,
+        0.00023792727733962238,
+        0.0001440532214473933,
+        0.00011468692537164316,
+        9.887188753054943e-06,
+        1.5641347772543668e-06,
+        4.073013997185626e-07
+      ],
+      "originalChannelOrderCompared": true,
+      "speakerPermutationApplied": false
+    }
+  },
+  "weightsChangedOrTrained": false,
+  "sourceNemoSha256": "867c53f552998f772e5b5e5c082962ae85ee7ca5669c2bc17d7f615133d4e96d",
+  "newNeuralCallsInThisScoring": 0,
+  "qualityQualified": false,
+  "fullMeetingStillRequired": true,
+  "scope": "Identical61s audio, fixed geometry/threshold, raw anonymous channels; no annotation, tuning, shifts or best-label remapping. The upstream FP32 frontend is the full-run route; original-bank branch is a fixed implementation diagnostic only.",
+  "limits": {
+    "pid": 16296,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 526745600,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

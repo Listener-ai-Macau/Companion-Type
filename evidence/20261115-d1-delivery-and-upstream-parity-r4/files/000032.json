@@ -1,0 +1,735 @@
+{
+  "deviceAccess": false,
+  "operationError": null,
+  "settings": {
+    "asrProvider": "local-meeting",
+    "autoLocalCardTranscription": true,
+    "bleCompress": false,
+    "deepseekApiKeySet": true,
+    "deepseekBaseUrl": "https://api.deepseek.com/v1",
+    "deepseekMinutesEnabled": false,
+    "deepseekModel": "deepseek-v4-flash",
+    "defaultMeetingMode": "offlineStore",
+    "localAsrAvailable": true,
+    "openaiAsrApiKeySet": false,
+    "openaiAsrEndpoint": "https://api.openai.com/v1/audio/transcriptions",
+    "openaiAsrModel": "gpt-4o-transcribe",
+    "settingsPath": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\settings.json",
+    "storageSaveBlocked": false,
+    "storageWarning": null,
+    "volcAccessKeySet": false,
+    "volcAppKeySet": false,
+    "volcResourceId": "volc.bigasr.sauc.duration"
+  },
+  "snapshot": {
+    "bleName": {
+      "activeName": "companion",
+      "maxLen": 29,
+      "pendingRestart": false,
+      "stagedName": "companion",
+      "status": "clean"
+    },
+    "connected": false,
+    "device": {
+      "autoReconnectEnabled": true,
+      "boardId": null,
+      "buildId": null,
+      "connected": false,
+      "connectionPhase": "idle",
+      "deviceId": null,
+      "firmwareVersion": null,
+      "hardwareRevision": null,
+      "lastConnectedAt": null,
+      "lastReconnectAttemptAt": null,
+      "lastSeenAt": null,
+      "lastSyncAt": null,
+      "manualDisconnect": false,
+      "mcuUid": null,
+      "message": "Not scanned",
+      "mode": "windowsNative",
+      "providerId": "companion-type-windows-ble",
+      "reconnectAttemptCount": 0,
+      "recording": false,
+      "recordingCapacity": null,
+      "recordingsAvailable": 0,
+      "rememberedDeviceId": null,
+      "scanning": false,
+      "signalRssi": null,
+      "supported": true,
+      "uiGeneration": null
+    },
+    "deviceId": "fixture-companion-v1",
+    "gatt": {
+      "audioOutputServiceUuid": "8f7a000a-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "bleNameConfigUuid": "8f7a4002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "deviceStatusServiceUuid": "8f7a0001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "deviceStatusUuid": "8f7a1001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "imuStatusUuid": "8f7a9001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "meetingControlUuid": "8f7a8001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "meetingServiceUuid": "8f7a0008-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "meetingStatusUuid": "8f7a8002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "sensorsServiceUuid": "8f7a0009-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "settingsServiceUuid": "8f7a0004-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "speakerControlUuid": "8f7aa001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "speakerStatusUuid": "8f7aa002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "wakeWordControlUuid": "8f7aa003-7b7d-4f3d-9d6f-6c2d1b7c0000",
+      "wakeWordStatusUuid": "8f7aa004-7b7d-4f3d-9d6f-6c2d1b7c0000"
+    },
+    "host": {
+      "activeSessionId": null,
+      "persistence": {
+        "message": null,
+        "recoveryPath": null,
+        "status": "ready"
+      },
+      "recordingPolicy": {
+        "asrProviderMode": "openaiCompatibleOrLocalCommand",
+        "chunkSeconds": 300,
+        "defaultMeetingMode": "offlineStore",
+        "deviceFlashRawCacheSeconds": 60,
+        "deviceRole": "triggerAndShortCache",
+        "longMeetingGuide": "Long meeting: host microphone (5 min chunks); device is trigger/status only — not full-hour BLE pull",
+        "longMeetingStrategy": "hostChunkedWav",
+        "maxAsrUploadBytes": 26214400,
+        "offlineStoreGuide": "Offline: store WAV/chunks first (no live ASR); later batch transcribe → L0/L1 minutes",
+        "oneHourChunkCount": 12,
+        "oneHourRawPcmBytes": 115200000,
+        "onlineLiveGuide": "Online: live partial transcript while recording; audio still stored as backup; stop → minutes",
+        "owner": "host",
+        "preferredLongRecordingSource": "hostMicrophone",
+        "rawPcmBytesPerSecond": 32000,
+        "shortCaptureGuide": "Short: device flash cache (≤60s) → Sync/pull → host ASR → minutes",
+        "supportedMeetingModes": [
+          "offlineStore",
+          "onlineLive"
+        ],
+        "targetMeetingSeconds": 3600
+      },
+      "selectedSessionId": null,
+      "sessions": [
+        {
+          "audioBytes": 2880044,
+          "audioPath": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\import-af05bb1f664e4d368bd390ff644a1a94.wav",
+          "audioStored": true,
+          "bookmarkRevision": 0,
+          "calendarCopyEpoch": 0,
+          "calendarCopyRevision": 0,
+          "captureIncomplete": false,
+          "chunks": [
+            {
+              "bytes": 2880044,
+              "durationMs": 90000,
+              "id": "import-af05bb1f664e4d368bd390ff644a1a94-chunk-1",
+              "path": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\import-af05bb1f664e4d368bd390ff644a1a94.wav",
+              "startedAt": null,
+              "status": "sealed",
+              "stoppedAt": null
+            },
+            {
+              "bytes": 2880044,
+              "durationMs": 90000,
+              "id": "import-af05bb1f664e4d368bd390ff644a1a94-imported-original-dea1f9d47d753e6b626614a87ef163e48f21657d51303f4cffc182845dbd79a8",
+              "path": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\import-af05bb1f664e4d368bd390ff644a1a94.original.wav",
+              "startedAt": null,
+              "status": "importedOriginal",
+              "stoppedAt": null
+            }
+          ],
+          "deviceReclaimed": false,
+          "durationMs": 90000,
+          "exportMarkdown": "",
+          "exportedAt": null,
+          "id": "import-af05bb1f664e4d368bd390ff644a1a94",
+          "liveTranscriptText": "",
+          "meetingMode": "offlineStore",
+          "minutes": null,
+          "minutesByMode": {},
+          "noteRevision": 0,
+          "processingPolicy": "manual",
+          "recorderControlUncertain": false,
+          "recovery": {
+            "attemptCount": 0,
+            "captureReviewConfirmed": false,
+            "intent": "none",
+            "maxAttempts": 3,
+            "requestedMeetingMode": "",
+            "retryStage": "",
+            "stage": "idle"
+          },
+          "retention": {
+            "audioCached": true,
+            "consentRequired": true,
+            "expiresAt": null,
+            "minutesCached": false,
+            "retentionLabel": "Local until manually deleted",
+            "transcriptCached": false
+          },
+          "source": "importedAudio",
+          "startedAt": null,
+          "status": "captured",
+          "stoppedAt": null,
+          "title": "public-probe90",
+          "transcriptFinal": false,
+          "transcriptPreview": "",
+          "transcriptSegments": 0,
+          "transcriptText": "",
+          "utterances": []
+        },
+        {
+          "audioBytes": 2880044,
+          "audioPath": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\import-1ff38f4359bf44d898b1e3829fc547c8.wav",
+          "audioStored": true,
+          "bookmarkRevision": 0,
+          "calendarCopyEpoch": 0,
+          "calendarCopyRevision": 0,
+          "captureIncomplete": false,
+          "chunks": [
+            {
+              "bytes": 2880044,
+              "durationMs": 90000,
+              "id": "import-1ff38f4359bf44d898b1e3829fc547c8-chunk-1",
+              "path": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\import-1ff38f4359bf44d898b1e3829fc547c8.wav",
+              "startedAt": null,
+              "status": "sealed",
+              "stoppedAt": null
+            },
+            {
+              "bytes": 2880044,
+              "durationMs": 90000,
+              "id": "import-1ff38f4359bf44d898b1e3829fc547c8-imported-original-dea1f9d47d753e6b626614a87ef163e48f21657d51303f4cffc182845dbd79a8",
+              "path": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\import-1ff38f4359bf44d898b1e3829fc547c8.original.wav",
+              "startedAt": null,
+              "status": "importedOriginal",
+              "stoppedAt": null
+            }
+          ],
+          "deviceReclaimed": false,
+          "durationMs": 90000,
+          "exportMarkdown": "",
+          "exportedAt": null,
+          "id": "import-1ff38f4359bf44d898b1e3829fc547c8",
+          "liveTranscriptText": "",
+          "meetingMode": "offlineStore",
+          "minutes": null,
+          "minutesByMode": {},
+          "noteRevision": 0,
+          "processingPolicy": "manual",
+          "recorderControlUncertain": false,
+          "recovery": {
+            "attemptCount": 1,
+            "captureReviewConfirmed": false,
+            "intent": "none",
+            "lastError": "本机会议识别未完成：command failed (exit code 1)；原音和已保存的处理进度保留。",
+            "maxAttempts": 3,
+            "requestedMeetingMode": "",
+            "retryStage": "",
+            "stage": "paused"
+          },
+          "retention": {
+            "audioCached": true,
+            "consentRequired": true,
+            "expiresAt": null,
+            "minutesCached": false,
+            "retentionLabel": "Local until manually deleted",
+            "transcriptCached": true
+          },
+          "source": "importedAudio",
+          "startedAt": null,
+          "status": "transcribed",
+          "stoppedAt": null,
+          "title": "public-probe90",
+          "transcriptFinal": true,
+          "transcriptPreview": "说话人1: 零零一超市主管，\n说话人2: 零零六A，\n说话人3: 零零七B，零零八C，\n说话人4: 零零九D。\n说话人1: 把各个区的这个咱那个负责人啊叫过来，来简单呃做一个交流。\n说话人?: 呃，\n说话人1: 咱超市啊近期的销售啊。\n说话人?: I\n说话人?: wonder\n说话人?: how much of\n说话人?: the meetings\n说话人5: is talking about the stuff at the m...",
+          "transcriptSegments": 59,
+          "transcriptText": "说话人1: 零零一超市主管，\n说话人2: 零零六A，\n说话人3: 零零七B，零零八C，\n说话人4: 零零九D。\n说话人1: 把各个区的这个咱那个负责人啊叫过来，来简单呃做一个交流。\n说话人?: 呃，\n说话人1: 咱超市啊近期的销售啊。\n说话人?: I\n说话人?: wonder\n说话人?: how much of\n说话人?: the meetings\n说话人5: is talking about the stuff at the meetings.\n说话人3: Yeah, exactly. Yeah, yeah. Look at\n说话人?: all\n说话人2: this stuff. Welcome, start.\n说话人?: Okay.\n说话人2: Right.\n说话人?: So, shall we\n说话人2: need to talk about?\n说话人?: Shall\n说话人2: we just go around and\n说话人?: everyone\n说话人2: says what they\n说话人?: what\n说话人2: they've\n说话人?: been\n说话人2: doing? Has\n说话人?: anybody\n说话人?: done\n说话人3: anything?\n说话人?: No one.\n说话人?: Oh, I'm sorry.\n说话人?: Yeah. Okay. Sounds like\n说话人5: you've done something.\n说话人1: 零零一超市主管。\n说话人2: 零零六A。\n说话人?: 零\n说话人3: 零七\n说话人?: I\n说话人?: wonder\n说话人5: how much of the meetings is talking about the stuff at the meetings. Yeah,\n说话人?: exactly. Yeah, yeah. Look\n说话人2: at all this stuff.\n说话人?: Welcome, start. Okay.\n说话人?: So,\n说话人?: what\n说话人2: do we\n说话人?: need\n说话人?: to talk\n说话人2: about?",
+          "utterances": [
+            {
+              "approximateTiming": true,
+              "endMs": 7420,
+              "speaker": 0,
+              "startMs": 6880,
+              "text": "零零一超市主管，"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 13180,
+              "speaker": 1,
+              "startMs": 12560,
+              "text": "零零六A，"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 18060,
+              "speaker": 2,
+              "startMs": 14560,
+              "text": "零零七B，零零八C，"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 19340,
+              "speaker": 3,
+              "startMs": 18800,
+              "text": "零零九D。"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 26620,
+              "speaker": 0,
+              "startMs": 22800,
+              "text": "把各个区的这个咱那个负责人啊叫过来，来简单呃做一个交流。"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 27580,
+              "speaker": null,
+              "startMs": 27520,
+              "text": "呃，"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 29660,
+              "speaker": 0,
+              "startMs": 27760,
+              "text": "咱超市啊近期的销售啊。\n"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 30060,
+              "speaker": null,
+              "startMs": 30000,
+              "text": "I "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 31020,
+              "speaker": null,
+              "startMs": 30960,
+              "text": "wonder "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 31580,
+              "speaker": null,
+              "startMs": 31200,
+              "text": "how much of "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 31660,
+              "speaker": null,
+              "startMs": 31600,
+              "text": "the meetings "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 33260,
+              "speaker": 4,
+              "startMs": 32000,
+              "text": "is talking about the stuff at the meetings. "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 35580,
+              "speaker": 2,
+              "startMs": 33600,
+              "text": "Yeah, exactly. Yeah, yeah. Look at "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 35820,
+              "speaker": null,
+              "startMs": 35760,
+              "text": "all "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 37420,
+              "speaker": 1,
+              "startMs": 37280,
+              "text": "this stuff. Welcome, start. "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 37740,
+              "speaker": null,
+              "startMs": 37680,
+              "text": "Okay. "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 38860,
+              "speaker": 1,
+              "startMs": 38800,
+              "text": "Right. "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 43116,
+              "speaker": null,
+              "startMs": 42160,
+              "text": "So, shall we "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 44300,
+              "speaker": 1,
+              "startMs": 43440,
+              "text": "need to talk about? "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 44540,
+              "speaker": null,
+              "startMs": 44480,
+              "text": "Shall "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 46380,
+              "speaker": 1,
+              "startMs": 45600,
+              "text": "we just go around and "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 46860,
+              "speaker": null,
+              "startMs": 46800,
+              "text": "everyone "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 47660,
+              "speaker": 1,
+              "startMs": 47120,
+              "text": "says what they "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 48300,
+              "speaker": null,
+              "startMs": 48240,
+              "text": "what "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 48460,
+              "speaker": 1,
+              "startMs": 48400,
+              "text": "they've "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 48620,
+              "speaker": null,
+              "startMs": 48560,
+              "text": "been "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 48860,
+              "speaker": 1,
+              "startMs": 48640,
+              "text": "doing? Has "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 49340,
+              "speaker": null,
+              "startMs": 49280,
+              "text": "anybody "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 49500,
+              "speaker": null,
+              "startMs": 49440,
+              "text": "done "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 49740,
+              "speaker": 2,
+              "startMs": 49680,
+              "text": "anything? "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 51580,
+              "speaker": null,
+              "startMs": 51440,
+              "text": "No one. "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 52060,
+              "speaker": null,
+              "startMs": 52000,
+              "text": "Oh, I'm sorry. "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 53980,
+              "speaker": null,
+              "startMs": 52880,
+              "text": "Yeah. Okay. Sounds like "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 57900,
+              "speaker": 4,
+              "startMs": 57440,
+              "text": "you've done something.\n"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 67420,
+              "speaker": 0,
+              "startMs": 66880,
+              "text": "零零一超市主管。"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 73260,
+              "speaker": 1,
+              "startMs": 72560,
+              "text": "零零六A。"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 74620,
+              "speaker": null,
+              "startMs": 74560,
+              "text": "零"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 74940,
+              "speaker": 2,
+              "startMs": 74880,
+              "text": "零七\n"
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 75060,
+              "speaker": null,
+              "startMs": 75000,
+              "text": "I "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 76020,
+              "speaker": null,
+              "startMs": 75960,
+              "text": "wonder "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 78660,
+              "speaker": 4,
+              "startMs": 76200,
+              "text": "how much of the meetings is talking about the stuff at the meetings. Yeah, "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 80500,
+              "speaker": null,
+              "startMs": 80440,
+              "text": "exactly. Yeah, yeah. Look "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 82420,
+              "speaker": 1,
+              "startMs": 82200,
+              "text": "at all this stuff. "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 82740,
+              "speaker": null,
+              "startMs": 82620,
+              "text": "Welcome, start. Okay. "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 83124,
+              "speaker": null,
+              "startMs": 83064,
+              "text": "So, "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 83572,
+              "speaker": null,
+              "startMs": 83512,
+              "text": "what "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 84020,
+              "speaker": 1,
+              "startMs": 83960,
+              "text": "do we "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 84180,
+              "speaker": null,
+              "startMs": 84120,
+              "text": "need "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 84260,
+              "speaker": null,
+              "startMs": 84200,
+              "text": "to talk "
+            },
+            {
+              "approximateTiming": true,
+              "endMs": 89460,
+              "speaker": 1,
+              "startMs": 89400,
+              "text": "about?"
+            }
+          ]
+        }
+      ]
+    },
+    "imu": {
+      "accel": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 1.0
+      },
+      "gyro": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "motion": "unknown",
+      "online": false,
+      "sampleHz": 0,
+      "supported": false
+    },
+    "lastControl": {
+      "accepted": true,
+      "action": "meetingTranscribeAudio",
+      "characteristicUuid": "host://companion-type/recording",
+      "message": "transcribed by Companion-Type provider companion-local-meeting (local-bilingual-complete-meeting) -> E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\.asr-chunk-cache\\local-meeting\\5d777ba6-1d85-43df-b214-b15645a69596\\input.json",
+      "payloadHex": "4d656574696e675472616e736372696265417564696f3a696d706f72742d316666333866343335396266343464383938"
+    },
+    "meeting": {
+      "active": false,
+      "durationMs": 0,
+      "startedAt": null,
+      "status": "idle",
+      "supported": true,
+      "transcriptCount": 1
+    },
+    "minutesContextSupported": true,
+    "oobe": {
+      "checks": [
+        {
+          "id": "bluetooth",
+          "label": "蓝牙连接",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "firmware",
+          "label": "固件与板卡身份",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "gatt",
+          "label": "核心 GATT",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "boardMicrophone",
+          "label": "板端录音链路",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "clock",
+          "label": "自动校时",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "imu",
+          "label": "IMU",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "speaker",
+          "label": "扬声器",
+          "message": "等待实板检查",
+          "status": "pending"
+        },
+        {
+          "id": "display",
+          "label": "墨水屏",
+          "message": "等待实板观察",
+          "status": "pending"
+        },
+        {
+          "id": "touch",
+          "label": "触摸",
+          "message": "等待实板操作",
+          "status": "pending"
+        },
+        {
+          "id": "power",
+          "label": "电源与充电",
+          "message": "等待实板测量",
+          "status": "pending"
+        },
+        {
+          "id": "remoteServices",
+          "label": "ASR / 纪要服务",
+          "message": "不在硬件检查中调用",
+          "status": "pending"
+        }
+      ],
+      "complete": false,
+      "lastRunAt": null
+    },
+    "privacy": {
+      "audioCacheBytes": 11520176,
+      "consentRequired": true,
+      "lastEraseAt": null,
+      "localOnly": true,
+      "minutesBytes": 0,
+      "policyLabel": "Local cache",
+      "retentionDays": 7,
+      "transcriptBytes": 1406
+    },
+    "schema": "companion.host.v1",
+    "source": "unavailable",
+    "speaker": {
+      "findSupported": false,
+      "muted": true,
+      "online": false,
+      "status": "notPopulated",
+      "supported": false,
+      "volume": 0
+    },
+    "updatedAt": "2026-11-15T03:06:25.302Z",
+    "wakeWord": {
+      "armed": false,
+      "confidence": 0.0,
+      "engine": "notPopulated",
+      "keyword": "hey companion",
+      "lastDetectedAt": null,
+      "supported": false
+    }
+  },
+  "transcriptionRequested": true
+}

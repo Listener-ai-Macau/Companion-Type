@@ -1,0 +1,65 @@
+{
+  "state": "INCOMPLETE_ACTUAL_NATIVE_FLOW_RETAINED",
+  "startedAt": "2026-11-15T11:02:59+08:00",
+  "sessionId": "import-1ff38f4359bf44d898b1e3829fc547c8",
+  "steps": [
+    {
+      "step": "finalize",
+      "exitCode": 0,
+      "seconds": 205.9220000000205,
+      "privatePeakBytes": 1810472960
+    },
+    {
+      "step": "busy-clear",
+      "exitCode": 1,
+      "seconds": 1.0160000000032596,
+      "privatePeakBytes": 4595712
+    },
+    {
+      "step": "after-busy",
+      "exitCode": 0,
+      "seconds": 0.5160000000032596,
+      "privatePeakBytes": 2342912
+    },
+    {
+      "step": "clear-transcript",
+      "exitCode": 0,
+      "seconds": 2.062000000005355,
+      "privatePeakBytes": 7606272
+    },
+    {
+      "step": "delete-session",
+      "exitCode": 1,
+      "seconds": 0.5159999999741558,
+      "privatePeakBytes": 2404352
+    }
+  ],
+  "privateInputUsed": false,
+  "sourceUploaded": false,
+  "cloudTextOrMinutesRequested": false,
+  "qualityQualified": false,
+  "retainedActualNativeLiveProbe": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\qa\\live-resume-privacy-r1\\actual-live-hub.json",
+  "repeatNativeLiveInference": false,
+  "finalization": {
+    "characters": 946,
+    "utterances": 50,
+    "stream": {
+      "firstPreviewSeconds": 81.2359646,
+      "frames": 1440000,
+      "partialCharacters": 69,
+      "previewPromotedToFinal": false,
+      "qualityQualified": false,
+      "realMicrophoneOrBoardAccess": false,
+      "seconds": 90.2810853,
+      "sourceSha256": "dea1f9d47d753e6b626614a87ef163e48f21657d51303f4cffc182845dbd79a8",
+      "state": "PASS_ACTUAL_NATIVE_LIVE_HUB_PACED90_SOURCE_AND_DRAFT_LEASE_RELEASED",
+      "streamRoot": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\.asr-chunk-cache\\local-meeting\\fd64f650-188a-4327-9074-e53698d3c55f"
+    },
+    "privateJobRoot": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\profile\\recordings\\.asr-chunk-cache\\local-meeting\\5d777ba6-1d85-43df-b214-b15645a69596",
+    "noStaticPublicAsrCacheUsed": true,
+    "nativeSourceSha256": "dea1f9d47d753e6b626614a87ef163e48f21657d51303f4cffc182845dbd79a8",
+    "ownedCacheDirectories": 3
+  },
+  "error": "AssertionError('Actual native delete-session failed; evidence retained')",
+  "finishedAt": "2026-11-15T11:06:29+08:00"
+}
