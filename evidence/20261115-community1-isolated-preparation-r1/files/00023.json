@@ -1,0 +1,32 @@
+{
+  "state": "PASS_ORIGINAL_FULL_DER_COMPONENTS_REPRODUCED_BEFORE_CANDIDATE_OUTPUT",
+  "components": {
+    "total": 1833.9097710178457,
+    "false alarm": 83.34395656628632,
+    "correct": 1626.735378199538,
+    "missed detection": 81.12372958413499,
+    "confusion": 126.05066323417276,
+    "diarization error rate": 0.1584147453575932
+  },
+  "originalScoreSha256": "3d442e9d96010083d978c905238aad9e82a58d7f94e369a13b95358e89c64a2a",
+  "newNeuralCalls": 0,
+  "at": "2026-11-15T14:15:50.201168+08:00",
+  "qualityQualified": false,
+  "fullMeetingGatesChanged": false,
+  "limits": {
+    "pid": 25920,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 101556224,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

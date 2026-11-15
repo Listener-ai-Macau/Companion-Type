@@ -1,0 +1,33 @@
+{
+  "state": "PASS_ISOLATED_PYANNOTE_IMPORT_AND_OFFICIAL_IN_MEMORY_PCM_EXACT",
+  "at": "2026-11-15T14:07:49.015433+08:00",
+  "existingRuntimeChanged": false,
+  "gatedWeightsAccessed": false,
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "torchVersion": "2.11.0+rocm10.0.0",
+  "torchOrigin": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\torch\\__init__.py",
+  "pyannoteOrigin": "E:\\CodexData\\Companion\\.model-cache\\community1-preflight-20261115\\isolated-pyannote-r1\\pyannote\\audio\\__init__.py",
+  "gpuInitialized": false,
+  "telemetryEnabled": false,
+  "wholePcmExact": true,
+  "cropPcmExact": true,
+  "torchcodecNativeDecoderAvailable": true,
+  "pipelineFromPretrainedCalled": false,
+  "limits": {
+    "pid": 22356,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 610893824,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

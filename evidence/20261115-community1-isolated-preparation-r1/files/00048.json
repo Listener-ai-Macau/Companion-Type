@@ -1,0 +1,39 @@
+{
+  "meeting": "technical_transport_control",
+  "audioSeconds": 3.0,
+  "audioSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "regular": [
+    {
+      "start": 0.123456,
+      "end": 1.987654,
+      "track": "first",
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 1.111111,
+      "end": 2.333333,
+      "track": "second",
+      "speaker": "SPEAKER_01"
+    }
+  ],
+  "exclusiveDiagnosticOnly": [
+    {
+      "start": 0.123456,
+      "end": 1.111111,
+      "track": "first",
+      "speaker": "SPEAKER_00"
+    },
+    {
+      "start": 1.111111,
+      "end": 2.333333,
+      "track": "second",
+      "speaker": "SPEAKER_01"
+    }
+  ],
+  "binding": {
+    "scope": "Constructed transport control; no model, reference or quality inference"
+  },
+  "originalFloatTimesPreserved": true,
+  "speakerIdentityVerified": false,
+  "qualityQualified": false
+}

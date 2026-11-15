@@ -1,0 +1,5 @@
+{
+  "state": "PREPARATION_ASSERTION_ONLY_NO_INFERENCE",
+  "at": "2026-11-15T14:25:18.246784+08:00",
+  "reason": "Prior command required an arbitrary>5000source-character minimum; actual complete prefix is4605characters and exactly equal. Replace length guess with unique branch-boundary and exact ending/equality checks. No feature/model rerun or tolerance change."
+}

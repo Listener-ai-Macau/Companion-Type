@@ -148,3 +148,6 @@ A reference-protocol audit corrects the physical interpretation of earlier Engli
 
 
 2026-11-15 13:51 ASR输出/评测口径与条件匹配基座诊断结案：两场英文143最终块与官方processor转写逐段完全相同，ES产品26784字符/70换行原始到最终全等，0新NN；当前榜单ami_cleaned/IHM分段/英文normalizer与本机整场单远场原字门不同，不追认历史榜单复现或放宽评分。原128适配训练最短2.20256秒且无自然多人窗，覆盖缺口已证实，但新32条基座诊断（32调用、0训练、305.218秒、族峰1253470208B）不支持简单归因为不会短应答：20干净<2秒共87字13错，16条全对、8条<=2字全对，错误集中一个来源4条；12多人完整窗1476字161错全部有重叠，至少一例首两段话倒序，原55错保持且不全称漏听，标签潜在秋天/秋千歧义未擅自更正。只分条件报、无完整D2资格；不自动扩训/重叠任意序列teacher forcing，原固定LoRA拒绝与原门/最终holdout保持。数据准备两次边界断言失败与修复均留证，未增加NN重试。证据由evidence/20261115-asr-contract-and-context-baseline-r1逐文件绑定；D1候选仍d574b5e4/R8，D2未过。可选Community1访问需Owner账号条件同意，暂无授权，不影响独立源头审计。
+
+
+2026-11-15T14:28:38+08:00 Community1固定人物组件准备：原AMD环境包版本/torch字节不变，TA2.11.1+cpu与55个SHA固定公开wheel在独立target导入成功；pyannote4.0.7官方内存PCM全段/裁剪精确，0NN/CPU峰610893824B。实际默认WeSpeaker特征CPU/GPU无骨干/无权重控制通过（max0.0001282692,mean1.67927e-6，job峰1076359168B），非门控检查点/整场质量证明。常规重叠与全精度输出单独保存、exclusive不替代原门，传输及原完整DER各分量复现通过。固定新34分钟/官方默认/无真实人数提示/先原DER<=10再旧会及其余门；原访问问题待答，0门控下载/0整场pipeline/0训练，原D2未过。原ASR4条错误原音及前后文已备，无听审/改标签；不再据短控制直接训。源与证据保护见evidence/20261115-community1-isolated-preparation-r1。

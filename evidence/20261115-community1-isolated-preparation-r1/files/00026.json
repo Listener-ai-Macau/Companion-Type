@@ -1,0 +1,8 @@
+{
+  "state": "PASS_PRE_MODEL_FULL_BRANCH_ONLY_REPAIR_FEATURE_EXECUTION_SOURCE_EXACT",
+  "passedFeatureWorkerSha256": "5f35369cc82a9ca08d95097f81cdfc7ee5451f566d6607f4c53283f23e79f3ad",
+  "currentWorkerSha256": "75082bc8499d24392af447f3e977cd6519f13bcbbad6cad8fe49e746669891d1",
+  "executedFeaturePrefixExact": true,
+  "executedFeaturePrefixSha256": "4b292d63054d780b69c1771a80ac73f91d690e989e0b6cfb55467c1edfbc6e44",
+  "changes": "Full branch validates frozen audio before reading and marks NN count unknown before upstream model loading, including partial failure. Passed numerical feature path/helpers/protocol unchanged; no repeated GPU control."
+}

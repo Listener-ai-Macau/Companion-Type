@@ -1,0 +1,472 @@
+{
+  "state": "COMMUNITY1_RUNTIME_AND_FIXED_COMPARISON_PREPARED_NO_MODEL_QUALITY_CLAIM",
+  "at": "2026-11-15T14:29:56.130694+08:00",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\dependency-resolution-state.json",
+      "logicalPath": "community1-preflight-r1/dependency-resolution-state.json",
+      "file": "files/00000.json",
+      "bytes": 734,
+      "sha256": "18e680a215bf00ade2ad713c56ce8859b589202cf7f3f85cca956801e03cf1a0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\dependency-resolution.json",
+      "logicalPath": "community1-preflight-r1/dependency-resolution.json",
+      "file": "files/00001.json",
+      "bytes": 860197,
+      "sha256": "60e4ed5f38a4c3ddfdfe984a090ae0469aff083b9e63d45e25f93171f233da91"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\dependency-resolution.log",
+      "logicalPath": "community1-preflight-r1/dependency-resolution.log",
+      "file": "files/00002.log",
+      "bytes": 27542,
+      "sha256": "b8055376227cc3e9fa2dcbde1d4dd0104c719adf596543bcb27f53267ebed379"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\frozen-existing-runtime.json",
+      "logicalPath": "community1-preflight-r1/frozen-existing-runtime.json",
+      "file": "files/00003.json",
+      "bytes": 5215,
+      "sha256": "b907a881b8495bf00b0a5fb6a9a34dd1cdd48f1750c8b12decd7a194adc3babc"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\frozen-existing-runtime.txt",
+      "logicalPath": "community1-preflight-r1/frozen-existing-runtime.txt",
+      "file": "files/00004.txt",
+      "bytes": 1275,
+      "sha256": "4044b12073b039e9012abfa9960aafd4385910dc289aaf649d068cbfe80052e5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\isolated-additions-install-state.json",
+      "logicalPath": "community1-preflight-r1/isolated-additions-install-state.json",
+      "file": "files/00005.json",
+      "bytes": 1007,
+      "sha256": "92c718ae8f1361cb126cc676340229121842bc086ecb50f87e690bdd85e52b82"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\isolated-additions-install.json",
+      "logicalPath": "community1-preflight-r1/isolated-additions-install.json",
+      "file": "files/00006.json",
+      "bytes": 860088,
+      "sha256": "553e0bc0b367331da5a28f0843f05572b93fe8a11ddccf3be4f21c66ae2c21f9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\isolated-additions-install.log",
+      "logicalPath": "community1-preflight-r1/isolated-additions-install.log",
+      "file": "files/00007.log",
+      "bytes": 29562,
+      "sha256": "fa9ae78a34f92c9d01daf0fddff55b8603641cad9b250e024966c81265141546"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\isolated-additions-requirements.txt",
+      "logicalPath": "community1-preflight-r1/isolated-additions-requirements.txt",
+      "file": "files/00008.txt",
+      "bytes": 13542,
+      "sha256": "ea53eb7c2ef7b447ab82718669814c823e0058ecebf4c45d5e977cfa612732b7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-wheel-inspection.json",
+      "logicalPath": "community1-preflight-r1/public-wheel-inspection.json",
+      "file": "files/00009.json",
+      "bytes": 6819,
+      "sha256": "f113f59d5905e3f9939ed9be2e52e305f2c216271e9ca49689d050620b999f65"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\pyannote-import-control.json",
+      "logicalPath": "community1-preflight-r1/pyannote-import-control.json",
+      "file": "files/00010.json",
+      "bytes": 1335,
+      "sha256": "328bb41f3fcb92bd1d3afead74940faf431df9e0219eee01250daf3bd4d7d605"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\runtime-inventory.json",
+      "logicalPath": "community1-preflight-r1/runtime-inventory.json",
+      "file": "files/00011.json",
+      "bytes": 1400,
+      "sha256": "84b0ff34d980c858ec0604ad20e7cb51087e260a682c98d298af9906e1804edc"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\torchaudio-import-control.json",
+      "logicalPath": "community1-preflight-r1/torchaudio-import-control.json",
+      "file": "files/00012.json",
+      "bytes": 1406,
+      "sha256": "34fa10db9bd8090b86d331dd68c40ca3a302db6caa9ff87c3729ae07845df311"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\torchaudio-isolated-install.log",
+      "logicalPath": "community1-preflight-r1/torchaudio-isolated-install.log",
+      "file": "files/00013.log",
+      "bytes": 223,
+      "sha256": "f994c0ece533dbd50cd4ab569b8782a692603a92d7fd17e6d555dbcad313cd8f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\pyannote.audio\\pyannote__audio__core__io.py.source.txt",
+      "logicalPath": "community1-preflight-r1/public-source/pyannote.audio/pyannote__audio__core__io.py.source.txt",
+      "file": "files/00014.txt",
+      "bytes": 15897,
+      "sha256": "f3139af9bca0d7d7bdf200231435fda18e79e15eb73e6784c57184e7856e41bc"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\pyannote.audio\\pyannote__audio__core__pipeline.py.source.txt",
+      "logicalPath": "community1-preflight-r1/public-source/pyannote.audio/pyannote__audio__core__pipeline.py.source.txt",
+      "file": "files/00015.txt",
+      "bytes": 23030,
+      "sha256": "c126c1ecf3a7172be311e61616145f45fbb5e52f06307adb28ac11103c8ee615"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\pyannote.audio\\pyannote__audio__pipelines__speaker_diarization.py.source.txt",
+      "logicalPath": "community1-preflight-r1/public-source/pyannote.audio/pyannote__audio__pipelines__speaker_diarization.py.source.txt",
+      "file": "files/00016.txt",
+      "bytes": 30022,
+      "sha256": "cbb358abedef5042fcc71bb970b12a2936a16686be4bda15691a224f172656fd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\pyannote.audio\\pyannote_audio-4.0.7.dist-info__METADATA.source.txt",
+      "logicalPath": "community1-preflight-r1/public-source/pyannote.audio/pyannote_audio-4.0.7.dist-info__METADATA.source.txt",
+      "file": "files/00017.txt",
+      "bytes": 13962,
+      "sha256": "5411f7ef49a4d5c91aafbb90c924bd98848c918971138619b3f55c40560e91c4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\torchaudio\\torchaudio-2.11.1.dist-info__METADATA.source.txt",
+      "logicalPath": "community1-preflight-r1/public-source/torchaudio/torchaudio-2.11.1.dist-info__METADATA.source.txt",
+      "file": "files/00018.txt",
+      "bytes": 7549,
+      "sha256": "4e1d623ab2fbf44787a3ab5ab408eb08318610eba89917a2380cab5d824c92b4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\torchaudio\\torchaudio____init__.py.source.txt",
+      "logicalPath": "community1-preflight-r1/public-source/torchaudio/torchaudio____init__.py.source.txt",
+      "file": "files/00019.txt",
+      "bytes": 8082,
+      "sha256": "fb25996556e5580d3a1d0e1c512f2c46c69266e82a69cab0d00eef4042f18d81"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\torchaudio\\torchaudio__functional__functional.py.source.txt",
+      "logicalPath": "community1-preflight-r1/public-source/torchaudio/torchaudio__functional__functional.py.source.txt",
+      "file": "files/00020.txt",
+      "bytes": 97578,
+      "sha256": "0f124d0f0b9eb9fc1750f1b726469350a664c9ecfe01d325523d72db611462e7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\audio-only.json",
+      "logicalPath": "community1-comparison-r1/audio-only.json",
+      "file": "files/00021.json",
+      "bytes": 270,
+      "sha256": "0a9aac701b62d0b493315e0284fb8d14b283273c9c605b204c23face7b4696c0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\baseline-binding.json",
+      "logicalPath": "community1-comparison-r1/baseline-binding.json",
+      "file": "files/00022.json",
+      "bytes": 881,
+      "sha256": "bfea3c6dc5cc69a30e891e2598fd3bc3e05aee4c9c565da49b046ccd9451b1d1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\baseline-reproduced-score-receipt.json",
+      "logicalPath": "community1-comparison-r1/baseline-reproduced-score-receipt.json",
+      "file": "files/00023.json",
+      "bytes": 1126,
+      "sha256": "54315a973aa6665f4f733624a2307761b2c7b22b560045ce6e0515000f4cebad"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\baseline-reproduced-score.json",
+      "logicalPath": "community1-comparison-r1/baseline-reproduced-score.json",
+      "file": "files/00024.json",
+      "bytes": 2423,
+      "sha256": "7414be6c052e414fb2365c662df965efc2ba3764469858df18c4a5a35fa36141"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\binding-used-for-feature-control.json",
+      "logicalPath": "community1-comparison-r1/binding-used-for-feature-control.json",
+      "file": "files/00025.json",
+      "bytes": 1195,
+      "sha256": "fadcfa04350cf334a33ad473c8c116c86043a2b6a9f2d9501955c03195561a27"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\feature-source-compatibility.json",
+      "logicalPath": "community1-comparison-r1/feature-source-compatibility.json",
+      "file": "files/00026.json",
+      "bytes": 660,
+      "sha256": "a3b071aff8379ef223a08e695f8181dc9263747e2587327dcb70da6ccb290120"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\output-contract-proof.json",
+      "logicalPath": "community1-comparison-r1/output-contract-proof.json",
+      "file": "files/00027.json",
+      "bytes": 1067,
+      "sha256": "67a35ecf906e7f183553bb3f98fceb4e4ee1e974efb1ce64f58a1415dba14838"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\protocol.json",
+      "logicalPath": "community1-comparison-r1/protocol.json",
+      "file": "files/00028.json",
+      "bytes": 3978,
+      "sha256": "f35f3d45cad413fe5b4f101e230eeb0cb3dad62471e935f84d92996207c52a77"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\runner-used-for-feature-control.py",
+      "logicalPath": "community1-comparison-r1/runner-used-for-feature-control.py",
+      "file": "files/00029.py",
+      "bytes": 4482,
+      "sha256": "39d38f0147f4eaf208ca89e3ac73d7fb9709fa9cc8259e023c31b6ea62e7a5fc"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\runtime-source-binding.json",
+      "logicalPath": "community1-comparison-r1/runtime-source-binding.json",
+      "file": "files/00030.json",
+      "bytes": 1837956,
+      "sha256": "036c0640722461de986defb5f17ebc2baf4e32bf82daaeafb1d741a1291fc14a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\scoring-case.json",
+      "logicalPath": "community1-comparison-r1/scoring-case.json",
+      "file": "files/00031.json",
+      "bytes": 597,
+      "sha256": "7c6724dba1baad033702f7cefed1ece0a89ae6fe4adb94441ebf3c1ec12aacdd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\source-binding-preparation-note.json",
+      "logicalPath": "community1-comparison-r1/source-binding-preparation-note.json",
+      "file": "files/00032.json",
+      "bytes": 373,
+      "sha256": "d71e0c61c6b6b306dc3c980ae92a26f48bd9d0b229d2debea12828817c32d6f1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\worker-binding.json",
+      "logicalPath": "community1-comparison-r1/worker-binding.json",
+      "file": "files/00033.json",
+      "bytes": 1530,
+      "sha256": "97f312a514986a4ac2a048968b25d5eabb9ed3976e4497ea9513b53146958f2e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\worker-used-for-feature-control.py",
+      "logicalPath": "community1-comparison-r1/worker-used-for-feature-control.py",
+      "file": "files/00034.py",
+      "bytes": 7564,
+      "sha256": "5f35369cc82a9ca08d95097f81cdfc7ee5451f566d6607f4c53283f23e79f3ad"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\asr-audio-adjudication-r1\\packet.json",
+      "logicalPath": "asr-audio-adjudication-r1/packet.json",
+      "file": "files/00035.json",
+      "bytes": 9725,
+      "sha256": "80069fcd573c05cee49fe8c7fc874707a6866b16597e657d22ef828805f2142f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\features-r1\\inventory.log",
+      "logicalPath": "community1-comparison-r1/features-r1/inventory.log",
+      "file": "files/00036.log",
+      "bytes": 579,
+      "sha256": "0a2acc22febb7d51c14f5e0db992c1ef5cb78fc46887bd8b60c68734bc1b68c8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\features-r1\\run.json",
+      "logicalPath": "community1-comparison-r1/features-r1/run.json",
+      "file": "files/00037.json",
+      "bytes": 532,
+      "sha256": "e27b02521397bdf229eecf240f82d3fe288f901add201a4dbd3882267a659d92"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\features-r1\\state.json",
+      "logicalPath": "community1-comparison-r1/features-r1/state.json",
+      "file": "files/00038.json",
+      "bytes": 1920,
+      "sha256": "09679e847b59fc6269f0b81d130458c98bdc0778ab0233e3416c5549d4940259"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\features-r1\\worker.log",
+      "logicalPath": "community1-comparison-r1/features-r1/worker.log",
+      "file": "files/00039.log",
+      "bytes": 1869,
+      "sha256": "1d9c785afc4b3128e5d5b36448e6c46734b3ef1fd83005a70824dcea4e5a6be9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\features-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "community1-comparison-r1/features-r1/inventory/hip-inventory.json",
+      "file": "files/00040.json",
+      "bytes": 1394,
+      "sha256": "d224987b67a9cac69e91193d62ee11c9c3dd434b2858656626192fa3652f8f52"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\features-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "community1-comparison-r1/features-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00041.jsonl",
+      "bytes": 489,
+      "sha256": "c8fce884eed64dda9609e2fb85dd13c1dd007e9b8d3796bc87d6c1fffa790be1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\features-r1\\inventory\\inventory-run.json",
+      "logicalPath": "community1-comparison-r1/features-r1/inventory/inventory-run.json",
+      "file": "files/00042.json",
+      "bytes": 610,
+      "sha256": "9f7286316ab6cf8348ee00ee7b30b99f37fd5ab6543a27739ce2f94f8e54bc3e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\features-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "community1-comparison-r1/features-r1/inventory/inventory-worker.log",
+      "file": "files/00043.log",
+      "bytes": 1213,
+      "sha256": "286d3b362b983a1af6755699052d4962b5cc6630b910b262a163c846c2a2aabb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\features-r1\\matplotlib-cache\\fontlist-v3.11.0.json",
+      "logicalPath": "community1-comparison-r1/features-r1/matplotlib-cache/fontlist-v3.11.0.json",
+      "file": "files/00044.json",
+      "bytes": 86072,
+      "sha256": "b67bc5c3b1ff334f3e698c685039c5ff1fb23fffbd439611cd42f4f63e8c9d33"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\output-contract-r1\\exclusive-diagnostic-only.rttm",
+      "logicalPath": "community1-comparison-r1/output-contract-r1/exclusive-diagnostic-only.rttm",
+      "file": "files/00045.rttm",
+      "bytes": 186,
+      "sha256": "27b926d2e1462238f6e20f5ac4c5e2cfe8b3dc262ce4807368a81d094cabfae0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\output-contract-r1\\output-receipt.json",
+      "logicalPath": "community1-comparison-r1/output-contract-r1/output-receipt.json",
+      "file": "files/00046.json",
+      "bytes": 475,
+      "sha256": "eb243c8148e121d2086a16aea07f19d52c7f7676524ae97d67c7c46e083c7244"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\output-contract-r1\\predicted.rttm",
+      "logicalPath": "community1-comparison-r1/output-contract-r1/predicted.rttm",
+      "file": "files/00047.rttm",
+      "bytes": 186,
+      "sha256": "42f5801334ed1da0caf25755c4aefe0d7bfd95355e60f6f027898e81e2605a95"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\output-contract-r1\\raw-output.json",
+      "logicalPath": "community1-comparison-r1/output-contract-r1/raw-output.json",
+      "file": "files/00048.json",
+      "bytes": 921,
+      "sha256": "605ae1b97a56459e88353268b156bb77cf25fe77cadeeb0dc284f03246f09d64"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\community1-comparison-r1\\output-contract-r1\\speaker-embeddings.npy",
+      "logicalPath": "community1-comparison-r1/output-contract-r1/speaker-embeddings.npy",
+      "file": "files/00049.npy",
+      "bytes": 152,
+      "sha256": "5627075baf7dd1d6049fd6d03f2400daa20d4a909b3db072a8b6c0c59a943458"
+    },
+    {
+      "source": "work\\inspect_community1_public_wheels_20261115.py",
+      "logicalPath": "continuation-tools/inspect_community1_public_wheels_20261115.py",
+      "file": "files/00050.py",
+      "bytes": 3651,
+      "sha256": "a8afdff3380d770afeeb5f5e4e7141f1a6d8bf739b39400ab2cbc849df444447"
+    },
+    {
+      "source": "work\\install_isolated_torchaudio_20261115.py",
+      "logicalPath": "continuation-tools/install_isolated_torchaudio_20261115.py",
+      "file": "files/00051.py",
+      "bytes": 1234,
+      "sha256": "09d5d8132704949676b3400c6b361313c97a0784ef6d3846431db4c47aed996b"
+    },
+    {
+      "source": "work\\probe_isolated_torchaudio_20261115.py",
+      "logicalPath": "continuation-tools/probe_isolated_torchaudio_20261115.py",
+      "file": "files/00052.py",
+      "bytes": 2726,
+      "sha256": "c267b900f2cf3b16b13001666ad96ffad86076230e5fbe0d4d84133c875f6a54"
+    },
+    {
+      "source": "work\\resolve_community1_isolated_dependencies_20261115.py",
+      "logicalPath": "continuation-tools/resolve_community1_isolated_dependencies_20261115.py",
+      "file": "files/00053.py",
+      "bytes": 2585,
+      "sha256": "0defdecf9352fac22e49d564f95ca583896dc99b3cf52c4675c9e3261b337564"
+    },
+    {
+      "source": "work\\install_community1_isolated_dependencies_20261115.py",
+      "logicalPath": "continuation-tools/install_community1_isolated_dependencies_20261115.py",
+      "file": "files/00054.py",
+      "bytes": 3100,
+      "sha256": "41032d3938cccd2e1d9f16c425f030150e38027a464d291a1bc13f71f0cd450e"
+    },
+    {
+      "source": "work\\probe_isolated_pyannote_20261115.py",
+      "logicalPath": "continuation-tools/probe_isolated_pyannote_20261115.py",
+      "file": "files/00055.py",
+      "bytes": 2826,
+      "sha256": "d7304ea39b862c992989af78c9c3eb4e45a6c1960cce2a8ef335ac194fd5cbe6"
+    },
+    {
+      "source": "work\\prepare_community1_comparison_20261115.py",
+      "logicalPath": "continuation-tools/prepare_community1_comparison_20261115.py",
+      "file": "files/00056.py",
+      "bytes": 6821,
+      "sha256": "9345ede56f20c3cd85eea977f30da608d7731dc140fcd75eeb54a582214a8212"
+    },
+    {
+      "source": "work\\score_community1_comparison_20261115.py",
+      "logicalPath": "continuation-tools/score_community1_comparison_20261115.py",
+      "file": "files/00057.py",
+      "bytes": 3061,
+      "sha256": "ae098c8fc8805e4f737f44dd47036bf150c2587c98b8c482e92d774d6966c421"
+    },
+    {
+      "source": "work\\check_community1_output_contract_20261115.py",
+      "logicalPath": "continuation-tools/check_community1_output_contract_20261115.py",
+      "file": "files/00058.py",
+      "bytes": 2811,
+      "sha256": "5e997a20e18cd4847a0f2f4135c11d9f2ef3fe7f115dacb6f18542b83079ed8b"
+    },
+    {
+      "source": "work\\finalize_community1_source_binding_20261115.py",
+      "logicalPath": "continuation-tools/finalize_community1_source_binding_20261115.py",
+      "file": "files/00059.py",
+      "bytes": 2079,
+      "sha256": "00644aaa72bde679283f4e13a0def8af9f154a3146361cc17c2ee247659c876c"
+    },
+    {
+      "source": "work\\prepare_asr_audio_adjudication_20261115.py",
+      "logicalPath": "continuation-tools/prepare_asr_audio_adjudication_20261115.py",
+      "file": "files/00060.py",
+      "bytes": 6096,
+      "sha256": "9055efa4ece3faedbb50b1c6324be5effddc3f2ab3e906bb3d44447f4b9ef58a"
+    },
+    {
+      "source": "work\\record_community1_preparation_20261115.py",
+      "logicalPath": "continuation-tools/record_community1_preparation_20261115.py",
+      "file": "files/00061.py",
+      "bytes": 6458,
+      "sha256": "b6bde0d0d0a7ee74d28a31450a14a565e079d60b33b183ba80f586588c791613"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "logicalPath": "canonical-workpoint-snapshot.json",
+      "file": "files/00062.json",
+      "bytes": 113019,
+      "sha256": "3630e6027f3ea519445714e318ea6ddf10399d8dbe7beb9544851359b6d6e111"
+    },
+    {
+      "source": "outputs\\Companion-社区可行性与实际进度-20261115.txt",
+      "logicalPath": "owner-latest-research-note.txt",
+      "file": "files/00063.txt",
+      "bytes": 7069,
+      "sha256": "6896f0630cf9c4b1a2db7bc08fe855d3607f03edea5ab294896e75cc6f133792"
+    },
+    {
+      "source": "outputs\\Companion-ASR原音复核-20261115\\复核说明.txt",
+      "logicalPath": "owner-original-audio-review-guide.txt",
+      "file": "files/00064.txt",
+      "bytes": 2243,
+      "sha256": "38756e0cb7ab006390da1f6d4a3adf5f13a23bb9a3fdffd8a91899e4a79458dc"
+    }
+  ],
+  "d1Complete": true,
+  "d2Complete": false,
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "gatedWeightsDownloaded": false,
+  "allTestAudioPublic": true,
+  "sourceAudioOrBaseWeightsCopied": false,
+  "modelParentCommit": "de6bcd252e041549e92242adf153860298340fdc",
+  "modelAccessQuestionUnanswered": true,
+  "originalAudioAdjudicationCompleted": false,
+  "featureProofScope": "Default upstream WeSpeaker feature branch only, no model or checkpoint-specific configuration tested."
+}

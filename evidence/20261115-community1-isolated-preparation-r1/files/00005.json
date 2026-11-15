@@ -1,0 +1,28 @@
+{
+  "state": "INSTALLED_ISOLATED_PUBLIC_ADDITIONS_BASE_DISTRIBUTIONS_EXACTLY_UNCHANGED",
+  "at": "2026-11-15T14:06:31.634209+08:00",
+  "target": "E:\\CodexData\\Companion\\.model-cache\\community1-preflight-20261115\\isolated-pyannote-r1",
+  "exitCode": 0,
+  "addedDistributions": 55,
+  "baseDistributionsExactBeforeAfter": true,
+  "baseTorchInitExactBeforeAfter": true,
+  "gatedModelAccessed": false,
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 24216,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 73826304,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

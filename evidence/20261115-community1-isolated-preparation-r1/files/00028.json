@@ -1,0 +1,41 @@
+{
+  "state": "FROZEN_SINGLE_OFFICIAL_COMMUNITY1_SPEAKER_ONLY_COMPARISON_AWAITING_ACCESS",
+  "at": "2026-11-15T14:15:47.389180+08:00",
+  "repository": "pyannote/speaker-diarization-community-1",
+  "officialCard": "https://huggingface.co/pyannote/speaker-diarization-community-1",
+  "reason": "Same-checkpoint upstream parity reproduces native returning-speaker confusion and neutral cache tracing rules out total cache eviction. An unchanged official VBx/WeSpeaker pipeline is materially different from the failed ERes complete-link port or cached regrouping.",
+  "modelRoot": "E:/CodexData/Companion/.model-cache/community1-comparison-20261115/model",
+  "modelAccess": "Owner account-information agreement and a pinned official local snapshot must be completed before model-binding.json and any full NN phase. No token is accepted in control files or logs.",
+  "pythonExe": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+  "additionalSites": [
+    "E:\\CodexData\\Companion\\.model-cache\\community1-preflight-20261115\\isolated-pyannote-r1",
+    "E:\\CodexData\\Companion\\.model-cache\\community1-preflight-20261115\\isolated-torchaudio-r1"
+  ],
+  "runtimeManifest": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-comparison-r1\\runtime-source-binding.json",
+  "runtimeManifestSha256": "036c0640722461de986defb5f17ebc2baf4e32bf82daaeafb1d741a1291fc14a",
+  "rocmBlasLibrary": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+  "rocmBlasLibrarySha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+  "featureProof": "E:/CodexData/Companion/product-d1d2-20261114/community1-comparison-r1/features-r1/state.json",
+  "audioOnlySha256": "0a9aac701b62d0b493315e0284fb8d14b283273c9c605b204c23face7b4696c0",
+  "pipelineSettings": "Unmodified official pretrained defaults, FP32/default upstream dtype, no AMP, no speaker-count hints, no segmentation/clustering/threshold/batch-size sweep, seed20261115.",
+  "localInput": "Exact original mono16k PCM16/32768, no enhancement, no separation, no amplitude change, no resampling. Official preloaded waveform input; all samples retained.",
+  "scoring": "Original full continuous-time DER, zero collar, overlap included, full audio UEM and original reference/parser. Score regular output only; keep raw float times and9decimal RTTM. Save exclusive separately; never use it as a replacement score.",
+  "scorer": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_cross_corpus_diarization_20261103.py",
+  "scorerSha256": "99756dd111ba154432604cf61236a7ad49e97274492bbc8c6737e6063fc8ccec",
+  "acceptance": "One fixed full new ordinary development meeting. Only if DER<=10% and returning-voice attribution improves, run the protected old whole meeting before considering a product candidate. Inspect per-person regressions; ASR/per-person words/minutes/original whole-product gates remain independently required. No automatic adoption.",
+  "stop": "If new complete original DER fails10%, reject this fixed comparison for default use; no speaker-count hint, cutoff/duration tweak, model version shopping or easier reference.",
+  "originalBenchmarkProtocolSha256": "2a82b5b36b231dd4ba77c670c347bb573aa7a13f225271eb9c5750e309e99623",
+  "oldProtectedMeeting": "S_R004S03C01",
+  "finalHoldoutOpened": false,
+  "newTraining": false,
+  "qualityQualified": false,
+  "ownerAccessAnswerReceived": false,
+  "cpuPercentMaximum": 5,
+  "privateLimitBytes": 2147483648,
+  "actualWindowsLowRamStop": true,
+  "featureToleranceBeforeOutputs": {
+    "maximumAbsolute": 0.003,
+    "meanAbsolute": 0.0001,
+    "scope": "Technical CPU/GPU FP32 public feature check, not speech recognition or model quality."
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "state": "PASS_OUTPUT_TRANSPORT_PRESERVES_ORIGINAL_OVERLAP_AND_FLOAT_TIMES",
+  "at": "2026-11-15T14:19:19.534250+08:00",
+  "rawFloatTimesExact": true,
+  "regularOverlapPreserved": true,
+  "exclusiveSeparate": true,
+  "rttmPrecisionSeconds": 1e-09,
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "scope": "Only serialization and input/output contract, constructed intervals, not speech recognition evidence.",
+  "adapterSourceSha256": "a6905264e2787ac059c7500e0e87ef8b5bf7e8a57502fbad42e53eea6b4e189d",
+  "limits": {
+    "pid": 28856,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 528535552,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

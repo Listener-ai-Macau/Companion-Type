@@ -1,0 +1,25 @@
+{
+  "state": "READ_ONLY_RUNTIME_PREPARATION_NO_MODEL_ACCESS_OR_INSTALL",
+  "at": "2026-11-15T13:57:17.505383+08:00",
+  "currentRuntime": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime",
+  "installedVersions": {
+    "torch": "2.11.0+rocm10.0.0",
+    "torchaudio": null,
+    "torchcodec": null,
+    "pyannote.audio": null,
+    "pyannote.core": null,
+    "pyannote.database": null,
+    "pyannote.pipeline": null,
+    "pytorch-lightning": null,
+    "lightning": null,
+    "huggingface-hub": "2.4.0",
+    "safetensors": "0.8.0"
+  },
+  "method": "importlib.metadata distribution lookup only, without importing torch or initializing GPU",
+  "modelAccess": "Official account-information sharing and model conditions await user response; no local authorized token, no gated download or credential submission.",
+  "next": "Before inference preserve the existing AMD runtime. Pin pyannote dependencies in an isolated location and verify existing torch ABI compatibility with public source/metadata; do not allow pip to replace current torch. Prepare a single whole-new-Chinese speaker-only control at default auto speaker count, no true-count hints, original strict scorer and reference unchanged.",
+  "modelInferencePerformed": false,
+  "packagesInstalledOrUpdated": false,
+  "globalSettingsChanged": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,14 @@
+{
+  "workerSha256": "75082bc8499d24392af447f3e977cd6519f13bcbbad6cad8fe49e746669891d1",
+  "runnerSha256": "148d4a6afb1d753900a3f385fc7a0bbbc9cd47e34312321ad4c4b04276aefa41",
+  "protocolSha256": "f35f3d45cad413fe5b4f101e230eeb0cb3dad62471e935f84d92996207c52a77",
+  "helpers": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_community1_adapter_20261115.py": "a6905264e2787ac059c7500e0e87ef8b5bf7e8a57502fbad42e53eea6b4e189d",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_pcm_session_20261114.py": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_windows_power_request_20261115.py": "768ec264ea4b068765b3ab07ef2f275295e81b6cf746bdb21bfb694a1fbdccbc",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+  },
+  "postFeaturePreparationChange": "Runner validates frozen audio manifest before full launch; feature worker/helper/protocol/numeric path unchanged. Source used by completed feature control retained, no repeated GPU control.",
+  "featureSourceCompatibilitySha256": "a3b071aff8379ef223a08e695f8181dc9263747e2587327dcb70da6ccb290120"
+}

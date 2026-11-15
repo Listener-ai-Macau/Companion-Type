@@ -1,0 +1,20 @@
+{
+  "state": "COMPLETE_FIXED_COMMUNITY1_CONTROL",
+  "phase": "features",
+  "startedAt": "2026-11-15T14:15:50+08:00",
+  "newTraining": false,
+  "automaticRetries": 0,
+  "privatePeakBytes": 1060982784,
+  "qualityQualified": false,
+  "pid": 30784,
+  "pidCreatedAt": 1794723354.5863504,
+  "gpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "exitCode": 0,
+  "finishedAt": "2026-11-15T14:16:07+08:00",
+  "seconds": 16.437999999994645
+}

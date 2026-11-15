@@ -1,0 +1,50 @@
+{
+  "state": "PASS_UPSTREAM_WESPEAKER_CPU_GPU_FEATURE_NUMERICAL_CONTROL_NO_MODEL",
+  "startedAt": "2026-11-15T14:15:55.199955+08:00",
+  "protocolSha256": "f35f3d45cad413fe5b4f101e230eeb0cb3dad62471e935f84d92996207c52a77",
+  "workerSha256": "5f35369cc82a9ca08d95097f81cdfc7ee5451f566d6607f4c53283f23e79f3ad",
+  "runtimeManifestSha256": "036c0640722461de986defb5f17ebc2baf4e32bf82daaeafb1d741a1291fc14a",
+  "phase": "features",
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "referenceRead": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 13064,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1076359168,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "observedAt": "2026-11-15T14:16:05.815576+08:00",
+  "gpu": "AMD Radeon RX 6800 XT",
+  "blas": {
+    "library": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "featureShape": [
+    1,
+    98,
+    80
+  ],
+  "maximumAbsoluteDifference": 0.00012826919555664062,
+  "meanAbsoluteDifference": 1.679269644228043e-06,
+  "predefinedMaximumAbsoluteTolerance": 0.003,
+  "predefinedMeanAbsoluteTolerance": 0.0001,
+  "noModelInstantiated": true,
+  "noWeightsLoaded": true,
+  "upstreamFeatureMethodUnchanged": true,
+  "seconds": 10.61523880000459,
+  "finishedAt": "2026-11-15T14:16:05.815576+08:00"
+}

@@ -1,0 +1,33 @@
+{
+  "state": "PASS_ISOLATED_TORCHAUDIO_IMPORT_AND_BASIC_CPU_AUDIO_CONTROLS",
+  "at": "2026-11-15T14:01:53.028631+08:00",
+  "isolatedSite": "E:\\CodexData\\Companion\\.model-cache\\community1-preflight-20261115\\isolated-torchaudio-r1",
+  "existingRuntimeChanged": false,
+  "gatedModelAccessed": false,
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "torchVersion": "2.11.0+rocm10.0.0",
+  "torchOrigin": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\torch\\__init__.py",
+  "hipVersion": "7.15.26333",
+  "torchaudioVersion": "2.11.1+cpu",
+  "torchaudioOrigin": "E:\\CodexData\\Companion\\.model-cache\\community1-preflight-20261115\\isolated-torchaudio-r1\\torchaudio\\__init__.py",
+  "gpuInitialized": false,
+  "identityRateExact": true,
+  "zeroResampleExact": true,
+  "limits": {
+    "pid": 9800,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 506949632,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

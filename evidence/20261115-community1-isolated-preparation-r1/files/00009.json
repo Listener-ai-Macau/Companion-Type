@@ -1,0 +1,136 @@
+{
+  "state": "COMPLETE_PUBLIC_WHEEL_SOURCE_AND_METADATA_READ_ONLY",
+  "at": "2026-11-15T13:59:43.972296+08:00",
+  "packages": [
+    {
+      "name": "pyannote.audio",
+      "version": "4.0.7",
+      "pypiMetadataUrl": "https://pypi.org/pypi/pyannote.audio/4.0.7/json",
+      "wheel": "E:\\CodexData\\Companion\\.model-cache\\community1-preflight-20261115\\public-packages-r1\\pyannote_audio-4.0.7-py3-none-any.whl",
+      "wheelUrl": "https://files.pythonhosted.org/packages/66/a3/1d03ed6c7669f7b94ce4a7ebe3b21f5c3b6331999a5680837e371e0a0537/pyannote_audio-4.0.7-py3-none-any.whl",
+      "wheelSha256": "852ea15c4d85bc34773e618267603ffca6a521669a74d33742692cc67fc700d6",
+      "wheelBytes": 894598,
+      "requiresPython": ">=3.10",
+      "requiresDist": [
+        "asteroid-filterbanks>=0.4.0",
+        "einops>=0.8.1",
+        "huggingface-hub>=0.28.1",
+        "lightning>=2.4",
+        "matplotlib>=3.10.0",
+        "opentelemetry-api>=1.34.0",
+        "opentelemetry-exporter-otlp>=1.34.0",
+        "opentelemetry-sdk>=1.34.0",
+        "pyannote-core>=6.0.1",
+        "pyannote-database>=6.1.1",
+        "pyannote-metrics>=4.0.0",
+        "pyannote-pipeline>=4.0.0",
+        "pyannoteai-sdk>=0.3.0",
+        "pytorch-metric-learning>=2.8.1",
+        "rich>=13.9.4",
+        "safetensors>=0.5.2",
+        "torch-audiomentations>=0.12.0",
+        "torch>=2.8.0",
+        "torchaudio>=2.8.0",
+        "torchcodec>=0.7.0",
+        "torchmetrics>=1.6.1",
+        "typer>=0.15.1; extra == \"cli\"",
+        "ipython>=8.32.0; extra == \"dev\"",
+        "sphinx-rtd-theme>=3.0.2; extra == \"doc\"",
+        "sphinx>=8.1.3; extra == \"doc\"",
+        "asteroid>=0.5.2; extra == \"separation\"",
+        "transformers>=4.48.3; extra == \"separation\"",
+        "papermill>=2.6.0; extra == \"test\"",
+        "pytest>=8.3.4; extra == \"test\""
+      ],
+      "nativeExtensions": [],
+      "sources": [
+        {
+          "wheelPath": "pyannote_audio-4.0.7.dist-info/METADATA",
+          "saved": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\pyannote.audio\\pyannote_audio-4.0.7.dist-info__METADATA.source.txt",
+          "bytes": 13962,
+          "sha256": "5411f7ef49a4d5c91aafbb90c924bd98848c918971138619b3f55c40560e91c4"
+        },
+        {
+          "wheelPath": "pyannote/audio/core/io.py",
+          "saved": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\pyannote.audio\\pyannote__audio__core__io.py.source.txt",
+          "bytes": 15897,
+          "sha256": "f3139af9bca0d7d7bdf200231435fda18e79e15eb73e6784c57184e7856e41bc"
+        },
+        {
+          "wheelPath": "pyannote/audio/core/pipeline.py",
+          "saved": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\pyannote.audio\\pyannote__audio__core__pipeline.py.source.txt",
+          "bytes": 23030,
+          "sha256": "c126c1ecf3a7172be311e61616145f45fbb5e52f06307adb28ac11103c8ee615"
+        },
+        {
+          "wheelPath": "pyannote/audio/pipelines/speaker_diarization.py",
+          "saved": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\pyannote.audio\\pyannote__audio__pipelines__speaker_diarization.py.source.txt",
+          "bytes": 30022,
+          "sha256": "cbb358abedef5042fcc71bb970b12a2936a16686be4bda15691a224f172656fd"
+        }
+      ],
+      "sourceExecuted": false,
+      "installed": false
+    },
+    {
+      "name": "torchaudio",
+      "version": "2.11.1",
+      "pypiMetadataUrl": "https://pypi.org/pypi/torchaudio/2.11.1/json",
+      "wheel": "E:\\CodexData\\Companion\\.model-cache\\community1-preflight-20261115\\public-packages-r1\\torchaudio-2.11.1-py3-none-win_amd64.whl",
+      "wheelUrl": "https://files.pythonhosted.org/packages/6b/9e/549c9bb2d139fe78c90c9381f9ffbfc87232336df4537a65ea31d51fcdee/torchaudio-2.11.1-py3-none-win_amd64.whl",
+      "wheelSha256": "46ea71634d181f797370f046075ea982043c228b38d674fd7d9fc1c855a37b6a",
+      "wheelBytes": 334360,
+      "requiresPython": ">=3.10",
+      "requiresDist": [
+        "torch>=2.11"
+      ],
+      "nativeExtensions": [
+        "torchaudio/lib/_torchaudio.pyd",
+        "torchaudio/lib/libtorchaudio.pyd"
+      ],
+      "sources": [
+        {
+          "wheelPath": "torchaudio-2.11.1.dist-info/METADATA",
+          "saved": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\torchaudio\\torchaudio-2.11.1.dist-info__METADATA.source.txt",
+          "bytes": 7549,
+          "sha256": "4e1d623ab2fbf44787a3ab5ab408eb08318610eba89917a2380cab5d824c92b4"
+        },
+        {
+          "wheelPath": "torchaudio/__init__.py",
+          "saved": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\torchaudio\\torchaudio____init__.py.source.txt",
+          "bytes": 8082,
+          "sha256": "fb25996556e5580d3a1d0e1c512f2c46c69266e82a69cab0d00eef4042f18d81"
+        },
+        {
+          "wheelPath": "torchaudio/functional/functional.py",
+          "saved": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\community1-preflight-r1\\public-source\\torchaudio\\torchaudio__functional__functional.py.source.txt",
+          "bytes": 97578,
+          "sha256": "0f124d0f0b9eb9fc1750f1b726469350a664c9ecfe01d325523d72db611462e7"
+        }
+      ],
+      "sourceExecuted": false,
+      "installed": false
+    }
+  ],
+  "gpuInitialized": false,
+  "gatedWeightsDownloaded": false,
+  "localCredentialsRead": false,
+  "existingRuntimeChanged": false,
+  "limits": {
+    "pid": 26260,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 16261120,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "qualityQualified": false
+}

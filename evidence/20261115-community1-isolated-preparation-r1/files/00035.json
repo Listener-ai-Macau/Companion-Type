@@ -1,0 +1,194 @@
+{
+  "state": "PREPARED_PUBLIC_ORIGINAL_AUDIO_ERROR_ADJUDICATION_PACKET_NOT_YET_REVIEWED",
+  "at": "2026-11-15T14:22:58.353724+08:00",
+  "cases": [
+    {
+      "case": "20200805_S_R001S01C01-clean-short-response-04",
+      "meeting": "20200805_S_R001S01C01",
+      "originalInput": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-ASR原音复核-20261115\\01-原识别输入.wav",
+      "originalInputSha256": "e9abaa5ec0896c6443310574053b76c7b2f7c4f934ece86bb1c244b2662b08b8",
+      "contextAudio": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-ASR原音复核-20261115\\01-含前后各两秒原音.wav",
+      "contextAudioSha256": "c650747db5b731a997823ea242455b7f5ed23b39e4c97e2c05c52a15a3d49b9a",
+      "contextStartFrame": 324702,
+      "contextEndFrame": 417422,
+      "targetStartInContextSeconds": 2.0,
+      "targetEndInContextSeconds": 3.7950000000000017,
+      "sourceWholeFlacSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+      "sourceReferenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+      "referenceTextPendingAudioAdjudication": "零零七主管",
+      "rawAsrTextUnchanged": "民企主管。",
+      "originalCharacterEdits": 3,
+      "nearbyOriginalAnnotations": [
+        {
+          "start": 24.98512,
+          "end": 34.35514,
+          "speaker": "006-F",
+          "text": "嗯<sil>行咱们<%>现在来开一个会议，就是我们我们公司的一些近况，"
+        },
+        {
+          "start": 20.27762,
+          "end": 22.06762,
+          "speaker": "002-F",
+          "text": "零零六客服"
+        },
+        {
+          "start": 22.37387,
+          "end": 24.00887,
+          "speaker": "004-F",
+          "text": "零零七主管"
+        }
+      ],
+      "humanAudioReviewCompleted": false,
+      "labelDecision": null,
+      "scope": "Posthoc review of all4erroneous clean-short cases, not a held-out quality sample. Longer context may include partial neighbor utterances; it is for listening, never an ASR target or scored/transcribed input."
+    },
+    {
+      "case": "20200805_S_R001S01C01-clean-short-response-08",
+      "meeting": "20200805_S_R001S01C01",
+      "originalInput": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-ASR原音复核-20261115\\02-原识别输入.wav",
+      "originalInputSha256": "55958adb34c971be117b5827bc07789f8950cbdfe8edc70aadaad15406829eed",
+      "contextAudio": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-ASR原音复核-20261115\\02-含前后各两秒原音.wav",
+      "contextAudioSha256": "87df9312294df115cd96e2f6955d02751011bb2be888d776df066324e88af8a0",
+      "contextStartFrame": 19210597,
+      "contextEndFrame": 19306917,
+      "targetStartInContextSeconds": 2.0,
+      "targetEndInContextSeconds": 4.019999999999982,
+      "sourceWholeFlacSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+      "sourceReferenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+      "referenceTextPendingAudioAdjudication": "绿化那边儿怎么样？",
+      "rawAsrTextUnchanged": "六号那边怎么样？",
+      "originalCharacterEdits": 3,
+      "nearbyOriginalAnnotations": [
+        {
+          "start": 1202.74229,
+          "end": 1204.60229,
+          "speaker": "004-F",
+          "text": "绿化那边儿怎么样？"
+        },
+        {
+          "start": 1206.1873,
+          "end": 1208.152752976347,
+          "speaker": "004-F",
+          "text": "下半年这边儿情况"
+        }
+      ],
+      "humanAudioReviewCompleted": false,
+      "labelDecision": null,
+      "scope": "Posthoc review of all4erroneous clean-short cases, not a held-out quality sample. Longer context may include partial neighbor utterances; it is for listening, never an ASR target or scored/transcribed input."
+    },
+    {
+      "case": "20200805_S_R001S01C01-clean-short-response-10",
+      "meeting": "20200805_S_R001S01C01",
+      "originalInput": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-ASR原音复核-20261115\\03-原识别输入.wav",
+      "originalInputSha256": "7c8b4c4109f0db4584827d63edff2bcc40b6c291a129de841563e2f66c2e214c",
+      "contextAudio": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-ASR原音复核-20261115\\03-含前后各两秒原音.wav",
+      "contextAudioSha256": "76fd5391a21a344686afbc0533676c0c71e837d8ec63a5deb79187cfb8db49c1",
+      "contextStartFrame": 25044608,
+      "contextEndFrame": 25131888,
+      "targetStartInContextSeconds": 2.0,
+      "targetEndInContextSeconds": 3.4549999999999272,
+      "sourceWholeFlacSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+      "sourceReferenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+      "referenceTextPendingAudioAdjudication": "保安这边儿",
+      "rawAsrTextUnchanged": "我们是。",
+      "originalCharacterEdits": 5,
+      "nearbyOriginalAnnotations": [
+        {
+          "start": 1564.43296,
+          "end": 1566.96796,
+          "speaker": "001-M",
+          "text": "会给心理上有些安慰对"
+        },
+        {
+          "start": 1569.46046,
+          "end": 1581.04549,
+          "speaker": "005-M",
+          "text": "保安这儿就是下半年有一个计划，就是<#>咱们之前一直都是这种门禁卡的方式出入小区，现在<sil>我们计划是<sil>安装一个人脸识别，"
+        },
+        {
+          "start": 1565.081711111405,
+          "end": 1566.2713931182448,
+          "speaker": "004-F",
+          "text": "对嗯嗯"
+        },
+        {
+          "start": 1567.36796,
+          "end": 1568.66296,
+          "speaker": "004-F",
+          "text": "保安这边儿"
+        }
+      ],
+      "humanAudioReviewCompleted": false,
+      "labelDecision": null,
+      "scope": "Posthoc review of all4erroneous clean-short cases, not a held-out quality sample. Longer context may include partial neighbor utterances; it is for listening, never an ASR target or scored/transcribed input."
+    },
+    {
+      "case": "20200805_S_R001S01C01-clean-short-response-12",
+      "meeting": "20200805_S_R001S01C01",
+      "originalInput": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-ASR原音复核-20261115\\04-原识别输入.wav",
+      "originalInputSha256": "0c671c83b790c88ee2909ede3cd0e2c478916c67a24936125a7edc85cb006c16",
+      "contextAudio": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-ASR原音复核-20261115\\04-含前后各两秒原音.wav",
+      "contextAudioSha256": "b72ae4e7778098076b07c5d640a95079588f5e9723e943e1877eac5495d1532e",
+      "contextStartFrame": 31596980,
+      "contextEndFrame": 31677083,
+      "targetStartInContextSeconds": 2.0,
+      "targetEndInContextSeconds": 3.0064374999999472,
+      "sourceWholeFlacSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+      "sourceReferenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+      "referenceTextPendingAudioAdjudication": "属于阴面儿，",
+      "rawAsrTextUnchanged": "属于一面。",
+      "originalCharacterEdits": 2,
+      "nearbyOriginalAnnotations": [
+        {
+          "start": 1961.90369,
+          "end": 1976.77371,
+          "speaker": "001-M",
+          "text": "而且嗯咱们这个游泳游泳池建的地方也是非常的完美，就是它的它的南面就有一个。住宅楼很高，就是没有人不会被太阳晒到很凉快"
+        },
+        {
+          "start": 1976.84871,
+          "end": 1977.817631975501,
+          "speaker": "001-M",
+          "text": "属于阴面儿，"
+        },
+        {
+          "start": 1977.817631975501,
+          "end": 1979.8570868443692,
+          "speaker": "005-M",
+          "text": "对而且正好儿现在处于夏季"
+        }
+      ],
+      "humanAudioReviewCompleted": false,
+      "labelDecision": null,
+      "scope": "Posthoc review of all4erroneous clean-short cases, not a held-out quality sample. Longer context may include partial neighbor utterances; it is for listening, never an ASR target or scored/transcribed input."
+    }
+  ],
+  "newNeuralCalls": 0,
+  "newParameterUpdates": 0,
+  "newScoredCohort": false,
+  "selectedAfterKnownErrors": true,
+  "trainingUseAuthorizedByThisPacket": false,
+  "originalLabelsOrScoresChanged": false,
+  "audioPlaybackStarted": false,
+  "microphoneStarted": false,
+  "humanReviewCompleted": false,
+  "license": "AISHELL4 CC-BY-SA-4.0; original source manifest retained. https://www.openslr.org/111/",
+  "next": "Listen to the original input and its unchanged surrounding source before adjudicating lexical content or annotation boundaries. Preserve all existing labels/scores until a justified separate correction. Do not claim the model is repaired by preparing this packet.",
+  "qualityQualified": false,
+  "limits": {
+    "pid": 22968,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 27574272,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
