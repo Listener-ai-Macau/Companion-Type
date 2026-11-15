@@ -16,7 +16,7 @@ pub struct Status {pub phase:Phase}
 #[derive(Default)]
 pub struct Surface {
     last_ms:Option<u32>,lift_ms:Option<u32>,
-    filtered_z:f64,candidate:f64,upward_velocity:f64,upward_travel:f64,
+    filtered_z:f64,candidate:f64,upward_velocity:f64,upward_travel:f64,planar_time:f64,
     quiet:f64,contact_until:Option<u32>,pub status:Status,
 }
 impl Surface {
@@ -27,7 +27,7 @@ impl Surface {
             self.reset_stroke();self.contact_until=Some(ms.wrapping_add(150));
         }
     }
-    fn reset_candidate(&mut self){self.candidate=0.;self.upward_velocity=0.;self.upward_travel=0.;}
+    fn reset_candidate(&mut self){self.candidate=0.;self.upward_velocity=0.;self.upward_travel=0.;self.planar_time=0.;}
     fn reset_stroke(&mut self){self.status=Status::default();self.lift_ms=None;self.filtered_z=0.;self.reset_candidate();self.quiet=0.;}
     pub fn reanchor_if_ready(&mut self,_up:[f64;3]){if self.status.phase==Phase::Ready{self.filtered_z=0.;self.reset_candidate();}}
     pub fn sample(&mut self,ms:u32,z:f64,up:[f64;3],stationary:bool)->bool{self.sample_with_planar(ms,z,0.,up,stationary)}
@@ -47,19 +47,34 @@ impl Surface {
             // Z shocks exceeded the old20ms/absolute-acceleration rule, which
             // latched ordinary sliding out for seconds. From a supported
             // desk pose, a lift starts UP; a downward shock alone is no lift.
-            // Require coherent upward-dominant travel over at least50ms and
-            //4mm before latching. Bound this onset observer to250ms and reset
-            // it on reversal/rest: it never estimates an airborne/return height.
-            if !stationary&&z>0.20&&z>planar{
+            // Owner157 requests a natural3-5cm lift. Track a SHORT signed
+            // upward stroke through its braking half, not just consecutive
+            // positive-acceleration frames. Confirm100ms/rough4mm rather than
+            // requiring a3cm reading: a smaller lift should still pause.
+            // This is NOT calibrated height. Bound it to1.5s; never keep an
+            // airborne/return-height estimate or integrate missing intervals.
+            if self.candidate>0.||(!stationary&&z>0.20&&z>planar){
                 self.candidate+=dt;
                 self.upward_travel+=(self.upward_velocity+0.5*z*dt)*dt;
                 self.upward_velocity+=z*dt;
-                if self.candidate>0.25{self.reset_candidate();}
+                // An unconfirmed desk bump must not keep its old upward
+                // velocity while ordinary XY sliding has resumed. Coasting
+                // straight upward (quiet on all axes) is kept; sustained
+                // planar dominance cancels only the UNCONFIRMED observer.
+                self.planar_time=if planar>0.20&&planar>z.abs(){self.planar_time+dt}else{0.};
+                // Balanced +/- desk vibration can leave a positive floating
+                // roundoff tail at zero velocity. Do not concatenate those
+                // separate bumps into one fictitious upward stroke.
+                if stationary||self.upward_velocity<=1e-9||self.candidate>1.5||self.planar_time>=0.1{self.reset_candidate();}
             }else{self.reset_candidate();}
             // Board gravity already compensates a changed grip. Tilt by
             // itself does not establish that the card left the desk; the
             // former15deg rule locked out Owner155's normal movement.
-            if self.candidate<0.05||self.upward_travel<0.004{return !(vertical||vertical_impulse);}
+            // Confirmation still needs CURRENT vertical activity (including
+            // braking). An old bump's coasting estimate must not start a
+            // long pause after the card has resumed ordinary planar motion.
+            let vertical_now=z.abs()>=0.20&&z.abs()>planar;
+            if self.candidate<0.1||self.upward_travel<0.004||!vertical_now{return !(vertical||vertical_impulse||self.candidate>0.);}
             self.status.phase=Phase::Lifted;self.lift_ms=Some(ms);self.quiet=0.;
         }
         if stationary{self.quiet+=dt;self.status.phase=Phase::Settling;}else{self.quiet=0.;self.status.phase=Phase::Lifted;}
@@ -85,6 +100,18 @@ impl Surface {
   for n in 1..101{let z=if n%8<4{3.}else{-3.};s.sample_with_planar(n*10,z,0.2,up,false);assert_eq!(s.status.phase,Phase::Ready);}
   for n in 101..131{s.sample_with_planar(n*10,0.,0.6,up,false);}
   assert!(s.sample_with_planar(1310,0.,0.6,up,false));
+ }
+ #[test]fn short_lift_confirmation_includes_braking_without_waiting_for_a_return_height(){
+  let mut s=Surface::default();let up=[0.,0.,1.];s.sample(0,0.,up,true);
+  //100ms at+0.4 then200ms at-0.2m/s2:6mm in this analytic
+  // trace. Its accelerating half is only2mm; confirmation must include
+  // braking. Physical distance accuracy remains a separate open question.
+  for n in 1..=30{
+   s.sample(n*10,if n<=10{0.4}else{-0.2},up,false);
+   if n<=10{assert_eq!(s.status.phase,Phase::Ready);}
+  }
+  assert_eq!(s.status.phase,Phase::Lifted);
+  let mut ready=false;for n in 31..300{ready=s.sample(n*10,0.,up,true);}assert!(ready);
  }
  #[test]fn downward_impact_is_suppressed_without_being_classified_as_a_lift(){
   let mut s=Surface::default();let up=[0.,0.,1.];s.sample(0,0.,up,true);
