@@ -129,7 +129,7 @@ impl Desktop {
                     // Its offset keeps adapting; a second fixed host offset
                     // turns that correction into a fictitious rotation.
                     self.gyro_bias=[0.;3];self.fusion.align(accel);
-                    self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;
+                    self.earth_bias=self.fusion.desktop_step_corrected([0.;3],accel,dt,true).0;
                 }else{self.gyro_bias=[0.;3];self.earth_bias=board_acceleration(accel,g).unwrap().0;}
             }else{
                 self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);self.fusion.align(accel);
@@ -148,7 +148,7 @@ impl Desktop {
         // into apparent XY/Z acceleration. Reuse the existing upstream gyro
         // propagation instead; its accelerometer correction is off while a
         // translational force is present. No invented position/height fusion.
-        let (earth,up)=if self.state.pose_prediction{self.fusion.desktop_step(rates,s.accel_mg,dt,correction)}
+        let (earth,up)=if self.state.pose_prediction{self.fusion.desktop_step_corrected(rates,s.accel_mg,dt,correction)}
             else{board.unwrap_or_else(||self.fusion.desktop_step(rates,s.accel_mg,dt,correction))};
         let linear=std::array::from_fn(|i|earth[i]-self.earth_bias[i]);self.state.linear_mps2=linear;
         let surface_ready=if self.state.clutched{false}else if let Some(surface)=self.surface.as_mut(){
@@ -169,7 +169,7 @@ impl Desktop {
             if settled{
                 let accel=self.accel_sum.map(|x|x/self.count as f64);
                 if let Some(g)=gravity{
-                    if self.predict_board_pose{self.gyro_bias=[0.;3];self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;}
+                    if self.predict_board_pose{self.gyro_bias=[0.;3];self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step_corrected([0.;3],accel,dt,true).0;}
                     else{self.gyro_bias=[0.;3];self.earth_bias=board_acceleration(accel,g).unwrap().0;}
                 }
                 else{self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;}
@@ -210,7 +210,7 @@ impl Desktop {
             // integrated velocity, then discard that residual and old tail.
             let reanchor=self.state.pose_prediction&&(self.state.moving||!on_plane);
             self.stop();
-            self.earth_bias=if reanchor{self.fusion.align(s.accel_mg);self.fusion.desktop_step([0.;3],s.accel_mg,dt,true).0}else{earth};
+            self.earth_bias=if reanchor{self.fusion.align(s.accel_mg);self.fusion.desktop_step_corrected([0.;3],s.accel_mg,dt,true).0}else{earth};
             self.state.linear_mps2=[0.;3];return Point::default();
         }
         // Fusion already rotates acceleration into the Earth frame. Comparing
