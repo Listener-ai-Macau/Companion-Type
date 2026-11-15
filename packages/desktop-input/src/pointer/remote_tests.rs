@@ -27,6 +27,27 @@ use super::*;
 }
 fn bounds()->Bounds{Bounds{left:0.,top:0.,width:1920.,height:1080.,primary:None}}
 fn sample(n:u32,gyro:[f64;3])->Sample{Sample{sequence:n,sensor_ms:n*10,held:false,tap_serial:0,fused:true,device_ready:Some(true),accel:[0.,0.,1000.],gyro,aim:None}}
+#[test]fn desktop_ready_waits_for_the_actual_cim6_calibration_flag(){
+    let mut p=Pointer::new(Settings{desktop_motion:true,..Settings::relative_remote()},Point{x:960.,y:540.});
+    for n in 1..121{
+        p.observe_device_readiness(Some(false));
+        p.sample_raw_gravity(desktop::Raw{sequence:n,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[20.,10.,5.]},Some([0.,0.,1000.]),n as f64/100.);
+        assert!(!p.metrics.calibrated);
+    }
+    p.observe_device_readiness(Some(true));
+    for n in 121..181{p.sample_raw_gravity(desktop::Raw{sequence:n,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]},Some([0.,0.,1000.]),n as f64/100.);}
+    assert!(p.metrics.calibrated&&p.planar_state().unwrap().pose_prediction);
+    assert_eq!(p.shown,Point{x:960.,y:540.});
+}
+#[test]fn sensor_clock_rate_cannot_hide_slow_wallclock_delivery_or_erase_recovery_time(){
+    let mut p=Pointer::new(Settings::relative_remote(),Point{x:960.,y:540.});
+    for n in 1..21{p.sample(sample(n,[0.;3]),n as f64*0.2,bounds());}
+    assert!((p.metrics.sensor_hz-100.).abs()<0.01);
+    assert!((p.metrics.receive_hz-5.).abs()<0.01);
+    p.frame(6.,bounds());assert!(p.metrics.receive_hz<4.,"silence must remain in the rate denominator");
+    p.begin_stream();p.sample(sample(1,[0.;3]),6.5,bounds());
+    assert!(p.metrics.receive_hz<5.,"recovery must not reset the wallclock denominator");
+}
 fn ready()->Pointer{
     // Preserve the128 turn-profile regressions; the new default is side tilt.
     let settings=Settings{relative_horizontal:RelativeHorizontal::Turn,tap_click:false,..Settings::relative_remote()};

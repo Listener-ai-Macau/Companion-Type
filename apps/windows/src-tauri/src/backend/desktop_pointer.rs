@@ -82,7 +82,7 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
                 use super::ble_bridge::DesktopInputUpdate;
                 match event {
                     DesktopInputUpdate::Motion(sample)=>{
-                        if desktop_motion{return;}
+                        if desktop_motion{p.lock().unwrap_or_else(|e|e.into_inner()).observe_device_readiness(sample.device_ready);return;}
                         // Mapping needs monitor geometry; Win32 read only.
                         let b=desktop_bounds();p.lock().unwrap_or_else(|e|e.into_inner()).sample(sample,origin.elapsed().as_secs_f64(),b);
                     },
