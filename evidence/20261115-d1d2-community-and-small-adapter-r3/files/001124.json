@@ -1,0 +1,41 @@
+{
+  "pid": 22800,
+  "ownedWindows": [
+    {
+      "class": "Tauri Window",
+      "visibleBefore": false,
+      "visibleAfter": false,
+      "rect": [
+        256,
+        256,
+        1250,
+        1014
+      ]
+    },
+    {
+      "class": "Tao Thread Event Target",
+      "visibleBefore": true,
+      "visibleAfter": false,
+      "rect": [
+        0,
+        0,
+        14,
+        14
+      ]
+    },
+    {
+      "class": "IME",
+      "visibleBefore": false,
+      "visibleAfter": false,
+      "rect": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "actualNativeAppContentWindowHiddenThroughoutInspection": true,
+  "foregroundIsOwnedApp": false,
+  "frameworkEventTargetHiddenBeforeCleanup": true
+}

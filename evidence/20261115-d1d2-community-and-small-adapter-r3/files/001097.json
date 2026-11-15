@@ -1,0 +1,284 @@
+{
+  "minutesContextSupported": true,
+  "schema": "companion.host.v1",
+  "source": "unavailable",
+  "deviceId": "fixture-companion-v1",
+  "connected": false,
+  "updatedAt": "2026-11-15T01:37:10.822Z",
+  "gatt": {
+    "deviceStatusServiceUuid": "8f7a0001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "deviceStatusUuid": "8f7a1001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "settingsServiceUuid": "8f7a0004-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "bleNameConfigUuid": "8f7a4002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "meetingServiceUuid": "8f7a0008-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "meetingControlUuid": "8f7a8001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "meetingStatusUuid": "8f7a8002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "sensorsServiceUuid": "8f7a0009-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "imuStatusUuid": "8f7a9001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "audioOutputServiceUuid": "8f7a000a-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "speakerControlUuid": "8f7aa001-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "speakerStatusUuid": "8f7aa002-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "wakeWordControlUuid": "8f7aa003-7b7d-4f3d-9d6f-6c2d1b7c0000",
+    "wakeWordStatusUuid": "8f7aa004-7b7d-4f3d-9d6f-6c2d1b7c0000"
+  },
+  "meeting": {
+    "supported": true,
+    "active": false,
+    "status": "idle",
+    "startedAt": null,
+    "durationMs": 0,
+    "transcriptCount": 0
+  },
+  "imu": {
+    "supported": false,
+    "online": false,
+    "sampleHz": 0,
+    "motion": "unknown",
+    "accel": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 1.0
+    },
+    "gyro": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    }
+  },
+  "speaker": {
+    "supported": false,
+    "findSupported": false,
+    "online": false,
+    "muted": true,
+    "volume": 0,
+    "status": "notPopulated"
+  },
+  "wakeWord": {
+    "supported": false,
+    "armed": false,
+    "engine": "notPopulated",
+    "keyword": "hey companion",
+    "lastDetectedAt": null,
+    "confidence": 0.0
+  },
+  "bleName": {
+    "activeName": "companion",
+    "stagedName": "companion",
+    "maxLen": 29,
+    "status": "clean",
+    "pendingRestart": false
+  },
+  "device": {
+    "supported": true,
+    "providerId": "companion-type-windows-ble",
+    "mode": "windowsNative",
+    "scanning": false,
+    "connected": false,
+    "deviceId": null,
+    "lastSeenAt": null,
+    "signalRssi": null,
+    "recordingsAvailable": 0,
+    "recording": false,
+    "lastSyncAt": null,
+    "firmwareVersion": null,
+    "buildId": null,
+    "boardId": null,
+    "hardwareRevision": null,
+    "mcuUid": null,
+    "uiGeneration": null,
+    "recordingCapacity": null,
+    "connectionPhase": "idle",
+    "rememberedDeviceId": null,
+    "autoReconnectEnabled": true,
+    "manualDisconnect": false,
+    "lastConnectedAt": null,
+    "lastReconnectAttemptAt": null,
+    "reconnectAttemptCount": 0,
+    "message": "Not scanned"
+  },
+  "oobe": {
+    "complete": false,
+    "lastRunAt": null,
+    "checks": [
+      {
+        "id": "bluetooth",
+        "label": "蓝牙连接",
+        "status": "pending",
+        "message": "等待实板检查"
+      },
+      {
+        "id": "firmware",
+        "label": "固件与板卡身份",
+        "status": "pending",
+        "message": "等待实板检查"
+      },
+      {
+        "id": "gatt",
+        "label": "核心 GATT",
+        "status": "pending",
+        "message": "等待实板检查"
+      },
+      {
+        "id": "boardMicrophone",
+        "label": "板端录音链路",
+        "status": "pending",
+        "message": "等待实板检查"
+      },
+      {
+        "id": "clock",
+        "label": "自动校时",
+        "status": "pending",
+        "message": "等待实板检查"
+      },
+      {
+        "id": "imu",
+        "label": "IMU",
+        "status": "pending",
+        "message": "等待实板检查"
+      },
+      {
+        "id": "speaker",
+        "label": "扬声器",
+        "status": "pending",
+        "message": "等待实板检查"
+      },
+      {
+        "id": "display",
+        "label": "墨水屏",
+        "status": "pending",
+        "message": "等待实板观察"
+      },
+      {
+        "id": "touch",
+        "label": "触摸",
+        "status": "pending",
+        "message": "等待实板操作"
+      },
+      {
+        "id": "power",
+        "label": "电源与充电",
+        "status": "pending",
+        "message": "等待实板测量"
+      },
+      {
+        "id": "remoteServices",
+        "label": "ASR / 纪要服务",
+        "status": "pending",
+        "message": "不在硬件检查中调用"
+      }
+    ]
+  },
+  "privacy": {
+    "localOnly": true,
+    "consentRequired": true,
+    "retentionDays": 7,
+    "audioCacheBytes": 262232,
+    "transcriptBytes": 0,
+    "minutesBytes": 0,
+    "lastEraseAt": null,
+    "policyLabel": "Local cache"
+  },
+  "host": {
+    "persistence": {
+      "status": "ready",
+      "message": null,
+      "recoveryPath": null
+    },
+    "recordingPolicy": {
+      "owner": "host",
+      "deviceFlashRawCacheSeconds": 60,
+      "targetMeetingSeconds": 3600,
+      "rawPcmBytesPerSecond": 32000,
+      "oneHourRawPcmBytes": 115200000,
+      "chunkSeconds": 300,
+      "oneHourChunkCount": 12,
+      "maxAsrUploadBytes": 26214400,
+      "preferredLongRecordingSource": "hostMicrophone",
+      "deviceRole": "triggerAndShortCache",
+      "longMeetingStrategy": "hostChunkedWav",
+      "asrProviderMode": "openaiCompatibleOrLocalCommand",
+      "shortCaptureGuide": "Short: device flash cache (≤60s) → Sync/pull → host ASR → minutes",
+      "longMeetingGuide": "Long meeting: host microphone (5 min chunks); device is trigger/status only — not full-hour BLE pull",
+      "supportedMeetingModes": [
+        "offlineStore",
+        "onlineLive"
+      ],
+      "defaultMeetingMode": "offlineStore",
+      "offlineStoreGuide": "Offline: store WAV/chunks first (no live ASR); later batch transcribe → L0/L1 minutes",
+      "onlineLiveGuide": "Online: live partial transcript while recording; audio still stored as backup; stop → minutes"
+    },
+    "activeSessionId": null,
+    "selectedSessionId": "import-3f846fa7adcd4c47b3df2986d60fb74d",
+    "sessions": [
+      {
+        "id": "import-3f846fa7adcd4c47b3df2986d60fb74d",
+        "title": "pcm16-all-values",
+        "source": "importedAudio",
+        "status": "captured",
+        "meetingMode": "offlineStore",
+        "processingPolicy": "manual",
+        "startedAt": null,
+        "stoppedAt": null,
+        "durationMs": 4096,
+        "audioPath": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r3\\qa\\probe-after\\recordings\\import-3f846fa7adcd4c47b3df2986d60fb74d.wav",
+        "audioBytes": 131116,
+        "audioStored": true,
+        "deviceReclaimed": false,
+        "captureIncomplete": false,
+        "recorderControlUncertain": false,
+        "chunks": [
+          {
+            "id": "import-3f846fa7adcd4c47b3df2986d60fb74d-chunk-1",
+            "path": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r3\\qa\\probe-after\\recordings\\import-3f846fa7adcd4c47b3df2986d60fb74d.wav",
+            "startedAt": null,
+            "stoppedAt": "1794706630822",
+            "durationMs": 4096,
+            "bytes": 131116,
+            "status": "sealed"
+          },
+          {
+            "id": "import-3f846fa7adcd4c47b3df2986d60fb74d-imported-original-5af1f8f3ff38ccf04d0adf4f408c94c5d88ab256cf76021f40aeb9fe599bcc33",
+            "path": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r3\\qa\\probe-after\\recordings\\import-3f846fa7adcd4c47b3df2986d60fb74d.original.wav",
+            "startedAt": null,
+            "stoppedAt": null,
+            "durationMs": 4096,
+            "bytes": 131116,
+            "status": "importedOriginal"
+          }
+        ],
+        "transcriptText": "",
+        "transcriptFinal": false,
+        "liveTranscriptText": "",
+        "transcriptPreview": "",
+        "transcriptSegments": 0,
+        "utterances": [],
+        "bookmarkRevision": 0,
+        "noteRevision": 0,
+        "minutes": null,
+        "minutesByMode": {},
+        "recovery": {
+          "intent": "none",
+          "requestedMeetingMode": "",
+          "stage": "idle",
+          "attemptCount": 0,
+          "maxAttempts": 3,
+          "retryStage": "",
+          "captureReviewConfirmed": false
+        },
+        "exportMarkdown": "",
+        "calendarCopyRevision": 0,
+        "calendarCopyEpoch": 0,
+        "exportedAt": null,
+        "retention": {
+          "audioCached": true,
+          "transcriptCached": false,
+          "minutesCached": false,
+          "consentRequired": true,
+          "retentionLabel": "Local until manually deleted",
+          "expiresAt": null
+        }
+      }
+    ]
+  },
+  "lastControl": null
+}

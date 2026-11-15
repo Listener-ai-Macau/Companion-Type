@@ -1,0 +1,37 @@
+{
+  "state": "ONE_SOURCE_BOUNDARY_INTERVENTION_FROZEN_NOT_INFERRED",
+  "oldWorkerSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+  "newWorkerSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+  "reversibleSourceChange": {
+    "        spans=quiet_wav_spans(audio)": "        from companion_predicted_turn_boundaries_20261115 import checked_turn_spans\n        spans=checked_turn_spans(audio,case,P,C)"
+  },
+  "inferenceMathematicsOrModelWeightsChanged": false,
+  "counts": {
+    "S_R004S03C01": {
+      "originalSpans": 79,
+      "newSpans": 88,
+      "sourceFrames": 37233904,
+      "newSpansBelow2Seconds": 1,
+      "allOriginalSamplesExactlyOnce": true,
+      "allOriginalQuietBoundariesRetained": true
+    },
+    "20200623_S_R001S07C01": {
+      "originalSpans": 68,
+      "newSpans": 370,
+      "sourceFrames": 32789784,
+      "newSpansBelow2Seconds": 69,
+      "allOriginalSamplesExactlyOnce": true,
+      "allOriginalQuietBoundariesRetained": true
+    }
+  },
+  "reason": "Complete prior raw error audit found195 short-response deletions in235 spans for006-M. Isolate predicted changes using existing activity, keeping every sample and original quiet boundary.",
+  "runOrder": [
+    "unchanged native pilot",
+    "20200623_S_R001S07C01",
+    "S_R004S03C01"
+  ],
+  "acceptance": "Original full rawCER<5%, source short-turn deletions and all speakers; preserve old ordinary quality. On raw failure retain output and do not claim speaker/whole product qualification.",
+  "noReferencePassedToWorker": true,
+  "newNeuralCalls": 0,
+  "qualityQualified": false
+}

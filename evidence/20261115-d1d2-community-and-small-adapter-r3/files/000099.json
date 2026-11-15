@@ -1,0 +1,39 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 82,
+    "startSample": 7268960,
+    "endSample": 7358080,
+    "text": "就是有个别的，就是钱不还。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      99486,
+      104627,
+      102657,
+      3837,
+      99486,
+      99428,
+      16530,
+      97706,
+      1773,
+      151645
+    ],
+    "rawDecoded": "就是有个别的，就是钱不还。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 1.9339503000082914,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 89120,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 557,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "43a42367a96a0f7cf3dc5cf46fef638b32394031f17f66d5e41ab09560ee5981"
+}

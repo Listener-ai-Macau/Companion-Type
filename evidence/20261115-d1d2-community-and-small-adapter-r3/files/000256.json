@@ -1,0 +1,51 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 239,
+    "startSample": 20164480,
+    "endSample": 20274240,
+    "text": "十万以下也不是不能做，也能做，但是就是说，因为我们只要是一单就要做的话。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      110860,
+      87752,
+      104993,
+      53153,
+      99190,
+      3837,
+      104425,
+      99190,
+      3837,
+      100131,
+      99486,
+      36587,
+      3837,
+      110259,
+      100671,
+      99639,
+      23990,
+      104134,
+      99190,
+      100363,
+      1773,
+      151645
+    ],
+    "rawDecoded": "十万以下也不是不能做，也能做，但是就是说，因为我们只要是一单就要做的话。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.323438199993689,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 109760,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 686,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "e1ab45853c4a040fc81208e470d7082a3983ddb49f5441de0cf3baed1580d321"
+}

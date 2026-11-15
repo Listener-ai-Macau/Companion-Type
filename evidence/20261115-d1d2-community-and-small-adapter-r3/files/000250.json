@@ -1,0 +1,46 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 233,
+    "startSample": 19910080,
+    "endSample": 19998240,
+    "text": "那咱们这个十万以以下，咱们收益方面就有，肯定会有所这个。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      99212,
+      104335,
+      99487,
+      110860,
+      23031,
+      87752,
+      3837,
+      104335,
+      102105,
+      99522,
+      104435,
+      3837,
+      109476,
+      101192,
+      99487,
+      1773,
+      151645
+    ],
+    "rawDecoded": "那咱们这个十万以以下，咱们收益方面就有，肯定会有所这个。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 3.30067379999673,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 88160,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 551,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "a4d53d877ce86088ae0d79d7d64f206625a018747e6c1602fc475943ca13929b"
+}

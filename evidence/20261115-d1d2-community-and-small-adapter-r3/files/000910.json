@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 59,
+    "startSample": 24663753,
+    "endSample": 25109101,
+    "text": "让顾客来一下打包带走，这样的顾客他本来说想要买洗衣液吧，是吧？然后他一下连肥皂，呃，跟那个洗衣粉，他一下也也都买走了，然后来增加我们的一个那个呃销售额度，嗯，还有就是说我们的一个洗一个洗衣液活动，洗衣液活动的话，我们可以说买够。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 24663753,
+        "endSample": 25109101,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "bf52a53dd22dc4b367bdae469b152f13ae7323c21e3f9a81115f67d5d29786d5"
+}

@@ -1,0 +1,795 @@
+{
+  "policy": {
+    "groups": "Number of distinct anonymous IDs already predicted by the frozen full native journal, not reference people",
+    "features": "All exact previously saved clean>=2s ERes2Net vectors; no new embeddings or selected first profiles",
+    "clustering": "Cosine dissimilarity, average-link hierarchical clustering, maxclust at predicted group count; one fixed method, no cutoff or group-count scan",
+    "displayIdMapping": "Global maximum duration agreement between vector clusters and original anonymous IDs; predicted data only",
+    "shortIntervals": "For a shorter clean run, revise only when preceding and following eligible runs for that original ID have the same reconciled label; otherwise retain original",
+    "overlapAndActivity": "Preserve all original multivoice intervals, every activity boundary and activity multiplicity; no missing speech is invented",
+    "acceptance": "Both complete ordinary cases must meet original DER<=10% and old per-person regressions remain explicit; raw/per-person text gates unchanged",
+    "stop": "One fixed cached-data reconciliation; no parameter variants after full scores"
+  },
+  "vectorBindings": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000000.json",
+      "sha256": "6a0daf155843cde23ab3e9b93cce622c52fc57aee1ca29547380178601f07048"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000001.json",
+      "sha256": "3fc794e3b5a59c0f00a7a992af22ebdccf4d6415a15214ca9b5ffeea74c17a0e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000002.json",
+      "sha256": "af02356ef76dd0ef63b11b82b8fcdd86f466e86c22483834ec3cbd455d41fdfe"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000003.json",
+      "sha256": "1e801371e26885cbaca2ea8bce6ac46e6757b1aa443e7b48a7846d8823bb6cd9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000004.json",
+      "sha256": "d4aa01759df9609a4a4791dfa466cff2aca636d958ea778e3acbd5f70ae451f8"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000005.json",
+      "sha256": "dba4f6b2bf8918edaa36d686881cfbde25f675b138dedb665311bd0ad9afefd2"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000006.json",
+      "sha256": "5c0c045d8f712aa87ccb90056c0af5aeb2ea8499ecf5f3d8adc37f2d064e4aaf"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000007.json",
+      "sha256": "dc02f91a71e0cd15495df066677c53966b2f8716e7d86416c18a112ddbf3c2c3"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000008.json",
+      "sha256": "09c428f53f8a145049e59c80e5ba7eabac3fd68e543233e9e2eb796f95d0e536"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000009.json",
+      "sha256": "659103074bca6e94421bc87c55b421af3f22e1f992162fa49863281ff768072f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000010.json",
+      "sha256": "5b6666440538323022a07349a4b345b57ef320a0731ac47ed752d75a252b044b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000011.json",
+      "sha256": "accb4f6cc86949a0b2848cb1a226ec707531a0f3bec5f41ea06a2a5934329bb2"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000012.json",
+      "sha256": "f85efef0ead2e5087d0fa58b0b9f672cee6f0fed45bbeddb3045505c604b2e4b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000013.json",
+      "sha256": "83b93a32b092f3fb8e36dc68ecddcbca69d9451df270963cbc3706b10ade0359"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000014.json",
+      "sha256": "51ed07617c91abdd31e560730e2ea2e0cfa72d4b1bf6c2340923fa5115489da0"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000015.json",
+      "sha256": "9b818368000a225510e04d1271a200fca9c585f349671102740eb7e990a82b24"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000016.json",
+      "sha256": "ae39e2e3a3f9c9a3461774b285a0c5c565b9ffc01ab02b34591158ad91697fa2"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000017.json",
+      "sha256": "64c42638e6fd493e4c47a41c324e9065cceaf4698ab6fa58016e5a53b56a6ab2"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000018.json",
+      "sha256": "342cfbbf919cf8998ebfef0abeb424b027065f94d358621609466212dd02947e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000019.json",
+      "sha256": "8f041d220d4404d949f6c7f51011cfcdb97150705cada627df8256480b500646"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000020.json",
+      "sha256": "bcb7c94c9c7fb4e3bb64da02b8f3c2f2dfbde2f85cc57ae8bcde43f5d350be82"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000021.json",
+      "sha256": "35f2c117a6202c1d1656ff76fdb65891c70ce61d3c92f54917ddb81f41e1958d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000022.json",
+      "sha256": "dc5e71c692c7a9f32f3bc19309b16070302aa01550709eb585b2a110c5d2330c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000023.json",
+      "sha256": "cf70d8455bb1c9d84576cce702368dbb0659ac4e30a9bac72208da5b77006495"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000024.json",
+      "sha256": "4bb2484ac7b4162903d657076d72413fd60b6ffdddd6d434c49ac43ab55e9a5e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000025.json",
+      "sha256": "e1c987cd997e81f7204ed3ac8e63612894cbc8acd344c4354a38f27b807a3a2b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000026.json",
+      "sha256": "8479600efa3ec10342ec1215a933a85701aecdc9985bda526ee85e9a0a7d9788"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000027.json",
+      "sha256": "7969a0236c302b6142ed9950b2579609290505803862aa11482b6bad9c855da5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000028.json",
+      "sha256": "b5b617df396e8a4e568c1634339afbc704d877b9b6eb85a5b6fdd15b56a18f95"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000029.json",
+      "sha256": "cbc01a63b927f90cadd08a3511e872bcfc3099e25a23b0d5763dd73a84de9352"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000030.json",
+      "sha256": "b0d7b26780f8f4516a4d54c44e907524d529a886676d9b29676c490b9502ebf0"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000031.json",
+      "sha256": "a5225f9d78a41cfa86865e2fc13cc613bb680a309b38df71f13234d0a9ffe550"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000032.json",
+      "sha256": "142e9ea63a76d994830b27cfe5d31247fd78802fe7aa5cffa73052e5cf085254"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000033.json",
+      "sha256": "dec90c79892cd9c71e9444e43ca28101bd7524163edd3eaae83156a7322596cc"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000034.json",
+      "sha256": "f993c975d2e918aab4d35e42bed7fa917689d6ff50df823aa23c73bf492fa3aa"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000035.json",
+      "sha256": "b110d7e79bf54d2fd246b444f3cb46baede6efd57a25ba08eebd50cd064ee573"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000036.json",
+      "sha256": "15d49869a24a3ad53f4781dc657a68e0bbaa875278ecbdd463d0281ce903b2cb"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000037.json",
+      "sha256": "e4891951cb24788b1fb627f72a8dbcf2a55e68937c735295e97c7bc45a301ac3"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000038.json",
+      "sha256": "c831795d874747a2fa0be4033c80489ce6a4364ef8f28e717a65c78b330035bc"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000039.json",
+      "sha256": "dab69295ebf2e65e301df8a56933f5a6e6afca476bd3fca107039cf1f7b25ea3"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000040.json",
+      "sha256": "ee8f680219baf0a20641cb8321bb195b0f520dadeafd58d7353945cc151926bb"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000041.json",
+      "sha256": "f183827e8962fa996922df7f8b5f6fe3e9719221defbcf0c3ab15edcbc02409a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000042.json",
+      "sha256": "26f44596f9b3c1f8c09f1a0bf247ec19b29bc6d6bd037861055df4ffa6acb10b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000043.json",
+      "sha256": "ffe42f7a17a77372c205ab82ccdef3aaea6000ef4c263d4d5529eb891a62c7ff"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000044.json",
+      "sha256": "e636c0943242116633aaeec9c530246d107d02d3390a23c6deaa0a38462feb24"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000045.json",
+      "sha256": "9eed61181ea7be3a811c55d13dd9cc05691cc54bdf6ef641fb3d248251435819"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000046.json",
+      "sha256": "f9ae70d1efdf15d953e0207dbfdfd80d691d21e6a772721291f06b16fca4af39"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000047.json",
+      "sha256": "654a60a171dd9c50ec64fcc13d836f062764cee05742fd4dc3e2ec1a252bee45"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000048.json",
+      "sha256": "e225ab7f3e2be07957c200ac2886868d358e98fa9a5f749f4cebe28e457782ea"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000049.json",
+      "sha256": "4e6e5758e097bb63c70eb2ef7c4017c3bcc4d7b1f4b8bcef7bf7350d1515e776"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000050.json",
+      "sha256": "a3777e13202a7301b05238ba99b8966d04ebf139b9a2ae180565bb5892a90366"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000051.json",
+      "sha256": "784b84875831ae889f959d267c1c56d4dbe96b5d10c9f0c48f7775ca3693a3f7"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000052.json",
+      "sha256": "8dab25cf12741a455323258e32c33f39400cad212d8c630f3bdb1a7ddb635429"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000053.json",
+      "sha256": "1a7814ebbcea02df76f0c3cad928ff418be4638cdf513fe7fbf2da0aa983c943"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000054.json",
+      "sha256": "2d881208589f2e60561a36bfaa66e15e65d6787c8601e12e938dc224813ab21e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000055.json",
+      "sha256": "984264fb27d50a4af6cd457f4378d7f1317feef000b079a7d806f304f5d0fa9a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000056.json",
+      "sha256": "2a5243628793ff263f5aa3847599b5ca745509f84f3a692cb75adb79ccb12722"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000057.json",
+      "sha256": "38a571fbe462a7b235348dd5657a48b0b362997974a942743eb875437fd08fdd"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000058.json",
+      "sha256": "d5a93c36eeef5aa1ba15a96cde9376abedd0a5e76d23092fa1a5e0da08f3d965"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000059.json",
+      "sha256": "dc7e67146a5ba8a7c2b4bc246c3e9758adfa674074e548c04daade0756a5b9f0"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000060.json",
+      "sha256": "b4f09d4120942089a624926020784b4f77d41e9982624fb1afcb1dc8467a41a9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000061.json",
+      "sha256": "d4e979f8d9591c48e204e52b171c4b59c2a585a147882ade69ce184ba40822ef"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000062.json",
+      "sha256": "48fa7661463a91c8d0de1e6b1f109ac96e35a60044c783e78c437c67ed68dcef"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000063.json",
+      "sha256": "3ecb4978f0be23a0eb578e3d39f436a47358e3330e953840c1b9e9745fe19b9c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000064.json",
+      "sha256": "da9d5cc09c1571348773a3832d9b743c98a8497d960cb5d95c6297facd44a317"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000065.json",
+      "sha256": "7f89b41e7e75b8f2088219cf1d10cd1431d9ee928e538eeb7cd197160e52a7cd"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000066.json",
+      "sha256": "b9912ccff731699d21ceb5ecd45a2a45f643d1f79ebe985925209d06d9f3dff8"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000067.json",
+      "sha256": "b2f10786df426d13b1ab4abca76531b53daec58cfe816f5c6a80cccc5bfc1408"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000068.json",
+      "sha256": "060faff40966035b0cec13bf2bea61f141e415dc15041fdc374ec080a1993ad2"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000069.json",
+      "sha256": "08f106d4a7993a4767bf665b10a59c30fe70c96f1d616806806449b635115b1c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000070.json",
+      "sha256": "bf319a5cc334f3c426739f8dcfe94a1c0348736e31cc7f2a583de11134879f0f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000071.json",
+      "sha256": "c832b56ab096362d41b49b4e4735e859f1ce7a9d14964ddf9a0e06c17a6433cb"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000072.json",
+      "sha256": "bb3d06a8ab7ad8a80c7d124516708c95c0eedef003eebd376a6aa9c1ee6e2fb1"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000073.json",
+      "sha256": "b13fecb2a15cf5b7630dd9b065eb2c724a49dfe07c9f2260c78950b294d75c8b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000074.json",
+      "sha256": "7b18b82b6df2d37a056588c545a227a92fdc8d894752797a89679b7f06e13dcd"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000075.json",
+      "sha256": "61fba048eb6636940e18c46b90f6178957dfeea89c9984444aed6c4d07723d1d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000076.json",
+      "sha256": "e96a2dd4a47a9b64f0de44f6a97bcd6e40702a6487d6faa17dffdafa4b91750c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000077.json",
+      "sha256": "406f678036287e65926514cd52211aef50d54259437af38ed023ec508a468bd2"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000078.json",
+      "sha256": "ef462ac36c5ed0841931111ba854d98c65182d19efed5d7d8f4a7e91ea2ae73a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000079.json",
+      "sha256": "9e8b282a8d485a998d70b4b8408f8844df083f87dcd6e10aa50ad557602ba8cd"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000080.json",
+      "sha256": "d70f3a84f910b7679fbb8b4a63e045b21a448b389fb3cc09da0849ce302bbab2"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000081.json",
+      "sha256": "71fbd7e5eaba4d395499c0f87a5a1979dadac958ab25496d7196d512e1d38e35"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000082.json",
+      "sha256": "6a574fed4ee4dffe4887d603c93972ee38d10b4e4aa9430fc26b402df7438bf5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000083.json",
+      "sha256": "ff380f58c12fba49e029a620f3be104ddce7599e998f331f050b305230526164"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000084.json",
+      "sha256": "9ce4264d6c0243ef28eef53f88e6db15845e79ead824a1c7f242d745e0813231"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000085.json",
+      "sha256": "c9c22c6e3fdf65254b0f18cc9fa6ce18de52b9e5d6313d628dc34e8fe3d86352"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000086.json",
+      "sha256": "1acc6436f2c9c32f1bd3c002111605e3cc490a6fa473c5072a52ed4670beb313"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000087.json",
+      "sha256": "d1b21d9e7237bf402a930f970e05551be2564ddea97a8d651b9437d03a3b958f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000088.json",
+      "sha256": "c2dd2846f94af5d64c59deef1dd09c4e3eee77aae33d393c28e1b762c0e40a2e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000089.json",
+      "sha256": "add15c7cfc152f018c6966852bac1e2bf86f2a1d38fd0fd8ba13cb60692f86ee"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000090.json",
+      "sha256": "22807ab2f9b97c31f380ef612c37275bf99a6ad4f4134e10bde4b7c3b71fa84a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000091.json",
+      "sha256": "de62986c4099c489551e01378883286416029155b9cf30f6fe12e8dd9b657c66"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000092.json",
+      "sha256": "5f6f2f7a1cd6d0081e0ee55550311cd96158f330bda2ccf51553213c36e5cfde"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000093.json",
+      "sha256": "fb245fc49352039f1201bbb53cc5a5ef2ece87ef6a087002d628286ab87ff744"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000094.json",
+      "sha256": "52dc83b1b7c719a5ab9605bddba08ac14e02be514ef1e0c6d63148760abfb1af"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000095.json",
+      "sha256": "a45b92484beb39d9ed6bf20192070f119a9d4c85013883b7a0a12f100527beb5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000096.json",
+      "sha256": "259cf1140e7bfa1639bc03b4bb5b7da9dca5ff017a961497ea51e8e4008d2786"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000097.json",
+      "sha256": "bdf0161cec530259da4ef66bcac05daeb8e08e348858eeec9b1fba60887162f1"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000098.json",
+      "sha256": "88a690bee7501be9e2ce2f92a6e8f1235852a451597cf2d9ab82d83942e6d956"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000099.json",
+      "sha256": "07fae0563bd62e7d2d5b8ac80a3b8cc326b92f2eed8c911cb23e2540d3ed27c6"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000100.json",
+      "sha256": "e4ca2130d62b62183f93539276354339acf72dde09329dada2d65d825669efb1"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000101.json",
+      "sha256": "ebaa14a25fbb7dc64fa5481a936862bd531b1f1527bf44f2d44fb49a16a9e72a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000102.json",
+      "sha256": "9db284fe212cf2bea633a88154661d85424fafbda50b4c3e2d971cc1f0bb5845"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000103.json",
+      "sha256": "d3899ea27a639a7a31b90ffb9f277c8295556a21f7077f0468eed74eaaf8cce5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000104.json",
+      "sha256": "08e4ea3bd082471dadda1d36e5b44bd10d71b83d61615ca8c979d2e2250e1e7e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000105.json",
+      "sha256": "fd05088a6bb41613043370ffbcc486bf8ec233ee9035470b29149ec09d44d216"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000106.json",
+      "sha256": "0c878a677aaa68936cc0a45054d9c833acba27a1ae49746f51255cb9df8a522b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000107.json",
+      "sha256": "4f5d8b3ccb6b36b5fd83223a2ea84879b8b8cc85f5a173a6fa5c7ad969b1ae7a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000108.json",
+      "sha256": "a16c0273315e1151e7e7e459e4156c8cdd4d5c162f059fd8f0b313f09ce77657"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000109.json",
+      "sha256": "32ece978bbaca0e08bed0ec2055c3ce3f6ae21ba0349a200953e3b55d9daeba7"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000110.json",
+      "sha256": "d5bc528914493e958b5c812c9f73d1d146bbcc4755bbbdce83ba8691a8aa5ffb"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000111.json",
+      "sha256": "a9bda018ec17677cc567bce159c5e050853ad546d1ac9186bbe5cca8c881ff68"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000112.json",
+      "sha256": "9829ef26c560fc04b8809026975f61b6d641e2f07b705c2f128498c6edf57503"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000113.json",
+      "sha256": "4b8462e5e9a5ec24e82030a86937a2b3ddacf638a4d6bab57f5db0581080bec0"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000114.json",
+      "sha256": "569622133736c314f6a2cf467fc698c8bb0b1911e70af6c675e9e31b56504d6c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000115.json",
+      "sha256": "a1bb7d7bc00833fda4e5c03c2612c751a69003ba4862cbf82d28b9a8635ae7dd"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000116.json",
+      "sha256": "d244dd7e11194153cc888548795f3ffc8f2b4f9e56524047fe204629c38a1af1"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000117.json",
+      "sha256": "76b69f26d182c61414887131cb5fdd84c13d017da9b8bfb3a0a375be229076eb"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000118.json",
+      "sha256": "8084f994d6ccae0ae42fa6d4cd76953c3fbda0438669084d05ad9cea924ac6ed"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000119.json",
+      "sha256": "59a481d769f0c11c223e1493501f9b8981c4e7dea85f7a3852db37541ff8f170"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000120.json",
+      "sha256": "8f7cba7bfd420c763968c96210a108fc1e3812dc83d0aa463b370ab1d197c07d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000121.json",
+      "sha256": "7e55c7bc85f819ec7c5b996f6786226b6617959bd18a50262ab283a8cea8d67d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000122.json",
+      "sha256": "96e921b4ac4c7f8f502b517a6d99902043f9615c386e542c0634ef696477fd82"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000123.json",
+      "sha256": "8baf09c0252e5514cb5d9eb51d0f6ae0f05172763d7862c7bb6b60ddd4b866b5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000124.json",
+      "sha256": "f78fda88a3fea3bd68864d2846a0f14ca6cf6331efdf619d544bfe59ba12683b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000125.json",
+      "sha256": "8e3e744efa5bcff1cf1e17d155a078cb7ec2cb580ecd2c5de6c4d1014bc69625"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000126.json",
+      "sha256": "a9f9c26d1aa079a73861ab19596949bdf7169c5b738fddf6c2d73f709b4d2d42"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000127.json",
+      "sha256": "8b66f981ee62e43ec60864f727caad98bf3f4d6047ead7c3c16d77615b02b3cd"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000128.json",
+      "sha256": "5377ded59933f26f4db9e932a0a3b86348bfdb2e96cf5344fa0f361186d66f1e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000129.json",
+      "sha256": "a52d7f729f5f16d192b4b21ab235207ea633e536f18011c3f752b5a96cd983c8"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000130.json",
+      "sha256": "f92f5c0bbbd4ef3a689af8c6bd3c97e940297b5522ca4dcab8aadd6e9c6f5804"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000131.json",
+      "sha256": "64bb64612921aff61e983564aced7876b38594e5a8d3ef1f2d509176ad154e8a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000132.json",
+      "sha256": "5ba3f6976333b6f9e37b27fc25dc062b6a20b28e95fdc98b32625ddca46c19a5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000133.json",
+      "sha256": "925801ed0ee45d87269b58120728847615d530edb9a6cef2fa0e8a4dce6d8a5f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000134.json",
+      "sha256": "5d40244aecd8869c57c73b2ec6ea7c068965a885cdf7bd852128ff23f03647fa"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000135.json",
+      "sha256": "9d870593503adef9e7602cc02d6dc5edb2c1f1eb36256d36ae839542d20968a9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000136.json",
+      "sha256": "4dbfcfad0af821731ee37df9150e3df4ad3532b268dc92373ae6578601377fb0"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000137.json",
+      "sha256": "dfe1e281cc42b08141f42e21bb3ea72f96a0e4537864dae38195e8585623fe11"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000138.json",
+      "sha256": "8eb5deee93fbabf5fd4568b53811f4a66c6706f5eb15fcd2e731d9fd9f4b5315"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000139.json",
+      "sha256": "d6cc3a54153c3e2a8a4e13b5797403364ddd11f9dbeb4dc3faa7bc23eee34330"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000140.json",
+      "sha256": "42645367defc7472aab67950545192b5f963dba30553b933ab303d78fa6dc32f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000141.json",
+      "sha256": "a13ddbb0c66679b608eb22d4edb24cfed68f5bc6d73f462ca6e677a593f4a7f9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000142.json",
+      "sha256": "ce462f07b024d6049c3b980389df88fea693f519eacd1338b6418a49ec77c234"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000143.json",
+      "sha256": "b0edf08151fb77c7e7de4fb06038df73d3a3bf0646f1958bb089b31f83f40002"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000144.json",
+      "sha256": "e3d7474666a21f218c89e3d6aa2626ff6d6d4aeae561d740573105c641d220b2"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000145.json",
+      "sha256": "8665f62127ff269a022b87cd15858af375bba52305274c8296d23eee956b34e9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000146.json",
+      "sha256": "5cac09647d9b9d71970537442f80bcbe4d41d18631fa783420ecefaa9e6302a4"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000147.json",
+      "sha256": "96346d2ce6f92e947ccc17b0e9cf5510a2eaf4831b6a587e57893d73da21eaa8"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000148.json",
+      "sha256": "b2e783178f399fba63d1c9a8e680164bfc33229f441fc0f1ff216bff06bd0a76"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000149.json",
+      "sha256": "348ef2052fe0715cc2ed449430527ec8caa42ee18c6b88294f60ebc45c39c562"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000150.json",
+      "sha256": "bc96503964ab820d5837a9fba2f65303bbae95d2b0ab6e7027d5814bc3078c84"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000151.json",
+      "sha256": "498cba3b75b9a4cbd884299ea22bfa56bbf1576ea6b5029c97216c79e1690db6"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000152.json",
+      "sha256": "c6b1999b5e360e2fc9e1fae4f18810be7adda54b1e24922427af0bc1e3dd9f61"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000153.json",
+      "sha256": "a00c588a6e5ad7f6230e4fa6002744dc6109fb992e41216a43d7e936fb0a38fe"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000154.json",
+      "sha256": "80d0fd658caff39c0f528f2448c2992ed1ff967a5ff0b7151633c9d42e50921c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000155.json",
+      "sha256": "a0a55b93e012c6cbd362f5d2d3ef872c67a0bcb4b52ea1cb348497ecdaff238a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000156.json",
+      "sha256": "9d40a18480f1b5fdc4263e1c2f3938fa202ea65187a57d7b623e9033cb8b9be9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000157.json",
+      "sha256": "ca5fcdbafffac3138263d053cef115da8f2394393e2a4bc87cce4aff0cd29209"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000158.json",
+      "sha256": "e50013fb70d8c6d0709be9af4089eb9442f6a287b1f20cf96e1921ebbbb0afe3"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000159.json",
+      "sha256": "ff8c054203d8224471628ec9d5f03ae8cfd3a7876376a35001c03680d0d612ae"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000160.json",
+      "sha256": "66eae66f87a995197099974db180e94dbb6a4ae3bef2418bd532fc8f75de59ef"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000161.json",
+      "sha256": "c563894816a06a3954427a913ee0a2b6c0ebd411512101f357e69f5aa34f518b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000162.json",
+      "sha256": "8749d714a4543d08067d459936762041a919d11eb8240ebe9f61014efb461219"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000163.json",
+      "sha256": "0a823dce7b5cc6eea7e62964baad3dcaaee0a95587efc6e90fc685f6d556ff27"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000164.json",
+      "sha256": "df835775f45acc015650566a513da1cc1b5ffa97fc51e5c386408427fcba5ccb"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000165.json",
+      "sha256": "e3d37275a3295228988c09a748f7f1fa954facc016a8be399fe81a90d37e4827"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000166.json",
+      "sha256": "7670876d62be883780529b0292ae47d4f3b1bbbdb0e65290494a00d6f65e78cf"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000167.json",
+      "sha256": "0aed2856be0138365885a15bba4521ef7ab31aa1b2412be3e68c2557285adb42"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000168.json",
+      "sha256": "ab834a7d5042781c905fd31ca0e96ced83bed47aac9ca67f34414839a8a3fc89"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000169.json",
+      "sha256": "63cf8c6d1f4277144b8e4241148cc62be30a512149e43b4fb6b6a680d947657a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000170.json",
+      "sha256": "48a5a45093986a456ae1ffd04891c647b99b4439a89c9fb6899efe5668fa54ed"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000171.json",
+      "sha256": "046bb5e921c179ebf730107ee04ff26c2d6f8f2586a54a50debefd275d0a684b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000172.json",
+      "sha256": "cc0029054fc7b41f012b867743e9472be24c2379c544008de74c5594cc766ad8"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000173.json",
+      "sha256": "77e1d89633585607d4bed5bde08cfc8462cb35db414e10768a8eb69069e027c2"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000174.json",
+      "sha256": "41402d0e4e71f3bf4db866472ed6f0da227e325422d95d592b5c475d03cc32d0"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000175.json",
+      "sha256": "1ad3fc24bec3807d444c6c68f5eccb3e0e073e2e9cf8796a44223e65f876bc93"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000176.json",
+      "sha256": "08a98cc803e5faf5d463d79183b044d06cd87927b57c9f103e1d0289c1d3f0a4"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000177.json",
+      "sha256": "63a0dd0b0cf01fa37dfb7eff5e79513b10445287d420848cdb62f542feb1e0eb"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000178.json",
+      "sha256": "3868f721946a45879c498b22bb88e6cb255ee0e6a0e39f952667ca5e594e804b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000179.json",
+      "sha256": "82ae3b8178658f24a2cc8fa91746fcb4c9cb918380b084d56e2c1857b8e51197"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000180.json",
+      "sha256": "ccc7fb22296db3664fa76a540bc621c85c3468b5d9870f8c83223defea0722d6"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000181.json",
+      "sha256": "1f0b5006170b77003a25571a26e0684513c491f1c805a436e044094d3e8b4054"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000182.json",
+      "sha256": "47ef6972d7fd4d6cd2df8a4c58a62f066f253d10d74d4e00166d4d03a9740bf7"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000183.json",
+      "sha256": "c70c1a3c7b6a2f9791446ab7f21fa80d7f8a58661471f7450e33618619d23190"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000184.json",
+      "sha256": "87b76154614f03c1fb352f3981a150c216e0f5e81085d8f6db3d661376c66b4c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000185.json",
+      "sha256": "74885cc6231774fbe18aba987870d2d2ce7b6c2d0d1c2dc8e8fb6ea3f1eabd75"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000186.json",
+      "sha256": "0d321d4435eef2af2ef6eaf85b02685d58798414fb51f55004e098ccb3b03a9a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\persistent-voice-r1\\results\\S_R004S03C01\\vectors\\000187.json",
+      "sha256": "826567b692ccee7ebf8367ddf9bbe30165347b6d1ff32de90a94414bbdd68b65"
+    }
+  ],
+  "changes": [],
+  "clusterToOriginalAnonymousIdForDisplay": {
+    "1": 0,
+    "2": 3,
+    "3": 2,
+    "4": 1,
+    "5": 4
+  },
+  "predictedGroups": 5,
+  "vectorCount": 188,
+  "newNeuralCalls": 0,
+  "referencePassedToReconciliation": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 4756,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 56479744,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 23,
+    "startSample": 1959520,
+    "endSample": 2019840,
+    "text": "有些想要创业的一些大学生，因为他们没有钱。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      101895,
+      103945,
+      100388,
+      104901,
+      104422,
+      3837,
+      109449,
+      80443,
+      99428,
+      1773,
+      151645
+    ],
+    "rawDecoded": "有些想要创业的一些大学生，因为他们没有钱。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.261999000009382,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 60320,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 377,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "1770eb7324bb8b7685654f4a71eb262050264fc6136d6f6065c0828715557c9e"
+}

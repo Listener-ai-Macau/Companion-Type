@@ -1,0 +1,759 @@
+{
+  "state": "EXACT_UNCHANGED_AUDIO_MODEL_GENERATION_NODES_REBOUND_WITH_LINEAGE",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000001-root.json",
+      "sourceSha256": "bbcb6ebb40f4f58e6b7f88a04e5ec8448d0ce0776d31d0ca692491ce59847811",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000005-root.json",
+      "targetSha256": "58f19476000956589b16048d4a311833a05a88183ee5ac521c406f11f32fb8a3",
+      "rawSha256": "3b8cc4e22f3c4bb74007c589335203f6dc5e0b002592653bd284875331505c93",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 1,
+      "newIndex": 5
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000002-root.json",
+      "sourceSha256": "8de82bef779e4a6f2e2c163f95020e80310886b3f1309351549be6ec56c9c45d",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000006-root.json",
+      "targetSha256": "f5b0f397240728f8171da22c642ca2444daba3616137015293f8551822cb3472",
+      "rawSha256": "6db291bbe0450ae872c3db7270b6e593abbfbcc354847b859e9e767df6e87419",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 2,
+      "newIndex": 6
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000003-root.json",
+      "sourceSha256": "303b1fafe87faff6aa47bfcb4184e63dfa7f9a4e1cd8e2d27d92aec1632228b0",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000007-root.json",
+      "targetSha256": "8fa55a0aafcc9c2cd48df87bd1ab8086db5d8f9b61aa952ff6a2059c9af98cc0",
+      "rawSha256": "40cbb2382780a2df3beb2cff2274ab40625cd439c918a9e9f224a2ee7600646b",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 3,
+      "newIndex": 7
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000004-root.json",
+      "sourceSha256": "92534973d91031a1936739fee9a7100c2875df92fe257945660976e8bb988124",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000008-root.json",
+      "targetSha256": "b5a678cd3a482ca9bddddb92b7857df5f45f6b83416cbf152b43a408ebb98c7b",
+      "rawSha256": "10419c6126f71820d8c2ac90b03613042e4cd64dd6f14200e5d68c4584eeed73",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 4,
+      "newIndex": 8
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000005-root.json",
+      "sourceSha256": "27684798975f970ee27292f91150846aa38d90ce8a1cf95f5e39b46ca113c646",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000009-root.json",
+      "targetSha256": "b2bbb93016042fdbfe3c2a63744a4c481c72242c73b08492cdacc825284aee54",
+      "rawSha256": "c247f8e0eb595ff939d0ba885a113e751f34da4a46a39406f87d10acdc455daa",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 5,
+      "newIndex": 9
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000006-root.json",
+      "sourceSha256": "1afcc87064a5009df6c6c7298501d73f42d0f3a97baf91e4d3119900512ad4b9",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000010-root.json",
+      "targetSha256": "52bbbd9d19a92ac81a152094d5e9215116ac49b7f99a28d54b3ed0ace1f13300",
+      "rawSha256": "64cfbe29941196fa4d290026193705c189786d31cfb1d2aeece008f863c1eddb",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 6,
+      "newIndex": 10
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000007-root.json",
+      "sourceSha256": "6a78847f956a1ea688c0d10ad95a49857fcdb70248ec2359553ce09f1495d1d0",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000011-root.json",
+      "targetSha256": "10ec309de17f400f2a741ef07cb73ee6c3f7baef5bb7212e87344efe770c6854",
+      "rawSha256": "fa7610ab6e515d9f653683aaf53e3b2a534b5e78a3e3a65bc3e1729f93b5d4c2",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 7,
+      "newIndex": 11
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000008-root.json",
+      "sourceSha256": "a06937f1946ec1b7f621c6a024c8bfa3f50f7bfd3766f3ce117a53f6f518aaa6",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000012-root.json",
+      "targetSha256": "c2e9fdbef5afc857a94ee44bef63a10d76236918d69f1f55d5328cf7a241e959",
+      "rawSha256": "7aa361ae8178d95afe01cae3bda913cd40b59a7f0ce4e2cb463ee761475c41a4",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 8,
+      "newIndex": 12
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000010-root.json",
+      "sourceSha256": "86320d89ef6916211f349cd22a32f33d3b0bf0d3e7d9ed01fa889ddd45bce85e",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000015-root.json",
+      "targetSha256": "3ca3e62034e550dcec1e65a16148130676c8ccdac43fa9985ff6a8ef04c28585",
+      "rawSha256": "34001da54f8aa9c5d9ce500be5c02e6b3e2f36391d316c7b966048ffaf25f948",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 10,
+      "newIndex": 15
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000011-root.json",
+      "sourceSha256": "d921ff5c6b30b8c957b878bf277c16301e8bd2e91a1b541adf5979bfce0677e8",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000016-root.json",
+      "targetSha256": "0c5bc1857e852da8047f42095ff82596d0a065a70bdf4d208b214c51dd0a92a9",
+      "rawSha256": "91196ac9cc7025d01029ec998acfa2e0259ff9400cc4f2b00b7337ecfc78f4f0",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 11,
+      "newIndex": 16
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000012-root.json",
+      "sourceSha256": "911df97344fc3fe7e594c134af1e7c45d26d7466cb321ff6f6eb8670e53e28c6",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000017-root.json",
+      "targetSha256": "56e3bb497fe3d6c49db6dac9aee806d86e242e0b2dcde79b694787e96d1caed4",
+      "rawSha256": "414450fc256d0655c1b503934776c9a3583a14764dc62ed03dc87d4b09363b4d",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 12,
+      "newIndex": 17
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000013-root.json",
+      "sourceSha256": "145f5914db659b04b06232a1599cdf26ee5f38e92a792e7d90142cd175051481",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000018-root.json",
+      "targetSha256": "e5453e7d9690dc90a74c215ddf65c8178fb4e880dd2c13e3baff5dc9dff7f2b1",
+      "rawSha256": "86a937579bdb97a3140e532c93cf11e58c41a5f39992848df59d53839b32f61c",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 13,
+      "newIndex": 18
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000014-root.json",
+      "sourceSha256": "a0c932c4aa284a5c5584e89d1ffcab4156475517a02dc1b1c7aaf7ede0963fa0",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000019-root.json",
+      "targetSha256": "44fd58798ce92e0f3689ebaf7122d46979f7a995ba5c666e446618ca512966b0",
+      "rawSha256": "e354cb4fc8521a49b06e03397af9eae23fced9586c265156f0df645de8eddb93",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 14,
+      "newIndex": 19
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000015-root.json",
+      "sourceSha256": "98d6157b275bdd80510822c5d37cb722f6a053a301121d83f664d1f16721d27b",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000020-root.json",
+      "targetSha256": "7fb1ceae9abd08813af01485d202e2d49894a852a9804207e2e8bb9da4446bce",
+      "rawSha256": "54107966355e19e465c4d13ce6b2f5c55d65a9d01b8005a9d846785ecbcd80fb",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 15,
+      "newIndex": 20
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000016-root.json",
+      "sourceSha256": "a45d61a330ab4c13ca60bfff64282ff97a0ab81be0bd2ec44d4d618af3a484a1",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000021-root.json",
+      "targetSha256": "bf8a85da89488e1541a6a53ebf4afcbe577b9d4d9de13e124c89dd9728ce0572",
+      "rawSha256": "cee8b214747706b1786a8f52f033031c5e198fe418436a92d007edd53a950b72",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 16,
+      "newIndex": 21
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000017-root.json",
+      "sourceSha256": "9a780183600262a40e0be58884bad1ed68370416d5c4e47dbcf93ff8bf48ccf4",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000022-root.json",
+      "targetSha256": "93c82535074ece2299506d7e3ba71bcd7f839235b6a5f6b60695f5a4c83d3482",
+      "rawSha256": "ed87f79a0be84ff16f024c4e7a09aa21a68d49458049ebd9f9ada0bbcbd099f2",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 17,
+      "newIndex": 22
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000018-root.json",
+      "sourceSha256": "29482167912e474a68a25d34eb9f79325beafd5405e450a6b78497c0de4bb400",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000023-root.json",
+      "targetSha256": "9a91c0d7cf9e4ca3aa96df9f870750fa3eb293471db14df6b93e9537028206c4",
+      "rawSha256": "76a7e0905e52bdfa9eaa9c2bf675ba89b52d83653158a128d694803322fc8cae",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 18,
+      "newIndex": 23
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000019-root.json",
+      "sourceSha256": "e09d907c76da812128c973262303fddb2d86b6644cf308688166a014c90a9241",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000024-root.json",
+      "targetSha256": "c24f044ade0b51e6881e6087c2fde04f5b3b0c0cfede261e7f878611fd93a9c7",
+      "rawSha256": "d660bed9d79f095fd459b5aa209111002e046fcb24bc4fcd42a9808aaa707960",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 19,
+      "newIndex": 24
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000020-root.json",
+      "sourceSha256": "7bde3f31ba308059f4a4dd6ae83158046a2773aacd1a34102393c60c45634d1e",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000025-root.json",
+      "targetSha256": "2607774a02600dac8f4891df24a2bfe506bd87f25ee2d105af953824ea8dfc7e",
+      "rawSha256": "2c92650f43cef53d9c6a9f2eab60c569f91ada994c0671c2ed65ec5531e27f44",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 20,
+      "newIndex": 25
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000021-root.json",
+      "sourceSha256": "d76cb7b4a709b593e05dafce5d554b92246fd9cc3fb462066984826ec0476769",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000026-root.json",
+      "targetSha256": "5c31ddd84f4ca1520bb4e3471ac2fcc0e743344da1b58082f43220571236fd60",
+      "rawSha256": "a51882344de4351870d956f72d788579870db2baaabdfcdfc263c718db6cc3d7",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 21,
+      "newIndex": 26
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000022-root.json",
+      "sourceSha256": "4e3e1b2a99e36b4abe40eb4e01d88a87b7c2ef6c55aac471cb5518d835556d66",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000027-root.json",
+      "targetSha256": "73a4d0de90a44f35bc6e69d6c39c81340004d2420d14d7a7a7e3f59e73a9096e",
+      "rawSha256": "e0a026b93e09271c0711877bcb9bb92e66078180b49742be9b707c56c81fe42c",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 22,
+      "newIndex": 27
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000023-root.json",
+      "sourceSha256": "222d47e82dbaca4b21b6dc709f411cf046a5e77cdf72476ccc3d53888f719997",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000028-root.json",
+      "targetSha256": "baed37eda86a4ec8ea80c0c76ac3e2243f4aedb545ec8107c91484f89a3b9972",
+      "rawSha256": "5e0b3b27dbd64a13c94a4a172c95264fd48dc030b45eaa6009eab356a6878b23",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 23,
+      "newIndex": 28
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000024-root.json",
+      "sourceSha256": "fe09111d2423b8d32aa2b6f9d8f4446c38b1dba1063069c55048d4cff3400c24",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000029-root.json",
+      "targetSha256": "8e425d1a73836d98394cd517619c5207f058236e093a4f26bab39d8b3557080b",
+      "rawSha256": "23b8375af4d0a74e0d29c1920b07becea7a9942a4221be89bd6d1e981054563d",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 24,
+      "newIndex": 29
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000025-root.json",
+      "sourceSha256": "25bda9b4e4b400924d339c845a02f00c6bc55fb8cf9d3c4e64d10face406f547",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000030-root.json",
+      "targetSha256": "9d9f43a3c259967afc2bf0e505cdc646127d889df9851c7a01f81f13e2436b54",
+      "rawSha256": "91e354853dae2aa930bf90030c773d24ef44b69ceb1f04f3f1cc84bc3a8c6cde",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 25,
+      "newIndex": 30
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000026-root.json",
+      "sourceSha256": "aeadca8ca939ec4a399c3db0e6fa1ec56b3a958cc500b0463d0ba71914865258",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000031-root.json",
+      "targetSha256": "2a134978335b08c177a5541d924dfa576af298fa16f0e3104b92ee483627cd6a",
+      "rawSha256": "47b7fb11287a4d353b39af1d62fb0b99fb8517bfb41e4f772943278af84f45da",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 26,
+      "newIndex": 31
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000028-root.json",
+      "sourceSha256": "ee0a4e97a242293dd4f13b1690f005a6ce94f8c02e6fb1489729c3d8092cdf33",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000034-root.json",
+      "targetSha256": "420a026533754d460465f05bc0a7a6529c1e9f3ae24afe642ed6a4c1b4de583a",
+      "rawSha256": "981cc26c96909fe8992ed6549d938d18f18c5307477ba896b1f3ff50c98ab823",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 28,
+      "newIndex": 34
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000029-root.json",
+      "sourceSha256": "6ee4ecc025c2027a033e979e2946e5c1c955d86e380ec74e6e9d842c55ecd4a5",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000035-root.json",
+      "targetSha256": "e410b5372ec76957771cd4286f87c47a2f3d8a0763dbdaae04d4bcb250ea6d03",
+      "rawSha256": "ffee5cf62a6e38ab90a4943ad6e4cc1417d992fef5872c070c0544f135a9d30f",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 29,
+      "newIndex": 35
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000030-root.json",
+      "sourceSha256": "92441c3da53de1cd347ad93cc4fb097bec9089f801a38e081abc87a6b5860b26",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000036-root.json",
+      "targetSha256": "73930dfabd81bad7a7e7583ec95083c7c51268d7ead6b98c41dab76a02389ead",
+      "rawSha256": "6e5a860e531fe9d5c6ed19a7a582eb2c2b75986cb61673597a2f455dc57c4567",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 30,
+      "newIndex": 36
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000031-root.json",
+      "sourceSha256": "64dbc91c24dac73e4cf7418b9dd6813f5c5d4849170243c35347bd1f509c82b9",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000037-root.json",
+      "targetSha256": "f6afb95c3258666565bc7b081c59a5f638b7a0b76be070fe4b221698d998dc90",
+      "rawSha256": "ac15734cc0a6a21cff920590edb531f77d8df2798170e431ff1c8adfc7ac51b6",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 31,
+      "newIndex": 37
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000032-root.json",
+      "sourceSha256": "a2173eeca5d3f3e6302d4f0ebb381b819a5eec5d1e37f1b5a06f5d08d60980a8",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000038-root.json",
+      "targetSha256": "480b56423b6f82bad7bbb6222d5333a9d9590cf87bbc42b92ad774222d4629d4",
+      "rawSha256": "cd546b7a85636b16a12f1233de973b6e87d49e669025900463fd8b31bb524678",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 32,
+      "newIndex": 38
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000033-root.json",
+      "sourceSha256": "06a290dff7bfaf6f575f0739693895ecd0ea9756b6039f1b86bd578ef9e1c740",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000039-root.json",
+      "targetSha256": "cea11b5611be1725f5a0f812ee4f4c025e1678dfdea4c098e71cca3c28c5188e",
+      "rawSha256": "b7f65283dfa942b93c2ac4f85fb274a5716c99b522a3849d95f4aa600676a942",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 33,
+      "newIndex": 39
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000034-root.json",
+      "sourceSha256": "bf5fed2fe3ff31bf35a0a28c737a425cf2bdd9b559b9e805f487c7af1467ddf3",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000040-root.json",
+      "targetSha256": "fbad2c653b01f282a186babcf7d1c5c10a1a5de3182f1bfd6181c2c577c48ab7",
+      "rawSha256": "145851088044acfeebfe82e4073dbacc69ecdd26dee0de786288d15c91a00d15",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 34,
+      "newIndex": 40
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000035-root.json",
+      "sourceSha256": "0784df4fcbd2b4875b36346858c5442940e6c9550217d2da26c47eea85414bca",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000041-root.json",
+      "targetSha256": "fd1dbb2eeb8d11ec8c8e29e5914ee60aad507f5bbb581b6c9ade12fb0120ffec",
+      "rawSha256": "67364ae174959a3d00b20c63d82f9716363305d57da148d9dd4b8a24cb96500a",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 35,
+      "newIndex": 41
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000036-root.json",
+      "sourceSha256": "2bbc8c1a9e04c3f44c1ce2a5508c03a62aaa9c93c87365dfc4c0572e9e7790e4",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000042-root.json",
+      "targetSha256": "b117f7807a949b6c22a5113980df3a9513f9ce06dce5eb134dab9631c72b95d3",
+      "rawSha256": "9413b009798336a19f321ec17cf8d6ea51899809789fc038dcab7d9542d9692d",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 36,
+      "newIndex": 42
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000037-root.json",
+      "sourceSha256": "8d753a4e38b6aefaf50ee5d1b82cbd2d943bbfc3e73a25453dc11f2259945591",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000043-root.json",
+      "targetSha256": "d0d91b7a697aecf3c1cd7c296a09a6f17bcf2b905275b171a877fda99a39ced8",
+      "rawSha256": "0e309812414f08f261d725d06bee135a7b6e03b253c07c5ed9a6b6302796067a",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 37,
+      "newIndex": 43
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000038-root.json",
+      "sourceSha256": "e770f37821ff6f3a60aae2ce257bbd2f85e3352a4258bcc73bc2e7b3e60d02d6",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000044-root.json",
+      "targetSha256": "88dd91f754ca6a6fba999819b2aa0dd9e8f1078ab92498d625582e455c4020db",
+      "rawSha256": "07cef7158ed6b4f2d04db0fe7da618644babde5b35af57ab18db2a2b5d9a0468",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 38,
+      "newIndex": 44
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000039-root.json",
+      "sourceSha256": "22ecbf23be2a9e13fd229a98ba3a9769f19fbda27203b6f6df894fb2976a81f0",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000045-root.json",
+      "targetSha256": "958e36e2607c865798897d20a36638e97c6c6d1970febb4451825190eda8a3e7",
+      "rawSha256": "61c571301c5ea25470deef35f30050fb3ca4214801a2d72589ae038ae3504fa9",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 39,
+      "newIndex": 45
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000040-root.json",
+      "sourceSha256": "468c6820096616073b655745c4549f8f7616a1f83e674d712d121867df8152c1",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000046-root.json",
+      "targetSha256": "63aaf7d207c972e48f4da915650ee121c7057d123b66638473b658b8694f436c",
+      "rawSha256": "5f3b15d7e5405cd5f050f053eda8e23c3a6ffdd54a879c097c990f58be032147",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 40,
+      "newIndex": 46
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000041-root.json",
+      "sourceSha256": "f1a10493ed3803ff93dd49082487a9f5d9395641e3a6859a5f49d13197931052",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000047-root.json",
+      "targetSha256": "60d8c8c725c0cf0ecb7f89d1eb53fbfea3df318c54a9cc15c85f334196ea50c5",
+      "rawSha256": "a358fa7471d84b42f57a3dcb7d08068cd5988279770a95dbcf53efa865ca159e",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 41,
+      "newIndex": 47
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000042-root.json",
+      "sourceSha256": "fdec839445b607fccec27a376d5362f3d2a41c33d792e682f5b42993d69c0f6c",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000048-root.json",
+      "targetSha256": "df62f2f2f0fd41c888f3217aded3585a0f8e5b16adeca4d60c1da8eb0ddb5042",
+      "rawSha256": "5556913b7ef2888e3f764474c8c015a990fe0a7129fef18b99ca73ff395b837d",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 42,
+      "newIndex": 48
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000043-root.json",
+      "sourceSha256": "d60441270c71b6dc55c68936c015946f22c9594a2fbacbeda6a45735d5b05e38",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000049-root.json",
+      "targetSha256": "f779c3f609fca9887a0010da3e1edcd63d36f5a92ebae9b877803311ed338db1",
+      "rawSha256": "fa5b02ec31cbac05faa8b417550c67b6647582222a2b4e1c868d0180c75233b9",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 43,
+      "newIndex": 49
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000044-root.json",
+      "sourceSha256": "60ba3f476ddd6f20d32780db67a34328fcb3572dc9140c3c64e69f2379e31098",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000050-root.json",
+      "targetSha256": "461798140ca0b4fdb33d2211398741daec80a60d4295fec0ccf7278f2972e644",
+      "rawSha256": "6e2ac0ca3ffbd50d4f7704712415a9321486be02ea99eaec40ef6982edaf8a9e",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 44,
+      "newIndex": 50
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000045-root.json",
+      "sourceSha256": "3fe67a63c98e74656f16646e7beb56e2177944458e7bf94aa9834ff4360ebe25",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000051-root.json",
+      "targetSha256": "8ff5f37b7e28fed2e622da8a04135fdcc1ac7c8ee74c002eec6850ec528da3eb",
+      "rawSha256": "34899ea30b979328cba151a17e158960f8b279df843a11e59dad4d26d81f502b",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 45,
+      "newIndex": 51
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000046-root.json",
+      "sourceSha256": "c2f6c9fc07826209983695bbee993c853c85f1b9cd84e156db763ce40865adec",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000052-root.json",
+      "targetSha256": "82ebe779d9d22ae55f4ff52a5e48dce95f845c6a57567a6eb66aebaadc6d4643",
+      "rawSha256": "06df838ac058f7b553e0560c52efdcff4479992ee5cc1c9b8146281abcb4b4e6",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 46,
+      "newIndex": 52
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000048-root.json",
+      "sourceSha256": "0ba92c1837f913ce005a78b96604227ab8a9a53423a91560061eebe3317d8f47",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000055-root.json",
+      "targetSha256": "884671218d672128d22784f497ae3d696fbe43ddb52fc2e0bd4742c6105a5fd7",
+      "rawSha256": "46c30622c3dad6be711fc52038ccca65081a5ac8b3444554978e3a629b9b1af0",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 48,
+      "newIndex": 55
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000049-root.json",
+      "sourceSha256": "c32d247b558c0986ab05fcc235a341fe3c77de300b8b2adfff8c64a1637319e8",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000056-root.json",
+      "targetSha256": "699c1f3c03d44a5133f28007cc63f7fd93a63a552ce2d87843eddc711f56042d",
+      "rawSha256": "99c1a6e43bf690ecf8a96f7d5791ec9b033a15b4d45043a7a4b96a19c10431ad",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 49,
+      "newIndex": 56
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000050-root.json",
+      "sourceSha256": "d90d34b0f5b32e40ce37bb7b3daef4d9c320671fe77221e9261c7c0bd607f553",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000057-root.json",
+      "targetSha256": "b740ac9d3ce0fcd1769f424323b02236a2321d6f68cd37842e8c83cb4f057524",
+      "rawSha256": "a233f26b4fa5b205f381c169508d77d530e217b69c838987d077c54cb5090d7f",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 50,
+      "newIndex": 57
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000051-root.json",
+      "sourceSha256": "6877404e22bf4cbefec14db668c6de6eaad09cf7d1228f73b0ada7010ef8dcac",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000058-root.json",
+      "targetSha256": "603e893df435f04565e22ef4b7aaf2f269bf57634ddb18d925eaf4898487698e",
+      "rawSha256": "b94120fd157a1a443f7dd6fdcbf8493c320d2730c08f9e8d7b79f1c00748cf8c",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 51,
+      "newIndex": 58
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000052-root.json",
+      "sourceSha256": "d498a06e1edca269cb73f40d8763ad35e8b058f02e4b6053528a90e9680f0bbe",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000059-root.json",
+      "targetSha256": "5661b966eefdf6797a303a17688fc0c05d96bbfe20a9e007a5237b0e3ce36218",
+      "rawSha256": "58189889db6c86653f226f54e98f91d1fe45620e1fdeb13687c479cd937162d9",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 52,
+      "newIndex": 59
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000053-root.json",
+      "sourceSha256": "ebe2345b091d7a2810a851c931a3bc0052c55e41e8e8512a70fb194553e62af2",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000060-root.json",
+      "targetSha256": "5aac5c43f45acc3de178947deb96ea0e927c661c168e1eb591cbafdb588a8fe4",
+      "rawSha256": "7f262d9228daf2cc371957980ad1544b2b3ee88e3b29192bb42683e6ce0884f5",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 53,
+      "newIndex": 60
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000054-root.json",
+      "sourceSha256": "aa3f45a97dbdfea5016fe55645cfc9795c3ad2e916478c604b08f7e43192d759",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000061-root.json",
+      "targetSha256": "a40ee47330d470890c3b3833de5be3d37c637b455aa592b93fa04dca3a0f0881",
+      "rawSha256": "b85bb7c4025db2cc5508528fac37e0b5a64d97e339e295532513efdd48748b08",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 54,
+      "newIndex": 61
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000055-root.json",
+      "sourceSha256": "c26da4e437e0a6028b62b9f79a48f1d600a6645581b6955face2a732e9cbf858",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000062-root.json",
+      "targetSha256": "b0bd0a6609c1477f8f8041e7606f38b1f42b3c9960b79c3047903a01ab7b726e",
+      "rawSha256": "75cc9ef6c7d198792829c26ef1e39b06ddb39c02fd4fff730c371a427fb2b0b3",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 55,
+      "newIndex": 62
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000056-root.json",
+      "sourceSha256": "6752252a49f9ac1a1e89c0ca5bbbe85a6181677117d8057903c1f81da32059d9",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000063-root.json",
+      "targetSha256": "f82932c715b74cb9f5955c713e91fe3e17fafbf7b4cfb7db180a8d760a08012e",
+      "rawSha256": "57962a53e170cae7b315ba8944db802a9d258be8d1768b17eee04442a8bd1093",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 56,
+      "newIndex": 63
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000057-root.json",
+      "sourceSha256": "f76fe9fb3615380aed1404feb28e396c0c8ba5cbc6eecf809a7fc674bdaf5f23",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000064-root.json",
+      "targetSha256": "6063a543d4eb23643e72b78887ca84104180722669b4fefaa44ae82f2de9b84b",
+      "rawSha256": "968a142927ca41f9b712918f36d2b9e126afa51c83ce55a18cac9047333e2195",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 57,
+      "newIndex": 64
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000058-root.json",
+      "sourceSha256": "52355e9074e6520256734c5fe208f8e70ff8daaac06691d300b47876fa90c8fe",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000065-root.json",
+      "targetSha256": "14561c54dfc90e1d2b5864714b7ffb14b37a0c8333404b92b8debeaece300582",
+      "rawSha256": "998f2e986c0df4b7d5cf3347f39022cb8a57cbc081346cac140f1ad1065a2376",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 58,
+      "newIndex": 65
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000059-root.json",
+      "sourceSha256": "19c5f5e34218f8f25e25a6f8de60314767cc07f674855d42ae976c9c9af963a4",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000066-root.json",
+      "targetSha256": "b89697ad82f9d325142745a5a7bf341bf2e6f03229400a6c43d14d3deb531f74",
+      "rawSha256": "61eb64d88a6a567d9d42e9084c319821bd29ad5aa9963cfadd5b8a97548a0e84",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 59,
+      "newIndex": 66
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000060-root.json",
+      "sourceSha256": "ae3b53f604105b51c316e8799ab7bced3a38ca2aa75b58bc42e8eaacaee0fb8a",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000067-root.json",
+      "targetSha256": "85f325990b9d179b5fbc5d101c9474372d78af71e65344f852a55bce2352ca5d",
+      "rawSha256": "2d65723753a1f5cc9dcc4aa7cd1cdc53245559e414c1157aa783e8d4b0130f40",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 60,
+      "newIndex": 67
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000062-root.json",
+      "sourceSha256": "7553a371a2085ff5aaacb403b6b5d45f05134b0662d6cb8c77f67530746aabb0",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000070-root.json",
+      "targetSha256": "1bf1b4e7da8b10a747a77a82c12650f45f4718f332288a78f8b7d3f93fb3582a",
+      "rawSha256": "9950bb7b48bb4f8b5d0675363e64f1d9efc2bd69f466874b4c63d26d6a17af24",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 62,
+      "newIndex": 70
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000063-root.json",
+      "sourceSha256": "39da2313854399e7abc5e56928ac5aa7d0cfda883a9cb52772f8cd9710b36c7a",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000071-root.json",
+      "targetSha256": "71ce5c23f94243218094ac8255ad91328070281dc097beb11aeb1e53c9f435f0",
+      "rawSha256": "7ae8d7102050dba74952fdb0c750ed4f9594b757cf72d375b49aabf811f87ccc",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 63,
+      "newIndex": 71
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000064-root.json",
+      "sourceSha256": "24916c7c30ce9c7f930070a7689ad978476558b5b7e82e26128c75823d04c0ed",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000072-root.json",
+      "targetSha256": "16fe95ae5b1cb94ae0f1f58ac3b4a4f717780a0dda8a52afba291b76c087bcef",
+      "rawSha256": "7a7b612914698275855148125ecc2b059da62c84f1f874f242645ae5504a1ba3",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 64,
+      "newIndex": 72
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000065-root.json",
+      "sourceSha256": "349867a981319344c7d6e668bd33f7c1b9835a71ce4370df96a3b138a6fd0e10",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000073-root.json",
+      "targetSha256": "737066677ef86889cabe6bae948b13738cdbfc5fb34902fcdc4461e15bda36fb",
+      "rawSha256": "9326a279a6a3ba6452b147a74d356e7ee18bf659a3c5a7b8957fc0df3a42a682",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 65,
+      "newIndex": 73
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000066-root.json",
+      "sourceSha256": "971cee7c957b1e047817ac4573f555b03c4558ec785ae384fb854db4c1deb1a5",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000074-root.json",
+      "targetSha256": "d2a8212f6525de38683014846089014f1d7be5f4f64977b4784874b4d9f66db0",
+      "rawSha256": "eb5170280ff921d344e824a69b6b698957141657301ddd133d55639ca573f417",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 66,
+      "newIndex": 74
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000068-root.json",
+      "sourceSha256": "595331cc2d93dc4a1d4e5942229c98ec21b1fe4f1d07f1a9dc2e04438b1118db",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000077-root.json",
+      "targetSha256": "2894db237f54cc745c71c94f0078be8017f0e8589e487c9c1d7141e0556d5251",
+      "rawSha256": "6cb1ecfc43580efee2b919ba4d4a9ea22f74fc524067874fa2d06f05953e4a4a",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 68,
+      "newIndex": 77
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000069-root.json",
+      "sourceSha256": "af57ac9f0944fc60600471c249a88df88cfe6bd54ab7566b058adbe3d664cc50",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000078-root.json",
+      "targetSha256": "7ddfd437589b88cc6cb4a9be1347692d5db281b085f2dc82ebf2b6d764f45072",
+      "rawSha256": "c775162dbc9bfc570491fa8af687b45bacf9b46b8840e618ff5c304f3c88f6d2",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 69,
+      "newIndex": 78
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000070-root.json",
+      "sourceSha256": "340a15568a14948527f7f119132675bc3163b3435e621fa958656d57bec9707e",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000079-root.json",
+      "targetSha256": "a5a08df801b5ab1fa4cbdc8a11e89195ea7b330eec56c209f3ff9cfd1447e635",
+      "rawSha256": "e011e5bf8c283ff6a3d9658d088415a19e43348eea562b7a1f992ce9355277e6",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 70,
+      "newIndex": 79
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000071-root.json",
+      "sourceSha256": "c19771ddf0aa780e0397e555dfa3a36f53037bb2584de06b65024f8c64a6b0b0",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000080-root.json",
+      "targetSha256": "5c72a23c6d330895df526ef209ee7c29665bedd0602835ffa86755c77468ffa5",
+      "rawSha256": "677023244bbde566875452567b3ce26b34d7baf2a32b5a95c525f59a6a095385",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 71,
+      "newIndex": 80
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000072-root.json",
+      "sourceSha256": "1186c7f28a9919aa00754252c66b2fa65af97a04913475c8b6a82ab5b04596db",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000081-root.json",
+      "targetSha256": "4e848be07c78a14da76d6ac51656d3b87eb1d2475360a060872bc3a34b7a11e1",
+      "rawSha256": "bd006ade2cd40f7c85f07c15682c00d725f7449b48be00150627751506ced814",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 72,
+      "newIndex": 81
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000073-root.json",
+      "sourceSha256": "b679331588ec9bb78c8a379664df43a93277bf25998f331d8b14c160b0f948c8",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000082-root.json",
+      "targetSha256": "f2261fa8c6a9712e271d00733895d5d192bd9c645abe0d04d833040a45963f73",
+      "rawSha256": "a5149bb300466cd51b3549fe9bc23b880560a3a0abbb108085aa647b5ab43318",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 73,
+      "newIndex": 82
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000074-root.json",
+      "sourceSha256": "0f59fa0156e1f69b0d1d8bef7c83c9edae4c77e1ebc6c0d7ba8b81dbdb84e4b7",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000083-root.json",
+      "targetSha256": "f145ad5d3659087310c53da7c6bdfbec57e9ed1c7764e8c12eeaabb8bed4be75",
+      "rawSha256": "58a952448b04c46828aa686d958cc00ac3dfeec163acebaab1681370029cd18c",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 74,
+      "newIndex": 83
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000075-root.json",
+      "sourceSha256": "4f57ae1cdedca437ed1499f2a65c8d582984d783ab31465c92a510f33dcdc9e6",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000084-root.json",
+      "targetSha256": "c0ff880a33903da6789bbc7815617ede9c9267a084083d7ee33c0e9c361fbfbf",
+      "rawSha256": "5ed7a24913bd7802f83f589d68d6850f7e7c9cee2c3846c446ac8e1c5c70ecbe",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 75,
+      "newIndex": 84
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000076-root.json",
+      "sourceSha256": "f49c33da75d3717390b82fb801a8367d10af34432cc11efd13e3c3e474ad073e",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000085-root.json",
+      "targetSha256": "8803d9cf703e29e96b549d620ec010332160100cd0ca7a3a96bf5a7f76796bf9",
+      "rawSha256": "7be1f0cc9d15fef9ec59f51fa6a9d2c61530795877cd4bf2a6383144d4086484",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 76,
+      "newIndex": 85
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000077-root.json",
+      "sourceSha256": "b9e0f87c2190bb4c219028a40418cfacdfab9010ffe9a5357707ac85971be53a",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000086-root.json",
+      "targetSha256": "472df1599639b1459b45007c48b49a88c1168db4192becd5c1d4555af25c4792",
+      "rawSha256": "c449dc7f48271a1fa448bc159c5f896564e30201a0fd37cecb9d24bb61eddba7",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 77,
+      "newIndex": 86
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000078-root.json",
+      "sourceSha256": "be9f782b184dcc1c01319a1c41b41aac1a754020f26c8c57ec6e22f19a26666c",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\S_R004S03C01\\nodes\\000087-root.json",
+      "targetSha256": "206b467830b2169a23fd7b2c84c0d9597b6b62f75748875fec71e31e2da251a7",
+      "rawSha256": "762e4b74674d10c77ccd54c2f72eff949e401809eb12b1327c85103b2b221f49",
+      "meeting": "S_R004S03C01",
+      "oldIndex": 78,
+      "newIndex": 87
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\qwen\\tasks\\ordinary-qwen\\control\\full\\transcripts\\recording-8928600b2cc089ed\\nodes\\000050-root.json",
+      "sourceSha256": "8ba8a81f8e8409b5aca7f87fdbaaa38eebc9857ecd468cd964967b11578e732e",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\20200623_S_R001S07C01\\nodes\\000286-root.json",
+      "targetSha256": "8499a7b3d0ac054eeb60119c22cf3ed901964a17d4f0371ea5502e78f9d1db0c",
+      "rawSha256": "40c68b37698af2935691a8b3a9fde47ad53655a6da42c5490c3045a7b35e435c",
+      "meeting": "20200623_S_R001S07C01",
+      "oldIndex": 50,
+      "newIndex": 286
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\qwen\\tasks\\ordinary-qwen\\control\\full\\transcripts\\recording-8928600b2cc089ed\\nodes\\000067-root.json",
+      "sourceSha256": "a228819562f83c33b20da420027a9e826224f43e962afba28b58cb7684cb33d5",
+      "target": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\predicted-turn-asr-r1\\full\\transcripts\\20200623_S_R001S07C01\\nodes\\000369-root.json",
+      "targetSha256": "1579ce1e58089aba76ace25e8b46be4947add1a595a7179ef6b50160ce11c8ff",
+      "rawSha256": "47dbbda6e3b3564f2491397a3c48e509cfcd41a6445700a3ac3aaa0f8a057339",
+      "meeting": "20200623_S_R001S07C01",
+      "oldIndex": 67,
+      "newIndex": 369
+    }
+  ],
+  "newNeuralCalls": 0,
+  "changedIntervalsReused": 0,
+  "oldFailureNodesPreserved": true,
+  "qualityQualified": false
+}

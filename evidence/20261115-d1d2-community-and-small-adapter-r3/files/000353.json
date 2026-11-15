@@ -1,0 +1,43 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 336,
+    "startSample": 29051679,
+    "endSample": 29114719,
+    "text": "要填，呃，亲戚，呃，直系亲属。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      30534,
+      68756,
+      3837,
+      119108,
+      3837,
+      108472,
+      3837,
+      119108,
+      3837,
+      73145,
+      38176,
+      111956,
+      1773,
+      151645
+    ],
+    "rawDecoded": "要填，呃，亲戚，呃，直系亲属。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.761341600009473,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 63040,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 394,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "b35e9553a55babd848aec050241b1bd2d0ccc507bf93d1b63e72347ed368ad76"
+}

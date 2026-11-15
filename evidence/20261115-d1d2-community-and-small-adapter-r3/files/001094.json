@@ -1,0 +1,22 @@
+{
+  "state": "PASS_ACTUAL_ALL65536_PCM16_VALUES_PRESERVED_AFTER_IMPORT_FIX",
+  "results": [
+    {
+      "candidate": "before",
+      "sourceFrames": 65536,
+      "resultFrames": 65536,
+      "exactPcm": false,
+      "changedBytes": 65790,
+      "pcmSha256": "2847fba803d134e96184fc7fea69276838a3c7571b0242be0a1b20ace7435b7c"
+    },
+    {
+      "candidate": "after",
+      "sourceFrames": 65536,
+      "resultFrames": 65536,
+      "exactPcm": true,
+      "changedBytes": 0,
+      "pcmSha256": "697df5e3231fd569f25e5826e4aab08fe4526bb6730a7489aabeb4708e6efe5d"
+    }
+  ],
+  "scope": "Format/cache integrity technical probe; no speech or quality inference"
+}

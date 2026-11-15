@@ -1,0 +1,46 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 76,
+    "startSample": 32291519,
+    "endSample": 32414439,
+    "text": "其实大家说的都不错，呃，但是总体来说呀，呃。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      101045,
+      99466,
+      36587,
+      9370,
+      100486,
+      28726,
+      3837,
+      119108,
+      3837,
+      100131,
+      102198,
+      99883,
+      104256,
+      3837,
+      119108,
+      1773,
+      151645
+    ],
+    "rawDecoded": "其实大家说的都不错，呃，但是总体来说呀，呃。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 3.5356237000087276,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 122920,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 768,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "0687a33e1fbf258c8b2b16a3096a12c031617064941d1b9136d348d080379e4d"
+}

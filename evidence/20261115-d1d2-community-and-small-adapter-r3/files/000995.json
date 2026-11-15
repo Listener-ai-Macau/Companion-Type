@@ -1,0 +1,11 @@
+{
+  "state": "PASS_REAL_COMPLETE_TRAIN_UTTERANCE_MASKED_LOSS_AND_FINITE_ADAPTER_GRADIENTS",
+  "trainingId": "20200707_L_R001S08C01-000",
+  "loss": 3.8284518718719482,
+  "nonzeroGradientTensors": 56,
+  "optimizerStepPerformedForProof": false,
+  "frozenParameterGradsAbsent": true,
+  "maskedPrefixTokens": 61,
+  "supervisedTargetTokens": 8,
+  "originalTextSha256": "5bac416c03cb1ecc99a1fe1b780f906499f75f4226036cd2a7a92bf0e8523d93"
+}

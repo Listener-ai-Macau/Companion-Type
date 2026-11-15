@@ -1,0 +1,53 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 299,
+    "startSample": 26119000,
+    "endSample": 26240159,
+    "text": "这只是后边儿呢，后边儿的话，对不起，你自己都不给你自己台阶下了，是吧？",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      114014,
+      33447,
+      99319,
+      99261,
+      101036,
+      3837,
+      33447,
+      99319,
+      99261,
+      100363,
+      3837,
+      109024,
+      3837,
+      107828,
+      100486,
+      104314,
+      99283,
+      110911,
+      104853,
+      3837,
+      20412,
+      100003,
+      11319,
+      151645
+    ],
+    "rawDecoded": "这只是后边儿呢，后边儿的话，对不起，你自己都不给你自己台阶下了，是吧？<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.878375399974175,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 121159,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 757,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "02a5f9844146e6571c97ad47d1a86dbfa7b091b3840e12fbe8c85c5fc7769f3a"
+}

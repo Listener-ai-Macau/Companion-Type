@@ -1,0 +1,44 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 4,
+    "startSample": 413760,
+    "endSample": 476564,
+    "text": "行，好的，今天把各位叫过来开一个咱那个。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      22243,
+      3837,
+      99692,
+      3837,
+      100644,
+      99360,
+      104280,
+      99882,
+      101180,
+      29767,
+      46944,
+      102177,
+      101095,
+      1773,
+      151645
+    ],
+    "rawDecoded": "行，好的，今天把各位叫过来开一个咱那个。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.953869199991459,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 62804,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 392,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "0f1828554871aa10a1dc8fd7a34ae5b6d5ceb92b432ec1d0ed51d9e9f722fcd1"
+}

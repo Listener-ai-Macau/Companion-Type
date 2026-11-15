@@ -1,0 +1,51 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 323,
+    "startSample": 27859839,
+    "endSample": 27984959,
+    "text": "嗯，还有咱们各公司，咱们这些这行业的贷款公司，咱们也都是信息的一些这个。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      106287,
+      3837,
+      100626,
+      104335,
+      99200,
+      73218,
+      3837,
+      104335,
+      100001,
+      43288,
+      104586,
+      101983,
+      73218,
+      3837,
+      104335,
+      74763,
+      100132,
+      27369,
+      104901,
+      99487,
+      1773,
+      151645
+    ],
+    "rawDecoded": "嗯，还有咱们各公司，咱们这些这行业的贷款公司，咱们也都是信息的一些这个。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.28736069999286,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 125120,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 782,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "a54860a153540e9317f358ad6da0593123812d099720e8c18331f1ae50f59f43"
+}

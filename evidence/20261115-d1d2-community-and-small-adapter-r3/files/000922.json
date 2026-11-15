@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 71,
+    "startSample": 30131808,
+    "endSample": 30562374,
+    "text": "主要呢是，陈列上呢主要依托乳制品区的冰柜作为展架，更好的向顾客们展示。然后最重要的一点呢，是我们要向这些顾客呢介绍牛奶的一些功效、一些价格，让他们感觉到就是今天的这个活动是比较实惠的，性价比也高，而且牛奶呢是。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 30131808,
+        "endSample": 30562374,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "cbda6ff91e0c167944a009b1645bfbae96aa7f146a9dde3e0afa8a0f03f75d6e"
+}

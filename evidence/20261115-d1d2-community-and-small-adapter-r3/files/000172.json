@@ -1,0 +1,51 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 155,
+    "startSample": 12852480,
+    "endSample": 13015200,
+    "text": "然后我们再呃进行呃进行调查，呃优步会进行调查，然后呃贷款受理。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      101889,
+      97639,
+      87256,
+      119108,
+      71817,
+      119108,
+      71817,
+      101923,
+      3837,
+      119108,
+      90172,
+      64682,
+      36993,
+      71817,
+      101923,
+      3837,
+      101889,
+      119108,
+      101983,
+      105731,
+      1773,
+      151645
+    ],
+    "rawDecoded": "然后我们再呃进行呃进行调查，呃优步会进行调查，然后呃贷款受理。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.4799163000134286,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 162720,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 1017,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "b5a262253e3d33496bdf5cc2c8a4048a983f793121b8e9c2d216db16b33157d4"
+}

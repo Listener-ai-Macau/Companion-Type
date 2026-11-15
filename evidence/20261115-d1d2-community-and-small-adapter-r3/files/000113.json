@@ -1,0 +1,41 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 96,
+    "startSample": 8516160,
+    "endSample": 8635040,
+    "text": "呃，上个月还算可以，不不是太多的。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      119108,
+      3837,
+      17447,
+      99943,
+      111675,
+      73670,
+      3837,
+      16530,
+      99520,
+      108821,
+      1773,
+      151645
+    ],
+    "rawDecoded": "呃，上个月还算可以，不不是太多的。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.359962099988479,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 118880,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 743,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "a8857962c667b8734ea0fb05a986e724e8f781c229a4eb9173f464103d00be3b"
+}

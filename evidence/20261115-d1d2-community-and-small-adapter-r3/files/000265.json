@@ -1,0 +1,38 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 248,
+    "startSample": 20634367,
+    "endSample": 20671520,
+    "text": "我们后期就是不打算再做了。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      97639,
+      104694,
+      99486,
+      16530,
+      104868,
+      87256,
+      104209,
+      1773,
+      151645
+    ],
+    "rawDecoded": "我们后期就是不打算再做了。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 1.9401226000045426,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 37153,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 232,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "b875738b8c5676d33b7a72169764aafa30fbd7e4607e51a8126a9266bf61657e"
+}

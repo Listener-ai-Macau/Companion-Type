@@ -1,0 +1,63 @@
+{
+  "at": "2026-11-15T10:10:36+08:00",
+  "corpus": "AISHELL-4",
+  "meeting": "S_R004S03C01",
+  "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6",
+  "audioSeconds": 2327.119,
+  "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+  "referenceKind": "textgrid_lexical",
+  "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+  "referenceSpeakers": 5,
+  "predictedSpeakers": 5,
+  "components": {
+    "total": 2074.389489999999,
+    "correct": 2007.10447151,
+    "confusion": 1.3699999690000002,
+    "false alarm": 12.69548335299988,
+    "missed detection": 65.91501852099925,
+    "diarization error rate": 0.03855616422497357
+  },
+  "perReferenceSpeakerForEvaluationOnly": {
+    "001-M": {
+      "referenceSeconds": 526.4244499999995,
+      "correctlyAttributedSeconds": 512.9966264029995,
+      "attributionRecall": 0.9744924013369819,
+      "matchedAnonymousGroup": "speaker_0"
+    },
+    "002-F": {
+      "referenceSeconds": 161.2375100000003,
+      "correctlyAttributedSeconds": 157.1193758840011,
+      "attributionRecall": 0.9744592054541205,
+      "matchedAnonymousGroup": "speaker_1"
+    },
+    "003-F": {
+      "referenceSeconds": 475.39315999999974,
+      "correctlyAttributedSeconds": 463.3858323720002,
+      "attributionRecall": 0.9747423214334856,
+      "matchedAnonymousGroup": "speaker_4"
+    },
+    "004-F": {
+      "referenceSeconds": 536.8083999999998,
+      "correctlyAttributedSeconds": 531.1539204499999,
+      "attributionRecall": 0.9894664845967389,
+      "matchedAnonymousGroup": "speaker_2"
+    },
+    "005-F": {
+      "referenceSeconds": 374.5259699999999,
+      "correctlyAttributedSeconds": 342.4487164009995,
+      "attributionRecall": 0.9143523916405571,
+      "matchedAnonymousGroup": "speaker_3"
+    }
+  },
+  "macroReferenceAttributionRecall": 0.9655025608923768,
+  "uncoveredReferenceSpeakers": [],
+  "shortReferenceSpans": {
+    "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+    "count": 8,
+    "referenceSeconds": 11.584090000000048,
+    "correctSeconds": 8.522690725000217,
+    "zeroCorrectSpans": 1
+  },
+  "rttmSha256": "eec7e3e10b7c0d540296f5207d5b8bf56f1a46f2563a5775fa3a07ca9db0aba2"
+}

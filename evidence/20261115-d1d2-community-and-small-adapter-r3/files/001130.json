@@ -1,0 +1,31 @@
+{
+  "state": "PASS_ACTUAL_TWO_MODES_REVIEWABLE_DRAFT_NO_PROVIDER_RETRY_AND_EXPORT_NOTICE",
+  "steps": [
+    {
+      "step": "minutes-offlineStore",
+      "exitCode": 0
+    },
+    {
+      "step": "minutes-onlineLive",
+      "exitCode": 0
+    },
+    {
+      "step": "reopen",
+      "exitCode": 0
+    }
+  ],
+  "qualityQualified": false,
+  "sessionId": "import-3c3ce53e1d5f4789a09fedada81d555e",
+  "sourceRangesPreserved": [
+    {
+      "endMs": 2109814,
+      "source": "本地识别待核对",
+      "startMs": 2100000
+    }
+  ],
+  "sourceOriginalUnchanged": true,
+  "sourceCloudUpload": false,
+  "originalUserLibraryChanged": false,
+  "binarySha256": "3b5c9991d3ad8685f9c7033fe3a4b88d3524e2b9743209f4761f5883a96ff129",
+  "exportSha256": "3451288ba771e03a51c46c961db5c7b4c8b131b287530087dbd49d5c1ac8dba9"
+}

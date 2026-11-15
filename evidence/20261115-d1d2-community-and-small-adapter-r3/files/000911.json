@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 60,
+    "startSample": 25109101,
+    "endSample": 25653071,
+    "text": "四桶洗衣液，我们可以赠赠一个那迷你洗衣机活动，这样的顾客，这样的顾客感觉是超值的。比如些那个在外在外上班的一些人员吧，洗哎，我我我有洗衣液，但是没有洗衣机，还得回家用手洗，这样的赠赠他个迷你洗衣机呢，最起码呢我小型的衣物啊都可以到时候也可以方便他的他方便他的呃洗涤，增加一些那个洗衣液的销售。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 25109101,
+        "endSample": 25653071,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "329094b97d74a05d09d95eddfbe1a34c39736276466c3fc868af0d1b4a7a99ab"
+}

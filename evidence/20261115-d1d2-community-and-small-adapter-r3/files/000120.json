@@ -1,0 +1,39 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 103,
+    "startSample": 9056800,
+    "endSample": 9108480,
+    "text": "那他们为什么不还款？有过了解吗？",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      99212,
+      99650,
+      111846,
+      110005,
+      11319,
+      107258,
+      99794,
+      101037,
+      11319,
+      151645
+    ],
+    "rawDecoded": "那他们为什么不还款？有过了解吗？<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.1854491000121925,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 51680,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 323,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "a0e249ce60fa2e0179df4ecf59bdabfbb9f903385acd247e051885299c0b7232"
+}

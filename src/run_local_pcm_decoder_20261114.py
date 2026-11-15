@@ -49,6 +49,8 @@ def run_one_decoder():
         save();print(json.dumps(record,ensure_ascii=False));return 2
     worker=Path(__file__).with_name('companion_local_qwen_worker_20261114.py')
     env={k:v for k,v in os.environ.items() if k not in ['CUDA_VISIBLE_DEVICES','ROCR_VISIBLE_DEVICES','HIP_VISIBLE_DEVICES','GPU_DEVICE_ORDINAL','PYTHONPATH']}
+    if os.environ.get('COMPANION_LOCAL_ARTIFACT_ROOT'):
+        env['PYTHONPATH']=str(Path(__file__).resolve().parent/'cache-audit-hook')
     env.update(HIP_VISIBLE_DEVICES=str(selected['ordinal']),OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='1')
     command=[str(GPU_PY),str(worker),'--session',str(session.root),'--protocol',str(BASE),
              '--inventory',str(args.inventory),'--run',str(args.run),'--follow-seconds',str(args.follow_seconds)]

@@ -1,0 +1,51 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 182,
+    "startSample": 15145744,
+    "endSample": 15273120,
+    "text": "嗯，到时候咱们这个要让销售和他这个多联系，把咱公司的一些这个产品。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      106287,
+      3837,
+      110625,
+      104335,
+      99487,
+      30534,
+      99258,
+      100352,
+      33108,
+      42411,
+      99487,
+      42140,
+      72064,
+      3837,
+      99360,
+      102177,
+      73218,
+      104901,
+      99487,
+      82700,
+      1773,
+      151645
+    ],
+    "rawDecoded": "嗯，到时候咱们这个要让销售和他这个多联系，把咱公司的一些这个产品。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.487463400000706,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 127376,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 796,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "9a201bee2ac2d27229c49764345ffd5a18b585466c84ca83fce3dab58dfba8a6"
+}

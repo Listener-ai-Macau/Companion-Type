@@ -1,0 +1,43 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 41,
+    "startSample": 3354720,
+    "endSample": 3427200,
+    "text": "手机号的使用时间越长，那么它的额度就会越高。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      75355,
+      9370,
+      37029,
+      20450,
+      99236,
+      45861,
+      3837,
+      100624,
+      104121,
+      108091,
+      103939,
+      108692,
+      1773,
+      151645
+    ],
+    "rawDecoded": "手机号的使用时间越长，那么它的额度就会越高。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.8691321999940556,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 72480,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 453,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "b3fa93a38845c5192b8a95d9afcc2b7c89257cdf0220fcb7abe510df3b5f9bcb"
+}

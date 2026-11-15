@@ -1,0 +1,31 @@
+{
+  "binarySha256": "3b5c9991d3ad8685f9c7033fe3a4b88d3524e2b9743209f4761f5883a96ff129",
+  "sourceBase": "d2773733b401f38d7cd77cbaf23499e70652bfd6",
+  "changedSourceFiles": {
+    "apps/windows/src-tauri/src/backend/external_command.rs": "3184cefc90f44183841fb118175f7b942255010cbf3ef6708e1b7fac374c468a",
+    "apps/windows/src-tauri/src/backend/external_command/windows.rs": "7da038f43867e493b95f129909f2d4580e9d141dd0660b4e87d45a4e6c392ca8",
+    "apps/windows/src-tauri/src/backend/import_audio.rs": "d57b0c5e6cd370d8e243b3862bf963372456b14744815ba7fe1a1247d12f455c",
+    "apps/windows/src-tauri/src/backend/live_asr.rs": "cd6b54f3f07e490ae9fdd85212b77afdfd74c4c2c1f490b5625c7ca9ffa90cfd",
+    "apps/windows/src-tauri/src/backend/meeting_processing_job.rs": "0c2e2f2b3f13d85265b228d86c2781e7ded6731369cbc57322e8de8f83444ff2",
+    "apps/windows/src-tauri/src/backend/minutes.rs": "2818cc77c1374b87ad1fd16889c690fbabee6d5a73ec8953d5dd92d1507edbfc",
+    "apps/windows/src-tauri/src/backend/mod.rs": "62d6188f3665a27d2734a75107e44dda2eed4c6c20937fcfe73502ad492c563c",
+    "apps/windows/src-tauri/src/backend/recording_wire/receiver/live.rs": "f026378ae9299d6a5b6f9b8b24a2cce49da418e2900e74159a6814ff4f898d09",
+    "apps/windows/src-tauri/src/backend/service_check.rs": "7f7f32af63cb94753750e37c193c4b0be200f5ee2ad69fa72c54cabf6bda57fb",
+    "apps/windows/src-tauri/src/backend/transcription.rs": "047c0097231f657270301bbae9d04fa56358cfd3ee99f84855dcee2cf05debe8",
+    "apps/windows/src-tauri/src/commands/segmented_online_live.rs": "348efd07b1605ad57812f271ca66a6a99c36b9c3db96a01088b1bda854e2d1b3",
+    "apps/windows/src-tauri/src/lib.rs": "98ba4266265dbcd1b5a5512aa565ed8a5e809fa03ad81ed224274e5c4c4791ee",
+    "packages/ui/src/CompanionDashboard.tsx": "335eb4ebfb9463a42c4b16e8ddf863e5ca9f249c594606d8aead1475fed7b7fb",
+    "packages/ui/src/CompanionRecordingReadiness.tsx": "b56454f97ad6c7d2df31f784ced4e162df79310430f7577edf1740b6b07aee56",
+    "packages/ui/src/CompanionSetup.tsx": "5a595558b0792a3973bd7ea300844d78958f6a7387cf54eeafa598d192c166c5",
+    "apps/windows/src-tauri/src/backend/minutes/source_review_notice.rs": "9cfe6298bada1ce7d5f396d678bf2f89f20d49f98470782bb72a7c2fa9a50906",
+    "apps/windows/src-tauri/src/backend/processing_power.rs": "940cec2a2ad1daa4de528e67addbecda0a0220dc8d45b07408bcbaec08f3cd6b",
+    "apps/windows/src-tauri/src/backend/transcription/local_meeting.rs": "a134dbe5490593d0774cf7d510a63d610e38410750adc84a1dbe6b6e6c4f7d1a",
+    "packages/ui/src/localAsr.ts": "a6b57656d761ffcf89a1a58acdf9a89408f2505fb1c72508680c212440bbc926"
+  },
+  "buildReceipt": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-native-build-r5\\result.json",
+  "modelPackage": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r5\\package.json",
+  "profile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r3\\profile",
+  "profileContainsOnlyOwnedPublicInput": true,
+  "installedAsDefault": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,50 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 15,
+    "startSample": 1478400,
+    "endSample": 1584320,
+    "text": "所以说，我们嗯给到的额度是，呃，从五万到三十万之间。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      109304,
+      3837,
+      97639,
+      106287,
+      89012,
+      26939,
+      9370,
+      108091,
+      20412,
+      3837,
+      119108,
+      3837,
+      45181,
+      75108,
+      31207,
+      26939,
+      105134,
+      31207,
+      101920,
+      1773,
+      151645
+    ],
+    "rawDecoded": "所以说，我们嗯给到的额度是，呃，从五万到三十万之间。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.077723900001729,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 105920,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 662,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "7a849db24419e21b2359fa9d5905e79a2c18b90eb6e1bb4fced835e81f562a81"
+}

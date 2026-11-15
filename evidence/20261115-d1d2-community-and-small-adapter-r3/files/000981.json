@@ -1,0 +1,8 @@
+{
+  "state": "FROZEN_BEFORE_ANY_ADAPTER_INFERENCE_OR_UPDATES",
+  "englishRule": "Candidate must preserve the baseline English output under the existing strict case/punctuation/whitespace normalization; do not claim whole-English-meeting qualification.",
+  "naturalMixedRule": "Candidate strict CER must not exceed this same4.03s natural reference baseline, no reference supplied to inference.",
+  "newOrdinaryEvalTraining": false,
+  "parameterSweepAllowed": false,
+  "naturalReferenceSha256": "23ae2d4a2362c36babd51126bb6ed5a90f95ceff14394a0c5deadf3e4322fab3"
+}

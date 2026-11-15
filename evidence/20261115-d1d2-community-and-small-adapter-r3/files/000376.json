@@ -1,0 +1,50 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 359,
+    "startSample": 31085919,
+    "endSample": 31184319,
+    "text": "专专业的，他是专业做这方面的，咱们这个负责领域就是这个十万、三十万。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      95411,
+      104715,
+      3837,
+      104878,
+      99878,
+      99190,
+      43288,
+      104481,
+      3837,
+      104335,
+      99487,
+      100668,
+      100650,
+      99486,
+      99487,
+      110860,
+      5373,
+      105134,
+      31207,
+      1773,
+      151645
+    ],
+    "rawDecoded": "专专业的，他是专业做这方面的，咱们这个负责领域就是这个十万、三十万。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.318379200005438,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 98400,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 615,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "5b2a30478341e7e5d5af5a215846e8daba33645211121fbd3cb67aac5d83bc5b"
+}

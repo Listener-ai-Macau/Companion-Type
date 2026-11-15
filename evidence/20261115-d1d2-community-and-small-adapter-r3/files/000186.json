@@ -1,0 +1,50 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 169,
+    "startSample": 14126560,
+    "endSample": 14244912,
+    "text": "然后盈利的多少，然后来，呃，确保一下他，看他能不能够定期的。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      101889,
+      102451,
+      9370,
+      100430,
+      3837,
+      101889,
+      36407,
+      3837,
+      119108,
+      3837,
+      103944,
+      100158,
+      42411,
+      3837,
+      111441,
+      105976,
+      99521,
+      104406,
+      9370,
+      1773,
+      151645
+    ],
+    "rawDecoded": "然后盈利的多少，然后来，呃，确保一下他，看他能不能够定期的。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.137773299997207,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 118352,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 739,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "cc48a5f6458622a46fd4cf6eaf1177012d324f41182c81120de2c29d3d60f4f4"
+}

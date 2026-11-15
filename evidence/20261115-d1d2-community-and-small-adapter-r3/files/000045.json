@@ -1,0 +1,38 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 28,
+    "startSample": 2286080,
+    "endSample": 2332800,
+    "text": "上太阳跑的嘛，麻烦。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      17447,
+      101281,
+      99803,
+      9370,
+      102455,
+      3837,
+      104969,
+      1773,
+      151645
+    ],
+    "rawDecoded": "上太阳跑的嘛，麻烦。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 1.9335444000025745,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 46720,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 292,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "e0184bac4dcfdcd822de59d7bbd255f04e1eb73e8fac9fd129d82b27b890e95f"
+}

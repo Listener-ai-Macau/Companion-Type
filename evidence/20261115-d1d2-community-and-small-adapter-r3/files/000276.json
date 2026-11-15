@@ -1,0 +1,49 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 259,
+    "startSample": 21684960,
+    "endSample": 21830400,
+    "text": "但是，嗯，可以考虑一下，因为，嗯，房地产这块贷款买房也是一个趋势。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      100131,
+      3837,
+      106287,
+      3837,
+      73670,
+      101118,
+      100158,
+      3837,
+      99519,
+      3837,
+      106287,
+      3837,
+      104021,
+      108162,
+      101983,
+      105860,
+      109381,
+      101226,
+      1773,
+      151645
+    ],
+    "rawDecoded": "但是，嗯，可以考虑一下，因为，嗯，房地产这块贷款买房也是一个趋势。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.079313299997011,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 145440,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 909,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "7fb4442a175f9c3c740119b64c0596de6109f7d09ec9fbfe973272ab4e0fc2aa"
+}

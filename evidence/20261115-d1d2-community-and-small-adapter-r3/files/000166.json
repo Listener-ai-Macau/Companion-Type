@@ -1,0 +1,51 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 149,
+    "startSample": 12270274,
+    "endSample": 12406400,
+    "text": "行，嗯，还有就是业务这这边儿，业务下个月咱们有什么比较大的客户吗？",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      22243,
+      3837,
+      106287,
+      3837,
+      100626,
+      99486,
+      103923,
+      43288,
+      106467,
+      99261,
+      3837,
+      103923,
+      16872,
+      99943,
+      104335,
+      104139,
+      99792,
+      99750,
+      100017,
+      101037,
+      11319,
+      151645
+    ],
+    "rawDecoded": "行，嗯，还有就是业务这这边儿，业务下个月咱们有什么比较大的客户吗？<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.340387400006875,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 136126,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 850,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "f39e8f2381c3c0dacfb73e0ee0a239e141b845e0bd8b768c3eac023c06f42897"
+}

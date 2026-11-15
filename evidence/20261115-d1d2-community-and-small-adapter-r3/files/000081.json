@@ -1,0 +1,43 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 64,
+    "startSample": 5231145,
+    "endSample": 5310400,
+    "text": "确保公司的，还会确保公司的呃贷款的安全，资产安全。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      103944,
+      104202,
+      3837,
+      104342,
+      103944,
+      104202,
+      119108,
+      101983,
+      106552,
+      3837,
+      99814,
+      99464,
+      1773,
+      151645
+    ],
+    "rawDecoded": "确保公司的，还会确保公司的呃贷款的安全，资产安全。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.772064599994337,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 79255,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 495,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "7e9e1bde0321f1b7a8877296ddd1571afe765baf5ea795d4e11fea9e54c4a9a7"
+}

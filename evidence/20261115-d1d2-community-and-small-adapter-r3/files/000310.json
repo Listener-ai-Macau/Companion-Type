@@ -1,0 +1,53 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 293,
+    "startSample": 25629146,
+    "endSample": 25747359,
+    "text": "这就等于是给他一个人员的压力，就是你你你不还钱，他是个什么？他赖人。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      105505,
+      49567,
+      101959,
+      104808,
+      46944,
+      99653,
+      107363,
+      3837,
+      99486,
+      56568,
+      56568,
+      107719,
+      97706,
+      99428,
+      3837,
+      42411,
+      104104,
+      99245,
+      11319,
+      42411,
+      100921,
+      17340,
+      1773,
+      151645
+    ],
+    "rawDecoded": "这就等于是给他一个人员的压力，就是你你你不还钱，他是个什么？他赖人。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.889748499990674,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 118213,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 738,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "7b1f3181fd0102a150b154710af5c44515315c96386282b878d44481252f572a"
+}

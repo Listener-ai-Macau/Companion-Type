@@ -46,6 +46,8 @@ for process in psutil.process_iter(['cmdline']):
     except (psutil.NoSuchProcess, psutil.AccessDenied):
         pass
 env = {k: v for k, v in os.environ.items() if k not in {'CUDA_VISIBLE_DEVICES', 'ROCR_VISIBLE_DEVICES', 'HIP_VISIBLE_DEVICES', 'GPU_DEVICE_ORDINAL', 'PYTHONPATH'}}
+if os.environ.get('COMPANION_LOCAL_ARTIFACT_ROOT'):
+    env['PYTHONPATH']=str(SRC/'cache-audit-hook')
 env.update(HIP_VISIBLE_DEVICES=str(gpu['ordinal']), OMP_NUM_THREADS='1', MKL_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1',
            HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1', TOKENIZERS_PARALLELISM='false')
 python = 'E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe'

@@ -1,0 +1,848 @@
+{
+  "at": "2026-11-15T10:48:53+08:00",
+  "state": "KEEP_FOR_COMPLETE_MEETING_EVALUATION_ONLY",
+  "protocolSha256": "032f9b35bc0a82b177ad85e833112cb45dee07001c272f24a6eaf5de49f97f45",
+  "adapterSha256": "2ff7a3c055cca6782d9094aa346af5bdb25c042581c6e8cb589210c5f15a448f",
+  "total": {
+    "referenceCharacters": 989,
+    "baselineEdits": 30,
+    "baselineCer": 0.030333670374115267,
+    "candidateEdits": 27,
+    "candidateCer": 0.027300303336703743
+  },
+  "byMeeting": {
+    "20200709_L_R002S01C01": {
+      "referenceCharacters": 533,
+      "baselineEdits": 13,
+      "candidateEdits": 11,
+      "baselineCer": 0.024390243902439025,
+      "candidateCer": 0.020637898686679174
+    },
+    "20200805_S_R001S01C01": {
+      "referenceCharacters": 456,
+      "baselineEdits": 17,
+      "candidateEdits": 16,
+      "baselineCer": 0.03728070175438596,
+      "candidateCer": 0.03508771929824561
+    }
+  },
+  "rows": [
+    {
+      "id": "20200709_L_R002S01C01-000",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 43,
+      "baseline": {
+        "edits": 2,
+        "cer": 0.046511627906976744,
+        "counts": {
+          "replace": 0,
+          "delete": 2,
+          "insert": 0
+        },
+        "rawText": "就是会会每天的话都会看一下车棚的情况，会定期会去检查，所以说目前的话还没有出现这种情况。"
+      },
+      "candidate": {
+        "edits": 2,
+        "cer": 0.046511627906976744,
+        "counts": {
+          "replace": 0,
+          "delete": 2,
+          "insert": 0
+        },
+        "rawText": "就是会会每天的话都会看一下车棚的情况，会定期会去检查，所以说目前的话还没有出现这种情况。"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-001",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 27,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "呃，目前的话，也就是对于保我们保安部后半年，目前的话就是这些。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "呃，目前的话，也就是对于保我们保安部后半年，目前的话就是这些。"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-002",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 9,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "零二四前台接待部门。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "零二四前台接待部门。"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-003",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 46,
+      "baseline": {
+        "edits": 2,
+        "cer": 0.043478260869565216,
+        "counts": {
+          "replace": 1,
+          "delete": 1,
+          "insert": 0
+        },
+        "rawText": "嗯，咱们就是咱们这儿前一段时间会一直下雨，然后咱们这边儿，我想问一下，咱们这边儿这个设施有没有受到？"
+      },
+      "candidate": {
+        "edits": 2,
+        "cer": 0.043478260869565216,
+        "counts": {
+          "replace": 1,
+          "delete": 1,
+          "insert": 0
+        },
+        "rawText": "嗯，咱们就是咱们这儿前一段时间会一直下雨，然后咱们这边儿，我想问一下，咱们这边儿这个设施有没有受到"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-004",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 52,
+      "baseline": {
+        "edits": 1,
+        "cer": 0.019230769230769232,
+        "counts": {
+          "replace": 0,
+          "delete": 1,
+          "insert": 0
+        },
+        "rawText": "就是了解自身会怎么样瘦身之类的东西，比方说会有，就是你这一段时间长胖是短时间长胖，还是以前就是很胖，需要慢慢减。"
+      },
+      "candidate": {
+        "edits": 1,
+        "cer": 0.019230769230769232,
+        "counts": {
+          "replace": 0,
+          "delete": 1,
+          "insert": 0
+        },
+        "rawText": "就是了解自身会怎么样瘦身之类的东西，比方说会有，就是你这一段时间长胖是短时间长胖，还是以前就是很胖需要慢慢减。"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-005",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 10,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "你这个都是一样的，是吧？"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "你这个都是一样的，是吧？"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-006",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 21,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "测量男生和女生的体脂率，一般男生的体脂率是在。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "测量男生和女生的体脂率，一般男生的体脂率是在"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-007",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 48,
+      "baseline": {
+        "edits": 2,
+        "cer": 0.041666666666666664,
+        "counts": {
+          "replace": 1,
+          "delete": 0,
+          "insert": 1
+        },
+        "rawText": "包括抹布，我们都要定期的更换。啊，洗不出来了，我们就扔了吧。因为本身我们就是一个非常清洁的，呃，让人看着就是愿意。"
+      },
+      "candidate": {
+        "edits": 1,
+        "cer": 0.020833333333333332,
+        "counts": {
+          "replace": 0,
+          "delete": 1,
+          "insert": 0
+        },
+        "rawText": "包括抹布，我们都要定期的更换，洗不出来了我们就扔了，因为本身我们就是一个非常清洁的，呃，让人看着就是愿意。"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-008",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 26,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "这一块儿，这一块儿是我想了解一下，咱们这一块儿是怎么做的？"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "这一块儿，这一块儿是我想了解一下，咱们这一块儿是怎么做的？"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-009",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 28,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "然后这些的话，必须对，就是会进行再再再一次进行一个统一的培训。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "然后这些的话，必须对，就是会进行再再再一次进行一个统一的培训。"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-010",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 44,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "消毒措施还是要做的，我们可以在奖励程度上给给予一定的奖励，因为确实比以前的工作量要加大，我们还。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "消毒措施还是要做的，我们可以在奖励程度上给给予一定的奖励，因为确实比以前的工作量要加大，我们还"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-011",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 52,
+      "baseline": {
+        "edits": 4,
+        "cer": 0.07692307692307693,
+        "counts": {
+          "replace": 2,
+          "delete": 1,
+          "insert": 1
+        },
+        "rawText": "咱们这个安全这一块肯定是要，肯定是不能放下了，因为，咱们最主要的就是安全，所以说要适当的要稍微加加一些保安的人员。"
+      },
+      "candidate": {
+        "edits": 4,
+        "cer": 0.07692307692307693,
+        "counts": {
+          "replace": 2,
+          "delete": 1,
+          "insert": 1
+        },
+        "rawText": "咱们这个安全这一块肯定是要，肯定是不能放下了，因为，咱们最主要的就是安全，所以说要适当的要稍微加加一些保安的人员。"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-012",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 29,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "嗯，首先我们是肯定会先让这个顾客了解一下，我们这个是十分优惠的。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "嗯，首先我们是肯定会先让这个顾客了解一下，我们这个是十分优惠的。"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-013",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 35,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "百分之十八到百分之二十左右，女生的体脂率是在百分之平均在百分之二十二左右。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "百分之十八到百分之二十左右，女生的体脂率是在百分之平均在百分之二十二左右。"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-014",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 36,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "嗯，今天呢，把大家叫来，咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "嗯，今天呢，把大家叫来，咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的。"
+      }
+    },
+    {
+      "id": "20200709_L_R002S01C01-015",
+      "meeting": "20200709_L_R002S01C01",
+      "referenceCharacters": 27,
+      "baseline": {
+        "edits": 2,
+        "cer": 0.07407407407407407,
+        "counts": {
+          "replace": 0,
+          "delete": 2,
+          "insert": 0
+        },
+        "rawText": "不管任何一个班，发现问题，及时汇报给当班的领导、维修人员。"
+      },
+      "candidate": {
+        "edits": 1,
+        "cer": 0.037037037037037035,
+        "counts": {
+          "replace": 0,
+          "delete": 1,
+          "insert": 0
+        },
+        "rawText": "不管任何一个班儿，发现问题，及时汇报给当班的领导、维修人员。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-000",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 18,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "然后还有我们还有这个这个礼仪培训，就是。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "然后还有我们还有这个这个礼仪培训，就是。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-001",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 25,
+      "baseline": {
+        "edits": 1,
+        "cer": 0.04,
+        "counts": {
+          "replace": 0,
+          "delete": 1,
+          "insert": 0
+        },
+        "rawText": "电梯方面，就是有时候电梯就停的话，就会影响他们的上班。"
+      },
+      "candidate": {
+        "edits": 1,
+        "cer": 0.04,
+        "counts": {
+          "replace": 0,
+          "delete": 1,
+          "insert": 0
+        },
+        "rawText": "电梯方面，就是有时候电梯就停的话，就会影响他们的上班。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-002",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 53,
+      "baseline": {
+        "edits": 1,
+        "cer": 0.018867924528301886,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 1
+        },
+        "rawText": "一般外人他是没有门禁卡的，他也没有人脸，对吧？嗯。然后虽然说这个这个设备需要有成本，但是为了咱们，但是咱们这个小区的这个。"
+      },
+      "candidate": {
+        "edits": 1,
+        "cer": 0.018867924528301886,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 1
+        },
+        "rawText": "一般外人他是没有门禁卡的，他也没有人脸，对吧？嗯。然后虽然说这个这个设备需要有成本，但是为了咱们，但是咱们这个小区的这个"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-003",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 39,
+      "baseline": {
+        "edits": 3,
+        "cer": 0.07692307692307693,
+        "counts": {
+          "replace": 1,
+          "delete": 2,
+          "insert": 0
+        },
+        "rawText": "嗯，他们每一家都有自己的车位，对吧？然后，就好多别的小区的现状就是，来来了又没地方停。"
+      },
+      "candidate": {
+        "edits": 3,
+        "cer": 0.07692307692307693,
+        "counts": {
+          "replace": 1,
+          "delete": 2,
+          "insert": 0
+        },
+        "rawText": "嗯，他们每一家都有自己的车位，对吧？然后，就好多别的小区的现状就是，来来了又没地方停。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-004",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 5,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "零零四，后勤。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "零零四，后勤。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-005",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 48,
+      "baseline": {
+        "edits": 3,
+        "cer": 0.0625,
+        "counts": {
+          "replace": 0,
+          "delete": 2,
+          "insert": 1
+        },
+        "rawText": "安全问题啊，一定要做好用电，一定要保证安全，否则的话会发生一些火灾啊，或者就是人员触电事故，这就是大事了。"
+      },
+      "candidate": {
+        "edits": 2,
+        "cer": 0.041666666666666664,
+        "counts": {
+          "replace": 0,
+          "delete": 1,
+          "insert": 1
+        },
+        "rawText": "安全问题啊，一定要做好用电，一定要保证安全，否则的话会发生一些火灾啊，或者就是人员触电事故，这就是大事儿了。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-006",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 60,
+      "baseline": {
+        "edits": 6,
+        "cer": 0.1,
+        "counts": {
+          "replace": 2,
+          "delete": 3,
+          "insert": 1
+        },
+        "rawText": "哦，那我们这边后勤这边是一直都会进行，比方说游泳池，咱们这毕竟是露天泳游泳池嘛，万一会有一些树叶啊飘进去啊，我们都会定期的清理。"
+      },
+      "candidate": {
+        "edits": 6,
+        "cer": 0.1,
+        "counts": {
+          "replace": 2,
+          "delete": 3,
+          "insert": 1
+        },
+        "rawText": "哦，那我们这边后勤这边是一直都会进行，比方说游泳池，咱们这毕竟是露天泳游泳池嘛，万一会有一些树叶啊飘进去啊，我们都会定期的清理。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-007",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 19,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "然后还有小孩子们的东西，比方说像一些秋千。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "然后还有小孩子们的东西，比方说像一些秋千。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-008",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 7,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "嗯，首先就是这些。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "嗯，首先就是这些。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-009",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 31,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "嗯，首先咱们是学区房，然后咱们的房产证和社保什么都资料整理的比较好。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "嗯，首先咱们是学区房，然后咱们的房产证和社保什么都资料整理的比较好。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-010",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 33,
+      "baseline": {
+        "edits": 1,
+        "cer": 0.030303030303030304,
+        "counts": {
+          "replace": 1,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "是，还有宠物方面，我也就是提醒各个业主都注意一下安全，不要让他们到处乱跑。"
+      },
+      "candidate": {
+        "edits": 1,
+        "cer": 0.030303030303030304,
+        "counts": {
+          "replace": 1,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "是，还有宠物方面，我也就是提醒各个业主都注意一下安全，不要让他们到处乱跑。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-011",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 7,
+      "baseline": {
+        "edits": 1,
+        "cer": 0.14285714285714285,
+        "counts": {
+          "replace": 1,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "啊，这我们保安部。"
+      },
+      "candidate": {
+        "edits": 1,
+        "cer": 0.14285714285714285,
+        "counts": {
+          "replace": 1,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "啊，这我们保安部。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-012",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 44,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "可能有人会说，有的小区物业费只有五毛，有的小区物业费只有一块二，那我们小区物业费为什么会这么高？"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "可能有人会说，有的小区物业费只有五毛，有的小区物业费只有一块二，那我们小区物业费为什么会这么高？"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-013",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 26,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "我们的小区，我们的物业质量高，我们的物业服务好，我们的小区。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "我们的小区，我们的物业质量高，我们的物业服务好，我们的小区。"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-014",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 26,
+      "baseline": {
+        "edits": 1,
+        "cer": 0.038461538461538464,
+        "counts": {
+          "replace": 1,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "那呃，下半年的话，你们有什么计划，或者说有什么想改进的地方？"
+      },
+      "candidate": {
+        "edits": 1,
+        "cer": 0.038461538461538464,
+        "counts": {
+          "replace": 1,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "那呃，下半年的话，你们有什么计划，或者说有什么想改进的地方？"
+      }
+    },
+    {
+      "id": "20200805_S_R001S01C01-015",
+      "meeting": "20200805_S_R001S01C01",
+      "referenceCharacters": 15,
+      "baseline": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "这个我们都会定期的擦拭，还有喷水。"
+      },
+      "candidate": {
+        "edits": 0,
+        "cer": 0.0,
+        "counts": {
+          "replace": 0,
+          "delete": 0,
+          "insert": 0
+        },
+        "rawText": "这个我们都会定期的擦拭，还有喷水。"
+      }
+    }
+  ],
+  "english30NormalizedOutputPreserved": true,
+  "englishRawOutputs": [
+    "I wonder how much of the meetings is talking about the stuff at the meetings. Yeah, exactly. Yeah, yeah. Look at all this stuff. Welcome, start. Okay. Right. So, shall we need to talk about? Shall we just go around and everyone says what they what they've been doing? Has anybody done anything? No one. Oh, I'm sorry. Yeah. Okay. Sounds like you've done something.",
+    "I wonder how much of the meetings is talking about the stuff at the meetings. Yeah, exactly. Yeah, yeah. Look at all this stuff. Welcome, start. Okay. Right. So, shall we need to talk about? Shall we just go around and everyone says what they what they've been doing? Has anybody done anything? No one. Oh, I'm sorry. Yeah. Okay. Sounds like you've done something."
+  ],
+  "mixed4SecondReferenceCharacters": 39,
+  "mixedEdits": [
+    2,
+    2
+  ],
+  "frozenBackboneBytesUnchanged": true,
+  "disabledAdapterExactEnglishIdsPreserved": true,
+  "parameterSweeps": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "adoptedInProduct": false,
+  "scope": "32 held-out complete annotated utterances, not complete meetings or independent room/speaker/final-holdout qualification. A kept adapter still needs unchanged full Chinese/English and person gates."
+}

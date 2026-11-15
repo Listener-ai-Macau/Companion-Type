@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 11,
+    "startSample": 3266320,
+    "endSample": 3724048,
+    "text": "呃，比较卖的销量比较高的这个销售产品是否再进行一下呃优惠活动，呃，或者咱们呃不好卖的产品呢是否要进行下架，呃，这得需要各位来进行一个评判。我这边只是看到你们日常的一些工作状态、一些报表情况，这个包括我这边一些出库、呃入库这些。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 3266320,
+        "endSample": 3724048,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "3a3436ba4ee0c4d51b143977b0fcfca3c2480d68f023e77cea096f2e50f60ac9"
+}

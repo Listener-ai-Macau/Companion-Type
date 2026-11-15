@@ -1,0 +1,16 @@
+{
+  "state": "FROZEN_BEFORE_RECONCILIATION_ONE_GLOBAL_METHOD_ON_SAVED_FEATURES",
+  "policy": {
+    "groups": "Number of distinct anonymous IDs already predicted by the frozen full native journal, not reference people",
+    "features": "All exact previously saved clean>=2s ERes2Net vectors; no new embeddings or selected first profiles",
+    "clustering": "Cosine dissimilarity, average-link hierarchical clustering, maxclust at predicted group count; one fixed method, no cutoff or group-count scan",
+    "displayIdMapping": "Global maximum duration agreement between vector clusters and original anonymous IDs; predicted data only",
+    "shortIntervals": "For a shorter clean run, revise only when preceding and following eligible runs for that original ID have the same reconciled label; otherwise retain original",
+    "overlapAndActivity": "Preserve all original multivoice intervals, every activity boundary and activity multiplicity; no missing speech is invented",
+    "acceptance": "Both complete ordinary cases must meet original DER<=10% and old per-person regressions remain explicit; raw/per-person text gates unchanged",
+    "stop": "One fixed cached-data reconciliation; no parameter variants after full scores"
+  },
+  "workerSha256": "61f0d745fd5013842d18fdc802136694e61025ea02106b81e325228a90262cec",
+  "embeddingSha256": "1a331345f04805badbb495c775a6ddffcdd1a732567d5ec8b3d5749e3c7a5e4b",
+  "reason": "Original complete-link whole model failed at memory reconstruction; first-three frozen prototypes changed no labels. Test one bounded global average-link reconciliation using all saved vectors and native-predicted count, without new inference or cut-off tuning."
+}

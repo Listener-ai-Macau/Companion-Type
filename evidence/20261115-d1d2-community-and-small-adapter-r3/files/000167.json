@@ -1,0 +1,47 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 150,
+    "startSample": 12406400,
+    "endSample": 12507360,
+    "text": "下个月，呃，有下个月有好几个，呃，创业的人嘛。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      16872,
+      99943,
+      3837,
+      119108,
+      3837,
+      18830,
+      16872,
+      99943,
+      18830,
+      116197,
+      3837,
+      119108,
+      3837,
+      100388,
+      100623,
+      102455,
+      1773,
+      151645
+    ],
+    "rawDecoded": "下个月，呃，有下个月有好几个，呃，创业的人嘛。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 3.451291000004858,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 100960,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 631,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "e175f117a1aadb32be28502d2b6e3d8092b83c6724b46e76cb375e80ebc836ba"
+}

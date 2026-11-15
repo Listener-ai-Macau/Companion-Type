@@ -1,0 +1,40 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 119,
+    "startSample": 10291114,
+    "endSample": 10371520,
+    "text": "嗯，将那个分期这个呃时时间。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      106287,
+      3837,
+      44063,
+      101095,
+      111521,
+      99487,
+      119108,
+      13343,
+      20450,
+      1773,
+      151645
+    ],
+    "rawDecoded": "嗯，将那个分期这个呃时时间。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.1858535000064876,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 80406,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 502,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "7302f5efc4011136f8b06d252fe493bc865381b671f1e451acce9b80a0117488"
+}

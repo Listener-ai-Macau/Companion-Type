@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 73,
+    "startSample": 31103085,
+    "endSample": 31505214,
+    "text": "可以做一些这样的活动，然后奶制品呢，它的这个保质期呢一般是在四十到四十五天，而酸奶的这个保质期呢，它是相较于短的，二十来天吧。所以对于酸奶的话，我们可以采用这样的，就是买一赠一或者是买二赠一的。对于这些零售的一些酸奶，可以采取这样的一个销售吧。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 31103085,
+        "endSample": 31505214,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "5504dcba754b3b60200faa3410340aa1f32ca837ae69281f42feac4df22a075a"
+}

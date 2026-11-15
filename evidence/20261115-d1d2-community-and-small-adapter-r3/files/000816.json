@@ -1,0 +1,48 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 53,
+    "startSample": 22249896,
+    "endSample": 22478879,
+    "text": "他他可能也会给你介绍那种新顾客，嗯，这就是我的这种销售方案。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      42411,
+      42411,
+      87267,
+      103977,
+      104314,
+      100157,
+      102245,
+      16628,
+      104476,
+      3837,
+      106287,
+      3837,
+      104301,
+      97611,
+      100137,
+      100352,
+      100389,
+      1773,
+      151645
+    ],
+    "rawDecoded": "他他可能也会给你介绍那种新顾客，嗯，这就是我的这种销售方案。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 3.913266100018518,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 228983,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 1431,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "4a61c63a45338b31eda87ed6dcaa35b4dac5f0273145854f74cf919d9461e9be"
+}

@@ -1,0 +1,51 @@
+{
+  "state": "COMPLETE",
+  "startedAt": "2026-11-15T10:41:39+08:00",
+  "command": [
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-source\\tools\\build_windows_local.py",
+    "build",
+    "--output",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-build-r7"
+  ],
+  "privatePeakBytes": 3038490624,
+  "compilerOnlyPrivateBudgetBytes": 4294967296,
+  "writers": [
+    {
+      "pid": 7336,
+      "name": "rustc.exe",
+      "createTime": 1794710438.5205889
+    },
+    {
+      "pid": 26332,
+      "name": "link.exe",
+      "createTime": 1794710559.39795
+    },
+    {
+      "pid": 29420,
+      "name": "cargo.exe",
+      "createTime": 1794710437.348222
+    }
+  ],
+  "pid": 15992,
+  "pidCreatedAt": 1794710565.1808934,
+  "exitCode": 0,
+  "finishedAt": "2026-11-15T10:44:31+08:00",
+  "seconds": 171.3540401000064,
+  "limits": {
+    "pid": 22800,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 4294967296,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 3097055232,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

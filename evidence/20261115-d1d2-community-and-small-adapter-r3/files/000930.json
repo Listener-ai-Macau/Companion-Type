@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 79,
+    "startSample": 33340368,
+    "endSample": 33813648,
+    "text": "咱可以呃把一些呃你们各个区域的这个打折商品呃要呃可以往这摆放一些，让顾客来了以后呃能够一眼看到这些咱今天超市今日特价商品，咱这个特价商品一定要瞩目，每个部门每天都有特价商品。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 33340368,
+        "endSample": 33813648,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "ec95bfc6c5e61730b2b998bd57b6d13c0ab42f3e0b7e9287e72f1cfab147739d"
+}

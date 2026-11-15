@@ -1,0 +1,46 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 266,
+    "startSample": 22646399,
+    "endSample": 22782239,
+    "text": "所以说我们未贷，然后，嗯，给了他的期限是两年偿还。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      109304,
+      97639,
+      38342,
+      100055,
+      3837,
+      101889,
+      3837,
+      106287,
+      3837,
+      102558,
+      100648,
+      105362,
+      20412,
+      100845,
+      111544,
+      1773,
+      151645
+    ],
+    "rawDecoded": "所以说我们未贷，然后，嗯，给了他的期限是两年偿还。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 3.363980199996149,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 135840,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 849,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "a47aa13e7050e1670e2174ad034316e01262be471691b82e1f4d26a97606e64a"
+}

@@ -1,0 +1,47 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 35,
+    "startSample": 2720640,
+    "endSample": 2803653,
+    "text": "合适，我们就可以给他放额十万、二十万，都是没有问题的。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      100968,
+      3837,
+      97639,
+      102003,
+      104808,
+      53222,
+      61191,
+      110860,
+      5373,
+      104294,
+      31207,
+      3837,
+      100132,
+      80443,
+      86119,
+      9370,
+      1773,
+      151645
+    ],
+    "rawDecoded": "合适，我们就可以给他放额十万、二十万，都是没有问题的。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 3.5087851000134833,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 83013,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 518,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "dc5eb5b8f985b98606095bc5ba4db12406bc87d26031decf07cf23f8b08f09d4"
+}

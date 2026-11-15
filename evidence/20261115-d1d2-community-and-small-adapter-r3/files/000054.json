@@ -1,0 +1,47 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 37,
+    "startSample": 2917600,
+    "endSample": 3005120,
+    "text": "对吧？现在大的手机号，嗯，有的用个十几年的都已经有了。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      32664,
+      100003,
+      11319,
+      99601,
+      99750,
+      75355,
+      3837,
+      106287,
+      3837,
+      99996,
+      11622,
+      18947,
+      109745,
+      9370,
+      108445,
+      101144,
+      1773,
+      151645
+    ],
+    "rawDecoded": "对吧？现在大的手机号，嗯，有的用个十几年的都已经有了。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 3.551913599978434,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 87520,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 547,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "d7debc9ac633ed1051d85c6b5f31f22c1af89dc15957b425a64d38dd698e138b"
+}

@@ -116,13 +116,21 @@ def asr_session(root, bundle, audio):
             continue
         return session, True
     session_path = root/'asr-session'
-    stream_root = bundle.get('streamRoot')
-    if stream_root:
-        for path in sorted(Path(stream_root).glob('*/audio.pcm')):
+    stream_roots = bundle.get('ownedStreamRoots')
+    if stream_roots is None:
+        stream_root = bundle.get('streamRoot')
+        stream_roots = sorted(str(p) for p in Path(stream_root).glob('*') if p.is_dir()) if stream_root else []
+    if stream_roots:
+        for path in [Path(p)/'audio.pcm' for p in stream_roots]:
+            if not path.is_file(): continue
             if path.stat().st_size == audio['frames']*2 and sha(path) == audio['pcmSha256']:
                 candidate = PcmSession(path.parent/'session')
                 if candidate.meta.exists() and candidate.state()['config']['language'] == language:
-                    session_path = candidate.root
+                    # Native ownership remains per job/session. Copy the exact
+                    # incremental cache into the leased finalization root;
+                    # private output never escapes into a calibration cache.
+                    if not session_path.exists():
+                        shutil.copytree(candidate.root, session_path)
                     break
     if session_path.exists():
         session = PcmSession(session_path)
@@ -159,11 +167,15 @@ def alignment_plan(root, bundle, session, audio, case):
         assert packet['inferenceBinding'] == expected, 'Do not mix model/language/runtime cache bindings'
         request, result = packet['request'], packet['result']
         session.read_request_pcm(request)
-        assert not result.get('reviewRequired'), 'Unconfirmed ASR interval cannot become a completed product transcript'
+        unconfirmed=result.get('unconfirmedAudioIntervals',[])
+        if result.get('reviewRequired'):
+            assert unconfirmed, 'Unconfirmed decoder state needs explicit original audio ranges'
         for leaf in result['leaves']:
             node_file = session.root/'decode'/request['jobId']/(leaf['node']+'.json')
             node = read(node_file)
             raw = node['raw']
+            if any(r['startFrame']==raw['startSample'] and r['endFrame']==raw['endSample'] for r in unconfirmed):
+                assert raw['text']=='', 'Do not promote failed or unconfirmed nonempty decoding'
             assert node['binding'] == {**expected,'jobId':request['jobId'],
                 'pcmSha256':request['pcmSha256'],'configSha256':request['configSha256']}
             canonical = json.dumps(raw, ensure_ascii=False, sort_keys=True, separators=(',',':')).encode()
@@ -174,7 +186,7 @@ def alignment_plan(root, bundle, session, audio, case):
                 'nodeSha256':sha(node_file), 'text':raw['text'], 'startSample':raw['startSample'],
                 'endSample':raw['endSample'], 'alignmentLanguage':language})
     document = session.document()
-    assert document['isFinal'] and not document['reviewRequired']
+    assert document['isFinal']
     assert leaves[0]['startSample'] == 0 and leaves[-1]['endSample'] == audio['frames']
     assert all(a['endSample'] == b['startSample'] for a,b in zip(leaves,leaves[1:]))
     assert document['text'] == '\n'.join(l['text'] for l in leaves)
@@ -207,6 +219,11 @@ def main():
     assert bundle['schema'] == 'companion.local-meeting-bundle.v1'
     for file, digest in bundle['sourceFiles'].items():
         assert sha(file) == digest, 'Installed model package source changed'
+    owned_root = manifest.get('artifactRoot')
+    if owned_root:
+        from companion_local_cache_audit_20261115 import activate
+        activate(owned_root, SRC/'cache-audit-hook')
+        bundle = {**bundle, 'ownedStreamRoots':manifest.get('ownedStreamRoots', [])}
     if manifest['schema'] == 'companion.local-meeting-stream.v1':
         from companion_local_meeting_stream_20261115 import run
         run(manifest,bundle)
@@ -218,7 +235,7 @@ def main():
     # Paths may change on reimport, so content and configuration identify work.
     identity = hashlib.sha256(json.dumps({'sources':[x['sha256'] for x in manifest['files']],
                                          'bundle':binding['bundleSha256']},sort_keys=True).encode()).hexdigest()
-    root = Path(bundle['workRoot'])/identity
+    root = Path(owned_root) if owned_root else Path(bundle['workRoot'])/identity
     root.mkdir(parents=True, exist_ok=True)
     with exclusive_file(Path(bundle['workRoot'])/'local-meeting-pipeline.lock'), exclusive_file(root/'pipeline.lock'), PowerLease():
         target = root/'job.json'
@@ -313,13 +330,23 @@ def main():
             payloads = [read(alignment/'aligned'/case['meeting']/(leaf['id']+'.json'))['payload'] for leaf in plan['leaves']]
             document, trace = join_aligned_recording(read(plan['sourceDocument']),plan['leaves'],payloads,raw_journal,
                 audio_seconds=case['audioSeconds'],audio_sha256=case['audioSha256'],attribution_journal=exclusive)
+            unrecognized=[]
+            for packet in (session.root/'results').glob('*.json'):
+                value=read(packet)
+                if not value['request']['blockFinal'] or not value['result'].get('accepted'):continue
+                for interval in value['result'].get('unconfirmedAudioIntervals',[]):
+                    unrecognized.append({'startMs':interval['startFrame']//16,
+                        'endMs':(interval['endFrame']+15)//16,'source':'本地识别待核对'})
+            unrecognized.sort(key=lambda row:(row['startMs'],row['endMs']))
+            assert bool(unrecognized)==bool(session.document()['reviewRequired'])
+            document.update(reviewRequired=bool(unrecognized),unrecognizedAudio=unrecognized,qualityQualified=False)
             assert document['text'] == ''.join(r['text'] for r in document['utterances'])
             atomic_json(root/'attribution-evidence.json',trace)
             atomic_json(root/'final-document.json',document)
             atomic_json(root/'final-binding.json',{'documentSha256':sha(root/'final-document.json'),
                 'bundleSha256':binding['bundleSha256'],'inputPcmSha256':audio['pcmSha256'],
                 'speakerJournalSha256':sha(journal),'qualityQualified':False})
-            state.update(state='COMPLETE_LOCAL_MEETING_CANDIDATE_NOT_QUALITY_QUALIFIED',finishedAt=now(),
+            state.update(state='COMPLETE_LOCAL_MEETING_REVIEW_REQUIRED_UNQUALIFIED' if unrecognized else 'COMPLETE_LOCAL_MEETING_CANDIDATE_NOT_QUALITY_QUALIFIED',finishedAt=now(),
                          documentSha256=sha(root/'final-document.json'))
             atomic_json(target,state)
             print(json.dumps(document,ensure_ascii=False))

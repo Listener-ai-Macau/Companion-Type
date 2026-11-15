@@ -1,0 +1,60 @@
+{
+  "state": "PASS_REAL35MIN_ENGLISH_NATIVE_LOCAL_TRANSCRIPT_REVIEW_MINUTES_REOPEN_EXPORT",
+  "startedAt": "2026-11-15T09:39:13.831348+08:00",
+  "sessionId": "import-3c3ce53e1d5f4789a09fedada81d555e",
+  "steps": [
+    {
+      "step": "transcribe",
+      "exitCode": 0,
+      "seconds": 244.09399999998277,
+      "output": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r3\\qa\\transcribe-result.json"
+    },
+    {
+      "step": "minutes-offlineStore",
+      "exitCode": 0,
+      "seconds": 50.078000000008615,
+      "output": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r3\\qa\\minutes-offlineStore-result.json"
+    },
+    {
+      "step": "minutes-onlineLive",
+      "exitCode": 0,
+      "seconds": 58.062999999994645,
+      "output": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r3\\qa\\minutes-onlineLive-result.json"
+    },
+    {
+      "step": "reopen",
+      "exitCode": 0,
+      "seconds": 0.046000000002095476,
+      "output": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r3\\qa\\reopen-result.json"
+    },
+    {
+      "step": "export-markdown",
+      "exitCode": 0,
+      "bytes": 48526,
+      "sha256": "1387eb66f25906c2b2efa128963457a9f25517791d72d77f7649d66d363ef4b6"
+    },
+    {
+      "step": "export-json",
+      "exitCode": 0,
+      "bytes": 381357,
+      "sha256": "ae6554ab20caffe2a92ad9f07a5a0ed23c908048e720fe57557a5ee1462dc259"
+    }
+  ],
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "sourceReviewRequired": true,
+  "activeStep": "reopen",
+  "uncertainRangesPreserved": [
+    {
+      "endMs": 2109814,
+      "source": "本地识别待核对",
+      "startMs": 2100000
+    }
+  ],
+  "recognizedCharactersPreserved": true,
+  "utterances": 852,
+  "sourceOriginalSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+  "newWholeAsrExpected": false,
+  "scope": "Functional real English product flow only; strict full WER23.94% and original speaker/text gates remain failed or unqualified",
+  "finishedAt": "2026-11-15T09:45:11.634187+08:00"
+}

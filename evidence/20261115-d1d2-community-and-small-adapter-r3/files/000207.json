@@ -1,0 +1,52 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 190,
+    "startSample": 16016000,
+    "endSample": 16139960,
+    "text": "目前咱们这个啊，这是主打的是吧？对，就是主打。还有一些咱们今天都在，咱们。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      100004,
+      104335,
+      99487,
+      103924,
+      3837,
+      100346,
+      110123,
+      100146,
+      100003,
+      11319,
+      32664,
+      3837,
+      99486,
+      110123,
+      1773,
+      110075,
+      104335,
+      100644,
+      102070,
+      3837,
+      104335,
+      1773,
+      151645
+    ],
+    "rawDecoded": "目前咱们这个啊，这是主打的是吧？对，就是主打。还有一些咱们今天都在，咱们。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.538548799988348,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 123960,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 774,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "59ccb4dbf3f8b8597300e0f9fe0df60f449f2d93b7030d654391ed9742fbe6a3"
+}

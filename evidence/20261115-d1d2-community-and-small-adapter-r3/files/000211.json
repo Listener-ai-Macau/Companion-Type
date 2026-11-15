@@ -1,0 +1,44 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 194,
+    "startSample": 16324640,
+    "endSample": 16404480,
+    "text": "要是小额的农业贷款的话，现在暂时已经停止发放了。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      104806,
+      118906,
+      9370,
+      100174,
+      101983,
+      100363,
+      3837,
+      99601,
+      105253,
+      99461,
+      104390,
+      104752,
+      34187,
+      1773,
+      151645
+    ],
+    "rawDecoded": "要是小额的农业贷款的话，现在暂时已经停止发放了。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.9467778999824077,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 79840,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 499,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "9e087c64921024df026781defcb0d0352078e159bfa0a1ac6b6c95c439347aeb"
+}

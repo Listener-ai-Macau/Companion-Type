@@ -46,6 +46,7 @@ def references(directory,meeting,duration):
 def main():
     p=argparse.ArgumentParser();p.add_argument('--audio',type=Path,required=True);p.add_argument('--manual',type=Path,required=True)
     p.add_argument('--meeting',default='EN2002a');p.add_argument('--document',type=Path)
+    p.add_argument('--allow-review-required-diagnostic',action='store_true')
     p.add_argument('--out',type=Path,required=True);a=p.parse_args();assert not a.out.exists()
     with wave.open(str(a.audio),'rb') as f:duration=f.getnframes()/f.getframerate()
     rows,bindings,condition=references(a.manual,a.meeting,duration)
@@ -54,13 +55,17 @@ def main():
         'condition':condition,'qualityQualified':False,'referencePassedToInference':False}
     if a.document:
         from rapidfuzz.distance import Levenshtein
-        doc=json.loads(a.document.read_text(encoding='utf-8'));assert doc['isFinal'] and not doc.get('reviewRequired',False)
+        doc=json.loads(a.document.read_text(encoding='utf-8'));assert doc['isFinal']
+        needs_review=doc.get('reviewRequired',False)
+        assert not needs_review or a.allow_review_required_diagnostic,'Unconfirmed audio remains a quality failure; diagnostic scoring must be explicit'
         ref=[token for x in rows for token in x['tokens']];hyp=words(doc['text'])
         ops=Levenshtein.editops(ref,hyp);counts=Counter(o[0] for o in ops)
         distance=Levenshtein.distance(ref,hyp);assert distance==sum(counts.values())
         result.update(documentSha256=sha(a.document),hypothesisWords=len(hyp),substitutions=counts['replace'],
             deletions=counts['delete'],insertions=counts['insert'],errors=distance,wer=distance/len(ref),
-            rawWordTargetPassed=distance/len(ref)<.05)
+            rawWordTargetPassed=distance/len(ref)<.05 and not needs_review,
+            reviewRequired=needs_review,unconfirmedAudioRemainsInFullReferenceDenominator=True,
+            diagnosticOnly=needs_review)
         result['rawHypothesis']=doc['text']
     a.out.parent.mkdir(parents=True,exist_ok=True)
     a.out.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

@@ -1,0 +1,50 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 106,
+    "startSample": 9246880,
+    "endSample": 9343481,
+    "text": "他现在有有了，他就还，但是还还不完，也也算是在在还款了。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      42411,
+      99601,
+      18830,
+      101144,
+      3837,
+      105799,
+      97706,
+      3837,
+      100131,
+      97706,
+      101558,
+      46306,
+      3837,
+      74763,
+      111023,
+      18493,
+      18493,
+      110005,
+      34187,
+      1773,
+      151645
+    ],
+    "rawDecoded": "他现在有有了，他就还，但是还还不完，也也算是在在还款了。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.139817099989159,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 96601,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 603,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "710c9515df95326a92cced59a0c0f83e58fa2d010e7e4c8fc7ccabc3898adc1e"
+}

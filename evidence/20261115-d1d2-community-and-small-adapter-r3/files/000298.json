@@ -1,0 +1,35 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 281,
+    "startSample": 23885439,
+    "endSample": 23908479,
+    "text": "啊，结算方面。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      103924,
+      3837,
+      106331,
+      99522,
+      1773,
+      151645
+    ],
+    "rawDecoded": "啊，结算方面。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 1.3453891999961343,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 23040,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 144,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "2291e14815c5f0e0803f513739db35d4e8e48852a65e05b8162cffe5d693d34a"
+}

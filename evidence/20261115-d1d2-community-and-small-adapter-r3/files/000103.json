@@ -1,0 +1,50 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 86,
+    "startSample": 7532960,
+    "endSample": 7683040,
+    "text": "有的我们会通过他的家人、亲戚、朋友来给来提醒他，让让那人还款。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      99996,
+      107233,
+      67338,
+      100648,
+      104271,
+      5373,
+      108472,
+      5373,
+      99614,
+      36407,
+      89012,
+      36407,
+      104211,
+      42411,
+      3837,
+      99258,
+      99258,
+      110583,
+      110005,
+      1773,
+      151645
+    ],
+    "rawDecoded": "有的我们会通过他的家人、亲戚、朋友来给来提醒他，让让那人还款。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.08449050001218,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 150080,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 938,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "5161bd5aed80534663d5a0f5b4a00c84bbe39c2701d50e0fa36f33c8b751816b"
+}

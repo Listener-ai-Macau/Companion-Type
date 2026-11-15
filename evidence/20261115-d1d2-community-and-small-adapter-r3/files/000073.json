@@ -1,0 +1,49 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 56,
+    "startSample": 4543840,
+    "endSample": 4683572,
+    "text": "然后我们之前一，呃，一定是，呃，考核他的信誉度的，呃。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      101889,
+      97639,
+      101056,
+      14777,
+      3837,
+      119108,
+      3837,
+      106507,
+      3837,
+      119108,
+      3837,
+      104263,
+      100648,
+      106531,
+      26381,
+      9370,
+      3837,
+      119108,
+      1773,
+      151645
+    ],
+    "rawDecoded": "然后我们之前一，呃，一定是，呃，考核他的信誉度的，呃。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.1370635999774095,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 139732,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 873,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "f177aaa6066ceb2061633f972875a492aa26d682ffb1163b83cde2d5304c1425"
+}

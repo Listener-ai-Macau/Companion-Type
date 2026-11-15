@@ -1,0 +1,36 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 351,
+    "startSample": 30737759,
+    "endSample": 30760159,
+    "text": "还有这个小哥的。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      100626,
+      99487,
+      30709,
+      99826,
+      9370,
+      1773,
+      151645
+    ],
+    "rawDecoded": "还有这个小哥的。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 1.5073037999973167,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 22400,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 140,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "231777a66d43bd7250d93246eb97faf950a68fec662b0995d6cb69e44bc87f30"
+}

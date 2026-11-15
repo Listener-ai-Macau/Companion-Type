@@ -1,0 +1,50 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 254,
+    "startSample": 21305120,
+    "endSample": 21456040,
+    "text": "如果我们，嗯，短期的这个小额贷款的回收的好的话，我们可以考虑一下三十万。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      109198,
+      3837,
+      106287,
+      3837,
+      105299,
+      9370,
+      99487,
+      118907,
+      9370,
+      104234,
+      9370,
+      99692,
+      57443,
+      3837,
+      105773,
+      101118,
+      100158,
+      105134,
+      31207,
+      1773,
+      151645
+    ],
+    "rawDecoded": "如果我们，嗯，短期的这个小额贷款的回收的好的话，我们可以考虑一下三十万。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.138414799992461,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 150920,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 943,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "caab015ef26f665e705f0036e2881e42e2277ba6e7d3d313dcbcdd65deb644b8"
+}

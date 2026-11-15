@@ -1,0 +1,97 @@
+{
+  "state": "COMPLETE_FULL_ENGLISH_WORD_AND_SPEAKER_DIAGNOSTIC_NOT_QUALIFIED",
+  "policy": {
+    "schema": "companion.english-full-word-scoring.v1",
+    "reference": "All <w> lexical content in all four official AMI word files, including fillers and partial words",
+    "normalization": "Unicode NFKC, lower case, curly apostrophe to ASCII, alphanumeric words with internal apostrophes; punctuation separates words",
+    "wordOrder": "All words sorted by original start time, original end time, speaker and XML order; overlap ordering is a limitation of single-stream WER",
+    "excluded": "Non-word XML nodes only; no manual synonym, abbreviation, numeral, filler or disfluency rewrites",
+    "wer": "(substitutions+deletions+insertions)/all reference words",
+    "englishQualityTarget": {
+      "strictWholeWerLessThan": 0.05,
+      "status": "explicit conservative extension for English ordinary-meeting development; not an existing Chinese CER definition"
+    },
+    "qualityQualificationRequires": "Complete final document, per-person words and activity, ordinary/complex conditions and original independent meeting coverage; raw WER alone cannot qualify product"
+  },
+  "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+  "documentSha256": "1c5325357e0f8a91060ddf2ecb4f767ada8db1235d37a67ceab9fc142075f42c",
+  "referenceFiles": [
+    {
+      "path": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ES2003b\\ES2003b.A.words.xml",
+      "sha256": "40d587031566d3e4a82c810728403b590df1852d9beecd50043742d4a8af18d5"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ES2003b\\ES2003b.B.words.xml",
+      "sha256": "89a94bfe0e8f3c25e396c3f717dec82137981b9e7a1bb888af4aa9c866fb8bf3"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ES2003b\\ES2003b.C.words.xml",
+      "sha256": "d9431cf57246544d02d2d441dd8112ded56cac6e53f4d62b4c34bdab7a1bed63"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ES2003b\\ES2003b.D.words.xml",
+      "sha256": "fc35e6ad74a58b8769163b8eb8fc586dbf19b8dd1b2dca17f057c4d04ab936f7"
+    }
+  ],
+  "condition": {
+    "wordActivityUnionSeconds": 1867.0,
+    "wordActivityOverlapSeconds": 88.52000000000083,
+    "overlapFractionOfSpeechUnion": 0.04741296197107704,
+    "referenceSpeakerSeconds": 1958.6500000000008,
+    "condition": "ordinary_development",
+    "conditionUsesReferencesOnlyForScoringNotInference": true
+  },
+  "referenceWords": 5781,
+  "hypothesisWords": 4969,
+  "unknownWordsForcedUnmatched": 458,
+  "cpWerErrors": 2238,
+  "cpWer": 0.38713025428126624,
+  "perReferenceSpeaker": [
+    {
+      "referenceSpeaker": "A",
+      "predictedAnonymousSpeaker": 2,
+      "referenceWords": 1419,
+      "hypothesisWords": 1036,
+      "substitutions": 92,
+      "deletions": 390,
+      "insertions": 7,
+      "wer": 0.34460887949260044
+    },
+    {
+      "referenceSpeaker": "B",
+      "predictedAnonymousSpeaker": 1,
+      "referenceWords": 2289,
+      "hypothesisWords": 1834,
+      "substitutions": 147,
+      "deletions": 469,
+      "insertions": 14,
+      "wer": 0.27522935779816515
+    },
+    {
+      "referenceSpeaker": "C",
+      "predictedAnonymousSpeaker": 0,
+      "referenceWords": 1543,
+      "hypothesisWords": 1283,
+      "substitutions": 106,
+      "deletions": 281,
+      "insertions": 21,
+      "wer": 0.2644199611147116
+    },
+    {
+      "referenceSpeaker": "D",
+      "predictedAnonymousSpeaker": 3,
+      "referenceWords": 530,
+      "hypothesisWords": 358,
+      "substitutions": 77,
+      "deletions": 174,
+      "insertions": 2,
+      "wer": 0.47735849056603774
+    }
+  ],
+  "extraPredictedGroups": [],
+  "reviewRequired": true,
+  "unknownHandling": "Unknown or cross-person lexical words remain unmatched insertions; missing reference content is also counted by reference sequences. No unknown group is assigned to a reference person.",
+  "mappingForScoringOnly": true,
+  "referenceNeverPassedToInference": true,
+  "qualityQualified": false
+}

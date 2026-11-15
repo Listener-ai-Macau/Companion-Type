@@ -1,0 +1,39 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 138,
+    "startSample": 11332160,
+    "endSample": 11387256,
+    "text": "有有这样有有这样公关战略。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      18830,
+      18830,
+      99654,
+      18830,
+      18830,
+      99654,
+      114260,
+      100033,
+      1773,
+      151645
+    ],
+    "rawDecoded": "有有这样有有这样公关战略。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.1177215999923646,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 55096,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 344,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "e2ac221e62d53e7f923f577c3944ac9e9af0b015f72ea07f6138ce8516ba5c81"
+}

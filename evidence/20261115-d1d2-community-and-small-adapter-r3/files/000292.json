@@ -1,0 +1,43 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 275,
+    "startSample": 23304959,
+    "endSample": 23384959,
+    "text": "要嗯，提前的跟他说好，签好协议。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      30534,
+      106287,
+      3837,
+      104154,
+      9370,
+      99557,
+      104318,
+      52801,
+      3837,
+      61755,
+      52801,
+      101136,
+      1773,
+      151645
+    ],
+    "rawDecoded": "要嗯，提前的跟他说好，签好协议。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.7062267000146676,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 80000,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 500,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "f5b7314bf18e9bf87063d50e576d5ebef5a94337861c6373d3ff24d94af26161"
+}

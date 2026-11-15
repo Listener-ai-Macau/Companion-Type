@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 36,
+    "startSample": 14474621,
+    "endSample": 14894118,
+    "text": "嗯，就是营造一种温馨的感觉。嗯，比如说在店内粘点儿一些，嗯，粘贴一些这种嗯制作蛋糕的这个过制作蛋糕过程的这个照片啦，呃，还有这些嗯，就是很温馨的一些场景什么的，就是可以起到起到一个很好的宣传效果。嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 14474621,
+        "endSample": 14894118,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "c148d7ba0542889b167424abfaa02102f94448d32c1e27592183243879df26fb"
+}

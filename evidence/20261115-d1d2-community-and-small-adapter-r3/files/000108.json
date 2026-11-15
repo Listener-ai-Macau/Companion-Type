@@ -1,0 +1,44 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 91,
+    "startSample": 8023360,
+    "endSample": 8131360,
+    "text": "包括他的额度、什么日期、还款日，都提醒他。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      100630,
+      100648,
+      108091,
+      5373,
+      99245,
+      45785,
+      5373,
+      110005,
+      8903,
+      3837,
+      71268,
+      104211,
+      42411,
+      1773,
+      151645
+    ],
+    "rawDecoded": "包括他的额度、什么日期、还款日，都提醒他。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.957970999996178,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 108000,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 675,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "eb60bb30a7adb8c6b9bc4c3eccd406f86f78c3591e3753284272f7c2c813fafc"
+}

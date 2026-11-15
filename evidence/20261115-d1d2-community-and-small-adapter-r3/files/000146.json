@@ -1,0 +1,45 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 129,
+    "startSample": 10927520,
+    "endSample": 10986560,
+    "text": "我们呢，也只能仁痛割爱了，你自己看着办吧。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      97639,
+      101036,
+      3837,
+      111931,
+      102030,
+      100406,
+      100958,
+      99242,
+      34187,
+      3837,
+      107828,
+      101952,
+      99227,
+      100003,
+      1773,
+      151645
+    ],
+    "rawDecoded": "我们呢，也只能仁痛割爱了，你自己看着办吧。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 3.2995129999762867,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 59040,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 369,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "c9050813d309939eb7ecd1ec2d4c8710b7e72c0e5e047792e20e9de041db25f2"
+}

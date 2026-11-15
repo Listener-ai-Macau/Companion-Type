@@ -1,0 +1,36 @@
+{
+  "state": "COMPLETE",
+  "startedAt": "2026-11-15T10:33:44+08:00",
+  "command": [
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-source\\tools\\build_windows_local.py",
+    "test",
+    "--output",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-local-cache-test-r1",
+    "--filter",
+    "backend::transcription::local_meeting_cache::tests"
+  ],
+  "privatePeakBytes": 3457556480,
+  "compilerOnlyPrivateBudgetBytes": 4294967296,
+  "pid": 9004,
+  "pidCreatedAt": 1794710024.0443697,
+  "exitCode": 0,
+  "finishedAt": "2026-11-15T10:35:47+08:00",
+  "seconds": 123.93843390000984,
+  "limits": {
+    "pid": 11240,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 4294967296,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 3527925760,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

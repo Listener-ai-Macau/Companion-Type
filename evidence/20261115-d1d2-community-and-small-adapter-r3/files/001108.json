@@ -1,0 +1,70 @@
+[
+  {
+    "id": "import-3f846fa7adcd4c47b3df2986d60fb74d",
+    "title": "pcm16-all-values",
+    "source": "importedAudio",
+    "status": "captured",
+    "meetingMode": "offlineStore",
+    "processingPolicy": "manual",
+    "startedAt": null,
+    "stoppedAt": null,
+    "durationMs": 4096,
+    "audioPath": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r3\\qa\\probe-after\\recordings\\import-3f846fa7adcd4c47b3df2986d60fb74d.wav",
+    "audioBytes": 131116,
+    "audioStored": true,
+    "deviceReclaimed": false,
+    "captureIncomplete": false,
+    "recorderControlUncertain": false,
+    "chunks": [
+      {
+        "id": "import-3f846fa7adcd4c47b3df2986d60fb74d-chunk-1",
+        "path": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r3\\qa\\probe-after\\recordings\\import-3f846fa7adcd4c47b3df2986d60fb74d.wav",
+        "startedAt": null,
+        "stoppedAt": "1794706630822",
+        "durationMs": 4096,
+        "bytes": 131116,
+        "status": "sealed"
+      },
+      {
+        "id": "import-3f846fa7adcd4c47b3df2986d60fb74d-imported-original-5af1f8f3ff38ccf04d0adf4f408c94c5d88ab256cf76021f40aeb9fe599bcc33",
+        "path": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r3\\qa\\probe-after\\recordings\\import-3f846fa7adcd4c47b3df2986d60fb74d.original.wav",
+        "startedAt": null,
+        "stoppedAt": null,
+        "durationMs": 4096,
+        "bytes": 131116,
+        "status": "importedOriginal"
+      }
+    ],
+    "transcriptText": "",
+    "transcriptFinal": false,
+    "liveTranscriptText": "",
+    "transcriptPreview": "",
+    "transcriptSegments": 0,
+    "utterances": [],
+    "bookmarkRevision": 0,
+    "noteRevision": 0,
+    "minutes": null,
+    "minutesByMode": {},
+    "recovery": {
+      "intent": "none",
+      "requestedMeetingMode": "",
+      "stage": "idle",
+      "attemptCount": 0,
+      "maxAttempts": 3,
+      "retryStage": "",
+      "captureReviewConfirmed": false
+    },
+    "exportMarkdown": "",
+    "calendarCopyRevision": 0,
+    "calendarCopyEpoch": 0,
+    "exportedAt": null,
+    "retention": {
+      "audioCached": true,
+      "transcriptCached": false,
+      "minutesCached": false,
+      "consentRequired": true,
+      "retentionLabel": "Local until manually deleted",
+      "expiresAt": null
+    }
+  }
+]

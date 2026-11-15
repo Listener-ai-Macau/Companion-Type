@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 34,
+    "startSample": 13474154,
+    "endSample": 13990292,
+    "text": "嗯，小孩儿，还有老人，还有这大学生什么的都会，嗯，都会就是有需要，嗯嗯，首先从这个咱们这个店面的装修，我感觉就是，呃，必须要整洁干净，嗯，可以就是分为两个部分，就是前厅和嗯厨房，前厅就是接待顾客，定做蛋糕，嗯，就是嗯DIY蛋糕制作的。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 13474154,
+        "endSample": 13990292,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "a7f33d3836bce8f84e42bee70b5d251904cefc7dbc426484ad9af1ae8ffd6a03"
+}

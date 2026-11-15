@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 10,
+    "startSample": 2813634,
+    "endSample": 3266320,
+    "text": "买一些这个小孩子的用品，呃，小孩子的一些零嘴儿，呃，这个有上升的趋势，所以大家看看有没有对呃，咱下季度的这个销售呃有没有一些好的就是整改，在原有的基础上，嗯，咱做一些新的调整，啊，把一些咱这个。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 2813634,
+        "endSample": 3266320,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "b558c4f05e42aabe999e43dad1a4c205ea9d0e03e89422802a4cc2a1ab725853"
+}

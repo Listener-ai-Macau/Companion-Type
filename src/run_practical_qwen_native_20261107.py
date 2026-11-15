@@ -28,6 +28,8 @@ for proc in psutil.process_iter(['cmdline']):
     try:assert not any(Path(arg).name in ['practical_qwen_native_worker_20261107.py','practical_transcript_worker_20261107.py','practical_nemotron_worker_20261107.py','moss_night_gpu_worker_20261104.py'] for arg in proc.info['cmdline'] or []),'An existing owned model stage must finish first'
     except (psutil.NoSuchProcess,psutil.AccessDenied):pass
 env={k:v for k,v in os.environ.items() if k not in ['CUDA_VISIBLE_DEVICES','ROCR_VISIBLE_DEVICES','HIP_VISIBLE_DEVICES','GPU_DEVICE_ORDINAL','PYTHONPATH']}
+if os.environ.get('COMPANION_LOCAL_ARTIFACT_ROOT'):
+    env['PYTHONPATH']=str(Path(__file__).resolve().parent/'cache-audit-hook')
 env.update(OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',TOKENIZERS_PARALLELISM='false')
 if a.phase=='short':
     inventory=read(C/'hip-inventory.json');assert inventory['state']=='PASS_CURRENT_HIP_DEVICE_INVENTORY_NO_MODEL' and inventory['sourceSha256']==sha(worker)

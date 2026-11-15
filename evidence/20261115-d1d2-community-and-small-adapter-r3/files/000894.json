@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 43,
+    "startSample": 17530382,
+    "endSample": 17965713,
+    "text": "嗯，可以在我们店儿里，就是嗯，提供一个游玩的场所。嗯，毕竟就是嗯，带家长带着孩子过来，肯定也也会就是嗯，这些小孩儿看到一些好玩的什么的，他就他就不想走。嗯，然后可以让孩子在那儿玩儿，然后我们就可以跟这些家长推推一些门店的产品啦，什么蛋糕啦，嗯。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 17530382,
+        "endSample": 17965713,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "03605d741f87b2b0825bc3f50b780712938e67ce71d3928fc1dd9881a65d81d6"
+}

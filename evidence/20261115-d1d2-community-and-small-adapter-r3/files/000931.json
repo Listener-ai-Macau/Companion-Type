@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f"
+  },
+  "raw": {
+    "index": 80,
+    "startSample": 33813648,
+    "endSample": 34307651,
+    "text": "这个一定要放到那儿，就是我现在有个部门还往那儿放一把，有个部门啊，甚至就是呃还在自己的零售台那儿放着。嗯，咱这块儿一定要注意起来啊，各个部门你们自己负责的这块儿负责起来，下边员工也要提醒，及时的巡查。还有就是呃，下边员工你们一定要把这个对待客户这块儿一定要积极主动。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 33813648,
+        "endSample": 34307651,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "9932667fdd04d0e02c40986275d5e5702d0da33c403f6904302da53dac3c4264"
+}

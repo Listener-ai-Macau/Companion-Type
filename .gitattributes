@@ -107,3 +107,29 @@ src/run_local_pcm_decoder_20261114.py -text
 evidence/20261115-d1d2-local-package-r2/** -text -whitespace
 
 .gitattributes -text
+
+src/companion_local_meeting_pipeline_20261115.py -text
+
+src/run_bilingual_alignment_20261115.py -text
+
+src/run_practical_qwen_native_20261107.py -text
+
+src/score_ami_bilingual_20261115.py -text
+
+src/companion_local_cache_audit_20261115.py -text
+
+src/companion_predicted_turn_boundaries_20261115.py -text
+
+src/practical_qwen_predicted_turn_worker_20261115.py -text
+
+src/reconcile_cached_voice_groups_20261115.py -text
+
+src/run_fixed_asr_adapter_20261115.py -text
+
+src/run_predicted_turn_asr_20261115.py -text
+
+src/score_ami_speaker_words_20261115.py -text
+
+src/score_fixed_asr_adapter_20261115.py -text
+
+evidence/20261115-d1d2-community-and-small-adapter-r3/** -text -whitespace

@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-15T10:36:16+08:00",
+  "state": "ACTIVATE_ONE_PREVIOUSLY_FROZEN_SMALL_ADAPTER_TRIAL_AFTER_COMPONENT_AND_SOURCE_BOUNDARY_FAILURES",
+  "reason": "Frozen alternate ASR combination, returning-voice review and predicted-turn boundary intervention all failed ordinary full-meeting targets. No parameter sweep; test only the already prepared rank8 one-epoch trial.",
+  "originalPreparedProtocolSha256": "032f9b35bc0a82b177ad85e833112cb45dee07001c272f24a6eaf5de49f97f45",
+  "identicalProtocolSha256": "032f9b35bc0a82b177ad85e833112cb45dee07001c272f24a6eaf5de49f97f45",
+  "ownerAuthorization": "Owner asked to completeD1/D2 autonomously and continue model optimization; mature combination first, no random trial expansion.",
+  "trainExamples": 128,
+  "independentValidationExamples": 32,
+  "trainingMeetingsUsedForFullD2Evaluation": false,
+  "englishScope": "30-second existing capability control only. No whole English qualification, and this Chinese adaptation cannot fix the failed English whole-meeting result by assertion.",
+  "originalFullMeetingGatesRetained": true,
+  "selectedAdapterOnlyIfFrozenKeepRulePasses": true,
+  "baselineOrFinalHoldoutUsedAsTrainingLabels": false,
+  "automaticRetries": 0,
+  "qualityQualified": false
+}

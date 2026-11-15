@@ -1,0 +1,48 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 151,
+    "startSample": 12507360,
+    "endSample": 12614880,
+    "text": "呃，创业的大学生嘛，跟我联系了，需要呃，贷二十五万。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      119108,
+      3837,
+      100388,
+      9370,
+      104422,
+      102455,
+      3837,
+      106400,
+      72064,
+      34187,
+      3837,
+      85106,
+      119108,
+      3837,
+      100055,
+      117920,
+      31207,
+      1773,
+      151645
+    ],
+    "rawDecoded": "呃，创业的大学生嘛，跟我联系了，需要呃，贷二十五万。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 3.730142300017178,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 107520,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 672,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "6485cad30d0fc8eba2eef8504b9ff02ea26771b2efb6d41a010f024062525cde"
+}

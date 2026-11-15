@@ -1,0 +1,51 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 225,
+    "startSample": 19150080,
+    "endSample": 19237063,
+    "text": "第二方面说的是车贷，先说完这个，嗯，然后就是第二方面就是车贷嘛。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      99802,
+      99522,
+      112736,
+      39953,
+      100055,
+      3837,
+      60726,
+      107484,
+      99487,
+      3837,
+      106287,
+      3837,
+      101889,
+      99486,
+      99802,
+      99522,
+      99486,
+      39953,
+      100055,
+      102455,
+      1773,
+      151645
+    ],
+    "rawDecoded": "第二方面说的是车贷，先说完这个，嗯，然后就是第二方面就是车贷嘛。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 4.306471599993529,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 86983,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 543,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "9ef3bf42fe697b339802d1af71a5c77cc9e61be6289520d44b5461290131051f"
+}

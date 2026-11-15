@@ -1,0 +1,296 @@
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> E:\CodexData\Companion\product-d1d2-20261114\app-source\third_party\denzic-platform\third_party\cpal\src\host\wasapi\device.rs:344:9
+    |
+344 |         &self,
+    |         ^^^^^ the lifetime is elided here
+345 |     ) -> Result<MutexGuard<Option<IAudioClientWrapper>>, windows::core::Error> {
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+345 |     ) -> Result<MutexGuard<'_, Option<IAudioClientWrapper>>, windows::core::Error> {
+    |                            +++
+
+warning: `cpal` (lib) generated 1 warning (run `cargo fix --lib -p cpal` to apply 1 suggestion)
+warning: function `notifications_stream_from_broadcast_receiver` is never used
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\third_party\btleplug-0.11.8\src\common\util.rs:29:8
+   |
+29 | pub fn notifications_stream_from_broadcast_receiver<T: Clone + Send + 'static>(
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `unsubscribe` is never used
+   --> E:\CodexData\Companion\product-d1d2-20261114\app-source\third_party\btleplug-0.11.8\src\winrtble\ble\characteristic.rs:186:18
+    |
+ 95 | impl BLECharacteristic {
+    | ---------------------- method in this implementation
+...
+186 |     pub async fn unsubscribe(&mut self) -> Result<()> {
+    |                  ^^^^^^^^^^^
+
+warning: function `to_error` is never used
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\third_party\btleplug-0.11.8\src\winrtble\utils.rs:26:8
+   |
+26 | pub fn to_error(status: GattCommunicationStatus) -> Result<()> {
+   |        ^^^^^^^^
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\third_party\btleplug-0.11.8\src\common\adapter_manager.rs:79:9
+   |
+79 |         &self,
+   |         ^^^^^ the lifetime is elided here
+80 |         id: &PeripheralId,
+81 |     ) -> Option<RefMut<PeripheralId, PeripheralType>> {
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+   |
+81 |     ) -> Option<RefMut<'_, PeripheralId, PeripheralType>> {
+   |                        +++
+
+warning: `btleplug` (lib) generated 4 warnings (run `cargo fix --lib -p btleplug` to apply 1 suggestion)
+   Compiling companion-type v0.1.121 (E:\CodexData\Companion\product-d1d2-20261114\app-source\apps\windows\src-tauri)
+warning: constant in pattern `UIA_EditControlTypeId` should have an upper case name
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\packages\desktop-input\src\selection\windows_uia.rs:72:33
+   |
+72 |     } else if matches!(control, UIA_EditControlTypeId | UIA_DocumentControlTypeId)
+   |                                 ^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper case: `UIA_EDIT_CONTROL_TYPE_ID`
+   |
+   = note: `#[warn(non_upper_case_globals)]` (part of `#[warn(nonstandard_style)]`) on by default
+
+warning: constant in pattern `UIA_DocumentControlTypeId` should have an upper case name
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\packages\desktop-input\src\selection\windows_uia.rs:72:57
+   |
+72 |     } else if matches!(control, UIA_EditControlTypeId | UIA_DocumentControlTypeId)
+   |                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper case: `UIA_DOCUMENT_CONTROL_TYPE_ID`
+
+warning: constant in pattern `UIA_ButtonControlTypeId` should have an upper case name
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\packages\desktop-input\src\selection\windows_uia.rs:77:34
+   |
+77 |             || matches!(control, UIA_ButtonControlTypeId | UIA_CheckBoxControlTypeId
+   |                                  ^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper case: `UIA_BUTTON_CONTROL_TYPE_ID`
+
+warning: constant in pattern `UIA_CheckBoxControlTypeId` should have an upper case name
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\packages\desktop-input\src\selection\windows_uia.rs:77:60
+   |
+77 |             || matches!(control, UIA_ButtonControlTypeId | UIA_CheckBoxControlTypeId
+   |                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper case: `UIA_CHECK_BOX_CONTROL_TYPE_ID`
+
+warning: constant in pattern `UIA_RadioButtonControlTypeId` should have an upper case name
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\packages\desktop-input\src\selection\windows_uia.rs:78:19
+   |
+78 |                 | UIA_RadioButtonControlTypeId | UIA_HyperlinkControlTypeId)) {
+   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper case: `UIA_RADIO_BUTTON_CONTROL_TYPE_ID`
+
+warning: constant in pattern `UIA_HyperlinkControlTypeId` should have an upper case name
+  --> E:\CodexData\Companion\product-d1d2-20261114\app-source\packages\desktop-input\src\selection\windows_uia.rs:78:50
+   |
+78 |                 | UIA_RadioButtonControlTypeId | UIA_HyperlinkControlTypeId)) {
+   |                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^ help: convert the identifier to upper case: `UIA_HYPERLINK_CONTROL_TYPE_ID`
+
+warning: `companion-desktop-input` (lib) generated 6 warnings
+warning: unused import: `EvidenceKind`
+ --> src\backend\meeting_notes.rs:5:28
+  |
+5 | pub use context::{Evidence,EvidenceKind,NoteKind};
+  |                            ^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `HANDLE`
+  --> src\file_clipboard.rs:56:48
+   |
+56 |     use windows::{core::w,Win32::{Foundation::{HANDLE,HWND},System::{DataExchange::{OpenClipboard,CloseClipboard,GetClipboardData,Re...
+   |                                                ^^^^^^
+
+warning: variable does not need to be mutable
+   --> src\backend\ble_bridge\desktop_input.rs:124:21
+    |
+124 |                 let mut values:Notifications=Box::pin(device.peripheral.checked_notifications().map(|value|
+    |                     ----^^^^^^
+    |                     |
+    |                     help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `write_board_acceptance_output` is never used
+    --> src\lib.rs:1997:4
+     |
+1997 | fn write_board_acceptance_output(path: &Path, payload: &serde_json::Value) -> Result<(), String> {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `delete_all_privacy` is never used
+   --> src\backend\ble_bridge.rs:819:12
+    |
+273 | impl CompanionBleBridge {
+    | ----------------------- method in this implementation
+...
+819 |     pub fn delete_all_privacy(&self, requested_device_id: Option<&str>) -> CompanionBleOperation {
+    |            ^^^^^^^^^^^^^^^^^^
+
+warning: field `device_id` is never read
+    --> src\backend\ble_bridge.rs:2015:5
+     |
+2013 | struct NativeRecordingSync {
+     |        ------------------- field in this struct
+2014 |     capture_incomplete: bool,
+2015 |     device_id: String,
+     |     ^^^^^^^^^
+     |
+     = note: `NativeRecordingSync` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: fields `operation`, `request_id`, `recording_id`, and `validated_total_length` are never read
+    --> src\backend\ble_bridge.rs:2343:5
+     |
+2341 | struct NativeDeleteResult {
+     |        ------------------ fields in this struct
+2342 |     device_id: String,
+2343 |     operation: u8,
+     |     ^^^^^^^^^
+2344 |     request_id: u32,
+     |     ^^^^^^^^^^
+2345 |     refused: bool,
+2346 |     recording_id: u32,
+     |     ^^^^^^^^^^^^
+2347 |     validated_total_length: u32,
+     |     ^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: `NativeDeleteResult` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: function `sync_first_native_recording` is never used
+    --> src\backend\ble_bridge.rs:4801:10
+     |
+4801 | async fn sync_first_native_recording(
+     |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sync_first_native_recording_inner` is never used
+    --> src\backend\ble_bridge.rs:5205:10
+     |
+5205 | async fn sync_first_native_recording_inner(
+     |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `sync_native_recordings_inner` is never used
+    --> src\backend\ble_bridge.rs:5211:10
+     |
+5211 | async fn sync_native_recordings_inner(
+     |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `recording_chunk_pull_request` is never used
+    --> src\backend\ble_bridge.rs:6503:4
+     |
+6503 | fn recording_chunk_pull_request(recording_id: u32, offset: u32, requested_length: u16) -> [u8; 16] {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `merge` is never used
+  --> src\backend\recording_bookmarks\device.rs:35:15
+   |
+35 | pub(crate) fn merge(row:&mut CompanionV1HostSession,marks:&[DeviceMark],key:&SessionKey,
+   |               ^^^^^
+
+warning: function `require_saved` is never used
+   --> src\backend\recording_bookmarks\device.rs:100:15
+    |
+100 | pub(crate) fn require_saved(row:&CompanionV1HostSession,marks:&[DeviceMark],key:&SessionKey,
+    |               ^^^^^^^^^^^^^
+
+warning: function `bind` is never used
+ --> src\backend\recording_bookmarks\logical.rs:5:15
+  |
+5 | pub(crate) fn bind(row:&mut CompanionV1HostSession,key:&SessionKey,captured_samples:Option<u64>)
+  |               ^^^^
+
+warning: function `require_saved` is never used
+  --> src\backend\recording_bookmarks\logical.rs:40:15
+   |
+40 | pub(crate) fn require_saved(row:&CompanionV1HostSession,key:&SessionKey,captured_samples:Option<u64>)
+   |               ^^^^^^^^^^^^^
+
+warning: method `session_id` is never used
+   --> src\backend\recording_wire\receiver.rs:160:19
+    |
+102 | impl Receiver {
+    | ------------- method in this implementation
+...
+160 |     pub(crate) fn session_id(&self) -> &str { &self.stem }
+    |                   ^^^^^^^^^^
+
+warning: function `pointer_request` is never used
+  --> src\backend\recorder_input.rs:53:15
+   |
+53 | pub(crate) fn pointer_request(peer:&Peer,nonce:u32)->Result<[u8;36],String>{encode_request(peer,1,3,8,nonce)}
+   |               ^^^^^^^^^^^^^^^
+
+warning: type alias `SeedCache` is never used
+  --> src\backend\diagnostics\identity.rs:13:6
+   |
+13 | type SeedCache=Option<(PathBuf,Result<[u8;32],()>)>;
+   |      ^^^^^^^^^
+
+warning: static `SEED` is never used
+  --> src\backend\diagnostics\identity.rs:14:8
+   |
+14 | static SEED:Mutex<SeedCache>=Mutex::new(None);
+   |        ^^^^
+
+warning: function `import` is never used
+   --> src\backend\import_audio.rs:145:15
+    |
+145 | pub(super) fn import(input:&Path)->Result<ImportedAudio,String> {import_with_id(input,None)}
+    |               ^^^^^^
+
+warning: function `run_finalized_deepseek_request` is never used
+   --> src\backend\minutes.rs:352:15
+    |
+352 | pub(super) fn run_finalized_deepseek_request(
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `run` is never used
+   --> src\backend\minutes\long_meeting.rs:373:15
+    |
+373 | pub(super) fn run(endpoint: &str, model: &str, key: &str, session: &CompanionV1HostSession,
+    |               ^^^
+
+warning: function `load_sessions` is never used
+   --> src\backend\persistence.rs:425:8
+    |
+425 | pub fn load_sessions() -> Option<Vec<CompanionV1HostSession>> {
+    |        ^^^^^^^^^^^^^
+
+warning: method `consumable_ids` is never used
+   --> src\backend\recording_ring.rs:163:12
+    |
+119 | impl RecordingRing {
+    | ------------------ method in this implementation
+...
+163 |     pub fn consumable_ids(&self) -> Vec<u32> {
+    |            ^^^^^^^^^^^^^^
+
+warning: function `extract_transcript_from_stdout` is never used
+    --> src\backend\transcription.rs:1504:4
+     |
+1504 | fn extract_transcript_from_stdout(stdout: &str) -> Result<String, String> {
+     |    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `configured` is never used
+  --> src\backend\transcription\local_meeting.rs:24:15
+   |
+24 | pub(super) fn configured()->bool{
+   |               ^^^^^^^^^^
+
+warning: `companion-type` (lib test) generated 26 warnings (run `cargo fix --lib -p companion-type --tests` to apply 3 suggestions)
+    Finished `test` profile [unoptimized] target(s) in 2m 06s
+     Running unittests src\lib.rs (E:\CodexData\Companion\.build-cache\shared-windows-target\debug\deps\companion_type_lib-f45c4951a77532bd.exe)
+
+running 2 tests
+test backend::live_asr::tests::actual_public_pcm_uses_native_live_hub_and_releases_cache_lease ... ignored, Explicit isolated public90s PCM/model package; real local inference, never microphone/card
+test backend::live_asr::tests::finished_failed_worker_is_not_reported_as_active_and_keeps_partial ... ok
+
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 1267 filtered out; finished in 0.00s
+

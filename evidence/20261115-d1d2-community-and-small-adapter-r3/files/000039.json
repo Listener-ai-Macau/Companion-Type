@@ -1,0 +1,43 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 22,
+    "startSample": 1860960,
+    "endSample": 1959520,
+    "text": "也有失业的下岗职工，都可以在我们这这里。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      103943,
+      108127,
+      9370,
+      16872,
+      100448,
+      101156,
+      3837,
+      104570,
+      18493,
+      97639,
+      43288,
+      99817,
+      1773,
+      151645
+    ],
+    "rawDecoded": "也有失业的下岗职工，都可以在我们这这里。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 2.7697896999889053,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 98560,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 616,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "5743321713c075e4dae074ff63c179a4dce1bb50205b0d62475dff0da47c16a8"
+}

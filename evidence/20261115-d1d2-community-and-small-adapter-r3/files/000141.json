@@ -1,0 +1,38 @@
+{
+  "binding": {
+    "protocolSha256": "d26007dc10b27d2e0869fe90cab87a1f27f6c903f4f69a62ce85c1e1c580311f",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "ef826c481eae229bfdff8aabeed5fab1d2a44c962791a1a8abd1782afbe9fe5d",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 124,
+    "startSample": 10578080,
+    "endSample": 10616640,
+    "text": "不诚信，然后你不诚信的话。",
+    "tokens": [],
+    "timestamps": [],
+    "generatedIds": [
+      16530,
+      104647,
+      3837,
+      101889,
+      107719,
+      104647,
+      100363,
+      1773,
+      151645
+    ],
+    "rawDecoded": "不诚信，然后你不诚信的话。<|im_end|>",
+    "naturalEos": true,
+    "inferenceSeconds": 1.91414049998275,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "modelInputSamples": 38560,
+    "inputPaddingSamples": 0,
+    "validMelFrames": 241,
+    "inputNotTruncated": true
+  },
+  "rawSha256": "657929f95fdd6875110722ff6bbec1a1a76b90948c9086e0311c163c23085b8e"
+}
