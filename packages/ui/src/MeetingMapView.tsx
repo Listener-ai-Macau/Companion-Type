@@ -1,4 +1,4 @@
-import {useId,useMemo,useState,type CSSProperties} from 'react';
+import {useId,useMemo,useState} from 'react';
 import {ArrowUpRight,BookOpen,CheckCheck,ChevronDown,GitBranch,ListTodo,MessageCircleQuestion} from 'lucide-react';
 import {meetingReaderModel,type MeetingReaderGroup} from './meetingReaderModel';
 import {meetingDiagramParts} from './meetingDiagram';
@@ -30,7 +30,7 @@ export function MeetingMapView({markdown,title='会议纪要',onLocate,onRead}:{
   <div className="meeting-map-canvas">
    <div className="meeting-map-origin"><GitBranch size={19} aria-hidden="true"/><strong>{title}</strong></div>
    {nodes.length>0&&<div className="meeting-map-topic-group"><div className="meeting-map-group-label">讨论议题</div><ol className="meeting-map-branches" aria-label="讨论议题">
-    {nodes.map((node,index)=><li key={node.id} data-tone={index%4} style={{'--map-branch':index%4} as CSSProperties} data-source-text={node.text}>
+    {nodes.map((node,index)=><li key={node.id} data-source-text={node.text}>
      <details open={expanded.has(node.id)} onToggle={event=>{if(event.currentTarget===event.target)toggle(node.id,event.currentTarget.open);}}>
       <summary aria-controls={id+node.id}><span className="meeting-map-topic-number" aria-hidden="true">{String(index+1).padStart(2,'0')}</span><span className="meeting-map-topic-title">{node.title||'议题 '+(index+1)}</span><ChevronDown size={14} aria-hidden="true"/></summary>
       <div className="meeting-map-topic-content" id={id+node.id}>
