@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 46,
+    "startSample": 22420964,
+    "endSample": 22836240,
+    "text": "江江，呃，出了点头，然后呢，他想贷三十多万，我们这儿给他做了，因为他是买的一辆国产的奔驰，然后，嗯，你说他没有能力嘛？他肯定是有这个能力，所以说我们有一单，然后，嗯，给了他的期限是两年偿还，对，然后分期一个月一还就行。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 22420964,
+        "endSample": 22836240,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "b4152326f925a0e4ae5efbe07fe20047f3ca44f88accd0c2adaa24d39324a7a2"
+}

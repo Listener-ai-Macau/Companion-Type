@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 60,
+    "startSample": 29000834,
+    "endSample": 29535763,
+    "text": "嗯，相关手续上，家里呢也要，还要填，呃，亲戚，呃，直系亲属，对，或亲属，或者亲戚的都要填，然后，嗯，不能少于三个，对，然后我们，然后才开始放贷，而且我们放贷，因为程序和这个都很把关的情况下，我们放贷是很快的，呃，最晚不超过三天就可以放贷，因为咱们这个业务流程要比这个银行快很多，对，我们就是为了体现的就是",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 29000834,
+        "endSample": 29535763,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "f6dd4bbd480ad897064c38133ac033c4c9c52deb287ecc2eb9d58e35676e7b8a"
+}

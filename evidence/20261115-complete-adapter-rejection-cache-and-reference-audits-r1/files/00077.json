@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 2,
+    "startSample": 921677,
+    "endSample": 1344410,
+    "text": "是一个大项吧，然后还有这个，嗯，创业的，创业贷，可以开公司的，呃，不能说开公司了，开一个小型的门市的，我们也可以给他放贷，嗯，然后嗯，大型公司不超过三十万的，呃，借贷也我们也是可以放贷的。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 921677,
+        "endSample": 1344410,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "da03ce5fce0773fe11cf53a251c2f2c82a10f753d01c0fd3a060817083032f21"
+}

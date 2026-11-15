@@ -1,0 +1,57 @@
+{
+  "at": "2026-11-15T12:36:45+08:00",
+  "corpus": "AMI-external-MFA-reference-COMPLEX-DIAGNOSTIC-ONLY-original-gates-unchanged",
+  "meeting": "EN2002a",
+  "referenceParser": "original_rttm_parser",
+  "audioSeconds": 2142.709375,
+  "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+  "referenceSha256": "3f8938f08b19eea51529cfeda608543e0c3c885c679d2b8f2360d668bdba406b",
+  "referenceKind": "rttm_only_words",
+  "scope": "Frozen validation, full continuous-time DER, zero collar, overlap included. Global anonymous mapping only for evaluation. Not ASR/meeting-minutes or product acceptance. AMI only_words short spans are not directly comparable to TextGrid utterance turns.",
+  "referenceSpeakers": 4,
+  "predictedSpeakers": 4,
+  "components": {
+    "correct": 1704.8449419999981,
+    "missed detection": 174.24297499999716,
+    "total": 1907.9019999999962,
+    "confusion": 28.814083000000732,
+    "false alarm": 101.67097499999969,
+    "diarization error rate": 0.1597189127114486
+  },
+  "perReferenceSpeakerForEvaluationOnly": {
+    "EN2002a.A": {
+      "referenceSeconds": 434.45000000000203,
+      "correctlyAttributedSeconds": 380.2575150000001,
+      "attributionRecall": 0.8752618598227606,
+      "matchedAnonymousGroup": "speaker_1"
+    },
+    "EN2002a.B": {
+      "referenceSeconds": 383.6989999999982,
+      "correctlyAttributedSeconds": 330.33691399999884,
+      "attributionRecall": 0.8609272215981809,
+      "matchedAnonymousGroup": "speaker_3"
+    },
+    "EN2002a.C": {
+      "referenceSeconds": 714.9059999999984,
+      "correctlyAttributedSeconds": 668.3091929999998,
+      "attributionRecall": 0.9348210715814406,
+      "matchedAnonymousGroup": "speaker_2"
+    },
+    "EN2002a.D": {
+      "referenceSeconds": 374.8469999999992,
+      "correctlyAttributedSeconds": 325.9413199999997,
+      "attributionRecall": 0.8695316222352063,
+      "matchedAnonymousGroup": "speaker_0"
+    }
+  },
+  "macroReferenceAttributionRecall": 0.8851354438093971,
+  "uncoveredReferenceSpeakers": [],
+  "shortReferenceSpans": {
+    "definition": "Reference speech spans shorter than2s under the corpus boundary policy; no per-span remapping.",
+    "count": 1349,
+    "referenceSeconds": 931.1959999999983,
+    "correctSeconds": 796.5915810000004,
+    "zeroCorrectSpans": 169
+  },
+  "rttmSha256": "3ff2a9463b0adde0881bd51198f29142ba168775c95bc6c83833e3e3f9c58ddb"
+}

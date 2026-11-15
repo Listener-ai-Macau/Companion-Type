@@ -1,0 +1,49 @@
+{
+  "state": "PASS_ORIGINAL_FULL_BASELINE_SCORES_REPRODUCED_BEFORE_CANDIDATE_SCORING",
+  "rows": [
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "referenceCharacters": 7153,
+      "errors": 1037,
+      "cer": 0.1449741367258493,
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\combination-study-r1\\exclusive-frozen\\transcripts\\qwen-20200623_S_R001S07C01\\attribution-review.json",
+      "sha256": "0a86783d17f5657284b3b3dbffa3a97d0a880b8f253dd05cbfb0337858726489",
+      "counts": {
+        "replace": 421,
+        "delete": 511,
+        "insert": 105
+      }
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "referenceCharacters": 8325,
+      "errors": 461,
+      "cer": 0.055375375375375374,
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\model-output.json",
+      "sha256": "543423e146ab4f5deb03d27d0d85e25fc2fe0e3dd436e9c82341e372869d5155",
+      "counts": {
+        "replace": 225,
+        "delete": 178,
+        "insert": 58
+      }
+    }
+  ],
+  "newNeuralCalls": 0,
+  "qualificationReferenceChanged": false,
+  "limits": {
+    "pid": 9444,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 54947840,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

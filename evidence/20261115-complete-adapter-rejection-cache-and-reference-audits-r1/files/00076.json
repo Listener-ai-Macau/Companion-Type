@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 1,
+    "startSample": 476564,
+    "endSample": 921677,
+    "text": "嗯，总结会，对，月度总结会，并且各部门儿啊，这个各部门儿的一个情况，在会上做一个这个呃汇报。嗯，从这个嗯，占也不。嗯，我们现在面临嗯人群比较广阔，比方说车贷，小额的车贷我们也",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 476564,
+        "endSample": 921677,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "b0b022c1bbb1d66401a2085cedeed58773d80e22a153eabdc8b7079636327b89"
+}

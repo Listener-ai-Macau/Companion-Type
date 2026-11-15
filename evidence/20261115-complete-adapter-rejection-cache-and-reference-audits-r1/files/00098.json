@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 23,
+    "startSample": 11387256,
+    "endSample": 11830562,
+    "text": "当然，这样的人是很少的，呃，一千个里面顶多出那么一个、两个。我们要及时的告诉他，这个如果不还款，有什么后果？对他，因为就跟滚雪球一样，你越不还，它滚的会越大。因为我我们虽然不是高利贷，但是按我们这个计算的话，它的利润也会越来越大。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 11387256,
+        "endSample": 11830562,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "54b926d920ceed457e7a768b2fc8c2bc734d52224aeb49c0c335d3218f23f8ef"
+}

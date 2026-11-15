@@ -1,0 +1,154 @@
+{
+  "state": "HISTORICAL_CACHE_EVIDENCE_RETAINED_SIMPLE_TOTAL_EVICTION_NOT_SUPPORTED",
+  "at": "2026-11-15T12:40:45.154382+08:00",
+  "exactFullProbabilityBytesUnchanged": true,
+  "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+  "probabilitySha256": "e067ef343282e0af4253391d4657172d5ccc419ab34d8ac6a25571af1984a86c",
+  "diagnosisSourceSha256": "c844e7b0c12fbf47d8203cd521e577ef8326b7a3bb3370bb6cb585a8adbfa4f0",
+  "anonymousChannelForPostInferenceDiagnosisOnly": 2,
+  "previousLastPredictedActivitySeconds": 1040.9999767318368,
+  "referenceReturnSecondsForDiagnosisOnly": 1484.1187036478975,
+  "absenceObservedCacheUpdates": 16,
+  "priorMaximumActiveCacheFrames": 112,
+  "minimumActiveCacheFramesDuringAbsence": 48,
+  "firstAfterActivityUpdate": 39,
+  "lastBeforeReturnUpdate": 54,
+  "firstAfterActivityCacheSupportFrames": 48,
+  "lastBeforeReturnCacheSupportFrames": 48,
+  "exactSameHistoricalActiveFrameFingerprintsRetainedAcrossGap": 48,
+  "gapCurve": [
+    {
+      "update": 39,
+      "sourceEndSeconds": 1060.8,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 40,
+      "sourceEndSeconds": 1088.0,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 41,
+      "sourceEndSeconds": 1115.2,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 42,
+      "sourceEndSeconds": 1142.4,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 43,
+      "sourceEndSeconds": 1169.6000000000001,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 44,
+      "sourceEndSeconds": 1196.8,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 45,
+      "sourceEndSeconds": 1224.0,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 46,
+      "sourceEndSeconds": 1251.2,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 47,
+      "sourceEndSeconds": 1278.4,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 48,
+      "sourceEndSeconds": 1305.6000000000001,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 49,
+      "sourceEndSeconds": 1332.8,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 50,
+      "sourceEndSeconds": 1360.0,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 51,
+      "sourceEndSeconds": 1387.2,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 52,
+      "sourceEndSeconds": 1414.4,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 53,
+      "sourceEndSeconds": 1441.6000000000001,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    },
+    {
+      "update": 54,
+      "sourceEndSeconds": 1468.8,
+      "activeCacheFrames": 48,
+      "positiveScoreCacheFrames": 48,
+      "maximumCachedProbability": 0.9681760668754578
+    }
+  ],
+  "newSelectionPolicyOrWeights": false,
+  "qualityQualified": false,
+  "d2Complete": false,
+  "nextAction": "Do not add reserve-slot policy: the hypothesized total loss did not occur. Preserve this negative result; distinguish prototype/acoustic mismatch from absent memory.",
+  "limits": {
+    "pid": 20924,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 531984384,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "scope": "Prior reference return time enters only this exited-output audit. Cache support is model-predicted activity, not human-verified voice identity. Preserved embeddings rule out full eviction, not all forms of representation or contextual confusion."
+}

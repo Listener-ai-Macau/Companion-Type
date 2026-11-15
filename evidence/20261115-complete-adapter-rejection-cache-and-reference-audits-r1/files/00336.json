@@ -1,0 +1,21 @@
+{
+  "state": "FROZEN_FINAL_ADAPTER_WHOLE_MEETING_EVALUATION_NOT_INFERRED",
+  "cases": [
+    {
+      "meeting": "S_R004S03C01",
+      "originalQuietSpans": 79
+    },
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "originalQuietSpans": 68
+    }
+  ],
+  "adapterSha256": "2ff7a3c055cca6782d9094aa346af5bdb25c042581c6e8cb589210c5f15a448f",
+  "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+  "trainingMeetingsDisjoint": true,
+  "newTrainingUpdates": 0,
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "stopping": "One fixed saved candidate; score full rawCER against original reference and baseline. No further epoch/lr/rank/boundary variants. Preserve raw words, failures and original5% gate.",
+  "fullDecodeRecoveryOutputAndCoverageCodeUnchangedFromBaseline": true
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 27,
+    "startSample": 13231753,
+    "endSample": 13784119,
+    "text": "啊，对，有两个是电子方面的，还有一个就是，呃，自己开一些，呃，经营的店儿。哦，电子方面的。对，有一个是饭店，呃，还有一个就是五金之类的。然后呢，我们会准备好材料清单，然后申请表、接待申请书，啊，还有我们的调查报告，呃。他的实际情况，咱们要掌握。对，呃，我们",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 13231753,
+        "endSample": 13784119,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "9ca6fe7410504958e36bf0e810c333509a1ccac692210fbf74521fecfb1095b9"
+}

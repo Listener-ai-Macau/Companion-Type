@@ -1,0 +1,43 @@
+{
+  "declaredAt": "2026-11-15T11:55:08.393292+08:00",
+  "baseControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6",
+  "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+  "baseWorkerSourceSha256": null,
+  "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+  "recoverySourceSha256": "cfc8f1acf6aebd682f210450a0fb9941ba704035cb9673bd51b290f716807691",
+  "maximumSplitDepth": 2,
+  "minimumLeafSamples": 120000,
+  "repeatCopies": 20,
+  "maximumRepeatBlockTokens": 8,
+  "rule": "On missing natural EOS or the existing short-gate20-copy token loop, retain the failed raw node, bisect the entire original input and decode both children. At most2levels; no child shorter than7.5s. Exhaustion is a failure. Early loop stop changes no generated prefix. No word deletion, VAD trimming, token-budget increase, model/prompt/weight change, reference or participant count.",
+  "normalOutputPolicy": "Keep every accepted original raw ID/text exactly; same frozen policy across both whole meetings.",
+  "modelParametersChanged": true,
+  "rawFailedParentReplacedByClaimedEos": false,
+  "qualityQualified": false,
+  "pilotCases": "One unchanged actual30s must match native1.7B recorded IDs/text; longest real audio-only selected root must retain all input mel frames (no30s truncation); exact-zero-only pipeline guard reused. No accuracy claim before same full meeting scoring.",
+  "originalFailedReview": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-signal-r3\\review.json",
+  "changedParameterScope": "Only apply the previously frozen final saved LoRA; no new training. Original quiet boundaries, base weights, BF16/eager/greedy/Chinese/token512/recovery unchanged.",
+  "boundarySourceSha256": "708ff9bcaa37b4b70789635601830cba04b4fb60ea763501509dfd39d62eca82",
+  "boundaryPolicy": "Exact author low-energy rule, same local30s budget; search±5s/minimum100ms absolute-amplitude window; source-required short-tail padding only. No VAD trimming.",
+  "sourceAuthorAsrDefaultTargetSeconds": 1200,
+  "localTargetSeconds": 30.0,
+  "searchExpandSeconds": 5.0,
+  "energyWindowMilliseconds": 100.0,
+  "normalControlRawFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native17-r5\\pilot\\nodes\\ordinary-bounded-root.json",
+  "parentWorkerSourceSha256": "ae2acae1551dc7eb508631b509940dde796b00cbe7bb0b6136ec19f84d7b2947",
+  "adapterRoot": "E:\\CodexData\\Companion\\.model-cache\\ordinary-asr-adaptation-20261114\\d1d2-fixed-trial-r1\\final-adapter",
+  "adapterFiles": {
+    "adapter_config.json": "a5b725c928cdc0228c82c96012607b4bf65868242ed2f025e0b50b6b363c6104",
+    "adapter_model.safetensors": "2ff7a3c055cca6782d9094aa346af5bdb25c042581c6e8cb589210c5f15a448f"
+  },
+  "isolatedPeftBinding": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-asr-adapter-r1\\isolated-peft.json",
+  "exactBaseControl": "Disabled saved adapter must reproduce retained same30s native IDs/text; all saved adapter tensors roundtrip exact before enabled pilot.",
+  "runOrder": [
+    "disabled/enabled original30s native control",
+    "old ordinary38min regression",
+    "new ordinary34min returning-speaker case"
+  ],
+  "noAdditionalTraining": true,
+  "noCheckpointSelection": true,
+  "finalHoldoutUntouched": true
+}

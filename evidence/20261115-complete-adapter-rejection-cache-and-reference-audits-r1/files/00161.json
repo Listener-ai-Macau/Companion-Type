@@ -1,0 +1,138 @@
+{
+  "originalCheckpoint": "E:/CodexData/Companion/.model-cache/nemotron-speaker-20261107/Nemotron-3-Diarization.nemo",
+  "originalSha256": "867c53f552998f772e5b5e5c082962ae85ee7ca5669c2bc17d7f615133d4e96d",
+  "converterSha256": "6a4de669f624642eb723d5361900f0e6c6c07d1d7153edf645e2fae0e0c71da1",
+  "mappedTensors": 417,
+  "originalTensors": 363,
+  "allMappedTensorBytesRoundtripExact": true,
+  "onlyDroppedKeys": [
+    "preprocessor.featurizer.window",
+    "preprocessor.featurizer.fb",
+    "sortformer_modules.hidden_to_spks.weight",
+    "sortformer_modules.hidden_to_spks.bias",
+    "sortformer_modules.activity_head.0.weight",
+    "sortformer_modules.activity_head.0.bias",
+    "sortformer_modules.activity_head.1.weight",
+    "sortformer_modules.activity_head.1.bias"
+  ],
+  "config": {
+    "transformers_version": "5.22.1",
+    "architectures": null,
+    "output_hidden_states": false,
+    "return_dict": true,
+    "dtype": "float32",
+    "chunk_size_feed_forward": 0,
+    "is_encoder_decoder": false,
+    "id2label": {
+      "0": "LABEL_0",
+      "1": "LABEL_1"
+    },
+    "label2id": {
+      "LABEL_0": 0,
+      "LABEL_1": 1
+    },
+    "problem_type": null,
+    "audio_config": {
+      "architectures": null,
+      "output_hidden_states": false,
+      "return_dict": true,
+      "dtype": null,
+      "chunk_size_feed_forward": 0,
+      "is_encoder_decoder": false,
+      "id2label": {
+        "0": "LABEL_0",
+        "1": "LABEL_1"
+      },
+      "label2id": {
+        "LABEL_0": 0,
+        "LABEL_1": 1
+      },
+      "problem_type": null,
+      "hidden_size": 512,
+      "intermediate_size": 2048,
+      "num_hidden_layers": 31,
+      "num_attention_heads": 8,
+      "num_key_value_heads": 8,
+      "hidden_act": "gelu",
+      "max_position_embeddings": 5000,
+      "initializer_range": 0.02,
+      "rope_parameters": {
+        "rope_type": "default",
+        "rope_theta": 10000.0,
+        "partial_rotary_factor": 1.0
+      },
+      "attention_dropout": 0.0,
+      "num_mel_bins": 128,
+      "subsampling_factor": 8,
+      "_name_or_path": "",
+      "model_type": "nemotron3_diarization_audio",
+      "output_attentions": false
+    },
+    "head_config": {
+      "architectures": null,
+      "output_hidden_states": false,
+      "return_dict": true,
+      "dtype": null,
+      "chunk_size_feed_forward": 0,
+      "is_encoder_decoder": false,
+      "id2label": {
+        "0": "LABEL_0",
+        "1": "LABEL_1"
+      },
+      "label2id": {
+        "LABEL_0": 0,
+        "LABEL_1": 1
+      },
+      "problem_type": null,
+      "hidden_size": 192,
+      "num_speakers": 8,
+      "audio_hidden_size": 512,
+      "subsampling_factor": 8,
+      "_name_or_path": "",
+      "model_type": "",
+      "output_attentions": false
+    },
+    "streaming_config": {
+      "architectures": null,
+      "output_hidden_states": false,
+      "return_dict": true,
+      "dtype": null,
+      "chunk_size_feed_forward": 0,
+      "is_encoder_decoder": false,
+      "id2label": {
+        "0": "LABEL_0",
+        "1": "LABEL_1"
+      },
+      "label2id": {
+        "LABEL_0": 0,
+        "LABEL_1": 1
+      },
+      "problem_type": null,
+      "fifo_length": 264,
+      "speaker_cache_update_period": 222,
+      "speaker_cache_length": 264,
+      "speaker_cache_silence_frames_per_speaker": 1,
+      "prediction_score_threshold": 0.25,
+      "latest_frames_score_boost": 0.05,
+      "strong_boost_rate": 0.75,
+      "weak_boost_rate": 1.5,
+      "min_positive_scores_rate": 0.5,
+      "num_speakers": 8,
+      "subsampling_factor": 8,
+      "_name_or_path": "",
+      "model_type": "",
+      "output_attentions": false
+    },
+    "chunk_length": 340,
+    "chunk_right_context": 40,
+    "chunk_left_context": 0,
+    "fifo_length": 40,
+    "speaker_cache_update_period": 300,
+    "initializer_range": 0.02,
+    "_name_or_path": "",
+    "model_type": "nemotron3_diarization",
+    "output_attentions": false
+  },
+  "newWeightsDownloaded": false,
+  "referenceRead": false
+}

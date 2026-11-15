@@ -1,0 +1,192 @@
+{
+  "state": "COMPLETE_RETURNING_VOICE_POSTERIOR_DIAGNOSIS_NO_NEW_INFERENCE",
+  "at": "2026-11-15T12:44:37.038733+08:00",
+  "results": {
+    "beforeGap": {
+      "allTargetReferenceFrames": {
+        "diagnosticReferenceFrameSeconds": 90.60000000000001,
+        "frames": 9060,
+        "targetChannelActiveSeconds": 84.49,
+        "noChannelAboveOriginalThresholdSeconds": 4.96,
+        "otherChannelAboveOriginalThresholdSeconds": 1.45,
+        "highestProbabilityChannelSeconds": {
+          "0": 1.12,
+          "1": 0.55,
+          "2": 88.93,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0,
+          "7": 0.0
+        },
+        "targetProbabilityQuantiles": [
+          0.3886742994189263,
+          0.9611020684242249,
+          0.9851854592561722,
+          0.999515894651413,
+          0.9998962879180908
+        ],
+        "maximumOtherProbabilityQuantiles": [
+          0.004020767961628736,
+          0.009518358390778303,
+          0.1753814183175557,
+          0.5713597047328948,
+          0.9210727214813232
+        ],
+        "quantileLevels": [
+          0.05,
+          0.5,
+          0.95,
+          0.99,
+          1.0
+        ]
+      },
+      "targetOnlyReferenceFramesForDiagnosis": {
+        "diagnosticReferenceFrameSeconds": 90.51,
+        "frames": 9051,
+        "targetChannelActiveSeconds": 84.4,
+        "noChannelAboveOriginalThresholdSeconds": 4.96,
+        "otherChannelAboveOriginalThresholdSeconds": 1.44,
+        "highestProbabilityChannelSeconds": {
+          "0": 1.12,
+          "1": 0.55,
+          "2": 88.84,
+          "3": 0.0,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0,
+          "7": 0.0
+        },
+        "targetProbabilityQuantiles": [
+          0.3881390243768692,
+          0.9611119031906128,
+          0.9851861298084259,
+          0.9995167851448059,
+          0.9998962879180908
+        ],
+        "maximumOtherProbabilityQuantiles": [
+          0.004018439678475261,
+          0.009509249590337276,
+          0.17220629751682281,
+          0.5704928040504456,
+          0.9210727214813232
+        ],
+        "quantileLevels": [
+          0.05,
+          0.5,
+          0.95,
+          0.99,
+          1.0
+        ]
+      }
+    },
+    "afterReturn": {
+      "allTargetReferenceFrames": {
+        "diagnosticReferenceFrameSeconds": 66.11,
+        "frames": 6611,
+        "targetChannelActiveSeconds": 0.0,
+        "noChannelAboveOriginalThresholdSeconds": 1.99,
+        "otherChannelAboveOriginalThresholdSeconds": 64.12,
+        "highestProbabilityChannelSeconds": {
+          "0": 0.9500000000000001,
+          "1": 63.370000000000005,
+          "2": 0.0,
+          "3": 1.79,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0,
+          "7": 0.0
+        },
+        "targetProbabilityQuantiles": [
+          0.0007971164013724774,
+          0.001965662930160761,
+          0.028578300029039383,
+          0.10746128112077687,
+          0.16342099010944366
+        ],
+        "maximumOtherProbabilityQuantiles": [
+          0.611340343952179,
+          0.9845520853996277,
+          0.9960850477218628,
+          0.9965311646461487,
+          0.9968411922454834
+        ],
+        "quantileLevels": [
+          0.05,
+          0.5,
+          0.95,
+          0.99,
+          1.0
+        ]
+      },
+      "targetOnlyReferenceFramesForDiagnosis": {
+        "diagnosticReferenceFrameSeconds": 65.7,
+        "frames": 6570,
+        "targetChannelActiveSeconds": 0.0,
+        "noChannelAboveOriginalThresholdSeconds": 1.99,
+        "otherChannelAboveOriginalThresholdSeconds": 63.71,
+        "highestProbabilityChannelSeconds": {
+          "0": 0.9500000000000001,
+          "1": 63.02,
+          "2": 0.0,
+          "3": 1.73,
+          "4": 0.0,
+          "5": 0.0,
+          "6": 0.0,
+          "7": 0.0
+        },
+        "targetProbabilityQuantiles": [
+          0.0007960880000609905,
+          0.0019299605046398938,
+          0.019372636824846214,
+          0.06215449925512054,
+          0.16342099010944366
+        ],
+        "maximumOtherProbabilityQuantiles": [
+          0.6327108353376389,
+          0.9846498668193817,
+          0.996086186170578,
+          0.9965312623977661,
+          0.9968411922454834
+        ],
+        "quantileLevels": [
+          0.05,
+          0.5,
+          0.95,
+          0.99,
+          1.0
+        ]
+      }
+    }
+  },
+  "referenceSpeakerAndMappingForPostInferenceDiagnosisOnly": {
+    "003-M": 2,
+    "004-M": 1,
+    "001-M": 3,
+    "006-M": 0
+  },
+  "sourceProbabilitySha256": "e067ef343282e0af4253391d4657172d5ccc419ab34d8ac6a25571af1984a86c",
+  "referenceSha256": "d876d6c4b713ba3b0fb3bd189db0d753c09e66abbde616a6fa2d6ec63e80b04a",
+  "cachedHistoricalFramesRemain": 48,
+  "newNeuralCalls": 0,
+  "thresholdOrMappingRetuned": false,
+  "modelOutputChanged": false,
+  "qualityQualified": false,
+  "scope": "10ms-frame descriptive diagnostic, not continuous-time DER or a replacement gate. Original coarse reference intervals may include silence; all-target and target-only frames are both reported. No region is removed from original scoring. Reference voice identity has not been independently re-audited by listening here.",
+  "limits": {
+    "pid": 30440,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 33038336,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

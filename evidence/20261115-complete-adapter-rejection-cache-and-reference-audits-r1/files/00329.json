@@ -1,0 +1,31 @@
+{
+  "source": "https://github.com/nttcslab-sp/diar-forced-alignment/blob/master/AMI/test/EN2002a.rttm",
+  "blob": "3a4228ec8d83411dd016565378e5eb5fff2dbe28",
+  "sha256": "3f8938f08b19eea51529cfeda608543e0c3c885c679d2b8f2360d668bdba406b",
+  "bytes": 102646,
+  "referenceOnlyNameMap": {
+    "FEO070": "EN2002a.B",
+    "FEO072": "EN2002a.C",
+    "MEE071": "EN2002a.D",
+    "MEE073": "EN2002a.A"
+  },
+  "originalQualificationReferenceChanged": false,
+  "sameCompletePrediction": true,
+  "newNeuralCalls": 0,
+  "limits": {
+    "pid": 20916,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 25190400,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

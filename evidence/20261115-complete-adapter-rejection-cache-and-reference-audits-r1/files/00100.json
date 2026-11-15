@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 25,
+    "startSample": 12270274,
+    "endSample": 12737004,
+    "text": "行，嗯，还有就是业务这这边儿，业务下个月咱们有什么比较大的客户吗？下个月呃有下月有好几个呃创业的人嘛，呃创业的大学生嘛跟我联系了，需要呃贷二十五万，二十五万，对，有有两个二十五万的和三个二十万的人。",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 12270274,
+        "endSample": 12737004,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "a4ef78f842f08b33643ab60b3664bd4e1820deebe69e52b90dfaad17844bb041"
+}

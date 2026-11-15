@@ -1,0 +1,61 @@
+{
+  "state": "COMPLETE_FROZEN_ADAPTER_FULL_MEETING_RAW_TEXT_SCORE",
+  "at": "2026-11-15T12:18:56.075301+08:00",
+  "meeting": "S_R004S03C01",
+  "audioSeconds": 2327.119,
+  "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "referenceSha256": "ca515d60e370362aebbf481c465dadc0b8f0f0dc6eeb125845edd09f17cee3d3",
+  "baselineSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\model-output.json",
+  "baselineSourceSha256": "543423e146ab4f5deb03d27d0d85e25fc2fe0e3dd436e9c82341e372869d5155",
+  "baseline": {
+    "referenceCharacters": 8325,
+    "recognizedCharacters": 8205,
+    "totalEdits": 461,
+    "edits": {
+      "replace": 225,
+      "delete": 178,
+      "insert": 58
+    },
+    "cer": 0.055375375375375374,
+    "strictRawCerLessThan5Percent": false
+  },
+  "candidate": {
+    "referenceCharacters": 8325,
+    "recognizedCharacters": 8216,
+    "totalEdits": 456,
+    "edits": {
+      "replace": 231,
+      "delete": 167,
+      "insert": 58
+    },
+    "cer": 0.05477477477477478,
+    "strictRawCerLessThan5Percent": false
+  },
+  "candidateOutputSha256": "6472e47a4c879934117abb515105933ab70e2750157fbda8af09c86f62b6ab67",
+  "candidateStateSha256": "aa957426f3ae39fb4c763876556b90209e797f3ed01761a40672b56b47551d1a",
+  "editsReduced": 5,
+  "normalizationSourceSha256": "05dffe59c59266b9f62de319ea3ec7b8ab7ae5fca982b6becfe3f0bf9098c72f",
+  "noScoringDefinitionsChanged": true,
+  "noReferenceUsedDuringInference": true,
+  "newTrainingUpdates": 0,
+  "allAudioSamplesCoveredOnce": true,
+  "allRawAsrTextPreserved": true,
+  "qualityQualified": false,
+  "scope": "Full chronological original ASR characters only; overlap has no unique merged order. This is not per-person text, diarization, minutes, device or sale acceptance.",
+  "limits": {
+    "pid": 18308,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 18583552,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

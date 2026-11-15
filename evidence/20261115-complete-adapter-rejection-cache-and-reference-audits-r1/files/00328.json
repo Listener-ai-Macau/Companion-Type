@@ -1,0 +1,266 @@
+{
+  "names": {
+    "FEO070": "EN2002a.B",
+    "FEO072": "EN2002a.C",
+    "MEE071": "EN2002a.D",
+    "MEE073": "EN2002a.A"
+  },
+  "originalNames": [
+    "FEO070",
+    "FEO072",
+    "MEE071",
+    "MEE073"
+  ],
+  "externalNames": [
+    "EN2002a.A",
+    "EN2002a.B",
+    "EN2002a.C",
+    "EN2002a.D"
+  ],
+  "referenceOnlyIntersectionSeconds": [
+    [
+      82.61500000000063,
+      366.6059999999984,
+      75.02500000000038,
+      62.421000000000596
+    ],
+    [
+      100.27300000000227,
+      68.46899999999968,
+      697.4179999999998,
+      89.93800000000002
+    ],
+    [
+      105.26099999999994,
+      60.26999999999951,
+      107.6489999999998,
+      361.0879999999995
+    ],
+    [
+      417.6989999999991,
+      81.33899999999994,
+      124.959999999999,
+      111.33800000000059
+    ]
+  ],
+  "assignments": [
+    {
+      "permutation": [
+        1,
+        2,
+        3,
+        0
+      ],
+      "commonSeconds": 1842.8109999999967
+    },
+    {
+      "permutation": [
+        1,
+        2,
+        0,
+        3
+      ],
+      "commonSeconds": 1280.6229999999987
+    },
+    {
+      "permutation": [
+        3,
+        2,
+        1,
+        0
+      ],
+      "commonSeconds": 1237.807999999999
+    },
+    {
+      "permutation": [
+        0,
+        2,
+        3,
+        1
+      ],
+      "commonSeconds": 1222.4599999999998
+    },
+    {
+      "permutation": [
+        1,
+        3,
+        2,
+        0
+      ],
+      "commonSeconds": 981.8919999999973
+    },
+    {
+      "permutation": [
+        1,
+        0,
+        3,
+        2
+      ],
+      "commonSeconds": 952.9269999999992
+    },
+    {
+      "permutation": [
+        0,
+        2,
+        1,
+        3
+      ],
+      "commonSeconds": 951.6410000000005
+    },
+    {
+      "permutation": [
+        3,
+        2,
+        0,
+        1
+      ],
+      "commonSeconds": 946.4390000000003
+    },
+    {
+      "permutation": [
+        2,
+        1,
+        3,
+        0
+      ],
+      "commonSeconds": 922.2809999999986
+    },
+    {
+      "permutation": [
+        1,
+        3,
+        0,
+        2
+      ],
+      "commonSeconds": 686.7649999999974
+    },
+    {
+      "permutation": [
+        1,
+        0,
+        2,
+        3
+      ],
+      "commonSeconds": 685.8660000000011
+    },
+    {
+      "permutation": [
+        3,
+        1,
+        2,
+        0
+      ],
+      "commonSeconds": 656.2379999999991
+    },
+    {
+      "permutation": [
+        2,
+        3,
+        1,
+        0
+      ],
+      "commonSeconds": 642.931999999999
+    },
+    {
+      "permutation": [
+        0,
+        1,
+        3,
+        2
+      ],
+      "commonSeconds": 637.1319999999988
+    },
+    {
+      "permutation": [
+        2,
+        0,
+        3,
+        1
+      ],
+      "commonSeconds": 617.7250000000021
+    },
+    {
+      "permutation": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "commonSeconds": 370.0710000000007
+    },
+    {
+      "permutation": [
+        0,
+        3,
+        2,
+        1
+      ],
+      "commonSeconds": 361.5410000000004
+    },
+    {
+      "permutation": [
+        3,
+        1,
+        0,
+        2
+      ],
+      "commonSeconds": 361.1109999999992
+    },
+    {
+      "permutation": [
+        2,
+        1,
+        0,
+        3
+      ],
+      "commonSeconds": 360.0930000000006
+    },
+    {
+      "permutation": [
+        0,
+        3,
+        1,
+        2
+      ],
+      "commonSeconds": 357.78299999999916
+    },
+    {
+      "permutation": [
+        3,
+        0,
+        2,
+        1
+      ],
+      "commonSeconds": 351.68200000000263
+    },
+    {
+      "permutation": [
+        2,
+        3,
+        0,
+        1
+      ],
+      "commonSeconds": 351.5630000000003
+    },
+    {
+      "permutation": [
+        3,
+        0,
+        1,
+        2
+      ],
+      "commonSeconds": 347.9240000000014
+    },
+    {
+      "permutation": [
+        2,
+        0,
+        1,
+        3
+      ],
+      "commonSeconds": 346.90600000000273
+    }
+  ],
+  "uniqueBestMarginSeconds": 562.187999999998,
+  "modelPredictionsConsulted": false
+}

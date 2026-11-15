@@ -5,7 +5,7 @@ an independent diagnostic, not new ground truth or permission to pass D2.
 """
 from pathlib import Path
 from datetime import datetime
-import hashlib,json,os
+import argparse,hashlib,json,os
 os.environ.update(OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='1')
 from moss_windows_resource_limits_20261104 import WorkerLimits
 limits=WorkerLimits(cpu_percent=5,memory_bytes=1024**3)
@@ -13,11 +13,13 @@ from pyannote.core import Annotation,Segment,Timeline
 
 R=Path('C:/Users/Billy/Desktop/Denzic/Companion')
 D=R/'docs/handoffs/20261109-paired-real-meeting/bilingual-local20261114/d1d2-execution'
-out=D/'reference-annotation-audit-r1'
+parser=argparse.ArgumentParser();parser.add_argument('--control',type=Path)
+args=parser.parse_args()
+out=args.control if args.control is not None else D/'reference-annotation-audit-r1'
 read=lambda p:json.loads(Path(p).read_text(encoding='utf-8'))
 def sha(p):
  with Path(p).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
-old_case=read('E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/speaker-scoring-only.json')
+old_case=read(out/'original-case.json') if (out/'original-case.json').exists() else read('E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/speaker-scoring-only.json')
 new_case=read(out/'alternate-case.json');hyp_binding=read(out/'hypothesis-binding.json')
 old_score=read(hyp_binding['originalQualificationScore'])
 new_score=read(out/'alternate-score-diagnostic-only.json')
@@ -36,8 +38,9 @@ def annotation(path):
  return value.support().crop(uem)
 old,new,hyp=map(annotation,[old_case['reference'],new_case['reference'],hyp_binding['file']])
 rows=[]
+reference_names=read(out/'reference-name-map.json')['names'] if (out/'reference-name-map.json').exists() else None
 for person in old.labels():
- alt=old_case['meeting']+'.'+person
+ alt=reference_names[person] if reference_names is not None else old_case['meeting']+'.'+person
  assert alt in new.labels()
  group=old_score['perReferenceSpeakerForEvaluationOnly'][person]['matchedAnonymousGroup']
  assert group==new_score['perReferenceSpeakerForEvaluationOnly'][alt]['matchedAnonymousGroup']
@@ -64,7 +67,7 @@ outside_nonmatch=sum(r['originalNonAttributedSecondsOutsideMfaReference'] for r 
 # or reference boundary is changed.
 metric_nonmatch=old_score['components']['total']-old_score['components']['correct']
 assert abs(total_nonmatch-metric_nonmatch)<1e-4
-report={'state':'ANNOTATION_PROTOCOL_EXPLAINS_MUCH_OF_ENGLISH_ACTIVITY_SCORE_DIFFERENCE',
+report={'state':'ANNOTATION_PROTOCOL_EXPLAINS_MUCH_OF_ENGLISH_ACTIVITY_SCORE_DIFFERENCE' if outside_nonmatch/total_nonmatch>.5 else 'REFERENCE_PROTOCOL_DIFFERENCE_WITH_RESIDUAL_MODEL_ERRORS',
  'at':datetime.now().astimezone().isoformat(),'meeting':old_case['meeting'],'audioSeconds':duration,
  'originalReferenceDer':old_score['components']['diarization error rate'],
  'externalMfaDiagnosticDer':new_score['components']['diarization error rate'],
@@ -78,7 +81,7 @@ report={'state':'ANNOTATION_PROTOCOL_EXPLAINS_MUCH_OF_ENGLISH_ACTIVITY_SCORE_DIF
  'scope':'Same complete recording and prediction, zero collar, overlap included, no time shifts/padding/threshold changes. Anonymous global mapping identical in both. Non-attributed time includes missed and confused reference activity; this decomposition is not a new DER definition.',
  'limits':['External force-aligned annotations also contain errors and are not independently human-verified here.',
   'Reference-only regions are annotation disagreements, not proved acoustic silence.',
-  'Original whole English WER23.9405% remains unchanged. No new words or identity ability were learned.',
+  'Original whole English word scores remain unchanged. No new words or identity ability were learned.',
   'This English audit does not resolve the Chinese returning-speaker failure or qualify unseen rooms/devices.'],
  'nextAction':'Keep original failures and acceptance gates. Correct the prior diagnosis that English missed-activity seconds alone prove the same amount of lost speech; distinguish reference-protocol mismatch from missing lexical content and actual speaker confusion.',
  'limitsApplied':limits.query()}

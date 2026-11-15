@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 61,
+    "startSample": 29535763,
+    "endSample": 29955955,
+    "text": "额度小，放款快，然后呢，力度低，这就是我们比银行的优优秀的地方，也就是我们客户选择我们的最大的好处。还有就是，我觉得可以增添一个，呃，在APP上增添，嗯，小额贷款，在收集了，呃",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 29535763,
+        "endSample": 29955955,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "4c7efc9cf51d69bc2f26d17a521d13b0127040a23f5c9ffc8c32d7329ae2da5c"
+}

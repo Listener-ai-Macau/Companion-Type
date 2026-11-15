@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "protocolSha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619",
+    "seedManifestSha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267",
+    "workerSourceSha256": "c2de69c21665169f469ca5e7258e5ae90d002a4cc158bddc9a0f05c7656e540c",
+    "baseProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c"
+  },
+  "raw": {
+    "index": 35,
+    "startSample": 17222103,
+    "endSample": 17776513,
+    "text": "农民们他们养猪养鸡，然后贷款，哎，这个还行。但是种大地的话，有些嗯，就是回生活是很好。嗯，然后呢，我们决定就是说把这个贷款嗯下架了，不再做这个。嗯，既然咱这个结算这边没有了，嗯，直接就下架了。对。也不用这个去催催收了。对，也不用催收了。然后呢，这个这个贷款放贷就不放了。我们现在嗯主抓一下这个嗯汽车的呃",
+    "tokens": [],
+    "timestamps": [],
+    "naturalEos": true,
+    "isAggregatedRecovery": false,
+    "acceptedLeaves": [
+      {
+        "startSample": 17222103,
+        "endSample": 17776513,
+        "naturalEos": true,
+        "nodeKey": "root"
+      }
+    ]
+  },
+  "rawSha256": "9bb13fdedf126a8859e85e8d4d23ccf4738bd49099ff2f1e21f6e3175589f160"
+}
