@@ -129,12 +129,10 @@ body .ct-windows.ct-notebook .meeting-topic-source,.mobile-app .meeting-topic-so
 .meeting-map-structured:not(.meeting-map-overview) .meeting-topic-title-node:after{content:none}
 .meeting-map-structured:not(.meeting-map-overview) .meeting-topic-title-node>h3{flex:1;padding:7px 10px;border-radius:0;background:transparent;color:var(--map-ink)!important}
 .meeting-topic-branch-body{display:contents}
-.meeting-topic-answer{display:contents}
 .meeting-map-structured:not(.meeting-map-overview) .meeting-topic-branch-body{position:relative;display:block;margin-left:var(--map-child-indent);padding:var(--map-child-top) 0 0 var(--map-child-span)}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-answer{display:flow-root;min-width:0;padding:0;border:0;border-radius:8px;background:var(--map-soft)}
 .meeting-map-structured:not(.meeting-map-overview) .meeting-topic-branch-body:before,.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-branch-body:after{content:none}
 .meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments{display:flex;flex-direction:column;gap:var(--map-child-spacing);margin:0!important;padding:0;border:0;line-height:var(--map-child-leading)!important}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li{position:relative;padding:8px 14px;border:0;border-radius:0;background:transparent}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li{position:relative;padding:8px 14px;border:0;border-radius:8px;background:var(--map-soft)}
 .meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li:before{content:'';position:absolute;left:calc(0px - var(--map-child-span));top:calc(var(--map-child-anchor) - 5px);width:var(--map-child-span);height:6px;box-sizing:border-box;border:0;border-left:1px solid var(--map-connection);border-bottom:1px solid var(--map-connection);border-bottom-left-radius:5px;background:transparent;pointer-events:none}
 .meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li:after{content:'';position:absolute;left:calc(0px - var(--map-child-span));top:calc(0px - var(--map-child-spacing));bottom:0;width:1px;background:var(--map-connection);pointer-events:none}
 .meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li:first-child:after{top:calc(0px - var(--map-child-top))}

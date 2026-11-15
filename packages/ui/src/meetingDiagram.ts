@@ -16,8 +16,7 @@ export function meetingJudgmentFragments(text:string):string[]{
   }
  }
  parts.push(text.slice(start));
- // Two peers fit the reading surface; keep further statements together.
- return parts.length>2?[parts[0],parts.slice(1).join('')]:parts;
+ return parts;
 }
 
 /** Source fragments only. The tree expresses containment, never inferred causality. */
