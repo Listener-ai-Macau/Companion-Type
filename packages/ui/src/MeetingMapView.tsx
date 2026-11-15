@@ -22,6 +22,7 @@ export function MeetingMapView({markdown,title='会议纪要',onLocate,onRead,co
  const model=useMemo(()=>meetingReaderModel(markdown),[markdown]);
  const labels=useMemo(()=>meetingGlanceLabels(markdown,model.topics),[markdown,model]);
  const nodes=useMemo(()=>model.topics.map(topic=>({...topic,...meetingDiagramParts(topic.text,labels.get(topic.id))})),[model,labels]);
+ const hasResults=model.groups.some(g=>g.id!=='discussionQuestions');
  const questionBased=model.structured&&model.topics.every(topic=>/[?？]$/.test(topic.label.trim()));
  const unitLabel=model.topicLabel==='分组'?'分组':'要点';
  const initiallyOpen=()=>new Set(nodes.slice(0,6).map(node=>node.id));
@@ -29,7 +30,7 @@ export function MeetingMapView({markdown,title='会议纪要',onLocate,onRead,co
  const expanded=selection.source===markdown?selection.ids:initiallyOpen();
  function toggle(key:string,open:boolean){setSelection(previous=>{const ids=new Set(previous.source===markdown?previous.ids:initiallyOpen());if(ids.has(key)===open)return previous;if(open)ids.add(key);else ids.delete(key);return {source:markdown,ids};});}
  if(model.outlineUnavailable)return <section className="meeting-map" aria-label="会议图解"><p className="meeting-topic-unavailable">主题整理尚未完成</p>{onRead&&<button type="button" className="meeting-map-read" onClick={onRead}><BookOpen size={15}/>查看完整纪要<ArrowUpRight size={13}/></button>}</section>;
- return <section className={'meeting-map meeting-diagram'+(model.structured?' meeting-map-structured':'')+(composition==='overview'?' meeting-map-overview':'')} aria-label={composition==='overview'?'主题与观点总览':'会议图解'}>
+ return <section className={'meeting-map meeting-diagram'+(model.structured?' meeting-map-structured':'')+(composition==='overview'?' meeting-map-overview':'')+(hasResults?' meeting-map-has-results':'')} aria-label={composition==='overview'?'主题与观点总览':'会议图解'}>
   {!model.structured&&<div className="meeting-map-tools"><span>{nodes.length} {unitLabel==='分组'?'个分组':'条要点'}</span><div><button type="button" disabled={!nodes.length||expanded.size===nodes.length} onClick={()=>setSelection({source:markdown,ids:new Set(nodes.map(node=>node.id))})}>展开全部</button><button type="button" disabled={!expanded.size} onClick={()=>setSelection({source:markdown,ids:new Set()})}>收起</button></div></div>}
   <div className="meeting-map-canvas">
    <div className={'meeting-map-origin'+(model.structured?' meeting-map-purpose':'')}>{!model.structured&&<GitBranch size={19} aria-hidden="true"/>}<div>{model.structured?<div className="meeting-map-purpose-heading"><strong>会议概览</strong><span>{nodes.length} 个{questionBased?'问题':'主题'}</span></div>:<strong>{title}</strong>}{model.purpose&&<p>{model.purpose}</p>}</div></div>
@@ -44,7 +45,7 @@ export function MeetingMapView({markdown,title='会议纪要',onLocate,onRead,co
      </details>}
     </li>)}
    </ol></div>}
-   {model.groups.some(g=>g.id!=='discussionQuestions')&&<div className="meeting-map-result-group"><div className="meeting-map-group-label">会议事项</div><div className="meeting-map-results">{model.groups.filter(g=>g.id!=='discussionQuestions').map(group=><ResultBranch key={group.id} group={group} onLocate={onLocate}/>)}</div></div>}
+   {hasResults&&<div className="meeting-map-result-group"><div className="meeting-map-group-label">会议事项</div><div className="meeting-map-results">{model.groups.filter(g=>g.id!=='discussionQuestions').map(group=><ResultBranch key={group.id} group={group} onLocate={onLocate}/>)}</div></div>}
    {model.groups.filter(g=>g.id==='discussionQuestions').map(group=><details key={group.id} className="meeting-map-discussed"><summary>会中提问 · {group.items.length}<ChevronDown size={12}/></summary><ResultBranch group={group} onLocate={onLocate}/></details>)}
   </div>
   {onRead&&<button type="button" className="meeting-map-read" onClick={onRead}><BookOpen size={15} aria-hidden="true"/>完整纪要<ArrowUpRight size={13} aria-hidden="true"/></button>}

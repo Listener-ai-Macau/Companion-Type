@@ -104,3 +104,13 @@ body .ct-windows.ct-notebook .meeting-reading-formats>button[aria-pressed=true],
 .meeting-action-group>h3{font-size:16px!important;font-weight:600!important}
 .meeting-action-group li p{font-size:14px!important}
 @media(pointer:coarse){.meeting-reading-formats>button{min-height:44px!important}}
+
+/* One restrained blue accent; clear surfaces and deliberate control hierarchy. */
+body .ct-windows.ct-notebook .meeting-reading-views,.mobile-app .meeting-reading-views{border:1px solid var(--notebook-line);background:var(--notebook-soft);padding:3px;gap:4px;border-radius:11px}
+body .ct-windows.ct-notebook .meeting-reading-views>button[aria-pressed=true],.mobile-app .meeting-reading-views>button[aria-pressed=true]{background:var(--notebook-accent);border-color:var(--notebook-accent);color:var(--notebook-accent-foreground);box-shadow:0 2px 5px var(--notebook-shadow)}
+body .ct-windows.ct-notebook .meeting-reading-formats>button[aria-pressed=true],.mobile-app .meeting-reading-formats>button[aria-pressed=true]{background:var(--notebook-selection);color:var(--notebook-accent)}
+body .ct-windows.ct-notebook .meeting-topic-source,body .ct-windows.ct-notebook .meeting-topic-toggle,.mobile-app .meeting-topic-source,.mobile-app .meeting-topic-toggle{border:1px solid var(--notebook-line);border-radius:7px;background:var(--notebook-paper);color:var(--notebook-muted);padding:3px 7px}
+.meeting-topic-controls>:is(.meeting-topic-source,.meeting-topic-toggle):hover{border-color:var(--notebook-accent);background:var(--notebook-selection);color:var(--notebook-accent)}
+.meeting-topic-toggle[aria-expanded=true]{background:var(--notebook-selection)!important;color:var(--notebook-accent)!important}
+.meeting-map-purpose-heading strong{color:var(--notebook-accent)!important}
+.meeting-speaker-avatar{background:var(--notebook-selection);border-color:var(--notebook-line)}
