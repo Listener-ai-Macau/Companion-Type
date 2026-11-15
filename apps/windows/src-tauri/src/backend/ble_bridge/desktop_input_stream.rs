@@ -15,7 +15,9 @@ fn trace_motion_wire(packet:&[u8]) {
     static ENABLED:std::sync::OnceLock<bool>=std::sync::OnceLock::new();
     static COUNT:std::sync::atomic::AtomicU32=std::sync::atomic::AtomicU32::new(0);
     if !*ENABLED.get_or_init(||std::env::var("COMPANION_POINTER_CAPTURE_WIRE").as_deref()==Ok("1")){return;}
-    if COUNT.fetch_update(Ordering::Relaxed,Ordering::Relaxed,|n|(n<12000).then_some(n+1)).is_err(){return;}
+    // At100Hz this covers the bounded450s manual direction capture. The
+    // trace is opt-in, host-only, and capped below10MiB per process.
+    if COUNT.fetch_update(Ordering::Relaxed,Ordering::Relaxed,|n|(n<48000).then_some(n+1)).is_err(){return;}
     let host_us=std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_micros();
     let hex=packet.iter().map(|b|format!("{b:02x}")).collect::<String>();
     eprintln!("desktop_input_motion_wire schema=1 host_unix_us={host_us} packet={hex}");
@@ -90,13 +92,19 @@ where A:Fn(u32)->F,F:Future<Output=Result<(),String>> {
                     if value.uuid==SETTINGS_UUID {
                         if mode==3 {
                             let fused=companion_desktop_input::pointer::Sample::parse(&value.value).ok();
+                            let mut raw_traced=false;
                             if options==24||options==72 {
                                 if let Ok(sample)=companion_desktop_input::pointer::desktop::Raw::parse(&value.value){
+                                    // CIM5 intentionally has no fused Sample.
+                                    // Capture accepted raw packets here too;
+                                    // the old fused-only trace lost all RAW24
+                                    // payloads despite healthy sample metrics.
+                                    trace_motion_wire(&value.value);raw_traced=true;
                                     sequence=Some(sample.sequence);notify(Update::RawMotion(sample,fused.as_ref().map(|s|s.accel)));
                                 }
                             }
                             if let Some(sample)=fused{
-                                trace_motion_wire(&value.value);
+                                if !raw_traced{trace_motion_wire(&value.value);}
                                 sequence=Some(sample.sequence);
                                 if sample.aim.is_some(){latest=Some(sample);}else{notify(Update::Motion(sample));}
                             }
@@ -157,6 +165,24 @@ mod tests {
         p[40..52].copy_from_slice(&peer.uid);p[52..60].copy_from_slice(&peer.epoch.to_le_bytes());
         let crc=crc32fast::hash(&p[..60]);p[60..].copy_from_slice(&crc.to_le_bytes());
         ValueNotification{uuid:SETTINGS_UUID,value:p}
+    }
+    #[tokio::test(start_paused=true)]
+    async fn raw_cim5_is_delivered_without_a_fused_sample_and_keeps_its_clock_live(){
+        fn raw(sequence:u32)->ValueNotification{
+            let mut p=vec![0u8;32];p[..4].copy_from_slice(b"CIM1");p[4]=5;p[5]=3;
+            p[8..12].copy_from_slice(&sequence.to_le_bytes());p[12..16].copy_from_slice(&(sequence*500).to_le_bytes());p[20..22].copy_from_slice(&1000i16.to_le_bytes());
+            let crc=crc32fast::hash(&p[..28]);p[28..].copy_from_slice(&crc.to_le_bytes());ValueNotification{uuid:SETTINGS_UUID,value:p}
+        }
+        let(tx,rx)=tokio::sync::mpsc::unbounded_channel();
+        let mut values:Notifications=Box::pin(futures::stream::unfold(rx,|mut rx|async move{rx.recv().await.map(|v|(v,rx))}));
+        let stop=AtomicBool::new(false);let seen=Mutex::new(vec![]);let peer=peer();
+        let input=async{tx.send(Ok(raw(1))).unwrap();tokio::time::sleep(Duration::from_millis(500)).await;tx.send(Ok(raw(2))).unwrap();tokio::time::sleep(Duration::from_millis(500)).await;};
+        let notify=|event|match event{
+            Update::RawMotion(s,gravity)=>{assert!(gravity.is_none());seen.lock().unwrap().push(s.sequence);if s.sequence==2{stop.store(true,Ordering::Release);}},
+            Update::Motion(_)=>panic!("CIM5 must not invent fused gravity"),_=>{}
+        };
+        let(result,())=tokio::join!(receive(&mut values,3,24,&peer,&stop,&notify,|_|async{Ok(())}),input);
+        assert_eq!(result,Ok(()));assert_eq!(*seen.lock().unwrap(),vec![1,2]);
     }
     #[tokio::test(start_paused=true)]
     async fn silent_pointer_with_live_native_connection_leaves_waiting_and_requests_recovery(){
