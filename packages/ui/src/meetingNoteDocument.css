@@ -1,4 +1,5 @@
 @import './notebookTheme.css';
+@import './notebookCraft.css';
 /* Document hierarchy follows the official Notta overview/chapters/actions and
    Granola heading/source patterns. Navigation remains the licensed shadcn base. */
 body .ct-shell.ct-windows.ct-notebook{font-family:var(--notebook-font);background:var(--nb-paper)}

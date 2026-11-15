@@ -1,15 +1,14 @@
 import {useMemo} from 'react';
 import {ArrowUpRight,BookOpen,ChevronDown} from 'lucide-react';
-import {meetingGlanceExcerpt} from './meetingGlance';
-import {topicReadingParts} from './MeetingTopic';
+import {meetingGlanceExcerpt,meetingGlanceLabels} from './meetingGlance';
 import {meetingReaderModel,type MeetingReaderGroup,type MeetingReaderItem} from './meetingReaderModel';
 import './meetingOverview.css';
 
 type Locate=(section:string,text?:string)=>void;
 /** Emphasize an exact source prefix; this does not produce a new heading or fact. */
-function SourceText({text}:{text:string}){
- const prefix=topicReadingParts(text).title;
- return <>{prefix?<><strong>{prefix}</strong>{text.slice(prefix.length)}</>:text}</>;
+function SourceText({text,emphasis}:{text:string;emphasis?:string}){
+ const at=emphasis?text.indexOf(emphasis):-1;
+ return <>{at>=0?<>{text.slice(0,at)}<strong>{emphasis}</strong>{text.slice(at+emphasis!.length)}</>:text}</>;
 }
 function OutcomeItem({item,onLocate}:{item:MeetingReaderItem;onLocate:Locate}){
  const preview=meetingGlanceExcerpt(item.body,78);
@@ -31,12 +30,13 @@ function Outcome({group,onLocate}:{group:MeetingReaderGroup;onLocate:Locate}){
 /** Readable saved notes first, with outcomes alongside. No service call or content rewrite. */
 export function MeetingOverview({markdown,onLocate,onRead}:{markdown:string;onLocate:Locate;onRead:()=>void}){
  const model=useMemo(()=>meetingReaderModel(markdown),[markdown]);
+ const labels=useMemo(()=>meetingGlanceLabels(markdown,model.topics),[markdown,model]);
  const topics=(offset:number,count?:number)=>model.topics.slice(offset,count===undefined?undefined:offset+count).map((topic,index)=>{
   const excerpt=meetingGlanceExcerpt(topic.text,180);
   return <li key={topic.id} data-source-text={topic.text}>
    <span className="meeting-overview-number" aria-hidden="true">{String(offset+index+1).padStart(2,'0')}</span>
    <div className="meeting-reader-topic-content">
-    {excerpt.clipped?<details className="meeting-reader-long-topic"><summary><span className="meeting-reader-long-preview"><SourceText text={excerpt.text}/>…</span><span className="meeting-reader-long-close">收起内容</span><ChevronDown size={13} aria-hidden="true"/></summary><p>{topic.text}</p></details>:<p className="meeting-reader-topic-text"><SourceText text={topic.text}/></p>}
+    {excerpt.clipped?<details className="meeting-reader-long-topic"><summary><span className="meeting-reader-long-preview"><SourceText text={excerpt.text} emphasis={labels.get(topic.id)}/>…</span><span className="meeting-reader-long-close">收起内容</span><ChevronDown size={13} aria-hidden="true"/></summary><p>{topic.text}</p></details>:<p className="meeting-reader-topic-text"><SourceText text={topic.text} emphasis={labels.get(topic.id)}/></p>}
     <button type="button" className="meeting-reader-context" aria-label={'查看议题 '+(offset+index+1)+' 上下文'} onClick={()=>onLocate(topic.section,topic.text)}>原文<ArrowUpRight size={12} aria-hidden="true"/></button>
    </div>
   </li>;
