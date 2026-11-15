@@ -1,0 +1,36 @@
+{
+  "state": "FAIL_SINGLE_SOURCE_PROTECTION_NO_THRESHOLD_OR_LABEL_CHANGE",
+  "cases": [
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-10",
+      "baselineErrors": 5,
+      "candidateErrors": 7,
+      "additionalErrors": 2,
+      "originalPredictedOverlapSeconds": 0.5599999999999454
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-12",
+      "baselineErrors": 2,
+      "candidateErrors": 3,
+      "additionalErrors": 1,
+      "originalPredictedOverlapSeconds": 0.9376874999998108
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-14",
+      "baselineErrors": 0,
+      "candidateErrors": 2,
+      "additionalErrors": 2,
+      "originalPredictedOverlapSeconds": 0.4751874999997199
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-15",
+      "baselineErrors": 0,
+      "candidateErrors": 1,
+      "additionalErrors": 1,
+      "originalPredictedOverlapSeconds": 0.30150000000003274
+    }
+  ],
+  "additionalErrors": 6,
+  "ownerLabelingRequired": false,
+  "referenceOrThresholdChanged": false
+}

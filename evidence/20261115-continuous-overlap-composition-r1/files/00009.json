@@ -1,0 +1,299 @@
+{
+  "state": "PASS_ALL32_SAMPLE_COVERAGE_AND_ORIGINAL_AUDIO_PRESERVATION",
+  "cases": [
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-01",
+      "frames": 458640,
+      "predictedOverlapFrames": 17120,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-02",
+      "frames": 461040,
+      "predictedOverlapFrames": 1120,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-03",
+      "frames": 400621,
+      "predictedOverlapFrames": 26880,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-04",
+      "frames": 426440,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-05",
+      "frames": 414820,
+      "predictedOverlapFrames": 19840,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-06",
+      "frames": 397114,
+      "predictedOverlapFrames": 18240,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-01",
+      "frames": 28880,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-02",
+      "frames": 27440,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-03",
+      "frames": 25360,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-04",
+      "frames": 26880,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-05",
+      "frames": 26080,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-01",
+      "frames": 449191,
+      "predictedOverlapFrames": 6080,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-02",
+      "frames": 449651,
+      "predictedOverlapFrames": 13440,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-03",
+      "frames": 475581,
+      "predictedOverlapFrames": 10080,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-04",
+      "frames": 421241,
+      "predictedOverlapFrames": 67040,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-05",
+      "frames": 411541,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-06",
+      "frames": 397051,
+      "predictedOverlapFrames": 105760,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-01",
+      "frames": 33840,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-02",
+      "frames": 26880,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-03",
+      "frames": 31200,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-04",
+      "frames": 28720,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-05",
+      "frames": 16400,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-06",
+      "frames": 16480,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-07",
+      "frames": 14574,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-08",
+      "frames": 32320,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-09",
+      "frames": 14876,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-10",
+      "frames": 23280,
+      "predictedOverlapFrames": 8960,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-11",
+      "frames": 12459,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-12",
+      "frames": 16103,
+      "predictedOverlapFrames": 15003,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-13",
+      "frames": 12157,
+      "predictedOverlapFrames": 0,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-14",
+      "frames": 7603,
+      "predictedOverlapFrames": 7603,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-15",
+      "frames": 7704,
+      "predictedOverlapFrames": 4824,
+      "outsideOverlapOriginalLane0BitExact": true,
+      "outsideOverlapLane1ExactZero": true,
+      "insideOverlapBothSeparatedLanesBitExact": true,
+      "originalAsrReused": false
+    }
+  ],
+  "reusedOriginalCases": 18,
+  "newAsrStreams": 28,
+  "newSeparatorNeuralCalls": 0,
+  "thresholdChanged": false,
+  "speakerStreamAssociationImplemented": false,
+  "qualityQualified": false
+}

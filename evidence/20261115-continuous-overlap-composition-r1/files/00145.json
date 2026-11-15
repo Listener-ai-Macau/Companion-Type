@@ -1,0 +1,40 @@
+{
+  "id": "20200709_L_R002S01C01-multi-turn-context-03",
+  "stream": 1,
+  "sourceWavSha256": "02afe97da640fc7185b76273662c06822924824c9e6a795284bec345de7b65d1",
+  "inputFloatSha256": "0c998648cf22680c22955430ca352968c52b6f2ec24be9f154a8565a6b9c0c36",
+  "text": "可能会，你的安全呢？",
+  "frames": 400621,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 400621,
+        "text": "可能会，你的安全呢？",
+        "language": "Chinese",
+        "generatedIds": [
+          104309,
+          3837,
+          103929,
+          99464,
+          101036,
+          11319,
+          151645
+        ],
+        "rawDecoded": "可能会，你的安全呢？<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.5789882999997644
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,66 @@
+{
+  "repository": "https://github.com/modelscope/ClearerVoice-Studio",
+  "revision": "6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61",
+  "files": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\source\\LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "source": "https://raw.githubusercontent.com/modelscope/ClearerVoice-Studio/6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61/LICENSE",
+      "bytes": 11357
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\source\\clearvoice\\clearvoice\\config\\inference\\MossFormer2_SS_16K.yaml",
+      "sha256": "839fb7cc7eac064552e397172ef2d48fb2762180f3aaba12c04b5899f9edfb00",
+      "source": "https://raw.githubusercontent.com/modelscope/ClearerVoice-Studio/6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61/clearvoice/clearvoice/config/inference/MossFormer2_SS_16K.yaml",
+      "bytes": 866
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\source\\clearvoice\\clearvoice\\network_wrapper.py",
+      "sha256": "39ccc11557a5d805a15564996d7c5d1b5793d2528d1855e71787a6da0601a2e0",
+      "source": "https://raw.githubusercontent.com/modelscope/ClearerVoice-Studio/6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61/clearvoice/clearvoice/network_wrapper.py",
+      "bytes": 15020
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\source\\clearvoice\\clearvoice\\utils\\decode.py",
+      "sha256": "e19417ea6b0556af8b002a2260d9ec287ed4d776eb49e9612586f217ee13f6be",
+      "source": "https://raw.githubusercontent.com/modelscope/ClearerVoice-Studio/6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61/clearvoice/clearvoice/utils/decode.py",
+      "bytes": 32718
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\source\\clearvoice\\clearvoice\\models\\mossformer2_ss\\__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source": "https://raw.githubusercontent.com/modelscope/ClearerVoice-Studio/6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61/clearvoice/clearvoice/models/mossformer2_ss/__init__.py",
+      "bytes": 0
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\source\\clearvoice\\clearvoice\\models\\mossformer2_ss\\conv_module.py",
+      "sha256": "b413aa0cb0df34742460a1f1af2e2cd1d2005900af8ac17e8de8675b8f80de86",
+      "source": "https://raw.githubusercontent.com/modelscope/ClearerVoice-Studio/6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61/clearvoice/clearvoice/models/mossformer2_ss/conv_module.py",
+      "bytes": 12400
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\source\\clearvoice\\clearvoice\\models\\mossformer2_ss\\fsmn.py",
+      "sha256": "62c376b2708ac1c59853c13cbe9acb7ea011082c39f1a42e1af0f8213a00bb76",
+      "source": "https://raw.githubusercontent.com/modelscope/ClearerVoice-Studio/6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61/clearvoice/clearvoice/models/mossformer2_ss/fsmn.py",
+      "bytes": 10621
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\source\\clearvoice\\clearvoice\\models\\mossformer2_ss\\layer_norm.py",
+      "sha256": "d28fea41b3c5a2dd8bb7a1a8c1c97492fcc7eb88cc7b46283fc21e4dbf19f062",
+      "source": "https://raw.githubusercontent.com/modelscope/ClearerVoice-Studio/6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61/clearvoice/clearvoice/models/mossformer2_ss/layer_norm.py",
+      "bytes": 4075
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\source\\clearvoice\\clearvoice\\models\\mossformer2_ss\\mossformer2.py",
+      "sha256": "66f14af8efc0758d8c79bd7d1054851558081c5f6f1150cdf133ae4b6ca9c442",
+      "source": "https://raw.githubusercontent.com/modelscope/ClearerVoice-Studio/6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61/clearvoice/clearvoice/models/mossformer2_ss/mossformer2.py",
+      "bytes": 28213
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\source\\clearvoice\\clearvoice\\models\\mossformer2_ss\\mossformer2_block.py",
+      "sha256": "2760c18c1eb68f8ba2f1160e9a46dc6adfbcb397a693dad27ae6e43e8a02faf0",
+      "source": "https://raw.githubusercontent.com/modelscope/ClearerVoice-Studio/6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61/clearvoice/clearvoice/models/mossformer2_ss/mossformer2_block.py",
+      "bytes": 34003
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-12",
+  "stream": 0,
+  "sourceWavSha256": "0c671c83b790c88ee2909ede3cd0e2c478916c67a24936125a7edc85cb006c16",
+  "inputFloatSha256": "0dc8c00727aea1b597828c22cbd3e86c120eb05650b534cb9d6a3c2d98e9853b",
+  "text": "属于一面。",
+  "frames": 16103,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 16103,
+        "text": "属于一面。",
+        "language": "Chinese",
+        "generatedIds": [
+          100409,
+          105997,
+          1773,
+          151645
+        ],
+        "rawDecoded": "属于一面。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.4653734999997141
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

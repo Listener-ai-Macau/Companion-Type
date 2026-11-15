@@ -189,3 +189,11 @@ src/window_aligned_separator_worker_20261115.py -text -whitespace
 src/run_window_aligned_separator_20261115.py -text -whitespace
 
 src/compile_continuous_meeting_routing_20261115.py -text -whitespace
+
+evidence/20261115-continuous-overlap-composition-r1/** -text -whitespace
+
+src/continuous_meeting_audio_routing_20261115.py -text -whitespace
+
+src/continuous_overlap_composition_worker_20261115.py -text -whitespace
+
+src/run_continuous_overlap_composition_20261115.py -text -whitespace

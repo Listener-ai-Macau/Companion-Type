@@ -1,0 +1,37 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-10",
+  "stream": 0,
+  "sourceWavSha256": "7c8b4c4109f0db4584827d63edff2bcc40b6c291a129de841563e2f66c2e214c",
+  "inputFloatSha256": "b8878d81705bd08314efa36bcc171eaa081a460baee45ab93107348b109e23c1",
+  "text": "放一点。",
+  "frames": 23280,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 23280,
+        "text": "放一点。",
+        "language": "Chinese",
+        "generatedIds": [
+          53222,
+          100380,
+          1773,
+          151645
+        ],
+        "rawDecoded": "放一点。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.3127907000002779
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

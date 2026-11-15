@@ -1,0 +1,41 @@
+{
+  "id": "20200709_L_R002S01C01-multi-turn-context-05",
+  "stream": 1,
+  "sourceWavSha256": "089e498d501cb0841b500f51813a94b3b5692d6e370d61e70c0ff5dc9554f4ec",
+  "inputFloatSha256": "7f71cb23948d93bb2234d02a6dc4bc024204e3b8cc22f6851270e7c9efba363b",
+  "text": "对，不想再练了。",
+  "frames": 414820,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 414820,
+        "text": "对，不想再练了。",
+        "language": "Chinese",
+        "generatedIds": [
+          32664,
+          3837,
+          104359,
+          87256,
+          99930,
+          34187,
+          1773,
+          151645
+        ],
+        "rawDecoded": "对，不想再练了。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.74208950000002
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

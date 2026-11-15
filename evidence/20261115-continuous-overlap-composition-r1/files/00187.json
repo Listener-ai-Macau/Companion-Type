@@ -1,0 +1,37 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-14",
+  "stream": 0,
+  "sourceWavSha256": "6f6dfbf3af1cc0e3309f5e109e02d048a57742d76e32d95b6e1bed93047f9c0a",
+  "inputFloatSha256": "14eab01c25178aa98a2dad2c2fd80e5a5df71d1e6a91f88b2c2f48c0574b5244",
+  "text": "没啦。",
+  "frames": 7603,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 7603,
+        "text": "没啦。",
+        "language": "Chinese",
+        "generatedIds": [
+          70927,
+          104060,
+          1773,
+          151645
+        ],
+        "rawDecoded": "没啦。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 0.9043268999998872
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

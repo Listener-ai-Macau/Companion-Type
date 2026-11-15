@@ -1,0 +1,50 @@
+{
+  "id": "20200805_S_R001S01C01-multi-turn-context-06",
+  "stream": 1,
+  "sourceWavSha256": "85898af5f6278c8aeaf548fa436cfeec4677440426b00fd207971812f944ddbf",
+  "inputFloatSha256": "57a47463395b0562fc755d7eae5f93ee6223f0b66e878f8af126dcab89d60c35",
+  "text": "对，这些就是说那，嗯，这这这些，然后每。",
+  "frames": 397051,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 397051,
+        "text": "对，这些就是说那，嗯，这这这些，然后每。",
+        "language": "Chinese",
+        "generatedIds": [
+          32664,
+          3837,
+          100001,
+          99486,
+          36587,
+          99212,
+          3837,
+          106287,
+          3837,
+          43288,
+          43288,
+          100001,
+          3837,
+          101889,
+          73157,
+          1773,
+          151645
+        ],
+        "rawDecoded": "对，这些就是说那，嗯，这这这些，然后每。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 3.7590071999998145
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}
