@@ -11,11 +11,12 @@ export function meetingReaderModel(markdown:string){
   const parsed=meetingGlanceQualifier(text);
   return {text,body:parsed.body,qualifier:parsed.qualifier||(/(?:需|待)(?:核对|确认)/.test(section!.title)?'待核对':''),section:section!.title};
  });
- const decisions=items(model.decisions),pending=decisions.filter(item=>item.qualifier);
+ const decisions=items(model.decisions),actions=items(model.actions);
+ const pending=[...decisions,...actions].filter(item=>item.qualifier);
  const groups:MeetingReaderGroup[]=[
   {id:'decisions',label:'讨论结论',items:decisions.filter(item=>!item.qualifier)},
   {id:'questions',label:'待确认',items:[...items(model.questions),...pending]},
-  {id:'actions',label:'后续安排',items:items(model.actions)},
+  {id:'actions',label:'后续安排',items:actions.filter(item=>!item.qualifier)},
   {id:'discussionQuestions',label:'会中问题',items:items(model.discussionQuestions)},
  ];
  return {...model,groups:groups.filter(group=>group.items.length)};
