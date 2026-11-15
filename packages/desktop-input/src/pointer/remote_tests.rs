@@ -245,11 +245,19 @@ fn check_surface_stationary_trace(root:&std::path::Path){
     let mut p=Pointer::new(settings,Point{x:960.,y:540.});
     let log=std::fs::read_to_string(root.join("native/app.log")).unwrap();
     let(mut first,mut count,mut ready,mut still,mut path,mut last)=(None,0usize,0usize,0usize,0.,p.shown);
+    let mut previously_moving=false;
     for line in log.lines().filter(|s|s.contains("desktop_input_motion_wire")){
         let h=line.split("packet=").nth(1).unwrap().split_whitespace().next().unwrap();
         let bytes=(0..h.len()).step_by(2).map(|i|u8::from_str_radix(&h[i..i+2],16).unwrap()).collect::<Vec<_>>();
         let raw=desktop::Raw::parse(&bytes).unwrap();let zero=*first.get_or_insert(raw.sensor_ms);let at=raw.sensor_ms.wrapping_sub(zero)as f64/1000.;
         let fused=Sample::parse(&bytes).unwrap();p.sample_raw_gravity(raw,Some(fused.accel),at);p.sample(fused,at,bounds());p.frame(at,bounds());
+        if let Some(c)=&p.coarse{
+            if std::env::var_os("COMPANION_SURFACE_MOVING_DIAGNOSTICS").is_some()&&at>5.&&
+                (c.desktop.state.moving!=previously_moving||c.desktop.state.moving&&c.desktop.state.translation_inhibited){
+                println!("surface moving edge at{at:.3} {:?}",c.desktop.state);
+            }
+            previously_moving=c.desktop.state.moving;
+        }
         if at>5.{count+=1;if !p.metrics.surface_paused{ready+=1;}if let Some(c)=&p.coarse{if c.desktop.state.stationary{still+=1;}}
             path+=(p.shown.x-last.x).hypot(p.shown.y-last.y);
         }
