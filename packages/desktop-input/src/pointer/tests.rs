@@ -54,10 +54,29 @@ fn side_ready()->Pointer{
     let bytes=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect::<Vec<_>>();
     let motion=Sample::parse(&bytes).unwrap();let raw=desktop::Raw::parse(&bytes).unwrap();
     assert_eq!(motion.accel,[0.,0.,1000.]);assert_eq!(raw.accel_mg,[1.,-2.,1000.]);assert_eq!(motion.gyro,raw.gyro_dps);
-    let settings=Settings{contact_regions:true,..Settings::relative_remote()};assert!(settings.validate().is_ok());assert_eq!(settings.pointer_options(),72);
+    let settings=Settings{contact_regions:true,..Settings::relative_remote()};assert!(settings.validate().is_ok());assert_eq!(settings.pointer_options(),200);
     let mut p=Pointer::new(settings,Point::default());p.sample_raw(raw,0.);p.sample(motion,0.,bounds());
     assert_eq!(p.metrics.samples,1);assert!(p.coarse.is_none());assert!(p.metrics.calibrated);
     let mut bad=bytes;bad[28]^=1;assert!(Sample::parse(&bad).is_err());assert!(desktop::Raw::parse(&bad).is_err());
+}
+#[test]fn native_acceleration_preserves_sensor_codes_without_changing_fused_gravity_units(){
+    // Independent firmware C packer, exhaustive driver/native check fixture:
+    // signed raw [-32768,1,32767], gravity+Z, corrected gyro[1.23,-2.34,.01].
+    let hex="43494d310703030209000000701101000000000000407b0016ff010000800100ff7f0000f10acf30";
+    let mut bytes=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect::<Vec<_>>();
+    let raw=desktop::Raw::parse(&bytes).unwrap();let fused=Sample::parse(&bytes).unwrap();
+    assert_eq!(raw.sequence,9);assert_eq!(raw.sensor_ms,70000);
+    assert!((raw.accel_mg[0]+3997.696).abs()<1e-9);
+    assert_eq!(raw.accel_mg[1],0.122);
+    assert!((raw.accel_mg[2]-3997.574).abs()<1e-9);
+    assert_eq!(fused.accel,[0.,0.,1000.]);assert_eq!(fused.gyro,[1.23,-2.34,0.01]);
+    assert_eq!(fused.device_ready,Some(true));assert!(fused.held);
+    // A valid CRC cannot make unsupported reserved data silently acceptable.
+    bytes[34]=1;
+    let mut crc=0xffff_ffffu32;
+    for byte in &bytes[..36]{crc^=*byte as u32;for _ in 0..8{crc=(crc>>1)^((0u32.wrapping_sub(crc&1))&0xedb8_8320);}}
+    bytes[36..].copy_from_slice(&(!crc).to_le_bytes());
+    assert!(desktop::Raw::parse(&bytes).is_err());assert!(Sample::parse(&bytes).is_err());
 }
 #[test]fn regional_clicks_do_not_freeze_movement_or_rewind_the_ordinary_mouse(){
     let mut p=Pointer::new(Settings{contact_regions:true,contact_profile:Some(side_profile()),..Settings::relative_remote()},Point{x:960.,y:540.});
@@ -430,7 +449,7 @@ fn actual_typec_front_lift_moves_up_in_the_existing_angular_mapper() {
 
 fn surface_pointer()->Pointer{
     let settings=Settings{desktop_motion:true,contact_regions:true,contact_profile:Some(side_profile()),key_role:KeyRole::Regrip,..Settings::relative_remote()};
-    assert!(settings.validate().is_ok());assert_eq!(settings.pointer_options(),72);
+    assert!(settings.validate().is_ok());assert_eq!(settings.pointer_options(),200);
     let mut p=Pointer::new(settings,Point{x:960.,y:540.});
     for n in 0..121{surface_frame(&mut p,n,[0.,0.,1000.],[0.;3]);}
     assert!(p.metrics.calibrated);assert!(!p.metrics.surface_paused);p

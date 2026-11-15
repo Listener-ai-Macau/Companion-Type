@@ -93,7 +93,7 @@ where A:Fn(u32)->F,F:Future<Output=Result<(),String>> {
                         if mode==3 {
                             let fused=companion_desktop_input::pointer::Sample::parse(&value.value).ok();
                             let mut raw_traced=false;
-                            if options==24||options==72 {
+                            if matches!(options,24|72|200) {
                                 if let Ok(sample)=companion_desktop_input::pointer::desktop::Raw::parse(&value.value){
                                     // CIM5 intentionally has no fused Sample.
                                     // Capture accepted raw packets here too;
@@ -227,6 +227,19 @@ mod tests {
             Update::Physical(_)=>{events.lock().unwrap().push("control");signal.store(true,Ordering::Release);},_=>{},
         },|_|async{Ok(())}).await,Ok(()));
         assert_eq!(*events.lock().unwrap(),vec!["raw","motion","control"]);
+    }
+    #[tokio::test(start_paused=true)]
+    async fn native_precision_keeps_fractional_raw_before_fused_and_physical_control(){
+        let hex="43494d310703030209000000701101000000000000407b0016ff010000800100ff7f0000f10acf30";
+        let packet=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect();
+        let stop=AtomicBool::new(false);let events=Mutex::new(vec![]);
+        let mut values:Notifications=Box::pin(futures::stream::iter(vec![Ok(ValueNotification{uuid:SETTINGS_UUID,value:packet}),Ok(click(1))]).chain(futures::stream::pending()));
+        assert_eq!(receive(&mut values,3,200,&peer(),&stop,&|event|match event{
+            Update::RawMotion(s,gravity)=>{assert_eq!(s.accel_mg[1],0.122);assert_eq!(gravity,Some([0.,0.,1000.]));events.lock().unwrap().push("native-raw");},
+            Update::Motion(s)=>{assert_eq!(s.accel,[0.,0.,1000.]);events.lock().unwrap().push("fused");},
+            Update::Physical(_)=>{events.lock().unwrap().push("physical");stop.store(true,Ordering::Release);},_=>{},
+        },|_|async{Ok(())}).await,Ok(()));
+        assert_eq!(*events.lock().unwrap(),vec!["native-raw","fused","physical"]);
     }
     #[tokio::test(start_paused=true)]
     async fn control_order_and_ack_prefix_survive_until_missing_motion_ends_the_owner(){

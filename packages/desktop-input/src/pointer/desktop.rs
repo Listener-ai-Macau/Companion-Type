@@ -15,14 +15,14 @@ const NEGLIGIBLE_SPEED_MPS:f64=0.005;
 pub struct Raw {pub sequence:u32,pub sensor_ms:u32,pub accel_mg:[f64;3],pub gyro_dps:[f64;3]}
 impl Raw {
     pub fn parse(p:&[u8])->Result<Self,&'static str>{
-        if p.len()<32||&p[..4]!=b"CIM1"||!matches!(p[4],5|6)||p.len()!=if p[4]==6{40}else{32}||p[5]!=3||p[6]&!3!=0||(p[4]==6&&p[34..36]!=[0,0]){return Err("invalid raw CIM5/6");}
+        if p.len()<32||&p[..4]!=b"CIM1"||!matches!(p[4],5|6|7)||p.len()!=if matches!(p[4],6|7){40}else{32}||p[5]!=3||p[6]&!3!=0||(matches!(p[4],6|7)&&p[34..36]!=[0,0]){return Err("invalid raw CIM5/6/7");}
         let mut crc=0xffff_ffffu32;
         let crc_at=p.len()-4;
         for byte in &p[..crc_at]{crc^=*byte as u32;for _ in 0..8{crc=(crc>>1)^((0u32.wrapping_sub(crc&1))&0xedb8_8320);}}
         if !crc!=u32::from_le_bytes(p[crc_at..].try_into().unwrap()){return Err("raw CRC mismatch");}
         let value=|i|i16::from_le_bytes(p[i..i+2].try_into().unwrap())as f64;
         Ok(Self{sequence:u32::from_le_bytes(p[8..12].try_into().unwrap()),sensor_ms:u32::from_le_bytes(p[12..16].try_into().unwrap()),
-            accel_mg:std::array::from_fn(|i|value((if p[4]==6{28}else{16})+2*i)),gyro_dps:std::array::from_fn(|i|value(22+2*i)/100.)})
+            accel_mg:std::array::from_fn(|i|value((if matches!(p[4],6|7){28}else{16})+2*i)*if p[4]==7{0.122}else{1.}),gyro_dps:std::array::from_fn(|i|value(22+2*i)/100.)})
     }
 }
 #[derive(Clone,Debug,Default,Serialize)]

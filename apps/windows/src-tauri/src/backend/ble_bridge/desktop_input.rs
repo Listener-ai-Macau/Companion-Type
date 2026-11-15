@@ -172,6 +172,12 @@ pub(crate) fn listen_mode(
                     } else {
                         exchange(&device, &characteristic, &mut values, &peer, Some(mode),wanted_options).await?
                     };
+                    // Native precision is additive. An explicit unsupported
+                    // reply permits legacyCIM6; a timeout/link error is still
+                    // an error and is never hidden by changing schemas.
+                    if mode==3&&initial.result==2&&wanted_options==200 {
+                        initial=exchange(&device,&characteristic,&mut values,&peer,Some(mode),72).await?;
+                    }
                     // Old normal firmware remains usable with its original
                     // schema3 controls. New firmware negotiates CIM4 explicitly.
                     if mode==3&&initial.result==2&&wanted_options==8 {
@@ -181,12 +187,13 @@ pub(crate) fn listen_mode(
                     if initial.result != 0 || initial.mode != mode {
                         return Err("请先松开按键并结束当前录音，再启用电脑输入。".into());
                     }
+                    let negotiated_options=initial.options;
                     notify(Update::Ready(initial));
                     drop(acquisition);
                     let input_characteristic=&characteristic;
                     let input_peer=&peer;
                     let input_device=&device;
-                    let receive=input_stream::receive(&mut values,mode,wanted_options,&peer,&stop,&notify,
+                    let receive=input_stream::receive(&mut values,mode,negotiated_options,&peer,&stop,&notify,
                         |sequence|async move {
                             let message=recorder_input::pointer_ack(input_peer,sequence)?;
                             let trace=AckTrace::new(sequence);
@@ -297,6 +304,58 @@ mod hardware_test {
     #[ignore="Owner-labelled raw IMU metadata only; existing production receiver, no mapper/MIC/cursor/reset"]
     fn real_fixed_board_labelled_raw_capture(){
         fixed_board_motion_probe(true);
+    }
+    #[test]
+    #[ignore="Explicit fixed-board lease: production native-precision negotiation, no mapper/MIC/cursor"]
+    fn real_fixed_native_precision_negotiation_restores_recorder_mode(){
+        const DEVICE:&str="C8:ED:45:EB:95:B4";
+        assert_eq!(std::env::var("COMPANION_IMU_HARDWARE_LEASE").as_deref(),Ok("fixed-uid-native-precision-no-mic-no-cursor"));
+        let expected:u32=std::env::var("COMPANION_IMU_EXPECT_FIRMWARE").expect("actual firmware").parse().unwrap();
+        let expected_options:usize=std::env::var("COMPANION_IMU_EXPECT_OPTIONS").expect("explicit native or fallback").parse().unwrap();
+        assert!(matches!(expected_options,72|200));
+        let peer=run_native_blocking(async{
+            let mut device=connect_recorder_device_with_clock(Some(DEVICE),false).await?;
+            let run=async{
+                let wire=read_optional_status(&device.peripheral,&device.peripheral.characteristics(),DEVICE_STATUS_UUID,116).await.ok_or("No protected identity")?;
+                let peer=super::super::super::recording_wire::transport::Peer::from_status(&wire)?.ok_or("No protected peer")?;
+                let uid=peer.uid.iter().map(|b|format!("{b:02x}")).collect::<String>();
+                if uid!="120011000d50335754363720"||u32::from_le_bytes(wire[4..8].try_into().unwrap())!=expected{return Err("Wrong fixed UID/firmware".into());}
+                Ok((peer,uid))
+            }.await;
+            match run{
+                Ok((peer,uid))=>{device.user_connection=true;device.verified_uid=Some(uid);device.recording_peer=Some(peer.clone());remember_prepared_device(device).await?;Ok(peer)},
+                Err(error)=>{close_native_device(&device).await;Err(error)},
+            }
+        }).expect("fixed native precision preparation");
+        let stop=Arc::new(AtomicBool::new(false));let ending_stop=stop.clone();
+        let ending=std::thread::spawn(move||{for _ in 0..200{
+            if ending_stop.load(Ordering::Acquire){return;}
+            std::thread::sleep(StdDuration::from_millis(100));
+        }ending_stop.store(true,Ordering::Release);});
+        let rows=Arc::new(Mutex::new(Vec::<serde_json::Value>::new()));let observed=rows.clone();
+        let accepted=Arc::new(std::sync::atomic::AtomicUsize::new(0));let options=accepted.clone();let completed=stop.clone();
+        let result=listen_mode(DEVICE,peer,stop.clone(),Arc::new(tokio::sync::Mutex::new(())),3,200,move|event|match event{
+            Update::Ready(status)=>{options.store(status.options as usize,Ordering::Release);},
+            Update::RawMotion(raw,gravity)=>{
+                let mut rows=observed.lock().unwrap();if rows.len()<500{rows.push(serde_json::json!({"sequence":raw.sequence,"sensorMs":raw.sensor_ms,"accelMg":raw.accel_mg,"gyroDps":raw.gyro_dps,"gravity":gravity}));}
+                if rows.len()>=500{completed.store(true,Ordering::Release);}
+            },_=>{},
+        });
+        stop.store(true,Ordering::Release);ending.join().unwrap();
+        let cleanup=run_native_blocking(async{
+            let owned=PREPARED_DEVICE_CONNECTION.lock().unwrap().disconnect(Some(DEVICE));
+            if let Some(owned)=owned{disconnect_native_device(&owned.device).await?;}Ok(())
+        });
+        let rows=rows.lock().unwrap();let accepted=accepted.load(Ordering::Acquire);
+        let report=serde_json::json!({"firmware":expected,"requestedOptions":200,"acceptedOptions":accepted,"samples":*rows,"mode0Confirmed":result.is_ok(),"ownedHandlesClosed":cleanup.is_ok(),"microphoneCommands":0,"cursorOutput":false,"physicalStationaryLabelKnown":false});
+        std::fs::write(std::env::var("COMPANION_IMU_NATIVE_RESULT").expect("explicit receipt path"),serde_json::to_vec_pretty(&report).unwrap()).unwrap();
+        cleanup.expect("owned handles closed");result.expect("production mode0 acknowledgement");
+        assert_eq!(accepted,expected_options);assert!(rows.len()>=400,"insufficient actual stream");
+        if accepted==200{
+            assert!(rows.iter().any(|s|s["accelMg"].as_array().unwrap().iter().any(|v|{let x=v.as_f64().unwrap();(x-x.round()).abs()>1e-6})),"native precision was reduced to whole mg");
+            assert!(rows.iter().all(|s|s["accelMg"].as_array().unwrap().iter().all(|v|{let codes=v.as_f64().unwrap()/0.122;(codes-codes.round()).abs()<1e-7})),"native register scale differs");
+        }
+        eprintln!("NATIVE_PRECISION_ACTUAL firmware={expected} requested=200 accepted={accepted} samples={} mode0=true handles_closed=true no_mapper=true no_mic=true",rows.len());
     }
     fn fixed_board_motion_probe(capture:bool){
         const DEVICE:&str="C8:ED:45:EB:95:B4";
