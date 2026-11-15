@@ -1,0 +1,36 @@
+{
+  "id": "20200805_S_R001S01C01-multi-turn-context-05",
+  "stream": 1,
+  "sourceWavSha256": "46a98022e67079c893f3f947fa30cd8c3ada7515610d6395ec378271b0deba3f",
+  "inputFloatSha256": "225d90f39d3e8862f38a550b05d54b4a66638c3d7c630e395b315c899b8cf625",
+  "text": "哦。",
+  "frames": 411541,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 411541,
+        "text": "哦。",
+        "language": "Chinese",
+        "generatedIds": [
+          104170,
+          1773,
+          151645
+        ],
+        "rawDecoded": "哦。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 0.7419705000065733
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

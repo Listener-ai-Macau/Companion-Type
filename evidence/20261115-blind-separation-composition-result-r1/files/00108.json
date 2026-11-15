@@ -1,0 +1,42 @@
+{
+  "id": "20200709_L_R002S01C01-clean-short-response-03",
+  "stream": 0,
+  "sourceWavSha256": "476c7273d9d1fd9f7f3c883c962da44e1ba45a5eb76c6457187e54d855618f35",
+  "inputFloatSha256": "0e9e6f109995155717fae306a6101930016078b62da10e70865d9d73d5de82bd",
+  "text": "零二八，我是保安部。",
+  "frames": 25360,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 25360,
+        "text": "零二八，我是保安部。",
+        "language": "Chinese",
+        "generatedIds": [
+          99822,
+          40820,
+          99568,
+          3837,
+          104198,
+          107150,
+          32948,
+          1773,
+          151645
+        ],
+        "rawDecoded": "零二八，我是保安部。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.9985937000019476
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

@@ -38,7 +38,8 @@ def main():
         assert inventory['selected']['name']=='AMD Radeon RX 6800 XT'
         assert 0<=(datetime.now().astimezone()-datetime.fromisoformat(inventory['finishedAt'])).total_seconds()<1800
         import torch,numpy as np
-        torch.set_num_threads(1);torch.set_num_interop_threads(1)
+        torch.set_num_threads(1)
+        if a.phase!='asr':torch.set_num_interop_threads(1)
         torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
         assert torch.version.hip and torch.cuda.device_count()==1
         torch.cuda.set_device(0);gpu=torch.cuda.get_device_properties(0)
@@ -96,7 +97,9 @@ def main():
             from companion_local_decode_recovery_20261114 import recover_local_decode
             from practical_qwen_bounded_decode_20261107 import repeated_block
             from transformers import StoppingCriteria,StoppingCriteriaList
-            separated=read(Path(protocol['separationRun'])/'state.json')
+            execution_file=a.control/'asr-execution.json'
+            execution=read(execution_file) if execution_file.exists() else {}
+            separated=read(execution.get('separationManifest',str(Path(protocol['separationRun'])/'state.json')))
             assert separated['state']=='COMPLETE_FIXED_BLIND_SEPARATION_ASR_PENDING'
             assert separated['protocolSha256']==binding['protocolSha256']
             class Session:
@@ -125,7 +128,11 @@ def main():
                             neuralInferencePerformed=True,inferenceSeconds=elapsed)
             # One unchanged original waveform/prefix control; all32 baseline
             # transcriptions are reused, never regenerated as a baseline sweep.
-            original=read_audio(cases[0],np);control=raw_infer(original,0,len(original))
+            if execution.get('nativePrefixControl'):
+                assert sha(execution['nativePrefixControl'])==execution['nativePrefixControlSha256']
+                control=read(execution['nativePrefixControl'])
+            else:
+                original=read_audio(cases[0],np);control=raw_infer(original,0,len(original))
             assert control['generatedIds']==read(protocol['baselineNativeControl'])['raw']['generatedIds']
             atomic_json(a.run/'original-native-control.json',control)
             results=[]

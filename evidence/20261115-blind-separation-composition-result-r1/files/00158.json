@@ -1,0 +1,36 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-04",
+  "stream": 1,
+  "sourceWavSha256": "e9abaa5ec0896c6443310574053b76c7b2f7c4f934ece86bb1c244b2662b08b8",
+  "inputFloatSha256": "fa54cbf225ee99e098fe9527d74ced1ee081d2982bcd3e2f70218f83eb70eb2a",
+  "text": "嗯。",
+  "frames": 28720,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 28720,
+        "text": "嗯。",
+        "language": "Chinese",
+        "generatedIds": [
+          106287,
+          1773,
+          151645
+        ],
+        "rawDecoded": "嗯。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 0.719080800015945
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

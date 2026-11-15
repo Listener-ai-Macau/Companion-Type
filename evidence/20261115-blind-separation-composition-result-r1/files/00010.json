@@ -1,0 +1,374 @@
+{
+  "state": "FROZEN_DETECTOR_ROUTED_COMPOSITION_BEFORE_ANY_TEXT_SCORE_INSPECTION",
+  "at": "2026-11-15T17:21:46.699825+08:00",
+  "cases": [
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-01",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "sourceStartFrame": 5287131,
+      "sourceEndFrame": 5745771,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 1.0699999999999932,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-02",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "sourceStartFrame": 6643372,
+      "sourceEndFrame": 7104412,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0.06999999999993634,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-03",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "sourceStartFrame": 27746070,
+      "sourceEndFrame": 28146691,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 1.6800000000000637,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-04",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "sourceStartFrame": 29143992,
+      "sourceEndFrame": 29570432,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-05",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "sourceStartFrame": 29570432,
+      "sourceEndFrame": 29985252,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 1.240000000000009,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-06",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "sourceStartFrame": 31343660,
+      "sourceEndFrame": 31740774,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 1.1399999999998727,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-01",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 628927,
+      "sourceEndFrame": 657807,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-02",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 657807,
+      "sourceEndFrame": 685247,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-03",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 685607,
+      "sourceEndFrame": 710967,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-04",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 712247,
+      "sourceEndFrame": 739127,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-05",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 739127,
+      "sourceEndFrame": 765207,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-01",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "sourceStartFrame": 7300495,
+      "sourceEndFrame": 7749686,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0.37999999999999545,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-02",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "sourceStartFrame": 13194506,
+      "sourceEndFrame": 13644157,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0.8400000000000318,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-03",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "sourceStartFrame": 16617532,
+      "sourceEndFrame": 17093113,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0.6300000000001091,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-04",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "sourceStartFrame": 22656723,
+      "sourceEndFrame": 23077964,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 4.190000000000055,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-05",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "sourceStartFrame": 27967173,
+      "sourceEndFrame": 28378714,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-06",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "sourceStartFrame": 33848154,
+      "sourceEndFrame": 34245205,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 6.609999999999673,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-01",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 170082,
+      "sourceEndFrame": 203922,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-02",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 295042,
+      "sourceEndFrame": 321922,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-03",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 323162,
+      "sourceEndFrame": 354362,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-04",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 356702,
+      "sourceEndFrame": 385422,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-05",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 3548268,
+      "sourceEndFrame": 3564668,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-06",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 11284343,
+      "sourceEndFrame": 11300823,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-07",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 15925361,
+      "sourceEndFrame": 15939935,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-08",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 19242597,
+      "sourceEndFrame": 19274917,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-09",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 22097272,
+      "sourceEndFrame": 22112148,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-10",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 25076608,
+      "sourceEndFrame": 25099888,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0.5599999999999454,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-11",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 26359930,
+      "sourceEndFrame": 26372389,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-12",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 31628980,
+      "sourceEndFrame": 31645083,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0.9376874999998108,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-13",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 31791319,
+      "sourceEndFrame": 31803476,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0,
+      "useBothSeparatedStreams": false
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-14",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 34637016,
+      "sourceEndFrame": 34644619,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0.4751874999997199,
+      "useBothSeparatedStreams": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-15",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "sourceStartFrame": 34644619,
+      "sourceEndFrame": 34652323,
+      "sourceClipPcmExact": true,
+      "detectorPredictedOverlapSeconds": 0.30150000000003274,
+      "useBothSeparatedStreams": true
+    }
+  ],
+  "detectors": {
+    "20200709_L_R002S01C01": {
+      "predictionRttm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\baseline-r1\\results\\20200709_L_R002S01C01\\predicted.rttm",
+      "predictionRttmSha256": "1eac0e315fb6d007fe7091c03b3171061e8cf316246634b43ca21b057e6145d0",
+      "originalAudioSha256": "7772a2f7106a3abfc306e4e638c452f8996e14083b86b6c11e6587e906690d35",
+      "trueSpeakerCountSupplied": false,
+      "originalThreshold": 0.5
+    },
+    "20200805_S_R001S01C01": {
+      "predictionRttm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\baseline-r1\\results\\20200805_S_R001S01C01\\predicted.rttm",
+      "predictionRttmSha256": "536cabaa3178e472528c9691d9a2271912f2984b3fd830dbc555f4cd68937b63",
+      "originalAudioSha256": "eb1bb3eec8f1984e9286dfb9daf5c0437573a2af40eba7ee4093501259ffe4e6",
+      "trueSpeakerCountSupplied": false,
+      "originalThreshold": 0.5
+    }
+  },
+  "rule": "Existing original unadapted Nemotron output, unchanged0.5activity threshold. If any interval in the same PCM clip has>=2predicted active anonymous speakers, use both separated ASR streams. Otherwise retain original raw-input ASR exactly. No gate from reference speaker count/activity, reference words, ASR text/confidence/error or source loudness.",
+  "stage": "Architecture composition added after64ASR streams generated but before any composition score or output-word inspection. The earlier always-on component remains separately evaluated under its own frozen protocol; no failed result is rewritten.",
+  "annotationAssistedDiagnosticCuts": true,
+  "sourceLocationsFromOriginalFrozenCohortOnly": true,
+  "anySourceClipsSelectedOrRemoved": false,
+  "all32InputsScored": true,
+  "thresholdVariants": 0,
+  "keepRule": "Same fixed diagnostic criteria: natural-context total improve, neither context source regress, solo total and either solo source not regress, all used intervals confirmed. Passing only permits original complete meeting/identity/bilingual gates, no default adoption.",
+  "originalAlwaysOnProtocolSha256": "4f10b3428d039872cea32cc3a9c1ccbf121e17458aeada5d2bd6c08f300ff543",
+  "ownerParticipationRequired": false,
+  "newDetectorNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "qualityQualified": false,
+  "d2Complete": false,
+  "fullMeetingOrIdentityAcceptanceClaim": false,
+  "finalHoldoutOpened": false,
+  "limits": {
+    "pid": 10116,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 14004224,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

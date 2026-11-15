@@ -1,0 +1,39 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-03",
+  "stream": 0,
+  "sourceWavSha256": "6514fae7e0f6154eb50520aa90373bd39e1dab9928217c5d7123e32566288fe4",
+  "inputFloatSha256": "fa3a28bc62b21872b68bc5cad90c08d63d86dda989fd74e44579dfd528381dda",
+  "text": "零零六客服。",
+  "frames": 31200,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 31200,
+        "text": "零零六客服。",
+        "language": "Chinese",
+        "generatedIds": [
+          99822,
+          99822,
+          99566,
+          105041,
+          1773,
+          151645
+        ],
+        "rawDecoded": "零零六客服。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.3374227000167593
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

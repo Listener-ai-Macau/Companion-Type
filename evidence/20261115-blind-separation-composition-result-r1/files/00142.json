@@ -1,0 +1,57 @@
+{
+  "id": "20200709_L_R002S01C01-multi-turn-context-06",
+  "stream": 1,
+  "sourceWavSha256": "4e00212ad9b703ceb42cae0e57d7307cc0e5882566f91878ee7e7ba088e612ab",
+  "inputFloatSha256": "090acc69db5256a9766468c9592cfd84836a3e7ccf1ff3bad1383f3c497eb98e",
+  "text": "嗯，我们首先对我们这个健身，嗯，有一些误解，他可能缺少一些了解，或者他觉得。",
+  "frames": 397114,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 397114,
+        "text": "嗯，我们首先对我们这个健身，嗯，有一些误解，他可能缺少一些了解，或者他觉得。",
+        "language": "Chinese",
+        "generatedIds": [
+          106287,
+          3837,
+          97639,
+          101140,
+          107237,
+          99487,
+          101420,
+          3837,
+          106287,
+          3837,
+          101529,
+          114161,
+          3837,
+          42411,
+          87267,
+          102822,
+          101883,
+          99794,
+          3837,
+          100631,
+          42411,
+          99801,
+          1773,
+          151645
+        ],
+        "rawDecoded": "嗯，我们首先对我们这个健身，嗯，有一些误解，他可能缺少一些了解，或者他觉得。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 4.901824200002011
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

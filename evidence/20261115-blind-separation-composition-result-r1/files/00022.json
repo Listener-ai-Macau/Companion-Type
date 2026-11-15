@@ -1,0 +1,8 @@
+{
+  "stage": "CPU unit restoration before any output or neural worker",
+  "error": "AttributeError: str passed to Path-only JSON helper",
+  "controllerPreflightRejectedUnchangedOldBinding": true,
+  "emptyAsrDirectoryVerifiedAndRemoved": true,
+  "newNeuralCalls": 0,
+  "transformedFilesBeforeFix": 0
+}

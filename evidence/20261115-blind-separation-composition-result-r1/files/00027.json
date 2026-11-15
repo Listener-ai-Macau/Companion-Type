@@ -1,0 +1,37 @@
+{
+  "state": "FAILED_BLIND_SEPARATION_PHASE_RETAINED",
+  "phase": "asr",
+  "startedAt": "2026-11-15T17:03:01.047631+08:00",
+  "explicitNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "referencesRead": false,
+  "qualityQualified": false,
+  "protocolSha256": "4f10b3428d039872cea32cc3a9c1ccbf121e17458aeada5d2bd6c08f300ff543",
+  "observedAt": "2026-11-15T17:03:14.180724+08:00",
+  "limits": {
+    "pid": 15876,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 473726976,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "gpu": "AMD Radeon RX 6800 XT",
+  "blas": {
+    "library": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "error": "RuntimeError('Error: cannot set number of interop threads after parallel work has started or set_num_interop_threads called')",
+  "finishedAt": "2026-11-15T17:03:14.181723+08:00",
+  "seconds": 13.134118499991018
+}

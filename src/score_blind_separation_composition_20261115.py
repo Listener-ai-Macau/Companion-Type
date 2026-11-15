@@ -27,7 +27,9 @@ def main():
     limits=WorkerLimits(cpu_percent=5,memory_bytes=1024**3)
     read=lambda p:json.loads(Path(p).read_text(encoding='utf-8'))
     target=a.control/'decision.json';assert not target.exists()
-    protocol=read(a.control/'protocol.json');run=Path(protocol['asrRun'])
+    protocol=read(a.control/'protocol.json')
+    execution=a.control/'asr-execution.json'
+    run=Path(read(execution)['run'] if execution.exists() else protocol['asrRun'])
     state=read(run/'state.json');assert state['state']=='COMPLETE_FIXED_SEPARATION_ASR_COMPOSITION_SCORING_PENDING'
     assert state['all64StreamsRetained'] and state['originalNativePrefixExact']
     assert sha(protocol['scoringManifest'])==protocol['scoringManifestSha256']

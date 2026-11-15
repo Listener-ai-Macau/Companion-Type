@@ -1,0 +1,58 @@
+{
+  "id": "20200709_L_R002S01C01-multi-turn-context-02",
+  "stream": 1,
+  "sourceWavSha256": "1edd536e4b974e3f3743e7a6d3a072983efb9a29095c0b4bf9ed5f7ea6108b97",
+  "inputFloatSha256": "6190bfe71f612285644171e953ccde31a81ae0d50c57b2ac7037c6a042f12fa5",
+  "text": "嗯，嗯，那咱们这个保安部这边呢，上一个季度的情况怎么样？就是安全情况，各种。",
+  "frames": 461040,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 461040,
+        "text": "嗯，嗯，那咱们这个保安部这边呢，上一个季度的情况怎么样？就是安全情况，各种。",
+        "language": "Chinese",
+        "generatedIds": [
+          106287,
+          3837,
+          106287,
+          3837,
+          99212,
+          104335,
+          99487,
+          107150,
+          32948,
+          106467,
+          101036,
+          3837,
+          17447,
+          46944,
+          100126,
+          102072,
+          104472,
+          11319,
+          99486,
+          99464,
+          99559,
+          3837,
+          100646,
+          1773,
+          151645
+        ],
+        "rawDecoded": "嗯，嗯，那咱们这个保安部这边呢，上一个季度的情况怎么样？就是安全情况，各种。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 5.129238299996359
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

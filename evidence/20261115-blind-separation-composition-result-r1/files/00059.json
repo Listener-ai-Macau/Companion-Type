@@ -1,0 +1,39 @@
+{
+  "id": "20200709_L_R002S01C01-clean-short-response-04",
+  "stream": 1,
+  "sourceWavSha256": "9c319739b10df443b332513b84d92e4aa59c1df1af3374a86ae27af9e3b6c544",
+  "inputFloatSha256": "b150a39e28d8cc0ad198964b91804d9913eaf6d1a76f6d49a177b852495cca88",
+  "text": "零幺九不存在。",
+  "frames": 26880,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 26880,
+        "text": "零幺九不存在。",
+        "language": "Chinese",
+        "generatedIds": [
+          99822,
+          119538,
+          99609,
+          69184,
+          1773,
+          151645
+        ],
+        "rawDecoded": "零幺九不存在。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.3341141999990214
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

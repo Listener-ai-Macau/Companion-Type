@@ -1,0 +1,36 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-06",
+  "stream": 0,
+  "sourceWavSha256": "88099221880b006322080c4503f99cddb8ee6864a4960e6076002818ae0f2c33",
+  "inputFloatSha256": "97d30db4a94d1191c5efbb7a08e3871b4e34be47e4f5f3f6330ae766fb6564ff",
+  "text": "客服。",
+  "frames": 16480,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 16480,
+        "text": "客服。",
+        "language": "Chinese",
+        "generatedIds": [
+          105041,
+          1773,
+          151645
+        ],
+        "rawDecoded": "客服。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 0.6800770999980159
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

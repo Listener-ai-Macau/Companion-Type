@@ -1,0 +1,40 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-02",
+  "stream": 0,
+  "sourceWavSha256": "271c623507f6f215fb754eed25528f4b2f2b7d3ef28bda9cbdadfc1daadbb1cf",
+  "inputFloatSha256": "49466383f665200d05fd724b0ea0c991140cca11063717e14c001b7a3c6f7524",
+  "text": "零零五，安保。",
+  "frames": 26880,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 26880,
+        "text": "零零五，安保。",
+        "language": "Chinese",
+        "generatedIds": [
+          99822,
+          99822,
+          75108,
+          3837,
+          113740,
+          1773,
+          151645
+        ],
+        "rawDecoded": "零零五，安保。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.5864585999806877
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,40 @@
+{
+  "id": "20200709_L_R002S01C01-clean-short-response-05",
+  "stream": 0,
+  "sourceWavSha256": "114f596a4a4d0ecca0a4c5a73e549eaf3b81f5cf066e58c1fea9be5516a58ba6",
+  "inputFloatSha256": "5b1b69467215701a67dc05000260ad13763b98c37c83240fa0d0e31f33c3bec6",
+  "text": "零二三运营主管。",
+  "frames": 26080,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 26080,
+        "text": "零二三运营主管。",
+        "language": "Chinese",
+        "generatedIds": [
+          99822,
+          40820,
+          44991,
+          101087,
+          102667,
+          1773,
+          151645
+        ],
+        "rawDecoded": "零二三运营主管。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.5914731999801006
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

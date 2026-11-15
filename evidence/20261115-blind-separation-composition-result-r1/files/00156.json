@@ -1,0 +1,37 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-04",
+  "stream": 0,
+  "sourceWavSha256": "e9abaa5ec0896c6443310574053b76c7b2f7c4f934ece86bb1c244b2662b08b8",
+  "inputFloatSha256": "4e63bd5e801e86fcbb01447b1520e00a0ac8f4ae8a554bf2befe8953fa3d4812",
+  "text": "明星主播。",
+  "frames": 28720,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 28720,
+        "text": "明星主播。",
+        "language": "Chinese",
+        "generatedIds": [
+          102152,
+          107206,
+          1773,
+          151645
+        ],
+        "rawDecoded": "明星主播。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.0624714000150561
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

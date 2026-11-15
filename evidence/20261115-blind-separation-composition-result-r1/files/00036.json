@@ -1,0 +1,22 @@
+{
+  "state": "INCOMPLETE_BLIND_COMPOSITION_PHASE_RETAINED_NO_AUTO_RETRY",
+  "startedAt": "2026-11-15T17:07:23+08:00",
+  "phase": "asr",
+  "index": 0,
+  "workerSha256": "de4ece73554ebbe342964ae950f32a3a5836321403686baee3cfd7563bd2b533",
+  "newTraining": false,
+  "automaticRetries": 0,
+  "qualityQualified": false,
+  "privatePeakBytes": 1251299328,
+  "pid": 6636,
+  "pidCreatedAt": 1794733647.08079,
+  "gpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "error": "InterruptedError('Owned bounded model phase stopped; all source/nodes retained')",
+  "finishedAt": "2026-11-15T17:11:10+08:00",
+  "seconds": 226.92199999999139
+}

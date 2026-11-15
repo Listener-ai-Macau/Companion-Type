@@ -1,0 +1,252 @@
+{
+  "state": "RESTORED_COMMON_SEPARATED_OUTPUT_UNITS_BEFORE_VALID_COMPOSITION_COMPARISON",
+  "at": "2026-11-15T17:14:01.633210+08:00",
+  "cases": [
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-01",
+      "condition": "multi-turn-context",
+      "sharedScale": 0.021570655491014386,
+      "restoredSumToInputRmsRatio": 0.9999999993079473,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-02",
+      "condition": "multi-turn-context",
+      "sharedScale": 0.024125795093291703,
+      "restoredSumToInputRmsRatio": 0.9999999999257176,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-03",
+      "condition": "multi-turn-context",
+      "sharedScale": 0.02518009811552724,
+      "restoredSumToInputRmsRatio": 0.9999999997618974,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-04",
+      "condition": "multi-turn-context",
+      "sharedScale": 0.01916991269092117,
+      "restoredSumToInputRmsRatio": 1.000000000467974,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-05",
+      "condition": "multi-turn-context",
+      "sharedScale": 0.01982015622679189,
+      "restoredSumToInputRmsRatio": 0.9999999999109019,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-06",
+      "condition": "multi-turn-context",
+      "sharedScale": 0.033868288046829745,
+      "restoredSumToInputRmsRatio": 0.9999999996228188,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-01",
+      "condition": "clean-short-response",
+      "sharedScale": 0.02018087436693257,
+      "restoredSumToInputRmsRatio": 1.0000000002255427,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-02",
+      "condition": "clean-short-response",
+      "sharedScale": 0.03380092424498156,
+      "restoredSumToInputRmsRatio": 0.9999999999258932,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-03",
+      "condition": "clean-short-response",
+      "sharedScale": 0.03707534350678819,
+      "restoredSumToInputRmsRatio": 1.0000000013308397,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-04",
+      "condition": "clean-short-response",
+      "sharedScale": 0.01785364636862619,
+      "restoredSumToInputRmsRatio": 0.9999999989718079,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-05",
+      "condition": "clean-short-response",
+      "sharedScale": 0.03583247445091265,
+      "restoredSumToInputRmsRatio": 1.0000000002811533,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-01",
+      "condition": "multi-turn-context",
+      "sharedScale": 0.01593290016668003,
+      "restoredSumToInputRmsRatio": 1.0000000002022653,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-02",
+      "condition": "multi-turn-context",
+      "sharedScale": 0.01612777763965541,
+      "restoredSumToInputRmsRatio": 0.9999999998759643,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-03",
+      "condition": "multi-turn-context",
+      "sharedScale": 0.016291136201755756,
+      "restoredSumToInputRmsRatio": 0.9999999997206906,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-04",
+      "condition": "multi-turn-context",
+      "sharedScale": 0.016142149754799506,
+      "restoredSumToInputRmsRatio": 0.9999999998004762,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-05",
+      "condition": "multi-turn-context",
+      "sharedScale": 0.017633745152794835,
+      "restoredSumToInputRmsRatio": 1.0000000001724,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-06",
+      "condition": "multi-turn-context",
+      "sharedScale": 0.017371878951294575,
+      "restoredSumToInputRmsRatio": 0.999999999899899,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-01",
+      "condition": "clean-short-response",
+      "sharedScale": 0.018572323310353748,
+      "restoredSumToInputRmsRatio": 0.9999999989733868,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-02",
+      "condition": "clean-short-response",
+      "sharedScale": 0.01754145763721766,
+      "restoredSumToInputRmsRatio": 0.999999999003221,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-03",
+      "condition": "clean-short-response",
+      "sharedScale": 0.015794151927404403,
+      "restoredSumToInputRmsRatio": 0.9999999996278103,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-04",
+      "condition": "clean-short-response",
+      "sharedScale": 0.017664970612384086,
+      "restoredSumToInputRmsRatio": 1.0000000005754828,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-05",
+      "condition": "clean-short-response",
+      "sharedScale": 0.026395787538468395,
+      "restoredSumToInputRmsRatio": 0.9999999998407312,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-06",
+      "condition": "clean-short-response",
+      "sharedScale": 0.024117734986973654,
+      "restoredSumToInputRmsRatio": 0.9999999993243596,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-07",
+      "condition": "clean-short-response",
+      "sharedScale": 0.024867384950840583,
+      "restoredSumToInputRmsRatio": 0.9999999996411315,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-08",
+      "condition": "clean-short-response",
+      "sharedScale": 0.02108595552519126,
+      "restoredSumToInputRmsRatio": 0.999999999254465,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-09",
+      "condition": "clean-short-response",
+      "sharedScale": 0.01885250037912228,
+      "restoredSumToInputRmsRatio": 1.0000000018917121,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-10",
+      "condition": "clean-short-response",
+      "sharedScale": 0.021248353825766456,
+      "restoredSumToInputRmsRatio": 1.0000000004146765,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-11",
+      "condition": "clean-short-response",
+      "sharedScale": 0.030666091347980082,
+      "restoredSumToInputRmsRatio": 1.0000000005344116,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-12",
+      "condition": "clean-short-response",
+      "sharedScale": 0.016562107953412154,
+      "restoredSumToInputRmsRatio": 0.9999999997452412,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-13",
+      "condition": "clean-short-response",
+      "sharedScale": 0.037808308571072806,
+      "restoredSumToInputRmsRatio": 1.0000000014595327,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-14",
+      "condition": "clean-short-response",
+      "sharedScale": 0.019029139173474284,
+      "restoredSumToInputRmsRatio": 1.000000000342336,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-15",
+      "condition": "clean-short-response",
+      "sharedScale": 0.022966684483463493,
+      "restoredSumToInputRmsRatio": 0.99999999930047,
+      "rawInputAndRawSeparatedOutputsUnchanged": true
+    }
+  ],
+  "all64RawFloatOutputsRetained": true,
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "reason": "SI-SNR-trained public separator outputs were~40–50x mixture RMS. Official wrapper independently restores each output RMS; this adapter instead restores one common sum RMS to original magnitude, avoiding independent boosting of weak streams. This is a signal-unit preparation fix applied to all32inputs, not a score-selected or learned gain.",
+  "referenceTextOrScoresConsulted": false,
+  "previousUnscaledTranscriptsRetained": true,
+  "limits": {
+    "pid": 15288,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 546291712,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

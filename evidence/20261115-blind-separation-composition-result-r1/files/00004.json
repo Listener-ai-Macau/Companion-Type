@@ -1,0 +1,554 @@
+{
+  "state": "COMPLETE_EXISTING_FLOAT_OUTPUT_PRESERVATION_DIAGNOSTIC",
+  "at": "2026-11-15T17:08:47.241045+08:00",
+  "groups": {
+    "clean-short-response": {
+      "cases": 20,
+      "medianLouderStreamRmsRatio": 42.396983164225205,
+      "medianQuieterStreamRmsRatio": 1.2852760196858335,
+      "medianSumResidualRatio": 46.550826038251785,
+      "samplesOutsideUnitRange": 38379
+    },
+    "multi-turn-context": {
+      "cases": 12,
+      "medianLouderStreamRmsRatio": 49.18844024543598,
+      "medianQuieterStreamRmsRatio": 18.003338729904613,
+      "medianSumResidualRatio": 53.621720991216776,
+      "samplesOutsideUnitRange": 651106
+    }
+  },
+  "cases": [
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-01",
+      "condition": "multi-turn-context",
+      "frames": 458640,
+      "inputRms": 0.016053952222933526,
+      "outputRmsRatios": [
+        40.89841654177479,
+        20.949409746005337
+      ],
+      "sumResidualRmsRatio": 45.650652040909726,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 51505,
+      "anonymousChannelSwaps": 4
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-02",
+      "condition": "multi-turn-context",
+      "frames": 461040,
+      "inputRms": 0.01601953598261973,
+      "outputRmsRatios": [
+        38.24208655777291,
+        15.766719101377463
+      ],
+      "sumResidualRmsRatio": 40.819046350101765,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 44417,
+      "anonymousChannelSwaps": 5
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-03",
+      "condition": "multi-turn-context",
+      "frames": 400621,
+      "inputRms": 0.015460990590291886,
+      "outputRmsRatios": [
+        18.996449643568276,
+        33.88183377597787
+      ],
+      "sumResidualRmsRatio": 38.971888764334544,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 24968,
+      "anonymousChannelSwaps": 9
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-04",
+      "condition": "multi-turn-context",
+      "frames": 426440,
+      "inputRms": 0.015474940952783336,
+      "outputRmsRatios": [
+        50.02866968374457,
+        11.774270283197081
+      ],
+      "sumResidualRmsRatio": 51.32960714440891,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 50985,
+      "anonymousChannelSwaps": 4
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-05",
+      "condition": "multi-turn-context",
+      "frames": 414820,
+      "inputRms": 0.016675630659043948,
+      "outputRmsRatios": [
+        43.92345612729921,
+        23.190007605498955
+      ],
+      "sumResidualRmsRatio": 49.64154916475889,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 49279,
+      "anonymousChannelSwaps": 5
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-06",
+      "condition": "multi-turn-context",
+      "frames": 397114,
+      "inputRms": 0.015913803031606746,
+      "outputRmsRatios": [
+        27.42204847431859,
+        8.748655012229097
+      ],
+      "sumResidualRmsRatio": 29.01242071925335,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 16706,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-01",
+      "condition": "clean-short-response",
+      "frames": 28880,
+      "inputRms": 0.021702675205857835,
+      "outputRmsRatios": [
+        49.523282191444665,
+        0.5354700026469223
+      ],
+      "sumResidualRmsRatio": 48.881517903929755,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 6341,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-02",
+      "condition": "clean-short-response",
+      "frames": 27440,
+      "inputRms": 0.016948489648130997,
+      "outputRmsRatios": [
+        29.161987684214534,
+        1.9211064028525258
+      ],
+      "sumResidualRmsRatio": 29.146594656412358,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 1872,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-03",
+      "condition": "clean-short-response",
+      "frames": 25360,
+      "inputRms": 0.01426251773015432,
+      "outputRmsRatios": [
+        26.829044763177404,
+        1.788126703136591
+      ],
+      "sumResidualRmsRatio": 26.603673030583895,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 691,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-04",
+      "condition": "clean-short-response",
+      "frames": 26880,
+      "inputRms": 0.011119261797125054,
+      "outputRmsRatios": [
+        41.16755866490743,
+        20.725390617653964
+      ],
+      "sumResidualRmsRatio": 55.050068505211044,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 1426,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-05",
+      "condition": "clean-short-response",
+      "frames": 26080,
+      "inputRms": 0.010567549003823156,
+      "outputRmsRatios": [
+        27.881517766656152,
+        0.5179440245978424
+      ],
+      "sumResidualRmsRatio": 27.50975701216641,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 292,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-01",
+      "condition": "multi-turn-context",
+      "frames": 449191,
+      "inputRms": 0.014193257863281804,
+      "outputRmsRatios": [
+        54.54187214277266,
+        30.969060582700457
+      ],
+      "sumResidualRmsRatio": 61.9031014969426,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 80271,
+      "anonymousChannelSwaps": 3
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-02",
+      "condition": "multi-turn-context",
+      "frames": 449651,
+      "inputRms": 0.015346852868051545,
+      "outputRmsRatios": [
+        51.63801418564552,
+        31.034895516972867
+      ],
+      "sumResidualRmsRatio": 61.12744124340326,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 86007,
+      "anonymousChannelSwaps": 9
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-03",
+      "condition": "multi-turn-context",
+      "frames": 475581,
+      "inputRms": 0.012381505196326323,
+      "outputRmsRatios": [
+        61.05978928148884,
+        5.179716549631123
+      ],
+      "sumResidualRmsRatio": 60.52730096807059,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 73440,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-04",
+      "condition": "multi-turn-context",
+      "frames": 421241,
+      "inputRms": 0.01623517828835058,
+      "outputRmsRatios": [
+        59.3837403265657,
+        17.010227816240953
+      ],
+      "sumResidualRmsRatio": 61.081220042995064,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 88147,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-05",
+      "condition": "multi-turn-context",
+      "frames": 411541,
+      "inputRms": 0.01119801906787423,
+      "outputRmsRatios": [
+        56.65336123345072,
+        1.5656482020406175
+      ],
+      "sumResidualRmsRatio": 55.91383483802464,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 42917,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-06",
+      "condition": "multi-turn-context",
+      "frames": 397051,
+      "inputRms": 0.011024291089590058,
+      "outputRmsRatios": [
+        30.896561643398844,
+        48.34821080712739
+      ],
+      "sumResidualRmsRatio": 56.74170159878656,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 42464,
+      "anonymousChannelSwaps": 12
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-01",
+      "condition": "clean-short-response",
+      "frames": 33840,
+      "inputRms": 0.03562882165020484,
+      "outputRmsRatios": [
+        24.52878817054284,
+        47.80222789986562
+      ],
+      "sumResidualRmsRatio": 52.9798384217437,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 9367,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-02",
+      "condition": "clean-short-response",
+      "frames": 26880,
+      "inputRms": 0.008219796959005168,
+      "outputRmsRatios": [
+        56.92075048321792,
+        1.9110345660283545
+      ],
+      "sumResidualRmsRatio": 56.20660933273408,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 1696,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-03",
+      "condition": "clean-short-response",
+      "frames": 31200,
+      "inputRms": 0.011739437955777688,
+      "outputRmsRatios": [
+        63.3000173205188,
+        0.5898003553243691
+      ],
+      "sumResidualRmsRatio": 62.44399018181843,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 5208,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-04",
+      "condition": "clean-short-response",
+      "frames": 28720,
+      "inputRms": 0.01073418309611157,
+      "outputRmsRatios": [
+        56.50910918888986,
+        1.3350568764408646
+      ],
+      "sumResidualRmsRatio": 55.75111106477609,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 2502,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-05",
+      "condition": "clean-short-response",
+      "frames": 16400,
+      "inputRms": 0.005684520678062738,
+      "outputRmsRatios": [
+        6.021296841193506,
+        37.403997831740135
+      ],
+      "sumResidualRmsRatio": 37.34218239681782,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 0,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-06",
+      "condition": "clean-short-response",
+      "frames": 16480,
+      "inputRms": 0.006618127134373634,
+      "outputRmsRatios": [
+        41.25490840404468,
+        2.8828314592520803
+      ],
+      "sumResidualRmsRatio": 40.84684950501552,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 313,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-07",
+      "condition": "clean-short-response",
+      "frames": 14574,
+      "inputRms": 0.0054843661882606875,
+      "outputRmsRatios": [
+        40.16986138999853,
+        1.2354951629308022
+      ],
+      "sumResidualRmsRatio": 39.62736106363912,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 0,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-08",
+      "condition": "clean-short-response",
+      "frames": 32320,
+      "inputRms": 0.007739916212805188,
+      "outputRmsRatios": [
+        47.42068419431132,
+        0.46194249362534606
+      ],
+      "sumResidualRmsRatio": 46.769289791663084,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 1220,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-09",
+      "condition": "clean-short-response",
+      "frames": 14876,
+      "inputRms": 0.0078106500255817,
+      "outputRmsRatios": [
+        48.97507016098196,
+        19.051098047588727
+      ],
+      "sumResidualRmsRatio": 52.14629988295662,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 726,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-10",
+      "condition": "clean-short-response",
+      "frames": 23280,
+      "inputRms": 0.011910124069573137,
+      "outputRmsRatios": [
+        39.91476186127835,
+        19.46725752764625
+      ],
+      "sumResidualRmsRatio": 46.332362284840485,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 1987,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-11",
+      "condition": "clean-short-response",
+      "frames": 12459,
+      "inputRms": 0.007326704403074126,
+      "outputRmsRatios": [
+        32.60001610544029,
+        0.3456617010243919
+      ],
+      "sumResidualRmsRatio": 32.10262662632233,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 129,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-12",
+      "condition": "clean-short-response",
+      "frames": 16103,
+      "inputRms": 0.017660780250895295,
+      "outputRmsRatios": [
+        60.32832869921245,
+        0.8865920922047636
+      ],
+      "sumResidualRmsRatio": 59.525497702455226,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 4025,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-13",
+      "condition": "clean-short-response",
+      "frames": 12157,
+      "inputRms": 0.004876179789973913,
+      "outputRmsRatios": [
+        26.452319973207686,
+        0.467542001690377
+      ],
+      "sumResidualRmsRatio": 25.965516709040465,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 0,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-14",
+      "condition": "clean-short-response",
+      "frames": 7603,
+      "inputRms": 0.007851596028273285,
+      "outputRmsRatios": [
+        52.55220485103091,
+        0.6756113871575504
+      ],
+      "sumResidualRmsRatio": 51.877968115602066,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 254,
+      "anonymousChannelSwaps": 0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-15",
+      "condition": "clean-short-response",
+      "frames": 7704,
+      "inputRms": 0.010177742639535888,
+      "outputRmsRatios": [
+        43.539057924405725,
+        0.24982345047454194
+      ],
+      "sumResidualRmsRatio": 42.7956516859575,
+      "originalAmplitudeInput": true,
+      "noPerStreamOutputGain": true,
+      "noSamplesClipped": true,
+      "samplesOutsideUnitRange": 330,
+      "anonymousChannelSwaps": 0
+    }
+  ],
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "qualityQualified": false,
+  "interpretation": "Natural single-mic recordings have no exact isolated source waveforms. Energy/sum residual is not SI-SNRi, acoustic separation quality or word recovery. No gains, outputs, decoding or frozen keep rules changed after observing this diagnostic.",
+  "limits": {
+    "pid": 14848,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 540065792,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

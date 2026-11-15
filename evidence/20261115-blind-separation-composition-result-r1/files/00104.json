@@ -1,0 +1,42 @@
+{
+  "id": "20200709_L_R002S01C01-clean-short-response-02",
+  "stream": 0,
+  "sourceWavSha256": "173dce22a7ac51ab544022adbdce564ba71e1b2064e9fc3a58a4329f4852a89b",
+  "inputFloatSha256": "06feaac4c19deff3dc286b0cafecff112a52a217b7f5372efc4daba8f0c6de5a",
+  "text": "零二六，我们的教练不。",
+  "frames": 27440,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 27440,
+        "text": "零二六，我们的教练不。",
+        "language": "Chinese",
+        "generatedIds": [
+          99822,
+          40820,
+          99566,
+          3837,
+          103952,
+          102562,
+          16530,
+          1773,
+          151645
+        ],
+        "rawDecoded": "零二六，我们的教练不。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.9451078999845777
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

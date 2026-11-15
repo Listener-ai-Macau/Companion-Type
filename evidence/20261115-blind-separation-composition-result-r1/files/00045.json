@@ -1,0 +1,41 @@
+{
+  "id": "20200709_L_R002S01C01-clean-short-response-01",
+  "stream": 0,
+  "sourceWavSha256": "1d76332bff4c12b36848613101845075d48736f640310a29c5de4d8fcf5d2ca4",
+  "inputFloatSha256": "6a2f38d757cc0938c3099478e4bc2410907b23df43376f25bab3e15b9861938d",
+  "text": "零零二，我是总经理。",
+  "frames": 28880,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 28880,
+        "text": "零零二，我是总经理。",
+        "language": "Chinese",
+        "generatedIds": [
+          99822,
+          99822,
+          40820,
+          3837,
+          104198,
+          104266,
+          1773,
+          151645
+        ],
+        "rawDecoded": "零零二，我是总经理。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.7526233999815304
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

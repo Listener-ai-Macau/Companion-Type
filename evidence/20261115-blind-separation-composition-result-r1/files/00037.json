@@ -1,0 +1,195 @@
+{
+  "state": "FAILED_BLIND_SEPARATION_PHASE_RETAINED",
+  "phase": "asr",
+  "startedAt": "2026-11-15T17:07:27.560660+08:00",
+  "explicitNeuralCalls": 23,
+  "parameterUpdates": 0,
+  "referencesRead": false,
+  "qualityQualified": false,
+  "protocolSha256": "4f10b3428d039872cea32cc3a9c1ccbf121e17458aeada5d2bd6c08f300ff543",
+  "observedAt": "2026-11-15T17:11:09.909824+08:00",
+  "limits": {
+    "pid": 28188,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1283354624,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "gpu": "AMD Radeon RX 6800 XT",
+  "blas": {
+    "library": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "completed": 22,
+  "total": 64,
+  "results": [
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-01",
+      "stream": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-multi-turn-context-01\\stream-0\\result.json",
+      "sha256": "4e4bed50b25e7c920c86480851e73c3f65385f42df79c09422bdac232627662b",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-01",
+      "stream": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-multi-turn-context-01\\stream-1\\result.json",
+      "sha256": "373999c89e8ef1133db63d744d84bdf8e15d0b0c9c4c585eda14d5c8fd51ff4a",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-02",
+      "stream": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-multi-turn-context-02\\stream-0\\result.json",
+      "sha256": "e83683424801acfe4e300954523f14a0859593c2543fdaa616c4ce77c6f8db36",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-02",
+      "stream": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-multi-turn-context-02\\stream-1\\result.json",
+      "sha256": "00a7ca2505a8bf26089e0a0f0a811fb11909588d801cba4888d01434997f96f2",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-03",
+      "stream": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-multi-turn-context-03\\stream-0\\result.json",
+      "sha256": "2598457869019e8d33628fb9465b826b18c344a1b83103194bed6a11fc9dd2cb",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-03",
+      "stream": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-multi-turn-context-03\\stream-1\\result.json",
+      "sha256": "502c172cc92fc8ab45045dc8c31052c9ebb226d60e5ac5e1f80eabe6bc2202da",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-04",
+      "stream": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-multi-turn-context-04\\stream-0\\result.json",
+      "sha256": "f81fac900024dcb8cb5e1237620f0adfb5ee8164a149d6e7fdc35d577ca04381",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-04",
+      "stream": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-multi-turn-context-04\\stream-1\\result.json",
+      "sha256": "0a29c05e8a58b53cc0e67914bad50e2d17865449300ac2fc92e57a0fabc77b10",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-05",
+      "stream": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-multi-turn-context-05\\stream-0\\result.json",
+      "sha256": "5b296b251e86602bcd3013d979d1ada2d41631f4090b71b2fe2fb7d4debc84b9",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-05",
+      "stream": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-multi-turn-context-05\\stream-1\\result.json",
+      "sha256": "12981e03d31bb906bbd16ecccc8ea51e4e49fdcff027ce23add9957e3b354164",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-06",
+      "stream": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-multi-turn-context-06\\stream-0\\result.json",
+      "sha256": "e60133e17dc1b9022e2f0220cdc685f3941dd9874cf3a66723a7b6cd9420b64e",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-06",
+      "stream": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-multi-turn-context-06\\stream-1\\result.json",
+      "sha256": "3ad18764da11ed409e97231c999f565a01d6da1eabed5f56c754b313e420b507",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-01",
+      "stream": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-clean-short-response-01\\stream-0\\result.json",
+      "sha256": "84f16c7ebb1a5ca6d911ec83a5f4d177f2d3d01dfded6a601d3e2758fcd70b65",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-01",
+      "stream": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-clean-short-response-01\\stream-1\\result.json",
+      "sha256": "a3f88775bdf0b030361ae6c428002b1593365046ec87683b356a111803f6cea2",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-02",
+      "stream": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-clean-short-response-02\\stream-0\\result.json",
+      "sha256": "a51244854133b6778252d409d8186f2d4c029bb4ad8110db231c10da527d0c37",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-02",
+      "stream": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-clean-short-response-02\\stream-1\\result.json",
+      "sha256": "f6bf36812ae30e436c559803eee22d76b7545471400676326c527edce84fbec4",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-03",
+      "stream": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-clean-short-response-03\\stream-0\\result.json",
+      "sha256": "d1c3191bf3afadd14991f066189206655a4c58d5f571544cad4978747b1a4be7",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-03",
+      "stream": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-clean-short-response-03\\stream-1\\result.json",
+      "sha256": "8b0460a5d5a5d3e185042aa3e7ea23860fe1e9ccc0f502439b120d2e99eb9819",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-04",
+      "stream": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-clean-short-response-04\\stream-0\\result.json",
+      "sha256": "6025ee51e7e2a2bfcfffe06d1a48ef87734426730ce3b23f00996ec7f6d39dec",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-04",
+      "stream": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-clean-short-response-04\\stream-1\\result.json",
+      "sha256": "4010b62d52e81d7a411d96dcdde5e6c09abd72eb9e38ddc7cb4b4c1bcf63c7ce",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-05",
+      "stream": 0,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-clean-short-response-05\\stream-0\\result.json",
+      "sha256": "441b147c74cd95e8011ed529567a653fdbe5db60ecf933c64e37f49a3c00cda3",
+      "reviewRequired": false
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-05",
+      "stream": 1,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\transcripts\\20200709_L_R002S01C01-clean-short-response-05\\stream-1\\result.json",
+      "sha256": "1256ac0ef2a856cfa3caa2d1adab39b94d6b7130f5bb4a766003b3c4da208a89",
+      "reviewRequired": false
+    }
+  ],
+  "error": "InterruptedError('Owned resource stop; original source and all outputs retained')",
+  "finishedAt": "2026-11-15T17:11:09.910825+08:00",
+  "seconds": 222.34965239997837
+}

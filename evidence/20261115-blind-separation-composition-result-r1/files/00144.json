@@ -1,0 +1,38 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-01",
+  "stream": 0,
+  "sourceWavSha256": "cc998bf62e7f33ba7b32188c7253adee4d9348e189cb88d273b12c862c34f9f0",
+  "inputFloatSha256": "6b7da63b71a409d55012455109b774bf060448d6a92ab4cdceb557e2b20aa420",
+  "text": "联盟三总经理。",
+  "frames": 33840,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 33840,
+        "text": "联盟三总经理。",
+        "language": "Chinese",
+        "generatedIds": [
+          104237,
+          44991,
+          104266,
+          1773,
+          151645
+        ],
+        "rawDecoded": "联盟三总经理。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.3959576000052039
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

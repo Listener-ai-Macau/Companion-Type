@@ -1,0 +1,53 @@
+{
+  "state": "ISOLATED_THREE_PURE_PYTHON_DEPENDENCIES_NO_BASE_RUNTIME_CHANGES",
+  "at": "2026-11-15T16:49:13.751300+08:00",
+  "target": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\isolated-dependencies",
+  "packages": [
+    {
+      "package": "einops",
+      "version": "0.8.2",
+      "wheel": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\wheels\\einops-0.8.2-py3-none-any.whl",
+      "sha256": "54058201ac7087911181bfec4af6091bb59380360f069276601256a76af08193",
+      "source": "https://files.pythonhosted.org/packages/2a/09/f8d8f8f31e4483c10a906437b4ce31bdf3d6d417b73fe33f1a8b59e34228/einops-0.8.2-py3-none-any.whl",
+      "dependencies": []
+    },
+    {
+      "package": "rotary-embedding-torch",
+      "version": "0.8.9",
+      "wheel": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\wheels\\rotary_embedding_torch-0.8.9-py3-none-any.whl",
+      "sha256": "700e8de9dfbefba5f9117a66652a2520648dcc60136895f0068b6a85347cab02",
+      "source": "https://files.pythonhosted.org/packages/94/21/05e319ebef4a8194f9c4cc09f9c3213ab846da200fa6e88699cdb7e9679a/rotary_embedding_torch-0.8.9-py3-none-any.whl",
+      "dependencies": [
+        "einops>=0.7",
+        "torch>=2.0"
+      ]
+    },
+    {
+      "package": "torchinfo",
+      "version": "1.8.0",
+      "wheel": "E:\\CodexData\\Companion\\.model-cache\\blind-separation-composition-20261115\\wheels\\torchinfo-1.8.0-py3-none-any.whl",
+      "sha256": "2e911c2918603f945c26ff21a3a838d12709223dc4ccf243407bce8b6e897b46",
+      "source": "https://files.pythonhosted.org/packages/72/25/973bd6128381951b23cdcd8a9870c6dcfc5606cb864df8eabd82e529f9c1/torchinfo-1.8.0-py3-none-any.whl",
+      "dependencies": []
+    }
+  ],
+  "installedWithNoDependencyUpgrade": true,
+  "baseTorchOrTransformersChanged": false,
+  "newNeuralCalls": 0,
+  "limits": {
+    "pid": 26656,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 15187968,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

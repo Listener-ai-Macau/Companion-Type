@@ -1,0 +1,43 @@
+{
+  "id": "20200709_L_R002S01C01-clean-short-response-04",
+  "stream": 0,
+  "sourceWavSha256": "9c319739b10df443b332513b84d92e4aa59c1df1af3374a86ae27af9e3b6c544",
+  "inputFloatSha256": "939a93080b08be0c3c980ce75de2f779446cc9ee894ece05ca1c228ffef224c5",
+  "text": "零幺九，不急不急。",
+  "frames": 26880,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 26880,
+        "text": "零幺九，不急不急。",
+        "language": "Chinese",
+        "generatedIds": [
+          99822,
+          119538,
+          99609,
+          3837,
+          16530,
+          99508,
+          16530,
+          99508,
+          1773,
+          151645
+        ],
+        "rawDecoded": "零幺九，不急不急。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 2.1831739000044763
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

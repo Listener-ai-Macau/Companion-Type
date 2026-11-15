@@ -1,0 +1,39 @@
+W1115 17:07:32.576000 28188 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1030: 找不到指定的模块。
+
+{"state": "FAILED_BLIND_SEPARATION_PHASE_RETAINED", "phase": "asr", "error": "InterruptedError('Owned resource stop; original source and all outputs retained')", "explicitNeuralCalls": 23, "seconds": 222.34965239997837}
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\blind_separation_worker_20261115.py", line 161, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\blind_separation_worker_20261115.py", line 143, in main
+    leaves=recover_local_decode(0,len(samples),infer=infer,load=load,save=store,language_mode='Chinese')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\companion_local_decode_recovery_20261114.py", line 17, in recover_local_decode
+    raw=infer(start,end)
+        ^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\blind_separation_worker_20261115.py", line 140, in infer
+    def infer(low,high):return raw_infer(samples,low,high)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\blind_separation_worker_20261115.py", line 118, in raw_infer
+    with torch.inference_mode():out=model.generate(**inputs,max_new_tokens=512,do_sample=False,stopping_criteria=StoppingCriteriaList([Stop()]))
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\utils\_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\generation\utils.py", line 3000, in generate
+    result = decoding_method(
+             ^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\generation\utils.py", line 3280, in _sample
+    unfinished_sequences = unfinished_sequences & ~stopping_criteria(input_ids, scores)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\generation\stopping_criteria.py", line 625, in __call__
+    is_done = is_done | criteria(input_ids, scores, **kwargs)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\blind_separation_worker_20261115.py", line 116, in __call__
+    check();return repeated_block(input_ids[0,size:].tolist(),suffix_only=True) is not None
+    ^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\blind_separation_worker_20261115.py", line 34, in check
+    if (a.run/'stop.request').exists():raise InterruptedError('Owned resource stop; original source and all outputs retained')
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+InterruptedError: Owned resource stop; original source and all outputs retained

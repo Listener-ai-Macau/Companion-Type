@@ -1,0 +1,22 @@
+{
+  "state": "ASR_ONLY_THREAD_OWNERSHIP_FIX_NO_SEPARATOR_OR_MODEL_MATH_CHANGE",
+  "at": "2026-11-15T17:07:22.955727+08:00",
+  "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r3",
+  "protocolSha256": "4f10b3428d039872cea32cc3a9c1ccbf121e17458aeada5d2bd6c08f300ff543",
+  "oldWorkerSha256": "e1573b247a25723875251bb5f3b2700c7c6587cddd076672f23c55f4e2c36a00",
+  "workerSha256": "de4ece73554ebbe342964ae950f32a3a5836321403686baee3cfd7563bd2b533",
+  "exactOnlySourceChangeVerified": true,
+  "controlAndSeparatorExecutedCodeSemanticallyUnchanged": true,
+  "change": "NativeDecoder owns the one-time interop thread setter inASR phase. Separator phases still set it exactly once. Original decoder, CPU cap, memory guard, weights, inputs, CSS parameters and scoring unchanged.",
+  "previousFailureNeuralCalls": 0,
+  "previousFailureModelLoadCompleted": false,
+  "separatorResultsReusedWithoutNeuralRerun": true,
+  "automaticRetries": 0,
+  "previousRun": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2",
+  "separationManifest": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\calibrated-float-r1\\state.json",
+  "sharedUnitsProof": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\blind-separation-composition-r1\\shared-output-unit-proof.json",
+  "nativePrefixControl": "E:\\CodexData\\Companion\\product-d1d2-20261114\\blind-separation-composition-r1\\asr-r2\\original-native-control.json",
+  "nativePrefixControlSha256": "def3baab64c4dbe774f882f5954d3e68fa555eefa21d6caa5051ab6596852eb7",
+  "nativePrefixReusedBecauseOriginalInputModelParserUnchanged": true,
+  "note": "Unscaled preparation run stopped by verified owned PID before independent scoring;22completed stream transcripts retained. Repeat only the corrected stream inputs, not unchanged239separator calls or original prefix control."
+}

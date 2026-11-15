@@ -1,0 +1,40 @@
+{
+  "id": "20200709_L_R002S01C01-clean-short-response-04",
+  "stream": 0,
+  "sourceWavSha256": "9c319739b10df443b332513b84d92e4aa59c1df1af3374a86ae27af9e3b6c544",
+  "inputFloatSha256": "5a44f40800bce43617544f073fd5c97f6d4c0a84911778734db0bbb4d74eed95",
+  "text": "零幺九不停泵。",
+  "frames": 26880,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 26880,
+        "text": "零幺九不停泵。",
+        "language": "Chinese",
+        "generatedIds": [
+          99822,
+          119538,
+          99609,
+          101677,
+          102598,
+          1773,
+          151645
+        ],
+        "rawDecoded": "零幺九不停泵。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.5876897999842186
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}
