@@ -1,0 +1,50 @@
+{
+  "id": "20200709_L_R002S01C01-multi-turn-context-06",
+  "stream": 1,
+  "sourceWavSha256": "4e00212ad9b703ceb42cae0e57d7307cc0e5882566f91878ee7e7ba088e612ab",
+  "inputFloatSha256": "6a89a78fdce2ae207035b92ceaf8d6d2313728b2fece80ed94e2f89c1381c75c",
+  "text": "嗯，对我们这个健身，嗯，他可能不了解，或者他觉得。",
+  "frames": 397114,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 397114,
+        "text": "嗯，对我们这个健身，嗯，他可能不了解，或者他觉得。",
+        "language": "Chinese",
+        "generatedIds": [
+          106287,
+          3837,
+          107237,
+          99487,
+          101420,
+          3837,
+          106287,
+          3837,
+          42411,
+          87267,
+          112332,
+          3837,
+          100631,
+          42411,
+          99801,
+          1773,
+          151645
+        ],
+        "rawDecoded": "嗯，对我们这个健身，嗯，他可能不了解，或者他觉得。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 3.5275318999999854
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

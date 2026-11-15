@@ -1,0 +1,67 @@
+from pathlib import Path
+from datetime import datetime
+import hashlib,json,os,shutil,subprocess
+R=Path('C:/Users/Billy/Desktop/Denzic/Companion');M=R/'model-research';S=M/'src'
+D=R/'docs/handoffs/20261109-paired-real-meeting/bilingual-local20261114/d1d2-execution'
+T=D/'supervised-blind-separation-r1';C=T/'natural-composition-r1'
+E=Path('E:/CodexData/Companion/product-d1d2-20261114/supervised-blind-separation-r1/natural-composition-r1')
+read=lambda p:json.loads(Path(p).read_text(encoding='utf-8'))
+def sha(p):
+    with Path(p).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+parent=read(D/'protection-r17.json')['modelCommit']
+assert read(D/'protection-r17.json')['remoteVerified']
+assert subprocess.check_output(['git','-C',str(M),'rev-parse','HEAD'],text=True).strip()==parent
+assert not subprocess.check_output(['git','-C',str(M),'diff','--cached','--name-only'],text=True).strip()
+assert read(E/'asr-r1/state.json')['state']=='COMPLETE_FIXED_SEPARATION_ASR_COMPOSITION_SCORING_PENDING'
+assert (C/'decision.json').exists() and (C/'routed-decision.json').exists()
+DEST=M/'evidence/20261115-supervised-separation-natural-result-r1'
+assert not DEST.exists();(DEST/'files').mkdir(parents=True);items=[]
+def take(f,logical):
+    before=f.stat();digest=sha(f);assert before.st_size<32*1024**2,(f,before.st_size)
+    target=DEST/'files'/(str(len(items)).zfill(5)+f.suffix)
+    shutil.copyfile(f,target);assert sha(target)==sha(f)==digest and before.st_mtime_ns==f.stat().st_mtime_ns
+    items.append(dict(source=str(f),logicalPath=logical,file=target.relative_to(DEST).as_posix(),bytes=before.st_size,sha256=digest))
+for root in [C,E/'control-r1',E/'separate-r1',E/'asr-r1']:
+    for directory,dirs,files in os.walk(root):
+        dirs[:]=[n for n in dirs if n not in ['__pycache__','offline-hf-cache','matplotlib-cache']]
+        for name in sorted(files):
+            f=Path(directory)/name
+            if f.name=='run.json':assert read(f).get('finishedAt')
+            if f.suffix.lower() in {'.json','.jsonl','.log','.py','.txt','.npy'}:take(f,root.name+'/'+f.relative_to(root).as_posix())
+for name in ['prepare_supervised_separator_natural_validation_20261115.py','score_supervised_separator_natural_router_20261115.py',
+             'record_supervised_blind_separator_result_20261115.py','sync_supervised_separator_natural_waveforms_20261115.py',Path(__file__).name]:
+    take(Path('work')/name,'continuation-tools/'+name)
+take(Path('work/bilingual_progress.json'),'canonical-workpoint-snapshot.json')
+take(Path('outputs/Companion-分离组合模型进度-20261115.txt'),'owner-separation-composition-note.txt')
+manifest=dict(state='FINAL_SUPERVISED_SEPARATOR_ALL32_NATURAL_TWO_STREAMS_AND64_ASR_WORDS_PROTECTED',
+    at=datetime.now().astimezone().isoformat(),entries=items,parentCommit=parent,
+    priorFullTrainedWeightProtection=str(D/'protection-r17.json'),
+    originalAudioOrBaseWeightsCopied=False,allDerivedWaveformsAndRawAsrRetained=True,
+    qualityQualified=False,d2Complete=False,productDefaultChanged=False,ownerParticipationRequired=False)
+(DEST/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+sources=['supervised_separator_natural_worker_20261115.py','run_supervised_separator_natural_20261115.py']
+attrs=M/'.gitattributes';body=attrs.read_bytes()
+for rule in [DEST.relative_to(M).as_posix()+'/** -text -whitespace']+['src/'+n+' -text -whitespace' for n in sources]:
+    if rule.encode() not in body:body+=b'\n'+rule.encode()+b'\n'
+attrs.write_bytes(body)
+decision=read(C/'routed-decision.json')
+with (M/'README.md').open('a',encoding='utf-8') as f:
+    f.write('\n\n'+manifest['at']+' 固定盲分离完整核80更新后：84独立源门通过，原自然32/完整64路原ASR及原Nemotron固定路由结果：'+decision['state']+'。所有实际使用路文字计分，未改参考/窗口/阈值；原整会中英文人物门与最终留出保持，不能据此称产品售卖合格。完整分离权重在父提交保护。\n')
+paths=['.gitattributes','README.md']+['src/'+n for n in sources]+[p.relative_to(M).as_posix() for p in DEST.rglob('*') if p.is_file()]
+subprocess.run(['git','-C',str(M),'add','--force','--pathspec-from-file=-','--pathspec-file-nul'],input=b'\0'.join(p.encode() for p in paths)+b'\0',check=True)
+for name in paths:
+    raw=(M/name).read_bytes();expected=hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+    assert subprocess.check_output(['git','-C',str(M),'rev-parse',':'+name],text=True).strip()==expected,name
+subprocess.run(['git','-c','maintenance.auto=false','-c','gc.auto=0','-C',str(M),'commit','--quiet','-m','Record fixed trained separator complete natural meeting composition and word gate'],check=True)
+head=subprocess.check_output(['git','-C',str(M),'rev-parse','HEAD'],text=True).strip()
+receipt=dict(state=manifest['state'],modelCommit=head,exactByteStagedFiles=len(paths),evidenceFiles=len(items),
+    evidenceBytes=sum(i['bytes'] for i in items),remoteVerified=False,d2Complete=False)
+target=D/'protection-r18.json';target.write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
+ssh='ssh -o HostName=github.com -p22 -o ProxyCommand=none -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=15 -o ServerAliveInterval=10 -o ServerAliveCountMax=2'
+base=['git','-c','maintenance.auto=false','-c','gc.auto=0','-c','core.sshCommand='+ssh,'-C',str(M)]
+result=subprocess.run(base+['push','origin','research/moss-resume-20261105'],capture_output=True,text=True,timeout=600)
+(D/'push-r18-model.log').write_text(result.stdout+result.stderr,encoding='utf-8');assert result.returncode==0
+result=subprocess.run(base+['ls-remote','origin','refs/heads/research/moss-resume-20261105'],capture_output=True,text=True,timeout=60)
+assert result.returncode==0 and result.stdout.split()[0]==head
+receipt['remoteVerified']=True;target.write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
+print(json.dumps(receipt))

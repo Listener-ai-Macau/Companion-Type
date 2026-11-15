@@ -1,0 +1,41 @@
+{
+  "id": "20200709_L_R002S01C01-clean-short-response-04",
+  "stream": 1,
+  "sourceWavSha256": "9c319739b10df443b332513b84d92e4aa59c1df1af3374a86ae27af9e3b6c544",
+  "inputFloatSha256": "7fe6657d698222e662c4e3ffd5e646aad24f0d3bc02c31752dbacf09ca65a0d7",
+  "text": "零幺九，不行的。",
+  "frames": 26880,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 26880,
+        "text": "零幺九，不行的。",
+        "language": "Chinese",
+        "generatedIds": [
+          99822,
+          119538,
+          99609,
+          3837,
+          104810,
+          9370,
+          1773,
+          151645
+        ],
+        "rawDecoded": "零幺九，不行的。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.7690921000000799
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

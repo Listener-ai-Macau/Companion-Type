@@ -1,0 +1,38 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-08",
+  "stream": 0,
+  "sourceWavSha256": "55958adb34c971be117b5827bc07789f8950cbdfe8edc70aadaad15406829eed",
+  "inputFloatSha256": "89a76129256fd0c5b4d63b65c86c627e0e93f8d9e8e16fef7764e2c8a94127e1",
+  "text": "绿化那边怎么样？",
+  "frames": 32320,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 32320,
+        "text": "绿化那边怎么样？",
+        "language": "Chinese",
+        "generatedIds": [
+          105449,
+          106505,
+          104472,
+          11319,
+          151645
+        ],
+        "rawDecoded": "绿化那边怎么样？<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.1700075999999626
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

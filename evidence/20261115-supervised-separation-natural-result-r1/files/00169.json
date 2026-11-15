@@ -1,0 +1,59 @@
+{
+  "id": "20200709_L_R002S01C01-multi-turn-context-04",
+  "stream": 1,
+  "sourceWavSha256": "692a256ab4f232779efb19db906757d743dba6495ab2b7bd67e41af31e5c3bbd",
+  "inputFloatSha256": "503cf08bf030c7db3a99fd6b8a7a383442fbf9ddcbd2e4840bbcb57b36bf0104",
+  "text": "你不来吧，我们就扔了它。看着就是愿意停留在这儿。如果呃，顾客来到我们这里之后。",
+  "frames": 426440,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 426440,
+        "text": "你不来吧，我们就扔了它。看着就是愿意停留在这儿。如果呃，顾客来到我们这里之后。",
+        "language": "Chinese",
+        "generatedIds": [
+          107719,
+          36407,
+          100003,
+          3837,
+          106235,
+          105603,
+          34187,
+          99652,
+          1773,
+          101952,
+          99486,
+          102167,
+          111864,
+          102332,
+          99261,
+          1773,
+          62244,
+          119108,
+          3837,
+          104476,
+          104071,
+          97639,
+          99817,
+          103922,
+          1773,
+          151645
+        ],
+        "rawDecoded": "你不来吧，我们就扔了它。看着就是愿意停留在这儿。如果呃，顾客来到我们这里之后。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 5.5564772000000175
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

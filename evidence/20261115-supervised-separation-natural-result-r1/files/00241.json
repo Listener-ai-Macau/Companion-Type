@@ -1,0 +1,44 @@
+{
+  "id": "20200805_S_R001S01C01-multi-turn-context-01",
+  "stream": 1,
+  "sourceWavSha256": "d14adcaddfc38b1110927585f601213b1c3caa3a61cc6b3ac4646e21595bf425",
+  "inputFloatSha256": "126c99c968bb6c937e4cfa9a209b36c9f7ae8e730a3d32044fdc39ac9aa37eda",
+  "text": "住户告诉他们是谁的车，通知一下。",
+  "frames": 449191,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 449191,
+        "text": "住户告诉他们是谁的车，通知一下。",
+        "language": "Chinese",
+        "generatedIds": [
+          113901,
+          99957,
+          99650,
+          105518,
+          9370,
+          39953,
+          3837,
+          101151,
+          100158,
+          1773,
+          151645
+        ],
+        "rawDecoded": "住户告诉他们是谁的车，通知一下。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 2.5253393000000415
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

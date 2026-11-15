@@ -1,0 +1,82 @@
+{
+  "state": "PASS_BLIND_SEPARATOR_NUMERICAL_AND_LOSSLESS_STITCH_CONTROLS",
+  "phase": "control",
+  "startedAt": "2026-11-15T18:29:04.582891+08:00",
+  "explicitNeuralCalls": 5,
+  "parameterUpdates": 0,
+  "referencesRead": false,
+  "qualityQualified": false,
+  "protocolSha256": "6ab77ba4df0f507588c3fe949055bbd2f402da585d89ba7702512a8ca5d27498",
+  "observedAt": "2026-11-15T18:30:16.549751+08:00",
+  "limits": {
+    "pid": 19128,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1236381696,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "gpu": "AMD Radeon RX 6800 XT",
+  "blas": {
+    "library": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "weightProof": {
+    "stateTensors": 1099,
+    "parameters": 55735410,
+    "strictAllCheckpointTensorsExact": true,
+    "optimizerLoadedForTraining": false,
+    "metaSkeletonAndMappedModelOnly": true
+  },
+  "trainedFullCheckpointReload": {
+    "state": "PASS_FULL_SHARDED_SEPARATOR_CHECKPOINT_RELOADED_EXACT",
+    "tensors": 1099,
+    "shards": 10
+  },
+  "trainingUpdatesBeforeValidation": 80,
+  "maximumCpuGpuWaveformDifference": 5.155801773071289e-06,
+  "meanCpuGpuWaveformDifference": 4.255587384704995e-07,
+  "singleWindowCoreExact": true,
+  "stitchingControls": [
+    {
+      "frames": 1,
+      "maximumWaveformError": 0.0,
+      "swaps": 0
+    },
+    {
+      "frames": 4096,
+      "maximumWaveformError": 0.0,
+      "swaps": 0
+    },
+    {
+      "frames": 32000,
+      "maximumWaveformError": 0.0,
+      "swaps": 0
+    },
+    {
+      "frames": 32001,
+      "maximumWaveformError": 7.450580596923828e-09,
+      "swaps": 1
+    },
+    {
+      "frames": 74001,
+      "maximumWaveformError": 7.450580596923828e-09,
+      "swaps": 1
+    }
+  ],
+  "coreDigitalSilenceMaximum": 0.0,
+  "exactDigitalSilenceBypass": true,
+  "noPerStreamGain": true,
+  "finishedAt": "2026-11-15T18:30:16.551751+08:00",
+  "seconds": 71.96775019999995
+}

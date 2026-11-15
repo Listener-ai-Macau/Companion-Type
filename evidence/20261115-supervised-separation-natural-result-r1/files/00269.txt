@@ -1,0 +1,18 @@
+Companion 分离训练与组合模型实际进度
+2026-11-15T18:42:40+08:00
+
+当前主线：单麦原音 → 原人物/重叠检测 → 重叠段双路分离 → 原本地中英文识别 → 时间轴与人物关联。
+已完成：同一公开55.7M盲分离核，89组已知一/双源单位、319个2秒窗口、固定一轮80次真实更新；最终全权重分片保存并重新加载核验。识别模型与人物模型未训练。
+独立源验证：另一批公开会议24组声音成分、84个窗口，实际单源39/双源45；输入文件与目标波形分开，推理不读取目标。
+平均误差能量比：0.706630 → 0.305816（越低越好）；结论：PASS_SOURCE_GATE_NATURAL_WORD_EVALUATION_REQUIRED。
+active:1: 0.611308 → 0.105886
+active:2: 0.789242 → 0.479088
+multi-turn-context: 161 → 308 错误 / 1476 字；REJECT_FIXED_ROUTED_THREE_MODEL_COMPOSITION
+clean-short-response: 13 → 20 错误 / 87 字；REJECT_FIXED_ROUTED_THREE_MODEL_COMPOSITION
+
+先前原分离器未训练的组合已拒绝：自然多轮161→419错误，原检测路由后仍161→360；单人短回应13→51，路由后13→19。失败证据保留。
+本次波形验证含人工叠加混音，保留真实远场房间背景，不是自然重叠的独立原声金标。自然会议、稳定人物、中英文整体和真实设备验收仍按原规则。
+准确率和售卖标准尚未达标；最终留出未打开，产品默认未改，Owner无需听审、标注、提供账号或录音。
+
+下一步：最终固定分离训练的自然会议词门仍失败，保留两路全部词/原分数/最终权重；执行已有结果的CPU错误归因，核清源失真和跨块串音，不再小样本调轮数/阈值或换模型试错。原D1交付保留，D2逐字/人物/自然混说、真实设备增量等未完成项继续保留，未达售卖标准。
+证据：C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261109-paired-real-meeting\bilingual-local20261114\d1d2-execution\supervised-blind-separation-r1\source-decision.json

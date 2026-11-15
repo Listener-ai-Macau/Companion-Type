@@ -1,0 +1,39 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-01",
+  "stream": 0,
+  "sourceWavSha256": "cc998bf62e7f33ba7b32188c7253adee4d9348e189cb88d273b12c862c34f9f0",
+  "inputFloatSha256": "974a07215440c7383dd86656d8e84bcbe3a3a6504b640ef0db80c81f0a34aff1",
+  "text": "雷蒙莎总经理。",
+  "frames": 33840,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 33840,
+        "text": "雷蒙莎总经理。",
+        "language": "Chinese",
+        "generatedIds": [
+          96465,
+          100750,
+          105733,
+          104266,
+          1773,
+          151645
+        ],
+        "rawDecoded": "雷蒙莎总经理。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 1.5211068000000978
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,51 @@
+{
+  "id": "20200805_S_R001S01C01-multi-turn-context-02",
+  "stream": 0,
+  "sourceWavSha256": "bfbf02a9364cd4f95c3268d958414702205869aa3b430925b88837d79ed2f376",
+  "inputFloatSha256": "bf747859990554c048d5ac2b835e34ebfc230fbb4afb25442c3875911013c1c5",
+  "text": "对不对？一定要有人来投诉，或者说有人来上门感谢我们。嗯。",
+  "frames": 449651,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 449651,
+        "text": "对不对？一定要有人来投诉，或者说有人来上门感谢我们。嗯。",
+        "language": "Chinese",
+        "generatedIds": [
+          32664,
+          105788,
+          11319,
+          103962,
+          101114,
+          36407,
+          104943,
+          3837,
+          109165,
+          101114,
+          36407,
+          105754,
+          104305,
+          97639,
+          1773,
+          106287,
+          1773,
+          151645
+        ],
+        "rawDecoded": "对不对？一定要有人来投诉，或者说有人来上门感谢我们。嗯。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 3.7106800999999905
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}
