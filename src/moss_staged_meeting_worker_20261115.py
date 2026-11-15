@@ -109,7 +109,8 @@ def main():
       atomic_json(a.run/(a.meeting+'-partial-ids.json'),{'generatedIds':generated,'audioSha256':case['audioSha256'],
        'notFinal':True,'qualityQualified':False});last[0]=time.monotonic()
     with torch.inference_mode():generated,restored=greedy(model,cache,logits,torch=torch,
-     max_tokens=case.get('maxNewTokens',32768),expected_prefix=expected,resume_prefix=resume,checkpoint=checkpoint,progress=advance)
+     max_tokens=case.get('maxNewTokens',32768),expected_prefix=expected,resume_prefix=resume,checkpoint=checkpoint,progress=advance,
+     step_pause_seconds=B.get('decodeStepPauseSeconds',0.),synchronize_each_forward=B.get('synchronizeEachDecodeForward',False))
     output=torch.tensor([generated],dtype=torch.long)
    else:
     with torch.inference_mode():output=model.generate(input_ids=ids,attention_mask=mask,past_key_values=cache,disable_compile=True,
@@ -140,7 +141,9 @@ def main():
    if case.get('runtimeControl'):assert generated==expected
    else:assert packet['naturalEos'],'Incomplete output cap retained, no retry'
    state.update(state='PASS_BIT_EXACT_STAGED_NATIVE16_TOKEN_CONTROL' if case.get('runtimeControl') else 'COMPLETE_WHOLE_MEETING_JOINT_OUTPUT_SCORING_PENDING',
-    generatedTokens=len(generated),decodeSeconds=elapsed,naturalEos=packet['naturalEos'],retainedPrefixMatched=len(expected))
+    generatedTokens=len(generated),decodeSeconds=elapsed,naturalEos=packet['naturalEos'],retainedPrefixMatched=len(expected),
+    newGeneratedTokens=len(generated)-(len(resume) if manual else 0),
+    tokensPerSecond=(len(generated)-(len(resume) if manual else 0))/elapsed)
  except BaseException as error:state.update(state='FAILED_OR_STOPPED_STAGED_'+a.phase.upper(),error=repr(error));raise
  finally:state.update(finishedAt=datetime.now().astimezone().isoformat(),seconds=time.perf_counter()-began);save()
  print(json.dumps(state,ensure_ascii=False))

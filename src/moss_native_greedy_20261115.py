@@ -10,7 +10,14 @@ def install_prefix_replay_attention(*,torch):
   return original(q,k,v,attn_mask=attn_mask,dropout_p=dropout_p,is_causal=is_causal,scale=scale,enable_gqa=enable_gqa)
  def scheduled(*args,**kwargs):return bounded_sdpa(keyed,*args,**kwargs,query_block=128)
  F.scaled_dot_product_attention=scheduled
-def greedy(model,cache,logits,*,torch,max_tokens,expected_prefix,resume_prefix,checkpoint,progress):
+def greedy(model,cache,logits,*,torch,max_tokens,expected_prefix,resume_prefix,checkpoint,progress,
+           step_pause_seconds=0.,synchronize_each_forward=False):
+ import time
+ assert 0.<=step_pause_seconds<=.25
+ def settle():
+  if synchronize_each_forward:torch.cuda.synchronize()
+  if step_pause_seconds:time.sleep(step_pause_seconds)
+  checkpoint()
  assert not model.training and not torch.is_grad_enabled()
  config=model.generation_config
  for name,value in {'num_beams':1,'repetition_penalty':1.,'no_repeat_ngram_size':0,
@@ -29,6 +36,7 @@ def greedy(model,cache,logits,*,torch,max_tokens,expected_prefix,resume_prefix,c
   for start in range(0,len(generated),128):
    checkpoint();block=torch.tensor([generated[start:start+128]],device='cuda:0',dtype=torch.long)
    result=model(input_ids=block,past_key_values=cache,use_cache=True,logits_to_keep=1)
+   settle()
    assert result.past_key_values is cache;logits=result.logits
   assert int(cache.get_seq_length())==initial+len(generated)
  while len(generated)<max_tokens:
@@ -37,6 +45,8 @@ def greedy(model,cache,logits,*,torch,max_tokens,expected_prefix,resume_prefix,c
   generated.append(token);progress(generated)
   if token in eos or len(generated)==max_tokens:break
   result=model(input_ids=torch.tensor([[token]],device='cuda:0'),past_key_values=cache,use_cache=True,logits_to_keep=1)
+  settle()
   assert result.past_key_values is cache;logits=result.logits
  return generated,{'savedFirstLogitsUsedOrVerified':True,'originalGeneratedPrefixTokensReplayed':len(resume_prefix),
-  'noReferenceTeacherForcing':True,'allOriginalGeneratedPrefixIdsPreserved':True,'cpuEosDecision':True}
+  'noReferenceTeacherForcing':True,'allOriginalGeneratedPrefixIdsPreserved':True,'cpuEosDecision':True,
+  'stepPauseSeconds':step_pause_seconds,'synchronizeEachForward':synchronize_each_forward}
