@@ -87,3 +87,20 @@ body .ct-windows.ct-notebook .meeting-action-source,.mobile-app .meeting-action-
 @container(max-width:420px){.meeting-reading-formats{margin-top:5px}}
 @media(pointer:coarse){.meeting-reading-views>button,.meeting-reading-formats>button,.meeting-action-source{min-height:44px!important}}
 .mobile-app .meeting-reading-views>button,.mobile-app .meeting-reading-formats>button,.mobile-app .meeting-action-source{min-height:44px}
+
+/* A single calm control and reading treatment across meeting perspectives. */
+.meeting-reading-formats{gap:2px;padding:2px;border:1px solid var(--notebook-line);border-radius:9px;background:var(--notebook-paper)}
+body .ct-windows.ct-notebook .meeting-reading-formats>button,.mobile-app .meeting-reading-formats>button{min-height:30px;padding:5px 10px;border-radius:6px}
+body .ct-windows.ct-notebook .meeting-reading-formats>button[aria-pressed=true],.mobile-app .meeting-reading-formats>button[aria-pressed=true]{background:var(--notebook-soft);color:var(--notebook-ink);font-weight:500}
+.meeting-reading-views>button:hover:not([aria-pressed=true]),.meeting-reading-formats>button:hover:not([aria-pressed=true]){color:var(--notebook-ink);background:var(--notebook-paper)}
+.meeting-topic-controls{gap:8px}
+.meeting-speakers-empty{border-style:solid;background:var(--notebook-soft);gap:10px;padding:32px 24px}
+.meeting-speakers-empty>span{width:38px;height:38px;border:0;border-radius:10px;background:var(--notebook-paper)}
+.meeting-speakers-empty>p{font-size:13px!important}
+.meeting-speaker-card header h4{font-size:14px!important}
+.meeting-speaker-card header small,.meeting-speaker-excerpt-label,.meeting-speaker-points>span{font-size:11px}
+.meeting-speaker-points>ul,.meeting-speaker-excerpt blockquote{font-size:13px;line-height:1.9}
+.meeting-speaker-utterance>p{font-size:13px!important}
+.meeting-action-group>h3{font-size:16px!important;font-weight:600!important}
+.meeting-action-group li p{font-size:14px!important}
+@media(pointer:coarse){.meeting-reading-formats>button{min-height:44px!important}}
