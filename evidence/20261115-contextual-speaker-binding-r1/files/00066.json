@@ -1,0 +1,30 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-14",
+  "meeting": "20200805_S_R001S01C01",
+  "frames": 7603,
+  "segments": [
+    {
+      "startFrame": 0,
+      "endFrame": 7603,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        0,
+        1
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    }
+  ],
+  "overlapResolvedFrames": 0,
+  "overlapUnconfirmedFrames": 7603,
+  "sourceAudioAndWordsChanged": false,
+  "speakerIdentityVerified": false,
+  "wordSpeakerAlignmentImplemented": false
+}

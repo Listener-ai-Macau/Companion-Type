@@ -1,0 +1,618 @@
+[
+  {
+    "id": "20200709_L_R002S01C01-multi-turn-context-01",
+    "stream": 0,
+    "globalFirstFeatureFrame": 33044,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-01\\stream-0-probabilities.npy",
+        "sha256": "33633e76f6210e555609a9b9fe030d96186aa2946d4699b53074f08b7b847f59"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-01\\stream-0-activity.npy",
+        "sha256": "e8a52385989e383dc0f119e56e6f8b26892f90ed9cac314b71128c3da9a7355f"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-01\\stream-0-computed.npy",
+        "sha256": "22732f455e1d4242c3a0a4f21256dafcf3f023afd966cffe024bd51a893b9004"
+      }
+    },
+    "sourceFloatSha256": "d4f90ede3a28131b9faeb9889d0e51e5c267638e5b7b1f383d3682004440abc4",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-multi-turn-context-01",
+    "stream": 1,
+    "globalFirstFeatureFrame": 33044,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-01\\stream-1-probabilities.npy",
+        "sha256": "6c1d0459d3b2092e22c2fa013643e65f169a1f4a87f3145d44cd3611ad20eea1"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-01\\stream-1-activity.npy",
+        "sha256": "cd41792b2ec1054d2a10c36f431fed5370441daae342f42c648a342e5cbcf9b9"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-01\\stream-1-computed.npy",
+        "sha256": "22732f455e1d4242c3a0a4f21256dafcf3f023afd966cffe024bd51a893b9004"
+      }
+    },
+    "sourceFloatSha256": "ce01d0c39a2de0dfb0604f97642b5b6aec12a11b7e23400218d7a1099358266a",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-multi-turn-context-02",
+    "stream": 0,
+    "globalFirstFeatureFrame": 41521,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-02\\stream-0-probabilities.npy",
+        "sha256": "57da8a6b44ed5059386b88d2c3ff6bffdb50f45d2588d2ede8b6a9baeb4f697b"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-02\\stream-0-activity.npy",
+        "sha256": "be03ca05e694e6a50075c42826b7057aa96fc0ad2003bb31b1ba5e48e6d7e508"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-02\\stream-0-computed.npy",
+        "sha256": "6379e29ae34fcfdaa13a53a17a06df6b0156600bdf8836ec9614469bd1a7d0ce"
+      }
+    },
+    "sourceFloatSha256": "58ae49ace248545e278d81073756c16a307bdb886b728111802a74bb909233ca",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-multi-turn-context-02",
+    "stream": 1,
+    "globalFirstFeatureFrame": 41521,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-02\\stream-1-probabilities.npy",
+        "sha256": "06ea67611d9c37aca1fce948e35a3a087603242d0bcf0840614431dee4aed944"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-02\\stream-1-activity.npy",
+        "sha256": "22d2dbef157dca9e2db28b5392fcd2a2a347b733ba866686b70a054c428cfd75"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-02\\stream-1-computed.npy",
+        "sha256": "6379e29ae34fcfdaa13a53a17a06df6b0156600bdf8836ec9614469bd1a7d0ce"
+      }
+    },
+    "sourceFloatSha256": "b28cf137385cb3d655fe889a34aa6b37d2bef9dcf3a7376a14118a4498303825",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-multi-turn-context-03",
+    "stream": 0,
+    "globalFirstFeatureFrame": 173412,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-03\\stream-0-probabilities.npy",
+        "sha256": "eb18b28b838d6739a427a9dea1545d1f37b05a876ae0716fda98ff892c9f8c29"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-03\\stream-0-activity.npy",
+        "sha256": "55b1586ec574f08103703b4c42df88baa34d4b36a571a97f582a445d324671bd"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-03\\stream-0-computed.npy",
+        "sha256": "ba17d3c2606069a2a0d08851e4175fe62faa046d83024e25ae86d5d3236a63ff"
+      }
+    },
+    "sourceFloatSha256": "a85f47bd805f013f0dbcd69621f56551a19e72ff8d089cfa97ee2796109876bf",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-multi-turn-context-03",
+    "stream": 1,
+    "globalFirstFeatureFrame": 173412,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-03\\stream-1-probabilities.npy",
+        "sha256": "328acc767102fb96d402e3a1f41e4645a31e43532fac9b214076d12c40703321"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-03\\stream-1-activity.npy",
+        "sha256": "f80a4668368c11aa8056057097534e7cebc69b495a9617835b0f8d1c1b4b8cf5"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-03\\stream-1-computed.npy",
+        "sha256": "ba17d3c2606069a2a0d08851e4175fe62faa046d83024e25ae86d5d3236a63ff"
+      }
+    },
+    "sourceFloatSha256": "0c998648cf22680c22955430ca352968c52b6f2ec24be9f154a8565a6b9c0c36",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-multi-turn-context-05",
+    "stream": 0,
+    "globalFirstFeatureFrame": 184815,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-05\\stream-0-probabilities.npy",
+        "sha256": "8d4b82e917638bfef8bd03abe3515b299a829d364485360e40278c3a9492b9bb"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-05\\stream-0-activity.npy",
+        "sha256": "0d0976dc54f7e958c449e557d99fc6d1e99649b80354ea82d838476e15b718c7"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-05\\stream-0-computed.npy",
+        "sha256": "cef54aabf6085ac80cf1fddf8e748a4da7d79d43c1cc06c1a38c8113634c040f"
+      }
+    },
+    "sourceFloatSha256": "e98117854621ef73e7f7004f61c3717e7c4107b3f90173615f2b3dbc5a848f43",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-multi-turn-context-05",
+    "stream": 1,
+    "globalFirstFeatureFrame": 184815,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-05\\stream-1-probabilities.npy",
+        "sha256": "f367abed47068eca08397dcaf08e013374af789c10659a3c541b02fa2f1b5d8e"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-05\\stream-1-activity.npy",
+        "sha256": "53468b251e69976366c7b3af6670536ba73e0560884fb65c483bd18290798c10"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-05\\stream-1-computed.npy",
+        "sha256": "cef54aabf6085ac80cf1fddf8e748a4da7d79d43c1cc06c1a38c8113634c040f"
+      }
+    },
+    "sourceFloatSha256": "7f71cb23948d93bb2234d02a6dc4bc024204e3b8cc22f6851270e7c9efba363b",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-multi-turn-context-06",
+    "stream": 0,
+    "globalFirstFeatureFrame": 195897,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-06\\stream-0-probabilities.npy",
+        "sha256": "e271b66e563edda90adbd31d9df8e68c663caf8b24e73f0a2dcab06407473eb1"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-06\\stream-0-activity.npy",
+        "sha256": "d60ad40222bf143f9e2262b4133e5b92c6b906353364bc86e25bc872770bcfef"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-06\\stream-0-computed.npy",
+        "sha256": "ab31aa7a8a3178911304fce3bf39264f087edd5f5639cefce418eee4a303791b"
+      }
+    },
+    "sourceFloatSha256": "4f3a23c9a63a8ed88eeeb34f192cce91e45d2bf081faffdd9e05ed838dacb26a",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200709_L_R002S01C01-multi-turn-context-06",
+    "stream": 1,
+    "globalFirstFeatureFrame": 195897,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-06\\stream-1-probabilities.npy",
+        "sha256": "afe84ee49f39af257c5be7eddaf435d14bcd417746e25b04ed44ae4aab3634b8"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-06\\stream-1-activity.npy",
+        "sha256": "69b5f55eb7177912fc0ad4e2f3f0e2afe5d81af974745c2207222ce588ab85e1"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200709_L_R002S01C01-multi-turn-context-06\\stream-1-computed.npy",
+        "sha256": "ab31aa7a8a3178911304fce3bf39264f087edd5f5639cefce418eee4a303791b"
+      }
+    },
+    "sourceFloatSha256": "9e2e99dd6a29621bf8b2014edddf21d47151abbaa592c606aaf0520ac388e55a",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-multi-turn-context-01",
+    "stream": 0,
+    "globalFirstFeatureFrame": 45628,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-01\\stream-0-probabilities.npy",
+        "sha256": "70ba9f96e1ccc6f2569a9350690c33711a2eaa810da177b0177976e4b7c37ae9"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-01\\stream-0-activity.npy",
+        "sha256": "de7453477fdc473a4efb9a8569b7f7b4d75eb3d223487e697720813fba74e60a"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-01\\stream-0-computed.npy",
+        "sha256": "f86f9d49519f933cee5a3d2d9471ae19b72abcf2a805906b73b4bf1af70ae974"
+      }
+    },
+    "sourceFloatSha256": "895547eded81ca43d5c2b560bc4ff85196650a5199cc13292327236951a0b6d1",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-multi-turn-context-01",
+    "stream": 1,
+    "globalFirstFeatureFrame": 45628,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-01\\stream-1-probabilities.npy",
+        "sha256": "8de0712c16d505a779a46ef94f056a7a4bab552dac41d2e078aafce89056eda8"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-01\\stream-1-activity.npy",
+        "sha256": "8ca7536c241a91d46afd83243d7a11ae3885a8497cc68c0975d633d45a774250"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-01\\stream-1-computed.npy",
+        "sha256": "f86f9d49519f933cee5a3d2d9471ae19b72abcf2a805906b73b4bf1af70ae974"
+      }
+    },
+    "sourceFloatSha256": "14006124a1ab00e7a49e22e44ffb025231c0aaaf9cc4933f7cf28664911ae0eb",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-multi-turn-context-02",
+    "stream": 0,
+    "globalFirstFeatureFrame": 82465,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-02\\stream-0-probabilities.npy",
+        "sha256": "d8a5c7a9a92fd06df4ad70de29861356b4e7a240f11e829641b7898ebcf11c90"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-02\\stream-0-activity.npy",
+        "sha256": "cb8d4c4b49711ffd6797e4a8e7a29046a782bfff2f1cd66c69b537094f88b186"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-02\\stream-0-computed.npy",
+        "sha256": "20cc972749e273715fb4dc1f876d6362a5551cc6be40c4eb2bfafb01ab7fc920"
+      }
+    },
+    "sourceFloatSha256": "4b5c5421ccaeb0ee80c90bce27c65235f1451bd25e61d3b2a31824e2ee6ab2d8",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-multi-turn-context-02",
+    "stream": 1,
+    "globalFirstFeatureFrame": 82465,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-02\\stream-1-probabilities.npy",
+        "sha256": "7a64b1f27ee8d5bcb15cc7647e3c2d29dc89f502044831e2f911ffcc7c5c573f"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-02\\stream-1-activity.npy",
+        "sha256": "ff74ef15a3cc802b06d6e0e36236ea420109ac52dbfd04e4f1193125f24b50b5"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-02\\stream-1-computed.npy",
+        "sha256": "20cc972749e273715fb4dc1f876d6362a5551cc6be40c4eb2bfafb01ab7fc920"
+      }
+    },
+    "sourceFloatSha256": "30bcb622a2da7d484385f721952ab18e869900d12cbaa6a0592834717d114fab",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-multi-turn-context-03",
+    "stream": 0,
+    "globalFirstFeatureFrame": 103859,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-03\\stream-0-probabilities.npy",
+        "sha256": "3d59d0a54d1fd2eeac10f8e9d2c475a7fbda0c2131bb72b94436f73d5172ec57"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-03\\stream-0-activity.npy",
+        "sha256": "6c428420cff803f67c1227a80dc121930287d5c0865ccb26c25a85ec8402b63a"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-03\\stream-0-computed.npy",
+        "sha256": "964283bc969b416f7665e51240cf3b112ed4d84099006e0a1befc4cfe06e8809"
+      }
+    },
+    "sourceFloatSha256": "071aef93c38d006344c5ef2f4476cf89924e80e84ee5f378e3b86675891081e5",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-multi-turn-context-03",
+    "stream": 1,
+    "globalFirstFeatureFrame": 103859,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-03\\stream-1-probabilities.npy",
+        "sha256": "296e7051ea095d665c5d4d725a18baec968723e8b0cfafa2c766290e67b97375"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-03\\stream-1-activity.npy",
+        "sha256": "8b0911ce56fd1bda3bffd9f8188cd14b48bfd0f51815b621930cfb8262203443"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-03\\stream-1-computed.npy",
+        "sha256": "964283bc969b416f7665e51240cf3b112ed4d84099006e0a1befc4cfe06e8809"
+      }
+    },
+    "sourceFloatSha256": "d0c94269de75d2021fdc90b4aa5738ded029e3f3ceaa6f4b5924fb7680a6ff26",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-multi-turn-context-04",
+    "stream": 0,
+    "globalFirstFeatureFrame": 141604,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-04\\stream-0-probabilities.npy",
+        "sha256": "d5308b5d137c55f463bd0d4042c9b008440a779764cfacb3b54b2d37b95615a8"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-04\\stream-0-activity.npy",
+        "sha256": "c5e7d5d884d4e5a6d2c47be8528e8f847aeb8b74463b47cdd7d2a505ce4d929d"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-04\\stream-0-computed.npy",
+        "sha256": "f451dd40bdec5a95fc8242c4d7f9b9ad0cd54d8055c9e054d5503782e52150a4"
+      }
+    },
+    "sourceFloatSha256": "fcd0185b3d44101db8e33ca61dc13935c64b7fe13d1f77a5ca18649eabae3513",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-multi-turn-context-04",
+    "stream": 1,
+    "globalFirstFeatureFrame": 141604,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-04\\stream-1-probabilities.npy",
+        "sha256": "1d1cde35bc576d6fde67f8dd90a881397f95bfbd5dc7f9801bb2a63222fb805e"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-04\\stream-1-activity.npy",
+        "sha256": "004fb021b6c9eeef3962bba3949c3682d52bfc3b53597027ba981d3febad71a7"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-04\\stream-1-computed.npy",
+        "sha256": "f451dd40bdec5a95fc8242c4d7f9b9ad0cd54d8055c9e054d5503782e52150a4"
+      }
+    },
+    "sourceFloatSha256": "22a7342297f36a22cd26509218df60af2ebff84106aa52bfb86eef2a07b8892a",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-multi-turn-context-06",
+    "stream": 0,
+    "globalFirstFeatureFrame": 211550,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-06\\stream-0-probabilities.npy",
+        "sha256": "66e5a5c5285dc72ad7d0e18ca0a205c19b79867586358c42622c0675b1ee30db"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-06\\stream-0-activity.npy",
+        "sha256": "67537c1ca902570e31a277f40cadb57e074d29cfefe8fd71923f764008a8daa2"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-06\\stream-0-computed.npy",
+        "sha256": "b7721c035302b2e3ddfb944f9d9652228c1bee1ac2c598598b7185ffcfe8e0b9"
+      }
+    },
+    "sourceFloatSha256": "5de76a30a2eb827e37a5aa184a828d305c14e7b6d58b8ff32f2382ee0ca9cda0",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-multi-turn-context-06",
+    "stream": 1,
+    "globalFirstFeatureFrame": 211550,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-06\\stream-1-probabilities.npy",
+        "sha256": "a3868cb06a15c78d496e26732dd79dc21bf73fa71a47c07a1d41d83c0ebd8dcc"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-06\\stream-1-activity.npy",
+        "sha256": "614394fa18c28eaa4973775cb7beba9025b46338ccc31b5bbd3ab38594beaed8"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-multi-turn-context-06\\stream-1-computed.npy",
+        "sha256": "b7721c035302b2e3ddfb944f9d9652228c1bee1ac2c598598b7185ffcfe8e0b9"
+      }
+    },
+    "sourceFloatSha256": "57a47463395b0562fc755d7eae5f93ee6223f0b66e878f8af126dcab89d60c35",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-clean-short-response-10",
+    "stream": 0,
+    "globalFirstFeatureFrame": 156728,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-10\\stream-0-probabilities.npy",
+        "sha256": "e89d407583f6397768997d5f841dc20d55c03c290df6323336c7ccf8a9f077ff"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-10\\stream-0-activity.npy",
+        "sha256": "b9a12147fba0cf9d12e72476c6159c836a7599b9231a0c6408ccffe4bb7f1423"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-10\\stream-0-computed.npy",
+        "sha256": "6f749d283549d04961c78b836b358e7f5fdf5dde36108bc7658a45d0682129a3"
+      }
+    },
+    "sourceFloatSha256": "b8878d81705bd08314efa36bcc171eaa081a460baee45ab93107348b109e23c1",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-clean-short-response-10",
+    "stream": 1,
+    "globalFirstFeatureFrame": 156728,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-10\\stream-1-probabilities.npy",
+        "sha256": "59365a90089cd70add4323d456b6f16a0a71bfca8dd9d7fc5af2cae482451292"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-10\\stream-1-activity.npy",
+        "sha256": "fb03d23e962ff8f9b42b8f88c29276ddcd583943cde24555c24480b4dfaab095"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-10\\stream-1-computed.npy",
+        "sha256": "6f749d283549d04961c78b836b358e7f5fdf5dde36108bc7658a45d0682129a3"
+      }
+    },
+    "sourceFloatSha256": "8307d5099fb55ebbac148a08d2a574380f90b85835d464f45e05562d2809f7e0",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-clean-short-response-12",
+    "stream": 0,
+    "globalFirstFeatureFrame": 197681,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-12\\stream-0-probabilities.npy",
+        "sha256": "5d11225a8903a5ae8219d49c334ef3e7367ae56f72d6a5489247d3e2e37f18e0"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-12\\stream-0-activity.npy",
+        "sha256": "c857dc6f33eb408fb919cb92c0480437206ceac843987fd14b8121b01c32d1c9"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-12\\stream-0-computed.npy",
+        "sha256": "fce7261e46197fdca994880f9baf30336c5e8fa2767b7c26ccff2c18e2baae34"
+      }
+    },
+    "sourceFloatSha256": "0dc8c00727aea1b597828c22cbd3e86c120eb05650b534cb9d6a3c2d98e9853b",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-clean-short-response-12",
+    "stream": 1,
+    "globalFirstFeatureFrame": 197681,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-12\\stream-1-probabilities.npy",
+        "sha256": "868c85948999390023281b71359d64b7b374eeb2033b7aa8bdc87b822c1281aa"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-12\\stream-1-activity.npy",
+        "sha256": "9d417bd8a7c0e9cacf954c3dfd76ab2a7014f0dbff8dddae5b35abf781634aeb"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-12\\stream-1-computed.npy",
+        "sha256": "fce7261e46197fdca994880f9baf30336c5e8fa2767b7c26ccff2c18e2baae34"
+      }
+    },
+    "sourceFloatSha256": "6c974f67bc4c8db33ca2d5c9edf1cc25811bfa1c25e861b5d0e214f5a9b47ce2",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-clean-short-response-14",
+    "stream": 0,
+    "globalFirstFeatureFrame": 216481,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-14\\stream-0-probabilities.npy",
+        "sha256": "88098c06013e06c190e8b6c7e2d181398e7430b9d9729c7028dc49a02c9ccfc2"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-14\\stream-0-activity.npy",
+        "sha256": "f6c62648177ffccb282e381b5b68466692d857c8d5567830cb7e77896d175adb"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-14\\stream-0-computed.npy",
+        "sha256": "76aa517847aba53cb601bb08e6a89cfdbcdd31560068423bf1b807f93b3c1e4d"
+      }
+    },
+    "sourceFloatSha256": "14eab01c25178aa98a2dad2c2fd80e5a5df71d1e6a91f88b2c2f48c0574b5244",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-clean-short-response-14",
+    "stream": 1,
+    "globalFirstFeatureFrame": 216481,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-14\\stream-1-probabilities.npy",
+        "sha256": "e485954df6bc78b51b6566a2dbf7cae408a42938c0d19a73bbb29f71cf6146d6"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-14\\stream-1-activity.npy",
+        "sha256": "7e53ae3a352860ab3d8d08b83404cdbf1c43c83ac0431b0a95cf4540cd6797c4"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-14\\stream-1-computed.npy",
+        "sha256": "76aa517847aba53cb601bb08e6a89cfdbcdd31560068423bf1b807f93b3c1e4d"
+      }
+    },
+    "sourceFloatSha256": "66dac350b3568a61c7c8d90c778496db89386ddca49359955853379759a4bbf8",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-clean-short-response-15",
+    "stream": 0,
+    "globalFirstFeatureFrame": 216528,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-15\\stream-0-probabilities.npy",
+        "sha256": "26c761111e699a9b9be858d0b45f16a0d588ddd259e26af20cd3bb71b2a63a35"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-15\\stream-0-activity.npy",
+        "sha256": "1c4a4c5576f1ef37aa113dfcd7023fd31204526e0568e5de99d091a9a4973572"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-15\\stream-0-computed.npy",
+        "sha256": "4e7023b239382481800648ad4f3d1a506c031f23ab6081978ac494209c6b2ed6"
+      }
+    },
+    "sourceFloatSha256": "182d62c9e5cd46caf589828221ff9f83e3ec9ed80e237884b5e7506ba292d2af",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  },
+  {
+    "id": "20200805_S_R001S01C01-clean-short-response-15",
+    "stream": 1,
+    "globalFirstFeatureFrame": 216528,
+    "outputs": {
+      "probabilities": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-15\\stream-1-probabilities.npy",
+        "sha256": "50a88e11ddc7b18d1c599ad90c01405d088937d16b080d3cdef93913d8539e94"
+      },
+      "activity": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-15\\stream-1-activity.npy",
+        "sha256": "18aa6a4187067d2c1bbff8cc6268c9ba3fa08011b2b4116d0e686d9bd1d63a3b"
+      },
+      "computed": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3\\queries\\20200805_S_R001S01C01-clean-short-response-15\\stream-1-computed.npy",
+        "sha256": "4e7023b239382481800648ad4f3d1a506c031f23ab6081978ac494209c6b2ed6"
+      }
+    },
+    "sourceFloatSha256": "467ac087d94d29aa574da3e6f0b8adff040b630d01563332fe7251df433eb4de",
+    "readOnlyOriginalCache": true,
+    "referenceRead": false
+  }
+]

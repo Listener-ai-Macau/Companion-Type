@@ -1,0 +1,601 @@
+{
+  "id": "20200805_S_R001S01C01-multi-turn-context-06",
+  "meeting": "20200805_S_R001S01C01",
+  "frames": 397051,
+  "segments": [
+    {
+      "startFrame": 0,
+      "endFrame": 2406,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-activity-uncertain",
+      "originalPredictedSlots": [],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 2406,
+      "endFrame": 12326,
+      "predictedModelSlots": [
+        4,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group4",
+        null
+      ]
+    },
+    {
+      "startFrame": 12326,
+      "endFrame": 12806,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 12806,
+      "endFrame": 40166,
+      "predictedModelSlots": [
+        1,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        1
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group1",
+        null
+      ]
+    },
+    {
+      "startFrame": 40166,
+      "endFrame": 79686,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 79686,
+      "endFrame": 97446,
+      "predictedModelSlots": [
+        1,
+        4
+      ],
+      "overlapRoute": true,
+      "associationReason": "contextual-distinct-single-source-agreement",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group1",
+        "20200805_S_R001S01C01/group4"
+      ]
+    },
+    {
+      "startFrame": 97446,
+      "endFrame": 104806,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 104806,
+      "endFrame": 106246,
+      "predictedModelSlots": [
+        1,
+        4
+      ],
+      "overlapRoute": true,
+      "associationReason": "contextual-distinct-single-source-agreement",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group1",
+        "20200805_S_R001S01C01/group4"
+      ]
+    },
+    {
+      "startFrame": 106246,
+      "endFrame": 108326,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 108326,
+      "endFrame": 158566,
+      "predictedModelSlots": [
+        4,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group4",
+        null
+      ]
+    },
+    {
+      "startFrame": 158566,
+      "endFrame": 161126,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 161126,
+      "endFrame": 162726,
+      "predictedModelSlots": [
+        1,
+        4
+      ],
+      "overlapRoute": true,
+      "associationReason": "contextual-distinct-single-source-agreement",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group1",
+        "20200805_S_R001S01C01/group4"
+      ]
+    },
+    {
+      "startFrame": 162726,
+      "endFrame": 163046,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 163046,
+      "endFrame": 164006,
+      "predictedModelSlots": [
+        1,
+        4
+      ],
+      "overlapRoute": true,
+      "associationReason": "contextual-distinct-single-source-agreement",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group1",
+        "20200805_S_R001S01C01/group4"
+      ]
+    },
+    {
+      "startFrame": 164006,
+      "endFrame": 165926,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 165926,
+      "endFrame": 166566,
+      "predictedModelSlots": [
+        1,
+        4
+      ],
+      "overlapRoute": true,
+      "associationReason": "contextual-distinct-single-source-agreement",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group1",
+        "20200805_S_R001S01C01/group4"
+      ]
+    },
+    {
+      "startFrame": 166566,
+      "endFrame": 167366,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 167366,
+      "endFrame": 167846,
+      "predictedModelSlots": [
+        1,
+        4
+      ],
+      "overlapRoute": true,
+      "associationReason": "contextual-distinct-single-source-agreement",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group1",
+        "20200805_S_R001S01C01/group4"
+      ]
+    },
+    {
+      "startFrame": 167846,
+      "endFrame": 169766,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 169766,
+      "endFrame": 178726,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-activity-uncertain",
+      "originalPredictedSlots": [],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 178726,
+      "endFrame": 179686,
+      "predictedModelSlots": [
+        4,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group4",
+        null
+      ]
+    },
+    {
+      "startFrame": 179686,
+      "endFrame": 180326,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 180326,
+      "endFrame": 194886,
+      "predictedModelSlots": [
+        1,
+        4
+      ],
+      "overlapRoute": true,
+      "associationReason": "contextual-distinct-single-source-agreement",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group1",
+        "20200805_S_R001S01C01/group4"
+      ]
+    },
+    {
+      "startFrame": 194886,
+      "endFrame": 196006,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 196006,
+      "endFrame": 220966,
+      "predictedModelSlots": [
+        4,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group4",
+        null
+      ]
+    },
+    {
+      "startFrame": 220966,
+      "endFrame": 224166,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-activity-uncertain",
+      "originalPredictedSlots": [],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 224166,
+      "endFrame": 292486,
+      "predictedModelSlots": [
+        1,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        1
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group1",
+        null
+      ]
+    },
+    {
+      "startFrame": 292486,
+      "endFrame": 293286,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 293286,
+      "endFrame": 301606,
+      "predictedModelSlots": [
+        4,
+        1
+      ],
+      "overlapRoute": true,
+      "associationReason": "contextual-distinct-single-source-agreement",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group4",
+        "20200805_S_R001S01C01/group1"
+      ]
+    },
+    {
+      "startFrame": 301606,
+      "endFrame": 302086,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 302086,
+      "endFrame": 366886,
+      "predictedModelSlots": [
+        1,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        1
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group1",
+        null
+      ]
+    },
+    {
+      "startFrame": 366886,
+      "endFrame": 377126,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-activity-uncertain",
+      "originalPredictedSlots": [],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 377126,
+      "endFrame": 394246,
+      "predictedModelSlots": [
+        1,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        1
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group1",
+        null
+      ]
+    },
+    {
+      "startFrame": 394246,
+      "endFrame": 397051,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-activity-uncertain",
+      "originalPredictedSlots": [],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    }
+  ],
+  "overlapResolvedFrames": 45760,
+  "overlapUnconfirmedFrames": 60000,
+  "sourceAudioAndWordsChanged": false,
+  "speakerIdentityVerified": false,
+  "wordSpeakerAlignmentImplemented": false
+}

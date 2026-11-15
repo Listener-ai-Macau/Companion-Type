@@ -1,0 +1,59 @@
+{
+  "id": "20200709_L_R002S01C01-clean-short-response-01",
+  "meeting": "20200709_L_R002S01C01",
+  "frames": 28880,
+  "segments": [
+    {
+      "startFrame": 0,
+      "endFrame": 1633,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-activity-uncertain",
+      "originalPredictedSlots": [],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 1633,
+      "endFrame": 28833,
+      "predictedModelSlots": [
+        0,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        0
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200709_L_R002S01C01/group0",
+        null
+      ]
+    },
+    {
+      "startFrame": 28833,
+      "endFrame": 28880,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-activity-uncertain",
+      "originalPredictedSlots": [],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    }
+  ],
+  "overlapResolvedFrames": 0,
+  "overlapUnconfirmedFrames": 0,
+  "sourceAudioAndWordsChanged": false,
+  "speakerIdentityVerified": false,
+  "wordSpeakerAlignmentImplemented": false
+}

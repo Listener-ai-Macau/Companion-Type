@@ -1,0 +1,9 @@
+W1115 19:58:52.303000 9944 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+{"state": "FAILED_CONTEXTUAL_SPEAKER_QUERY_RETAINED", "newEncoderCalls": 0, "newProjectionCalls": 1, "error": "RuntimeError('Inplace update to inference tensor outside InferenceMode is not allowed.You can make a clone to get a normal tensor before doing inplace update.See https://github.com/pytorch/rfcs/pull/17 for more details.')", "seconds": 10.282216599999629}
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\contextual_speaker_binding_worker_20261115.py", line 158, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\contextual_speaker_binding_worker_20261115.py", line 114, in main
+    counter_features[:,first:last].copy_(value[None].to('cuda:0'))
+RuntimeError: Inplace update to inference tensor outside InferenceMode is not allowed.You can make a clone to get a normal tensor before doing inplace update.See https://github.com/pytorch/rfcs/pull/17 for more details.

@@ -1,0 +1,29 @@
+{
+  "id": "20200709_L_R002S01C01-multi-turn-context-04",
+  "meeting": "20200709_L_R002S01C01",
+  "frames": 426440,
+  "segments": [
+    {
+      "startFrame": 0,
+      "endFrame": 426440,
+      "predictedModelSlots": [
+        3,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        3
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200709_L_R002S01C01/group3",
+        null
+      ]
+    }
+  ],
+  "overlapResolvedFrames": 0,
+  "overlapUnconfirmedFrames": 0,
+  "sourceAudioAndWordsChanged": false,
+  "speakerIdentityVerified": false,
+  "wordSpeakerAlignmentImplemented": false
+}

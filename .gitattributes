@@ -205,3 +205,11 @@ src/single_source_activity_guard_worker_20261115.py -text -whitespace
 src/run_single_source_activity_guard_20261115.py -text -whitespace
 
 src/score_single_source_activity_guard_20261115.py -text -whitespace
+
+evidence/20261115-contextual-speaker-binding-r1/** -text -whitespace
+
+src/contextual_speaker_binding_20261115.py -text -whitespace
+
+src/contextual_speaker_binding_worker_20261115.py -text -whitespace
+
+src/run_contextual_speaker_binding_20261115.py -text -whitespace

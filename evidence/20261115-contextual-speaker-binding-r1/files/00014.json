@@ -1,0 +1,78 @@
+{
+  "state": "PASS_CONTEXTUAL_QUERY_ORIGINAL_FEATURE_EMBEDDING_AND_POSTERIOR_CONTROLS",
+  "phase": "control",
+  "startedAt": "2026-11-15T19:55:03.142507+08:00",
+  "newEncoderCalls": 3,
+  "newProjectionCalls": 2,
+  "optimizerUpdates": 0,
+  "referenceRead": false,
+  "qualityQualified": false,
+  "protocolSha256": "4cf2cd96b9dd2eaebf2da8731a587ff5c5aef88bbdb7d2303a0a455c4c061a05",
+  "limits": {
+    "pid": 19536,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1222762496,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "observedAt": "2026-11-15T19:55:17.921881+08:00",
+  "weights": {
+    "originalMappedTensors": 417,
+    "allOriginalMappedTensorValuesExact": true,
+    "restoredAuxiliaryKeys": [
+      "0.weight",
+      "0.bias",
+      "1.weight",
+      "1.bias"
+    ],
+    "auxiliaryOriginalValuesExact": true
+  },
+  "gpu": "AMD Radeon RX 6800 XT",
+  "controls": [
+    {
+      "meeting": "20200709_L_R002S01C01",
+      "first": 33000,
+      "last": 36000,
+      "frontendMaximumDifference": 0.0
+    },
+    {
+      "meeting": "20200709_L_R002S01C01",
+      "routeFirst": 32640,
+      "originalEmbeddingExact": true,
+      "originalPosteriorsExact": true
+    },
+    {
+      "meeting": "20200709_L_R002S01C01",
+      "routeFirst": 35360,
+      "originalEmbeddingExact": true,
+      "originalPosteriorsExact": true
+    },
+    {
+      "meeting": "20200805_S_R001S01C01",
+      "first": 45000,
+      "last": 48000,
+      "frontendMaximumDifference": 0.0
+    },
+    {
+      "meeting": "20200805_S_R001S01C01",
+      "routeFirst": 46240,
+      "originalEmbeddingExact": true,
+      "originalPosteriorsExact": true
+    }
+  ],
+  "originalAudioPcmExact": true,
+  "originalFrontendExact": true,
+  "originalEmbeddingExact": true,
+  "originalPosteriorsExact": true,
+  "finishedAt": "2026-11-15T19:55:17.921881+08:00",
+  "seconds": 14.780121200000394
+}

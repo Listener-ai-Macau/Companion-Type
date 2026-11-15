@@ -1,0 +1,14 @@
+{
+  "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\contextual-speaker-binding-r1\\association-r3",
+  "protocolSha256": "4cf2cd96b9dd2eaebf2da8731a587ff5c5aef88bbdb7d2303a0a455c4c061a05",
+  "at": "2026-11-15T19:59:40.120609+08:00",
+  "reason": "Correct inference tensor write context only; no formula/weight/data/association-rule change.",
+  "sourceBeforeSha256": "75c6d00ecba59e7626c39a4e1db5ceca11a1cedf3eb6057deb19ea2b1b4b79a9",
+  "sourceAfterSha256": "20c8683d16e3000a6f6145e6081c2e6fbb4f35e08041412c3cfec3e7071a8f65",
+  "oldNumericalControlUnaffected": true,
+  "previousSeparatedQueryEncoderCalls": 0,
+  "previousProjectionCalls": 1,
+  "automaticRetries": 0,
+  "failedPreparation": "First snapshot destination exceeded Windows MAX_PATH; copy failed before source mutation. Unconditional caller incorrectly launched association-r2 with unchanged source; it failed identically with0encoder queries/1original projection. Both failed runs retained; repaired snapshot uses short parent path and next launch follows confirmed exit0.",
+  "failureEvidenceRoot": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\ctx-scope-r1"
+}

@@ -1,0 +1,98 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-12",
+  "meeting": "20200805_S_R001S01C01",
+  "frames": 16103,
+  "segments": [
+    {
+      "startFrame": 0,
+      "endFrame": 620,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-activity-uncertain",
+      "originalPredictedSlots": [],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 620,
+      "endFrame": 1100,
+      "predictedModelSlots": [
+        2,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        2
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group2",
+        null
+      ]
+    },
+    {
+      "startFrame": 1100,
+      "endFrame": 13260,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        2
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 13260,
+      "endFrame": 13900,
+      "predictedModelSlots": [
+        1,
+        2
+      ],
+      "overlapRoute": true,
+      "associationReason": "contextual-distinct-single-source-agreement",
+      "originalPredictedSlots": [
+        1,
+        2
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200805_S_R001S01C01/group1",
+        "20200805_S_R001S01C01/group2"
+      ]
+    },
+    {
+      "startFrame": 13900,
+      "endFrame": 16103,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        1,
+        2
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    }
+  ],
+  "overlapResolvedFrames": 640,
+  "overlapUnconfirmedFrames": 14363,
+  "sourceAudioAndWordsChanged": false,
+  "speakerIdentityVerified": false,
+  "wordSpeakerAlignmentImplemented": false
+}

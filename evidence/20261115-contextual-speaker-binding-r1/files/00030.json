@@ -1,0 +1,44 @@
+{
+  "state": "FAILED_CONTEXTUAL_SPEAKER_QUERY_RETAINED",
+  "phase": "baseline",
+  "startedAt": "2026-11-15T19:58:47.354565+08:00",
+  "newEncoderCalls": 0,
+  "newProjectionCalls": 1,
+  "optimizerUpdates": 0,
+  "referenceRead": false,
+  "qualityQualified": false,
+  "protocolSha256": "4cf2cd96b9dd2eaebf2da8731a587ff5c5aef88bbdb7d2303a0a455c4c061a05",
+  "limits": {
+    "pid": 9944,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 892399616,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "observedAt": "2026-11-15T19:58:57.636761+08:00",
+  "weights": {
+    "originalMappedTensors": 417,
+    "allOriginalMappedTensorValuesExact": true,
+    "restoredAuxiliaryKeys": [
+      "0.weight",
+      "0.bias",
+      "1.weight",
+      "1.bias"
+    ],
+    "auxiliaryOriginalValuesExact": true
+  },
+  "gpu": "AMD Radeon RX 6800 XT",
+  "error": "RuntimeError('Inplace update to inference tensor outside InferenceMode is not allowed.You can make a clone to get a normal tensor before doing inplace update.See https://github.com/pytorch/rfcs/pull/17 for more details.')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\contextual_speaker_binding_worker_20261115.py\", line 114, in main\n    counter_features[:,first:last].copy_(value[None].to('cuda:0'))\nRuntimeError: Inplace update to inference tensor outside InferenceMode is not allowed.You can make a clone to get a normal tensor before doing inplace update.See https://github.com/pytorch/rfcs/pull/17 for more details.\n",
+  "finishedAt": "2026-11-15T19:58:57.636761+08:00",
+  "seconds": 10.282216599999629
+}

@@ -1,0 +1,100 @@
+{
+  "id": "20200709_L_R002S01C01-multi-turn-context-05",
+  "meeting": "20200709_L_R002S01C01",
+  "frames": 414820,
+  "segments": [
+    {
+      "startFrame": 0,
+      "endFrame": 45248,
+      "predictedModelSlots": [
+        3,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        3
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200709_L_R002S01C01/group3",
+        null
+      ]
+    },
+    {
+      "startFrame": 45248,
+      "endFrame": 60608,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        3,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 60608,
+      "endFrame": 63008,
+      "predictedModelSlots": [
+        3,
+        4
+      ],
+      "overlapRoute": true,
+      "associationReason": "contextual-distinct-single-source-agreement",
+      "originalPredictedSlots": [
+        3,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200709_L_R002S01C01/group3",
+        "20200709_L_R002S01C01/group4"
+      ]
+    },
+    {
+      "startFrame": 63008,
+      "endFrame": 65088,
+      "predictedModelSlots": [
+        null,
+        null
+      ],
+      "overlapRoute": true,
+      "associationReason": "separated-source-association-unconfirmed",
+      "originalPredictedSlots": [
+        3,
+        4
+      ],
+      "globalPredictedSpeakerIds": [
+        null,
+        null
+      ]
+    },
+    {
+      "startFrame": 65088,
+      "endFrame": 414820,
+      "predictedModelSlots": [
+        3,
+        null
+      ],
+      "overlapRoute": false,
+      "associationReason": "original-single-slot",
+      "originalPredictedSlots": [
+        3
+      ],
+      "globalPredictedSpeakerIds": [
+        "20200709_L_R002S01C01/group3",
+        null
+      ]
+    }
+  ],
+  "overlapResolvedFrames": 2400,
+  "overlapUnconfirmedFrames": 17440,
+  "sourceAudioAndWordsChanged": false,
+  "speakerIdentityVerified": false,
+  "wordSpeakerAlignmentImplemented": false
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "meeting": "20200709_L_R002S01C01",
+    "role": "validation",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200709_L_R002S01C01\\microphone0.wav",
+    "audioSha256": "7772a2f7106a3abfc306e4e638c452f8996e14083b86b6c11e6587e906690d35",
+    "audioSeconds": 2145.3378125,
+    "frames": 214534,
+    "validSupervisedFrames": 214533,
+    "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200709_L_R002S01C01\\features.npy",
+    "featuresSha256": "d18453b7dfa20a4301c951967b45f43a7ceb3ac2fc5098cc4ca146f9e13a28c4",
+    "probabilities": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\baseline-r1\\results\\20200709_L_R002S01C01\\probabilities.npy",
+    "probabilitiesSha256": "e2325fc328043522441f57e7179d97bf2cd93f0d391ebb4eecf656d552779df1",
+    "legacyOverlap": {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\legacy-overlap.npy",
+      "sha256": "23b439a54ead23e31d24c68c32e79a9c9aff6e082082601114c87e73afb1add6",
+      "shape": [
+        214534
+      ]
+    },
+    "cacheRoutes": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\routes.json",
+    "cacheRoutesSha256": "b5b6bd84b042575fdfb3fb5413cb5123b3025a798c717873499de9c794b02351"
+  },
+  {
+    "meeting": "20200805_S_R001S01C01",
+    "role": "validation",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200805_S_R001S01C01\\microphone0.wav",
+    "audioSha256": "eb1bb3eec8f1984e9286dfb9daf5c0437573a2af40eba7ee4093501259ffe4e6",
+    "audioSeconds": 2195.362,
+    "frames": 219537,
+    "validSupervisedFrames": 219536,
+    "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200805_S_R001S01C01\\features.npy",
+    "featuresSha256": "8884deab17acb5c87b82b395237617e13672b863b6314865be2ae4dfbc224733",
+    "probabilities": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\baseline-r1\\results\\20200805_S_R001S01C01\\probabilities.npy",
+    "probabilitiesSha256": "9a96f10ad5bb5b4637e57b4a7b4b5da4635ffedd2c9efc7dc3a1f357fb8b4553",
+    "legacyOverlap": {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\legacy-overlap.npy",
+      "sha256": "59a4fe38a32570bb49d75ae86f2d6a9292875e8ac24167a5f5d12ab35a7ce8f3",
+      "shape": [
+        219537
+      ]
+    },
+    "cacheRoutes": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\routes.json",
+    "cacheRoutesSha256": "fbb9a70a425807325d2b9dcdce63d23768845283958a6fa3b708ea450c6eda08"
+  }
+]
