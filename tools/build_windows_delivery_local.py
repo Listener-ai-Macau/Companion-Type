@@ -73,7 +73,11 @@ def main():
  parser.add_argument('--reuse-build-receipt',type=Path,help='Completed same-target build with exact native inputs; reserve2GiB for an app-only rebuild')
  parser.add_argument('--reuse-dependency-build-receipt',type=Path,help='Verified same-toolchain/dependencies; only app/input Rust sources may differ; reserve2GiB for those warm crates')
  parser.add_argument('--reuse-input-adapter-build-receipt',type=Path,help='Verified same dependencies, app/input Rust and the single local Fusion C shim; reserve2GiB without allowing upstream C/header changes')
+ parser.add_argument('--native-only',action='store_true',help='Verified warm native/web stage,1.5GiB reserve; no MSI yet')
+ parser.add_argument('--bundle-native-receipt',type=Path,help='Exact completed native/web stage; hash-check and bundle only,256MiB reserve')
  args=parser.parse_args()
+ assert not(args.native_only and args.bundle_native_receipt),'Choose one delivery stage'
+
  assert os.name=='nt' and os.environ.get('GITHUB_ACTIONS')!='true'
  cache=Path('E:/CodexData/Companion/.build-cache');target=cache/'shared-windows-target';out=args.output.resolve()
  # Completed releases belong outside the reusable compiler cache.
@@ -97,10 +101,25 @@ def main():
    # First normal release in this fixed target may need up to8GiB for crates;
    # this estimate does not increase the common80GiB budget or delete anything.
    reserve=8
+   staged=None
+   if args.bundle_native_receipt:
+    staged=json.loads(args.bundle_native_receipt.read_bytes())
+    assert staged['state']=='LOCAL_WINDOWS_NATIVE_STAGE_COMPLETE_BUNDLE_PENDING'
+    assert staged['sourceCommit']==record['sourceCommit'] and staged['platformCommit']==record['platformCommit'] and staged['version']==record['version']
+    assert Path(staged['sharedTarget']).resolve()==target.resolve() and staged['normalReleaseOptimization']
+    assert capture(['rustc','+1.95.0','--version'])==staged['rustc']
+    for row in staged['sourceFiles']:assert sha(ROOT/row['path'])==row['sha256'],row['path']
+    for row in staged['webAssets']:assert sha(ROOT/'apps/windows/dist'/row['path'])==row['sha256'],row['path']
+    for row in staged['nativeFiles']:
+     assert sha(target/'release'/row['path'])==row['sha256'] and sha(args.bundle_native_receipt.parent/'windows-bin'/row['path'])==row['sha256']
+    reserve=0.25
+    record['verifiedNativeStageReuse']={'receipt':str(args.bundle_native_receipt),'sha256':sha(args.bundle_native_receipt),'nativeAndWebExact':True,'reservedGiB':reserve}
    assert sum(bool(value)for value in [args.reuse_build_receipt,args.reuse_dependency_build_receipt,args.reuse_input_adapter_build_receipt])<=1,'Choose one reuse scope'
    reuse=args.reuse_build_receipt or args.reuse_dependency_build_receipt or args.reuse_input_adapter_build_receipt
+   assert not(staged and reuse),'Native-stage reuse already verifies exact inputs'
+   if args.native_only:assert reuse,'Warm native-stage estimate requires a verified existing dependency graph'
    if reuse:
-    record['verifiedWarmBuildReuse']=verified_reuse(reuse,target,record['version'],bool(args.reuse_dependency_build_receipt or args.reuse_input_adapter_build_receipt),bool(args.reuse_input_adapter_build_receipt));reserve=2
+    record['verifiedWarmBuildReuse']=verified_reuse(reuse,target,record['version'],bool(args.reuse_dependency_build_receipt or args.reuse_input_adapter_build_receipt),bool(args.reuse_input_adapter_build_receipt));reserve=1.5 if args.native_only else 2
    record['storageBefore']=preflight(cache,reserve_gib=reserve)
    observed=inspect(target,ROOT);assert observed['result']=='TARGET_IDLE_AT_OBSERVATION',observed['result']
    assert not capture(['git','status','--porcelain','--untracked-files=no']),'Commit the exact source before a normal delivery build'
@@ -111,14 +130,19 @@ def main():
    names=capture(['git','ls-files','--recurse-submodules','--','apps/windows','packages','third_party','package.json','package-lock.json','tsconfig.base.json']).splitlines()
    record['sourceFiles']=[{'path':name,'sha256':sha(ROOT/name)} for name in names if (ROOT/name).is_file()]
    before_manifest=(ROOT/'apps/windows/src-tauri/Cargo.toml').read_bytes()
-   run('windows-web',['cmd','/d','/c','npm.cmd','run','build:windows'])
+   if not staged:run('windows-web',['cmd','/d','/c','npm.cmd','run','build:windows'])
    observed=inspect(target,ROOT,source_dir=ROOT);assert observed['result']=='TARGET_IDLE_AT_OBSERVATION',observed['result']
    dist=ROOT/'apps/windows/dist';record['webAssets']=[{'path':p.relative_to(dist).as_posix(),'bytes':p.stat().st_size,'sha256':sha(p)} for p in sorted(dist.rglob('*')) if p.is_file()]
    record['state']='LOCAL_NORMAL_RELEASE_BUILDING';save()
-   run('cargo-release',['cargo','build','--release','--locked','--offline','--manifest-path',ROOT/'apps/windows/src-tauri/Cargo.toml'])
+   if not staged:run('cargo-release',['cargo','build','--release','--locked','--offline','--manifest-path',ROOT/'apps/windows/src-tauri/Cargo.toml'])
    pair=out/'windows-bin';pair.mkdir()
    for name in ['companion-type.exe','companion_type_lib.dll']:shutil.copyfile(target/'release'/name,pair/name)
    record['nativeFiles']=[{'path':p.name,'bytes':p.stat().st_size,'sha256':sha(p)} for p in pair.iterdir()]
+   if args.native_only:
+    for row in record['sourceFiles']:assert sha(ROOT/row['path'])==row['sha256'],row['path']
+    record.update(state='LOCAL_WINDOWS_NATIVE_STAGE_COMPLETE_BUNDLE_PENDING',normalReleaseOptimization=True,sharedTarget=str(target),intermediateTargetCopies=0,automaticDeletion=False,finishedAt=datetime.now().astimezone().isoformat(timespec='seconds'))
+    record['storageAfter']=preflight(cache,reserve_gib=0);record['resourceLimits']=limits.query();save()
+    print(json.dumps({k:record[k]for k in ['state','sourceCommit','version','nativeFiles']},ensure_ascii=False));return
    run('msi-bundle',['node',ROOT/'node_modules/@tauri-apps/cli/tauri.js','bundle','--bundles','msi','--ci','--no-sign'],ROOT/'apps/windows')
    installers=list((target/'release/bundle/msi').glob('*'+record['version']+'*x64*.msi'));assert len(installers)==1
    installer=out/('Companion-Windows-'+record['version']+'.msi');shutil.copyfile(installers[0],installer)
