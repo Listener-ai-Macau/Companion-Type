@@ -1,0 +1,114 @@
+{
+  "state": "BASE_DIAGNOSTIC_COMPLETE_NO_AUTOMATIC_ADDITIONAL_TRAINING",
+  "at": "2026-11-15T13:54:14.742484+08:00",
+  "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r3\\base-run-r1",
+  "runSeconds": 305.2179999999935,
+  "familyPrivatePeakBytes": 1253470208,
+  "neuralCalls": 32,
+  "newParameterUpdates": 0,
+  "byCondition": {
+    "clean-short-response": {
+      "cases": 20,
+      "audioSeconds": 26.827249999999996,
+      "referenceCharacters": 87,
+      "recognizedCharacters": 82,
+      "totalEdits": 13,
+      "edits": {
+        "replace": 8,
+        "delete": 5
+      },
+      "cer": 0.14942528735632185,
+      "reviewRequiredCases": 0
+    },
+    "multi-turn-context": {
+      "cases": 12,
+      "audioSeconds": 322.68318750000003,
+      "referenceCharacters": 1476,
+      "recognizedCharacters": 1432,
+      "totalEdits": 161,
+      "edits": {
+        "replace": 33,
+        "insert": 42,
+        "delete": 86
+      },
+      "cer": 0.10907859078590786,
+      "reviewRequiredCases": 0
+    }
+  },
+  "byMeetingAndCondition": {
+    "20200709_L_R002S01C01": {
+      "clean-short-response": {
+        "cases": 5,
+        "audioSeconds": 8.415,
+        "referenceCharacters": 37,
+        "recognizedCharacters": 37,
+        "totalEdits": 0,
+        "edits": {},
+        "cer": 0.0,
+        "reviewRequiredCases": 0
+      },
+      "multi-turn-context": {
+        "cases": 6,
+        "audioSeconds": 159.9171875,
+        "referenceCharacters": 740,
+        "recognizedCharacters": 713,
+        "totalEdits": 48,
+        "edits": {
+          "replace": 11,
+          "insert": 5,
+          "delete": 32
+        },
+        "cer": 0.06486486486486487,
+        "reviewRequiredCases": 0
+      }
+    },
+    "20200805_S_R001S01C01": {
+      "clean-short-response": {
+        "cases": 15,
+        "audioSeconds": 18.41225,
+        "referenceCharacters": 50,
+        "recognizedCharacters": 45,
+        "totalEdits": 13,
+        "edits": {
+          "replace": 8,
+          "delete": 5
+        },
+        "cer": 0.26,
+        "reviewRequiredCases": 0
+      },
+      "multi-turn-context": {
+        "cases": 6,
+        "audioSeconds": 162.766,
+        "referenceCharacters": 736,
+        "recognizedCharacters": 719,
+        "totalEdits": 113,
+        "edits": {
+          "delete": 54,
+          "insert": 37,
+          "replace": 22
+        },
+        "cer": 0.15353260869565216,
+        "reviewRequiredCases": 0
+      }
+    }
+  },
+  "cleanShortExactCases": 16,
+  "cleanShortCases": 20,
+  "atMost2CharacterCases": 8,
+  "atMost2CharacterExactCases": 8,
+  "findings": [
+    "The previous training selection excludes<2s and multi-turn contexts, but this baseline does not show a universal inability to recognize short speech. All8at-most2-character controls are exact.",
+    "All13clean-short character errors occur in4cases from one validation meeting; the other source is0/37. This87-character cohort is too small for a general quality or statistical claim.",
+    "Every selected natural multi-turn window contains overlapping reference speech. Its chronological merged CER is diagnostic and confounded by ordering; do not train the base blindly against an arbitrary mixed-speaker order.",
+    "In context20200805_S_R001S01C01-06, the first two substantially overlapping reference utterances appear in the reverse order in raw ASR. The original55edits remain unchanged. Some content from both voices is present; this is not evidence of55missed or misheard independent characters.",
+    "The same example has a potentially ambiguous transcription (reference秋天, hypothesis秋千) in a sentence about a swing. No reference is silently corrected without audio adjudication, and original gates/scores remain unchanged."
+  ],
+  "decision": "No automatic repetition of the rejected clean-utterance LoRA, no new short-response oversampling or mixed-overlap teacher targets on this evidence. First separate actual acoustic losses, reference ambiguity, overlap ordering and speaker attribution. Preserve original whole meetings and never claim these clips satisfy D2.",
+  "next": "Keep one optional official Community1 speaker-only comparison behind its account-access gate; prepare fixed local adapter and exact original scoring before any run. Independent ASR work should use audio-grounded error adjudication from existing sources, not further blind hyperparameter/model variants.",
+  "originalGatesChanged": false,
+  "finalHoldoutOpened": false,
+  "d1Complete": true,
+  "d2Complete": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

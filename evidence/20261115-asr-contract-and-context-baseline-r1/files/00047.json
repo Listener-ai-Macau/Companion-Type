@@ -1,0 +1,42 @@
+{
+  "binding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "Chinese",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter",
+    "jobId": "00000000-00025360-final",
+    "pcmSha256": "05b4e7e83ac099d7baf629fe49f36ff56e9b3826a1e696ac04228bd265dca1f7",
+    "configSha256": "b23d1f5378ff1eb6a30d5600b7e5cc70a6a544cbe8388991ab6664871882d146"
+  },
+  "raw": {
+    "startSample": 0,
+    "endSample": 25360,
+    "text": "零二八，我是保安部。",
+    "language": "Chinese",
+    "languageHeaderPresent": false,
+    "generatedIds": [
+      99822,
+      40820,
+      99568,
+      3837,
+      104198,
+      107150,
+      32948,
+      1773,
+      151645
+    ],
+    "rawDecoded": "零二八，我是保安部。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 1.9276593000104185
+  },
+  "rawSha256": "3aa320b67528407f945ccb40de3dab5026d0fd006f66c43d1c79908310d87d32"
+}

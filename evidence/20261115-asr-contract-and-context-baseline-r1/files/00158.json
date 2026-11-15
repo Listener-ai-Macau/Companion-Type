@@ -1,0 +1,36 @@
+{
+  "binding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "Chinese",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter",
+    "jobId": "00000000-00012157-final",
+    "pcmSha256": "07c7d99e5bb80b4a21c1b76b29e5c0c6853506d3ca48448976e55992e2edef15",
+    "configSha256": "b72a5751060e52bc947c81b44e318d567c9a5abd3854e870d47f1231d7e6846b"
+  },
+  "raw": {
+    "startSample": 0,
+    "endSample": 12157,
+    "text": "对。",
+    "language": "Chinese",
+    "languageHeaderPresent": false,
+    "generatedIds": [
+      32664,
+      1773,
+      151645
+    ],
+    "rawDecoded": "对。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 0.6331103999982588
+  },
+  "rawSha256": "f18a0d572aa0473aba3724e3e5056ecfb6b5c19522204e980accb63f5be948c2"
+}

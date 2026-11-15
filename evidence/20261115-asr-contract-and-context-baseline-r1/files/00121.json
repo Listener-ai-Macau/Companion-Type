@@ -1,0 +1,27 @@
+{
+  "isFinal": true,
+  "text": "客服。",
+  "utterances": [
+    {
+      "text": "客服。",
+      "startMs": 0.0,
+      "endMs": 1030.0,
+      "speaker": null,
+      "approximateTiming": true,
+      "block": 0,
+      "revision": "00000000-00016480-final",
+      "blockFinal": true,
+      "language": "Chinese",
+      "decodeAccepted": true,
+      "reviewRequired": false,
+      "unconfirmedAudioIntervals": []
+    }
+  ],
+  "confirmedAudioFrames": 16480,
+  "finalDecodedFrames": 16480,
+  "audioSealed": true,
+  "speakerIdentityVerified": false,
+  "reviewRequired": false,
+  "wordTimingVerified": false,
+  "qualityQualified": false
+}

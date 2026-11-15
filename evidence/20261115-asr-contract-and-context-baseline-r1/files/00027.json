@@ -1,0 +1,20 @@
+{
+  "state": "COMPLETE_FROZEN_CONTEXT_BASELINE_SCORING_PENDING",
+  "startedAt": "2026-11-15T13:45:48+08:00",
+  "workerSha256": "092a0c479a196ef646d4f082ae2de2c67c299a8f624c7fc70519cb4e5fbd9e1b",
+  "newTraining": false,
+  "automaticRetries": 0,
+  "qualityQualified": false,
+  "privatePeakBytes": 1253470208,
+  "pid": 7480,
+  "pidCreatedAt": 1794721554.0751405,
+  "gpu": {
+    "ordinal": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030",
+    "totalMemory": 17163091968
+  },
+  "exitCode": 0,
+  "finishedAt": "2026-11-15T13:50:54+08:00",
+  "seconds": 305.2179999999935
+}

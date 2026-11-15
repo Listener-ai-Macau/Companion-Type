@@ -1,0 +1,37 @@
+{
+  "binding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "Chinese",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter",
+    "jobId": "00000000-00028720-final",
+    "pcmSha256": "478cc7b6731f8874d172fa149a59e4c285b00eaaeb3f7275780e3185f368ad3d",
+    "configSha256": "6917a8a5d8edbc52bbe3c848cf0dd8594df5ba035682f7a108c86f32a95833a2"
+  },
+  "raw": {
+    "startSample": 0,
+    "endSample": 28720,
+    "text": "民企主管。",
+    "language": "Chinese",
+    "languageHeaderPresent": false,
+    "generatedIds": [
+      118831,
+      102667,
+      1773,
+      151645
+    ],
+    "rawDecoded": "民企主管。<|im_end|>",
+    "naturalEos": true,
+    "repeatBlock": null,
+    "neuralInferencePerformed": true,
+    "inferenceSeconds": 0.9270000000251457
+  },
+  "rawSha256": "cc11a47060b89e31a0a7585b0ef38c6e52fad42ce65289e7f163334680a6781e"
+}

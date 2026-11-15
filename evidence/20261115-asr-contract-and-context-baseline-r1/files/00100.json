@@ -1,0 +1,62 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00033840-final",
+    "recordingId": "3b55a4a7-42f0-5ec7-8d55-46f521793157",
+    "configSha256": "1b9d1b1f57e245f86c0fc0ba87d8b8b26272c4aa6f6bbfec903c053ffcbab54c",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 33840,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r3\\base-run-r1\\sessions\\20200805_S_R001S01C01-clean-short-response-01\\audio.pcm",
+    "pcmSha256": "5b10b530868a8fd43b694adf7603123bf0e88df15c36fe9d9198d1d803f5e37c",
+    "language": "Chinese",
+    "blockFinal": true,
+    "publishedAtMonotonic": 239450.8575145,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "Chinese",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "零零三总经理。",
+    "rawGeneratedIds": [
+      [
+        99822,
+        99822,
+        44991,
+        104266,
+        1773,
+        151645
+      ]
+    ],
+    "language": "Chinese",
+    "accepted": true,
+    "seconds": 2.338227400003234,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 1.3282992000167724,
+    "allKnownDecodeSecondsIncludingFailedParents": 1.3282992000167724,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 33840
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

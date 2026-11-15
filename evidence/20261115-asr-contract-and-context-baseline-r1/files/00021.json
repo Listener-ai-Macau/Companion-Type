@@ -1,0 +1,5 @@
+{
+  "at": "2026-11-15T13:45:06.196147+08:00",
+  "state": "PREPARATION_ONLY_BEFORE_ZERO_NEURAL_CALLS",
+  "reason": "Continuous interval assertion regarded the final quantized sample as crossing a touching fractional annotation boundary. Fix validation to the exact discrete half-open sample ranges [ceil(start*rate),ceil(end*rate)). Preserve audio and require byte equality on preparation resume."
+}

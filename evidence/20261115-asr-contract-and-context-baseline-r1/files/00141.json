@@ -1,0 +1,27 @@
+{
+  "isFinal": true,
+  "text": "我们是。",
+  "utterances": [
+    {
+      "text": "我们是。",
+      "startMs": 0.0,
+      "endMs": 1455.0,
+      "speaker": null,
+      "approximateTiming": true,
+      "block": 0,
+      "revision": "00000000-00023280-final",
+      "blockFinal": true,
+      "language": "Chinese",
+      "decodeAccepted": true,
+      "reviewRequired": false,
+      "unconfirmedAudioIntervals": []
+    }
+  ],
+  "confirmedAudioFrames": 23280,
+  "finalDecodedFrames": 23280,
+  "audioSealed": true,
+  "speakerIdentityVerified": false,
+  "reviewRequired": false,
+  "wordTimingVerified": false,
+  "qualityQualified": false
+}

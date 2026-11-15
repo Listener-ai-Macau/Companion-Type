@@ -1,0 +1,24 @@
+{
+  "state": "PREPARATION_STOPPED_BEFORE_ANY_INFERENCE",
+  "at": "2026-11-15T13:43:50.916789+08:00",
+  "reason": "Adjacent complete contexts had105ms gap; independent80ms padding overlapped. Uniqueness assertion stopped before protocol freeze. No inference, training or source changes.",
+  "retainedAudio": [
+    {
+      "path": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r1\\audio\\20200709_L_R002S01C01-context-01.wav",
+      "sha256": "732af89ad6f25be24db0538e95351793ab37046444dacb69d91a224b58d70a2b"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r1\\audio\\20200709_L_R002S01C01-context-02.wav",
+      "sha256": "1edd536e4b974e3f3743e7a6d3a072983efb9a29095c0b4bf9ed5f7ea6108b97"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r1\\audio\\20200709_L_R002S01C01-context-03.wav",
+      "sha256": "cf71d5a9ecf85077f11bfc9fc4a944aaf903ae2d7b3471a5a0a204eaacbf0e88"
+    },
+    {
+      "path": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r1\\audio\\20200709_L_R002S01C01-context-04.wav",
+      "sha256": "1657853f07f84b46c6accf8dd85d970b8075167cec524a7b563e1f0f22ccfabe"
+    }
+  ],
+  "next": "Bound both padding edges by the middle of neighboring annotation gaps, retain this failure and prepare a fresh r2. Selected context indices unchanged."
+}

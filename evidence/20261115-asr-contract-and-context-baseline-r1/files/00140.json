@@ -1,0 +1,59 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00014876-final",
+    "recordingId": "f4571247-a767-5c95-b1ce-958a8d925b7b",
+    "configSha256": "25d8096bef4c29b3e397dca67e4abbe8a64b2794c2e7a4292d57629457fbce17",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 14876,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r3\\base-run-r1\\sessions\\20200805_S_R001S01C01-clean-short-response-09\\audio.pcm",
+    "pcmSha256": "855b21e69441174b2a2279750f73d5cc659574ad20b1456a885d2b6f99442827",
+    "language": "Chinese",
+    "blockFinal": true,
+    "publishedAtMonotonic": 239467.6375206,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "workerSourceSha256": "d583b011c89dec47a8ff2b90dc8a306794da6510d071628c63c143696a99e530",
+    "sessionParserSourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+    "localRecoverySourceSha256": "4e59bfeb9dcf23b780bc6d6128b731ff60d93f542ae4dfdf6e26c5a2da5d3659",
+    "nativeProtocolSha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9",
+    "weightsSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+    "languagePolicy": "Chinese",
+    "generation": {
+      "maxNewTokens": 512,
+      "doSample": false
+    },
+    "inference": "pinned-native-transformers-incremental-window-adapter"
+  },
+  "result": {
+    "text": "哎。",
+    "rawGeneratedIds": [
+      [
+        110030,
+        1773,
+        151645
+      ]
+    ],
+    "language": "Chinese",
+    "accepted": true,
+    "seconds": 1.774573100003181,
+    "reviewRequired": false,
+    "unconfirmedAudioIntervals": [],
+    "acceptedLeafInferenceSeconds": 0.7650183999794535,
+    "allKnownDecodeSecondsIncludingFailedParents": 0.7650183999794535,
+    "leaves": [
+      {
+        "node": "root",
+        "startFrame": 0,
+        "endFrame": 14876
+      }
+    ],
+    "referenceUsed": false,
+    "sourcePcmUnchanged": true,
+    "wordsPostEdited": false,
+    "qualityQualified": false
+  }
+}

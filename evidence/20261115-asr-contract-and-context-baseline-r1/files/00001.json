@@ -1,0 +1,106 @@
+{
+  "state": "COMPLETE_ASR_OUTPUT_AND_PUBLIC_BENCHMARK_CONTRACT_AUDIT_NO_QUALITY_CHANGE",
+  "at": "2026-11-15T13:48:47.305637+08:00",
+  "savedTokenComparison": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\asr-input-contract-audit-r1\\cached-decoding-comparison.json",
+  "savedTokenComparisonSha256": "bda45f292b55337c3a8caf994f8689f724628eaca9c61ec2bba41ed72fffe97e",
+  "actualOfficialExactBlocks": {
+    "ES2003b": 71,
+    "EN2002a": 72
+  },
+  "actualEnglishHeaders": {
+    "ES2003b": {
+      "English": 70,
+      "None": 1
+    },
+    "EN2002a": {
+      "English": 74
+    }
+  },
+  "productTextPreservation": {
+    "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r5\\jobs\\80b53638ab136f5dbdbb3560998b2de18aa017774cdf748e2c00f9c3be99afa7\\source-asr.json",
+    "sourceSha256": "ec32716c6a1e986217e67e7331d3a877559218f288024f70b4991c4f26788192",
+    "final": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r5\\jobs\\80b53638ab136f5dbdbb3560998b2de18aa017774cdf748e2c00f9c3be99afa7\\final-document.json",
+    "finalSha256": "1c5325357e0f8a91060ddf2ecb4f767ada8db1235d37a67ceab9fc142075f42c",
+    "exactTextEqual": true,
+    "characters": 26784,
+    "newlines": 70
+  },
+  "publicSourcesCopiedNotExecuted": [
+    {
+      "file": "transformers__submit_jobs_qwen3asr.sh.source.txt",
+      "origin": "https://github.com/huggingface/open_asr_leaderboard/blob/main/transformers/submit_jobs_qwen3asr.sh",
+      "gitBlobSha1": "8ae6f21b9b505601d3d1bf84527aaf9ef6788520",
+      "expectedBytes": 6046,
+      "originalTrailingLf": true,
+      "modifiedDate": "2026-11-10T14:43:57Z",
+      "sha256": "682c0ddb54cb119aff6346868b0eec830911e4ae46c02f5f8e72fc363d20a2a9"
+    },
+    {
+      "file": "transformers__run_eval.py.source.txt",
+      "origin": "https://github.com/huggingface/open_asr_leaderboard/blob/main/transformers/run_eval.py",
+      "gitBlobSha1": "4393f1a272a80ec83334c4254e328ece5ce7ae9c",
+      "expectedBytes": 30078,
+      "originalTrailingLf": true,
+      "modifiedDate": "2026-11-10T14:43:57Z",
+      "sha256": "ff3761041d31e186ea1dc338b8854f9523514677cadc5076904288f97919c131"
+    },
+    {
+      "file": "normalizer__eval_utils.py.source.txt",
+      "origin": "https://github.com/huggingface/open_asr_leaderboard/blob/main/normalizer/eval_utils.py",
+      "gitBlobSha1": "c3e9a9c9dc1f6abefbad86ecc461e7446257de56",
+      "expectedBytes": 55049,
+      "originalTrailingLf": true,
+      "modifiedDate": "2026-11-12T20:39:14Z",
+      "sha256": "ddb5bc93e77b3bc2e5397bed09f32bf3aa9953546c822d25f30b957d6a06e9fd"
+    },
+    {
+      "file": "normalizer__data_utils.py.source.txt",
+      "origin": "https://github.com/huggingface/open_asr_leaderboard/blob/main/normalizer/data_utils.py",
+      "gitBlobSha1": "bafe58e8cd03b43400f5097ecdb6be54c49602b2",
+      "expectedBytes": 8743,
+      "originalTrailingLf": true,
+      "modifiedDate": "2026-11-12T20:39:14Z",
+      "sha256": "e81d63fd66ac7384996902b7f07ba0bff46d0f5670f9147bcfccea35fa7f02ac"
+    },
+    {
+      "file": "normalizer__normalizer.py.source.txt",
+      "origin": "https://github.com/huggingface/open_asr_leaderboard/blob/main/normalizer/normalizer.py",
+      "gitBlobSha1": "134e3f4daa36ae5ee62d98cf2d8843bf309f1c94",
+      "expectedBytes": 34295,
+      "originalTrailingLf": true,
+      "modifiedDate": "2026-11-03T18:12:01Z",
+      "sha256": "0992a3ea199f2b9045c3afce13aaf7045d5bcf4b7a98b15c6a5efdc6908cf216"
+    }
+  ],
+  "benchmarkObservations": [
+    {
+      "claim": "Pinned public Qwen1.7B-hf model card reports AMI9.26WER under a leaderboard label dated2026-06-26.",
+      "url": "https://huggingface.co/Qwen/Qwen3-ASR-1.7B-hf"
+    },
+    {
+      "claim": "Current upstream job selects ami_cleaned, BF16, max_new_tokens512 and forced English. Current normalizer removes some hesitation tokens and normalizes numbers, contractions, spelling and acronyms.",
+      "urls": [
+        "https://github.com/huggingface/open_asr_leaderboard/blob/main/transformers/submit_jobs_qwen3asr.sh",
+        "https://github.com/huggingface/open_asr_leaderboard/blob/main/transformers/run_eval.py",
+        "https://github.com/huggingface/open_asr_leaderboard/blob/main/normalizer/normalizer.py"
+      ]
+    },
+    {
+      "claim": "Public ESB AMI builder explicitly fetches audio/ihm archives and emits segmented annotation examples. Ours is whole-session Array1-01 single distant microphone.",
+      "url": "https://huggingface.co/datasets/hf-audio/esb-datasets-test-only/blob/main/datasets-test-only.py"
+    }
+  ],
+  "conclusions": [
+    "No saved accepted output text differs from the official transcription parser in these two full English cases. No product merge, newline or text-preservation loss was found in ES2003b.",
+    "Actual generated speech headers are English throughout accepted English speech leaves. This does not supply evidence for an automatic language-detection fix.",
+    "Historical card, current code, microphone, segmentation and normalization conditions are not identical. Do not attribute the entire gap to these differences or promise9.26on the current full single-mic recording.",
+    "The current normalizer is not fully traced to the historical June model-card score. No reproduction of that historical leaderboard result is claimed.",
+    "Keep full/raw original scoring and saved failure evidence. No cleaned secondary score or easier microphone replaces the original product gates."
+  ],
+  "newNeuralCalls": 0,
+  "newParameterUpdates": 0,
+  "rawOutputChanged": false,
+  "fullMeetingGatesChanged": false,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false
+}

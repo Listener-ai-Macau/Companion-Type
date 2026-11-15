@@ -1,0 +1,663 @@
+[
+  {
+    "id": "20200709_L_R002S01C01-context-01",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r2\\audio\\20200709_L_R002S01C01-context-01.wav",
+    "wavSha256": "c90320ac74efba04e8afa4deb4c4bedaf108e0836ed0f14e0d0c62d1a9bc2aed",
+    "pcmSha256": "60cc4ff5cd1a28ee47dd41ff6e677ca720cde097b5c0d5aeadc51172a179681a",
+    "frames": 458640,
+    "audioSeconds": 28.665,
+    "language": "Chinese",
+    "sourceStartFrame": 5287131,
+    "sourceEndFrame": 5745771,
+    "sourceWholeSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+    "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200709_L_R002S01C01.TextGrid",
+    "referenceSha256": "b6a1e716db42766dca61fcf14d15212855dcf87389d7ef1b5e0a9ad9baf412f3",
+    "eligiblePlanIndex": 0,
+    "eligiblePlansAfter30sCap": 6,
+    "utterances": [
+      {
+        "start": 330.52564,
+        "end": 338.88065,
+        "speaker": "002-M",
+        "text": "这一块儿我们这个教练是不分顾客，如果会有V I P待遇和普通顾客他们觉得会有差异的话，会让顾客心里产生不平衡"
+      },
+      {
+        "start": 339.14065,
+        "end": 341.46565,
+        "speaker": "001-M",
+        "text": "你这个都是一样的是吧？"
+      },
+      {
+        "start": 341.54215186567166,
+        "end": 344.11276753731346,
+        "speaker": "001-M",
+        "text": "没有什么V I P之类的吗"
+      },
+      {
+        "start": 341.55565,
+        "end": 342.4062243603412,
+        "speaker": "002-M",
+        "text": "对，"
+      },
+      {
+        "start": 343.78874035181235,
+        "end": 349.24566,
+        "speaker": "002-M",
+        "text": "有V I P V I P就可能是运动区域比较广阔，就像有什么"
+      },
+      {
+        "start": 349.37066,
+        "end": 354.13600847547957,
+        "speaker": "002-M",
+        "text": "游泳健身教练之类的，会有V I P会员儿专门儿指定一个教练给他服务。"
+      },
+      {
+        "start": 353.76877766524507,
+        "end": 354.8488682835819,
+        "speaker": "001-M",
+        "text": "嗯"
+      },
+      {
+        "start": 355.00566,
+        "end": 359.05567,
+        "speaker": "001-M",
+        "text": "这一块儿这一块儿是我想了解一下咱们这一块儿是怎么做的"
+      }
+    ],
+    "rawReferenceText": "这一块儿我们这个教练是不分顾客，如果会有V I P待遇和普通顾客他们觉得会有差异的话，会让顾客心里产生不平衡你这个都是一样的是吧？没有什么V I P之类的吗对，有V I P V I P就可能是运动区域比较广阔，就像有什么游泳健身教练之类的，会有V I P会员儿专门儿指定一个教练给他服务。嗯这一块儿这一块儿是我想了解一下咱们这一块儿是怎么做的",
+    "speakers": [
+      "001-M",
+      "002-M"
+    ],
+    "shortUtterances": 2,
+    "overlapPresent": true
+  },
+  {
+    "id": "20200709_L_R002S01C01-context-02",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r2\\audio\\20200709_L_R002S01C01-context-02.wav",
+    "wavSha256": "1edd536e4b974e3f3743e7a6d3a072983efb9a29095c0b4bf9ed5f7ea6108b97",
+    "pcmSha256": "99a4d6e74bc98aa33b84cd488d232e871bc293293a099529483cab8c6ff5acf2",
+    "frames": 461040,
+    "audioSeconds": 28.815,
+    "language": "Chinese",
+    "sourceStartFrame": 6643372,
+    "sourceEndFrame": 7104412,
+    "sourceWholeSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+    "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200709_L_R002S01C01.TextGrid",
+    "referenceSha256": "b6a1e716db42766dca61fcf14d15212855dcf87389d7ef1b5e0a9ad9baf412f3",
+    "eligiblePlanIndex": 1,
+    "eligiblePlansAfter30sCap": 6,
+    "utterances": [
+      {
+        "start": 415.29071,
+        "end": 428.76073,
+        "speaker": "002-M",
+        "text": "行。而且我们这边儿教练也要了解顾客的心理嘛？像一些顾客会有一些憧憬，他会不会再一个星期或者一个月之内瘦掉几斤？会不会有明显的变化？"
+      },
+      {
+        "start": 419.72718521321957,
+        "end": 420.76407220682296,
+        "speaker": "006-F",
+        "text": "嗯"
+      },
+      {
+        "start": 428.90073,
+        "end": 436.18573,
+        "speaker": "002-M",
+        "text": "这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作"
+      },
+      {
+        "start": 436.31073,
+        "end": 443.94574,
+        "speaker": "006-F",
+        "text": "嗯好。那咱们这个保安部这边儿呢上一个季度的情况怎么样？就是安全情况各种"
+      }
+    ],
+    "rawReferenceText": "行。而且我们这边儿教练也要了解顾客的心理嘛？像一些顾客会有一些憧憬，他会不会再一个星期或者一个月之内瘦掉几斤？会不会有明显的变化？嗯这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作嗯好。那咱们这个保安部这边儿呢上一个季度的情况怎么样？就是安全情况各种",
+    "speakers": [
+      "002-M",
+      "006-F"
+    ],
+    "shortUtterances": 1,
+    "overlapPresent": true
+  },
+  {
+    "id": "20200709_L_R002S01C01-context-03",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r2\\audio\\20200709_L_R002S01C01-context-03.wav",
+    "wavSha256": "02afe97da640fc7185b76273662c06822924824c9e6a795284bec345de7b65d1",
+    "pcmSha256": "f9ff6408758a5b9c08c4a7ff2068a3f92c36ddd9dd28998b52d964e92dc3077d",
+    "frames": 400621,
+    "audioSeconds": 25.0388125,
+    "language": "Chinese",
+    "sourceStartFrame": 27746070,
+    "sourceEndFrame": 28146691,
+    "sourceWholeSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+    "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200709_L_R002S01C01.TextGrid",
+    "referenceSha256": "b6a1e716db42766dca61fcf14d15212855dcf87389d7ef1b5e0a9ad9baf412f3",
+    "eligiblePlanIndex": 2,
+    "eligiblePlansAfter30sCap": 6,
+    "utterances": [
+      {
+        "start": 1734.18187,
+        "end": 1744.81188,
+        "speaker": "006-F",
+        "text": "嗯因为现在夏天高温，然后可能会发生什么东西易燃然后这边儿要做好这个安全的措施。那咱们后勤维修部呢就是下半年什么计划"
+      },
+      {
+        "start": 1736.0477295415776,
+        "end": 1736.9118020362473,
+        "speaker": "003-M",
+        "text": "对"
+      },
+      {
+        "start": 1739.5472231449892,
+        "end": 1741.3401735714285,
+        "speaker": "003-M",
+        "text": "对对对嗯"
+      },
+      {
+        "start": 1744.85438,
+        "end": 1759.11439,
+        "speaker": "004-F",
+        "text": "嗯因为上半年的受疫情影响呢来我们健身中心的健身的人相对的比较少，但是呢工作量并没有减少，因为我们对这个消毒的严格的要求其实是增大了他们"
+      }
+    ],
+    "rawReferenceText": "嗯因为现在夏天高温，然后可能会发生什么东西易燃然后这边儿要做好这个安全的措施。那咱们后勤维修部呢就是下半年什么计划对对对对嗯嗯因为上半年的受疫情影响呢来我们健身中心的健身的人相对的比较少，但是呢工作量并没有减少，因为我们对这个消毒的严格的要求其实是增大了他们",
+    "speakers": [
+      "003-M",
+      "004-F",
+      "006-F"
+    ],
+    "shortUtterances": 2,
+    "overlapPresent": true
+  },
+  {
+    "id": "20200709_L_R002S01C01-context-04",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r2\\audio\\20200709_L_R002S01C01-context-04.wav",
+    "wavSha256": "692a256ab4f232779efb19db906757d743dba6495ab2b7bd67e41af31e5c3bbd",
+    "pcmSha256": "c82a50a76bc1d2920f0bc0cb088d1c26fc6a1eadd3d27be8bc5b37be0b66f9d3",
+    "frames": 426440,
+    "audioSeconds": 26.6525,
+    "language": "Chinese",
+    "sourceStartFrame": 29143992,
+    "sourceEndFrame": 29570432,
+    "sourceWholeSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+    "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200709_L_R002S01C01.TextGrid",
+    "referenceSha256": "b6a1e716db42766dca61fcf14d15212855dcf87389d7ef1b5e0a9ad9baf412f3",
+    "eligiblePlanIndex": 3,
+    "eligiblePlansAfter30sCap": 6,
+    "utterances": [
+      {
+        "start": 1821.57944,
+        "end": 1829.27445,
+        "speaker": "004-F",
+        "text": "这样摸一米没有明显的污渍，这是我对他们的要求。所以呃就是"
+      },
+      {
+        "start": 1824.8278155330488,
+        "end": 1826.0159152132194,
+        "speaker": "006-F",
+        "text": "嗯"
+      },
+      {
+        "start": 1829.42445,
+        "end": 1839.72946,
+        "speaker": "004-F",
+        "text": "包括抹布我们都要定期的更换，洗不出来了我们就扔了它，因为本身我们就是一个非常清洁的，呃让人看着就是愿意"
+      },
+      {
+        "start": 1839.81946,
+        "end": 1848.09947,
+        "speaker": "004-F",
+        "text": "停留在这儿的，如果让呃顾客来到我们这里之后，他一摸这个健身器材竟然有灰尘"
+      }
+    ],
+    "rawReferenceText": "这样摸一米没有明显的污渍，这是我对他们的要求。所以呃就是嗯包括抹布我们都要定期的更换，洗不出来了我们就扔了它，因为本身我们就是一个非常清洁的，呃让人看着就是愿意停留在这儿的，如果让呃顾客来到我们这里之后，他一摸这个健身器材竟然有灰尘",
+    "speakers": [
+      "004-F",
+      "006-F"
+    ],
+    "shortUtterances": 1,
+    "overlapPresent": true
+  },
+  {
+    "id": "20200709_L_R002S01C01-context-05",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r2\\audio\\20200709_L_R002S01C01-context-05.wav",
+    "wavSha256": "089e498d501cb0841b500f51813a94b3b5692d6e370d61e70c0ff5dc9554f4ec",
+    "pcmSha256": "7d5b8786e44e0242d9545d06bf3f6bd2b5834a45f2f3d27ea9b1a3fcdcf79c20",
+    "frames": 414820,
+    "audioSeconds": 25.92625,
+    "language": "Chinese",
+    "sourceStartFrame": 29570432,
+    "sourceEndFrame": 29985252,
+    "sourceWholeSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+    "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200709_L_R002S01C01.TextGrid",
+    "referenceSha256": "b6a1e716db42766dca61fcf14d15212855dcf87389d7ef1b5e0a9ad9baf412f3",
+    "eligiblePlanIndex": 4,
+    "eligiblePlansAfter30sCap": 6,
+    "utterances": [
+      {
+        "start": 1848.20447,
+        "end": 1856.15447,
+        "speaker": "004-F",
+        "text": "那他可能就心里面儿膈应不愿意来了，所以对健身器材的这个清洁要每天"
+      },
+      {
+        "start": 1850.523967601279,
+        "end": 1852.4897325266522,
+        "speaker": "006-F",
+        "text": "对不想锻炼了"
+      },
+      {
+        "start": 1856.20447,
+        "end": 1865.45948,
+        "speaker": "004-F",
+        "text": "呃甚至这个人用完了之后，他们要立刻上去，因为有一些汗渍啊水渍啊那下一个人再用的话，所以要求他们"
+      },
+      {
+        "start": 1865.78198,
+        "end": 1874.04699,
+        "speaker": "004-F",
+        "text": "及时的去做一些清洁工作。 呃除了常规的之外，呃楼道呢是要求没有没有脚印"
+      },
+      {
+        "start": 1868.641444537247,
+        "end": 1869.4839152195498,
+        "speaker": "006-F",
+        "text": "嗯"
+      }
+    ],
+    "rawReferenceText": "那他可能就心里面儿膈应不愿意来了，所以对健身器材的这个清洁要每天对不想锻炼了呃甚至这个人用完了之后，他们要立刻上去，因为有一些汗渍啊水渍啊那下一个人再用的话，所以要求他们及时的去做一些清洁工作。 呃除了常规的之外，呃楼道呢是要求没有没有脚印嗯",
+    "speakers": [
+      "004-F",
+      "006-F"
+    ],
+    "shortUtterances": 2,
+    "overlapPresent": true
+  },
+  {
+    "id": "20200709_L_R002S01C01-context-06",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r2\\audio\\20200709_L_R002S01C01-context-06.wav",
+    "wavSha256": "4e00212ad9b703ceb42cae0e57d7307cc0e5882566f91878ee7e7ba088e612ab",
+    "pcmSha256": "c3eb0c2b613a3b8be69e7d00bfbcec7498c97a8c57af615e03f8f7cbdeb236a5",
+    "frames": 397114,
+    "audioSeconds": 24.819625,
+    "language": "Chinese",
+    "sourceStartFrame": 31343660,
+    "sourceEndFrame": 31740774,
+    "sourceWholeSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+    "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200709_L_R002S01C01.TextGrid",
+    "referenceSha256": "b6a1e716db42766dca61fcf14d15212855dcf87389d7ef1b5e0a9ad9baf412f3",
+    "eligiblePlanIndex": 5,
+    "eligiblePlansAfter30sCap": 6,
+    "utterances": [
+      {
+        "start": 1958.9803582409381,
+        "end": 1959.650014424307,
+        "speaker": "007-F",
+        "text": "嗯"
+      },
+      {
+        "start": 1959.03706,
+        "end": 1961.7021865991471,
+        "speaker": "006-F",
+        "text": "制定什么样的计划活动，然后"
+      },
+      {
+        "start": 1961.5077702878466,
+        "end": 1966.81207,
+        "speaker": "007-F",
+        "text": "我首先觉得呃我们现在健身还有来询问我们"
+      },
+      {
+        "start": 1966.88707,
+        "end": 1975.88208,
+        "speaker": "007-F",
+        "text": "这个情况的这个人员比较少，是因为有一个很重要的一点，就是有很多人对我们这个健身嗯有一些误解"
+      },
+      {
+        "start": 1976.18208,
+        "end": 1983.75708,
+        "speaker": "007-F",
+        "text": "他可能缺少这方面的一些了解，或者他觉得做就像网上一些推出了一些什么动作"
+      }
+    ],
+    "rawReferenceText": "嗯制定什么样的计划活动，然后我首先觉得呃我们现在健身还有来询问我们这个情况的这个人员比较少，是因为有一个很重要的一点，就是有很多人对我们这个健身嗯有一些误解他可能缺少这方面的一些了解，或者他觉得做就像网上一些推出了一些什么动作",
+    "speakers": [
+      "006-F",
+      "007-F"
+    ],
+    "shortUtterances": 1,
+    "overlapPresent": true
+  },
+  {
+    "id": "20200805_S_R001S01C01-context-01",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r2\\audio\\20200805_S_R001S01C01-context-01.wav",
+    "wavSha256": "d14adcaddfc38b1110927585f601213b1c3caa3a61cc6b3ac4646e21595bf425",
+    "pcmSha256": "4bd467bebd2cfcb80038252e3b7702fe036602f3f08bd9e9f4cc2e08ca794f08",
+    "frames": 449191,
+    "audioSeconds": 28.0744375,
+    "language": "Chinese",
+    "sourceStartFrame": 7300495,
+    "sourceEndFrame": 7749686,
+    "sourceWholeSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+    "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200805_S_R001S01C01.TextGrid",
+    "referenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+    "eligiblePlanIndex": 0,
+    "eligiblePlansAfter30sCap": 26,
+    "utterances": [
+      {
+        "start": 456.36092,
+        "end": 472.51595,
+        "speaker": "001-M",
+        "text": "会有这个小区虽然有地下停车场，汽车肯定不会乱停，但是会有一些就有人会不自觉会停一些自行车儿，这方面我们都会让后勤部还有保安部配合把这些车给他们挪放到哪个位置，"
+      },
+      {
+        "start": 472.5997,
+        "end": 484.32972,
+        "speaker": "001-M",
+        "text": "然后再提醒，毕竟咱们这个是属于上门儿服务嘛，有一些就比方说就会提醒一些小区的住户，告诉他们是谁的车，通知一下，"
+      },
+      {
+        "start": 477.35996150035186,
+        "end": 477.77540601067693,
+        "speaker": "004-F",
+        "text": "嗯"
+      }
+    ],
+    "rawReferenceText": "会有这个小区虽然有地下停车场，汽车肯定不会乱停，但是会有一些就有人会不自觉会停一些自行车儿，这方面我们都会让后勤部还有保安部配合把这些车给他们挪放到哪个位置，然后再提醒，毕竟咱们这个是属于上门儿服务嘛，有一些就比方说就会提醒一些小区的住户，告诉他们是谁的车，通知一下，嗯",
+    "speakers": [
+      "001-M",
+      "004-F"
+    ],
+    "shortUtterances": 1,
+    "overlapPresent": true
+  },
+  {
+    "id": "20200805_S_R001S01C01-context-02",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r2\\audio\\20200805_S_R001S01C01-context-02.wav",
+    "wavSha256": "bfbf02a9364cd4f95c3268d958414702205869aa3b430925b88837d79ed2f376",
+    "pcmSha256": "3ac29a366f13493dbc4e6a5b049956fcb71bae0688650facc25fe70c07b8054a",
+    "frames": 449651,
+    "audioSeconds": 28.1031875,
+    "language": "Chinese",
+    "sourceStartFrame": 13194506,
+    "sourceEndFrame": 13644157,
+    "sourceWholeSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+    "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200805_S_R001S01C01.TextGrid",
+    "referenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+    "eligiblePlanIndex": 5,
+    "eligiblePlansAfter30sCap": 26,
+    "utterances": [
+      {
+        "start": 824.73659,
+        "end": 836.86662,
+        "speaker": "004-F",
+        "text": "对不对？ 一定要有人来投诉，或者说有人来上门儿感谢我们，这样太被动了，我们要知道业主对我们的工作是满意还是不满意，还是认可还是不认可，我们就要去走出去"
+      },
+      {
+        "start": 825.0969164591821,
+        "end": 825.7578509074265,
+        "speaker": "002-F",
+        "text": "对"
+      },
+      {
+        "start": 836.93537,
+        "end": 840.82537,
+        "speaker": "004-F",
+        "text": "去每一个业主家里去听听他们的声音。"
+      },
+      {
+        "start": 841.59663,
+        "end": 852.70665,
+        "speaker": "002-F",
+        "text": "对，有时候也会对他们进行一些代收服务，还有那个钥匙不好的话，钥匙坏的话，就是我们也尽快给他们配上，就送上楼去楼去。"
+      },
+      {
+        "start": 844.8650680314576,
+        "end": 845.3560479072962,
+        "speaker": "004-F",
+        "text": "嗯"
+      }
+    ],
+    "rawReferenceText": "对不对？ 一定要有人来投诉，或者说有人来上门儿感谢我们，这样太被动了，我们要知道业主对我们的工作是满意还是不满意，还是认可还是不认可，我们就要去走出去对去每一个业主家里去听听他们的声音。对，有时候也会对他们进行一些代收服务，还有那个钥匙不好的话，钥匙坏的话，就是我们也尽快给他们配上，就送上楼去楼去。嗯",
+    "speakers": [
+      "002-F",
+      "004-F"
+    ],
+    "shortUtterances": 2,
+    "overlapPresent": true
+  },
+  {
+    "id": "20200805_S_R001S01C01-context-03",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r2\\audio\\20200805_S_R001S01C01-context-03.wav",
+    "wavSha256": "5c3dee4326765cd3a5dd61a6995059f531c89aad0e591703df82ca624629ca06",
+    "pcmSha256": "915e161f41f1134e948d8325ae448de3ea578ebf287ff0aa63741d81c463b170",
+    "frames": 475581,
+    "audioSeconds": 29.7238125,
+    "language": "Chinese",
+    "sourceStartFrame": 16617532,
+    "sourceEndFrame": 17093113,
+    "sourceWholeSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+    "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200805_S_R001S01C01.TextGrid",
+    "referenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+    "eligiblePlanIndex": 10,
+    "eligiblePlansAfter30sCap": 26,
+    "utterances": [
+      {
+        "start": 1038.67574,
+        "end": 1045.73075,
+        "speaker": "004-F",
+        "text": "那嗯下半年的话你们有什么计划或者说有什么想改进的地方，"
+      },
+      {
+        "start": 1046.15075,
+        "end": 1058.41577,
+        "speaker": "002-F",
+        "text": "下半年就是效率再提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对跟他们交流结果进行分析。"
+      },
+      {
+        "start": 1058.74203,
+        "end": 1068.25704,
+        "speaker": "004-F",
+        "text": "嗯我们小区是有这个呃社区的门诊的，要定期的给六十岁以上的老人做一些简单的体检，"
+      },
+      {
+        "start": 1064.0876905830828,
+        "end": 1064.7486250313273,
+        "speaker": "002-F",
+        "text": "嗯"
+      }
+    ],
+    "rawReferenceText": "那嗯下半年的话你们有什么计划或者说有什么想改进的地方，下半年就是效率再提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对跟他们交流结果进行分析。嗯我们小区是有这个呃社区的门诊的，要定期的给六十岁以上的老人做一些简单的体检，嗯",
+    "speakers": [
+      "002-F",
+      "004-F"
+    ],
+    "shortUtterances": 1,
+    "overlapPresent": true
+  },
+  {
+    "id": "20200805_S_R001S01C01-context-04",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r2\\audio\\20200805_S_R001S01C01-context-04.wav",
+    "wavSha256": "6dec83f99500682d5d054ce8a0d4240b6b11244571dc09da8ae9db451fc76fe8",
+    "pcmSha256": "773d9b87e82c9aae489c9a0e3973349031f0c8dbfd0ec2194587b5b6acfc864a",
+    "frames": 421241,
+    "audioSeconds": 26.3275625,
+    "language": "Chinese",
+    "sourceStartFrame": 22656723,
+    "sourceEndFrame": 23077964,
+    "sourceWholeSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+    "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200805_S_R001S01C01.TextGrid",
+    "referenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+    "eligiblePlanIndex": 15,
+    "eligiblePlansAfter30sCap": 26,
+    "utterances": [
+      {
+        "start": 1416.09643,
+        "end": 1416.6267110315875,
+        "speaker": "004-F",
+        "text": "嗯"
+      },
+      {
+        "start": 1416.5700595074525,
+        "end": 1430.4307990792058,
+        "speaker": "001-M",
+        "text": "就会属于闪屏的那种模式，让这些字进行滚动，让业主看到消息，如果不看公式，而那些文字的话，他能注意到这些对比较显眼的，就会告诉他们就是停电以后备用电源，"
+      },
+      {
+        "start": 1423.5759646588426,
+        "end": 1424.142479900195,
+        "speaker": "004-F",
+        "text": "嗯嗯"
+      },
+      {
+        "start": 1425.8231417828736,
+        "end": 1427.4471521414168,
+        "speaker": "004-F",
+        "text": "比较显眼"
+      },
+      {
+        "start": 1430.60771,
+        "end": 1442.29273,
+        "speaker": "001-M",
+        "text": "最好不要用什么大功率的东西，就不要又开空调，又用电脑儿又又看电视的，因为社区人太多，他这样对照明，然后开一个空调就可以了"
+      },
+      {
+        "start": 1433.5452066249884,
+        "end": 1434.2816764387464,
+        "speaker": "004-F",
+        "text": "嗯"
+      },
+      {
+        "start": 1437.7940709351308,
+        "end": 1439.871293486756,
+        "speaker": "004-F",
+        "text": "照明就可以了嗯"
+      }
+    ],
+    "rawReferenceText": "嗯就会属于闪屏的那种模式，让这些字进行滚动，让业主看到消息，如果不看公式，而那些文字的话，他能注意到这些对比较显眼的，就会告诉他们就是停电以后备用电源，嗯嗯比较显眼最好不要用什么大功率的东西，就不要又开空调，又用电脑儿又又看电视的，因为社区人太多，他这样对照明，然后开一个空调就可以了嗯照明就可以了嗯",
+    "speakers": [
+      "001-M",
+      "004-F"
+    ],
+    "shortUtterances": 4,
+    "overlapPresent": true
+  },
+  {
+    "id": "20200805_S_R001S01C01-context-05",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r2\\audio\\20200805_S_R001S01C01-context-05.wav",
+    "wavSha256": "46a98022e67079c893f3f947fa30cd8c3ada7515610d6395ec378271b0deba3f",
+    "pcmSha256": "e4e6d48c0044faf3c5b1353f797e949811ee49a90334b02366223b2abfa796b7",
+    "frames": 411541,
+    "audioSeconds": 25.7213125,
+    "language": "Chinese",
+    "sourceStartFrame": 27967173,
+    "sourceEndFrame": 28378714,
+    "sourceWholeSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+    "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200805_S_R001S01C01.TextGrid",
+    "referenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+    "eligiblePlanIndex": 20,
+    "eligiblePlansAfter30sCap": 26,
+    "utterances": [
+      {
+        "start": 1748.02829,
+        "end": 1759.34831,
+        "speaker": "004-F",
+        "text": "大家再回去下半年的工作要总结一下我们上半年有什么嗯值得肯定的，还有什么值得需要改进的，"
+      },
+      {
+        "start": 1759.72956,
+        "end": 1763.55457,
+        "speaker": "004-F",
+        "text": "要让我们工作更进一步，更上一层楼，"
+      },
+      {
+        "start": 1763.75457,
+        "end": 1773.58959,
+        "speaker": "005-M",
+        "text": "那这个门口儿是不是保安不应该设立一些，比方说像一些检查车牌号儿，向一些车主肯定都是车比较多吗，咱们小区毕竟汽车较多，"
+      },
+      {
+        "start": 1771.177453134708,
+        "end": 1771.5740138036545,
+        "speaker": "004-F",
+        "text": "嗯"
+      }
+    ],
+    "rawReferenceText": "大家再回去下半年的工作要总结一下我们上半年有什么嗯值得肯定的，还有什么值得需要改进的，要让我们工作更进一步，更上一层楼，那这个门口儿是不是保安不应该设立一些，比方说像一些检查车牌号儿，向一些车主肯定都是车比较多吗，咱们小区毕竟汽车较多，嗯",
+    "speakers": [
+      "004-F",
+      "005-M"
+    ],
+    "shortUtterances": 1,
+    "overlapPresent": true
+  },
+  {
+    "id": "20200805_S_R001S01C01-context-06",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\context-matched-baseline-r2\\audio\\20200805_S_R001S01C01-context-06.wav",
+    "wavSha256": "85898af5f6278c8aeaf548fa436cfeec4677440426b00fd207971812f944ddbf",
+    "pcmSha256": "12945aea7b6f43d164d75d94b0823a686429c8be1950f13386bdc84c381f2fe4",
+    "frames": 397051,
+    "audioSeconds": 24.8156875,
+    "language": "Chinese",
+    "sourceStartFrame": 33848154,
+    "sourceEndFrame": 34245205,
+    "sourceWholeSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+    "reference": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261108-tse-source-supervision\\20200805_S_R001S01C01.TextGrid",
+    "referenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+    "eligiblePlanIndex": 25,
+    "eligiblePlansAfter30sCap": 26,
+    "utterances": [
+      {
+        "start": 2115.55772,
+        "end": 2122.7268323818935,
+        "speaker": "004-F",
+        "text": "嗯嗯，对所以就是说那些螺丝啊那那那些东西一定要检查好嗯"
+      },
+      {
+        "start": 2116.4573970442607,
+        "end": 2127.7499341885505,
+        "speaker": "001-M",
+        "text": "因为秋天这方面他如果在荡的时候螺丝会松的话，他就会甩甩出去嗯这方面"
+      },
+      {
+        "start": 2126.76399,
+        "end": 2129.41399,
+        "speaker": "004-F",
+        "text": "这这这些地方不容忽视。"
+      },
+      {
+        "start": 2129.53024,
+        "end": 2140.24526,
+        "speaker": "001-M",
+        "text": "我们这属于是半年就会定期更换一次螺丝，然后每个星期都会检查两到三次，就是这种安全问题。"
+      },
+      {
+        "start": 2133.69834422275,
+        "end": 2134.3592786709946,
+        "speaker": "004-F",
+        "text": "嗯"
+      }
+    ],
+    "rawReferenceText": "嗯嗯，对所以就是说那些螺丝啊那那那些东西一定要检查好嗯因为秋天这方面他如果在荡的时候螺丝会松的话，他就会甩甩出去嗯这方面这这这些地方不容忽视。我们这属于是半年就会定期更换一次螺丝，然后每个星期都会检查两到三次，就是这种安全问题。嗯",
+    "speakers": [
+      "001-M",
+      "004-F"
+    ],
+    "shortUtterances": 1,
+    "overlapPresent": true
+  }
+]

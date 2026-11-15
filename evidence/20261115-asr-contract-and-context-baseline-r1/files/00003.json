@@ -1,0 +1,34 @@
+[
+  {
+    "file": "transformers__submit_jobs_qwen3asr.sh.source.txt",
+    "origin": "https://github.com/huggingface/open_asr_leaderboard/blob/main/transformers/submit_jobs_qwen3asr.sh",
+    "gitBlobSha1": "8ae6f21b9b505601d3d1bf84527aaf9ef6788520",
+    "expectedBytes": 6046,
+    "originalTrailingLf": true,
+    "modifiedDate": "2026-11-10T14:43:57Z"
+  },
+  {
+    "file": "transformers__run_eval.py.source.txt",
+    "origin": "https://github.com/huggingface/open_asr_leaderboard/blob/main/transformers/run_eval.py",
+    "gitBlobSha1": "4393f1a272a80ec83334c4254e328ece5ce7ae9c",
+    "expectedBytes": 30078,
+    "originalTrailingLf": true,
+    "modifiedDate": "2026-11-10T14:43:57Z"
+  },
+  {
+    "file": "normalizer__eval_utils.py.source.txt",
+    "origin": "https://github.com/huggingface/open_asr_leaderboard/blob/main/normalizer/eval_utils.py",
+    "gitBlobSha1": "c3e9a9c9dc1f6abefbad86ecc461e7446257de56",
+    "expectedBytes": 55049,
+    "originalTrailingLf": true,
+    "modifiedDate": "2026-11-12T20:39:14Z"
+  },
+  {
+    "file": "normalizer__data_utils.py.source.txt",
+    "origin": "https://github.com/huggingface/open_asr_leaderboard/blob/main/normalizer/data_utils.py",
+    "gitBlobSha1": "bafe58e8cd03b43400f5097ecdb6be54c49602b2",
+    "expectedBytes": 8743,
+    "originalTrailingLf": true,
+    "modifiedDate": "2026-11-12T20:39:14Z"
+  }
+]

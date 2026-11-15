@@ -1,0 +1,1801 @@
+{
+  "state": "FROZEN_TRAINING_COHORT_OMITS_OBSERVED_SHORT_RESPONSE_AND_MULTI_TURN_CONDITIONS",
+  "at": "2026-11-15T13:33:20.362503+08:00",
+  "originalTraining": {
+    "examples": 128,
+    "minAudioSeconds": 2.2025625,
+    "shorterThan2sReferenceUtterances": 0,
+    "minimumLexicalCharacters": 7,
+    "wholeNaturalMultiTurnContexts": 0,
+    "selectionSource": "Original preparation selects isolated complete non-overlap2–12s utterances,>=4lexical chars. Selected cohort actually has>=7chars."
+  },
+  "sources": [
+    {
+      "meeting": "20200707_L_R001S08C01",
+      "role": "train",
+      "sourceFlacSha256": "35cec60f5279217cbd21e473408c349a1775c7651efd28f7d4a8ecf468601a03",
+      "referenceSha256": "489f7597d1953e0d488e55b1edf79f575d87b1fa5b69883aab4399e9cae8d3de",
+      "audioSeconds": 1982.6698125,
+      "nonemptyReferenceUtterances": 302,
+      "cleanCompleteShortUtterances": 4,
+      "shortDurationBins": {
+        "under0.3": 0,
+        "0.3to1": 1,
+        "1to2": 3
+      },
+      "shortBySpeaker": {
+        "004-M": 1,
+        "005-F": 1,
+        "003-M": 2
+      },
+      "shortByLexicalLength": {
+        "7": 2,
+        "3": 1,
+        "4": 1
+      },
+      "completeNaturalContextPlans": 66,
+      "eligibleMultiTurnShortResponseContextPlans": 27,
+      "oversizedOverlapComponentsNotCut": [],
+      "eligibleContextPlans": [
+        {
+          "start": 185.49552,
+          "end": 207.71054,
+          "seconds": 22.21502000000001,
+          "speakers": [
+            "003-M",
+            "006-F"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 232.17806,
+          "end": 263.28267051100175,
+          "seconds": 31.104610511001766,
+          "speakers": [
+            "003-M",
+            "004-M",
+            "006-F",
+            "007-M"
+          ],
+          "utterances": 8,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 263.40059,
+          "end": 293.0319491664314,
+          "seconds": 29.631359166431366,
+          "speakers": [
+            "003-M",
+            "007-M"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 383.47569,
+          "end": 414.45072,
+          "seconds": 30.975030000000004,
+          "speakers": [
+            "003-M",
+            "007-M"
+          ],
+          "utterances": 7,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 416.15322,
+          "end": 442.31589652142446,
+          "seconds": 26.162676521424487,
+          "speakers": [
+            "002-M",
+            "003-M",
+            "007-M"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 442.41074,
+          "end": 474.21577,
+          "seconds": 31.805030000000045,
+          "speakers": [
+            "001-M",
+            "003-M",
+            "004-M",
+            "005-F",
+            "007-M"
+          ],
+          "utterances": 6,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 474.27577,
+          "end": 508.7783,
+          "seconds": 34.50252999999998,
+          "speakers": [
+            "005-F",
+            "007-M"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 567.9432197589733,
+          "end": 598.19338,
+          "seconds": 30.25016024102672,
+          "speakers": [
+            "001-M",
+            "005-F",
+            "007-M"
+          ],
+          "utterances": 6,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 598.24588,
+          "end": 624.12091,
+          "seconds": 25.875029999999924,
+          "speakers": [
+            "002-M",
+            "005-F",
+            "007-M"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 688.60346,
+          "end": 718.47099,
+          "seconds": 29.867529999999988,
+          "speakers": [
+            "001-M",
+            "002-M",
+            "003-M",
+            "004-M",
+            "005-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 718.88349,
+          "end": 753.19852,
+          "seconds": 34.31502999999998,
+          "speakers": [
+            "001-M",
+            "002-M",
+            "003-M",
+            "007-M"
+          ],
+          "utterances": 8,
+          "shortUtterances": 3,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 753.31602,
+          "end": 778.52604,
+          "seconds": 25.210019999999986,
+          "speakers": [
+            "001-M",
+            "003-M",
+            "005-F",
+            "007-M"
+          ],
+          "utterances": 7,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 840.6611,
+          "end": 868.58112,
+          "seconds": 27.920020000000022,
+          "speakers": [
+            "003-M",
+            "005-F",
+            "007-M"
+          ],
+          "utterances": 6,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 899.84365,
+          "end": 925.88617,
+          "seconds": 26.042519999999968,
+          "speakers": [
+            "002-M",
+            "003-M",
+            "004-M",
+            "007-M"
+          ],
+          "utterances": 6,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 925.96117,
+          "end": 953.2362,
+          "seconds": 27.275030000000015,
+          "speakers": [
+            "003-M",
+            "004-M"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1045.93628,
+          "end": 1075.02881,
+          "seconds": 29.092530000000124,
+          "speakers": [
+            "003-M",
+            "007-M"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1098.78633,
+          "end": 1127.61135,
+          "seconds": 28.825019999999995,
+          "speakers": [
+            "001-M",
+            "005-F",
+            "007-M"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1149.68387,
+          "end": 1176.2189,
+          "seconds": 26.535030000000006,
+          "speakers": [
+            "001-M",
+            "003-M",
+            "005-F",
+            "006-F",
+            "007-M"
+          ],
+          "utterances": 6,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1203.91642,
+          "end": 1232.926694630609,
+          "seconds": 29.010274630609047,
+          "speakers": [
+            "001-M",
+            "003-M",
+            "005-F",
+            "007-M"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1233.06645,
+          "end": 1258.47147,
+          "seconds": 25.405019999999922,
+          "speakers": [
+            "005-F",
+            "007-M"
+          ],
+          "utterances": 5,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1258.85147,
+          "end": 1282.53649,
+          "seconds": 23.685019999999895,
+          "speakers": [
+            "005-F",
+            "006-F",
+            "007-M"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1282.65649,
+          "end": 1309.4234629892883,
+          "seconds": 26.766972989288206,
+          "speakers": [
+            "003-M",
+            "006-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1594.47177,
+          "end": 1611.45678,
+          "seconds": 16.985009999999875,
+          "speakers": [
+            "003-M",
+            "007-M"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1697.32186,
+          "end": 1728.78939,
+          "seconds": 31.467529999999897,
+          "speakers": [
+            "003-M",
+            "004-M",
+            "006-F",
+            "007-M"
+          ],
+          "utterances": 7,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1728.85439,
+          "end": 1762.11692,
+          "seconds": 33.26252999999997,
+          "speakers": [
+            "003-M",
+            "005-F",
+            "007-M"
+          ],
+          "utterances": 6,
+          "shortUtterances": 3,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1762.32692,
+          "end": 1789.75694,
+          "seconds": 27.430020000000013,
+          "speakers": [
+            "003-M",
+            "006-F",
+            "007-M"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1904.67704,
+          "end": 1925.65706,
+          "seconds": 20.980019999999968,
+          "speakers": [
+            "003-M",
+            "004-M",
+            "005-F",
+            "007-M"
+          ],
+          "utterances": 6,
+          "shortUtterances": 3,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        }
+      ],
+      "shortExamples": [
+        {
+          "start": 84.35793,
+          "end": 86.31293,
+          "seconds": 1.9549999999999983,
+          "speaker": "004-M",
+          "text": "零幺三我是画师",
+          "lexicalCharacters": 7
+        },
+        {
+          "start": 486.27828,
+          "end": 487.06995830775907,
+          "seconds": 0.7916783077590708,
+          "speaker": "005-F",
+          "text": "电影儿",
+          "lexicalCharacters": 3
+        },
+        {
+          "start": 947.8400549030109,
+          "end": 949.7322235333289,
+          "seconds": 1.8921686303179968,
+          "speaker": "003-M",
+          "text": "过程需要反转，啊",
+          "lexicalCharacters": 7
+        },
+        {
+          "start": 1010.54125,
+          "end": 1012.02125,
+          "seconds": 1.4800000000000182,
+          "speaker": "003-M",
+          "text": "还有反转，",
+          "lexicalCharacters": 4
+        }
+      ]
+    },
+    {
+      "meeting": "20200708_L_R002S01C01",
+      "role": "train",
+      "sourceFlacSha256": "470f0c683e474220c6dcc9b85f2345d73c84c0fbd0f38e9f58f47a9e524540d4",
+      "referenceSha256": "16e65eb5938f0b3e750b755d04abe7586dcd46c5edab5bef52d9225699188b4c",
+      "audioSeconds": 1943.7345,
+      "nonemptyReferenceUtterances": 301,
+      "cleanCompleteShortUtterances": 14,
+      "shortDurationBins": {
+        "under0.3": 0,
+        "0.3to1": 4,
+        "1to2": 10
+      },
+      "shortBySpeaker": {
+        "001-M": 1,
+        "002-M": 4,
+        "003-M": 4,
+        "004-M": 1,
+        "005-F": 1,
+        "006-F": 2,
+        "007-F": 1
+      },
+      "shortByLexicalLength": {
+        "7": 4,
+        "8": 3,
+        "6": 2,
+        "1": 3,
+        "3": 1,
+        "4": 1
+      },
+      "completeNaturalContextPlans": 64,
+      "eligibleMultiTurnShortResponseContextPlans": 23,
+      "oversizedOverlapComponentsNotCut": [],
+      "eligibleContextPlans": [
+        {
+          "start": 119.60495,
+          "end": 149.44994,
+          "seconds": 29.844989999999996,
+          "speakers": [
+            "002-M",
+            "003-M"
+          ],
+          "utterances": 10,
+          "shortUtterances": 4,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 378.4175043199598,
+          "end": 406.80984,
+          "seconds": 28.39233568004022,
+          "speakers": [
+            "001-M",
+            "003-M",
+            "004-M",
+            "006-F"
+          ],
+          "utterances": 7,
+          "shortUtterances": 4,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 406.89484,
+          "end": 433.6613,
+          "seconds": 26.766459999999995,
+          "speakers": [
+            "002-M",
+            "003-M",
+            "004-M",
+            "005-F",
+            "006-F"
+          ],
+          "utterances": 11,
+          "shortUtterances": 6,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 433.6888,
+          "end": 468.00638,
+          "seconds": 34.317579999999964,
+          "speakers": [
+            "006-F",
+            "007-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 546.43655,
+          "end": 573.34161,
+          "seconds": 26.905059999999935,
+          "speakers": [
+            "002-M",
+            "004-M",
+            "005-F",
+            "006-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 600.21417,
+          "end": 628.54673,
+          "seconds": 28.332560000000058,
+          "speakers": [
+            "001-M",
+            "002-M",
+            "003-M",
+            "004-M",
+            "005-F",
+            "006-F"
+          ],
+          "utterances": 12,
+          "shortUtterances": 4,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 661.2918,
+          "end": 694.01187,
+          "seconds": 32.72007000000008,
+          "speakers": [
+            "002-M",
+            "006-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 694.13687,
+          "end": 726.2821607274805,
+          "seconds": 32.145290727480415,
+          "speakers": [
+            "002-M",
+            "003-M",
+            "004-M",
+            "006-F"
+          ],
+          "utterances": 8,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 726.2821607274805,
+          "end": 757.6652413151608,
+          "seconds": 31.383080587680297,
+          "speakers": [
+            "003-M",
+            "004-M",
+            "005-F",
+            "006-F"
+          ],
+          "utterances": 7,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 759.01701,
+          "end": 793.69709,
+          "seconds": 34.680079999999975,
+          "speakers": [
+            "002-M",
+            "006-F",
+            "007-F"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1083.33022,
+          "end": 1115.3389163536906,
+          "seconds": 32.00869635369054,
+          "speakers": [
+            "002-M",
+            "005-F",
+            "007-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1147.65787,
+          "end": 1180.64544,
+          "seconds": 32.987570000000005,
+          "speakers": [
+            "002-M",
+            "005-F",
+            "006-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1180.75544,
+          "end": 1212.42551,
+          "seconds": 31.670070000000123,
+          "speakers": [
+            "003-M",
+            "006-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1245.68558,
+          "end": 1272.2503163491488,
+          "seconds": 26.56473634914869,
+          "speakers": [
+            "004-M",
+            "005-F"
+          ],
+          "utterances": 6,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1272.2503163491488,
+          "end": 1301.7907,
+          "seconds": 29.540383650851254,
+          "speakers": [
+            "004-M",
+            "005-F",
+            "006-F"
+          ],
+          "utterances": 10,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1353.00082,
+          "end": 1386.39839,
+          "seconds": 33.39757000000009,
+          "speakers": [
+            "002-M",
+            "003-M",
+            "007-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1444.5358668236747,
+          "end": 1476.8572842661295,
+          "seconds": 32.32141744245473,
+          "speakers": [
+            "001-M",
+            "002-M",
+            "003-M",
+            "007-F"
+          ],
+          "utterances": 8,
+          "shortUtterances": 3,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1508.74616,
+          "end": 1538.85872,
+          "seconds": 30.11256000000003,
+          "speakers": [
+            "002-M",
+            "003-M"
+          ],
+          "utterances": 5,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1602.64886,
+          "end": 1630.935922694368,
+          "seconds": 28.287062694367933,
+          "speakers": [
+            "002-M",
+            "004-M",
+            "007-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1631.2197498543478,
+          "end": 1656.75398,
+          "seconds": 25.534230145652145,
+          "speakers": [
+            "002-M",
+            "004-M",
+            "005-F",
+            "007-F"
+          ],
+          "utterances": 7,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1657.14148,
+          "end": 1686.91905,
+          "seconds": 29.77756999999997,
+          "speakers": [
+            "005-F",
+            "006-F",
+            "007-F"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1778.39425,
+          "end": 1799.16679,
+          "seconds": 20.772539999999935,
+          "speakers": [
+            "002-M",
+            "006-F"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1830.95436,
+          "end": 1864.05693,
+          "seconds": 33.102570000000014,
+          "speakers": [
+            "001-M",
+            "002-M",
+            "003-M"
+          ],
+          "utterances": 6,
+          "shortUtterances": 3,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        }
+      ],
+      "shortExamples": [
+        {
+          "start": 61.68998,
+          "end": 63.68997,
+          "seconds": 1.999990000000004,
+          "speaker": "001-M",
+          "text": "零零二，我是校长。",
+          "lexicalCharacters": 7
+        },
+        {
+          "start": 64.03497,
+          "end": 65.74497,
+          "seconds": 1.7099999999999937,
+          "speaker": "002-M",
+          "text": "零二六，我是副校长。",
+          "lexicalCharacters": 8
+        },
+        {
+          "start": 65.97997,
+          "end": 67.64497,
+          "seconds": 1.6650000000000063,
+          "speaker": "003-M",
+          "text": "零二二我是教务处",
+          "lexicalCharacters": 8
+        },
+        {
+          "start": 67.86997,
+          "end": 69.54497,
+          "seconds": 1.6750000000000114,
+          "speaker": "004-M",
+          "text": "零二七，我是教学",
+          "lexicalCharacters": 7
+        },
+        {
+          "start": 69.70497,
+          "end": 71.24497,
+          "seconds": 1.539999999999992,
+          "speaker": "005-F",
+          "text": "零二三，我是咨询处。",
+          "lexicalCharacters": 8
+        },
+        {
+          "start": 71.35497,
+          "end": 73.10997,
+          "seconds": 1.7550000000000097,
+          "speaker": "006-F",
+          "text": "零二四，我是市场。",
+          "lexicalCharacters": 7
+        },
+        {
+          "start": 73.28497,
+          "end": 75.08497,
+          "seconds": 1.7999999999999972,
+          "speaker": "007-F",
+          "text": "零幺四，管理处",
+          "lexicalCharacters": 6
+        },
+        {
+          "start": 138.42914341879032,
+          "end": 139.85494,
+          "seconds": 1.4257965812096813,
+          "speaker": "002-M",
+          "text": "他算大公司吗？",
+          "lexicalCharacters": 6
+        },
+        {
+          "start": 159.15494,
+          "end": 159.68637210421363,
+          "seconds": 0.5314321042136214,
+          "speaker": "003-M",
+          "text": "嗯",
+          "lexicalCharacters": 1
+        },
+        {
+          "start": 260.24217571721783,
+          "end": 260.5827683091937,
+          "seconds": 0.3405925919758488,
+          "speaker": "002-M",
+          "text": "对",
+          "lexicalCharacters": 1
+        },
+        {
+          "start": 608.3710918023392,
+          "end": 608.95419,
+          "seconds": 0.5830981976608882,
+          "speaker": "006-F",
+          "text": "对",
+          "lexicalCharacters": 1
+        },
+        {
+          "start": 1369.90835,
+          "end": 1371.158810909496,
+          "seconds": 1.2504609094960415,
+          "speaker": "003-M",
+          "text": "对，就是这个意思",
+          "lexicalCharacters": 7
+        },
+        {
+          "start": 1415.25845,
+          "end": 1416.2250837495162,
+          "seconds": 0.966633749516177,
+          "speaker": "002-M",
+          "text": "这方面",
+          "lexicalCharacters": 3
+        },
+        {
+          "start": 1465.8637122695764,
+          "end": 1467.2071608268143,
+          "seconds": 1.3434485572379344,
+          "speaker": "003-M",
+          "text": "免得踩空",
+          "lexicalCharacters": 4
+        }
+      ]
+    },
+    {
+      "meeting": "20200709_L_R002S01C01",
+      "role": "validation",
+      "sourceFlacSha256": "8cdd907d2e6975df15c7b7320bf7582d0660b4b2397e25bcc699d5228ac3561b",
+      "referenceSha256": "b6a1e716db42766dca61fcf14d15212855dcf87389d7ef1b5e0a9ad9baf412f3",
+      "audioSeconds": 2145.3378125,
+      "nonemptyReferenceUtterances": 330,
+      "cleanCompleteShortUtterances": 5,
+      "shortDurationBins": {
+        "under0.3": 0,
+        "0.3to1": 0,
+        "1to2": 5
+      },
+      "shortBySpeaker": {
+        "001-M": 1,
+        "002-M": 1,
+        "003-M": 1,
+        "004-F": 1,
+        "006-F": 1
+      },
+      "shortByLexicalLength": {
+        "8": 3,
+        "6": 1,
+        "7": 1
+      },
+      "completeNaturalContextPlans": 72,
+      "eligibleMultiTurnShortResponseContextPlans": 13,
+      "oversizedOverlapComponentsNotCut": [],
+      "eligibleContextPlans": [
+        {
+          "start": 330.52564,
+          "end": 359.05567,
+          "seconds": 28.53003000000001,
+          "speakers": [
+            "001-M",
+            "002-M"
+          ],
+          "utterances": 8,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 359.16567,
+          "end": 392.12069,
+          "seconds": 32.95502000000005,
+          "speakers": [
+            "001-M",
+            "002-M"
+          ],
+          "utterances": 11,
+          "shortUtterances": 6,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 415.29071,
+          "end": 443.94574,
+          "seconds": 28.65503000000001,
+          "speakers": [
+            "002-M",
+            "006-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 592.41087,
+          "end": 626.0834,
+          "seconds": 33.67252999999994,
+          "speakers": [
+            "003-M",
+            "006-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 880.51612,
+          "end": 913.66615,
+          "seconds": 33.150030000000015,
+          "speakers": [
+            "004-F",
+            "006-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1215.55141,
+          "end": 1246.46394,
+          "seconds": 30.91253000000006,
+          "speakers": [
+            "006-F",
+            "007-F"
+          ],
+          "utterances": 7,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1613.96426,
+          "end": 1644.26179,
+          "seconds": 30.29753000000005,
+          "speakers": [
+            "003-M",
+            "006-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1702.79184,
+          "end": 1734.07687,
+          "seconds": 31.285030000000006,
+          "speakers": [
+            "003-M",
+            "006-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1734.18187,
+          "end": 1759.11439,
+          "seconds": 24.932520000000068,
+          "speakers": [
+            "003-M",
+            "004-F",
+            "006-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1821.57944,
+          "end": 1848.09947,
+          "seconds": 26.520030000000133,
+          "speakers": [
+            "004-F",
+            "006-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1848.20447,
+          "end": 1874.04699,
+          "seconds": 25.84252000000015,
+          "speakers": [
+            "004-F",
+            "006-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1874.10949,
+          "end": 1903.94951,
+          "seconds": 29.840019999999868,
+          "speakers": [
+            "004-F",
+            "006-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1958.9803582409381,
+          "end": 1983.75708,
+          "seconds": 24.776721759061957,
+          "speakers": [
+            "006-F",
+            "007-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        }
+      ],
+      "shortExamples": [
+        {
+          "start": 39.38789,
+          "end": 41.06789,
+          "seconds": 1.6799999999999997,
+          "speaker": "001-M",
+          "text": "零零二我是总经理",
+          "lexicalCharacters": 8
+        },
+        {
+          "start": 41.15789,
+          "end": 42.74789,
+          "seconds": 1.5899999999999963,
+          "speaker": "002-M",
+          "text": "零二六我是教练部",
+          "lexicalCharacters": 8
+        },
+        {
+          "start": 42.93039,
+          "end": 44.35539,
+          "seconds": 1.4249999999999972,
+          "speaker": "003-M",
+          "text": "零二八我是保安部",
+          "lexicalCharacters": 8
+        },
+        {
+          "start": 44.59539,
+          "end": 46.17039,
+          "seconds": 1.5749999999999957,
+          "speaker": "004-F",
+          "text": "零幺九后勤部",
+          "lexicalCharacters": 6
+        },
+        {
+          "start": 46.22039,
+          "end": 47.74539,
+          "seconds": 1.5249999999999986,
+          "speaker": "006-F",
+          "text": "零二三运营主管",
+          "lexicalCharacters": 7
+        }
+      ]
+    },
+    {
+      "meeting": "20200805_S_R001S01C01",
+      "role": "validation",
+      "sourceFlacSha256": "759f4a52949dd8d219d2b300cf1c11621c41a4b178b8dc1719605f8c4b1f9c38",
+      "referenceSha256": "d6401ee7776f3d9f4c3fd7a537da687bfac7fad4255113444b140d96b082111b",
+      "audioSeconds": 2195.362,
+      "nonemptyReferenceUtterances": 358,
+      "cleanCompleteShortUtterances": 15,
+      "shortDurationBins": {
+        "under0.3": 0,
+        "0.3to1": 9,
+        "1to2": 6
+      },
+      "shortBySpeaker": {
+        "006-F": 1,
+        "005-M": 5,
+        "002-F": 2,
+        "004-F": 5,
+        "001-M": 2
+      },
+      "shortByLexicalLength": {
+        "6": 1,
+        "5": 5,
+        "1": 5,
+        "2": 3,
+        "8": 1
+      },
+      "completeNaturalContextPlans": 77,
+      "eligibleMultiTurnShortResponseContextPlans": 33,
+      "oversizedOverlapComponentsNotCut": [],
+      "eligibleContextPlans": [
+        {
+          "start": 267.92182,
+          "end": 302.55313,
+          "seconds": 34.631309999999985,
+          "speakers": [
+            "004-F",
+            "005-M"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 456.36092,
+          "end": 484.32972,
+          "seconds": 27.968799999999987,
+          "speakers": [
+            "001-M",
+            "004-F"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 484.38097,
+          "end": 517.48603,
+          "seconds": 33.10506000000004,
+          "speakers": [
+            "001-M",
+            "004-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 517.53853,
+          "end": 541.34232,
+          "seconds": 23.803789999999935,
+          "speakers": [
+            "001-M",
+            "004-F"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 597.55868,
+          "end": 622.81747,
+          "seconds": 25.258789999999976,
+          "speakers": [
+            "001-M",
+            "004-F"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 622.89497,
+          "end": 656.39004,
+          "seconds": 33.495070000000055,
+          "speakers": [
+            "001-M",
+            "004-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 656.48129,
+          "end": 684.66259,
+          "seconds": 28.18130000000008,
+          "speakers": [
+            "001-M",
+            "004-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 684.85509,
+          "end": 713.6188790927029,
+          "seconds": 28.763789092702837,
+          "speakers": [
+            "001-M",
+            "002-F",
+            "004-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 766.81274,
+          "end": 801.2178,
+          "seconds": 34.40506000000005,
+          "speakers": [
+            "002-F",
+            "004-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 824.73659,
+          "end": 852.70665,
+          "seconds": 27.97005999999999,
+          "speakers": [
+            "002-F",
+            "004-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 852.8129,
+          "end": 877.53544,
+          "seconds": 24.72253999999998,
+          "speakers": [
+            "002-F",
+            "004-F"
+          ],
+          "utterances": 6,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 900.69673,
+          "end": 928.6347733057031,
+          "seconds": 27.938043305703104,
+          "speakers": [
+            "002-F",
+            "004-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 957.34309,
+          "end": 987.22939,
+          "seconds": 29.886300000000006,
+          "speakers": [
+            "002-F",
+            "004-F"
+          ],
+          "utterances": 6,
+          "shortUtterances": 3,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 987.30564,
+          "end": 1008.67943,
+          "seconds": 21.373789999999985,
+          "speakers": [
+            "002-F",
+            "004-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1009.20318,
+          "end": 1038.0428453667291,
+          "seconds": 28.83966536672915,
+          "speakers": [
+            "002-F",
+            "004-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1038.67574,
+          "end": 1068.25704,
+          "seconds": 29.581300000000056,
+          "speakers": [
+            "002-F",
+            "004-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1103.43961,
+          "end": 1128.508369169168,
+          "seconds": 25.06875916916806,
+          "speakers": [
+            "002-F",
+            "004-F",
+            "006-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1162.40597,
+          "end": 1189.87977,
+          "seconds": 27.473799999999983,
+          "speakers": [
+            "002-F",
+            "004-F"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1190.12102,
+          "end": 1220.48232,
+          "seconds": 30.36130000000003,
+          "speakers": [
+            "001-M",
+            "002-F",
+            "004-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1251.64988,
+          "end": 1277.29243,
+          "seconds": 25.64255000000003,
+          "speakers": [
+            "001-M",
+            "004-F"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1277.40618,
+          "end": 1301.69872,
+          "seconds": 24.292540000000145,
+          "speakers": [
+            "001-M",
+            "004-F"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1416.09643,
+          "end": 1442.29273,
+          "seconds": 26.196299999999837,
+          "speakers": [
+            "001-M",
+            "004-F"
+          ],
+          "utterances": 7,
+          "shortUtterances": 4,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1442.48523,
+          "end": 1468.7905201481901,
+          "seconds": 26.305290148190124,
+          "speakers": [
+            "001-M",
+            "004-F"
+          ],
+          "utterances": 6,
+          "shortUtterances": 3,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1468.7905201481901,
+          "end": 1495.9295016466324,
+          "seconds": 27.138981498442263,
+          "speakers": [
+            "001-M",
+            "004-F",
+            "005-M"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1496.09283,
+          "end": 1525.7456659688553,
+          "seconds": 29.652835968855243,
+          "speakers": [
+            "001-M",
+            "002-F",
+            "004-F"
+          ],
+          "utterances": 6,
+          "shortUtterances": 3,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1639.67434,
+          "end": 1664.26439,
+          "seconds": 24.59005000000002,
+          "speakers": [
+            "004-F",
+            "005-M"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1748.02829,
+          "end": 1773.58959,
+          "seconds": 25.561300000000074,
+          "speakers": [
+            "004-F",
+            "005-M"
+          ],
+          "utterances": 4,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1836.1697,
+          "end": 1863.238708568621,
+          "seconds": 27.06900856862103,
+          "speakers": [
+            "001-M",
+            "002-F",
+            "004-F",
+            "005-M"
+          ],
+          "utterances": 7,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1917.1286,
+          "end": 1949.48866,
+          "seconds": 32.360059999999976,
+          "speakers": [
+            "001-M",
+            "005-M"
+          ],
+          "utterances": 3,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1949.66366,
+          "end": 1976.77371,
+          "seconds": 27.11005,
+          "speakers": [
+            "001-M",
+            "004-F",
+            "005-M"
+          ],
+          "utterances": 4,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 1976.84871,
+          "end": 2000.23126,
+          "seconds": 23.382550000000037,
+          "speakers": [
+            "001-M",
+            "002-F",
+            "005-M"
+          ],
+          "utterances": 6,
+          "shortUtterances": 3,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 2093.380455968855,
+          "end": 2115.46147,
+          "seconds": 22.08101403114506,
+          "speakers": [
+            "001-M",
+            "004-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 2,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        },
+        {
+          "start": 2115.55772,
+          "end": 2140.24526,
+          "seconds": 24.687540000000354,
+          "speakers": [
+            "001-M",
+            "004-F"
+          ],
+          "utterances": 5,
+          "shortUtterances": 1,
+          "hasTaggedText": false,
+          "allContainedAnnotatedUtterancesComplete": true
+        }
+      ],
+      "shortExamples": [
+        {
+          "start": 10.7101,
+          "end": 12.6651,
+          "seconds": 1.955,
+          "speaker": "006-F",
+          "text": "零零三总经理",
+          "lexicalCharacters": 6
+        },
+        {
+          "start": 18.52011,
+          "end": 20.04011,
+          "seconds": 1.5199999999999996,
+          "speaker": "005-M",
+          "text": "零零五安保",
+          "lexicalCharacters": 5
+        },
+        {
+          "start": 20.27762,
+          "end": 22.06762,
+          "seconds": 1.7900000000000027,
+          "speaker": "002-F",
+          "text": "零零六客服",
+          "lexicalCharacters": 5
+        },
+        {
+          "start": 22.37387,
+          "end": 24.00887,
+          "seconds": 1.6350000000000016,
+          "speaker": "004-F",
+          "text": "零零七主管",
+          "lexicalCharacters": 5
+        },
+        {
+          "start": 221.84674,
+          "end": 222.71174,
+          "seconds": 0.8649999999999807,
+          "speaker": "005-M",
+          "text": "嗯",
+          "lexicalCharacters": 1
+        },
+        {
+          "start": 705.35138,
+          "end": 706.2919486378796,
+          "seconds": 0.9405686378796645,
+          "speaker": "004-F",
+          "text": "客服",
+          "lexicalCharacters": 2
+        },
+        {
+          "start": 995.3350298039151,
+          "end": 996.1659188245651,
+          "seconds": 0.8308890206500337,
+          "speaker": "002-F",
+          "text": "对",
+          "lexicalCharacters": 1
+        },
+        {
+          "start": 1202.74229,
+          "end": 1204.60229,
+          "seconds": 1.8600000000001273,
+          "speaker": "004-F",
+          "text": "绿化那边儿怎么样？",
+          "lexicalCharacters": 8
+        },
+        {
+          "start": 1381.0794525109861,
+          "end": 1381.9292253730148,
+          "seconds": 0.849772862028658,
+          "speaker": "005-M",
+          "text": "哎",
+          "lexicalCharacters": 1
+        },
+        {
+          "start": 1567.36796,
+          "end": 1568.66296,
+          "seconds": 1.2950000000000728,
+          "speaker": "004-F",
+          "text": "保安这边儿",
+          "lexicalCharacters": 5
+        },
+        {
+          "start": 1647.4955749961057,
+          "end": 1648.1942771271067,
+          "seconds": 0.6987021310010277,
+          "speaker": "004-F",
+          "text": "嗯",
+          "lexicalCharacters": 1
+        },
+        {
+          "start": 1976.84871,
+          "end": 1977.817631975501,
+          "seconds": 0.9689219755009617,
+          "speaker": "001-M",
+          "text": "属于阴面儿，",
+          "lexicalCharacters": 5
+        },
+        {
+          "start": 1986.9574112026519,
+          "end": 1987.6372294922749,
+          "seconds": 0.6798182896229719,
+          "speaker": "005-M",
+          "text": "对",
+          "lexicalCharacters": 1
+        },
+        {
+          "start": 2164.835422842863,
+          "end": 2165.288635035945,
+          "seconds": 0.45321219308198124,
+          "speaker": "005-M",
+          "text": "没了",
+          "lexicalCharacters": 2
+        },
+        {
+          "start": 2165.288635035945,
+          "end": 2165.760731070405,
+          "seconds": 0.4720960344602645,
+          "speaker": "001-M",
+          "text": "没了",
+          "lexicalCharacters": 2
+        }
+      ]
+    }
+  ],
+  "existingExposedFailureForDiagnosisOnly": {
+    "referenceCharacters": 537,
+    "replace": 62,
+    "delete": 195,
+    "spans": 235
+  },
+  "newNeuralCalls": 0,
+  "newParameterUpdates": 0,
+  "newAudioExports": 0,
+  "qualityQualified": false,
+  "fullMeetingGatesChanged": false,
+  "finalHoldoutOpened": false,
+  "interpretation": "The failed clean-utterance pilot did not cover the short backchannels or multi-turn windows prominent in the exposed failure. This is a training-coverage mismatch, not proof that a new cohort will improve the model. No further training should be launched until a source-disjoint, context-matched baseline demonstrates the target weakness.",
+  "nextAction": "Prepare a single bounded context-matched validation cohort from these disjoint sources, preserving whole annotated utterances and all voices. Measure the existing base first; retain original long controls, background false-acceptance and bilingual controls. Freeze any subsequent data-only intervention before new updates; no hyperparameter sweep.",
+  "limits": {
+    "pid": 23404,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 16674816,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

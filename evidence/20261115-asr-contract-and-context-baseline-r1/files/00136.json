@@ -1,0 +1,27 @@
+{
+  "isFinal": true,
+  "text": "哎。",
+  "utterances": [
+    {
+      "text": "哎。",
+      "startMs": 0.0,
+      "endMs": 929.75,
+      "speaker": null,
+      "approximateTiming": true,
+      "block": 0,
+      "revision": "00000000-00014876-final",
+      "blockFinal": true,
+      "language": "Chinese",
+      "decodeAccepted": true,
+      "reviewRequired": false,
+      "unconfirmedAudioIntervals": []
+    }
+  ],
+  "confirmedAudioFrames": 14876,
+  "finalDecodedFrames": 14876,
+  "audioSealed": true,
+  "speakerIdentityVerified": false,
+  "reviewRequired": false,
+  "wordTimingVerified": false,
+  "qualityQualified": false
+}
