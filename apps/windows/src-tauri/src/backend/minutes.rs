@@ -12,6 +12,7 @@ mod context_plan;
 mod question_sources;
 mod template;
 mod short_evidence;
+mod topic_outline;
 
 use crate::companion_v1::{
     CompanionV1ActionItem, CompanionV1HostSession, CompanionV1MeetingMinutes,
@@ -98,7 +99,9 @@ impl CompanionMinutesManager {
             return match result {
                 Ok(native)=>{
                     let base=if session.meeting_notes.is_empty(){l0}else{rules_l0_minutes(session,generated_at)};
-                    finalize_native_result(native,base,session)
+                    let mut minutes=finalize_native_result(native,base,session);
+                    topic_outline::attach_configured(session,&mut minutes,template);
+                    minutes
                 },
                 Err(reason)=>{l0.llm_note=Some(reason);l0},
             };
@@ -351,6 +354,11 @@ pub(super) fn run_finalized_deepseek_request(
 )->Result<CompanionV1MeetingMinutes,String>{
     run_deepseek_request_with_evidence(endpoint,model,api_key,session,l0,client,None)
         .map(|native|finalize_native_result(native,l0.clone(),session))
+}
+
+pub(super) fn attach_topic_outline(endpoint:&str,model:&str,key:&str,session:&CompanionV1HostSession,
+    minutes:&mut CompanionV1MeetingMinutes,client:&reqwest::blocking::Client) {
+    topic_outline::attach(endpoint,model,key,session,minutes,client,None);
 }
 
 pub(super) fn run_deepseek_request(

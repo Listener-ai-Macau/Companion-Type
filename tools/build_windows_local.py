@@ -4,7 +4,7 @@ CI keeps its existing explicit CARGO_TARGET_DIR. Batch output directories store
 small logs/receipts and final deliverables, never another complete Cargo tree.
 """
 from pathlib import Path
-import argparse,os,subprocess,sys
+import argparse,os,subprocess,sys,hashlib,json,shutil
 from check_type_build_target import inspect
 sys.path.insert(0,str(Path(os.environ.get('DENZIC_WORKFLOW_ROOT',
     'C:/Users/Billy/Desktop/Denzic/ai-collaboration-workflow'))/'scripts'))
@@ -17,15 +17,30 @@ def main():
     p.add_argument('--release',action='store_true')
     p.add_argument('--filter',help='Affected test filter, only with test')
     p.add_argument('--output',type=Path,help='Optional existing batch directory for one log')
+    p.add_argument('--reserve-gib',type=float,default=3,help='Explicit incremental-job space estimate, 1 to 3GiB; cache budget stays80GiB')
+    p.add_argument('--native-output',type=Path,help='Freeze the two CLI binaries under the shared build lock; new absolute output directory only')
     a=p.parse_args()
     if os.name!='nt':p.error('Windows native build entry')
     if a.filter and a.task!='test':p.error('--filter applies to test')
+    if not 1<=a.reserve_gib<=3:p.error('--reserve-gib must be1 to3; do not enlarge the cache budget')
+    if a.native_output and (a.task!='build' or not a.native_output.is_absolute() or a.native_output.exists()):p.error('--native-output requires build and a new absolute path')
     cache=Path(os.environ.get('COMPANION_BUILD_CACHE','E:/CodexData/Companion/.build-cache'))
     target=cache/'shared-windows-target'
     try:
         with exclusive_build(cache/'.shared-windows-build.lock'):
-            preflight(cache)
-            return build(a,target)
+            preflight(cache,reserve_gib=a.reserve_gib)
+            owned=[ROOT/'apps/windows/src-tauri'/name for name in ['Cargo.toml','src/lib.rs','src/main.rs','src/backend/minutes.rs','src/backend/minutes/topic_outline.rs']]
+            hashes={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in owned if p.exists()}
+            result=build(a,target)
+            preflight(cache,reserve_gib=0)
+            if result==0 and a.native_output:
+                if any(hashlib.sha256((ROOT/p).read_bytes()).hexdigest()!=v for p,v in hashes.items()):raise RuntimeError('Native inputs changed while compiling; do not freeze an ambiguous candidate')
+                a.native_output.mkdir(parents=True,exist_ok=False)
+                profile='release' if a.release else 'debug'
+                for name in ['companion-type.exe','companion_type_lib.dll']:shutil.copyfile(target/profile/name,a.native_output/name)
+                receipt={'authoringHead':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'nativeSourceHashes':hashes,'binaries':{n:hashlib.sha256((a.native_output/n).read_bytes()).hexdigest() for n in ['companion-type.exe','companion_type_lib.dll']},'scope':'Engineering native CLI candidate, copied before releasing the shared target lock; no GUI/install/frozen release claim'}
+                (a.native_output/'source.json').write_text(json.dumps(receipt,indent=2),encoding='utf8')
+            return result
     except (StorageLimit,OSError) as error:
         print(str(error),file=sys.stderr)
         return 2
