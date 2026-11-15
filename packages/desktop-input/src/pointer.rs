@@ -30,7 +30,7 @@ pub struct Sample {
 }
 impl Sample {
     pub fn parse(p: &[u8]) -> Result<Self, &'static str> {
-        if p.len()<32 || &p[..4]!=b"CIM1" || !matches!(p[4],1|2|3|4|6|7) || p.len()!=if matches!(p[4],6|7){40}else{32} || p[5]!=3 || p[6]&!(if p[4]>=3{3}else{1})!=0 || (matches!(p[4],6|7)&&p[34..36]!=[0,0]) {
+        if p.len()<32 || &p[..4]!=b"CIM1" || !matches!(p[4],1|2|3|4|6|7|8) || p.len()!=if matches!(p[4],6|7|8){40}else{32} || p[5]!=3 || p[6]&!(if p[4]>=3{3}else{1})!=0 || (matches!(p[4],6|7)&&p[34..36]!=[0,0]) {
             return Err("invalid CIM1 sample");
         }
         let mut crc=0xffff_ffffu32;
@@ -46,8 +46,8 @@ impl Sample {
             return Ok(s);
         }
         for i in 0..3 {s.accel[i]=i16::from_le_bytes(p[16+2*i..18+2*i].try_into().unwrap()) as f64;
-            if matches!(p[4],3|6|7){s.accel[i]*=1000./16384.;}
-            s.gyro[i]=i16::from_le_bytes(p[22+2*i..24+2*i].try_into().unwrap()) as f64/100.;}
+            if matches!(p[4],3|6|7|8){s.accel[i]*=1000./16384.;}
+            s.gyro[i]=i16::from_le_bytes(p[22+2*i..24+2*i].try_into().unwrap()) as f64*if p[4]==8{0.04}else{0.01};}
         Ok(s)
     }
 }
@@ -79,9 +79,9 @@ impl Default for Settings {
 }
 impl Settings {
     pub fn relative_remote()->Self{Self{mapping:Mapping::Relative,relative_direct:true,relative_horizontal:RelativeHorizontal::Tilt,tap_click:true,deadzone:0.,smoothing:0.,acceleration:0.,..Self::default()}}
-    /// CIM7 native acceleration is negotiated explicitly; the link adapter
-    /// falls back to legacy72 only on a firmware unsupported-options reply.
-    pub fn pointer_options(&self)->u8{if self.contact_regions{200}else if self.desktop_motion{24}else if self.relative_direct&&self.mapping==Mapping::Relative{40}else{8}}
+    /// CIM8 full-range gyro/native acceleration is negotiated explicitly;
+    /// unsupported firmware falls back to native200 then legacy72.
+    pub fn pointer_options(&self)->u8{if self.contact_regions{232}else if self.desktop_motion{24}else if self.relative_direct&&self.mapping==Mapping::Relative{40}else{8}}
     pub fn validate(&self)->Result<(), &'static str> {
         if self.desktop_motion&&self.mapping!=Mapping::Relative{return Err("desktop motion requires relative mapping");}
         if self.relative_direct&&self.mapping!=Mapping::Relative{return Err("direct relative input requires relative mapping");}

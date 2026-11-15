@@ -8,7 +8,7 @@ use super::*;
         let at=n as f64/100.;let acceleration=if (150..165).contains(&n){100.}else{0.};
         for p in [&mut candidate,&mut reference]{
             p.observe_device_readiness(Some(true));
-            p.sample_raw_gravity(desktop::Raw{sequence:n,sensor_ms:n*10,accel_mg:[acceleration,0.,1000.],gyro_dps:[0.;3]},Some([0.,0.,1000.]),at);
+            p.sample_raw_gravity(desktop::Raw{wide_gyro:false,sequence:n,sensor_ms:n*10,accel_mg:[acceleration,0.,1000.],gyro_dps:[0.;3]},Some([0.,0.,1000.]),at);
         }
         // No matching impact exists in these samples. The event must time out
         // without resetting the stroke either on arrival or on completion.
@@ -53,11 +53,11 @@ fn sample(n:u32,gyro:[f64;3])->Sample{Sample{sequence:n,sensor_ms:n*10,held:fals
     let mut p=Pointer::new(Settings{desktop_motion:true,..Settings::relative_remote()},Point{x:960.,y:540.});
     for n in 1..121{
         p.observe_device_readiness(Some(false));
-        p.sample_raw_gravity(desktop::Raw{sequence:n,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[20.,10.,5.]},Some([0.,0.,1000.]),n as f64/100.);
+        p.sample_raw_gravity(desktop::Raw{wide_gyro:false,sequence:n,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[20.,10.,5.]},Some([0.,0.,1000.]),n as f64/100.);
         assert!(!p.metrics.calibrated);
     }
     p.observe_device_readiness(Some(true));
-    for n in 121..181{p.sample_raw_gravity(desktop::Raw{sequence:n,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]},Some([0.,0.,1000.]),n as f64/100.);}
+    for n in 121..181{p.sample_raw_gravity(desktop::Raw{wide_gyro:false,sequence:n,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]},Some([0.,0.,1000.]),n as f64/100.);}
     assert!(p.metrics.calibrated&&p.planar_state().unwrap().pose_prediction);
     assert_eq!(p.shown,Point{x:960.,y:540.});
 }

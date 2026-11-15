@@ -42,7 +42,7 @@ mod tests {
         for w in windows.as_array().unwrap(){
             c.raw.clear();
             for s in w["samples"].as_array().unwrap(){c.sample(Raw{
-                sequence:s["sequence"].as_u64().unwrap()as u32,sensor_ms:s["sensorMs"].as_u64().unwrap()as u32,
+                wide_gyro:false,sequence:s["sequence"].as_u64().unwrap()as u32,sensor_ms:s["sensorMs"].as_u64().unwrap()as u32,
                 accel_mg:std::array::from_fn(|i|s["accelMg"][i].as_f64().unwrap()),gyro_dps:std::array::from_fn(|i|s["gyroDps"][i].as_f64().unwrap()),
             });}
             let ms=w["sensorMs"].as_u64().unwrap()as u32;
@@ -61,7 +61,7 @@ mod tests {
         for w in windows.as_array().unwrap(){
             events.push(w["sensorMs"].as_u64().unwrap()as u32);
             for s in w["samples"].as_array().unwrap(){raw.insert(s["sensorMs"].as_u64().unwrap()as u32,Raw{
-                sequence:s["sequence"].as_u64().unwrap()as u32,sensor_ms:s["sensorMs"].as_u64().unwrap()as u32,
+                wide_gyro:false,sequence:s["sequence"].as_u64().unwrap()as u32,sensor_ms:s["sensorMs"].as_u64().unwrap()as u32,
                 accel_mg:std::array::from_fn(|i|s["accelMg"][i].as_f64().unwrap()),gyro_dps:std::array::from_fn(|i|s["gyroDps"][i].as_f64().unwrap()),
             });}
         }

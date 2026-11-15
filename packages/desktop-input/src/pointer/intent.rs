@@ -85,7 +85,7 @@ impl Intent {
 }
 #[cfg(test)]mod tests{
     use super::*;
-    fn raw(n:u32)->Raw{Raw{sequence:n+1,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]}}
+    fn raw(n:u32)->Raw{Raw{wide_gyro:false,sequence:n+1,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]}}
     fn ready()->Intent{let mut p=Intent::default();for n in 0..121{p.sample(raw(n),n as f64/100.);p.frame(n as f64/100.);}p}
     fn table_ready()->Intent{
         let mut p=Intent::surface_mouse();p.desktop.enable_board_pose_prediction();

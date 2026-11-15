@@ -4,11 +4,11 @@
 #include "FusionBias.h"
 #include <stdlib.h>
 #include <math.h>
-typedef struct {FusionAhrs ahrs;FusionBias bias;} CompanionFusion;
+typedef struct {FusionAhrs ahrs;FusionBias bias;float gyro_range;} CompanionFusion;
 void companion_fusion_configure(void *handle,float sample_rate) {
     CompanionFusion *s=(CompanionFusion*)handle;
     FusionAhrsSettings a=fusionAhrsDefaultSettings;
-    a.sampleRate=sample_rate;a.gyroscopeRange=250.0f;
+    a.sampleRate=sample_rate;a.gyroscopeRange=s->gyro_range;
     a.gain=0.5f;a.accelerationRejection=10.0f;a.rejectionTimeout=5.0f;
     FusionAhrsSetSettings(&s->ahrs,&a);
     FusionBiasSettings b=fusionBiasDefaultSettings;
@@ -19,7 +19,16 @@ void *companion_fusion_create(void) {
     CompanionFusion *s=(CompanionFusion*)calloc(1,sizeof(CompanionFusion));
     if(!s)return NULL;
     FusionAhrsInitialise(&s->ahrs);FusionBiasInitialise(&s->bias);
-    companion_fusion_configure(s,100.0f);return s;
+    s->gyro_range=250.0f;companion_fusion_configure(s,100.0f);return s;
+}
+void companion_fusion_set_gyroscope_range(void *handle,float range){
+    CompanionFusion *s=(CompanionFusion*)handle;
+    if(s->gyro_range==range)return;
+    s->gyro_range=range;
+    /* Retain gain/mode and pose while matching explicitly negotiated gyro FS. */
+    FusionAhrsSettings a=fusionAhrsDefaultSettings;a.sampleRate=1.0f/s->ahrs.samplePeriod;
+    a.gain=s->ahrs.gain;a.gyroscopeRange=range;a.accelerationRejection=10.0f;a.rejectionTimeout=5.0f;
+    FusionAhrsSetSettings(&s->ahrs,&a);
 }
 void companion_fusion_destroy(void *handle){free(handle);}
 void companion_fusion_align(void *handle,const float accel[3]) {
@@ -59,7 +68,7 @@ void companion_fusion_desktop_step(void *handle,const float gyro[3],const float 
     const float gain=correct_gravity?0.5f:0.0f;
     if(s->ahrs.gain!=gain){
         FusionAhrsSettings a=fusionAhrsDefaultSettings;a.sampleRate=1.0f/dt;a.gain=gain;
-        a.gyroscopeRange=250.0f;a.accelerationRejection=10.0f;a.rejectionTimeout=5.0f;
+        a.gyroscopeRange=s->gyro_range;a.accelerationRejection=10.0f;a.rejectionTimeout=5.0f;
         FusionAhrsSetSettings(&s->ahrs,&a);
     }
     float corrected[3];step_rates(handle,gyro,accel,dt,gyro_corrected,gravity,corrected);

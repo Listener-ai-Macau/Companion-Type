@@ -98,6 +98,21 @@ pub(crate) fn listen(
     listen_mode(device_id,peer,stop,connection,1,0,notify)
 }
 
+fn unsupported_pointer_fallback(mode:u8,wanted:u8,attempted:u8,result:u8)->Option<u8>{
+    if mode!=3||result!=2{return None;}
+    match(wanted,attempted){(232,232)=>Some(200),(232|200,200)=>Some(72),(8,8)=>Some(0),_=>None}
+}
+#[cfg(test)]
+mod pointer_negotiation_tests{
+    use super::unsupported_pointer_fallback as fallback;
+    #[test]fn wide_native_and_legacy_only_follow_explicit_unsupported(){
+        assert_eq!(fallback(3,232,232,2),Some(200));assert_eq!(fallback(3,232,200,2),Some(72));
+        assert_eq!(fallback(3,232,72,2),None);assert_eq!(fallback(3,200,200,2),Some(72));
+        assert_eq!(fallback(3,8,8,2),Some(0));
+        for result in [0,1,3,255]{assert_eq!(fallback(3,232,232,result),None);}
+        assert_eq!(fallback(1,232,232,2),None);
+    }
+}
 pub(crate) fn listen_mode(
     device_id:&str, peer:super::super::recording_wire::transport::Peer,
     stop:Arc<AtomicBool>,connection:Arc<tokio::sync::Mutex<()>>,mode:u8,pointer_options:u8,
@@ -166,22 +181,22 @@ pub(crate) fn listen_mode(
                             exchange(&device, &characteristic, &mut values, &peer, None,0).await?;
                         notify(Update::Reconcile(current.clone()));
                     }
+                    // Owner may stop while a fresh GATT acquisition is awaiting.
+                    // Leave via the real mode0 handshake below, without enabling
+                    // pointer mode again after that stop request.
+                    if stop.load(Ordering::Acquire){return Ok(());}
                     let wanted_options=if mode==3{pointer_options}else{0};
                     let mut initial = if current.mode == mode && current.options == wanted_options {
                         current
                     } else {
                         exchange(&device, &characteristic, &mut values, &peer, Some(mode),wanted_options).await?
                     };
-                    // Native precision is additive. An explicit unsupported
-                    // reply permits legacyCIM6; a timeout/link error is still
-                    // an error and is never hidden by changing schemas.
-                    if mode==3&&initial.result==2&&wanted_options==200 {
-                        initial=exchange(&device,&characteristic,&mut values,&peer,Some(mode),72).await?;
-                    }
-                    // Old normal firmware remains usable with its original
-                    // schema3 controls. New firmware negotiates CIM4 explicitly.
-                    if mode==3&&initial.result==2&&wanted_options==8 {
-                        initial=exchange(&device,&characteristic,&mut values,&peer,Some(mode),0).await?;
+                    // Fallback requires the peer's explicit unsupported reply.
+                    // Busy, notification loss and transport timeouts stay errors.
+                    let mut attempted=wanted_options;
+                    while let Some(next)=unsupported_pointer_fallback(mode,wanted_options,attempted,initial.result){
+                        initial=exchange(&device,&characteristic,&mut values,&peer,Some(mode),next).await?;
+                        attempted=next;
                     }
                     if mode==3 && initial.result==2 {return Err("此固件尚不支持空中鼠标，请先升级录音卡固件。".into());}
                     if initial.result != 0 || initial.mode != mode {
@@ -312,7 +327,7 @@ mod hardware_test {
         assert_eq!(std::env::var("COMPANION_IMU_HARDWARE_LEASE").as_deref(),Ok("fixed-uid-native-precision-no-mic-no-cursor"));
         let expected:u32=std::env::var("COMPANION_IMU_EXPECT_FIRMWARE").expect("actual firmware").parse().unwrap();
         let expected_options:usize=std::env::var("COMPANION_IMU_EXPECT_OPTIONS").expect("explicit native or fallback").parse().unwrap();
-        assert!(matches!(expected_options,72|200));
+        assert!(matches!(expected_options,72|200|232));
         // The same production receiver can retain an Owner-labelled paired
         // capture until the original prompt requests Stop. No mapper/MIC.
         let capture_stop=std::env::var_os("COMPANION_IMU_NATIVE_CAPTURE_STOP").map(std::path::PathBuf::from);
@@ -341,7 +356,7 @@ mod hardware_test {
         }ending_stop.store(true,Ordering::Release);});
         let rows=Arc::new(Mutex::new(Vec::<serde_json::Value>::new()));let observed=rows.clone();
         let accepted=Arc::new(std::sync::atomic::AtomicUsize::new(0));let options=accepted.clone();let completed=stop.clone();
-        let result=listen_mode(DEVICE,peer,stop.clone(),Arc::new(tokio::sync::Mutex::new(())),3,200,move|event|match event{
+        let result=listen_mode(DEVICE,peer,stop.clone(),Arc::new(tokio::sync::Mutex::new(())),3,232,move|event|match event{
             Update::Ready(status)=>{options.store(status.options as usize,Ordering::Release);},
             Update::RawMotion(raw,gravity)=>{
                 let mut rows=observed.lock().unwrap();if rows.len()<sample_limit{rows.push(serde_json::json!({"sequence":raw.sequence,"sensorMs":raw.sensor_ms,"accelMg":raw.accel_mg,"gyroDps":raw.gyro_dps,"gravity":gravity}));}
@@ -354,15 +369,15 @@ mod hardware_test {
             if let Some(owned)=owned{disconnect_native_device(&owned.device).await?;}Ok(())
         });
         let rows=rows.lock().unwrap();let accepted=accepted.load(Ordering::Acquire);
-        let report=serde_json::json!({"firmware":expected,"requestedOptions":200,"acceptedOptions":accepted,"samples":*rows,"mode0Confirmed":result.is_ok(),"ownedHandlesClosed":cleanup.is_ok(),"microphoneCommands":0,"cursorOutput":false,"physicalStationaryLabelKnown":false});
+        let report=serde_json::json!({"firmware":expected,"requestedOptions":232,"acceptedOptions":accepted,"samples":*rows,"mode0Confirmed":result.is_ok(),"ownedHandlesClosed":cleanup.is_ok(),"microphoneCommands":0,"cursorOutput":false,"physicalStationaryLabelKnown":false});
         std::fs::write(std::env::var("COMPANION_IMU_NATIVE_RESULT").expect("explicit receipt path"),serde_json::to_vec_pretty(&report).unwrap()).unwrap();
         cleanup.expect("owned handles closed");result.expect("production mode0 acknowledgement");
         assert_eq!(accepted,expected_options);assert!(rows.len()>=400,"insufficient actual stream");
-        if accepted==200{
+        if matches!(accepted,200|232){
             assert!(rows.iter().any(|s|s["accelMg"].as_array().unwrap().iter().any(|v|{let x=v.as_f64().unwrap();(x-x.round()).abs()>1e-6})),"native precision was reduced to whole mg");
             assert!(rows.iter().all(|s|s["accelMg"].as_array().unwrap().iter().all(|v|{let codes=v.as_f64().unwrap()/0.122;(codes-codes.round()).abs()<1e-7})),"native register scale differs");
         }
-        eprintln!("NATIVE_PRECISION_ACTUAL firmware={expected} requested=200 accepted={accepted} samples={} mode0=true handles_closed=true no_mapper=true no_mic=true",rows.len());
+        eprintln!("NATIVE_PRECISION_ACTUAL firmware={expected} requested=232 accepted={accepted} samples={} mode0=true handles_closed=true no_mapper=true no_mic=true",rows.len());
     }
     fn fixed_board_motion_probe(capture:bool){
         const DEVICE:&str="C8:ED:45:EB:95:B4";

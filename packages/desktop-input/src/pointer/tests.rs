@@ -1,5 +1,15 @@
 use super::*;
-fn raw_sample(n:u32)->desktop::Raw{desktop::Raw{sequence:n+1,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]}}
+#[test]fn wide_gyro_c_fixture_keeps_full_rate_and_native_acceleration_in_the_same_packet(){
+    // Produced independently by the firmware C packer; not Rust re-encoding.
+    let hex="43494d31080303020900000070110100000000000040a861589e6b0300800100ff7f000025ab72d7";
+    let bytes=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect::<Vec<_>>();
+    let raw=desktop::Raw::parse(&bytes).unwrap();let fused=Sample::parse(&bytes).unwrap();
+    assert!(raw.wide_gyro);assert_eq!(raw.gyro_dps,[1000.,-1000.,35.]);assert_eq!(fused.gyro,raw.gyro_dps);
+    assert_eq!(fused.accel,[0.,0.,1000.]);
+    for(a,b)in raw.accel_mg.into_iter().zip([-3997.696,0.122,3997.574]){assert!((a-b).abs()<1e-8);}
+    assert_eq!(fused.sequence,9);assert_eq!(fused.sensor_ms,70000);assert_eq!(fused.device_ready,Some(true));
+}
+fn raw_sample(n:u32)->desktop::Raw{desktop::Raw{wide_gyro:false,sequence:n+1,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]}}
 fn coarse_ready()->Pointer{
     let mut p=Pointer::new(Settings{mapping:Mapping::Relative,desktop_motion:true,..Settings::default()},Point{x:960.,y:540.});
     for n in 0..121{p.sample_raw(raw_sample(n),n as f64/100.);p.frame(n as f64/100.,bounds());}
@@ -54,7 +64,7 @@ fn side_ready()->Pointer{
     let bytes=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect::<Vec<_>>();
     let motion=Sample::parse(&bytes).unwrap();let raw=desktop::Raw::parse(&bytes).unwrap();
     assert_eq!(motion.accel,[0.,0.,1000.]);assert_eq!(raw.accel_mg,[1.,-2.,1000.]);assert_eq!(motion.gyro,raw.gyro_dps);
-    let settings=Settings{contact_regions:true,..Settings::relative_remote()};assert!(settings.validate().is_ok());assert_eq!(settings.pointer_options(),200);
+    let settings=Settings{contact_regions:true,..Settings::relative_remote()};assert!(settings.validate().is_ok());assert_eq!(settings.pointer_options(),232);
     let mut p=Pointer::new(settings,Point::default());p.sample_raw(raw,0.);p.sample(motion,0.,bounds());
     assert_eq!(p.metrics.samples,1);assert!(p.coarse.is_none());assert!(p.metrics.calibrated);
     let mut bad=bytes;bad[28]^=1;assert!(Sample::parse(&bad).is_err());assert!(desktop::Raw::parse(&bad).is_err());
@@ -449,13 +459,13 @@ fn actual_typec_front_lift_moves_up_in_the_existing_angular_mapper() {
 
 fn surface_pointer()->Pointer{
     let settings=Settings{desktop_motion:true,contact_regions:true,contact_profile:Some(side_profile()),key_role:KeyRole::Regrip,..Settings::relative_remote()};
-    assert!(settings.validate().is_ok());assert_eq!(settings.pointer_options(),200);
+    assert!(settings.validate().is_ok());assert_eq!(settings.pointer_options(),232);
     let mut p=Pointer::new(settings,Point{x:960.,y:540.});
     for n in 0..121{surface_frame(&mut p,n,[0.,0.,1000.],[0.;3]);}
     assert!(p.metrics.calibrated);assert!(!p.metrics.surface_paused);p
 }
 fn surface_frame(p:&mut Pointer,n:u32,a:[f64;3],g:[f64;3])->Frame{
-    p.sample_raw(desktop::Raw{sequence:n+1,sensor_ms:n*10,accel_mg:a,gyro_dps:g},n as f64/100.);
+    p.sample_raw(desktop::Raw{wide_gyro:false,sequence:n+1,sensor_ms:n*10,accel_mg:a,gyro_dps:g},n as f64/100.);
     // Real CIM6 also dispatches a fused packet. It must not double-count the
     // clock or reactivate the angular mapper in surface mode.
     p.sample(Sample{fused:true,device_ready:Some(true),gyro:g,..sample(n+1,n*10,false)},n as f64/100.,bounds());
@@ -505,7 +515,7 @@ fn surface_frame(p:&mut Pointer,n:u32,a:[f64;3],g:[f64;3])->Frame{
     p.observe_device_readiness(Some(true));
     for n in 121..230{
         let shock=n==140||n==160;
-        let raw=desktop::Raw{sequence:n+1,sensor_ms:n*10,
+        let raw=desktop::Raw{wide_gyro:false,sequence:n+1,sensor_ms:n*10,
             accel_mg:if shock{[1000.,0.,1000.]}else{[0.,0.,1000.]},
             gyro_dps:if shock{[70.,0.,0.]}else{[0.;3]}};
         let at=n as f64/100.;

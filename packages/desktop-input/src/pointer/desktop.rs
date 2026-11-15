@@ -12,17 +12,17 @@ use serde::Serialize;
 const NEGLIGIBLE_SPEED_MPS:f64=0.005;
 
 #[derive(Clone,Copy,Debug)]
-pub struct Raw {pub sequence:u32,pub sensor_ms:u32,pub accel_mg:[f64;3],pub gyro_dps:[f64;3]}
+pub struct Raw {pub sequence:u32,pub sensor_ms:u32,pub accel_mg:[f64;3],pub gyro_dps:[f64;3],pub wide_gyro:bool}
 impl Raw {
     pub fn parse(p:&[u8])->Result<Self,&'static str>{
-        if p.len()<32||&p[..4]!=b"CIM1"||!matches!(p[4],5|6|7)||p.len()!=if matches!(p[4],6|7){40}else{32}||p[5]!=3||p[6]&!3!=0||(matches!(p[4],6|7)&&p[34..36]!=[0,0]){return Err("invalid raw CIM5/6/7");}
+        if p.len()<32||&p[..4]!=b"CIM1"||!matches!(p[4],5|6|7|8)||p.len()!=if matches!(p[4],6|7|8){40}else{32}||p[5]!=3||p[6]&!3!=0||(matches!(p[4],6|7)&&p[34..36]!=[0,0]){return Err("invalid raw CIM5/6/7");}
         let mut crc=0xffff_ffffu32;
         let crc_at=p.len()-4;
         for byte in &p[..crc_at]{crc^=*byte as u32;for _ in 0..8{crc=(crc>>1)^((0u32.wrapping_sub(crc&1))&0xedb8_8320);}}
         if !crc!=u32::from_le_bytes(p[crc_at..].try_into().unwrap()){return Err("raw CRC mismatch");}
         let value=|i|i16::from_le_bytes(p[i..i+2].try_into().unwrap())as f64;
         Ok(Self{sequence:u32::from_le_bytes(p[8..12].try_into().unwrap()),sensor_ms:u32::from_le_bytes(p[12..16].try_into().unwrap()),
-            accel_mg:std::array::from_fn(|i|value((if matches!(p[4],6|7){28}else{16})+2*i)*if p[4]==7{0.122}else{1.}),gyro_dps:std::array::from_fn(|i|value(22+2*i)/100.)})
+            accel_mg:std::array::from_fn(|i|value((if matches!(p[4],6|7|8){28}else{16})+2*i)*if matches!(p[4],7|8){0.122}else{1.}),gyro_dps:std::array::from_fn(|i|value(22+2*i)*if p[4]==8{0.04}else{0.01}),wide_gyro:p[4]==8})
     }
 }
 #[derive(Clone,Debug,Default,Serialize)]
@@ -80,6 +80,7 @@ impl Desktop {
     }
     pub fn sample_with_gravity(&mut self,s:Raw,allow_translation:bool,gravity:Option<[f64;3]>)->Point {
         self.state.translation_inhibited=true;
+        self.fusion.set_gyroscope_range(if s.wide_gyro{1000.}else{250.});
         let board=gravity.and_then(|g|board_acceleration(s.accel_mg,g));
         self.state.board_gravity=board.is_some();
         self.state.pose_prediction=self.predict_board_pose&&board.is_some();
@@ -274,7 +275,7 @@ mod tests {
         }
         assert_eq!(d.state.position_m,origin);
     }
-    fn raw(n:u32,x:f64,y:f64)->Raw{Raw{sequence:n+1,sensor_ms:n*10,accel_mg:[x,y,1000.],gyro_dps:[0.;3]}}
+    fn raw(n:u32,x:f64,y:f64)->Raw{Raw{wide_gyro:false,sequence:n+1,sensor_ms:n*10,accel_mg:[x,y,1000.],gyro_dps:[0.;3]}}
     fn ready()->Desktop{let mut d=Desktop::default();for n in 0..=120{d.sample(raw(n,0.,0.));}assert!(d.state.calibrated);d}
     #[test]fn board_corrected_rates_do_not_gain_a_second_offset_at_entry_or_regrip(){
         for regrip in [false,true]{

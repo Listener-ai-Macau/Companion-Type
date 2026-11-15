@@ -4,6 +4,7 @@ unsafe extern "C" {
     fn companion_fusion_create()->*mut c_void;
     fn companion_fusion_destroy(handle:*mut c_void);
     fn companion_fusion_configure(handle:*mut c_void,sample_rate:f32);
+    fn companion_fusion_set_gyroscope_range(handle:*mut c_void,range:f32);
     fn companion_fusion_align(handle:*mut c_void,accel:*const f32);
     fn companion_fusion_step(handle:*mut c_void,gyro:*const f32,accel:*const f32,dt:f32,gravity:*mut f32,corrected:*mut f32);
     fn companion_fusion_desktop_step(handle:*mut c_void,gyro:*const f32,accel:*const f32,dt:f32,correct_gravity:bool,gyro_corrected:bool,earth:*mut f32,gravity:*mut f32);
@@ -28,6 +29,7 @@ impl Fusion {
         unsafe{companion_fusion_desktop_step(self.handle.as_ptr(),gyro.as_ptr(),accel.as_ptr(),dt as f32,correct_gravity,gyro_corrected,earth.as_mut_ptr(),up.as_mut_ptr())};
         (earth.map(f64::from),up.map(f64::from))
     }
+    pub fn set_gyroscope_range(&mut self,range:f32){unsafe{companion_fusion_set_gyroscope_range(self.handle.as_ptr(),range)}}
     pub fn align(&mut self,accel:[f64;3]){let a=accel.map(|v|v as f32);unsafe{companion_fusion_align(self.handle.as_ptr(),a.as_ptr())};}
     pub fn step(&mut self,gyro:[f64;3],accel:[f64;3],dt:f64)->([f64;3],[f64;3]) {
         if !self.configured && dt>0. && dt<0.2 {
@@ -42,6 +44,18 @@ impl Fusion {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn negotiated_full_range_preserves_gyro_only_gravity_during_a_fast_impact(){
+        let mut wide=Fusion::default();let mut narrow=Fusion::default();
+        wide.set_gyroscope_range(1000.);wide.align([0.,0.,1000.]);narrow.align([0.,0.,1000.]);
+        let (_,up)=wide.desktop_step_corrected([700.,0.,0.],[300.,0.,1000.],0.01,false);
+        let (_,bad)=narrow.desktop_step_corrected([700.,0.,0.],[300.,0.,1000.],0.01,false);
+        // Independent 700deg/s *10ms =7deg roll. Acceleration in X is
+        // translation and must not override the caller's gyro-only mode.
+        assert!(up[0].abs()<0.001);
+        assert!((up[1]-7_f64.to_radians().sin()).abs()<0.004);
+        assert!(bad[0].abs()>0.01,"old overrange did not exercise unwanted startup feedback");
+    }
     #[test]
     fn already_corrected_slow_rotation_is_not_learned_as_a_second_gyro_bias(){
         let mut corrected=Fusion::default();let mut raw_reference=Fusion::default();
