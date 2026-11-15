@@ -188,7 +188,15 @@ fn ready()->Pointer{
 fn owner142_recorded_taps_and_impact_motion_replay(){
     let root=std::path::PathBuf::from(std::env::var("COMPANION_CONTACT_EVALUATION").expect("Owner trace"));
     let receipt:serde_json::Value=serde_json::from_str(&std::fs::read_to_string(root.join("result.json")).unwrap()).unwrap();
-    let settings:Settings=serde_json::from_value(receipt["sessions"][0]["finalPointer"]["settings"].clone()).unwrap();
+    // A failed native mode-exit can omit finalPointer. Preserve that failure;
+    // replay the actual last IPC snapshot instead of inventing default settings.
+    let calls:serde_json::Value=if receipt["sessions"][0]["finalPointer"].is_null(){
+        serde_json::from_str(&std::fs::read_to_string(root.join("native-1/native-calls.json")).unwrap()).unwrap()
+    }else{serde_json::Value::Null};
+    let snapshot=if calls.is_null(){&receipt["sessions"][0]["finalPointer"]}else{
+        &calls.as_array().unwrap().iter().rev().find(|v|v["cmd"]=="get_companion_pointer"&&v["response"]["value"]["settings"].is_object()).expect("actual native pointer snapshot")["response"]["value"]
+    };
+    let settings:Settings=serde_json::from_value(snapshot["settings"].clone()).unwrap();
     let rows:serde_json::Value=serde_json::from_str(&std::fs::read_to_string(root.join("offline-diagnosis/timeline.json")).unwrap()).unwrap();
     let mut p=Pointer::new(settings,Point{x:960.,y:540.});
     let rows=rows.as_array().unwrap();let zero=rows[0]["hostUs"].as_u64().unwrap();
@@ -215,7 +223,7 @@ fn owner142_recorded_taps_and_impact_motion_replay(){
         // desk. Do not infer intended motion labels for other Owner captures.
         assert!(states.iter().filter(|s|s["calibrated"]==true).all(|s|s["state"]["surface"].is_null()||s["state"]["surface"]["phase"]=="ready"),"reported desk sliding must not latch the lift-return timer");
     }
-    let expected=receipt["sessions"][0]["finalPointer"]["metrics"]["tapEvents"].as_u64().unwrap()as usize;
+    let expected=snapshot["metrics"]["tapEvents"].as_u64().unwrap()as usize;
     println!("Actual{expected} taps ->left{left}/right{right}; uncertain{}; labels unknown",p.contact_status().uncertain);
     if std::env::var_os("COMPANION_EXPECT_CONTACT_REPAIR").is_some(){assert_eq!(clicks.len(),expected,"reliable physical taps must reach the nearest GRT template, not all be rejected by a three-example radius");}
     if let Ok(text)=std::fs::read_to_string(root.join("offline-diagnosis/native-baseline.json")){

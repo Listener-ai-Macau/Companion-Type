@@ -24,7 +24,7 @@ impl Raw {
 }
 #[derive(Clone,Debug,Default,Serialize)]
 #[serde(rename_all="camelCase")]
-pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub stationary:bool,pub board_gravity:bool,pub pose_prediction:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3],pub surface:Option<surface::Status>}
+pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub stationary:bool,pub board_gravity:bool,pub pose_prediction:bool,pub translation_inhibited:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3],pub surface:Option<surface::Status>}
 pub struct Desktop {
     fusion:fusion::Fusion,rest:Option<rest::Rest>,last:Option<(u32,u32)>,count:u32,start_ms:Option<u32>,
     accel_sum:[f64;3],gyro_sum:[f64;3],gyro_bias:[f64;3],earth_bias:[f64;3],
@@ -75,6 +75,7 @@ impl Desktop {
         self.sample_with_gravity(s,allow_translation,None)
     }
     pub fn sample_with_gravity(&mut self,s:Raw,allow_translation:bool,gravity:Option<[f64;3]>)->Point {
+        self.state.translation_inhibited=true;
         let board=gravity.and_then(|g|board_acceleration(s.accel_mg,g));
         self.state.board_gravity=board.is_some();
         self.state.pose_prediction=self.predict_board_pose&&board.is_some();
@@ -148,6 +149,7 @@ impl Desktop {
             let allowed=surface.sample_with_planar(s.sensor_ms,linear[2],linear[0].hypot(linear[1]),up,self.state.stationary);
             self.state.surface=Some(surface.status.clone());allowed
         }else{true};
+        self.state.translation_inhibited=!allow_translation||!surface_ready;
         if self.state.clutched {
             // Natural use can put the card back at a different angle. Waiting
             // for the OLD gravity plane/residual to become quiet locks it out.
@@ -176,7 +178,16 @@ impl Desktop {
             }
             return Point::default();
         }
-        if !allow_translation||!surface_ready{self.stop();return Point::default();}
+        if !allow_translation{self.stop();return Point::default();}
+        if !surface_ready{
+            // Actual159:109/124 moving-to-stop edges were unconfirmed Z
+            // shocks while the lift phase was still Ready. Suppress that
+            // sample's output, but retain the stroke velocity so ordinary
+            // table vibration cannot force a slow restart every other tick.
+            // Confirmed lift, contact and gaps still discard old motion.
+            if self.state.surface.as_ref().is_none_or(|s|s.phase!=surface::Phase::Ready){self.stop();}
+            return Point::default();
+        }
         if self.reanchor_after_contact&&self.state.pose_prediction{
             // Use the fresh board pose AFTER the shock/target-freeze window,
             // not the impact acceleration. No extra user rest or gyro offset
@@ -217,7 +228,10 @@ impl Desktop {
         if self.stroke>2.0{self.clutch();return Point::default();}
         let old=self.state.velocity_mps;
         for i in 0..2 {
-            self.filtered[i]+=(linear[i]-self.filtered[i])*(dt/(0.02+dt));
+            // Ready CIM6 already has attitude compensation. Like PX4's
+            // current-time output predictor, integrate its current inertial
+            // increment directly; do not add a second20ms acceleration LPF.
+            self.filtered[i]=if self.state.pose_prediction{linear[i]}else{self.filtered[i]+(linear[i]-self.filtered[i])*(dt/(0.02+dt))};
             if old[i]*self.filtered[i]<0.&&self.filtered[i].abs()>0.10{self.braking=true;}
             self.state.velocity_mps[i]=(old[i]+self.filtered[i]*dt).clamp(-0.6,0.6);
         }
@@ -275,6 +289,18 @@ mod tests {
         for n in 150..165{d.sample_with_gravity(raw(n,80.,0.),true,up);assert_eq!(d.state.position_m,origin);}
         for n in 165..200{d.sample_with_gravity(raw(n,80.,0.),true,up);}
         assert!(!d.state.clutched);assert!(d.state.position_m[0]>origin[0]+0.001,"click left an unbounded rest clutch: {:?}",d.state);
+    }
+    #[test]fn an_unconfirmed_table_z_bump_holds_output_without_erasing_the_stroke_velocity(){
+        let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();let up=Some([0.,0.,1000.]);
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);}
+        for n in 150..170{d.sample_with_gravity(raw(n,80.,0.),true,up);}
+        let velocity=d.state.velocity_mps;assert!(velocity[0]>0.01);
+        let mut shock=raw(170,0.,0.);shock.accel_mg[2]+=40.;
+        assert_eq!(d.sample_with_gravity(shock,true,up),Point::default());
+        assert!(d.state.translation_inhibited);assert_eq!(d.state.surface.as_ref().unwrap().phase,surface::Phase::Ready);
+        assert_eq!(d.state.velocity_mps,velocity,"an unconfirmed desk bump erased the ongoing stroke");
+        let delta=d.sample_with_gravity(raw(171,0.,0.),true,up);
+        assert!(delta.x>0.,"coasting after the bump must not require another acceleration onset");
     }
     #[test]fn board_gravity_entry_learns_rest_without_waiting_for_a_second_gyro_bias(){
         let mut d=Desktop::surface_mouse();
