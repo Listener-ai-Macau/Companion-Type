@@ -1,42 +1,47 @@
-import {useId,useMemo,useState,type ReactNode,type CSSProperties} from 'react';
-import {ArrowUpRight,CheckCheck,ChevronDown,GitBranch,ListTodo,MessageCircleQuestion} from 'lucide-react';
-import {meetingMapModel,type MeetingMapSection} from './meetingMap';
+import {useId,useMemo,useState,type CSSProperties} from 'react';
+import {ArrowUpRight,BookOpen,CheckCheck,ChevronDown,GitBranch,ListTodo,MessageCircleQuestion} from 'lucide-react';
+import {meetingReaderModel,type MeetingReaderGroup} from './meetingReaderModel';
+import {meetingDiagramParts} from './meetingDiagram';
+import {meetingGlanceExcerpt,meetingGlanceLabels} from './meetingGlance';
 import './meetingMap.css';
 
-function MapSection({label,section,icon,onLocate}:{label:string;section:MeetingMapSection;icon:ReactNode;onLocate?:(section:string,text?:string)=>void}){
- return <details className="meeting-map-outcome"><summary>{icon}<span>{label}</span><small>{section.items.length||'—'}</small><ChevronDown size={14} aria-hidden="true"/></summary>
-  {section.items.length?<div className="meeting-map-outcome-content">{section.items.map((item,i)=><p key={i}>{item}</p>)}{onLocate&&<button type="button" onClick={()=>onLocate(section.title)}>在纪要中查看<ArrowUpRight size={13}/></button>}</div>:<p className="meeting-map-no-items">这份纪要未列出{label}。</p>}
- </details>;
+function ResultBranch({group,onLocate}:{group:MeetingReaderGroup;onLocate?:(section:string,text?:string)=>void}){
+ const Icon={decisions:CheckCheck,actions:ListTodo,questions:MessageCircleQuestion}[group.id];
+ return <section className={'meeting-map-result meeting-map-result-'+group.id} aria-label={group.label}>
+  <h4><Icon size={15} aria-hidden="true"/>{group.label}</h4>
+  <ul>{group.items.map((item,i)=>{const preview=meetingGlanceExcerpt(item.body,90);return <li key={i}><details>
+   <summary>{item.qualifier&&<small className="meeting-map-qualifier">{item.qualifier}</small>}<span>{preview.text}{preview.clipped?'…':''}</span><ChevronDown size={13} aria-hidden="true"/></summary>
+   <p>{item.body}</p>{onLocate&&<button type="button" onClick={()=>onLocate(item.section,item.text)}>原文<ArrowUpRight size={12} aria-hidden="true"/></button>}
+  </details></li>;})}</ul>
+ </section>;
 }
-/** A view of the saved note, with exact full wording behind every topic. */
-export function MeetingMapView({markdown,title='会议脉络',onLocate}:{markdown:string;title?:string;onLocate?:(section:string,text?:string)=>void}){
- const model=useMemo(()=>meetingMapModel(markdown),[markdown]);
- const [selection,setSelection]=useState<{source:string;ids:ReadonlySet<string>}>({source:markdown,ids:new Set()});
- const expanded=selection.source===markdown?selection.ids:new Set<string>(),id=useId();
- const toggle=(key:string,open:boolean)=>setSelection(previous=>{
-  const next=new Set(previous.source===markdown?previous.ids:[]);
-  if(next.has(key)===open)return previous;
-  if(open)next.add(key);else next.delete(key);return {source:markdown,ids:next};
- });
- return <section className="meeting-map" aria-label="会议思维导图">
-  <div className="meeting-map-tools"><p><span className="meeting-map-live-dot" aria-hidden="true"/>{model.topics.length} 个{model.topicLabel} · 点开查看内容</p><div>
-   <button type="button" disabled={!model.topics.length||expanded.size===model.topics.length} onClick={()=>setSelection({source:markdown,ids:new Set(model.topics.map(t=>t.id))})}>展开全部</button>
-   <button type="button" disabled={!expanded.size} onClick={()=>setSelection({source:markdown,ids:new Set()})}>收起</button>
-  </div></div>
+
+/** The same saved meeting, rendered as a top-to-bottom hierarchy. */
+export function MeetingMapView({markdown,title='会议纪要',onLocate,onRead}:{markdown:string;title?:string;onLocate?:(section:string,text?:string)=>void;onRead?:()=>void}){
+ const model=useMemo(()=>meetingReaderModel(markdown),[markdown]);
+ const labels=useMemo(()=>meetingGlanceLabels(markdown,model.topics),[markdown,model]);
+ const nodes=useMemo(()=>model.topics.map(topic=>({...topic,...meetingDiagramParts(topic.text,labels.get(topic.id))})),[model,labels]);
+ const initiallyOpen=()=>new Set(nodes.slice(0,6).map(node=>node.id));
+ const [selection,setSelection]=useState<{source:string;ids:ReadonlySet<string>}>(()=>({source:markdown,ids:initiallyOpen()})),id=useId();
+ const expanded=selection.source===markdown?selection.ids:initiallyOpen();
+ function toggle(key:string,open:boolean){setSelection(previous=>{const ids=new Set(previous.source===markdown?previous.ids:initiallyOpen());if(ids.has(key)===open)return previous;if(open)ids.add(key);else ids.delete(key);return {source:markdown,ids};});}
+ return <section className="meeting-map meeting-diagram" aria-label="会议图解">
+  <div className="meeting-map-tools"><span>{nodes.length} 个议题</span><div><button type="button" disabled={!nodes.length||expanded.size===nodes.length} onClick={()=>setSelection({source:markdown,ids:new Set(nodes.map(node=>node.id))})}>展开全部</button><button type="button" disabled={!expanded.size} onClick={()=>setSelection({source:markdown,ids:new Set()})}>收起</button></div></div>
   <div className="meeting-map-canvas">
-   <div className="meeting-map-origin"><span className="meeting-map-origin-icon"><GitBranch size={20} aria-hidden="true"/></span><div><small>会议主题</small><strong>{title}</strong></div></div>
-   {model.topics.length?<ol className="meeting-map-branches">{model.topics.map((topic,i)=><li key={topic.id} style={{'--map-branch':i%3} as CSSProperties}>
-    <details open={expanded.has(topic.id)} onToggle={event=>{if(event.currentTarget===event.target)toggle(topic.id,event.currentTarget.open);}}>
-     <summary aria-controls={id+topic.id}><span className="meeting-map-topic-number">{String(i+1).padStart(2,'0')}</span><span className="meeting-map-topic-title">{topic.label}</span><ChevronDown size={15} aria-hidden="true"/></summary>
-     <div className="meeting-map-topic-content" id={id+topic.id}><p>{topic.text}</p>{onLocate&&<button type="button" onClick={()=>onLocate(topic.section,topic.text)}>查看纪要上下文<ArrowUpRight size={13}/></button>}</div>
-    </details>
-   </li>)}</ol>:<div className="meeting-map-empty"><strong>这份纪要还没有主题分组</strong><p>可以先阅读完整纪要；有标题或要点后，会在这里显示结构。</p></div>}
+   <div className="meeting-map-origin"><GitBranch size={19} aria-hidden="true"/><strong>{title}</strong></div>
+   {nodes.length>0&&<div className="meeting-map-topic-group"><div className="meeting-map-group-label">讨论议题</div><ol className="meeting-map-branches" aria-label="讨论议题">
+    {nodes.map((node,index)=><li key={node.id} data-tone={index%4} style={{'--map-branch':index%4} as CSSProperties} data-source-text={node.text}>
+     <details open={expanded.has(node.id)} onToggle={event=>{if(event.currentTarget===event.target)toggle(node.id,event.currentTarget.open);}}>
+      <summary aria-controls={id+node.id}><span className="meeting-map-topic-number" aria-hidden="true">{String(index+1).padStart(2,'0')}</span><span className="meeting-map-topic-title">{node.title||'议题 '+(index+1)}</span><ChevronDown size={14} aria-hidden="true"/></summary>
+      <div className="meeting-map-topic-content" id={id+node.id}>
+       <ul className="meeting-map-points" aria-label={'议题 '+(index+1)+' 要点'}>{node.points.map((point,i)=><li key={i}><span>{point}</span></li>)}</ul>
+       {onLocate&&<button type="button" aria-label={'查看议题 '+(index+1)+' 上下文'} onClick={()=>onLocate(node.section,node.text)}>原文<ArrowUpRight size={12} aria-hidden="true"/></button>}
+      </div>
+     </details>
+    </li>)}
+   </ol></div>}
+   {model.groups.length>0&&<div className="meeting-map-result-group"><div className="meeting-map-group-label">会议结果</div><div className="meeting-map-results">{model.groups.map(group=><ResultBranch key={group.id} group={group} onLocate={onLocate}/>)}</div></div>}
   </div>
-  {(model.decisions||model.actions||model.questions)&&<div className="meeting-map-outcomes" aria-label="会议结论与跟进">
-   {model.decisions&&<MapSection label="讨论结论" section={model.decisions} icon={<CheckCheck size={16}/>} onLocate={onLocate}/>}
-   {model.actions&&<MapSection label="行动事项" section={model.actions} icon={<ListTodo size={16}/>} onLocate={onLocate}/>}
-   {model.questions&&<MapSection label="待确认" section={model.questions} icon={<MessageCircleQuestion size={16}/>} onLocate={onLocate}/>}
-  </div>}
-  <p className="meeting-map-caption">来自已保存纪要 · 保留原有表述，内容可回到纪要核对</p>
+  {onRead&&<button type="button" className="meeting-map-read" onClick={onRead}><BookOpen size={15} aria-hidden="true"/>完整纪要<ArrowUpRight size={13} aria-hidden="true"/></button>}
  </section>;
 }
