@@ -125,7 +125,10 @@ impl Desktop {
             let accel=self.accel_sum.map(|x|x/self.count as f64);
             if let Some(g)=gravity{
                 if self.predict_board_pose{
-                    self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);self.fusion.align(accel);
+                    // Ready CIM6 already carries the board's corrected rates.
+                    // Its offset keeps adapting; a second fixed host offset
+                    // turns that correction into a fictitious rotation.
+                    self.gyro_bias=[0.;3];self.fusion.align(accel);
                     self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;
                 }else{self.gyro_bias=[0.;3];self.earth_bias=board_acceleration(accel,g).unwrap().0;}
             }else{
@@ -166,7 +169,7 @@ impl Desktop {
             if settled{
                 let accel=self.accel_sum.map(|x|x/self.count as f64);
                 if let Some(g)=gravity{
-                    if self.predict_board_pose{self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;}
+                    if self.predict_board_pose{self.gyro_bias=[0.;3];self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;}
                     else{self.gyro_bias=[0.;3];self.earth_bias=board_acceleration(accel,g).unwrap().0;}
                 }
                 else{self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;}
@@ -258,6 +261,25 @@ mod tests {
     use super::*;
     fn raw(n:u32,x:f64,y:f64)->Raw{Raw{sequence:n+1,sensor_ms:n*10,accel_mg:[x,y,1000.],gyro_dps:[0.;3]}}
     fn ready()->Desktop{let mut d=Desktop::default();for n in 0..=120{d.sample(raw(n,0.,0.));}assert!(d.state.calibrated);d}
+    #[test]fn board_corrected_rates_do_not_gain_a_second_offset_at_entry_or_regrip(){
+        for regrip in [false,true]{
+            let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();
+            let up=Some([0.,0.,1000.]);
+            let mut next=0;
+            while !d.state.calibrated&&next<150{let mut s=raw(next,0.,0.);s.gyro_dps=[0.4,0.,0.];d.sample_with_gravity(s,true,up);next+=1;}
+            assert!(d.state.calibrated);
+            if regrip{
+                d.tap();let end=next+60;
+                while d.state.clutched&&next<end{let mut s=raw(next,0.,0.);s.gyro_dps=[0.3,0.,0.];d.sample_with_gravity(s,true,up);next+=1;}
+                assert!(!d.state.clutched);
+            }
+            // Firmware correction has converged to zero while the user now
+            // moves on X. No observed roll can justify cross-axis Y travel.
+            for n in next..next+70{d.sample_with_gravity(raw(n,80.,0.),true,up);}
+            assert!(d.state.position_m[0]>0.005,"real X stroke must remain available");
+            assert!(d.state.position_m[1].abs()<1e-6,"a host-only gyro offset created cross-axis motion: {:?}",d.state.position_m);
+        }
+    }
     #[test]fn board_gravity_is_used_directly_without_reintegrating_the_received_gyro(){
         let mut d=Desktop::surface_mouse();let up=Some([0.,0.,1000.]);
         for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);}
