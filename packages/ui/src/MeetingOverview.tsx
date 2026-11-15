@@ -1,58 +1,54 @@
-import {useId,useMemo,useRef,useState} from 'react';
+import {useMemo} from 'react';
 import {ArrowUpRight,BookOpen,ChevronDown} from 'lucide-react';
-import type {MeetingMapTopic} from './meetingMap';
-import {meetingGlanceExcerpt,meetingGlanceLabels} from './meetingGlance';
+import {meetingGlanceExcerpt} from './meetingGlance';
+import {topicReadingParts} from './MeetingTopic';
 import {meetingReaderModel,type MeetingReaderGroup,type MeetingReaderItem} from './meetingReaderModel';
 import './meetingOverview.css';
 
-function Excerpt({source,limit,preferClause=false}:{source:string;limit:number;preferClause?:boolean}){
- const excerpt=meetingGlanceExcerpt(source,limit,preferClause);
- return <>{excerpt.text}{excerpt.clipped&&<span aria-label="展开查看完整内容">…</span>}</>;
-}
 type Locate=(section:string,text?:string)=>void;
+/** Emphasize an exact source prefix; this does not produce a new heading or fact. */
+function SourceText({text}:{text:string}){
+ const prefix=topicReadingParts(text).title;
+ return <>{prefix?<><strong>{prefix}</strong>{text.slice(prefix.length)}</>:text}</>;
+}
 function OutcomeItem({item,onLocate}:{item:MeetingReaderItem;onLocate:Locate}){
+ const preview=meetingGlanceExcerpt(item.body,78);
  return <details className="meeting-reader-item" data-source-text={item.text}>
-  <summary><span className="meeting-reader-item-body">{item.qualifier&&<small className="meeting-glance-qualifier">{item.qualifier}</small>}<span className="meeting-reader-preview"><Excerpt source={item.body} limit={72}/></span><span className="meeting-reader-full">{item.body}</span></span><ChevronDown size={14} aria-hidden="true"/></summary>
+  <summary><span className="meeting-reader-item-body">{item.qualifier&&<small className="meeting-glance-qualifier">{item.qualifier}</small>}<span className="meeting-reader-preview">{preview.text}{preview.clipped?'…':''}</span><span className="meeting-reader-full">{item.body}</span></span><ChevronDown size={13} aria-hidden="true"/></summary>
   <button type="button" className="meeting-reader-source" onClick={()=>onLocate(item.section,item.text)}>查看上下文<ArrowUpRight size={13} aria-hidden="true"/></button>
  </details>;
 }
 function Outcome({group,onLocate}:{group:MeetingReaderGroup;onLocate:Locate}){
- const render=(item:MeetingReaderItem,index:number)=><OutcomeItem key={item.section+'\n'+item.text+'\n'+index} item={item} onLocate={onLocate}/>;
- const visible=group.id==='questions'?1:2;
+ const visible=2;
+ const render=(item:MeetingReaderItem,index:number)=><OutcomeItem key={item.section+'\n'+index} item={item} onLocate={onLocate}/>;
  return <section className={'meeting-overview-outcome meeting-reader-'+group.id} aria-label={group.label}>
-  <h3>{group.label}</h3>
+  <h3><span className="meeting-reader-outcome-mark" aria-hidden="true"/>{group.label}</h3>
   <div>{group.items.slice(0,visible).map(render)}</div>
   {group.items.length>visible&&<details className="meeting-reader-more"><summary>其他 {group.items.length-visible} 项<ChevronDown size={12} aria-hidden="true"/></summary><div>{group.items.slice(visible).map(render)}</div></details>}
  </section>;
 }
 
-/** A source-driven reading surface. Complete saved content is retained on demand. */
-export function MeetingOverview({markdown,onLocate,onRead,presentation='focus'}:{markdown:string;onLocate:Locate;onRead:()=>void;presentation?:'focus'|'paper'}){
+/** Readable saved notes first, with outcomes alongside. No service call or content rewrite. */
+export function MeetingOverview({markdown,onLocate,onRead}:{markdown:string;onLocate:Locate;onRead:()=>void}){
  const model=useMemo(()=>meetingReaderModel(markdown),[markdown]);
- const labels=useMemo(()=>meetingGlanceLabels(markdown,model.topics),[markdown,model]);
- const [selection,setSelection]=useState<{source:string;id:string|null}>({source:markdown,id:null});
- const current=selection.source===markdown?model.topics.find(topic=>topic.id===selection.id):undefined;
- const buttons=useRef(new Map<string,HTMLButtonElement>()),detail=useRef<HTMLDivElement>(null),id=useId();
- const close=()=>{setSelection({source:markdown,id:null});if(current)buttons.current.get(current.id)?.focus();};
- const select=(topic:MeetingMapTopic)=>{const open=current?.id!==topic.id;setSelection({source:markdown,id:open?topic.id:null});if(open)window.requestAnimationFrame(()=>detail.current?.scrollIntoView({block:'nearest',behavior:'auto'}));};
- const topics=(items:MeetingMapTopic[],offset=0)=>items.map((topic,i)=>{
-  const open=current?.id===topic.id,label=labels.get(topic.id)??topic.label,region=id+'-'+topic.id;
-  return <li key={topic.id}>
-   <button type="button" ref={node=>{if(node)buttons.current.set(topic.id,node);else buttons.current.delete(topic.id);}} aria-expanded={open} aria-controls={region} onClick={()=>select(topic)}>
-    <span className="meeting-overview-number" aria-hidden="true">{String(i+offset+1).padStart(2,'0')}</span><span className="meeting-overview-topic-label"><span className="meeting-reader-topic-title"><Excerpt source={label} limit={22}/></span>{topic.text.startsWith(label)&&<small className="meeting-reader-topic-preview"><Excerpt source={topic.text.slice(label.length).trim()} limit={32} preferClause/></small>}</span><ChevronDown size={14} aria-hidden="true"/>
-   </button>
-   {open&&<div className="meeting-overview-detail" ref={detail} id={region} role="region" aria-label={label+'详情'} onKeyDown={event=>{if(event.key==='Escape'){event.stopPropagation();close();}}}>
-    <p>{topic.text}</p><button type="button" onClick={()=>onLocate(topic.section,topic.text)}>查看上下文<ArrowUpRight size={13} aria-hidden="true"/></button>
-   </div>}
+ const topics=(offset:number,count?:number)=>model.topics.slice(offset,count===undefined?undefined:offset+count).map((topic,index)=>{
+  const excerpt=meetingGlanceExcerpt(topic.text,180);
+  return <li key={topic.id} data-source-text={topic.text}>
+   <span className="meeting-overview-number" aria-hidden="true">{String(offset+index+1).padStart(2,'0')}</span>
+   <div className="meeting-reader-topic-content">
+    {excerpt.clipped?<details className="meeting-reader-long-topic"><summary><span className="meeting-reader-long-preview"><SourceText text={excerpt.text}/>…</span><span className="meeting-reader-long-close">收起内容</span><ChevronDown size={13} aria-hidden="true"/></summary><p>{topic.text}</p></details>:<p className="meeting-reader-topic-text"><SourceText text={topic.text}/></p>}
+    <button type="button" className="meeting-reader-context" aria-label={'查看议题 '+(offset+index+1)+' 上下文'} onClick={()=>onLocate(topic.section,topic.text)}>原文<ArrowUpRight size={12} aria-hidden="true"/></button>
+   </div>
   </li>;
  });
- return <section className="meeting-overview meeting-reader" data-presentation={presentation} aria-label="会议一览">
-  {model.groups.length>0&&<div className="meeting-reader-groups">{model.groups.map(group=><Outcome key={group.id} group={group} onLocate={onLocate}/>)}</div>}
-  {model.topics.length>0&&<div className="meeting-reader-discussion">
-   <div className="meeting-overview-heading"><h3>讨论脉络</h3><span className="meeting-reader-topic-count">{model.topics.length} 个议题</span></div>
-   <ol className="meeting-overview-topics" aria-label="讨论议题">{topics(model.topics.slice(0,6))}</ol>
-   {model.topics.length>6&&<details className="meeting-glance-more"><summary>其他 {model.topics.length-6} 个议题<ChevronDown size={13} aria-hidden="true"/></summary><ol className="meeting-overview-topics">{topics(model.topics.slice(6),6)}</ol></details>}
-  </div>}
-  <button type="button" className="meeting-overview-read" onClick={onRead}><BookOpen size={15} aria-hidden="true"/><span>完整纪要</span><ArrowUpRight size={14} aria-hidden="true"/></button>
+ return <section className={'meeting-overview meeting-reader'+(model.groups.length?' meeting-reader-has-outcomes':'')} aria-label="会议一览">
+  <div className="meeting-reader-discussion">
+   {model.topics.length>0&&<>
+    <ol className="meeting-overview-topics" aria-label="会议重点">{topics(0,6)}</ol>
+    {model.topics.length>6&&<details className="meeting-glance-more"><summary>其他 {model.topics.length-6} 个议题<ChevronDown size={13} aria-hidden="true"/></summary><ol className="meeting-overview-topics" start={7}>{topics(6)}</ol></details>}
+   </>}
+   <button type="button" className="meeting-overview-read" onClick={onRead}><BookOpen size={15} aria-hidden="true"/><span>完整纪要</span><ArrowUpRight size={14} aria-hidden="true"/></button>
+  </div>
+  {model.groups.length>0&&<aside className="meeting-reader-groups" aria-label="会议结果">{[...model.groups].sort((a,b)=>['decisions','actions','questions'].indexOf(a.id)-['decisions','actions','questions'].indexOf(b.id)).map(group=><Outcome key={group.id} group={group} onLocate={onLocate}/>)}</aside>}
  </section>;
 }

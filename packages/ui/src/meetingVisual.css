@@ -63,3 +63,17 @@ body .ct-windows.ct-notebook .ct-minutes-article .meeting-section-heading:first-
 .meeting-section-heading>span>svg{display:block}
 @container(max-width:420px){body .ct-windows.ct-notebook .meeting-reading-intro>.meeting-reading-views,.mobile-app .meeting-reading-intro>.meeting-reading-views{width:100%;flex:1 0 100%;box-sizing:border-box}.meeting-reading-views>button{flex:1}.meeting-reading-intro{gap:3px}}
 @media(max-width:720px){.meeting-speaker-list{grid-template-columns:minmax(0,1fr)}.meeting-speakers-heading{align-items:flex-start}.mobile-app .ct-overview-topic{padding:16px 0 19px 30px}.mobile-app .ct-overview-topic:before{top:20px;width:20px}.mobile-app .meeting-reading-views>button{min-height:40px;padding-inline:10px}.mobile-app .meeting-section-heading{gap:9px}.meeting-section-icon{width:26px;height:26px}}
+
+body .ct-windows.ct-notebook .meeting-reading-start,.mobile-app .meeting-reading-start{margin:0 0 23px;padding:8px 0 16px;border-bottom:1px solid var(--notebook-line)}
+.meeting-view-menu{position:relative;min-width:0;margin:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+body .ct-windows.ct-notebook .meeting-view-menu>summary,.mobile-app .meeting-view-menu>summary{display:flex;align-items:center;gap:8px;list-style:none;margin:0;padding:3px 0;min-height:36px;border:0;background:transparent;color:var(--notebook-ink);font:600 15px/1.6 var(--notebook-font);cursor:pointer}
+.meeting-view-menu>summary::-webkit-details-marker{display:none}
+body .ct-windows.ct-notebook .meeting-view-menu>summary:after,.mobile-app .meeting-view-menu>summary:after{content:none!important;display:none!important}
+.meeting-view-menu>summary>svg:first-child{color:var(--notebook-accent)}
+.meeting-view-menu>summary>svg:last-child{color:var(--notebook-muted);margin-left:3px}
+.meeting-view-menu>nav{position:absolute;z-index:12;top:calc(100% + 7px);left:0;display:grid;gap:3px;min-width:168px;padding:6px;border:1px solid var(--notebook-line);border-radius:10px;background:var(--notebook-paper);box-shadow:0 8px 28px #10182814}
+body .ct-windows.ct-notebook .meeting-view-menu>nav>button,.mobile-app .meeting-view-menu>nav>button{display:flex;align-items:center;gap:9px;min-height:38px;margin:0;padding:8px 12px;border:0;border-radius:6px;background:transparent;color:var(--notebook-ink);font:400 13px/1.6 var(--notebook-font);text-align:left;cursor:pointer}
+.meeting-view-menu>nav>button[aria-current=page],.meeting-view-menu>nav>button:hover{background:var(--notebook-soft)!important}
+.meeting-view-menu :is(button,summary):focus-visible{outline:2px solid var(--notebook-accent);outline-offset:3px}
+.meeting-view-caption{color:var(--notebook-muted);font:400 11px/1.6 var(--notebook-font)}
+@media(pointer:coarse){.meeting-view-menu>summary,.meeting-view-menu>nav>button{min-height:44px!important}}

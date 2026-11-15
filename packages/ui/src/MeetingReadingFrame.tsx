@@ -12,11 +12,14 @@ import './meetingVisual.css';
 export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[],onOpenSpeakerSource,blocked=false,children}:{markdown:string;title?:string;sections?:readonly string[];speakerSources?:readonly CompanionTranscriptSource[];onOpenSpeakerSource?:(source:CompanionTranscriptSource)=>void;blocked?:boolean;children:ReactNode}){
  const content=useRef<HTMLDivElement>(null);
  const outline=useRef<HTMLDetailsElement>(null);
+ const viewMenu=useRef<HTMLDetailsElement>(null);
  const sectionKey=sections.join('\n');
  const titles=useMemo(()=>sections.length?[...new Set(sections)]:meetingSectionTitles(markdown),[markdown,sectionKey]);
  const indexed=markdown.trim().length>=1600||titles.length>=7;
  const [active,setActive]=useState<string|null>(null);
  const [view,setView]=useState<'overview'|'reading'|'map'|'speakers'>('overview');
+ const viewLabel={overview:'会议重点',reading:'完整纪要',map:'思维导图',speakers:'发言人'}[view];
+ function changeView(next:typeof view){setView(next);if(viewMenu.current){viewMenu.current.open=false;viewMenu.current.querySelector('summary')?.focus();}}
  useEffect(()=>{setView('overview');},[markdown,title]);
  function read(){
   setView('reading');
@@ -60,11 +63,14 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
  }
  return <div className={`meeting-reading-frame${indexed?' meeting-reading-indexed':''}`}>
   {titles.length>0&&<div className="meeting-reading-start">
-   <div className="meeting-reading-intro"><div className="meeting-reading-views" role="group" aria-label="纪要查看方式">
-    <button type="button" aria-pressed={view==='overview'||view==='reading'} onClick={()=>setView('overview')}><BookOpen size={14} aria-hidden="true"/>会议一览</button>
-    <button type="button" aria-pressed={view==='map'} onClick={()=>setView('map')}><GitBranch size={14} aria-hidden="true"/>思维导图</button>
-    <button type="button" aria-pressed={view==='speakers'} onClick={()=>setView('speakers')}><Users size={14} aria-hidden="true"/>按发言人</button>
-   </div>
+   <div className="meeting-reading-intro"><details ref={viewMenu} className="meeting-view-menu" onKeyDown={event=>{if(event.key==='Escape'){event.currentTarget.open=false;event.currentTarget.querySelector('summary')?.focus();}}}>
+    <summary><BookOpen size={16} aria-hidden="true"/><span>{viewLabel}</span><ChevronDown size={13} aria-hidden="true"/></summary>
+    <nav aria-label="纪要查看方式">
+     <button type="button" aria-current={view==='overview'?'page':undefined} onClick={()=>changeView('overview')}><BookOpen size={15} aria-hidden="true"/>会议重点</button>
+     <button type="button" aria-current={view==='map'?'page':undefined} onClick={()=>changeView('map')}><GitBranch size={15} aria-hidden="true"/>思维导图</button>
+     <button type="button" aria-current={view==='speakers'?'page':undefined} onClick={()=>changeView('speakers')}><Users size={15} aria-hidden="true"/>发言人</button>
+    </nav>
+   </details>
    {view==='reading'&&indexed&&titles.length>=2&&<details ref={outline} className="meeting-contents" onKeyDown={event=>{if(event.key==='Escape'){event.currentTarget.open=false;event.currentTarget.querySelector('summary')?.focus();}}}>
     <summary><List size={14} aria-hidden="true"/>目录<ChevronDown size={12} aria-hidden="true"/></summary>
     <nav className="meeting-outline" aria-label="会议目录">{titles.map((title,i)=><button type="button" key={i} aria-current={active===title?'location':undefined} onClick={()=>navigate(title)}>{meetingHeadingForDisplay(title)}</button>)}</nav>
@@ -74,7 +80,7 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
   {view==='overview'&&<MeetingOverview markdown={markdown} onLocate={navigate} onRead={read}/>}
   {view==='map'&&<MeetingMapView markdown={markdown} title={title} onLocate={navigate}/>}
   {view==='speakers'&&<MeetingSpeakers markdown={markdown} sources={speakerSources} onOpenSource={onOpenSpeakerSource} blocked={blocked}/>}
-  {view==='reading'&&<button type="button" className="meeting-reading-back" onClick={()=>{setView('overview');window.requestAnimationFrame(()=>content.current?.parentElement?.querySelector<HTMLElement>('.meeting-reading-views>button')?.focus());}}><ArrowLeft size={14} aria-hidden="true"/>返回会议一览</button>}
+  {view==='reading'&&<button type="button" className="meeting-reading-back" onClick={()=>changeView('overview')}><ArrowLeft size={14} aria-hidden="true"/>返回会议重点</button>}
   <div className="meeting-reading-content" ref={content} hidden={view!=='reading'}>{children}</div>
  </div>;
 }
