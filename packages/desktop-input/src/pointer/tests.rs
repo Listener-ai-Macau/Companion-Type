@@ -473,11 +473,29 @@ fn surface_frame(p:&mut Pointer,n:u32,a:[f64;3],g:[f64;3])->Frame{
         let shock=n==140||n==160;let a=if shock{[1000.,0.,1000.]}else{[0.,0.,1000.]};let g=if shock{[70.,0.,0.]}else{[0.;3]};
         let f=surface_frame(&mut p,n,a,g);clicks.extend(f.buttons);
         if n==141||n==161{p.control(Control{sequence:n,sensor_ms:(n-1)*10,events:CLICK}).unwrap();}
-        assert_eq!(p.shown,origin);
+        assert_eq!(p.shown,origin,"sample{n}: {:?}",p.planar_state());
     }
     assert_eq!(clicks,vec![Button::Click(origin),Button::Click(origin)]);
     p.control(Control{sequence:205,sensor_ms:2040,events:DOWN}).unwrap();
     p.control(Control{sequence:206,sensor_ms:2050,events:UP}).unwrap();assert!(!p.metrics.calibrated);
     for n in 206..330{surface_frame(&mut p,n,[0.,0.,1000.],[0.;3]);}
     assert!(p.metrics.calibrated);assert!(!p.metrics.surface_paused);assert_eq!(p.shown,origin);
+}
+#[test]fn ready_cim6_regional_clicks_cannot_leak_a_pose_prediction_tail(){
+    let mut p=surface_pointer();let origin=p.shown;let mut clicks=vec![];
+    p.observe_device_readiness(Some(true));
+    for n in 121..230{
+        let shock=n==140||n==160;
+        let raw=desktop::Raw{sequence:n+1,sensor_ms:n*10,
+            accel_mg:if shock{[1000.,0.,1000.]}else{[0.,0.,1000.]},
+            gyro_dps:if shock{[70.,0.,0.]}else{[0.;3]}};
+        let at=n as f64/100.;
+        p.sample_raw_gravity(raw,Some([0.,0.,1000.]),at);
+        p.sample(Sample{fused:true,device_ready:Some(true),gyro:raw.gyro_dps,..sample(n+1,n*10,false)},at,bounds());
+        if n==141||n==161{p.control(Control{sequence:n,sensor_ms:(n-1)*10,events:CLICK}).unwrap();}
+        clicks.extend(p.frame(at,bounds()).buttons);
+        assert_eq!(p.shown,origin,"sample{n}: {:?}",p.planar_state());
+    }
+    assert!(p.planar_state().unwrap().pose_prediction);
+    assert_eq!(clicks,vec![Button::Click(origin),Button::Click(origin)]);
 }

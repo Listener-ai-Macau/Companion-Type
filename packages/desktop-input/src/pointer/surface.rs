@@ -20,6 +20,11 @@ pub struct Surface {
     quiet:f64,contact_until:Option<u32>,pub status:Status,
 }
 impl Surface {
+    pub fn candidate(&mut self,ms:u32){
+        // Quarantine only the click target while the raw window is assembled.
+        // A candidate cannot cancel an established lift or reset XY velocity.
+        self.contact_until=Some(ms.wrapping_add(150));
+    }
     pub fn contact(&mut self,ms:u32){
         // Keep the accepted143 tap isolation. A short tap can initially look
         // like lift onset; a much older pause is not silently cancelled.

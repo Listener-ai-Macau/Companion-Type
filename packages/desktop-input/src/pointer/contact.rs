@@ -1,5 +1,5 @@
-//! Personal front-corner contacts. Hardware TAP authorizes a click; raw motion
-//! alone never clicks. Segment the shock, then use the pinned GRT matcher.
+//! Personal front-corner contacts. Hardware TAP supplies a candidate; raw
+//! motion alone never clicks. Segment/deduplicate before affecting the stroke.
 use super::{contact_dtw as dtw,desktop::Raw,Point};
 use serde::{Deserialize,Serialize};
 use std::collections::VecDeque;
@@ -162,7 +162,7 @@ impl Contact {
         let series=window.iter().map(|s|std::array::from_fn(|i|if i<3{(s.accel_mg[i]-a[i])/1000.}else{(s.gyro_dps[i-3]-g[i-3])/100.})).collect();
         Some(Impact{onset,series:dtw::normalize(series)})
     }
-    pub fn poll(&mut self,now:f64)->Vec<(Side,Point)>{
+    pub fn poll(&mut self,now:f64)->Vec<(Side,Point,u32)>{
         let mut clicks=vec![];
         loop {
             let Some(p)=self.pending.front()else{break;};
@@ -187,7 +187,7 @@ impl Contact {
                 if samples.len()<8{samples.push(feature.series);}
                 self.status.left_samples=self.left.len();self.status.right_samples=self.right.len();
             }else if let Some(profile)=&self.profile{
-                if let Some(side)=profile.classify(&feature.series){self.status.last_side=Some(side);clicks.push((side,p.point));}
+                if let Some(side)=profile.classify(&feature.series){self.status.last_side=Some(side);clicks.push((side,p.point,p.ms));}
                 else{self.status.uncertain+=1;}
             }
         }

@@ -1,4 +1,26 @@
 use super::*;
+#[test]fn an_unresolved_regional_candidate_does_not_cancel_a_planar_stroke(){
+    let settings=Settings{desktop_motion:true,contact_regions:true,
+        contact_profile:Some(contact::Profile{schema:2,left:vec![[0.;6];8],right:vec![[1.;6];8],left_threshold:0.,right_threshold:0.}),
+        ..Settings::relative_remote()};
+    let(mut candidate,mut reference)=(Pointer::new(settings.clone(),Point{x:960.,y:540.}),Pointer::new(settings,Point{x:960.,y:540.}));
+    for n in 1..241{
+        let at=n as f64/100.;let acceleration=if (150..165).contains(&n){100.}else{0.};
+        for p in [&mut candidate,&mut reference]{
+            p.observe_device_readiness(Some(true));
+            p.sample_raw_gravity(desktop::Raw{sequence:n,sensor_ms:n*10,accel_mg:[acceleration,0.,1000.],gyro_dps:[0.;3]},Some([0.,0.,1000.]),at);
+        }
+        // No matching impact exists in these samples. The event must time out
+        // without resetting the stroke either on arrival or on completion.
+        if n==166{candidate.control(Control{sequence:1,sensor_ms:n*10,events:CLICK}).unwrap();}
+        let f=candidate.frame(at,bounds());reference.frame(at,bounds());assert!(f.buttons.is_empty());
+        // Candidate quarantine may discard output briefly, but neither its
+        // arrival nor timeout may erase the observed coasting velocity.
+        if (166..225).contains(&n){assert!(candidate.planar_state().unwrap().velocity_mps[0]>0.08,"candidate erased established velocity at sample{n}");}
+    }
+    assert_eq!(candidate.contacts.status.missed_windows,1);
+    assert!(candidate.shown.x>1060.);
+}
 #[test]fn relative_body_tap_hits_the_visible_cursor_without_rewinding_it(){
     let mut p=Pointer::new(Settings::relative_remote(),Point{x:960.,y:540.});
     for n in 1..32{let t=n as f64/100.;p.sample(sample(n,[0.,20.,0.]),t,bounds());p.frame(t,bounds());}

@@ -24,6 +24,9 @@ impl Intent {
         self.clear_motion();self.desktop.tap();
     }
     pub fn contact(&mut self,ms:u32){self.clear_motion();self.desktop.contact(ms);}
+    pub fn contact_candidate(&mut self,ms:u32){
+        self.desktop.contact_candidate(ms);self.pending=Point::default();self.smoother.reset();
+    }
     pub fn sample(&mut self,s:Raw,now:f64){
         self.sample_blocked(s,now,false);
     }

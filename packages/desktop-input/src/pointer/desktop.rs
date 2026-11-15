@@ -60,6 +60,7 @@ impl Desktop {
     /// propagate uncalibrated rates merely because a gravity vector exists.
     pub fn enable_board_pose_prediction(&mut self){self.predict_board_pose=true;}
     pub fn has_surface(&self)->bool{self.surface.is_some()}
+    pub fn contact_candidate(&mut self,ms:u32){if let Some(surface)=self.surface.as_mut(){surface.candidate(ms);}}
     pub fn contact(&mut self,ms:u32){if let Some(surface)=self.surface.as_mut(){
         surface.contact(ms);
         if self.state.pose_prediction{
@@ -224,11 +225,15 @@ impl Desktop {
             self.clutch();return Point::default();
         }
         let planar=linear[0].hypot(linear[1]);let quiet=planar<0.055&&rates.iter().all(|x|x.abs()<2.);
+        // Use the existing20ms filter for onset too. A single noisy sample
+        // above the start threshold must not create a two-second velocity
+        // tail after the card has already settled. Gain/threshold stay fixed.
+        for i in 0..2{self.filtered[i]+=(linear[i]-self.filtered[i])*(dt/(0.02+dt));}
         if !self.state.moving {
             // Adapt residual bias only while classified at rest, never from
             // the middle of a constant-velocity stroke.
             if quiet{for i in 0..3{self.earth_bias[i]+=(earth[i]-self.earth_bias[i])*(dt/2.).min(1.);}}
-            if planar<0.10{return Point::default();}
+            if self.filtered[0].hypot(self.filtered[1])<0.10{return Point::default();}
             self.state.moving=true;self.stroke=0.;self.braking=false;
         }
         // A table user may keep moving for more than two seconds. The old
@@ -242,7 +247,6 @@ impl Desktop {
             // Retain20ms noise filtering: removing it made the retained real
             // stationary147/149 trace drift5.08px. Sensor-time output below
             // avoids a second HOST-clock integration without that regression.
-            self.filtered[i]+=(linear[i]-self.filtered[i])*(dt/(0.02+dt));
             if old[i]*self.filtered[i]<0.&&self.filtered[i].abs()>0.10{self.braking=true;}
             self.state.velocity_mps[i]=(old[i]+self.filtered[i]*dt).clamp(-0.6,0.6);
         }
@@ -259,6 +263,17 @@ impl Desktop {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]fn isolated_rest_noise_cannot_create_a_two_second_surface_stroke(){
+        let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,Some([0.,0.,1000.]));}
+        let origin=d.state.position_m;
+        for n in 150..450{
+            let x=if n%30==0{12.}else{0.};
+            d.sample_with_gravity(raw(n,x,0.),true,Some([0.,0.,1000.]));
+            assert!(!d.state.moving,"isolated rest noise started a stroke at{n}");
+        }
+        assert_eq!(d.state.position_m,origin);
+    }
     fn raw(n:u32,x:f64,y:f64)->Raw{Raw{sequence:n+1,sensor_ms:n*10,accel_mg:[x,y,1000.],gyro_dps:[0.;3]}}
     fn ready()->Desktop{let mut d=Desktop::default();for n in 0..=120{d.sample(raw(n,0.,0.));}assert!(d.state.calibrated);d}
     #[test]fn board_corrected_rates_do_not_gain_a_second_offset_at_entry_or_regrip(){

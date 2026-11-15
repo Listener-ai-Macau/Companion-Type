@@ -267,13 +267,16 @@ impl Pointer {
             if self.settings.relative_direct{self.smoother.reset();self.relative.reset();}
         }
         if event.events&CLICK!=0 && self.pressed.is_none()&&!self.metrics.dragging {
-            if let Some(c)=self.coarse.as_mut(){c.contact(event.sensor_ms);}
             // A relative mouse clicks where its visible cursor is now. The
             // laser's historical tap compensation must not teleport it back
             // through100ms of relative movement (hundreds of pixels in131).
             let point=if self.settings.relative_direct{self.shown}else{self.press_point(measured_at-0.1)};
-            if self.contacts.is_active(){self.contacts.contact(event.sensor_ms,self.arrival.unwrap_or(measured_at),point);}
+            if self.contacts.is_active(){
+                if let Some(c)=self.coarse.as_mut(){c.contact_candidate(event.sensor_ms);}
+                self.contacts.contact(event.sensor_ms,self.arrival.unwrap_or(measured_at),point);
+            }
             else{
+                if let Some(c)=self.coarse.as_mut(){c.contact(event.sensor_ms);}
                 self.shown=point;self.queued.push(Button::Click(point));
                 // The tap has already supplied its historical click position.
                 // Do not replay the impact's last angular target afterwards.
@@ -474,10 +477,11 @@ impl Pointer {
         self.metrics.stream_stale=stale;
         if stale {self.release();self.reset_motion();}
         if !stale&&!self.metrics.paused&&self.metrics.calibrated{
-            let was_pending=self.contacts.pending();
             let clicks=self.contacts.poll(now);
-            if !clicks.is_empty()||(was_pending&&!self.contacts.pending()){if let Some(c)=self.coarse.as_mut(){if c.desktop.has_surface(){c.clear_motion();}else{c.tap();}}}
-            for(side,point)in clicks{
+            // A missing raw window or a rebound is not an accepted contact.
+            // Candidate arrival/completion must not erase a planar stroke.
+            for(side,point,ms)in clicks{
+                if let Some(c)=self.coarse.as_mut(){c.contact(ms);}
                 let point=if self.settings.relative_direct{self.shown}else{point};
                 self.queued.push(match side{contact::Side::Left=>Button::Click(point),contact::Side::Right=>Button::RightClick(point)});
             }
