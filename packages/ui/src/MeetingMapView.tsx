@@ -18,7 +18,7 @@ function ResultBranch({group,onLocate}:{group:MeetingReaderGroup;onLocate?:(sect
 }
 
 /** The same saved meeting, rendered as a top-to-bottom hierarchy. */
-export function MeetingMapView({markdown,title='会议纪要',onLocate,onRead}:{markdown:string;title?:string;onLocate?:(section:string,text?:string)=>void;onRead?:()=>void}){
+export function MeetingMapView({markdown,title='会议纪要',onLocate,onRead,composition='diagram'}:{markdown:string;title?:string;onLocate?:(section:string,text?:string)=>void;onRead?:()=>void;composition?:'diagram'|'overview'}){
  const model=useMemo(()=>meetingReaderModel(markdown),[markdown]);
  const labels=useMemo(()=>meetingGlanceLabels(markdown,model.topics),[markdown,model]);
  const nodes=useMemo(()=>model.topics.map(topic=>({...topic,...meetingDiagramParts(topic.text,labels.get(topic.id))})),[model,labels]);
@@ -28,11 +28,11 @@ export function MeetingMapView({markdown,title='会议纪要',onLocate,onRead}:{
  const expanded=selection.source===markdown?selection.ids:initiallyOpen();
  function toggle(key:string,open:boolean){setSelection(previous=>{const ids=new Set(previous.source===markdown?previous.ids:initiallyOpen());if(ids.has(key)===open)return previous;if(open)ids.add(key);else ids.delete(key);return {source:markdown,ids};});}
  if(model.outlineUnavailable)return <section className="meeting-map" aria-label="会议图解"><p className="meeting-topic-unavailable">主题整理尚未完成</p>{onRead&&<button type="button" className="meeting-map-read" onClick={onRead}><BookOpen size={15}/>查看完整纪要<ArrowUpRight size={13}/></button>}</section>;
- return <section className={'meeting-map meeting-diagram'+(model.structured?' meeting-map-structured':'')} aria-label="会议图解">
+ return <section className={'meeting-map meeting-diagram'+(model.structured?' meeting-map-structured':'')+(composition==='overview'?' meeting-map-overview':'')} aria-label={composition==='overview'?'主题与观点总览':'会议图解'}>
   {!model.structured&&<div className="meeting-map-tools"><span>{nodes.length} {unitLabel==='分组'?'个分组':'条要点'}</span><div><button type="button" disabled={!nodes.length||expanded.size===nodes.length} onClick={()=>setSelection({source:markdown,ids:new Set(nodes.map(node=>node.id))})}>展开全部</button><button type="button" disabled={!expanded.size} onClick={()=>setSelection({source:markdown,ids:new Set()})}>收起</button></div></div>}
   <div className="meeting-map-canvas">
-   <div className={'meeting-map-origin'+(model.structured?' meeting-map-purpose':'')}>{!model.structured&&<GitBranch size={19} aria-hidden="true"/>}<div>{model.structured?<div className="meeting-map-purpose-heading"><strong>会议主线</strong><span>{nodes.length} 个主题</span></div>:<strong>{title}</strong>}{model.purpose&&<p>{model.purpose}</p>}</div></div>
-   {nodes.length>0&&<div className="meeting-map-topic-group">{!model.structured&&<div className="meeting-map-group-label">{unitLabel==='分组'?'内容分组':'讨论要点'}</div>}<ol className={'meeting-map-branches'+(model.structured?' meeting-map-organized':'')} aria-label={model.structured?'讨论主题':unitLabel==='分组'?'内容分组':'讨论要点'}>
+   <div className={'meeting-map-origin'+(model.structured?' meeting-map-purpose':'')}>{!model.structured&&<GitBranch size={19} aria-hidden="true"/>}<div>{model.structured?<div className="meeting-map-purpose-heading"><strong>会议概览</strong><span>{nodes.length} 个主题</span></div>:<strong>{title}</strong>}{model.purpose&&<p>{model.purpose}</p>}</div></div>
+   {nodes.length>0&&<div className="meeting-map-topic-group">{model.structured?(composition==='overview'&&<div className="meeting-map-column-headings" aria-hidden="true"><span>讨论主题</span><span>主要观点</span></div>):<div className="meeting-map-group-label">{unitLabel==='分组'?'内容分组':'讨论要点'}</div>}<ol className={'meeting-map-branches'+(model.structured?' meeting-map-organized':'')} aria-label={model.structured?'讨论主题':unitLabel==='分组'?'内容分组':'讨论要点'}>
     {nodes.map((node,index)=><li key={node.id} data-source-text={node.text}>
      {model.structured?<MeetingTopicBrief topic={model.topics[index]} onLocate={onLocate} graphic/>:<details open={expanded.has(node.id)} onToggle={event=>{if(event.currentTarget===event.target)toggle(node.id,event.currentTarget.open);}}>
       <summary aria-controls={id+node.id}><span className="meeting-map-topic-number" aria-hidden="true">{String(index+1).padStart(2,'0')}</span><span className="meeting-map-topic-title">{node.title||unitLabel+' '+(index+1)}</span><ChevronDown size={14} aria-hidden="true"/></summary>

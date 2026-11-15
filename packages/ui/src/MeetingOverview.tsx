@@ -3,7 +3,7 @@ import {ArrowUpRight,BookOpen,ChevronDown} from 'lucide-react';
 import {meetingGlanceExcerpt,meetingGlanceLabels} from './meetingGlance';
 import {meetingReaderModel,type MeetingReaderGroup,type MeetingReaderItem} from './meetingReaderModel';
 import './meetingOverview.css';
-import {MeetingTopicBrief} from './MeetingTopicBrief';
+import {MeetingMapView} from './MeetingMapView';
 
 type Locate=(section:string,text?:string)=>void;
 /** Emphasize an exact source prefix; this does not produce a new heading or fact. */
@@ -32,12 +32,7 @@ function Outcome({group,onLocate}:{group:MeetingReaderGroup;onLocate:Locate}){
 export function MeetingOverview({markdown,onLocate,onRead}:{markdown:string;onLocate:Locate;onRead:()=>void}){
  const model=useMemo(()=>meetingReaderModel(markdown),[markdown]);
  const labels=useMemo(()=>meetingGlanceLabels(markdown,model.topics),[markdown,model]);
- if(model.structured)return <section className="meeting-overview meeting-organized-overview" aria-label="会议一览">
-  <p className="meeting-organized-purpose">{model.purpose}</p>
-  <div>{model.topics.map(topic=><MeetingTopicBrief key={topic.id} topic={topic} onLocate={onLocate}/>)}</div>
-  {model.groups.filter(g=>g.id!=='discussionQuestions').map(group=><Outcome key={group.id} group={group} onLocate={onLocate}/>)}
-  <button type="button" className="meeting-overview-read" onClick={onRead}><BookOpen size={15}/><span>完整纪要</span><ArrowUpRight size={14}/></button>
- </section>;
+ if(model.structured)return <MeetingMapView markdown={markdown} onLocate={onLocate} onRead={onRead} composition="overview"/>;
  const topics=(offset:number,count?:number)=>model.topics.slice(offset,count===undefined?undefined:offset+count).map((topic,index)=>{
   const excerpt=meetingGlanceExcerpt(topic.text,180);
   return <li key={topic.id} data-source-text={topic.text}>

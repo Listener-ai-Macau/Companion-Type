@@ -18,14 +18,14 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
  const titles=useMemo(()=>sections.length?[...new Set(sections)]:meetingSectionTitles(markdown),[markdown,sectionKey]);
  const indexed=markdown.trim().length>=1600||titles.length>=7;
  const [active,setActive]=useState<string|null>(null);
- const [view,setView]=useState<'overview'|'reading'|'map'|'speakers'|'actions'>('map');
- const [keypointView,setKeypointView]=useState<'overview'|'map'>('map');
- const returnView=useRef<Exclude<typeof view,'reading'>>('map');
+ const [view,setView]=useState<'overview'|'reading'|'map'|'speakers'|'actions'>('overview');
+ const [keypointView,setKeypointView]=useState<'overview'|'map'>('overview');
+ const returnView=useRef<Exclude<typeof view,'reading'>>('overview');
  const sourceButton=useRef<HTMLElement|null>(null),restoreFocus=useRef(false);
  const keypoints=view==='map'||view==='overview';
- const viewLabels={overview:'重点大纲',map:'重点图解',speakers:'发言人',actions:'待办'};
+ const viewLabels={overview:'重点总览',map:'重点图解',speakers:'发言人',actions:'待办'};
  function changeFormat(next:typeof keypointView){setKeypointView(next);setView(next);}
- useEffect(()=>{returnView.current='map';sourceButton.current=null;restoreFocus.current=false;setKeypointView('map');setView('map');},[markdown,title]);
+ useEffect(()=>{returnView.current='overview';sourceButton.current=null;restoreFocus.current=false;setKeypointView('overview');setView('overview');},[markdown,title]);
  useLayoutEffect(()=>{if(!restoreFocus.current||view==='reading')return;restoreFocus.current=false;const target=sourceButton.current?.isConnected?sourceButton.current:viewControls.current?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]');target?.focus({preventScroll:true});target?.scrollIntoView({block:'nearest',behavior:'auto'});},[view]);
  function enterReading(){if(view!=='reading'){returnView.current=view;sourceButton.current=document.activeElement instanceof HTMLElement?document.activeElement:null;}setView('reading');}
  function returnToNotes(){restoreFocus.current=true;setView(returnView.current);}
@@ -78,8 +78,8 @@ export function MeetingReadingFrame({markdown,title,sections=[],speakerSources=[
     <button type="button" aria-pressed={view==='actions'} onClick={()=>setView('actions')}><ListTodo size={15} aria-hidden="true"/>待办</button>
    </div>:<span className="meeting-reading-label">完整纪要</span>}
    {keypoints&&<div className="meeting-reading-formats" role="group" aria-label="重点展示">
+    <button type="button" aria-pressed={view==='overview'} onClick={()=>changeFormat('overview')}><List size={13} aria-hidden="true"/>总览</button>
     <button type="button" aria-pressed={view==='map'} onClick={()=>changeFormat('map')}><GitBranch size={13} aria-hidden="true"/>图解</button>
-    <button type="button" aria-pressed={view==='overview'} onClick={()=>changeFormat('overview')}><List size={13} aria-hidden="true"/>大纲</button>
    </div>}
    {view==='reading'&&indexed&&titles.length>=2&&<details ref={outline} className="meeting-contents" onKeyDown={event=>{if(event.key==='Escape'){event.currentTarget.open=false;event.currentTarget.querySelector('summary')?.focus();}}}>
     <summary><List size={14} aria-hidden="true"/>目录<ChevronDown size={12} aria-hidden="true"/></summary>
