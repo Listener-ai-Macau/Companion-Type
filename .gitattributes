@@ -197,3 +197,11 @@ src/continuous_meeting_audio_routing_20261115.py -text -whitespace
 src/continuous_overlap_composition_worker_20261115.py -text -whitespace
 
 src/run_continuous_overlap_composition_20261115.py -text -whitespace
+
+evidence/20261115-original-activity-guard-result-r1/** -text -whitespace
+
+src/single_source_activity_guard_worker_20261115.py -text -whitespace
+
+src/run_single_source_activity_guard_20261115.py -text -whitespace
+
+src/score_single_source_activity_guard_20261115.py -text -whitespace

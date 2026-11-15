@@ -1,0 +1,44 @@
+{
+  "id": "20200805_S_R001S01C01-multi-turn-context-04",
+  "stream": 1,
+  "sourceWavSha256": "6dec83f99500682d5d054ce8a0d4240b6b11244571dc09da8ae9db451fc76fe8",
+  "inputFloatSha256": "72222d98f32b09a3bebe4048053cee0d3d219a32f761c09572c601397921d642",
+  "text": "嗯嗯嗯嗯，照明就可以了，嗯。",
+  "frames": 421241,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 421241,
+        "text": "嗯嗯嗯嗯，照明就可以了，嗯。",
+        "language": "Chinese",
+        "generatedIds": [
+          106287,
+          106287,
+          106287,
+          106287,
+          3837,
+          105865,
+          108466,
+          3837,
+          106287,
+          1773,
+          151645
+        ],
+        "rawDecoded": "嗯嗯嗯嗯，照明就可以了，嗯。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 2.3448580999993283
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false
+}

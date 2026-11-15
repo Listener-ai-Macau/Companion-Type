@@ -1,0 +1,2841 @@
+{
+  "state": "REJECTED_ORIGINAL_ACTIVITY_GUARD_WITH_EXACT_ORIGINAL_POSTERIORS_PROTECTED",
+  "at": "2026-11-15T19:49:54.915811+08:00",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\activity-diagnostic.json",
+      "logicalPath": "single-source-activity-guard-r1/activity-diagnostic.json",
+      "file": "files/00000.json",
+      "sha256": "6d6de0a0a043ef4b87349635c28ea5ed3fdd41100d96d8e5f29c40e9b979d2a1",
+      "bytes": 3173
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\audio-only.json",
+      "logicalPath": "single-source-activity-guard-r1/audio-only.json",
+      "file": "files/00001.json",
+      "sha256": "233e691cfd9895e4a6419f68d2bf80b273aa047fa757fd9f578ef302fd6fa418",
+      "bytes": 1271
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\baseline-bindings.json",
+      "logicalPath": "single-source-activity-guard-r1/baseline-bindings.json",
+      "file": "files/00002.json",
+      "sha256": "7bdc7d81a74ede217989353db5cef13820d69ee97a2b3dc24739350d44f767f4",
+      "bytes": 557
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\protocol.json",
+      "logicalPath": "single-source-activity-guard-r1/protocol.json",
+      "file": "files/00003.json",
+      "sha256": "1f91bd36d61d01537ba5eeaed1da11ffd5eaa5d5ed3b5bbb950c8d161088581e",
+      "bytes": 9242
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\worker-binding.json",
+      "logicalPath": "single-source-activity-guard-r1/worker-binding.json",
+      "file": "files/00004.json",
+      "sha256": "41c2fcf9d303e85143ba0765efe60b512d4ae6566b5b6c232ea9b42cf2575835",
+      "bytes": 1502
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-execution.json",
+      "logicalPath": "single-source-activity-guard-r1/composition-r1/asr-execution.json",
+      "file": "files/00005.json",
+      "sha256": "a832679112ac69359273a16f0a43f5560bb37a9b5058a1950ddae4ab4a4f3c69",
+      "bytes": 590
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\audio-only.json",
+      "logicalPath": "single-source-activity-guard-r1/composition-r1/audio-only.json",
+      "file": "files/00006.json",
+      "sha256": "d7495c1ed2713cf193a07faba290ba4d29f13663d6755629b2940fe0d3c40eb8",
+      "bytes": 17701
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\decision.json",
+      "logicalPath": "single-source-activity-guard-r1/composition-r1/decision.json",
+      "file": "files/00007.json",
+      "sha256": "ca496f1963d779541da991825b493ec5ab333d230746e0c6d5a2bb6e67875635",
+      "bytes": 45754
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\model-binding.json",
+      "logicalPath": "single-source-activity-guard-r1/composition-r1/model-binding.json",
+      "file": "files/00008.json",
+      "sha256": "8a591bcdf158041a43624ad8911ac1c4e2d9ea7e4e13f158deeade07c484f2f5",
+      "bytes": 918
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\protocol.json",
+      "logicalPath": "single-source-activity-guard-r1/composition-r1/protocol.json",
+      "file": "files/00009.json",
+      "sha256": "cbc61bc9c868b1398b830e700cfc5fd61cec3f22385977310afd7da867da3f51",
+      "bytes": 19777
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\reused-asr-input-only.json",
+      "logicalPath": "single-source-activity-guard-r1/composition-r1/reused-asr-input-only.json",
+      "file": "files/00010.json",
+      "sha256": "b061f9723fa98a60aedf417110314b343f175eb41d365601b5a6285085ab0219",
+      "bytes": 17944
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-composition-protocol.json",
+      "logicalPath": "single-source-activity-guard-r1/composition-r1/routed-composition-protocol.json",
+      "file": "files/00011.json",
+      "sha256": "7d46c8b4641dc4c11c52191b48d89f76bda1eded80caed5b4e4c1ab519d0c8ca",
+      "bytes": 14478
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-decision.json",
+      "logicalPath": "single-source-activity-guard-r1/composition-r1/routed-decision.json",
+      "file": "files/00012.json",
+      "sha256": "699701ba98d68dfb185cc1fabc32add6b2e6fa0e1a40ff8402b8d7039ee0862a",
+      "bytes": 49084
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routing-proof.json",
+      "logicalPath": "single-source-activity-guard-r1/composition-r1/routing-proof.json",
+      "file": "files/00013.json",
+      "sha256": "b9a3970b33394759c89db80ea56211456753c71f3e217f788e4a0fcc486e5bfa",
+      "bytes": 14359
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\source-binding.json",
+      "logicalPath": "single-source-activity-guard-r1/composition-r1/source-binding.json",
+      "file": "files/00014.json",
+      "sha256": "d10e24390ae894126dc9b5f63deb61be9ca3004ea553868e4cecdec66ee75c2d",
+      "bytes": 4707
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\worker-binding.json",
+      "logicalPath": "single-source-activity-guard-r1/composition-r1/worker-binding.json",
+      "file": "files/00015.json",
+      "sha256": "8f7ff52ac3f29c375b9c78b8bb251572850879c27e4121ae80e0a31c04e49ec6",
+      "bytes": 9921
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\inventory.log",
+      "logicalPath": "observation-r1/inventory.log",
+      "file": "files/00016.log",
+      "sha256": "550bb8f4e037f107649f038bfb8b2df7ca1e8e770d32bb8c392d747d403e1425",
+      "bytes": 578
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\run.json",
+      "logicalPath": "observation-r1/run.json",
+      "file": "files/00017.json",
+      "sha256": "b7324ec28c2775e43eaa5c68ad29cfc869dc35710e9792fb4649fe377345a7ec",
+      "bytes": 532
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\state.json",
+      "logicalPath": "observation-r1/state.json",
+      "file": "files/00018.json",
+      "sha256": "ded07ab22abf75e5fc0ded6bf0a8d9168a2b4d395375563c90ccc461edb72809",
+      "bytes": 6813
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\worker.log",
+      "logicalPath": "observation-r1/worker.log",
+      "file": "files/00019.log",
+      "sha256": "8b31a612bf9fdff219a9d5fc7d83b351f66ada016b7c34d123ad8a548feb0dd6",
+      "bytes": 469
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "observation-r1/inventory/hip-inventory.json",
+      "file": "files/00020.json",
+      "sha256": "891e0ccea2d5581e0fec1c2e077019dc9e1063303ddff79a0006e61b290acafe",
+      "bytes": 1393
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "observation-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00021.jsonl",
+      "sha256": "55b2d3b08787978b2a5f0939aeb4502b79a091bca00768b245acf23eeb24f99c",
+      "bytes": 1347
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\inventory\\inventory-run.json",
+      "logicalPath": "observation-r1/inventory/inventory-run.json",
+      "file": "files/00022.json",
+      "sha256": "85b1bebee1b830bb32b2109db8cdeb78a98c5e7d1b0c2031dc08e7affed91b4e",
+      "bytes": 609
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "observation-r1/inventory/inventory-worker.log",
+      "file": "files/00023.log",
+      "sha256": "354dd9c75c499f3d851527bca3bf5228f79458a91d9a32f10c818d629673478a",
+      "bytes": 1212
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\activity-class.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/activity-class.npy",
+      "file": "files/00024.npy",
+      "sha256": "e5deef4e871463daa710f91d9419c901a8bbe0f693ed0c40c974e5c9b4d1945c",
+      "bytes": 214662
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\activity-logits.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/activity-logits.npy",
+      "file": "files/00025.npy",
+      "sha256": "90c2ed2a8e688e59d16d4a9410be5273ca9804c254d5b1bee91eafcca9a365d4",
+      "bytes": 2574536
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\guarded-overlap.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/guarded-overlap.npy",
+      "file": "files/00026.npy",
+      "sha256": "aff3be3ae0dd2bad5565ecf845da178aedd6a5d289d4d8f5336288bb34755eb9",
+      "bytes": 214662
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\legacy-overlap.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/legacy-overlap.npy",
+      "file": "files/00027.npy",
+      "sha256": "23b439a54ead23e31d24c68c32e79a9c9aff6e082082601114c87e73afb1add6",
+      "bytes": 214662
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\result.json",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/result.json",
+      "file": "files/00028.json",
+      "sha256": "6300d179e94eff0094585fa3dfecf121c65660d16f3f19b35d131476be5eda02",
+      "bytes": 2320
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000000000.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000000000.npy",
+      "file": "files/00029.npy",
+      "sha256": "12e352db3e6fd471eae92715d903840a36a1c328828df2fcf9cd965a8bc9c7ea",
+      "bytes": 778368
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000002720.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000002720.npy",
+      "file": "files/00030.npy",
+      "sha256": "ab176b902ff83a933fc32ec5463282a2a4b096995ab8032233bc8171286f56d5",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000005440.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000005440.npy",
+      "file": "files/00031.npy",
+      "sha256": "426d1d42d621a87d0a6f8011a96595db6dc41f3282a52b27bed6ce17d217e3a6",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000008160.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000008160.npy",
+      "file": "files/00032.npy",
+      "sha256": "678520395dd381e2d1186c8e35d0317fb9c9661684f415770292eefdcd170920",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000010880.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000010880.npy",
+      "file": "files/00033.npy",
+      "sha256": "9b9f263e2d58f7e282fe98ab56dd5e8b2c364b89a48a876d466128d76d8e2a30",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000013600.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000013600.npy",
+      "file": "files/00034.npy",
+      "sha256": "1e47f80c65f41c8bb040f1fb1e400c2f8e2c52d6e9a4e8ccab13a71d0e0dc3ad",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000016320.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000016320.npy",
+      "file": "files/00035.npy",
+      "sha256": "b346eb0fd05ebdb62348b1f34d86c8d26e2b060f74d9bc35efac3f82ef3554b2",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000019040.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000019040.npy",
+      "file": "files/00036.npy",
+      "sha256": "2de32e7f495ab94a1b6d281e9c295c1280d60f661b499f09dc0c5700c08781ec",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000021760.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000021760.npy",
+      "file": "files/00037.npy",
+      "sha256": "3c67d7e8fc2a416089766fd53ff4d3c89810a6164ec619368d046f61719b8996",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000024480.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000024480.npy",
+      "file": "files/00038.npy",
+      "sha256": "04815bac51b597db7b4a430b74704f741cb18efa8cdfe5ae320c892213380522",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000027200.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000027200.npy",
+      "file": "files/00039.npy",
+      "sha256": "1fb624838811710a3038a06daa27ef10ae9e25ce91e43e141c62d839c8800c9a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000029920.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000029920.npy",
+      "file": "files/00040.npy",
+      "sha256": "42c399789abbd755620341d52faf4ca3719d7c4229beddc98baae955a45fb2f1",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000032640.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000032640.npy",
+      "file": "files/00041.npy",
+      "sha256": "91638907e0304cbd5aaa7a77c201bec1c09e82a72a80025a729562b0be305cd8",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000035360.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000035360.npy",
+      "file": "files/00042.npy",
+      "sha256": "a69ca12b54ec3cf2f64c4bcafe9a87f5f81d51e6775d3d13b73a50c4539bfa56",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000038080.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000038080.npy",
+      "file": "files/00043.npy",
+      "sha256": "f435dd53a5b29a0d5e798cd3805fc7b6f6279f763a59f6b761ae12bcdbaf7e7a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000040800.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000040800.npy",
+      "file": "files/00044.npy",
+      "sha256": "ed3c552471ddf488e8a8b5230661a2a0a5fb4ec5ba1a86e0a6ef11a8107b8cc7",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000043520.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000043520.npy",
+      "file": "files/00045.npy",
+      "sha256": "0fb8bcad57cfa09084f31d73545050913799f0b7bc7522e9c3244313a27c02bb",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000046240.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000046240.npy",
+      "file": "files/00046.npy",
+      "sha256": "7cb3cf96eb668ed7cf2e97534a8fcd1439082cfc7f399fffa0387ab7f6c8ab8a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000048960.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000048960.npy",
+      "file": "files/00047.npy",
+      "sha256": "2e00844fdc9ed7232d1b64d68aaf7c54a6d3f337798b6d156b0baa88c0fc7315",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000051680.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000051680.npy",
+      "file": "files/00048.npy",
+      "sha256": "61a0e0557621c2b8634467044d575144bd19cfd819b5a940f06aa5948a801a65",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000054400.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000054400.npy",
+      "file": "files/00049.npy",
+      "sha256": "d78361a8e897f3eed95ae36386110eff6e6202fb7becb5756101a699def36b7f",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000057120.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000057120.npy",
+      "file": "files/00050.npy",
+      "sha256": "b0bd16ac14fda7468266074068cf8bd7f958a0215bd38a6d152a0cc0c715c063",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000059840.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000059840.npy",
+      "file": "files/00051.npy",
+      "sha256": "13655262961bf129ce383d9ee5db1b59be32f0298860cf8810b9e99a21bb948f",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000062560.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000062560.npy",
+      "file": "files/00052.npy",
+      "sha256": "03e3afd08d63453a1105e8b984b034e5eee6f779a4b7e15ca477ce5254c104c8",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000065280.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000065280.npy",
+      "file": "files/00053.npy",
+      "sha256": "ab39a9c3cfa084256fc3de97df93767d615b8f358907596c16e84f01427f0b9a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000068000.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000068000.npy",
+      "file": "files/00054.npy",
+      "sha256": "e0309b3f00b5e3e79b51f1dd314216280a0a6cb7be94546e7ad7bd473dd4ceff",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000070720.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000070720.npy",
+      "file": "files/00055.npy",
+      "sha256": "4781b41299211e47ccdf032f65bd3d7b634884ae4a0b12223dda555cb2f55b64",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000073440.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000073440.npy",
+      "file": "files/00056.npy",
+      "sha256": "90485bd8dde52d0dfba168e77bf186bd9196a994e1be641e491ef427c34ecb2a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000076160.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000076160.npy",
+      "file": "files/00057.npy",
+      "sha256": "3f981a693d738e14b34b68b932d53407bb2cc61f83712414bb272ed1a8ada2bd",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000078880.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000078880.npy",
+      "file": "files/00058.npy",
+      "sha256": "f4bda40b0937135e9b31a65b2e79d0c59690306374faaacf52cdc45cf076cf1a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000081600.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000081600.npy",
+      "file": "files/00059.npy",
+      "sha256": "015e570b6850317bf88da76f80233045cef0b2290758026bbd4841614ee088a9",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000084320.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000084320.npy",
+      "file": "files/00060.npy",
+      "sha256": "430d32d596c0d4cfa1c93b8727403457c07435179a610586ac1860d7ad175aa4",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000087040.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000087040.npy",
+      "file": "files/00061.npy",
+      "sha256": "4646419a6c31abac41ab4756f84a0deb5f9a65e44c709077170a0c03f758556f",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000089760.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000089760.npy",
+      "file": "files/00062.npy",
+      "sha256": "7fcdd0ba627d955b3055ed7072faf66c03f2d62c13a78c6f21a9b2171bee2bb0",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000092480.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000092480.npy",
+      "file": "files/00063.npy",
+      "sha256": "d912e166b0b51fe2b0137e0a897fe4361ae3dd6de359ac162321be2571173496",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000095200.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000095200.npy",
+      "file": "files/00064.npy",
+      "sha256": "2d3b278e503d9aa2f3ff3084c5b3a9fb6faef698cc6509aaefacb9c1a114619d",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000097920.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000097920.npy",
+      "file": "files/00065.npy",
+      "sha256": "22c5d05f83e4a9879ac327ab23055cbf29d32a30b8115e863ff54bf506e437b8",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000100640.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000100640.npy",
+      "file": "files/00066.npy",
+      "sha256": "2a377ecba85ae305c9784c0ee3eaabf0447991fdc095d90eb69d0b841e78859e",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000103360.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000103360.npy",
+      "file": "files/00067.npy",
+      "sha256": "79fc67e7c3b1b2079b955d68ea3b2da6163be8d06b4d14f1e394e488cea43b1a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000106080.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000106080.npy",
+      "file": "files/00068.npy",
+      "sha256": "a3f663b48956b466d065048d146eac96e83bf7a866fd2dc56affb5ce0df2606c",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000108800.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000108800.npy",
+      "file": "files/00069.npy",
+      "sha256": "1d0779796cb360d775542aec6d70c4915ae965cc0c31fa0748a232a0749b3c69",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000111520.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000111520.npy",
+      "file": "files/00070.npy",
+      "sha256": "3d1dd1a13ba69a4fc74832013b2d707610fd51c54e33cb88e17cee2e768f93f7",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000114240.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000114240.npy",
+      "file": "files/00071.npy",
+      "sha256": "c99fc2c7c57fe160d1066190a531ac0d27a691d3035cf67e7cb548f99749c370",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000116960.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000116960.npy",
+      "file": "files/00072.npy",
+      "sha256": "3d1811ee64c29f79ca27eac069a1fd077f841156d657f28ed39e38f7508e59cb",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000119680.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000119680.npy",
+      "file": "files/00073.npy",
+      "sha256": "100288429dc4898ffd02aafa6370c316a64301fefb85222371281c99c24063a3",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000122400.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000122400.npy",
+      "file": "files/00074.npy",
+      "sha256": "3a29b6d591d34edbca7bc0e139961b6367ebc23c694d4f121f83c454c8caaa43",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000125120.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000125120.npy",
+      "file": "files/00075.npy",
+      "sha256": "75852fadfe20acbfa908d41a38cdeb05d7dbc07c94ff82c3fa6179b52d218a23",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000127840.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000127840.npy",
+      "file": "files/00076.npy",
+      "sha256": "146b8643bc24cfd96f1e71f3a49c38ff4b48ecee458105bdc3f0f66653f42fc9",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000130560.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000130560.npy",
+      "file": "files/00077.npy",
+      "sha256": "b9386ec8ff7defc01315580b5bd4cbad7dbf840590fbfd8601015521ffb61ef2",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000133280.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000133280.npy",
+      "file": "files/00078.npy",
+      "sha256": "a6b7830f1b0a35775be3d755ebadb21671dd4e8b2c7c36ddf501817fd8add6ca",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000136000.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000136000.npy",
+      "file": "files/00079.npy",
+      "sha256": "e75f2fb19c54b2560e90a5761b2ae07d01204a0f86d5adf38dbdc3ebb72189be",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000138720.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000138720.npy",
+      "file": "files/00080.npy",
+      "sha256": "3d09c3416319c720c7acd38778958d7f86df2cd4d816a860d3bc59005f74f213",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000141440.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000141440.npy",
+      "file": "files/00081.npy",
+      "sha256": "c85a9a92f474e7e1c41adae1e7d2924b83942eda30bc73436b810d60832a39dc",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000144160.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000144160.npy",
+      "file": "files/00082.npy",
+      "sha256": "f8063fed4bba5a9349dce6f802d929555b358417dd753ff05a4962700d03d0a5",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000146880.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000146880.npy",
+      "file": "files/00083.npy",
+      "sha256": "fd0b8f69d64fadbfc5a54cf75585473c0dc0a356297ae80732e17dee3c55ea90",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000149600.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000149600.npy",
+      "file": "files/00084.npy",
+      "sha256": "71c8da47257349fa84102f999102611557e941f3d3c7aa80fed6c32703d0a025",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000152320.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000152320.npy",
+      "file": "files/00085.npy",
+      "sha256": "596557805304b3909bc9fc020a1cad632b87d6a6d3603024a817a79346b80c2a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000155040.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000155040.npy",
+      "file": "files/00086.npy",
+      "sha256": "ccd06480cdcee62985856c458451a7cc791dfd56cd1474b2c202b81f052687b1",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000157760.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000157760.npy",
+      "file": "files/00087.npy",
+      "sha256": "4bb724ef150921a97a4c12e6148a9b21e4f11e80fbe2c7826d9bde9d71e8ef72",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000160480.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000160480.npy",
+      "file": "files/00088.npy",
+      "sha256": "1197bec00affbf7d80fda93d76ce271745a2a1bc83988c6175f4b773fffa2f48",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000163200.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000163200.npy",
+      "file": "files/00089.npy",
+      "sha256": "a6b09adf967f0f5c6fc5411935e6d0df3d95de6efbd90ee5aa6468b32c3e76aa",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000165920.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000165920.npy",
+      "file": "files/00090.npy",
+      "sha256": "502e1cf8e0ba62985d64db1d57e5cad384996678e3aa0e187528838a37640ec9",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000168640.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000168640.npy",
+      "file": "files/00091.npy",
+      "sha256": "e1ae3e549f2044e3b96b5f319c977c2d0afad65b36ce58f89b19b6106a58829b",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000171360.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000171360.npy",
+      "file": "files/00092.npy",
+      "sha256": "bba9ff51d7d16fa4deb32daaaf8d6cc6eb3c21b2255a975867d8e0ed31cf6275",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000174080.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000174080.npy",
+      "file": "files/00093.npy",
+      "sha256": "d3d87d9239cf7534a9eed1ebd1d3d7252add98f9e18b6b1d59dc67a7505af531",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000176800.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000176800.npy",
+      "file": "files/00094.npy",
+      "sha256": "6095ebd296c7248ea4ce0aadd5aa08f4ceeb1154b26fe39c93d451cedffd8ede",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000179520.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000179520.npy",
+      "file": "files/00095.npy",
+      "sha256": "973dfc269da8f6c2cb2e4f4649828188831495d4fc483ded9e578a9a8c9484cc",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000182240.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000182240.npy",
+      "file": "files/00096.npy",
+      "sha256": "090f930657d34556aeeffd524dfed231d08b8eda16a3fa1828ae7b8dc9e62daa",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000184960.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000184960.npy",
+      "file": "files/00097.npy",
+      "sha256": "6fd2b71f54cb26335d3e359883f15c9e1a54d21089d88b890c43ba702eb60a41",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000187680.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000187680.npy",
+      "file": "files/00098.npy",
+      "sha256": "7b8334c380948e861d105c5adb9794542497fe12c7c9eb662bf226620a6a4571",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000190400.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000190400.npy",
+      "file": "files/00099.npy",
+      "sha256": "9627d572ce1641551625683100ce5060b5abc92af84a5c1d758697eb005688c4",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000193120.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000193120.npy",
+      "file": "files/00100.npy",
+      "sha256": "700f4dce0fb8f1140644d8c759393123fa2134990f7b94c1f93750e58b8bc70f",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000195840.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000195840.npy",
+      "file": "files/00101.npy",
+      "sha256": "14fb4f25aa8d8008d818f0a5ce775c12f32c148de588e6683db5713943ed2bd1",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000198560.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000198560.npy",
+      "file": "files/00102.npy",
+      "sha256": "fe931f00be723e2d3be36cff43f6c613291cc2f01e614428e3331f6784d6c0cf",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000201280.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000201280.npy",
+      "file": "files/00103.npy",
+      "sha256": "99d306b1d57fc042dd1a44c13402b435196f9cf7b3aa1240ba37ab5d7e7addc2",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000204000.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000204000.npy",
+      "file": "files/00104.npy",
+      "sha256": "1a3e147ac58af9b8346adec658ce593045c0d72d92b9e5b33f0f869070c6fbdd",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000206720.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000206720.npy",
+      "file": "files/00105.npy",
+      "sha256": "c6e8e40a1e2179c3c32af927a1c4c49cf8809a3111128eb3820b2d5281fde17b",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000209440.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000209440.npy",
+      "file": "files/00106.npy",
+      "sha256": "5d2e394fee3a5294ccbe2b46ce1fecda580ea2b6926b42716c1ac047eb1b3fe6",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\000212160.npy",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/000212160.npy",
+      "file": "files/00107.npy",
+      "sha256": "b8b1fa5a317e657836af84349477ee3968b8406deb7ddb1d4ae132f9cbc1ac31",
+      "bytes": 1230976
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200709_L_R002S01C01\\original-cache-routes\\routes.json",
+      "logicalPath": "observation-r1/results/20200709_L_R002S01C01/original-cache-routes/routes.json",
+      "file": "files/00108.json",
+      "sha256": "b5b6bd84b042575fdfb3fb5413cb5123b3025a798c717873499de9c794b02351",
+      "bytes": 30642
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\activity-class.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/activity-class.npy",
+      "file": "files/00109.npy",
+      "sha256": "efb1e6193bf8e7f35f710a7c373489ab54d7fbeefed884d4bea1c9c6cb1efd58",
+      "bytes": 219665
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\activity-logits.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/activity-logits.npy",
+      "file": "files/00110.npy",
+      "sha256": "609508768398560637cf8253bd9c057dafe90c652779a28083ec5d3782f7bb15",
+      "bytes": 2634572
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\guarded-overlap.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/guarded-overlap.npy",
+      "file": "files/00111.npy",
+      "sha256": "ac34d94bb081147bbb1996b05fa9f7190aa1d78627ccebc9f48e79a155dc7b77",
+      "bytes": 219665
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\legacy-overlap.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/legacy-overlap.npy",
+      "file": "files/00112.npy",
+      "sha256": "59a4fe38a32570bb49d75ae86f2d6a9292875e8ac24167a5f5d12ab35a7ce8f3",
+      "bytes": 219665
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\result.json",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/result.json",
+      "file": "files/00113.json",
+      "sha256": "0e1ba12dce6b177ce06ac94255e269c635c19ba3a6f559f932a3837b2f131ecc",
+      "bytes": 2323
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000000000.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000000000.npy",
+      "file": "files/00114.npy",
+      "sha256": "3438d5f53bad0737f7a7476ccabbde4fb66a09c9c27365837dcb8625a412d6fe",
+      "bytes": 778368
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000002720.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000002720.npy",
+      "file": "files/00115.npy",
+      "sha256": "fe6fc43bcb86d8b79238194ce1e7046e4f08f6b33bdbfb4b11f25fbc558839a7",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000005440.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000005440.npy",
+      "file": "files/00116.npy",
+      "sha256": "4bba480d8a573a7395d74882d3e6fa4d80b069b016a633b7e94dbb43fd2cc1ac",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000008160.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000008160.npy",
+      "file": "files/00117.npy",
+      "sha256": "444b025eaadb04ae3ade2eca3f83ebd2d7c30e140987cc2319014f8ae5577d30",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000010880.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000010880.npy",
+      "file": "files/00118.npy",
+      "sha256": "d0f82b053f454d4f4d6528e2bec0643f404caa5854ee065654ba9297ca9993da",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000013600.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000013600.npy",
+      "file": "files/00119.npy",
+      "sha256": "8762f6405a2cb792e124be29d910c383c69087c311778baf43f57daa4c01c670",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000016320.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000016320.npy",
+      "file": "files/00120.npy",
+      "sha256": "e5bfc590f013fdfd3e0432cd9c8891524326499c8672e0cec1aed9d2095bcc23",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000019040.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000019040.npy",
+      "file": "files/00121.npy",
+      "sha256": "8085d9ab74bdaba490641119fc2e2bd1c7509a6fdbbc7e89059d564b9d7501d8",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000021760.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000021760.npy",
+      "file": "files/00122.npy",
+      "sha256": "fb5cd699b7f91bba0e9e1fb2697b736703ad665b2ba20a6d08a1a9523d32f00b",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000024480.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000024480.npy",
+      "file": "files/00123.npy",
+      "sha256": "d9866052cbc10964e682aacb345b72bbdb7e4c1359e4636d0b788e86fca35abb",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000027200.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000027200.npy",
+      "file": "files/00124.npy",
+      "sha256": "3bc659a221fe866ba64c03a48408a1f2401dc3b2ab64f5e68266b829dbc9346a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000029920.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000029920.npy",
+      "file": "files/00125.npy",
+      "sha256": "5338237b61939f243ca7e1d6b7376ca1f8728e815624f4608c8bedaca3c77639",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000032640.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000032640.npy",
+      "file": "files/00126.npy",
+      "sha256": "439ee137fc9e23964decaa8a3e8dc53b0a4a2a4e49fe880ad6f5a13f385da43d",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000035360.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000035360.npy",
+      "file": "files/00127.npy",
+      "sha256": "e6a8be24c033419a2f8dc00e5a2ecf039257661476b0ef09c11bdbbf58eaab97",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000038080.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000038080.npy",
+      "file": "files/00128.npy",
+      "sha256": "c7ff2fb32cfb696f58bd5f100dd868cbe4aa01f6d89e1e294b504ed87ce05cc6",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000040800.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000040800.npy",
+      "file": "files/00129.npy",
+      "sha256": "9c63f3b60308c96b0af634b7186ca7bf1e566b4988eef2c9a637ce1e658a9bd1",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000043520.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000043520.npy",
+      "file": "files/00130.npy",
+      "sha256": "5648520369216df23f27755548fd5f48890b0eea08e938ada76f804af655db68",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000046240.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000046240.npy",
+      "file": "files/00131.npy",
+      "sha256": "d35f8cb54918def92c5f88613979939c8dbf6b58f5964e3b3e0920d30068a190",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000048960.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000048960.npy",
+      "file": "files/00132.npy",
+      "sha256": "52ebfa7d6d29a7e9cd3572722202694c3d8b73f87a67c6136147725f40600a32",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000051680.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000051680.npy",
+      "file": "files/00133.npy",
+      "sha256": "ea6ebe9c801dadf4d4cf617cc703a5c41afd0f4c24c271d59502485370063dd5",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000054400.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000054400.npy",
+      "file": "files/00134.npy",
+      "sha256": "1de0028d022c74567328dcd9e9746e1a4ee0125388d7d46ec7118edc04c7ae86",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000057120.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000057120.npy",
+      "file": "files/00135.npy",
+      "sha256": "f4c837a115cd02282991b437a530df2a6988fc6f3d3806809c9ba992a794d088",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000059840.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000059840.npy",
+      "file": "files/00136.npy",
+      "sha256": "dd1171204fc7f38d7feeefc52c5ee42e4d72c76387c349186e13e2336e60357a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000062560.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000062560.npy",
+      "file": "files/00137.npy",
+      "sha256": "b230989fecf1a5fcfbcbff9a822f162b251895a90c3df6c3c62acb1f75dfc315",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000065280.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000065280.npy",
+      "file": "files/00138.npy",
+      "sha256": "9966564910b728ef44744a41aa79deedc2ab09f5e50db5126e10f4d380221c96",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000068000.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000068000.npy",
+      "file": "files/00139.npy",
+      "sha256": "b43d8a0643699d18811697ead70b37927a3700689f5c80dc14a6aa198d9ed33d",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000070720.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000070720.npy",
+      "file": "files/00140.npy",
+      "sha256": "43cc990b77bc086252eff64d20090d454a0fd2550e5c58d6111501eff613ad2d",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000073440.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000073440.npy",
+      "file": "files/00141.npy",
+      "sha256": "59e407f2f0ca77fb7f6cb46afaeb2596c88a195423f933eb7d65d0ac70bca894",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000076160.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000076160.npy",
+      "file": "files/00142.npy",
+      "sha256": "def67afe41b7f99c473b15c6847ce4c7ad7cac85c2c6fb8a7dcfb1bacc38c8e8",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000078880.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000078880.npy",
+      "file": "files/00143.npy",
+      "sha256": "a8f939d01a4e388096186d8ba42d1d4f29d425a745b03fb9fc309c5f21c041e7",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000081600.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000081600.npy",
+      "file": "files/00144.npy",
+      "sha256": "19d98784533646bb1449181b88d72f3528e688984305914fb8d8487516af77a6",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000084320.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000084320.npy",
+      "file": "files/00145.npy",
+      "sha256": "2fbf5ae7e92e291dd9f2435875f8dfa9b17b980b2db44fb4446eafa0faae25b2",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000087040.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000087040.npy",
+      "file": "files/00146.npy",
+      "sha256": "fc432e3c0533b78c38b1e24cd00c7e46d73d17f4909944393ea838992ef1415c",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000089760.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000089760.npy",
+      "file": "files/00147.npy",
+      "sha256": "ef160d46c47a1fde11d1da75ef18361c45598ddf9b6a06dd77c60494e978f4a9",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000092480.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000092480.npy",
+      "file": "files/00148.npy",
+      "sha256": "2cc1d9a264a9580e03cb5d7c6f6802941ca5bcf38d3ea6ed24ef326c7c5c86b2",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000095200.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000095200.npy",
+      "file": "files/00149.npy",
+      "sha256": "c2c0cac7ffa71170bf2f7e53e7459ecf3f036569366f1c3b378509433c39ae13",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000097920.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000097920.npy",
+      "file": "files/00150.npy",
+      "sha256": "a3608ef9dd833dbe4ad16e64bb383a648c425f26c107e531bc2e7df803226c39",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000100640.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000100640.npy",
+      "file": "files/00151.npy",
+      "sha256": "d4071c6aa4f485247c7a3ba4bdeda5b9c2c059bd618fd438186d286d4bfc3c65",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000103360.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000103360.npy",
+      "file": "files/00152.npy",
+      "sha256": "425c689aa54314cb96e18d7e74050aaa9f4b8cf71e9a0c3bec6be9e3d89cb88b",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000106080.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000106080.npy",
+      "file": "files/00153.npy",
+      "sha256": "d91254e1ed82aae84ee003fc61d98ab3e34f409dc06ea524d93522c483622ecf",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000108800.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000108800.npy",
+      "file": "files/00154.npy",
+      "sha256": "20325b772845f18b6a12b17861a2f86e79731e97efd0199d9b8d7a1fb22a8061",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000111520.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000111520.npy",
+      "file": "files/00155.npy",
+      "sha256": "3d62cb5de3a4310c34544aecbe317ebb58d0b115a298b8db706b52c02a93f8a3",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000114240.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000114240.npy",
+      "file": "files/00156.npy",
+      "sha256": "f67bbcb193d986326987304ff8b6648aa8866e92d92bea92ebdaa9c527d70f54",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000116960.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000116960.npy",
+      "file": "files/00157.npy",
+      "sha256": "8cea6faf8dcf69c543f6e891671c116e0e35aaba22e8494906f7428f1a327215",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000119680.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000119680.npy",
+      "file": "files/00158.npy",
+      "sha256": "c58d9f3320b3a6a2e80d97308c5d1d183f04c2c15f2ff6da58e021d7d2f7c477",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000122400.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000122400.npy",
+      "file": "files/00159.npy",
+      "sha256": "e7d4006b13f651a90529a9f0828a4cf5c52d667c1268a5aa92cfe211e439e255",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000125120.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000125120.npy",
+      "file": "files/00160.npy",
+      "sha256": "6d8e08aac5a3348040a7e16aa98bc9df4e054622db13b21c931212995d275ac0",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000127840.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000127840.npy",
+      "file": "files/00161.npy",
+      "sha256": "50613068a2fe1f09b06e2d11584ad20a00d2d227d3a9a6397e6e6f809360374a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000130560.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000130560.npy",
+      "file": "files/00162.npy",
+      "sha256": "e20c2f6e7a9df74d8c17e8f0be3c0ddd7ea042f7da051a07786852d8c391317c",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000133280.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000133280.npy",
+      "file": "files/00163.npy",
+      "sha256": "cbf07aa4c007cb73d384e6251400607976c153913df41b9fcdbb3994ea0e7f23",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000136000.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000136000.npy",
+      "file": "files/00164.npy",
+      "sha256": "c9fc2f95e239f531bdefb45807baf908caad0ad1ddaa7112c2b7efde8936d0a6",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000138720.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000138720.npy",
+      "file": "files/00165.npy",
+      "sha256": "76fe76661d792744a0362872e2cf521863abe100ca22aa3fdd0a2aef2285eda9",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000141440.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000141440.npy",
+      "file": "files/00166.npy",
+      "sha256": "f69fba36fce4214d7cc4934f95179f00f7982e934d1131fd5027e9c747e7f1b9",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000144160.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000144160.npy",
+      "file": "files/00167.npy",
+      "sha256": "baa8bc763a3ca503cc802309575f6cc2cedc606b59423fd8f7cd8d6ff99e10cd",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000146880.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000146880.npy",
+      "file": "files/00168.npy",
+      "sha256": "fab77a341087eee381c4ec1d711c0d22bb798d39bec41391123e5c6cbc1b7e9f",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000149600.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000149600.npy",
+      "file": "files/00169.npy",
+      "sha256": "a9d2b96f25a34de690386af67037fccd1a26da1fa39659f8b2c37faafa14d89e",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000152320.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000152320.npy",
+      "file": "files/00170.npy",
+      "sha256": "cae910775e2224010fded3be6c02312ea30e2ede2f61853dd1c02e83c3b450a6",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000155040.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000155040.npy",
+      "file": "files/00171.npy",
+      "sha256": "daa60da04e9a8c9403eb5c97c738ac8f04fc1e0e22a866caaac66f7f5b147237",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000157760.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000157760.npy",
+      "file": "files/00172.npy",
+      "sha256": "c8bb1520203c9dbf3cd3a5ebdd95a19e7bba8f85dc646fb63e4b70a0cfb7a458",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000160480.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000160480.npy",
+      "file": "files/00173.npy",
+      "sha256": "ec3919b5d9b38b72fdbb177efd49305787679db08974cf39ed8fb1b46b10abc6",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000163200.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000163200.npy",
+      "file": "files/00174.npy",
+      "sha256": "78ac92c33283bf28f2360df6ae8ff1af308b34e7787f2ac8d8ace06743d2d62c",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000165920.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000165920.npy",
+      "file": "files/00175.npy",
+      "sha256": "fb345d06011f99e4153b7f9ef95b439429807a5cd960971c85565afcca60cb2f",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000168640.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000168640.npy",
+      "file": "files/00176.npy",
+      "sha256": "73087c4b4e33f8753a830ca177393f8ede7fcd73bf4bcdaf90fc90cc0ddd714c",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000171360.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000171360.npy",
+      "file": "files/00177.npy",
+      "sha256": "2d8a74fa7b63c69dbdccf36c4f42b0f7286f3c66987c9d92e0d28aae77fa0a0a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000174080.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000174080.npy",
+      "file": "files/00178.npy",
+      "sha256": "cfaeefea5e1e38d6964f8711058708988520b20c41a9a6a058a6751a2179e4f5",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000176800.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000176800.npy",
+      "file": "files/00179.npy",
+      "sha256": "e312b78d04074521215399e68c744e3eabc2d2a6191cf45c77522cf372aac01c",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000179520.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000179520.npy",
+      "file": "files/00180.npy",
+      "sha256": "be16a92bd39672bbe03c91b14164ac3987897e70b46ea56d8b4e3941405ddc14",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000182240.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000182240.npy",
+      "file": "files/00181.npy",
+      "sha256": "fb73098c2d390a28b941c7d96034fec54a86cea89e5f38049cd5b4fc60e8bd90",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000184960.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000184960.npy",
+      "file": "files/00182.npy",
+      "sha256": "f2c994843b40799baab828b99c6e06d424d3d12c8b731759872e62afe9ec6fda",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000187680.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000187680.npy",
+      "file": "files/00183.npy",
+      "sha256": "02ce67e304b712f1f997c533dd399f48b4e8013b04051cf58aa8a2188d4e6b44",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000190400.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000190400.npy",
+      "file": "files/00184.npy",
+      "sha256": "9c550063210aa6619676763e6e3885af91c5916306ba63e46f1305aaa0a2060a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000193120.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000193120.npy",
+      "file": "files/00185.npy",
+      "sha256": "a732aae7f099b166429dbfb9ca26a18710d4d22152fda1e8f318f26bebfefff8",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000195840.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000195840.npy",
+      "file": "files/00186.npy",
+      "sha256": "fcce823525a005729302501acb4e6c57ad5440a22b49c6f9b1b07b4bd0583c72",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000198560.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000198560.npy",
+      "file": "files/00187.npy",
+      "sha256": "1479b1231d9c2d98d71070aa997bc2fdc0f5173f407d549a16c94531a4f5e5c3",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000201280.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000201280.npy",
+      "file": "files/00188.npy",
+      "sha256": "2fec2cb669049fbeaa056357bde89eae00f5e4e021ef965624e9dd8e6ab194ae",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000204000.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000204000.npy",
+      "file": "files/00189.npy",
+      "sha256": "18629e29d02e7d67390a2b8c227ec505f8aa367a021f21bca1f0db573278336c",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000206720.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000206720.npy",
+      "file": "files/00190.npy",
+      "sha256": "31e482ae17838c0575926ee68b0c39a3979b51373f88f8303d3a69ddef089e8a",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000209440.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000209440.npy",
+      "file": "files/00191.npy",
+      "sha256": "691ad1c3685e971c7ecd4e51c4115011fcf495b179af6d1efbe4902cb534f916",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000212160.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000212160.npy",
+      "file": "files/00192.npy",
+      "sha256": "37854258c1a38f88d6924527aaba2502def6f9303240a998c1a41566cef61b4b",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000214880.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000214880.npy",
+      "file": "files/00193.npy",
+      "sha256": "3291afee0aa1ec90691d407c5445999e54b475c8c7d028feafbec7683dce0bc2",
+      "bytes": 1400960
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\000217600.npy",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/000217600.npy",
+      "file": "files/00194.npy",
+      "sha256": "1aca7ec6e6c12b3cbb20624f729982ab9ff1b927c4530939eb03a4be10d20232",
+      "bytes": 1120384
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\routes.json",
+      "logicalPath": "observation-r1/results/20200805_S_R001S01C01/original-cache-routes/routes.json",
+      "file": "files/00195.json",
+      "sha256": "fbb9a70a425807325d2b9dcdce63d23768845283958a6fa3b708ea450c6eda08",
+      "bytes": 31414
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\inventory.log",
+      "logicalPath": "composition-r1/asr-r1/inventory.log",
+      "file": "files/00196.log",
+      "sha256": "c71f1e748597d446895691ce000547ec8f807e5df94d15633449379510fb50cc",
+      "bytes": 581
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\original-native-control.json",
+      "logicalPath": "composition-r1/asr-r1/original-native-control.json",
+      "file": "files/00197.json",
+      "sha256": "def3baab64c4dbe774f882f5954d3e68fa555eefa21d6caa5051ab6596852eb7",
+      "bytes": 2387
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\run.json",
+      "logicalPath": "composition-r1/asr-r1/run.json",
+      "file": "files/00198.json",
+      "sha256": "956394e84849e92277f1cb72fd59b3e3c5f8f4ad7091f3bbd15cd200831fffd1",
+      "bytes": 637
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\state.json",
+      "logicalPath": "composition-r1/asr-r1/state.json",
+      "file": "files/00199.json",
+      "sha256": "2929827f34c78b100fba8d756c0f6ee1fa39dd475e1e72ed43b46605a60ae894",
+      "bytes": 30270
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\weight-roundtrip.json",
+      "logicalPath": "composition-r1/asr-r1/weight-roundtrip.json",
+      "file": "files/00200.json",
+      "sha256": "64ec19109dc172feb38176b1845ad076084c081bb7754c1033f3bbef240e4ef1",
+      "bytes": 1632
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\worker-state.json",
+      "logicalPath": "composition-r1/asr-r1/worker-state.json",
+      "file": "files/00201.json",
+      "sha256": "0d43b073ca111d758048f4598bf0843945cef67694fbdc4c549853bdfa8be6ef",
+      "bytes": 1058
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\worker.log",
+      "logicalPath": "composition-r1/asr-r1/worker.log",
+      "file": "files/00202.log",
+      "sha256": "aa7301329724ae875b0d67ef41ae76127e6fbc3268aa8718f647e2cd2199f8e2",
+      "bytes": 462
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "composition-r1/asr-r1/inventory/hip-inventory.json",
+      "file": "files/00203.json",
+      "sha256": "422883bb4810215693b71f9054cf4317099c38155aabf9ae2277369ee4da2396",
+      "bytes": 1392
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\inventory\\inventory-resources.jsonl",
+      "logicalPath": "composition-r1/asr-r1/inventory/inventory-resources.jsonl",
+      "file": "files/00204.jsonl",
+      "sha256": "c70e9aef63c93229d2e5636ea6e4d8d596968ea9f8da0704838f80b971dc4af9",
+      "bytes": 856
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\inventory\\inventory-run.json",
+      "logicalPath": "composition-r1/asr-r1/inventory/inventory-run.json",
+      "file": "files/00205.json",
+      "sha256": "2e9abb319f6fe113636360edbb4bca0c9e1d523986810ce1a8490895989981bb",
+      "bytes": 612
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "composition-r1/asr-r1/inventory/inventory-worker.log",
+      "file": "files/00206.log",
+      "sha256": "23e4bee231b13d2840666cd50af794a9557577ae6394621a14a6a213847e511c",
+      "bytes": 1211
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-01\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-01/stream-0/result.json",
+      "file": "files/00207.json",
+      "sha256": "cfbdbcb5e2f0be89b5b58b12b38bee9f822385c4ae3c99df26f3e61be166d63d",
+      "bytes": 873
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-01\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-01/stream-1/result.json",
+      "file": "files/00208.json",
+      "sha256": "9c50f9fe745745570cecea131b365f09938761413d69dbc04e54c0d40ba42a25",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-02\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-02/stream-0/result.json",
+      "file": "files/00209.json",
+      "sha256": "b7dba49f5e1dd83886fa326dd67d3e348179263b392f2589b3eae715b8a3e7d1",
+      "bytes": 873
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-02\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-02/stream-1/result.json",
+      "file": "files/00210.json",
+      "sha256": "3aeacbedd763e57b43fb5445b5ca1a6f43e8f8f1b9611a66efcce516bf9eac30",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-03\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-03/stream-0/result.json",
+      "file": "files/00211.json",
+      "sha256": "03c686f8a5201ade27b726857117ad72027e3a5fb33879604cde956335812fe1",
+      "bytes": 873
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-03\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-03/stream-1/result.json",
+      "file": "files/00212.json",
+      "sha256": "3f7ac0e41f445648c4fa1a35baf9836c7c2e1d78d1a7692d97b9006bc5209450",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-04\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-04/stream-0/result.json",
+      "file": "files/00213.json",
+      "sha256": "7094b83eec242670f21a7445ab8f0c0bd2210a68e68bf98a73bf23e7f3cc6d41",
+      "bytes": 864
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-04\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-04/stream-1/result.json",
+      "file": "files/00214.json",
+      "sha256": "3c108bba88db083bcab634bf5665d76fac6d6687f56ca3fe9606e55bc407c54a",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-05\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-05/stream-0/result.json",
+      "file": "files/00215.json",
+      "sha256": "2ed33c57dafe9eb41cb7c98db1128f4273b192bbf32e31bf01af571ac8729f74",
+      "bytes": 867
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-clean-short-response-05\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-clean-short-response-05/stream-1/result.json",
+      "file": "files/00216.json",
+      "sha256": "c3cde7b9e7708f7938db3f6fa493a671a3ec5a94dc2db7e3d084b9fea254bd90",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-01\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-01/stream-0/result.json",
+      "file": "files/00217.json",
+      "sha256": "d2c5e10ad085c3ff1f61a109bfeb65b20baa7a4080a21cd09fc534d073011d80",
+      "bytes": 4050
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-01\\stream-0\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-01/stream-0/root.json",
+      "file": "files/00218.json",
+      "sha256": "d695fcbeed6016e5031c436759ea6d94d5c0f434364f8b96ca6f41a0e8b51e5e",
+      "bytes": 2372
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-01\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-01/stream-1/result.json",
+      "file": "files/00219.json",
+      "sha256": "957b3afe574a6298962ed1615d5916f4e0a3c6a1fb5790963153490d51c977c1",
+      "bytes": 993
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-01\\stream-1\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-01/stream-1/root.json",
+      "file": "files/00220.json",
+      "sha256": "005d6af0378d32420ad01273430d420e0e87ee2e2835d37a16f0f71b0bceec13",
+      "bytes": 323
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-02\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-02/stream-0/result.json",
+      "file": "files/00221.json",
+      "sha256": "6f0e40052e2f86ee23cd1d2f925e14be812ade503354ff16a01d4d3085419afb",
+      "bytes": 1260
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-02\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-02/stream-1/result.json",
+      "file": "files/00222.json",
+      "sha256": "d37f23f217b32e56a4623391fea4986891297356bb22ebe17b43a96c6dd25350",
+      "bytes": 840
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-03\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-03/stream-0/result.json",
+      "file": "files/00223.json",
+      "sha256": "f4bf43e437db24b40fd40f088ad57a4b236993e07ae6ebae5f380d745597b67b",
+      "bytes": 3368
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-03\\stream-0\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-03/stream-0/root.json",
+      "file": "files/00224.json",
+      "sha256": "f2794a3ea9c9fe46057afde640bdd7c897fead15f8e12f3acc1eb4c416513696",
+      "bytes": 1912
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-03\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-03/stream-1/result.json",
+      "file": "files/00225.json",
+      "sha256": "8713f0d071dee4b0fb2809a7683b60f3e906b54227f8d35fa2ab54acceeeb380",
+      "bytes": 1140
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-03\\stream-1\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-03/stream-1/root.json",
+      "file": "files/00226.json",
+      "sha256": "6c74d58042843ca1811eaf94e68071053c2de040e50e67e118491899ed5cb3db",
+      "bytes": 422
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-04\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-04/stream-0/result.json",
+      "file": "files/00227.json",
+      "sha256": "4d85d79fa41b451d2631f650351957df4ce8e37720aaaa15a42aed4a61dcfa9f",
+      "bytes": 1197
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-04\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-04/stream-1/result.json",
+      "file": "files/00228.json",
+      "sha256": "222ca1acd5d6b231856a5cac2107a8b030ba6b1334e1705343169b507998c788",
+      "bytes": 840
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-05\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-05/stream-0/result.json",
+      "file": "files/00229.json",
+      "sha256": "3f595f0ef60747ecd0d18434104f3e9c861e3e6bf805208ed416df1c00eb780c",
+      "bytes": 3849
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-05\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-05/stream-1/result.json",
+      "file": "files/00230.json",
+      "sha256": "c7448169af6d84dc1acf3fb91cd6d83410122572d45d20cce295d912f7b407d4",
+      "bytes": 1478
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-06\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-06/stream-0/result.json",
+      "file": "files/00231.json",
+      "sha256": "0c684e7e4b0f1bebc06d661ebfb708f2a205d68272a067339eda80afd29d861d",
+      "bytes": 3227
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-06\\stream-0\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-06/stream-0/root.json",
+      "file": "files/00232.json",
+      "sha256": "2c966326e94b4fcefeeb7c55c361eb322d6b976779b6175fd5e3a6a91021b41f",
+      "bytes": 1819
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-06\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-06/stream-1/result.json",
+      "file": "files/00233.json",
+      "sha256": "7e9e7bfa6262e1b186ef72cb5202d1e1d403e3d317a69ad2629e51b4c9f8dcf8",
+      "bytes": 994
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200709_L_R002S01C01-multi-turn-context-06\\stream-1\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200709_L_R002S01C01-multi-turn-context-06/stream-1/root.json",
+      "file": "files/00234.json",
+      "sha256": "c36d2ecd74bfa0d5bc34a85e2fe723163714a57b5f323b6e7a2ede6d4ce0a88a",
+      "bytes": 324
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-01\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-01/stream-0/result.json",
+      "file": "files/00235.json",
+      "sha256": "0e2bb36e3afd757a5e03de6bb941822f109b026e34d3b5352e78aa846342e178",
+      "bytes": 864
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-01\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-01/stream-1/result.json",
+      "file": "files/00236.json",
+      "sha256": "c10704e368809188fc2db32286912d24fa9b99d3ddefaab7c38cd8307165b11e",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-02\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-02/stream-0/result.json",
+      "file": "files/00237.json",
+      "sha256": "69324443e8a5b23e41aa52ef1a2d19de766defd46f07860debd91a20f31d74a3",
+      "bytes": 861
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-02\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-02/stream-1/result.json",
+      "file": "files/00238.json",
+      "sha256": "c86d456361d5081978dacbba17a9f47d5e38bae242dec72c9647f7e41c2a6bb8",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-03\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-03/stream-0/result.json",
+      "file": "files/00239.json",
+      "sha256": "40d40577f7e6e9a7e960afbbe4daa6f694d8b40219a3853aff63d7c79fd3373b",
+      "bytes": 861
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-03\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-03/stream-1/result.json",
+      "file": "files/00240.json",
+      "sha256": "ec01aafb361459faba42219db668258542e3315ff235fd390b81bb0ccb2f0a2e",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-04\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-04/stream-0/result.json",
+      "file": "files/00241.json",
+      "sha256": "cd1ef7d70ae7bd6cceeb060bde751ca5e2072542f90ebdf27c3405368ed2d047",
+      "bytes": 858
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-04\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-04/stream-1/result.json",
+      "file": "files/00242.json",
+      "sha256": "551b406ad4f9de5f4b12568397a9e90cd4aaae7a9c178a3fa70aa26af52c5b5d",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-05\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-05/stream-0/result.json",
+      "file": "files/00243.json",
+      "sha256": "975bf234b725487e5d52a9a1ae4fb001358d5f563c7380709b4b6e67756c8e0b",
+      "bytes": 849
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-05\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-05/stream-1/result.json",
+      "file": "files/00244.json",
+      "sha256": "78afe25c882746e84fab6f81484966df55eb6f2e6fb0953de6cc68cf8c18dc96",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-06\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-06/stream-0/result.json",
+      "file": "files/00245.json",
+      "sha256": "61534f554d7a7a45976a8258b52d35a77ed9e9204bffbe3edffb8d37182a9bce",
+      "bytes": 852
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-06\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-06/stream-1/result.json",
+      "file": "files/00246.json",
+      "sha256": "92e6784f7107af549f31a33a8b67bd0837fbcdf631803adf65c7c9506d2d63bd",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-07\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-07/stream-0/result.json",
+      "file": "files/00247.json",
+      "sha256": "b912357f3e905af94b66b3fed17110e0ed5de221bc63563e89cb36da75f66879",
+      "bytes": 849
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-07\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-07/stream-1/result.json",
+      "file": "files/00248.json",
+      "sha256": "d38debec1c7e13da79d878e9c307ec416f39fb54f6c4a0efb623994282d0ca09",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-08\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-08/stream-0/result.json",
+      "file": "files/00249.json",
+      "sha256": "6081d7c50d546f5b4617c606eeb3ac39197d4563cef33441b48f85491daa948d",
+      "bytes": 867
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-08\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-08/stream-1/result.json",
+      "file": "files/00250.json",
+      "sha256": "14b9ae8bf997c43864a93def3611d9a4195abf83e36bf1b1f2153c19a2eb1616",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-09\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-09/stream-0/result.json",
+      "file": "files/00251.json",
+      "sha256": "27272cd8f3cf53d171504d6a94ec8f1c534810302076bc1e1504174646450873",
+      "bytes": 849
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-09\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-09/stream-1/result.json",
+      "file": "files/00252.json",
+      "sha256": "fb9fdc7219edc94395cc9eb18f447d2c66fbd20b907d6730ef9aafb13b08c0be",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-10\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-10/stream-0/result.json",
+      "file": "files/00253.json",
+      "sha256": "17056b720070cb6c5a01aa4bb5e1d6af9be3887a0673f59553ef494e75c2a0d6",
+      "bytes": 1375
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-10\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-10/stream-1/result.json",
+      "file": "files/00254.json",
+      "sha256": "e33caa8668eb446fb54f1432f19f633381332ece7521bc623546e274b53e11e0",
+      "bytes": 1347
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-11\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-11/stream-0/result.json",
+      "file": "files/00255.json",
+      "sha256": "4d8b176d0d804638beb9f3e816ea5d42f09d7261a962b8d9391f7f120b02f2be",
+      "bytes": 849
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-11\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-11/stream-1/result.json",
+      "file": "files/00256.json",
+      "sha256": "0d3fbae4bc5b45562c6de98d7890a4d096344ec9805171c524999159f9ab0c1f",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-12\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-12/stream-0/result.json",
+      "file": "files/00257.json",
+      "sha256": "9d45715005ad10dd17781e62b7b2680ea61af20db25e70a620af665d03859bc5",
+      "bytes": 858
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-12\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-12/stream-1/result.json",
+      "file": "files/00258.json",
+      "sha256": "a97233b547de50a3a6d8fbb7786438ee8d08cade29e8f8b937d7871db6743cd4",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-13\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-13/stream-0/result.json",
+      "file": "files/00259.json",
+      "sha256": "cc859c01200b3e8e97166353ef211220051d4cb070c8d41e5ba6cef5f0217c9a",
+      "bytes": 849
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-13\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-13/stream-1/result.json",
+      "file": "files/00260.json",
+      "sha256": "d2dabaed18aac257bf52c6c4d5a02c3624ed2232823631b65c11cf5ffc0faadf",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-14\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-14/stream-0/result.json",
+      "file": "files/00261.json",
+      "sha256": "7bb3d1e6971605299d264ef0a01520fcb7a1e0d36dbcb45ef8eea8f7bd59e22a",
+      "bytes": 1364
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-14\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-14/stream-1/result.json",
+      "file": "files/00262.json",
+      "sha256": "e71b35fc15852815f0328350a46b7bf6e89448616acce185af51be2634cc9d18",
+      "bytes": 1337
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-15\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-15/stream-0/result.json",
+      "file": "files/00263.json",
+      "sha256": "dd20a4089c84a0d10daca36f9f5faab57c3ba8f115ea77038099eb30a1a26213",
+      "bytes": 1001
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-15\\stream-0\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-15/stream-0/root.json",
+      "file": "files/00264.json",
+      "sha256": "7981ca0f48113daeb668228f757496f42fd4f2488f077dbb50557ba8f3e8d614",
+      "bytes": 328
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-15\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-15/stream-1/result.json",
+      "file": "files/00265.json",
+      "sha256": "0cdd08c126f1481ce341daa5fef4a2edc1273a308ce02faff460497dbb298a7c",
+      "bytes": 992
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-15\\stream-1\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-clean-short-response-15/stream-1/root.json",
+      "file": "files/00266.json",
+      "sha256": "7f7dc2acee91d9ab4104b9d9099c702456ed9d87f1871b29b81e3c96349f2677",
+      "bytes": 322
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-01\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-01/stream-0/result.json",
+      "file": "files/00267.json",
+      "sha256": "8d83a923ef5178c8b0274d90776613cb12711b8f5628fceb5c9b25d886b19a90",
+      "bytes": 4009
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-01\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-01/stream-1/result.json",
+      "file": "files/00268.json",
+      "sha256": "f56592beca779de2b07cb498970a98fa4ae9324e2268772feea85541c6abd684",
+      "bytes": 1337
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-02\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-02/stream-0/result.json",
+      "file": "files/00269.json",
+      "sha256": "7d439aa5717b71ee0b9388e69c0a9c601afe8d440eae2397c1475134b6f0b3d3",
+      "bytes": 3927
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-02\\stream-0\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-02/stream-0/root.json",
+      "file": "files/00270.json",
+      "sha256": "0fffd30ae898bea5bdbd3ff4fcf85edf24f9c134e04762ed7d4bd78c1379afde",
+      "bytes": 2288
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-02\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-02/stream-1/result.json",
+      "file": "files/00271.json",
+      "sha256": "97876446c251fd52ca8e5356e3411cc3b907f43ce2330ec2cbdf5883fb297ef7",
+      "bytes": 994
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-02\\stream-1\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-02/stream-1/root.json",
+      "file": "files/00272.json",
+      "sha256": "372c4f80ca43822c3fea5b9c6e864851ebac353548e2b8175858c21eb15c52f2",
+      "bytes": 324
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-03\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-03/stream-0/result.json",
+      "file": "files/00273.json",
+      "sha256": "a7fb233198d4eaee313a135391b78c7f49afbd38917b9f44f8af4b918b7bbf49",
+      "bytes": 3715
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-03\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-03/stream-1/result.json",
+      "file": "files/00274.json",
+      "sha256": "3ad226971501b2e7c21f6453ca658454038aec1d1d2860b5d9014921720a156c",
+      "bytes": 1337
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-04\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-04/stream-0/result.json",
+      "file": "files/00275.json",
+      "sha256": "c7b2ad60ed07161951b192efae119ccabba15668d9a00bf7c7439c468e12cc5f",
+      "bytes": 3812
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-04\\stream-0\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-04/stream-0/root.json",
+      "file": "files/00276.json",
+      "sha256": "4244dacfec6a0d974e7732b4a9ab9f767696805c655460e73107d74e0d31e249",
+      "bytes": 2209
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-04\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-04/stream-1/result.json",
+      "file": "files/00277.json",
+      "sha256": "c9cd184788a8b6dfce74e81c923bddf99813a6fc30c9ffbe52cffed11a04068d",
+      "bytes": 1250
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-04\\stream-1\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-04/stream-1/root.json",
+      "file": "files/00278.json",
+      "sha256": "1f973798e654f14f6ef89810bd83c14ebba25d808ebcfc23273411c65ed3c654",
+      "bytes": 496
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-05\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-05/stream-0/result.json",
+      "file": "files/00279.json",
+      "sha256": "240a4d48f911390f28cf4b3c7ffa70ef9d21cf562a754c5eeeb6da1acbda2d53",
+      "bytes": 1197
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-05\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-05/stream-1/result.json",
+      "file": "files/00280.json",
+      "sha256": "66afd2fa096bb3f3f296a5a3cf2e9c294c4961af798c2db91fb939b47c81f62b",
+      "bytes": 840
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-06\\stream-0\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-06/stream-0/result.json",
+      "file": "files/00281.json",
+      "sha256": "6be9b06d5afeff19545a73ff92c378e2d5845f2222e6a7cd26285c391b6624a2",
+      "bytes": 3187
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-06\\stream-0\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-06/stream-0/root.json",
+      "file": "files/00282.json",
+      "sha256": "93e9a8e4a69fa1b6c7de07c038b939575f459690eaba32f568d1dc8fc93221c8",
+      "bytes": 1794
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-06\\stream-1\\result.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-06/stream-1/result.json",
+      "file": "files/00283.json",
+      "sha256": "490e226df8d39c34a363669e198c60689296c0906e128373213d327485dcfa52",
+      "bytes": 1407
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-multi-turn-context-06\\stream-1\\root.json",
+      "logicalPath": "composition-r1/asr-r1/transcripts/20200805_S_R001S01C01-multi-turn-context-06/stream-1/root.json",
+      "file": "files/00284.json",
+      "sha256": "875f43b4d7d15da0602403a631c3c349a789b4fd7bc98e14577b6eb8cde315d9",
+      "bytes": 599
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\state.json",
+      "logicalPath": "composition-r1/routed-waveforms/state.json",
+      "file": "files/00285.json",
+      "sha256": "e7544f88990b896fa47d9108279bfa0eea70b2b0d1878e7e70b4c7f033d8ce8a",
+      "bytes": 37242
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-01\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-01/reused-asr-0.json",
+      "file": "files/00286.json",
+      "sha256": "cfbdbcb5e2f0be89b5b58b12b38bee9f822385c4ae3c99df26f3e61be166d63d",
+      "bytes": 873
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-01\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-01/reused-asr-1.json",
+      "file": "files/00287.json",
+      "sha256": "9c50f9fe745745570cecea131b365f09938761413d69dbc04e54c0d40ba42a25",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-01\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-01/stream-0.npy",
+      "file": "files/00288.npy",
+      "sha256": "b41fe55ee99cdac1fe61d51915fe09fd4f922af870c00dd69d11c436057df4db",
+      "bytes": 115648
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-01\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-01/stream-1.npy",
+      "file": "files/00289.npy",
+      "sha256": "236a534c3c00ec105c56d4667b24fdc3d0c5081a590b61784b120027eaba4d88",
+      "bytes": 115648
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-02\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-02/reused-asr-0.json",
+      "file": "files/00290.json",
+      "sha256": "b7dba49f5e1dd83886fa326dd67d3e348179263b392f2589b3eae715b8a3e7d1",
+      "bytes": 873
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-02\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-02/reused-asr-1.json",
+      "file": "files/00291.json",
+      "sha256": "3aeacbedd763e57b43fb5445b5ca1a6f43e8f8f1b9611a66efcce516bf9eac30",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-02\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-02/stream-0.npy",
+      "file": "files/00292.npy",
+      "sha256": "c06168eb2b5760e535b00bd3a3af748727c1a4f94beb9cafe21fd81fb85a1d17",
+      "bytes": 109888
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-02\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-02/stream-1.npy",
+      "file": "files/00293.npy",
+      "sha256": "aca3a4c41951d164924cafc4d23a194dbb3c7e102b8f7ba1a6842f57e4a18f40",
+      "bytes": 109888
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-03\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-03/reused-asr-0.json",
+      "file": "files/00294.json",
+      "sha256": "03c686f8a5201ade27b726857117ad72027e3a5fb33879604cde956335812fe1",
+      "bytes": 873
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-03\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-03/reused-asr-1.json",
+      "file": "files/00295.json",
+      "sha256": "3f7ac0e41f445648c4fa1a35baf9836c7c2e1d78d1a7692d97b9006bc5209450",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-03\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-03/stream-0.npy",
+      "file": "files/00296.npy",
+      "sha256": "56a43038c5284e2b447583f7e0cb1e1e40562724b18e3e382bcb9156cac4773a",
+      "bytes": 101568
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-03\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-03/stream-1.npy",
+      "file": "files/00297.npy",
+      "sha256": "9d6232f253a111596fd19e4ea4a223ec1f7077588f5645041834d5122071aad5",
+      "bytes": 101568
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-04\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-04/reused-asr-0.json",
+      "file": "files/00298.json",
+      "sha256": "7094b83eec242670f21a7445ab8f0c0bd2210a68e68bf98a73bf23e7f3cc6d41",
+      "bytes": 864
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-04\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-04/reused-asr-1.json",
+      "file": "files/00299.json",
+      "sha256": "3c108bba88db083bcab634bf5665d76fac6d6687f56ca3fe9606e55bc407c54a",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-04\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-04/stream-0.npy",
+      "file": "files/00300.npy",
+      "sha256": "42aaa7e8a10264788adf8c3914461afe00fda0bf01f8a21b32ada22584239b04",
+      "bytes": 107648
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-04\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-04/stream-1.npy",
+      "file": "files/00301.npy",
+      "sha256": "fd71f4fa904d1d26a9389c746196795bcde94a1e284551c6eb4de855b5aaebd9",
+      "bytes": 107648
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-05\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-05/reused-asr-0.json",
+      "file": "files/00302.json",
+      "sha256": "2ed33c57dafe9eb41cb7c98db1128f4273b192bbf32e31bf01af571ac8729f74",
+      "bytes": 867
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-05\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-05/reused-asr-1.json",
+      "file": "files/00303.json",
+      "sha256": "c3cde7b9e7708f7938db3f6fa493a671a3ec5a94dc2db7e3d084b9fea254bd90",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-05\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-05/stream-0.npy",
+      "file": "files/00304.npy",
+      "sha256": "0111993ef3f1c690eb15434e7309e5855640c7f6b2359a72591a0e3c67eaa457",
+      "bytes": 104448
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-clean-short-response-05\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-clean-short-response-05/stream-1.npy",
+      "file": "files/00305.npy",
+      "sha256": "24433d50b59c3b5f729d9fdb4be185d05e8fc1ac39ea07c9f0a6b4817f6feea7",
+      "bytes": 104448
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-01\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-01/stream-0.npy",
+      "file": "files/00306.npy",
+      "sha256": "14a591522b83a2f228722e418fd6834aa478d98d304f03741ce7dcdba91e81b5",
+      "bytes": 1834688
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-01\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-01/stream-1.npy",
+      "file": "files/00307.npy",
+      "sha256": "ec0d329f998f1a51b89e54f640756fb6e335689f82ccdd934091b90a9ffe6f59",
+      "bytes": 1834688
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-02\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-02/reused-asr-0.json",
+      "file": "files/00308.json",
+      "sha256": "6f0e40052e2f86ee23cd1d2f925e14be812ade503354ff16a01d4d3085419afb",
+      "bytes": 1260
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-02\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-02/reused-asr-1.json",
+      "file": "files/00309.json",
+      "sha256": "d37f23f217b32e56a4623391fea4986891297356bb22ebe17b43a96c6dd25350",
+      "bytes": 840
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-02\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-02/stream-0.npy",
+      "file": "files/00310.npy",
+      "sha256": "4d2c0e6396a097a464952b0894688f010bbe3492066c1282e70e907de92f694e",
+      "bytes": 1844288
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-02\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-02/stream-1.npy",
+      "file": "files/00311.npy",
+      "sha256": "193504c4a69e17424a6ea23fe2a9863a7445544044f09ecf5fa3bf12c687df2e",
+      "bytes": 1844288
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-03\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-03/stream-0.npy",
+      "file": "files/00312.npy",
+      "sha256": "57047fc38b675d119a180e28f9da8e5dfd7507577712660ecf181fe786fae5fe",
+      "bytes": 1602612
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-03\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-03/stream-1.npy",
+      "file": "files/00313.npy",
+      "sha256": "3fe0196bea3381ca0abe661f97d950ee5927d84360cdad9c7b249073d2aaff97",
+      "bytes": 1602612
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-04\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-04/reused-asr-0.json",
+      "file": "files/00314.json",
+      "sha256": "4d85d79fa41b451d2631f650351957df4ce8e37720aaaa15a42aed4a61dcfa9f",
+      "bytes": 1197
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-04\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-04/reused-asr-1.json",
+      "file": "files/00315.json",
+      "sha256": "222ca1acd5d6b231856a5cac2107a8b030ba6b1334e1705343169b507998c788",
+      "bytes": 840
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-04\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-04/stream-0.npy",
+      "file": "files/00316.npy",
+      "sha256": "89ab8dfa0b63c320648869c977dc0a421292907250e07e35ef30683ee52b6579",
+      "bytes": 1705888
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-04\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-04/stream-1.npy",
+      "file": "files/00317.npy",
+      "sha256": "d26f1eb90e35a37b3f062e3112e40569784a19c9f5d5329a65107c672acf8b93",
+      "bytes": 1705888
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-05\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-05/reused-asr-0.json",
+      "file": "files/00318.json",
+      "sha256": "3f595f0ef60747ecd0d18434104f3e9c861e3e6bf805208ed416df1c00eb780c",
+      "bytes": 3849
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-05\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-05/reused-asr-1.json",
+      "file": "files/00319.json",
+      "sha256": "c7448169af6d84dc1acf3fb91cd6d83410122572d45d20cce295d912f7b407d4",
+      "bytes": 1478
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-05\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-05/stream-0.npy",
+      "file": "files/00320.npy",
+      "sha256": "e98117854621ef73e7f7004f61c3717e7c4107b3f90173615f2b3dbc5a848f43",
+      "bytes": 1659408
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-05\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-05/stream-1.npy",
+      "file": "files/00321.npy",
+      "sha256": "7f71cb23948d93bb2234d02a6dc4bc024204e3b8cc22f6851270e7c9efba363b",
+      "bytes": 1659408
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-06\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-06/stream-0.npy",
+      "file": "files/00322.npy",
+      "sha256": "9c69c0ffc0bbb135dd340792c9e387c6a96568fa7623057b5b1fbbfc22c0bbd3",
+      "bytes": 1588584
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200709_L_R002S01C01-multi-turn-context-06\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200709_L_R002S01C01-multi-turn-context-06/stream-1.npy",
+      "file": "files/00323.npy",
+      "sha256": "65b09f7fc7c68bd2222e93f6f5831f904250ce96be46799789621e3207632c52",
+      "bytes": 1588584
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-01\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-01/reused-asr-0.json",
+      "file": "files/00324.json",
+      "sha256": "0e2bb36e3afd757a5e03de6bb941822f109b026e34d3b5352e78aa846342e178",
+      "bytes": 864
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-01\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-01/reused-asr-1.json",
+      "file": "files/00325.json",
+      "sha256": "c10704e368809188fc2db32286912d24fa9b99d3ddefaab7c38cd8307165b11e",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-01\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-01/stream-0.npy",
+      "file": "files/00326.npy",
+      "sha256": "565959fa5bc0bc9ee4dd0715e639125d0fcfc70c5a2af5e0e1723eb791a723a8",
+      "bytes": 135488
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-01\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-01/stream-1.npy",
+      "file": "files/00327.npy",
+      "sha256": "9766c39c83272e32137eb70b46daf02cf94213c81fb9b3e376348e99f4803891",
+      "bytes": 135488
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-02\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-02/reused-asr-0.json",
+      "file": "files/00328.json",
+      "sha256": "69324443e8a5b23e41aa52ef1a2d19de766defd46f07860debd91a20f31d74a3",
+      "bytes": 861
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-02\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-02/reused-asr-1.json",
+      "file": "files/00329.json",
+      "sha256": "c86d456361d5081978dacbba17a9f47d5e38bae242dec72c9647f7e41c2a6bb8",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-02\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-02/stream-0.npy",
+      "file": "files/00330.npy",
+      "sha256": "f0591a2404e3c112a199a51dcdd296715dee1a1158e43906dd37365e06ab3823",
+      "bytes": 107648
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-02\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-02/stream-1.npy",
+      "file": "files/00331.npy",
+      "sha256": "fd71f4fa904d1d26a9389c746196795bcde94a1e284551c6eb4de855b5aaebd9",
+      "bytes": 107648
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-03\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-03/reused-asr-0.json",
+      "file": "files/00332.json",
+      "sha256": "40d40577f7e6e9a7e960afbbe4daa6f694d8b40219a3853aff63d7c79fd3373b",
+      "bytes": 861
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-03\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-03/reused-asr-1.json",
+      "file": "files/00333.json",
+      "sha256": "ec01aafb361459faba42219db668258542e3315ff235fd390b81bb0ccb2f0a2e",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-03\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-03/stream-0.npy",
+      "file": "files/00334.npy",
+      "sha256": "05da81a95f960bb0df9a7da247ebc73c020d3959b9722d6a9699e597106280f7",
+      "bytes": 124928
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-03\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-03/stream-1.npy",
+      "file": "files/00335.npy",
+      "sha256": "33af8890a8021427c446984741d94fe6f81023d2fa32665374f70bbeab4e8cb5",
+      "bytes": 124928
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-04\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-04/reused-asr-0.json",
+      "file": "files/00336.json",
+      "sha256": "cd1ef7d70ae7bd6cceeb060bde751ca5e2072542f90ebdf27c3405368ed2d047",
+      "bytes": 858
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-04\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-04/reused-asr-1.json",
+      "file": "files/00337.json",
+      "sha256": "551b406ad4f9de5f4b12568397a9e90cd4aaae7a9c178a3fa70aa26af52c5b5d",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-04\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-04/stream-0.npy",
+      "file": "files/00338.npy",
+      "sha256": "8b2f7acbb6bec802963de8c2b8e9dbf842e63763b23739ad70647b3617a621a6",
+      "bytes": 115008
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-04\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-04/stream-1.npy",
+      "file": "files/00339.npy",
+      "sha256": "d1e36e43208f1699cb76bb9b58506853c0cf7f44961d9f1f1142c73d8b8913d8",
+      "bytes": 115008
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-05\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-05/reused-asr-0.json",
+      "file": "files/00340.json",
+      "sha256": "975bf234b725487e5d52a9a1ae4fb001358d5f563c7380709b4b6e67756c8e0b",
+      "bytes": 849
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-05\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-05/reused-asr-1.json",
+      "file": "files/00341.json",
+      "sha256": "78afe25c882746e84fab6f81484966df55eb6f2e6fb0953de6cc68cf8c18dc96",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-05\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-05/stream-0.npy",
+      "file": "files/00342.npy",
+      "sha256": "7cc9f9711940fe380cdc810093ddbbde3e3083276749801193623147c9c7ceab",
+      "bytes": 65728
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-05\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-05/stream-1.npy",
+      "file": "files/00343.npy",
+      "sha256": "f043f96f705dd86a1f527e0f881389e73bc2a9773f5c8dfa968691fd1a5f196d",
+      "bytes": 65728
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-06\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-06/reused-asr-0.json",
+      "file": "files/00344.json",
+      "sha256": "61534f554d7a7a45976a8258b52d35a77ed9e9204bffbe3edffb8d37182a9bce",
+      "bytes": 852
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-06\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-06/reused-asr-1.json",
+      "file": "files/00345.json",
+      "sha256": "92e6784f7107af549f31a33a8b67bd0837fbcdf631803adf65c7c9506d2d63bd",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-06\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-06/stream-0.npy",
+      "file": "files/00346.npy",
+      "sha256": "53b843d65df81b458a705c0d2b8ea22befd41541383ed24d78e40dd587a53fdb",
+      "bytes": 66048
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-06\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-06/stream-1.npy",
+      "file": "files/00347.npy",
+      "sha256": "7332083a1739a11b87a3ba3e58c53f640f58973a8f341992c2d756231061ad78",
+      "bytes": 66048
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-07\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-07/reused-asr-0.json",
+      "file": "files/00348.json",
+      "sha256": "b912357f3e905af94b66b3fed17110e0ed5de221bc63563e89cb36da75f66879",
+      "bytes": 849
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-07\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-07/reused-asr-1.json",
+      "file": "files/00349.json",
+      "sha256": "d38debec1c7e13da79d878e9c307ec416f39fb54f6c4a0efb623994282d0ca09",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-07\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-07/stream-0.npy",
+      "file": "files/00350.npy",
+      "sha256": "6a41439eaecd4c6cc55e77a1b3717c750be0867dcc9694a42074835c9608db5d",
+      "bytes": 58424
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-07\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-07/stream-1.npy",
+      "file": "files/00351.npy",
+      "sha256": "13a92f3d8708d685daffbd9cb757548b190e68883a297163f6bcf5d997b3c045",
+      "bytes": 58424
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-08\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-08/reused-asr-0.json",
+      "file": "files/00352.json",
+      "sha256": "6081d7c50d546f5b4617c606eeb3ac39197d4563cef33441b48f85491daa948d",
+      "bytes": 867
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-08\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-08/reused-asr-1.json",
+      "file": "files/00353.json",
+      "sha256": "14b9ae8bf997c43864a93def3611d9a4195abf83e36bf1b1f2153c19a2eb1616",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-08\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-08/stream-0.npy",
+      "file": "files/00354.npy",
+      "sha256": "722ac7974a11e84fd590efec6fd86e93e24e9bfc9a2b32bcecef098176faade6",
+      "bytes": 129408
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-08\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-08/stream-1.npy",
+      "file": "files/00355.npy",
+      "sha256": "191c765f25a59ebd63ed94776c68a22248a75a3b244509201d4fa139e35f835d",
+      "bytes": 129408
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-09\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-09/reused-asr-0.json",
+      "file": "files/00356.json",
+      "sha256": "27272cd8f3cf53d171504d6a94ec8f1c534810302076bc1e1504174646450873",
+      "bytes": 849
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-09\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-09/reused-asr-1.json",
+      "file": "files/00357.json",
+      "sha256": "fb9fdc7219edc94395cc9eb18f447d2c66fbd20b907d6730ef9aafb13b08c0be",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-09\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-09/stream-0.npy",
+      "file": "files/00358.npy",
+      "sha256": "efbcbefd79d38caa112483a01d665100a7417a4c8b29883b2b6b8c6665d7d1b7",
+      "bytes": 59632
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-09\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-09/stream-1.npy",
+      "file": "files/00359.npy",
+      "sha256": "0e39703209c644fe30d83b8b01053011beb657f23fdd6bcb5d76f5971017e657",
+      "bytes": 59632
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-10\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-10/reused-asr-0.json",
+      "file": "files/00360.json",
+      "sha256": "17056b720070cb6c5a01aa4bb5e1d6af9be3887a0673f59553ef494e75c2a0d6",
+      "bytes": 1375
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-10\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-10/reused-asr-1.json",
+      "file": "files/00361.json",
+      "sha256": "e33caa8668eb446fb54f1432f19f633381332ece7521bc623546e274b53e11e0",
+      "bytes": 1347
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-10\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-10/stream-0.npy",
+      "file": "files/00362.npy",
+      "sha256": "b8878d81705bd08314efa36bcc171eaa081a460baee45ab93107348b109e23c1",
+      "bytes": 93248
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-10\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-10/stream-1.npy",
+      "file": "files/00363.npy",
+      "sha256": "8307d5099fb55ebbac148a08d2a574380f90b85835d464f45e05562d2809f7e0",
+      "bytes": 93248
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-11\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-11/reused-asr-0.json",
+      "file": "files/00364.json",
+      "sha256": "4d8b176d0d804638beb9f3e816ea5d42f09d7261a962b8d9391f7f120b02f2be",
+      "bytes": 849
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-11\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-11/reused-asr-1.json",
+      "file": "files/00365.json",
+      "sha256": "0d3fbae4bc5b45562c6de98d7890a4d096344ec9805171c524999159f9ab0c1f",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-11\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-11/stream-0.npy",
+      "file": "files/00366.npy",
+      "sha256": "d09da8c4f552c1f40fd77458efaf9dd382bcb29612fd4788a8281dcd2d16a700",
+      "bytes": 49964
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-11\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-11/stream-1.npy",
+      "file": "files/00367.npy",
+      "sha256": "b26a984e9176863db3ed2b75e8f05741e89a38574ad808caf07cd1eebcc4714a",
+      "bytes": 49964
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-12\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-12/reused-asr-0.json",
+      "file": "files/00368.json",
+      "sha256": "9d45715005ad10dd17781e62b7b2680ea61af20db25e70a620af665d03859bc5",
+      "bytes": 858
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-12\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-12/reused-asr-1.json",
+      "file": "files/00369.json",
+      "sha256": "a97233b547de50a3a6d8fbb7786438ee8d08cade29e8f8b937d7871db6743cd4",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-12\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-12/stream-0.npy",
+      "file": "files/00370.npy",
+      "sha256": "73b7122ad53920ebe4a9f0e629b1685a8bbfe3618ca8ef00c05ab8641e13e071",
+      "bytes": 64540
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-12\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-12/stream-1.npy",
+      "file": "files/00371.npy",
+      "sha256": "08d3a6f85f2c90dbd2dbd06d852025983292560bc9e759df25b30599dc0952e0",
+      "bytes": 64540
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-13\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-13/reused-asr-0.json",
+      "file": "files/00372.json",
+      "sha256": "cc859c01200b3e8e97166353ef211220051d4cb070c8d41e5ba6cef5f0217c9a",
+      "bytes": 849
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-13\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-13/reused-asr-1.json",
+      "file": "files/00373.json",
+      "sha256": "d2dabaed18aac257bf52c6c4d5a02c3624ed2232823631b65c11cf5ffc0faadf",
+      "bytes": 843
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-13\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-13/stream-0.npy",
+      "file": "files/00374.npy",
+      "sha256": "506bf6acec6f671e7b9035a0ddecffd39fe7a245999d2df5068c0f492cc329d7",
+      "bytes": 48756
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-13\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-13/stream-1.npy",
+      "file": "files/00375.npy",
+      "sha256": "169187fdbe3d4171ae0d7bba3ba75685d7742621ee6a0640e49bdc8afe29f926",
+      "bytes": 48756
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-14\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-14/reused-asr-0.json",
+      "file": "files/00376.json",
+      "sha256": "7bb3d1e6971605299d264ef0a01520fcb7a1e0d36dbcb45ef8eea8f7bd59e22a",
+      "bytes": 1364
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-14\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-14/reused-asr-1.json",
+      "file": "files/00377.json",
+      "sha256": "e71b35fc15852815f0328350a46b7bf6e89448616acce185af51be2634cc9d18",
+      "bytes": 1337
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-14\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-14/stream-0.npy",
+      "file": "files/00378.npy",
+      "sha256": "14eab01c25178aa98a2dad2c2fd80e5a5df71d1e6a91f88b2c2f48c0574b5244",
+      "bytes": 30540
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-14\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-14/stream-1.npy",
+      "file": "files/00379.npy",
+      "sha256": "66dac350b3568a61c7c8d90c778496db89386ddca49359955853379759a4bbf8",
+      "bytes": 30540
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-15\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-15/stream-0.npy",
+      "file": "files/00380.npy",
+      "sha256": "0f6adfaf4af468c7b97b4d7adc96a47fa64999fcabb1f1e0a9190ebca718fe6b",
+      "bytes": 30944
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-clean-short-response-15\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-clean-short-response-15/stream-1.npy",
+      "file": "files/00381.npy",
+      "sha256": "7519b4fc1dc2875308b5af9833bfc7debbc4de41ecaceecf4d19096331f87292",
+      "bytes": 30944
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-01\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-01/reused-asr-0.json",
+      "file": "files/00382.json",
+      "sha256": "8d83a923ef5178c8b0274d90776613cb12711b8f5628fceb5c9b25d886b19a90",
+      "bytes": 4009
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-01\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-01/reused-asr-1.json",
+      "file": "files/00383.json",
+      "sha256": "f56592beca779de2b07cb498970a98fa4ae9324e2268772feea85541c6abd684",
+      "bytes": 1337
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-01\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-01/stream-0.npy",
+      "file": "files/00384.npy",
+      "sha256": "895547eded81ca43d5c2b560bc4ff85196650a5199cc13292327236951a0b6d1",
+      "bytes": 1796892
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-01\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-01/stream-1.npy",
+      "file": "files/00385.npy",
+      "sha256": "14006124a1ab00e7a49e22e44ffb025231c0aaaf9cc4933f7cf28664911ae0eb",
+      "bytes": 1796892
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-02\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-02/stream-0.npy",
+      "file": "files/00386.npy",
+      "sha256": "9e656089895349fa130a45eafae6065b3ff3247afc586cd8ac8fe881e7234837",
+      "bytes": 1798732
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-02\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-02/stream-1.npy",
+      "file": "files/00387.npy",
+      "sha256": "3d9a446a73646397edb0cf75bac335ff5e7baa5768fe8747077631fe1d13c3b4",
+      "bytes": 1798732
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-03\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-03/reused-asr-0.json",
+      "file": "files/00388.json",
+      "sha256": "a7fb233198d4eaee313a135391b78c7f49afbd38917b9f44f8af4b918b7bbf49",
+      "bytes": 3715
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-03\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-03/reused-asr-1.json",
+      "file": "files/00389.json",
+      "sha256": "3ad226971501b2e7c21f6453ca658454038aec1d1d2860b5d9014921720a156c",
+      "bytes": 1337
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-03\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-03/stream-0.npy",
+      "file": "files/00390.npy",
+      "sha256": "071aef93c38d006344c5ef2f4476cf89924e80e84ee5f378e3b86675891081e5",
+      "bytes": 1902452
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-03\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-03/stream-1.npy",
+      "file": "files/00391.npy",
+      "sha256": "d0c94269de75d2021fdc90b4aa5738ded029e3f3ceaa6f4b5924fb7680a6ff26",
+      "bytes": 1902452
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-04\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-04/stream-0.npy",
+      "file": "files/00392.npy",
+      "sha256": "d73c0dc2d7f3a5c9599959e9ea633db4be11d3f418797bbea235cf6e56a38978",
+      "bytes": 1685092
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-04\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-04/stream-1.npy",
+      "file": "files/00393.npy",
+      "sha256": "72222d98f32b09a3bebe4048053cee0d3d219a32f761c09572c601397921d642",
+      "bytes": 1685092
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-05\\reused-asr-0.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-05/reused-asr-0.json",
+      "file": "files/00394.json",
+      "sha256": "240a4d48f911390f28cf4b3c7ffa70ef9d21cf562a754c5eeeb6da1acbda2d53",
+      "bytes": 1197
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-05\\reused-asr-1.json",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-05/reused-asr-1.json",
+      "file": "files/00395.json",
+      "sha256": "66afd2fa096bb3f3f296a5a3cf2e9c294c4961af798c2db91fb939b47c81f62b",
+      "bytes": 840
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-05\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-05/stream-0.npy",
+      "file": "files/00396.npy",
+      "sha256": "5c541acc395794a3794f82c634d7f7598f4c0b2ad224046de2a0fa07319d1eff",
+      "bytes": 1646292
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-05\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-05/stream-1.npy",
+      "file": "files/00397.npy",
+      "sha256": "fd9668b21d073b10d7c0de71e88d81058910a4d2a8cf249cb8916079d2e29be1",
+      "bytes": 1646292
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-06\\stream-0.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-06/stream-0.npy",
+      "file": "files/00398.npy",
+      "sha256": "0ecbee0b09adb65f6d3239a5a307f931ef03a3ff7b19d48e6e774048d2fa0ce0",
+      "bytes": 1588332
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\composition-r1\\routed-waveforms\\20200805_S_R001S01C01-multi-turn-context-06\\stream-1.npy",
+      "logicalPath": "composition-r1/routed-waveforms/20200805_S_R001S01C01-multi-turn-context-06/stream-1.npy",
+      "file": "files/00399.npy",
+      "sha256": "41ef13fa86231c3a5d0543dd5b12b652f7548e853f0bf8a08b7da7cace25186d",
+      "bytes": 1588332
+    },
+    {
+      "source": "work\\freeze_single_source_activity_guard_20261115.py",
+      "logicalPath": "continuation-tools/freeze_single_source_activity_guard_20261115.py",
+      "file": "files/00400.py",
+      "sha256": "969b4c4139df62738a830149196e16c3a9eac1433ba76baadf79392a534767c6",
+      "bytes": 6399
+    },
+    {
+      "source": "work\\prepare_activity_guard_composition_20261115.py",
+      "logicalPath": "continuation-tools/prepare_activity_guard_composition_20261115.py",
+      "file": "files/00401.py",
+      "sha256": "735c3e9e026c7672e79f4353bb763d65150506cdbc101e7841ae4724d8ab7c5d",
+      "bytes": 8424
+    },
+    {
+      "source": "work\\protect_single_source_activity_guard_20261115.py",
+      "logicalPath": "continuation-tools/protect_single_source_activity_guard_20261115.py",
+      "file": "files/00402.py",
+      "sha256": "14ea4ad86bce4b6c721ebae96445028ebf64f705725fbbdc75b116ff71f0f0be",
+      "bytes": 5619
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "logicalPath": "canonical-workpoint-snapshot.json",
+      "file": "files/00403.json",
+      "sha256": "16db031c1a6037c4f92dadd5ba90474598589752de936002a2078c6e79098b06",
+      "bytes": 164493
+    }
+  ],
+  "parentCommit": "732b5861290d3f61e07b94db3ed42f8ff8949fb2",
+  "rawOriginalAudioOrWeightsCopied": false,
+  "publicOriginalSpeakerCacheRoutesCopied": true,
+  "optimizerUpdates": 0,
+  "qualityQualified": false,
+  "d2Complete": false,
+  "productDefaultChanged": false
+}

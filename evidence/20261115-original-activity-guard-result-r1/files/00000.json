@@ -1,0 +1,113 @@
+{
+  "state": "COMPLETE_FIXED_ACTIVITY_GUARD_SOURCE_DIAGNOSTICS_WORD_GATE_PENDING",
+  "at": "2026-11-15T19:32:01.073081+08:00",
+  "meetings": [
+    {
+      "meeting": "20200709_L_R002S01C01",
+      "validFrames": 214533,
+      "truthActivityFrames": [
+        11156,
+        193974,
+        9403
+      ],
+      "auxiliaryActivityConfusion": [
+        [
+          8525,
+          2586,
+          45
+        ],
+        [
+          1490,
+          191432,
+          1052
+        ],
+        [
+          85,
+          3380,
+          5938
+        ]
+      ],
+      "originalSpeakerOverlap": {
+        "truePositiveSeconds": 58.64,
+        "falsePositiveSeconds": 12.24,
+        "falseNegativeSeconds": 35.39,
+        "precision": 0.827313769751693,
+        "recall": 0.623630756141657,
+        "f1": 0.7111757928567097
+      },
+      "auxiliaryOverlap": {
+        "truePositiveSeconds": 59.38,
+        "falsePositiveSeconds": 10.97,
+        "falseNegativeSeconds": 34.65,
+        "precision": 0.8440653873489694,
+        "recall": 0.6315005849197065,
+        "f1": 0.7224723202336051
+      },
+      "guardedOverlap": {
+        "truePositiveSeconds": 55.67,
+        "falsePositiveSeconds": 9.92,
+        "falseNegativeSeconds": 38.36,
+        "precision": 0.8487574325354474,
+        "recall": 0.5920450919919175,
+        "f1": 0.6975316376393935
+      },
+      "guardedIsOriginalSubset": true
+    },
+    {
+      "meeting": "20200805_S_R001S01C01",
+      "validFrames": 219536,
+      "truthActivityFrames": [
+        12832,
+        193601,
+        13103
+      ],
+      "auxiliaryActivityConfusion": [
+        [
+          10044,
+          2720,
+          68
+        ],
+        [
+          4160,
+          186917,
+          2524
+        ],
+        [
+          90,
+          3669,
+          9344
+        ]
+      ],
+      "originalSpeakerOverlap": {
+        "truePositiveSeconds": 86.56,
+        "falsePositiveSeconds": 23.41,
+        "falseNegativeSeconds": 44.47,
+        "precision": 0.7871237610257343,
+        "recall": 0.660612073570938,
+        "f1": 0.7183402489626556
+      },
+      "auxiliaryOverlap": {
+        "truePositiveSeconds": 93.44,
+        "falsePositiveSeconds": 25.92,
+        "falseNegativeSeconds": 37.59,
+        "precision": 0.7828418230563002,
+        "recall": 0.7131191330229718,
+        "f1": 0.7463556851311953
+      },
+      "guardedOverlap": {
+        "truePositiveSeconds": 83.16,
+        "falsePositiveSeconds": 19.75,
+        "falseNegativeSeconds": 47.870000000000005,
+        "precision": 0.8080847342337966,
+        "recall": 0.6346638174463863,
+        "f1": 0.7109515260323159
+      },
+      "guardedIsOriginalSubset": true
+    }
+  ],
+  "allOriginalSpeakerPredictionsBitExact": true,
+  "thresholdOrRuleSelectedUsingTheseLabels": false,
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "scope": "Full original segment-level labels at10ms; silence inside lexical turns can be annotated as speech. Report unchanged labels. Final original complete-used-word and person/bilingual gates remain decisive; no source-F1 substitute."
+}

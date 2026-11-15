@@ -1,0 +1,38 @@
+{
+  "id": "20200805_S_R001S01C01-clean-short-response-10",
+  "stream": 1,
+  "sourceWavSha256": "7c8b4c4109f0db4584827d63edff2bcc40b6c291a129de841563e2f66c2e214c",
+  "inputFloatSha256": "8307d5099fb55ebbac148a08d2a574380f90b85835d464f45e05562d2809f7e0",
+  "text": "现在。",
+  "frames": 23280,
+  "reviewRequired": false,
+  "leaves": [
+    {
+      "key": "root",
+      "raw": {
+        "startSample": 0,
+        "endSample": 23280,
+        "text": "现在。",
+        "language": "Chinese",
+        "generatedIds": [
+          99601,
+          1773,
+          151645
+        ],
+        "rawDecoded": "现在。<|im_end|>",
+        "naturalEos": true,
+        "repeatBlock": null,
+        "neuralInferencePerformed": true,
+        "inferenceSeconds": 0.8331265000001622
+      },
+      "reviewRequired": false
+    }
+  ],
+  "wordsPostEdited": false,
+  "referenceUsed": false,
+  "allFramesPreserved": true,
+  "outputStreamDropped": false,
+  "qualityQualified": false,
+  "previousExactInputResult": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\continuous-overlap-composition-r1\\asr-r1\\transcripts\\20200805_S_R001S01C01-clean-short-response-10\\stream-1\\result.json",
+  "previousExactInputResultSha256": "f5f37d42438f1d5a3c3000b990fc706a1755eae2df6563a6706b6bacae2dd87b"
+}

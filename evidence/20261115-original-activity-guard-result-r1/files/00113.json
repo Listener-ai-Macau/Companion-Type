@@ -1,0 +1,50 @@
+{
+  "meeting": "20200805_S_R001S01C01",
+  "audioSha256": "eb1bb3eec8f1984e9286dfb9daf5c0437573a2af40eba7ee4093501259ffe4e6",
+  "featuresSha256": "8884deab17acb5c87b82b395237617e13672b863b6314865be2ae4dfbc224733",
+  "originalSpeakerProbabilitiesBitExact": true,
+  "originalProbabilitySha256": "9a96f10ad5bb5b4637e57b4a7b4b5da4635ffedd2c9efc7dc3a1f357fb8b4553",
+  "frames": 219537,
+  "outputs": {
+    "activity-logits": {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\activity-logits.npy",
+      "sha256": "609508768398560637cf8253bd9c057dafe90c652779a28083ec5d3782f7bb15",
+      "shape": [
+        219537,
+        3
+      ]
+    },
+    "activity-class": {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\activity-class.npy",
+      "sha256": "efb1e6193bf8e7f35f710a7c373489ab54d7fbeefed884d4bea1c9c6cb1efd58",
+      "shape": [
+        219537
+      ]
+    },
+    "legacy-overlap": {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\legacy-overlap.npy",
+      "sha256": "59a4fe38a32570bb49d75ae86f2d6a9292875e8ac24167a5f5d12ab35a7ce8f3",
+      "shape": [
+        219537
+      ]
+    },
+    "guarded-overlap": {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\guarded-overlap.npy",
+      "sha256": "ac34d94bb081147bbb1996b05fa9f7190aa1d78627ccebc9f48e79a155dc7b77",
+      "shape": [
+        219537
+      ]
+    }
+  },
+  "legacyOverlapFrames": 10997,
+  "guardedOverlapFrames": 10291,
+  "activityClassFrames": [
+    14294,
+    193307,
+    11936
+  ],
+  "originalCacheRoutes": "E:\\CodexData\\Companion\\product-d1d2-20261114\\supervised-blind-separation-r1\\single-source-activity-guard-r1\\observation-r1\\results\\20200805_S_R001S01C01\\original-cache-routes\\routes.json",
+  "referenceRead": false,
+  "newWeights": false,
+  "speakerAssociationImplemented": false
+}

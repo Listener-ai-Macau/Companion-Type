@@ -1,0 +1,24 @@
+[
+  {
+    "meeting": "20200709_L_R002S01C01",
+    "role": "validation",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200709_L_R002S01C01\\microphone0.wav",
+    "audioSha256": "7772a2f7106a3abfc306e4e638c452f8996e14083b86b6c11e6587e906690d35",
+    "audioSeconds": 2145.3378125,
+    "frames": 214534,
+    "validSupervisedFrames": 214533,
+    "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200709_L_R002S01C01\\features.npy",
+    "featuresSha256": "d18453b7dfa20a4301c951967b45f43a7ceb3ac2fc5098cc4ca146f9e13a28c4"
+  },
+  {
+    "meeting": "20200805_S_R001S01C01",
+    "role": "validation",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200805_S_R001S01C01\\microphone0.wav",
+    "audioSha256": "eb1bb3eec8f1984e9286dfb9daf5c0437573a2af40eba7ee4093501259ffe4e6",
+    "audioSeconds": 2195.362,
+    "frames": 219537,
+    "validSupervisedFrames": 219536,
+    "features": "E:\\CodexData\\Companion\\.model-cache\\public-speaker-adaptation-20261115\\data-r2\\20200805_S_R001S01C01\\features.npy",
+    "featuresSha256": "8884deab17acb5c87b82b395237617e13672b863b6314865be2ae4dfbc224733"
+  }
+]

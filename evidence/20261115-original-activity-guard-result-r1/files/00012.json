@@ -1,0 +1,1329 @@
+{
+  "state": "REJECT_FIXED_ROUTED_THREE_MODEL_COMPOSITION",
+  "at": "2026-11-15T19:40:34.951017+08:00",
+  "checks": {
+    "naturalContextTotalImproved": true,
+    "neitherContextSourceRegressed": false,
+    "soloTotalNotRegressed": false,
+    "neitherSoloSourceRegressed": false,
+    "allUsedOutputsConfirmed": true
+  },
+  "keepForOriginalWholeMeetingTesting": false,
+  "byCondition": {
+    "multi-turn-context": {
+      "cases": 12,
+      "referenceCharacters": 1476,
+      "baselineDiagnosticEdits": 161,
+      "candidateDiagnosticEdits": 140,
+      "baselineDiagnosticCer": 0.10907859078590786,
+      "candidateDiagnosticCer": 0.0948509485094851,
+      "routed": 9,
+      "reviewRequiredCases": 0,
+      "baselineCounts": {
+        "replace": 33,
+        "insert": 42,
+        "delete": 86
+      },
+      "candidateCounts": {
+        "replace": 60,
+        "insert": 34,
+        "delete": 46
+      }
+    },
+    "clean-short-response": {
+      "cases": 20,
+      "referenceCharacters": 87,
+      "baselineDiagnosticEdits": 13,
+      "candidateDiagnosticEdits": 18,
+      "baselineDiagnosticCer": 0.14942528735632185,
+      "candidateDiagnosticCer": 0.20689655172413793,
+      "routed": 3,
+      "reviewRequiredCases": 0,
+      "baselineCounts": {
+        "replace": 8,
+        "delete": 5
+      },
+      "candidateCounts": {
+        "replace": 9,
+        "delete": 5,
+        "insert": 4
+      }
+    }
+  },
+  "byMeetingAndCondition": {
+    "20200709_L_R002S01C01": {
+      "multi-turn-context": {
+        "cases": 6,
+        "referenceCharacters": 740,
+        "baselineDiagnosticEdits": 48,
+        "candidateDiagnosticEdits": 51,
+        "baselineDiagnosticCer": 0.06486486486486487,
+        "candidateDiagnosticCer": 0.06891891891891892,
+        "routed": 4,
+        "reviewRequiredCases": 0,
+        "baselineCounts": {
+          "replace": 11,
+          "insert": 5,
+          "delete": 32
+        },
+        "candidateCounts": {
+          "replace": 21,
+          "insert": 9,
+          "delete": 21
+        }
+      },
+      "clean-short-response": {
+        "cases": 5,
+        "referenceCharacters": 37,
+        "baselineDiagnosticEdits": 0,
+        "candidateDiagnosticEdits": 0,
+        "baselineDiagnosticCer": 0.0,
+        "candidateDiagnosticCer": 0.0,
+        "routed": 0,
+        "reviewRequiredCases": 0,
+        "baselineCounts": {},
+        "candidateCounts": {}
+      }
+    },
+    "20200805_S_R001S01C01": {
+      "multi-turn-context": {
+        "cases": 6,
+        "referenceCharacters": 736,
+        "baselineDiagnosticEdits": 113,
+        "candidateDiagnosticEdits": 89,
+        "baselineDiagnosticCer": 0.15353260869565216,
+        "candidateDiagnosticCer": 0.12092391304347826,
+        "routed": 5,
+        "reviewRequiredCases": 0,
+        "baselineCounts": {
+          "delete": 54,
+          "insert": 37,
+          "replace": 22
+        },
+        "candidateCounts": {
+          "delete": 25,
+          "insert": 25,
+          "replace": 39
+        }
+      },
+      "clean-short-response": {
+        "cases": 15,
+        "referenceCharacters": 50,
+        "baselineDiagnosticEdits": 13,
+        "candidateDiagnosticEdits": 18,
+        "baselineDiagnosticCer": 0.26,
+        "candidateDiagnosticCer": 0.36,
+        "routed": 3,
+        "reviewRequiredCases": 0,
+        "baselineCounts": {
+          "replace": 8,
+          "delete": 5
+        },
+        "candidateCounts": {
+          "replace": 9,
+          "delete": 5,
+          "insert": 4
+        }
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-01",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 153,
+      "baseline": {
+        "edits": 6,
+        "counts": {
+          "replace": 1,
+          "insert": 1,
+          "delete": 4
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 5,
+        "counts": {
+          "replace": 1,
+          "insert": 1,
+          "delete": 3
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "originalChronologicalEdits": 6,
+      "rawReference": "这一块儿我们这个教练是不分顾客，如果会有V I P待遇和普通顾客他们觉得会有差异的话，会让顾客心里产生不平衡你这个都是一样的是吧？没有什么V I P之类的吗对，有V I P V I P就可能是运动区域比较广阔，就像有什么游泳健身教练之类的，会有V I P会员儿专门儿指定一个教练给他服务。嗯这一块儿这一块儿是我想了解一下咱们这一块儿是怎么做的",
+      "rawBaseline": "这一块儿，我们这个教练是不分顾客。如果会有VIP待遇和普通顾客，他们觉得会有差异的话，会让顾客心里产生不平衡。那这个都是一样的，是吧？对。没有什么VIP之类的吗？有VIP，VIP就可能是运动区域比较广阔，就像有什么游泳、健身教练之类的，会有VIP会员专门指定一个教练给他服务。这一块儿，这一块儿是我想了解一下，咱们这一块儿是怎么做的。",
+      "rawCandidateStreams": [
+        "这一块儿我们这个教练是不分顾客，如果会有VIP待遇和普通顾客，他们觉得会有差异的话，会让顾客心里产生不平衡。那这个都是一样的，是吧？对。没有什么VIP之类的吗？有VIP，VIP就可能是运动区域比较广阔，就像有什么游泳、健身教练之类的，会有VIP会员专门指定一个教练给他服务。这一块儿，这一块儿是我想了解一下，咱们这一块儿是怎么做的？",
+        "对。"
+      ],
+      "candidateReviewRequired": false,
+      "branch": "both-separated-streams",
+      "detectorPredictedOverlapSeconds": 0.98
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-02",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 130,
+      "baseline": {
+        "edits": 4,
+        "counts": {
+          "delete": 3,
+          "replace": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 4,
+        "counts": {
+          "delete": 3,
+          "replace": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "originalChronologicalEdits": 4,
+      "rawReference": "行。而且我们这边儿教练也要了解顾客的心理嘛？像一些顾客会有一些憧憬，他会不会再一个星期或者一个月之内瘦掉几斤？会不会有明显的变化？嗯这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作嗯好。那咱们这个保安部这边儿呢上一个季度的情况怎么样？就是安全情况各种",
+      "rawBaseline": "行，而且我们这边教练也要了解顾客的心理嘛。像一些顾客会有一些憧憬，他会不会在一个星期或者一个月之内瘦掉几斤，会不会有明显的变化？这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作。嗯，好。那咱们这个保安部这边呢，上一个季度的情况怎么样？就是安全情况，各种。",
+      "rawCandidateStreams": [
+        "行，而且我们这边教练也要了解顾客的心理嘛。像一些顾客会有一些憧憬，他会不会在一个星期或者一个月之内瘦掉几斤，会不会有明显的变化？这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作。嗯，好。那咱们这个保安部这边呢，上一个季度的情况怎么样？就是安全情况，各种。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-03",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 125,
+      "baseline": {
+        "edits": 21,
+        "counts": {
+          "insert": 3,
+          "delete": 12,
+          "replace": 6
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 28,
+        "counts": {
+          "insert": 6,
+          "delete": 9,
+          "replace": 13
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          1,
+          1,
+          0
+        ]
+      },
+      "originalChronologicalEdits": 21,
+      "rawReference": "嗯因为现在夏天高温，然后可能会发生什么东西易燃然后这边儿要做好这个安全的措施。那咱们后勤维修部呢就是下半年什么计划对对对对嗯嗯因为上半年的受疫情影响呢来我们健身中心的健身的人相对的比较少，但是呢工作量并没有减少，因为我们对这个消毒的严格的要求其实是增大了他们",
+      "rawBaseline": "嗯，因为现在夏天的高温，然后可能会发生什么东西易燃，然后这边要做好这个安全的措施。那咱们这个后勤维修部呢，就是下半年什么？嗯，因为上半年的受疫情影响，然后我们中心的接机的人相对的比较少，但是呢，工作量并没有减少，因为我们对这个消毒的严格的要求其实是很大的。",
+      "rawCandidateStreams": [
+        "嗯，因为现在夏天的高温，然后可能会发生什么东西易燃，然后这边要做好相应的措施。那咱们这个后勤维修部呢，就是下半年什么？嗯，因为上半年的受疫情影响，然后我们中心的接机的人相对的比较少，但是呢，工作量并没有减少，因为我们对这个消毒的严格的要求其实是很大的。",
+        "可能会，你的安全呢？"
+      ],
+      "candidateReviewRequired": false,
+      "branch": "both-separated-streams",
+      "detectorPredictedOverlapSeconds": 1.18
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-04",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 109,
+      "baseline": {
+        "edits": 4,
+        "counts": {
+          "delete": 4
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 4,
+        "counts": {
+          "delete": 4
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "originalChronologicalEdits": 4,
+      "rawReference": "这样摸一米没有明显的污渍，这是我对他们的要求。所以呃就是嗯包括抹布我们都要定期的更换，洗不出来了我们就扔了它，因为本身我们就是一个非常清洁的，呃让人看着就是愿意停留在这儿的，如果让呃顾客来到我们这里之后，他一摸这个健身器材竟然有灰尘",
+      "rawBaseline": "这样摸一米没有明显污渍，这是我对他们的要求。所以，呃，就是包括抹布，我们都要定期的更换。洗不出来了，我们就扔了。因为本身我们就是一个非常清洁的，呃，让人看着就是愿意停留在这儿。如果让呃顾客来到我们这里之后，他一摸这个健身器材，竟然有灰尘。",
+      "rawCandidateStreams": [
+        "这样摸一米没有明显污渍，这是我对他们的要求。所以，呃，就是包括抹布，我们都要定期的更换。洗不出来了，我们就扔了。因为本身我们就是一个非常清洁的，呃，让人看着就是愿意停留在这儿。如果让呃顾客来到我们这里之后，他一摸这个健身器材，竟然有灰尘。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-05",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 114,
+      "baseline": {
+        "edits": 10,
+        "counts": {
+          "replace": 2,
+          "delete": 8
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 7,
+        "counts": {
+          "replace": 4,
+          "delete": 2,
+          "insert": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "originalChronologicalEdits": 10,
+      "rawReference": "那他可能就心里面儿膈应不愿意来了，所以对健身器材的这个清洁要每天对不想锻炼了呃甚至这个人用完了之后，他们要立刻上去，因为有一些汗渍啊水渍啊那下一个人再用的话，所以要求他们及时的去做一些清洁工作。 呃除了常规的之外，呃楼道呢是要求没有没有脚印嗯",
+      "rawBaseline": "那他可能就心里面各种不愿意来了，所以对健身器材的这个清洁要每天，呃，甚至这个人用完了之后，他们要立刻上去，因为有一些汗渍啊、水渍啊，那下一个人再用的话，所以要求他们及时的去做一些清洁工作。呃，除了常规的之外，呃，楼道呢是要求没有没有脚印。",
+      "rawCandidateStreams": [
+        "那他可能就心里面各种不愿意来了，对，所以对健身器材的这个清洁要每天，呃，甚至这个人用完了之后，他们要立刻上去，因为有一些汗渍啊、水渍啊，那下一个人再用的话，所以要求他们及时的去做一些清洁工作。呃，除了常规的之外，呃，楼道呢是要求没有没有脚印。",
+        "对，不想再练了。"
+      ],
+      "candidateReviewRequired": false,
+      "branch": "both-separated-streams",
+      "detectorPredictedOverlapSeconds": 1.24
+    },
+    {
+      "id": "20200709_L_R002S01C01-multi-turn-context-06",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 109,
+      "baseline": {
+        "edits": 3,
+        "counts": {
+          "replace": 1,
+          "delete": 1,
+          "insert": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 3,
+        "counts": {
+          "replace": 2,
+          "insert": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "originalChronologicalEdits": 3,
+      "rawReference": "嗯制定什么样的计划活动，然后我首先觉得呃我们现在健身还有来询问我们这个情况的这个人员比较少，是因为有一个很重要的一点，就是有很多人对我们这个健身嗯有一些误解他可能缺少这方面的一些了解，或者他觉得做就像网上一些推出了一些什么动作",
+      "rawBaseline": "嗯，有什么样的计划活动？然后我首先觉得，呃，我们现在健身还有来询问我们这个情况的这个人员比较少，是因为有一个很重要的一点，就是有很多人对我们这个健身，嗯，有一些误解，他可能缺少这方面的一些了解，或者他觉得做一就像网上一些推出了一些什么动作。",
+      "rawCandidateStreams": [
+        "嗯，有什么样的计划活动？然后我首先觉得，呃，我们现在健身还有来询问我们这个情况的这个人员比较少，是因为有一个很重要的一点，就是有很多人对我们这个健身，嗯，有一些误解，他可能缺少这方面的一些了解，或者他觉得做一就像网上一些推出了一些什么动作。",
+        "嗯。"
+      ],
+      "candidateReviewRequired": false,
+      "branch": "both-separated-streams",
+      "detectorPredictedOverlapSeconds": 0.37
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-01",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 8,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "零零二我是总经理",
+      "rawBaseline": "零零二，我是总经理。",
+      "rawCandidateStreams": [
+        "零零二，我是总经理。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-02",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 8,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "零二六我是教练部",
+      "rawBaseline": "零二六，我是教练部。",
+      "rawCandidateStreams": [
+        "零二六，我是教练部。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-03",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 8,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "零二八我是保安部",
+      "rawBaseline": "零二八，我是保安部。",
+      "rawCandidateStreams": [
+        "零二八，我是保安部。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-04",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 6,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "零幺九后勤部",
+      "rawBaseline": "零幺九后勤部。",
+      "rawCandidateStreams": [
+        "零幺九后勤部。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200709_L_R002S01C01-clean-short-response-05",
+      "meeting": "20200709_L_R002S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 7,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "零二三运营主管",
+      "rawBaseline": "零二三运营主管。",
+      "rawCandidateStreams": [
+        "零二三运营主管。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-01",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 126,
+      "baseline": {
+        "edits": 3,
+        "counts": {
+          "delete": 3
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 2,
+        "counts": {
+          "delete": 2
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          1
+        ]
+      },
+      "originalChronologicalEdits": 3,
+      "rawReference": "会有这个小区虽然有地下停车场，汽车肯定不会乱停，但是会有一些就有人会不自觉会停一些自行车儿，这方面我们都会让后勤部还有保安部配合把这些车给他们挪放到哪个位置，然后再提醒，毕竟咱们这个是属于上门儿服务嘛，有一些就比方说就会提醒一些小区的住户，告诉他们是谁的车，通知一下，嗯",
+      "rawBaseline": "会有这个小区虽然有地下停车场，汽车肯定不会乱停，但是会有一些，就有人会不自觉，会停一些自行车。这方面我们都会让后勤部还有保安部配合，把这些车给他们挪放到哪个位置，然后再提醒。毕竟咱们这个是属于上门服务嘛，有一些，就比方说就会提醒一些小区的住户，告诉他们是谁的车，通知一下。",
+      "rawCandidateStreams": [
+        "会有这个小区虽然有地下停车场，汽车肯定不会乱停，但是会有一些，就有人会不自觉，会停一些自行车。这方面我们都会让后勤部还有保安部配合，把这些车给他们挪放到哪个位置，然后再提醒。毕竟咱们这个是属于上门服务嘛，有一些，就比方说就会提醒一些小区的住户，告诉他们是谁的车，通知一下。",
+        "嗯。"
+      ],
+      "candidateReviewRequired": false,
+      "branch": "both-separated-streams",
+      "detectorPredictedOverlapSeconds": 0.38
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-02",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 137,
+      "baseline": {
+        "edits": 6,
+        "counts": {
+          "delete": 3,
+          "insert": 2,
+          "replace": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 5,
+        "counts": {
+          "delete": 2,
+          "insert": 2,
+          "replace": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "originalChronologicalEdits": 6,
+      "rawReference": "对不对？ 一定要有人来投诉，或者说有人来上门儿感谢我们，这样太被动了，我们要知道业主对我们的工作是满意还是不满意，还是认可还是不认可，我们就要去走出去对去每一个业主家里去听听他们的声音。对，有时候也会对他们进行一些代收服务，还有那个钥匙不好的话，钥匙坏的话，就是我们也尽快给他们配上，就送上楼去楼去。嗯",
+      "rawBaseline": "对不对？一定要有人来投诉，或者说有人来上门感谢我们，这样太被动了。我们要知道业主对我们的工作是满意还是不满意，还是认可还是不认可，我们就要去走出去，去每一个业主家里去听一听他们的声音。对，有时候也会对他们进行一些代收服务。嗯。还有那个钥匙不好的话，钥匙坏的话，就是我们也尽快给他们配上，就送上楼是楼去。",
+      "rawCandidateStreams": [
+        "对不对？一定要有人来投诉，或者说有人来上门感谢我们，这样太被动了。我们要知道业主对我们的工作是满意还是不满意，还是认可还是不认可，我们就要去走出去，去每一个业主家里去听一听他们的声音。对，有时候也会对他们进行一些代收服务。嗯。还有那个钥匙不好的话，钥匙坏的话，就是我们也尽快给他们配上，就送上楼是楼去。",
+        "嗯。"
+      ],
+      "candidateReviewRequired": false,
+      "branch": "both-separated-streams",
+      "detectorPredictedOverlapSeconds": 0.76
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-03",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 115,
+      "baseline": {
+        "edits": 9,
+        "counts": {
+          "replace": 8,
+          "delete": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 8,
+        "counts": {
+          "replace": 8
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "originalChronologicalEdits": 9,
+      "rawReference": "那嗯下半年的话你们有什么计划或者说有什么想改进的地方，下半年就是效率再提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对跟他们交流结果进行分析。嗯我们小区是有这个呃社区的门诊的，要定期的给六十岁以上的老人做一些简单的体检，嗯",
+      "rawBaseline": "那呃，下半年的话，你们有什么计划，或者说有什么想改进的地方？下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对电商问卷的结果进行分析。呃，我们小区是有这个呃社区的门诊的，要定期的给六十岁以上的老人做一些简单的体检。",
+      "rawCandidateStreams": [
+        "那呃，下半年的话，你们有什么计划，或者说有什么想改进的地方？下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对电商问卷的结果进行分析。呃，我们小区是有这个呃社区的门诊的，要定期的给六十岁以上的老人做一些简单的体检。",
+        "嗯。"
+      ],
+      "candidateReviewRequired": false,
+      "branch": "both-separated-streams",
+      "detectorPredictedOverlapSeconds": 0.63
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-04",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 138,
+      "baseline": {
+        "edits": 30,
+        "counts": {
+          "delete": 16,
+          "insert": 11,
+          "replace": 3
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 14,
+        "counts": {
+          "insert": 6,
+          "replace": 3,
+          "delete": 5
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          1,
+          0,
+          1,
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      "originalChronologicalEdits": 30,
+      "rawReference": "嗯就会属于闪屏的那种模式，让这些字进行滚动，让业主看到消息，如果不看公式，而那些文字的话，他能注意到这些对比较显眼的，就会告诉他们就是停电以后备用电源，嗯嗯比较显眼最好不要用什么大功率的东西，就不要又开空调，又用电脑儿又又看电视的，因为社区人太多，他这样对照明，然后开一个空调就可以了嗯照明就可以了嗯",
+      "rawBaseline": "就会属于闪屏的那种模式，让这些字进行滚动，让业主看到消息。如果不看公示栏儿那些文字的话，他能注意到那些。比较显眼。对，比较显眼的，就会告诉他们，就是停电以后备用电源，最好不要用什么大功率的东西，就不要又开空调又用电脑又又看电视的，因为社区人太多，他这样。照明就可以了。对，照明，然后开一个空调就可以了。",
+      "rawCandidateStreams": [
+        "就会属于闪屏的那种模式，让这些字进行滚动，让业主看到消息。如果不看公示栏儿那些文字的话，他能注意到那些比较显眼。对，比较显眼的，就会告诉他们，就是停电以后备用电源最好不要用什么大功率的东西，就不要又开空调又用电脑又又看电视的，因为社区人太多，他这样又对照明，然后开一个空调就可以了。",
+        "嗯嗯嗯嗯，照明就可以了，嗯。"
+      ],
+      "candidateReviewRequired": false,
+      "branch": "both-separated-streams",
+      "detectorPredictedOverlapSeconds": 4.15
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-05",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 111,
+      "baseline": {
+        "edits": 10,
+        "counts": {
+          "replace": 6,
+          "delete": 3,
+          "insert": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 10,
+        "counts": {
+          "replace": 6,
+          "delete": 3,
+          "insert": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "originalChronologicalEdits": 10,
+      "rawReference": "大家再回去下半年的工作要总结一下我们上半年有什么嗯值得肯定的，还有什么值得需要改进的，要让我们工作更进一步，更上一层楼，那这个门口儿是不是保安不应该设立一些，比方说像一些检查车牌号儿，向一些车主肯定都是车比较多吗，咱们小区毕竟汽车较多，嗯",
+      "rawBaseline": "大家在回去下半年的工作要总结一下，我们上半年有什么嗯值得肯定的，还有什么值得需要改进的，要让我们工作更进一步，更上一层楼。那那个门口是不是保安部应该设立一些，比方说像一些检查车牌号，像一些车主肯定都是车主较多嘛。嗯。咱们小区毕竟汽车较多。",
+      "rawCandidateStreams": [
+        "大家在回去下半年的工作要总结一下，我们上半年有什么嗯值得肯定的，还有什么值得需要改进的，要让我们工作更进一步，更上一层楼。那那个门口是不是保安部应该设立一些，比方说像一些检查车牌号，像一些车主肯定都是车主较多嘛。嗯。咱们小区毕竟汽车较多。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-multi-turn-context-06",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "multi-turn-context",
+      "referenceCharacters": 109,
+      "baseline": {
+        "edits": 55,
+        "counts": {
+          "delete": 28,
+          "replace": 4,
+          "insert": 23
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 50,
+        "counts": {
+          "insert": 16,
+          "replace": 21,
+          "delete": 13
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "originalChronologicalEdits": 55,
+      "rawReference": "嗯嗯，对所以就是说那些螺丝啊那那那些东西一定要检查好嗯因为秋天这方面他如果在荡的时候螺丝会松的话，他就会甩甩出去嗯这方面这这这些地方不容忽视。我们这属于是半年就会定期更换一次螺丝，然后每个星期都会检查两到三次，就是这种安全问题。嗯",
+      "rawBaseline": "因为秋千这方面，它如果在荡的时候螺丝会松的话，它就会把孩子甩出去。对，就是说那些螺丝啊，那那那些东西一定要检查好。嗯，这方面。这这些地方不容忽视。我们这属于是半年就会定期更换一次螺丝，然后每个星期都会检查两到三次，就是这种安全问题。",
+      "rawCandidateStreams": [
+        "嗯，因为秋千这方面，它如果在荡的时候螺丝会松的话，它就会把孩子甩出去。那些螺丝啊，那那那些东西一定要检查好。嗯，这方面地方不容忽视。我们这属于是半年就会定期更换一次螺丝。嗯，每个星期都会检查两到三次，就是这种安全问题。",
+        "对，这些就是说那，嗯，这这这些，然后每。"
+      ],
+      "candidateReviewRequired": false,
+      "branch": "both-separated-streams",
+      "detectorPredictedOverlapSeconds": 6.5
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-01",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 6,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "零零三总经理",
+      "rawBaseline": "零零三总经理。",
+      "rawCandidateStreams": [
+        "零零三总经理。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-02",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 5,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "零零五安保",
+      "rawBaseline": "零零五安保。",
+      "rawCandidateStreams": [
+        "零零五安保。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-03",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 5,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "零零六客服",
+      "rawBaseline": "零零六客服。",
+      "rawCandidateStreams": [
+        "零零六客服。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-04",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 5,
+      "baseline": {
+        "edits": 3,
+        "counts": {
+          "replace": 2,
+          "delete": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 3,
+        "counts": {
+          "replace": 2,
+          "delete": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 3,
+      "rawReference": "零零七主管",
+      "rawBaseline": "民企主管。",
+      "rawCandidateStreams": [
+        "民企主管。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-05",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 1,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "嗯",
+      "rawBaseline": "嗯。",
+      "rawCandidateStreams": [
+        "嗯。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-06",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 2,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "客服",
+      "rawBaseline": "客服。",
+      "rawCandidateStreams": [
+        "客服。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-07",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 1,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "对",
+      "rawBaseline": "对。",
+      "rawCandidateStreams": [
+        "对。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-08",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 8,
+      "baseline": {
+        "edits": 3,
+        "counts": {
+          "replace": 2,
+          "delete": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 3,
+        "counts": {
+          "replace": 2,
+          "delete": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 3,
+      "rawReference": "绿化那边儿怎么样？",
+      "rawBaseline": "六号那边怎么样？",
+      "rawCandidateStreams": [
+        "六号那边怎么样？",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-09",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 1,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "哎",
+      "rawBaseline": "哎。",
+      "rawCandidateStreams": [
+        "哎。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-10",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 5,
+      "baseline": {
+        "edits": 5,
+        "counts": {
+          "replace": 3,
+          "delete": 2
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 7,
+        "counts": {
+          "replace": 3,
+          "delete": 2,
+          "insert": 2
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 5,
+      "rawReference": "保安这边儿",
+      "rawBaseline": "我们是。",
+      "rawCandidateStreams": [
+        "放一点。",
+        "现在。"
+      ],
+      "candidateReviewRequired": false,
+      "branch": "both-separated-streams",
+      "detectorPredictedOverlapSeconds": 0.56
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-11",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 1,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "嗯",
+      "rawBaseline": "嗯。",
+      "rawCandidateStreams": [
+        "嗯。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-12",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 5,
+      "baseline": {
+        "edits": 2,
+        "counts": {
+          "replace": 1,
+          "delete": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 2,
+        "counts": {
+          "replace": 1,
+          "delete": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 2,
+      "rawReference": "属于阴面儿，",
+      "rawBaseline": "属于一面。",
+      "rawCandidateStreams": [
+        "属于一面。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-13",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 1,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "对",
+      "rawBaseline": "对。",
+      "rawCandidateStreams": [
+        "对。",
+        ""
+      ],
+      "candidateReviewRequired": false,
+      "branch": "unchanged-original-asr",
+      "detectorPredictedOverlapSeconds": 0.0
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-14",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 2,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 2,
+        "counts": {
+          "replace": 1,
+          "insert": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "没了",
+      "rawBaseline": "没了。",
+      "rawCandidateStreams": [
+        "没啦。",
+        "嗯。"
+      ],
+      "candidateReviewRequired": false,
+      "branch": "both-separated-streams",
+      "detectorPredictedOverlapSeconds": 0.4751875
+    },
+    {
+      "id": "20200805_S_R001S01C01-clean-short-response-15",
+      "meeting": "20200805_S_R001S01C01",
+      "condition": "clean-short-response",
+      "referenceCharacters": 2,
+      "baseline": {
+        "edits": 0,
+        "counts": {},
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "candidate": {
+        "edits": 1,
+        "counts": {
+          "insert": 1
+        },
+        "referenceAssignmentForDiagnosticOnly": [
+          0
+        ]
+      },
+      "originalChronologicalEdits": 0,
+      "rawReference": "没了",
+      "rawBaseline": "没了。",
+      "rawCandidateStreams": [
+        "没了。",
+        "嗯。"
+      ],
+      "candidateReviewRequired": false,
+      "branch": "both-separated-streams",
+      "detectorPredictedOverlapSeconds": 0.2615
+    }
+  ],
+  "routingProtocolSha256": "7d46c8b4641dc4c11c52191b48d89f76bda1eded80caed5b4e4c1ab519d0c8ca",
+  "detectorFromOriginalWholeAudio": true,
+  "all32SourceClipsPcmExact": true,
+  "noGateFromReferenceOrWords": true,
+  "allWordsOfEveryUsedBranchCounted": true,
+  "bothSeparatedOutputsUsedWheneverRouted": true,
+  "allUnusedShadowArtifactsRetained": true,
+  "originalAlwaysOnDecisionUnchanged": true,
+  "originalAcceptanceScoresUnchanged": true,
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "qualityQualified": false,
+  "d2Complete": false,
+  "saleQualified": false,
+  "productDefaultChanged": false,
+  "ownerParticipationRequired": false,
+  "finalHoldoutOpened": false,
+  "scope": "Three original pretrained specialists: originalNemotron predicted overlap→blindSS two streams→originalQwenASR; no-overlap retains original ASR. Diagnostic cuts are annotation-assisted, ORC-style evaluation does not prove identity or whole-meeting acceptance.",
+  "limits": {
+    "pid": 19892,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 10244096,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
