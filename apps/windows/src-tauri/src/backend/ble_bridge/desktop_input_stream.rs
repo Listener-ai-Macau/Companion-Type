@@ -7,6 +7,7 @@ use std::{future::Future, pin::Pin, sync::atomic::{AtomicBool,Ordering}, time::D
 
 pub(super) type Notifications=Pin<Box<dyn futures::Stream<Item=Result<ValueNotification,String>>+Send>>;
 pub(super) const MOTION_TIMEOUT:Duration=Duration::from_millis(750);
+pub(super) const ACK_TIMEOUT:Duration=Duration::from_secs(2);
 
 // Opt-in, process-bounded QA capture of motion packets only. Normal product
 // sessions do not format or write these records; no microphone data is here.
@@ -36,10 +37,15 @@ pub(super) async fn receive<A,F>(values:&mut Notifications,mode:u8,options:u8,
 )->Result<(),ReceiveError>
 where A:Fn(u32)->F,F:Future<Output=Result<(),String>> {
     let (ack_tx,mut ack_rx)=tokio::sync::watch::channel(None::<u32>);
+    let ack_active=AtomicBool::new(false);
+    let ack_finished=std::sync::Mutex::new(None::<tokio::time::Instant>);
     let acknowledgements=async {
         while ack_rx.changed().await.is_ok() {
             let sequence=(*ack_rx.borrow_and_update()).unwrap();
-            acknowledge(sequence).await?;
+            ack_active.store(true,Ordering::Release);
+            let result=acknowledge(sequence).await;
+            ack_active.store(false,Ordering::Release);result?;
+            *ack_finished.lock().unwrap_or_else(|e|e.into_inner())=Some(tokio::time::Instant::now());
             // Only this receiver sends to the watch slot. Duplicates already
             // buffered DURING that write need no second identical write.
             // A new device retry AFTER completion still wakes changed(), and
@@ -54,6 +60,7 @@ where A:Fn(u32)->F,F:Future<Output=Result<(),String>> {
     let mut motion_at=tokio::time::Instant::now();
     let mut motion_sequence=None;
     let mut ack_sequence=None;
+    let mut deferred_for_ack=false;
     loop {
         tokio::select! {
             result=&mut acknowledgements=>{result?;return Err("动作确认通道已结束。".into());},
@@ -61,7 +68,20 @@ where A:Fn(u32)->F,F:Future<Output=Result<(),String>> {
                 if stop.load(Ordering::Acquire){return Ok(());}
                 // Pointer::frame already releases at300ms. This is recovery,
                 // not a relaxed quality gate. Idle dictation has no CIM clock.
-                if mode==3&&motion_at.elapsed()>=MOTION_TIMEOUT{return Err(ReceiveError::MotionStopped);}
+                if mode==3&&motion_at.elapsed()>=MOTION_TIMEOUT{
+                    // Owner158 cancelled a real ACK at1546ms although that
+                    // write owns a2s deadline. Retiring its GATT owner early
+                    // also forced an expensive rediscovery. Cursor output
+                    // still stops at300ms; this defers RECONNECTION only.
+                    let bounded=motion_at.elapsed()<MOTION_TIMEOUT+ACK_TIMEOUT+Duration::from_millis(100);
+                    if bounded&&ack_active.load(Ordering::Acquire){deferred_for_ack=true;continue;}
+                    // Give already-admitted post-ACK notifications one normal
+                    // dispatch tick. Control spam cannot renew motion_at or
+                    // extend the bound above, and a failed ACK still returns.
+                    if bounded&&deferred_for_ack&&ack_finished.lock().unwrap_or_else(|e|e.into_inner())
+                        .is_some_and(|at|at.elapsed()<Duration::from_millis(100)){continue;}
+                    return Err(ReceiveError::MotionStopped);
+                }
             },
             value=values.next()=>{
                 let mut value=value.ok_or("录音卡交互连接已断开。")??;
@@ -95,7 +115,7 @@ where A:Fn(u32)->F,F:Future<Output=Result<(),String>> {
                     // A duplicate/old callback cannot make a frozen sensor
                     // clock healthy, including at the u32 sequence wrap.
                     if motion_sequence.is_none_or(|previous:u32|{let d=sequence.wrapping_sub(previous);d!=0&&d<0x8000_0000}){
-                        motion_sequence=Some(sequence);motion_at=tokio::time::Instant::now();
+                        motion_sequence=Some(sequence);motion_at=tokio::time::Instant::now();deferred_for_ack=false;
                     }
                 }
                 if let Some(sample)=latest{notify(Update::Motion(sample));}
@@ -142,6 +162,30 @@ mod tests {
     async fn silent_pointer_with_live_native_connection_leaves_waiting_and_requests_recovery(){
         let mut values:Notifications=Box::pin(futures::stream::pending());let stop=AtomicBool::new(false);
         let result=tokio::time::timeout(Duration::from_secs(2),receive(&mut values,3,8,&peer(),&stop,&|_|{},|_|async{Ok(())})).await;
+        assert_eq!(result.unwrap(),Err(ReceiveError::MotionStopped));
+    }
+    #[tokio::test(start_paused=true)]
+    async fn motion_gap_does_not_cancel_an_ack_before_its_existing_write_deadline(){
+        let(tx,rx)=tokio::sync::mpsc::unbounded_channel::<Result<ValueNotification,String>>();
+        let mut values:Notifications=Box::pin(futures::stream::unfold(rx,|mut rx|async move{rx.recv().await.map(|value|(value,rx))}));
+        let stop=AtomicBool::new(false);let acked=Mutex::new(vec![]);
+        let input=async{
+            tx.send(Ok(motion(1))).unwrap();tokio::time::sleep(Duration::from_millis(600)).await;
+            tx.send(Ok(click(1))).unwrap();tokio::time::sleep(Duration::from_millis(1050)).await;
+            tx.send(Ok(motion(2))).unwrap();tokio::time::sleep(Duration::from_millis(500)).await;
+        };
+        let peer=peer();let notify=|event|{
+            if matches!(event,Update::Motion(sample)if sample.sequence==2){stop.store(true,Ordering::Release);}
+        };
+        let receive=receive(&mut values,3,8,&peer,&stop,&notify,|sequence|{let acked=&acked;async move{tokio::time::sleep(Duration::from_secs(1)).await;acked.lock().unwrap().push(sequence);Ok(())}});
+        let(result,())=tokio::join!(receive,input);
+        assert_eq!(result,Ok(()));assert_eq!(*acked.lock().unwrap(),vec![1]);
+    }
+    #[tokio::test(start_paused=true)]
+    async fn a_stuck_ack_cannot_keep_a_dead_motion_stream_alive_forever(){
+        let mut values:Notifications=Box::pin(futures::stream::iter(vec![Ok(motion(1)),Ok(click(1))]).chain(futures::stream::pending()));
+        let stop=AtomicBool::new(false);let peer=peer();
+        let result=tokio::time::timeout(Duration::from_secs(4),receive(&mut values,3,8,&peer,&stop,&|_|{},|_|futures::future::pending())).await;
         assert_eq!(result.unwrap(),Err(ReceiveError::MotionStopped));
     }
     #[tokio::test(start_paused=true)]

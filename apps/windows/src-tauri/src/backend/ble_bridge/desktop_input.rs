@@ -190,12 +190,13 @@ pub(crate) fn listen_mode(
                         |sequence|async move {
                             let message=recorder_input::pointer_ack(input_peer,sequence)?;
                             let trace=AckTrace::new(sequence);
-                            let result=tokio::time::timeout(StdDuration::from_secs(2),input_device.peripheral.write(input_characteristic,&message,WriteType::WithResponse))
+                            let result=tokio::time::timeout(input_stream::ACK_TIMEOUT,input_device.peripheral.write(input_characteristic,&message,WriteType::WithResponse))
                                 .await.map_err(|_|"动作确认超时。".to_string())
                                 .and_then(|r|r.map_err(|e|format!("动作确认未完成：{e}")));
                             trace.finish(result.is_ok());result
                         }).await;
                     if let Err(error)=receive {
+                        eprintln!("desktop_input receiver_end mode={mode} reason={error:?}");
                         if mode==3&&!stop.load(Ordering::Acquire) {
                             stream_failed.store(true,Ordering::Release);
                             notify(Update::Reconnecting("鼠标动作通道已停顿，光标已停止，正在恢复连接。".into()));
@@ -293,6 +294,9 @@ mod hardware_test {
         const DEVICE:&str="C8:ED:45:EB:95:B4";
         assert_eq!(std::env::var("COMPANION_IMU_HARDWARE_LEASE").as_deref(),Ok("fixed-uid-ack-probe-no-mic-no-cursor"));
         let expected: u32=std::env::var("COMPANION_IMU_EXPECT_FIRMWARE").expect("explicit actual firmware").parse().unwrap();
+        let pointer_options: u8=std::env::var("COMPANION_IMU_ACK_OPTIONS").ok().map(|s|s.parse().unwrap()).unwrap_or(8);
+        let quiet_seconds:u64=std::env::var("COMPANION_IMU_ACK_QUIET_SECONDS").ok().map(|s|s.parse().unwrap()).unwrap_or(2);
+        assert!(matches!(pointer_options,8|72)&&matches!(quiet_seconds,2..=5));
         let result=run_native_blocking(async {
             let device=connect_recorder_device_with_clock(Some(DEVICE),false).await?;
             let run=on_native_link(&device,async {
@@ -310,7 +314,7 @@ mod hardware_test {
                 if current.result!=0||current.flags&6!=0||current.events&0x1e00!=0||current.sequence==0xffff_ff00 {
                     return Err("Probe requires idle audio and no queued physical input; no mode changed".into());
                 }
-                let initial=exchange(&device,&characteristic,&mut values,&peer,Some(3),8).await;
+                let initial=exchange(&device,&characteristic,&mut values,&peer,Some(3),pointer_options).await;
                 if !initial.as_ref().is_ok_and(|s|s.result==0&&s.mode==3){
                     let restore=exchange(&device,&characteristic,&mut values,&peer,Some(0),0).await;
                     return Err(format!("Pointer mode not confirmed: {initial:?}; cleanup={restore:?}"));
@@ -318,7 +322,7 @@ mod hardware_test {
                 let stop=AtomicBool::new(false);let phase=std::sync::atomic::AtomicUsize::new(0);
                 let rows=Mutex::new(Vec::<(usize,u32,u128)>::new());let started=StdInstant::now();
                 let writer=async {
-                    tokio::time::sleep(StdDuration::from_secs(2)).await;phase.store(1,Ordering::Release);
+                    tokio::time::sleep(StdDuration::from_secs(quiet_seconds)).await;phase.store(1,Ordering::Release);
                     let packet=recorder_input::pointer_ack(&peer,0xffff_ff00)?;
                     let mut times=Vec::new();let mut error=None;
                     for _ in 0..10 {
@@ -328,14 +332,14 @@ mod hardware_test {
                         match write {Ok(Ok(()))=>{},other=>{error=Some(format!("stale ACK write failed: {other:?}"));break;}}
                         tokio::time::sleep(StdDuration::from_millis(50)).await;
                     }
-                    phase.store(2,Ordering::Release);tokio::time::sleep(StdDuration::from_secs(2)).await;stop.store(true,Ordering::Release);
+                    phase.store(2,Ordering::Release);tokio::time::sleep(StdDuration::from_secs(quiet_seconds)).await;stop.store(true,Ordering::Release);
                     error.map_or(Ok(times),Err)
                 };
                 let observe=|u|{
                     if let Update::Motion(s)=u{rows.lock().unwrap().push((phase.load(Ordering::Acquire),s.sequence,started.elapsed().as_micros()));}
                 };
                 let input_peer=&peer;let input_device=&device;let input_characteristic=&characteristic;
-                let receiver=input_stream::receive(&mut values,3,8,&peer,&stop,&observe,|sequence|async move {
+                let receiver=input_stream::receive(&mut values,3,pointer_options,&peer,&stop,&observe,|sequence|async move {
                     let packet=recorder_input::pointer_ack(input_peer,sequence)?;
                     input_device.peripheral.write(input_characteristic,&packet,WriteType::WithResponse).await.map_err(|e|e.to_string())
                 });

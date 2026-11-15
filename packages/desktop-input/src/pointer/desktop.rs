@@ -1,6 +1,7 @@
 //! Existing-hardware desktop feasibility core. No OS input, disk or BLE.
-//! CIM6 validates board pose and anchors the tabletop plane at observed rest;
-//! CIM5 retains upstream x-io Fusion. No second host AHRS on CIM6.
+//! Ready CIM6 can reuse upstream x-io Fusion for gyro pose propagation within
+//! a stroke. Board pose seeds gaps; accelerometer correction is gated during
+//! translation. Older callers retain the gravity-only/CIM5 adapters.
 //! Causal stroke integration/zero-velocity decisions are Companion adapters;
 //! the upstream Gait-Tracking end-of-stroke interpolation is NONCAUSAL and is
 //! deliberately not represented as a real-time mouse implementation.
@@ -23,17 +24,17 @@ impl Raw {
 }
 #[derive(Clone,Debug,Default,Serialize)]
 #[serde(rename_all="camelCase")]
-pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub stationary:bool,pub board_gravity:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3],pub surface:Option<surface::Status>}
+pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub stationary:bool,pub board_gravity:bool,pub pose_prediction:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3],pub surface:Option<surface::Status>}
 pub struct Desktop {
     fusion:fusion::Fusion,rest:Option<rest::Rest>,last:Option<(u32,u32)>,count:u32,start_ms:Option<u32>,
     accel_sum:[f64;3],gyro_sum:[f64;3],gyro_bias:[f64;3],earth_bias:[f64;3],
     filtered:[f64;2],quiet:f64,stroke:f64,braking:bool,
     surface:Option<surface::Surface>,reacquire_plane:bool,
-    supported_gravity:Option<[f64;3]>,
+    predict_board_pose:bool,reanchor_after_contact:bool,
     pub state:State,
 }
 impl Default for Desktop {
-    fn default()->Self{Self{fusion:fusion::Fusion::default(),rest:None,last:None,count:0,start_ms:None,accel_sum:[0.;3],gyro_sum:[0.;3],gyro_bias:[0.;3],earth_bias:[0.;3],filtered:[0.;2],quiet:0.,stroke:0.,braking:false,surface:None,reacquire_plane:false,supported_gravity:None,state:State::default()}}
+    fn default()->Self{Self{fusion:fusion::Fusion::default(),rest:None,last:None,count:0,start_ms:None,accel_sum:[0.;3],gyro_sum:[0.;3],gyro_bias:[0.;3],earth_bias:[0.;3],filtered:[0.;2],quiet:0.,stroke:0.,braking:false,surface:None,reacquire_plane:false,predict_board_pose:false,reanchor_after_contact:false,state:State::default()}}
 }
 fn board_acceleration(accel:[f64;3],gravity:[f64;3])->Option<([f64;3],[f64;3])>{
     let dot=|a:[f64;3],b:[f64;3]|a.iter().zip(b).map(|(x,y)|x*y).sum::<f64>();
@@ -52,8 +53,19 @@ impl Desktop {
     /// Default's reference integrator for explicit constant-velocity analysis.
     pub fn coarse_gestures()->Self{Self{rest:Some(rest::Rest::default()),..Self::default()}}
     pub fn surface_mouse()->Self{Self{surface:Some(surface::Surface::default()),..Self::coarse_gestures()}}
+    /// Native CIM6 opts in only after its explicit device-ready flag. Do not
+    /// propagate uncalibrated rates merely because a gravity vector exists.
+    pub fn enable_board_pose_prediction(&mut self){self.predict_board_pose=true;}
     pub fn has_surface(&self)->bool{self.surface.is_some()}
-    pub fn contact(&mut self,ms:u32){if let Some(surface)=self.surface.as_mut(){surface.contact(ms);self.clutch();}else{self.tap();}}
+    pub fn contact(&mut self,ms:u32){if let Some(surface)=self.surface.as_mut(){
+        surface.contact(ms);
+        if self.state.pose_prediction{
+            // The accepted tap guard already freezes the target for a bounded
+            // interval. Requiring another stationary interval here latched
+            // Owner158 out while trying to move immediately after a click.
+            self.stop();self.state.clutched=false;self.reanchor_after_contact=true;
+        }else{self.clutch();}
+    }else{self.tap();}}
     fn stop(&mut self){self.state.moving=false;self.state.velocity_mps=[0.;2];self.filtered=[0.;2];self.quiet=0.;self.stroke=0.;self.braking=false;}
     fn clutch(&mut self){self.stop();self.state.clutched=true;self.count=0;self.accel_sum=[0.;3];self.gyro_sum=[0.;3];}
     pub fn tap(&mut self){self.clutch();}
@@ -65,6 +77,7 @@ impl Desktop {
     pub fn sample_with_gravity(&mut self,s:Raw,allow_translation:bool,gravity:Option<[f64;3]>)->Point {
         let board=gravity.and_then(|g|board_acceleration(s.accel_mg,g));
         self.state.board_gravity=board.is_some();
+        self.state.pose_prediction=self.predict_board_pose&&board.is_some();
         if gravity.is_some()&&board.is_none(){self.clutch();return Point::default();}
         let dt=if let Some((sequence,ms))=self.last{
             let n=s.sequence.wrapping_sub(sequence);
@@ -78,7 +91,7 @@ impl Desktop {
                     // despite a missing BLE interval. Drop old XY velocity;
                     // do not demand a new stationary calibration each time.
                     self.state.clutched=false;self.reacquire_plane=false;
-                    if self.surface.is_some(){self.supported_gravity=Some(up.map(|v|v*1000.));}
+                    if self.predict_board_pose{self.fusion.align(up.map(|v|v*1000.));}
                     if let Some(surface)=self.surface.as_mut(){surface.reanchor_if_ready(up);}
                 }else{self.clutch();if self.surface.is_some(){self.reacquire_plane=true;}}
                 // A gap invalidates displacement integration, not the CURRENT
@@ -107,8 +120,10 @@ impl Desktop {
             if !ready{return Point::default();}
             let accel=self.accel_sum.map(|x|x/self.count as f64);
             if let Some(g)=gravity{
-                let g=if self.surface.is_some(){self.supported_gravity=Some(accel);accel}else{g};
-                self.gyro_bias=[0.;3];self.earth_bias=board_acceleration(accel,g).unwrap().0;
+                if self.predict_board_pose{
+                    self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);self.fusion.align(accel);
+                    self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;
+                }else{self.gyro_bias=[0.;3];self.earth_bias=board_acceleration(accel,g).unwrap().0;}
             }else{
                 self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);self.fusion.align(accel);
                 self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;
@@ -122,14 +137,12 @@ impl Desktop {
         // Never learn that force as gravity during a lifted reposition.
         let small_force=self.state.linear_mps2.iter().map(|v|v*v).sum::<f64>()<0.055f64.powi(2);
         let correction=if self.surface.is_some(){small_force&&(self.state.stationary||(!self.state.moving&&on_plane))}else{self.state.stationary||!self.state.moving};
-        // A supported desktop stroke uses the plane actually measured at
-        // rest. Feeding the AHRS's continuously corrected gravity into XY
-        // lets its response to translational acceleration invent another
-        // axis. Re-anchor only at a confirmed stop/regrip, never mid-stroke.
-        // This is the separate TABLE mode; angular/air and raw CIM5 stay as
-        // before. No claim that accelerometer rest proves desk contact.
-        let table_board=if board.is_some()&&self.surface.is_some(){self.supported_gravity.and_then(|g|board_acceleration(s.accel_mg,g))}else{None};
-        let (earth,up)=table_board.or(board).unwrap_or_else(||self.fusion.desktop_step(rates,s.accel_mg,dt,correction));
+        // A body-fixed plane (rejected Owner158) turns a natural grip rotation
+        // into apparent XY/Z acceleration. Reuse the existing upstream gyro
+        // propagation instead; its accelerometer correction is off while a
+        // translational force is present. No invented position/height fusion.
+        let (earth,up)=if self.state.pose_prediction{self.fusion.desktop_step(rates,s.accel_mg,dt,correction)}
+            else{board.unwrap_or_else(||self.fusion.desktop_step(rates,s.accel_mg,dt,correction))};
         let linear=std::array::from_fn(|i|earth[i]-self.earth_bias[i]);self.state.linear_mps2=linear;
         let surface_ready=if self.state.clutched{false}else if let Some(surface)=self.surface.as_mut(){
             let allowed=surface.sample_with_planar(s.sensor_ms,linear[2],linear[0].hypot(linear[1]),up,self.state.stationary);
@@ -147,7 +160,10 @@ impl Desktop {
             let settled=if self.surface.is_some(){self.quiet>=0.12&&self.count>=8}else{self.quiet>=0.3&&self.count>=20};
             if settled{
                 let accel=self.accel_sum.map(|x|x/self.count as f64);
-                if let Some(g)=gravity{let g=if self.surface.is_some(){self.supported_gravity=Some(accel);accel}else{g};self.gyro_bias=[0.;3];self.earth_bias=board_acceleration(accel,g).unwrap().0;}
+                if let Some(g)=gravity{
+                    if self.predict_board_pose{self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;}
+                    else{self.gyro_bias=[0.;3];self.earth_bias=board_acceleration(accel,g).unwrap().0;}
+                }
                 else{self.gyro_bias=self.gyro_sum.map(|x|x/self.count as f64);self.fusion.align(accel);self.earth_bias=self.fusion.desktop_step([0.;3],accel,dt,true).0;}
                 if self.reacquire_plane{
                     // A missing interval invalidates height, not the board's
@@ -161,12 +177,22 @@ impl Desktop {
             return Point::default();
         }
         if !allow_translation||!surface_ready{self.stop();return Point::default();}
+        if self.reanchor_after_contact&&self.state.pose_prediction{
+            // Use the fresh board pose AFTER the shock/target-freeze window,
+            // not the impact acceleration. No extra user rest or gyro offset
+            // calibration; discard this one transition sample's displacement.
+            if let Some((_,up))=board{
+                self.fusion.align(up.map(|v|v*1000.));self.reanchor_after_contact=false;
+                self.stop();self.state.linear_mps2=[0.;3];return Point::default();
+            }
+        }
         if self.state.stationary&&(self.surface.is_none()||!self.state.moving||self.braking||self.state.velocity_mps[0].hypot(self.state.velocity_mps[1])<0.005){
             // Residual gravity/offset is not evidence of continued motion.
             // Confirm rest from raw six-axis deviations independently of the
             // integrated velocity, then discard that residual and old tail.
+            let reanchor=self.state.pose_prediction&&(self.state.moving||!on_plane);
             self.stop();
-            self.earth_bias=if board.is_some()&&self.surface.is_some(){self.supported_gravity=Some(s.accel_mg);board_acceleration(s.accel_mg,s.accel_mg).unwrap().0}else{earth};
+            self.earth_bias=if reanchor{self.fusion.align(s.accel_mg);self.fusion.desktop_step([0.;3],s.accel_mg,dt,true).0}else{earth};
             self.state.linear_mps2=[0.;3];return Point::default();
         }
         // Fusion already rotates acceleration into the Earth frame. Comparing
@@ -219,6 +245,7 @@ mod tests {
     }
     #[test]fn table_motion_does_not_turn_fused_gravity_correction_into_cross_axis_translation(){
         let mut d=Desktop::surface_mouse();
+        d.enable_board_pose_prediction();
         for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,Some([0.,0.,1000.]));}
         // A planar acceleration can leak into the AHRS accelerometer
         // correction. The card's fixed supported plane did not tilt. This
@@ -229,6 +256,25 @@ mod tests {
         }
         assert!(d.state.position_m[0]>0.02);
         assert!(d.state.position_m[1].abs()<0.001,"gravity correction invented a transverse stroke: {:?}",d.state.position_m);
+    }
+    #[test]fn ready_board_grip_rotation_is_not_a_translation_or_lift(){
+        let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,Some([0.,0.,1000.]));}
+        for n in 150..250{
+            let angle=((n-149)as f64*0.2).to_radians();let g=[0.,angle.sin()*1000.,angle.cos()*1000.];
+            let mut s=raw(n,0.,0.);s.accel_mg=g;s.gyro_dps=[20.,0.,0.];d.sample_with_gravity(s,true,Some(g));
+            assert_eq!(d.state.surface.as_ref().unwrap().phase,surface::Phase::Ready);
+        }
+        assert!(d.state.pose_prediction);
+        assert!(d.state.position_m[0].hypot(d.state.position_m[1])<0.001,"rotation created a fake desk stroke: {:?}",d.state);
+    }
+    #[test]fn ready_board_contact_does_not_require_the_user_to_stop_moving_again(){
+        let mut d=Desktop::surface_mouse();d.enable_board_pose_prediction();let up=Some([0.,0.,1000.]);
+        for n in 0..150{d.sample_with_gravity(raw(n,0.,0.),true,up);}
+        d.contact(1500);let origin=d.state.position_m;
+        for n in 150..165{d.sample_with_gravity(raw(n,80.,0.),true,up);assert_eq!(d.state.position_m,origin);}
+        for n in 165..200{d.sample_with_gravity(raw(n,80.,0.),true,up);}
+        assert!(!d.state.clutched);assert!(d.state.position_m[0]>origin[0]+0.001,"click left an unbounded rest clutch: {:?}",d.state);
     }
     #[test]fn board_gravity_entry_learns_rest_without_waiting_for_a_second_gyro_bias(){
         let mut d=Desktop::surface_mouse();

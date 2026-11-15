@@ -149,7 +149,7 @@ pub const CLICK:u16=512;pub const DOWN:u16=1024;pub const UP:u16=2048;pub const 
 pub struct Frame {pub position:Option<Point>,pub buttons:Vec<Button>}
 #[derive(Clone,Debug,Default,Serialize)]
 #[serde(rename_all="camelCase")]
-pub struct Metrics {pub samples:u64,pub missing:u64,pub duplicates:u64,pub gaps:u64,pub tap_events:u64,pub sensor_hz:f64,pub calibrated:bool,pub calibration_samples:u32,pub dragging:bool,pub paused:bool,pub regripping:bool,pub stream_stale:bool,pub surface_paused:bool}
+pub struct Metrics {pub samples:u64,pub missing:u64,pub duplicates:u64,pub gaps:u64,pub tap_events:u64,pub sensor_hz:f64,pub receive_hz:f64,pub calibrated:bool,pub calibration_samples:u32,pub dragging:bool,pub paused:bool,pub regripping:bool,pub stream_stale:bool,pub surface_paused:bool}
 
 pub struct Pointer {
     pub settings:Settings,pub metrics:Metrics, smoother:Smoother, filter_x:OneEuro,filter_y:OneEuro,
@@ -158,6 +158,7 @@ pub struct Pointer {
     bias:[f64;3],bias_sum:[f64;3],accel_sum:[f64;3],calibration_start:Option<u32>,
     fusion:fusion::Fusion,
     coarse:Option<intent::Intent>,
+    desktop_device_ready:Option<bool>,first_arrival:Option<f64>,
     contacts:contact::Contact,
     tap_motion:tap_motion::TapMotion,
     heading:f64,heading_zero:Option<f64>,elevation_zero:Option<f64>,target:Option<Point>,shown:Point,
@@ -170,7 +171,7 @@ impl Pointer {
         let contacts=contact::Contact::new(settings.contact_profile.clone());
         Self {settings,metrics:Metrics::default(),smoother:Smoother::default(),filter_x:OneEuro::default(),filter_y:OneEuro::default(),
             relative:relative::Response::default(),last_emitted:position,
-            last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),coarse:None,contacts,tap_motion:tap_motion::TapMotion::default(),
+            last:None,last_tap:None,arrival:None,frame_at:None,sensor_clock:0.,clock_offset:None,bias:[0.;3],bias_sum:[0.;3],accel_sum:[0.;3],calibration_start:None,fusion:fusion::Fusion::default(),coarse:None,desktop_device_ready:None,first_arrival:None,contacts,tap_motion:tap_motion::TapMotion::default(),
             heading:0.,heading_zero:None,elevation_zero:None,target:None,shown:position,laser_offset:Point::default(),last_projected:None,last_control:None,pressed:None,wait_release:true,queued:vec![],history:VecDeque::with_capacity(360)}
     }
     fn release_button(&mut self) {if self.metrics.dragging {self.queued.push(Button::Up);}self.metrics.dragging=false;self.metrics.regripping=false;self.pressed=None;self.wait_release=true;}
@@ -179,7 +180,7 @@ impl Pointer {
     fn drag_delay(&self)->f64{if self.settings.relative_direct{0.18}else{0.35}}
     fn press_point(&self,at:f64)->Point {self.history.iter().rev().find(|(t,_)|*t<=at).or(self.history.front()).map(|(_,p)|*p).unwrap_or(self.shown)}
     pub fn pause(&mut self,paused:bool) {self.release();self.reset_motion();self.contacts.cancel();self.metrics.paused=paused;}
-    pub fn calibrate(&mut self) {self.release();self.reset_motion();self.contacts.cancel();self.coarse=None;self.fusion=fusion::Fusion::default();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.heading=0.;self.heading_zero=None;self.elevation_zero=None;self.laser_offset=Point::default();self.last_projected=None;}
+    pub fn calibrate(&mut self) {self.release();self.reset_motion();self.contacts.cancel();self.coarse=None;self.desktop_device_ready=None;self.fusion=fusion::Fusion::default();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.heading=0.;self.heading_zero=None;self.elevation_zero=None;self.laser_offset=Point::default();self.last_projected=None;}
     /// A newly verified link may start a new device sequence/time domain.
     /// Keep its first levels as a baseline; fresh control edges still own input.
     pub fn begin_stream(&mut self){
@@ -296,6 +297,8 @@ impl Pointer {
         self.clock_offset=Some(self.clock_offset.unwrap_or(f64::INFINITY).min(now-self.sensor_clock));
         let measured_at=self.sensor_clock+self.clock_offset.unwrap();
         self.last=Some((sequence,sensor_ms));self.arrival=Some(now);self.metrics.samples+=1;
+        let first=*self.first_arrival.get_or_insert(now);
+        if now>first{self.metrics.receive_hz=(self.metrics.samples-1)as f64/(now-first);}
         if dt>0. && dt<0.2 {self.metrics.sensor_hz=if self.metrics.sensor_hz==0.{1./dt}else{self.metrics.sensor_hz*0.9+0.1/dt};}
         Some((dt,gap,measured_at))
     }
@@ -304,13 +307,27 @@ impl Pointer {
     pub fn sample_raw(&mut self,s:desktop::Raw,now:f64){
         self.sample_raw_gravity(s,None,now);
     }
+    /// CIM6 supplies an explicit board calibration flag separately from its
+    /// gravity vector. Do not report host-ready or integrate startup gyro
+    /// offsets while the sensor's own fusion is still uncalibrated.
+    pub fn observe_device_readiness(&mut self,ready:Option<bool>){
+        if !self.settings.desktop_motion{return;}
+        if let Some(ready)=ready{
+            if !ready||self.desktop_device_ready==Some(false){
+                self.coarse=None;self.metrics.calibrated=false;self.metrics.surface_paused=false;
+            }
+            self.desktop_device_ready=Some(ready);
+        }
+    }
     pub fn sample_raw_gravity(&mut self,s:desktop::Raw,gravity:Option<[f64;3]>,now:f64){
         if self.settings.desktop_motion{
             if self.observe_clock(s.sequence,s.sensor_ms,now).is_none(){return;}
             self.contacts.sample(s);
             let surface=self.settings.relative_direct;
             if surface||self.settings.contact_regions{self.tap_motion.observe(s);}
+            if self.desktop_device_ready==Some(false){self.metrics.calibrated=false;return;}
             let c=self.coarse.get_or_insert_with(||if surface{intent::Intent::surface_mouse()}else{intent::Intent::default()});c.settings=self.settings.clone();
+            if self.desktop_device_ready==Some(true){c.desktop.enable_board_pose_prediction();}
             c.sample_blocked_gravity(s,now,surface&&self.tap_motion.blocked(),gravity);
             self.metrics.calibrated=c.desktop.state.calibrated;
             self.metrics.surface_paused=c.desktop.state.surface.as_ref().is_some_and(|s|s.phase!=surface::Phase::Ready)||c.desktop.state.clutched;
@@ -340,7 +357,7 @@ impl Pointer {
     pub fn cancel_contacts(&mut self){self.contacts.cancel();self.reset_motion();}
     pub fn clear_contacts(&mut self){self.contacts=contact::Contact::new(None);self.settings.contact_profile=None;self.settings.contact_device=None;}
     pub fn sample(&mut self,s:Sample,now:f64,bounds:Bounds) {
-        if self.settings.desktop_motion{return;}
+        if self.settings.desktop_motion{self.observe_device_readiness(s.device_ready);return;}
         let Some((dt,gap,measured_at))=self.observe_clock(s.sequence,s.sensor_ms,now)else{return;};
         // Consume the serial even while paused/calibrating. A lost packet may
         // carry the same event again; reconnect/baseline must never replay it.
@@ -452,6 +469,7 @@ impl Pointer {
     }
     pub fn frame(&mut self,now:f64,bounds:Bounds)->Frame {
         let dt=self.frame_at.map(|t|(now-t).clamp(0.,0.05)).unwrap_or(0.);self.frame_at=Some(now);
+        if let Some(first)=self.first_arrival{if now>first{self.metrics.receive_hz=self.metrics.samples.saturating_sub(1)as f64/(now-first);}}
         let stale=self.arrival.is_none_or(|at|now-at>0.3);
         self.metrics.stream_stale=stale;
         if stale {self.release();self.reset_motion();}
