@@ -1,0 +1,92 @@
+{
+  "state": "D1_INTERNAL_EXECUTABLE_CANDIDATE_DELIVERED_D2_QUALITY_STILL_OPEN",
+  "at": "2026-11-15T11:28:27+08:00",
+  "binary": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\companion-type.exe",
+  "binarySha256": "83a93abf8472ebc8cf643301ab26d428ab9633fded36517b79c6ca6c94b0d54d",
+  "modelPackage": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r8\\package.json",
+  "modelPackageSha256": "c892de9deaec4b89b08b48c8e6628c8ca323adbd7e3df4144dff0c8d5ebb1124",
+  "launches": {
+    "Companion-打开本地会议候选-20261115.cmd": {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-打开本地会议候选-20261115.cmd",
+      "sha256": "62646db23a871a13a8bb6ebb583aef9f6ab7c34349f95150810e8250b4218c44",
+      "env": {
+        "COMPANION_TYPE_LOCAL_MEETING_CONFIG": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r8\\package.json",
+        "COMPANION_TYPE_ASR_PROVIDER": "local-meeting",
+        "COMPANION_TYPE_DISABLE_AUTO_RECOVERY": "1",
+        "COMPANION_TYPE_DISABLE_AUTO_RECONNECT": "1",
+        "COMPANION_TYPE_STATE_PATH": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\owner-library\\sessions.json",
+        "COMPANION_TYPE_RECORDING_DIR": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\owner-library\\recordings",
+        "COMPANION_TYPE_PRODUCT_SETTINGS_PATH": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\owner-library\\settings.json",
+        "WEBVIEW2_USER_DATA_FOLDER": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\owner-library\\webview"
+      },
+      "clear": [
+        "COMPANION_TYPE_TRANSCRIPT_TEXT",
+        "COMPANION_TYPE_ASR_COMMAND",
+        "COMPANION_TYPE_LIVE_ASR_MOCK",
+        "COMPANION_TYPE_LIVE_ASR_OFF",
+        "COMPANION_TYPE_BACKGROUND_WINDOW",
+        "COMPANION_TYPE_WEBVIEW_ARGS",
+        "COMPANION_LOCAL_ARTIFACT_ROOT",
+        "COMPANION_LOCAL_ARTIFACT_ROOTS"
+      ]
+    },
+    "Companion-查看完整会议结果-20261115.cmd": {
+      "file": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-查看完整会议结果-20261115.cmd",
+      "sha256": "937647280c520dfff886dba93cba235f4e37505c435d9841aecba25b752e81ed",
+      "env": {
+        "COMPANION_TYPE_LOCAL_MEETING_CONFIG": "E:\\CodexData\\Companion\\product-d1d2-20261114\\local-package-r8\\package.json",
+        "COMPANION_TYPE_ASR_PROVIDER": "local-meeting",
+        "COMPANION_TYPE_DISABLE_AUTO_RECOVERY": "1",
+        "COMPANION_TYPE_DISABLE_AUTO_RECONNECT": "1",
+        "COMPANION_TYPE_STATE_PATH": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\review-library\\sessions.json",
+        "COMPANION_TYPE_RECORDING_DIR": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\review-library\\recordings",
+        "COMPANION_TYPE_PRODUCT_SETTINGS_PATH": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\review-library\\settings.json",
+        "WEBVIEW2_USER_DATA_FOLDER": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\review-library\\webview"
+      },
+      "clear": [
+        "COMPANION_TYPE_TRANSCRIPT_TEXT",
+        "COMPANION_TYPE_ASR_COMMAND",
+        "COMPANION_TYPE_LIVE_ASR_MOCK",
+        "COMPANION_TYPE_LIVE_ASR_OFF",
+        "COMPANION_TYPE_BACKGROUND_WINDOW",
+        "COMPANION_TYPE_WEBVIEW_ARGS",
+        "COMPANION_LOCAL_ARTIFACT_ROOT",
+        "COMPANION_LOCAL_ARTIFACT_ROOTS"
+      ]
+    }
+  },
+  "internalCandidateOnly": true,
+  "installedDefaultChanged": false,
+  "privateInputUsedForVerification": false,
+  "modelInputsRemainLocal": true,
+  "minutesUseExistingConfiguredProvider": true,
+  "newCloudCredentialsWrittenToArtifacts": false,
+  "evidence": {
+    "nativeLiveStopResumePrivacy": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\qa\\live-resume-privacy-final.json",
+    "speakerReviewAndReopenExport": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\qa\\speaker-review-portability-r1\\result.json",
+    "fullEnglishNativeMinutes": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r3\\qa\\whole-flow.json",
+    "draftUnknownSource": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r4\\qa\\source-review-flow.json"
+  },
+  "coldNativeFirstPreviewSeconds": 81.2359646,
+  "realtimeLatencyQualified": false,
+  "ordinaryMeetingQualityQualified": false,
+  "realCardAndroidOrCustomerHardwareQualified": false,
+  "saleQualified": false,
+  "d1AcceptancePassed": true,
+  "d2AcceptancePassed": false,
+  "finalNativeUiProof": "E:\\CodexData\\Companion\\product-d1d2-20261114\\app-candidate-r5\\qa\\hidden-delivery-r1\\native-ui-result.json",
+  "finalNativeUiClosed": true,
+  "usageNote": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-D1本机候选使用说明-20261115.txt",
+  "completedAt": "2026-11-15T11:36:15.627083+08:00",
+  "sourceProtection": {
+    "state": "D1_INTERNAL_EXECUTABLE_DELIVERED_D2_ORIGINAL_GATES_STILL_FAILING",
+    "modelCommit": "26c7ac3a31c6bf6d57acbc97677899b18811b70f",
+    "appCommit": "d574b5e4ba63badb7a0f4b1df6482387e599d623",
+    "archive": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\protected-progress-r4.zip",
+    "archiveBytes": 11209801,
+    "archiveSha256": "b94726fe11902c8b0f1604c6b524b5de780db0941c669f72a338f1de3cdc483a",
+    "evidenceFiles": 612,
+    "exactByteStagedFiles": 619,
+    "remoteVerified": true
+  }
+}

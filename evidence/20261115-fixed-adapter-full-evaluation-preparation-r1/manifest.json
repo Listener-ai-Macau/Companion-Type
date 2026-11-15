@@ -1,0 +1,150 @@
+{
+  "state": "FROZEN_FULL_ADAPTER_EVALUATION_PILOT_PASSED_FULL_PENDING",
+  "at": "2026-11-15T12:01:39.809501+08:00",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\audio-only.json",
+      "logicalPath": "frozen-control/audio-only.json",
+      "file": "files/00000.json",
+      "sha256": "776f7c4f2298a3dd2647365f87349b11fbe7c47a52d100109243b466900d0295"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\model-ready.json",
+      "logicalPath": "frozen-control/model-ready.json",
+      "file": "files/00001.json",
+      "sha256": "c8aa35ebee8558218793c66f1a9a1109fc269050df4e6808edf9628c9db01999"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\native-protocol.json",
+      "logicalPath": "frozen-control/native-protocol.json",
+      "file": "files/00002.json",
+      "sha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\pilot-extra-audio-only.json",
+      "logicalPath": "frozen-control/pilot-extra-audio-only.json",
+      "file": "files/00003.json",
+      "sha256": "52d186ecbc030a9a4ccb4e9c0d0209370f639b5d957db47365d15c38cde494ad"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\preparation.json",
+      "logicalPath": "frozen-control/preparation.json",
+      "file": "files/00004.json",
+      "sha256": "35f14aca2f794d0c7b11fa942dd2a2d45b1c320bec176be81b6ae5e78d0241d2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\protocol.json",
+      "logicalPath": "frozen-control/protocol.json",
+      "file": "files/00005.json",
+      "sha256": "9d221107edada491674e4b7e0015e931df035da7eb7f07e98d801a0716ea1619"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\seed-manifest.json",
+      "logicalPath": "frozen-control/seed-manifest.json",
+      "file": "files/00006.json",
+      "sha256": "9979c686d4f4ef4af012e250578c75eaa6f8e60ae5e6f3780f58a2db5169a267"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\pilot\\adapter-roundtrip.json",
+      "logicalPath": "frozen-control/pilot/adapter-roundtrip.json",
+      "file": "files/00007.json",
+      "sha256": "8139a6df6c12f34838e00a57c4cc16f78838c33994ff45e3672233c6fca883fa"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\pilot\\completed-state.json",
+      "logicalPath": "frozen-control/pilot/completed-state.json",
+      "file": "files/00008.json",
+      "sha256": "697d5c0bd643bd54f2459b7435d9cc2835af7debbd4341f716131a84dc07be93"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\pilot\\state.json",
+      "logicalPath": "frozen-control/pilot/state.json",
+      "file": "files/00009.json",
+      "sha256": "697d5c0bd643bd54f2459b7435d9cc2835af7debbd4341f716131a84dc07be93"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\pilot\\weight-roundtrip.json",
+      "logicalPath": "frozen-control/pilot/weight-roundtrip.json",
+      "file": "files/00010.json",
+      "sha256": "44f4ce461862e33311b495c5c509b32c1895c5ea5464037959c3edb24f598804"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\pilot\\nodes\\adapter-disabled-control-root.json",
+      "logicalPath": "frozen-control/pilot/nodes/adapter-disabled-control-root.json",
+      "file": "files/00011.json",
+      "sha256": "15d7d503bef371003f81cc2ecde7567de6fa090b58e5533011fcfc7972666cdd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\pilot\\nodes\\exact-zero-root.json",
+      "logicalPath": "frozen-control/pilot/nodes/exact-zero-root.json",
+      "file": "files/00012.json",
+      "sha256": "b5dc4cc931395b07599b7881accec3df4968abcc22520788b5beb39e3ac6fdd0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\fixed-adapter-full-r1\\pilot\\nodes\\ordinary-bounded-root.json",
+      "logicalPath": "frozen-control/pilot/nodes/ordinary-bounded-root.json",
+      "file": "files/00013.json",
+      "sha256": "eef30bcad7502a6f70751940e581fcfc4be2033369fbef70e2c7bac015c16e86"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\pilot-run-r1\\inventory.log",
+      "logicalPath": "actual-pilot/inventory.log",
+      "file": "files/00014.log",
+      "sha256": "c95a4386e4e828553af097621d576d42fea5c0e3595df484153907ba903a806f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\pilot-run-r1\\run.json",
+      "logicalPath": "actual-pilot/run.json",
+      "file": "files/00015.json",
+      "sha256": "dc122a3ec798212a73df7d6b8783e11ec74c5c4645ca8c8a666faf2018d1765f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\pilot-run-r1\\worker.log",
+      "logicalPath": "actual-pilot/worker.log",
+      "file": "files/00016.log",
+      "sha256": "7a3fbca38150a67a5387f1d4ec61021e3011b24005d321db66abb6291d638fa4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\pilot-run-r1\\inventory\\hip-inventory.json",
+      "logicalPath": "actual-pilot/inventory/hip-inventory.json",
+      "file": "files/00017.json",
+      "sha256": "14dc8d39e14ab9a8c92920845ed30d5a849ade33eedcff818a82c76a4a177751"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\pilot-run-r1\\inventory\\inventory-run.json",
+      "logicalPath": "actual-pilot/inventory/inventory-run.json",
+      "file": "files/00018.json",
+      "sha256": "5db52d17ad84b685edc7ed25663741bfd1bf6e74157845605c719f18fd664bae"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\fixed-adapter-full-r1\\pilot-run-r1\\inventory\\inventory-worker.log",
+      "logicalPath": "actual-pilot/inventory/inventory-worker.log",
+      "file": "files/00019.log",
+      "sha256": "5680bb1d26d4a9ed353d167cc7a528326129c04f47ea5e84c1e769be9a78138c"
+    },
+    {
+      "source": "work\\prepare_fixed_adapter_full_20261115.py",
+      "logicalPath": "prepare_fixed_adapter_full_20261115.py",
+      "file": "files/00020.py",
+      "sha256": "c15c9d3d05b686fd8d2fc21765e1d5041804de67e1f47e2e718c04b250d30b72"
+    },
+    {
+      "source": "outputs\\Companion-社区可行性与实际进度-20261115.txt",
+      "logicalPath": "Companion-社区可行性与实际进度-20261115.txt",
+      "file": "files/00021.txt",
+      "sha256": "b3f1fe1909a963f9b1dde2fa9bc1086642b704772b8c17eb03545d59623379e8"
+    },
+    {
+      "source": "outputs\\Companion-D1本机候选入口与核验-20261115.json",
+      "logicalPath": "Companion-D1本机候选入口与核验-20261115.json",
+      "file": "files/00022.json",
+      "sha256": "c633b9cf5cac4b8be30912d0e7c7909a5ec3389a65c1d3cc5de61c52603464d8"
+    }
+  ],
+  "newTrainingUpdates": 0,
+  "qualityQualified": false,
+  "d1Complete": true,
+  "d2Complete": false,
+  "activeWholeMeetingNotSnapshotted": true,
+  "modelAdapterPreviouslyProtectedInCommit": "1f49227af16f0ed490d9227fb19130b28afdf115"
+}

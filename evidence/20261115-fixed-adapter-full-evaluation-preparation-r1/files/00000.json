@@ -1,0 +1,900 @@
+[
+  {
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "audioSeconds": 2327.119,
+    "spans": [
+      {
+        "index": 0,
+        "startSample": 0,
+        "endSample": 516292,
+        "paddingSamples": 0
+      },
+      {
+        "index": 1,
+        "startSample": 516292,
+        "endSample": 1037743,
+        "paddingSamples": 0
+      },
+      {
+        "index": 2,
+        "startSample": 1037743,
+        "endSample": 1478531,
+        "paddingSamples": 0
+      },
+      {
+        "index": 3,
+        "startSample": 1478531,
+        "endSample": 1906351,
+        "paddingSamples": 0
+      },
+      {
+        "index": 4,
+        "startSample": 1906351,
+        "endSample": 2329336,
+        "paddingSamples": 0
+      },
+      {
+        "index": 5,
+        "startSample": 2329336,
+        "endSample": 2813634,
+        "paddingSamples": 0
+      },
+      {
+        "index": 6,
+        "startSample": 2813634,
+        "endSample": 3266320,
+        "paddingSamples": 0
+      },
+      {
+        "index": 7,
+        "startSample": 3266320,
+        "endSample": 3724048,
+        "paddingSamples": 0
+      },
+      {
+        "index": 8,
+        "startSample": 3724048,
+        "endSample": 4262526,
+        "paddingSamples": 0
+      },
+      {
+        "index": 9,
+        "startSample": 4262526,
+        "endSample": 4759369,
+        "paddingSamples": 0
+      },
+      {
+        "index": 10,
+        "startSample": 4759369,
+        "endSample": 5247434,
+        "paddingSamples": 0
+      },
+      {
+        "index": 11,
+        "startSample": 5247434,
+        "endSample": 5651538,
+        "paddingSamples": 0
+      },
+      {
+        "index": 12,
+        "startSample": 5651538,
+        "endSample": 6146414,
+        "paddingSamples": 0
+      },
+      {
+        "index": 13,
+        "startSample": 6146414,
+        "endSample": 6581659,
+        "paddingSamples": 0
+      },
+      {
+        "index": 14,
+        "startSample": 6581659,
+        "endSample": 7131968,
+        "paddingSamples": 0
+      },
+      {
+        "index": 15,
+        "startSample": 7131968,
+        "endSample": 7640996,
+        "paddingSamples": 0
+      },
+      {
+        "index": 16,
+        "startSample": 7640996,
+        "endSample": 8154024,
+        "paddingSamples": 0
+      },
+      {
+        "index": 17,
+        "startSample": 8154024,
+        "endSample": 8629678,
+        "paddingSamples": 0
+      },
+      {
+        "index": 18,
+        "startSample": 8629678,
+        "endSample": 9034199,
+        "paddingSamples": 0
+      },
+      {
+        "index": 19,
+        "startSample": 9034199,
+        "endSample": 9548927,
+        "paddingSamples": 0
+      },
+      {
+        "index": 20,
+        "startSample": 9548927,
+        "endSample": 9964198,
+        "paddingSamples": 0
+      },
+      {
+        "index": 21,
+        "startSample": 9964198,
+        "endSample": 10420201,
+        "paddingSamples": 0
+      },
+      {
+        "index": 22,
+        "startSample": 10420201,
+        "endSample": 10936211,
+        "paddingSamples": 0
+      },
+      {
+        "index": 23,
+        "startSample": 10936211,
+        "endSample": 11372383,
+        "paddingSamples": 0
+      },
+      {
+        "index": 24,
+        "startSample": 11372383,
+        "endSample": 11922366,
+        "paddingSamples": 0
+      },
+      {
+        "index": 25,
+        "startSample": 11922366,
+        "endSample": 12446494,
+        "paddingSamples": 0
+      },
+      {
+        "index": 26,
+        "startSample": 12446494,
+        "endSample": 12976002,
+        "paddingSamples": 0
+      },
+      {
+        "index": 27,
+        "startSample": 12976002,
+        "endSample": 13474154,
+        "paddingSamples": 0
+      },
+      {
+        "index": 28,
+        "startSample": 13474154,
+        "endSample": 13990292,
+        "paddingSamples": 0
+      },
+      {
+        "index": 29,
+        "startSample": 13990292,
+        "endSample": 14474621,
+        "paddingSamples": 0
+      },
+      {
+        "index": 30,
+        "startSample": 14474621,
+        "endSample": 14894118,
+        "paddingSamples": 0
+      },
+      {
+        "index": 31,
+        "startSample": 14894118,
+        "endSample": 15335518,
+        "paddingSamples": 0
+      },
+      {
+        "index": 32,
+        "startSample": 15335518,
+        "endSample": 15807725,
+        "paddingSamples": 0
+      },
+      {
+        "index": 33,
+        "startSample": 15807725,
+        "endSample": 16207725,
+        "paddingSamples": 0
+      },
+      {
+        "index": 34,
+        "startSample": 16207725,
+        "endSample": 16607725,
+        "paddingSamples": 0
+      },
+      {
+        "index": 35,
+        "startSample": 16607725,
+        "endSample": 17007725,
+        "paddingSamples": 0
+      },
+      {
+        "index": 36,
+        "startSample": 17007725,
+        "endSample": 17530382,
+        "paddingSamples": 0
+      },
+      {
+        "index": 37,
+        "startSample": 17530382,
+        "endSample": 17965713,
+        "paddingSamples": 0
+      },
+      {
+        "index": 38,
+        "startSample": 17965713,
+        "endSample": 18380210,
+        "paddingSamples": 0
+      },
+      {
+        "index": 39,
+        "startSample": 18380210,
+        "endSample": 18851845,
+        "paddingSamples": 0
+      },
+      {
+        "index": 40,
+        "startSample": 18851845,
+        "endSample": 19344822,
+        "paddingSamples": 0
+      },
+      {
+        "index": 41,
+        "startSample": 19344822,
+        "endSample": 19802917,
+        "paddingSamples": 0
+      },
+      {
+        "index": 42,
+        "startSample": 19802917,
+        "endSample": 20359825,
+        "paddingSamples": 0
+      },
+      {
+        "index": 43,
+        "startSample": 20359825,
+        "endSample": 20765869,
+        "paddingSamples": 0
+      },
+      {
+        "index": 44,
+        "startSample": 20765869,
+        "endSample": 21207486,
+        "paddingSamples": 0
+      },
+      {
+        "index": 45,
+        "startSample": 21207486,
+        "endSample": 21758204,
+        "paddingSamples": 0
+      },
+      {
+        "index": 46,
+        "startSample": 21758204,
+        "endSample": 22249896,
+        "paddingSamples": 0
+      },
+      {
+        "index": 47,
+        "startSample": 22249896,
+        "endSample": 22683567,
+        "paddingSamples": 0
+      },
+      {
+        "index": 48,
+        "startSample": 22683567,
+        "endSample": 23237822,
+        "paddingSamples": 0
+      },
+      {
+        "index": 49,
+        "startSample": 23237822,
+        "endSample": 23777344,
+        "paddingSamples": 0
+      },
+      {
+        "index": 50,
+        "startSample": 23777344,
+        "endSample": 24212734,
+        "paddingSamples": 0
+      },
+      {
+        "index": 51,
+        "startSample": 24212734,
+        "endSample": 24663753,
+        "paddingSamples": 0
+      },
+      {
+        "index": 52,
+        "startSample": 24663753,
+        "endSample": 25109101,
+        "paddingSamples": 0
+      },
+      {
+        "index": 53,
+        "startSample": 25109101,
+        "endSample": 25653071,
+        "paddingSamples": 0
+      },
+      {
+        "index": 54,
+        "startSample": 25653071,
+        "endSample": 26136830,
+        "paddingSamples": 0
+      },
+      {
+        "index": 55,
+        "startSample": 26136830,
+        "endSample": 26556323,
+        "paddingSamples": 0
+      },
+      {
+        "index": 56,
+        "startSample": 26556323,
+        "endSample": 27082522,
+        "paddingSamples": 0
+      },
+      {
+        "index": 57,
+        "startSample": 27082522,
+        "endSample": 27561980,
+        "paddingSamples": 0
+      },
+      {
+        "index": 58,
+        "startSample": 27561980,
+        "endSample": 28030239,
+        "paddingSamples": 0
+      },
+      {
+        "index": 59,
+        "startSample": 28030239,
+        "endSample": 28517446,
+        "paddingSamples": 0
+      },
+      {
+        "index": 60,
+        "startSample": 28517446,
+        "endSample": 29062174,
+        "paddingSamples": 0
+      },
+      {
+        "index": 61,
+        "startSample": 29062174,
+        "endSample": 29597087,
+        "paddingSamples": 0
+      },
+      {
+        "index": 62,
+        "startSample": 29597087,
+        "endSample": 30131808,
+        "paddingSamples": 0
+      },
+      {
+        "index": 63,
+        "startSample": 30131808,
+        "endSample": 30562374,
+        "paddingSamples": 0
+      },
+      {
+        "index": 64,
+        "startSample": 30562374,
+        "endSample": 31103085,
+        "paddingSamples": 0
+      },
+      {
+        "index": 65,
+        "startSample": 31103085,
+        "endSample": 31505214,
+        "paddingSamples": 0
+      },
+      {
+        "index": 66,
+        "startSample": 31505214,
+        "endSample": 31906599,
+        "paddingSamples": 0
+      },
+      {
+        "index": 67,
+        "startSample": 31906599,
+        "endSample": 32414439,
+        "paddingSamples": 0
+      },
+      {
+        "index": 68,
+        "startSample": 32414439,
+        "endSample": 32836147,
+        "paddingSamples": 0
+      },
+      {
+        "index": 69,
+        "startSample": 32836147,
+        "endSample": 33340368,
+        "paddingSamples": 0
+      },
+      {
+        "index": 70,
+        "startSample": 33340368,
+        "endSample": 33813648,
+        "paddingSamples": 0
+      },
+      {
+        "index": 71,
+        "startSample": 33813648,
+        "endSample": 34307651,
+        "paddingSamples": 0
+      },
+      {
+        "index": 72,
+        "startSample": 34307651,
+        "endSample": 34768446,
+        "paddingSamples": 0
+      },
+      {
+        "index": 73,
+        "startSample": 34768446,
+        "endSample": 35294122,
+        "paddingSamples": 0
+      },
+      {
+        "index": 74,
+        "startSample": 35294122,
+        "endSample": 35719805,
+        "paddingSamples": 0
+      },
+      {
+        "index": 75,
+        "startSample": 35719805,
+        "endSample": 36275933,
+        "paddingSamples": 0
+      },
+      {
+        "index": 76,
+        "startSample": 36275933,
+        "endSample": 36747542,
+        "paddingSamples": 0
+      },
+      {
+        "index": 77,
+        "startSample": 36747542,
+        "endSample": 37226077,
+        "paddingSamples": 0
+      },
+      {
+        "index": 78,
+        "startSample": 37226077,
+        "endSample": 37233904,
+        "paddingSamples": 173
+      }
+    ]
+  },
+  {
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "audioSeconds": 2049.3615,
+    "spans": [
+      {
+        "index": 0,
+        "startSample": 0,
+        "endSample": 476564,
+        "paddingSamples": 0
+      },
+      {
+        "index": 1,
+        "startSample": 476564,
+        "endSample": 921677,
+        "paddingSamples": 0
+      },
+      {
+        "index": 2,
+        "startSample": 921677,
+        "endSample": 1344410,
+        "paddingSamples": 0
+      },
+      {
+        "index": 3,
+        "startSample": 1344410,
+        "endSample": 1818368,
+        "paddingSamples": 0
+      },
+      {
+        "index": 4,
+        "startSample": 1818368,
+        "endSample": 2364404,
+        "paddingSamples": 0
+      },
+      {
+        "index": 5,
+        "startSample": 2364404,
+        "endSample": 2803653,
+        "paddingSamples": 0
+      },
+      {
+        "index": 6,
+        "startSample": 2803653,
+        "endSample": 3338646,
+        "paddingSamples": 0
+      },
+      {
+        "index": 7,
+        "startSample": 3338646,
+        "endSample": 3768752,
+        "paddingSamples": 0
+      },
+      {
+        "index": 8,
+        "startSample": 3768752,
+        "endSample": 4267833,
+        "paddingSamples": 0
+      },
+      {
+        "index": 9,
+        "startSample": 4267833,
+        "endSample": 4683572,
+        "paddingSamples": 0
+      },
+      {
+        "index": 10,
+        "startSample": 4683572,
+        "endSample": 5231145,
+        "paddingSamples": 0
+      },
+      {
+        "index": 11,
+        "startSample": 5231145,
+        "endSample": 5758848,
+        "paddingSamples": 0
+      },
+      {
+        "index": 12,
+        "startSample": 5758848,
+        "endSample": 6313292,
+        "paddingSamples": 0
+      },
+      {
+        "index": 13,
+        "startSample": 6313292,
+        "endSample": 6865870,
+        "paddingSamples": 0
+      },
+      {
+        "index": 14,
+        "startSample": 6865870,
+        "endSample": 7375945,
+        "paddingSamples": 0
+      },
+      {
+        "index": 15,
+        "startSample": 7375945,
+        "endSample": 7872424,
+        "paddingSamples": 0
+      },
+      {
+        "index": 16,
+        "startSample": 7872424,
+        "endSample": 8332029,
+        "paddingSamples": 0
+      },
+      {
+        "index": 17,
+        "startSample": 8332029,
+        "endSample": 8863045,
+        "paddingSamples": 0
+      },
+      {
+        "index": 18,
+        "startSample": 8863045,
+        "endSample": 9343481,
+        "paddingSamples": 0
+      },
+      {
+        "index": 19,
+        "startSample": 9343481,
+        "endSample": 9861863,
+        "paddingSamples": 0
+      },
+      {
+        "index": 20,
+        "startSample": 9861863,
+        "endSample": 10291114,
+        "paddingSamples": 0
+      },
+      {
+        "index": 21,
+        "startSample": 10291114,
+        "endSample": 10844362,
+        "paddingSamples": 0
+      },
+      {
+        "index": 22,
+        "startSample": 10844362,
+        "endSample": 11387256,
+        "paddingSamples": 0
+      },
+      {
+        "index": 23,
+        "startSample": 11387256,
+        "endSample": 11830562,
+        "paddingSamples": 0
+      },
+      {
+        "index": 24,
+        "startSample": 11830562,
+        "endSample": 12270274,
+        "paddingSamples": 0
+      },
+      {
+        "index": 25,
+        "startSample": 12270274,
+        "endSample": 12737004,
+        "paddingSamples": 0
+      },
+      {
+        "index": 26,
+        "startSample": 12737004,
+        "endSample": 13231753,
+        "paddingSamples": 0
+      },
+      {
+        "index": 27,
+        "startSample": 13231753,
+        "endSample": 13784119,
+        "paddingSamples": 0
+      },
+      {
+        "index": 28,
+        "startSample": 13784119,
+        "endSample": 14244912,
+        "paddingSamples": 0
+      },
+      {
+        "index": 29,
+        "startSample": 14244912,
+        "endSample": 14736824,
+        "paddingSamples": 0
+      },
+      {
+        "index": 30,
+        "startSample": 14736824,
+        "endSample": 15145744,
+        "paddingSamples": 0
+      },
+      {
+        "index": 31,
+        "startSample": 15145744,
+        "endSample": 15638587,
+        "paddingSamples": 0
+      },
+      {
+        "index": 32,
+        "startSample": 15638587,
+        "endSample": 16139960,
+        "paddingSamples": 0
+      },
+      {
+        "index": 33,
+        "startSample": 16139960,
+        "endSample": 16694757,
+        "paddingSamples": 0
+      },
+      {
+        "index": 34,
+        "startSample": 16694757,
+        "endSample": 17222103,
+        "paddingSamples": 0
+      },
+      {
+        "index": 35,
+        "startSample": 17222103,
+        "endSample": 17776513,
+        "paddingSamples": 0
+      },
+      {
+        "index": 36,
+        "startSample": 17776513,
+        "endSample": 18310680,
+        "paddingSamples": 0
+      },
+      {
+        "index": 37,
+        "startSample": 18310680,
+        "endSample": 18789294,
+        "paddingSamples": 0
+      },
+      {
+        "index": 38,
+        "startSample": 18789294,
+        "endSample": 19237063,
+        "paddingSamples": 0
+      },
+      {
+        "index": 39,
+        "startSample": 19237063,
+        "endSample": 19647665,
+        "paddingSamples": 0
+      },
+      {
+        "index": 40,
+        "startSample": 19647665,
+        "endSample": 20124947,
+        "paddingSamples": 0
+      },
+      {
+        "index": 41,
+        "startSample": 20124947,
+        "endSample": 20634367,
+        "paddingSamples": 0
+      },
+      {
+        "index": 42,
+        "startSample": 20634367,
+        "endSample": 21054525,
+        "paddingSamples": 0
+      },
+      {
+        "index": 43,
+        "startSample": 21054525,
+        "endSample": 21456040,
+        "paddingSamples": 0
+      },
+      {
+        "index": 44,
+        "startSample": 21456040,
+        "endSample": 21865585,
+        "paddingSamples": 0
+      },
+      {
+        "index": 45,
+        "startSample": 21865585,
+        "endSample": 22420964,
+        "paddingSamples": 0
+      },
+      {
+        "index": 46,
+        "startSample": 22420964,
+        "endSample": 22836240,
+        "paddingSamples": 0
+      },
+      {
+        "index": 47,
+        "startSample": 22836240,
+        "endSample": 23270692,
+        "paddingSamples": 0
+      },
+      {
+        "index": 48,
+        "startSample": 23270692,
+        "endSample": 23697891,
+        "paddingSamples": 0
+      },
+      {
+        "index": 49,
+        "startSample": 23697891,
+        "endSample": 24241891,
+        "paddingSamples": 0
+      },
+      {
+        "index": 50,
+        "startSample": 24241891,
+        "endSample": 24681598,
+        "paddingSamples": 0
+      },
+      {
+        "index": 51,
+        "startSample": 24681598,
+        "endSample": 25175958,
+        "paddingSamples": 0
+      },
+      {
+        "index": 52,
+        "startSample": 25175958,
+        "endSample": 25629146,
+        "paddingSamples": 0
+      },
+      {
+        "index": 53,
+        "startSample": 25629146,
+        "endSample": 26119000,
+        "paddingSamples": 0
+      },
+      {
+        "index": 54,
+        "startSample": 26119000,
+        "endSample": 26604205,
+        "paddingSamples": 0
+      },
+      {
+        "index": 55,
+        "startSample": 26604205,
+        "endSample": 27049355,
+        "paddingSamples": 0
+      },
+      {
+        "index": 56,
+        "startSample": 27049355,
+        "endSample": 27530497,
+        "paddingSamples": 0
+      },
+      {
+        "index": 57,
+        "startSample": 27530497,
+        "endSample": 28083898,
+        "paddingSamples": 0
+      },
+      {
+        "index": 58,
+        "startSample": 28083898,
+        "endSample": 28554294,
+        "paddingSamples": 0
+      },
+      {
+        "index": 59,
+        "startSample": 28554294,
+        "endSample": 29000834,
+        "paddingSamples": 0
+      },
+      {
+        "index": 60,
+        "startSample": 29000834,
+        "endSample": 29535763,
+        "paddingSamples": 0
+      },
+      {
+        "index": 61,
+        "startSample": 29535763,
+        "endSample": 29955955,
+        "paddingSamples": 0
+      },
+      {
+        "index": 62,
+        "startSample": 29955955,
+        "endSample": 30448899,
+        "paddingSamples": 0
+      },
+      {
+        "index": 63,
+        "startSample": 30448899,
+        "endSample": 30854318,
+        "paddingSamples": 0
+      },
+      {
+        "index": 64,
+        "startSample": 30854318,
+        "endSample": 31296276,
+        "paddingSamples": 0
+      },
+      {
+        "index": 65,
+        "startSample": 31296276,
+        "endSample": 31825969,
+        "paddingSamples": 0
+      },
+      {
+        "index": 66,
+        "startSample": 31825969,
+        "endSample": 32332728,
+        "paddingSamples": 0
+      },
+      {
+        "index": 67,
+        "startSample": 32332728,
+        "endSample": 32789784,
+        "paddingSamples": 0
+      }
+    ]
+  }
+]
