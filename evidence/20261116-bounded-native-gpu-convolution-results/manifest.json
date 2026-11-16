@@ -1,0 +1,82 @@
+{
+  "at": "2026-11-16T22:03:23.648850+08:00",
+  "parent": "5d31ec36a0408af0e856e57538e85756264927b9",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\bounded-gpu-results.json",
+      "file": "bounded-gpu-results.json",
+      "bytes": 6277,
+      "sha256": "98ce2a874a7e67352f538a4a96aa106b205c8bf49a8998741f56f12e613108d9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\bounded-native-conv-r1\\completed.json",
+      "file": "bounded-native-conv-r1/completed.json",
+      "bytes": 3219,
+      "sha256": "d51ffc44ed0ac50a1a4edc2d82809bad5938ccbacdc4f4ab12b6b8a5942d4695"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\bounded-native-conv-r1\\parent.json",
+      "file": "bounded-native-conv-r1/parent.json",
+      "bytes": 259,
+      "sha256": "d987fae06c3edbe34f368fa86235cfc09b17c9f1261d77e74da7318eeb00df38"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\bounded-native-conv-r1\\parent-completed.json",
+      "file": "bounded-native-conv-r1/parent-completed.json",
+      "bytes": 382,
+      "sha256": "a26263017b715099c56a415b8cfca2ce9fc2b8d9a7a0f028e6c07ed55ad94304"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\bounded-native-conv-r1\\stdout.log",
+      "file": "bounded-native-conv-r1/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\original-full-clip-r1\\completed.json",
+      "file": "original-full-clip-r1/completed.json",
+      "bytes": 2895,
+      "sha256": "962e2e222ced386c55bbc59720d6330bf155cd76ee2518b1e85881f89748c0b4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\original-full-clip-r1\\parent.json",
+      "file": "original-full-clip-r1/parent.json",
+      "bytes": 261,
+      "sha256": "4ab5a8d879074a5b91afa7cecdde381c772dd17f1f6822fafa09311690bb3ad3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\original-full-clip-r1\\parent-completed.json",
+      "file": "original-full-clip-r1/parent-completed.json",
+      "bytes": 382,
+      "sha256": "1fcbf720835124f5be0ea76b8bc78a34f90ed085df8dd8649f473bee4438bfcf"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\original-full-clip-r1\\stdout.log",
+      "file": "original-full-clip-r1/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "work\\checkpoint_gpu_compat_r51.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 2698,
+      "sha256": "77c943ea0268aec84d58509fa96ca9c2742fc10d7a0fe39b53337122928f95b0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/gpu_compat_frcrn_20261116.py": "68dfd79cfc8f38f6afc86a1bce416368af8995b0b6f4af1537ceba0ca06a8c2c"
+  },
+  "state": "BOUNDED2S6S27S_NATIVE_GPU_PROFILE_PASSED_NO_ROOT_CAUSE_OR_OVERNIGHT_QUALIFICATION",
+  "newNeuralCalls": 3,
+  "trainingUpdates": 0,
+  "systemDriverOrPowerSettingsChanged": false,
+  "oldFailedDefault27sReproduced": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

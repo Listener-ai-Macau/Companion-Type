@@ -1,0 +1,56 @@
+{
+  "revision": 51,
+  "evidenceDirectory": "evidence/20261116-bounded-native-gpu-convolution-results",
+  "sources": [
+    "src/gpu_compat_frcrn_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\bounded-gpu-results.json",
+      "name": "bounded-gpu-results.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\bounded-native-conv-r1\\completed.json",
+      "name": "bounded-native-conv-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\bounded-native-conv-r1\\parent.json",
+      "name": "bounded-native-conv-r1/parent.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\bounded-native-conv-r1\\parent-completed.json",
+      "name": "bounded-native-conv-r1/parent-completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\bounded-native-conv-r1\\stdout.log",
+      "name": "bounded-native-conv-r1/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\original-full-clip-r1\\completed.json",
+      "name": "original-full-clip-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\original-full-clip-r1\\parent.json",
+      "name": "original-full-clip-r1/parent.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\original-full-clip-r1\\parent-completed.json",
+      "name": "original-full-clip-r1/parent-completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\original-full-clip-r1\\stdout.log",
+      "name": "original-full-clip-r1/stdout.log"
+    }
+  ],
+  "commitMessage": "Preserve successful bounded RX6800XT native-convolution re-entry evidence",
+  "claims": {
+    "state": "BOUNDED2S6S27S_NATIVE_GPU_PROFILE_PASSED_NO_ROOT_CAUSE_OR_OVERNIGHT_QUALIFICATION",
+    "newNeuralCalls": 3,
+    "trainingUpdates": 0,
+    "systemDriverOrPowerSettingsChanged": false,
+    "oldFailedDefault27sReproduced": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

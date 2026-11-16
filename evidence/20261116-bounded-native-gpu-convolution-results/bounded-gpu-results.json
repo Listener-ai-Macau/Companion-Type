@@ -1,0 +1,143 @@
+{
+  "at": "2026-11-16T22:02:34+08:00",
+  "state": "BOUNDED_NATIVE_GPU_PROFILE_PASSED_2S_6S_ORIGINAL27S_NOT_OVERNIGHT_QUALIFIED",
+  "runs": [
+    {
+      "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\bounded-native-conv-r1",
+      "state": "PASS_BOUNDED2S6S_GPU_NATIVE_CONV_COMPATIBILITY_ONLY",
+      "workerSha256": "00efb947d59658fd4627e33f58adccc0a49fd41823a4aef59bd45ca41d5d3c77",
+      "device": {
+        "index": 1,
+        "name": "AMD Radeon RX 6800 XT",
+        "architecture": "gfx1030"
+      },
+      "results": [
+        {
+          "seconds": 2,
+          "inferenceSeconds": 4.642141000000038,
+          "outputFrames": 32000,
+          "outputSha256": "454f00f631d4b4d371df5366194bf151dac3479cd4bc1d90aeaee445697ed4dc",
+          "outputAbsolutePeak": 0.06442581117153168,
+          "memory": {
+            "allocatedBytes": 91425280,
+            "reservedBytes": 295698432,
+            "peakAllocatedBytes": 246662656,
+            "peakReservedBytes": 295698432,
+            "driverFreeBytes": 16624844800,
+            "driverTotalBytes": 17163091968,
+            "systemAvailableBytes": 9137729536
+          },
+          "weightsUpdated": false,
+          "accuracyScored": false
+        },
+        {
+          "seconds": 6,
+          "inferenceSeconds": 2.5155156000000716,
+          "outputFrames": 96000,
+          "outputSha256": "b6d2c4e993664aa560e95cc44e7a86d4ae912e7dce5e91486e540e7d9e95baf9",
+          "outputAbsolutePeak": 0.05571726709604263,
+          "memory": {
+            "allocatedBytes": 91937280,
+            "reservedBytes": 685768704,
+            "peakAllocatedBytes": 545933312,
+            "peakReservedBytes": 685768704,
+            "driverFreeBytes": 16205414400,
+            "driverTotalBytes": 17163091968,
+            "systemAvailableBytes": 9119621120
+          },
+          "weightsUpdated": false,
+          "accuracyScored": false
+        }
+      ],
+      "operatorMaximumSeconds": 0.20830420000015692,
+      "completedOperatorCalls": 1408,
+      "limits": {
+        "pid": 8452,
+        "cpuRate": 2500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 25.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 2147483648,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 1088724992,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      },
+      "processExited": true,
+      "newNeuralCalls": 2
+    },
+    {
+      "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\original-full-clip-r1",
+      "state": "PASS_ORIGINAL27S_GPU_NATIVE_CONV_COMPATIBILITY_ONLY",
+      "workerSha256": "68dfd79cfc8f38f6afc86a1bce416368af8995b0b6f4af1537ceba0ca06a8c2c",
+      "device": {
+        "index": 1,
+        "name": "AMD Radeon RX 6800 XT",
+        "architecture": "gfx1030"
+      },
+      "results": [
+        {
+          "seconds": 27.2500625,
+          "inferenceSeconds": 5.217131899999913,
+          "outputFrames": 436001,
+          "outputSha256": "5b661d1849e6b8fc1fe65c50b67e971a7d706f866372692e1609096c3c757475",
+          "outputAbsolutePeak": 0.03594686836004257,
+          "memory": {
+            "allocatedBytes": 92913664,
+            "reservedBytes": 2778726400,
+            "peakAllocatedBytes": 2227497984,
+            "peakReservedBytes": 2778726400,
+            "driverFreeBytes": 14160560128,
+            "driverTotalBytes": 17163091968,
+            "systemAvailableBytes": 9737482240
+          },
+          "weightsUpdated": false,
+          "accuracyScored": false,
+          "originalAudioSha256": "0e3615a5dc8437ca3129e82d269dbf3419fefd5871dde831d8898eb01b4f85bf",
+          "originalAllFramesAndGainRestored": true
+        }
+      ],
+      "operatorMaximumSeconds": 0.23252580000007583,
+      "completedOperatorCalls": 704,
+      "limits": {
+        "pid": 3412,
+        "cpuRate": 2500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 25.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 2147483648,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 911056896,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      },
+      "processExited": true,
+      "newNeuralCalls": 1
+    }
+  ],
+  "trainingUpdates": 0,
+  "newNeuralCalls": 3,
+  "driverSystemOrPowerSettingsChanged": false,
+  "profile": {
+    "backend": "Only this process:torch.backends.cudnn.enabled=False to bypass MIOpen convolution",
+    "torchAllocatorFraction": 0.25,
+    "cpuPercent": 25,
+    "privateCommitBytes": 2147483648,
+    "systemRamFloorGiB": 3.18,
+    "gpuOperatorSynchronizationAndJournal": true,
+    "operatorWatchdogSeconds": 30,
+    "overallProbeSeconds": 360,
+    "guardCannotGuaranteeKernelDriverRecovery": true
+  },
+  "causalBoundary": "This tests an alternative profile after reboot, changing backend, allocator allowance, per-operator synchronization/pacing and observation together. It is not a pure MIOpen ablation and does not prove old crash was VRAM or MIOpen. No re-execution of the old failing default27s profile.",
+  "qualityBoundary": "No transcription accuracy, trained model, whole-meeting or overnight stability result. Original27.25s source all436001frames/gain retained; publicenhancedwaveform stays localE.",
+  "decision": "Keep GPU usable through this measured alternative profile. Freeze profile before bounded enhancement/ASR re-entry; retain old defaultFRCRN27s restart as blocked recipe, not rerun. Validate original ASR control and bilingual raw baselines under changed backend before attributing frontend quality gains; no blind overnight retry or automatic training."
+}

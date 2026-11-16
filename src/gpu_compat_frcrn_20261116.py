@@ -29,16 +29,28 @@ ROOT=Path('C:/Users/Billy/Desktop/Denzic/Companion')
 J=ROOT/'docs/handoffs/20261109-paired-real-meeting/bilingual-local20261114/d1d2-execution/joint-architecture-r1'
 GPU_PY=Path('E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe')
 
-def child(run,limits):
+def child(run,limits,full_clip=False):
     P=read(J/'frcrn-front-end-r1/protocol-r2.json')
     for item in P['files']:require(sha(item['file'])==item['sha256'],'Frozen frontend dependency changed')
     cases=read(P['audioOnly']);case=next(c for c in cases if c['id']=='20200709_L_R002S01C01-seq-000')
     require(sha(case['audio'])==case['audioSha256'],'Public diagnostic audio changed')
     require(sha(P['enhancer']['file'])==P['enhancer']['sha256'],'Enhancer weights changed')
+    predecessor=None
+    if full_clip:
+        prior=run.parent/'bounded-native-conv-r1/completed.json'
+        predecessor=read(prior)
+        require(predecessor['state']=='PASS_BOUNDED2S6S_GPU_NATIVE_CONV_COMPATIBILITY_ONLY'
+            and [r['seconds'] for r in predecessor['results']]==[2,6]
+            and predecessor['workerSha256']=='00efb947d59658fd4627e33f58adccc0a49fd41823a4aef59bd45ca41d5d3c77'
+            and predecessor['originalProtocolSha256']==sha(J/'frcrn-front-end-r1/protocol-r2.json'),
+            'Completed bounded2s/6s same-model GPU evidence is required')
+    input_frames=[case['frames']] if full_clip else [32000,96000]
     state={'state':'PREPARING_BOUNDED_NO_MIOPEN_GPU_CHECK','at':now(),'pid':os.getpid(),
         'trainingUpdates':0,'newNeuralCalls':0,'qualityQualified':False,'saleQualified':False,
         'backend':'GPU native convolution with PyTorch cudnn_enabled=False; no MIOpen convolution selection',
-        'fixedPrefixSeconds':[2,6],'allocatorFraction':0.25,'allocatorIsNotWholeGpuPowerOrDriverCap':True,
+        'fixedInputFrames':input_frames,'fullOriginalClip':full_clip,
+        'predecessorProofSha256':sha(prior) if full_clip else None,
+        'allocatorFraction':0.25,'allocatorIsNotWholeGpuPowerOrDriverCap':True,
         'workerSha256':sha(__file__),'originalProtocolSha256':sha(J/'frcrn-front-end-r1/protocol-r2.json'),
         'currentOperationBudgetSeconds':120,'referencesRead':False}
     pressure=SystemRamPressure()
@@ -109,26 +121,36 @@ def child(run,limits):
                     hooks.append(module.register_forward_pre_hook(lambda m,x,n=name:before(n,m,x)))
                     hooks.append(module.register_forward_hook(lambda m,x,y,n=name:after(n,m,x,y)))
             results=[]
-            for seconds in [2,6]:
+            for frames in input_frames:
+                seconds=frames/16000
                 stop();torch.cuda.empty_cache();torch.cuda.reset_peak_memory_stats()
-                with wave.open(case['audio'],'rb') as w:raw=w.readframes(seconds*16000)
-                require(len(raw)==seconds*16000*2,'Diagnostic prefix truncated')
+                with wave.open(case['audio'],'rb') as w:raw=w.readframes(frames)
+                require(len(raw)==frames*2,'Diagnostic waveform truncated')
                 x=np.frombuffer(raw,dtype='<i2').astype(np.float64)/32768;norm,inverse=author.audio_norm(x)
                 tensor=torch.from_numpy(norm.astype(np.float32)[None,:]).to(device)
                 save(state='RUNNING_FIXED_PREFIX_NO_MIOPEN',currentPrefixSeconds=seconds,currentOperationBudgetSeconds=30,memory=memory())
                 tick=time.perf_counter()
-                with torch.inference_mode():y=model.inference(tensor)
+                with torch.inference_mode():
+                    y=author.decode_one_audio_frcrn_se_16k(model,device,norm[None,:],args) if full_clip else model.inference(tensor)
                 torch.cuda.synchronize();elapsed=time.perf_counter()-tick
-                require(y.shape==(seconds*16000,) and torch.isfinite(y).all(),'Invalid diagnostic enhancer result')
-                output=y.cpu().numpy();state['newNeuralCalls']+=1
+                if full_clip:
+                    require(y.ndim==1 and len(y)>=frames and np.isfinite(y).all(),'Invalid complete enhancer result')
+                    output=np.asarray(y[:frames]*inverse,dtype=np.float32)
+                    (run/'results').mkdir(exist_ok=True)
+                    np.save(run/'results'/(case['id']+'.npy'),output,allow_pickle=False)
+                else:
+                    require(y.shape==(frames,) and torch.isfinite(y).all(),'Invalid diagnostic enhancer result')
+                    output=y.cpu().numpy()
+                state['newNeuralCalls']+=1
                 results.append({'seconds':seconds,'inferenceSeconds':elapsed,'outputFrames':len(output),
                     'outputSha256':hashlib.sha256(output.tobytes()).hexdigest(),'outputAbsolutePeak':float(np.max(np.abs(output))),
-                    'memory':memory(),'weightsUpdated':False,'accuracyScored':False})
+                    'memory':memory(),'weightsUpdated':False,'accuracyScored':False,
+                    'originalAudioSha256':case['audioSha256'],'originalAllFramesAndGainRestored':full_clip})
                 save(state='FIXED_PREFIX_COMPLETE_NO_QUALITY_CLAIM',results=results,currentOperationBudgetSeconds=30)
                 del tensor,y,output,x,norm;gc.collect();torch.cuda.empty_cache();time.sleep(2)
             log.close()
             for h in hooks:h.remove()
-            save(state='PASS_BOUNDED2S6S_GPU_NATIVE_CONV_COMPATIBILITY_ONLY',results=results,
+            save(state='PASS_ORIGINAL27S_GPU_NATIVE_CONV_COMPATIBILITY_ONLY' if full_clip else 'PASS_BOUNDED2S6S_GPU_NATIVE_CONV_COMPATIBILITY_ONLY',results=results,
                 completedOperatorCalls=len(operations),maximumOperatorSeconds=max(r['seconds'] for r in operations),
                 currentOperation=None,currentOperationBudgetSeconds=30,
                 originalDefaultMiopen27sFailureReproduced=False,originalRestartRootCauseProven=False,
@@ -140,12 +162,13 @@ def child(run,limits):
         finally:pressure.close()
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--run',type=Path,required=True);p.add_argument('--child',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--run',type=Path,required=True);p.add_argument('--child',action='store_true');p.add_argument('--full-clip',action='store_true');a=p.parse_args()
     limits=own_limits(25);run=a.run.resolve()
-    if a.child:return child(run,limits)
+    if a.child:return child(run,limits,a.full_clip)
     run.mkdir(parents=True,exist_ok=False)
     with (run/'stdout.log').open('w',encoding='utf-8') as stream:
-        proc=subprocess.Popen([str(GPU_PY),str(Path(__file__).resolve()),'--child','--run',str(run)],stdout=stream,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW)
+        command=[str(GPU_PY),str(Path(__file__).resolve()),'--child','--run',str(run)]+(['--full-clip'] if a.full_clip else [])
+        proc=subprocess.Popen(command,stdout=stream,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW)
         import psutil
         owned=psutil.Process(proc.pid);created=owned.create_time();start=time.monotonic();reason=None
         atomic_json(run/'parent.json',{'pid':os.getpid(),'childPid':proc.pid,'childCreatedAt':created,'at':now(),

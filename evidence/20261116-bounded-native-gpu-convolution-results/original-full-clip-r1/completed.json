@@ -1,0 +1,82 @@
+{
+  "state": "PASS_ORIGINAL27S_GPU_NATIVE_CONV_COMPATIBILITY_ONLY",
+  "at": "2026-11-16T21:58:28+08:00",
+  "pid": 3412,
+  "trainingUpdates": 0,
+  "newNeuralCalls": 1,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "backend": "GPU native convolution with PyTorch cudnn_enabled=False; no MIOpen convolution selection",
+  "fixedInputFrames": [
+    436001
+  ],
+  "fullOriginalClip": true,
+  "predecessorProofSha256": "d51ffc44ed0ac50a1a4edc2d82809bad5938ccbacdc4f4ab12b6b8a5942d4695",
+  "allocatorFraction": 0.25,
+  "allocatorIsNotWholeGpuPowerOrDriverCap": true,
+  "workerSha256": "68dfd79cfc8f38f6afc86a1bce416368af8995b0b6f4af1537ceba0ca06a8c2c",
+  "originalProtocolSha256": "268ef363c74c17214d1069a83aa5aec4b61c85375277d597b67dcb8256b3a57e",
+  "currentOperationBudgetSeconds": 30,
+  "referencesRead": false,
+  "observedAt": "2026-11-16T21:59:47+08:00",
+  "limits": {
+    "pid": 3412,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 911056896,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "device": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  },
+  "memory": {
+    "allocatedBytes": 986987520,
+    "reservedBytes": 2778726400,
+    "peakAllocatedBytes": 2227497984,
+    "peakReservedBytes": 2778726400,
+    "driverFreeBytes": 14169538560,
+    "driverTotalBytes": 17163091968,
+    "systemAvailableBytes": 9737003008
+  },
+  "currentPrefixSeconds": 27.2500625,
+  "currentOperation": null,
+  "results": [
+    {
+      "seconds": 27.2500625,
+      "inferenceSeconds": 5.217131899999913,
+      "outputFrames": 436001,
+      "outputSha256": "5b661d1849e6b8fc1fe65c50b67e971a7d706f866372692e1609096c3c757475",
+      "outputAbsolutePeak": 0.03594686836004257,
+      "memory": {
+        "allocatedBytes": 92913664,
+        "reservedBytes": 2778726400,
+        "peakAllocatedBytes": 2227497984,
+        "peakReservedBytes": 2778726400,
+        "driverFreeBytes": 14160560128,
+        "driverTotalBytes": 17163091968,
+        "systemAvailableBytes": 9737482240
+      },
+      "weightsUpdated": false,
+      "accuracyScored": false,
+      "originalAudioSha256": "0e3615a5dc8437ca3129e82d269dbf3419fefd5871dde831d8898eb01b4f85bf",
+      "originalAllFramesAndGainRestored": true
+    }
+  ],
+  "completedOperatorCalls": 704,
+  "maximumOperatorSeconds": 0.23252580000007583,
+  "originalDefaultMiopen27sFailureReproduced": false,
+  "originalRestartRootCauseProven": false,
+  "wholeMeetingOrTrainingStabilityProven": false,
+  "systemDriverOrPowerSettingsChanged": false
+}
