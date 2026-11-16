@@ -1,0 +1,89 @@
+{
+  "id": "20200708_L_R002S01C01-seq-005",
+  "meeting": "20200708_L_R002S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200708_L_R002S01C01-seq-005-raw.json",
+  "rawSha256": "a9959f3e2185be52a116cc05bcb4995b06a81d1a0fa0d0c31dfc9a8197ac0a15",
+  "rows": [
+    {
+      "index": 0,
+      "text": "说不定会审核一下，大公司谁会管你这种个人情绪，他只会管理一个公司的整体运营，他会以团队协作为主。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 0.25,
+      "end": 8.51,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "他不会考虑到你的个人情绪，因为你的能力没有那么突出。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 9.94,
+      "end": 14.01,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "以上你们有什么看法？",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 15.92,
+      "end": 17.25,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "其实每个公司肯定都是有利有弊的，举一个比较现实的例子，就比如说我上初中的时候，两个兄弟班。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 6,
+      "start": 17.95,
+      "end": 25.19,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 1,
+    "S02": 6
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      13.659999999999968,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      7.240000000000009
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "sourceStartFrame": 13215355,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

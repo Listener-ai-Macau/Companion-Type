@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "EN2001a-a2-116",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-116.wav",
+    "wavSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+    "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f",
+    "frames": 289920,
+    "audioSeconds": 18.12,
+    "language": "English"
+  },
+  "seconds": 14.915191400003096,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Once we start doing it, it will become more and more obvious, I think, than you're making. Yeah. It's just we are halfway through the project time, but that's what's just freaked me out. It's a step forward. Yes. What time is it? Wait, two.",
+    "raw_text": "[0.94][S01]Once we start doing it, it will become more and more obvious, I think, than you're making.[5.12][5.12][S02]Yeah.[5.52][6.42][S03]It's just we are halfway through the project time, but that's what's just freaked me out.[9.74][6.81][S01]It's a step forward.[7.82][10.58][S04]Yes.[11.12][13.32][S04]What time is it?[13.94][15.55][S01]Wait, two.[16.18]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Once we start doing it, it will become more and more obvious, I think, than you're making.",
+        "t0_ms": 940,
+        "t1_ms": 5120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 5120,
+        "t1_ms": 5520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "It's just we are halfway through the project time, but that's what's just freaked me out.",
+        "t0_ms": 6420,
+        "t1_ms": 9740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "It's a step forward.",
+        "t0_ms": 6810,
+        "t1_ms": 7820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yes.",
+        "t0_ms": 10580,
+        "t1_ms": 11120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "What time is it?",
+        "t0_ms": 13320,
+        "t1_ms": 13940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Wait, two.",
+        "t0_ms": 15550,
+        "t1_ms": 16180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 940,
+        "t1_ms": 5120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5120,
+        "t1_ms": 5520,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6420,
+        "t1_ms": 9740,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6810,
+        "t1_ms": 7820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10580,
+        "t1_ms": 11120,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13320,
+        "t1_ms": 13940,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15550,
+        "t1_ms": 16180,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 24.349000930786133,
+      "encode_ms": 6692.22705078125,
+      "decode_ms": 8163.01513671875
+    }
+  },
+  "rawDecoded": "[0.94][S01]Once we start doing it, it will become more and more obvious, I think, than you're making.[5.12][5.12][S02]Yeah.[5.52][6.42][S03]It's just we are halfway through the project time, but that's what's just freaked me out.[9.74][6.81][S01]It's a step forward.[7.82][10.58][S04]Yes.[11.12][13.32][S04]What time is it?[13.94][15.55][S01]Wait, two.[16.18]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

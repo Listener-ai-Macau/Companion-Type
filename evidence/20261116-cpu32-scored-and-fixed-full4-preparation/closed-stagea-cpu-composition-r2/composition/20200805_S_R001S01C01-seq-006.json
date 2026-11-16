@@ -1,0 +1,74 @@
+{
+  "id": "20200805_S_R001S01C01-seq-006",
+  "meeting": "20200805_S_R001S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200805_S_R001S01C01-seq-006-raw.json",
+  "rawSha256": "f792f97af0b58d792d6ca6d7f194eac419325e2de2fe40233bcbec1e4ece7339",
+  "rows": [
+    {
+      "index": 0,
+      "text": "那呃下半年的话，你们有什么计划，或者说有什么想改进的地方？",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 0.12,
+      "end": 6.88,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问，嗯，努力的改善。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 7.72,
+      "end": 16.82,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "对调查问卷的结果进行分析。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 17.21,
+      "end": 19.87,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 4,
+    "S02": 3
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      6.760000000000218
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      11.759999999999764,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "sourceStartFrame": 16617532,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

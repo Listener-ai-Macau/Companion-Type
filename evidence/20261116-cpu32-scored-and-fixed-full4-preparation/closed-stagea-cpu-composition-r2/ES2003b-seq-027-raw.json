@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "ES2003b-seq-027",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-027.wav",
+    "wavSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+    "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+    "frames": 162401,
+    "audioSeconds": 10.1500625,
+    "language": "English"
+  },
+  "seconds": 12.760451199996169,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I'm pointing at my laptop, but we're clocking. We put the fashion into. Real reaction and such, so um so. That's the slogan, is that not the name? Slogan.",
+    "raw_text": "[0.00][S01]I'm pointing at my laptop, but we're clocking.[2.36][2.28][S02]We put the fashion into.[3.84][5.08][S01]Real reaction and such, so um so.[9.34][8.34][S02]That's the slogan, is that not the name?[9.72][9.12][S03]Slogan.[9.88]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I'm pointing at my laptop, but we're clocking.",
+        "t0_ms": 0,
+        "t1_ms": 2360,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "We put the fashion into.",
+        "t0_ms": 2280,
+        "t1_ms": 3840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Real reaction and such, so um so.",
+        "t0_ms": 5080,
+        "t1_ms": 9340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "That's the slogan, is that not the name?",
+        "t0_ms": 8340,
+        "t1_ms": 9720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Slogan.",
+        "t0_ms": 9120,
+        "t1_ms": 9880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2360,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2280,
+        "t1_ms": 3840,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5080,
+        "t1_ms": 9340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8340,
+        "t1_ms": 9720,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9120,
+        "t1_ms": 9880,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 17.930999755859375,
+      "encode_ms": 7418.0322265625,
+      "decode_ms": 5294.09814453125
+    }
+  },
+  "rawDecoded": "[0.00][S01]I'm pointing at my laptop, but we're clocking.[2.36][2.28][S02]We put the fashion into.[3.84][5.08][S01]Real reaction and such, so um so.[9.34][8.34][S02]That's the slogan, is that not the name?[9.72][9.12][S03]Slogan.[9.88]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

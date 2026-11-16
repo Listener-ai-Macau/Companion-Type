@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "20200709_L_R002S01C01-seq-009",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-009.wav",
+    "wavSha256": "988829118527d42a1b014f640471dd23b3ad281b1d88922d84b61bb11717b30f",
+    "pcmSha256": "3a9b28cb9b183bd8f93e51ef2a85fff2bd96c3f68f674024db8c951bd76da179",
+    "frames": 444561,
+    "audioSeconds": 27.7850625,
+    "language": "Chinese"
+  },
+  "seconds": 15.352391499996884,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "不管任何一个班儿，发现问题及时汇报给当班儿的领导维修人员，维修人员如果是一些小问题就是当场处理，如果说呃处理不了的一些器械的一些损坏，会及时的上报。 呃，这边儿他们的配合还是做的蛮好的。 嗯，咱们就是咱们这儿前一段时间会一直下雨，然后咱们这边儿我想问一下，咱们这边儿这个设施有没有受到。",
+    "raw_text": "[0.11][S01]不管任何一个班儿，发现问题及时汇报给当班儿的领导维修人员，维修人员如果是一些小问题就是当场处理，如果说呃处理不了的一些器械的一些损坏，会及时的上报。[14.69][14.74][S01]呃，这边儿他们的配合还是做的蛮好的。[18.03][19.18][S02]嗯，咱们就是咱们这儿前一段时间会一直下雨，然后咱们这边儿我想问一下，咱们这边儿这个设施有没有受到。[27.78]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "不管任何一个班儿，发现问题及时汇报给当班儿的领导维修人员，维修人员如果是一些小问题就是当场处理，如果说呃处理不了的一些器械的一些损坏，会及时的上报。",
+        "t0_ms": 110,
+        "t1_ms": 14690,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，这边儿他们的配合还是做的蛮好的。",
+        "t0_ms": 14740,
+        "t1_ms": 18030,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，咱们就是咱们这儿前一段时间会一直下雨，然后咱们这边儿我想问一下，咱们这边儿这个设施有没有受到。",
+        "t0_ms": 19180,
+        "t1_ms": 27780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 110,
+        "t1_ms": 14690,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14740,
+        "t1_ms": 18030,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19180,
+        "t1_ms": 27780,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 23.253999710083008,
+      "encode_ms": 6932.02978515625,
+      "decode_ms": 8362.693359375
+    }
+  },
+  "rawDecoded": "[0.11][S01]不管任何一个班儿，发现问题及时汇报给当班儿的领导维修人员，维修人员如果是一些小问题就是当场处理，如果说呃处理不了的一些器械的一些损坏，会及时的上报。[14.69][14.74][S01]呃，这边儿他们的配合还是做的蛮好的。[18.03][19.18][S02]嗯，咱们就是咱们这儿前一段时间会一直下雨，然后咱们这边儿我想问一下，咱们这边儿这个设施有没有受到。[27.78]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

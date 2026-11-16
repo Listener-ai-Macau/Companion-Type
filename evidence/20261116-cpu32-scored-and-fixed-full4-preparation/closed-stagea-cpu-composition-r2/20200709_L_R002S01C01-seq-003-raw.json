@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "20200709_L_R002S01C01-seq-003",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-003.wav",
+    "wavSha256": "e64a93b033e9102767a10d49040eabe4d96085c5c8076aabd6b0727a8886766e",
+    "pcmSha256": "59a5853e6cd1235b2c77b461806f2186fde768f07b90cc4e656b454799795c6f",
+    "frames": 357561,
+    "audioSeconds": 22.3475625,
+    "language": "Chinese"
+  },
+  "seconds": 13.689522600005148,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "然后调动顾客积极性，还有就是毕竟是健身房嘛，这些教练是吧，他们肯定会以安全为目的，像什么亚玲儿一些维修啊，砸到脚面之类的这方面是绝对不会发生的。 然后咱们这边儿其实呢，有那个意见反馈，就是说然后还在学游泳嘛，学游泳的时候，因为以前没有接触过。",
+    "raw_text": "[0.21][S01]然后调动顾客积极性，还有就是毕竟是健身房嘛，这些教练是吧，他们肯定会以安全为目的，像什么亚玲儿一些维修啊，砸到脚面之类的这方面是绝对不会发生的。[13.61][14.81][S02]然后咱们这边儿其实呢，有那个意见反馈，就是说然后还在学游泳嘛，学游泳的时候，因为以前没有接触过。[22.31]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "然后调动顾客积极性，还有就是毕竟是健身房嘛，这些教练是吧，他们肯定会以安全为目的，像什么亚玲儿一些维修啊，砸到脚面之类的这方面是绝对不会发生的。",
+        "t0_ms": 210,
+        "t1_ms": 13610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后咱们这边儿其实呢，有那个意见反馈，就是说然后还在学游泳嘛，学游泳的时候，因为以前没有接触过。",
+        "t0_ms": 14810,
+        "t1_ms": 22310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 210,
+        "t1_ms": 13610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14810,
+        "t1_ms": 22310,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 15.055999755859375,
+      "encode_ms": 7222.65576171875,
+      "decode_ms": 6419.244140625
+    }
+  },
+  "rawDecoded": "[0.21][S01]然后调动顾客积极性，还有就是毕竟是健身房嘛，这些教练是吧，他们肯定会以安全为目的，像什么亚玲儿一些维修啊，砸到脚面之类的这方面是绝对不会发生的。[13.61][14.81][S02]然后咱们这边儿其实呢，有那个意见反馈，就是说然后还在学游泳嘛，学游泳的时候，因为以前没有接触过。[22.31]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

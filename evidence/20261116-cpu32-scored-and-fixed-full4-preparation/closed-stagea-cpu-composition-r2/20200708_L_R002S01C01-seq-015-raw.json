@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "20200708_L_R002S01C01-seq-015",
+    "condition": "sequential-original-room",
+    "meeting": "20200708_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200708_L_R002S01C01-seq-015.wav",
+    "wavSha256": "f17dc9b21bee0242e44cc69f3ea78f76a9b7625bb1620b5c6ddb0114ed24e14c",
+    "pcmSha256": "55666181c83c17141992fc1975180395d0478732b5873fde82aabfff0b6c0b50",
+    "frames": 282021,
+    "audioSeconds": 17.6263125,
+    "language": "Chinese"
+  },
+  "seconds": 10.677199600002496,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "那咱本次会议就先到此结束，散会。 还是啥也不懂。",
+    "raw_text": "[0.12][S01]那咱本次会议就先到此结束，散会。[3.24][15.18][S02]还是啥也不懂。[16.22]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "那咱本次会议就先到此结束，散会。",
+        "t0_ms": 120,
+        "t1_ms": 3240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还是啥也不懂。",
+        "t0_ms": 15180,
+        "t1_ms": 16220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 120,
+        "t1_ms": 3240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15180,
+        "t1_ms": 16220,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 29.836000442504883,
+      "encode_ms": 7015.0380859375,
+      "decode_ms": 3599.992919921875
+    }
+  },
+  "rawDecoded": "[0.12][S01]那咱本次会议就先到此结束，散会。[3.24][15.18][S02]还是啥也不懂。[16.22]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,71 @@
+{
+  "id": "ES2003b-seq-005",
+  "meeting": "ES2003b",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\ES2003b-seq-005-raw.json",
+  "rawSha256": "6b54432a134c5f6247c6fbc424f426ba8521f06d69482974a480df27dbaa9601",
+  "rows": [
+    {
+      "index": 0,
+      "text": "than the remote something twenty per year, it's a bit impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part, then you can design the remote to look any way you want it to look, because there are no restrictions on physical size or shape.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 0.0,
+      "end": 19.2,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "It it could be as fancy as you want it to be, you know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 19.72,
+      "end": 28.88,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "Okay.",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 29.24,
+      "end": 29.74,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 0,
+    "S02": 1
+  },
+  "overlapSecondsMatrix": [
+    [
+      24.379999999999995,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.30000000000001137,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "sourceStartFrame": 6553760,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

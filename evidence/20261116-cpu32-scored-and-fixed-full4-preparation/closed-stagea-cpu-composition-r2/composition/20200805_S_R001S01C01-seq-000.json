@@ -1,0 +1,74 @@
+{
+  "id": "20200805_S_R001S01C01-seq-000",
+  "meeting": "20200805_S_R001S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200805_S_R001S01C01-seq-000-raw.json",
+  "rawSha256": "0bf5d925be335ab1be4522d0df9202452032a6fb53e0b326828d8952f3ccfee2",
+  "rows": [
+    {
+      "index": 0,
+      "text": "上半年的一些情况，以及下半年怎么做，然后接下来由我们的主管来主持一下这场会议。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 0.0,
+      "end": 7.92,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "嗯，上半年呢，呃，大家，呃，待会儿先，呃，说一下各个岗位的上半年的情况。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 10.68,
+      "end": 19.56,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "因为毕竟我们这个物业跟其他物业不一样，我们是全国一级资质的。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 19.56,
+      "end": 24.94,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 0,
+    "S02": 4
+  },
+  "overlapSecondsMatrix": [
+    [
+      7.770000000000003,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      14.2473125
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "sourceStartFrame": 550283,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

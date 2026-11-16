@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "20200709_L_R002S01C01-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-000.wav",
+    "wavSha256": "0e3615a5dc8437ca3129e82d269dbf3419fefd5871dde831d8898eb01b4f85bf",
+    "pcmSha256": "1693f208b2d6103a4cfc69b36b47a833fb913bd3becd2e42c02c6db4a5f10a30",
+    "frames": 436001,
+    "audioSeconds": 27.2500625,
+    "language": "Chinese"
+  },
+  "seconds": 16.980750899994746,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "嗯，今天呢把大家叫来，咱们就是对咱们健身中心上半年，咱们的经营情况做一个简单的。 嗯，汇报和总结，因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程。 然后现在咱们就先从教练部这边儿，简单的总结一下上半年的情况。 上半年的情况主要是有像一些。",
+    "raw_text": "[0.25][S01]嗯，今天呢把大家叫来，咱们就是对咱们健身中心上半年，咱们的经营情况做一个简单的。[7.51][7.65][S01]嗯，汇报和总结，因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程。[16.11][16.32][S01]然后现在咱们就先从教练部这边儿，简单的总结一下上半年的情况。[22.31][23.48][S02]上半年的情况主要是有像一些。[26.91]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "嗯，今天呢把大家叫来，咱们就是对咱们健身中心上半年，咱们的经营情况做一个简单的。",
+        "t0_ms": 250,
+        "t1_ms": 7510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，汇报和总结，因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程。",
+        "t0_ms": 7650,
+        "t1_ms": 16110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后现在咱们就先从教练部这边儿，简单的总结一下上半年的情况。",
+        "t0_ms": 16320,
+        "t1_ms": 22310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "上半年的情况主要是有像一些。",
+        "t0_ms": 23480,
+        "t1_ms": 26910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 250,
+        "t1_ms": 7510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7650,
+        "t1_ms": 16110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16320,
+        "t1_ms": 22310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23480,
+        "t1_ms": 26910,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 23.316999435424805,
+      "encode_ms": 7847.72216796875,
+      "decode_ms": 9063.9404296875
+    }
+  },
+  "rawDecoded": "[0.25][S01]嗯，今天呢把大家叫来，咱们就是对咱们健身中心上半年，咱们的经营情况做一个简单的。[7.51][7.65][S01]嗯，汇报和总结，因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程。[16.11][16.32][S01]然后现在咱们就先从教练部这边儿，简单的总结一下上半年的情况。[22.31][23.48][S02]上半年的情况主要是有像一些。[26.91]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,88 @@
+{
+  "id": "ES2003b-seq-016",
+  "meeting": "ES2003b",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\ES2003b-seq-016-raw.json",
+  "rawSha256": "4b5c11d059ad1da458aa468ee07e2c32fda443e3968405b33bfca0d52e56d6e6",
+  "rows": [
+    {
+      "index": 0,
+      "text": "So I can understand your point and I would agree with you, but this is our design spec for now. Great to see it. Um.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 0.0,
+      "end": 9.84,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "Well does that um would that include um access to say interactive functions on digital or cable?",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 10.57,
+      "end": 17.05,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "Yeah.",
+      "localSpeaker": "S03",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 17.32,
+      "end": 17.64,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "I'm to say so yes, because then we have to be able to control the remote boxes and that is a separate unit. Um I think the I would say that the design",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 19.32,
+      "end": 29.58,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 1,
+    "S02": 2,
+    "S03": 0
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      14.58999999999969,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      4.989999999999782,
+      0.0
+    ],
+    [
+      0.2899999999999636,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02",
+    "S03"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "sourceStartFrame": 23521760,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

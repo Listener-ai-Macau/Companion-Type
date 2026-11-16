@@ -1,0 +1,86 @@
+{
+  "id": "EN2001a-a2-069",
+  "meeting": "EN2001a",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\EN2001a-a2-069-raw.json",
+  "rawSha256": "4a3830816660ac66b399f94c5de424bc65a79f8a0b443a6a9ad9f8dc794d2eec",
+  "rows": [
+    {
+      "index": 0,
+      "text": "I don't like I mean there's no guarantee that anything stays there, but overnight it'll stay. But I think the temps usually uh",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 0.0,
+      "end": 6.2,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "Ah yeah, but that would have to be the temp directory of the machine in S. S. H. into directory of S. S. H.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 10.54,
+      "end": 16.74,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "Yeah, but I can do it from that session, don't I? I can compress it from a remote session and S. C. P. it from the same session.",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 16.84,
+      "end": 23.82,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "Yeah, they w they they probably hate you for doing it.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 26.85,
+      "end": 29.73,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 2,
+    "S02": 3
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.0,
+      14.429999999999836,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      6.289999999999964,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sourceStartFrame": 52090400,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

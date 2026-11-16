@@ -1,0 +1,89 @@
+{
+  "id": "20200707_L_R001S08C01-seq-008",
+  "meeting": "20200707_L_R001S08C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200707_L_R001S08C01-seq-008-raw.json",
+  "rawSha256": "da25d25a0f75be185ed313ab9ca92141451ad5cd36a53a1c7c947857f9620672",
+  "rows": [
+    {
+      "index": 0,
+      "text": "你呃我们需要和他们公司取得联系，然后告诉他们，就是可以他们的联系，然后微信作为下载，看他们是否同意。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 0.11,
+      "end": 12.61,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "然后需要一个签字，一个合同，这样。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 14.08,
+      "end": 18.41,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "嗯，那就像淘宝卖家一样，就采点儿货。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 6,
+      "start": 18.65,
+      "end": 21.51,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "咱们就是这方面的话，就需要把细节的话就是处理好。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 22.32,
+      "end": 27.51,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 1,
+    "S02": 6
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      13.430000000000064,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      5.400000000000091
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      2.8599999999999
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "sourceStartFrame": 22807586,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

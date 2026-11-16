@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "20200707_L_R001S08C01-seq-013",
+    "condition": "sequential-original-room",
+    "meeting": "20200707_L_R001S08C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200707_L_R001S08C01-seq-013.wav",
+    "wavSha256": "942ca9597f57fd3fb73a63f17e5c33487ae41a6ed9e015e77238c3db2885f698",
+    "pcmSha256": "c7ba1c8b9d5c98df404e0553a77849354cfbd5de98c19d56948eb1e4cd6a7429",
+    "frames": 356405,
+    "audioSeconds": 22.2753125,
+    "language": "Chinese"
+  },
+  "seconds": 14.58033169999544,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "日常。 对，然后但是咱们节奏是一定要快的。 就是以因为并不是这种公司嘛，是以拓展爆发为那个切入点的。 对，就是相当于就是很很简短的一个日常，就直接碰了。",
+    "raw_text": "[0.06][S01]日常。[0.72][1.06][S02]对，然后但是咱们节奏是一定要快的。[4.44][5.18][S02]就是以因为并不是这种公司嘛，是以拓展爆发为那个切入点的。[12.64][14.73][S02]对，就是相当于就是很很简短的一个日常，就直接碰了。[22.25]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "日常。",
+        "t0_ms": 60,
+        "t1_ms": 720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对，然后但是咱们节奏是一定要快的。",
+        "t0_ms": 1060,
+        "t1_ms": 4440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "就是以因为并不是这种公司嘛，是以拓展爆发为那个切入点的。",
+        "t0_ms": 5180,
+        "t1_ms": 12640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对，就是相当于就是很很简短的一个日常，就直接碰了。",
+        "t0_ms": 14730,
+        "t1_ms": 22250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 60,
+        "t1_ms": 720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1060,
+        "t1_ms": 4440,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5180,
+        "t1_ms": 12640,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14730,
+        "t1_ms": 22250,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 23.357999801635742,
+      "encode_ms": 7953.77880859375,
+      "decode_ms": 6564.5380859375
+    }
+  },
+  "rawDecoded": "[0.06][S01]日常。[0.72][1.06][S02]对，然后但是咱们节奏是一定要快的。[4.44][5.18][S02]就是以因为并不是这种公司嘛，是以拓展爆发为那个切入点的。[12.64][14.73][S02]对，就是相当于就是很很简短的一个日常，就直接碰了。[22.25]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

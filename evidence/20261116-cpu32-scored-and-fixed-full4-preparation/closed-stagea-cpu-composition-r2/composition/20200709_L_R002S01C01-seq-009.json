@@ -1,0 +1,77 @@
+{
+  "id": "20200709_L_R002S01C01-seq-009",
+  "meeting": "20200709_L_R002S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200709_L_R002S01C01-seq-009-raw.json",
+  "rawSha256": "95cc2b0d7d3440794b206c98d4007896e6980ab6e0c3847d77f2bca7e0b5d6b3",
+  "rows": [
+    {
+      "index": 0,
+      "text": "不管任何一个班儿，发现问题及时汇报给当班儿的领导维修人员，维修人员如果是一些小问题就是当场处理，如果说呃处理不了的一些器械的一些损坏，会及时的上报。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 0.11,
+      "end": 14.69,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "呃，这边儿他们的配合还是做的蛮好的。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 14.74,
+      "end": 18.03,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "嗯，咱们就是咱们这儿前一段时间会一直下雨，然后咱们这边儿我想问一下，咱们这边儿这个设施有没有受到。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 19.18,
+      "end": 27.78,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 3,
+    "S02": 4
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      17.870000000000005,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      8.600000000000023,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sourceStartFrame": 14898539,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

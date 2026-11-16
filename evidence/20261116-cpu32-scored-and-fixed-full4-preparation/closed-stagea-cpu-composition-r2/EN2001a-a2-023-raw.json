@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "EN2001a-a2-023",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-023.wav",
+    "wavSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+    "pcmSha256": "490510a15ef6f46ebac736fb41e975068df6e61349ac7f589c257fe724ae9d33",
+    "frames": 475520,
+    "audioSeconds": 29.72,
+    "language": "English"
+  },
+  "seconds": 16.904559099995822,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "And in that way we could probably use the same algorithm and just like make ver like one or two ifs that say okay if you are on whole document uh whole series level and that was a double click then don't just go into left um segment but load a new file or something like it but in general use the same algorithm that would be in alternative if you can't actually load the whole thing and Mm. 'Cause also like even if we maybe this whole like maybe I'm worrying too much about the whole series in one thing displayed because actually",
+    "raw_text": "[0.00][S01]And in that way we could probably use the same algorithm and just like make ver like one or two ifs that say okay if you are on whole document uh whole series level and that was a double click then don't just go into left um segment but load a new file or something like it but in general use the same algorithm that would be in alternative if you can't actually load the whole thing and[18.94][19.48][S02]Mm.[19.68][21.58][S01]'Cause also like even if we maybe this whole like maybe I'm worrying too much about the whole series in one thing displayed because actually[29.72]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "And in that way we could probably use the same algorithm and just like make ver like one or two ifs that say okay if you are on whole document uh whole series level and that was a double click then don't just go into left um segment but load a new file or something like it but in general use the same algorithm that would be in alternative if you can't actually load the whole thing and",
+        "t0_ms": 0,
+        "t1_ms": 18940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 19480,
+        "t1_ms": 19680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "'Cause also like even if we maybe this whole like maybe I'm worrying too much about the whole series in one thing displayed because actually",
+        "t0_ms": 21580,
+        "t1_ms": 29720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 18940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19480,
+        "t1_ms": 19680,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21580,
+        "t1_ms": 29720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 26.775999069213867,
+      "encode_ms": 7245.47509765625,
+      "decode_ms": 9598.40625
+    }
+  },
+  "rawDecoded": "[0.00][S01]And in that way we could probably use the same algorithm and just like make ver like one or two ifs that say okay if you are on whole document uh whole series level and that was a double click then don't just go into left um segment but load a new file or something like it but in general use the same algorithm that would be in alternative if you can't actually load the whole thing and[18.94][19.48][S02]Mm.[19.68][21.58][S01]'Cause also like even if we maybe this whole like maybe I'm worrying too much about the whole series in one thing displayed because actually[29.72]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

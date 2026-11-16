@@ -1,0 +1,98 @@
+{
+  "id": "20200708_L_R002S01C01-seq-000",
+  "meeting": "20200708_L_R002S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200708_L_R002S01C01-seq-000-raw.json",
+  "rawSha256": "b34ef224f466b515d99f600b98123402dfe59ad8138bab0c5098224f606e78e6",
+  "rows": [
+    {
+      "index": 0,
+      "text": "对。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 0.04,
+      "end": 0.42,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "所以刚才这个副校长这边儿把这个呃问题抛在你们会上，嗯所以大家对这个问题都怎么看？",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 0.42,
+      "end": 8.44,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "刚才副副校长说的这个，可以说一下你这个你对这个事件的一个看法。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 9.72,
+      "end": 16.14,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "我对这个事件的看法就先说一下弊端吧，像一些大公司之类的。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 17.32,
+      "end": 23.02,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 4,
+      "text": "大公司如果你是学计算机的，可能你去那儿起步特别的低。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 23.82,
+      "end": 28.04,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 1,
+    "S02": 0
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.002187499999990905,
+      10.29781250000002,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      14.43999999999994,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "sourceStartFrame": 4163875,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

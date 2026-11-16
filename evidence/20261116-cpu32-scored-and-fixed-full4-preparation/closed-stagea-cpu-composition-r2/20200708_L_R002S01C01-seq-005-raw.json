@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "20200708_L_R002S01C01-seq-005",
+    "condition": "sequential-original-room",
+    "meeting": "20200708_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200708_L_R002S01C01-seq-005.wav",
+    "wavSha256": "0efe4e31877020e65c55f8d9839256c144f46311a5b7bf85d0e53edf9fbbbed1",
+    "pcmSha256": "b6296b00a7de8ed98239b3c7cc2f4a179d7c7101592fcf5fe699c0b9cbfe8bfd",
+    "frames": 403587,
+    "audioSeconds": 25.2241875,
+    "language": "Chinese"
+  },
+  "seconds": 22.182167099999788,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "说不定会审核一下，大公司谁会管你这种个人情绪，他只会管理一个公司的整体运营，他会以团队协作为主。 他不会考虑到你的个人情绪，因为你的能力没有那么突出。 以上你们有什么看法？ 其实每个公司肯定都是有利有弊的，举一个比较现实的例子，就比如说我上初中的时候，两个兄弟班。",
+    "raw_text": "[0.25][S01]说不定会审核一下，大公司谁会管你这种个人情绪，他只会管理一个公司的整体运营，他会以团队协作为主。[8.51][9.94][S01]他不会考虑到你的个人情绪，因为你的能力没有那么突出。[14.01][15.92][S01]以上你们有什么看法？[17.25][17.95][S02]其实每个公司肯定都是有利有弊的，举一个比较现实的例子，就比如说我上初中的时候，两个兄弟班。[25.19]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "说不定会审核一下，大公司谁会管你这种个人情绪，他只会管理一个公司的整体运营，他会以团队协作为主。",
+        "t0_ms": 250,
+        "t1_ms": 8510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "他不会考虑到你的个人情绪，因为你的能力没有那么突出。",
+        "t0_ms": 9940,
+        "t1_ms": 14010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "以上你们有什么看法？",
+        "t0_ms": 15920,
+        "t1_ms": 17250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "其实每个公司肯定都是有利有弊的，举一个比较现实的例子，就比如说我上初中的时候，两个兄弟班。",
+        "t0_ms": 17950,
+        "t1_ms": 25190,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 250,
+        "t1_ms": 8510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9940,
+        "t1_ms": 14010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15920,
+        "t1_ms": 17250,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17950,
+        "t1_ms": 25190,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 16.51300048828125,
+      "encode_ms": 11820.5849609375,
+      "decode_ms": 10309.21875
+    }
+  },
+  "rawDecoded": "[0.25][S01]说不定会审核一下，大公司谁会管你这种个人情绪，他只会管理一个公司的整体运营，他会以团队协作为主。[8.51][9.94][S01]他不会考虑到你的个人情绪，因为你的能力没有那么突出。[14.01][15.92][S01]以上你们有什么看法？[17.25][17.95][S02]其实每个公司肯定都是有利有弊的，举一个比较现实的例子，就比如说我上初中的时候，两个兄弟班。[25.19]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

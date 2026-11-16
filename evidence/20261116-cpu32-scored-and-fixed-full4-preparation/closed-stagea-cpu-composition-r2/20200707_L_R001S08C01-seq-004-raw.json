@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "20200707_L_R001S08C01-seq-004",
+    "condition": "sequential-original-room",
+    "meeting": "20200707_L_R001S08C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200707_L_R001S08C01-seq-004.wav",
+    "wavSha256": "168c0cc748630c2607bdfe1504dd2dba6ff303fc0aec23fdfc99019271d424bd",
+    "pcmSha256": "4f3252d4456ba2aa6d16fb6df6cc1962462fc97afc1a42d52311a75187134f75",
+    "frames": 438281,
+    "audioSeconds": 27.3925625,
+    "language": "Chinese"
+  },
+  "seconds": 18.405992600004538,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "但是嗯网上肯定有会有舆论打，嗯觉得我们还是应该设计一个自己的故事吧，就可以是。 肯定都是正义最后要打败邪恶，但是过程的话。 可以一波几折之类的，可以反转反转。 过程就要反转。 嗯。 这样才有看点，更有卖点。 哦。",
+    "raw_text": "[0.12][S01]但是嗯网上肯定有会有舆论打，嗯觉得我们还是应该设计一个自己的故事吧，就可以是。[9.34][9.85][S01]肯定都是正义最后要打败邪恶，但是过程的话。[14.04][15.28][S01]可以一波几折之类的，可以反转反转。[19.62][22.02][S02]过程就要反转。[23.32][22.11][S01]嗯。[22.55][24.25][S01]这样才有看点，更有卖点。[25.82][26.06][S02]哦。[26.74]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "但是嗯网上肯定有会有舆论打，嗯觉得我们还是应该设计一个自己的故事吧，就可以是。",
+        "t0_ms": 120,
+        "t1_ms": 9340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "肯定都是正义最后要打败邪恶，但是过程的话。",
+        "t0_ms": 9850,
+        "t1_ms": 14040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "可以一波几折之类的，可以反转反转。",
+        "t0_ms": 15280,
+        "t1_ms": 19620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "过程就要反转。",
+        "t0_ms": 22020,
+        "t1_ms": 23320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 22110,
+        "t1_ms": 22550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这样才有看点，更有卖点。",
+        "t0_ms": 24250,
+        "t1_ms": 25820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "哦。",
+        "t0_ms": 26060,
+        "t1_ms": 26740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 120,
+        "t1_ms": 9340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9850,
+        "t1_ms": 14040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15280,
+        "t1_ms": 19620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22020,
+        "t1_ms": 23320,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22110,
+        "t1_ms": 22550,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24250,
+        "t1_ms": 25820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26060,
+        "t1_ms": 26740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 25.14900016784668,
+      "encode_ms": 7325.9921875,
+      "decode_ms": 11017.2841796875
+    }
+  },
+  "rawDecoded": "[0.12][S01]但是嗯网上肯定有会有舆论打，嗯觉得我们还是应该设计一个自己的故事吧，就可以是。[9.34][9.85][S01]肯定都是正义最后要打败邪恶，但是过程的话。[14.04][15.28][S01]可以一波几折之类的，可以反转反转。[19.62][22.02][S02]过程就要反转。[23.32][22.11][S01]嗯。[22.55][24.25][S01]这样才有看点，更有卖点。[25.82][26.06][S02]哦。[26.74]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

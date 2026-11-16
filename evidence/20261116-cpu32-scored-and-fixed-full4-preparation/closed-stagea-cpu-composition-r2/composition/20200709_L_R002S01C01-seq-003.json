@@ -1,0 +1,68 @@
+{
+  "id": "20200709_L_R002S01C01-seq-003",
+  "meeting": "20200709_L_R002S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200709_L_R002S01C01-seq-003-raw.json",
+  "rawSha256": "706ebec2b16e5fa4e5c8d2c68b9616822877e487a4275ad182d19e2de3601f1d",
+  "rows": [
+    {
+      "index": 0,
+      "text": "然后调动顾客积极性，还有就是毕竟是健身房嘛，这些教练是吧，他们肯定会以安全为目的，像什么亚玲儿一些维修啊，砸到脚面之类的这方面是绝对不会发生的。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 0.21,
+      "end": 13.61,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "然后咱们这边儿其实呢，有那个意见反馈，就是说然后还在学游泳嘛，学游泳的时候，因为以前没有接触过。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 14.81,
+      "end": 22.31,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 1,
+    "S02": 4
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      13.400000000000006,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      7.5,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sourceStartFrame": 3717009,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

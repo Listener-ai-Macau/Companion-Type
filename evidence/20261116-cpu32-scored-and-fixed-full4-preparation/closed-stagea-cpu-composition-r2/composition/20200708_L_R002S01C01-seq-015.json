@@ -1,0 +1,71 @@
+{
+  "id": "20200708_L_R002S01C01-seq-015",
+  "meeting": "20200708_L_R002S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200708_L_R002S01C01-seq-015-raw.json",
+  "rawSha256": "d07c7477fa38068015bd36c7ce0228285e06256e0f53a41deb3ee80e36535290",
+  "rows": [
+    {
+      "index": 0,
+      "text": "那咱本次会议就先到此结束，散会。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 0.12,
+      "end": 3.24,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "还是啥也不懂。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 15.18,
+      "end": 16.22,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 0,
+    "S02": 2
+  },
+  "overlapSecondsMatrix": [
+    [
+      3.1200000000001182,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0399999999999636,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "sourceStartFrame": 30713933,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

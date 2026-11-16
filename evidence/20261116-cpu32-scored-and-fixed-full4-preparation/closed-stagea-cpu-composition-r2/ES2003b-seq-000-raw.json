@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "ES2003b-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+    "wavSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+    "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92",
+    "frames": 192800,
+    "audioSeconds": 12.05,
+    "language": "English"
+  },
+  "seconds": 11.698795899996185,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Just put it on the desk, all I see is desktop. No, on the desktop you'll find you should find that there's a project documents link. Well actually just.",
+    "raw_text": "[0.00][S01]Just put it on the desk, all I see is desktop.[2.24][2.78][S02]No, on the desktop you'll find you should find that there's a project documents link.[7.20][11.26][S02]Well actually just.[12.02]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Just put it on the desk, all I see is desktop.",
+        "t0_ms": 0,
+        "t1_ms": 2240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "No, on the desktop you'll find you should find that there's a project documents link.",
+        "t0_ms": 2780,
+        "t1_ms": 7200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Well actually just.",
+        "t0_ms": 11260,
+        "t1_ms": 12020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2780,
+        "t1_ms": 7200,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11260,
+        "t1_ms": 12020,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 15.081999778747559,
+      "encode_ms": 7206.02490234375,
+      "decode_ms": 4413.251953125
+    }
+  },
+  "rawDecoded": "[0.00][S01]Just put it on the desk, all I see is desktop.[2.24][2.78][S02]No, on the desktop you'll find you should find that there's a project documents link.[7.20][11.26][S02]Well actually just.[12.02]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "20200805_S_R001S01C01-seq-006",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-006.wav",
+    "wavSha256": "8bb395e6a992c0d5de8de3b1d5dae910102055c8f51303a95c992aeb8e2bbfe1",
+    "pcmSha256": "6424262715a7b43c8aa89e1e6a829cdb0019915affabac1cf04fae4d934f6368",
+    "frames": 318401,
+    "audioSeconds": 19.9000625,
+    "language": "Chinese"
+  },
+  "seconds": 12.097883300004469,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "那呃下半年的话，你们有什么计划，或者说有什么想改进的地方？ 下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问，嗯，努力的改善。 对调查问卷的结果进行分析。",
+    "raw_text": "[0.12][S01]那呃下半年的话，你们有什么计划，或者说有什么想改进的地方？[6.88][7.72][S02]下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问，嗯，努力的改善。[16.82][17.21][S02]对调查问卷的结果进行分析。[19.87]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "那呃下半年的话，你们有什么计划，或者说有什么想改进的地方？",
+        "t0_ms": 120,
+        "t1_ms": 6880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问，嗯，努力的改善。",
+        "t0_ms": 7720,
+        "t1_ms": 16820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对调查问卷的结果进行分析。",
+        "t0_ms": 17210,
+        "t1_ms": 19870,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 120,
+        "t1_ms": 6880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7720,
+        "t1_ms": 16820,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17210,
+        "t1_ms": 19870,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 24.474000930786133,
+      "encode_ms": 6871.05712890625,
+      "decode_ms": 5170.51416015625
+    }
+  },
+  "rawDecoded": "[0.12][S01]那呃下半年的话，你们有什么计划，或者说有什么想改进的地方？[6.88][7.72][S02]下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问，嗯，努力的改善。[16.82][17.21][S02]对调查问卷的结果进行分析。[19.87]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

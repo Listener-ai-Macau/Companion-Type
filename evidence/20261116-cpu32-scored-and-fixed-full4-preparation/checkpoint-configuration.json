@@ -1,0 +1,75 @@
+{
+  "revision": 35,
+  "evidenceDirectory": "evidence/20261116-cpu32-scored-and-fixed-full4-preparation",
+  "commitMessage": "Record complete CPU32 ASR gains and freeze continuous full4 CPU composition",
+  "sources": [
+    "src/cpu_fixed_chunks_worker_20261116.py",
+    "src/run_cpu_fixed_chunks_20261116.py"
+  ],
+  "closedDirectories": [
+    {
+      "directory": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2",
+      "stateFile": "run.json",
+      "requiredState": "COMPLETE_CPU_WINDOW_COHORT_COMPOSITION_AND_SCORING_PENDING",
+      "label": "closed-stagea-cpu-composition-r2"
+    }
+  ],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\binding.json",
+      "name": "stagea-cpu-composition-r2/binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\composition-input.json",
+      "name": "stagea-cpu-composition-r2/composition-input.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\decision.json",
+      "name": "stagea-cpu-composition-r2/decision.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\predicted-speaker-bindings.json",
+      "name": "stagea-cpu-composition-r2/predicted-speaker-bindings.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\score.json",
+      "name": "stagea-cpu-composition-r2/score.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\scoring-binding.json",
+      "name": "stagea-cpu-composition-r2/scoring-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r1\\binding.json",
+      "name": "cpu-fixed-whole-r1/binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r1\\scoring-binding.json",
+      "name": "cpu-fixed-whole-r1/scoring-binding.json"
+    },
+    {
+      "source": "work\\record_cpu_window_result_20261116.py",
+      "name": "preparation/record_cpu_window_result_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_fixed_whole_20261116.py",
+      "name": "preparation/prepare_cpu_fixed_whole_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_checkpoint35_20261116.py",
+      "name": "preparation/prepare_cpu_checkpoint35_20261116.py"
+    }
+  ],
+  "claims": {
+    "state": "CPU32_COMPLETE_SCORED_IMPROVED_NOT_QUALIFIED_FULL4_SOURCE_FROZEN",
+    "cpuPercent": 25,
+    "computeThreadsMaximum": 4,
+    "privateLimitBytes": 2147483648,
+    "fullMeetingActiveOutputsExcluded": true,
+    "wholeMeetingResults": 0,
+    "newWeightTraining": false,
+    "productDefaultChanged": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

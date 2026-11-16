@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "20200805_S_R001S01C01-seq-002",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-002.wav",
+    "wavSha256": "c71881acc5ca1293b41190421f61f8af4106d1acbe9a3f216aca263e66cbe130",
+    "pcmSha256": "916d8a53c3e18b5a92b2aa282099ce93c78fc61d7410ed88db72934b546b626e",
+    "frames": 347300,
+    "audioSeconds": 21.70625,
+    "language": "Chinese"
+  },
+  "seconds": 13.73555949999718,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "那些想要去当空乘的，或者说是动车，动车这个动保，他们最后没有选上的，就是最后有好好大一部分来咱们这儿。 现在门口儿站咱们这个保安呢，其实是很重要的，因为来来往往的，咱们小区嗯大门口儿守着是一条大路，是是是是市区一条主路。",
+    "raw_text": "[0.18][S01]那些想要去当空乘的，或者说是动车，动车这个动保，他们最后没有选上的，就是最后有好好大一部分来咱们这儿。[10.32][10.81][S02]现在门口儿站咱们这个保安呢，其实是很重要的，因为来来往往的，咱们小区嗯大门口儿守着是一条大路，是是是是市区一条主路。[21.71]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "那些想要去当空乘的，或者说是动车，动车这个动保，他们最后没有选上的，就是最后有好好大一部分来咱们这儿。",
+        "t0_ms": 180,
+        "t1_ms": 10320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "现在门口儿站咱们这个保安呢，其实是很重要的，因为来来往往的，咱们小区嗯大门口儿守着是一条大路，是是是是市区一条主路。",
+        "t0_ms": 10810,
+        "t1_ms": 21710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 180,
+        "t1_ms": 10320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10810,
+        "t1_ms": 21710,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 28.742000579833984,
+      "encode_ms": 6995.80615234375,
+      "decode_ms": 6677.0341796875
+    }
+  },
+  "rawDecoded": "[0.18][S01]那些想要去当空乘的，或者说是动车，动车这个动保，他们最后没有选上的，就是最后有好好大一部分来咱们这儿。[10.32][10.81][S02]现在门口儿站咱们这个保安呢，其实是很重要的，因为来来往往的，咱们小区嗯大门口儿守着是一条大路，是是是是市区一条主路。[21.71]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

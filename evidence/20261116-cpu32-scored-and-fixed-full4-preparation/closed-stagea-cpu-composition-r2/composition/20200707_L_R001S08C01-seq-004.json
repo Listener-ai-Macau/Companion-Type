@@ -1,0 +1,116 @@
+{
+  "id": "20200707_L_R001S08C01-seq-004",
+  "meeting": "20200707_L_R001S08C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200707_L_R001S08C01-seq-004-raw.json",
+  "rawSha256": "f5e58a893303a6aa35cbc3557cf13a4ff3d16d1a82d4745be1251eb56db9bdd3",
+  "rows": [
+    {
+      "index": 0,
+      "text": "但是嗯网上肯定有会有舆论打，嗯觉得我们还是应该设计一个自己的故事吧，就可以是。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 0.12,
+      "end": 9.34,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "肯定都是正义最后要打败邪恶，但是过程的话。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 9.85,
+      "end": 14.04,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "可以一波几折之类的，可以反转反转。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 15.28,
+      "end": 19.62,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "过程就要反转。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 22.02,
+      "end": 23.32,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 4,
+      "text": "嗯。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 22.11,
+      "end": 22.55,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 5,
+      "text": "这样才有看点，更有卖点。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 24.25,
+      "end": 25.82,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 6,
+      "text": "哦。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 26.06,
+      "end": 26.74,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 3,
+    "S02": 2
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.0,
+      0.4399999999999409,
+      19.32000000000005,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.3000000000000682,
+      0.16631250000000364,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "sourceStartFrame": 14814779,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

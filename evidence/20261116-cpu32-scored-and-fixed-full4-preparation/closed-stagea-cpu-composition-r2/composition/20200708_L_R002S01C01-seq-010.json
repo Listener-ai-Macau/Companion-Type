@@ -1,0 +1,80 @@
+{
+  "id": "20200708_L_R002S01C01-seq-010",
+  "meeting": "20200708_L_R002S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200708_L_R002S01C01-seq-010-raw.json",
+  "rawSha256": "903083c49f81a4dec5b79fff72af464ae4b8a9b89617182f7326e43e3cc6878e",
+  "rows": [
+    {
+      "index": 0,
+      "text": "房贷啊，车贷啊之类的这方面的压力，他会怎么选择？",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 0.39,
+      "end": 4.43,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "我觉得一开始作为过渡还是小公司更好，因为这小公司的话你有更多的机会去。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 5.42,
+      "end": 12.21,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "施展自己的能力，对不对？",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 13.32,
+      "end": 15.11,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 1,
+    "S02": 3
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      4.039999999999964,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      8.579999999999927,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "sourceStartFrame": 19677889,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

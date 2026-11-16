@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "20200805_S_R001S01C01-seq-011",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-011.wav",
+    "wavSha256": "e1e2c4f404122a496adfe671d095180c18a968ba59c284c97a71e29796d0f829",
+    "pcmSha256": "bc930b017232565c34029ac52a9f5e75f80b26dd1cc2cfb8b4a9b6604c9b4576",
+    "frames": 306820,
+    "audioSeconds": 19.17625,
+    "language": "Chinese"
+  },
+  "seconds": 14.383132499999192,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "因为这个这个工作是一个长期的，有要有耐心的工作，不要说哎呀没事儿没事儿，千万不要存在这种侥幸的心理，因为业主安全是我们的。 工作的重中之重。 那你们下去记得就是给我发，给我发一个下半下半年的一个计划表儿什么的。",
+    "raw_text": "[0.17][S01]因为这个这个工作是一个长期的，有要有耐心的工作，不要说哎呀没事儿没事儿，千万不要存在这种侥幸的心理，因为业主安全是我们的。[10.62][10.62][S01]工作的重中之重。[12.45][12.45][S02]那你们下去记得就是给我发，给我发一个下半下半年的一个计划表儿什么的。[18.99]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "因为这个这个工作是一个长期的，有要有耐心的工作，不要说哎呀没事儿没事儿，千万不要存在这种侥幸的心理，因为业主安全是我们的。",
+        "t0_ms": 170,
+        "t1_ms": 10620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "工作的重中之重。",
+        "t0_ms": 10620,
+        "t1_ms": 12450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "那你们下去记得就是给我发，给我发一个下半下半年的一个计划表儿什么的。",
+        "t0_ms": 12450,
+        "t1_ms": 18990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 170,
+        "t1_ms": 10620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10620,
+        "t1_ms": 12450,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12450,
+        "t1_ms": 18990,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 19.464000701904297,
+      "encode_ms": 7704.1171875,
+      "decode_ms": 6622.93994140625
+    }
+  },
+  "rawDecoded": "[0.17][S01]因为这个这个工作是一个长期的，有要有耐心的工作，不要说哎呀没事儿没事儿，千万不要存在这种侥幸的心理，因为业主安全是我们的。[10.62][10.62][S01]工作的重中之重。[12.45][12.45][S02]那你们下去记得就是给我发，给我发一个下半下半年的一个计划表儿什么的。[18.99]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

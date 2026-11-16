@@ -307,3 +307,9 @@ src/run_cpu_window_joint_20261116.py -text -whitespace
 src/compose_cpu_window_speakers_20261116.py -text -whitespace
 
 src/score_cpu_window_composition_20261116.py -text -whitespace
+
+evidence/20261116-cpu32-scored-and-fixed-full4-preparation/** -text -whitespace
+
+src/cpu_fixed_chunks_worker_20261116.py -text -whitespace
+
+src/run_cpu_fixed_chunks_20261116.py -text -whitespace

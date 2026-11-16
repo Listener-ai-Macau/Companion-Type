@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "ES2003b-seq-005",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-005.wav",
+    "wavSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+    "pcmSha256": "ec8c4c16829d1d95404cb3fd3fcd8ee32cc310edaaf7b8901d562a90696b04e7",
+    "frames": 476000,
+    "audioSeconds": 29.75,
+    "language": "English"
+  },
+  "seconds": 19.14017089999834,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "than the remote something twenty per year, it's a bit impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part, then you can design the remote to look any way you want it to look, because there are no restrictions on physical size or shape. It it could be as fancy as you want it to be, you know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine. Okay.",
+    "raw_text": "[0.00][S01]than the remote something twenty per year, it's a bit impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part, then you can design the remote to look any way you want it to look, because there are no restrictions on physical size or shape.[19.20][19.72][S01]It it could be as fancy as you want it to be, you know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine.[28.88][29.24][S02]Okay.[29.74]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "than the remote something twenty per year, it's a bit impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part, then you can design the remote to look any way you want it to look, because there are no restrictions on physical size or shape.",
+        "t0_ms": 0,
+        "t1_ms": 19200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "It it could be as fancy as you want it to be, you know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine.",
+        "t0_ms": 19720,
+        "t1_ms": 28880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 29240,
+        "t1_ms": 29740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 19200,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19720,
+        "t1_ms": 28880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29240,
+        "t1_ms": 29740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 24.983999252319336,
+      "encode_ms": 7525.94482421875,
+      "decode_ms": 11555.01953125
+    }
+  },
+  "rawDecoded": "[0.00][S01]than the remote something twenty per year, it's a bit impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part, then you can design the remote to look any way you want it to look, because there are no restrictions on physical size or shape.[19.20][19.72][S01]It it could be as fancy as you want it to be, you know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine.[28.88][29.24][S02]Okay.[29.74]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

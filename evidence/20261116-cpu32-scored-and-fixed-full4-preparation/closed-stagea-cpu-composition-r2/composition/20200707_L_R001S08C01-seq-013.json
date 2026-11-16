@@ -1,0 +1,89 @@
+{
+  "id": "20200707_L_R001S08C01-seq-013",
+  "meeting": "20200707_L_R001S08C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200707_L_R001S08C01-seq-013-raw.json",
+  "rawSha256": "cf3b2be52210755baeb027b707c41e3d6e0158c56433c0a46fdfe64a8d8bf142",
+  "rows": [
+    {
+      "index": 0,
+      "text": "日常。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 0.06,
+      "end": 0.72,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "对，然后但是咱们节奏是一定要快的。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 1.06,
+      "end": 4.44,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "就是以因为并不是这种公司嘛，是以拓展爆发为那个切入点的。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 5.18,
+      "end": 12.64,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "对，就是相当于就是很很简短的一个日常，就直接碰了。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 14.73,
+      "end": 22.25,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 2,
+    "S02": 1
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.6400000000001,
+      0.01999999999998181,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      4.758249999999862,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      3.3500000000001364
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "sourceStartFrame": 29321468,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

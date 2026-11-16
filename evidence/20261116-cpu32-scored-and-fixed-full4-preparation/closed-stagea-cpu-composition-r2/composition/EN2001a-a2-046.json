@@ -1,0 +1,105 @@
+{
+  "id": "EN2001a-a2-046",
+  "meeting": "EN2001a",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\EN2001a-a2-046-raw.json",
+  "rawSha256": "a4bda8583f571c02c8853ce3dbac8df3afc1eb97b2f96d3113dbcb770bceaad2",
+  "rows": [
+    {
+      "index": 0,
+      "text": "Be difficult, yeah.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 0.0,
+      "end": 0.92,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "I know I we uh I guess we can do it like several people together, it's probably just they have people have to work together a lot and very closely and just make sure that they always understand what the other one's doing.",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 4.04,
+      "end": 14.8,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "Yeah.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 15.24,
+      "end": 15.54,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "Well I guess the important thing is to get the crucial m modules built.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 16.84,
+      "end": 21.32,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 4,
+      "text": "Or at least.",
+      "localSpeaker": "S03",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 21.88,
+      "end": 22.66,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 1,
+    "S02": 2,
+    "S03": 3
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      4.900000000000546,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      9.420000000000073,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.75,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02",
+    "S03"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sourceStartFrame": 38917440,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

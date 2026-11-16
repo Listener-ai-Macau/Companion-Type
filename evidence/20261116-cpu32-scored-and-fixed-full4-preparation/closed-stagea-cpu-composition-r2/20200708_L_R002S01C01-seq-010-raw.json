@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "20200708_L_R002S01C01-seq-010",
+    "condition": "sequential-original-room",
+    "meeting": "20200708_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200708_L_R002S01C01-seq-010.wav",
+    "wavSha256": "d16e7dbc916ffec0b3b9c4cb19035552597bb61e894e05ca9128c1d3e64fd40d",
+    "pcmSha256": "8a110c476c84bf63a053cf640d0e4a69a1651e5cae103e924dab048d28e9a0ce",
+    "frames": 246043,
+    "audioSeconds": 15.3776875,
+    "language": "Chinese"
+  },
+  "seconds": 12.234613000000536,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "房贷啊，车贷啊之类的这方面的压力，他会怎么选择？ 我觉得一开始作为过渡还是小公司更好，因为这小公司的话你有更多的机会去。 施展自己的能力，对不对？",
+    "raw_text": "[0.39][S01]房贷啊，车贷啊之类的这方面的压力，他会怎么选择？[4.43][5.42][S02]我觉得一开始作为过渡还是小公司更好，因为这小公司的话你有更多的机会去。[12.21][13.32][S02]施展自己的能力，对不对？[15.11]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "房贷啊，车贷啊之类的这方面的压力，他会怎么选择？",
+        "t0_ms": 390,
+        "t1_ms": 4430,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "我觉得一开始作为过渡还是小公司更好，因为这小公司的话你有更多的机会去。",
+        "t0_ms": 5420,
+        "t1_ms": 12210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "施展自己的能力，对不对？",
+        "t0_ms": 13320,
+        "t1_ms": 15110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 390,
+        "t1_ms": 4430,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5420,
+        "t1_ms": 12210,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13320,
+        "t1_ms": 15110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 18.993999481201172,
+      "encode_ms": 7223.72607421875,
+      "decode_ms": 4958.52099609375
+    }
+  },
+  "rawDecoded": "[0.39][S01]房贷啊，车贷啊之类的这方面的压力，他会怎么选择？[4.43][5.42][S02]我觉得一开始作为过渡还是小公司更好，因为这小公司的话你有更多的机会去。[12.21][13.32][S02]施展自己的能力，对不对？[15.11]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

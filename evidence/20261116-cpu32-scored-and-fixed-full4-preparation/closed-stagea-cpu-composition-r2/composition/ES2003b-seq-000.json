@@ -1,0 +1,71 @@
+{
+  "id": "ES2003b-seq-000",
+  "meeting": "ES2003b",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\ES2003b-seq-000-raw.json",
+  "rawSha256": "ad22ad8803b2b0cb2d3b4c9278c9336151f0f992d19ae334a69e023999e964d1",
+  "rows": [
+    {
+      "index": 0,
+      "text": "Just put it on the desk, all I see is desktop.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 0.0,
+      "end": 2.24,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "No, on the desktop you'll find you should find that there's a project documents link.",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 2.78,
+      "end": 7.2,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "Well actually just.",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 11.26,
+      "end": 12.02,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 0,
+    "S02": 1
+  },
+  "overlapSecondsMatrix": [
+    [
+      2.1599999999999993,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      4.729999999999997,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "sourceStartFrame": 68320,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

@@ -1,0 +1,132 @@
+{
+  "id": "EN2001a-a2-116",
+  "meeting": "EN2001a",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\EN2001a-a2-116-raw.json",
+  "rawSha256": "57cd4084d55dc196876e2732f671b79d499c20f9de17f762becd1b325daaa07d",
+  "rows": [
+    {
+      "index": 0,
+      "text": "Once we start doing it, it will become more and more obvious, I think, than you're making.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 0.94,
+      "end": 5.12,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "Yeah.",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": null,
+      "start": 5.12,
+      "end": 5.52,
+      "attribution": "UNKNOWN"
+    },
+    {
+      "index": 2,
+      "text": "It's just we are halfway through the project time, but that's what's just freaked me out.",
+      "localSpeaker": "S03",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 6.42,
+      "end": 9.74,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "It's a step forward.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 6.81,
+      "end": 7.82,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 4,
+      "text": "Yes.",
+      "localSpeaker": "S04",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 10.58,
+      "end": 11.12,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 5,
+      "text": "What time is it?",
+      "localSpeaker": "S04",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 13.32,
+      "end": 13.94,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 6,
+      "text": "Wait, two.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 15.55,
+      "end": 16.18,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 3,
+    "S03": 2,
+    "S04": 4
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.47999999999956344,
+      1.0599999999985812,
+      3.6300000000010186,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.28000000000065484,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      3.2999999999992724,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.1299999999991996,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02",
+    "S03",
+    "S04"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sourceStartFrame": 81832480,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

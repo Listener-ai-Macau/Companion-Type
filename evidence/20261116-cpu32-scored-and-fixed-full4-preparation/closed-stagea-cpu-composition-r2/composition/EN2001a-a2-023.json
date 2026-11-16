@@ -1,0 +1,77 @@
+{
+  "id": "EN2001a-a2-023",
+  "meeting": "EN2001a",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\EN2001a-a2-023-raw.json",
+  "rawSha256": "27926f223031d98b5d0493d0edf664dbd8be4ed2a225cc3441d8312b323cb6ed",
+  "rows": [
+    {
+      "index": 0,
+      "text": "And in that way we could probably use the same algorithm and just like make ver like one or two ifs that say okay if you are on whole document uh whole series level and that was a double click then don't just go into left um segment but load a new file or something like it but in general use the same algorithm that would be in alternative if you can't actually load the whole thing and",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 0.0,
+      "end": 18.94,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "Mm.",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 19.48,
+      "end": 19.68,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "'Cause also like even if we maybe this whole like maybe I'm worrying too much about the whole series in one thing displayed because actually",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 21.58,
+      "end": 29.72,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 2,
+    "S02": 1
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.0,
+      23.12000000000012,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.029999999999972715,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sourceStartFrame": 20852000,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

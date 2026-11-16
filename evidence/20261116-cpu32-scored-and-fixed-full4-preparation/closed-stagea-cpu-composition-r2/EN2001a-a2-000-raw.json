@@ -1,0 +1,66 @@
+{
+  "case": {
+    "id": "EN2001a-a2-000",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-000.wav",
+    "wavSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+    "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f",
+    "frames": 187360,
+    "audioSeconds": 11.71,
+    "language": "English"
+  },
+  "seconds": 11.379364099993836,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "But like duplication of effort and stuff and mm yeah, you're saying that we should maybe uh think about having a prototype for week six, which is",
+    "raw_text": "[0.00][S01]But like duplication of effort and stuff and mm yeah, you're saying that we should maybe uh think about having a prototype for week six, which is[11.72]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "But like duplication of effort and stuff and mm yeah, you're saying that we should maybe uh think about having a prototype for week six, which is",
+        "t0_ms": 0,
+        "t1_ms": 11720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 11720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 29.937999725341797,
+      "encode_ms": 7900.158203125,
+      "decode_ms": 3412.742919921875
+    }
+  },
+  "rawDecoded": "[0.00][S01]But like duplication of effort and stuff and mm yeah, you're saying that we should maybe uh think about having a prototype for week six, which is[11.72]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

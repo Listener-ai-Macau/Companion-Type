@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "EN2001a-a2-046",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-046.wav",
+    "wavSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+    "pcmSha256": "7c06b4b1859d19da0fe23e80c043ebb406245e57d456d2776536102c041cc8a4",
+    "frames": 362720,
+    "audioSeconds": 22.67,
+    "language": "English"
+  },
+  "seconds": 15.287182200001553,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Be difficult, yeah. I know I we uh I guess we can do it like several people together, it's probably just they have people have to work together a lot and very closely and just make sure that they always understand what the other one's doing. Yeah. Well I guess the important thing is to get the crucial m modules built. Or at least.",
+    "raw_text": "[0.00][S01]Be difficult, yeah.[0.92][4.04][S02]I know I we uh I guess we can do it like several people together, it's probably just they have people have to work together a lot and very closely and just make sure that they always understand what the other one's doing.[14.80][15.24][S01]Yeah.[15.54][16.84][S01]Well I guess the important thing is to get the crucial m modules built.[21.32][21.88][S03]Or at least.[22.66]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Be difficult, yeah.",
+        "t0_ms": 0,
+        "t1_ms": 920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I know I we uh I guess we can do it like several people together, it's probably just they have people have to work together a lot and very closely and just make sure that they always understand what the other one's doing.",
+        "t0_ms": 4040,
+        "t1_ms": 14800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 15240,
+        "t1_ms": 15540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Well I guess the important thing is to get the crucial m modules built.",
+        "t0_ms": 16840,
+        "t1_ms": 21320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Or at least.",
+        "t0_ms": 21880,
+        "t1_ms": 22660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4040,
+        "t1_ms": 14800,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15240,
+        "t1_ms": 15540,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16840,
+        "t1_ms": 21320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21880,
+        "t1_ms": 22660,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 28.2810001373291,
+      "encode_ms": 7029.26611328125,
+      "decode_ms": 8192.7880859375
+    }
+  },
+  "rawDecoded": "[0.00][S01]Be difficult, yeah.[0.92][4.04][S02]I know I we uh I guess we can do it like several people together, it's probably just they have people have to work together a lot and very closely and just make sure that they always understand what the other one's doing.[14.80][15.24][S01]Yeah.[15.54][16.84][S01]Well I guess the important thing is to get the crucial m modules built.[21.32][21.88][S03]Or at least.[22.66]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

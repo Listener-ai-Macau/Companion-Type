@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "20200709_L_R002S01C01-seq-012",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-012.wav",
+    "wavSha256": "725bcd016d924bed76085f504cfed325f25c10fb53a2548c07ad31e34191ecdf",
+    "pcmSha256": "c0ed8b3964eb7fe8f096cf20ae1967aa15f76e5f1e2a17699cf16b99c3908bb7",
+    "frames": 439120,
+    "audioSeconds": 27.445,
+    "language": "Chinese"
+  },
+  "seconds": 17.853023499999836,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "好，咱们前台这边儿，就是主要就是给顾客解答疑问，我想问一下，咱们前台就是遇到那些，就是大家在咨询有意有意愿有意志，就是在咱们这儿报名参加活动的这些人。 但是他们就一直在犹犹豫犹犹疑，你在这时候会怎么跟他们说，跟顾客说，然后让他们参加咱们这个课程。 嗯，首先我们是肯定会先让这个顾客了解一下，我们这个是十分优惠的。",
+    "raw_text": "[0.12][S01]好，咱们前台这边儿，就是主要就是给顾客解答疑问，我想问一下，咱们前台就是遇到那些，就是大家在咨询有意有意愿有意志，就是在咱们这儿报名参加活动的这些人。[12.01][12.22][S01]但是他们就一直在犹犹豫犹犹疑，你在这时候会怎么跟他们说，跟顾客说，然后让他们参加咱们这个课程。[20.04][20.75][S02]嗯，首先我们是肯定会先让这个顾客了解一下，我们这个是十分优惠的。[27.41]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "好，咱们前台这边儿，就是主要就是给顾客解答疑问，我想问一下，咱们前台就是遇到那些，就是大家在咨询有意有意愿有意志，就是在咱们这儿报名参加活动的这些人。",
+        "t0_ms": 120,
+        "t1_ms": 12010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "但是他们就一直在犹犹豫犹犹疑，你在这时候会怎么跟他们说，跟顾客说，然后让他们参加咱们这个课程。",
+        "t0_ms": 12220,
+        "t1_ms": 20040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，首先我们是肯定会先让这个顾客了解一下，我们这个是十分优惠的。",
+        "t0_ms": 20750,
+        "t1_ms": 27410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 120,
+        "t1_ms": 12010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12220,
+        "t1_ms": 20040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20750,
+        "t1_ms": 27410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 16.777999877929688,
+      "encode_ms": 7618.42919921875,
+      "decode_ms": 10182.9892578125
+    }
+  },
+  "rawDecoded": "[0.12][S01]好，咱们前台这边儿，就是主要就是给顾客解答疑问，我想问一下，咱们前台就是遇到那些，就是大家在咨询有意有意愿有意志，就是在咱们这儿报名参加活动的这些人。[12.01][12.22][S01]但是他们就一直在犹犹豫犹犹疑，你在这时候会怎么跟他们说，跟顾客说，然后让他们参加咱们这个课程。[20.04][20.75][S02]嗯，首先我们是肯定会先让这个顾客了解一下，我们这个是十分优惠的。[27.41]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

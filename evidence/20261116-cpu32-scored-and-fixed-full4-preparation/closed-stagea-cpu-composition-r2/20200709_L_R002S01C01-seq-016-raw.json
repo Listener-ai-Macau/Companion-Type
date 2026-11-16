@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "20200709_L_R002S01C01-seq-016",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-016.wav",
+    "wavSha256": "d08df775867bd3aeb82b4e24ed7a14488dc935c46169e5e54c0602c641f5a090",
+    "pcmSha256": "76ef981586fce2f41b31b1ca68a7a72bb68e3116e1181b9648b0c56a01bd2231",
+    "frames": 473887,
+    "audioSeconds": 29.6179375,
+    "language": "Chinese"
+  },
+  "seconds": 17.31557229999453,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "所以我告诉每一个保洁人员，我们的工作其实是很重要的，我们就是什么呀？我们就是这个健身中心的美容师，我们给他再做美容，如果我们这个工作做的不到位的话，那我们就该给他抹黑了。 所以他们都知道自己的工作非常重要，所以每个人的积极性还是蛮高的。 嗯，好，郭姐，我这边这个情况是这样，那咱们来听一下前台这边下半年的计划。",
+    "raw_text": "[0.12][S01]所以我告诉每一个保洁人员，我们的工作其实是很重要的，我们就是什么呀？我们就是这个健身中心的美容师，我们给他再做美容，如果我们这个工作做的不到位的话，那我们就该给他抹黑了。[16.44][17.58][S01]所以他们都知道自己的工作非常重要，所以每个人的积极性还是蛮高的。[22.34][22.55][S02]嗯，好，郭姐，我这边这个情况是这样，那咱们来听一下前台这边下半年的计划。[29.59]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "所以我告诉每一个保洁人员，我们的工作其实是很重要的，我们就是什么呀？我们就是这个健身中心的美容师，我们给他再做美容，如果我们这个工作做的不到位的话，那我们就该给他抹黑了。",
+        "t0_ms": 120,
+        "t1_ms": 16440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "所以他们都知道自己的工作非常重要，所以每个人的积极性还是蛮高的。",
+        "t0_ms": 17580,
+        "t1_ms": 22340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，好，郭姐，我这边这个情况是这样，那咱们来听一下前台这边下半年的计划。",
+        "t0_ms": 22550,
+        "t1_ms": 29590,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 120,
+        "t1_ms": 16440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17580,
+        "t1_ms": 22340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22550,
+        "t1_ms": 29590,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 20.690000534057617,
+      "encode_ms": 8140.88623046875,
+      "decode_ms": 9111.560546875
+    }
+  },
+  "rawDecoded": "[0.12][S01]所以我告诉每一个保洁人员，我们的工作其实是很重要的，我们就是什么呀？我们就是这个健身中心的美容师，我们给他再做美容，如果我们这个工作做的不到位的话，那我们就该给他抹黑了。[16.44][17.58][S01]所以他们都知道自己的工作非常重要，所以每个人的积极性还是蛮高的。[22.34][22.55][S02]嗯，好，郭姐，我这边这个情况是这样，那咱们来听一下前台这边下半年的计划。[29.59]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

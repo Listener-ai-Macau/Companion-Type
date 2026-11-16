@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "20200708_L_R002S01C01-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "20200708_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200708_L_R002S01C01-seq-000.wav",
+    "wavSha256": "578326a4a343479a8f0221196fce3f13fce2e6bec1ce7cb3145ac2d206d6e1cc",
+    "pcmSha256": "201dc991d7359db6b24750f8367689d5f14a86e1f1a7ffde55fc43d15d329c72",
+    "frames": 448924,
+    "audioSeconds": 28.05775,
+    "language": "Chinese"
+  },
+  "seconds": 18.86206929999753,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "对。 所以刚才这个副校长这边儿把这个呃问题抛在你们会上，嗯所以大家对这个问题都怎么看？ 刚才副副校长说的这个，可以说一下你这个你对这个事件的一个看法。 我对这个事件的看法就先说一下弊端吧，像一些大公司之类的。 大公司如果你是学计算机的，可能你去那儿起步特别的低。",
+    "raw_text": "[0.04][S01]对。[0.42][0.42][S02]所以刚才这个副校长这边儿把这个呃问题抛在你们会上，嗯所以大家对这个问题都怎么看？[8.44][9.72][S02]刚才副副校长说的这个，可以说一下你这个你对这个事件的一个看法。[16.14][17.32][S01]我对这个事件的看法就先说一下弊端吧，像一些大公司之类的。[23.02][23.82][S01]大公司如果你是学计算机的，可能你去那儿起步特别的低。[28.04]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "对。",
+        "t0_ms": 40,
+        "t1_ms": 420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "所以刚才这个副校长这边儿把这个呃问题抛在你们会上，嗯所以大家对这个问题都怎么看？",
+        "t0_ms": 420,
+        "t1_ms": 8440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "刚才副副校长说的这个，可以说一下你这个你对这个事件的一个看法。",
+        "t0_ms": 9720,
+        "t1_ms": 16140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "我对这个事件的看法就先说一下弊端吧，像一些大公司之类的。",
+        "t0_ms": 17320,
+        "t1_ms": 23020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "大公司如果你是学计算机的，可能你去那儿起步特别的低。",
+        "t0_ms": 23820,
+        "t1_ms": 28040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 40,
+        "t1_ms": 420,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 420,
+        "t1_ms": 8440,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9720,
+        "t1_ms": 16140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17320,
+        "t1_ms": 23020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23820,
+        "t1_ms": 28040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 24.014999389648438,
+      "encode_ms": 7136.14208984375,
+      "decode_ms": 11668.6171875
+    }
+  },
+  "rawDecoded": "[0.04][S01]对。[0.42][0.42][S02]所以刚才这个副校长这边儿把这个呃问题抛在你们会上，嗯所以大家对这个问题都怎么看？[8.44][9.72][S02]刚才副副校长说的这个，可以说一下你这个你对这个事件的一个看法。[16.14][17.32][S01]我对这个事件的看法就先说一下弊端吧，像一些大公司之类的。[23.02][23.82][S01]大公司如果你是学计算机的，可能你去那儿起步特别的低。[28.04]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "20200805_S_R001S01C01-seq-008",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-008.wav",
+    "wavSha256": "ec6cb287103798a2424f839fb40522da652b8677f162aa9d05a5aa1c743d6b0b",
+    "pcmSha256": "e3dd3a9849bd0d6515af65df219f40a7cceaa57f28ea97c9b9b5f708dda82784",
+    "frames": 169343,
+    "audioSeconds": 10.5839375,
+    "language": "Chinese"
+  },
+  "seconds": 11.804122999994433,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "请来一个张师傅行吗？ 不管他姓什么，干好了就行。 嗯，反正这个。 维修这边儿我已经换人员了。 唉。",
+    "raw_text": "[0.12][S01]请来一个张师傅行吗？[1.68][3.12][S02]不管他姓什么，干好了就行。[4.84][5.12][S03]嗯，反正这个。[6.62][7.33][S03]维修这边儿我已经换人员了。[9.24][10.12][S03]唉。[10.54]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "请来一个张师傅行吗？",
+        "t0_ms": 120,
+        "t1_ms": 1680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "不管他姓什么，干好了就行。",
+        "t0_ms": 3120,
+        "t1_ms": 4840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，反正这个。",
+        "t0_ms": 5120,
+        "t1_ms": 6620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "维修这边儿我已经换人员了。",
+        "t0_ms": 7330,
+        "t1_ms": 9240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "唉。",
+        "t0_ms": 10120,
+        "t1_ms": 10540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 120,
+        "t1_ms": 1680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3120,
+        "t1_ms": 4840,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5120,
+        "t1_ms": 6620,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7330,
+        "t1_ms": 9240,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10120,
+        "t1_ms": 10540,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 27.593000411987305,
+      "encode_ms": 6739.51611328125,
+      "decode_ms": 5006.8388671875
+    }
+  },
+  "rawDecoded": "[0.12][S01]请来一个张师傅行吗？[1.68][3.12][S02]不管他姓什么，干好了就行。[4.84][5.12][S03]嗯，反正这个。[6.62][7.33][S03]维修这边儿我已经换人员了。[9.24][10.12][S03]唉。[10.54]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

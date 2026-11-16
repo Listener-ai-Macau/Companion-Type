@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "20200805_S_R001S01C01-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-000.wav",
+    "wavSha256": "6c1818fbe8f564715e6cbcb498a7ea3ef91e7dd38449f25ce802c4ed367d4094",
+    "pcmSha256": "2fd5e1492ae266f668ec7d665ade16aca1f7c8a07b4a08f0087f5fe661ef3935",
+    "frames": 399261,
+    "audioSeconds": 24.9538125,
+    "language": "Chinese"
+  },
+  "seconds": 14.964490300000762,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "上半年的一些情况，以及下半年怎么做，然后接下来由我们的主管来主持一下这场会议。 嗯，上半年呢，呃，大家，呃，待会儿先，呃，说一下各个岗位的上半年的情况。 因为毕竟我们这个物业跟其他物业不一样，我们是全国一级资质的。",
+    "raw_text": "[0.00][S01]上半年的一些情况，以及下半年怎么做，然后接下来由我们的主管来主持一下这场会议。[7.92][10.68][S02]嗯，上半年呢，呃，大家，呃，待会儿先，呃，说一下各个岗位的上半年的情况。[19.56][19.56][S02]因为毕竟我们这个物业跟其他物业不一样，我们是全国一级资质的。[24.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "上半年的一些情况，以及下半年怎么做，然后接下来由我们的主管来主持一下这场会议。",
+        "t0_ms": 0,
+        "t1_ms": 7920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，上半年呢，呃，大家，呃，待会儿先，呃，说一下各个岗位的上半年的情况。",
+        "t0_ms": 10680,
+        "t1_ms": 19560,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "因为毕竟我们这个物业跟其他物业不一样，我们是全国一级资质的。",
+        "t0_ms": 19560,
+        "t1_ms": 24940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 7920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10680,
+        "t1_ms": 19560,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19560,
+        "t1_ms": 24940,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 21.111000061035156,
+      "encode_ms": 7760.72705078125,
+      "decode_ms": 7148.0732421875
+    }
+  },
+  "rawDecoded": "[0.00][S01]上半年的一些情况，以及下半年怎么做，然后接下来由我们的主管来主持一下这场会议。[7.92][10.68][S02]嗯，上半年呢，呃，大家，呃，待会儿先，呃，说一下各个岗位的上半年的情况。[19.56][19.56][S02]因为毕竟我们这个物业跟其他物业不一样，我们是全国一级资质的。[24.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

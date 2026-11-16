@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "20200707_L_R001S08C01-seq-008",
+    "condition": "sequential-original-room",
+    "meeting": "20200707_L_R001S08C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200707_L_R001S08C01-seq-008.wav",
+    "wavSha256": "888b24daa7347cc951ecca6411a0d541d1330839a73cc5947cf412bbfa9b26f5",
+    "pcmSha256": "bcaeb79824692d7e9c156eb248b4df36e4900f2090bb02ffb11c1054f8bb2485",
+    "frames": 449081,
+    "audioSeconds": 28.0675625,
+    "language": "Chinese"
+  },
+  "seconds": 16.62857239999721,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "你呃我们需要和他们公司取得联系，然后告诉他们，就是可以他们的联系，然后微信作为下载，看他们是否同意。 然后需要一个签字，一个合同，这样。 嗯，那就像淘宝卖家一样，就采点儿货。 咱们就是这方面的话，就需要把细节的话就是处理好。",
+    "raw_text": "[0.11][S01]你呃我们需要和他们公司取得联系，然后告诉他们，就是可以他们的联系，然后微信作为下载，看他们是否同意。[12.61][14.08][S01]然后需要一个签字，一个合同，这样。[18.41][18.65][S02]嗯，那就像淘宝卖家一样，就采点儿货。[21.51][22.32][S01]咱们就是这方面的话，就需要把细节的话就是处理好。[27.51]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "你呃我们需要和他们公司取得联系，然后告诉他们，就是可以他们的联系，然后微信作为下载，看他们是否同意。",
+        "t0_ms": 110,
+        "t1_ms": 12610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后需要一个签字，一个合同，这样。",
+        "t0_ms": 14080,
+        "t1_ms": 18410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，那就像淘宝卖家一样，就采点儿货。",
+        "t0_ms": 18650,
+        "t1_ms": 21510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "咱们就是这方面的话，就需要把细节的话就是处理好。",
+        "t0_ms": 22320,
+        "t1_ms": 27510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 110,
+        "t1_ms": 12610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14080,
+        "t1_ms": 18410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18650,
+        "t1_ms": 21510,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22320,
+        "t1_ms": 27510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 14.644000053405762,
+      "encode_ms": 8041.94482421875,
+      "decode_ms": 8533.62890625
+    }
+  },
+  "rawDecoded": "[0.11][S01]你呃我们需要和他们公司取得联系，然后告诉他们，就是可以他们的联系，然后微信作为下载，看他们是否同意。[12.61][14.08][S01]然后需要一个签字，一个合同，这样。[18.41][18.65][S02]嗯，那就像淘宝卖家一样，就采点儿货。[21.51][22.32][S01]咱们就是这方面的话，就需要把细节的话就是处理好。[27.51]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

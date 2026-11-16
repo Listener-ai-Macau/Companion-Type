@@ -1,0 +1,97 @@
+{
+  "id": "ES2003b-seq-027",
+  "meeting": "ES2003b",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\ES2003b-seq-027-raw.json",
+  "rawSha256": "3cd72a989790d63739077b97f91483d15deba42a434edd79e98bb708dbbfac48",
+  "rows": [
+    {
+      "index": 0,
+      "text": "I'm pointing at my laptop, but we're clocking.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 0.0,
+      "end": 2.36,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "We put the fashion into.",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 2.28,
+      "end": 3.84,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "Real reaction and such, so um so.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 5.08,
+      "end": 9.34,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "That's the slogan, is that not the name?",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 8.34,
+      "end": 9.72,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 4,
+      "text": "Slogan.",
+      "localSpeaker": "S03",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 9.12,
+      "end": 9.88,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 1,
+    "S02": 0,
+    "S03": 3
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.8099999999999454,
+      4.400000000000091,
+      0.0,
+      0.12000000000034561
+    ],
+    [
+      1.0799999999999272,
+      0.13999999999941792,
+      0.0,
+      0.2300000000000182
+    ],
+    [
+      0.5300000000002001,
+      0.0,
+      0.0,
+      0.2300000000000182
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02",
+    "S03"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "sourceStartFrame": 32770080,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

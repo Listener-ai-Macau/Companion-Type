@@ -1,0 +1,88 @@
+{
+  "id": "ES2003b-seq-021",
+  "meeting": "ES2003b",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\ES2003b-seq-021-raw.json",
+  "rawSha256": "84c0923339e0d4528e9f6411661feaec434faa56aef7c7de8685c90d4188acc9",
+  "rows": [
+    {
+      "index": 0,
+      "text": "Plus that's a nice wee detail, yeah.",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 0.0,
+      "end": 1.38,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "Okay.",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 1.74,
+      "end": 2.06,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "Yeah.",
+      "localSpeaker": "S03",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 1.92,
+      "end": 2.22,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "So by the sounds of it, what we're suggesting so far, your design um the user interface is still quite open, you could go for quite an interesting design.",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 2.48,
+      "end": 12.0,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 2,
+    "S02": 1,
+    "S03": 0
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.0,
+      1.3399999999999181,
+      0.0
+    ],
+    [
+      0.13999999999987267,
+      8.239999999999554,
+      0.0,
+      0.0
+    ],
+    [
+      0.25,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02",
+    "S03"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "sourceStartFrame": 30005600,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

@@ -1,0 +1,74 @@
+{
+  "id": "20200805_S_R001S01C01-seq-011",
+  "meeting": "20200805_S_R001S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200805_S_R001S01C01-seq-011-raw.json",
+  "rawSha256": "53ce45875c8d6c07e6e78e999245d81808e8850b27a62142abb0ea75cbe043d1",
+  "rows": [
+    {
+      "index": 0,
+      "text": "因为这个这个工作是一个长期的，有要有耐心的工作，不要说哎呀没事儿没事儿，千万不要存在这种侥幸的心理，因为业主安全是我们的。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 0.17,
+      "end": 10.62,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "工作的重中之重。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 10.62,
+      "end": 12.45,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "那你们下去记得就是给我发，给我发一个下半下半年的一个计划表儿什么的。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 12.45,
+      "end": 18.99,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 4,
+    "S02": 0
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      12.169999999999618
+    ],
+    [
+      6.440000000000055,
+      0.0,
+      0.0,
+      0.0,
+      0.06968750000032742
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "sourceStartFrame": 34249765,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

@@ -1,0 +1,198 @@
+{
+  "id": "20200707_L_R001S08C01-seq-000",
+  "meeting": "20200707_L_R001S08C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200707_L_R001S08C01-seq-000-raw.json",
+  "rawSha256": "b6ea18f88dc76e90328cb59c254187752a50cec6feb53b8c8bfa76e87c368a8d",
+  "rows": [
+    {
+      "index": 0,
+      "text": "零二二我是郝志贵。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 0.11,
+      "end": 1.41,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "零二六我是周华志乐。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 1.83,
+      "end": 3.23,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "零幺三我是画师。",
+      "localSpeaker": "S03",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 3.72,
+      "end": 5.35,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "零幺三我是角色设计。",
+      "localSpeaker": "S04",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 5.68,
+      "end": 7.41,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 4,
+      "text": "零二四我们是剧本。",
+      "localSpeaker": "S05",
+      "nativeWholeMeetingSpeaker": 5,
+      "start": 7.85,
+      "end": 10.11,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 5,
+      "text": "零二五我是呃制片监理，监理部。",
+      "localSpeaker": "S06",
+      "nativeWholeMeetingSpeaker": 6,
+      "start": 10.52,
+      "end": 14.25,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 6,
+      "text": "嗯行好的。",
+      "localSpeaker": "S07",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 14.55,
+      "end": 15.89,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 7,
+      "text": "呃。",
+      "localSpeaker": "S07",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 16.41,
+      "end": 17.35,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 8,
+      "text": "受邀来到咱们参加咱们这个一个这个飞翼，飞亮展，那个京都这个。",
+      "localSpeaker": "S07",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 17.94,
+      "end": 24.65,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 9,
+      "text": "制片这一块儿。",
+      "localSpeaker": "S07",
+      "nativeWholeMeetingSpeaker": 0,
+      "start": 25.88,
+      "end": 27.35,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 1,
+    "S02": 2,
+    "S03": 3,
+    "S04": 4,
+    "S05": 5,
+    "S06": 6,
+    "S07": 0
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      1.2999999999999972,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.4000000000000057,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.6299999999999955,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.7299999999999898,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      2.260000000000005,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      3.730000000000004
+    ],
+    [
+      10.460000000000008,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02",
+    "S03",
+    "S04",
+    "S05",
+    "S06",
+    "S07"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "sourceStartFrame": 1291379,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

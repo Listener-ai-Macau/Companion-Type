@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "ES2003b-seq-021",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-021.wav",
+    "wavSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+    "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f",
+    "frames": 203840,
+    "audioSeconds": 12.74,
+    "language": "English"
+  },
+  "seconds": 12.280918899996323,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Plus that's a nice wee detail, yeah. Okay. Yeah. So by the sounds of it, what we're suggesting so far, your design um the user interface is still quite open, you could go for quite an interesting design.",
+    "raw_text": "[0.00][S01]Plus that's a nice wee detail, yeah.[1.38][1.74][S02]Okay.[2.06][1.92][S03]Yeah.[2.22][2.48][S02]So by the sounds of it, what we're suggesting so far, your design um the user interface is still quite open, you could go for quite an interesting design.[12.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Plus that's a nice wee detail, yeah.",
+        "t0_ms": 0,
+        "t1_ms": 1380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 1740,
+        "t1_ms": 2060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 1920,
+        "t1_ms": 2220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "So by the sounds of it, what we're suggesting so far, your design um the user interface is still quite open, you could go for quite an interesting design.",
+        "t0_ms": 2480,
+        "t1_ms": 12000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 1380,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1740,
+        "t1_ms": 2060,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1920,
+        "t1_ms": 2220,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2480,
+        "t1_ms": 12000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 25.798999786376953,
+      "encode_ms": 7025.64697265625,
+      "decode_ms": 5199.43115234375
+    }
+  },
+  "rawDecoded": "[0.00][S01]Plus that's a nice wee detail, yeah.[1.38][1.74][S02]Okay.[2.06][1.92][S03]Yeah.[2.22][2.48][S02]So by the sounds of it, what we're suggesting so far, your design um the user interface is still quite open, you could go for quite an interesting design.[12.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

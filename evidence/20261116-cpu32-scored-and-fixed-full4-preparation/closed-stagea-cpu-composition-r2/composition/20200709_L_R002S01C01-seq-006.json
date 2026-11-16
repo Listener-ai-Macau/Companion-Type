@@ -1,0 +1,77 @@
+{
+  "id": "20200709_L_R002S01C01-seq-006",
+  "meeting": "20200709_L_R002S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200709_L_R002S01C01-seq-006-raw.json",
+  "rawSha256": "6783f10fb8a452f01043ed9a9b0f99b78d32ec886d98893d1743981de8c25ccf",
+  "rows": [
+    {
+      "index": 0,
+      "text": "这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 0.15,
+      "end": 7.21,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "嗯，好。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 7.72,
+      "end": 8.61,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "那咱们这个保安部这边儿呢，上一个季度的情况怎么样？就是安全情况，各种比如说车棚的检查，然后咱们的管理设施有没有遭到损坏，这个说一下吧，简单汇报一下。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 9.54,
+      "end": 22.93,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 1,
+    "S02": 4
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      7.060000000000002,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      14.279999999999973,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sourceStartFrame": 6861292,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

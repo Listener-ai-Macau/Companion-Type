@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "EN2001a-a2-069",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-069.wav",
+    "wavSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+    "pcmSha256": "01439b3125f9e794a9ffae891fd0cccc470ae701397a2b889487dc87d166bb39",
+    "frames": 476000,
+    "audioSeconds": 29.75,
+    "language": "English"
+  },
+  "seconds": 17.721390400001837,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I don't like I mean there's no guarantee that anything stays there, but overnight it'll stay. But I think the temps usually uh Ah yeah, but that would have to be the temp directory of the machine in S. S. H. into directory of S. S. H. Yeah, but I can do it from that session, don't I? I can compress it from a remote session and S. C. P. it from the same session. Yeah, they w they they probably hate you for doing it.",
+    "raw_text": "[0.00][S01]I don't like I mean there's no guarantee that anything stays there, but overnight it'll stay. But I think the temps usually uh[6.20][10.54][S01]Ah yeah, but that would have to be the temp directory of the machine in S. S. H. into directory of S. S. H.[16.74][16.84][S02]Yeah, but I can do it from that session, don't I? I can compress it from a remote session and S. C. P. it from the same session.[23.82][26.85][S01]Yeah, they w they they probably hate you for doing it.[29.73]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I don't like I mean there's no guarantee that anything stays there, but overnight it'll stay. But I think the temps usually uh",
+        "t0_ms": 0,
+        "t1_ms": 6200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Ah yeah, but that would have to be the temp directory of the machine in S. S. H. into directory of S. S. H.",
+        "t0_ms": 10540,
+        "t1_ms": 16740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, but I can do it from that session, don't I? I can compress it from a remote session and S. C. P. it from the same session.",
+        "t0_ms": 16840,
+        "t1_ms": 23820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, they w they they probably hate you for doing it.",
+        "t0_ms": 26850,
+        "t1_ms": 29730,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 6200,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10540,
+        "t1_ms": 16740,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16840,
+        "t1_ms": 23820,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26850,
+        "t1_ms": 29730,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 17.42799949645996,
+      "encode_ms": 7002.548828125,
+      "decode_ms": 10666.80078125
+    }
+  },
+  "rawDecoded": "[0.00][S01]I don't like I mean there's no guarantee that anything stays there, but overnight it'll stay. But I think the temps usually uh[6.20][10.54][S01]Ah yeah, but that would have to be the temp directory of the machine in S. S. H. into directory of S. S. H.[16.74][16.84][S02]Yeah, but I can do it from that session, don't I? I can compress it from a remote session and S. C. P. it from the same session.[23.82][26.85][S01]Yeah, they w they they probably hate you for doing it.[29.73]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

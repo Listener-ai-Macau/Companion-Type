@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "20200707_L_R001S08C01-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "20200707_L_R001S08C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200707_L_R001S08C01-seq-000.wav",
+    "wavSha256": "ea5f237972b723e7fb35b5b344fd9b2dde16d57441b5998c1d12a07c43611285",
+    "pcmSha256": "813bf3673b909105e54fe5277232578dadf14f2e18ff48989ad99ed199078500",
+    "frames": 438229,
+    "audioSeconds": 27.3893125,
+    "language": "Chinese"
+  },
+  "seconds": 21.208391400003165,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "零二二我是郝志贵。 零二六我是周华志乐。 零幺三我是画师。 零幺三我是角色设计。 零二四我们是剧本。 零二五我是呃制片监理，监理部。 嗯行好的。 呃。 受邀来到咱们参加咱们这个一个这个飞翼，飞亮展，那个京都这个。 制片这一块儿。",
+    "raw_text": "[0.11][S01]零二二我是郝志贵。[1.41][1.83][S02]零二六我是周华志乐。[3.23][3.72][S03]零幺三我是画师。[5.35][5.68][S04]零幺三我是角色设计。[7.41][7.85][S05]零二四我们是剧本。[10.11][10.52][S06]零二五我是呃制片监理，监理部。[14.25][14.55][S07]嗯行好的。[15.89][16.41][S07]呃。[17.35][17.94][S07]受邀来到咱们参加咱们这个一个这个飞翼，飞亮展，那个京都这个。[24.65][25.88][S07]制片这一块儿。[27.35]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "零二二我是郝志贵。",
+        "t0_ms": 110,
+        "t1_ms": 1410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "零二六我是周华志乐。",
+        "t0_ms": 1830,
+        "t1_ms": 3230,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "零幺三我是画师。",
+        "t0_ms": 3720,
+        "t1_ms": 5350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "零幺三我是角色设计。",
+        "t0_ms": 5680,
+        "t1_ms": 7410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "零二四我们是剧本。",
+        "t0_ms": 7850,
+        "t1_ms": 10110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 5
+      },
+      {
+        "text": "零二五我是呃制片监理，监理部。",
+        "t0_ms": 10520,
+        "t1_ms": 14250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 6
+      },
+      {
+        "text": "嗯行好的。",
+        "t0_ms": 14550,
+        "t1_ms": 15890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 7
+      },
+      {
+        "text": "呃。",
+        "t0_ms": 16410,
+        "t1_ms": 17350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 7
+      },
+      {
+        "text": "受邀来到咱们参加咱们这个一个这个飞翼，飞亮展，那个京都这个。",
+        "t0_ms": 17940,
+        "t1_ms": 24650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 7
+      },
+      {
+        "text": "制片这一块儿。",
+        "t0_ms": 25880,
+        "t1_ms": 27350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 7
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 110,
+        "t1_ms": 1410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1830,
+        "t1_ms": 3230,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3720,
+        "t1_ms": 5350,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5680,
+        "t1_ms": 7410,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7850,
+        "t1_ms": 10110,
+        "speaker_id": 5,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10520,
+        "t1_ms": 14250,
+        "speaker_id": 6,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14550,
+        "t1_ms": 15890,
+        "speaker_id": 7,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16410,
+        "t1_ms": 17350,
+        "speaker_id": 7,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17940,
+        "t1_ms": 24650,
+        "speaker_id": 7,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25880,
+        "t1_ms": 27350,
+        "speaker_id": 7,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 14.633999824523926,
+      "encode_ms": 7135.50390625,
+      "decode_ms": 14024.8798828125
+    }
+  },
+  "rawDecoded": "[0.11][S01]零二二我是郝志贵。[1.41][1.83][S02]零二六我是周华志乐。[3.23][3.72][S03]零幺三我是画师。[5.35][5.68][S04]零幺三我是角色设计。[7.41][7.85][S05]零二四我们是剧本。[10.11][10.52][S06]零二五我是呃制片监理，监理部。[14.25][14.55][S07]嗯行好的。[15.89][16.41][S07]呃。[17.35][17.94][S07]受邀来到咱们参加咱们这个一个这个飞翼，飞亮展，那个京都这个。[24.65][25.88][S07]制片这一块儿。[27.35]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

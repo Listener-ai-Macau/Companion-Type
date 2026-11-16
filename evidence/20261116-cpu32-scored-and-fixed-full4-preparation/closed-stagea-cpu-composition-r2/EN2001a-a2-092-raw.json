@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "EN2001a-a2-092",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-092.wav",
+    "wavSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+    "pcmSha256": "14091b430e04787c3694b572f922d0a4da22a3ce4f10cc7978dde91fa4797bb7",
+    "frames": 473600,
+    "audioSeconds": 29.6,
+    "language": "English"
+  },
+  "seconds": 17.647978500004683,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "That'd be completed with the same algorithm or. But I mean it could be as many nodes as you want, like this one could be deeper maybe. So so then you'd start with all your utterances here, and when you go up to get topic segments, you go to here here here here here here here. That might be a bit confusing though, 'cause you have things on different levels. Yeah, I'm also not sure how we can go from from what to map like or sort of like more that ah.",
+    "raw_text": "[0.00][S01]That'd be completed with the same algorithm or.[1.82][1.89][S02]But I mean it could be as many nodes as you want, like this one could be deeper maybe.[6.05][8.08][S02]So so then you'd start with all your utterances here, and when you go up to get topic segments, you go to here here here here here here here.[16.54][18.72][S02]That might be a bit confusing though, 'cause you have things on different levels.[21.74][23.36][S01]Yeah, I'm also not sure how we can go from from what to map like or sort of like more that ah.[29.60]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "That'd be completed with the same algorithm or.",
+        "t0_ms": 0,
+        "t1_ms": 1820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "But I mean it could be as many nodes as you want, like this one could be deeper maybe.",
+        "t0_ms": 1890,
+        "t1_ms": 6050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "So so then you'd start with all your utterances here, and when you go up to get topic segments, you go to here here here here here here here.",
+        "t0_ms": 8080,
+        "t1_ms": 16540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "That might be a bit confusing though, 'cause you have things on different levels.",
+        "t0_ms": 18720,
+        "t1_ms": 21740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, I'm also not sure how we can go from from what to map like or sort of like more that ah.",
+        "t0_ms": 23360,
+        "t1_ms": 29600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 1820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1890,
+        "t1_ms": 6050,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8080,
+        "t1_ms": 16540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18720,
+        "t1_ms": 21740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23360,
+        "t1_ms": 29600,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 25.031999588012695,
+      "encode_ms": 7121.8349609375,
+      "decode_ms": 10467.6025390625
+    }
+  },
+  "rawDecoded": "[0.00][S01]That'd be completed with the same algorithm or.[1.82][1.89][S02]But I mean it could be as many nodes as you want, like this one could be deeper maybe.[6.05][8.08][S02]So so then you'd start with all your utterances here, and when you go up to get topic segments, you go to here here here here here here here.[16.54][18.72][S02]That might be a bit confusing though, 'cause you have things on different levels.[21.74][23.36][S01]Yeah, I'm also not sure how we can go from from what to map like or sort of like more that ah.[29.60]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

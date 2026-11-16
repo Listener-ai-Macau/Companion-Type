@@ -1,0 +1,101 @@
+{
+  "id": "20200805_S_R001S01C01-seq-008",
+  "meeting": "20200805_S_R001S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200805_S_R001S01C01-seq-008-raw.json",
+  "rawSha256": "57bf3113c00114a0111e77c7fdf229023ac54cef35eefdc1641e2b90184ecd66",
+  "rows": [
+    {
+      "index": 0,
+      "text": "请来一个张师傅行吗？",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 2,
+      "start": 0.12,
+      "end": 1.68,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "不管他姓什么，干好了就行。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 3.12,
+      "end": 4.84,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "嗯，反正这个。",
+      "localSpeaker": "S03",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 5.12,
+      "end": 6.62,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "维修这边儿我已经换人员了。",
+      "localSpeaker": "S03",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 7.33,
+      "end": 9.24,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 4,
+      "text": "唉。",
+      "localSpeaker": "S03",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 10.12,
+      "end": 10.54,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 2,
+    "S02": 4,
+    "S03": 1
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.0,
+      1.5600000000001728,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.7200000000000273
+    ],
+    [
+      0.0,
+      3.8146875000002183,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02",
+    "S03"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "sourceStartFrame": 21942805,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

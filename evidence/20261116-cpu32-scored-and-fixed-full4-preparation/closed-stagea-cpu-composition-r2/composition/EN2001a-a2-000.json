@@ -1,0 +1,49 @@
+{
+  "id": "EN2001a-a2-000",
+  "meeting": "EN2001a",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\EN2001a-a2-000-raw.json",
+  "rawSha256": "28f7329080a6c9b743a9537975edf929bc949abbea0e86dddf55058f1513538a",
+  "rows": [
+    {
+      "index": 0,
+      "text": "But like duplication of effort and stuff and mm yeah, you're saying that we should maybe uh think about having a prototype for week six, which is",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 0.0,
+      "end": 11.72,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 1
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      7.469999999999995,
+      0.10000000000000142,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sourceStartFrame": 432320,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

@@ -1,0 +1,86 @@
+{
+  "id": "20200709_L_R002S01C01-seq-000",
+  "meeting": "20200709_L_R002S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200709_L_R002S01C01-seq-000-raw.json",
+  "rawSha256": "040935b1ff9a1092d1b13db467aa517d032dd98085b62745481c377f94b3d46e",
+  "rows": [
+    {
+      "index": 0,
+      "text": "嗯，今天呢把大家叫来，咱们就是对咱们健身中心上半年，咱们的经营情况做一个简单的。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 0.25,
+      "end": 7.51,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "嗯，汇报和总结，因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 7.65,
+      "end": 16.11,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "然后现在咱们就先从教练部这边儿，简单的总结一下上半年的情况。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 16.32,
+      "end": 22.31,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 3,
+      "text": "上半年的情况主要是有像一些。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 1,
+      "start": 23.48,
+      "end": 26.91,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 4,
+    "S02": 1
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      21.710000000000008,
+      0.0
+    ],
+    [
+      0.0,
+      3.4299999999999926,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sourceStartFrame": 1386167,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

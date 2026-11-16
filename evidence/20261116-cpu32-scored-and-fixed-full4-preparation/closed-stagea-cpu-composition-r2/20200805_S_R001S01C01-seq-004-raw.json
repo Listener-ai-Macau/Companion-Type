@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "20200805_S_R001S01C01-seq-004",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-004.wav",
+    "wavSha256": "3294e64009f3fd81af0ad2afb0949bb97ce215601aa9ffc0914ea2c1cda7b2a7",
+    "pcmSha256": "bd9e80cc5752015b0c405264aac434fb7b003c222e5e74eb98b5dcaa97d044d8",
+    "frames": 456807,
+    "audioSeconds": 28.5504375,
+    "language": "Chinese"
+  },
+  "seconds": 15.863943600001221,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "或者说根本就不让它萌芽，这是我们的工作的目的，这才是我们收费，或者说我们的金牌的为什么是金牌，我们为什么是一级的资质。 为什么人家要要掏比别人小区贵一倍的物业费，接受我们的服务，他们是愿意的。 是，还有宠物方面，我也就是提醒各个业主，都注意一下安全，不要让它们到处乱跑。",
+    "raw_text": "[0.00][S01]或者说根本就不让它萌芽，这是我们的工作的目的，这才是我们收费，或者说我们的金牌的为什么是金牌，我们为什么是一级的资质。[12.94][12.94][S01]为什么人家要要掏比别人小区贵一倍的物业费，接受我们的服务，他们是愿意的。[19.62][20.28][S02]是，还有宠物方面，我也就是提醒各个业主，都注意一下安全，不要让它们到处乱跑。[28.24]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "或者说根本就不让它萌芽，这是我们的工作的目的，这才是我们收费，或者说我们的金牌的为什么是金牌，我们为什么是一级的资质。",
+        "t0_ms": 0,
+        "t1_ms": 12940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "为什么人家要要掏比别人小区贵一倍的物业费，接受我们的服务，他们是愿意的。",
+        "t0_ms": 12940,
+        "t1_ms": 19620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "是，还有宠物方面，我也就是提醒各个业主，都注意一下安全，不要让它们到处乱跑。",
+        "t0_ms": 20280,
+        "t1_ms": 28240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 12940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12940,
+        "t1_ms": 19620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20280,
+        "t1_ms": 28240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 22.7810001373291,
+      "encode_ms": 7138.85986328125,
+      "decode_ms": 8670.220703125
+    }
+  },
+  "rawDecoded": "[0.00][S01]或者说根本就不让它萌芽，这是我们的工作的目的，这才是我们收费，或者说我们的金牌的为什么是金牌，我们为什么是一级的资质。[12.94][12.94][S01]为什么人家要要掏比别人小区贵一倍的物业费，接受我们的服务，他们是愿意的。[19.62][20.28][S02]是，还有宠物方面，我也就是提醒各个业主，都注意一下安全，不要让它们到处乱跑。[28.24]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

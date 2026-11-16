@@ -1,0 +1,77 @@
+{
+  "id": "20200709_L_R002S01C01-seq-016",
+  "meeting": "20200709_L_R002S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200709_L_R002S01C01-seq-016-raw.json",
+  "rawSha256": "350343b2d6dca42a9000bbc610ff7e620aa097cac9c06d99a3798ee37acd1207",
+  "rows": [
+    {
+      "index": 0,
+      "text": "所以我告诉每一个保洁人员，我们的工作其实是很重要的，我们就是什么呀？我们就是这个健身中心的美容师，我们给他再做美容，如果我们这个工作做的不到位的话，那我们就该给他抹黑了。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 0.12,
+      "end": 16.44,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "所以他们都知道自己的工作非常重要，所以每个人的积极性还是蛮高的。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 17.58,
+      "end": 22.34,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "嗯，好，郭姐，我这边这个情况是这样，那咱们来听一下前台这边下半年的计划。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 22.55,
+      "end": 29.59,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 3,
+    "S02": 4
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      21.080000000000155,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      7.030812499999911,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sourceStartFrame": 30869773,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}

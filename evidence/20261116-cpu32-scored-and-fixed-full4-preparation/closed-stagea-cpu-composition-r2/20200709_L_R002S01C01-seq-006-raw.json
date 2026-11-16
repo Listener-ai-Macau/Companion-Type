@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "20200709_L_R002S01C01-seq-006",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-006.wav",
+    "wavSha256": "c8740be429bd68fbec8bb283c04c15ca40797f461626fdb02e0afab2d09788ac",
+    "pcmSha256": "368d97c811872198cd344b845c35e8b2fb1c71eaa2bf33c12a2a838ef9ffd3b4",
+    "frames": 367600,
+    "audioSeconds": 22.975,
+    "language": "Chinese"
+  },
+  "seconds": 13.65548690000287,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作。 嗯，好。 那咱们这个保安部这边儿呢，上一个季度的情况怎么样？就是安全情况，各种比如说车棚的检查，然后咱们的管理设施有没有遭到损坏，这个说一下吧，简单汇报一下。",
+    "raw_text": "[0.15][S01]这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作。[7.21][7.72][S02]嗯，好。[8.61][9.54][S02]那咱们这个保安部这边儿呢，上一个季度的情况怎么样？就是安全情况，各种比如说车棚的检查，然后咱们的管理设施有没有遭到损坏，这个说一下吧，简单汇报一下。[22.93]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作。",
+        "t0_ms": 150,
+        "t1_ms": 7210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，好。",
+        "t0_ms": 7720,
+        "t1_ms": 8610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "那咱们这个保安部这边儿呢，上一个季度的情况怎么样？就是安全情况，各种比如说车棚的检查，然后咱们的管理设施有没有遭到损坏，这个说一下吧，简单汇报一下。",
+        "t0_ms": 9540,
+        "t1_ms": 22930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 150,
+        "t1_ms": 7210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7720,
+        "t1_ms": 8610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9540,
+        "t1_ms": 22930,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 213.06399536132812,
+      "mel_ms": 20.73699951171875,
+      "encode_ms": 6810.0380859375,
+      "decode_ms": 6790.8349609375
+    }
+  },
+  "rawDecoded": "[0.15][S01]这方面也要让顾客就是了解自己会有哪些运动方面的不足，让教练可以更改一些动作。[7.21][7.72][S02]嗯，好。[8.61][9.54][S02]那咱们这个保安部这边儿呢，上一个季度的情况怎么样？就是安全情况，各种比如说车棚的检查，然后咱们的管理设施有没有遭到损坏，这个说一下吧，简单汇报一下。[22.93]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

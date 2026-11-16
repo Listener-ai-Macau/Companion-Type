@@ -1,0 +1,9 @@
+{
+  "sourceControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2",
+  "audioManifestSha256": "ea332eee5c7f6eac11cec180c9d5276652ed883b5d64afb01146642521bec60d",
+  "scoringManifestSha256": "1bd61c8c2b9438a520b0f16879d94d7e320f1a7ea7fec72d74ad7d1047909f83",
+  "rawBaselineSha256": "cc469e7acfda616f9dcc4775c722e6d5fbca3c77e7acccc6f750130099b2b8f4",
+  "speakerBaselineSha256": "c885213117bc0f1ba344f98f08321232d1aef5b27ca24c6d4aeb17a97acacce8",
+  "composition": "MOSS raw words and segment times; infer native local Sxx-to-global Nemotron IDs by maximum overlap against the unchanged predicted full-source exclusive journal. No reference labels/counts/text used; unmatched/residual words remain UNKNOWN. Scoring uses the already frozen whole-meeting Nemotron-to-reference mapping, no per-window reference remapping.",
+  "qualityQualified": false
+}

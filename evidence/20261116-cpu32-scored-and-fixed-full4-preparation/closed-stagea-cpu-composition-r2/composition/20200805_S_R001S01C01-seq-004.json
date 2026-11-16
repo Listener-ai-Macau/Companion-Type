@@ -1,0 +1,74 @@
+{
+  "id": "20200805_S_R001S01C01-seq-004",
+  "meeting": "20200805_S_R001S01C01",
+  "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\20200805_S_R001S01C01-seq-004-raw.json",
+  "rawSha256": "f8f13e646a28f957b32ba8bed746432d4f48e242ab4c587a6c16cef327397668",
+  "rows": [
+    {
+      "index": 0,
+      "text": "或者说根本就不让它萌芽，这是我们的工作的目的，这才是我们收费，或者说我们的金牌的为什么是金牌，我们为什么是一级的资质。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 0.0,
+      "end": 12.94,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 1,
+      "text": "为什么人家要要掏比别人小区贵一倍的物业费，接受我们的服务，他们是愿意的。",
+      "localSpeaker": "S01",
+      "nativeWholeMeetingSpeaker": 4,
+      "start": 12.94,
+      "end": 19.62,
+      "attribution": "predicted_identity_overlap_assignment"
+    },
+    {
+      "index": 2,
+      "text": "是，还有宠物方面，我也就是提醒各个业主，都注意一下安全，不要让它们到处乱跑。",
+      "localSpeaker": "S02",
+      "nativeWholeMeetingSpeaker": 3,
+      "start": 20.28,
+      "end": 28.24,
+      "attribution": "predicted_identity_overlap_assignment"
+    }
+  ],
+  "localToNativeGlobal": {
+    "S01": 4,
+    "S02": 3
+  },
+  "overlapSecondsMatrix": [
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      19.620000000000005
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      7.960000000000036,
+      0.0
+    ]
+  ],
+  "matrixLocalOrder": [
+    "S01",
+    "S02"
+  ],
+  "matrixGlobalOrder": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "sourceStartFrame": 14859063,
+  "residual": [],
+  "referenceRead": false,
+  "trueSpeakerCountRead": false,
+  "mappingUsesPredictionsOnly": true,
+  "unknownRetained": true,
+  "wordsRewritten": false,
+  "wholeMeetingAcceptance": false
+}
