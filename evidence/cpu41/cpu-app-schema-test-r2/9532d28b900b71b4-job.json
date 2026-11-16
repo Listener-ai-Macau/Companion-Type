@@ -1,0 +1,37 @@
+{
+  "state": "INCOMPLETE_LOCAL_CPU_MEETING_RETAINED",
+  "startedAt": "2026-11-16T12:53:35.121253+08:00",
+  "attempts": [
+    {
+      "stage": "cpu-asr",
+      "exitCode": 0,
+      "seconds": 51.677374099999724,
+      "privatePeakBytes": 768172032,
+      "log": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\logs\\cpu-asr-1794804815952330400.log",
+      "taskNeuralDeadline": "2026-11-16T15:40:00+08:00",
+      "originalRamStartGateBytes": 3414499000
+    },
+    {
+      "stage": "cpu-speaker",
+      "exitCode": 1,
+      "seconds": 0.26807089999783784,
+      "privatePeakBytes": 15376384,
+      "log": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\logs\\cpu-speaker-1794804867638592000.log",
+      "taskNeuralDeadline": "2026-11-16T15:40:00+08:00",
+      "originalRamStartGateBytes": 3414499000
+    }
+  ],
+  "binding": {
+    "inputSha256": "7d1071095672497bba4c23f9fa50ed7c4476a1d61fe5e02a6dc77b5228e3fa8d",
+    "bundleSha256": "29638a57ca155747a68a359afc74fe0940cc3622cae479cd64c4dad718c58a05"
+  },
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "asrSession": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session",
+  "adoptedCompatibleStreamCache": false,
+  "activeStage": "cpu-speaker",
+  "speakerControl": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\speaker-attempt-1794804867633356200",
+  "error": "RuntimeError('Local cpu-speaker stage did not complete; retained stage log: E:\\\\CodexData\\\\Companion\\\\product-d1d2-20261114\\\\joint-architecture-r1\\\\cpu-app-schema-test-r2\\\\ES2003b\\\\offline-jobs\\\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\\\logs\\\\cpu-speaker-1794804867638592000.log')",
+  "finishedAt": "2026-11-16T12:54:27.908866+08:00"
+}

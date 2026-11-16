@@ -1,0 +1,43 @@
+{
+  "at": "2026-11-16T12:53:34.932727+08:00",
+  "scriptSha256": "4e17b96cfc3890304f6ad836f1ba1249ab10106ec527e3c9fa97709738d48677",
+  "packageSha256": "dc810f0cfe1849880d36dfccedd2f7ed20a8f085b493fb44a1753cbbf893b58c",
+  "cases": [
+    {
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "audioSeconds": 2109.813375,
+      "frames": 33757014,
+      "language": "English",
+      "testFrames": 1204000,
+      "testAudioSeconds": 75.25,
+      "sourceStartFrame": 0,
+      "pcmSha256": "f1bef19fef23964d6161c25ecf6aa69834e9312bfbe5e0bc7eaafd456210f06c",
+      "protocol": "Both paths submit exactly the same first75.25s real original mono PCM; live packets paced every5s, one byte-identical replay; offline intake sealed before inference. No microphones, speakers, private audio or clouds."
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "audioSeconds": 2327.119,
+      "frames": 37233904,
+      "language": "Chinese",
+      "testFrames": 1204000,
+      "testAudioSeconds": 75.25,
+      "sourceStartFrame": 0,
+      "pcmSha256": "a1a779247fb2ae9f39bcb10ff3a7775ff5f204b3f76e895797d2049589c83e47",
+      "protocol": "Both paths submit exactly the same first75.25s real original mono PCM; live packets paced every5s, one byte-identical replay; offline intake sealed before inference. No microphones, speakers, private audio or clouds."
+    }
+  ],
+  "scope": "Direct versioned backend command schemas, not installed native UI/card/phone testing. Model is rejected for quality; no release/default promotion.",
+  "sequence": [
+    "fresh offline ASR+CPU speaker finalization",
+    "paced growing-file app stream",
+    "finalize using unchanged accepted stream ASR cache",
+    "reload identical completed final cache without new neural stage"
+  ],
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "productDefaultChanged": false
+}

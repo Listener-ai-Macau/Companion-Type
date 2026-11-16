@@ -1,0 +1,28 @@
+{
+  "state": "COMPLETE_LOCAL_CPU_MEETING_CANDIDATE_NOT_QUALITY_QUALIFIED",
+  "startedAt": "2026-11-16T13:01:55.774879+08:00",
+  "attempts": [
+    {
+      "stage": "cpu-speaker",
+      "exitCode": 0,
+      "seconds": 3.4067177000033553,
+      "privatePeakBytes": 1540386816,
+      "log": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\logs\\cpu-speaker-1794805315819135300.log",
+      "taskNeuralDeadline": "2026-11-16T15:40:00+08:00",
+      "originalRamStartGateBytes": 3414499000
+    }
+  ],
+  "binding": {
+    "inputSha256": "6ef6d3026d1b19f595673965de40423b330c40fc71cac68ba3064e99cf8f6a19",
+    "bundleSha256": "95d466f098f548bdbb16d90250b28dee0e5d9ea857e420336e613d99fe870627"
+  },
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "asrSession": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session",
+  "adoptedCompatibleStreamCache": true,
+  "speakerControl": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\speaker-attempt-1794805315813136800",
+  "activeStage": "cpu-speaker",
+  "finishedAt": "2026-11-16T13:01:59.875648+08:00",
+  "documentSha256": "3ed5bade8c6aafd84b53801702fdf159d226745a2243a6789de30db66aa0b285"
+}

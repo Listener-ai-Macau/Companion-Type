@@ -359,3 +359,11 @@ src/companion_local_pcm_session_20261114.py -text -whitespace
 src/companion_cpu_guarded_stage_20261116.py -text -whitespace
 
 src/companion_local_paths_20261116.py -text -whitespace
+
+evidence/cpu41/** -text -whitespace
+
+src/qwen_cpu_port_worker_20261116.py -text -whitespace
+
+src/run_qwen_cpu_port_20261116.py -text -whitespace
+
+src/score_qwen_cpu_port_20261116.py -text -whitespace

@@ -1,0 +1,28 @@
+{
+  "state": "COMPLETE_LOCAL_CPU_MEETING_CANDIDATE_NOT_QUALITY_QUALIFIED",
+  "startedAt": "2026-11-16T12:59:26.702864+08:00",
+  "attempts": [
+    {
+      "stage": "cpu-speaker",
+      "exitCode": 0,
+      "seconds": 3.4176892999967095,
+      "privatePeakBytes": 1540485120,
+      "log": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\logs\\cpu-speaker-1794805166754312700.log",
+      "taskNeuralDeadline": "2026-11-16T15:40:00+08:00",
+      "originalRamStartGateBytes": 3414499000
+    }
+  ],
+  "binding": {
+    "inputSha256": "4647fcb6743bc44d74725c2351c266d7fa80140d6415af55c856df5767c75236",
+    "bundleSha256": "c7b2c42309d1f2f048762826cb7889b85f50706e149caf7bd8d2ccc338d2a57f"
+  },
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "asrSession": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session",
+  "adoptedCompatibleStreamCache": true,
+  "speakerControl": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\speaker-attempt-1794805166747043100",
+  "activeStage": "cpu-speaker",
+  "finishedAt": "2026-11-16T12:59:30.810608+08:00",
+  "documentSha256": "87a0b10505eac3bb3cc0623a2f8b9648ab2fe7a0fa50e9579d1cc72e2e30ddaf"
+}

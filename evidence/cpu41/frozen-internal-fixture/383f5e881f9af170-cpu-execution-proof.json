@@ -1,0 +1,63 @@
+{
+  "state": "COMPLETE_CPU_ONLY_NATIVE8_FULL4_NOT_QUALIFIED",
+  "startedAt": "2026-11-16T12:23:49.758504+08:00",
+  "results": [
+    {
+      "meeting": "ES2003b",
+      "phase": "activity",
+      "exitCode": 0,
+      "state": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+      "seconds": 93.14458829999785,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\ES2003b\\completed-state.json",
+      "sha256": "7162324514b4ca309add0b686a77b7eae7f81ad83f2ffeb013a061562baf8a16"
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "phase": "activity",
+      "exitCode": 0,
+      "state": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+      "seconds": 102.39383369999996,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\S_R004S03C01\\completed-state.json",
+      "sha256": "96cdb9d83df33f99e19bf9fb4eab6e56eed649175dc936d314f2d997c15789a2"
+    },
+    {
+      "meeting": "EN2002a",
+      "phase": "activity",
+      "exitCode": 0,
+      "state": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+      "seconds": 94.21020020000287,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\EN2002a\\completed-state.json",
+      "sha256": "d798a2392ca76fc73bb2431c2f2235885244b1fd68331b5e2a0c925ba58864f8"
+    },
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "phase": "activity",
+      "exitCode": 0,
+      "state": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+      "seconds": 91.09625890000461,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\20200623_S_R001S07C01\\completed-state.json",
+      "sha256": "05a510c7040049dd6d23fcf717f01358276002d0135dbb33ed40659522db8e63"
+    }
+  ],
+  "privatePeakBytes": 1537232896,
+  "familyWorkingSetPeakBytes": 304926720,
+  "systemAvailableMinBytes": 5116944384,
+  "qualityQualified": false,
+  "wholeMeetingAcceptance": false,
+  "automaticRetries": 0,
+  "executionDevice": "cpu",
+  "newWeightTraining": false,
+  "cpu61ControlPassed": true,
+  "reusedCpu61Control": {
+    "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r1\\run.json",
+    "runSha256": "42e90b736709cd0605f4004aad105dc1b832f3f0916e3908bb6266e8fca35ea7",
+    "protocol": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r1\\protocol.json",
+    "binding": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r1\\binding.json",
+    "reason": "61s CPU C ABI and official CPU CLI already passed; actual Windows low-RAM interrupted the first full source. After60s recovery, preserve that partial and restart the continuous speaker state from source start once, without repeating control or any completed ASR."
+  },
+  "activeMeeting": "20200623_S_R001S07C01",
+  "activePhase": "activity",
+  "pid": 31956,
+  "pidCreatedAt": 1794803319.545034,
+  "finishedAt": "2026-11-16T12:30:10.641269+08:00"
+}

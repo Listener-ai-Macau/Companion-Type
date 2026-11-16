@@ -1,0 +1,1213 @@
+{
+  "revision": 41,
+  "evidenceDirectory": "evidence/cpu41",
+  "commitMessage": "Verify actual CPU app stream/offline/cache schemas with continuous speakers; preserve deep Windows cache fixes",
+  "sources": [
+    "src/qwen_cpu_port_worker_20261116.py",
+    "src/run_qwen_cpu_port_20261116.py",
+    "src/score_qwen_cpu_port_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\protocol.json",
+      "name": "cpu-app-schema-test-r2/4173f88f360ea58b-protocol.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-bundle.json",
+      "name": "cpu-app-schema-test-r2/c672568d667662a3-offline-bundle.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-manifest.json",
+      "name": "cpu-app-schema-test-r2/716b467921a0fef4-offline-manifest.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-call\\stderr.log",
+      "name": "cpu-app-schema-test-r2/49c01c07cfcee0be-stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-call\\stdout.json",
+      "name": "cpu-app-schema-test-r2/1f4eda1be66d43e1-stdout.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\input-binding.json",
+      "name": "cpu-app-schema-test-r2/d6ceb47bcd3194ad-input-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\job.json",
+      "name": "cpu-app-schema-test-r2/9532d28b900b71b4-job.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-run-1794804815952330400\\document.json",
+      "name": "cpu-app-schema-test-r2/fb2d505dbaf8ac52-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-run-1794804815952330400\\native.log",
+      "name": "cpu-app-schema-test-r2/50e2c614b0ed3900-native.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-run-1794804815952330400\\run.json",
+      "name": "cpu-app-schema-test-r2/b4eef330a72b4636-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-run-1794804815952330400\\worker-state.json",
+      "name": "cpu-app-schema-test-r2/7f91c1b1fbc03369-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-run-1794804815952330400\\worker.log",
+      "name": "cpu-app-schema-test-r2/8f0e041ea256aabf-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\session.json",
+      "name": "cpu-app-schema-test-r2/7b2d441192aa6dbd-session.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000000-00080000-draft.json",
+      "name": "cpu-app-schema-test-r2/e3bb6c6e2eaae48d-00000000-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000000-00160000-draft.json",
+      "name": "cpu-app-schema-test-r2/a5331855e2716e75-00000000-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000000-00240000-draft.json",
+      "name": "cpu-app-schema-test-r2/3f395256cf4c87d7-00000000-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000000-00320000-draft.json",
+      "name": "cpu-app-schema-test-r2/9af9eec4560153fc-00000000-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000000-00400000-draft.json",
+      "name": "cpu-app-schema-test-r2/db57fbbc2d378240-00000000-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000000-00480000-final.json",
+      "name": "cpu-app-schema-test-r2/5fbd451de7ea6e3c-00000000-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000001-00080000-draft.json",
+      "name": "cpu-app-schema-test-r2/3374bc903b30db55-00000001-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000001-00160000-draft.json",
+      "name": "cpu-app-schema-test-r2/f8694c9b33b365f6-00000001-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000001-00240000-draft.json",
+      "name": "cpu-app-schema-test-r2/ec2b1c45eacea491-00000001-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000001-00320000-draft.json",
+      "name": "cpu-app-schema-test-r2/d3ebaa70bd8ffe4f-00000001-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000001-00400000-draft.json",
+      "name": "cpu-app-schema-test-r2/5d3e1f584cc62ec3-00000001-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000001-00480000-final.json",
+      "name": "cpu-app-schema-test-r2/3f7ded9d007741df-00000001-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000002-00080000-draft.json",
+      "name": "cpu-app-schema-test-r2/a0b921c1a805cf28-00000002-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000002-00160000-draft.json",
+      "name": "cpu-app-schema-test-r2/c0eb8f9946ca8f66-00000002-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000002-00240000-draft.json",
+      "name": "cpu-app-schema-test-r2/cf4e35688004343a-00000002-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\requests\\00000002-00244000-final.json",
+      "name": "cpu-app-schema-test-r2/14d8a9624e8bc447-00000002-00244000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\results\\00000000-00480000-final.json",
+      "name": "cpu-app-schema-test-r2/d991a4c47b208aa1-00000000-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\results\\00000001-00480000-final.json",
+      "name": "cpu-app-schema-test-r2/ce4c514fc3e8dc73-00000001-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\asr-session\\results\\00000002-00244000-final.json",
+      "name": "cpu-app-schema-test-r2/23e51552ac8dfcae-00000002-00244000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\logs\\cpu-asr-1794804815952330400.log",
+      "name": "cpu-app-schema-test-r2/e2ff491697ff5cc1-cpu-asr-1794804815952330400.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\logs\\cpu-speaker-1794804867638592000.log",
+      "name": "cpu-app-schema-test-r2/a9f6d4059a63f6a3-cpu-speaker-1794804867638592000.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\speaker-attempt-1794804867633356200\\audio-only.json",
+      "name": "cpu-app-schema-test-r2/b5abb8d862622732-audio-only.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\speaker-attempt-1794804867633356200\\binding.json",
+      "name": "cpu-app-schema-test-r2/10e5acea8bcc6f42-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\speaker-attempt-1794804867633356200\\protocol.json",
+      "name": "cpu-app-schema-test-r2/0f616ef2932c5d95-protocol.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\progress.json",
+      "name": "cpu-app-schema-test-r3/1b59886584780ec6-progress.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\protocol.json",
+      "name": "cpu-app-schema-test-r3/5c6e3037e45cedc3-protocol.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\result.json",
+      "name": "cpu-app-schema-test-r3/d60315029e665441-result.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-bundle.json",
+      "name": "cpu-app-schema-test-r3/6f1f7c21daea9c5e-offline-bundle.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-manifest.json",
+      "name": "cpu-app-schema-test-r3/908b549487e72755-offline-manifest.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\result.json",
+      "name": "cpu-app-schema-test-r3/494b13174d7260a9-result.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-bundle.json",
+      "name": "cpu-app-schema-test-r3/c4b02de031f8032f-stream-bundle.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-manifest.json",
+      "name": "cpu-app-schema-test-r3/3aa7330b588229ea-stream-final-manifest.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-manifest.json",
+      "name": "cpu-app-schema-test-r3/8c81d8c706581108-stream-manifest.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-call\\stderr.log",
+      "name": "cpu-app-schema-test-r3/e6bce75f42313d4a-stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-call\\stdout.json",
+      "name": "cpu-app-schema-test-r3/c01f079c0b506f8d-stdout.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\attribution-evidence.json",
+      "name": "cpu-app-schema-test-r3/1cc8de8cea6ec5da-attribution-evidence.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\final-binding.json",
+      "name": "cpu-app-schema-test-r3/33c08b4f7cbdd532-final-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\final-document.json",
+      "name": "cpu-app-schema-test-r3/c60a814270ba2bc3-final-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\input-binding.json",
+      "name": "cpu-app-schema-test-r3/9df204bf517f92cd-input-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\job.json",
+      "name": "cpu-app-schema-test-r3/1abbe23830e71699-job.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-run-1794805021563304800\\document.json",
+      "name": "cpu-app-schema-test-r3/dd276b563fcb4c55-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-run-1794805021563304800\\native.log",
+      "name": "cpu-app-schema-test-r3/9bf461305e716c39-native.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-run-1794805021563304800\\run.json",
+      "name": "cpu-app-schema-test-r3/4a6909cf1988a95e-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-run-1794805021563304800\\worker-state.json",
+      "name": "cpu-app-schema-test-r3/64c1d5798e48ccb9-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-run-1794805021563304800\\worker.log",
+      "name": "cpu-app-schema-test-r3/d9723e935f44aa6d-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\session.json",
+      "name": "cpu-app-schema-test-r3/046b25746db710e6-session.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000000-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/4ca93c0b6d66805e-00000000-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000000-00160000-draft.json",
+      "name": "cpu-app-schema-test-r3/c2db8a27188813c4-00000000-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000000-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/3c7d5615d2c40411-00000000-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000000-00320000-draft.json",
+      "name": "cpu-app-schema-test-r3/2b01cb5c16827046-00000000-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000000-00400000-draft.json",
+      "name": "cpu-app-schema-test-r3/095f15fc85da0cab-00000000-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000000-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/00f3e31e1ab07077-00000000-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000001-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/459a4344f2c3dc5d-00000001-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000001-00160000-draft.json",
+      "name": "cpu-app-schema-test-r3/0d3c68ad8e418fc4-00000001-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000001-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/09e203e9e32b3fc4-00000001-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000001-00320000-draft.json",
+      "name": "cpu-app-schema-test-r3/50356024c97caf14-00000001-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000001-00400000-draft.json",
+      "name": "cpu-app-schema-test-r3/492e73060809993f-00000001-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000001-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/b8650f3397a1fd28-00000001-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000002-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/16bdc27ad40b63de-00000002-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000002-00160000-draft.json",
+      "name": "cpu-app-schema-test-r3/278c5e6b10d28422-00000002-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000002-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/10508b1278e9de6f-00000002-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\requests\\00000002-00244000-final.json",
+      "name": "cpu-app-schema-test-r3/60a1b589914a45ab-00000002-00244000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\results\\00000000-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/689e69a29b51d64f-00000000-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\results\\00000001-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/07cba85cad186f94-00000001-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\results\\00000002-00244000-final.json",
+      "name": "cpu-app-schema-test-r3/d9cd233e54f24157-00000002-00244000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\logs\\cpu-asr-1794805021569624000.log",
+      "name": "cpu-app-schema-test-r3/0988a681f593a0a5-cpu-asr-1794805021569624000.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\logs\\cpu-speaker-1794805071745786100.log",
+      "name": "cpu-app-schema-test-r3/e5028e73fe0675d3-cpu-speaker-1794805071745786100.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\speaker-attempt-1794805071740204300\\audio-only.json",
+      "name": "cpu-app-schema-test-r3/59fd7e5d7ed616f6-audio-only.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\speaker-attempt-1794805071740204300\\binding.json",
+      "name": "cpu-app-schema-test-r3/64d3f70184789245-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\speaker-attempt-1794805071740204300\\protocol.json",
+      "name": "cpu-app-schema-test-r3/b851f9086f597452-protocol.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\speaker-attempt-1794805071740204300\\probabilities\\local-d5d7964f08806cb6\\probabilities.json",
+      "name": "cpu-app-schema-test-r3/cb94d12c269a6723-probabilities.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\speaker-attempt-1794805071740204300\\results\\local-d5d7964f08806cb6\\completed-state.json",
+      "name": "cpu-app-schema-test-r3/826ca9c922fdde16-completed-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\speaker-attempt-1794805071740204300\\results\\local-d5d7964f08806cb6\\speaker-journal.json",
+      "name": "cpu-app-schema-test-r3/9774986124d91f40-speaker-journal.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\speaker-attempt-1794805071740204300\\results\\local-d5d7964f08806cb6\\state.json",
+      "name": "cpu-app-schema-test-r3/6d343e4387b073b7-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\reload-final-call\\stderr.log",
+      "name": "cpu-app-schema-test-r3/22d55a2ba04b1492-stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\reload-final-call\\stdout.json",
+      "name": "cpu-app-schema-test-r3/9eb9eab96bd66609-stdout.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\decoder-run-1794805082137521700.log",
+      "name": "cpu-app-schema-test-r3/59266cfec4950600-decoder-run-1794805082137521700.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\events.json",
+      "name": "cpu-app-schema-test-r3/d786e108106c7edf-events.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\preview.json",
+      "name": "cpu-app-schema-test-r3/607ee805864faf37-preview.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\sealed.json",
+      "name": "cpu-app-schema-test-r3/037917f946f9ade0-sealed.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\stderr.log",
+      "name": "cpu-app-schema-test-r3/8572a574e2bdbcae-stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\stdout.log",
+      "name": "cpu-app-schema-test-r3/42b50bd985af7d4b-stdout.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\stream-receipt.json",
+      "name": "cpu-app-schema-test-r3/ca52e1ebf36b8b1b-stream-receipt.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\decoder-run-1794805082137521700\\document.json",
+      "name": "cpu-app-schema-test-r3/2fa0745aaae81f4f-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\decoder-run-1794805082137521700\\native.log",
+      "name": "cpu-app-schema-test-r3/dd78a120a05963d7-native.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\decoder-run-1794805082137521700\\run.json",
+      "name": "cpu-app-schema-test-r3/077295b057731d75-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\decoder-run-1794805082137521700\\worker-state.json",
+      "name": "cpu-app-schema-test-r3/cf8b4eb3d26ff944-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\decoder-run-1794805082137521700\\worker.log",
+      "name": "cpu-app-schema-test-r3/b23d8721e5edd469-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\session.json",
+      "name": "cpu-app-schema-test-r3/8cfc1243e92a323e-session.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000000-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/ff3c154762398dc4-00000000-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000000-00160000-draft.json",
+      "name": "cpu-app-schema-test-r3/e044ff51369a9488-00000000-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000000-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/789066ef8c510a50-00000000-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000000-00320000-draft.json",
+      "name": "cpu-app-schema-test-r3/478eaa0f490ee224-00000000-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000000-00400000-draft.json",
+      "name": "cpu-app-schema-test-r3/f529d0077c29ec13-00000000-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000000-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/508fc2d82888d789-00000000-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000001-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/11f1309260259c1a-00000001-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000001-00160000-draft.json",
+      "name": "cpu-app-schema-test-r3/247c6547af6d5489-00000001-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000001-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/29d83e0d91fe8a27-00000001-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000001-00320000-draft.json",
+      "name": "cpu-app-schema-test-r3/d34289ca6e56ef66-00000001-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000001-00400000-draft.json",
+      "name": "cpu-app-schema-test-r3/877c85bdc63c56ee-00000001-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000001-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/99000336f2f04236-00000001-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000002-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/7a08fa1503c53152-00000002-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000002-00160000-draft.json",
+      "name": "cpu-app-schema-test-r3/1f75e06c16a199c9-00000002-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000002-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/278935ff5e8a14fa-00000002-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\requests\\00000002-00244000-final.json",
+      "name": "cpu-app-schema-test-r3/cfa971bffc4dc484-00000002-00244000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\results\\00000000-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/a5abc6a5ac1c7271-00000000-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\results\\00000000-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/44b1b2861d42e74e-00000000-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\results\\00000001-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/6cd24d7abadd22aa-00000001-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\results\\00000001-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/37df7f5e44d2524d-00000001-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\results\\00000002-00244000-final.json",
+      "name": "cpu-app-schema-test-r3/7bb2e92f6308ceaa-00000002-00244000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-call\\stderr.log",
+      "name": "cpu-app-schema-test-r3/00a9599c13d38463-stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-call\\stdout.json",
+      "name": "cpu-app-schema-test-r3/74f2436106678846-stdout.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\attribution-evidence.json",
+      "name": "cpu-app-schema-test-r3/3a7ed2037ab02746-attribution-evidence.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\final-binding.json",
+      "name": "cpu-app-schema-test-r3/3bdae3e8e6aab634-final-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\final-document.json",
+      "name": "cpu-app-schema-test-r3/d301703285e8bf3b-final-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\input-binding.json",
+      "name": "cpu-app-schema-test-r3/2e308f2fcaeeaa8f-input-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\job.json",
+      "name": "cpu-app-schema-test-r3/abb6fda0a48ce073-job.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\stream-cache-lineage.json",
+      "name": "cpu-app-schema-test-r3/1a29dd39f219ae5c-stream-cache-lineage.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\logs\\cpu-speaker-1794805166754312700.log",
+      "name": "cpu-app-schema-test-r3/7186cccec9ee2aed-cpu-speaker-1794805166754312700.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\speaker-attempt-1794805166747043100\\audio-only.json",
+      "name": "cpu-app-schema-test-r3/94a15f7d2f95c46b-audio-only.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\speaker-attempt-1794805166747043100\\binding.json",
+      "name": "cpu-app-schema-test-r3/10be5dbe26314cd8-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\speaker-attempt-1794805166747043100\\protocol.json",
+      "name": "cpu-app-schema-test-r3/af99f6c5960f60fd-protocol.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\speaker-attempt-1794805166747043100\\probabilities\\local-c645cf392c5007a1\\probabilities.json",
+      "name": "cpu-app-schema-test-r3/2104ae4c23056882-probabilities.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\speaker-attempt-1794805166747043100\\results\\local-c645cf392c5007a1\\completed-state.json",
+      "name": "cpu-app-schema-test-r3/7e2c1cc47ad365c1-completed-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\speaker-attempt-1794805166747043100\\results\\local-c645cf392c5007a1\\speaker-journal.json",
+      "name": "cpu-app-schema-test-r3/48fd6a903e554ba2-speaker-journal.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream-final-jobs\\c645cf392c5007a19b3836b24020209172e0cd63892c853259c250aac2ed611c\\speaker-attempt-1794805166747043100\\results\\local-c645cf392c5007a1\\state.json",
+      "name": "cpu-app-schema-test-r3/70d04f510ee1f39d-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-bundle.json",
+      "name": "cpu-app-schema-test-r3/09cad5c03842b75c-offline-bundle.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-manifest.json",
+      "name": "cpu-app-schema-test-r3/90ccc3e78e8940eb-offline-manifest.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\result.json",
+      "name": "cpu-app-schema-test-r3/8910930be16c0212-result.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-bundle.json",
+      "name": "cpu-app-schema-test-r3/16004c13afcc6461-stream-bundle.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-manifest.json",
+      "name": "cpu-app-schema-test-r3/11ba868aa15a61d1-stream-final-manifest.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-manifest.json",
+      "name": "cpu-app-schema-test-r3/4d0b7d8ff5baa719-stream-manifest.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-call\\stderr.log",
+      "name": "cpu-app-schema-test-r3/960c33e2741ea8ef-stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-call\\stdout.json",
+      "name": "cpu-app-schema-test-r3/8ebb52dc3ad1ecca-stdout.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\attribution-evidence.json",
+      "name": "cpu-app-schema-test-r3/8a9cc66083e9403d-attribution-evidence.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\final-binding.json",
+      "name": "cpu-app-schema-test-r3/d316c68eef3e63f9-final-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\final-document.json",
+      "name": "cpu-app-schema-test-r3/4894ed68503ca63c-final-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\input-binding.json",
+      "name": "cpu-app-schema-test-r3/610c25d9e37a5a6b-input-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\job.json",
+      "name": "cpu-app-schema-test-r3/c62b4b89b1794a40-job.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-run-1794805172371006300\\document.json",
+      "name": "cpu-app-schema-test-r3/ae05a563c869e9d4-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-run-1794805172371006300\\native.log",
+      "name": "cpu-app-schema-test-r3/9cff9f877d5d44be-native.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-run-1794805172371006300\\run.json",
+      "name": "cpu-app-schema-test-r3/62bb0dcfcdf76b29-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-run-1794805172371006300\\worker-state.json",
+      "name": "cpu-app-schema-test-r3/b478a7fc8302088f-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-run-1794805172371006300\\worker.log",
+      "name": "cpu-app-schema-test-r3/5ee3feae800a7280-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\session.json",
+      "name": "cpu-app-schema-test-r3/6d8a6d4696212e63-session.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000000-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/ace18153fc04b1e9-00000000-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000000-00160000-draft.json",
+      "name": "cpu-app-schema-test-r3/43700880f0a658ce-00000000-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000000-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/5f764467701f7816-00000000-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000000-00320000-draft.json",
+      "name": "cpu-app-schema-test-r3/7f827e4f8493ff56-00000000-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000000-00400000-draft.json",
+      "name": "cpu-app-schema-test-r3/f62ac8dc59f4e7d7-00000000-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000000-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/d81cb2a44a831b4d-00000000-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000001-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/5432c6a41038b0f8-00000001-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000001-00160000-draft.json",
+      "name": "cpu-app-schema-test-r3/8c1812c8f82c9342-00000001-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000001-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/3eaecb24f7b91bdb-00000001-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000001-00320000-draft.json",
+      "name": "cpu-app-schema-test-r3/fc40c8c7bf945c9d-00000001-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000001-00400000-draft.json",
+      "name": "cpu-app-schema-test-r3/bca3006b6a391029-00000001-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000001-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/3b005e988dc9c23a-00000001-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000002-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/5e105c72fedab32a-00000002-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000002-00160000-draft.json",
+      "name": "cpu-app-schema-test-r3/554bb45a8432f917-00000002-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000002-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/5781e532a7d4eb7c-00000002-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\requests\\00000002-00244000-final.json",
+      "name": "cpu-app-schema-test-r3/68c9f4236f7224e5-00000002-00244000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\results\\00000000-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/7ae9f13ccb12b44f-00000000-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\results\\00000001-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/88ee7312dc9f7d7d-00000001-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\results\\00000002-00244000-final.json",
+      "name": "cpu-app-schema-test-r3/13bdd7d7e8c59e40-00000002-00244000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\logs\\cpu-asr-1794805172372013200.log",
+      "name": "cpu-app-schema-test-r3/6298e519c3dbbeab-cpu-asr-1794805172372013200.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\logs\\cpu-speaker-1794805221529409100.log",
+      "name": "cpu-app-schema-test-r3/ae7b832e766cf718-cpu-speaker-1794805221529409100.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\speaker-attempt-1794805221523199100\\audio-only.json",
+      "name": "cpu-app-schema-test-r3/c583374ab830a146-audio-only.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\speaker-attempt-1794805221523199100\\binding.json",
+      "name": "cpu-app-schema-test-r3/31ba7d611e03b98f-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\speaker-attempt-1794805221523199100\\protocol.json",
+      "name": "cpu-app-schema-test-r3/1559d663f537121c-protocol.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\speaker-attempt-1794805221523199100\\probabilities\\local-6061cff814f3dfd8\\probabilities.json",
+      "name": "cpu-app-schema-test-r3/28a59820c2b5516c-probabilities.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\speaker-attempt-1794805221523199100\\results\\local-6061cff814f3dfd8\\completed-state.json",
+      "name": "cpu-app-schema-test-r3/6594b1d571d78583-completed-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\speaker-attempt-1794805221523199100\\results\\local-6061cff814f3dfd8\\speaker-journal.json",
+      "name": "cpu-app-schema-test-r3/c55f83ef834e1cb0-speaker-journal.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\speaker-attempt-1794805221523199100\\results\\local-6061cff814f3dfd8\\state.json",
+      "name": "cpu-app-schema-test-r3/8e15b920e2d463fa-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\reload-final-call\\stderr.log",
+      "name": "cpu-app-schema-test-r3/58b310d0ccdeba3f-stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\reload-final-call\\stdout.json",
+      "name": "cpu-app-schema-test-r3/8aaa272198e70c7e-stdout.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\decoder-run-1794805231485237400.log",
+      "name": "cpu-app-schema-test-r3/34a487a23f369b8c-decoder-run-1794805231485237400.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\events.json",
+      "name": "cpu-app-schema-test-r3/9b24baf6714235b4-events.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\preview.json",
+      "name": "cpu-app-schema-test-r3/004a5756f10f9178-preview.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\sealed.json",
+      "name": "cpu-app-schema-test-r3/f86c689daa0acea2-sealed.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\stderr.log",
+      "name": "cpu-app-schema-test-r3/ade69e348ea49292-stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\stdout.log",
+      "name": "cpu-app-schema-test-r3/88a853dccd24fb5e-stdout.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\stream-receipt.json",
+      "name": "cpu-app-schema-test-r3/c339b650d446cd51-stream-receipt.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\decoder-run-1794805231485237400\\document.json",
+      "name": "cpu-app-schema-test-r3/9f484d3e4bee48e7-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\decoder-run-1794805231485237400\\native.log",
+      "name": "cpu-app-schema-test-r3/b92f6c6400742366-native.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\decoder-run-1794805231485237400\\run.json",
+      "name": "cpu-app-schema-test-r3/b98141b6a7c79930-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\decoder-run-1794805231485237400\\worker-state.json",
+      "name": "cpu-app-schema-test-r3/abca7eb10422052f-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\decoder-run-1794805231485237400\\worker.log",
+      "name": "cpu-app-schema-test-r3/5d21da31efc8b146-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\session.json",
+      "name": "cpu-app-schema-test-r3/f4e6bb5eeb18c3c3-session.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000000-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/23e18c12cf3536e0-00000000-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000000-00160000-draft.json",
+      "name": "cpu-app-schema-test-r3/74b051270a8b9d95-00000000-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000000-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/dc4524c4ffc6b631-00000000-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000000-00320000-draft.json",
+      "name": "cpu-app-schema-test-r3/2e7e180885cb6bf7-00000000-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000000-00400000-draft.json",
+      "name": "cpu-app-schema-test-r3/99c230b865e25583-00000000-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000000-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/0f5d6d1e5be2f2d8-00000000-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000001-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/25cae0cb2045117a-00000001-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000001-00160000-draft.json",
+      "name": "cpu-app-schema-test-r3/7b1618e1d1b6407a-00000001-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000001-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/b7eaa3fe6d978d4a-00000001-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000001-00320000-draft.json",
+      "name": "cpu-app-schema-test-r3/3d94b6f28345f7ae-00000001-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000001-00400000-draft.json",
+      "name": "cpu-app-schema-test-r3/9766b9f707fbeffe-00000001-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000001-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/2e589ab5c7f3c8c0-00000001-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000002-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/f6c6ceacadeeb863-00000002-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000002-00160000-draft.json",
+      "name": "cpu-app-schema-test-r3/dbb77d209c70da9f-00000002-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000002-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/310f29a87d448a55-00000002-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\requests\\00000002-00244000-final.json",
+      "name": "cpu-app-schema-test-r3/3506c493fa6a5eb9-00000002-00244000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\results\\00000000-00080000-draft.json",
+      "name": "cpu-app-schema-test-r3/301eaf1393ecaaf5-00000000-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\results\\00000000-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/2da5643d52a09e6b-00000000-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\results\\00000001-00240000-draft.json",
+      "name": "cpu-app-schema-test-r3/ebc062a14af2b084-00000001-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\results\\00000001-00480000-final.json",
+      "name": "cpu-app-schema-test-r3/d007e9ebb209fae9-00000001-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\results\\00000002-00244000-final.json",
+      "name": "cpu-app-schema-test-r3/f5e0b75eb33d7f3e-00000002-00244000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-call\\stderr.log",
+      "name": "cpu-app-schema-test-r3/cb6df9b03cad0432-stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-call\\stdout.json",
+      "name": "cpu-app-schema-test-r3/ea8dcb9c1265ed88-stdout.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\attribution-evidence.json",
+      "name": "cpu-app-schema-test-r3/891656ce82e2bb06-attribution-evidence.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\final-binding.json",
+      "name": "cpu-app-schema-test-r3/0b2f0bfbdd67b6af-final-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\final-document.json",
+      "name": "cpu-app-schema-test-r3/f58dbf423bf5d10e-final-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\input-binding.json",
+      "name": "cpu-app-schema-test-r3/d1aabb653b00c70e-input-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\job.json",
+      "name": "cpu-app-schema-test-r3/b85fba976558071a-job.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\stream-cache-lineage.json",
+      "name": "cpu-app-schema-test-r3/76615f252e96850c-stream-cache-lineage.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\logs\\cpu-speaker-1794805315819135300.log",
+      "name": "cpu-app-schema-test-r3/520c4281fc2c6ae5-cpu-speaker-1794805315819135300.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\speaker-attempt-1794805315813136800\\audio-only.json",
+      "name": "cpu-app-schema-test-r3/a4a5df80ded21624-audio-only.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\speaker-attempt-1794805315813136800\\binding.json",
+      "name": "cpu-app-schema-test-r3/8cb61717e7f79e72-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\speaker-attempt-1794805315813136800\\protocol.json",
+      "name": "cpu-app-schema-test-r3/f5a505b5a5cba35a-protocol.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\speaker-attempt-1794805315813136800\\probabilities\\local-d9f07e9440c601ce\\probabilities.json",
+      "name": "cpu-app-schema-test-r3/34084f3b0ecaed50-probabilities.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\speaker-attempt-1794805315813136800\\results\\local-d9f07e9440c601ce\\completed-state.json",
+      "name": "cpu-app-schema-test-r3/6339fef9c9ae7bb1-completed-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\speaker-attempt-1794805315813136800\\results\\local-d9f07e9440c601ce\\speaker-journal.json",
+      "name": "cpu-app-schema-test-r3/eeae349c9d18a2c0-speaker-journal.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream-final-jobs\\d9f07e9440c601ce8bf12be05f0a82ddca0c314052d6f9a9cab971303cf3c49a\\speaker-attempt-1794805315813136800\\results\\local-d9f07e9440c601ce\\state.json",
+      "name": "cpu-app-schema-test-r3/be2629263a8074a5-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-long-path-scheme-r1\\result.json",
+      "name": "cpu-long-path-scheme-r1/2befe5795c2a3b8b-result.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-long-path-scheme-r1\\pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\\jobs\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\session\\session.json",
+      "name": "cpu-long-path-scheme-r1/6ee8ed1003db6507-session.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-long-path-scheme-r1\\pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\\jobs\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\session\\requests\\00000000-00080000-draft.json",
+      "name": "cpu-long-path-scheme-r1/27d0a6a0ad9b7cb0-00000000-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-long-path-scheme-r1\\pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\\jobs\\aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\\session\\requests\\00000000-00096000-final.json",
+      "name": "cpu-long-path-scheme-r1/d805406818424815-00000000-00096000-final.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r4\\binding.json",
+      "name": "cpu-pcm-candidate-r4/946901887c31a89e-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r4\\dualroute-protocol.json",
+      "name": "cpu-pcm-candidate-r4/b550621c3ee62afd-dualroute-protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r4\\internal-app-fixture.json",
+      "name": "cpu-pcm-candidate-r4/ce03892801aaa2a3-internal-app-fixture.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r4\\runtime-contract.json",
+      "name": "cpu-pcm-candidate-r4/991e92cb6ccee6e8-runtime-contract.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\binding.json",
+      "name": "qwen-cpu-port-r1/1f1fbda547b187b0-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\model-ready.json",
+      "name": "qwen-cpu-port-r1/8ba83c4c864b2634-model-ready.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\protocol.json",
+      "name": "qwen-cpu-port-r1/f555d37c535ba3d8-protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\publisher-metadata.json",
+      "name": "qwen-cpu-port-r1/9658f9530b02d08a-publisher-metadata.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\scoring-binding.json",
+      "name": "qwen-cpu-port-r1/0c0c3778638733b7-scoring-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\source.json",
+      "name": "qwen-cpu-port-r1/09491fa932abf5ae-source.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\aishell-publisher-metadata.json",
+      "name": "meeting-domain-data-r1/8f16e9ccc31d5f8b-aishell-publisher-metadata.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\plan.json",
+      "name": "meeting-domain-data-r1/dcae1869f7ca7c3c-plan.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\bundle.json",
+      "name": "frozen-internal-fixture/fc5c5a6f5df34306-bundle.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\package.json",
+      "name": "frozen-internal-fixture/f31576030a500e1e-package.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\controls\\native8\\binding.json",
+      "name": "frozen-internal-fixture/433a161245ad6e19-binding.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\controls\\native8\\cpu-execution-proof.json",
+      "name": "frozen-internal-fixture/383f5e881f9af170-cpu-execution-proof.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\controls\\native8\\protocol.json",
+      "name": "frozen-internal-fixture/01fb175826ec005b-protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\controls\\pcm\\binding.json",
+      "name": "frozen-internal-fixture/76f6b2dda8a0432b-binding.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\controls\\pcm\\runtime-contract.json",
+      "name": "frozen-internal-fixture/a7ecf913c182a400-runtime-contract.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\runtime\\moss-python\\transcribe_cpp\\errors.py",
+      "name": "frozen-internal-fixture/20111c0db05c76b7-errors.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\runtime\\moss-python\\transcribe_cpp\\_abi.py",
+      "name": "frozen-internal-fixture/40ef3e70ec54d1c7-_abi.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\runtime\\moss-python\\transcribe_cpp\\_generated.py",
+      "name": "frozen-internal-fixture/bbe7612e9668f43a-_generated.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\runtime\\moss-python\\transcribe_cpp\\_library.py",
+      "name": "frozen-internal-fixture/83b842e2d42be1f0-_library.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\runtime\\moss-python\\transcribe_cpp\\__init__.py",
+      "name": "frozen-internal-fixture/e9376edf9bad2b15-__init__.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\companion_cpu_guarded_stage_20261116.py",
+      "name": "frozen-internal-fixture/5599c6d10527e77c-companion_cpu_guarded_stage_20261116.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\companion_exclusive_journal_20261114.py",
+      "name": "frozen-internal-fixture/d04b0ea73c4595d4-companion_exclusive_journal_20261114.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\companion_local_cache_audit_20261115.py",
+      "name": "frozen-internal-fixture/2164a5aef3ac58f6-companion_local_cache_audit_20261115.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\companion_local_meeting_pipeline_20261115.py",
+      "name": "frozen-internal-fixture/f78a99bbcd090000-companion_local_meeting_pipeline_20261115.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\companion_local_moss_cpu_pipeline_20261116.py",
+      "name": "frozen-internal-fixture/d4657e5a503d3224-companion_local_moss_cpu_pipeline_20261116.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\companion_local_moss_cpu_stream_20261116.py",
+      "name": "frozen-internal-fixture/af9af3ca5748a37a-companion_local_moss_cpu_stream_20261116.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\companion_local_moss_cpu_worker_20261116.py",
+      "name": "frozen-internal-fixture/5c77f95429345e19-companion_local_moss_cpu_worker_20261116.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\companion_local_paths_20261116.py",
+      "name": "frozen-internal-fixture/67170978b52e51a9-companion_local_paths_20261116.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\companion_local_pcm_session_20261114.py",
+      "name": "frozen-internal-fixture/8e44f48b79040f77-companion_local_pcm_session_20261114.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\companion_moss_raw_output_20261116.py",
+      "name": "frozen-internal-fixture/a3e47ce9d5b378a0-companion_moss_raw_output_20261116.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\companion_moss_speaker_document_20261116.py",
+      "name": "frozen-internal-fixture/d33fe5c1f7177a3e-companion_moss_speaker_document_20261116.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\companion_windows_power_request_20261115.py",
+      "name": "frozen-internal-fixture/5eca5c63fb16a631-companion_windows_power_request_20261115.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\cpu25_nemotron_wrapper_20261116.py",
+      "name": "frozen-internal-fixture/e2175afc2e245247-cpu25_nemotron_wrapper_20261116.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\cpu_window_joint_worker_20261116.py",
+      "name": "frozen-internal-fixture/25c1e1e16a063df6-cpu_window_joint_worker_20261116.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\moss_windows_resource_limits_20261104.py",
+      "name": "frozen-internal-fixture/828ab9f5b0eb9280-moss_windows_resource_limits_20261104.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\practical_io_20261107.py",
+      "name": "frozen-internal-fixture/60dc83a433ecbce8-practical_io_20261107.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\practical_nemotron_cli_control_20261107.py",
+      "name": "frozen-internal-fixture/d9ff7955221c69db-practical_nemotron_cli_control_20261107.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\practical_nemotron_worker_20261107.py",
+      "name": "frozen-internal-fixture/c7485eb62b4172d4-practical_nemotron_worker_20261107.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\run_local_moss_cpu_decoder_20261116.py",
+      "name": "frozen-internal-fixture/c918d28738a12d28-run_local_moss_cpu_decoder_20261116.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\run_moss_overnight_20261115.py",
+      "name": "frozen-internal-fixture/d2fabac94b3eb624-run_moss_overnight_20261115.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\cache-audit-hook\\sitecustomize.py",
+      "name": "frozen-internal-fixture/81b5169d7a230e19-sitecustomize.py"
+    },
+    {
+      "source": "work\\prepare_cpu_internal_app_fixture_20261116.py",
+      "name": "preparation/7ebef806448b1b58-prepare_cpu_internal_app_fixture_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_internal_app_fixture_frozen_r3_20261116.py",
+      "name": "preparation/535978ce5159e1c7-prepare_cpu_internal_app_fixture_frozen_r3_20261116.py"
+    },
+    {
+      "source": "work\\run_cpu_application_schema_20261116.py",
+      "name": "preparation/00e05be88f14fbb3-run_cpu_application_schema_20261116.py"
+    },
+    {
+      "source": "work\\record_cpu_application_result_20261116.py",
+      "name": "preparation/5952707c5b5480f1-record_cpu_application_result_20261116.py"
+    },
+    {
+      "source": "work\\prepare_meeting_domain_data_plan_20261116.py",
+      "name": "preparation/894421874ff03142-prepare_meeting_domain_data_plan_20261116.py"
+    },
+    {
+      "source": "work\\fetch_meeting_domain_data_20261116.py",
+      "name": "preparation/bd47b286f06e7cb8-fetch_meeting_domain_data_20261116.py"
+    },
+    {
+      "source": "work\\prepare_qwen_cpu_port_20261116.py",
+      "name": "preparation/541ddc579add721d-prepare_qwen_cpu_port_20261116.py"
+    },
+    {
+      "source": "work\\freeze_qwen_cpu_runtime_20261116.py",
+      "name": "preparation/50eb0d66e3917105-freeze_qwen_cpu_runtime_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_checkpoint41_20261116.py",
+      "name": "preparation/922020a2e3b890b8-prepare_cpu_checkpoint41_20261116.py"
+    }
+  ],
+  "claims": {
+    "state": "ACTUAL_CPU_BACKEND_APP_SCHEMAS_PASS_QUALITY_UNQUALIFIED_QWEN_PORT_AND_TRAINING_DATA_PREPARATION_PENDING",
+    "actualBackendSchemaCases": 2,
+    "freshOfflineAndIncrementalFinalTextExactlyEqual": true,
+    "acceptedAsrCachePreservedAndReused": true,
+    "completedReloadAddsNoNeuralStage": true,
+    "actualCpuSpeakerJournalApplied": true,
+    "nativeUiAndCardTested": false,
+    "qwenCpuPortNeuralOutputsExcludedWhileRunning": true,
+    "trainingDataLiveOutputsExcluded": true,
+    "newWeightTraining": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "productDefaultChanged": false,
+    "installedPackageChanged": false
+  }
+}

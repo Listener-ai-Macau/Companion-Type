@@ -1,0 +1,170 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000001-00480000-final",
+    "recordingId": "fc8f9c03-d788-4b14-ad2d-cb600adf0d6a",
+    "configSha256": "9454ff026deefe88e857402e5dce261027fabd37bf353d3f38a0f96f307bfc0e",
+    "block": 1,
+    "startFrame": 480000,
+    "endFrame": 960000,
+    "sourcePcm": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\audio.pcm",
+    "pcmSha256": "430cd7b84479ebf5e821cf8768c777caac86ee7368645f0e6c7c719dea3817c4",
+    "language": "auto",
+    "blockFinal": true,
+    "publishedAtMonotonic": 45731.8856811,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "schema": "companion.local-moss-cpu.v1",
+    "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+    "nativeCommit": "275cd50",
+    "runtimeContractSha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff",
+    "workerSha256": "071f5742d4d2d6a7a0ce84b367a1fd45927f5ce2c9e71f488fea82c40fa4eadf",
+    "languagePolicy": "Original bilingual model, language=None, no reference or count hints.",
+    "generation": "Unmodified native greedy/EOS, f16 KV, no repetition guard or word postediting."
+  },
+  "result": {
+    "text": "That was sorry. Well, that'll train you. Here we go. Excellent, right. Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um we'll start with the minutes of the last meeting, not a lot.",
+    "language": null,
+    "rawGeneratedIds": [],
+    "tokenIdsAvailable": false,
+    "rawDecoded": "[4.41][S01]That was sorry.[4.91][9.41][S02]Well, that'll train you.[10.29][11.81][S03]Here we go.[12.15][12.85][S02]Excellent, right.[13.61][15.49][S02]Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um[24.89][26.79][S02]we'll start with the minutes of the last meeting, not a lot.[29.97]",
+    "nativeResult": {
+      "text": "That was sorry. Well, that'll train you. Here we go. Excellent, right. Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um we'll start with the minutes of the last meeting, not a lot.",
+      "raw_text": "[4.41][S01]That was sorry.[4.91][9.41][S02]Well, that'll train you.[10.29][11.81][S03]Here we go.[12.15][12.85][S02]Excellent, right.[13.61][15.49][S02]Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um[24.89][26.79][S02]we'll start with the minutes of the last meeting, not a lot.[29.97]",
+      "language": "",
+      "timestamp_kind": "segment",
+      "segments": [
+        {
+          "text": "That was sorry.",
+          "t0_ms": 4410,
+          "t1_ms": 4910,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        },
+        {
+          "text": "Well, that'll train you.",
+          "t0_ms": 9410,
+          "t1_ms": 10290,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 2
+        },
+        {
+          "text": "Here we go.",
+          "t0_ms": 11810,
+          "t1_ms": 12150,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 3
+        },
+        {
+          "text": "Excellent, right.",
+          "t0_ms": 12850,
+          "t1_ms": 13610,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 2
+        },
+        {
+          "text": "Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um",
+          "t0_ms": 15490,
+          "t1_ms": 24890,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 2
+        },
+        {
+          "text": "we'll start with the minutes of the last meeting, not a lot.",
+          "t0_ms": 26790,
+          "t1_ms": 29970,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 2
+        }
+      ],
+      "speaker_segments": [
+        {
+          "t0_ms": 4410,
+          "t1_ms": 4910,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 9410,
+          "t1_ms": 10290,
+          "speaker_id": 2,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 11810,
+          "t1_ms": 12150,
+          "speaker_id": 3,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 12850,
+          "t1_ms": 13610,
+          "speaker_id": 2,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 15490,
+          "t1_ms": 24890,
+          "speaker_id": 2,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 26790,
+          "t1_ms": 29970,
+          "speaker_id": 2,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        }
+      ],
+      "words": [],
+      "tokens": [],
+      "timings": {
+        "load_ms": 210.58299255371094,
+        "mel_ms": 15.581000328063965,
+        "encode_ms": 6986.9482421875,
+        "decode_ms": 9501.9189453125
+      }
+    },
+    "naturalEos": true,
+    "accepted": true,
+    "reviewRequired": true,
+    "seconds": 16.541952599996876,
+    "rawSpeakerIdsAreLocalToThisRequest": true,
+    "speakerIdentityVerified": false,
+    "wordsRewritten": false,
+    "qualityQualified": false,
+    "semanticError": null,
+    "unconfirmedAudioIntervals": []
+  }
+}

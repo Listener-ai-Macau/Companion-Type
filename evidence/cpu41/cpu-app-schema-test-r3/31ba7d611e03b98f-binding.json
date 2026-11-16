@@ -1,0 +1,167 @@
+{
+  "at": "2026-11-16T12:23:27.234477+08:00",
+  "wrapperSha256": "78c658cfa26b26f473b2d498474c14f1a62c51fc1581a6901e6ea81baa6ae057",
+  "runnerSha256": "2f10c673b6bd79de41ed1a061aab8d51a086e86f158296a12f5065942f346d0c",
+  "ownerCpuBudgetPermission": {
+    "at": "2026-11-16T09:33:57.370019+08:00",
+    "quote": "允许约 25% CPU，继续后台实测",
+    "maximumComputeThreads": 4,
+    "privateBytesUnchanged": 2147483648
+  },
+  "workerPython": "E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe",
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "reportDeadline": "2026-11-16T16:00:00+08:00",
+  "nativeComputeThreads": 4,
+  "threadDefaultSourceProof": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\controls\\native8\\thread-default-proof\\src-runtime-ggml-runtime.h",
+      "sha256": "7303954a1ad5777b139420a8dd2750d62ab60e46b7cbc086dc70c2bd64d8d634",
+      "upstreamGitBlobSha1": "308985e0482ea2200b532f569c2a50697f669934",
+      "source": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/v0.3.0/src/runtime/ggml/runtime.h"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\controls\\native8\\thread-default-proof\\src-asr-diar-diarizer.cpp",
+      "sha256": "1536bc044bc17fcc4c7913f983c5314ebef6fd2df14649cef4024832424f2b82",
+      "upstreamGitBlobSha1": "610812c872a507b847f609906e65b0a5cab6ec33",
+      "source": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/v0.3.0/src/asr/diar/diarizer.cpp"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\controls\\native8\\thread-default-proof\\src-runtime-ggml-session.cpp",
+      "sha256": "64cb8b7b8a684a4a86f9e699ff48ce824fbf67d69e2f855c4f69b8268bcabd6f",
+      "upstreamGitBlobSha1": "deac3003efd5720d818f9eb51c30ef79b538d414",
+      "source": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/v0.3.0/src/runtime/ggml/session.cpp"
+    }
+  ],
+  "helperSha256": {
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\practical_nemotron_worker_20261107.py": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r3\\src\\practical_nemotron_cli_control_20261107.py": "dc3e69092f6539a744c4b6e4ff0948fbdf863e28998165f96e22870b0cdd5603"
+  },
+  "modelScope": "The same original native8 FP16 speaker backbone and geometry; explicit CPU-only binary/gpu=-1, no oracle speaker count or references.",
+  "control": "Exact existing public61 waveform; CPU C ABI vs official CPU CLI at unchanged geometry/threshold and millisecond serialization tolerance before original4 whole recordings.",
+  "runtimeOnly": true,
+  "weightsChanged": false,
+  "qualityQualified": false,
+  "productDefaultChanged": false,
+  "newWeightTraining": false,
+  "noNeuralExecutionDuringPreparation": true,
+  "reusedCpu61Control": {
+    "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r1\\run.json",
+    "runSha256": "42e90b736709cd0605f4004aad105dc1b832f3f0916e3908bb6266e8fca35ea7",
+    "protocol": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r1\\protocol.json",
+    "binding": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r1\\binding.json",
+    "reason": "61s CPU C ABI and official CPU CLI already passed; actual Windows low-RAM interrupted the first full source. After60s recovery, preserve that partial and restart the continuous speaker state from source start once, without repeating control or any completed ASR."
+  },
+  "recoveryEvidence": [
+    {
+      "at": "2026-11-16T12:21:42.219590+08:00",
+      "availableBytes": 2789040128,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:21:47.220315+08:00",
+      "availableBytes": 3413463040,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:21:52.221044+08:00",
+      "availableBytes": 3451117568,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:21:57.221571+08:00",
+      "availableBytes": 3544678400,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:22:02.222108+08:00",
+      "availableBytes": 3665530880,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:22:07.222732+08:00",
+      "availableBytes": 3623555072,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:22:12.223169+08:00",
+      "availableBytes": 3609001984,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:22:17.223709+08:00",
+      "availableBytes": 3435581440,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:22:22.224385+08:00",
+      "availableBytes": 3353473024,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:22:27.225045+08:00",
+      "availableBytes": 3539582976,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:22:32.225650+08:00",
+      "availableBytes": 5219622912,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:22:37.226171+08:00",
+      "availableBytes": 5358792704,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:22:42.226913+08:00",
+      "availableBytes": 5393485824,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:22:47.227416+08:00",
+      "availableBytes": 5347827712,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:22:52.228160+08:00",
+      "availableBytes": 5383352320,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:22:57.228967+08:00",
+      "availableBytes": 5330444288,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:23:02.230114+08:00",
+      "availableBytes": 5722574848,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:23:07.230532+08:00",
+      "availableBytes": 5639032832,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:23:12.231079+08:00",
+      "availableBytes": 5725036544,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:23:17.231393+08:00",
+      "availableBytes": 5757038592,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:23:22.231781+08:00",
+      "availableBytes": 5732446208,
+      "actualWindowsLowMemory": false
+    },
+    {
+      "at": "2026-11-16T12:23:27.232467+08:00",
+      "availableBytes": 5804863488,
+      "actualWindowsLowMemory": false
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000001-00240000-draft",
+    "recordingId": "99249877-fd84-4d84-bec6-2195fa6d6edb",
+    "configSha256": "0f44f0c471f434174ef269026d0e5ad0f8020f6c75b39d21f7fc81931cf11f42",
+    "block": 1,
+    "startFrame": 480000,
+    "endFrame": 720000,
+    "sourcePcm": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\stream\\session\\audio.pcm",
+    "pcmSha256": "c25c182c0fab59e47890d1c452bbe9f28d190898bbf6cc4e2b16e64895eeb38f",
+    "language": "auto",
+    "blockFinal": false,
+    "publishedAtMonotonic": 45866.458257,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "schema": "companion.local-moss-cpu.v1",
+    "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+    "nativeCommit": "275cd50",
+    "runtimeContractSha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff",
+    "workerSha256": "071f5742d4d2d6a7a0ce84b367a1fd45927f5ce2c9e71f488fea82c40fa4eadf",
+    "languagePolicy": "Original bilingual model, language=None, no reference or count hints.",
+    "generation": "Unmodified native greedy/EOS, f16 KV, no repetition guard or word postediting."
+  },
+  "result": {
+    "text": "嗯，比往期的要好，啊明显的客流量也。 呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。 呃，这都是大家伙儿在做的，呃努力的出现的状。",
+    "language": null,
+    "rawGeneratedIds": [],
+    "tokenIdsAvailable": false,
+    "rawDecoded": "[0.00][S01]嗯，比往期的要好，啊明显的客流量也。[4.22][4.22][S01]呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。[9.36][10.61][S01]呃，这都是大家伙儿在做的，呃努力的出现的状。[15.00]",
+    "nativeResult": {
+      "text": "嗯，比往期的要好，啊明显的客流量也。 呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。 呃，这都是大家伙儿在做的，呃努力的出现的状。",
+      "raw_text": "[0.00][S01]嗯，比往期的要好，啊明显的客流量也。[4.22][4.22][S01]呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。[9.36][10.61][S01]呃，这都是大家伙儿在做的，呃努力的出现的状。[15.00]",
+      "language": "",
+      "timestamp_kind": "segment",
+      "segments": [
+        {
+          "text": "嗯，比往期的要好，啊明显的客流量也。",
+          "t0_ms": 0,
+          "t1_ms": 4220,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        },
+        {
+          "text": "呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。",
+          "t0_ms": 4220,
+          "t1_ms": 9360,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        },
+        {
+          "text": "呃，这都是大家伙儿在做的，呃努力的出现的状。",
+          "t0_ms": 10610,
+          "t1_ms": 15000,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        }
+      ],
+      "speaker_segments": [
+        {
+          "t0_ms": 0,
+          "t1_ms": 4220,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 4220,
+          "t1_ms": 9360,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 10610,
+          "t1_ms": 15000,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        }
+      ],
+      "words": [],
+      "tokens": [],
+      "timings": {
+        "load_ms": 220.69000244140625,
+        "mel_ms": 14.041999816894531,
+        "encode_ms": 6701.76611328125,
+        "decode_ms": 4906.40380859375
+      }
+    },
+    "naturalEos": true,
+    "accepted": true,
+    "reviewRequired": true,
+    "seconds": 11.65526089999912,
+    "rawSpeakerIdsAreLocalToThisRequest": true,
+    "speakerIdentityVerified": false,
+    "wordsRewritten": false,
+    "qualityQualified": false,
+    "semanticError": null,
+    "unconfirmedAudioIntervals": []
+  }
+}

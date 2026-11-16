@@ -1,0 +1,150 @@
+{
+  "blocks": [
+    {
+      "job": {
+        "schema": 1,
+        "jobId": "00000000-00480000-final",
+        "recordingId": "fc8f9c03-d788-4b14-ad2d-cb600adf0d6a",
+        "configSha256": "9454ff026deefe88e857402e5dce261027fabd37bf353d3f38a0f96f307bfc0e",
+        "block": 0,
+        "startFrame": 0,
+        "endFrame": 480000,
+        "sourcePcm": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\audio.pcm",
+        "pcmSha256": "35b7576e94da66661d218bfb8af5217f5f4cf86bd25a51abaea613a0081f9998",
+        "language": "auto",
+        "blockFinal": true,
+        "publishedAtMonotonic": 45701.952989,
+        "wholeRecordingFinal": false,
+        "speaker": null
+      },
+      "localToNativeGlobal": {
+        "S01": 0,
+        "S02": 1
+      },
+      "matrixLocalOrder": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "matrixGlobalOrder": [
+        0,
+        1
+      ],
+      "overlapSecondsMatrix": [
+        [
+          5.260000436976552,
+          0.09999963209033069
+        ],
+        [
+          0.09000036790967059,
+          7.070000290125607
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "residualKeptUnknown": []
+    },
+    {
+      "job": {
+        "schema": 1,
+        "jobId": "00000001-00480000-final",
+        "recordingId": "fc8f9c03-d788-4b14-ad2d-cb600adf0d6a",
+        "configSha256": "9454ff026deefe88e857402e5dce261027fabd37bf353d3f38a0f96f307bfc0e",
+        "block": 1,
+        "startFrame": 480000,
+        "endFrame": 960000,
+        "sourcePcm": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\audio.pcm",
+        "pcmSha256": "430cd7b84479ebf5e821cf8768c777caac86ee7368645f0e6c7c719dea3817c4",
+        "language": "auto",
+        "blockFinal": true,
+        "publishedAtMonotonic": 45731.8856811,
+        "wholeRecordingFinal": false,
+        "speaker": null
+      },
+      "localToNativeGlobal": {
+        "S02": 1,
+        "S03": 0
+      },
+      "matrixLocalOrder": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "matrixGlobalOrder": [
+        0,
+        1
+      ],
+      "overlapSecondsMatrix": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          10.99000103756785
+        ],
+        [
+          0.33000093474984027,
+          0.0
+        ]
+      ],
+      "residualKeptUnknown": []
+    },
+    {
+      "job": {
+        "schema": 1,
+        "jobId": "00000002-00244000-final",
+        "recordingId": "fc8f9c03-d788-4b14-ad2d-cb600adf0d6a",
+        "configSha256": "9454ff026deefe88e857402e5dce261027fabd37bf353d3f38a0f96f307bfc0e",
+        "block": 2,
+        "startFrame": 960000,
+        "endFrame": 1204000,
+        "sourcePcm": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\stream\\session\\audio.pcm",
+        "pcmSha256": "46a1b564da5323ef109d20a99a011e6f1b0ab593c30d45db439964779746b76c",
+        "language": "auto",
+        "blockFinal": true,
+        "publishedAtMonotonic": 45746.9865799,
+        "wholeRecordingFinal": false,
+        "speaker": null
+      },
+      "localToNativeGlobal": {
+        "S01": 1
+      },
+      "matrixLocalOrder": [
+        "S01"
+      ],
+      "matrixGlobalOrder": [
+        0,
+        1
+      ],
+      "overlapSecondsMatrix": [
+        [
+          0.0,
+          12.500000060796737
+        ]
+      ],
+      "residualKeptUnknown": []
+    }
+  ],
+  "exclusiveDerivation": {
+    "committedFrames": 7526,
+    "secondsPerFrame": 0.009999999776482582,
+    "rawSpeechFrames": 3688,
+    "rawMultiVoiceFrames": 19,
+    "exclusiveSpeechFrames": 3688,
+    "speechFramesUnassignedDueToExactPosteriorTie": 0,
+    "thresholdUnchanged": 0.5,
+    "smoothingOrGapFillApplied": false,
+    "speakerCountHintProvided": false,
+    "referenceUsed": false,
+    "newNeuralCalls": 0,
+    "cannotUseExclusiveViewAsOverlapDERProof": true
+  },
+  "rawSpeakerJournalRetained": true,
+  "referencesRead": false,
+  "trueSpeakerCountsRead": false,
+  "wordsRewritten": false,
+  "newNeuralCalls": 0
+}

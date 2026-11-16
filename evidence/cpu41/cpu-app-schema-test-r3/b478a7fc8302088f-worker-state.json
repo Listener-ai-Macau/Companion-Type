@@ -1,0 +1,60 @@
+{
+  "state": "COMPLETE_CPU_PCM_FINAL_TEXT_SPEAKERS_PENDING_NOT_QUALIFIED",
+  "startedAt": "2026-11-16T12:59:33.786306+08:00",
+  "completed": [
+    {
+      "job": "00000000-00480000-final",
+      "block": 0,
+      "blockFinal": true,
+      "inputFrames": 480000,
+      "seconds": 17.210481800000707,
+      "accepted": true,
+      "resultFile": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\results\\00000000-00480000-final.json"
+    },
+    {
+      "job": "00000001-00480000-final",
+      "block": 1,
+      "blockFinal": true,
+      "inputFrames": 480000,
+      "seconds": 17.193079700002272,
+      "accepted": true,
+      "resultFile": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\results\\00000001-00480000-final.json"
+    },
+    {
+      "job": "00000002-00244000-final",
+      "block": 2,
+      "blockFinal": true,
+      "inputFrames": 244000,
+      "seconds": 11.871090300002834,
+      "accepted": true,
+      "resultFile": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session\\results\\00000002-00244000-final.json"
+    }
+  ],
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "productDefaultChanged": false,
+  "tokenIdsAvailable": false,
+  "fullSpeakerJournalFinalized": false,
+  "draftPolicy": "One accepted nonempty draft per open block; empty/failed drafts may advance to the newest frozen prefix. Complete final blocks always run first.",
+  "limits": {
+    "pid": 28812,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 748556288,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "activeJob": "00000002-00244000-final",
+  "finishedAt": "2026-11-16T13:00:20.766065+08:00"
+}

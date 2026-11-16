@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1116, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 206] 文件名或扩展名太长。: 'E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\speaker-attempt-1794804867633356200\\probabilities\\local-eeedd2f258fa9369'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpu-internal-app-fixture-r2\src\cpu25_nemotron_wrapper_20261116.py", line 28, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpu-internal-app-fixture-r2\src\cpu25_nemotron_wrapper_20261116.py", line 27, in main
+    runpy.run_path(str(source),run_name='__main__')
+  File "<frozen runpy>", line 291, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpu-internal-app-fixture-r2\src\practical_nemotron_worker_20261107.py", line 97, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpu-internal-app-fixture-r2\src\practical_nemotron_worker_20261107.py", line 34, in main
+    limits=WorkerLimits(cpu_percent=5,memory_bytes=2*1024**3);out=C/'results'/case['meeting'];out.mkdir(parents=True,exist_ok=False);cache=Path(P['probabilityCacheRoot'])/case['meeting'];cache.mkdir(parents=True,exist_ok=False)
+                                                                                                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1121, in mkdir
+    self.mkdir(mode, parents=False, exist_ok=exist_ok)
+  File "C:\Users\Billy\AppData\Local\Programs\Python\Python311\Lib\pathlib.py", line 1116, in mkdir
+    os.mkdir(self, mode)
+FileNotFoundError: [WinError 206] 文件名或扩展名太长。: 'E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r2\\ES2003b\\offline-jobs\\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\\speaker-attempt-1794804867633356200\\probabilities\\local-eeedd2f258fa9369'

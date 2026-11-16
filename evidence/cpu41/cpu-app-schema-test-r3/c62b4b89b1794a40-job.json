@@ -1,0 +1,37 @@
+{
+  "state": "COMPLETE_LOCAL_CPU_MEETING_CANDIDATE_NOT_QUALITY_QUALIFIED",
+  "startedAt": "2026-11-16T12:59:31.547074+08:00",
+  "attempts": [
+    {
+      "stage": "cpu-asr",
+      "exitCode": 0,
+      "seconds": 49.14935789999436,
+      "privatePeakBytes": 767963136,
+      "log": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\logs\\cpu-asr-1794805172372013200.log",
+      "taskNeuralDeadline": "2026-11-16T15:40:00+08:00",
+      "originalRamStartGateBytes": 3414499000
+    },
+    {
+      "stage": "cpu-speaker",
+      "exitCode": 0,
+      "seconds": 3.412429500000144,
+      "privatePeakBytes": 1540763648,
+      "log": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\logs\\cpu-speaker-1794805221529409100.log",
+      "taskNeuralDeadline": "2026-11-16T15:40:00+08:00",
+      "originalRamStartGateBytes": 3414499000
+    }
+  ],
+  "binding": {
+    "inputSha256": "211a9f3f817693edde8aadb99d2f196ba5a49f707a165e2451c2d590a112ff3e",
+    "bundleSha256": "f206377f222955483121e406fed931772fe18b44092177b6715cd866f465e70d"
+  },
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "asrSession": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\asr-session",
+  "adoptedCompatibleStreamCache": false,
+  "activeStage": "cpu-speaker",
+  "speakerControl": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\S_R004S03C01\\offline-jobs\\6061cff814f3dfd8b8793937d88033a427ef6adcc2c72e168f3ca5cb24632dbc\\speaker-attempt-1794805221523199100",
+  "finishedAt": "2026-11-16T13:00:25.588235+08:00",
+  "documentSha256": "3ed5bade8c6aafd84b53801702fdf159d226745a2243a6789de30db66aa0b285"
+}

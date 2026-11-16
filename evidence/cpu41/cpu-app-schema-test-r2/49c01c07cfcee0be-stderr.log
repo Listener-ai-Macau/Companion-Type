@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpu-internal-app-fixture-r2\src\companion_local_moss_cpu_pipeline_20261116.py", line 80, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpu-internal-app-fixture-r2\src\companion_local_moss_cpu_pipeline_20261116.py", line 68, in main
+    run_cpu_stage(root,state,'cpu-speaker',[control['workerPython'],str(S/'cpu25_nemotron_wrapper_20261116.py'),
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpu-internal-app-fixture-r2\src\companion_cpu_guarded_stage_20261116.py", line 33, in run_cpu_stage
+    if child.returncode:raise RuntimeError('Local '+name+' stage did not complete; retained stage log: '+str(log_path))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Local cpu-speaker stage did not complete; retained stage log: E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpu-app-schema-test-r2\ES2003b\offline-jobs\eeedd2f258fa9369b2456a0a58e3bfbce2f59ee7e21773f68ac31aa3fbc5e283\logs\cpu-speaker-1794804867638592000.log

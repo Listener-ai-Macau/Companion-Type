@@ -1,0 +1,20 @@
+{
+  "repository": "handy-computer/Qwen3-ASR-1.7B-gguf",
+  "revision": "0e0a596e3959c3f3f2ab7d443a5b6f0f4a4bba6f",
+  "gated": false,
+  "file": {
+    "rfilename": "Qwen3-ASR-1.7B-Q8_0.gguf",
+    "blobId": "09314bbbe92aeaf921f40e09554cbdcb14551566",
+    "size": 2185030624,
+    "lfs": {
+      "sha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+      "size": 2185030624,
+      "pointerSize": 135
+    }
+  },
+  "api": "https://huggingface.co/api/models/handy-computer/Qwen3-ASR-1.7B-gguf?blobs=true",
+  "portDocumentation": "https://github.com/handy-computer/transcribe.cpp/blob/275cd50d2c4104c204009a197ac091b9687668e5/docs/models/qwen3-asr-1.7b.md",
+  "upstreamAuthorRevision": "7278e1e70fe206f11671096ffdd38061171dd6e5",
+  "license": "Apache-2.0",
+  "newWeightTraining": false
+}

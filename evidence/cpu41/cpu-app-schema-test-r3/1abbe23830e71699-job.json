@@ -1,0 +1,37 @@
+{
+  "state": "COMPLETE_LOCAL_CPU_MEETING_CANDIDATE_NOT_QUALITY_QUALIFIED",
+  "startedAt": "2026-11-16T12:57:00.705998+08:00",
+  "attempts": [
+    {
+      "stage": "cpu-asr",
+      "exitCode": 0,
+      "seconds": 50.167929399998684,
+      "privatePeakBytes": 768155648,
+      "log": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\logs\\cpu-asr-1794805021569624000.log",
+      "taskNeuralDeadline": "2026-11-16T15:40:00+08:00",
+      "originalRamStartGateBytes": 3414499000
+    },
+    {
+      "stage": "cpu-speaker",
+      "exitCode": 0,
+      "seconds": 3.668621600001643,
+      "privatePeakBytes": 1541341184,
+      "log": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\logs\\cpu-speaker-1794805071745786100.log",
+      "taskNeuralDeadline": "2026-11-16T15:40:00+08:00",
+      "originalRamStartGateBytes": 3414499000
+    }
+  ],
+  "binding": {
+    "inputSha256": "0cdcc13e486673c13a7848d330a6f2aeaa69fa7a64f0f391f4630d61ce983f68",
+    "bundleSha256": "d013b4e618fa0088060314941529ca121345a1624e68f645359fb67b87044670"
+  },
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "asrSession": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session",
+  "adoptedCompatibleStreamCache": false,
+  "activeStage": "cpu-speaker",
+  "speakerControl": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\speaker-attempt-1794805071740204300",
+  "finishedAt": "2026-11-16T12:57:56.150300+08:00",
+  "documentSha256": "87a0b10505eac3bb3cc0623a2f8b9648ab2fe7a0fa50e9579d1cc72e2e30ddaf"
+}

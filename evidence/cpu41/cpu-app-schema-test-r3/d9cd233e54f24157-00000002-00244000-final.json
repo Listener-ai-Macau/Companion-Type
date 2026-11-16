@@ -1,0 +1,80 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000002-00244000-final",
+    "recordingId": "4a3ff3d6-e181-5001-b7db-4c95117e6484",
+    "configSha256": "bc7dc72948f618488e664b986f787354c9b07370b8dee5025f4c5a48b17cd5ef",
+    "block": 2,
+    "startFrame": 960000,
+    "endFrame": 1204000,
+    "sourcePcm": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r3\\ES2003b\\offline-jobs\\d5d7964f08806cb6ff124d2e2ed5deb3bad1ba488dfffe8f0cb622b1f0a782f4\\asr-session\\audio.pcm",
+    "pcmSha256": "46a1b564da5323ef109d20a99a011e6f1b0ab593c30d45db439964779746b76c",
+    "language": "auto",
+    "blockFinal": true,
+    "publishedAtMonotonic": 45616.2178335,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "schema": "companion.local-moss-cpu.v1",
+    "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+    "nativeCommit": "275cd50",
+    "runtimeContractSha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff",
+    "workerSha256": "071f5742d4d2d6a7a0ce84b367a1fd45927f5ce2c9e71f488fea82c40fa4eadf",
+    "languagePolicy": "Original bilingual model, language=None, no reference or count hints.",
+    "generation": "Unmodified native greedy/EOS, f16 KV, no repetition guard or word postediting."
+  },
+  "result": {
+    "text": "We've introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote",
+    "language": null,
+    "rawGeneratedIds": [],
+    "tokenIdsAvailable": false,
+    "rawDecoded": "[0.00][S01]We've introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote[15.22]",
+    "nativeResult": {
+      "text": "We've introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote",
+      "raw_text": "[0.00][S01]We've introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote[15.22]",
+      "language": "",
+      "timestamp_kind": "segment",
+      "segments": [
+        {
+          "text": "We've introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote",
+          "t0_ms": 0,
+          "t1_ms": 15220,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        }
+      ],
+      "speaker_segments": [
+        {
+          "t0_ms": 0,
+          "t1_ms": 15220,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        }
+      ],
+      "words": [],
+      "tokens": [],
+      "timings": {
+        "load_ms": 236.04800415039062,
+        "mel_ms": 15.961000442504883,
+        "encode_ms": 7390.22705078125,
+        "decode_ms": 4197.62890625
+      }
+    },
+    "naturalEos": true,
+    "accepted": true,
+    "reviewRequired": true,
+    "seconds": 11.651572700000543,
+    "rawSpeakerIdsAreLocalToThisRequest": true,
+    "speakerIdentityVerified": false,
+    "wordsRewritten": false,
+    "qualityQualified": false,
+    "semanticError": null,
+    "unconfirmedAudioIntervals": []
+  }
+}
