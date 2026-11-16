@@ -122,6 +122,9 @@ fn prepend(minutes:&mut CompanionV1MeetingMinutes,outline:&Outline) {
 }
 pub(super) fn attach(endpoint:&str,model:&str,key:&str,session:&CompanionV1HostSession,
     minutes:&mut CompanionV1MeetingMinutes,client:&reqwest::blocking::Client,template:Option<&MinutesTemplate>) {
+    if std::env::var("COMPANION_TOPIC_OUTLINE_MODE").as_deref()==Ok("source-isolated") {
+        super::topic_outline_candidate::attach(endpoint,model,key,session,minutes,client,template);return;
+    }
     if !eligible(session,minutes,template){return;}
     let units=source_units(&session.transcript_text);
     let items=units.iter().enumerate().map(|(id,text)|json!({"id":id,"text":text})).collect::<Vec<_>>();

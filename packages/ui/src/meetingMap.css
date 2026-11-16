@@ -116,46 +116,37 @@ body .ct-windows.ct-notebook .meeting-topic-toggle,.mobile-app .meeting-topic-to
 .meeting-map-overview .meeting-topic-tree .meeting-topic-support{grid-column:2/-1;grid-row:2;margin:0!important}
 @container(max-width:580px){.meeting-map-overview .meeting-map-column-headings{display:none}.meeting-map-overview .meeting-map-branches>li:first-child{border-top:0}.meeting-map-overview .meeting-topic-tree{grid-template-columns:minmax(0,1fr) auto;column-gap:10px;row-gap:9px;padding:15px 14px}.meeting-map-overview .meeting-topic-tree .meeting-topic-controls{grid-column:2}.meeting-map-overview .meeting-topic-tree .meeting-topic-judgments{grid-column:1/-1;grid-row:2}.meeting-map-overview .meeting-topic-tree .meeting-topic-support{grid-column:1/-1;grid-row:3}}
 
-/* Neutral titles and an explicit question -> saved viewpoint hierarchy. */
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-canvas{--map-branch-span:24px;--map-child-indent:18px;--map-child-span:17px;--map-child-top:8px;--map-topic-gap:24px;--map-child-spacing:10px;--map-child-leading:1.85;--map-child-anchor:calc(8px + .5em * var(--map-child-leading))}
+/* Independent questions read as sections; short branches connect only peers. */
+.meeting-map-structured:not(.meeting-map-overview) .meeting-map-canvas{--map-child-indent:14px;--map-child-span:14px;--map-child-top:8px;--map-topic-gap:26px;--map-child-spacing:10px;--map-child-leading:1.85;--map-child-anchor:calc(12px + .5em * var(--map-child-leading))}
 .meeting-topic-controls{display:flex;align-items:center;gap:6px;flex:none;margin-left:auto}
 body .ct-windows.ct-notebook .meeting-topic-source,.mobile-app .meeting-topic-source{display:inline-flex;align-items:center;justify-content:center;gap:3px;min-height:30px;padding:3px 5px;border:0;border-radius:5px;background:transparent;color:var(--map-muted);font:400 11px/1.6 var(--notebook-font);cursor:pointer}
 .meeting-topic-source:hover{background:var(--map-soft);color:var(--map-ink)}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-tree{padding:0 0 4px;border:0;border-radius:0;background:transparent}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-topic-group,.meeting-map-structured:not(.meeting-map-overview) .meeting-map-result-group{padding-left:calc(var(--map-branch-span) - 1px)}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-map-purpose{margin-bottom:24px}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-map-purpose:after{content:none}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-map-topic-group{margin-left:0;padding:0;border:0}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-map-organized{gap:var(--map-topic-gap)}
 .meeting-map-structured:not(.meeting-map-overview) .meeting-map-organized>li:before,.meeting-map-structured:not(.meeting-map-overview) .meeting-map-organized>li:after{content:none}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-tree{padding:0;border:0;border-radius:0;background:transparent}
 .meeting-map-structured:not(.meeting-map-overview) .meeting-topic-title-node{position:relative;gap:12px;min-height:42px}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-title-node:before{content:'';position:absolute;left:calc(0px - var(--map-branch-span));top:calc(50% - 7px);width:var(--map-branch-span);height:8px;box-sizing:border-box;border:0;border-left:1px solid var(--map-connection);border-bottom:1px solid var(--map-connection);border-bottom-left-radius:7px;background:transparent;pointer-events:none}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-title-node:after{content:none}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-title-node>h3{flex:1;padding:7px 10px;border-radius:0;background:transparent;color:var(--map-ink)!important}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-title-node:before,.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-title-node:after{content:none}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-title-node>h3{flex:1;padding:6px 0;border:0;border-radius:0;background:transparent;color:var(--map-ink)!important}
 .meeting-topic-branch-body{display:contents}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-branch-body{position:relative;display:block;margin-left:var(--map-child-indent);padding:var(--map-child-top) 0 0 var(--map-child-span)}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-branch-body{position:relative;display:block;margin:0;padding:var(--map-child-top) 0 0}
 .meeting-map-structured:not(.meeting-map-overview) .meeting-topic-branch-body:before,.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-branch-body:after{content:none}
 .meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments{display:flex;flex-direction:column;gap:var(--map-child-spacing);margin:0!important;padding:0;border:0;line-height:var(--map-child-leading)!important}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li{position:relative;padding:8px 14px;border:0;border-radius:8px;background:var(--map-soft)}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li:before{content:'';position:absolute;left:calc(0px - var(--map-child-span));top:calc(var(--map-child-anchor) - 5px);width:var(--map-child-span);height:6px;box-sizing:border-box;border:0;border-left:1px solid var(--map-connection);border-bottom:1px solid var(--map-connection);border-bottom-left-radius:5px;background:transparent;pointer-events:none}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li:after{content:'';position:absolute;left:calc(0px - var(--map-child-span));top:calc(0px - var(--map-child-spacing));bottom:0;width:1px;background:var(--map-connection);pointer-events:none}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li:first-child:after{top:calc(0px - var(--map-child-top))}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li:last-child:after{bottom:calc(100% - var(--map-child-anchor) - 1px)}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-support{margin:10px 14px 0!important;padding:0 0 12px!important;border:0!important}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li{position:relative;padding:12px 16px;border:0;border-radius:10px;background:var(--map-soft)}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li:before,.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-judgments>li:after{content:none}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-peers .meeting-topic-branch-body{margin-left:var(--map-child-indent);padding-left:var(--map-child-span)}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-peers .meeting-topic-judgments>li:before{content:'';position:absolute;left:calc(0px - var(--map-child-span));top:calc(var(--map-child-anchor) - 5px);width:var(--map-child-span);height:6px;box-sizing:border-box;border:0;border-left:1px solid var(--map-connection);border-bottom:1px solid var(--map-connection);border-bottom-left-radius:5px;background:transparent;pointer-events:none}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-peers .meeting-topic-judgments>li:after{content:'';position:absolute;left:calc(0px - var(--map-child-span));top:calc(0px - var(--map-child-spacing));bottom:0;width:1px;background:var(--map-connection);pointer-events:none}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-peers .meeting-topic-judgments>li:first-child:after{top:calc(0px - var(--map-child-top))}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-peers .meeting-topic-judgments>li:last-child:after{bottom:calc(100% - var(--map-child-anchor) - 1px)}
+.meeting-point-kind{display:inline;margin-right:8px;color:var(--map-muted);font:400 11px/1.6 var(--notebook-font);white-space:nowrap}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-support{margin:10px 16px 0!important;padding:0 0 8px!important;border:0!important}
 .meeting-map-structured:not(.meeting-map-overview) .meeting-topic-support>ul{padding-left:16px}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-organized{gap:var(--map-topic-gap)}
-@container(max-width:580px){.meeting-map-structured:not(.meeting-map-overview) .meeting-map-canvas{--map-child-indent:10px;--map-child-span:13px}.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-title-node{gap:8px}.meeting-map-overview .meeting-topic-title-node>h3{grid-column:1/-1!important}.meeting-map-overview .meeting-topic-tree .meeting-topic-controls{grid-column:1/-1;grid-row:2}.meeting-map-overview .meeting-topic-tree .meeting-topic-judgments{grid-row:3}.meeting-map-overview .meeting-topic-tree .meeting-topic-support{grid-row:4}}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-map-result-group{margin:24px 0 0;padding:0;border:0}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-map-result-group>.meeting-map-group-label:before,.meeting-map-structured:not(.meeting-map-overview) .meeting-map-result-group>.meeting-map-group-label:after,.meeting-map-structured:not(.meeting-map-overview) .meeting-map-result:before,.meeting-map-structured:not(.meeting-map-overview) .meeting-map-result:after{content:none}
+.meeting-map-structured:not(.meeting-map-overview) .meeting-map-discussed{margin-left:0}
+@container(max-width:580px){.meeting-map-structured:not(.meeting-map-overview) .meeting-topic-title-node{gap:8px}.meeting-map-overview .meeting-topic-title-node>h3{grid-column:1/-1!important}.meeting-map-overview .meeting-topic-tree .meeting-topic-controls{grid-column:1/-1;grid-row:2}.meeting-map-overview .meeting-topic-tree .meeting-topic-judgments{grid-row:3}.meeting-map-overview .meeting-topic-tree .meeting-topic-support{grid-row:4}}
+@container(max-width:420px){.meeting-map-structured:not(.meeting-map-overview) .meeting-map-canvas{--map-child-indent:8px;--map-child-span:12px}}
 @media(pointer:coarse){.meeting-topic-controls>.meeting-topic-source,.meeting-topic-controls>.meeting-topic-toggle{min-height:44px!important;min-width:58px}}
-
-@container(max-width:420px){.meeting-map-structured:not(.meeting-map-overview) .meeting-map-canvas{--map-branch-span:17px}}
-
-/* A connector ends at its final real node. No decorative group footer. */
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-topic-group{border-left:0;padding-left:var(--map-branch-span);padding-bottom:0}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-organized>li:after{content:'';position:absolute;left:calc(0px - var(--map-branch-span));top:calc(0px - var(--map-topic-gap));bottom:0;width:1px;height:auto;border:0;border-radius:0;background:var(--map-connection);pointer-events:none}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-organized>li:first-child:after{top:0}
-.meeting-map-structured:not(.meeting-map-overview):not(.meeting-map-has-results) .meeting-map-organized>li:last-child:after{content:none}
-.meeting-map-structured:not(.meeting-map-overview):not(.meeting-map-has-results) .meeting-map-organized>li:last-child .meeting-topic-title-node:after{content:'';position:absolute;left:calc(0px - var(--map-branch-span));top:calc(0px - var(--map-topic-gap));bottom:calc(50% - 1px);width:1px;border:0;border-radius:0;background:var(--map-connection);pointer-events:none}
-.meeting-map-structured:not(.meeting-map-overview):not(.meeting-map-has-results) .meeting-map-organized>li:only-child .meeting-topic-title-node:after{top:0}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-result-group{border-left:0;padding-left:var(--map-branch-span)}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-result-group>.meeting-map-group-label:before{content:none}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-result-group>.meeting-map-group-label:after{content:'';position:absolute;left:calc(0px - var(--map-branch-span));top:-13px;bottom:0;width:1px;background:var(--map-connection);pointer-events:none}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-results>.meeting-map-result:after{content:'';position:absolute;left:calc(0px - var(--map-branch-span) - 1px);top:-13px;bottom:-1px;width:1px;background:var(--map-connection);pointer-events:none}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-results>.meeting-map-result:first-child:after{top:-1px}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-results>.meeting-map-result:last-child:after{bottom:calc(100% - 26px)}
-.meeting-map-structured:not(.meeting-map-overview) .meeting-map-result:before{left:calc(0px - var(--map-branch-span) - 1px);width:var(--map-branch-span)}

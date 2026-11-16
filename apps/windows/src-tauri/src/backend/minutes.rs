@@ -13,6 +13,7 @@ mod question_sources;
 mod template;
 mod short_evidence;
 mod topic_outline;
+mod topic_outline_candidate;
 
 use crate::companion_v1::{
     CompanionV1ActionItem, CompanionV1HostSession, CompanionV1MeetingMinutes,
@@ -577,7 +578,7 @@ fn strip_code_fences(content: &str) -> String {
         .join("\n")
 }
 
-const DEEPSEEK_SYSTEM_PROMPT: &str = "你是 Companion 会议纪要助手。根据会议转写输出严格 JSON（不要 markdown 代码围栏），字段：summary(string[]), decisions(string[]), actionItems({text,owner?,due?}[]), questions(string[]), keywords(string[]), unsupportedClaims(string[] 转写不足以支持、你刻意未写入的推测), markdown(string 完整中文纪要 Markdown)。source 固定 llm_deepseek，quality固定 final。markdown 需含：标题、摘要、决定、行动项、问题、关键词。\n硬性规则（防编造）：\n1) 只使用转写中出现的事实；不要发明负责人、日期、产品名、缩写。\n2) 只有转写明确给出行动项、待办、负责人或跟进任务时才输出 actionItems；不得把决定、风险或验收原则自行改写成任务。owner / due 仅当转写明确出现时才填。\n3) 专有名词、数字、单位和否定关系以转写为准，不用预设产品词或固定样例纠改原话。不确定的术语标为待核对；不得把风险、未完成或未验收改成已完成。\n4) 同一任务不要重复派给多人；无法确认归属时写「负责人：待确认」。\n5) 不确定的内容放入 unsupportedClaims，不要写进 decisions/actionItems。\n6) 用户消息中的来源事实锚点来自确定性转写提取；summary 与 markdown 必须覆盖每一项的原意。可去重和压缩措辞，但不得遗漏或改变数值、主体、先后关系与风险。\n7) 转写的说话人编号是来源标签，不是已核实身份。“说话人?”/“说话人？”表示片段归属未知，不能据此推断另一位发言者、人数、同一人或负责人；保留其内容与未知归属，只有原话或明确人工核对才可确认身份。";
+const DEEPSEEK_SYSTEM_PROMPT: &str = "你是 Companion 会议纪要助手。根据会议转写输出严格 JSON（不要 markdown 代码围栏），字段：summary(string[]), decisions(string[]), actionItems({text,owner?,due?}[]), questions(string[]), keywords(string[]), unsupportedClaims(string[] 转写不足以支持、你刻意未写入的推测), markdown(string 完整中文纪要 Markdown)。source 固定 llm_deepseek，quality固定 final。markdown 需含：标题、摘要、决定、行动项、问题、关键词。\n硬性规则（防编造）：\n1) 只使用转写中出现的事实；不要发明负责人、日期、产品名、缩写。\n2) 只有转写明确给出行动项、待办、负责人或跟进任务时才输出 actionItems；主持在现场请嘉宾回答、接话、介绍或作一句总结只是会中流程，不属于会后行动；结合紧随的回答判断，不把“下来/下面讨论”误当会后承诺。圆桌观点交流没有明确会后承诺时actionItems应为空，建议与预测不能升级为决定。不得把决定、风险或验收原则自行改写成任务。owner / due 仅当转写明确出现时才填。\n3) 专有名词、数字、单位和否定关系以转写为准，不用预设产品词或固定样例纠改原话。不确定的术语标为待核对；不得把风险、未完成或未验收改成已完成。\n4) 同一任务不要重复派给多人；无法确认归属时写「负责人：待确认」。\n5) 不确定的内容放入 unsupportedClaims，不要写进 decisions/actionItems。\n6) 用户消息中的来源事实锚点来自确定性转写提取；summary 与 markdown 必须覆盖每一项的原意。可去重和压缩措辞，但不得遗漏或改变数值、主体、先后关系与风险。\n7) 转写的说话人编号是来源标签，不是已核实身份。“说话人?”/“说话人？”表示片段归属未知，不能据此推断另一位发言者、人数、同一人或负责人；保留其内容与未知归属，只有原话或明确人工核对才可确认身份。";
 
 fn external_minutes_command(
     session: &CompanionV1HostSession,

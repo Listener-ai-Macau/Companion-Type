@@ -23,7 +23,8 @@ export function minutesOutline(markdown:string):MindMapNode {
  }
  return root;
 }
-export type MeetingMapTopic={id:string;label:string;text:string;section:string;takeaway?:string;details?:string[];sourceText?:string;sourceSection?:string};
+export type MeetingMapPoint={kind:'观点'|'建议'|'预计'|'现状'|'决定';text:string};
+export type MeetingMapTopic={id:string;label:string;text:string;section:string;takeaway?:string;points?:MeetingMapPoint[];details?:string[];sourceText?:string;sourceSection?:string};
 export type MeetingMapSection={title:string;items:string[]};
 const overviewTitles=['会议概览','全会重点','Summary','会议摘要','摘要','重点'];
 const emptyItem=/^(?:None captured[.。]?|暂无[。]?|无[。]?)$/i;
@@ -52,8 +53,10 @@ export function meetingMapModel(markdown:string){
  const organized:MeetingMapTopic[]=(narrative?.children??[]).map((node,index)=>{
   const lines=meetingListItems(node.body),first=lines[0]??'';
   const source=sections.find(s=>s.title===node.title+' · 原话');
-  return first.startsWith('判断：')&&source?.items.length?{id:'organized-'+index,label:node.title,text:first,section:node.title,
-   takeaway:first.slice(3),details:lines.slice(1).map(t=>t.replace(/^补充：/,'')),sourceSection:source.title,sourceText:source.items[0]}:null;
+  const points=lines.flatMap(line=>{const m=/^(观点|建议|预计|现状|决定)：(.+)$/.exec(line);return m?[{kind:m[1] as MeetingMapPoint['kind'],text:m[2]}]:[];});
+  const legacy=first.startsWith('判断：');
+  return (legacy||points.length>0)&&source?.items.length?{id:'organized-'+index,label:node.title,text:legacy?first:points.map(p=>p.kind+'：'+p.text).join('\n'),section:node.title,
+   takeaway:legacy?first.slice(3):points.map(p=>p.kind+'：'+p.text).join('\n'),points:legacy?undefined:points,details:legacy?lines.slice(1).map(t=>t.replace(/^补充：/,'')):lines.filter(t=>t.startsWith('补充：')).map(t=>t.slice(3)),sourceSection:source.title,sourceText:source.items[0]}:null;
  }).filter((item):item is NonNullable<typeof item>=>item!==null);
  const structured=!!purpose&&organized.length>0&&organized.length===(narrative?.children.length??0);
  const overview=overviewTitles.map(title=>sections.find(s=>s.title===title&&s.items.length)).find(Boolean);

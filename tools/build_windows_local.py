@@ -29,7 +29,11 @@ def main():
     try:
         with exclusive_build(cache/'.shared-windows-build.lock'):
             preflight(cache,reserve_gib=a.reserve_gib)
-            owned=[ROOT/'apps/windows/src-tauri'/name for name in ['Cargo.toml','src/lib.rs','src/main.rs','src/backend/minutes.rs','src/backend/minutes/topic_outline.rs']]
+            native_root=ROOT/'apps/windows/src-tauri'
+            owned=[native_root/name for name in ['Cargo.toml','Cargo.lock','build.rs']]
+            owned.extend(p for p in (native_root/'src').rglob('*') if p.is_file())
+            input_root=ROOT/'packages/desktop-input'
+            owned.extend(p for p in input_root.rglob('*') if p.is_file() and (p.suffix=='.rs' or p.name in ['Cargo.toml','build.rs']))
             hashes={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in owned if p.exists()}
             result=build(a,target)
             preflight(cache,reserve_gib=0)
@@ -38,7 +42,7 @@ def main():
                 a.native_output.mkdir(parents=True,exist_ok=False)
                 profile='release' if a.release else 'debug'
                 for name in ['companion-type.exe','companion_type_lib.dll']:shutil.copyfile(target/profile/name,a.native_output/name)
-                receipt={'authoringHead':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'nativeSourceHashes':hashes,'binaries':{n:hashlib.sha256((a.native_output/n).read_bytes()).hexdigest() for n in ['companion-type.exe','companion_type_lib.dll']},'scope':'Engineering native CLI candidate, copied before releasing the shared target lock; no GUI/install/frozen release claim'}
+                receipt={'authoringHead':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),'profile':profile,'nativeSourceHashes':hashes,'binaries':{n:hashlib.sha256((a.native_output/n).read_bytes()).hexdigest() for n in ['companion-type.exe','companion_type_lib.dll']},'scope':'Engineering native CLI candidate, copied before releasing the shared target lock; no GUI/install/frozen release claim'}
                 (a.native_output/'source.json').write_text(json.dumps(receipt,indent=2),encoding='utf8')
             return result
     except (StorageLimit,OSError) as error:
