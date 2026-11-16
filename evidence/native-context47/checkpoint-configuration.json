@@ -1,0 +1,34 @@
+{
+  "revision": 47,
+  "evidenceDirectory": "evidence/native-context47",
+  "sources": [
+    "src/moss_native_context180_worker_20261116.py",
+    "src/score_moss_context180_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\native-context180-r1\\protocol.json",
+      "name": "protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\native-context180-r1\\scoring-control.json",
+      "name": "scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_native_context180_20261116.py",
+      "name": "preparation-source.py"
+    }
+  ],
+  "commitMessage": "Run bounded native pretrained context180 meeting comparison with original scoring",
+  "claims": {
+    "state": "OVERNIGHT_NATIVE_CONTEXT180_INFERENCE_IN_PROGRESS",
+    "trainingUpdates": 0,
+    "nativeControlExact": true,
+    "initialCompleteSourceScoresAvailable": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "defaultWeightsChanged": false,
+    "speakerIdentityLocalToEachBlock": true
+  }
+}

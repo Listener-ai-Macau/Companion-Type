@@ -419,3 +419,9 @@ evidence/direction46/** -text -whitespace
 src/native_microphone_diagnostic_20261116.py -text -whitespace
 
 src/score_microphone_diagnostic_20261116.py -text -whitespace
+
+evidence/native-context47/** -text -whitespace
+
+src/moss_native_context180_worker_20261116.py -text -whitespace
+
+src/score_moss_context180_20261116.py -text -whitespace

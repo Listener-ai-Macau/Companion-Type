@@ -1,0 +1,48 @@
+{
+  "at": "2026-11-16T20:19:28.543307+08:00",
+  "parent": "5e13a05e503e295d0dd836483afa9c58d552729f",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\native-context180-r1\\protocol.json",
+      "file": "protocol.json",
+      "bytes": 16813,
+      "sha256": "947213776a96625b29164f17bc6c9381b0087f9ca0a5d0f034b9c48380769547"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\native-context180-r1\\scoring-control.json",
+      "file": "scoring-control.json",
+      "bytes": 1957,
+      "sha256": "d6db44cbf92d894320bf15a0d07308b4b1ed75e4992d88ec850bdd0e5e834369"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_native_context180_20261116.py",
+      "file": "preparation-source.py",
+      "bytes": 4097,
+      "sha256": "85262b54d88386bfa2e7da7f965e45d5d5ad6ae50b124cfc1fc1fd9f23dbf33a"
+    },
+    {
+      "source": "work\\protect_native_context47.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 1395,
+      "sha256": "7b0a6b7354a3fe28683854794bfe22eee28b4bbf11761221a6dce3b8cd90ba98"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/moss_native_context180_worker_20261116.py": "bf6a713134c9dcaecd9e9550a430b74172df7c422bf94aed0e803a3e1c53315a",
+    "src/score_moss_context180_20261116.py": "2b137ddbf8facc9eaa24c7cb78563485a94b6611ade302951250fc1a5a2622e1"
+  },
+  "state": "OVERNIGHT_NATIVE_CONTEXT180_INFERENCE_IN_PROGRESS",
+  "trainingUpdates": 0,
+  "nativeControlExact": true,
+  "initialCompleteSourceScoresAvailable": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "defaultWeightsChanged": false,
+  "speakerIdentityLocalToEachBlock": true
+}
