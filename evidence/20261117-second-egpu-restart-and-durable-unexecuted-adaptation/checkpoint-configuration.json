@@ -1,0 +1,78 @@
+{
+  "revision": 55,
+  "evidenceDirectory": "evidence/20261117-second-egpu-restart-and-durable-unexecuted-adaptation",
+  "sources": [
+    "src/durable_model_state_20261117.py",
+    "src/tdt_adaptation_checkpoint_20261116.py",
+    "src/tdt_domain_adaptation_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\second-restart-20261117.json",
+      "name": "incident/second-restart-20261117.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\dock-recurrence-analysis-20261117.json",
+      "name": "incident/dock-recurrence-analysis-20261117.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\journal-integration-20261117.json",
+      "name": "incident/journal-integration-20261117.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\recent-chronology.json",
+      "name": "read-only-scene/recent-chronology.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\egpu-topology.json",
+      "name": "read-only-scene/egpu-topology.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\crash-capture-settings.json",
+      "name": "read-only-scene/crash-capture-settings.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\journal-verification\\result.json",
+      "name": "journal-verification/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\journal-verification-r2\\result.json",
+      "name": "journal-verification-r2/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\journal-verification\\tested-source-before-archive-fix.py",
+      "name": "journal-verification/tested-source-before-archive-fix.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\inspect_restart_20261117.py",
+      "name": "local-tools/inspect_restart_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\read_egpu_topology_20261117.ps1",
+      "name": "local-tools/read_egpu_topology_20261117.ps1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_durable_model_state_20261117.py",
+      "name": "local-tools/verify_durable_model_state_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_second_restart_20261117.py",
+      "name": "local-tools/record_second_restart_20261117.py"
+    }
+  ],
+  "commitMessage": "Preserve second eGPU restart and make future adaptation state durable",
+  "claims": {
+    "state": "SECOND_GPU_RESTART_PRESERVED_CAUSE_UNIDENTIFIED_TDT_TRAINING_NOT_STARTED",
+    "trainingUpdates": 0,
+    "newNeuralCallsDuringInvestigation": 0,
+    "secondSourceComplete": false,
+    "durableJournalCorruptPrimaryRecoverySimulationPassed": true,
+    "actualPowerLossQualified": false,
+    "gpuStabilityFixed": false,
+    "TdtWorkerGpuPreflightOrTrainingExecuted": false,
+    "TdtWorkerHasPendingPreflightResumeAndScoringReview": true,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

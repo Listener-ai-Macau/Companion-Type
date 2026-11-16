@@ -1,0 +1,43 @@
+{
+  "at": "2026-11-17T07:54:54+08:00",
+  "state": "CPU_VERIFIED_DURABLE_JOURNAL_IN_UNEXECUTED_TDT_SOURCE_GPU_CAUSE_UNFIXED",
+  "sourceSha256": {
+    "durable_model_state_20261117.py": "5fea82f461da06e76afd3321c860c48a570147a4d9cce6c7cca37a595bb54e3b",
+    "tdt_adaptation_checkpoint_20261116.py": "61675d8cac7f2352a683d4e28af6f8893f27192073cd966cca77779a892ff414",
+    "tdt_domain_adaptation_20261116.py": "facaedb7795e58061978ef5cb091da94ade9917c2001f94916dca8db9c054c36"
+  },
+  "corruptStateSimulation": {
+    "state": "PASS_FSYNC_PREVIOUS_SNAPSHOT_EXPLICIT_RECOVERY_AND_CORRUPT_BYTES_PRESERVATION",
+    "latestCorruptionDetected": true,
+    "previousGenerationRecovered": 1,
+    "corruptPrimaryWasNotSilentlyRepaired": true,
+    "futureSuccessfulWritePreservesLastValidBackup": true,
+    "futureSuccessfulWriteArchivesCorruptOriginalBytes": true,
+    "actualAbruptPowerLossTested": false,
+    "pcRestartedByTest": false,
+    "newNeuralCalls": 0,
+    "parameterUpdates": 0,
+    "sourceSha256": "5fea82f461da06e76afd3321c860c48a570147a4d9cce6c7cca37a595bb54e3b",
+    "limits": {
+      "pid": 17672,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 134217728,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 10780672,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "integratedIntoUnexecutedTdtWorkerAndCheckpoint": true,
+  "oldFrozenMossWorkerModified": false,
+  "gpuOrTrainingExecutedByVerification": false,
+  "actualPowerLossTested": false,
+  "tdtWorkerGpuPreflightAndResumeReviewPending": true
+}

@@ -1,0 +1,108 @@
+﻿{
+    "At":  "2026-11-17T07:44:29.1621518+08:00",
+    "ReadOnly":  true,
+    "NeuralRuntimeLoaded":  false,
+    "DeviceSettingsChanged":  false,
+    "Parents":  [
+                    {
+                        "Hop":  0,
+                        "Name":  "AMD Radeon RX 6800 XT",
+                        "Class":  "Display",
+                        "Status":  "OK",
+                        "InstanceId":  "PCI\\VEN_1002\u0026DEV_73BF\u0026SUBSYS_67011EAE\u0026REV_C1\\8\u00261BD3869F\u00260\u0026000000000021",
+                        "LocationPaths":  [
+                                              "PCIROOT(0)#PCI(0401)#PCI(0000)#PCI(0000)#PCI(0000)#PCI(0000)#PCI(0000)",
+                                              "ACPI(_SB_)#ACPI(PCI0)#ACPI(GP12)#ACPI(SWUS)#PCI(0000)#PCI(0000)#PCI(0000)#PCI(0000)"
+                                          ]
+                    },
+                    {
+                        "Hop":  1,
+                        "Name":  "AMD PCI Express Downstream Switch Port",
+                        "Class":  "System",
+                        "Status":  "OK",
+                        "InstanceId":  "PCI\\VEN_1002\u0026DEV_1479\u0026SUBSYS_14791002\u0026REV_00\\7\u00267d411c6\u00260\u00260000000021",
+                        "LocationPaths":  [
+                                              "PCIROOT(0)#PCI(0401)#PCI(0000)#PCI(0000)#PCI(0000)#PCI(0000)",
+                                              "ACPI(_SB_)#ACPI(PCI0)#ACPI(GP12)#ACPI(SWUS)#PCI(0000)#PCI(0000)#PCI(0000)"
+                                          ]
+                    },
+                    {
+                        "Hop":  2,
+                        "Name":  "AMD PCI Express Upstream Switch Port",
+                        "Class":  "System",
+                        "Status":  "OK",
+                        "InstanceId":  "PCI\\VEN_1002\u0026DEV_1478\u0026SUBSYS_00000000\u0026REV_C1\\6\u002631314553\u00260\u002600000021",
+                        "LocationPaths":  [
+                                              "PCIROOT(0)#PCI(0401)#PCI(0000)#PCI(0000)#PCI(0000)",
+                                              "ACPI(_SB_)#ACPI(PCI0)#ACPI(GP12)#ACPI(SWUS)#PCI(0000)#PCI(0000)"
+                                          ]
+                    },
+                    {
+                        "Hop":  3,
+                        "Name":  "PCI Express 下游交换机端口",
+                        "Class":  "System",
+                        "Status":  "OK",
+                        "InstanceId":  "PCI\\VEN_1B21\u0026DEV_2463\u0026SUBSYS_24631B21\u0026REV_00\\5\u00263724f955\u00260\u0026000021",
+                        "LocationPaths":  [
+                                              "PCIROOT(0)#PCI(0401)#PCI(0000)#PCI(0000)",
+                                              "ACPI(_SB_)#ACPI(PCI0)#ACPI(GP12)#ACPI(SWUS)#PCI(0000)"
+                                          ]
+                    },
+                    {
+                        "Hop":  4,
+                        "Name":  "PCI Express 上游交换机端口",
+                        "Class":  "System",
+                        "Status":  "OK",
+                        "InstanceId":  "PCI\\VEN_1B21\u0026DEV_2463\u0026SUBSYS_24631B21\u0026REV_00\\4\u002627681e3f\u00260\u00260021",
+                        "LocationPaths":  [
+                                              "PCIROOT(0)#PCI(0401)#PCI(0000)",
+                                              "ACPI(_SB_)#ACPI(PCI0)#ACPI(GP12)#ACPI(SWUS)"
+                                          ]
+                    },
+                    {
+                        "Hop":  5,
+                        "Name":  "PCI Express 根端口",
+                        "Class":  "System",
+                        "Status":  "OK",
+                        "InstanceId":  "PCI\\VEN_1022\u0026DEV_14EF\u0026SUBSYS_14531022\u0026REV_00\\3\u00262411e6fe\u00260\u002621",
+                        "LocationPaths":  [
+                                              "PCIROOT(0)#PCI(0401)",
+                                              "ACPI(_SB_)#ACPI(PCI0)#ACPI(GP12)"
+                                          ]
+                    },
+                    {
+                        "Hop":  6,
+                        "Name":  "PCI Express 根复合体",
+                        "Class":  "System",
+                        "Status":  "OK",
+                        "InstanceId":  "ACPI\\PNP0A08\\1",
+                        "LocationPaths":  [
+                                              "ACPI(_SB_)#ACPI(PCI0)"
+                                          ]
+                    },
+                    {
+                        "Hop":  7,
+                        "Name":  "Microsoft ACPI-Compliant System",
+                        "Class":  "System",
+                        "Status":  "OK",
+                        "InstanceId":  "ACPI_HAL\\PNP0C08\\0",
+                        "LocationPaths":  null
+                    },
+                    {
+                        "Hop":  8,
+                        "Name":  "基于 ACPI x64 的电脑",
+                        "Class":  "Computer",
+                        "Status":  "OK",
+                        "InstanceId":  "ROOT\\ACPI_HAL\\0000",
+                        "LocationPaths":  null
+                    },
+                    {
+                        "Hop":  9,
+                        "Name":  null,
+                        "Class":  null,
+                        "Status":  "OK",
+                        "InstanceId":  "HTREE\\ROOT\\0",
+                        "LocationPaths":  null
+                    }
+                ]
+}

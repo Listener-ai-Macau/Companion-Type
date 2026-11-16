@@ -1,0 +1,28 @@
+{
+  "state": "PASS_FSYNC_PREVIOUS_SNAPSHOT_EXPLICIT_RECOVERY_AND_CORRUPT_BYTES_PRESERVATION",
+  "latestCorruptionDetected": true,
+  "previousGenerationRecovered": 1,
+  "corruptPrimaryWasNotSilentlyRepaired": true,
+  "futureSuccessfulWritePreservesLastValidBackup": true,
+  "actualAbruptPowerLossTested": false,
+  "pcRestartedByTest": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "sourceSha256": "66a742be4d69bb980799465358a999f959d4c819f9fa5084812388fc10e5380a",
+  "limits": {
+    "pid": 8344,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 134217728,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 10539008,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

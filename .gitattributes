@@ -471,3 +471,11 @@ src/moss_guarded_raw_candidate_20261116.py -text -whitespace
 src/score_moss_guarded_context180_20261116.py -text -whitespace
 
 src/tdt_selected_loss_20261116.py -text -whitespace
+
+evidence/20261117-second-egpu-restart-and-durable-unexecuted-adaptation/** -text -whitespace
+
+src/durable_model_state_20261117.py -text -whitespace
+
+src/tdt_adaptation_checkpoint_20261116.py -text -whitespace
+
+src/tdt_domain_adaptation_20261116.py -text -whitespace

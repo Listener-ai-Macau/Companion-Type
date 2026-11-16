@@ -1,0 +1,152 @@
+{
+  "at": "2026-11-17T07:52:34.774314+08:00",
+  "events": [
+    {
+      "utc": "2026-11-16T15:16:10.9335729Z",
+      "event": "41",
+      "data": {
+        "BugcheckCode": "0",
+        "PowerButtonTimestamp": "0",
+        "LongPowerButtonPressDetected": "false"
+      }
+    },
+    {
+      "utc": "2026-11-16T15:16:30.8183739Z",
+      "event": "6008",
+      "data": {
+        "0": "23:15:26",
+        "1": "‎2026/‎11/‎16"
+      }
+    },
+    {
+      "utc": "2026-11-16T13:37:15.4293394Z",
+      "event": "41",
+      "data": {
+        "BugcheckCode": "0",
+        "PowerButtonTimestamp": "0",
+        "LongPowerButtonPressDetected": "false"
+      }
+    },
+    {
+      "utc": "2026-11-16T13:37:25.4765328Z",
+      "event": "6008",
+      "data": {
+        "0": "21:36:35",
+        "1": "‎2026/‎11/‎16"
+      }
+    },
+    {
+      "utc": "2026-11-15T16:16:48.6543705Z",
+      "event": "41",
+      "data": {
+        "BugcheckCode": "257",
+        "PowerButtonTimestamp": "0",
+        "LongPowerButtonPressDetected": "false"
+      }
+    },
+    {
+      "utc": "2026-11-15T16:16:58.8493134Z",
+      "event": "6008",
+      "data": {
+        "0": "0:14:17",
+        "1": "‎2026/‎11/‎16"
+      }
+    },
+    {
+      "utc": "2026-11-15T10:17:05.3893443Z",
+      "event": "41",
+      "data": {
+        "BugcheckCode": "0",
+        "PowerButtonTimestamp": "0",
+        "LongPowerButtonPressDetected": "false"
+      }
+    },
+    {
+      "utc": "2026-11-15T10:17:12.7709523Z",
+      "event": "6008",
+      "data": {
+        "0": "18:16:13",
+        "1": "‎2026/‎11/‎15"
+      }
+    },
+    {
+      "utc": "2026-11-12T11:19:38.6651892Z",
+      "event": "41",
+      "data": {
+        "BugcheckCode": "0",
+        "PowerButtonTimestamp": "134389559386167622",
+        "LongPowerButtonPressDetected": "false"
+      }
+    },
+    {
+      "utc": "2026-11-12T11:19:48.6801985Z",
+      "event": "6008",
+      "data": {
+        "0": "19:18:28",
+        "1": "‎2026/‎11/‎12"
+      }
+    },
+    {
+      "utc": "2026-11-09T02:43:43.2703279Z",
+      "event": "41",
+      "data": {
+        "BugcheckCode": "0",
+        "PowerButtonTimestamp": "134386657936807584",
+        "LongPowerButtonPressDetected": "false"
+      }
+    },
+    {
+      "utc": "2026-11-09T02:43:50.9184531Z",
+      "event": "6008",
+      "data": {
+        "0": "10:42:41",
+        "1": "‎2026/‎11/‎9"
+      }
+    },
+    {
+      "utc": "2026-11-05T14:58:00.3234913Z",
+      "event": "41",
+      "data": {
+        "BugcheckCode": "0",
+        "PowerButtonTimestamp": "0",
+        "LongPowerButtonPressDetected": "false"
+      }
+    },
+    {
+      "utc": "2026-11-05T14:58:09.7284587Z",
+      "event": "6008",
+      "data": {
+        "0": "22:57:41",
+        "1": "‎2026/‎11/‎5"
+      }
+    }
+  ],
+  "runtimeDirectoryTimestamps": [
+    {
+      "name": "amd_torch_device_gfx1030-2.11.0+rocm10.0.0.dist-info",
+      "directoryCreatedLocal": "2026-11-05T22:31:07.416031",
+      "directoryModifiedLocal": "2026-11-05T22:31:07.436772"
+    },
+    {
+      "name": "rocm_sdk_core-10.0.0.dist-info",
+      "directoryCreatedLocal": "2026-11-05T22:29:35.003154",
+      "directoryModifiedLocal": "2026-11-05T22:29:36.151892"
+    },
+    {
+      "name": "rocm_sdk_device_gfx1030-10.0.0.dist-info",
+      "directoryCreatedLocal": "2026-11-05T22:30:03.504754",
+      "directoryModifiedLocal": "2026-11-05T22:30:03.529925"
+    },
+    {
+      "name": "rocm_sdk_libraries-10.0.0.dist-info",
+      "directoryCreatedLocal": "2026-11-05T22:29:24.847269",
+      "directoryModifiedLocal": "2026-11-05T22:29:24.906744"
+    },
+    {
+      "name": "torch-2.11.0+rocm10.0.0.dist-info",
+      "directoryCreatedLocal": "2026-11-05T22:30:26.729831",
+      "directoryModifiedLocal": "2026-11-05T22:31:07.223323"
+    }
+  ],
+  "timestampsAreNotProofOfCausality": true
+}

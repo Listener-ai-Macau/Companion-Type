@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-17T07:55:30.654932+08:00",
+  "readOnly": true,
+  "settingsChanged": false,
+  "crashControl": {
+    "CrashDumpEnabled": 7,
+    "LogEvent": 1,
+    "AutoReboot": 1,
+    "DumpFile": "%SystemRoot%\\MEMORY.DMP",
+    "MinidumpDir": "%SystemRoot%\\Minidump",
+    "AlwaysKeepMemoryDump": null
+  },
+  "pagefile": {
+    "PagingFiles": "?:\\pagefile.sys",
+    "ExistingPageFiles": [
+      "\\??\\C:\\pagefile.sys"
+    ],
+    "TempPageFile": null
+  }
+}

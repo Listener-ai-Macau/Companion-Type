@@ -1,0 +1,224 @@
+{
+  "state": "SECOND_OVERNIGHT_UNEXPECTED_RESTART_DURING_MOSS_GPU_INFERENCE_CAUSE_NOT_IDENTIFIED",
+  "at": "2026-11-17T07:41:37+08:00",
+  "windowsReportedPreviousShutdown": "2026-11-16T23:15:26+08:00",
+  "actualBoot": "2026-11-16T23:16:08.215736+08:00",
+  "timeBoundary": "Event6008 reports23:15:26; persisted model/operator files reach23:15:50/51. Treat this as an approximate23:15 incident, not an exact synchronized crash instant.",
+  "ownedRun": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\guarded-native-context180-r2\\run-extension",
+  "pidBeforeRestart": 19924,
+  "modelRole": "Published nativeMOSS0.9B complete-source180s ASR inference on RX6800XT, not weight training",
+  "gpuProfile": "MIOpen convolution disabled, per-operator synchronization, Torch allocator50percent, CPU25percent and2GiB private limit; no hard GPU power/thermal limit",
+  "lastCompletedOperator": {
+    "event": "exit",
+    "module": "model.language_model.layers.0.self_attn.v_proj",
+    "seconds": 0.00596029999996972,
+    "memory": {
+      "allocatedBytes": 2380412416,
+      "reservedBytes": 4032823296,
+      "peakAllocatedBytes": 3157924864,
+      "peakReservedBytes": 4032823296,
+      "driverFreeBytes": 12863995904,
+      "driverTotalBytes": 17163091968,
+      "systemAvailableBytes": 10685251584
+    }
+  },
+  "lastCompleteOperatorWasNotAnError": true,
+  "lastObservedGpuReservedGiB": 3.755859375,
+  "observedGpuReservedPeakGiB": 3.755859375,
+  "lastObservedDriverFreeGiB": 11.98052978515625,
+  "lastObservedSystemAvailableGiB": 9.951416015625,
+  "resourceSamplesAreNotGuaranteedInstantOfCrash": true,
+  "completedOriginalBlocks": [
+    {
+      "id": "EN2002a-context180-0000",
+      "meeting": "EN2002a",
+      "startFrame": 0,
+      "endFrame": 2880000,
+      "frames": 2880000,
+      "naturalEos": true,
+      "seconds": 447.2238827000001,
+      "trainingUpdates": 0
+    },
+    {
+      "id": "EN2002a-context180-0001",
+      "meeting": "EN2002a",
+      "startFrame": 2880000,
+      "endFrame": 5760000,
+      "frames": 2880000,
+      "naturalEos": true,
+      "seconds": 606.3489137000006,
+      "trainingUpdates": 0
+    }
+  ],
+  "completedAudioSeconds": 360,
+  "wholeSourcesCompleted": 0,
+  "trainingParameterUpdates": 0,
+  "english119MTrainingStarted": false,
+  "operatorRowsPreserved": 2024,
+  "lastPartialId": "EN2002a-context180-0001",
+  "lastPartialGeneratedTokens": 1909,
+  "zeroFilledProgressFiles": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\owned-run-original-bytes\\state.json",
+      "bytes": 3875,
+      "allZero": true,
+      "sha256": "576ed5dc6ffd10da1e714b2f34155aaf87d89c6799a9f8af11be1364d8041231"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\owned-run-original-bytes\\inference\\state.json",
+      "bytes": 3875,
+      "allZero": true,
+      "sha256": "576ed5dc6ffd10da1e714b2f34155aaf87d89c6799a9f8af11be1364d8041231"
+    }
+  ],
+  "progressFileDurabilityDefectObserved": true,
+  "unexpectedEvents": [
+    {
+      "timeUtc": "2026-11-16T15:16:30.8183739Z",
+      "provider": "EventLog",
+      "id": 6008,
+      "level": 2,
+      "data": [
+        [
+          null,
+          "23:15:26"
+        ],
+        [
+          null,
+          "‎2026/‎11/‎16"
+        ],
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          "5894"
+        ],
+        [
+          null,
+          null
+        ],
+        [
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "timeUtc": "2026-11-16T15:16:10.9335729Z",
+      "provider": "Microsoft-Windows-Kernel-Power",
+      "id": 41,
+      "level": 1,
+      "data": [
+        [
+          "BugcheckCode",
+          "0"
+        ],
+        [
+          "BugcheckParameter1",
+          "0x0"
+        ],
+        [
+          "BugcheckParameter2",
+          "0x0"
+        ],
+        [
+          "BugcheckParameter3",
+          "0x0"
+        ],
+        [
+          "BugcheckParameter4",
+          "0x0"
+        ],
+        [
+          "SleepInProgress",
+          "0"
+        ],
+        [
+          "PowerButtonTimestamp",
+          "0"
+        ],
+        [
+          "BootAppStatus",
+          "0"
+        ],
+        [
+          "Checkpoint",
+          "0"
+        ],
+        [
+          "ConnectedStandbyInProgress",
+          "false"
+        ],
+        [
+          "SystemSleepTransitionsToOn",
+          "0"
+        ],
+        [
+          "CsEntryScenarioInstanceId",
+          "0"
+        ],
+        [
+          "BugcheckInfoFromEFI",
+          "false"
+        ],
+        [
+          "CheckpointStatus",
+          "0"
+        ],
+        [
+          "CsEntryScenarioInstanceIdV2",
+          "0"
+        ],
+        [
+          "LongPowerButtonPressDetected",
+          "false"
+        ],
+        [
+          "LidReliability",
+          "false"
+        ],
+        [
+          "InputSuppressionState",
+          "0"
+        ],
+        [
+          "PowerButtonSuppressionState",
+          "0"
+        ],
+        [
+          "LidState",
+          "1"
+        ],
+        [
+          "WHEABootErrorCount",
+          "0"
+        ]
+      ]
+    }
+  ],
+  "prebootMemoryExhaustionOrDisplayRecoveryEvents": [],
+  "currentDumpFiles": {
+    "minidumpFiles": [],
+    "liveKernelCurrent": []
+  },
+  "oldRequeuedWerNotThisIncident": {
+    "file": "C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\Kernel_1cc_a7926a1d767f542ccdc47716af41ce0a07aa0_00000000_764e2650-bf3e-4c73-8b48-90786cd7e00a\\Report.wer",
+    "code": "1cc",
+    "reportId": "764e2650-bf3e-4c73-8b48-90786cd7e00a",
+    "actualEventUtc": "2026-11-12T11:19:09.705565+00:00"
+  },
+  "currentOwnedModelProcesses": [],
+  "conclusion": "The ownedGPUworkload remains the leading suspected trigger. Recurrence with a different model while MIOpen is bypassed disproves that the previous workaround established long-run stability or isolated the issue to MIOpen. Available samples do not showVRAM/RAM exhaustion. No matched newdump/bugcheck identifies compute runtime, driver, dock link, power or thermal cause.",
+  "next": "Do not automatically rerun this unchanged GPU recipe. Preserve original bytes, fix journal durability and continue read-only driver/runtime/dock analysis plus CPU code/data work. No driver/TDR/power/BIOS change or GPU stress test in this inspection.",
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "torchImported": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

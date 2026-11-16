@@ -1,0 +1,112 @@
+{
+  "at": "2026-11-17T07:55:31.545188+08:00",
+  "parent": "4b6ab9e3b63cdb5b71cc4f58de83078943f4e740",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\second-restart-20261117.json",
+      "file": "incident/second-restart-20261117.json",
+      "bytes": 6807,
+      "sha256": "5a9878a6ca4735af148cdafb80378c5a4b4819c6eb895761542febd55f05661b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\dock-recurrence-analysis-20261117.json",
+      "file": "incident/dock-recurrence-analysis-20261117.json",
+      "bytes": 6806,
+      "sha256": "216450247f5f87eb4657a14a215b7ff1abb26c9df680480268327126ddf1d258"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\journal-integration-20261117.json",
+      "file": "incident/journal-integration-20261117.json",
+      "bytes": 1903,
+      "sha256": "ba062a2e26dadaf1eba1f7ef9445ca68de121e464782b07f9e41103078acc9d8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\recent-chronology.json",
+      "file": "read-only-scene/recent-chronology.json",
+      "bytes": 3961,
+      "sha256": "5880785c67987356f0dc0ad6c5f075cb1ef6a17c92e69cd3218e2372f1207d41"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\egpu-topology.json",
+      "file": "read-only-scene/egpu-topology.json",
+      "bytes": 5695,
+      "sha256": "1a11e424aaf55f8371040624bcfce9fb81b44d1d36256b6204a534d80ec29286"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\crash-capture-settings.json",
+      "file": "read-only-scene/crash-capture-settings.json",
+      "bytes": 479,
+      "sha256": "54ece734de26c0c100803ae934f02af75de3743c0f1f0275075e192b0b0a0066"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\journal-verification\\result.json",
+      "file": "journal-verification/result.json",
+      "bytes": 1027,
+      "sha256": "63838e9dd8db7bf31b59d16f69f80adceae2fa19dd4f0d6ebcc44513470baac4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\journal-verification-r2\\result.json",
+      "file": "journal-verification-r2/result.json",
+      "bytes": 1090,
+      "sha256": "1fbaf42104c9458f6de2346b9ee5b7ea9ff276acc64619fcab7340bdaa4d18a0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\journal-verification\\tested-source-before-archive-fix.py",
+      "file": "journal-verification/tested-source-before-archive-fix.py",
+      "bytes": 2066,
+      "sha256": "66a742be4d69bb980799465358a999f959d4c819f9fa5084812388fc10e5380a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\inspect_restart_20261117.py",
+      "file": "local-tools/inspect_restart_20261117.py",
+      "bytes": 8156,
+      "sha256": "e922f1d05f8beee53e65651bdbf9f14ae69f3d293da867f06ddd5b1d2265617e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\read_egpu_topology_20261117.ps1",
+      "file": "local-tools/read_egpu_topology_20261117.ps1",
+      "bytes": 1304,
+      "sha256": "0e856878a5fb42f3641b05ca08be6d577420f9df784707a1b3c57a3594811b65"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_durable_model_state_20261117.py",
+      "file": "local-tools/verify_durable_model_state_20261117.py",
+      "bytes": 2265,
+      "sha256": "304c6800396a5bd042c78a4b0436fe26616a0e5182cb3c18cdeafd577a030acc"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_second_restart_20261117.py",
+      "file": "local-tools/record_second_restart_20261117.py",
+      "bytes": 7814,
+      "sha256": "9061ec73a3d1f8cf49ece3256792589818f11aa403521b4036354e7a2f146558"
+    },
+    {
+      "source": "work\\checkpoint_second_restart_r55.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 4013,
+      "sha256": "ad7fce55c0328bc8d312d46f59f483a4d83934902dade386dedbd00befed1786"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/durable_model_state_20261117.py": "5fea82f461da06e76afd3321c860c48a570147a4d9cce6c7cca37a595bb54e3b",
+    "src/tdt_adaptation_checkpoint_20261116.py": "61675d8cac7f2352a683d4e28af6f8893f27192073cd966cca77779a892ff414",
+    "src/tdt_domain_adaptation_20261116.py": "facaedb7795e58061978ef5cb091da94ade9917c2001f94916dca8db9c054c36"
+  },
+  "state": "SECOND_GPU_RESTART_PRESERVED_CAUSE_UNIDENTIFIED_TDT_TRAINING_NOT_STARTED",
+  "trainingUpdates": 0,
+  "newNeuralCallsDuringInvestigation": 0,
+  "secondSourceComplete": false,
+  "durableJournalCorruptPrimaryRecoverySimulationPassed": true,
+  "actualPowerLossQualified": false,
+  "gpuStabilityFixed": false,
+  "TdtWorkerGpuPreflightOrTrainingExecuted": false,
+  "TdtWorkerHasPendingPreflightResumeAndScoringReview": true,
+  "qualityQualified": false,
+  "saleQualified": false
+}
