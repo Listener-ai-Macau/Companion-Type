@@ -1,0 +1,209 @@
+{
+  "state": "COMPLETE_GUARDED_RAW25_PENDING_SCORE",
+  "at": "2026-11-16T22:10:46+08:00",
+  "pid": 4828,
+  "binding": {
+    "protocolSha256": "e9945e1e4351f0e429d1371babb2efeabe62ff8881d2a37da9c4d2d187cf3c62",
+    "workerSha256": "9f0b5c1bfe3bcfc4dfe5d48abdbe22af6518d3d823f033d64cee256856ce5169",
+    "enhancerSha256": "b22256adbb91b68cf5a3db8f6657a4fb17066eecd5f069803e59c186c1cf3ebb",
+    "asrSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1"
+  },
+  "phase": "raw",
+  "completed": [
+    {
+      "id": "native-original-control",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\native-original-control.json",
+      "sha256": "261ca620689eb3b74cb61173293b1e852ac56c3b16ef00001efe5c1d2f926c89"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\20200709_L_R002S01C01-seq-000.json",
+      "sha256": "556ab01df92e379affe0ae2d9f5b6c4e12a44b0c64ee4a16dfbb48f708e2968f"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-003",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\20200709_L_R002S01C01-seq-003.json",
+      "sha256": "e61e8ff49b11802994c8201f83123eefecd305c70400ade6546972cd9df8adf5"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-006",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\20200709_L_R002S01C01-seq-006.json",
+      "sha256": "547158141269da437b6f7bfc71cb828c67026f0be2676abdfc782f76d8607006"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-009",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\20200709_L_R002S01C01-seq-009.json",
+      "sha256": "46477ead1d244394c4c1df9bf0f016f34188c830c2869553b82396f8b0ca625a"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-012",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\20200709_L_R002S01C01-seq-012.json",
+      "sha256": "3dc4e00d1923fbbdcc5f8d0f597da9606b4f86e58ce0f1fb00ac21023500d42c"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-016",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\20200709_L_R002S01C01-seq-016.json",
+      "sha256": "dbc2d494c923404ab902cc66e60dbbb8162543474e0749923368d5fe7a272489"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\20200805_S_R001S01C01-seq-000.json",
+      "sha256": "1cb8cc758b821a3d20e9cb5ba532a4f2fcfa9c1321274b25cccbb93dac245f2e"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-002",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\20200805_S_R001S01C01-seq-002.json",
+      "sha256": "b6331586afaf00c645224c4cb13751205bb20a5c8e731a996a2f99a4c0acf093"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-004",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\20200805_S_R001S01C01-seq-004.json",
+      "sha256": "b176ae667a12279bdc0e9acb9d2a6e0cd5794fde53925c525c4c6a5b383454b1"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-006",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\20200805_S_R001S01C01-seq-006.json",
+      "sha256": "16d146bb2a2d1ceb731872e6bfa3afda2224a10564572ac0525070f426f3fd7d"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-008",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\20200805_S_R001S01C01-seq-008.json",
+      "sha256": "6957a9ef0b8d41e8fc7e5ae312d0b5de859d688303799a438a29c1b4843bf4f6"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-011",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\20200805_S_R001S01C01-seq-011.json",
+      "sha256": "49892f232b5958478df9f5941a88bd2dfa9b03a74462ed075d433b698deb7f07"
+    },
+    {
+      "id": "ES2003b-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\ES2003b-seq-000.json",
+      "sha256": "0ae4fe5a664c53f45c439559aedae6b6234a1eb59403e6dc1881d3f597469cc3"
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\ES2003b-seq-005.json",
+      "sha256": "e70fb1907eae5e417316bb711e04a88107493d1efda185736e0968d1b27d8197"
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\ES2003b-seq-010.json",
+      "sha256": "d8310d1d87cc56dd4603c38bfb9d14da2049884cb4e0dc256fe8015538cc36fe"
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\ES2003b-seq-016.json",
+      "sha256": "c980e097fbaf8a078d1c0e8082ea56806dd171b10444100a800d4ac59d5eb838"
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\ES2003b-seq-021.json",
+      "sha256": "1ca5584564cf227335545987cc53845565caa55ce6c12ce721f7effd58c6cd63"
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\ES2003b-seq-027.json",
+      "sha256": "8287a71f88ccab37faf17cc61e5d001bf8ba8cbbee5f01b5eeed015cca0b5d2c"
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\EN2001a-a2-000.json",
+      "sha256": "b09ba0ce55af5ea21d2244de322fc981f9811fc632b239fafe0d98adbbc33a0e"
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\EN2001a-a2-023.json",
+      "sha256": "8e92fa7413c2b90c6e6314f1090a203a8e44a18213a4885d60e5aba9b732fb86"
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\EN2001a-a2-046.json",
+      "sha256": "e057b89527966f7bd98ea17c56340cc9c8487b323edad8ccdaee86e70ea1dc74"
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\EN2001a-a2-069.json",
+      "sha256": "a51e4320faf0cf7c7fafa662f4e69d381d337765597a980d11debf753c9ba713"
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\EN2001a-a2-092.json",
+      "sha256": "5e999baad16e9227f036fb204772637d5461283ed6c6aa47b6835d3bbd638fe6"
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\results\\EN2001a-a2-116.json",
+      "sha256": "9ced1941eee3ba3053e1e1acfbe3c714f33019f4c98a4e5e7d83c26f14bbd8a5"
+    }
+  ],
+  "newNeuralCalls": 25,
+  "trainingUpdates": 0,
+  "referencesRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "currentOperationBudgetSeconds": 90,
+  "observedAt": "2026-11-16T22:23:31+08:00",
+  "limits": {
+    "pid": 4828,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1362628608,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "presentDevices": [
+    {
+      "FriendlyName": "AMD Radeon RX 6800 XT",
+      "Status": "OK"
+    },
+    {
+      "FriendlyName": "AMD Radeon 780M Graphics",
+      "Status": "OK"
+    }
+  ],
+  "device": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  },
+  "gpu": {
+    "allocatedBytes": 4111395328,
+    "reservedBytes": 4131389440,
+    "peakAllocatedBytes": 4298839552,
+    "peakReservedBytes": 4387241984,
+    "driverFreeBytes": 12698320896,
+    "driverTotalBytes": 17163091968,
+    "systemAvailableBytes": 7094030336
+  },
+  "gpuProfile": {
+    "cudnnEnabled": false,
+    "allocatorFraction": 0.5,
+    "operatorSynchronization": true,
+    "hardGpuUtilizationOrPowerCap": false
+  },
+  "currentId": "EN2001a-a2-116",
+  "currentOperation": null,
+  "oldDefaultControlExact": true,
+  "gpuSummary": {
+    "operatorCalls": 331558,
+    "maximumOperatorSeconds": 0.43206750000035754,
+    "gpu": {
+      "allocatedBytes": 4111395328,
+      "reservedBytes": 4131389440,
+      "peakAllocatedBytes": 4298839552,
+      "peakReservedBytes": 4387241984,
+      "driverFreeBytes": 12698320896,
+      "driverTotalBytes": 17163091968,
+      "systemAvailableBytes": 7093108736
+    },
+    "driverStabilityOrOriginalCauseProven": false
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "state": "CONTROL_LEXICAL_UNITS_EXACT_OLD_GENERATED_IDS_NONEXACT_NEW_RUNTIME_CANDIDATE_ONLY",
+  "at": "2026-11-16T22:55:35.637063+08:00",
+  "oldControl": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-context180-r1\\run-initial\\results\\native180-control.json",
+    "sha256": "7d3e3dd09ec197d0f06edfaa93068fdf10a4660bf933936755ae81aa149be8da"
+  },
+  "newControl": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\guarded-native-context180-r1\\run-extension\\results\\native180-control.json",
+    "sha256": "28a92f61c2ea633b932aabf235c63c7f4fdce2b87b4c648c9d912cfec3c5084f"
+  },
+  "oldBinding": {
+    "protocolSha256": "947213776a96625b29164f17bc6c9381b0087f9ca0a5d0f034b9c48380769547",
+    "workerSha256": "bf6a713134c9dcaecd9e9550a430b74172df7c422bf94aed0e803a3e1c53315a",
+    "nativeCheckpointSha256": "2caea232f4ac46367ed97373542b92e4dc1fa11e4e30dfd5f6d874abb618d127",
+    "authorCheckpointSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4"
+  },
+  "newBinding": {
+    "protocolSha256": "d2e46717ba202034a4207821761c1168748b388c3bd959c475e378f0a093a478",
+    "workerSha256": "fae26056bd1322933156172301ea992effc93e0f25ea3353d6956893a272d89e",
+    "nativeCheckpointSha256": "2caea232f4ac46367ed97373542b92e4dc1fa11e4e30dfd5f6d874abb618d127",
+    "authorCheckpointSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4"
+  },
+  "audioSha256": "220fc5638592ce6c7fb90a189b0569bc39ed1e3b72256b078454dd5d60aa52bd",
+  "frames": 2880000,
+  "nativeCheckpointSha256": "2caea232f4ac46367ed97373542b92e4dc1fa11e4e30dfd5f6d874abb618d127",
+  "lexicalUnits": 451,
+  "oldLexicalUnitsSha256": "e36fca9fde8d0bd94273c03cdd6f9e3af5e95a410b95c71404c0d1512a752e50",
+  "newLexicalUnitsSha256": "e36fca9fde8d0bd94273c03cdd6f9e3af5e95a410b95c71404c0d1512a752e50",
+  "lexicalUnitsExact": true,
+  "generatedIdsExact": false,
+  "oldTokens": 764,
+  "newTokens": 763,
+  "oldSegments": 25,
+  "newSegments": 25,
+  "timestampPairsChanged": 23,
+  "speakerLabelPairsChanged": 0,
+  "allLexicalResidualsIncluded": true,
+  "normalizerSourceSha256": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9",
+  "referencesRead": false,
+  "weightsChanged": false,
+  "trainingUpdates": 0,
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "scope": "Model-output control only;451unchanged lexical units are not a ground-truth accuracy score. Strict old-generated-ID admission failed and remains failed. Evaluate the changed runtime as a raw-text candidate, keep original full-source reference/quality gates."
+}

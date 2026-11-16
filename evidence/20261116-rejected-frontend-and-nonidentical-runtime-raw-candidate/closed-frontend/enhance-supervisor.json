@@ -1,0 +1,27 @@
+{
+  "state": "OWNED_GPU_WORKER_EXITED",
+  "at": "2026-11-16T22:26:50.741701+08:00",
+  "exitCode": 0,
+  "watchdogReason": null,
+  "pid": 20832,
+  "createdAt": 1794839083.5282536,
+  "phase": "enhance",
+  "trainingUpdates": 0,
+  "limits": {
+    "pid": 9924,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1118736384,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "cannotGuaranteeGpuDriverRecovery": true
+}

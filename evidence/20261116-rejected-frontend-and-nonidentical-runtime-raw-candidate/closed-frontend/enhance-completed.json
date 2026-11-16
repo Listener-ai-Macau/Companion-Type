@@ -1,0 +1,347 @@
+{
+  "state": "COMPLETE_GUARDED_FRCRN24_ALL_FRAMES",
+  "at": "2026-11-16T22:24:43+08:00",
+  "pid": 19664,
+  "binding": {
+    "protocolSha256": "e9945e1e4351f0e429d1371babb2efeabe62ff8881d2a37da9c4d2d187cf3c62",
+    "workerSha256": "9f0b5c1bfe3bcfc4dfe5d48abdbe22af6518d3d823f033d64cee256856ce5169",
+    "enhancerSha256": "b22256adbb91b68cf5a3db8f6657a4fb17066eecd5f069803e59c186c1cf3ebb",
+    "asrSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1"
+  },
+  "phase": "enhance",
+  "completed": [
+    {
+      "id": "20200709_L_R002S01C01-seq-000",
+      "language": "Chinese",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\gpu-compatibility-r1\\original-full-clip-r1\\results\\20200709_L_R002S01C01-seq-000.npy",
+      "sha256": "5ccfbc5e3712b373ee8774a524bd53e04898b7014b3a0f2ecf031072a2c5a2fd",
+      "frames": 436001,
+      "originalAudioSha256": "0e3615a5dc8437ca3129e82d269dbf3419fefd5871dde831d8898eb01b4f85bf",
+      "seconds": 5.217131899999913,
+      "originalGainRestored": true,
+      "origin": "Inherited verified full-clip forward, not rerun"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-003",
+      "language": "Chinese",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\20200709_L_R002S01C01-seq-003.npy",
+      "sha256": "813466fc5635db446d22b7234e3c5ecb7f0e85eb1e532c9d18a562b9949ca934",
+      "frames": 357561,
+      "originalAudioSha256": "e64a93b033e9102767a10d49040eabe4d96085c5c8076aabd6b0727a8886766e",
+      "seconds": 1.9360893000002761,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-006",
+      "language": "Chinese",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\20200709_L_R002S01C01-seq-006.npy",
+      "sha256": "1e59abdc38912b246ed0ae47cf36db61c7b811ec42144efd3c97a490dabec95e",
+      "frames": 367600,
+      "originalAudioSha256": "c8740be429bd68fbec8bb283c04c15ca40797f461626fdb02e0afab2d09788ac",
+      "seconds": 1.9783824000001005,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-009",
+      "language": "Chinese",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\20200709_L_R002S01C01-seq-009.npy",
+      "sha256": "a8deb8ef8156e2b0004ad4a2cdd091866378aff886648e4a959eda7bd8204e38",
+      "frames": 444561,
+      "originalAudioSha256": "988829118527d42a1b014f640471dd23b3ad281b1d88922d84b61bb11717b30f",
+      "seconds": 2.17104530000006,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-012",
+      "language": "Chinese",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\20200709_L_R002S01C01-seq-012.npy",
+      "sha256": "137b452a8b0c2904d38691c52cca5d68535257794314259f9c395dd9e73dda44",
+      "frames": 439120,
+      "originalAudioSha256": "725bcd016d924bed76085f504cfed325f25c10fb53a2548c07ad31e34191ecdf",
+      "seconds": 2.1421540999999706,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-016",
+      "language": "Chinese",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\20200709_L_R002S01C01-seq-016.npy",
+      "sha256": "dcb20cd3fc57215c914c80c707a35450c3b6b2ba300e7aa43d6cca90e6b18063",
+      "frames": 473887,
+      "originalAudioSha256": "d08df775867bd3aeb82b4e24ed7a14488dc935c46169e5e54c0602c641f5a090",
+      "seconds": 2.99284439999974,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-000",
+      "language": "Chinese",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\20200805_S_R001S01C01-seq-000.npy",
+      "sha256": "f7e0ed2a292c11c5e751d4d5274ef0eb3943fa7ac764b4c0d69f212f9cee424f",
+      "frames": 399261,
+      "originalAudioSha256": "6c1818fbe8f564715e6cbcb498a7ea3ef91e7dd38449f25ce802c4ed367d4094",
+      "seconds": 2.206812599999921,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-002",
+      "language": "Chinese",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\20200805_S_R001S01C01-seq-002.npy",
+      "sha256": "9573c3bfe3cef547172286e415222ef3f93b602cb5c04b398cee3a633d75e814",
+      "frames": 347300,
+      "originalAudioSha256": "c71881acc5ca1293b41190421f61f8af4106d1acbe9a3f216aca263e66cbe130",
+      "seconds": 2.1699407000000974,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-004",
+      "language": "Chinese",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\20200805_S_R001S01C01-seq-004.npy",
+      "sha256": "58337a6a61e383e76d7eaa6e8907ae1b3a28aff5b275d381d58b38f1df321496",
+      "frames": 456807,
+      "originalAudioSha256": "3294e64009f3fd81af0ad2afb0949bb97ce215601aa9ffc0914ea2c1cda7b2a7",
+      "seconds": 2.3368884999999864,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-006",
+      "language": "Chinese",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\20200805_S_R001S01C01-seq-006.npy",
+      "sha256": "551190ec58f37e91028ed6af6fa98ab63c26a4bccf3d5709db7fb32582948541",
+      "frames": 318401,
+      "originalAudioSha256": "8bb395e6a992c0d5de8de3b1d5dae910102055c8f51303a95c992aeb8e2bbfe1",
+      "seconds": 2.17753410000023,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-008",
+      "language": "Chinese",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\20200805_S_R001S01C01-seq-008.npy",
+      "sha256": "ef5243776933ee2d764c2b2c08536210ab7d3d1da94c2d4ca539bc4706665877",
+      "frames": 169343,
+      "originalAudioSha256": "ec6cb287103798a2424f839fb40522da652b8677f162aa9d05a5aa1c743d6b0b",
+      "seconds": 1.8095861000001605,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-011",
+      "language": "Chinese",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\20200805_S_R001S01C01-seq-011.npy",
+      "sha256": "46a0f87e21002846928b471cabad771da9c2cb7e5464a3f7030bf1e471baab7d",
+      "frames": 306820,
+      "originalAudioSha256": "e1e2c4f404122a496adfe671d095180c18a968ba59c284c97a71e29796d0f829",
+      "seconds": 2.162262400000145,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "ES2003b-seq-000",
+      "language": "English",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\ES2003b-seq-000.npy",
+      "sha256": "22f323b2f2b9cbdcb97e96ee87e06fe5f948b13b635b753adc91d09469aa638a",
+      "frames": 192800,
+      "originalAudioSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+      "seconds": 1.8433241000002454,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "language": "English",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\ES2003b-seq-005.npy",
+      "sha256": "7bc99f218c955ba800046986afefb258baca26a0fb3b85153599cd78bb7ff1b7",
+      "frames": 476000,
+      "originalAudioSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+      "seconds": 2.6078567000004114,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "language": "English",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\ES2003b-seq-010.npy",
+      "sha256": "d182bee85a582dc6791c5035705c5d09b8f0885f0659828989b14eb98f9f7595",
+      "frames": 475520,
+      "originalAudioSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+      "seconds": 2.4996311999998397,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "language": "English",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\ES2003b-seq-016.npy",
+      "sha256": "f9927e8b88b715e7dbd304d485d9365d9704bfb0076264e2c4edf03c902f16ae",
+      "frames": 473280,
+      "originalAudioSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+      "seconds": 2.4886289000000943,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "language": "English",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\ES2003b-seq-021.npy",
+      "sha256": "72a4fc7045225d2b77b4d916cbc2c67d359cad461f158266c1568c829df6c769",
+      "frames": 203840,
+      "originalAudioSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+      "seconds": 1.8981407000001127,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "language": "English",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\ES2003b-seq-027.npy",
+      "sha256": "15d4c8b283f7da1908a5a0c59813a807c9d51269331f0e8aaef8353d7e708e02",
+      "frames": 162401,
+      "originalAudioSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+      "seconds": 1.7883553000001484,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "language": "English",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\EN2001a-a2-000.npy",
+      "sha256": "586fb7a7ac1874ec2dad582b07caa4feb8500792576f95b35791be7a69daaea1",
+      "frames": 187360,
+      "originalAudioSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+      "seconds": 1.8403567999998813,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "language": "English",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\EN2001a-a2-023.npy",
+      "sha256": "6eb94d6499aa476b4ed3fe17925004784ffde00fdeb8506ef9ad3d47f212ea81",
+      "frames": 475520,
+      "originalAudioSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+      "seconds": 2.465303800000129,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "language": "English",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\EN2001a-a2-046.npy",
+      "sha256": "3ca5fd4aa5de0dd1bed957edcd5cb9a7d34972c1893148d368d7c758951f7839",
+      "frames": 362720,
+      "originalAudioSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+      "seconds": 2.2752602999999,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "language": "English",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\EN2001a-a2-069.npy",
+      "sha256": "2147f48ce7fe1c305a00d67bd353faac602b979a42fe84914b4df73bf7f40df8",
+      "frames": 476000,
+      "originalAudioSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+      "seconds": 2.446157299999868,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "language": "English",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\EN2001a-a2-092.npy",
+      "sha256": "1c95369effbdf5e699a57edd15df7bd27a201b8f05550b4225d8d114a5508ec3",
+      "frames": 473600,
+      "originalAudioSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+      "seconds": 2.4279599000001326,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "language": "English",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\results\\EN2001a-a2-116.npy",
+      "sha256": "af9d5e0a58def46374ddaa5ab81134a81a3a1f34b1f3a0d02c6506bed4b73c87",
+      "frames": 289920,
+      "originalAudioSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+      "seconds": 1.8564734999999928,
+      "originalGainRestored": true,
+      "origin": "New frozen-profile enhancement"
+    }
+  ],
+  "newNeuralCalls": 24,
+  "trainingUpdates": 0,
+  "referencesRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "currentOperationBudgetSeconds": 90,
+  "observedAt": "2026-11-16T22:26:49+08:00",
+  "limits": {
+    "pid": 19664,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1104285696,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "presentDevices": [
+    {
+      "FriendlyName": "AMD Radeon RX 6800 XT",
+      "Status": "OK"
+    },
+    {
+      "FriendlyName": "AMD Radeon 780M Graphics",
+      "Status": "OK"
+    }
+  ],
+  "device": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  },
+  "gpu": {
+    "allocatedBytes": 91169280,
+    "reservedBytes": 102760448,
+    "peakAllocatedBytes": 2434745856,
+    "peakReservedBytes": 3045064704,
+    "driverFreeBytes": 16821977088,
+    "driverTotalBytes": 17163091968,
+    "systemAvailableBytes": 7799926784
+  },
+  "gpuProfile": {
+    "cudnnEnabled": false,
+    "allocatorFraction": 0.25,
+    "operatorSynchronization": true,
+    "hardGpuUtilizationOrPowerCap": false
+  },
+  "currentOperation": null,
+  "currentId": "EN2001a-a2-116",
+  "gpuSummary": {
+    "operatorCalls": 16896,
+    "maximumOperatorSeconds": 0.1581533999997191,
+    "gpu": {
+      "allocatedBytes": 91169280,
+      "reservedBytes": 102760448,
+      "peakAllocatedBytes": 2434745856,
+      "peakReservedBytes": 3045064704,
+      "driverFreeBytes": 16821977088,
+      "driverTotalBytes": 17163091968,
+      "systemAvailableBytes": 7799746560
+    },
+    "driverStabilityOrOriginalCauseProven": false
+  }
+}

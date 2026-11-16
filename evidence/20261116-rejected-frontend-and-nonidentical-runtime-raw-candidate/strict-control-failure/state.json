@@ -1,0 +1,78 @@
+{
+  "state": "FAILED_NATIVE_CONTEXT180_RETAINED_NO_AUTOMATIC_RETRY",
+  "at": "2026-11-16T22:42:05+08:00",
+  "pid": 6424,
+  "binding": {
+    "protocolSha256": "d2e46717ba202034a4207821761c1168748b388c3bd959c475e378f0a093a478",
+    "workerSha256": "fae26056bd1322933156172301ea992effc93e0f25ea3353d6956893a272d89e",
+    "nativeCheckpointSha256": "2caea232f4ac46367ed97373542b92e4dc1fa11e4e30dfd5f6d874abb618d127",
+    "authorCheckpointSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4"
+  },
+  "meetings": [
+    "EN2002a",
+    "20200623_S_R001S07C01"
+  ],
+  "completedBlocks": [],
+  "completedMeetings": [],
+  "nativeControlExact": false,
+  "newNeuralCalls": 1,
+  "trainingUpdates": 0,
+  "speakerIdentityScope": "Local to each180s block; not a continuous whole-meeting identity claim.",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "referencesRead": false,
+  "currentOperationBudgetSeconds": 90,
+  "observedAt": "2026-11-16T22:47:30+08:00",
+  "limits": {
+    "pid": 6424,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1415704576,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "presentDevices": [
+    {
+      "FriendlyName": "AMD Radeon RX 6800 XT",
+      "Status": "OK"
+    },
+    {
+      "FriendlyName": "AMD Radeon 780M Graphics",
+      "Status": "OK"
+    }
+  ],
+  "gpu": {
+    "allocatedBytes": 2242792960,
+    "reservedBytes": 4032823296,
+    "peakAllocatedBytes": 3157924864,
+    "peakReservedBytes": 4032823296,
+    "driverFreeBytes": 12887064576,
+    "driverTotalBytes": 17163091968,
+    "systemAvailableBytes": 10416590848
+  },
+  "gpuProfile": {
+    "cudnnEnabled": false,
+    "allocatorFraction": 0.5,
+    "operatorSynchronization": true,
+    "hardGpuUtilizationOrPowerCap": false
+  },
+  "device": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  },
+  "currentOperation": "model.language_model.layers.22.mlp.up_proj",
+  "currentId": "native180-control",
+  "currentGeneratedTokens": 724,
+  "error": "RuntimeError('Retained native180 generated-ID control differs; stop before evaluating new context blocks')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_guarded_context180_worker_20261116.py\", line 158, in main\n    require(packet['generatedIds']==P['expectedControlIds'],'Retained native180 generated-ID control differs; stop before evaluating new context blocks')\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_contract_20261116.py\", line 36, in require\n    raise RuntimeError(message)\nRuntimeError: Retained native180 generated-ID control differs; stop before evaluating new context blocks\n",
+  "finishedAt": "2026-11-16T22:47:30+08:00"
+}

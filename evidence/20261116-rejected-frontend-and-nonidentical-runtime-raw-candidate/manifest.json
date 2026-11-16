@@ -1,0 +1,104 @@
+{
+  "at": "2026-11-16T22:59:40.062815+08:00",
+  "parent": "4efdcefefb2a54f5e54bfe6106f0cc37981f8fbe",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\paired-score-r3.json",
+      "file": "frcrn-front-end-r1/paired-score-r3.json",
+      "bytes": 13634,
+      "sha256": "e86728edf909f198f5ad155be7ac4599c2f126b389f4b4f9dc43ae269c08aa6a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\guarded-native-context180-r2\\protocol.json",
+      "file": "guarded-native-context180-r2/protocol.json",
+      "bytes": 19504,
+      "sha256": "be9e227c1292071a75cffbf0fb5fc504ed70624fa286b95bf52a18acb2383b36"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\guarded-native-context180-r2\\scoring-control.json",
+      "file": "guarded-native-context180-r2/scoring-control.json",
+      "bytes": 1981,
+      "sha256": "a72ef77a3e6e028dd333462b48695419b94f0edccbee3697fd82d65fe3eac275"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\guarded-native-context180-r2\\runtime-control-proof.json",
+      "file": "guarded-native-context180-r2/runtime-control-proof.json",
+      "bytes": 2664,
+      "sha256": "de0fc3901133d130a78a120e23fabf24c0d53910eb18b72e0a728d602a8a047b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\completed.json",
+      "file": "closed-frontend/raw-completed.json",
+      "bytes": 9832,
+      "sha256": "bf0acb7e379e76bb59b9377bdc289cceab1c7826ced8e1c374f13c868c24f3ee"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\supervisor-raw\\completed.json",
+      "file": "closed-frontend/raw-supervisor.json",
+      "bytes": 793,
+      "sha256": "37d6b3078ae117808c4f5ce87e94e04c266bfaba7a0c3f75c22fffcbee1591d8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\completed.json",
+      "file": "closed-frontend/enhance-completed.json",
+      "bytes": 16136,
+      "sha256": "f105aa7e953b01362fbf158879811a8fccdd1b7a671e183fa55387e89c70165a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\supervisor-enhance\\completed.json",
+      "file": "closed-frontend/enhance-supervisor.json",
+      "bytes": 797,
+      "sha256": "6b6c6874f1b8d0481c452c9bba93c5292666d03032ab6b39b0b0952c6e892032"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\asr\\completed.json",
+      "file": "closed-frontend/asr-completed.json",
+      "bytes": 10061,
+      "sha256": "253b0ec9fb67cacca4fc8345917521129890dd272c42e86b910449218cb155e3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\supervisor-asr\\completed.json",
+      "file": "closed-frontend/asr-supervisor.json",
+      "bytes": 794,
+      "sha256": "577eaa3048849ba682949160344674d5f01bc3b7bd5ce37f60a85db461a75ef5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\guarded-native-context180-r1\\run-extension\\state.json",
+      "file": "strict-control-failure/state.json",
+      "bytes": 3158,
+      "sha256": "6a9b8d2ae367a6825805444e90f3fb1ec541c5fa72dc138956e91d3fd915c321"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\guarded-native-context180-r1\\run-extension\\supervisor-inference\\completed.json",
+      "file": "strict-control-failure/supervisor-inference/completed.json",
+      "bytes": 807,
+      "sha256": "03d2d41d9e9793587c13f3262c2fc0c54a4824169fbca1e74beb8d2885017789"
+    },
+    {
+      "source": "work\\checkpoint_frontend_rejection_r54.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 3864,
+      "sha256": "f48838dffb25f93103fb2920d73da73330ab7537eb92d339b25f2137133d2880"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/moss_guarded_raw_candidate_20261116.py": "a72fda23320c6357648bc32beb824cb5cfc7b74f0ff1d11e96273949562f038e",
+    "src/score_moss_guarded_context180_20261116.py": "2d723104b404f6c32ee3b8eaa1fd67297ebf9e1138eb93aca9131681ed2f58ee",
+    "src/tdt_selected_loss_20261116.py": "de968fc0365992d0bd97770e1ef965fa92d56395acd5009f701827f974375288"
+  },
+  "state": "FRCRN_REJECTED_RETAIN_STRICT_CONTROL_FAILURE_RAW_MOSS_SOURCE_CANDIDATE_RUNNING",
+  "trainingUpdates": 0,
+  "rawControlLexicalUnitsExact": 451,
+  "nativeGeneratedIdControlExact": false,
+  "timestampControlEquivalent": false,
+  "fullSourceQualityGatesChanged": false,
+  "TdtSelectedLossGpuEquivalenceProven": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

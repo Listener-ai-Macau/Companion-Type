@@ -1,0 +1,72 @@
+{
+  "revision": 54,
+  "evidenceDirectory": "evidence/20261116-rejected-frontend-and-nonidentical-runtime-raw-candidate",
+  "sources": [
+    "src/moss_guarded_raw_candidate_20261116.py",
+    "src/score_moss_guarded_context180_20261116.py",
+    "src/tdt_selected_loss_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\paired-score-r3.json",
+      "name": "frcrn-front-end-r1/paired-score-r3.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\guarded-native-context180-r2\\protocol.json",
+      "name": "guarded-native-context180-r2/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\guarded-native-context180-r2\\scoring-control.json",
+      "name": "guarded-native-context180-r2/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\guarded-native-context180-r2\\runtime-control-proof.json",
+      "name": "guarded-native-context180-r2/runtime-control-proof.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\raw\\completed.json",
+      "name": "closed-frontend/raw-completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\supervisor-raw\\completed.json",
+      "name": "closed-frontend/raw-supervisor.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\enhance\\completed.json",
+      "name": "closed-frontend/enhance-completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\supervisor-enhance\\completed.json",
+      "name": "closed-frontend/enhance-supervisor.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\asr\\completed.json",
+      "name": "closed-frontend/asr-completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r3\\supervisor-asr\\completed.json",
+      "name": "closed-frontend/asr-supervisor.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\guarded-native-context180-r1\\run-extension\\state.json",
+      "name": "strict-control-failure/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\guarded-native-context180-r1\\run-extension\\supervisor-inference\\completed.json",
+      "name": "strict-control-failure/supervisor-inference/completed.json"
+    }
+  ],
+  "commitMessage": "Reject bilingual FRCRN regression and retain nonidentical GPU runtime raw evaluation",
+  "claims": {
+    "state": "FRCRN_REJECTED_RETAIN_STRICT_CONTROL_FAILURE_RAW_MOSS_SOURCE_CANDIDATE_RUNNING",
+    "trainingUpdates": 0,
+    "rawControlLexicalUnitsExact": 451,
+    "nativeGeneratedIdControlExact": false,
+    "timestampControlEquivalent": false,
+    "fullSourceQualityGatesChanged": false,
+    "TdtSelectedLossGpuEquivalenceProven": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

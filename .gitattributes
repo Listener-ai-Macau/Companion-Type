@@ -463,3 +463,11 @@ src/compose_presence_identity_20261116.py -text -whitespace
 src/score_context_activity_20261116.py -text -whitespace
 
 src/moss_guarded_context180_worker_20261116.py -text -whitespace
+
+evidence/20261116-rejected-frontend-and-nonidentical-runtime-raw-candidate/** -text -whitespace
+
+src/moss_guarded_raw_candidate_20261116.py -text -whitespace
+
+src/score_moss_guarded_context180_20261116.py -text -whitespace
+
+src/tdt_selected_loss_20261116.py -text -whitespace
