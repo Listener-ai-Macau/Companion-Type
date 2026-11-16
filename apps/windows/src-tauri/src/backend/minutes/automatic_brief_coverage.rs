@@ -158,17 +158,37 @@ fn evaluate(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,
     Ok((decode_comparison(&raw,questions,&retrieved)?,summary))
 }
 
+#[derive(Debug,Serialize)]
+#[serde(rename_all="camelCase")]
+struct AppendSlot {id:String,path:String,label:String,max_characters:usize}
+fn append_slots(doc:&Document)->Vec<AppendSlot>{
+    let used=doc.topics.iter().flat_map(|t|&t.points).map(|p|p.text.chars().count()).sum::<usize>();
+    let main_free=1000usize.saturating_sub(used);let mut slots=Vec::new();
+    for(i,t)in doc.topics.iter().enumerate(){
+        if main_free>0{for j in t.points.len()..3{slots.push(AppendSlot{id:format!("t{i}p{j}"),path:format!("topics[{i}].points"),label:format!("{} · 主要观点",t.title),max_characters:90.min(main_free)});}}
+        for j in t.details.len()..3{slots.push(AppendSlot{id:format!("t{i}d{j}"),path:format!("topics[{i}].details"),label:format!("{} · 补充",t.title),max_characters:120});}
+    }
+    for(name,n,label)in[("decisions",doc.decisions.len(),"明确共同决定"),("actionItems",doc.action_items.len(),"明确会后任务"),("questions",doc.questions.len(),"明确未决问题")]{
+        for j in n..(n+8).min(20){slots.push(AppendSlot{id:format!("{name}{j}"),path:name.into(),label:label.into(),max_characters:180});}
+    }
+    slots
+}
+
 fn append(raw:&str,doc:&Document,allowed:&HashSet<String>,units:&[Unit])->Result<Document,String>{
     let value:Value=parse(raw)?;let root=value.as_object().ok_or_else(fail)?;
     if root.len()!=1{return Err(fail());}let rows=root.get("changes").and_then(Value::as_array).ok_or_else(fail)?;
     if rows.is_empty()||rows.len()>8{return Err(fail());}
+    let slots=append_slots(doc);let known=slots.iter().map(|s|(s.id.as_str(),s)).collect::<HashMap<_,_>>();let mut used_slots=HashSet::new();
     let mut value=serde_json::to_value(doc).map_err(|_|fail())?;
     for row in rows {
         let row=row.as_object().ok_or_else(fail)?;
-        if row.len()!=3||row.keys().any(|k|!matches!(k.as_str(),"path"|"questionIds"|"append")){return Err(fail());}
+        if row.len()!=3||row.keys().any(|k|!matches!(k.as_str(),"slot"|"questionIds"|"append")){return Err(fail());}
         let ids=row.get("questionIds").and_then(Value::as_array).ok_or_else(fail)?;
         if ids.is_empty()||ids.len()>40||ids.iter().any(|id|id.as_str().map_or(true,|s|!allowed.contains(s))){return Err(fail());}
-        let path=row.get("path").and_then(Value::as_str).ok_or_else(fail)?;
+        let id=row.get("slot").and_then(Value::as_str).ok_or_else(fail)?;
+        let slot=known.get(id).ok_or_else(||"追加显示容量：只能选择availableAppendSlots中实际存在的空位".to_string())?;
+        if !used_slots.insert(id){return Err("追加显示容量：每个空位编号只能使用一次".into());}
+        let path=slot.path.as_str();
         let pointer=if let Some(tail)=path.strip_prefix("topics[") {
             let(index,field)=tail.split_once("].").ok_or_else(fail)?;let index=index.parse::<usize>().map_err(|_|fail())?;
             if index>=doc.topics.len()||!matches!(field,"points"|"details"){return Err(fail());}
@@ -177,6 +197,7 @@ fn append(raw:&str,doc:&Document,allowed:&HashSet<String>,units:&[Unit])->Result
         let item=row.get("append").and_then(Value::as_object).ok_or_else(fail)?;
         let text=item.get("text").and_then(Value::as_str).ok_or_else(fail)?.trim();
         if text.starts_with('他')||text.starts_with('她'){return Err("新增纪要需使用可确认的人物归属，已有结果保留。".into());}
+        if text.chars().count()>slot.max_characters{return Err(format!("追加显示容量：空位{id}每条最多{}字",slot.max_characters));}
         value.pointer_mut(&pointer).and_then(Value::as_array_mut).ok_or_else(fail)?.push(Value::Object(item.clone()));
     }
     let repaired:Document=serde_json::from_value(value).map_err(|_|fail())?;
@@ -229,10 +250,9 @@ pub(super) fn complete(endpoint:&str,model:&str,key:&str,client:&reqwest::blocki
         }
         if issues.is_empty(){return Ok(current);}
         if round==2||allowed.iter().any(|q|attempted.contains(q)){return Err(fail());}
-        let capacity=current.topics.iter().enumerate().map(|(i,t)|json!({"topic":i,"title":t.title,"points":3usize.saturating_sub(t.points.len()),"details":3usize.saturating_sub(t.details.len())})).collect::<Vec<_>>();
         let used=current.topics.iter().flat_map(|t|&t.points).map(|p|p.text.chars().count()).sum::<usize>();
-        let mut payload=json!({"sourceUnits":units,"previousDocument":current,"coverageProblems":issues,"appendCapacity":capacity,"mainCharactersAvailable":1000usize.saturating_sub(used),"entryCharacterLimits":{"points":90,"details":120,"decisions":180,"actionItems":180,"questions":180}});
-        let raw=super::request(endpoint,model,key,client,APPEND,payload.clone(),false,start,trace,&format!("coverage-append-{round}"))?;
+        let mut payload=json!({"sourceUnits":units,"previousDocument":current,"coverageProblems":issues,"availableAppendSlots":append_slots(&current),"mainCharactersAvailable":1000usize.saturating_sub(used)});
+        let raw=super::request(endpoint,model,key,client,APPEND,payload.clone(),true,start,trace,&format!("coverage-append-{round}"))?;
         let before=current.clone();
         let added=match append(&raw,&current,&allowed,units){
             Ok(doc)=>doc,
@@ -240,8 +260,8 @@ pub(super) fn complete(endpoint:&str,model:&str,key:&str,client:&reqwest::blocki
                 // A rejected oversized patch has not changed the document.
                 // Recover its machine layout once; all facts still need audit.
                 recovered_capacity=true;payload["previousResult"]=json!(raw);payload["formatProblems"]=json!([reason]);
-                payload["instruction"]=json!("只修复追加条目的条数/字数容量合同。已有纪要逐字保留，不追加到容量为0的数组；可合并相关遗漏、用仍有空位的相关主题details。按mainCharactersAvailable分配points，优先保留实用核心，不以补背景凑数。不得截断条件/否定/自愿，不得编事实；仍只返回changes。");
-                let fixed=super::request(endpoint,model,key,client,APPEND,payload,false,start,trace,&format!("coverage-append-{round}-capacity-recovery"))?;
+                payload["instruction"]=json!("只修复追加条目的空位/字数容量合同。每项slot必须从availableAppendSlots选一个实际编号，不能自行写path，同一slot不可重复。已有纪要逐字保留；可合并相关遗漏、选择仍有空位的相关主题补充。按mainCharactersAvailable分配主要观点，优先实用核心，不为背景扩写。不得截断条件/否定/自愿，不得编事实；仍只返回changes。");
+                let fixed=super::request(endpoint,model,key,client,APPEND,payload,true,start,trace,&format!("coverage-append-{round}-capacity-recovery"))?;
                 append(&fixed,&current,&allowed,units)?
             },
             Err(reason)=>return Err(reason),
@@ -271,9 +291,20 @@ mod tests {
     #[test]
     fn automatic_brief_coverage_append_cannot_rewrite_old_text_or_guess_pronouns(){
         let allowed=HashSet::from(["q00".to_string()]);let old=doc();
-        let ok=json!({"changes":[{"questionIds":["q00"],"path":"topics[0].points","append":{"kind":"status","text":"原文明确不得先采购。","sources":["u000"]}}]}).to_string();
+        let ok=json!({"changes":[{"questionIds":["q00"],"slot":"t0p1","append":{"kind":"status","text":"原文明确不得先采购。","sources":["u000"]}}]}).to_string();
         let new=append(&ok,&old,&allowed,&units()).unwrap();assert_eq!(new.topics[0].points[0].text,old.topics[0].points[0].text);assert_eq!(new.topics[0].points.len(),2);
-        for bad in [json!({"changes":[{"questionIds":["q00"],"path":"topics[0].points[0]","text":"已经审批。"}]}),json!({"changes":[{"questionIds":["q00"],"path":"topics[0].details","append":{"text":"她已审批。","sources":["u000"]}}]}),json!({"changes":[{"questionIds":["q99"],"path":"topics[0].details","append":{"text":"不可采购。","sources":["u000"]}}]})]{assert!(append(&bad.to_string(),&old,&allowed,&units()).is_err());}
+        for bad in [json!({"changes":[{"questionIds":["q00"],"path":"topics[0].points[0]","text":"已经审批。"}]}),json!({"changes":[{"questionIds":["q00"],"slot":"t0d0","append":{"text":"她已审批。","sources":["u000"]}}]}),json!({"changes":[{"questionIds":["q99"],"slot":"t0d0","append":{"text":"不可采购。","sources":["u000"]}}]})]{assert!(append(&bad.to_string(),&old,&allowed,&units()).is_err());}
+    }
+    #[test]
+    fn automatic_brief_coverage_slots_exclude_full_arrays_and_cannot_be_reused(){
+        let allowed=HashSet::from(["q00".to_string()]);let mut full=doc();
+        for text in ["先核对采购前提。","采购有待核对。"]{let mut p=full.topics[0].points[0].clone();p.text=text.into();full.topics[0].points.push(p);}
+        assert!(!append_slots(&full).iter().any(|s|s.path=="topics[0].points"));
+        let row=json!({"questionIds":["q00"],"slot":"t0d0","append":{"text":"不得先采购。","sources":["u000"]}});
+        let duplicate=json!({"changes":[row.clone(),row.clone()]});assert!(append(&duplicate.to_string(),&full,&allowed,&units()).is_err());
+        let mut occupied=row.clone();occupied["slot"]=json!("t0p0");assert!(append(&json!({"changes":[occupied]}).to_string(),&full,&allowed,&units()).is_err());
+        let changed=append(&json!({"changes":[row]}).to_string(),&full,&allowed,&units()).unwrap();
+        assert_eq!(serde_json::to_value(&changed.topics[0].points).unwrap(),serde_json::to_value(&full.topics[0].points).unwrap());assert_eq!(changed.topics[0].details.len(),1);
     }
     #[test]
     fn automatic_brief_coverage_requires_real_summary_witness_and_matching_kind(){
