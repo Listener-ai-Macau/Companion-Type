@@ -9,6 +9,14 @@ pub(super) type Notifications=Pin<Box<dyn futures::Stream<Item=Result<ValueNotif
 pub(super) const MOTION_TIMEOUT:Duration=Duration::from_millis(750);
 pub(super) const ACK_TIMEOUT:Duration=Duration::from_secs(2);
 
+// Two complete CIM9 frames fit the existing96B settings attribute. Keep
+// independent CRC/clock/sequence handling for every frame; CIN1 and legacy
+// motion remain one packet and cannot be mistaken for an aggregate.
+fn motion_packets(packet:&[u8])->std::slice::Chunks<'_,u8>{
+    let batch=packet.len()==88&&packet.chunks_exact(44).all(|p|&p[..4]==b"CIM1"&&p[4]==9);
+    packet.chunks(if batch{44}else{packet.len().max(1)})
+}
+
 // Opt-in, process-bounded QA capture of motion packets only. Normal product
 // sessions do not format or write these records; no microphone data is here.
 fn trace_motion_wire(packet:&[u8]) {
@@ -91,23 +99,25 @@ where A:Fn(u32)->F,F:Future<Output=Result<(),String>> {
                 for index in 0..64 {
                     if value.uuid==SETTINGS_UUID {
                         if mode==3 {
-                            let fused=companion_desktop_input::pointer::Sample::parse(&value.value).ok();
+                          for packet in motion_packets(&value.value){
+                            let fused=companion_desktop_input::pointer::Sample::parse(packet).ok();
                             let mut raw_traced=false;
-                            if matches!(options,24|72|200|232) {
-                                if let Ok(sample)=companion_desktop_input::pointer::desktop::Raw::parse(&value.value){
+                            if matches!(options,24|72|200|232|248) {
+                                if let Ok(sample)=companion_desktop_input::pointer::desktop::Raw::parse(packet){
                                     // CIM5 intentionally has no fused Sample.
                                     // Capture accepted raw packets here too;
                                     // the old fused-only trace lost all RAW24
                                     // payloads despite healthy sample metrics.
-                                    trace_motion_wire(&value.value);raw_traced=true;
+                                    trace_motion_wire(packet);raw_traced=true;
                                     sequence=Some(sample.sequence);notify(Update::RawMotion(sample,fused.as_ref().map(|s|s.accel)));
                                 }
                             }
                             if let Some(sample)=fused{
-                                if !raw_traced{trace_motion_wire(&value.value);}
+                                if !raw_traced{trace_motion_wire(packet);}
                                 sequence=Some(sample.sequence);
                                 if sample.aim.is_some(){latest=Some(sample);}else{notify(Update::Motion(sample));}
                             }
+                          }
                         }
                         if let Ok(status)=InputStatus::parse(&value.value,peer){
                             if status.request==0 {trace_input("physical",&status);physical.push(status);}
@@ -227,6 +237,37 @@ mod tests {
             Update::Physical(_)=>{events.lock().unwrap().push("control");signal.store(true,Ordering::Release);},_=>{},
         },|_|async{Ok(())}).await,Ok(()));
         assert_eq!(*events.lock().unwrap(),vec!["raw","motion","control"]);
+    }
+    #[tokio::test(start_paused=true)]
+    async fn cim9_fifo_delivers_every_frame_of_two_sample_notifications_with_fractional_clock(){
+        let mut packets=vec![];
+        for n in 0..12u32{
+            let h="43494d31090303020900000070110100000000000040a861589e6b0300800100ff7f64032700feffa23956bd";
+            let mut packet=(0..h.len()).step_by(2).map(|i|u8::from_str_radix(&h[i..i+2],16).unwrap()).collect::<Vec<_>>();
+            let ticks=n*96;packet[8..12].copy_from_slice(&(n+1).to_le_bytes());packet[12..16].copy_from_slice(&(ticks/40).to_le_bytes());packet[36]=(ticks%40)as u8;
+            let mut crc=0xFFFF_FFFFu32;for byte in &packet[..40]{crc^=*byte as u32;for _ in 0..8{crc=(crc>>1)^((0u32.wrapping_sub(crc&1))&0xEDB8_8320);}}
+            packet[40..].copy_from_slice(&(!crc).to_le_bytes());
+            packets.push(packet);
+        }
+        let mut notifications=packets.chunks(2).map(|pair|Ok(ValueNotification{uuid:SETTINGS_UUID,value:pair.concat()})).collect::<Vec<_>>();
+        notifications.push(Ok(click(1)));
+        let mut values:Notifications=Box::pin(futures::stream::iter(notifications).chain(futures::stream::pending()));
+        let stop=AtomicBool::new(false);let seen=Mutex::new(vec![]);
+        assert_eq!(receive(&mut values,3,248,&peer(),&stop,&|event|match event{
+            Update::RawMotion(s,g)=>{assert!(s.high_rate);assert_eq!(s.sensor_sub_ms_25us,(((s.sequence-1)*96)%40)as u8);assert_eq!(g,Some([0.,0.,1000.]));seen.lock().unwrap().push(("raw",s.sequence));},
+            Update::Motion(s)=>seen.lock().unwrap().push(("fused",s.sequence)),
+            Update::Physical(_)=>stop.store(true,Ordering::Release),_=>{},
+        },|_|async{Ok(())}).await,Ok(()));
+        let expected=(1..=12).flat_map(|n|[("raw",n),("fused",n)]).collect::<Vec<_>>();assert_eq!(*seen.lock().unwrap(),expected);
+    }
+    #[test]fn only_explicit_two_frame_cim9_is_split_and_each_crc_still_matters(){
+        let h="43494d31090303020900000070110100000000000040a861589e6b0300800100ff7f64032700feffa23956bd";
+        let packet=(0..h.len()).step_by(2).map(|i|u8::from_str_radix(&h[i..i+2],16).unwrap()).collect::<Vec<_>>();
+        let mut batch=[packet.clone(),packet.clone()].concat();batch[44+28]^=1;
+        let frames=motion_packets(&batch).collect::<Vec<_>>();assert_eq!(frames.len(),2);
+        assert!(companion_desktop_input::pointer::desktop::Raw::parse(frames[0]).is_ok());assert!(companion_desktop_input::pointer::desktop::Raw::parse(frames[1]).is_err());
+        assert_eq!(motion_packets(&packet).count(),1);assert_eq!(motion_packets(&[0;64]).count(),1);assert_eq!(motion_packets(&[]).count(),0);
+        batch[44]=0;assert_eq!(motion_packets(&batch).count(),1);
     }
     #[tokio::test(start_paused=true)]
     async fn cim8_full_gyro_range_reaches_raw_and_fused_consumers_before_control(){

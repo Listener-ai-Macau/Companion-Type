@@ -17,6 +17,19 @@ pub struct Profile {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]fn fifo_contact_window_keeps_the_old_profile_time_scale_and_rejects_loss(){
+        let mut c=Contact::new(None);
+        for n in 0..300u32{
+            let ticks=n*96;let ms=ticks as f64*0.025;
+            c.sample(Raw{frequency_fine:0,sequence:n+1,sensor_ms:ticks/40,sensor_sub_ms_25us:(ticks%40)as u8,continuity_generation:1,high_rate:true,wide_gyro:true,accel_mg:[ms*2.,0.,1000.],gyro_dps:[ms*0.1,0.,0.]});
+        }
+        assert!(c.raw.front().unwrap().sensor_ms<=150,"the pre-contact baseline must remain available");
+        let grid=contact_grid(&c.raw,500).unwrap();assert_eq!(grid.len(),19);
+        for (n,s)in grid.iter().enumerate(){let at=470.+n as f64*10.;assert!((s.accel_mg[0]-at*2.).abs()<1e-9);assert!((s.gyro_dps[0]-at*0.1).abs()<1e-9);}
+        c.contact(500,0.7,Point::default());assert!(c.pending());
+        let mut s=*c.raw.back().unwrap();s.sequence+=1;s.sensor_ms+=2;s.continuity_generation=2;c.sample(s);
+        assert_eq!(c.raw.len(),1);assert!(!c.pending(),"old contacts cannot cross a missing FIFO interval");
+    }
     #[test]
     #[ignore="Requires the Owner-labelled local capture; never bundles private samples in the product"]
     fn physical_front_corners_match_upstream_and_deduplicate_the_actual_rebounds(){
@@ -42,7 +55,7 @@ mod tests {
         for w in windows.as_array().unwrap(){
             c.raw.clear();
             for s in w["samples"].as_array().unwrap(){c.sample(Raw{
-                wide_gyro:false,sequence:s["sequence"].as_u64().unwrap()as u32,sensor_ms:s["sensorMs"].as_u64().unwrap()as u32,
+                frequency_fine:0,sensor_sub_ms_25us:0,continuity_generation:0,high_rate:false,wide_gyro:false,sequence:s["sequence"].as_u64().unwrap()as u32,sensor_ms:s["sensorMs"].as_u64().unwrap()as u32,
                 accel_mg:std::array::from_fn(|i|s["accelMg"][i].as_f64().unwrap()),gyro_dps:std::array::from_fn(|i|s["gyroDps"][i].as_f64().unwrap()),
             });}
             let ms=w["sensorMs"].as_u64().unwrap()as u32;
@@ -61,7 +74,7 @@ mod tests {
         for w in windows.as_array().unwrap(){
             events.push(w["sensorMs"].as_u64().unwrap()as u32);
             for s in w["samples"].as_array().unwrap(){raw.insert(s["sensorMs"].as_u64().unwrap()as u32,Raw{
-                wide_gyro:false,sequence:s["sequence"].as_u64().unwrap()as u32,sensor_ms:s["sensorMs"].as_u64().unwrap()as u32,
+                frequency_fine:0,sensor_sub_ms_25us:0,continuity_generation:0,high_rate:false,wide_gyro:false,sequence:s["sequence"].as_u64().unwrap()as u32,sensor_ms:s["sensorMs"].as_u64().unwrap()as u32,
                 accel_mg:std::array::from_fn(|i|s["accelMg"][i].as_f64().unwrap()),gyro_dps:std::array::from_fn(|i|s["gyroDps"][i].as_f64().unwrap()),
             });}
         }
@@ -132,7 +145,11 @@ impl Contact {
     pub fn sample(&mut self,s:Raw){
         if !s.accel_mg.iter().chain(s.gyro_dps.iter()).all(|x|x.is_finite()){return;}
         if self.raw.back().is_some_and(|p|{let n=s.sequence.wrapping_sub(p.sequence);n==0||n>=0x8000_0000}){return;}
-        if self.raw.len()==64{self.raw.pop_front();}self.raw.push_back(s);
+        if self.raw.back().is_some_and(|p|p.continuity_generation!=s.continuity_generation||p.high_rate!=s.high_rate){self.clear_stream();}
+        // Preserve the same >600ms evidence at417Hz. The old64-frame ring
+        // retained only154ms, erasing the baseline before contact evaluation.
+        let capacity=if s.high_rate{320}else{64};
+        while self.raw.len()>=capacity{self.raw.pop_front();}self.raw.push_back(s);
     }
     pub fn contact(&mut self,ms:u32,now:f64,point:Point){
         if self.pending.len()<8{self.pending.push_back(Pending{ms,at:now,point,learning:self.status.learning});}
@@ -157,7 +174,13 @@ impl Contact {
         }
         let onset=onset?;
         if (self.raw.back()?.sensor_ms.wrapping_sub(onset)as i32)<150{return None;}
-        let window:Vec<_>=self.raw.iter().filter(|s|(-30..=150).contains(&(s.sensor_ms.wrapping_sub(onset)as i32))).collect();
+        let mut window:Vec<_>=self.raw.iter().filter(|s|(-30..=150).contains(&(s.sensor_ms.wrapping_sub(onset)as i32))).collect();
+        // Personal DTW profiles are100Hz waveforms. Resample ONLY this host
+        // classification view, never the raw stream or motion integration.
+        let resampled;
+        if self.raw.back()?.high_rate{
+            resampled=contact_grid(&self.raw,onset)?;window=resampled.iter().collect();
+        }
         if !(8..=dtw::MAX_ROWS).contains(&window.len())||window.windows(2).any(|w|w[1].sensor_ms.wrapping_sub(w[0].sensor_ms)>35){return None;}
         let series=window.iter().map(|s|std::array::from_fn(|i|if i<3{(s.accel_mg[i]-a[i])/1000.}else{(s.gyro_dps[i-3]-g[i-3])/100.})).collect();
         Some(Impact{onset,series:dtw::normalize(series)})
@@ -193,4 +216,22 @@ impl Contact {
         }
         clicks
     }
+}
+
+fn contact_grid(raw:&VecDeque<Raw>,onset:u32)->Option<Vec<Raw>>{
+    let origin=onset.wrapping_sub(30);
+    let relative=|s:&Raw|s.sensor_ms.wrapping_sub(origin)as i32 as f64+s.sensor_sub_ms_25us as f64*0.025;
+    let values:Vec<_>=raw.iter().collect();
+    let mut out=Vec::with_capacity(19);let mut index=1;
+    for n in 0..19{
+        let at=n as f64*10.;
+        while index<values.len()&&relative(values[index])<at{index+=1;}
+        if index>=values.len(){return None;}
+        let (a,b)=(values[index-1],values[index]);let (ta,tb)=(relative(a),relative(b));
+        if ta>at||tb-ta<=0.||tb-ta>35.{return None;}
+        let t=(at-ta)/(tb-ta);let mut s=*a;s.sensor_ms=origin.wrapping_add(n*10);s.sensor_sub_ms_25us=0;
+        for i in 0..3{s.accel_mg[i]=a.accel_mg[i]+t*(b.accel_mg[i]-a.accel_mg[i]);s.gyro_dps[i]=a.gyro_dps[i]+t*(b.gyro_dps[i]-a.gyro_dps[i]);}
+        out.push(s);
+    }
+    Some(out)
 }

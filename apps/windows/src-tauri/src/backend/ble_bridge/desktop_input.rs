@@ -100,16 +100,17 @@ pub(crate) fn listen(
 
 fn unsupported_pointer_fallback(mode:u8,wanted:u8,attempted:u8,result:u8)->Option<u8>{
     if mode!=3||result!=2{return None;}
-    match(wanted,attempted){(232,232)=>Some(200),(232|200,200)=>Some(72),(8,8)=>Some(0),_=>None}
+    match(wanted,attempted){(248,248)=>Some(232),(248|232,232)=>Some(200),(248|232|200,200)=>Some(72),(8,8)=>Some(0),_=>None}
 }
 #[cfg(test)]
 mod pointer_negotiation_tests{
     use super::unsupported_pointer_fallback as fallback;
     #[test]fn wide_native_and_legacy_only_follow_explicit_unsupported(){
+        assert_eq!(fallback(3,248,248,2),Some(232));assert_eq!(fallback(3,248,232,2),Some(200));assert_eq!(fallback(3,248,200,2),Some(72));assert_eq!(fallback(3,248,72,2),None);
         assert_eq!(fallback(3,232,232,2),Some(200));assert_eq!(fallback(3,232,200,2),Some(72));
         assert_eq!(fallback(3,232,72,2),None);assert_eq!(fallback(3,200,200,2),Some(72));
         assert_eq!(fallback(3,8,8,2),Some(0));
-        for result in [0,1,3,255]{assert_eq!(fallback(3,232,232,result),None);}
+        for result in [0,1,3,255]{assert_eq!(fallback(3,232,232,result),None);assert_eq!(fallback(3,248,248,result),None);}
         assert_eq!(fallback(1,232,232,2),None);
     }
 }
@@ -327,7 +328,9 @@ mod hardware_test {
         assert_eq!(std::env::var("COMPANION_IMU_HARDWARE_LEASE").as_deref(),Ok("fixed-uid-native-precision-no-mic-no-cursor"));
         let expected:u32=std::env::var("COMPANION_IMU_EXPECT_FIRMWARE").expect("actual firmware").parse().unwrap();
         let expected_options:usize=std::env::var("COMPANION_IMU_EXPECT_OPTIONS").expect("explicit native or fallback").parse().unwrap();
-        assert!(matches!(expected_options,72|200|232));
+        assert!(matches!(expected_options,72|200|232|248));
+        let requested_options:u8=std::env::var("COMPANION_IMU_REQUEST_OPTIONS").ok().map(|s|s.parse().unwrap()).unwrap_or(232);
+        assert!(matches!(requested_options,200|232|248));
         // The same production receiver can retain an Owner-labelled paired
         // capture until the original prompt requests Stop. No mapper/MIC.
         let capture_stop=std::env::var_os("COMPANION_IMU_NATIVE_CAPTURE_STOP").map(std::path::PathBuf::from);
@@ -356,10 +359,10 @@ mod hardware_test {
         }ending_stop.store(true,Ordering::Release);});
         let rows=Arc::new(Mutex::new(Vec::<serde_json::Value>::new()));let observed=rows.clone();
         let accepted=Arc::new(std::sync::atomic::AtomicUsize::new(0));let options=accepted.clone();let completed=stop.clone();
-        let result=listen_mode(DEVICE,peer,stop.clone(),Arc::new(tokio::sync::Mutex::new(())),3,232,move|event|match event{
+        let result=listen_mode(DEVICE,peer,stop.clone(),Arc::new(tokio::sync::Mutex::new(())),3,requested_options,move|event|match event{
             Update::Ready(status)=>{options.store(status.options as usize,Ordering::Release);},
             Update::RawMotion(raw,gravity)=>{
-                let mut rows=observed.lock().unwrap();if rows.len()<sample_limit{rows.push(serde_json::json!({"sequence":raw.sequence,"sensorMs":raw.sensor_ms,"accelMg":raw.accel_mg,"gyroDps":raw.gyro_dps,"gravity":gravity}));}
+                let mut rows=observed.lock().unwrap();if rows.len()<sample_limit{rows.push(serde_json::json!({"sequence":raw.sequence,"sensorMs":raw.sensor_ms,"sensorSubMs25us":raw.sensor_sub_ms_25us,"continuityGeneration":raw.continuity_generation,"frequencyFine":raw.frequency_fine,"highRate":raw.high_rate,"hostUnixUs":std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_micros(),"accelMg":raw.accel_mg,"gyroDps":raw.gyro_dps,"gravity":gravity}));}
                 if rows.len()>=sample_limit{completed.store(true,Ordering::Release);}
             },_=>{},
         });
@@ -369,15 +372,16 @@ mod hardware_test {
             if let Some(owned)=owned{disconnect_native_device(&owned.device).await?;}Ok(())
         });
         let rows=rows.lock().unwrap();let accepted=accepted.load(Ordering::Acquire);
-        let report=serde_json::json!({"firmware":expected,"requestedOptions":232,"acceptedOptions":accepted,"samples":*rows,"mode0Confirmed":result.is_ok(),"ownedHandlesClosed":cleanup.is_ok(),"microphoneCommands":0,"cursorOutput":false,"physicalStationaryLabelKnown":false});
+        let report=serde_json::json!({"firmware":expected,"requestedOptions":requested_options,"acceptedOptions":accepted,"samples":*rows,"mode0Confirmed":result.is_ok(),"ownedHandlesClosed":cleanup.is_ok(),"microphoneCommands":0,"cursorOutput":false,"physicalStationaryLabelKnown":false});
         std::fs::write(std::env::var("COMPANION_IMU_NATIVE_RESULT").expect("explicit receipt path"),serde_json::to_vec_pretty(&report).unwrap()).unwrap();
         cleanup.expect("owned handles closed");result.expect("production mode0 acknowledgement");
         assert_eq!(accepted,expected_options);assert!(rows.len()>=400,"insufficient actual stream");
-        if matches!(accepted,200|232){
+        if matches!(accepted,200|232|248){
             assert!(rows.iter().any(|s|s["accelMg"].as_array().unwrap().iter().any(|v|{let x=v.as_f64().unwrap();(x-x.round()).abs()>1e-6})),"native precision was reduced to whole mg");
             assert!(rows.iter().all(|s|s["accelMg"].as_array().unwrap().iter().all(|v|{let codes=v.as_f64().unwrap()/0.122;(codes-codes.round()).abs()<1e-7})),"native register scale differs");
         }
-        eprintln!("NATIVE_PRECISION_ACTUAL firmware={expected} requested=232 accepted={accepted} samples={} mode0=true handles_closed=true no_mapper=true no_mic=true",rows.len());
+        if accepted==248{assert!(rows.iter().all(|s|s["highRate"]==true));}
+        eprintln!("NATIVE_PRECISION_ACTUAL firmware={expected} requested={requested_options} accepted={accepted} samples={} mode0=true handles_closed=true no_mapper=true no_mic=true",rows.len());
     }
     fn fixed_board_motion_probe(capture:bool){
         const DEVICE:&str="C8:ED:45:EB:95:B4";

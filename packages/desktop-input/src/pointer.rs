@@ -23,6 +23,7 @@ impl Point {
 #[derive(Clone, Copy, Debug)]
 pub struct Sample {
     pub sequence: u32, pub sensor_ms: u32, pub held: bool, pub tap_serial: u8, pub fused: bool, pub device_ready: Option<bool>,
+    pub sensor_sub_ms_25us:u8,pub continuity_generation:u16,
     pub accel: [f64;3], pub gyro: [f64;3],
     /// CIM4: device heading, world-vertical yaw rate, device-X pitch rate.
     /// Heading is integrated BEFORE lossy delivery, as in WatchPointer.
@@ -30,7 +31,7 @@ pub struct Sample {
 }
 impl Sample {
     pub fn parse(p: &[u8]) -> Result<Self, &'static str> {
-        if p.len()<32 || &p[..4]!=b"CIM1" || !matches!(p[4],1|2|3|4|6|7|8) || p.len()!=if matches!(p[4],6|7|8){40}else{32} || p[5]!=3 || p[6]&!(if p[4]>=3{3}else{1})!=0 || (matches!(p[4],6|7)&&p[34..36]!=[0,0]) {
+        if p.len()<32 || &p[..4]!=b"CIM1" || !matches!(p[4],1|2|3|4|6|7|8|9) || p.len()!=if p[4]==9{44}else if matches!(p[4],6|7|8){40}else{32} || p[5]!=3 || p[6]&!(if p[4]>=3{3}else{1})!=0 || (matches!(p[4],6|7)&&p[34..36]!=[0,0]) || (p[4]==9&&p[36]>=40) {
             return Err("invalid CIM1 sample");
         }
         let mut crc=0xffff_ffffu32;
@@ -38,6 +39,7 @@ impl Sample {
         for byte in &p[..crc_at] { crc^=*byte as u32; for _ in 0..8 {crc=(crc>>1)^((0u32.wrapping_sub(crc&1))&0xedb8_8320);} }
         if !crc!=u32::from_le_bytes(p[crc_at..].try_into().unwrap()) {return Err("CIM1 CRC mismatch");}
         let mut s=Self {sequence:u32::from_le_bytes(p[8..12].try_into().unwrap()),
+            sensor_sub_ms_25us:if p[4]==9{p[36]}else{0},continuity_generation:if p[4]==9{u16::from_le_bytes([p[38],p[39]])}else{0},
             sensor_ms:u32::from_le_bytes(p[12..16].try_into().unwrap()),held:p[6]&1!=0,tap_serial:p[7],fused:p[4]>=2,device_ready:if p[4]>=3{Some(p[6]&2!=0)}else{None},accel:[0.;3],gyro:[0.;3],aim:None};
         if p[4]==4 {
             let value=|at|i16::from_le_bytes(p[at..at+2].try_into().unwrap()) as f64/100.;
@@ -46,10 +48,15 @@ impl Sample {
             return Ok(s);
         }
         for i in 0..3 {s.accel[i]=i16::from_le_bytes(p[16+2*i..18+2*i].try_into().unwrap()) as f64;
-            if matches!(p[4],3|6|7|8){s.accel[i]*=1000./16384.;}
-            s.gyro[i]=i16::from_le_bytes(p[22+2*i..24+2*i].try_into().unwrap()) as f64*if p[4]==8{0.04}else{0.01};}
+            if matches!(p[4],3|6|7|8|9){s.accel[i]*=1000./16384.;}
+            s.gyro[i]=i16::from_le_bytes(p[22+2*i..24+2*i].try_into().unwrap()) as f64*if matches!(p[4],8|9){0.04}else{0.01};}
         Ok(s)
     }
+}
+/// Keep the49-day millisecond wrap and the sensor's25us resolution. Converting
+/// the entire clock into a u32 of ticks would wrap after only29.8hours.
+fn sensor_elapsed(ms:u32,fraction:u8,previous_ms:u32,previous_fraction:u8)->f64{
+    ms.wrapping_sub(previous_ms)as f64*0.001+(fraction as f64-previous_fraction as f64)*0.000025
 }
 #[derive(Clone, Copy, Debug, Default, Deserialize, Serialize, PartialEq)]
 #[serde(rename_all="camelCase")]
@@ -79,9 +86,9 @@ impl Default for Settings {
 }
 impl Settings {
     pub fn relative_remote()->Self{Self{mapping:Mapping::Relative,relative_direct:true,relative_horizontal:RelativeHorizontal::Tilt,tap_click:true,deadzone:0.,smoothing:0.,acceleration:0.,..Self::default()}}
-    /// CIM8 full-range gyro/native acceleration is negotiated explicitly;
-    /// unsupported firmware falls back to native200 then legacy72.
-    pub fn pointer_options(&self)->u8{if self.contact_regions{232}else if self.desktop_motion{24}else if self.relative_direct&&self.mapping==Mapping::Relative{40}else{8}}
+    /// Desktop contact mode requests timestamped417Hz FIFO/CIM9 explicitly;
+    /// unsupported firmware falls back to CIM8, native200 then legacy72.
+    pub fn pointer_options(&self)->u8{if self.contact_regions&&self.desktop_motion{248}else if self.contact_regions{232}else if self.desktop_motion{24}else if self.relative_direct&&self.mapping==Mapping::Relative{40}else{8}}
     pub fn validate(&self)->Result<(), &'static str> {
         if self.desktop_motion&&self.mapping!=Mapping::Relative{return Err("desktop motion requires relative mapping");}
         if self.relative_direct&&self.mapping!=Mapping::Relative{return Err("direct relative input requires relative mapping");}
@@ -156,7 +163,7 @@ pub struct Metrics {pub samples:u64,pub missing:u64,pub duplicates:u64,pub gaps:
 pub struct Pointer {
     pub settings:Settings,pub metrics:Metrics, smoother:Smoother, filter_x:OneEuro,filter_y:OneEuro,
     relative:relative::Response,last_emitted:Point,
-    last:Option<(u32,u32)>, last_tap:Option<u8>, arrival:Option<f64>, frame_at:Option<f64>,sensor_clock:f64,clock_offset:Option<f64>,
+    last:Option<(u32,u32,u8,u16)>, last_tap:Option<u8>, arrival:Option<f64>, frame_at:Option<f64>,sensor_clock:f64,clock_offset:Option<f64>,
     bias:[f64;3],bias_sum:[f64;3],accel_sum:[f64;3],calibration_start:Option<u32>,
     fusion:fusion::Fusion,
     coarse:Option<intent::Intent>,
@@ -245,7 +252,7 @@ impl Pointer {
         // the cursor steady remains a click, independently of the clutch key.
         if event.events==CLICK&&!self.settings.tap_click{return Ok(true);}
         if self.metrics.paused||!self.metrics.calibrated{if event.events&UP!=0{self.wait_release=false;}return Ok(true);}
-        let measured_at=self.last.map(|(_,ms)|self.sensor_clock+(event.sensor_ms.wrapping_sub(ms) as i32 as f64)/1000.+self.clock_offset.unwrap_or(0.)).unwrap_or(0.);
+        let measured_at=self.last.map(|(_,ms,fraction,_)|self.sensor_clock+(event.sensor_ms.wrapping_sub(ms) as i32 as f64)/1000.-fraction as f64*0.000025+self.clock_offset.unwrap_or(0.)).unwrap_or(0.);
         if self.contacts.status.learning.is_some(){
             if event.events&CLICK!=0{self.contacts.contact(event.sensor_ms,self.arrival.unwrap_or(measured_at),self.shown);}
             return Ok(true);
@@ -287,24 +294,26 @@ impl Pointer {
         }
         Ok(true)
     }
-    fn observe_clock(&mut self,sequence:u32,sensor_ms:u32,now:f64)->Option<(f64,bool,f64)> {
-        let dt=if let Some((previous,ms))=self.last {
+    fn observe_clock(&mut self,sequence:u32,sensor_ms:u32,fraction:u8,generation:u16,now:f64)->Option<(f64,bool,f64)> {
+        let mut continuity_gap=false;
+        let dt=if let Some((previous,ms,previous_fraction,previous_generation))=self.last {
             let advance=sequence.wrapping_sub(previous);
             if advance==0 || advance>=0x8000_0000 {self.metrics.duplicates+=1;return None;}
             self.metrics.missing+=(advance-1) as u64;
-            sensor_ms.wrapping_sub(ms) as f64/1000.
+            continuity_gap=previous_generation!=generation;
+            sensor_elapsed(sensor_ms,fraction,ms,previous_fraction)
         }else{0.};
-        let gap=dt>0.2 || self.arrival.is_some_and(|at|now-at>0.3);
+        let gap=continuity_gap||dt<0.||dt>0.2 || self.arrival.is_some_and(|at|now-at>0.3);
         if gap {self.metrics.gaps+=1;self.release();self.reset_motion();}
         // Same fastest-arriving clock alignment as WatchPointer. Button DOWN
         // uses its sensor sample time, rather than an invented60ms rewind.
         // Desktop radio backlog must not become a fresh clock baseline just
         // because host arrivals paused. The monotonic sensor clock still
         // advances across that gap; begin_stream owns actual stream resets.
-        if self.last.is_none()||(gap&&!self.settings.desktop_motion){self.sensor_clock=sensor_ms as f64/1000.;self.clock_offset=None;}else{self.sensor_clock+=dt;}
+        if self.last.is_none()||(gap&&!self.settings.desktop_motion){self.sensor_clock=sensor_ms as f64/1000.+fraction as f64*0.000025;self.clock_offset=None;}else{self.sensor_clock+=dt;}
         self.clock_offset=Some(self.clock_offset.unwrap_or(f64::INFINITY).min(now-self.sensor_clock));
         let measured_at=self.sensor_clock+self.clock_offset.unwrap();
-        self.last=Some((sequence,sensor_ms));self.arrival=Some(now);self.metrics.samples+=1;
+        self.last=Some((sequence,sensor_ms,fraction,generation));self.arrival=Some(now);self.metrics.samples+=1;
         let first=*self.first_arrival.get_or_insert(now);
         if now>first{self.metrics.receive_hz=(self.metrics.samples-1)as f64/(now-first);}
         if dt>0. && dt<0.2 {self.metrics.sensor_hz=if self.metrics.sensor_hz==0.{1./dt}else{self.metrics.sensor_hz*0.9+0.1/dt};}
@@ -329,7 +338,7 @@ impl Pointer {
     }
     pub fn sample_raw_gravity(&mut self,s:desktop::Raw,gravity:Option<[f64;3]>,now:f64){
         if self.settings.desktop_motion{
-            let Some((_,_,measured_at))=self.observe_clock(s.sequence,s.sensor_ms,now)else{return;};
+            let Some((_,_,measured_at))=self.observe_clock(s.sequence,s.sensor_ms,s.sensor_sub_ms_25us,s.continuity_generation,now)else{return;};
             let delayed=now-measured_at>0.3; // Same existing pointer stale interval.
             self.contacts.sample(s);
             let surface=self.settings.relative_direct;
@@ -369,7 +378,7 @@ impl Pointer {
     pub fn clear_contacts(&mut self){self.contacts=contact::Contact::new(None);self.settings.contact_profile=None;self.settings.contact_device=None;}
     pub fn sample(&mut self,s:Sample,now:f64,bounds:Bounds) {
         if self.settings.desktop_motion{self.observe_device_readiness(s.device_ready);return;}
-        let Some((dt,gap,measured_at))=self.observe_clock(s.sequence,s.sensor_ms,now)else{return;};
+        let Some((dt,gap,measured_at))=self.observe_clock(s.sequence,s.sensor_ms,s.sensor_sub_ms_25us,s.continuity_generation,now)else{return;};
         // Consume the serial even while paused/calibrating. A lost packet may
         // carry the same event again; reconnect/baseline must never replay it.
         let tapped=self.last_tap.is_some_and(|previous|s.tap_serial.wrapping_sub(previous)==1);

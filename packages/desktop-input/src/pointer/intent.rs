@@ -8,7 +8,7 @@ use serde::Serialize;
 pub enum Source {#[default] Rest,Translation}
 pub struct Intent {
     pub desktop:Desktop,pub source:Source,pub settings:Settings,
-    smoother:Smoother,at:Option<f64>,last:Option<(u32,u32,f64)>,
+    smoother:Smoother,at:Option<f64>,last:Option<(u32,u32,u8,u16,f64)>,
     pending:Point,
 }
 impl Default for Intent {
@@ -34,17 +34,16 @@ impl Intent {
         self.sample_blocked_gravity(s,now,blocked,None);
     }
     pub fn sample_blocked_gravity(&mut self,s:Raw,now:f64,blocked:bool,gravity:Option<[f64;3]>){
-        let sample_dt=self.last.map(|(_,ms,_)|s.sensor_ms.wrapping_sub(ms)as f64/1000.).unwrap_or(0.01);
-        if let Some((sequence,ms,arrival))=self.last{
+        let sample_dt=self.last.map(|(_,ms,fraction,_,_)|super::sensor_elapsed(s.sensor_ms,s.sensor_sub_ms_25us,ms,fraction)).unwrap_or(s.nominal_period());
+        if let Some((sequence,_,_,generation,arrival))=self.last{
             let n=s.sequence.wrapping_sub(sequence);
             if n==0||n>=0x8000_0000{return;}
-            let dt=s.sensor_ms.wrapping_sub(ms)as f64/1000.;
-            if n!=1||dt<=0.||dt>0.05||now-arrival>0.12{
+            if n!=1||sample_dt<=0.||sample_dt>0.05||now-arrival>0.12||generation!=s.continuity_generation{
                 // A missing interval cannot justify continued displacement.
                 self.smoother.reset();self.pending=Point::default();self.at=Some(now);
             }
         }
-        self.last=Some((s.sequence,s.sensor_ms,now));
+        self.last=Some((s.sequence,s.sensor_ms,s.sensor_sub_ms_25us,s.continuity_generation,now));
         let displacement=self.desktop.sample_with_gravity(s,!blocked,gravity);
         let state=&self.desktop.state;
         if !state.calibrated{self.smoother.reset();self.pending=Point::default();self.source=Source::Rest;return;}
@@ -77,7 +76,7 @@ impl Intent {
     pub fn frame(&mut self,now:f64)->Point{
         let dt=self.at.map(|at|(now-at).clamp(0.,0.05)).unwrap_or(0.);self.at=Some(now);
         if self.desktop.has_surface(){
-            if self.last.is_none_or(|(_,_,at)|now-at>0.12){self.pending=Point::default();}
+            if self.last.is_none_or(|(_,_,_,_,at)|now-at>0.12){self.pending=Point::default();}
             return std::mem::take(&mut self.pending);
         }
         self.smoother.step(now,dt,self.settings.smoothing)
@@ -85,7 +84,7 @@ impl Intent {
 }
 #[cfg(test)]mod tests{
     use super::*;
-    fn raw(n:u32)->Raw{Raw{wide_gyro:false,sequence:n+1,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]}}
+    fn raw(n:u32)->Raw{Raw{frequency_fine:0,sensor_sub_ms_25us:0,continuity_generation:0,high_rate:false,wide_gyro:false,sequence:n+1,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]}}
     fn ready()->Intent{let mut p=Intent::default();for n in 0..121{p.sample(raw(n),n as f64/100.);p.frame(n as f64/100.);}p}
     fn table_ready()->Intent{
         let mut p=Intent::surface_mouse();p.desktop.enable_board_pose_prediction();

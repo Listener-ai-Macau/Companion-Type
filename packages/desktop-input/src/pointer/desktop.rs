@@ -12,24 +12,27 @@ use serde::Serialize;
 const NEGLIGIBLE_SPEED_MPS:f64=0.005;
 
 #[derive(Clone,Copy,Debug)]
-pub struct Raw {pub sequence:u32,pub sensor_ms:u32,pub accel_mg:[f64;3],pub gyro_dps:[f64;3],pub wide_gyro:bool}
+pub struct Raw {pub sequence:u32,pub sensor_ms:u32,pub sensor_sub_ms_25us:u8,pub continuity_generation:u16,pub high_rate:bool,pub frequency_fine:i8,pub accel_mg:[f64;3],pub gyro_dps:[f64;3],pub wide_gyro:bool}
 impl Raw {
     pub fn parse(p:&[u8])->Result<Self,&'static str>{
-        if p.len()<32||&p[..4]!=b"CIM1"||!matches!(p[4],5|6|7|8)||p.len()!=if matches!(p[4],6|7|8){40}else{32}||p[5]!=3||p[6]&!3!=0||(matches!(p[4],6|7)&&p[34..36]!=[0,0]){return Err("invalid raw CIM5/6/7");}
+        if p.len()<32||&p[..4]!=b"CIM1"||!matches!(p[4],5|6|7|8|9)||p.len()!=if p[4]==9{44}else if matches!(p[4],6|7|8){40}else{32}||p[5]!=3||p[6]&!3!=0||(matches!(p[4],6|7)&&p[34..36]!=[0,0])||(p[4]==9&&p[36]>=40){return Err("invalid raw CIM5/6/7/8/9");}
         let mut crc=0xffff_ffffu32;
         let crc_at=p.len()-4;
         for byte in &p[..crc_at]{crc^=*byte as u32;for _ in 0..8{crc=(crc>>1)^((0u32.wrapping_sub(crc&1))&0xedb8_8320);}}
         if !crc!=u32::from_le_bytes(p[crc_at..].try_into().unwrap()){return Err("raw CRC mismatch");}
         let value=|i|i16::from_le_bytes(p[i..i+2].try_into().unwrap())as f64;
         Ok(Self{sequence:u32::from_le_bytes(p[8..12].try_into().unwrap()),sensor_ms:u32::from_le_bytes(p[12..16].try_into().unwrap()),
-            accel_mg:std::array::from_fn(|i|value((if matches!(p[4],6|7|8){28}else{16})+2*i)*if matches!(p[4],7|8){0.122}else{1.}),gyro_dps:std::array::from_fn(|i|value(22+2*i)*if p[4]==8{0.04}else{0.01}),wide_gyro:p[4]==8})
+            sensor_sub_ms_25us:if p[4]==9{p[36]}else{0},continuity_generation:if p[4]==9{u16::from_le_bytes([p[38],p[39]])}else{0},high_rate:p[4]==9,
+            frequency_fine:if p[4]==9{p[37]as i8}else{0},
+            accel_mg:std::array::from_fn(|i|value((if matches!(p[4],6|7|8|9){28}else{16})+2*i)*if matches!(p[4],7|8|9){0.122}else{1.}),gyro_dps:std::array::from_fn(|i|value(22+2*i)*if matches!(p[4],8|9){0.04}else{0.01}),wide_gyro:matches!(p[4],8|9)})
     }
+    pub fn nominal_period(self)->f64{if self.high_rate{0.0024*2000./(2000.+3.*self.frequency_fine as f64)}else{0.01}}
 }
 #[derive(Clone,Debug,Default,Serialize)]
 #[serde(rename_all="camelCase")]
 pub struct State {pub calibrated:bool,pub moving:bool,pub clutched:bool,pub stationary:bool,pub board_gravity:bool,pub pose_prediction:bool,pub translation_inhibited:bool,pub gaps:u64,pub samples:u64,pub velocity_mps:[f64;2],pub position_m:[f64;2],pub linear_mps2:[f64;3],pub gyro_dps:[f64;3],pub surface:Option<surface::Status>}
 pub struct Desktop {
-    fusion:fusion::Fusion,rest:Option<rest::Rest>,last:Option<(u32,u32)>,count:u32,start_ms:Option<u32>,
+    fusion:fusion::Fusion,rest:Option<rest::Rest>,last:Option<(u32,u32,u8,u16,bool)>,count:u32,start_ms:Option<u32>,
     accel_sum:[f64;3],gyro_sum:[f64;3],gyro_bias:[f64;3],earth_bias:[f64;3],
     filtered:[f64;2],quiet:f64,stroke:f64,braking:bool,
     surface:Option<surface::Surface>,reacquire_plane:bool,
@@ -80,18 +83,19 @@ impl Desktop {
     }
     pub fn sample_with_gravity(&mut self,s:Raw,allow_translation:bool,gravity:Option<[f64;3]>)->Point {
         self.state.translation_inhibited=true;
+        self.fusion.set_sample_rate(1./s.nominal_period());
         self.fusion.set_gyroscope_range(if s.wide_gyro{1000.}else{250.});
         let board=gravity.and_then(|g|board_acceleration(s.accel_mg,g));
         self.state.board_gravity=board.is_some();
         self.state.pose_prediction=self.predict_board_pose&&board.is_some();
         if gravity.is_some()&&board.is_none(){self.clutch();return Point::default();}
-        let dt=if let Some((sequence,ms))=self.last{
+        let dt=if let Some((sequence,ms,fraction,generation,high_rate))=self.last{
             let n=s.sequence.wrapping_sub(sequence);
             if n==0||n>=0x8000_0000{return Point::default();}
-            let dt=s.sensor_ms.wrapping_sub(ms)as f64/1000.;
-            if n!=1||dt>0.05||dt<=0.{
+            let dt=super::sensor_elapsed(s.sensor_ms,s.sensor_sub_ms_25us,ms,fraction);
+            if n!=1||dt>0.05||dt<=0.||generation!=s.continuity_generation||high_rate!=s.high_rate{
                 if let Some(rest)=self.rest.as_mut(){*rest=rest::Rest::default();}self.state.stationary=false;
-                self.state.gaps+=1;self.stop();self.last=Some((s.sequence,s.sensor_ms));
+                self.state.gaps+=1;self.stop();self.last=Some((s.sequence,s.sensor_ms,s.sensor_sub_ms_25us,s.continuity_generation,s.high_rate));
                 if let Some((_,up))=board.filter(|_|self.state.calibrated){
                     // The board's current absolute gravity remains usable
                     // despite a missing BLE interval. Drop old XY velocity;
@@ -108,13 +112,13 @@ impl Desktop {
                 return Point::default();
             }
             dt
-        }else{0.01};
-        self.last=Some((s.sequence,s.sensor_ms));self.state.samples+=1;
+        }else{s.nominal_period()};
+        self.last=Some((s.sequence,s.sensor_ms,s.sensor_sub_ms_25us,s.continuity_generation,s.high_rate));self.state.samples+=1;
         // CIM6 supplies gravity independently of this receive stream. Its
         // gyro offset can still be adapting at entry; do not make an
         // accelerometer-only mouse wait for another gyro calibration.
         let rest_gyro=if board.is_some(){[0.;3]}else{s.gyro_dps};
-        self.state.stationary=self.rest.as_mut().is_some_and(|rest|rest.sample(rest_gyro,s.accel_mg));
+        self.state.stationary=self.rest.as_mut().is_some_and(|rest|rest.sample_timed(rest_gyro,s.accel_mg,dt,s.nominal_period()));
         let norm=s.accel_mg.iter().map(|x|x*x).sum::<f64>().sqrt();
         if !self.state.calibrated {
             if !(850. ..=1150.).contains(&norm)||(if board.is_some(){!self.state.stationary}else{s.gyro_dps.iter().any(|x|x.abs()>3.)}){
@@ -275,7 +279,7 @@ mod tests {
         }
         assert_eq!(d.state.position_m,origin);
     }
-    fn raw(n:u32,x:f64,y:f64)->Raw{Raw{wide_gyro:false,sequence:n+1,sensor_ms:n*10,accel_mg:[x,y,1000.],gyro_dps:[0.;3]}}
+    fn raw(n:u32,x:f64,y:f64)->Raw{Raw{frequency_fine:0,sensor_sub_ms_25us:0,continuity_generation:0,high_rate:false,wide_gyro:false,sequence:n+1,sensor_ms:n*10,accel_mg:[x,y,1000.],gyro_dps:[0.;3]}}
     fn ready()->Desktop{let mut d=Desktop::default();for n in 0..=120{d.sample(raw(n,0.,0.));}assert!(d.state.calibrated);d}
     #[test]fn board_corrected_rates_do_not_gain_a_second_offset_at_entry_or_regrip(){
         for regrip in [false,true]{

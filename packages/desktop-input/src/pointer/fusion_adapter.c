@@ -4,13 +4,16 @@
 #include "FusionBias.h"
 #include <stdlib.h>
 #include <math.h>
-typedef struct {FusionAhrs ahrs;FusionBias bias;float gyro_range;} CompanionFusion;
-void companion_fusion_configure(void *handle,float sample_rate) {
-    CompanionFusion *s=(CompanionFusion*)handle;
+typedef struct {FusionAhrs ahrs;FusionBias bias;float gyro_range,sample_rate;} CompanionFusion;
+static void configure_ahrs(CompanionFusion *s,float sample_rate,float gain) {
     FusionAhrsSettings a=fusionAhrsDefaultSettings;
     a.sampleRate=sample_rate;a.gyroscopeRange=s->gyro_range;
-    a.gain=0.5f;a.accelerationRejection=10.0f;a.rejectionTimeout=5.0f;
+    a.gain=gain;a.accelerationRejection=10.0f;a.rejectionTimeout=5.0f;
     FusionAhrsSetSettings(&s->ahrs,&a);
+}
+void companion_fusion_configure(void *handle,float sample_rate) {
+    CompanionFusion *s=(CompanionFusion*)handle;s->sample_rate=sample_rate;
+    configure_ahrs(s,sample_rate,0.5f);
     FusionBiasSettings b=fusionBiasDefaultSettings;
     b.sampleRate=sample_rate;b.stationaryThreshold=0.5f;b.stationaryPeriod=1.0f;
     FusionBiasSetSettings(&s->bias,&b);
@@ -26,9 +29,7 @@ void companion_fusion_set_gyroscope_range(void *handle,float range){
     if(s->gyro_range==range)return;
     s->gyro_range=range;
     /* Retain gain/mode and pose while matching explicitly negotiated gyro FS. */
-    FusionAhrsSettings a=fusionAhrsDefaultSettings;a.sampleRate=1.0f/s->ahrs.samplePeriod;
-    a.gain=s->ahrs.gain;a.gyroscopeRange=range;a.accelerationRejection=10.0f;a.rejectionTimeout=5.0f;
-    FusionAhrsSetSettings(&s->ahrs,&a);
+    configure_ahrs(s,s->sample_rate>208.0f?s->sample_rate:1.0f/s->ahrs.samplePeriod,s->ahrs.gain);
 }
 void companion_fusion_destroy(void *handle){free(handle);}
 void companion_fusion_align(void *handle,const float accel[3]) {
@@ -42,8 +43,16 @@ void companion_fusion_align(void *handle,const float accel[3]) {
      * residual from the OLD bias subtracts it again from the new zero and
      * manufactures rotation/linear acceleration while physically stationary. */
     FusionBiasSetOffset(&s->bias,zero);
+    const bool high_rate=s->sample_rate>208.0f;
+    const float period=s->ahrs.samplePeriod,gain=s->ahrs.gain;
+    /* Keep the accepted300 virtual10ms seed at high acquisition rates too.
+     * Actual rate/period return before the next real sample. Choose the same
+     * measured-gravity hemisphere as the board's upstream Fusion adapter. */
+    if(high_rate)configure_ahrs(s,100.0f,gain);
     FusionAhrsRestart(&s->ahrs);
+    if(high_rate&&a.axis.z<0.0f)FusionAhrsSetQuaternion(&s->ahrs,(FusionQuaternion){.array={0.0f,1.0f,0.0f,0.0f}});
     for(unsigned i=0;i<300;++i)FusionAhrsUpdateNoMagnetometer(&s->ahrs,zero,a);
+    if(high_rate){configure_ahrs(s,s->sample_rate,gain);FusionAhrsSetSamplePeriod(&s->ahrs,period);}
     FusionAhrsSkipStartup(&s->ahrs);
 }
 static void step_rates(void *handle,const float gyro[3],const float accel[3],float dt,bool gyro_corrected,float gravity[3],float corrected[3]) {
@@ -67,9 +76,7 @@ void companion_fusion_desktop_step(void *handle,const float gyro[3],const float 
     CompanionFusion *s=(CompanionFusion*)handle;
     const float gain=correct_gravity?0.5f:0.0f;
     if(s->ahrs.gain!=gain){
-        FusionAhrsSettings a=fusionAhrsDefaultSettings;a.sampleRate=1.0f/dt;a.gain=gain;
-        a.gyroscopeRange=s->gyro_range;a.accelerationRejection=10.0f;a.rejectionTimeout=5.0f;
-        FusionAhrsSetSettings(&s->ahrs,&a);
+        configure_ahrs(s,s->sample_rate>208.0f?s->sample_rate:1.0f/dt,gain);
     }
     float corrected[3];step_rates(handle,gyro,accel,dt,gyro_corrected,gravity,corrected);
     const FusionVector acceleration=FusionAhrsGetEarthAcceleration(&s->ahrs);

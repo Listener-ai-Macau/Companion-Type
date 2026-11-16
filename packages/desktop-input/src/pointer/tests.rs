@@ -9,7 +9,49 @@ use super::*;
     for(a,b)in raw.accel_mg.into_iter().zip([-3997.696,0.122,3997.574]){assert!((a-b).abs()<1e-8);}
     assert_eq!(fused.sequence,9);assert_eq!(fused.sensor_ms,70000);assert_eq!(fused.device_ready,Some(true));
 }
-fn raw_sample(n:u32)->desktop::Raw{desktop::Raw{wide_gyro:false,sequence:n+1,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]}}
+fn raw_sample(n:u32)->desktop::Raw{desktop::Raw{frequency_fine:0,sensor_sub_ms_25us:0,continuity_generation:0,high_rate:false,wide_gyro:false,sequence:n+1,sensor_ms:n*10,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]}}
+
+#[test]fn fifo_c_golden_preserves_native_axes_fraction_generation_and_crc(){
+    let h="43494d31090303020900000070110100000000000040a861589e6b0300800100ff7f64032700feffa23956bd";
+    let mut p=(0..h.len()).step_by(2).map(|i|u8::from_str_radix(&h[i..i+2],16).unwrap()).collect::<Vec<_>>();
+    let raw=desktop::Raw::parse(&p).unwrap();let fused=Sample::parse(&p).unwrap();
+    assert!(raw.high_rate&&raw.wide_gyro);assert_eq!(raw.sensor_ms,70000);assert_eq!(raw.sensor_sub_ms_25us,39);assert_eq!(raw.continuity_generation,65534);
+    assert_eq!(raw.gyro_dps,[1000.,-1000.,35.]);assert_eq!(raw.accel_mg,[-32768.*0.122,0.122,32767.*0.122]);
+    assert_eq!(fused.accel,[0.,0.,1000.]);assert_eq!(fused.gyro,raw.gyro_dps);assert_eq!(fused.sensor_sub_ms_25us,39);assert_eq!(fused.continuity_generation,65534);
+    p[36]^=1;assert!(desktop::Raw::parse(&p).is_err()&&Sample::parse(&p).is_err());
+    p[36]=40;assert!(desktop::Raw::parse(&p).is_err()&&Sample::parse(&p).is_err());
+}
+#[test]fn fifo_time_keeps_25us_resolution_and_millisecond_wrap(){
+    assert!((sensor_elapsed(0,16,u32::MAX-1,0)-0.0024).abs()<1e-12);
+    assert!((sensor_elapsed(2,32,0,16)-0.0024).abs()<1e-12);
+    assert!((sensor_elapsed(5,8,2,32)-0.0024).abs()<1e-12);
+}
+#[test]fn factory_frequency_fixture_keeps_board_corrected_clock_and_filter_rate_separate(){
+    let h="43494d31090303020900000070110100000000000040a861589e6b0300800100ff7f640327e0feff02e9b414";
+    let p=(0..h.len()).step_by(2).map(|i|u8::from_str_radix(&h[i..i+2],16).unwrap()).collect::<Vec<_>>();
+    let raw=desktop::Raw::parse(&p).unwrap();let fused=Sample::parse(&p).unwrap();
+    assert_eq!(raw.frequency_fine,-32);assert!((raw.nominal_period()-0.0025210084033613445).abs()<1e-15);
+    // Time fields are already calibrated by the board. They retain their
+    // original millisecond/25us units, without another host scale factor.
+    assert_eq!(raw.sensor_ms,70000);assert_eq!(raw.sensor_sub_ms_25us,39);assert_eq!(fused.sensor_ms,raw.sensor_ms);
+    assert_eq!(fused.gyro,raw.gyro_dps);assert_eq!(fused.accel,[0.,0.,1000.]);
+}
+fn fifo_raw(n:u32,generation:u16)->desktop::Raw{
+    let ticks=n*96;desktop::Raw{frequency_fine:0,sequence:n+1,sensor_ms:ticks/40,sensor_sub_ms_25us:(ticks%40)as u8,continuity_generation:generation,high_rate:true,wide_gyro:true,accel_mg:[0.,0.,1000.],gyro_dps:[0.;3]}
+}
+#[test]fn fifo_rest_waits_real_time_and_loss_epoch_cancels_the_old_stroke(){
+    let mut p=Pointer::new(Settings{desktop_motion:true,contact_regions:true,..Settings::relative_remote()},Point{x:960.,y:540.});
+    assert_eq!(p.settings.pointer_options(),248);p.observe_device_readiness(Some(true));
+    for n in 0..50{p.sample_raw_gravity(fifo_raw(n,1),Some([0.,0.,1000.]),n as f64*0.0024);p.frame(n as f64*0.0024,bounds());}
+    assert!(!p.metrics.calibrated,"50 frames at417Hz are only120ms, not a stationary second");
+    for n in 50..600{p.sample_raw_gravity(fifo_raw(n,1),Some([0.,0.,1000.]),n as f64*0.0024);p.frame(n as f64*0.0024,bounds());}
+    assert!(p.metrics.calibrated);assert!((p.metrics.sensor_hz-1./0.0024).abs()<0.001);
+    for n in 600..640{let mut s=fifo_raw(n,1);s.accel_mg[0]=100.;p.sample_raw_gravity(s,Some([0.,0.,1000.]),n as f64*0.0024);p.frame(n as f64*0.0024,bounds());}
+    assert!(p.planar_state().unwrap().velocity_mps[0]>0.01);
+    let origin=p.shown;p.sample_raw_gravity(fifo_raw(640,2),Some([0.,0.,1000.]),640.*0.0024);
+    assert!(p.frame(640.*0.0024,bounds()).position.is_none());
+    assert_eq!(p.shown,origin);assert_eq!(p.planar_state().unwrap().velocity_mps,[0.;2]);
+}
 fn coarse_ready()->Pointer{
     let mut p=Pointer::new(Settings{mapping:Mapping::Relative,desktop_motion:true,..Settings::default()},Point{x:960.,y:540.});
     for n in 0..121{p.sample_raw(raw_sample(n),n as f64/100.);p.frame(n as f64/100.,bounds());}
@@ -107,7 +149,7 @@ fn side_ready()->Pointer{
     let mut clicks=vec![];let mut moved_while_pending=false;
     for n in 0..80{
         let mut raw=raw_sample(n);if n==40{raw.gyro_dps[0]=70.;}
-        let motion=Sample{fused:true,device_ready:Some(true),gyro:[5.,0.,0.],..sample(n+1,n*10,false)};
+        let motion=Sample{sensor_sub_ms_25us:0,continuity_generation:0,fused:true,device_ready:Some(true),gyro:[5.,0.,0.],..sample(n+1,n*10,false)};
         p.sample_raw(raw,n as f64/100.);p.sample(motion,n as f64/100.,bounds());
         if n==41{p.control(Control{sequence:1,sensor_ms:400,events:CLICK}).unwrap();}
         if n==50{p.external_position(Point{x:1500.,y:800.});}
@@ -126,7 +168,7 @@ fn side_ready()->Pointer{
     for n in 0..105{
         let mut raw=raw_sample(n);let shock=n==40||n==60;
         if shock{raw.accel_mg[0]=1000.;raw.gyro_dps[0]=70.;}
-        let motion=Sample{fused:true,device_ready:Some(true),gyro:raw.gyro_dps,..sample(n+1,n*10,false)};
+        let motion=Sample{sensor_sub_ms_25us:0,continuity_generation:0,fused:true,device_ready:Some(true),gyro:raw.gyro_dps,..sample(n+1,n*10,false)};
         p.sample_raw(raw,n as f64/100.);p.sample(motion,n as f64/100.,bounds());
         if n==41||n==61{p.control(Control{sequence:n,sensor_ms:(n-1)*10,events:CLICK}).unwrap();}
         let f=p.frame(n as f64/100.,bounds());clicks.extend(f.buttons);
@@ -135,7 +177,7 @@ fn side_ready()->Pointer{
     assert_eq!(clicks,vec![Button::Click(origin),Button::Click(origin)],"two contacts200ms apart remain a same-target double click");
     for n in 105..125{
         let mut raw=raw_sample(n);raw.gyro_dps=[0.,2.,0.];
-        p.sample_raw(raw,n as f64/100.);p.sample(Sample{fused:true,device_ready:Some(true),gyro:raw.gyro_dps,..sample(n+1,n*10,false)},n as f64/100.,bounds());p.frame(n as f64/100.,bounds());
+        p.sample_raw(raw,n as f64/100.);p.sample(Sample{sensor_sub_ms_25us:0,continuity_generation:0,fused:true,device_ready:Some(true),gyro:raw.gyro_dps,..sample(n+1,n*10,false)},n as f64/100.,bounds());p.frame(n as f64/100.,bounds());
     }
     assert!(p.shown.x>origin.x,"normal fine movement after the clicks must still work");
 }
@@ -200,7 +242,7 @@ fn side_ready()->Pointer{
     }
     assert_eq!(p.contact_status().right_samples,3);p.finish_contacts().unwrap();assert!(p.settings.contact_profile.is_some());
 }
-fn sample(seq:u32,ms:u32,held:bool)->Sample {Sample{sequence:seq,sensor_ms:ms,held,tap_serial:0,fused:false,device_ready:None,aim:None,accel:[0.,0.,1000.],gyro:[0.;3]}}
+fn sample(seq:u32,ms:u32,held:bool)->Sample {Sample{sensor_sub_ms_25us:0,continuity_generation:0,sequence:seq,sensor_ms:ms,held,tap_serial:0,fused:false,device_ready:None,aim:None,accel:[0.,0.,1000.],gyro:[0.;3]}}
 fn calibrated()->Pointer {
     let mut p=Pointer::new(Settings::default(),Point{x:960.,y:540.});
     for n in 0..=27 {p.sample(sample(n+1,n*40,false),n as f64*0.04,bounds());p.frame(n as f64*0.04,bounds());}
@@ -256,7 +298,7 @@ fn lost_button_release_and_pause_never_create_a_click(){
 }
 #[test]
 fn sensor_clock_wrap_duplicate_and_sequence_gap_are_not_integrated_twice(){
-    let mut p=calibrated();p.last=Some((u32::MAX,0xfffffff0));
+    let mut p=calibrated();p.last=Some((u32::MAX,0xfffffff0,0,0));
     p.sample(sample(1,24,false),1.12,bounds());assert_eq!(p.metrics.missing,1);
     let count=p.metrics.samples;p.sample(sample(1,24,true),1.13,bounds());
     assert_eq!(p.metrics.samples,count);assert_eq!(p.metrics.duplicates,1);assert!(p.pressed.is_none());
@@ -327,7 +369,7 @@ fn board_calibrated_packet_uses_q14_gravity_and_no_second_fixed_host_bias() {
 }
 
 fn aim_sample(seq:u32,ms:u32,heading:f64)->Sample {
-    Sample{fused:true,device_ready:Some(true),aim:Some([heading,90.,0.]),..sample(seq,ms,false)}
+    Sample{sensor_sub_ms_25us:0,continuity_generation:0,fused:true,device_ready:Some(true),aim:Some([heading,90.,0.]),..sample(seq,ms,false)}
 }
 fn aim_pointer()->Pointer {
     let mut p=Pointer::new(Settings::default(),Point{x:960.,y:540.});
@@ -473,16 +515,16 @@ fn actual_typec_front_lift_moves_up_in_the_existing_angular_mapper() {
 
 fn surface_pointer()->Pointer{
     let settings=Settings{desktop_motion:true,contact_regions:true,contact_profile:Some(side_profile()),key_role:KeyRole::Regrip,..Settings::relative_remote()};
-    assert!(settings.validate().is_ok());assert_eq!(settings.pointer_options(),232);
+    assert!(settings.validate().is_ok());assert_eq!(settings.pointer_options(),248);
     let mut p=Pointer::new(settings,Point{x:960.,y:540.});
     for n in 0..121{surface_frame(&mut p,n,[0.,0.,1000.],[0.;3]);}
     assert!(p.metrics.calibrated);assert!(!p.metrics.surface_paused);p
 }
 fn surface_frame(p:&mut Pointer,n:u32,a:[f64;3],g:[f64;3])->Frame{
-    p.sample_raw(desktop::Raw{wide_gyro:false,sequence:n+1,sensor_ms:n*10,accel_mg:a,gyro_dps:g},n as f64/100.);
+    p.sample_raw(desktop::Raw{frequency_fine:0,sensor_sub_ms_25us:0,continuity_generation:0,high_rate:false,wide_gyro:false,sequence:n+1,sensor_ms:n*10,accel_mg:a,gyro_dps:g},n as f64/100.);
     // Real CIM6 also dispatches a fused packet. It must not double-count the
     // clock or reactivate the angular mapper in surface mode.
-    p.sample(Sample{fused:true,device_ready:Some(true),gyro:g,..sample(n+1,n*10,false)},n as f64/100.,bounds());
+    p.sample(Sample{sensor_sub_ms_25us:0,continuity_generation:0,fused:true,device_ready:Some(true),gyro:g,..sample(n+1,n*10,false)},n as f64/100.,bounds());
     p.frame(n as f64/100.,bounds())
 }
 #[test]fn surface_pointer_uses_acceleration_with_zero_gyro_and_keeps_a_coasting_stroke(){
@@ -529,12 +571,12 @@ fn surface_frame(p:&mut Pointer,n:u32,a:[f64;3],g:[f64;3])->Frame{
     p.observe_device_readiness(Some(true));
     for n in 121..230{
         let shock=n==140||n==160;
-        let raw=desktop::Raw{wide_gyro:false,sequence:n+1,sensor_ms:n*10,
+        let raw=desktop::Raw{frequency_fine:0,sensor_sub_ms_25us:0,continuity_generation:0,high_rate:false,wide_gyro:false,sequence:n+1,sensor_ms:n*10,
             accel_mg:if shock{[1000.,0.,1000.]}else{[0.,0.,1000.]},
             gyro_dps:if shock{[70.,0.,0.]}else{[0.;3]}};
         let at=n as f64/100.;
         p.sample_raw_gravity(raw,Some([0.,0.,1000.]),at);
-        p.sample(Sample{fused:true,device_ready:Some(true),gyro:raw.gyro_dps,..sample(n+1,n*10,false)},at,bounds());
+        p.sample(Sample{sensor_sub_ms_25us:0,continuity_generation:0,fused:true,device_ready:Some(true),gyro:raw.gyro_dps,..sample(n+1,n*10,false)},at,bounds());
         if n==141||n==161{p.control(Control{sequence:n,sensor_ms:(n-1)*10,events:CLICK}).unwrap();}
         clicks.extend(p.frame(at,bounds()).buttons);
         assert_eq!(p.shown,origin,"sample{n}: {:?}",p.planar_state());

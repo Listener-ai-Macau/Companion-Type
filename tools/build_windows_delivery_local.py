@@ -73,6 +73,7 @@ def main():
  parser.add_argument('--reuse-build-receipt',type=Path,help='Completed same-target build with exact native inputs; reserve2GiB for an app-only rebuild')
  parser.add_argument('--reuse-dependency-build-receipt',type=Path,help='Verified same-toolchain/dependencies; only app/input Rust sources may differ; reserve2GiB for those warm crates')
  parser.add_argument('--reuse-input-adapter-build-receipt',type=Path,help='Verified same dependencies, app/input Rust and the single local Fusion C shim; reserve2GiB without allowing upstream C/header changes')
+ parser.add_argument('--warm-native-reserve-gib',type=float,help='Explicit1-3GiB estimate only for verified warm native-only work; does not change cache budget')
  parser.add_argument('--native-only',action='store_true',help='Verified warm native/web stage,1.5GiB reserve; no MSI yet')
  parser.add_argument('--bundle-native-receipt',type=Path,help='Exact completed native/web stage; hash-check and bundle only,256MiB reserve')
  args=parser.parse_args()
@@ -120,6 +121,12 @@ def main():
    if args.native_only:assert reuse,'Warm native-stage estimate requires a verified existing dependency graph'
    if reuse:
     record['verifiedWarmBuildReuse']=verified_reuse(reuse,target,record['version'],bool(args.reuse_dependency_build_receipt or args.reuse_input_adapter_build_receipt),bool(args.reuse_input_adapter_build_receipt));reserve=1.5 if args.native_only else 2
+   if args.warm_native_reserve_gib is not None:
+    assert args.native_only and reuse and 1<=args.warm_native_reserve_gib<=3,'Explicit reserve requires verified warm native-only inputs'
+    reserve=args.warm_native_reserve_gib
+    record['explicitWarmNativeEstimateGiB']=reserve
+    record['verifiedWarmBuildReuse']['baseEstimatedGiB']=record['verifiedWarmBuildReuse']['reservedGiB']
+    record['verifiedWarmBuildReuse']['reservedGiB']=reserve
    record['storageBefore']=preflight(cache,reserve_gib=reserve)
    observed=inspect(target,ROOT);assert observed['result']=='TARGET_IDLE_AT_OBSERVATION',observed['result']
    assert not capture(['git','status','--porcelain','--untracked-files=no']),'Commit the exact source before a normal delivery build'

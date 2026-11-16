@@ -9,7 +9,7 @@ fn main(){
         let start=Instant::now();let samples=250_000u32;let mut frames=0u64;
         for n in 0..samples {
             let t=n as f64*0.04;let rate=if n<50 {0.}else{(t*0.8).sin()*25.};
-            p.sample(black_box(Sample{sequence:n+1,sensor_ms:n*40,held:false,tap_serial:0,fused:false,device_ready:None,aim:None,accel:[0.,100.,995.],gyro:[rate*0.3,0.,rate]}),t,b);
+            p.sample(black_box(Sample{sensor_sub_ms_25us:0,continuity_generation:0,sequence:n+1,sensor_ms:n*40,held:false,tap_serial:0,fused:false,device_ready:None,aim:None,accel:[0.,100.,995.],gyro:[rate*0.3,0.,rate]}),t,b);
             for f in 0..5 {black_box(p.frame(t+f as f64*0.008,b));frames+=1;}
         }
         let seconds=start.elapsed().as_secs_f64();let simulated_seconds=samples as f64*0.04;

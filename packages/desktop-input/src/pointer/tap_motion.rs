@@ -49,7 +49,7 @@ impl TapMotion {
 }
 #[cfg(test)]mod tests{
  use super::*;
- fn raw(n:u32,a:f64,g:f64)->Raw{Raw{wide_gyro:false,sequence:n,sensor_ms:n*10,accel_mg:[a,0.,1000.],gyro_dps:[g,0.,0.]}}
+ fn raw(n:u32,a:f64,g:f64)->Raw{Raw{frequency_fine:0,sensor_sub_ms_25us:0,continuity_generation:0,high_rate:false,wide_gyro:false,sequence:n,sensor_ms:n*10,accel_mg:[a,0.,1000.],gyro_dps:[g,0.,0.]}}
  #[test]fn a_shock_discards_queued_motion_before_a_delayed_click_and_resumes_at_quiet(){
   let mut s=TapMotion::default();s.observe(raw(1,0.,0.));
   assert!(s.angular(10,Point{x:20.,y:0.},0.01).is_none());
