@@ -31,6 +31,8 @@ def main():
   import torch
   torch.set_num_threads(1);torch.set_num_interop_threads(1)
   state['executionDevice']='cpu';state['cpuCapability']=torch.backends.cpu.get_cpu_capability()
+  from companion_community1_adapter_20261115 import pin_rocm_blas
+  state['blas']=pin_rocm_blas(Path(B['blas']),B['blasSha256']);save()
   from transformers import AutoProcessor,StoppingCriteria,StoppingCriteriaList
   from moss_cpu_mapped_runtime_20261116 import load_cpu_mapped_native,cpu_file_cache,restore_cpu_prefill,retire_cpu_audio
   from moss_native_full_execution_20261115 import prepare_wave,install_native_bounded
@@ -41,6 +43,8 @@ def main():
   processor=AutoProcessor.from_pretrained(P['nativeModelRoot'],local_files_only=True,trust_remote_code=False)
   model,proof=load_cpu_mapped_native(C,P['nativeModelRoot'],torch=torch)
   atomic_json(a.run/(a.meeting+'-'+a.phase+'-weights.json'),proof)
+  state.update(state='CPU_READONLY_MAPPED_WEIGHTS_READY',privateAfterWeights=__import__('psutil').Process().memory_info().private,
+   workingSetAfterWeights=__import__('psutil').Process().memory_info().rss);save()
   cache_dir=Path(case['reusedPrefill']['cache']) if case.get('reusedPrefill') else a.run/'cache'/a.meeting
   if a.phase=='prefill':
    assert sha(case['audio'])==case['audioSha256']

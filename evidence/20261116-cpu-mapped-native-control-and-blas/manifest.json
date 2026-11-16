@@ -1,0 +1,119 @@
+{
+  "at": "2026-11-16T08:54:00.603096+08:00",
+  "parent": "5345731ce98088c039c0026cab876e10cc6ff402",
+  "entries": [
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r1\\run.json",
+      "file": "closed-cpu-mapped-r1-run.json",
+      "bytes": 1418,
+      "sha256": "4889f2708c2a807d7cf8ef088f8277c97bf99d4b076534a1dacba1bd429783e3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r1\\runtime-control61-decode-state.json",
+      "file": "closed-cpu-mapped-r1-runtime-control61-decode-state.json",
+      "bytes": 783,
+      "sha256": "4dd08e1ecc34ddb2c5b9ef9e3efc587234c51db9fc6f80b0dfd889aeb55276fe"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r1\\runtime-control61-decode-weights.json",
+      "file": "closed-cpu-mapped-r1-runtime-control61-decode-weights.json",
+      "bytes": 908,
+      "sha256": "b0143287941f0460ff14d21f375defe12ad950511a9c38159eb2e121fb1447b1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r1\\runtime-control61-decode-worker.log",
+      "file": "closed-cpu-mapped-r1-runtime-control61-decode-worker.log",
+      "bytes": 1768,
+      "sha256": "e638e4aa60e362d6b4b16145123993e3848e06f255b5314379319052dc17529d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r6\\device-disconnection.json",
+      "file": "windows-device-disconnection.json",
+      "bytes": 1671,
+      "sha256": "e283e6f79d6da62f4f22a904739975910937d94dc0e40aae038a744af29a08e2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-vulkan-commit-probe-r1\\result.json",
+      "file": "vulkan-probe-no6800-no-allocation.json",
+      "bytes": 335,
+      "sha256": "5f0231834626c4a69909a8eb3a01ca8461d643d03168fe5488a16dae962c2a87"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-mapped-r2\\staged-binding.json",
+      "file": "cpu-mapped-frozen-binding.json",
+      "bytes": 12778,
+      "sha256": "a09e9332d23923bf8a38d1a0cf3d56c00ae39ceae9fcd05788fb10b680465cb5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\runtime-control61-decode-state.json",
+      "file": "closed-cpu-control-runtime-control61-decode-state.json",
+      "bytes": 1569,
+      "sha256": "6d2d41779d7e01165c576e5a0027143488b68c81f670b6ee62fd3d99030df00c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\runtime-control61-decode-weights.json",
+      "file": "closed-cpu-control-runtime-control61-decode-weights.json",
+      "bytes": 908,
+      "sha256": "c20b782129fe9da0a84193571baac3e9bee1be27a46e7ec449283035a72ca9a1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\runtime-control61-decode-worker.log",
+      "file": "closed-cpu-control-runtime-control61-decode-worker.log",
+      "bytes": 2828,
+      "sha256": "4c974788f12af4da767e1c20b5ef95dd7e7032d8812fd5567f3800f1b948b3cd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\runtime-control61-generated-ids.json",
+      "file": "closed-cpu-control-runtime-control61-generated-ids.json",
+      "bytes": 352,
+      "sha256": "b42e1613f7fd4134b051320d56fc79d5c6f6dd0665d9d458478fda9c48813fe5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\runtime-control61-raw.json",
+      "file": "closed-cpu-control-runtime-control61-raw.json",
+      "bytes": 4513,
+      "sha256": "0eef908a0f7b1d50133a3b2681e493404402f119c9bd2701e6dc2eca49d5019f"
+    },
+    {
+      "source": "work\\prepare_cpu_mapped_sources_20261116.py",
+      "file": "prepare_cpu_mapped_sources_20261116.py",
+      "bytes": 3838,
+      "sha256": "775b1711222315956446be2cc9c7fb10491666050bc3168acd8a0cc85dbdba21"
+    },
+    {
+      "source": "work\\prepare_cpu_mapped_binding_20261116.py",
+      "file": "prepare_cpu_mapped_binding_20261116.py",
+      "bytes": 5903,
+      "sha256": "843b482bf0178361a40a78d2ad7cb3828443c595a89294fea00c3f7404e58e32"
+    },
+    {
+      "source": "work\\protect_cpu_mapped_source_20261116.py",
+      "file": "protect_cpu_mapped_source_20261116.py",
+      "bytes": 5855,
+      "sha256": "fc2a08c1533ae9757b311abd9899c5c764e2128b46ef3746e97441ebbb8d79b3"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "file": "bilingual_progress.json",
+      "bytes": 225488,
+      "sha256": "efc30d60f101a138bf9827a93c1fc0e2c9bad09551ac83950a76aa440304a4a0"
+    }
+  ],
+  "sources": {
+    "src/moss_cpu_mapped_meeting_worker_20261116.py": "b41abfaadffe963a66219c84a54bdc3b5384c03f5fccc37c39f532870d37153b"
+  },
+  "state": "GPU_UNPLUG_CONFIRMED_CPU_MAPPED_NATIVE_SOURCE_CHECKPOINT",
+  "ownerGpuReply": "已经拔下或断电",
+  "retainedGeneratedTokens": 6501,
+  "fullPromptTokens": 27924,
+  "weightsChanged": false,
+  "quantizationUsed": false,
+  "newWeightTraining": false,
+  "wholeMeetingResults": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "activeCpuRunOutputsExcluded": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r1",
+  "readOnlyWeightsMapping": "ACCESS_READ; tensor storage pointers checked after materialization",
+  "sharedWritableKvMapping": "ACCESS_WRITE on real files; private memory and real working RAM monitored separately",
+  "earlierSystemBugcheckCauseStillUnknown": true
+}
