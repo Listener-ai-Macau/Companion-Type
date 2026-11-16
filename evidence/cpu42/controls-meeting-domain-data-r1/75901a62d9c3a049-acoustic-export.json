@@ -1,0 +1,386 @@
+{
+  "state": "COMPLETE_ACOUSTIC_TRAINING_INPUT_EXPORT_NOT_A_TRAINED_MODEL",
+  "startedAt": "2026-11-16T13:32:47.099785+08:00",
+  "completed": [
+    {
+      "meeting": "ES2002b",
+      "language": "English",
+      "originalAudioSeconds": 2279.7546875,
+      "originalReferenceEvents": 8110,
+      "examples": 23,
+      "trainingAudioSeconds": 206.29037500000004,
+      "speakerReturnExamples": 2,
+      "selectionExclusions": {
+        "nonlexicalLabels": 1117,
+        "overlapOrLongClustersExcludedFromStageA": 112,
+        "shortLongOrSingleSpeakerGroups": 12
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "Complete official AMI speakers/word XML"
+    },
+    {
+      "meeting": "ES2005b",
+      "language": "English",
+      "originalAudioSeconds": 2313.2586875,
+      "originalReferenceEvents": 7199,
+      "examples": 46,
+      "trainingAudioSeconds": 495.9703125000001,
+      "speakerReturnExamples": 8,
+      "selectionExclusions": {
+        "nonlexicalLabels": 1009,
+        "overlapOrLongClustersExcludedFromStageA": 158,
+        "shortLongOrSingleSpeakerGroups": 25
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "Complete official AMI speakers/word XML"
+    },
+    {
+      "meeting": "ES2006b",
+      "language": "English",
+      "originalAudioSeconds": 2183.125375,
+      "originalReferenceEvents": 7220,
+      "examples": 28,
+      "trainingAudioSeconds": 324.55024999999995,
+      "speakerReturnExamples": 1,
+      "selectionExclusions": {
+        "nonlexicalLabels": 1019,
+        "overlapOrLongClustersExcludedFromStageA": 121,
+        "shortLongOrSingleSpeakerGroups": 21
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "Complete official AMI speakers/word XML"
+    },
+    {
+      "meeting": "ES2007b",
+      "language": "English",
+      "originalAudioSeconds": 1685.344,
+      "originalReferenceEvents": 4840,
+      "examples": 33,
+      "trainingAudioSeconds": 317.90050000000014,
+      "speakerReturnExamples": 2,
+      "selectionExclusions": {
+        "nonlexicalLabels": 706,
+        "shortLongOrSingleSpeakerGroups": 27,
+        "overlapOrLongClustersExcludedFromStageA": 97
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "Complete official AMI speakers/word XML"
+    },
+    {
+      "meeting": "IS1000b",
+      "language": "English",
+      "originalAudioSeconds": 2343.765375,
+      "originalReferenceEvents": 6538,
+      "examples": 50,
+      "trainingAudioSeconds": 420.0258124999999,
+      "speakerReturnExamples": 9,
+      "selectionExclusions": {
+        "nonlexicalLabels": 762,
+        "overlapOrLongClustersExcludedFromStageA": 169,
+        "shortLongOrSingleSpeakerGroups": 21
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "Complete official AMI speakers/word XML"
+    },
+    {
+      "meeting": "IS1001b",
+      "language": "English",
+      "originalAudioSeconds": 2116.864,
+      "originalReferenceEvents": 5560,
+      "examples": 58,
+      "trainingAudioSeconds": 661.2404375,
+      "speakerReturnExamples": 15,
+      "selectionExclusions": {
+        "nonlexicalLabels": 692,
+        "overlapOrLongClustersExcludedFromStageA": 146,
+        "shortLongOrSingleSpeakerGroups": 27
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "Complete official AMI speakers/word XML"
+    },
+    {
+      "meeting": "TS3005b",
+      "language": "English",
+      "originalAudioSeconds": 2439.914625,
+      "originalReferenceEvents": 8906,
+      "examples": 63,
+      "trainingAudioSeconds": 599.4105625000002,
+      "speakerReturnExamples": 9,
+      "selectionExclusions": {
+        "nonlexicalLabels": 1388,
+        "shortLongOrSingleSpeakerGroups": 37,
+        "overlapOrLongClustersExcludedFromStageA": 190
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "Complete official AMI speakers/word XML"
+    },
+    {
+      "meeting": "TS3008b",
+      "language": "English",
+      "originalAudioSeconds": 2320.96,
+      "originalReferenceEvents": 8453,
+      "examples": 46,
+      "trainingAudioSeconds": 486.2354375000001,
+      "speakerReturnExamples": 5,
+      "selectionExclusions": {
+        "nonlexicalLabels": 1306,
+        "shortLongOrSingleSpeakerGroups": 21,
+        "overlapOrLongClustersExcludedFromStageA": 168
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "Complete official AMI speakers/word XML"
+    },
+    {
+      "meeting": "TS3009b",
+      "language": "English",
+      "originalAudioSeconds": 2460.0533125,
+      "originalReferenceEvents": 9128,
+      "examples": 51,
+      "trainingAudioSeconds": 474.810375,
+      "speakerReturnExamples": 5,
+      "selectionExclusions": {
+        "nonlexicalLabels": 1349,
+        "overlapOrLongClustersExcludedFromStageA": 197,
+        "shortLongOrSingleSpeakerGroups": 39
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "Complete official AMI speakers/word XML"
+    },
+    {
+      "meeting": "TS3010b",
+      "language": "English",
+      "originalAudioSeconds": 2085.482625,
+      "originalReferenceEvents": 4146,
+      "examples": 77,
+      "trainingAudioSeconds": 1107.3455625000001,
+      "speakerReturnExamples": 13,
+      "selectionExclusions": {
+        "nonlexicalLabels": 589,
+        "overlapOrLongClustersExcludedFromStageA": 57,
+        "shortLongOrSingleSpeakerGroups": 21
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "Complete official AMI speakers/word XML"
+    },
+    {
+      "meeting": "20200707_L_R001S02C01",
+      "language": "Chinese",
+      "originalAudioSeconds": 1855.6564375,
+      "originalReferenceEvents": 849,
+      "examples": 20,
+      "trainingAudioSeconds": 201.478125,
+      "speakerReturnExamples": 2,
+      "selectionExclusions": {
+        "emptyIntervals": 428,
+        "taggedOrUnclearIntervals": 36,
+        "overlapOrLongClustersExcludedFromStageA": 79,
+        "shortLongOrSingleSpeakerGroups": 14,
+        "groupsIntersectUnclearLabels": 4,
+        "roundedGroupExceeds30s": 1
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6"
+    },
+    {
+      "meeting": "20200709_L_R002S08C01",
+      "language": "Chinese",
+      "originalAudioSeconds": 2040.3881875,
+      "originalReferenceEvents": 817,
+      "examples": 17,
+      "trainingAudioSeconds": 144.628375,
+      "speakerReturnExamples": 0,
+      "selectionExclusions": {
+        "emptyIntervals": 412,
+        "taggedOrUnclearIntervals": 27,
+        "overlapOrLongClustersExcludedFromStageA": 81,
+        "shortLongOrSingleSpeakerGroups": 4,
+        "groupsIntersectUnclearLabels": 5
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6"
+    },
+    {
+      "meeting": "20200622_M_R002S03C01",
+      "language": "Chinese",
+      "originalAudioSeconds": 2213.912375,
+      "originalReferenceEvents": 1172,
+      "examples": 34,
+      "trainingAudioSeconds": 381.8440000000001,
+      "speakerReturnExamples": 1,
+      "selectionExclusions": {
+        "emptyIntervals": 588,
+        "taggedOrUnclearIntervals": 52,
+        "overlapOrLongClustersExcludedFromStageA": 99,
+        "shortLongOrSingleSpeakerGroups": 13,
+        "groupsIntersectUnclearLabels": 5
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6"
+    },
+    {
+      "meeting": "20200618_M_R001S03C01",
+      "language": "Chinese",
+      "originalAudioSeconds": 1849.80375,
+      "originalReferenceEvents": 1027,
+      "examples": 60,
+      "trainingAudioSeconds": 764.861375,
+      "speakerReturnExamples": 14,
+      "selectionExclusions": {
+        "emptyIntervals": 515,
+        "taggedOrUnclearIntervals": 48,
+        "overlapOrLongClustersExcludedFromStageA": 80,
+        "shortLongOrSingleSpeakerGroups": 11,
+        "groupsIntersectUnclearLabels": 7
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6"
+    },
+    {
+      "meeting": "20200621_M_R002S06C01",
+      "language": "Chinese",
+      "originalAudioSeconds": 2020.0305,
+      "originalReferenceEvents": 747,
+      "examples": 53,
+      "trainingAudioSeconds": 572.5551875,
+      "speakerReturnExamples": 7,
+      "selectionExclusions": {
+        "emptyIntervals": 376,
+        "taggedOrUnclearIntervals": 100,
+        "overlapOrLongClustersExcludedFromStageA": 52,
+        "groupsIntersectUnclearLabels": 8,
+        "shortLongOrSingleSpeakerGroups": 14
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6"
+    },
+    {
+      "meeting": "20200805_S_R001S06C01",
+      "language": "Chinese",
+      "originalAudioSeconds": 2152.653,
+      "originalReferenceEvents": 1459,
+      "examples": 37,
+      "trainingAudioSeconds": 273.12131250000004,
+      "speakerReturnExamples": 1,
+      "selectionExclusions": {
+        "emptyIntervals": 732,
+        "taggedOrUnclearIntervals": 112,
+        "overlapOrLongClustersExcludedFromStageA": 121,
+        "shortLongOrSingleSpeakerGroups": 20,
+        "groupsIntersectUnclearLabels": 20
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6"
+    },
+    {
+      "meeting": "20200807_S_R001S06C01",
+      "language": "Chinese",
+      "originalAudioSeconds": 2233.986,
+      "originalReferenceEvents": 937,
+      "examples": 40,
+      "trainingAudioSeconds": 494.4085,
+      "speakerReturnExamples": 0,
+      "selectionExclusions": {
+        "emptyIntervals": 471,
+        "taggedOrUnclearIntervals": 86,
+        "groupsIntersectUnclearLabels": 9,
+        "overlapOrLongClustersExcludedFromStageA": 64,
+        "shortLongOrSingleSpeakerGroups": 15
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6"
+    },
+    {
+      "meeting": "20200630_S_R001S03C01",
+      "language": "Chinese",
+      "originalAudioSeconds": 2191.104,
+      "originalReferenceEvents": 1778,
+      "examples": 21,
+      "trainingAudioSeconds": 112.31212499999998,
+      "speakerReturnExamples": 1,
+      "selectionExclusions": {
+        "emptyIntervals": 891,
+        "taggedOrUnclearIntervals": 174,
+        "overlapOrLongClustersExcludedFromStageA": 163,
+        "groupsIntersectUnclearLabels": 29,
+        "shortLongOrSingleSpeakerGroups": 38
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6"
+    },
+    {
+      "meeting": "20200807_S_R001S04C01",
+      "language": "Chinese",
+      "originalAudioSeconds": 2233.013,
+      "originalReferenceEvents": 917,
+      "examples": 25,
+      "trainingAudioSeconds": 362.41831250000007,
+      "speakerReturnExamples": 0,
+      "selectionExclusions": {
+        "emptyIntervals": 461,
+        "taggedOrUnclearIntervals": 30,
+        "overlapOrLongClustersExcludedFromStageA": 85,
+        "groupsIntersectUnclearLabels": 7,
+        "shortLongOrSingleSpeakerGroups": 3
+      },
+      "globalChinesePeopleCountNotInferredFromLocalIds": true,
+      "referenceParser": "praatio-6.2.2-count-validated-long-textgrid-r6"
+    }
+  ],
+  "failures": [
+    {
+      "meeting": "20200707_L_R001S01C01",
+      "error": "AssertionError('No duplicated overlapping training windows')"
+    },
+    {
+      "meeting": "20200706_L_R001S06C01",
+      "error": "AssertionError('No duplicated overlapping training windows')"
+    },
+    {
+      "meeting": "20200616_M_R001S05C01",
+      "error": "AssertionError('No duplicated overlapping training windows')"
+    }
+  ],
+  "qualityQualified": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "groups": [
+    {
+      "language": "English",
+      "meetings": 10,
+      "examples": 475,
+      "audioSeconds": 5093.779624999999,
+      "speakerReturnExamples": 69
+    },
+    {
+      "language": "Chinese",
+      "meetings": 9,
+      "examples": 307,
+      "audioSeconds": 3307.6273125,
+      "speakerReturnExamples": 26
+    }
+  ],
+  "trainJsonl": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-nonoverlap\\train.jsonl",
+  "trainJsonlSha256": "2e423172edc8beec58854a81f9a22b330db9aa989bfd1a29f01776659df3a1ad",
+  "examples": 782,
+  "originalPublicSourceHours": 13.09690564236111,
+  "trainingStarted": false,
+  "modelTrainingReady": false,
+  "chineseGlobalParticipantDisjointnessVerified": false,
+  "finishedAt": "2026-11-16T13:33:49.214570+08:00",
+  "limits": {
+    "pid": 25992,
+    "cpuRate": 50,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 0.5,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 43749376,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

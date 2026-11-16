@@ -1,0 +1,39 @@
+{
+  "state": "INCOMPLETE_CPU_RUNTIME_PREPARATION_NO_NEURAL_CALLS",
+  "startedAt": "2026-11-16T13:39:36.451495+08:00",
+  "source": {
+    "state": "PINNED_OFFICIAL_TORCH_CPU_OVERLAY_BEFORE_INSTALL",
+    "at": "2026-11-16T13:39:36.451495+08:00",
+    "url": "https://download-r2.pytorch.org/whl/cpu/torch-2.11.0%2Bcpu-cp312-cp312-win_amd64.whl#sha256=1abeaa46fa7532ed35ed79146f4de5d7a9d4b30462c98052ea4ddfe781ea3eca",
+    "filename": "torch-2.11.0+cpu-cp312-cp312-win_amd64.whl",
+    "sha256": "1abeaa46fa7532ed35ed79146f4de5d7a9d4b30462c98052ea4ddfe781ea3eca",
+    "version": "2.11.0+cpu",
+    "index": "https://download.pytorch.org/whl/cpu/torch/",
+    "indexSha256": "70955fc815c9e4ffb35b5c9ce9f9e2e1768f8d321dba7f8eff2e50afc1840bd9",
+    "sitePackages": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-r1\\torch-cpu-site",
+    "basePython": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+    "otherDependencies": "Reuse the existing pinned native Transformers5.22.1 and pure Python processor dependencies. This target shadows only Torch; no existing environment or system packages are modified.",
+    "newNeuralCalls": 0,
+    "modelWeightsChanged": false,
+    "qualityQualified": false
+  },
+  "newNeuralCalls": 0,
+  "error": "AssertionError(1)",
+  "finishedAt": "2026-11-16T13:39:49.595569+08:00",
+  "limits": {
+    "pid": 8108,
+    "cpuRate": 50,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 0.5,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 65261568,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

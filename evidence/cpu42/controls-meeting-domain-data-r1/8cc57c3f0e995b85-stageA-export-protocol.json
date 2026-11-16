@@ -1,0 +1,18 @@
+{
+  "state": "FROZEN_TRAINING_ONLY_MULTI_PERSON_SEQUENTIAL_EXPORT",
+  "at": "2026-11-16T13:25:02.647435+08:00",
+  "planSha256": "dc5f852a8a54d2f78e103da1e7d8aacfd1e137a452c52eb7c8dd9fb8164a96c6",
+  "dataRunSha256": "05eb5178b91b9ee23532afa4feb40b52debab38a28899bad79ea32a8dca532dd",
+  "sourceSha256": "ed389e6fdfdea56562ea3d342ac9d784cbece8098ea9f5ad40c7fda42f33462e",
+  "selection": "Greedy adjacent complete lexical event clusters,10-30s,at least2 speakers,no reference overlap; flush at overlap/unclear event or gaps>3s. Annotation boundaries are training supervision only; existing validation/final inputs and scoring remain unchanged.",
+  "contextPaddingSeconds": 0.1,
+  "references": "Original complete AMI word XML and frozen count-validated AISHELL TextGrid reader. Empty/nonlexical/unclear labels are retained in source metadata; unclear intervals exclude a training window instead of inventing words.",
+  "wordHandling": "All selected original words, fillers, repetitions, partial words and numbers kept. English words separated by spaces; Chinese labels concatenated without lexical normalization.",
+  "trainingFormat": "Official Qwen audio/text JSONL,language prefix. No model trained by export; raw full source events retained for later overlap/person supervision.",
+  "originalValidationAndFinalHoldoutsUsed": false,
+  "chineseGlobalParticipantDisjointnessVerified": false,
+  "modelTrainingReady": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false
+}

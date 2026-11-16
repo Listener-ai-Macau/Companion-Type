@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "EN2001a-a2-000",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-000.wav",
+    "wavSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+    "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f",
+    "frames": 187360,
+    "audioSeconds": 11.71,
+    "language": "English"
+  },
+  "seconds": 3.424730600003386,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "bit duplication of effort and stuff and yeah saying that we should maybe think about having a prototype for week six which is",
+    "raw_text": "bit duplication of effort and stuff and yeah saying that we should maybe think about having a prototype for week six which is",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "bit duplication of effort and stuff and yeah saying that we should maybe think about having a prototype for week six which is",
+        "t0_ms": 0,
+        "t1_ms": 11710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 5.998000144958496,
+      "encode_ms": 764.4349975585938,
+      "decode_ms": 2619.68994140625
+    }
+  },
+  "rawDecoded": "bit duplication of effort and stuff and yeah saying that we should maybe think about having a prototype for week six which is",
+  "hypothesis": "bit duplication of effort and stuff and yeah saying that we should maybe think about having a prototype for week six which is",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

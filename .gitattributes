@@ -367,3 +367,23 @@ src/qwen_cpu_port_worker_20261116.py -text -whitespace
 src/run_qwen_cpu_port_20261116.py -text -whitespace
 
 src/score_qwen_cpu_port_20261116.py -text -whitespace
+
+evidence/cpu42/** -text -whitespace
+
+src/qwen_cpu_chinese_whole_worker_20261116.py -text -whitespace
+
+src/run_qwen_cpu_chinese_whole_20261116.py -text -whitespace
+
+src/companion_windows_working_set_20261116.py -text -whitespace
+
+src/qwen_cpu_workingset_worker_20261116.py -text -whitespace
+
+src/run_qwen_cpu_workingset_20261116.py -text -whitespace
+
+src/score_qwen_cpu_chinese_whole_20261116.py -text -whitespace
+
+src/companion_cpu_aligner_loader_20261116.py -text -whitespace
+
+src/cpu_forced_alignment_worker_20261116.py -text -whitespace
+
+src/run_cpu_forced_alignment_20261116.py -text -whitespace

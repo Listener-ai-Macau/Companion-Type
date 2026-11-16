@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "20200805_S_R001S01C01-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-000.wav",
+    "wavSha256": "6c1818fbe8f564715e6cbcb498a7ea3ef91e7dd38449f25ce802c4ed367d4094",
+    "pcmSha256": "2fd5e1492ae266f668ec7d665ade16aca1f7c8a07b4a08f0087f5fe661ef3935",
+    "frames": 399261,
+    "audioSeconds": 24.9538125,
+    "language": "Chinese"
+  },
+  "seconds": 7.773422500002198,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "上半年的一些情况以及下半年怎么做，然后接下来由我们的主管来主持一下这场会议。嗯，上半年呢，嗯，大家嗯，待会儿先呃说一下各个岗位的上半年的情况，因为毕竟我们这个物业跟其他物业不一样，我们是全国一级资质的。",
+    "raw_text": "上半年的一些情况以及下半年怎么做，然后接下来由我们的主管来主持一下这场会议。嗯，上半年呢，嗯，大家嗯，待会儿先呃说一下各个岗位的上半年的情况，因为毕竟我们这个物业跟其他物业不一样，我们是全国一级资质的。",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "上半年的一些情况以及下半年怎么做，然后接下来由我们的主管来主持一下这场会议。嗯，上半年呢，嗯，大家嗯，待会儿先呃说一下各个岗位的上半年的情况，因为毕竟我们这个物业跟其他物业不一样，我们是全国一级资质的。",
+        "t0_ms": 0,
+        "t1_ms": 24953,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 12.345999717712402,
+      "encode_ms": 1754.73095703125,
+      "decode_ms": 5967.02685546875
+    }
+  },
+  "rawDecoded": "上半年的一些情况以及下半年怎么做，然后接下来由我们的主管来主持一下这场会议。嗯，上半年呢，嗯，大家嗯，待会儿先呃说一下各个岗位的上半年的情况，因为毕竟我们这个物业跟其他物业不一样，我们是全国一级资质的。",
+  "hypothesis": "上半年的一些情况以及下半年怎么做，然后接下来由我们的主管来主持一下这场会议。嗯，上半年呢，嗯，大家嗯，待会儿先呃说一下各个岗位的上半年的情况，因为毕竟我们这个物业跟其他物业不一样，我们是全国一级资质的。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

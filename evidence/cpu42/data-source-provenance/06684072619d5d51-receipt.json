@@ -1,0 +1,46 @@
+{
+  "meeting": "20200707_L_R001S01C01",
+  "language": "Chinese",
+  "corpus": "AISHELL-4",
+  "role": "candidate-training-only",
+  "source": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S01C01\\source.flac",
+    "sha256": "999497f076f795caa07e60c5bad0d8ef220f0eb13f338bb0270e85a38184ae87",
+    "bytes": 240382134,
+    "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200707_L_R001S01C01.flac",
+    "headers": {
+      "Content-Length": "240382134",
+      "ETag": "\"a89e76ec34f42b65a177f946d4ce4e9a4c8a2ca236ee7458080a6490d54f2583\"",
+      "Last-Modified": null
+    },
+    "publisherHashVerified": true,
+    "seconds": 13.31300000000192
+  },
+  "reference": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S01C01\\reference.TextGrid",
+    "sha256": "c679f0805986c049f70dc3f30fbed936626cf4c7d16fa14ef1a16117bb57f3d2",
+    "bytes": 181910,
+    "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/TextGrid/20200707_L_R001S01C01.TextGrid",
+    "headers": {
+      "Content-Length": "181910",
+      "ETag": "\"43969ac5246eb9894f49ce6ba673c5398002d0da\"",
+      "Last-Modified": null
+    },
+    "publisherHashVerified": true,
+    "seconds": 1.5310000000026776
+  },
+  "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S01C01\\microphone0.wav",
+  "audioSha256": "74d49c98fc10f3626973bfed45f2cc3354bc08b9947d7e8236172e085824afcd",
+  "pcmSha256": "23a6bc61dd394a34ae06f581f17e3473e94b6d7cedb27de79ee05effbb9ef810",
+  "frames": 31937747,
+  "audioSeconds": 1996.1091875,
+  "selectedMicrophoneZeroBased": 0,
+  "sourceChannels": 8,
+  "resampled": false,
+  "denoised": false,
+  "vadDroppedAudio": false,
+  "referenceTranscriptModified": false,
+  "trainingStarted": false,
+  "newNeuralCalls": 0,
+  "qualityQualified": false
+}

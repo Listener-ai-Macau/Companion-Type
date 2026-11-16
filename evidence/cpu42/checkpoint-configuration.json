@@ -1,0 +1,511 @@
+{
+  "revision": 42,
+  "evidenceDirectory": "evidence/cpu42",
+  "commitMessage": "Bound own CPU model resident memory; preserve bilingual port rejection and audited broad public training data",
+  "sources": [
+    "src/qwen_cpu_chinese_whole_worker_20261116.py",
+    "src/run_qwen_cpu_chinese_whole_20261116.py",
+    "src/companion_windows_working_set_20261116.py",
+    "src/qwen_cpu_workingset_worker_20261116.py",
+    "src/run_qwen_cpu_workingset_20261116.py",
+    "src/score_qwen_cpu_chinese_whole_20261116.py",
+    "src/companion_cpu_aligner_loader_20261116.py",
+    "src/cpu_forced_alignment_worker_20261116.py",
+    "src/run_cpu_forced_alignment_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\binding.json",
+      "name": "controls-qwen-cpu-port-r1/1f1fbda547b187b0-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\model-ready.json",
+      "name": "controls-qwen-cpu-port-r1/8ba83c4c864b2634-model-ready.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\protocol.json",
+      "name": "controls-qwen-cpu-port-r1/f555d37c535ba3d8-protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\publisher-metadata.json",
+      "name": "controls-qwen-cpu-port-r1/9658f9530b02d08a-publisher-metadata.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\score.json",
+      "name": "controls-qwen-cpu-port-r1/fbcc6f39c8ca1e53-score.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\scoring-binding.json",
+      "name": "controls-qwen-cpu-port-r1/0c0c3778638733b7-scoring-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\source.json",
+      "name": "controls-qwen-cpu-port-r1/09491fa932abf5ae-source.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\binding.json",
+      "name": "controls-qwen-cpu-chinese-characterization-r1/a8a934243f6d9373-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\protocol.json",
+      "name": "controls-qwen-cpu-chinese-characterization-r1/0021cfd3be86f5fe-protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\scope-decision.json",
+      "name": "controls-qwen-cpu-chinese-characterization-r1/60f8db57618db64b-scope-decision.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\whole-scoring-only.json",
+      "name": "controls-qwen-cpu-chinese-characterization-r1/8ac3d5534f88bb1b-whole-scoring-only.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\binding.json",
+      "name": "controls-qwen-cpu-chinese-characterization-r2/006abd98e9968084-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\protocol.json",
+      "name": "controls-qwen-cpu-chinese-characterization-r2/b87fd62bf96f2f6f-protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\scope-decision.json",
+      "name": "controls-qwen-cpu-chinese-characterization-r2/cc0f7994f186ad66-scope-decision.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\scoring-binding.json",
+      "name": "controls-qwen-cpu-chinese-characterization-r2/881f32e069306c65-scoring-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\whole-scoring-only.json",
+      "name": "controls-qwen-cpu-chinese-characterization-r2/c2b6c5ea675c6803-whole-scoring-only.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-working-set-r1\\probe.json",
+      "name": "controls-qwen-cpu-working-set-r1/47e9cd76630f88c4-probe.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-working-set-r1\\neural-control\\binding.json",
+      "name": "controls-qwen-cpu-working-set-r1/432b81505be3fd1f-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-working-set-r1\\neural-control\\protocol.json",
+      "name": "controls-qwen-cpu-working-set-r1/19036b6eb471e5c6-protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-working-set-r1\\neural-control\\recovery-observation.json",
+      "name": "controls-qwen-cpu-working-set-r1/f55f5a3a47888cb4-recovery-observation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-working-set-r1\\neural-control\\result.json",
+      "name": "controls-qwen-cpu-working-set-r1/0981dfce95f0cf39-result.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r1\\installation.log",
+      "name": "controls-cpu-forced-alignment-r1/5dcf9163c77e1cb8-installation.log"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r1\\official-cpu-index.html",
+      "name": "controls-cpu-forced-alignment-r1/aa16f147751cca46-official-cpu-index.html"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r1\\runtime-installation.json",
+      "name": "controls-cpu-forced-alignment-r1/ef9762e8ede3067f-runtime-installation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r1\\runtime-source.json",
+      "name": "controls-cpu-forced-alignment-r1/2e5a26e6bbf59283-runtime-source.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r2\\installation.log",
+      "name": "controls-cpu-forced-alignment-r2/5c17b6c355e6f372-installation.log"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r2\\official-cpu-index.html",
+      "name": "controls-cpu-forced-alignment-r2/c3ab7f7f149b9453-official-cpu-index.html"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r2\\pip-install-report.json",
+      "name": "controls-cpu-forced-alignment-r2/948617ff1bf4dbe4-pip-install-report.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r2\\runtime-installation.json",
+      "name": "controls-cpu-forced-alignment-r2/a4e4fd0425c58e10-runtime-installation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r2\\runtime-source.json",
+      "name": "controls-cpu-forced-alignment-r2/de49b010d4fb294e-runtime-source.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\binding.json",
+      "name": "controls-cpu-forced-alignment-control-r1/654d672df97151a7-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-export-protocol.json",
+      "name": "controls-meeting-domain-data-r1/0f874d938050dc44-acoustic-export-protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-export-r2-protocol.json",
+      "name": "controls-meeting-domain-data-r1/3e85ac7fd7015f22-acoustic-export-r2-protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-export-r2.json",
+      "name": "controls-meeting-domain-data-r1/7e32f3869aa5a82e-acoustic-export-r2.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-export.json",
+      "name": "controls-meeting-domain-data-r1/75901a62d9c3a049-acoustic-export.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\aishell-publisher-metadata.json",
+      "name": "controls-meeting-domain-data-r1/8f16e9ccc31d5f8b-aishell-publisher-metadata.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\data-preparation.json",
+      "name": "controls-meeting-domain-data-r1/91e083658f7fa104-data-preparation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\export-integrity.json",
+      "name": "controls-meeting-domain-data-r1/118fa6f2c23acaa5-export-integrity.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\plan.json",
+      "name": "controls-meeting-domain-data-r1/dcae1869f7ca7c3c-plan.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\stageA-export-protocol.json",
+      "name": "controls-meeting-domain-data-r1/8cc57c3f0e995b85-stageA-export-protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\stageA-export.json",
+      "name": "controls-meeting-domain-data-r1/94d5e09c7c28a1ae-stageA-export.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-000-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/c2a187387ff87535-20200709_L_R002S01C01-seq-000-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-003-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/aab8fa20705b31b5-20200709_L_R002S01C01-seq-003-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-006-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/149980b7c59a1e5e-20200709_L_R002S01C01-seq-006-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-009-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/872c799a7858a913-20200709_L_R002S01C01-seq-009-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-012-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/5b7edaedcfa6dbe7-20200709_L_R002S01C01-seq-012-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-016-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/379c369389f322ad-20200709_L_R002S01C01-seq-016-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-000-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/5aaecf4c5c416983-20200805_S_R001S01C01-seq-000-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-002-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/82e4b6f0e8b54a44-20200805_S_R001S01C01-seq-002-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-004-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/0783b438bed73dc9-20200805_S_R001S01C01-seq-004-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-006-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/def356b07e343736-20200805_S_R001S01C01-seq-006-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-008-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/d4b00209633ebdc1-20200805_S_R001S01C01-seq-008-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-011-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/c37ae320c14a220e-20200805_S_R001S01C01-seq-011-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-000-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/db193bc6d10fe5c0-EN2001a-a2-000-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-023-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/f69f94a818f13e6b-EN2001a-a2-023-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-046-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/f93931c1c10607e8-EN2001a-a2-046-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-069-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/afecf63f7270f027-EN2001a-a2-069-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-092-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/503428b84cc255eb-EN2001a-a2-092-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-116-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/d7be54f2d4d9ec90-EN2001a-a2-116-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-000-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/7bee05a47704a465-ES2003b-seq-000-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-005-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/af6e0a1e49c27dc2-ES2003b-seq-005-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-010-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/a76ba73dd69716bf-ES2003b-seq-010-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-016-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/85bfa5532f8c982f-ES2003b-seq-016-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-021-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/b3a2a99a8abe452e-ES2003b-seq-021-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-027-raw.json",
+      "name": "closed-qwen-cpu-port-run-r1/b259d309aa661292-ES2003b-seq-027-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\inference-state.json",
+      "name": "closed-qwen-cpu-port-run-r1/f72e76bfe5722bf3-inference-state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\native.log",
+      "name": "closed-qwen-cpu-port-run-r1/46965bce155d19b7-native.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\run.json",
+      "name": "closed-qwen-cpu-port-run-r1/99c6f328ce898e4a-run.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\worker.log",
+      "name": "closed-qwen-cpu-port-run-r1/55f66eaa866c1b8d-worker.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\inference-state.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r1/d1847436dff1d4a3-inference-state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\native.log",
+      "name": "closed-qwen-cpu-chinese-whole-run-r1/0f6e04e94eb7f05c-native.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\run.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r1/48423febc7485075-run.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\S_R004S03C01-fixed30-0000-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r1/067caa02f62d3c99-S_R004S03C01-fixed30-0000-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\worker.log",
+      "name": "closed-qwen-cpu-chinese-whole-run-r1/e4e0622964457d7e-worker.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-working-set-control-r1\\inference-state.json",
+      "name": "closed-qwen-cpu-working-set-control-r1/de546ff4f3e5c600-inference-state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-working-set-control-r1\\native.log",
+      "name": "closed-qwen-cpu-working-set-control-r1/5779f2665368c096-native.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-working-set-control-r1\\run.json",
+      "name": "closed-qwen-cpu-working-set-control-r1/70ee684634fbdb1f-run.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-working-set-control-r1\\S_R004S03C01-fixed30-0000-raw.json",
+      "name": "closed-qwen-cpu-working-set-control-r1/d4e0eed97503bfa2-S_R004S03C01-fixed30-0000-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-working-set-control-r1\\worker.log",
+      "name": "closed-qwen-cpu-working-set-control-r1/97ec5d12b8b929bb-worker.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\run.json",
+      "name": "data-counts-and-hashes-only/47bdaa159d46fea3-run.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\stageA\\run.json",
+      "name": "data-counts-and-hashes-only/048419c44d952d5e-run.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-nonoverlap\\run.json",
+      "name": "data-counts-and-hashes-only/062247ea75766b2e-run.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-nonoverlap-r2\\run.json",
+      "name": "data-counts-and-hashes-only/91103dd2ae7750da-run.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200616_M_R001S05C01\\receipt.json",
+      "name": "data-source-provenance/4e9d71d3dfb1f6d3-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200618_M_R001S03C01\\receipt.json",
+      "name": "data-source-provenance/bdd251ae56ac0544-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200621_M_R002S06C01\\receipt.json",
+      "name": "data-source-provenance/e5e3ae4475df4179-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200622_M_R002S03C01\\receipt.json",
+      "name": "data-source-provenance/7e1988b0adc38a93-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200630_S_R001S03C01\\receipt.json",
+      "name": "data-source-provenance/d3ed1e55c3e5cb84-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200706_L_R001S06C01\\receipt.json",
+      "name": "data-source-provenance/ac498a96fd63b3c6-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S01C01\\receipt.json",
+      "name": "data-source-provenance/06684072619d5d51-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S02C01\\receipt.json",
+      "name": "data-source-provenance/5a055de1f40bf73e-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200709_L_R002S08C01\\receipt.json",
+      "name": "data-source-provenance/42f11a69163516bd-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200805_S_R001S06C01\\receipt.json",
+      "name": "data-source-provenance/bcb2926d876ecd7f-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200807_S_R001S04C01\\receipt.json",
+      "name": "data-source-provenance/e39cefccd1a19b2e-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200807_S_R001S06C01\\receipt.json",
+      "name": "data-source-provenance/e7de687ecdb97096-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2002b\\receipt.json",
+      "name": "data-source-provenance/1de124b1e348905e-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2005b\\receipt.json",
+      "name": "data-source-provenance/bb3e7593e8e7d2f2-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2006b\\receipt.json",
+      "name": "data-source-provenance/a650d69877142296-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2007b\\receipt.json",
+      "name": "data-source-provenance/365da9d08039e3a5-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\IS1000b\\receipt.json",
+      "name": "data-source-provenance/9fd27d6e518730bf-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\IS1001b\\receipt.json",
+      "name": "data-source-provenance/14e17baa3887af1b-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3005b\\receipt.json",
+      "name": "data-source-provenance/11101ab20e9a8986-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3008b\\receipt.json",
+      "name": "data-source-provenance/8cab167dce9cceb9-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3009b\\receipt.json",
+      "name": "data-source-provenance/4355e875276aa61c-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3010b\\receipt.json",
+      "name": "data-source-provenance/2aaef2b4e2367e4c-receipt.json"
+    },
+    {
+      "source": "work\\prepare_qwen_cpu_chinese_characterization_20261116.py",
+      "name": "work-source/6ff346a9e8f2787a-prepare_qwen_cpu_chinese_characterization_20261116.py"
+    },
+    {
+      "source": "work\\prepare_qwen_workingset_control_20261116.py",
+      "name": "work-source/c98cfc8582c3abf3-prepare_qwen_workingset_control_20261116.py"
+    },
+    {
+      "source": "work\\probe_cpu_mmap_working_set_20261116.py",
+      "name": "work-source/9d51a08bad18d870-probe_cpu_mmap_working_set_20261116.py"
+    },
+    {
+      "source": "work\\resume_qwen_cpu_whole_workingset_20261116.py",
+      "name": "work-source/6f973456f4b6cffb-resume_qwen_cpu_whole_workingset_20261116.py"
+    },
+    {
+      "source": "work\\prepare_meeting_domain_data_plan_20261116.py",
+      "name": "work-source/894421874ff03142-prepare_meeting_domain_data_plan_20261116.py"
+    },
+    {
+      "source": "work\\fetch_meeting_domain_data_20261116.py",
+      "name": "work-source/bd47b286f06e7cb8-fetch_meeting_domain_data_20261116.py"
+    },
+    {
+      "source": "work\\export_meeting_domain_stagea_20261116.py",
+      "name": "work-source/1284b73c78fe0bef-export_meeting_domain_stagea_20261116.py"
+    },
+    {
+      "source": "work\\export_meeting_domain_acoustic_frozen_20261116.py",
+      "name": "work-source/ff7ad3aa59bb3c86-export_meeting_domain_acoustic_frozen_20261116.py"
+    },
+    {
+      "source": "work\\recover_domain_acoustic_export_20261116.py",
+      "name": "work-source/907686943dd9237d-recover_domain_acoustic_export_20261116.py"
+    },
+    {
+      "source": "work\\recover_domain_acoustic_export_frozen_20261116.py",
+      "name": "work-source/65d0a6a02313029f-recover_domain_acoustic_export_frozen_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_torch_alignment_runtime_20261116.py",
+      "name": "work-source/7311063c164e6214-prepare_cpu_torch_alignment_runtime_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_alignment_control_20261116.py",
+      "name": "work-source/5930c59c5fbe02b3-prepare_cpu_alignment_control_20261116.py"
+    },
+    {
+      "source": "work\\audit_domain_training_exports_20261116.py",
+      "name": "work-source/614c9c09c12cbbe6-audit_domain_training_exports_20261116.py"
+    },
+    {
+      "source": "work\\record_cpu_memory_and_data_20261116.py",
+      "name": "work-source/d3436b58e9fb116c-record_cpu_memory_and_data_20261116.py"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "name": "progress-snapshot/e560a1b1fa7bdeea-bilingual_progress.json"
+    }
+  ],
+  "claims": {
+    "state": "OWN_CPU_RAM_CONTROL_EXACT_ONE_CLIP_AND_PUBLIC_DATA_INTEGRITY_VERIFIED_WHOLE_CHINESE_AND_ALIGNER_PENDING",
+    "newWeightTraining": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "productDefaultChanged": false,
+    "finalHoldoutOpened": false,
+    "universalQwenCpuPortRejected": true,
+    "liveWholeChineseOutputsExcludedFromThisCheckpoint": true,
+    "alignerPreparedNotYetRun": true,
+    "rawTrainingAudioAndLabelsExcludedFromGit": true
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "ES2003b-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+    "wavSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+    "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92",
+    "frames": 192800,
+    "audioSeconds": 12.05,
+    "language": "English"
+  },
+  "seconds": 9.12318889999733,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Just put it on the desk. All I see is desk. No, on the desktop you'll find. You should find that there's a project documents link. Oh, actually, just.",
+    "raw_text": "Just put it on the desk. All I see is desk. No, on the desktop you'll find. You should find that there's a project documents link. Oh, actually, just.",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "Just put it on the desk. All I see is desk. No, on the desktop you'll find. You should find that there's a project documents link. Oh, actually, just.",
+        "t0_ms": 0,
+        "t1_ms": 12050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 8.505999565124512,
+      "encode_ms": 1745.126953125,
+      "decode_ms": 7278.01513671875
+    }
+  },
+  "rawDecoded": "Just put it on the desk. All I see is desk. No, on the desktop you'll find. You should find that there's a project documents link. Oh, actually, just.",
+  "hypothesis": "Just put it on the desk. All I see is desk. No, on the desktop you'll find. You should find that there's a project documents link. Oh, actually, just.",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

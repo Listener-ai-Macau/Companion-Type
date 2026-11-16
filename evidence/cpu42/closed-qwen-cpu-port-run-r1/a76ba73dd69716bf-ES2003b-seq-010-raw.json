@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "ES2003b-seq-010",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-010.wav",
+    "wavSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+    "pcmSha256": "e087cf4e22224bfc9c3ad810c56bd3595ad7343c30b6d53fc5c1ce00d445b32f",
+    "frames": 475520,
+    "audioSeconds": 29.72,
+    "language": "English"
+  },
+  "seconds": 13.985305599999265,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Yeah, and just go fastly. Okay. Uh, I'm responsible for working design. Uh, this is basically the inside going on of the the uh remote.",
+    "raw_text": "Yeah, and just go fastly. Okay. Uh, I'm responsible for working design. Uh, this is basically the inside going on of the the uh remote.",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "Yeah, and just go fastly. Okay. Uh, I'm responsible for working design. Uh, this is basically the inside going on of the the uh remote.",
+        "t0_ms": 0,
+        "t1_ms": 29720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 27.400999069213867,
+      "encode_ms": 3375.2919921875,
+      "decode_ms": 10490.8837890625
+    }
+  },
+  "rawDecoded": "Yeah, and just go fastly. Okay. Uh, I'm responsible for working design. Uh, this is basically the inside going on of the the uh remote.",
+  "hypothesis": "Yeah, and just go fastly. Okay. Uh, I'm responsible for working design. Uh, this is basically the inside going on of the the uh remote.",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

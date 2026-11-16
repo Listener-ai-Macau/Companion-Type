@@ -1,0 +1,759 @@
+{
+  "at": "2026-11-16T14:15:24.864909+08:00",
+  "parent": "b103c2707b399f7326c8ac78cdbb8427df6d2c87",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\binding.json",
+      "file": "controls-qwen-cpu-port-r1/1f1fbda547b187b0-binding.json",
+      "bytes": 21864,
+      "sha256": "cc133591c182cef001ceb19acba9d1b8ca4346eecfc5b444aae227eefb77d413"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\model-ready.json",
+      "file": "controls-qwen-cpu-port-r1/8ba83c4c864b2634-model-ready.json",
+      "bytes": 298,
+      "sha256": "27d5c4a7c2f166e9a7013018a0348c303b60dabbf70c260b0f43db582f6aaedd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\protocol.json",
+      "file": "controls-qwen-cpu-port-r1/f555d37c535ba3d8-protocol.json",
+      "bytes": 15265,
+      "sha256": "fe6381e0388eca130c5ece20dbc6264a6ba0e1193fa53c12ac3a6768f359c975"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\publisher-metadata.json",
+      "file": "controls-qwen-cpu-port-r1/9658f9530b02d08a-publisher-metadata.json",
+      "bytes": 5607,
+      "sha256": "804b050e5446a1f50a96addc84738fa926bb62e9fcca4dfac1dfdc3cc6149a48"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\score.json",
+      "file": "controls-qwen-cpu-port-r1/fbcc6f39c8ca1e53-score.json",
+      "bytes": 148092,
+      "sha256": "aca561fdaeee0bf45b14865476732ba5f992eba05ce3119db55f2a6eafe062ef"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\scoring-binding.json",
+      "file": "controls-qwen-cpu-port-r1/0c0c3778638733b7-scoring-binding.json",
+      "bytes": 1765,
+      "sha256": "65fd3b8824fa42e8ee87467515f8c55d6e83dcf888ab7234606a2d54dc850eb9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\source.json",
+      "file": "controls-qwen-cpu-port-r1/09491fa932abf5ae-source.json",
+      "bytes": 803,
+      "sha256": "1ae22cc350b6b81a5b39f33ef1f4230e311df8db3406ae14a2a564c1346120ff"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\binding.json",
+      "file": "controls-qwen-cpu-chinese-characterization-r1/a8a934243f6d9373-binding.json",
+      "bytes": 97732,
+      "sha256": "0564215df6aac502f154b8863b20ea5eceda482fae2bbf110ea20d109e0bdd1b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\protocol.json",
+      "file": "controls-qwen-cpu-chinese-characterization-r1/0021cfd3be86f5fe-protocol.json",
+      "bytes": 1872,
+      "sha256": "8380038deb516529677931493318116ddf0cd0c955e9774e9ec48fb554e68659"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\scope-decision.json",
+      "file": "controls-qwen-cpu-chinese-characterization-r1/60f8db57618db64b-scope-decision.json",
+      "bytes": 1872,
+      "sha256": "8380038deb516529677931493318116ddf0cd0c955e9774e9ec48fb554e68659"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\whole-scoring-only.json",
+      "file": "controls-qwen-cpu-chinese-characterization-r1/8ac3d5534f88bb1b-whole-scoring-only.json",
+      "bytes": 5531,
+      "sha256": "e1163be50128d322254a40597d0db7fef4d99b1b29b3d33430c3b6f744f80a2d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\binding.json",
+      "file": "controls-qwen-cpu-chinese-characterization-r2/006abd98e9968084-binding.json",
+      "bytes": 101977,
+      "sha256": "687294d8fca39204495f0abbbffd19a2a7af0c790fe120132291f471f6ec3daa"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\protocol.json",
+      "file": "controls-qwen-cpu-chinese-characterization-r2/b87fd62bf96f2f6f-protocol.json",
+      "bytes": 1872,
+      "sha256": "8380038deb516529677931493318116ddf0cd0c955e9774e9ec48fb554e68659"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\scope-decision.json",
+      "file": "controls-qwen-cpu-chinese-characterization-r2/cc0f7994f186ad66-scope-decision.json",
+      "bytes": 1872,
+      "sha256": "8380038deb516529677931493318116ddf0cd0c955e9774e9ec48fb554e68659"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\scoring-binding.json",
+      "file": "controls-qwen-cpu-chinese-characterization-r2/881f32e069306c65-scoring-binding.json",
+      "bytes": 3321,
+      "sha256": "91eef90b42af4ec9aa67e1ceaa1cbf2e72fb9061ec329a4b2def45b345bad426"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\whole-scoring-only.json",
+      "file": "controls-qwen-cpu-chinese-characterization-r2/c2b6c5ea675c6803-whole-scoring-only.json",
+      "bytes": 5531,
+      "sha256": "e1163be50128d322254a40597d0db7fef4d99b1b29b3d33430c3b6f744f80a2d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-working-set-r1\\probe.json",
+      "file": "controls-qwen-cpu-working-set-r1/47e9cd76630f88c4-probe.json",
+      "bytes": 1255,
+      "sha256": "c1c5c5c59c3f650b5f4b81a214fa6629fddaace76b3c424f97b24689baaed1d9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-working-set-r1\\neural-control\\binding.json",
+      "file": "controls-qwen-cpu-working-set-r1/432b81505be3fd1f-binding.json",
+      "bytes": 12969,
+      "sha256": "deff113dee0b9fa588e0748ce37e3531d3f8e0c7cb82e234735e91a2767eb6ce"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-working-set-r1\\neural-control\\protocol.json",
+      "file": "controls-qwen-cpu-working-set-r1/19036b6eb471e5c6-protocol.json",
+      "bytes": 513,
+      "sha256": "24403695411985b77917ab515748dfbe26bff0a6dc940e659ed420f90d5a7536"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-working-set-r1\\neural-control\\recovery-observation.json",
+      "file": "controls-qwen-cpu-working-set-r1/f55f5a3a47888cb4-recovery-observation.json",
+      "bytes": 1838,
+      "sha256": "8028dd0d8e0b3ba3ca456a93a501819f391c70a978cfc2311a59efad0c1b9bdd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-working-set-r1\\neural-control\\result.json",
+      "file": "controls-qwen-cpu-working-set-r1/0981dfce95f0cf39-result.json",
+      "bytes": 1585,
+      "sha256": "5d2b6afd5356b8786a5f062705a51c13e4db7e58b2c9f21780604bcf7965ba35"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r1\\installation.log",
+      "file": "controls-cpu-forced-alignment-r1/5dcf9163c77e1cb8-installation.log",
+      "bytes": 321,
+      "sha256": "6ab8e39279e0a91e26c919222b14fcb7490427a15f5ba8cbdf27016fcd89d0c2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r1\\official-cpu-index.html",
+      "file": "controls-cpu-forced-alignment-r1/aa16f147751cca46-official-cpu-index.html",
+      "bytes": 431099,
+      "sha256": "70955fc815c9e4ffb35b5c9ce9f9e2e1768f8d321dba7f8eff2e50afc1840bd9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r1\\runtime-installation.json",
+      "file": "controls-cpu-forced-alignment-r1/ef9762e8ede3067f-runtime-installation.json",
+      "bytes": 1935,
+      "sha256": "de6a9484984ee1782d8d13a84873a4564cb8910bf26317490056f1d8a22899d3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r1\\runtime-source.json",
+      "file": "controls-cpu-forced-alignment-r1/2e5a26e6bbf59283-runtime-source.json",
+      "bytes": 1144,
+      "sha256": "223af0a948dc45bab3d78ae0ef9a30a154dbe15a48f99cb30d1c446a22e11613"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r2\\installation.log",
+      "file": "controls-cpu-forced-alignment-r2/5c17b6c355e6f372-installation.log",
+      "bytes": 528,
+      "sha256": "8a48bc7612ab6a3acd27229990313b1816698428c20d67ca95830ef6bdc17997"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r2\\official-cpu-index.html",
+      "file": "controls-cpu-forced-alignment-r2/c3ab7f7f149b9453-official-cpu-index.html",
+      "bytes": 431099,
+      "sha256": "70955fc815c9e4ffb35b5c9ce9f9e2e1768f8d321dba7f8eff2e50afc1840bd9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r2\\pip-install-report.json",
+      "file": "controls-cpu-forced-alignment-r2/948617ff1bf4dbe4-pip-install-report.json",
+      "bytes": 32372,
+      "sha256": "9c9d61ddfec95a90a39e12e9bc9d3d0c737c78f2ab8325ede2197dbc7a59441f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r2\\runtime-installation.json",
+      "file": "controls-cpu-forced-alignment-r2/a4e4fd0425c58e10-runtime-installation.json",
+      "bytes": 2056,
+      "sha256": "6fd28c9977d6f28d7dfef1af4a2a82c57a7a1a0f2f796a108d56a59437be5d3d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-r2\\runtime-source.json",
+      "file": "controls-cpu-forced-alignment-r2/de49b010d4fb294e-runtime-source.json",
+      "bytes": 1144,
+      "sha256": "53e4882aee10376965566a079bb0228990d984d516bb8736fb4bdea99f59ec3e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\binding.json",
+      "file": "controls-cpu-forced-alignment-control-r1/654d672df97151a7-binding.json",
+      "bytes": 4415,
+      "sha256": "4eea53802cc3897c4a0d3a757873536665e873fbef2ba0864ba189e4bfb3216f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-export-protocol.json",
+      "file": "controls-meeting-domain-data-r1/0f874d938050dc44-acoustic-export-protocol.json",
+      "bytes": 1617,
+      "sha256": "d235bccaad4b461d50fd1c74664593628d1cd6c5cfd5a1fa5a0b80df8e5b88f0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-export-r2-protocol.json",
+      "file": "controls-meeting-domain-data-r1/3e85ac7fd7015f22-acoustic-export-r2-protocol.json",
+      "bytes": 2052,
+      "sha256": "1108ff2108cb348a7954a55fa3dff663ddf22697775de2c1cae9256cb3cc248a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-export-r2.json",
+      "file": "controls-meeting-domain-data-r1/7e32f3869aa5a82e-acoustic-export-r2.json",
+      "bytes": 3572,
+      "sha256": "b8c5f7f619def816f041510140906d9e8947e5884627181abce3963b8a9d004f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-export.json",
+      "file": "controls-meeting-domain-data-r1/75901a62d9c3a049-acoustic-export.json",
+      "bytes": 13529,
+      "sha256": "4b38c77990a387beeeb0bcfde332cdc9ff8349642f4e415788439a1f8e807529"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\aishell-publisher-metadata.json",
+      "file": "controls-meeting-domain-data-r1/8f16e9ccc31d5f8b-aishell-publisher-metadata.json",
+      "bytes": 87447,
+      "sha256": "20e74f0ce74b6c4d52d55ce8834d67be64a6be4e9e9d78edcf43a954144fe3fb"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\data-preparation.json",
+      "file": "controls-meeting-domain-data-r1/91e083658f7fa104-data-preparation.json",
+      "bytes": 45051,
+      "sha256": "05eb5178b91b9ee23532afa4feb40b52debab38a28899bad79ea32a8dca532dd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\export-integrity.json",
+      "file": "controls-meeting-domain-data-r1/118fa6f2c23acaa5-export-integrity.json",
+      "bytes": 2261,
+      "sha256": "e1fe0e4a74749bf8c0b37925bb9c279fe999eee75cdd7c09037137b4ef38faf8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\plan.json",
+      "file": "controls-meeting-domain-data-r1/dcae1869f7ca7c3c-plan.json",
+      "bytes": 44711,
+      "sha256": "dc5f852a8a54d2f78e103da1e7d8aacfd1e137a452c52eb7c8dd9fb8164a96c6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\stageA-export-protocol.json",
+      "file": "controls-meeting-domain-data-r1/8cc57c3f0e995b85-stageA-export-protocol.json",
+      "bytes": 1497,
+      "sha256": "5f68158c5f8f068684610b12bd130da8143643522789c29f834c7623696b5aad"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\stageA-export.json",
+      "file": "controls-meeting-domain-data-r1/94d5e09c7c28a1ae-stageA-export.json",
+      "bytes": 14947,
+      "sha256": "0001aea36b9f2aa002076b0c49c506fc8dbaa18f88f5b91d4202d43a84bfda55"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-000-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/c2a187387ff87535-20200709_L_R002S01C01-seq-000-raw.json",
+      "bytes": 3607,
+      "sha256": "eea7f47001d1e7143631e82a1482d7ab9880d54ec49517cab4fbabf4684bc456"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-003-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/aab8fa20705b31b5-20200709_L_R002S01C01-seq-003-raw.json",
+      "bytes": 3529,
+      "sha256": "8777a47cb1412209efc2e13c32dd7e96882777d03eca571ec6cdc0cd3a4d96e6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-006-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/149980b7c59a1e5e-20200709_L_R002S01C01-seq-006-raw.json",
+      "bytes": 3479,
+      "sha256": "4bbc16e1806d3c4433dab919e18e23bd88b4296e0eef3998672788dfaf1e676f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-009-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/872c799a7858a913-20200709_L_R002S01C01-seq-009-raw.json",
+      "bytes": 3799,
+      "sha256": "00f08128f0e6cdc174900a6b77d8e7876641fcdaffbc03c11f90c92a20af11e6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-012-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/5b7edaedcfa6dbe7-20200709_L_R002S01C01-seq-012-raw.json",
+      "bytes": 4007,
+      "sha256": "a1f6a35d378d99d04081f24801ea7994e62352f8579ff2e334969dd83872b78d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-016-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/379c369389f322ad-20200709_L_R002S01C01-seq-016-raw.json",
+      "bytes": 4058,
+      "sha256": "4fab26d69228c38e9c38af72fe7c1b638aaa3b39a8cc62d0447519523b38e109"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-000-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/5aaecf4c5c416983-20200805_S_R001S01C01-seq-000-raw.json",
+      "bytes": 3260,
+      "sha256": "e3bd4c0b8fdee0d899da7a4a7d61e298bc2dcfc08f0fee1cd66047bfcf55b012"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-002-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/82e4b6f0e8b54a44-20200805_S_R001S01C01-seq-002-raw.json",
+      "bytes": 3361,
+      "sha256": "e52032d20f058c202d37cf656d77a06587158dcf5208e36b4657786335b93e18"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-004-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/0783b438bed73dc9-20200805_S_R001S01C01-seq-004-raw.json",
+      "bytes": 3695,
+      "sha256": "b4f8489a18f101c43d16e21bf208a5a78fbf2675592a04e577f05705920cf457"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-006-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/def356b07e343736-20200805_S_R001S01C01-seq-006-raw.json",
+      "bytes": 2991,
+      "sha256": "78f62193956d4c4276d71d8be93b92120ff9e34bebfbc48c5cfcc38785afe57d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-008-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/d4b00209633ebdc1-20200805_S_R001S01C01-seq-008-raw.json",
+      "bytes": 2362,
+      "sha256": "53eb1bc06464637b52a816c4b09919115590bec0dc8c7b8a96aaca3b3e8a8af5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-011-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/c37ae320c14a220e-20200805_S_R001S01C01-seq-011-raw.json",
+      "bytes": 3270,
+      "sha256": "06969b08e84401c3d2435474731d41a41bdb8b9b6b94479311b79ff39d81af45"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-000-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/db193bc6d10fe5c0-EN2001a-a2-000-raw.json",
+      "bytes": 2321,
+      "sha256": "10f2e1b26da6442867863063c289fcdceb86c2509f710e2b7279b0665fb57878"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-023-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/f69f94a818f13e6b-EN2001a-a2-023-raw.json",
+      "bytes": 4290,
+      "sha256": "1af878c545d0669be30a7c29ef0ecf8b6c090d44577980dc8900a3ee2533d264"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-046-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/f93931c1c10607e8-EN2001a-a2-046-raw.json",
+      "bytes": 3301,
+      "sha256": "72617ec81fcb2ade831dc7236a7f9a5a69933ea73d3e2c564e16111768de4f68"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-069-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/afecf63f7270f027-EN2001a-a2-069-raw.json",
+      "bytes": 3596,
+      "sha256": "a46306280ba68586c2b73617f68c16b4c009968a40f24a01dce8ef10064b9f67"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-092-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/503428b84cc255eb-EN2001a-a2-092-raw.json",
+      "bytes": 3958,
+      "sha256": "5d30b8a4752ab68285c2bc9f5223b173e5db2c12eaded09543f7301f9d55acd1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-116-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/d7be54f2d4d9ec90-EN2001a-a2-116-raw.json",
+      "bytes": 2597,
+      "sha256": "2857aeadcfed337c3cfecf90e55759b86cc0984fdc64247f4bd28e28e9933ff3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-000-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/7bee05a47704a465-ES2003b-seq-000-raw.json",
+      "bytes": 2444,
+      "sha256": "49df452eed0aa6cc1f94bad97a1e474b28d65d188f3989470e582510e8ce80bf"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-005-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/af6e0a1e49c27dc2-ES2003b-seq-005-raw.json",
+      "bytes": 4361,
+      "sha256": "3e289ff01a582678f583ec7c6ec26016c9f73ece1b7ed4eaec32ae455047e513"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-010-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/a76ba73dd69716bf-ES2003b-seq-010-raw.json",
+      "bytes": 2373,
+      "sha256": "6999dd795804b553330994ef8bf45748c4983bd591de644050b1aeb1cc2ba0c5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-016-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/85bfa5532f8c982f-ES2003b-seq-016-raw.json",
+      "bytes": 3473,
+      "sha256": "cd28a931f9262f89e626e063f4d7ae4b57b736967711badf3d8ad05a79efb744"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-021-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/b3a2a99a8abe452e-ES2003b-seq-021-raw.json",
+      "bytes": 2637,
+      "sha256": "884670d98d2f27547c0fc14f603020f3595f9726849382656d6b22701c022b7a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-027-raw.json",
+      "file": "closed-qwen-cpu-port-run-r1/b259d309aa661292-ES2003b-seq-027-raw.json",
+      "bytes": 2158,
+      "sha256": "ad7bad486f98927f05d8245a3d7d17e442edb4b3e233b16721ce9847f537291d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\inference-state.json",
+      "file": "closed-qwen-cpu-port-run-r1/f72e76bfe5722bf3-inference-state.json",
+      "bytes": 10136,
+      "sha256": "b7211ab02761d23974f6d20ec2e2679af35220b1b8793248e7a111f001c96825"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\native.log",
+      "file": "closed-qwen-cpu-port-run-r1/46965bce155d19b7-native.log",
+      "bytes": 7539,
+      "sha256": "65b884e1180457449d9e691c3456eda503bac2eecd494a230e51a93b3290f73a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\run.json",
+      "file": "closed-qwen-cpu-port-run-r1/99c6f328ce898e4a-run.json",
+      "bytes": 487,
+      "sha256": "52162ff674f156a07ea0103870f95e3fb0bc84a4322b88d8b3bc7a14fcceb9cb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\worker.log",
+      "file": "closed-qwen-cpu-port-run-r1/55f66eaa866c1b8d-worker.log",
+      "bytes": 1875,
+      "sha256": "8ea4dce30e24589e30c1b964dd7a8df1a7a4b79f4cb8a760a59691c1b5041846"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\inference-state.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r1/d1847436dff1d4a3-inference-state.json",
+      "bytes": 2286,
+      "sha256": "c48ef9f12a67bbe4c2b73e54e9e8b6b3711f08378157b25a0285c568fec8050d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\native.log",
+      "file": "closed-qwen-cpu-chinese-whole-run-r1/0f6e04e94eb7f05c-native.log",
+      "bytes": 478,
+      "sha256": "4b8d4230cef5e7c57e42e165711a9bb6f0b6498725530998cc1474d71400ebf7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\run.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r1/48423febc7485075-run.json",
+      "bytes": 596,
+      "sha256": "077231b472337f8656d568a04b4287c4722131e6ebf30a605510d4db6ef7249d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\S_R004S03C01-fixed30-0000-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r1/067caa02f62d3c99-S_R004S03C01-fixed30-0000-raw.json",
+      "bytes": 2816,
+      "sha256": "08983fb96f5c121ee2b0ddb5f92dd8b20a8dd1fa2f31285d45112245833718c4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\worker.log",
+      "file": "closed-qwen-cpu-chinese-whole-run-r1/e4e0622964457d7e-worker.log",
+      "bytes": 901,
+      "sha256": "27b2c2930f29d3b2d05735b08e06cc28412bf4d63a66a69362afda76f685a90e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-working-set-control-r1\\inference-state.json",
+      "file": "closed-qwen-cpu-working-set-control-r1/de546ff4f3e5c600-inference-state.json",
+      "bytes": 2427,
+      "sha256": "3e15b233c7a8574da0c67684b89f713c42d7c6e62eec3b933c2209a1eb7e899f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-working-set-control-r1\\native.log",
+      "file": "closed-qwen-cpu-working-set-control-r1/5779f2665368c096-native.log",
+      "bytes": 478,
+      "sha256": "4b8d4230cef5e7c57e42e165711a9bb6f0b6498725530998cc1474d71400ebf7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-working-set-control-r1\\run.json",
+      "file": "closed-qwen-cpu-working-set-control-r1/70ee684634fbdb1f-run.json",
+      "bytes": 487,
+      "sha256": "a88e8bb1bfdb34098ee8668d80a066f119bee702af4fff47e22adb0b929a3d1a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-working-set-control-r1\\S_R004S03C01-fixed30-0000-raw.json",
+      "file": "closed-qwen-cpu-working-set-control-r1/d4e0eed97503bfa2-S_R004S03C01-fixed30-0000-raw.json",
+      "bytes": 2813,
+      "sha256": "048b3d57d3bd5e3146aeed796cf6498cf9fc5ef2e9fa660e724fdf12138ba7db"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-working-set-control-r1\\worker.log",
+      "file": "closed-qwen-cpu-working-set-control-r1/97ec5d12b8b929bb-worker.log",
+      "bytes": 2034,
+      "sha256": "3c5887cef488f43c068e396496c19ebe5588c57ce1fedecf39d8f378beca9b6f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\run.json",
+      "file": "data-counts-and-hashes-only/47bdaa159d46fea3-run.json",
+      "bytes": 45051,
+      "sha256": "05eb5178b91b9ee23532afa4feb40b52debab38a28899bad79ea32a8dca532dd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\stageA\\run.json",
+      "file": "data-counts-and-hashes-only/048419c44d952d5e-run.json",
+      "bytes": 14947,
+      "sha256": "0001aea36b9f2aa002076b0c49c506fc8dbaa18f88f5b91d4202d43a84bfda55"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-nonoverlap\\run.json",
+      "file": "data-counts-and-hashes-only/062247ea75766b2e-run.json",
+      "bytes": 13529,
+      "sha256": "4b38c77990a387beeeb0bcfde332cdc9ff8349642f4e415788439a1f8e807529"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-nonoverlap-r2\\run.json",
+      "file": "data-counts-and-hashes-only/91103dd2ae7750da-run.json",
+      "bytes": 3572,
+      "sha256": "b8c5f7f619def816f041510140906d9e8947e5884627181abce3963b8a9d004f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200616_M_R001S05C01\\receipt.json",
+      "file": "data-source-provenance/4e9d71d3dfb1f6d3-receipt.json",
+      "bytes": 2067,
+      "sha256": "cde41558677afa9814fd673a7fb0fd1a9c09e730a2e5fb8ae8234c5c4c99636b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200618_M_R001S03C01\\receipt.json",
+      "file": "data-source-provenance/bdd251ae56ac0544-receipt.json",
+      "bytes": 2069,
+      "sha256": "02322d007dba8a289b2b4fda9c5b5b06fe74a7463d91c29f5a8966d1b3f663da"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200621_M_R002S06C01\\receipt.json",
+      "file": "data-source-provenance/e5e3ae4475df4179-receipt.json",
+      "bytes": 2056,
+      "sha256": "2a12db94856a5deff2c5c32b3a0798fe48561a42e7f07ea4dc91baa353e0309f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200622_M_R002S03C01\\receipt.json",
+      "file": "data-source-provenance/7e1988b0adc38a93-receipt.json",
+      "bytes": 2069,
+      "sha256": "eaafe9812ee608090f2626b9540a9297a682931278036e3e8a07ffeeef80d8db"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200630_S_R001S03C01\\receipt.json",
+      "file": "data-source-provenance/d3ed1e55c3e5cb84-receipt.json",
+      "bytes": 2067,
+      "sha256": "1dfccfccbf363d1110dac53faa69ccda8cad34c4126ef3bf3b70b92ad6fa98ac"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200706_L_R001S06C01\\receipt.json",
+      "file": "data-source-provenance/ac498a96fd63b3c6-receipt.json",
+      "bytes": 2072,
+      "sha256": "628afab4275b1a795b71f52b5c642d77cac7b31b3b9029db5d60609ff489ffe3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S01C01\\receipt.json",
+      "file": "data-source-provenance/06684072619d5d51-receipt.json",
+      "bytes": 2071,
+      "sha256": "fbf0a1e773cceddd4f77e2faa0eb9a29c41de80f197a8fd0bf29ffaedcde590a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S02C01\\receipt.json",
+      "file": "data-source-provenance/5a055de1f40bf73e-receipt.json",
+      "bytes": 2070,
+      "sha256": "dcfc07423871e407bfcd84188fcb0332de920331e7d9b5df93b8c9a8a1f475d0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200709_L_R002S08C01\\receipt.json",
+      "file": "data-source-provenance/42f11a69163516bd-receipt.json",
+      "bytes": 2071,
+      "sha256": "c51796f3b326bd5dca3fce1f2e05c1f9b23abb14176b281bea90c4fba6ade2f1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200805_S_R001S06C01\\receipt.json",
+      "file": "data-source-provenance/bcb2926d876ecd7f-receipt.json",
+      "bytes": 2053,
+      "sha256": "2fb0b0c607d98bf7acfecbd8172aa8f0274ae57f918837a938b313d3ea37d368"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200807_S_R001S04C01\\receipt.json",
+      "file": "data-source-provenance/e39cefccd1a19b2e-receipt.json",
+      "bytes": 2068,
+      "sha256": "3599b9640b04fd5fd5c8a16d4a9ff5f6e1208d25a51b3e66ffb00f671266ff2b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200807_S_R001S06C01\\receipt.json",
+      "file": "data-source-provenance/e7de687ecdb97096-receipt.json",
+      "bytes": 2067,
+      "sha256": "e65d988c0056ce50b6db7ce050594df79fe87e25785d189bb307cf0ad890ca8f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2002b\\receipt.json",
+      "file": "data-source-provenance/1de124b1e348905e-receipt.json",
+      "bytes": 1526,
+      "sha256": "823d43f3e0f826005ca63463d35b2589a8f9215d997100fa5e69ef4893784fc5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2005b\\receipt.json",
+      "file": "data-source-provenance/bb3e7593e8e7d2f2-receipt.json",
+      "bytes": 1527,
+      "sha256": "a55a88862abd0f559b52dcca9f7b9bf43ef2bcfae69ee86a06fa40e1dd76935a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2006b\\receipt.json",
+      "file": "data-source-provenance/a650d69877142296-receipt.json",
+      "bytes": 1514,
+      "sha256": "bf08d1e1c814378d1e0c3b8178848a1bdad2e89aa96e4185649a7ff623ad7dd7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2007b\\receipt.json",
+      "file": "data-source-provenance/365da9d08039e3a5-receipt.json",
+      "bytes": 1512,
+      "sha256": "2642ad3d41dbbbf05914c45a1e59140bc5c18012869b32d3aeca4b6cd92c2bca"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\IS1000b\\receipt.json",
+      "file": "data-source-provenance/9fd27d6e518730bf-receipt.json",
+      "bytes": 1526,
+      "sha256": "4b9207dec038feff55970120bffc837b133212aefc943bd706c907923fd59469"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\IS1001b\\receipt.json",
+      "file": "data-source-provenance/14e17baa3887af1b-receipt.json",
+      "bytes": 1522,
+      "sha256": "e6d6fe96ee5ce2ac6373c4eb7b4fdbafe625859c606d10c7aaebd9aded812245"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3005b\\receipt.json",
+      "file": "data-source-provenance/11101ab20e9a8986-receipt.json",
+      "bytes": 1526,
+      "sha256": "a5a36d995b4d2d6f2496d111b194e78a086db6f359a7697e8574ebc4860719dc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3008b\\receipt.json",
+      "file": "data-source-provenance/8cab167dce9cceb9-receipt.json",
+      "bytes": 1522,
+      "sha256": "793ed07e8cb6b7d4663c0eb0aa1ca32253d4684125245722be9578eec3c47917"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3009b\\receipt.json",
+      "file": "data-source-provenance/4355e875276aa61c-receipt.json",
+      "bytes": 1527,
+      "sha256": "cf6d83d38624c74c421c607602fdee1ca1dc56a6d28ce789c35ce1e6ffcbaec7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3010b\\receipt.json",
+      "file": "data-source-provenance/2aaef2b4e2367e4c-receipt.json",
+      "bytes": 1526,
+      "sha256": "27933087dabe5427b6657c8920130700df3e093be50dc681d182050b3c8543db"
+    },
+    {
+      "source": "work\\prepare_qwen_cpu_chinese_characterization_20261116.py",
+      "file": "work-source/6ff346a9e8f2787a-prepare_qwen_cpu_chinese_characterization_20261116.py",
+      "bytes": 6306,
+      "sha256": "deed6489e42ebed20e57561b40cc6a118dd902b1a9821b11c52ad64b7bea713b"
+    },
+    {
+      "source": "work\\prepare_qwen_workingset_control_20261116.py",
+      "file": "work-source/c98cfc8582c3abf3-prepare_qwen_workingset_control_20261116.py",
+      "bytes": 4581,
+      "sha256": "9590b307c10ce50f1a275d5110faadec497397c28dbdbc16eea244b1b7a76915"
+    },
+    {
+      "source": "work\\probe_cpu_mmap_working_set_20261116.py",
+      "file": "work-source/9d51a08bad18d870-probe_cpu_mmap_working_set_20261116.py",
+      "bytes": 2641,
+      "sha256": "98ed2d1d6a466de15a547e0c9cfabb43ff4da59b89feb768060708b617fb08e0"
+    },
+    {
+      "source": "work\\resume_qwen_cpu_whole_workingset_20261116.py",
+      "file": "work-source/6f973456f4b6cffb-resume_qwen_cpu_whole_workingset_20261116.py",
+      "bytes": 2917,
+      "sha256": "2223362d0c8f46988d323bfd1777353d93ae1b11f34f0da9cc67d50334b6fad1"
+    },
+    {
+      "source": "work\\prepare_meeting_domain_data_plan_20261116.py",
+      "file": "work-source/894421874ff03142-prepare_meeting_domain_data_plan_20261116.py",
+      "bytes": 6422,
+      "sha256": "6d7e48355edd75e1fe66403ad4fce4d7d5141806db875070acabf75ea294b4e6"
+    },
+    {
+      "source": "work\\fetch_meeting_domain_data_20261116.py",
+      "file": "work-source/bd47b286f06e7cb8-fetch_meeting_domain_data_20261116.py",
+      "bytes": 6887,
+      "sha256": "988c51f74911cef41fca9ba7064336233a3c37b504074c6c3bb333f506badfe1"
+    },
+    {
+      "source": "work\\export_meeting_domain_stagea_20261116.py",
+      "file": "work-source/1284b73c78fe0bef-export_meeting_domain_stagea_20261116.py",
+      "bytes": 11294,
+      "sha256": "ed389e6fdfdea56562ea3d342ac9d784cbece8098ea9f5ad40c7fda42f33462e"
+    },
+    {
+      "source": "work\\export_meeting_domain_acoustic_frozen_20261116.py",
+      "file": "work-source/ff7ad3aa59bb3c86-export_meeting_domain_acoustic_frozen_20261116.py",
+      "bytes": 11554,
+      "sha256": "42f38819d9fa5bc88234cf61f6ed1aa93035ca547c55d3990424d8636de18670"
+    },
+    {
+      "source": "work\\recover_domain_acoustic_export_20261116.py",
+      "file": "work-source/907686943dd9237d-recover_domain_acoustic_export_20261116.py",
+      "bytes": 2587,
+      "sha256": "547728d61f44454d9a539b21b3d74b3747d59867ae9b6f41aa7961429c5c1e5e"
+    },
+    {
+      "source": "work\\recover_domain_acoustic_export_frozen_20261116.py",
+      "file": "work-source/65d0a6a02313029f-recover_domain_acoustic_export_frozen_20261116.py",
+      "bytes": 12528,
+      "sha256": "cc9b767bcebc7644437547e34b5f98ae8980cf52e455187cbd16a3f2ede53019"
+    },
+    {
+      "source": "work\\prepare_cpu_torch_alignment_runtime_20261116.py",
+      "file": "work-source/7311063c164e6214-prepare_cpu_torch_alignment_runtime_20261116.py",
+      "bytes": 4148,
+      "sha256": "81a5d630e140e4fe61719ccb61d3e7415a5f578e73cba30020fb9c284d76f024"
+    },
+    {
+      "source": "work\\prepare_cpu_alignment_control_20261116.py",
+      "file": "work-source/5930c59c5fbe02b3-prepare_cpu_alignment_control_20261116.py",
+      "bytes": 3652,
+      "sha256": "57aa3ad34a1936d396202c54e306b7dcc1e2a37407d715975af3cc808e73e2f5"
+    },
+    {
+      "source": "work\\audit_domain_training_exports_20261116.py",
+      "file": "work-source/614c9c09c12cbbe6-audit_domain_training_exports_20261116.py",
+      "bytes": 4135,
+      "sha256": "101c242273a3c1e2f557fa23be535102095ea0ec02c5a2a7399a832be6200b4c"
+    },
+    {
+      "source": "work\\record_cpu_memory_and_data_20261116.py",
+      "file": "work-source/d3436b58e9fb116c-record_cpu_memory_and_data_20261116.py",
+      "bytes": 6248,
+      "sha256": "c68a0d313c52bb7e01f9907b887113db00ef98cc11a2197321226dd2d05ec32c"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "file": "progress-snapshot/e560a1b1fa7bdeea-bilingual_progress.json",
+      "bytes": 321938,
+      "sha256": "fd9fd2581d42bee081a031b704f2771301035bb920d626051ceede3bac30a147"
+    },
+    {
+      "source": "work\\cpu-checkpoint42.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 32648,
+      "sha256": "c1d48d06eb8a01614e1f247e6f4e974216547dea62e10d3d1f04b905d144aa3a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4193,
+      "sha256": "2765183d65ebbc010f0808a76da74b88ae49cb1b45933b4ec854865fce3daa76"
+    }
+  ],
+  "sources": {
+    "src/qwen_cpu_chinese_whole_worker_20261116.py": "39a86283c9398b73ce9aa877551fcb600b6de3dcdb20594f09ca0d0fb318c1e1",
+    "src/run_qwen_cpu_chinese_whole_20261116.py": "b51d6b25d8415a5938726d165d438491a02a84cb9216bedad0e17b27b03e10bf",
+    "src/companion_windows_working_set_20261116.py": "014c2099f042ce4544fb61daa5fee7cf4785b7caafd97c1b89f781ba8480b9d3",
+    "src/qwen_cpu_workingset_worker_20261116.py": "8e17fcbd22d95b7401a9287bd5ad0de29c3ed6d99317dac895c6bddeeb6299ba",
+    "src/run_qwen_cpu_workingset_20261116.py": "728c23d323f0190d47080897efd133d1603391b7949d97ab8b26b5caaf7759ff",
+    "src/score_qwen_cpu_chinese_whole_20261116.py": "84adf5a3d733a98f44a4bb10cb05a54894d580db872eff7ede66f20c032802fe",
+    "src/companion_cpu_aligner_loader_20261116.py": "3091bca3d7b6613bcfa39d0e90d0520caccbf4f8f065f7ffd8b08bd20e3c2848",
+    "src/cpu_forced_alignment_worker_20261116.py": "a9d11ac42d796f89f19e4b69fefb3528921f1b47590a1c9d665647c25b6ff370",
+    "src/run_cpu_forced_alignment_20261116.py": "1d5f1aa0fd4bb0f1f0b6b1eab5e0c0fb2af769b536261973320b93fc75b844a9"
+  },
+  "state": "OWN_CPU_RAM_CONTROL_EXACT_ONE_CLIP_AND_PUBLIC_DATA_INTEGRITY_VERIFIED_WHOLE_CHINESE_AND_ALIGNER_PENDING",
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "productDefaultChanged": false,
+  "finalHoldoutOpened": false,
+  "universalQwenCpuPortRejected": true,
+  "liveWholeChineseOutputsExcludedFromThisCheckpoint": true,
+  "alignerPreparedNotYetRun": true,
+  "rawTrainingAudioAndLabelsExcludedFromGit": true
+}

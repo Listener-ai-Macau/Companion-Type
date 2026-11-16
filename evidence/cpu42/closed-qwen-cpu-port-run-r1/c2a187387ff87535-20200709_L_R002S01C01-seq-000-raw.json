@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "20200709_L_R002S01C01-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-000.wav",
+    "wavSha256": "0e3615a5dc8437ca3129e82d269dbf3419fefd5871dde831d8898eb01b4f85bf",
+    "pcmSha256": "1693f208b2d6103a4cfc69b36b47a833fb913bd3becd2e42c02c6db4a5f10a30",
+    "frames": 436001,
+    "audioSeconds": 27.2500625,
+    "language": "Chinese"
+  },
+  "seconds": 13.262280000002647,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "嗯，今天呢，把大家叫来，咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的嗯汇报和总结。因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程。然后现在咱们就先从教练部这边简单的总结一下上半年的情况。上半年的情况主要是有像一些。",
+    "raw_text": "嗯，今天呢，把大家叫来，咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的嗯汇报和总结。因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程。然后现在咱们就先从教练部这边简单的总结一下上半年的情况。上半年的情况主要是有像一些。",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "嗯，今天呢，把大家叫来，咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的嗯汇报和总结。因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程。然后现在咱们就先从教练部这边简单的总结一下上半年的情况。上半年的情况主要是有像一些。",
+        "t0_ms": 0,
+        "t1_ms": 27250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 20.600000381469727,
+      "encode_ms": 2897.756103515625,
+      "decode_ms": 10269.0283203125
+    }
+  },
+  "rawDecoded": "嗯，今天呢，把大家叫来，咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的嗯汇报和总结。因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程。然后现在咱们就先从教练部这边简单的总结一下上半年的情况。上半年的情况主要是有像一些。",
+  "hypothesis": "嗯，今天呢，把大家叫来，咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的嗯汇报和总结。因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程。然后现在咱们就先从教练部这边简单的总结一下上半年的情况。上半年的情况主要是有像一些。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

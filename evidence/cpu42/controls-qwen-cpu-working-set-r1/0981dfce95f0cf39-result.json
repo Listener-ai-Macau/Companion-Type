@@ -1,0 +1,30 @@
+{
+  "state": "PASS_ACTUAL_QWEN_RAW_OUTPUT_EXACT_UNDER_175GIB_WORKING_SET_WITHOUT_2X_SLOWDOWN",
+  "at": "2026-11-16T13:58:55.049072+08:00",
+  "controlRun": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-working-set-control-r1\\run.json",
+  "controlRunSha256": "a88e8bb1bfdb34098ee8668d80a066f119bee702af4fff47e22adb0b929a3d1a",
+  "controlOutput": {
+    "id": "S_R004S03C01-fixed30-0000",
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-working-set-control-r1\\S_R004S03C01-fixed30-0000-raw.json",
+    "sha256": "048b3d57d3bd5e3146aeed796cf6498cf9fc5ef2e9fa660e724fdf12138ba7db",
+    "seconds": 11.924232900004426,
+    "audioSeconds": 30.0
+  },
+  "oldOutput": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\S_R004S03C01-fixed30-0000-raw.json",
+  "oldOutputSha256": "08983fb96f5c121ee2b0ddb5f92dd8b20a8dd1fa2f31285d45112245833718c4",
+  "oldSeconds": 15.677010899999004,
+  "cappedSeconds": 11.924232900004426,
+  "ratio": 0.7606190348445304,
+  "workingSetControl": {
+    "minimumBytes": 204800,
+    "maximumBytes": 1879048192,
+    "flags": 6,
+    "maximumEnforced": true,
+    "scope": "Current owned worker process only; no global/other-process/registry changes."
+  },
+  "observedFamilyWorkingSetPeakBytes": 1890840576,
+  "observedFamilyPrivatePeakBytes": 1006120960,
+  "singleControlTimingNotAUniversalPerformanceClaim": true,
+  "originalCpuPrivateAndLowRamGuardsUnchanged": true,
+  "noModelOrQuantizationChange": true
+}

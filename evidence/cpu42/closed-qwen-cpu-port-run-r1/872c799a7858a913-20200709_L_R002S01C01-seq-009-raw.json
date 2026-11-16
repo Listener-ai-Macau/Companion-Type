@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "20200709_L_R002S01C01-seq-009",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-009.wav",
+    "wavSha256": "988829118527d42a1b014f640471dd23b3ad281b1d88922d84b61bb11717b30f",
+    "pcmSha256": "3a9b28cb9b183bd8f93e51ef2a85fff2bd96c3f68f674024db8c951bd76da179",
+    "frames": 444561,
+    "audioSeconds": 27.7850625,
+    "language": "Chinese"
+  },
+  "seconds": 14.813836199995421,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "不管任何一个班发现问题，及时汇报给当班的领导、维修人员。维修人员如果是一些小问题，就是当场处理；如果说呃处理不了的一些器械的一些损坏，会及时的上报。呃，这边他们的配合还是做的蛮好的。嗯，咱们就是咱们这前一段时间会一直下雨，然后咱们这边我想问一下，咱们这边这个设施有没有受到？",
+    "raw_text": "不管任何一个班发现问题，及时汇报给当班的领导、维修人员。维修人员如果是一些小问题，就是当场处理；如果说呃处理不了的一些器械的一些损坏，会及时的上报。呃，这边他们的配合还是做的蛮好的。嗯，咱们就是咱们这前一段时间会一直下雨，然后咱们这边我想问一下，咱们这边这个设施有没有受到？",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "不管任何一个班发现问题，及时汇报给当班的领导、维修人员。维修人员如果是一些小问题，就是当场处理；如果说呃处理不了的一些器械的一些损坏，会及时的上报。呃，这边他们的配合还是做的蛮好的。嗯，咱们就是咱们这前一段时间会一直下雨，然后咱们这边我想问一下，咱们这边这个设施有没有受到？",
+        "t0_ms": 0,
+        "t1_ms": 27785,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 45.52000045776367,
+      "encode_ms": 3056.972900390625,
+      "decode_ms": 11640.84765625
+    }
+  },
+  "rawDecoded": "不管任何一个班发现问题，及时汇报给当班的领导、维修人员。维修人员如果是一些小问题，就是当场处理；如果说呃处理不了的一些器械的一些损坏，会及时的上报。呃，这边他们的配合还是做的蛮好的。嗯，咱们就是咱们这前一段时间会一直下雨，然后咱们这边我想问一下，咱们这边这个设施有没有受到？",
+  "hypothesis": "不管任何一个班发现问题，及时汇报给当班的领导、维修人员。维修人员如果是一些小问题，就是当场处理；如果说呃处理不了的一些器械的一些损坏，会及时的上报。呃，这边他们的配合还是做的蛮好的。嗯，咱们就是咱们这前一段时间会一直下雨，然后咱们这边我想问一下，咱们这边这个设施有没有受到？",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

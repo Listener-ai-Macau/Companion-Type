@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "20200805_S_R001S01C01-seq-006",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-006.wav",
+    "wavSha256": "8bb395e6a992c0d5de8de3b1d5dae910102055c8f51303a95c992aeb8e2bbfe1",
+    "pcmSha256": "6424262715a7b43c8aa89e1e6a829cdb0019915affabac1cf04fae4d934f6368",
+    "frames": 318401,
+    "audioSeconds": 19.9000625,
+    "language": "Chinese"
+  },
+  "seconds": 6.208865500004322,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "那呃下半年的话，你们有什么计划或者说有什么想改进的地方？下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对电商问卷的结果进行分析。",
+    "raw_text": "那呃下半年的话，你们有什么计划或者说有什么想改进的地方？下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对电商问卷的结果进行分析。",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "那呃下半年的话，你们有什么计划或者说有什么想改进的地方？下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对电商问卷的结果进行分析。",
+        "t0_ms": 0,
+        "t1_ms": 19900,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 9.987000465393066,
+      "encode_ms": 1337.3079833984375,
+      "decode_ms": 4819.38720703125
+    }
+  },
+  "rawDecoded": "那呃下半年的话，你们有什么计划或者说有什么想改进的地方？下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对电商问卷的结果进行分析。",
+  "hypothesis": "那呃下半年的话，你们有什么计划或者说有什么想改进的地方？下半年就是效率在提高吧，然后这个问卷每次也会做一个报告，然后就会也在问嗯努力的改善，对电商问卷的结果进行分析。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

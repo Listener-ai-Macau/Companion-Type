@@ -1,0 +1,37 @@
+{
+  "meeting": "TS3005b",
+  "language": "English",
+  "corpus": "AMI",
+  "role": "candidate-training-only",
+  "source": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3005b\\microphone0.wav",
+    "sha256": "b19c76def7e946a13cd6afa103f1070a8396c5daa2d7a600ba7ecf1e544f9100",
+    "bytes": 78080382,
+    "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/TS3005b/audio/TS3005b.Array1-01.wav",
+    "headers": {
+      "Content-Length": "78080382",
+      "ETag": "\"4a7697e-406a372b8eb40\"",
+      "Last-Modified": "Mon, 28 Nov 2005 17:29:41 GMT"
+    },
+    "publisherHashVerified": false,
+    "seconds": 72.68699999999808
+  },
+  "reference": {
+    "archive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+    "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+  },
+  "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3005b\\microphone0.wav",
+  "audioSha256": "b19c76def7e946a13cd6afa103f1070a8396c5daa2d7a600ba7ecf1e544f9100",
+  "pcmSha256": "c3ffe581b103f9d3ab023819ca8c366c61012742695e83b5b22be65478e21696",
+  "frames": 39038634,
+  "audioSeconds": 2439.914625,
+  "selectedMicrophoneZeroBased": 0,
+  "sourceChannels": 1,
+  "resampled": false,
+  "denoised": false,
+  "vadDroppedAudio": false,
+  "referenceTranscriptModified": false,
+  "trainingStarted": false,
+  "newNeuralCalls": 0,
+  "qualityQualified": false
+}

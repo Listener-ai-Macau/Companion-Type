@@ -1,0 +1,16 @@
+{
+  "state": "INCOMPLETE_QWEN_CPU_PORT_RETAINED",
+  "startedAt": "2026-11-16T13:33:19.785787+08:00",
+  "privatePeakBytes": 1006354432,
+  "familyWorkingSetPeakBytes": 2359091200,
+  "systemAvailableMinBytes": 841478144,
+  "qualityQualified": false,
+  "automaticRetries": 0,
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "pid": 29968,
+  "pidCreatedAt": 1794807199.7887976,
+  "stopReason": "actual_windows_low_memory",
+  "availableBytesAtStop": 694349824,
+  "error": "InterruptedError('Owned guard; original sources and partials retained')",
+  "finishedAt": "2026-11-16T13:33:45.215220+08:00"
+}

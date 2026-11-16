@@ -1,0 +1,8 @@
+Collecting torch==2.11.0+cpu
+  Downloading https://download-r2.pytorch.org/whl/cpu/torch-2.11.0%2Bcpu-cp311-cp311-win_amd64.whl (114.4 MB)
+     ------------------------------------- 114.4/114.4 MB 18.2 MB/s eta 0:00:00
+Installing collected packages: torch
+Successfully installed torch-2.11.0+cpu
+
+[notice] A new release of pip is available: 24.0 -> 26.3
+[notice] To update, run: E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Scripts\python.exe -m pip install --upgrade pip

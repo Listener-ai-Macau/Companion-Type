@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "20200709_L_R002S01C01-seq-012",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-012.wav",
+    "wavSha256": "725bcd016d924bed76085f504cfed325f25c10fb53a2548c07ad31e34191ecdf",
+    "pcmSha256": "c0ed8b3964eb7fe8f096cf20ae1967aa15f76e5f1e2a17699cf16b99c3908bb7",
+    "frames": 439120,
+    "audioSeconds": 27.445,
+    "language": "Chinese"
+  },
+  "seconds": 9.976759500001208,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "好，咱们前台这边啊，就是主要就是给顾客解答疑问。我想问一下，咱们前台就是遇到那些就是大家在咨询有意有意愿有意志，就是在咱们这报名参加活动的这些人，但是他们就一直在犹犹豫犹犹疑，你在这时候会怎么跟他们说，跟顾客说，然后让他们参加咱们这个课程？嗯，首先我们是肯定会先让这个顾客了解一下我们这个是十分优惠的。",
+    "raw_text": "好，咱们前台这边啊，就是主要就是给顾客解答疑问。我想问一下，咱们前台就是遇到那些就是大家在咨询有意有意愿有意志，就是在咱们这报名参加活动的这些人，但是他们就一直在犹犹豫犹犹疑，你在这时候会怎么跟他们说，跟顾客说，然后让他们参加咱们这个课程？嗯，首先我们是肯定会先让这个顾客了解一下我们这个是十分优惠的。",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "好，咱们前台这边啊，就是主要就是给顾客解答疑问。我想问一下，咱们前台就是遇到那些就是大家在咨询有意有意愿有意志，就是在咱们这报名参加活动的这些人，但是他们就一直在犹犹豫犹犹疑，你在这时候会怎么跟他们说，跟顾客说，然后让他们参加咱们这个课程？嗯，首先我们是肯定会先让这个顾客了解一下我们这个是十分优惠的。",
+        "t0_ms": 0,
+        "t1_ms": 27445,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 23.013999938964844,
+      "encode_ms": 2006.0909423828125,
+      "decode_ms": 7900.4208984375
+    }
+  },
+  "rawDecoded": "好，咱们前台这边啊，就是主要就是给顾客解答疑问。我想问一下，咱们前台就是遇到那些就是大家在咨询有意有意愿有意志，就是在咱们这报名参加活动的这些人，但是他们就一直在犹犹豫犹犹疑，你在这时候会怎么跟他们说，跟顾客说，然后让他们参加咱们这个课程？嗯，首先我们是肯定会先让这个顾客了解一下我们这个是十分优惠的。",
+  "hypothesis": "好，咱们前台这边啊，就是主要就是给顾客解答疑问。我想问一下，咱们前台就是遇到那些就是大家在咨询有意有意愿有意志，就是在咱们这报名参加活动的这些人，但是他们就一直在犹犹豫犹犹疑，你在这时候会怎么跟他们说，跟顾客说，然后让他们参加咱们这个课程？嗯，首先我们是肯定会先让这个顾客了解一下我们这个是十分优惠的。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "20200805_S_R001S01C01-seq-011",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-011.wav",
+    "wavSha256": "e1e2c4f404122a496adfe671d095180c18a968ba59c284c97a71e29796d0f829",
+    "pcmSha256": "bc930b017232565c34029ac52a9f5e75f80b26dd1cc2cfb8b4a9b6604c9b4576",
+    "frames": 306820,
+    "audioSeconds": 19.17625,
+    "language": "Chinese"
+  },
+  "seconds": 6.438392599993676,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "因为这个这个工作是一个长期的，一个又要有耐心的工作，不要说哎呀没事儿没事儿，千万不要存在这种侥幸的心理。因为业主安全是我们的工作的重中之重。那你们下去记得就是给我发给我发一个下半下半年的一个计划表什么的。",
+    "raw_text": "因为这个这个工作是一个长期的，一个又要有耐心的工作，不要说哎呀没事儿没事儿，千万不要存在这种侥幸的心理。因为业主安全是我们的工作的重中之重。那你们下去记得就是给我发给我发一个下半下半年的一个计划表什么的。",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "因为这个这个工作是一个长期的，一个又要有耐心的工作，不要说哎呀没事儿没事儿，千万不要存在这种侥幸的心理。因为业主安全是我们的工作的重中之重。那你们下去记得就是给我发给我发一个下半下半年的一个计划表什么的。",
+        "t0_ms": 0,
+        "t1_ms": 19176,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 9.968999862670898,
+      "encode_ms": 1290.427001953125,
+      "decode_ms": 5097.99609375
+    }
+  },
+  "rawDecoded": "因为这个这个工作是一个长期的，一个又要有耐心的工作，不要说哎呀没事儿没事儿，千万不要存在这种侥幸的心理。因为业主安全是我们的工作的重中之重。那你们下去记得就是给我发给我发一个下半下半年的一个计划表什么的。",
+  "hypothesis": "因为这个这个工作是一个长期的，一个又要有耐心的工作，不要说哎呀没事儿没事儿，千万不要存在这种侥幸的心理。因为业主安全是我们的工作的重中之重。那你们下去记得就是给我发给我发一个下半下半年的一个计划表什么的。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

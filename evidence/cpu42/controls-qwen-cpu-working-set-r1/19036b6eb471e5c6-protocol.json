@@ -1,0 +1,6 @@
+{
+  "expectedRawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\S_R004S03C01-fixed30-0000-raw.json",
+  "expectedRawSha256": "08983fb96f5c121ee2b0ddb5f92dd8b20a8dd1fa2f31285d45112245833718c4",
+  "originalSeconds": 15.677010899999004,
+  "keepRule": "Same rawDecoded/hypothesis/naturalEOS, original25%/4/2GiB+lowRAM guards, observed family RSS<=1.75GiB+64MiB, compute no slower than2x original. Otherwise reject this memory setting; no ceiling grid."
+}

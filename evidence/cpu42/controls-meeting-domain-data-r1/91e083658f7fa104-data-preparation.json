@@ -1,0 +1,967 @@
+{
+  "state": "PUBLIC_TRAINING_SOURCE_DATA_PREPARED_WITH_RETAINED_FAILURES",
+  "startedAt": "2026-11-16T13:02:00.403595+08:00",
+  "completed": [
+    {
+      "meeting": "ES2002b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2002b\\microphone0.wav",
+        "sha256": "49f98d02441d2553e7f228fe89265d57251ee1a2d38f7ebc42874de4a56850d6",
+        "bytes": 72952194,
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/ES2002b/audio/ES2002b.Array1-01.wav",
+        "headers": {
+          "Content-Length": "72952194",
+          "ETag": "\"4592982-3f375da1a1e80\"",
+          "Last-Modified": "Tue, 29 Mar 2005 16:07:06 GMT"
+        },
+        "publisherHashVerified": false,
+        "seconds": 78.8440000000046
+      },
+      "reference": {
+        "archive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+        "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2002b\\microphone0.wav",
+      "audioSha256": "49f98d02441d2553e7f228fe89265d57251ee1a2d38f7ebc42874de4a56850d6",
+      "pcmSha256": "952373384778b47aaa62cdb3bdd7f788ffdf4e74575be8329dd17829374ca5ca",
+      "frames": 36476075,
+      "audioSeconds": 2279.7546875,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 1,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "ES2005b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2005b\\microphone0.wav",
+        "sha256": "3e4d1186e9e6aec369abd52dd47c6d8c15c533476471e398621e835334778a99",
+        "bytes": 74024322,
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/ES2005b/audio/ES2005b.Array1-01.wav",
+        "headers": {
+          "Content-Length": "74024322",
+          "ETag": "\"4698582-3f1f4e22c4bc0\"",
+          "Last-Modified": "Thu, 10 Mar 2005 12:49:59 GMT"
+        },
+        "publisherHashVerified": false,
+        "seconds": 67.98400000000402
+      },
+      "reference": {
+        "archive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+        "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2005b\\microphone0.wav",
+      "audioSha256": "3e4d1186e9e6aec369abd52dd47c6d8c15c533476471e398621e835334778a99",
+      "pcmSha256": "b9f4ffe92d1d0845c4f6830c4a7005f60ec3f5bc5a67a484c3808fa18b100231",
+      "frames": 37012139,
+      "audioSeconds": 2313.2586875,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 1,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "ES2006b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2006b\\microphone0.wav",
+        "sha256": "2e46c407e9b4535fdb94c5768dc629b3b87e8e1089f2d765343d969f071315e8",
+        "bytes": 69860056,
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/ES2006b/audio/ES2006b.Array1-01.wav",
+        "headers": {
+          "Content-Length": "69860056",
+          "ETag": "\"429fad8-3f1f631bf4740\"",
+          "Last-Modified": "Thu, 10 Mar 2005 14:23:49 GMT"
+        },
+        "publisherHashVerified": false,
+        "seconds": 38.25
+      },
+      "reference": {
+        "archive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+        "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2006b\\microphone0.wav",
+      "audioSha256": "2e46c407e9b4535fdb94c5768dc629b3b87e8e1089f2d765343d969f071315e8",
+      "pcmSha256": "77416b9ed7aa64801eaa82508404dc8801eccf8beab309271fc3b8788f1a1187",
+      "frames": 34930006,
+      "audioSeconds": 2183.125375,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 1,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "ES2007b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2007b\\microphone0.wav",
+        "sha256": "12adb47ac8119e8b8a6eab9a5d8ad732db142161ae1cc00228713270028526a7",
+        "bytes": 53931052,
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/ES2007b/audio/ES2007b.Array1-01.wav",
+        "headers": {
+          "Content-Length": "53931052",
+          "ETag": "\"336ec2c-3f1f725e34740\"",
+          "Last-Modified": "Thu, 10 Mar 2005 15:32:05 GMT"
+        },
+        "publisherHashVerified": false,
+        "seconds": 50.125
+      },
+      "reference": {
+        "archive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+        "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2007b\\microphone0.wav",
+      "audioSha256": "12adb47ac8119e8b8a6eab9a5d8ad732db142161ae1cc00228713270028526a7",
+      "pcmSha256": "9cab998ae9e8d788d111bf2ff26bbd1253647ba0c79ea6a0870cc4a6328cfbcd",
+      "frames": 26965504,
+      "audioSeconds": 1685.344,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 1,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "IS1000b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\IS1000b\\microphone0.wav",
+        "sha256": "35bfeaa60e262198c708c2cc589ae61b78deca4a3372b18e04cdfb8f6543f04a",
+        "bytes": 75000626,
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/IS1000b/audio/IS1000b.Array1-01.wav",
+        "headers": {
+          "Content-Length": "75000626",
+          "ETag": "\"4786b32-3f0247c001100\"",
+          "Last-Modified": "Tue, 15 Feb 2005 10:47:00 GMT"
+        },
+        "publisherHashVerified": false,
+        "seconds": 56.42200000000594
+      },
+      "reference": {
+        "archive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+        "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\IS1000b\\microphone0.wav",
+      "audioSha256": "35bfeaa60e262198c708c2cc589ae61b78deca4a3372b18e04cdfb8f6543f04a",
+      "pcmSha256": "e8405fe9f0a6a1fbf5e271b300b6989a944f40aa255b69dc19681815c2c688d7",
+      "frames": 37500246,
+      "audioSeconds": 2343.765375,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 1,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "IS1001b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\IS1001b\\microphone0.wav",
+        "sha256": "164dda162e5e8e851cb56b629116e916835d571b6b4cdf3d164337297b0a853d",
+        "bytes": 67741119,
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/IS1001b/audio/IS1001b.Array1-01.wav",
+        "headers": {
+          "Content-Length": "67741119",
+          "ETag": "\"409a5bf-3f0248ced9000\"",
+          "Last-Modified": "Tue, 15 Feb 2005 10:51:44 GMT"
+        },
+        "publisherHashVerified": false,
+        "seconds": 73.4690000000046
+      },
+      "reference": {
+        "archive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+        "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\IS1001b\\microphone0.wav",
+      "audioSha256": "164dda162e5e8e851cb56b629116e916835d571b6b4cdf3d164337297b0a853d",
+      "pcmSha256": "277467c00810f71c0d89d6a0b4709b1a3cd4dc2e28dc28f8500b2ea58ff6a430",
+      "frames": 33869824,
+      "audioSeconds": 2116.864,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 1,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "TS3005b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3005b\\microphone0.wav",
+        "sha256": "b19c76def7e946a13cd6afa103f1070a8396c5daa2d7a600ba7ecf1e544f9100",
+        "bytes": 78080382,
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/TS3005b/audio/TS3005b.Array1-01.wav",
+        "headers": {
+          "Content-Length": "78080382",
+          "ETag": "\"4a7697e-406a372b8eb40\"",
+          "Last-Modified": "Mon, 28 Nov 2005 17:29:41 GMT"
+        },
+        "publisherHashVerified": false,
+        "seconds": 72.68699999999808
+      },
+      "reference": {
+        "archive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+        "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3005b\\microphone0.wav",
+      "audioSha256": "b19c76def7e946a13cd6afa103f1070a8396c5daa2d7a600ba7ecf1e544f9100",
+      "pcmSha256": "c3ffe581b103f9d3ab023819ca8c366c61012742695e83b5b22be65478e21696",
+      "frames": 39038634,
+      "audioSeconds": 2439.914625,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 1,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "TS3008b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3008b\\microphone0.wav",
+        "sha256": "ac699e81732665978aa650659a35ef2f5e46440819c36c8dd88df13ec332b7c7",
+        "bytes": 74273834,
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/TS3008b/audio/TS3008b.Array1-01.wav",
+        "headers": {
+          "Content-Length": "74273834",
+          "ETag": "\"46d542a-406a380e882c0\"",
+          "Last-Modified": "Mon, 28 Nov 2005 17:33:39 GMT"
+        },
+        "publisherHashVerified": false,
+        "seconds": 82.76599999999598
+      },
+      "reference": {
+        "archive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+        "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3008b\\microphone0.wav",
+      "audioSha256": "ac699e81732665978aa650659a35ef2f5e46440819c36c8dd88df13ec332b7c7",
+      "pcmSha256": "c663df472c5bb6805a0027946f10155c6d03c53e60db47a28560b4b8dc36732b",
+      "frames": 37135360,
+      "audioSeconds": 2320.96,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 1,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "TS3009b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3009b\\microphone0.wav",
+        "sha256": "c5fc2bb57bd14c3750fdd5bab99183eff46ff7cc15d2fb90278d144c7183aa1a",
+        "bytes": 78724820,
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/TS3009b/audio/TS3009b.Array1-01.wav",
+        "headers": {
+          "Content-Length": "78724820",
+          "ETag": "\"4b13ed4-406a384e6d980\"",
+          "Last-Modified": "Mon, 28 Nov 2005 17:34:46 GMT"
+        },
+        "publisherHashVerified": false,
+        "seconds": 93.70300000000134
+      },
+      "reference": {
+        "archive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+        "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3009b\\microphone0.wav",
+      "audioSha256": "c5fc2bb57bd14c3750fdd5bab99183eff46ff7cc15d2fb90278d144c7183aa1a",
+      "pcmSha256": "1a30cecc456ea132d35cb4d2b47eb4a22815a74dab683bed91671a11b06e8da0",
+      "frames": 39360853,
+      "audioSeconds": 2460.0533125,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 1,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "TS3010b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3010b\\microphone0.wav",
+        "sha256": "130419161db300a6170de17b5ffb25dccbde178566927d5b665440a1f76c9d49",
+        "bytes": 66738558,
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/TS3010b/audio/TS3010b.Array1-01.wav",
+        "headers": {
+          "Content-Length": "66738558",
+          "ETag": "\"3fa597e-406a388004e80\"",
+          "Last-Modified": "Mon, 28 Nov 2005 17:35:38 GMT"
+        },
+        "publisherHashVerified": false,
+        "seconds": 55.96899999999732
+      },
+      "reference": {
+        "archive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+        "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\TS3010b\\microphone0.wav",
+      "audioSha256": "130419161db300a6170de17b5ffb25dccbde178566927d5b665440a1f76c9d49",
+      "pcmSha256": "cad269920ad065f63fb835a4ec6ccde474c82f3141850a059944b845b01734da",
+      "frames": 33367722,
+      "audioSeconds": 2085.482625,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 1,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200707_L_R001S01C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S01C01\\source.flac",
+        "sha256": "999497f076f795caa07e60c5bad0d8ef220f0eb13f338bb0270e85a38184ae87",
+        "bytes": 240382134,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200707_L_R001S01C01.flac",
+        "headers": {
+          "Content-Length": "240382134",
+          "ETag": "\"a89e76ec34f42b65a177f946d4ce4e9a4c8a2ca236ee7458080a6490d54f2583\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 13.31300000000192
+      },
+      "reference": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S01C01\\reference.TextGrid",
+        "sha256": "c679f0805986c049f70dc3f30fbed936626cf4c7d16fa14ef1a16117bb57f3d2",
+        "bytes": 181910,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/TextGrid/20200707_L_R001S01C01.TextGrid",
+        "headers": {
+          "Content-Length": "181910",
+          "ETag": "\"43969ac5246eb9894f49ce6ba673c5398002d0da\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 1.5310000000026776
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S01C01\\microphone0.wav",
+      "audioSha256": "74d49c98fc10f3626973bfed45f2cc3354bc08b9947d7e8236172e085824afcd",
+      "pcmSha256": "23a6bc61dd394a34ae06f581f17e3473e94b6d7cedb27de79ee05effbb9ef810",
+      "frames": 31937747,
+      "audioSeconds": 1996.1091875,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 8,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200706_L_R001S06C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200706_L_R001S06C01\\source.flac",
+        "sha256": "18e7ca07c0b1f89c2d85c45e5b4693e71c93715d9e3d6611c73ec66753d96201",
+        "bytes": 251254681,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200706_L_R001S06C01.flac",
+        "headers": {
+          "Content-Length": "251254681",
+          "ETag": "\"8651165f740d616c5fa45e5519b46e65a257ccf93e05270b89589edd4c8ae22e\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 10.610000000000582
+      },
+      "reference": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200706_L_R001S06C01\\reference.TextGrid",
+        "sha256": "0aca5a3ebc0c82f2294e45939d77149473e839d0ff5d886f541ca805ff72fd14",
+        "bytes": 142331,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/TextGrid/20200706_L_R001S06C01.TextGrid",
+        "headers": {
+          "Content-Length": "142331",
+          "ETag": "\"b995f26a85a06611fde14101210fd5d0c41d2c09\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 0.6560000000026776
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200706_L_R001S06C01\\microphone0.wav",
+      "audioSha256": "63b9acb9426555949d1f4acee1d6c0fe01c1efca07dd873d6461435bab8aa6a2",
+      "pcmSha256": "747c562d48f856c3f3b264914eba7f14ab07bd62b19cf0b70112e8d58a45198c",
+      "frames": 33527515,
+      "audioSeconds": 2095.4696875,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 8,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200707_L_R001S02C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S02C01\\source.flac",
+        "sha256": "83c94edb3d2d047848c0a37b80270312a4b82b1bc12333a990c3201a5c32fe47",
+        "bytes": 227574643,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200707_L_R001S02C01.flac",
+        "headers": {
+          "Content-Length": "227574643",
+          "ETag": "\"234b47d69057693e3b581e918256ac6ac2288bd5bfe7e3ed4431723e5417a6c0\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 9.01600000000326
+      },
+      "reference": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S02C01\\reference.TextGrid",
+        "sha256": "73a865d63ac377939efc66f2b9e4b21e38c14d3ebe9cc4804abf16b6f925501c",
+        "bytes": 125693,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/TextGrid/20200707_L_R001S02C01.TextGrid",
+        "headers": {
+          "Content-Length": "125693",
+          "ETag": "\"72373696e72b36d24b434eb20c9467d8213220c2\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 1.1869999999980791
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200707_L_R001S02C01\\microphone0.wav",
+      "audioSha256": "50496bb3716053139881552fe9be5a42f6dcaaaa1ba099fc4e2e467a79a6a4e7",
+      "pcmSha256": "67ff96965e6db03660f8e440ac45607bc2f9a5b2e1a4901fa56ffcda21aecf87",
+      "frames": 29690503,
+      "audioSeconds": 1855.6564375,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 8,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200709_L_R002S08C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200709_L_R002S08C01\\source.flac",
+        "sha256": "ef2c828c4c863104c2079cf56bf9631e945418dee9fe193910cf240bfca2172c",
+        "bytes": 237705686,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/wav/20200709_L_R002S08C01.flac",
+        "headers": {
+          "Content-Length": "237705686",
+          "ETag": "\"6d395c5386c05b168f1eaa66e844cb5d902e726cd443f2f5f690325efd72e979\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 7.328000000001339
+      },
+      "reference": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200709_L_R002S08C01\\reference.TextGrid",
+        "sha256": "cbc804b0dfdf25a3a0f6a62bcad77f04b697b8dd2425e261e5fa9c8217fe6ebc",
+        "bytes": 130444,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_L/TextGrid/20200709_L_R002S08C01.TextGrid",
+        "headers": {
+          "Content-Length": "130444",
+          "ETag": "\"06f7b5e2e890639e62882b021a264eba09efa5f1\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 0.9689999999973224
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200709_L_R002S08C01\\microphone0.wav",
+      "audioSha256": "13901ba3283cceef33f998a2003eaa8da797652d1448d2ae2667583a1b20206b",
+      "pcmSha256": "c919ce368c855d636429944605769b10d6b418c5edd7da6f338cedafe0f209ee",
+      "frames": 32646211,
+      "audioSeconds": 2040.3881875,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 8,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200616_M_R001S05C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200616_M_R001S05C01\\source.flac",
+        "sha256": "2589285dceb57fe8b98012a81d2bdf52e6fc0af5343080239d65de0aacc6827c",
+        "bytes": 233060317,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_M/wav/20200616_M_R001S05C01.flac",
+        "headers": {
+          "Content-Length": "233060317",
+          "ETag": "\"aa8aa75a9ab182063bb06558c04acafad4f6a9f056e05030b4aabf719f89cbad\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 7.39100000000326
+      },
+      "reference": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200616_M_R001S05C01\\reference.TextGrid",
+        "sha256": "127463f0c36a758038926f2df70bd9f8684f37013c80ee0b546e9ddc8df9330b",
+        "bytes": 130299,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_M/TextGrid/20200616_M_R001S05C01.TextGrid",
+        "headers": {
+          "Content-Length": "130299",
+          "ETag": "\"1aa35fc09ae2e7a290e265e5a19904a7382c1a64\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 0.8909999999959837
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200616_M_R001S05C01\\microphone0.wav",
+      "audioSha256": "f3ded237ccaa41f247326c8f1a1e8ef41ba1fbb115ff3a6b399668bfa15b8cfe",
+      "pcmSha256": "3291af1c0bb2d7feacdb148b3fa80c147e8d5d1a2dda027285f60050c033f841",
+      "frames": 32611384,
+      "audioSeconds": 2038.2115,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 8,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200622_M_R002S03C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200622_M_R002S03C01\\source.flac",
+        "sha256": "34c64b26fb2669e57dcfd2f7675ecf072cf7d1898fdd38a2d580b37be66cf7d7",
+        "bytes": 257634534,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_M/wav/20200622_M_R002S03C01.flac",
+        "headers": {
+          "Content-Length": "257634534",
+          "ETag": "\"8eca17ba738a5bb41ca3c0faf83f70b901e81ecd01a4fd9635cfc5d10ecc6a10\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 8.43800000000192
+      },
+      "reference": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200622_M_R002S03C01\\reference.TextGrid",
+        "sha256": "1524b57d5526e036ab1f54afdf4e7d9bdf7a1619682d7652f688eedc840e9f27",
+        "bytes": 167417,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_M/TextGrid/20200622_M_R002S03C01.TextGrid",
+        "headers": {
+          "Content-Length": "167417",
+          "ETag": "\"97ae397bc50a3c49447fae1853a457a1c85b164b\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 0.6719999999986612
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200622_M_R002S03C01\\microphone0.wav",
+      "audioSha256": "6f59fc1970e4b2ad9e2c4e983b53a24f0461f93027a05e9553b117e8bd79e2a0",
+      "pcmSha256": "6474bc5ea5c607c22402181fedd3d9444a27fcc1ee220f1ca08e52c6f4b80402",
+      "frames": 35422598,
+      "audioSeconds": 2213.912375,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 8,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200618_M_R001S03C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200618_M_R001S03C01\\source.flac",
+        "sha256": "a89bb6af281ca81821e8139fedbcf182e159e33d3590ea345860914343c968a3",
+        "bytes": 210750225,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_M/wav/20200618_M_R001S03C01.flac",
+        "headers": {
+          "Content-Length": "210750225",
+          "ETag": "\"c45e05ed3c5ba57327185fafa794ee7c54d7153e5ddfea4289dd548b3678f870\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 6.703000000001339
+      },
+      "reference": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200618_M_R001S03C01\\reference.TextGrid",
+        "sha256": "8a6f4f8ceed94ea0e3c45fb9d5e3e4d4fe74739aa4274ef1541c00a6003af21c",
+        "bytes": 138497,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_M/TextGrid/20200618_M_R001S03C01.TextGrid",
+        "headers": {
+          "Content-Length": "138497",
+          "ETag": "\"8f01afca6276a06e1d83cbe6acbe191c06b05893\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 0.5939999999973224
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200618_M_R001S03C01\\microphone0.wav",
+      "audioSha256": "4e79e2106f922587e2a9c09df8422037eab27f775783158d03cf4f20b5e7978f",
+      "pcmSha256": "3fbfdfeaec066951d9a1f5c4471d05ae0d75019ac110f78d6a98190b1b0a1138",
+      "frames": 29596860,
+      "audioSeconds": 1849.80375,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 8,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200621_M_R002S06C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200621_M_R002S06C01\\source.flac",
+        "sha256": "71f71d696b08581522d4298417746529106a8b8bfbff00aac9ae7273708cedf7",
+        "bytes": 223962268,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_M/wav/20200621_M_R002S06C01.flac",
+        "headers": {
+          "Content-Length": "223962268",
+          "ETag": "\"92c1a16c99920c724f30bf8cb15d3fb867c5c7194485a6090df2825b4bade2e1\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 7.375
+      },
+      "reference": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200621_M_R002S06C01\\reference.TextGrid",
+        "sha256": "fa3fdb7a6062a869b46469eec1092267fd06d834bae6cfb8569fa243acecbc57",
+        "bytes": 111850,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_M/TextGrid/20200621_M_R002S06C01.TextGrid",
+        "headers": {
+          "Content-Length": "111850",
+          "ETag": "\"25cb111c385998f9cc5521d43a7425bf7eee464d\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 0.8910000000032596
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200621_M_R002S06C01\\microphone0.wav",
+      "audioSha256": "13d404613c048a2989a068c5f19115e35f9c0bdb35eedb1ba3c65963726df0d0",
+      "pcmSha256": "34ddacd4c80e41742d56d9aa5489b58033f63213639d82e1c57e86e64775b4a7",
+      "frames": 32320488,
+      "audioSeconds": 2020.0305,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 8,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200805_S_R001S06C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200805_S_R001S06C01\\source.flac",
+        "sha256": "3b4ddd0a5981831ea9ddea7089c6b49a852825cf5c2edd8175dc576fe1def267",
+        "bytes": 275960488,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/wav/20200805_S_R001S06C01.flac",
+        "headers": {
+          "Content-Length": "275960488",
+          "ETag": "\"e8eb1c04b15e45aee64da91a62be0e9b4cd62533c0c96bff7ca8b61a9c2d1fa9\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 8.5
+      },
+      "reference": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200805_S_R001S06C01\\reference.TextGrid",
+        "sha256": "1758cf601959b82dac12406db8e8e648651639f042a2d2365690f6d0415e532e",
+        "bytes": 198509,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/TextGrid/20200805_S_R001S06C01.TextGrid",
+        "headers": {
+          "Content-Length": "198509",
+          "ETag": "\"9b44018045efc3801c81c14a9300cfb135ef7ae8\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 0.5789999999979045
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200805_S_R001S06C01\\microphone0.wav",
+      "audioSha256": "267197e56d59c866de9fe52b0483fe63615abcadee7ce0dc4342a467ec1c029f",
+      "pcmSha256": "6b1e7585ddd42c20eb9d6558058f12994dbed1ce69f1253d62fb1d23b99f79cd",
+      "frames": 34442448,
+      "audioSeconds": 2152.653,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 8,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200807_S_R001S06C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200807_S_R001S06C01\\source.flac",
+        "sha256": "afedb812d4e1e0011c71a0a3be73918f604413d3859cbd3070d695e1f3a823f1",
+        "bytes": 289885279,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/wav/20200807_S_R001S06C01.flac",
+        "headers": {
+          "Content-Length": "289885279",
+          "ETag": "\"75245ed7094fdc212ccf91ed1ca0600858371618a1dd118675be3da5d4e33947\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 8.421999999998661
+      },
+      "reference": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200807_S_R001S06C01\\reference.TextGrid",
+        "sha256": "0d0c96e489dc9cc247630f76c818d41df7fd63948dc1b9ee138f0a855163dee1",
+        "bytes": 137989,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/TextGrid/20200807_S_R001S06C01.TextGrid",
+        "headers": {
+          "Content-Length": "137989",
+          "ETag": "\"7cb061bfba19e60a5bda85b7b6c6991059008d7e\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 0.6569999999992433
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200807_S_R001S06C01\\microphone0.wav",
+      "audioSha256": "fe28af67c7edc1982523a349178e4809e137f9fc5c0122324422c8dfb69ca791",
+      "pcmSha256": "49dd5bd358a7c6c359b12121070dec74cd2a5e3c1ededdb798de65a3cfd8e369",
+      "frames": 35743776,
+      "audioSeconds": 2233.986,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 8,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200630_S_R001S03C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200630_S_R001S03C01\\source.flac",
+        "sha256": "933f18a30aece0f1ff4e388054eb5a11341e370c0eb953fa899402ad359d8d2b",
+        "bytes": 283956509,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/wav/20200630_S_R001S03C01.flac",
+        "headers": {
+          "Content-Length": "283956509",
+          "ETag": "\"62d1386b2a96826c48d211ba14db4bdfea0879161a9fba34277bf7103268414a\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 8.797000000005937
+      },
+      "reference": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200630_S_R001S03C01\\reference.TextGrid",
+        "sha256": "160ee2671485e213e8e8c5f26ff5ba2c8f8d6f8c2696d1ad31fa00a5cc7bcac7",
+        "bytes": 235847,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/TextGrid/20200630_S_R001S03C01.TextGrid",
+        "headers": {
+          "Content-Length": "235847",
+          "ETag": "\"2ac8a3ee2c990c2704158f3d8ea75c9454c50e5d\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 0.6879999999946449
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200630_S_R001S03C01\\microphone0.wav",
+      "audioSha256": "6da5e4e096bcda90439fa681684d9d745bd370c75626ffccd65b337a340929a8",
+      "pcmSha256": "40edece5dffd05f0100a65980e56be31bcb25be4365b34fa1d8b3ee7da402850",
+      "frames": 35057664,
+      "audioSeconds": 2191.104,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 8,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200807_S_R001S04C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "source": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200807_S_R001S04C01\\source.flac",
+        "sha256": "5c99d848634b9f44fdebdda86c555ec7e3c382af073ba4bf1f9a7b5ac8f11e18",
+        "bytes": 288938873,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/wav/20200807_S_R001S04C01.flac",
+        "headers": {
+          "Content-Length": "288938873",
+          "ETag": "\"3a0a22be04fdee7c24acdd322321b2eb9bdbdfe6de32549d7d1181b70a686dab\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 7.969000000004598
+      },
+      "reference": {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200807_S_R001S04C01\\reference.TextGrid",
+        "sha256": "f0cdcb1cf10022f383fa2a506082255ec2cbf7c4eb7560863afa63b21acda72b",
+        "bytes": 135858,
+        "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/TextGrid/20200807_S_R001S04C01.TextGrid",
+        "headers": {
+          "Content-Length": "135858",
+          "ETag": "\"e8c1ace5544860fc4f75039a7207e32c861117a9\"",
+          "Last-Modified": null
+        },
+        "publisherHashVerified": true,
+        "seconds": 0.34399999999732245
+      },
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200807_S_R001S04C01\\microphone0.wav",
+      "audioSha256": "52d2846514a575e718a8c7cd3c87e81f63038c9b91a069a6d2b222a9974527e9",
+      "pcmSha256": "b9426034a07856fec205a5ad612068f4598608c9e6486178dac0e531caab2d2b",
+      "frames": 35728208,
+      "audioSeconds": 2233.013,
+      "selectedMicrophoneZeroBased": 0,
+      "sourceChannels": 8,
+      "resampled": false,
+      "denoised": false,
+      "vadDroppedAudio": false,
+      "referenceTranscriptModified": false,
+      "trainingStarted": false,
+      "newNeuralCalls": 0,
+      "qualityQualified": false
+    }
+  ],
+  "failures": [
+    {
+      "meeting": "IS1002b",
+      "error": "<HTTPError 403: 'Forbidden'>",
+      "at": "2026-11-16T13:08:11.591046+08:00",
+      "automaticRetry": false
+    },
+    {
+      "meeting": "IS1003b",
+      "error": "<HTTPError 404: 'Not Found'>",
+      "at": "2026-11-16T13:08:12.544533+08:00",
+      "automaticRetry": false
+    }
+  ],
+  "downloadedBytes": 3734229244,
+  "canonicalAudioBytes": 797451332,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "trainingStarted": false,
+  "qualityQualified": false,
+  "soundfileVersion": "0.13.1",
+  "libsndfileVersion": "1.2.2",
+  "limits": {
+    "pid": 2276,
+    "cpuRate": 50,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 0.5,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 33439744,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "finishedAt": "2026-11-16T13:23:19.822126+08:00"
+}

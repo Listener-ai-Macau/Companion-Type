@@ -1,0 +1,24 @@
+{
+  "state": "FROZEN_TRAINING_ONLY_BROAD_ACOUSTIC_NONOVERLAP_EXPORT",
+  "at": "2026-11-16T13:49:42.137628+08:00",
+  "planSha256": "dc5f852a8a54d2f78e103da1e7d8aacfd1e137a452c52eb7c8dd9fb8164a96c6",
+  "dataRunSha256": "05eb5178b91b9ee23532afa4feb40b52debab38a28899bad79ea32a8dca532dd",
+  "sourceSha256": "cc9b767bcebc7644437547e34b5f98ae8980cf52e455187cbd16a3f2ede53019",
+  "selection": "Greedy adjacent complete lexical event clusters,2-30s,at least1 speaker; includes ordinary single-person acoustic training as well as the separately retained strict multi-person StageA cohort,no reference overlap; flush at overlap/unclear event or gaps>3s. Annotation boundaries are training supervision only; existing validation/final inputs and scoring remain unchanged.",
+  "contextPaddingSeconds": 0.1,
+  "references": "Original complete AMI word XML and frozen count-validated AISHELL TextGrid reader. Empty/nonlexical/unclear labels are retained in source metadata; unclear intervals exclude a training window instead of inventing words.",
+  "wordHandling": "All selected original words, fillers, repetitions, partial words and numbers kept. English words separated by spaces; Chinese labels concatenated without lexical normalization.",
+  "trainingFormat": "Official Qwen audio/text JSONL,language prefix. No model trained by export; raw full source events retained for later overlap/person supervision.",
+  "originalValidationAndFinalHoldoutsUsed": false,
+  "chineseGlobalParticipantDisjointnessVerified": false,
+  "modelTrainingReady": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "recovery": {
+    "previousRunSha256": "4b38c77990a387beeeb0bcfde332cdc9ff8349642f4e415788439a1f8e807529",
+    "previousProvenanceSha256": "2ca84e7ec770f9653572164a61213ad3a928c6eab805997a2ce2092d7d3495f5",
+    "reuseSuccessfulSources": 19,
+    "changedCondition": "One-sample overlap from floor/ceil of a shared padding midpoint; trim context only, otherwise exclude the example. No label, source, model or evaluation change."
+  }
+}

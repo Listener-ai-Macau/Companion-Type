@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "ES2003b-seq-005",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-005.wav",
+    "wavSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+    "pcmSha256": "ec8c4c16829d1d95404cb3fd3fcd8ee32cc310edaaf7b8901d562a90696b04e7",
+    "frames": 476000,
+    "audioSeconds": 29.75,
+    "language": "English"
+  },
+  "seconds": 19.51720860000205,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "The remote, so I'm training for you. It's been impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part. Then you can design the remote to look any way you want it to look because there's no restrictions on physical size or shape. It it could be as fancy as you want it to be. You know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine.",
+    "raw_text": "The remote, so I'm training for you. It's been impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part. Then you can design the remote to look any way you want it to look because there's no restrictions on physical size or shape. It it could be as fancy as you want it to be. You know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine.",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "The remote, so I'm training for you. It's been impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part. Then you can design the remote to look any way you want it to look because there's no restrictions on physical size or shape. It it could be as fancy as you want it to be. You know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine.",
+        "t0_ms": 0,
+        "t1_ms": 29750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 53.4630012512207,
+      "encode_ms": 3537.072998046875,
+      "decode_ms": 15847.638671875
+    }
+  },
+  "rawDecoded": "The remote, so I'm training for you. It's been impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part. Then you can design the remote to look any way you want it to look because there's no restrictions on physical size or shape. It it could be as fancy as you want it to be. You know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine.",
+  "hypothesis": "The remote, so I'm training for you. It's been impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part. Then you can design the remote to look any way you want it to look because there's no restrictions on physical size or shape. It it could be as fancy as you want it to be. You know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine.",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

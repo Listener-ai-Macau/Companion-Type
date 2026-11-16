@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "20200805_S_R001S01C01-seq-002",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-002.wav",
+    "wavSha256": "c71881acc5ca1293b41190421f61f8af4106d1acbe9a3f216aca263e66cbe130",
+    "pcmSha256": "916d8a53c3e18b5a92b2aa282099ce93c78fc61d7410ed88db72934b546b626e",
+    "frames": 347300,
+    "audioSeconds": 21.70625,
+    "language": "Chinese"
+  },
+  "seconds": 8.319864800003415,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "那些想要去当空乘的，或者说是动车、动车这个动保，他们最后没有选上的，就是最后有好好大一部分来咱们这儿。现在门口站咱们这个保安的其实是很重要的，因为来来往往的咱们小区，嗯，大门口守着是一条大路，是全是是是是去一条主路。",
+    "raw_text": "那些想要去当空乘的，或者说是动车、动车这个动保，他们最后没有选上的，就是最后有好好大一部分来咱们这儿。现在门口站咱们这个保安的其实是很重要的，因为来来往往的咱们小区，嗯，大门口守着是一条大路，是全是是是是去一条主路。",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "那些想要去当空乘的，或者说是动车、动车这个动保，他们最后没有选上的，就是最后有好好大一部分来咱们这儿。现在门口站咱们这个保安的其实是很重要的，因为来来往往的咱们小区，嗯，大门口守着是一条大路，是全是是是是去一条主路。",
+        "t0_ms": 0,
+        "t1_ms": 21706,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 12.10099983215332,
+      "encode_ms": 1514.4730224609375,
+      "decode_ms": 6756.37109375
+    }
+  },
+  "rawDecoded": "那些想要去当空乘的，或者说是动车、动车这个动保，他们最后没有选上的，就是最后有好好大一部分来咱们这儿。现在门口站咱们这个保安的其实是很重要的，因为来来往往的咱们小区，嗯，大门口守着是一条大路，是全是是是是去一条主路。",
+  "hypothesis": "那些想要去当空乘的，或者说是动车、动车这个动保，他们最后没有选上的，就是最后有好好大一部分来咱们这儿。现在门口站咱们这个保安的其实是很重要的，因为来来往往的咱们小区，嗯，大门口守着是一条大路，是全是是是是去一条主路。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

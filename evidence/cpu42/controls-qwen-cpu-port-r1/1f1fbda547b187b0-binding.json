@@ -1,0 +1,425 @@
+{
+  "workerPython": "E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe",
+  "ownerCpuBudgetPermission": {
+    "at": "2026-11-16T09:33:57.370019+08:00",
+    "quote": "允许约 25% CPU，继续后台实测",
+    "maximumComputeThreads": 4,
+    "privateBytesUnchanged": 2147483648
+  },
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "runtimeFiles": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-base.dll",
+      "sha256": "ed3596197098edf9a6b6d4eac8b85362cbec0ee2a5e338006e4864781807dd4a",
+      "bytes": 675328
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-alderlake.dll",
+      "sha256": "2ed1df33efbb3800c34797dd5f5fffaca513266aff451470394bea42d5bd0129",
+      "bytes": 1103360
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-cannonlake.dll",
+      "sha256": "b9113914f4b74add4d25e09474ad0157c2919858df02029e03bfc4cad9191b94",
+      "bytes": 1205760
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-cascadelake.dll",
+      "sha256": "dbaf116b5963fb06c419a15c4ce06d7eaa56f3e075e58bac1db758d8679426bb",
+      "bytes": 1205760
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-haswell.dll",
+      "sha256": "7284dd19351f3b0130a9deb2d4bbc965c9feffa72fe6ebefa77c73ef2f137dc2",
+      "bytes": 1104896
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-icelake.dll",
+      "sha256": "8fb7c4bffd30e6ca3da237116e3b5a68dbf317b720d865f8891005bde620ac66",
+      "bytes": 1205760
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-sandybridge.dll",
+      "sha256": "08ad3710832d62e019fbfd91aae54eda9a8841c51547ac42b45a538de4050f3a",
+      "bytes": 1075712
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-skylakex.dll",
+      "sha256": "d6cc2ae65ac2b4d6b947f6d1a5a0c5e0071e0c675ef301b6e7e47707840fb658",
+      "bytes": 1205760
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-sse42.dll",
+      "sha256": "26b15b35b444fca28025f2723b47788c621fb421c4734eec795b69d9133b1197",
+      "bytes": 842240
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-x64.dll",
+      "sha256": "7da17a52d8c483408f90ecffa1a0c550675a83210deec2a59cfc2c029730e5b2",
+      "bytes": 842752
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml.dll",
+      "sha256": "ff02f87dad8e389e750f00863af60825d8cbb35854b28074728e6d8cba676752",
+      "bytes": 61952
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\transcribe.dll",
+      "sha256": "bfe89e1ad7c126c51f0774133f3744f75c1b79829bd8cc2527ffbd172f4cf3b3",
+      "bytes": 2052608
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\licenses\\LICENSE",
+      "sha256": "acef7d1711847656cdeb0007784dbe19bd7fd069767b0b38bd62714c6a8f3159",
+      "bytes": 1104
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\licenses\\ggml\\LICENSE",
+      "sha256": "bcd8ec749126d45cb06737d0690295d73df4b6e7e194205bcf91190368f27285",
+      "bytes": 1099
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\licenses\\src\\third_party\\miniz\\LICENSE",
+      "sha256": "0115478d567121238cf6cc1c0c361926cf07a49d9e4c9e66da97fac6a01646b3",
+      "bytes": 1184
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\licenses\\src\\third_party\\silero_vad\\LICENSE",
+      "sha256": "9cb98d261a9f2dfd347ee43b314343c68fe063ecc7f31514e24b248b1be727c6",
+      "bytes": 1095
+    }
+  ],
+  "library": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\transcribe.dll",
+  "pythonFiles": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\__init__.py",
+      "gitBlob": "c7fbce779ee4eccab4d69569b99d942801b8a577",
+      "sha256": "4317cf8d93b52ce3addab6644b07347e86d1cb82453c900f983633574490246e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\_abi.py",
+      "gitBlob": "2bb9bfb478feb862dd5be4e3203fdededcf7e955",
+      "sha256": "8f98f6015353b6851d5b6003fe3a57925ee9b1a393ca488552d945254d03c8b0"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\_generated.py",
+      "gitBlob": "844dfa8a416cf46a7a9fe49f2ddc450164946e8e",
+      "sha256": "7f2ebbff71b644f4ee4e0186ff93ae3594764643c96f206b47874068333dbf6e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\_library.py",
+      "gitBlob": "b0e7597e8fdfd29b80682437adc2b39ff2b89e43",
+      "sha256": "cce7021c4cd3c2a27fdf9625646d2e0db9ac2f6442a8ac5722f97a94d1d3e7b1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\errors.py",
+      "gitBlob": "b82fea02dda72b59f067eb4a19722ff673653e6e",
+      "sha256": "32d11b3e9b5846bd8c108aff09edc4ac64018d89e62d326a939fe229a87358fc"
+    }
+  ],
+  "pythonRoot": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python",
+  "helpers": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_pcm_session_20261114.py": "4fc0f32bc986bccf6c90e8b65e81b251dbc79b476d0399a0e4670fac931df548",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\cpu_window_joint_worker_20261116.py": "290e5664bb3cf2762571bdbed581736b020abb40d40a95f348b64d490352f7ee",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_moss_raw_output_20261116.py": "6294fb998d572991b8cc3acf463c9b24787fcbe031a0035d0ef26f2a853e07c1",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_paths_20261116.py": "cc4cc430bae71cba0fcdc4f122349ba248628503f1ab1ff5480d08409bddcb6c"
+  },
+  "cpuPercent": 25,
+  "privateBytes": 2147483648,
+  "at": "2026-11-16T13:12:02.305054+08:00",
+  "workerSha256": "03095a048c1a95ea122b9d7522d3b1953c18b636d79015750250b11cf46a2eef",
+  "runnerSha256": "72833776d76b3c099c339bf8e899131a3b9e194133f31f342f51abc14f2e142d",
+  "model": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-r1\\Qwen3-ASR-1.7B-Q8_0.gguf",
+    "sha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+    "bytes": 2185030624,
+    "sourceRevision": "0e0a596e3959c3f3f2ab7d443a5b6f0f4a4bba6f"
+  },
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+      "wavSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+      "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92",
+      "frames": 192800,
+      "audioSeconds": 12.05,
+      "language": "English"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-000",
+      "condition": "sequential-original-room",
+      "meeting": "20200709_L_R002S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-000.wav",
+      "wavSha256": "0e3615a5dc8437ca3129e82d269dbf3419fefd5871dde831d8898eb01b4f85bf",
+      "pcmSha256": "1693f208b2d6103a4cfc69b36b47a833fb913bd3becd2e42c02c6db4a5f10a30",
+      "frames": 436001,
+      "audioSeconds": 27.2500625,
+      "language": "Chinese"
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-005.wav",
+      "wavSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+      "pcmSha256": "ec8c4c16829d1d95404cb3fd3fcd8ee32cc310edaaf7b8901d562a90696b04e7",
+      "frames": 476000,
+      "audioSeconds": 29.75,
+      "language": "English"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-003",
+      "condition": "sequential-original-room",
+      "meeting": "20200709_L_R002S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-003.wav",
+      "wavSha256": "e64a93b033e9102767a10d49040eabe4d96085c5c8076aabd6b0727a8886766e",
+      "pcmSha256": "59a5853e6cd1235b2c77b461806f2186fde768f07b90cc4e656b454799795c6f",
+      "frames": 357561,
+      "audioSeconds": 22.3475625,
+      "language": "Chinese"
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-010.wav",
+      "wavSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+      "pcmSha256": "e087cf4e22224bfc9c3ad810c56bd3595ad7343c30b6d53fc5c1ce00d445b32f",
+      "frames": 475520,
+      "audioSeconds": 29.72,
+      "language": "English"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-006",
+      "condition": "sequential-original-room",
+      "meeting": "20200709_L_R002S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-006.wav",
+      "wavSha256": "c8740be429bd68fbec8bb283c04c15ca40797f461626fdb02e0afab2d09788ac",
+      "pcmSha256": "368d97c811872198cd344b845c35e8b2fb1c71eaa2bf33c12a2a838ef9ffd3b4",
+      "frames": 367600,
+      "audioSeconds": 22.975,
+      "language": "Chinese"
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-016.wav",
+      "wavSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+      "pcmSha256": "7e8c174955670b930e9b657a8fdcbea730374845ac6668f4a916ddc867ee7f6e",
+      "frames": 473280,
+      "audioSeconds": 29.58,
+      "language": "English"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-009",
+      "condition": "sequential-original-room",
+      "meeting": "20200709_L_R002S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-009.wav",
+      "wavSha256": "988829118527d42a1b014f640471dd23b3ad281b1d88922d84b61bb11717b30f",
+      "pcmSha256": "3a9b28cb9b183bd8f93e51ef2a85fff2bd96c3f68f674024db8c951bd76da179",
+      "frames": 444561,
+      "audioSeconds": 27.7850625,
+      "language": "Chinese"
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-021.wav",
+      "wavSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+      "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f",
+      "frames": 203840,
+      "audioSeconds": 12.74,
+      "language": "English"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-012",
+      "condition": "sequential-original-room",
+      "meeting": "20200709_L_R002S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-012.wav",
+      "wavSha256": "725bcd016d924bed76085f504cfed325f25c10fb53a2548c07ad31e34191ecdf",
+      "pcmSha256": "c0ed8b3964eb7fe8f096cf20ae1967aa15f76e5f1e2a17699cf16b99c3908bb7",
+      "frames": 439120,
+      "audioSeconds": 27.445,
+      "language": "Chinese"
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-027.wav",
+      "wavSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+      "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+      "frames": 162401,
+      "audioSeconds": 10.1500625,
+      "language": "English"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-016",
+      "condition": "sequential-original-room",
+      "meeting": "20200709_L_R002S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-016.wav",
+      "wavSha256": "d08df775867bd3aeb82b4e24ed7a14488dc935c46169e5e54c0602c641f5a090",
+      "pcmSha256": "76ef981586fce2f41b31b1ca68a7a72bb68e3116e1181b9648b0c56a01bd2231",
+      "frames": 473887,
+      "audioSeconds": 29.6179375,
+      "language": "Chinese"
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "condition": "sequential-original-room",
+      "meeting": "EN2001a",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-000.wav",
+      "wavSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+      "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f",
+      "frames": 187360,
+      "audioSeconds": 11.71,
+      "language": "English"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-000",
+      "condition": "sequential-original-room",
+      "meeting": "20200805_S_R001S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-000.wav",
+      "wavSha256": "6c1818fbe8f564715e6cbcb498a7ea3ef91e7dd38449f25ce802c4ed367d4094",
+      "pcmSha256": "2fd5e1492ae266f668ec7d665ade16aca1f7c8a07b4a08f0087f5fe661ef3935",
+      "frames": 399261,
+      "audioSeconds": 24.9538125,
+      "language": "Chinese"
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "condition": "sequential-original-room",
+      "meeting": "EN2001a",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-023.wav",
+      "wavSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+      "pcmSha256": "490510a15ef6f46ebac736fb41e975068df6e61349ac7f589c257fe724ae9d33",
+      "frames": 475520,
+      "audioSeconds": 29.72,
+      "language": "English"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-002",
+      "condition": "sequential-original-room",
+      "meeting": "20200805_S_R001S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-002.wav",
+      "wavSha256": "c71881acc5ca1293b41190421f61f8af4106d1acbe9a3f216aca263e66cbe130",
+      "pcmSha256": "916d8a53c3e18b5a92b2aa282099ce93c78fc61d7410ed88db72934b546b626e",
+      "frames": 347300,
+      "audioSeconds": 21.70625,
+      "language": "Chinese"
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "condition": "sequential-original-room",
+      "meeting": "EN2001a",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-046.wav",
+      "wavSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+      "pcmSha256": "7c06b4b1859d19da0fe23e80c043ebb406245e57d456d2776536102c041cc8a4",
+      "frames": 362720,
+      "audioSeconds": 22.67,
+      "language": "English"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-004",
+      "condition": "sequential-original-room",
+      "meeting": "20200805_S_R001S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-004.wav",
+      "wavSha256": "3294e64009f3fd81af0ad2afb0949bb97ce215601aa9ffc0914ea2c1cda7b2a7",
+      "pcmSha256": "bd9e80cc5752015b0c405264aac434fb7b003c222e5e74eb98b5dcaa97d044d8",
+      "frames": 456807,
+      "audioSeconds": 28.5504375,
+      "language": "Chinese"
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "condition": "sequential-original-room",
+      "meeting": "EN2001a",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-069.wav",
+      "wavSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+      "pcmSha256": "01439b3125f9e794a9ffae891fd0cccc470ae701397a2b889487dc87d166bb39",
+      "frames": 476000,
+      "audioSeconds": 29.75,
+      "language": "English"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-006",
+      "condition": "sequential-original-room",
+      "meeting": "20200805_S_R001S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-006.wav",
+      "wavSha256": "8bb395e6a992c0d5de8de3b1d5dae910102055c8f51303a95c992aeb8e2bbfe1",
+      "pcmSha256": "6424262715a7b43c8aa89e1e6a829cdb0019915affabac1cf04fae4d934f6368",
+      "frames": 318401,
+      "audioSeconds": 19.9000625,
+      "language": "Chinese"
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "condition": "sequential-original-room",
+      "meeting": "EN2001a",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-092.wav",
+      "wavSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+      "pcmSha256": "14091b430e04787c3694b572f922d0a4da22a3ce4f10cc7978dde91fa4797bb7",
+      "frames": 473600,
+      "audioSeconds": 29.6,
+      "language": "English"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-008",
+      "condition": "sequential-original-room",
+      "meeting": "20200805_S_R001S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-008.wav",
+      "wavSha256": "ec6cb287103798a2424f839fb40522da652b8677f162aa9d05a5aa1c743d6b0b",
+      "pcmSha256": "e3dd3a9849bd0d6515af65df219f40a7cceaa57f28ea97c9b9b5f708dda82784",
+      "frames": 169343,
+      "audioSeconds": 10.5839375,
+      "language": "Chinese"
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "condition": "sequential-original-room",
+      "meeting": "EN2001a",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-116.wav",
+      "wavSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+      "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f",
+      "frames": 289920,
+      "audioSeconds": 18.12,
+      "language": "English"
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-011",
+      "condition": "sequential-original-room",
+      "meeting": "20200805_S_R001S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-011.wav",
+      "wavSha256": "e1e2c4f404122a496adfe671d095180c18a968ba59c284c97a71e29796d0f829",
+      "pcmSha256": "bc930b017232565c34029ac52a9f5e75f80b26dd1cc2cfb8b4a9b6604c9b4576",
+      "frames": 306820,
+      "audioSeconds": 19.17625,
+      "language": "Chinese"
+    }
+  ],
+  "settings": {
+    "backend": "cpu",
+    "nativeThreads": 4,
+    "cpuPercent": 25,
+    "familyPrivateBytes": 2147483648,
+    "quant": "Q8_0 only",
+    "kvType": "f16",
+    "nCtx": 2048,
+    "contextReason": "All fixed cohort inputs are at most30s, as in the existing PCM contract; complete natural EOS is required and no truncated output can pass.",
+    "language": "Same per-case known language policy as the frozen native Qwen baseline; no reference text/prompts/vocabulary/speaker counts.",
+    "timestamps": "none",
+    "diarize": "off",
+    "postEditWords": false,
+    "cuts": "Existing annotation-selected StageA-r2 clips, unchanged; development/regression only."
+  },
+  "protocolSha256": "fe6381e0388eca130c5ece20dbc6264a6ba0e1193fa53c12ac3a6768f359c975",
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "productDefaultChanged": false
+}

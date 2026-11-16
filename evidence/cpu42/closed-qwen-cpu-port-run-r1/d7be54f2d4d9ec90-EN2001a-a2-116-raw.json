@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "EN2001a-a2-116",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-116.wav",
+    "wavSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+    "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f",
+    "frames": 289920,
+    "audioSeconds": 18.12,
+    "language": "English"
+  },
+  "seconds": 6.158369299999322,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Once we start doing it, it will become more obvious. I think anyway. It's just yeah, halfway through the project time, but this one's just freaked me out. Yes. What time is it? Two.",
+    "raw_text": "Once we start doing it, it will become more obvious. I think anyway. It's just yeah, halfway through the project time, but this one's just freaked me out. Yes. What time is it? Two.",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "Once we start doing it, it will become more obvious. I think anyway. It's just yeah, halfway through the project time, but this one's just freaked me out. Yes. What time is it? Two.",
+        "t0_ms": 0,
+        "t1_ms": 18120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 9.09000015258789,
+      "encode_ms": 1370.4949951171875,
+      "decode_ms": 4740.4609375
+    }
+  },
+  "rawDecoded": "Once we start doing it, it will become more obvious. I think anyway. It's just yeah, halfway through the project time, but this one's just freaked me out. Yes. What time is it? Two.",
+  "hypothesis": "Once we start doing it, it will become more obvious. I think anyway. It's just yeah, halfway through the project time, but this one's just freaked me out. Yes. What time is it? Two.",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

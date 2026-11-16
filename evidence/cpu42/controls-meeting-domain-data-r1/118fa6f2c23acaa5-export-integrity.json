@@ -1,0 +1,70 @@
+{
+  "state": "PASS_PUBLIC_TRAINING_EXPORT_PCM_LABEL_AND_SOURCE_INTEGRITY_NOT_A_MODEL_RESULT",
+  "at": "2026-11-16T14:12:39.650726+08:00",
+  "exports": [
+    {
+      "directory": "stageA",
+      "examples": 190,
+      "meetings": 22,
+      "languageExamples": {
+        "English": 86,
+        "Chinese": 104
+      },
+      "languageAudioSeconds": {
+        "English": 1546.4105625,
+        "Chinese": 1929.2836249999998
+      },
+      "trainJsonlSha256": "df4766fc31002e8b69df219913648f29f53735f5b7b76392318afa3e3b9341e4",
+      "exactOriginalPcmFrameSlicesVerified": true,
+      "everySelectedLabelCharacterPreserved": true,
+      "noWithinSourceDuplicateFrames": true,
+      "sourceExclusionsVerified": true,
+      "referenceEventCount": 3978
+    },
+    {
+      "directory": "acoustic-nonoverlap-r2",
+      "examples": 944,
+      "meetings": 22,
+      "languageExamples": {
+        "English": 475,
+        "Chinese": 469
+      },
+      "languageAudioSeconds": {
+        "English": 5093.779625000001,
+        "Chinese": 5032.299875000003
+      },
+      "trainJsonlSha256": "6ed9ed0972d11673a8ca4bd044d06dea066732d51422dc20de3b20816d898d04",
+      "exactOriginalPcmFrameSlicesVerified": true,
+      "everySelectedLabelCharacterPreserved": true,
+      "noWithinSourceDuplicateFrames": true,
+      "sourceExclusionsVerified": true,
+      "referenceEventCount": 13081
+    }
+  ],
+  "strictStageAEventsAlsoInBroadAcoustic": 3978,
+  "strictStageAEventsMissingInBroadAcoustic": 0,
+  "distinctCoverageByExportRetained": true,
+  "chineseGlobalParticipantDisjointnessVerified": false,
+  "modelTrainingReady": false,
+  "trainingStarted": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 11276,
+    "cpuRate": 100,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 1.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 21889024,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

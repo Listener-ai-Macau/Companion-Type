@@ -1,0 +1,9 @@
+load_backend: loaded CPU backend from E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpu-pcm-candidate-r1\runtime-cpu-only\ggml-cpu-cascadelake.dll
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\qwen_cpu_chinese_whole_worker_20261116.py", line 84, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\qwen_cpu_chinese_whole_worker_20261116.py", line 51, in main
+    if (a.run/'stop.request').exists() or datetime.now().astimezone()>=datetime.fromisoformat(B['neuralDeadline']):raise InterruptedError('Owned stop/deadline')
+                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+InterruptedError: Owned stop/deadline

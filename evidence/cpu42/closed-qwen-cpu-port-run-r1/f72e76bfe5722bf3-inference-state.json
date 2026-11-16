@@ -1,0 +1,219 @@
+{
+  "state": "COMPLETE_QWEN_CPU_PORT_CLIPS_SCORING_PENDING",
+  "startedAt": "2026-11-16T13:12:04.618534+08:00",
+  "completed": [
+    {
+      "id": "ES2003b-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-000-raw.json",
+      "sha256": "49df452eed0aa6cc1f94bad97a1e474b28d65d188f3989470e582510e8ce80bf",
+      "seconds": 9.12318889999733,
+      "audioSeconds": 12.05
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-000-raw.json",
+      "sha256": "eea7f47001d1e7143631e82a1482d7ab9880d54ec49517cab4fbabf4684bc456",
+      "seconds": 13.262280000002647,
+      "audioSeconds": 27.2500625
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-005-raw.json",
+      "sha256": "3e289ff01a582678f583ec7c6ec26016c9f73ece1b7ed4eaec32ae455047e513",
+      "seconds": 19.51720860000205,
+      "audioSeconds": 29.75
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-003",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-003-raw.json",
+      "sha256": "8777a47cb1412209efc2e13c32dd7e96882777d03eca571ec6cdc0cd3a4d96e6",
+      "seconds": 13.154283200005011,
+      "audioSeconds": 22.3475625
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-010-raw.json",
+      "sha256": "6999dd795804b553330994ef8bf45748c4983bd591de644050b1aeb1cc2ba0c5",
+      "seconds": 13.985305599999265,
+      "audioSeconds": 29.72
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-006",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-006-raw.json",
+      "sha256": "4bbc16e1806d3c4433dab919e18e23bd88b4296e0eef3998672788dfaf1e676f",
+      "seconds": 22.676639099998283,
+      "audioSeconds": 22.975
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-016-raw.json",
+      "sha256": "cd28a931f9262f89e626e063f4d7ae4b57b736967711badf3d8ad05a79efb744",
+      "seconds": 17.644496199995046,
+      "audioSeconds": 29.58
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-009",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-009-raw.json",
+      "sha256": "00f08128f0e6cdc174900a6b77d8e7876641fcdaffbc03c11f90c92a20af11e6",
+      "seconds": 14.813836199995421,
+      "audioSeconds": 27.7850625
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-021-raw.json",
+      "sha256": "884670d98d2f27547c0fc14f603020f3595f9726849382656d6b22701c022b7a",
+      "seconds": 9.59728890000406,
+      "audioSeconds": 12.74
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-012",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-012-raw.json",
+      "sha256": "a1f6a35d378d99d04081f24801ea7994e62352f8579ff2e334969dd83872b78d",
+      "seconds": 9.976759500001208,
+      "audioSeconds": 27.445
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-027-raw.json",
+      "sha256": "ad7bad486f98927f05d8245a3d7d17e442edb4b3e233b16721ce9847f537291d",
+      "seconds": 3.178455400004168,
+      "audioSeconds": 10.1500625
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-016",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-016-raw.json",
+      "sha256": "4fab26d69228c38e9c38af72fe7c1b638aaa3b39a8cc62d0447519523b38e109",
+      "seconds": 10.067635299994436,
+      "audioSeconds": 29.6179375
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-000-raw.json",
+      "sha256": "10f2e1b26da6442867863063c289fcdceb86c2509f710e2b7279b0665fb57878",
+      "seconds": 3.424730600003386,
+      "audioSeconds": 11.71
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-000-raw.json",
+      "sha256": "e3bd4c0b8fdee0d899da7a4a7d61e298bc2dcfc08f0fee1cd66047bfcf55b012",
+      "seconds": 7.773422500002198,
+      "audioSeconds": 24.9538125
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-023-raw.json",
+      "sha256": "1af878c545d0669be30a7c29ef0ecf8b6c090d44577980dc8900a3ee2533d264",
+      "seconds": 11.908261399999901,
+      "audioSeconds": 29.72
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-002",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-002-raw.json",
+      "sha256": "e52032d20f058c202d37cf656d77a06587158dcf5208e36b4657786335b93e18",
+      "seconds": 8.319864800003415,
+      "audioSeconds": 21.70625
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-046-raw.json",
+      "sha256": "72617ec81fcb2ade831dc7236a7f9a5a69933ea73d3e2c564e16111768de4f68",
+      "seconds": 8.599085200003174,
+      "audioSeconds": 22.67
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-004",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-004-raw.json",
+      "sha256": "b4f8489a18f101c43d16e21bf208a5a78fbf2675592a04e577f05705920cf457",
+      "seconds": 10.018499099998735,
+      "audioSeconds": 28.5504375
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-069-raw.json",
+      "sha256": "a46306280ba68586c2b73617f68c16b4c009968a40f24a01dce8ef10064b9f67",
+      "seconds": 10.84181759999774,
+      "audioSeconds": 29.75
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-006",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-006-raw.json",
+      "sha256": "78f62193956d4c4276d71d8be93b92120ff9e34bebfbc48c5cfcc38785afe57d",
+      "seconds": 6.208865500004322,
+      "audioSeconds": 19.9000625
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-092-raw.json",
+      "sha256": "5d30b8a4752ab68285c2bc9f5223b173e5db2c12eaded09543f7301f9d55acd1",
+      "seconds": 13.02822549999837,
+      "audioSeconds": 29.6
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-008",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-008-raw.json",
+      "sha256": "53eb1bc06464637b52a816c4b09919115590bec0dc8c7b8a96aaca3b3e8a8af5",
+      "seconds": 3.662737999999081,
+      "audioSeconds": 10.5839375
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\EN2001a-a2-116-raw.json",
+      "sha256": "2857aeadcfed337c3cfecf90e55759b86cc0984fdc64247f4bd28e28e9933ff3",
+      "seconds": 6.158369299999322,
+      "audioSeconds": 18.12
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-011",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200805_S_R001S01C01-seq-011-raw.json",
+      "sha256": "06969b08e84401c3d2435474731d41a41bdb8b9b6b94479311b79ff39d81af45",
+      "seconds": 6.438392599993676,
+      "audioSeconds": 19.17625
+    }
+  ],
+  "newWeightTraining": false,
+  "productDefaultChanged": false,
+  "qualityQualified": false,
+  "referencesRead": false,
+  "trueSpeakerCountsRead": false,
+  "executionDevice": "cpu",
+  "inferenceSettings": {
+    "backend": "cpu",
+    "nativeThreads": 4,
+    "cpuPercent": 25,
+    "familyPrivateBytes": 2147483648,
+    "quant": "Q8_0 only",
+    "kvType": "f16",
+    "nCtx": 2048,
+    "contextReason": "All fixed cohort inputs are at most30s, as in the existing PCM contract; complete natural EOS is required and no truncated output can pass.",
+    "language": "Same per-case known language policy as the frozen native Qwen baseline; no reference text/prompts/vocabulary/speaker counts.",
+    "timestamps": "none",
+    "diarize": "off",
+    "postEditWords": false,
+    "cuts": "Existing annotation-selected StageA-r2 clips, unchanged; development/regression only."
+  },
+  "speakerAttributionVerified": false,
+  "wordTimestampsVerified": false,
+  "limits": {
+    "pid": 16296,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1004003328,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelArch": "qwen3_asr",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeCommit": "275cd50",
+  "finishedAt": "2026-11-16T13:16:20.517971+08:00"
+}

@@ -1,0 +1,37 @@
+{
+  "meeting": "ES2006b",
+  "language": "English",
+  "corpus": "AMI",
+  "role": "candidate-training-only",
+  "source": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2006b\\microphone0.wav",
+    "sha256": "2e46c407e9b4535fdb94c5768dc629b3b87e8e1089f2d765343d969f071315e8",
+    "bytes": 69860056,
+    "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/ES2006b/audio/ES2006b.Array1-01.wav",
+    "headers": {
+      "Content-Length": "69860056",
+      "ETag": "\"429fad8-3f1f631bf4740\"",
+      "Last-Modified": "Thu, 10 Mar 2005 14:23:49 GMT"
+    },
+    "publisherHashVerified": false,
+    "seconds": 38.25
+  },
+  "reference": {
+    "archive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+    "archiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d"
+  },
+  "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\ES2006b\\microphone0.wav",
+  "audioSha256": "2e46c407e9b4535fdb94c5768dc629b3b87e8e1089f2d765343d969f071315e8",
+  "pcmSha256": "77416b9ed7aa64801eaa82508404dc8801eccf8beab309271fc3b8788f1a1187",
+  "frames": 34930006,
+  "audioSeconds": 2183.125375,
+  "selectedMicrophoneZeroBased": 0,
+  "sourceChannels": 1,
+  "resampled": false,
+  "denoised": false,
+  "vadDroppedAudio": false,
+  "referenceTranscriptModified": false,
+  "trainingStarted": false,
+  "newNeuralCalls": 0,
+  "qualityQualified": false
+}

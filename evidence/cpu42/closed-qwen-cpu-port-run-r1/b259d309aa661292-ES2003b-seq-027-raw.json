@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "ES2003b-seq-027",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-027.wav",
+    "wavSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+    "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+    "frames": 162401,
+    "audioSeconds": 10.1500625,
+    "language": "English"
+  },
+  "seconds": 3.178455400004168,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "We put the fashion into real action and such. So that's the slogan. Is that the name of it?",
+    "raw_text": "We put the fashion into real action and such. So that's the slogan. Is that the name of it?",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "We put the fashion into real action and such. So that's the slogan. Is that the name of it?",
+        "t0_ms": 0,
+        "t1_ms": 10150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 5.160999774932861,
+      "encode_ms": 693.2839965820312,
+      "decode_ms": 2442.43701171875
+    }
+  },
+  "rawDecoded": "We put the fashion into real action and such. So that's the slogan. Is that the name of it?",
+  "hypothesis": "We put the fashion into real action and such. So that's the slogan. Is that the name of it?",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "20200805_S_R001S01C01-seq-004",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-004.wav",
+    "wavSha256": "3294e64009f3fd81af0ad2afb0949bb97ce215601aa9ffc0914ea2c1cda7b2a7",
+    "pcmSha256": "bd9e80cc5752015b0c405264aac434fb7b003c222e5e74eb98b5dcaa97d044d8",
+    "frames": 456807,
+    "audioSeconds": 28.5504375,
+    "language": "Chinese"
+  },
+  "seconds": 10.018499099998735,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "或者说根本就不让它萌芽，这是我们的工作的目的，这才是我们收费或者说我们的金牌的为什么是金牌？我们为什么是一级的资质？为什么人家要要掏比别人小区贵一倍的物业费接受我们的服务？他们是愿意的。是，还有宠物方面，我也就是提醒各个业主都注意一下安全，不要让他们到处乱跑。",
+    "raw_text": "或者说根本就不让它萌芽，这是我们的工作的目的，这才是我们收费或者说我们的金牌的为什么是金牌？我们为什么是一级的资质？为什么人家要要掏比别人小区贵一倍的物业费接受我们的服务？他们是愿意的。是，还有宠物方面，我也就是提醒各个业主都注意一下安全，不要让他们到处乱跑。",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "或者说根本就不让它萌芽，这是我们的工作的目的，这才是我们收费或者说我们的金牌的为什么是金牌？我们为什么是一级的资质？为什么人家要要掏比别人小区贵一倍的物业费接受我们的服务？他们是愿意的。是，还有宠物方面，我也就是提醒各个业主都注意一下安全，不要让他们到处乱跑。",
+        "t0_ms": 0,
+        "t1_ms": 28550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 14.312000274658203,
+      "encode_ms": 2269.924072265625,
+      "decode_ms": 7694.658203125
+    }
+  },
+  "rawDecoded": "或者说根本就不让它萌芽，这是我们的工作的目的，这才是我们收费或者说我们的金牌的为什么是金牌？我们为什么是一级的资质？为什么人家要要掏比别人小区贵一倍的物业费接受我们的服务？他们是愿意的。是，还有宠物方面，我也就是提醒各个业主都注意一下安全，不要让他们到处乱跑。",
+  "hypothesis": "或者说根本就不让它萌芽，这是我们的工作的目的，这才是我们收费或者说我们的金牌的为什么是金牌？我们为什么是一级的资质？为什么人家要要掏比别人小区贵一倍的物业费接受我们的服务？他们是愿意的。是，还有宠物方面，我也就是提醒各个业主都注意一下安全，不要让他们到处乱跑。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

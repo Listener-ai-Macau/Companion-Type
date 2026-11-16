@@ -1,0 +1,234 @@
+{
+  "workerPython": "E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe",
+  "ownerCpuBudgetPermission": {
+    "at": "2026-11-16T09:33:57.370019+08:00",
+    "quote": "允许约 25% CPU，继续后台实测",
+    "maximumComputeThreads": 4,
+    "privateBytesUnchanged": 2147483648
+  },
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "runtimeFiles": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-base.dll",
+      "sha256": "ed3596197098edf9a6b6d4eac8b85362cbec0ee2a5e338006e4864781807dd4a",
+      "bytes": 675328
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-alderlake.dll",
+      "sha256": "2ed1df33efbb3800c34797dd5f5fffaca513266aff451470394bea42d5bd0129",
+      "bytes": 1103360
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-cannonlake.dll",
+      "sha256": "b9113914f4b74add4d25e09474ad0157c2919858df02029e03bfc4cad9191b94",
+      "bytes": 1205760
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-cascadelake.dll",
+      "sha256": "dbaf116b5963fb06c419a15c4ce06d7eaa56f3e075e58bac1db758d8679426bb",
+      "bytes": 1205760
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-haswell.dll",
+      "sha256": "7284dd19351f3b0130a9deb2d4bbc965c9feffa72fe6ebefa77c73ef2f137dc2",
+      "bytes": 1104896
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-icelake.dll",
+      "sha256": "8fb7c4bffd30e6ca3da237116e3b5a68dbf317b720d865f8891005bde620ac66",
+      "bytes": 1205760
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-sandybridge.dll",
+      "sha256": "08ad3710832d62e019fbfd91aae54eda9a8841c51547ac42b45a538de4050f3a",
+      "bytes": 1075712
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-skylakex.dll",
+      "sha256": "d6cc2ae65ac2b4d6b947f6d1a5a0c5e0071e0c675ef301b6e7e47707840fb658",
+      "bytes": 1205760
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-sse42.dll",
+      "sha256": "26b15b35b444fca28025f2723b47788c621fb421c4734eec795b69d9133b1197",
+      "bytes": 842240
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-x64.dll",
+      "sha256": "7da17a52d8c483408f90ecffa1a0c550675a83210deec2a59cfc2c029730e5b2",
+      "bytes": 842752
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml.dll",
+      "sha256": "ff02f87dad8e389e750f00863af60825d8cbb35854b28074728e6d8cba676752",
+      "bytes": 61952
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\transcribe.dll",
+      "sha256": "bfe89e1ad7c126c51f0774133f3744f75c1b79829bd8cc2527ffbd172f4cf3b3",
+      "bytes": 2052608
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\licenses\\LICENSE",
+      "sha256": "acef7d1711847656cdeb0007784dbe19bd7fd069767b0b38bd62714c6a8f3159",
+      "bytes": 1104
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\licenses\\ggml\\LICENSE",
+      "sha256": "bcd8ec749126d45cb06737d0690295d73df4b6e7e194205bcf91190368f27285",
+      "bytes": 1099
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\licenses\\src\\third_party\\miniz\\LICENSE",
+      "sha256": "0115478d567121238cf6cc1c0c361926cf07a49d9e4c9e66da97fac6a01646b3",
+      "bytes": 1184
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\licenses\\src\\third_party\\silero_vad\\LICENSE",
+      "sha256": "9cb98d261a9f2dfd347ee43b314343c68fe063ecc7f31514e24b248b1be727c6",
+      "bytes": 1095
+    }
+  ],
+  "library": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\transcribe.dll",
+  "pythonFiles": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\__init__.py",
+      "gitBlob": "c7fbce779ee4eccab4d69569b99d942801b8a577",
+      "sha256": "4317cf8d93b52ce3addab6644b07347e86d1cb82453c900f983633574490246e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\_abi.py",
+      "gitBlob": "2bb9bfb478feb862dd5be4e3203fdededcf7e955",
+      "sha256": "8f98f6015353b6851d5b6003fe3a57925ee9b1a393ca488552d945254d03c8b0"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\_generated.py",
+      "gitBlob": "844dfa8a416cf46a7a9fe49f2ddc450164946e8e",
+      "sha256": "7f2ebbff71b644f4ee4e0186ff93ae3594764643c96f206b47874068333dbf6e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\_library.py",
+      "gitBlob": "b0e7597e8fdfd29b80682437adc2b39ff2b89e43",
+      "sha256": "cce7021c4cd3c2a27fdf9625646d2e0db9ac2f6442a8ac5722f97a94d1d3e7b1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python\\transcribe_cpp\\errors.py",
+      "gitBlob": "b82fea02dda72b59f067eb4a19722ff673653e6e",
+      "sha256": "32d11b3e9b5846bd8c108aff09edc4ac64018d89e62d326a939fe229a87358fc"
+    }
+  ],
+  "pythonRoot": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-r1\\python",
+  "helpers": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_pcm_session_20261114.py": "4fc0f32bc986bccf6c90e8b65e81b251dbc79b476d0399a0e4670fac931df548",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\cpu_window_joint_worker_20261116.py": "290e5664bb3cf2762571bdbed581736b020abb40d40a95f348b64d490352f7ee",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_moss_raw_output_20261116.py": "6294fb998d572991b8cc3acf463c9b24787fcbe031a0035d0ef26f2a853e07c1",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_paths_20261116.py": "cc4cc430bae71cba0fcdc4f122349ba248628503f1ab1ff5480d08409bddcb6c",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_windows_working_set_20261116.py": "014c2099f042ce4544fb61daa5fee7cf4785b7caafd97c1b89f781ba8480b9d3"
+  },
+  "cpuPercent": 25,
+  "privateBytes": 2147483648,
+  "at": "2026-11-16T13:32:57.262522+08:00",
+  "workerSha256": "8e17fcbd22d95b7401a9287bd5ad0de29c3ed6d99317dac895c6bddeeb6299ba",
+  "runnerSha256": "728c23d323f0190d47080897efd133d1603391b7949d97ab8b26b5caaf7759ff",
+  "model": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-r1\\Qwen3-ASR-1.7B-Q8_0.gguf",
+    "sha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+    "bytes": 2185030624,
+    "sourceRevision": "0e0a596e3959c3f3f2ab7d443a5b6f0f4a4bba6f"
+  },
+  "cases": [
+    {
+      "id": "S_R004S03C01-fixed30-0000",
+      "meeting": "S_R004S03C01",
+      "language": "Chinese",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\S_R004S03C01-fixed30-0000.wav",
+      "wavSha256": "2ef90eaa6d0c8529ce3f5e1a4139b3dfb7421e9387d703cae8c37eecd32009a7",
+      "pcmSha256": "ce1131d47fe7ef35953b5687b954147887804d605823ac9814ad5d48267911a7",
+      "frames": 480000,
+      "audioSeconds": 30.0,
+      "sourceStartFrame": 0,
+      "sourceEndFrame": 480000
+    }
+  ],
+  "settings": {
+    "backend": "cpu",
+    "nativeThreads": 4,
+    "cpuPercent": 25,
+    "familyPrivateBytes": 2147483648,
+    "quant": "Q8_0 only",
+    "kvType": "f16",
+    "nCtx": 2048,
+    "contextReason": "All fixed cohort inputs are at most30s, as in the existing PCM contract; complete natural EOS is required and no truncated output can pass.",
+    "language": "auto for complete recordings, as in original baseline",
+    "timestamps": "none",
+    "diarize": "off",
+    "postEditWords": false,
+    "cuts": "Existing annotation-selected StageA-r2 clips, unchanged; development/regression only."
+  },
+  "protocolSha256": "8380038deb516529677931493318116ddf0cd0c955e9774e9ec48fb554e68659",
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "productDefaultChanged": false,
+  "meetings": [
+    {
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "audioSeconds": 2327.119,
+      "frames": 37233904,
+      "language": "Chinese"
+    },
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "audioSeconds": 2049.3615,
+      "frames": 32789784,
+      "language": "Chinese"
+    }
+  ],
+  "scopeDecision": {
+    "state": "CHARACTERIZE_CHINESE_COMPONENT_ONLY_UNIVERSAL_PORT_REJECTION_UNCHANGED",
+    "at": "2026-11-16T13:32:57.262522+08:00",
+    "originalDecision": "REJECT_QWEN_CPU_PORT_DEPLOYMENT_REGRESSION_NO_QUANTIZATION_GRID",
+    "originalScore": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\score.json",
+    "originalScoreSha256": "aca561fdaeee0bf45b14865476732ba5f992eba05ce3119db55f2a6eafe062ef",
+    "reason": "The universal CPU port failed English and remains rejected. Both independent Chinese clip sources matched or improved the protected native baseline(35->35,38->37). The user wants Chinese/English handled by suitable components and asks how users without GPU run. Characterize only the existing preferred Chinese component on both complete original recordings; this does not overturn the original bilingual keep rule, permit default promotion, or claim a trained/qualified model.",
+    "scopeChangeBeforeWholeOutputs": true,
+    "universalGateStillFailed": true,
+    "quantContextOrPromptGrid": false,
+    "modelPresetUnchanged": "Qwen1.7B Q8_0/f16KV/nCtx2048",
+    "languagePolicy": "Whole input uses auto, matching the existing complete-recording native baseline. The prior clip regression used per-case known languages, matching its separate frozen clip baseline.",
+    "originalProductGatesUnchanged": true,
+    "chineseWholeCharacterization": [
+      "S_R004S03C01",
+      "20200623_S_R001S07C01"
+    ],
+    "originalRawBaselines": {
+      "S_R004S03C01": {
+        "errors": 461,
+        "units": 8325
+      },
+      "20200623_S_R001S07C01": {
+        "errors": 1037,
+        "units": 7153
+      }
+    },
+    "qualityQualified": false,
+    "saleQualified": false,
+    "productDefaultChanged": false,
+    "wholeSpeakerWordAlignmentNotEvaluated": true,
+    "finalHoldoutOpened": false
+  },
+  "resumeCompleted": [],
+  "maximumWorkingSetBytes": 1879048192,
+  "caseTimeBudgetSeconds": 31.35402179999801,
+  "resourceControl": {
+    "expectedRawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r1\\S_R004S03C01-fixed30-0000-raw.json",
+    "expectedRawSha256": "08983fb96f5c121ee2b0ddb5f92dd8b20a8dd1fa2f31285d45112245833718c4",
+    "originalSeconds": 15.677010899999004,
+    "keepRule": "Same rawDecoded/hypothesis/naturalEOS, original25%/4/2GiB+lowRAM guards, observed family RSS<=1.75GiB+64MiB, compute no slower than2x original. Otherwise reject this memory setting; no ceiling grid."
+  }
+}

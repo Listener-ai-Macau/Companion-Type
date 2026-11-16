@@ -1,0 +1,46 @@
+{
+  "meeting": "20200805_S_R001S06C01",
+  "language": "Chinese",
+  "corpus": "AISHELL-4",
+  "role": "candidate-training-only",
+  "source": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200805_S_R001S06C01\\source.flac",
+    "sha256": "3b4ddd0a5981831ea9ddea7089c6b49a852825cf5c2edd8175dc576fe1def267",
+    "bytes": 275960488,
+    "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/wav/20200805_S_R001S06C01.flac",
+    "headers": {
+      "Content-Length": "275960488",
+      "ETag": "\"e8eb1c04b15e45aee64da91a62be0e9b4cd62533c0c96bff7ca8b61a9c2d1fa9\"",
+      "Last-Modified": null
+    },
+    "publisherHashVerified": true,
+    "seconds": 8.5
+  },
+  "reference": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200805_S_R001S06C01\\reference.TextGrid",
+    "sha256": "1758cf601959b82dac12406db8e8e648651639f042a2d2365690f6d0415e532e",
+    "bytes": 198509,
+    "url": "https://huggingface.co/datasets/AISHELL/AISHELL-4/resolve/aada72727856313b19d4a030383c426364931dbf/train_S/TextGrid/20200805_S_R001S06C01.TextGrid",
+    "headers": {
+      "Content-Length": "198509",
+      "ETag": "\"9b44018045efc3801c81c14a9300cfb135ef7ae8\"",
+      "Last-Modified": null
+    },
+    "publisherHashVerified": true,
+    "seconds": 0.5789999999979045
+  },
+  "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\20200805_S_R001S06C01\\microphone0.wav",
+  "audioSha256": "267197e56d59c866de9fe52b0483fe63615abcadee7ce0dc4342a467ec1c029f",
+  "pcmSha256": "6b1e7585ddd42c20eb9d6558058f12994dbed1ce69f1253d62fb1d23b99f79cd",
+  "frames": 34442448,
+  "audioSeconds": 2152.653,
+  "selectedMicrophoneZeroBased": 0,
+  "sourceChannels": 8,
+  "resampled": false,
+  "denoised": false,
+  "vadDroppedAudio": false,
+  "referenceTranscriptModified": false,
+  "trainingStarted": false,
+  "newNeuralCalls": 0,
+  "qualityQualified": false
+}

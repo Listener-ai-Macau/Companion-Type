@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "20200805_S_R001S01C01-seq-008",
+    "condition": "sequential-original-room",
+    "meeting": "20200805_S_R001S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200805_S_R001S01C01-seq-008.wav",
+    "wavSha256": "ec6cb287103798a2424f839fb40522da652b8677f162aa9d05a5aa1c743d6b0b",
+    "pcmSha256": "e3dd3a9849bd0d6515af65df219f40a7cceaa57f28ea97c9b9b5f708dda82784",
+    "frames": 169343,
+    "audioSeconds": 10.5839375,
+    "language": "Chinese"
+  },
+  "seconds": 3.662737999999081,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "请来一个张师傅，怎么？不管姓什么，干好了就行。嗯，反正这个维修这边我已经换人员了。",
+    "raw_text": "请来一个张师傅，怎么？不管姓什么，干好了就行。嗯，反正这个维修这边我已经换人员了。",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "请来一个张师傅，怎么？不管姓什么，干好了就行。嗯，反正这个维修这边我已经换人员了。",
+        "t0_ms": 0,
+        "t1_ms": 10583,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 6.1479997634887695,
+      "encode_ms": 823.4509887695312,
+      "decode_ms": 2793.071044921875
+    }
+  },
+  "rawDecoded": "请来一个张师傅，怎么？不管姓什么，干好了就行。嗯，反正这个维修这边我已经换人员了。",
+  "hypothesis": "请来一个张师傅，怎么？不管姓什么，干好了就行。嗯，反正这个维修这边我已经换人员了。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

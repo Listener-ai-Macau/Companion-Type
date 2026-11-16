@@ -1,0 +1,1257 @@
+{
+  "state": "FROZEN_BROAD_PUBLIC_FARFIELD_TRAINING_SOURCE_PLAN_NO_TRAINING",
+  "at": "2026-11-16T13:00:13.447398+08:00",
+  "sources": [
+    {
+      "meeting": "ES2002b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/ES2002b/audio/ES2002b.Array1-01.wav",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationArchiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "officialMetadata": {
+        "{http://nite.sourceforge.net/}id": "meet_42",
+        "type": "scenario",
+        "observation": "ES2002b",
+        "name": "AMI scenario meeting",
+        "dateOnly": "13-12-04",
+        "startTime": "",
+        "description": "AMI scenario Hub -- meeting ",
+        "duration": "2281",
+        "visibility": "seen",
+        "seen_type": "training",
+        "k10": "1",
+        "k5": "1"
+      },
+      "participants": [
+        {
+          "{http://nite.sourceforge.net/}id": "ES2002b_2",
+          "channel": "1",
+          "nxt_agent": "B",
+          "camera": "Closeup4",
+          "global_name": "FEE005",
+          "role": "PM"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "ES2002b_1",
+          "channel": "0",
+          "nxt_agent": "A",
+          "camera": "Closeup1",
+          "global_name": "MEE006",
+          "role": "ID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "ES2002b_3",
+          "channel": "2",
+          "nxt_agent": "C",
+          "camera": "Closeup2",
+          "global_name": "MEE007",
+          "role": "UI"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "ES2002b_4",
+          "channel": "3",
+          "nxt_agent": "D",
+          "camera": "Closeup3",
+          "global_name": "MEE008",
+          "role": "ME"
+        }
+      ],
+      "disjointFromSeenValidationGlobalParticipants": true,
+      "knownValidationGlobalParticipants": [
+        "FEO065",
+        "FEO066",
+        "FEO070",
+        "FEO072",
+        "MEE009",
+        "MEE010",
+        "MEE011",
+        "MEE012",
+        "MEE067",
+        "MEE068",
+        "MEE071",
+        "MEE073",
+        "MEO069"
+      ]
+    },
+    {
+      "meeting": "ES2005b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/ES2005b/audio/ES2005b.Array1-01.wav",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationArchiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "officialMetadata": {
+        "{http://nite.sourceforge.net/}id": "meet_53",
+        "type": "scenario",
+        "observation": "ES2005b",
+        "name": "AMI scenario meeting",
+        "dateOnly": "26-01-05",
+        "startTime": "11h49",
+        "description": "AMI scenario Hub -- meeting ",
+        "duration": "2308",
+        "visibility": "seen",
+        "seen_type": "training",
+        "k10": "3",
+        "k5": "2"
+      },
+      "participants": [
+        {
+          "{http://nite.sourceforge.net/}id": "ES2005b_3",
+          "channel": "2",
+          "nxt_agent": "C",
+          "camera": "Closeup4",
+          "global_name": "MEE017",
+          "role": "PM"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "ES2005b_1",
+          "channel": "0",
+          "nxt_agent": "A",
+          "camera": "Closeup2",
+          "global_name": "MEE018",
+          "role": "ID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "ES2005b_4",
+          "channel": "3",
+          "nxt_agent": "D",
+          "camera": "Closeup3",
+          "global_name": "FEE019",
+          "role": "UI"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "ES2005b_2",
+          "channel": "1",
+          "nxt_agent": "B",
+          "camera": "Closeup1",
+          "global_name": "MEO020",
+          "role": "ME"
+        }
+      ],
+      "disjointFromSeenValidationGlobalParticipants": true,
+      "knownValidationGlobalParticipants": [
+        "FEO065",
+        "FEO066",
+        "FEO070",
+        "FEO072",
+        "MEE009",
+        "MEE010",
+        "MEE011",
+        "MEE012",
+        "MEE067",
+        "MEE068",
+        "MEE071",
+        "MEE073",
+        "MEO069"
+      ]
+    },
+    {
+      "meeting": "ES2006b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/ES2006b/audio/ES2006b.Array1-01.wav",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationArchiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "officialMetadata": {
+        "{http://nite.sourceforge.net/}id": "meet_57",
+        "type": "scenario",
+        "observation": "ES2006b",
+        "name": "AMI scenario meeting",
+        "dateOnly": "28-01-05",
+        "startTime": "12h02",
+        "description": "AMI scenario Hub -- meeting ",
+        "duration": "2190",
+        "visibility": "seen",
+        "seen_type": "training",
+        "k10": "4",
+        "k5": "2"
+      },
+      "participants": [
+        {
+          "{http://nite.sourceforge.net/}id": "ES2006b_3",
+          "channel": "2",
+          "nxt_agent": "C",
+          "camera": "Closeup4",
+          "global_name": "FEE021",
+          "role": "PM"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "ES2006b_1",
+          "channel": "0",
+          "nxt_agent": "A",
+          "camera": "Closeup2",
+          "global_name": "MEO022",
+          "role": "ID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "ES2006b_4",
+          "channel": "3",
+          "nxt_agent": "D",
+          "camera": "Closeup3",
+          "global_name": "FEO023",
+          "role": "UI"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "ES2006b_2",
+          "channel": "1",
+          "nxt_agent": "B",
+          "camera": "Closeup1",
+          "global_name": "FEE024",
+          "role": "ME"
+        }
+      ],
+      "disjointFromSeenValidationGlobalParticipants": true,
+      "knownValidationGlobalParticipants": [
+        "FEO065",
+        "FEO066",
+        "FEO070",
+        "FEO072",
+        "MEE009",
+        "MEE010",
+        "MEE011",
+        "MEE012",
+        "MEE067",
+        "MEE068",
+        "MEE071",
+        "MEE073",
+        "MEO069"
+      ]
+    },
+    {
+      "meeting": "ES2007b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/ES2007b/audio/ES2007b.Array1-01.wav",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationArchiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "officialMetadata": {
+        "{http://nite.sourceforge.net/}id": "meet_61",
+        "type": "scenario",
+        "observation": "ES2007b",
+        "name": "AMI scenario meeting",
+        "dateOnly": "02-02-05",
+        "startTime": "12h05",
+        "description": "AMI scenario Hub -- meeting ",
+        "duration": "1701",
+        "visibility": "seen",
+        "seen_type": "training",
+        "k10": "2",
+        "k5": "1"
+      },
+      "participants": [
+        {
+          "{http://nite.sourceforge.net/}id": "ES2007b_1",
+          "channel": "0",
+          "nxt_agent": "A",
+          "camera": "Closeup4",
+          "global_name": "MEE025",
+          "role": "PM"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "ES2007b_2",
+          "channel": "1",
+          "nxt_agent": "B",
+          "camera": "Closeup2",
+          "global_name": "FEO026",
+          "role": "ID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "ES2007b_3",
+          "channel": "2",
+          "nxt_agent": "C",
+          "camera": "Closeup3",
+          "global_name": "MEE027",
+          "role": "UI"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "ES2007b_4",
+          "channel": "3",
+          "nxt_agent": "D",
+          "camera": "Closeup1",
+          "global_name": "FEE028",
+          "role": "ME"
+        }
+      ],
+      "disjointFromSeenValidationGlobalParticipants": true,
+      "knownValidationGlobalParticipants": [
+        "FEO065",
+        "FEO066",
+        "FEO070",
+        "FEO072",
+        "MEE009",
+        "MEE010",
+        "MEE011",
+        "MEE012",
+        "MEE067",
+        "MEE068",
+        "MEE071",
+        "MEE073",
+        "MEO069"
+      ]
+    },
+    {
+      "meeting": "IS1000b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/IS1000b/audio/IS1000b.Array1-01.wav",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationArchiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "officialMetadata": {
+        "{http://nite.sourceforge.net/}id": "meet_2",
+        "type": "scenario",
+        "observation": "IS1000b",
+        "name": "AMI scenario meeting",
+        "dateOnly": "29-10-2004",
+        "startTime": "11h50",
+        "description": "AMI scenario Hub -- meeting ",
+        "duration": "2341",
+        "visibility": "seen",
+        "seen_type": "training",
+        "k10": "1",
+        "k5": "1"
+      },
+      "participants": [
+        {
+          "{http://nite.sourceforge.net/}id": "IS1000b_4",
+          "channel": "3",
+          "nxt_agent": "D",
+          "camera": "Closeup4",
+          "global_name": "MIO016",
+          "role": "ID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "IS1000b_2",
+          "channel": "1",
+          "nxt_agent": "B",
+          "camera": "Closeup2",
+          "global_name": "MIO082",
+          "role": "PM"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "IS1000b_1",
+          "channel": "0",
+          "nxt_agent": "A",
+          "camera": "Closeup1",
+          "global_name": "FIE081",
+          "role": "ME"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "IS1000b_3",
+          "channel": "2",
+          "nxt_agent": "C",
+          "camera": "Closeup3",
+          "global_name": "MIO050",
+          "role": "UI"
+        }
+      ],
+      "disjointFromSeenValidationGlobalParticipants": true,
+      "knownValidationGlobalParticipants": [
+        "FEO065",
+        "FEO066",
+        "FEO070",
+        "FEO072",
+        "MEE009",
+        "MEE010",
+        "MEE011",
+        "MEE012",
+        "MEE067",
+        "MEE068",
+        "MEE071",
+        "MEE073",
+        "MEO069"
+      ]
+    },
+    {
+      "meeting": "IS1001b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/IS1001b/audio/IS1001b.Array1-01.wav",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationArchiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "officialMetadata": {
+        "{http://nite.sourceforge.net/}id": "meet_6",
+        "type": "scenario",
+        "observation": "IS1001b",
+        "name": "AMI scenario meeting",
+        "dateOnly": "09-11-2004",
+        "startTime": "11h46",
+        "description": "AMI scenario Hub -- meeting ",
+        "duration": "2110",
+        "visibility": "seen",
+        "seen_type": "training",
+        "k10": "2",
+        "k5": "1"
+      },
+      "participants": [
+        {
+          "{http://nite.sourceforge.net/}id": "IS1001b_4",
+          "channel": "3",
+          "nxt_agent": "D",
+          "camera": "Closeup4",
+          "global_name": "FIO074",
+          "role": "ME"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "IS1001b_2",
+          "channel": "1",
+          "nxt_agent": "B",
+          "camera": "Closeup2",
+          "global_name": "MIO012",
+          "role": "UI"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "IS1001b_1",
+          "channel": "0",
+          "nxt_agent": "A",
+          "camera": "Closeup1",
+          "global_name": "MIO043",
+          "role": "PM"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "IS1001b_3",
+          "channel": "2",
+          "nxt_agent": "C",
+          "camera": "Closeup3",
+          "global_name": "MIO020",
+          "role": "ID"
+        }
+      ],
+      "disjointFromSeenValidationGlobalParticipants": true,
+      "knownValidationGlobalParticipants": [
+        "FEO065",
+        "FEO066",
+        "FEO070",
+        "FEO072",
+        "MEE009",
+        "MEE010",
+        "MEE011",
+        "MEE012",
+        "MEE067",
+        "MEE068",
+        "MEE071",
+        "MEE073",
+        "MEO069"
+      ]
+    },
+    {
+      "meeting": "IS1002b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/IS1002b/audio/IS1002b.Array1-01.wav",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationArchiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "officialMetadata": {
+        "{http://nite.sourceforge.net/}id": "meet_10",
+        "type": "scenario",
+        "observation": "IS1002b",
+        "name": "AMI scenario meeting",
+        "dateOnly": "16-11-2004",
+        "startTime": "11h50",
+        "description": "AMI scenario Hub -- meeting ",
+        "duration": "2370",
+        "visibility": "seen",
+        "seen_type": "training",
+        "k10": "3",
+        "k5": "2"
+      },
+      "participants": [
+        {
+          "{http://nite.sourceforge.net/}id": "IS1002b_4",
+          "channel": "3",
+          "nxt_agent": "D",
+          "camera": "Closeup4",
+          "global_name": "MIE083",
+          "role": "ME"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "IS1002b_2",
+          "channel": "1",
+          "nxt_agent": "B",
+          "camera": "Closeup2",
+          "global_name": "MIE029",
+          "role": "UI"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "IS1002b_1",
+          "channel": "0",
+          "nxt_agent": "A",
+          "camera": "Closeup1",
+          "global_name": "MIE080",
+          "role": "PM"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "IS1002b_3",
+          "channel": "2",
+          "nxt_agent": "C",
+          "camera": "Closeup3",
+          "global_name": "MIO026",
+          "role": "ID"
+        }
+      ],
+      "disjointFromSeenValidationGlobalParticipants": true,
+      "knownValidationGlobalParticipants": [
+        "FEO065",
+        "FEO066",
+        "FEO070",
+        "FEO072",
+        "MEE009",
+        "MEE010",
+        "MEE011",
+        "MEE012",
+        "MEE067",
+        "MEE068",
+        "MEE071",
+        "MEE073",
+        "MEO069"
+      ]
+    },
+    {
+      "meeting": "IS1003b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/IS1003b/audio/IS1003b.Array1-01.wav",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationArchiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "officialMetadata": {
+        "{http://nite.sourceforge.net/}id": "meet_14",
+        "type": "scenario",
+        "observation": "IS1003b",
+        "name": "AMI scenario meeting",
+        "dateOnly": "19-11-2004",
+        "startTime": "11h49",
+        "description": "AMI scenario Hub -- meeting ",
+        "duration": "1635",
+        "visibility": "seen",
+        "seen_type": "training",
+        "k10": "4",
+        "k5": "2"
+      },
+      "participants": [
+        {
+          "{http://nite.sourceforge.net/}id": "IS1003b_4",
+          "channel": "0",
+          "nxt_agent": "A",
+          "camera": "Closeup4",
+          "global_name": "MIO023",
+          "role": "ME"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "IS1003b_2",
+          "channel": "3",
+          "nxt_agent": "D",
+          "camera": "Closeup2",
+          "global_name": "MIO035",
+          "role": "UI"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "IS1003b_1",
+          "channel": "2",
+          "nxt_agent": "C",
+          "camera": "Closeup1",
+          "global_name": "FIO017",
+          "role": "PM"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "IS1003b_3",
+          "channel": "1",
+          "nxt_agent": "B",
+          "camera": "Closeup3",
+          "global_name": "MIO005",
+          "role": "ID"
+        }
+      ],
+      "disjointFromSeenValidationGlobalParticipants": true,
+      "knownValidationGlobalParticipants": [
+        "FEO065",
+        "FEO066",
+        "FEO070",
+        "FEO072",
+        "MEE009",
+        "MEE010",
+        "MEE011",
+        "MEE012",
+        "MEE067",
+        "MEE068",
+        "MEE071",
+        "MEE073",
+        "MEO069"
+      ]
+    },
+    {
+      "meeting": "TS3005b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/TS3005b/audio/TS3005b.Array1-01.wav",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationArchiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "officialMetadata": {
+        "{http://nite.sourceforge.net/}id": "meet_121",
+        "type": "scenario",
+        "observation": "TS3005b",
+        "name": "AMI scenario meeting",
+        "dateOnly": "13-10-2004",
+        "duration": "2439.916",
+        "visibility": "seen",
+        "seen_type": "training",
+        "k10": "2",
+        "k5": "1"
+      },
+      "participants": [
+        {
+          "{http://nite.sourceforge.net/}id": "TS3005b_1",
+          "channel": "0",
+          "nxt_agent": "A",
+          "camera": "Closeup2",
+          "role": "PM",
+          "global_name": "MTD017PM"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "TS3005b_2",
+          "channel": "2",
+          "nxt_agent": "C",
+          "camera": "Closeup4",
+          "role": "ID",
+          "global_name": "MTD018ID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "TS3005b_3",
+          "channel": "1",
+          "nxt_agent": "B",
+          "camera": "Closeup3",
+          "role": "UI",
+          "global_name": "FTD019UID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "TS3005b_4",
+          "channel": "3",
+          "nxt_agent": "D",
+          "camera": "Closeup1",
+          "role": "ME",
+          "global_name": "MTD020ME"
+        }
+      ],
+      "disjointFromSeenValidationGlobalParticipants": true,
+      "knownValidationGlobalParticipants": [
+        "FEO065",
+        "FEO066",
+        "FEO070",
+        "FEO072",
+        "MEE009",
+        "MEE010",
+        "MEE011",
+        "MEE012",
+        "MEE067",
+        "MEE068",
+        "MEE071",
+        "MEE073",
+        "MEO069"
+      ]
+    },
+    {
+      "meeting": "TS3008b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/TS3008b/audio/TS3008b.Array1-01.wav",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationArchiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "officialMetadata": {
+        "{http://nite.sourceforge.net/}id": "meet_133",
+        "type": "scenario",
+        "observation": "TS3008b",
+        "name": "AMI scenario meeting",
+        "dateOnly": "19-10-2004",
+        "duration": "2320",
+        "visibility": "seen",
+        "seen_type": "training",
+        "k10": "4",
+        "k5": "2"
+      },
+      "participants": [
+        {
+          "{http://nite.sourceforge.net/}id": "TS3008b_1",
+          "channel": "0",
+          "nxt_agent": "A",
+          "camera": "Closeup2",
+          "role": "PM",
+          "global_name": "MTD029PM"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "TS3008b_2",
+          "channel": "2",
+          "nxt_agent": "C",
+          "camera": "Closeup4",
+          "role": "ID",
+          "global_name": "MTD030ID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "TS3008b_3",
+          "channel": "1",
+          "nxt_agent": "B",
+          "camera": "Closeup3",
+          "role": "UI",
+          "global_name": "MTD031UID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "TS3008b_4",
+          "channel": "3",
+          "nxt_agent": "D",
+          "camera": "Closeup1",
+          "role": "ME",
+          "global_name": "MTD032ME"
+        }
+      ],
+      "disjointFromSeenValidationGlobalParticipants": true,
+      "knownValidationGlobalParticipants": [
+        "FEO065",
+        "FEO066",
+        "FEO070",
+        "FEO072",
+        "MEE009",
+        "MEE010",
+        "MEE011",
+        "MEE012",
+        "MEE067",
+        "MEE068",
+        "MEE071",
+        "MEE073",
+        "MEO069"
+      ]
+    },
+    {
+      "meeting": "TS3009b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/TS3009b/audio/TS3009b.Array1-01.wav",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationArchiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "officialMetadata": {
+        "{http://nite.sourceforge.net/}id": "meet_137",
+        "type": "scenario",
+        "observation": "TS3009b",
+        "name": "AMI scenario meeting",
+        "dateOnly": "20-10-2004",
+        "duration": "2460",
+        "visibility": "seen",
+        "seen_type": "training",
+        "k10": "5",
+        "k5": "3"
+      },
+      "participants": [
+        {
+          "{http://nite.sourceforge.net/}id": "TS3009b_1",
+          "channel": "0",
+          "nxt_agent": "A",
+          "camera": "Closeup2",
+          "role": "PM",
+          "global_name": "MTD033PM"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "TS3009b_2",
+          "channel": "2",
+          "nxt_agent": "C",
+          "camera": "Closeup4",
+          "role": "ID",
+          "global_name": "MTD034ID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "TS3009b_3",
+          "channel": "1",
+          "nxt_agent": "B",
+          "camera": "Closeup3",
+          "role": "UI",
+          "global_name": "MTD035UID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "TS3009b_4",
+          "channel": "3",
+          "nxt_agent": "D",
+          "camera": "Closeup1",
+          "role": "ME",
+          "global_name": "MTD036ME"
+        }
+      ],
+      "disjointFromSeenValidationGlobalParticipants": true,
+      "knownValidationGlobalParticipants": [
+        "FEO065",
+        "FEO066",
+        "FEO070",
+        "FEO072",
+        "MEE009",
+        "MEE010",
+        "MEE011",
+        "MEE012",
+        "MEE067",
+        "MEE068",
+        "MEE071",
+        "MEE073",
+        "MEO069"
+      ]
+    },
+    {
+      "meeting": "TS3010b",
+      "language": "English",
+      "corpus": "AMI",
+      "role": "candidate-training-only",
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/TS3010b/audio/TS3010b.Array1-01.wav",
+      "license": "CC-BY-4.0",
+      "licenseSource": "https://groups.inf.ed.ac.uk/ami/download/",
+      "annotationArchive": "E:\\CodexData\\Companion\\product-d1d2-20261114\\ami-manual\\ami_public_manual_1.6.2.zip",
+      "annotationArchiveSha256": "b56e5babb2496b8795deeeda7e71178d7fbc9963f94276cf2a3f4b56ebbc9f9d",
+      "officialMetadata": {
+        "{http://nite.sourceforge.net/}id": "meet_141",
+        "type": "scenario",
+        "observation": "TS3010b",
+        "name": "AMI scenario meeting",
+        "dateOnly": "22-10-2004",
+        "duration": "2085",
+        "visibility": "seen",
+        "seen_type": "training",
+        "k10": "6",
+        "k5": "3"
+      },
+      "participants": [
+        {
+          "{http://nite.sourceforge.net/}id": "TS3010b_1",
+          "channel": "0",
+          "nxt_agent": "A",
+          "camera": "Closeup2",
+          "role": "PM",
+          "global_name": "MTD037PM"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "TS3010b_2",
+          "channel": "2",
+          "nxt_agent": "C",
+          "camera": "Closeup4",
+          "role": "ID",
+          "global_name": "MTD038ID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "TS3010b_3",
+          "channel": "1",
+          "nxt_agent": "B",
+          "camera": "Closeup3",
+          "role": "UI",
+          "global_name": "MTD039UID"
+        },
+        {
+          "{http://nite.sourceforge.net/}id": "TS3010b_4",
+          "channel": "3",
+          "nxt_agent": "D",
+          "camera": "Closeup1",
+          "role": "ME",
+          "global_name": "MTD040ME"
+        }
+      ],
+      "disjointFromSeenValidationGlobalParticipants": true,
+      "knownValidationGlobalParticipants": [
+        "FEO065",
+        "FEO066",
+        "FEO070",
+        "FEO072",
+        "MEE009",
+        "MEE010",
+        "MEE011",
+        "MEE012",
+        "MEE067",
+        "MEE068",
+        "MEE071",
+        "MEE073",
+        "MEO069"
+      ]
+    },
+    {
+      "meeting": "20200707_L_R001S01C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "audioSource": {
+        "rfilename": "train_L/wav/20200707_L_R001S01C01.flac",
+        "blobId": "a5cad6cd7594b3eabc9654575bcde33d94748f8e",
+        "size": 240382134,
+        "lfs": {
+          "sha256": "999497f076f795caa07e60c5bad0d8ef220f0eb13f338bb0270e85a38184ae87",
+          "size": 240382134,
+          "pointerSize": 134
+        }
+      },
+      "referenceSource": {
+        "rfilename": "train_L/TextGrid/20200707_L_R001S01C01.TextGrid",
+        "blobId": "43969ac5246eb9894f49ce6ba673c5398002d0da",
+        "size": 181910
+      },
+      "subset": "train_L",
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "mirrorLicenseTagIsNotAuthoritative": "HF mirror metadata says Apache-2.0; preserve official OpenSLR CC-BY-SA-4.0 source instead.",
+      "participantDisjointness": "Meeting-disjoint from all existing validation/development sources; cross-meeting participant overlap not established from local numeric speaker IDs."
+    },
+    {
+      "meeting": "20200706_L_R001S06C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "audioSource": {
+        "rfilename": "train_L/wav/20200706_L_R001S06C01.flac",
+        "blobId": "d10e6eaedae4ab6e307f7961bac78534c3a16d83",
+        "size": 251254681,
+        "lfs": {
+          "sha256": "18e7ca07c0b1f89c2d85c45e5b4693e71c93715d9e3d6611c73ec66753d96201",
+          "size": 251254681,
+          "pointerSize": 134
+        }
+      },
+      "referenceSource": {
+        "rfilename": "train_L/TextGrid/20200706_L_R001S06C01.TextGrid",
+        "blobId": "b995f26a85a06611fde14101210fd5d0c41d2c09",
+        "size": 142331
+      },
+      "subset": "train_L",
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "mirrorLicenseTagIsNotAuthoritative": "HF mirror metadata says Apache-2.0; preserve official OpenSLR CC-BY-SA-4.0 source instead.",
+      "participantDisjointness": "Meeting-disjoint from all existing validation/development sources; cross-meeting participant overlap not established from local numeric speaker IDs."
+    },
+    {
+      "meeting": "20200707_L_R001S02C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "audioSource": {
+        "rfilename": "train_L/wav/20200707_L_R001S02C01.flac",
+        "blobId": "cc2d040806ff5d6798631967608b5e1d5782d5df",
+        "size": 227574643,
+        "lfs": {
+          "sha256": "83c94edb3d2d047848c0a37b80270312a4b82b1bc12333a990c3201a5c32fe47",
+          "size": 227574643,
+          "pointerSize": 134
+        }
+      },
+      "referenceSource": {
+        "rfilename": "train_L/TextGrid/20200707_L_R001S02C01.TextGrid",
+        "blobId": "72373696e72b36d24b434eb20c9467d8213220c2",
+        "size": 125693
+      },
+      "subset": "train_L",
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "mirrorLicenseTagIsNotAuthoritative": "HF mirror metadata says Apache-2.0; preserve official OpenSLR CC-BY-SA-4.0 source instead.",
+      "participantDisjointness": "Meeting-disjoint from all existing validation/development sources; cross-meeting participant overlap not established from local numeric speaker IDs."
+    },
+    {
+      "meeting": "20200709_L_R002S08C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "audioSource": {
+        "rfilename": "train_L/wav/20200709_L_R002S08C01.flac",
+        "blobId": "b0c6ff4b4da43b1fa1dee946ebc8568dfa96574b",
+        "size": 237705686,
+        "lfs": {
+          "sha256": "ef2c828c4c863104c2079cf56bf9631e945418dee9fe193910cf240bfca2172c",
+          "size": 237705686,
+          "pointerSize": 134
+        }
+      },
+      "referenceSource": {
+        "rfilename": "train_L/TextGrid/20200709_L_R002S08C01.TextGrid",
+        "blobId": "06f7b5e2e890639e62882b021a264eba09efa5f1",
+        "size": 130444
+      },
+      "subset": "train_L",
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "mirrorLicenseTagIsNotAuthoritative": "HF mirror metadata says Apache-2.0; preserve official OpenSLR CC-BY-SA-4.0 source instead.",
+      "participantDisjointness": "Meeting-disjoint from all existing validation/development sources; cross-meeting participant overlap not established from local numeric speaker IDs."
+    },
+    {
+      "meeting": "20200616_M_R001S05C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "audioSource": {
+        "rfilename": "train_M/wav/20200616_M_R001S05C01.flac",
+        "blobId": "12dc058b15b045b07528b9f5a3311665a7caf4b7",
+        "size": 233060317,
+        "lfs": {
+          "sha256": "2589285dceb57fe8b98012a81d2bdf52e6fc0af5343080239d65de0aacc6827c",
+          "size": 233060317,
+          "pointerSize": 134
+        }
+      },
+      "referenceSource": {
+        "rfilename": "train_M/TextGrid/20200616_M_R001S05C01.TextGrid",
+        "blobId": "1aa35fc09ae2e7a290e265e5a19904a7382c1a64",
+        "size": 130299
+      },
+      "subset": "train_M",
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "mirrorLicenseTagIsNotAuthoritative": "HF mirror metadata says Apache-2.0; preserve official OpenSLR CC-BY-SA-4.0 source instead.",
+      "participantDisjointness": "Meeting-disjoint from all existing validation/development sources; cross-meeting participant overlap not established from local numeric speaker IDs."
+    },
+    {
+      "meeting": "20200622_M_R002S03C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "audioSource": {
+        "rfilename": "train_M/wav/20200622_M_R002S03C01.flac",
+        "blobId": "e6e996c04af5db132ee771f4398a4f6a07e69fbb",
+        "size": 257634534,
+        "lfs": {
+          "sha256": "34c64b26fb2669e57dcfd2f7675ecf072cf7d1898fdd38a2d580b37be66cf7d7",
+          "size": 257634534,
+          "pointerSize": 134
+        }
+      },
+      "referenceSource": {
+        "rfilename": "train_M/TextGrid/20200622_M_R002S03C01.TextGrid",
+        "blobId": "97ae397bc50a3c49447fae1853a457a1c85b164b",
+        "size": 167417
+      },
+      "subset": "train_M",
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "mirrorLicenseTagIsNotAuthoritative": "HF mirror metadata says Apache-2.0; preserve official OpenSLR CC-BY-SA-4.0 source instead.",
+      "participantDisjointness": "Meeting-disjoint from all existing validation/development sources; cross-meeting participant overlap not established from local numeric speaker IDs."
+    },
+    {
+      "meeting": "20200618_M_R001S03C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "audioSource": {
+        "rfilename": "train_M/wav/20200618_M_R001S03C01.flac",
+        "blobId": "b263cbec8e99979ec9dbe5a33f4850e66977c770",
+        "size": 210750225,
+        "lfs": {
+          "sha256": "a89bb6af281ca81821e8139fedbcf182e159e33d3590ea345860914343c968a3",
+          "size": 210750225,
+          "pointerSize": 134
+        }
+      },
+      "referenceSource": {
+        "rfilename": "train_M/TextGrid/20200618_M_R001S03C01.TextGrid",
+        "blobId": "8f01afca6276a06e1d83cbe6acbe191c06b05893",
+        "size": 138497
+      },
+      "subset": "train_M",
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "mirrorLicenseTagIsNotAuthoritative": "HF mirror metadata says Apache-2.0; preserve official OpenSLR CC-BY-SA-4.0 source instead.",
+      "participantDisjointness": "Meeting-disjoint from all existing validation/development sources; cross-meeting participant overlap not established from local numeric speaker IDs."
+    },
+    {
+      "meeting": "20200621_M_R002S06C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "audioSource": {
+        "rfilename": "train_M/wav/20200621_M_R002S06C01.flac",
+        "blobId": "c48c315c66a004cfa5d27dbd6049d39c805dfefc",
+        "size": 223962268,
+        "lfs": {
+          "sha256": "71f71d696b08581522d4298417746529106a8b8bfbff00aac9ae7273708cedf7",
+          "size": 223962268,
+          "pointerSize": 134
+        }
+      },
+      "referenceSource": {
+        "rfilename": "train_M/TextGrid/20200621_M_R002S06C01.TextGrid",
+        "blobId": "25cb111c385998f9cc5521d43a7425bf7eee464d",
+        "size": 111850
+      },
+      "subset": "train_M",
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "mirrorLicenseTagIsNotAuthoritative": "HF mirror metadata says Apache-2.0; preserve official OpenSLR CC-BY-SA-4.0 source instead.",
+      "participantDisjointness": "Meeting-disjoint from all existing validation/development sources; cross-meeting participant overlap not established from local numeric speaker IDs."
+    },
+    {
+      "meeting": "20200805_S_R001S06C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "audioSource": {
+        "rfilename": "train_S/wav/20200805_S_R001S06C01.flac",
+        "blobId": "db0470de53c5fafb3fe4892bd69b8202be1a9945",
+        "size": 275960488,
+        "lfs": {
+          "sha256": "3b4ddd0a5981831ea9ddea7089c6b49a852825cf5c2edd8175dc576fe1def267",
+          "size": 275960488,
+          "pointerSize": 134
+        }
+      },
+      "referenceSource": {
+        "rfilename": "train_S/TextGrid/20200805_S_R001S06C01.TextGrid",
+        "blobId": "9b44018045efc3801c81c14a9300cfb135ef7ae8",
+        "size": 198509
+      },
+      "subset": "train_S",
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "mirrorLicenseTagIsNotAuthoritative": "HF mirror metadata says Apache-2.0; preserve official OpenSLR CC-BY-SA-4.0 source instead.",
+      "participantDisjointness": "Meeting-disjoint from all existing validation/development sources; cross-meeting participant overlap not established from local numeric speaker IDs."
+    },
+    {
+      "meeting": "20200807_S_R001S06C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "audioSource": {
+        "rfilename": "train_S/wav/20200807_S_R001S06C01.flac",
+        "blobId": "a7b5619dec871da6f18254887e02d12f4893f2a8",
+        "size": 289885279,
+        "lfs": {
+          "sha256": "afedb812d4e1e0011c71a0a3be73918f604413d3859cbd3070d695e1f3a823f1",
+          "size": 289885279,
+          "pointerSize": 134
+        }
+      },
+      "referenceSource": {
+        "rfilename": "train_S/TextGrid/20200807_S_R001S06C01.TextGrid",
+        "blobId": "7cb061bfba19e60a5bda85b7b6c6991059008d7e",
+        "size": 137989
+      },
+      "subset": "train_S",
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "mirrorLicenseTagIsNotAuthoritative": "HF mirror metadata says Apache-2.0; preserve official OpenSLR CC-BY-SA-4.0 source instead.",
+      "participantDisjointness": "Meeting-disjoint from all existing validation/development sources; cross-meeting participant overlap not established from local numeric speaker IDs."
+    },
+    {
+      "meeting": "20200630_S_R001S03C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "audioSource": {
+        "rfilename": "train_S/wav/20200630_S_R001S03C01.flac",
+        "blobId": "d728416c921cd5c710972b61bb9f75d02f1048fc",
+        "size": 283956509,
+        "lfs": {
+          "sha256": "933f18a30aece0f1ff4e388054eb5a11341e370c0eb953fa899402ad359d8d2b",
+          "size": 283956509,
+          "pointerSize": 134
+        }
+      },
+      "referenceSource": {
+        "rfilename": "train_S/TextGrid/20200630_S_R001S03C01.TextGrid",
+        "blobId": "2ac8a3ee2c990c2704158f3d8ea75c9454c50e5d",
+        "size": 235847
+      },
+      "subset": "train_S",
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "mirrorLicenseTagIsNotAuthoritative": "HF mirror metadata says Apache-2.0; preserve official OpenSLR CC-BY-SA-4.0 source instead.",
+      "participantDisjointness": "Meeting-disjoint from all existing validation/development sources; cross-meeting participant overlap not established from local numeric speaker IDs."
+    },
+    {
+      "meeting": "20200807_S_R001S04C01",
+      "language": "Chinese",
+      "corpus": "AISHELL-4",
+      "role": "candidate-training-only",
+      "audioSource": {
+        "rfilename": "train_S/wav/20200807_S_R001S04C01.flac",
+        "blobId": "bf92a1db452cc10fc7159253decce8db3bb23eb7",
+        "size": 288938873,
+        "lfs": {
+          "sha256": "5c99d848634b9f44fdebdda86c555ec7e3c382af073ba4bf1f9a7b5ac8f11e18",
+          "size": 288938873,
+          "pointerSize": 134
+        }
+      },
+      "referenceSource": {
+        "rfilename": "train_S/TextGrid/20200807_S_R001S04C01.TextGrid",
+        "blobId": "e8c1ace5544860fc4f75039a7207e32c861117a9",
+        "size": 135858
+      },
+      "subset": "train_S",
+      "revision": "aada72727856313b19d4a030383c426364931dbf",
+      "license": "CC-BY-SA-4.0",
+      "licenseSource": "https://www.openslr.org/111/",
+      "mirrorLicenseTagIsNotAuthoritative": "HF mirror metadata says Apache-2.0; preserve official OpenSLR CC-BY-SA-4.0 source instead.",
+      "participantDisjointness": "Meeting-disjoint from all existing validation/development sources; cross-meeting participant overlap not established from local numeric speaker IDs."
+    }
+  ],
+  "existingDevelopmentSourcesExcluded": [
+    "20200623_S_R001S07C01",
+    "20200709_L_R002S01C01",
+    "20200805_S_R001S01C01",
+    "EN2001a",
+    "EN2002a",
+    "ES2003b",
+    "S_R004S03C01"
+  ],
+  "reservedFinalPrefixNeverOpened": "L_R003",
+  "selection": "12 AMI training meetings,4 per recording site;12 AISHELL training meetings,4 per room size. Selection uses only publisher split/participant metadata and fixed hash order, no candidate outputs.",
+  "scope": "Collect original one-mic full meetings and source annotations, then export training-only audio/text supervision. No new model trial, no validation labels in training, no quality/sale/default change.",
+  "trainingStarted": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "newModelSelectedByThisDataPlan": false,
+  "cpuPercent": 0.5,
+  "privateBytes": 268435456,
+  "maximumNewDataBytes": 12884901888,
+  "minimumDiskFreeBytes": 53687091200,
+  "preparationDeadline": "2026-11-16T15:20:00+08:00",
+  "trainingLaunchDependency": "A usable training GPU/runtime and a separate proven train/dev participant split. No training launch under the present CPU-only2GiB inference budget.",
+  "chineseGlobalSpeakerDisjointnessVerified": false,
+  "modelTrainingReady": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "productDefaultChanged": false,
+  "referenceSources": {
+    "AMI": "https://groups.inf.ed.ac.uk/ami/corpus/datasets.shtml",
+    "AISHELL": "https://www.openslr.org/111/",
+    "QwenOfficialTraining": "https://github.com/QwenLM/Qwen3-ASR/tree/main/finetuning",
+    "MossOfficialJointFormat": "https://github.com/OpenMOSS/MOSS-Transcribe-Diarize/blob/main/FINETUNING.md"
+  },
+  "metadataSha256": "20e74f0ce74b6c4d52d55ce8834d67be64a6be4e9e9d78edcf43a954144fe3fb",
+  "amiMeetingsMetadataSha256": "8ab6cdcf03ed863e839418f31c7380392397a2eed892d73b9bc1b438c7ec520a"
+}

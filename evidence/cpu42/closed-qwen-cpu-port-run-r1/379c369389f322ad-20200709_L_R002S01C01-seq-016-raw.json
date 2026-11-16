@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "20200709_L_R002S01C01-seq-016",
+    "condition": "sequential-original-room",
+    "meeting": "20200709_L_R002S01C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-016.wav",
+    "wavSha256": "d08df775867bd3aeb82b4e24ed7a14488dc935c46169e5e54c0602c641f5a090",
+    "pcmSha256": "76ef981586fce2f41b31b1ca68a7a72bb68e3116e1181b9648b0c56a01bd2231",
+    "frames": 473887,
+    "audioSeconds": 29.6179375,
+    "language": "Chinese"
+  },
+  "seconds": 10.067635299994436,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "所以，我告诉我每一个保洁人员，我们的工作其实是很重要的。我们就是什么？我们就是这个健身中心的美容师，我们给他在做美容。如果我们这个工作做的不到位的话，那我们就是在给他抹黑了。所以他们都知道自己的工作非常重要，所以每个人的积极性还是蛮高的。嗯，好，后勤部这边这个情况是这样，那咱们来听一下前台这边下半年的计划。",
+    "raw_text": "所以，我告诉我每一个保洁人员，我们的工作其实是很重要的。我们就是什么？我们就是这个健身中心的美容师，我们给他在做美容。如果我们这个工作做的不到位的话，那我们就是在给他抹黑了。所以他们都知道自己的工作非常重要，所以每个人的积极性还是蛮高的。嗯，好，后勤部这边这个情况是这样，那咱们来听一下前台这边下半年的计划。",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "所以，我告诉我每一个保洁人员，我们的工作其实是很重要的。我们就是什么？我们就是这个健身中心的美容师，我们给他在做美容。如果我们这个工作做的不到位的话，那我们就是在给他抹黑了。所以他们都知道自己的工作非常重要，所以每个人的积极性还是蛮高的。嗯，好，后勤部这边这个情况是这样，那咱们来听一下前台这边下半年的计划。",
+        "t0_ms": 0,
+        "t1_ms": 29617,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 14.829999923706055,
+      "encode_ms": 1971.2569580078125,
+      "decode_ms": 8042.64501953125
+    }
+  },
+  "rawDecoded": "所以，我告诉我每一个保洁人员，我们的工作其实是很重要的。我们就是什么？我们就是这个健身中心的美容师，我们给他在做美容。如果我们这个工作做的不到位的话，那我们就是在给他抹黑了。所以他们都知道自己的工作非常重要，所以每个人的积极性还是蛮高的。嗯，好，后勤部这边这个情况是这样，那咱们来听一下前台这边下半年的计划。",
+  "hypothesis": "所以，我告诉我每一个保洁人员，我们的工作其实是很重要的。我们就是什么？我们就是这个健身中心的美容师，我们给他在做美容。如果我们这个工作做的不到位的话，那我们就是在给他抹黑了。所以他们都知道自己的工作非常重要，所以每个人的积极性还是蛮高的。嗯，好，后勤部这边这个情况是这样，那咱们来听一下前台这边下半年的计划。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

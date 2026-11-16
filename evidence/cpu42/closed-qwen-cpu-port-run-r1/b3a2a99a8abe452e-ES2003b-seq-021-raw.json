@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "ES2003b-seq-021",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-021.wav",
+    "wavSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+    "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f",
+    "frames": 203840,
+    "audioSeconds": 12.74,
+    "language": "English"
+  },
+  "seconds": 9.59728890000406,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Plus, that's a nice design. Yeah. So, by the sounds of it, what we're suggesting so far, your design, the user interface, is still quite open. You could go for quite an interesting design.",
+    "raw_text": "Plus, that's a nice design. Yeah. So, by the sounds of it, what we're suggesting so far, your design, the user interface, is still quite open. You could go for quite an interesting design.",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "Plus, that's a nice design. Yeah. So, by the sounds of it, what we're suggesting so far, your design, the user interface, is still quite open. You could go for quite an interesting design.",
+        "t0_ms": 0,
+        "t1_ms": 12740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 960.8510131835938,
+      "mel_ms": 13.609999656677246,
+      "encode_ms": 2716.423095703125,
+      "decode_ms": 6803.2548828125
+    }
+  },
+  "rawDecoded": "Plus, that's a nice design. Yeah. So, by the sounds of it, what we're suggesting so far, your design, the user interface, is still quite open. You could go for quite an interesting design.",
+  "hypothesis": "Plus, that's a nice design. Yeah. So, by the sounds of it, what we're suggesting so far, your design, the user interface, is still quite open. You could go for quite an interesting design.",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}
