@@ -1,5 +1,5 @@
 //! A separate source-only verdict. Neither inventory nor prior review reaches it.
-use std::{collections::{HashMap,HashSet},time::Instant};
+use std::{collections::{HashMap,HashSet},sync::atomic::{AtomicBool,Ordering},time::Instant};
 use serde::Deserialize;
 use serde_json::{json,Value};
 use super::{Document,Unit};
@@ -100,6 +100,54 @@ fn validate(raw:&str,expected:&[Value],source:&[Sentence])->Result<(),String> {
     let audit=decode(raw,expected,source)?;let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").count();
     if issues>0{Err(format!("纪要仍有{issues}处表述需要核对，本次未发布为完成结果；原文和已有纪要保留。"))}else{Ok(())}
 }
+fn check_cancellation(token:Option<&super::super::super::meeting_processing_job::Cancellation>)->Result<(),String>{
+    if token.is_some_and(|t|t.requested()){return Err(super::super::super::meeting_processing_job::MINUTES_CANCELLED.into());}
+    super::super::super::meeting_processing_job::check_current()
+}
+fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,wire:&Value,expected:&[Value],source:&[Sentence],stage:&str,start:Instant,trace:&mut Vec<Value>,recovered_format:&AtomicBool)->Result<Audit,String>{
+    // Each independent batch still sees the complete immutable source and
+    // document. Bound concurrency to three; every claim needs a verdict.
+    if expected.is_empty(){return Ok(Audit{claim_audit:Vec::new()});}
+    let batches=if super::coverage::enabled(){expected.len().div_ceil(12).clamp(1,3)}else{1};let size=expected.len().div_ceil(batches);
+    let token=super::super::super::meeting_processing_job::current();check_cancellation(token.as_ref())?;
+    let results=std::thread::scope(|scope|{
+        let workers=expected.chunks(size).enumerate().map(|(i,claims)|{
+            let token=token.clone();let stage=if batches==1{stage.to_string()}else{format!("{stage}-batch-{i}")};
+            scope.spawn(move||{
+                let mut calls=Vec::new();
+                let result=(||{
+                    check_cancellation(token.as_ref())?;
+                    let payload=json!({"sourceUnits":wire,"document":doc,"checkClaims":claims});
+                    let raw=super::request(endpoint,model,key,client,PROMPT,payload.clone(),true,start,&mut calls,&stage)?;
+                    check_cancellation(token.as_ref())?;
+                    match decode(&raw,claims,source){
+                        Ok(audit)=>Ok(audit),
+                        Err(_) if serde_json::from_str::<Value>(super::super::strip_code_fences(&raw).trim()).is_err()
+                            &&recovered_format.compare_exchange(false,true,Ordering::AcqRel,Ordering::Acquire).is_ok()=>{
+                            let negative=readable_negative_paths(&raw);let mut payload=payload;
+                            payload["previousMalformedAudit"]=json!(raw);payload["formatProblem"]=json!("上次JSON语法损坏。按相同完整原文和本批陈述修复JSON，不删除已指出的负面结论；仍须逐项核对本批全部陈述，不能只给passed。");
+                            check_cancellation(token.as_ref())?;
+                            let fixed=super::request(endpoint,model,key,client,PROMPT,payload,true,start,&mut calls,&format!("{stage}-format-recovery"))?;
+                            check_cancellation(token.as_ref())?;let audit=decode(&fixed,claims,source)?;
+                            if !preserves_negative_paths(&audit,&negative){return Err("纪要审核格式恢复改变了已指出的问题，已有结果保留。".into());}Ok(audit)
+                        },
+                        Err(error)=>Err(error),
+                    }
+                })();
+                for call in &mut calls{call["parallelAuditBatchCount"]=json!(batches);}
+                (result,calls)
+            })
+        }).collect::<Vec<_>>();
+        // Join every worker even when one failed; no detached service calls.
+        workers.into_iter().map(|worker|worker.join().unwrap_or_else(|_|(Err("纪要审核作业未正常完成，已有结果保留。".into()),Vec::new()))).collect::<Vec<_>>()
+    });
+    let mut claims=Vec::new();let mut error=None;
+    for(result,calls)in results{trace.extend(calls);match result{Ok(audit)=>claims.extend(audit.claim_audit),Err(e)=>if error.is_none(){error=Some(e);}}}
+    check_cancellation(token.as_ref())?;
+    if let Some(error)=error{return Err(error);}
+    if claims.len()!=expected.len(){return Err("纪要审核未覆盖全部陈述，已有结果保留。".into());}
+    Ok(Audit{claim_audit:claims})
+}
 fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,units:&[Unit])->Result<Document,String> {
     let fail=||"纪要修正没有遵守受影响范围，已有结果保留。".to_string();
     let changes:Value=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|fail())?;
@@ -177,8 +225,8 @@ fn unverified_claims(doc:&Document,verified:Option<&Document>)->Vec<Value> {
 // still see the complete original source, never a model inventory.
 pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
     let source=sentences(units);
-    let wire=units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>();
-    let mut current=doc.clone();let mut attempted:HashMap<String,String>=HashMap::new();let mut recovered_format=false;
+    let wire=json!(units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>());
+    let mut current=doc.clone();let mut attempted:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
     let mut verified_claims=verified.map(claims).unwrap_or_default().into_iter().map(|c|(c["path"].as_str().unwrap().to_string(),c)).collect::<HashMap<_,_>>();
     for round in 0..=2 {
         let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
@@ -186,23 +234,7 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
         let original_expected=expected.clone();
         emphasize_source_scope(&mut expected,&source);
         let stage=match round{0=>"source-factual-audit",1=>"source-factual-reaudit",_=>"source-factual-reaudit-2"};
-        let payload=json!({"sourceUnits":wire,"document":current,"checkClaims":expected});
-        let raw=super::request(endpoint,model,key,client,PROMPT,payload.clone(),true,start,trace,stage)?;
-        let audit=match decode(&raw,&expected,&source) {
-            Ok(audit)=>audit,
-            Err(error) if !recovered_format&&serde_json::from_str::<Value>(super::super::strip_code_fences(&raw).trim()).is_err()=>{
-                // Only broken JSON syntax permits one format recovery. Negative
-                // verdicts already readable from that response cannot disappear.
-                recovered_format=true;let negative=readable_negative_paths(&raw);
-                let mut payload=payload;payload["previousMalformedAudit"]=json!(raw);
-                payload["formatProblem"]=json!("上次JSON语法损坏。按相同完整原文和陈述修复JSON，不删除已指出的负面结论；仍须逐项核对全部陈述，不能只给passed。");
-                let fixed=super::request(endpoint,model,key,client,PROMPT,payload,true,start,trace,&format!("{stage}-format-recovery"))?;
-                let audit=decode(&fixed,&expected,&source)?;
-                if !preserves_negative_paths(&audit,&negative){return Err("纪要审核格式恢复改变了已指出的问题，已有结果保留。".into());}
-                let _=error;audit
-            },
-            Err(error)=>return Err(error),
-        };
+        let audit=partitioned_audit(endpoint,model,key,client,&current,&wire,&expected,&source,stage,start,trace,&recovered_format)?;
         // Retain only exact in-call positive claims. Changed text, kind,
         // refs, owner/due, or shifted array positions are automatically audited.
         for verdict in audit.claim_audit.iter().filter(|c|c.status=="supported") {
@@ -218,8 +250,7 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
             attempted.get(&c.path).is_some_and(|old|!(super::coverage::enabled()&&old!="unclear"&&c.status=="unclear"))
         });
         if round==2||repeated {
-            validate(&raw,&expected,&source)?;
-            return Err("纪要复审仍有未解决表述，已有结果保留。".into());
+            return Err(format!("纪要复审仍有{}处未解决表述，已有结果保留。",issues.len()));
         }
         let unclear=audit.claim_audit.iter().filter(|c|c.status=="unclear").map(|c|c.path.clone()).collect::<HashSet<_>>();
         let stage=if round==0{"source-factual-repair"}else{"source-factual-repair-2"};
@@ -233,6 +264,17 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn automatic_brief_parallel_audit_keeps_parent_job_cancellation(){
+        use super::super::super::super::meeting_processing_job as job;
+        let result=job::run("factual-parallel-test","factual-parallel-job",job::Kind::Minutes,||{
+            let token=job::current().unwrap();let(ready_tx,ready_rx)=std::sync::mpsc::channel();let(release_tx,release_rx)=std::sync::mpsc::channel();
+            let worker=std::thread::spawn(move||{assert!(check_cancellation(Some(&token)).is_ok());ready_tx.send(()).unwrap();release_rx.recv().unwrap();check_cancellation(Some(&token))});
+            ready_rx.recv().unwrap();assert!(job::cancel("factual-parallel-test","factual-parallel-job").unwrap());release_tx.send(()).unwrap();
+            assert_eq!(worker.join().unwrap().unwrap_err(),job::MINUTES_CANCELLED);Ok(())
+        });
+        assert_eq!(result.unwrap_err(),job::MINUTES_CANCELLED);
+    }
     #[test]
     fn automatic_brief_fact_keeps_only_unchanged_in_call_claims_verified(){
         let original:Document=serde_json::from_value(json!({"purpose":"采购前提","topics":[{"title":"预算","points":[{"kind":"status","text":"预算尚未审批。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap();

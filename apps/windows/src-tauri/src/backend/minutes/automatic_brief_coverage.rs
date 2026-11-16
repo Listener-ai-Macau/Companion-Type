@@ -49,7 +49,7 @@ struct Compared {checks:Vec<Check>}
 // Model returns only existing sentence IDs. The program retrieves original
 // text; the model never has to transcribe or normalize an evidence quotation.
 fn decode_questions(raw:&str,all:&[Value],window:&[&Unit],primary:&HashSet<&str>)->Result<Vec<Question>,String>{
-    let parsed:Questions=parse(raw)?;if parsed.questions.len()>6{return Err(fail());}
+    let parsed:Questions=parse(raw)?;if parsed.questions.len()>4{return Err(fail());}
     let local=window.iter().map(|u|u.id.as_str()).collect::<HashSet<_>>();
     let known=all.iter().filter(|s|local.contains(s["source"].as_str().unwrap())).map(|s|(s["id"].as_str().unwrap(),s)).collect::<HashMap<_,_>>();
     let mut out=Vec::new();
@@ -74,7 +74,7 @@ fn decode_questions(raw:&str,all:&[Value],window:&[&Unit],primary:&HashSet<&str>
 fn extract(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Vec<Question>,String>{
     let source=super::factual_audit::evidence_sentences(units);
     let mut ranges=Vec::new();let mut begin=0;let mut size=0;
-    for(i,unit)in units.iter().enumerate(){let n=unit.text.chars().count();if i>begin&&size+n>2400{ranges.push((begin,i));begin=i;size=0;}size+=n;}
+    for(i,unit)in units.iter().enumerate(){let n=unit.text.chars().count();if i>begin&&size+n>1200{ranges.push((begin,i));begin=i;size=0;}size+=n;}
     if begin<units.len(){ranges.push((begin,units.len()));}
     let mut out:Vec<Question>=Vec::new();let mut recovered=false;
     for(index,(begin,end))in ranges.into_iter().enumerate(){
@@ -89,7 +89,7 @@ fn extract(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,u
             Ok(q)=>q,
             Err(_) if !recovered=>{
                 recovered=true;input["previousResult"]=json!(raw);
-                input["formatProblems"]=json!("仅修复JSON/机器合同：每窗0至6题，每题50字内、至多一个问号，只问primarySourceIds有实质内容的一个核心问题；evidence只能是本窗口存在的句子e编号字符串，至少一处涉及primary，不能抄句子、编编号或拼接。不要添加新主题或自称通过。");
+                input["formatProblems"]=json!("仅修复JSON/机器合同：每窗0至4题，每题50字内、至多一个问号，只问primarySourceIds有实质内容的一个核心问题；evidence只能是本窗口存在的句子e编号字符串，至少一处涉及primary，不能抄句子、编编号或拼接。不要添加新主题或自称通过。");
                 let raw=super::request(endpoint,model,key,client,SOURCE,input,false,start,trace,&format!("{stage}-format-recovery"))?;
                 decode_questions(&raw,&source,&window,&primary)?
             },
