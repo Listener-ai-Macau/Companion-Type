@@ -104,11 +104,26 @@ fn check_cancellation(token:Option<&super::super::super::meeting_processing_job:
     if token.is_some_and(|t|t.requested()){return Err(super::super::super::meeting_processing_job::MINUTES_CANCELLED.into());}
     super::super::super::meeting_processing_job::check_current()
 }
+fn bind_supported_sources(doc:&Document,audit:&Audit,source:&[Sentence],units:&[Unit])->Result<Document,String>{
+    let fail=||"纪要原话关联未完成，已有结果保留。".to_string();
+    let known=source.iter().map(|s|(s.id.as_str(),s.source.as_str())).collect::<HashMap<_,_>>();
+    let mut value=serde_json::to_value(doc).map_err(|_|fail())?;
+    for claim in audit.claim_audit.iter().filter(|c|c.status=="supported"){
+        let pointer=format!("/{}",claim.path.replace('[',"/").replace(']',"").replace('.',"/"));
+        let target=value.pointer_mut(&pointer).ok_or_else(fail)?;
+        if target.get("sources").is_none(){continue;}
+        let mut refs=Vec::new();
+        for id in &claim.evidence{let source=known.get(id.as_str()).ok_or_else(fail)?;if !refs.contains(source){refs.push(*source);}}
+        if refs.is_empty()||refs.len()>8{return Err(fail());}
+        target.as_object_mut().ok_or_else(fail)?.insert("sources".into(),json!(refs));
+    }
+    let bound:Document=serde_json::from_value(value).map_err(|_|fail())?;super::validate(&bound,units)?;Ok(bound)
+}
 fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,wire:&Value,expected:&[Value],source:&[Sentence],stage:&str,start:Instant,trace:&mut Vec<Value>,recovered_format:&AtomicBool)->Result<Audit,String>{
     // Each independent batch still sees the complete immutable source and
     // document. Bound concurrency to three; every claim needs a verdict.
     if expected.is_empty(){return Ok(Audit{claim_audit:Vec::new()});}
-    let batches=if super::coverage::enabled(){expected.len().div_ceil(12).clamp(1,3)}else{1};let size=expected.len().div_ceil(batches);
+    let batches=if super::coverage::enabled(){expected.len().div_ceil(4).clamp(1,3)}else{1};let size=expected.len().div_ceil(batches);
     let token=super::super::super::meeting_processing_job::current();check_cancellation(token.as_ref())?;
     let results=std::thread::scope(|scope|{
         let workers=expected.chunks(size).enumerate().map(|(i,claims)|{
@@ -231,14 +246,17 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
     for round in 0..=2 {
         let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
         if expected.is_empty(){return Ok(current);}
-        let original_expected=expected.clone();
         emphasize_source_scope(&mut expected,&source);
         let stage=match round{0=>"source-factual-audit",1=>"source-factual-reaudit",_=>"source-factual-reaudit-2"};
         let audit=partitioned_audit(endpoint,model,key,client,&current,&wire,&expected,&source,stage,start,trace,&recovered_format)?;
+        // Bind original jumps to the exact immutable evidence actually checked,
+        // rather than retaining an earlier writer's incomplete source list.
+        current=bind_supported_sources(&current,&audit,&source,units)?;
+        let audited_claims=claims(&current);
         // Retain only exact in-call positive claims. Changed text, kind,
         // refs, owner/due, or shifted array positions are automatically audited.
         for verdict in audit.claim_audit.iter().filter(|c|c.status=="supported") {
-            if let Some(claim)=original_expected.iter().find(|c|c["path"].as_str()==Some(verdict.path.as_str())){verified_claims.insert(verdict.path.clone(),claim.clone());}
+            if let Some(claim)=audited_claims.iter().find(|c|c["path"].as_str()==Some(verdict.path.as_str())){verified_claims.insert(verdict.path.clone(),claim.clone());}
         }
         let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|json!({"path":c.path,"status":c.status,"reason":c.reason,"evidence":c.evidence})).collect::<Vec<_>>();
         if issues.is_empty(){return Ok(current);}
@@ -274,6 +292,16 @@ mod tests {
             assert_eq!(worker.join().unwrap().unwrap_err(),job::MINUTES_CANCELLED);Ok(())
         });
         assert_eq!(result.unwrap_err(),job::MINUTES_CANCELLED);
+    }
+    #[test]
+    fn automatic_brief_original_jump_uses_audited_evidence_without_rewriting_claim(){
+        let units=vec![Unit{id:"u000".into(),text:"预算尚未审批。".into()},Unit{id:"u001".into(),text:"校长是学校的总设计师。".into()}];
+        let doc:Document=serde_json::from_value(json!({"purpose":"讨论学校治理","topics":[{"title":"校长职责","points":[{"kind":"opinion","text":"校长是学校的总设计师。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap();
+        let mut raw=json!({"claimAudit":[{"path":"topics[0].points[0]","status":"supported","reason":"完整原文第二单位有直接依据","evidence":["e0001"]}]});
+        let audit:Audit=serde_json::from_value(raw.clone()).unwrap();let fixed=bind_supported_sources(&doc,&audit,&sentences(&units),&units).unwrap();
+        assert_eq!(fixed.topics[0].points[0].sources,vec!["u001"]);assert_eq!(fixed.topics[0].points[0].text,doc.topics[0].points[0].text);assert_eq!(serde_json::to_value(&fixed.topics[0].points[0].kind).unwrap(),serde_json::to_value(&doc.topics[0].points[0].kind).unwrap());
+        raw["claimAudit"][0]["status"]=json!("unclear");let negative:Audit=serde_json::from_value(raw).unwrap();
+        assert_eq!(bind_supported_sources(&doc,&negative,&sentences(&units),&units).unwrap().topics[0].points[0].sources,doc.topics[0].points[0].sources);
     }
     #[test]
     fn automatic_brief_fact_keeps_only_unchanged_in_call_claims_verified(){
