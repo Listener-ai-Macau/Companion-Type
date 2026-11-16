@@ -31,6 +31,9 @@ fn sentences(units:&[Unit])->Vec<Sentence> {
     }
     out
 }
+pub(super) fn evidence_sentences(units:&[Unit])->Vec<Value> {
+    sentences(units).iter().map(|s|json!({"id":s.id,"source":s.source,"text":s.text})).collect()
+}
 fn claims(doc:&Document)->Vec<Value> {
     let mut out=vec![json!({"path":"purpose","text":doc.purpose})];
     for (i,t) in doc.topics.iter().enumerate() {
@@ -122,6 +125,9 @@ fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSe
             let original=if path=="purpose"||path.ends_with(".title"){target.as_str()}else{target.get("text").and_then(Value::as_str)}.ok_or_else(fail)?;
             let mut shortened=original.to_string();
             for part in parts {let fragment=part.as_str().ok_or_else(fail)?;if fragment.is_empty()||shortened.matches(fragment).count()!=1{return Err(fail());}shortened=shortened.replacen(fragment,"",1);}
+            // Exact deletion of all optional detail is the same authorized
+            // removal as remove:true, not an invalid empty displayed entry.
+            if shortened.trim().is_empty()&&path.contains(".details["){removals.push(pointer);continue;}
             if path=="purpose"||path.ends_with(".title"){*target=json!(shortened);}else{target.as_object_mut().ok_or_else(fail)?.insert("text".into(),json!(shortened));}
             continue;
         }
@@ -172,9 +178,11 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
     let source=sentences(units);
     let wire=units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>();
     let mut current=doc.clone();let mut attempted=HashSet::new();let mut recovered_format=false;
+    let mut verified_claims=verified.map(claims).unwrap_or_default().into_iter().map(|c|(c["path"].as_str().unwrap().to_string(),c)).collect::<HashMap<_,_>>();
     for round in 0..=2 {
-        let mut expected=unverified_claims(&current,verified);
+        let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
         if expected.is_empty(){return Ok(current);}
+        let original_expected=expected.clone();
         emphasize_source_scope(&mut expected,&source);
         let stage=match round{0=>"source-factual-audit",1=>"source-factual-reaudit",_=>"source-factual-reaudit-2"};
         let payload=json!({"sourceUnits":wire,"document":current,"checkClaims":expected});
@@ -194,6 +202,11 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
             },
             Err(error)=>return Err(error),
         };
+        // Retain only exact in-call positive claims. Changed text, kind,
+        // refs, owner/due, or shifted array positions are automatically audited.
+        for verdict in audit.claim_audit.iter().filter(|c|c.status=="supported") {
+            if let Some(claim)=original_expected.iter().find(|c|c["path"].as_str()==Some(verdict.path.as_str())){verified_claims.insert(verdict.path.clone(),claim.clone());}
+        }
         let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|json!({"path":c.path,"status":c.status,"reason":c.reason,"evidence":c.evidence})).collect::<Vec<_>>();
         if issues.is_empty(){return Ok(current);}
         let allowed=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|c.path.clone()).collect::<HashSet<_>>();
@@ -279,6 +292,13 @@ mod tests {
         assert!(apply_changes(&fixed,&doc,&allowed,&allowed,&units).is_ok());
         let invented=json!({"changes":[{"path":"topics[0].points[0]","text":"方案在趋势上问题严重，预算尚未审批，不能先采购。"}]}).to_string();
         assert!(apply_changes(&invented,&doc,&allowed,&allowed,&units).is_err());
+    }
+    #[test]
+    fn automatic_brief_exact_deletion_can_remove_an_empty_optional_detail(){
+        let doc:Document=serde_json::from_value(json!({"purpose":"采购条件","topics":[{"title":"预算","points":[{"kind":"status","text":"预算未批。","sources":["u000"]}],"details":[{"text":"含糊例子待核对。","sources":["u000"]}]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap();
+        let units=vec![Unit{id:"u000".into(),text:"预算还没批。那个例子听不清。".into()}];let allowed=HashSet::from(["topics[0].details[0]".to_string()]);
+        let patch=json!({"changes":[{"path":"topics[0].details[0]","delete":["含糊例子待核对。"]}]}).to_string();
+        let fixed=apply_changes(&patch,&doc,&allowed,&allowed,&units).unwrap();assert!(fixed.topics[0].details.is_empty());assert_eq!(fixed.topics[0].points[0].text,doc.topics[0].points[0].text);
     }
     #[test]
     fn automatic_brief_fact_repair_changes_only_audited_fields(){

@@ -27,7 +27,10 @@ struct Evidence {source:String,quote:String}
 struct Question {id:String,question:String,importance:String,evidence:Vec<Evidence>}
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
-struct Questions {questions:Vec<Question>}
+struct Questions {questions:Vec<RawQuestion>}
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct RawQuestion {id:String,question:String,importance:String,evidence:Vec<String>}
 #[derive(Debug,Clone,Serialize)]
 struct SummaryUnit {id:String,path:String,text:String,#[serde(skip_serializing_if="Option::is_none")]kind:Option<String>}
 #[derive(Deserialize)]
@@ -43,49 +46,33 @@ struct Check {id:String,result:String,material:bool,difference:String,summary_id
 #[serde(deny_unknown_fields)]
 struct Compared {checks:Vec<Check>}
 
-fn normalized(text:&str)->String{text.chars().filter(|c|!c.is_whitespace()).collect()}
-
-// Recover only original whitespace and exact source spans. A quotation with
-// changed characters or an ambiguous occurrence is never silently repaired.
-fn ground_quote(quote:&str,units:&[Unit])->Result<Vec<Evidence>,String>{
-    if quote.is_empty()||quote.chars().count()>180{return Err(fail());}
-    let full=units.iter().map(|u|u.text.as_str()).collect::<String>();
-    let mut plain=String::new();let mut starts=HashMap::new();let mut ends=HashMap::new();
-    for(i,c)in full.char_indices(){if !c.is_whitespace(){starts.insert(plain.len(),i);plain.push(c);ends.insert(plain.len(),i+c.len_utf8());}}
-    let needle=normalized(quote);if needle.is_empty(){return Err(fail());}
-    let first=plain.find(&needle).ok_or_else(fail)?;
-    let after_first=first+needle.chars().next().unwrap().len_utf8();
-    if plain[after_first..].contains(&needle){return Err(fail());}
-    let left=*starts.get(&first).ok_or_else(fail)?;let right=*ends.get(&(first+needle.len())).ok_or_else(fail)?;
-    let mut offset=0;let mut out=Vec::new();
-    for unit in units {
-        let end=offset+unit.text.len();let begin=left.max(offset);let stop=right.min(end);
-        if begin<stop {out.push(Evidence{source:unit.id.clone(),quote:full[begin..stop].to_string()});}
-        offset=end;
-    }
-    if out.is_empty()||out.iter().any(|e|e.quote.chars().count()>240){return Err(fail());}Ok(out)
-}
-
-fn decode_questions(raw:&str,all:&[Unit],window:&[&Unit],primary:&HashSet<&str>)->Result<Vec<Question>,String>{
+// Model returns only existing sentence IDs. The program retrieves original
+// text; the model never has to transcribe or normalize an evidence quotation.
+fn decode_questions(raw:&str,all:&[Value],window:&[&Unit],primary:&HashSet<&str>)->Result<Vec<Question>,String>{
     let parsed:Questions=parse(raw)?;if parsed.questions.len()>6{return Err(fail());}
-    let known=window.iter().map(|u|u.id.as_str()).collect::<HashSet<_>>();
-    let local=window.iter().map(|u|u.text.as_str()).collect::<String>();let local=normalized(&local);
+    let local=window.iter().map(|u|u.id.as_str()).collect::<HashSet<_>>();
+    let known=all.iter().filter(|s|local.contains(s["source"].as_str().unwrap())).map(|s|(s["id"].as_str().unwrap(),s)).collect::<HashMap<_,_>>();
     let mut out=Vec::new();
-    for mut q in parsed.questions {
+    for q in parsed.questions {
         if !super::line(&q.question,50)||q.question.chars().filter(|c|matches!(c,'?'|'？')).count()>1
-            ||!matches!(q.importance.as_str(),"essential"|"supporting")||q.evidence.is_empty()||q.evidence.len()>3{return Err(fail());}
-        let mut grounded=Vec::new();
-        for e in &q.evidence {
-            if !known.contains(e.source.as_str())||!local.contains(&normalized(&e.quote)){return Err(fail());}
-            for exact in ground_quote(&e.quote,all)?{if !grounded.contains(&exact){grounded.push(exact);}}
+            ||!matches!(q.importance.as_str(),"essential"|"supporting")||q.evidence.is_empty()||q.evidence.len()>8{return Err(fail());}
+        let mut evidence=Vec::new();
+        for id in q.evidence {
+            let sentence=known.get(id.as_str()).ok_or_else(fail)?;
+            let quote=sentence["text"].as_str().ok_or_else(fail)?;if quote.trim().is_empty(){return Err(fail());}
+            let exact=Evidence{source:sentence["source"].as_str().unwrap().to_string(),quote:quote.to_string()};
+            if !evidence.contains(&exact){evidence.push(exact);}
         }
-        if grounded.len()>6||!grounded.iter().any(|e|primary.contains(e.source.as_str())){return Err(fail());}
-        q.evidence=grounded;out.push(q);
+        // Context-only questions belong to another window. They do not make
+        // this complete primary window fail or consume its format recovery.
+        if !evidence.iter().any(|e|primary.contains(e.source.as_str())){continue;}
+        out.push(Question{id:q.id,question:q.question,importance:q.importance,evidence});
     }
     Ok(out)
 }
 
 fn extract(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Vec<Question>,String>{
+    let source=super::factual_audit::evidence_sentences(units);
     let mut ranges=Vec::new();let mut begin=0;let mut size=0;
     for(i,unit)in units.iter().enumerate(){let n=unit.text.chars().count();if i>begin&&size+n>2400{ranges.push((begin,i));begin=i;size=0;}size+=n;}
     if begin<units.len(){ranges.push((begin,units.len()));}
@@ -94,16 +81,17 @@ fn extract(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,u
         let window=units[begin.saturating_sub(1)..(end+1).min(units.len())].iter().collect::<Vec<_>>();
         let primary=units[begin..end].iter().map(|u|u.id.as_str()).collect::<HashSet<_>>();
         let primary_ids=units[begin..end].iter().map(|u|u.id.as_str()).collect::<Vec<_>>();
-        let mut input=json!({"sourceUnits":window,"primarySourceIds":primary_ids});
+        let wire=window.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s["source"].as_str()==Some(u.id.as_str())).map(|s|json!({"id":s["id"],"text":s["text"]})).collect::<Vec<_>>()})).collect::<Vec<_>>();
+        let mut input=json!({"sourceUnits":wire,"primarySourceIds":primary_ids});
         let stage=format!("coverage-source-{index}");
         let raw=super::request(endpoint,model,key,client,SOURCE,input.clone(),false,start,trace,&stage)?;
-        let questions=match decode_questions(&raw,units,&window,&primary){
+        let questions=match decode_questions(&raw,&source,&window,&primary){
             Ok(q)=>q,
             Err(_) if !recovered=>{
                 recovered=true;input["previousResult"]=json!(raw);
-                input["formatProblems"]=json!("仅修复JSON/机器合同：每窗0至6题，每题50字内、至多一个问号，只问primarySourceIds有实质内容的一个核心问题；逐字依据必须在本窗口且至少一处涉及primary，不能换字拼接。不要添加新主题或自称通过。");
+                input["formatProblems"]=json!("仅修复JSON/机器合同：每窗0至6题，每题50字内、至多一个问号，只问primarySourceIds有实质内容的一个核心问题；evidence只能是本窗口存在的句子e编号字符串，至少一处涉及primary，不能抄句子、编编号或拼接。不要添加新主题或自称通过。");
                 let raw=super::request(endpoint,model,key,client,SOURCE,input,false,start,trace,&format!("{stage}-format-recovery"))?;
-                decode_questions(&raw,units,&window,&primary)?
+                decode_questions(&raw,&source,&window,&primary)?
             },
             Err(e)=>return Err(e),
         };
@@ -248,11 +236,13 @@ mod tests {
     fn units()->Vec<Unit>{vec![Unit{id:"u000".into(),text:"预算尚未审批。\n不得先采购。".into()},Unit{id:"u001".into(),text:"王梅承诺周五提交报告。".into()}]}
     fn doc()->Document{serde_json::from_value(json!({"purpose":"确认采购前提","topics":[{"title":"采购","points":[{"kind":"status","text":"预算尚未审批。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap()}
     #[test]
-    fn automatic_brief_coverage_quotes_recover_only_original_whitespace_and_spans(){
-        let u=units();let e=ground_quote("预算尚未审批。不得先采购。",&u).unwrap();assert_eq!(e[0].quote,u[0].text);
-        let e=ground_quote("不得先采购。王梅承诺周五提交报告。",&u).unwrap();assert_eq!(e.len(),2);assert_eq!(e[0].source,"u000");assert_eq!(e[1].source,"u001");
-        assert!(ground_quote("预算已经审批。",&u).is_err());
-        let repeated=vec![Unit{id:"u000".into(),text:"预算未批。预算未批。".into()}];assert!(ground_quote("预算未批。",&repeated).is_err());
+    fn automatic_brief_coverage_evidence_uses_only_existing_original_sentence_ids(){
+        let u=units();let source=super::super::factual_audit::evidence_sentences(&u);let window=u.iter().collect::<Vec<_>>();let primary=HashSet::from(["u000"]);
+        let good=json!({"questions":[{"id":"q00","question":"预算状态？","importance":"essential","evidence":[source[0]["id"]]}]});
+        let decoded=decode_questions(&good.to_string(),&source,&window,&primary).unwrap();assert_eq!(decoded[0].evidence[0].quote,source[0]["text"].as_str().unwrap());
+        let mut bad=good.clone();bad["questions"][0]["evidence"]=json!(["e9999"]);assert!(decode_questions(&bad.to_string(),&source,&window,&primary).is_err());
+        let mut bad=good.clone();bad["questions"][0]["question"]=json!("预算状态？采购状态？");assert!(decode_questions(&bad.to_string(),&source,&window,&primary).is_err());
+        let mut context=good;context["questions"][0]["evidence"]=json!([source.last().unwrap()["id"]]);assert!(decode_questions(&context.to_string(),&source,&window,&primary).unwrap().is_empty());
     }
     #[test]
     fn automatic_brief_coverage_append_cannot_rewrite_old_text_or_guess_pronouns(){

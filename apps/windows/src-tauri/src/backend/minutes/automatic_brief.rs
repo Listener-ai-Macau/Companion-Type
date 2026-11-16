@@ -29,7 +29,7 @@ impl Kind {fn label(&self)->&'static str {match self {Self::Opinion=>"观点",Se
 struct Point {kind:Kind,text:String,sources:Vec<String>}
 #[derive(Debug,Clone,Deserialize,Serialize)]
 #[serde(deny_unknown_fields)]
-struct Topic {title:String,points:Vec<Point>,details:Vec<Entry>}
+struct Topic {title:String,points:Vec<Point>,#[serde(default)]details:Vec<Entry>}
 #[derive(Debug,Clone,Deserialize,Serialize)]
 #[serde(deny_unknown_fields)]
 struct Action {text:String,owner:Option<String>,due:Option<String>,sources:Vec<String>}
@@ -164,7 +164,7 @@ fn request(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,p
     super::super::meeting_processing_job::check_current()?;
     let url=super::http_policy::endpoint(endpoint).map_err(super::safe_minutes_http_error)?;
     let mut body=json!({"model":model,"response_format":{"type":"json_object"},"max_tokens":if review{24576}else{8192},"messages":[{"role":"system","content":prompt},{"role":"user","content":source_first_input(&input)}]});
-    if model.to_ascii_lowercase().starts_with("deepseek-"){body["thinking"]=json!({"type":if review{"enabled"}else{"disabled"}});if review{body["reasoning_effort"]=json!(if stage.starts_with("source-factual-"){"high"}else{"low"});}}
+    if model.to_ascii_lowercase().starts_with("deepseek-"){body["thinking"]=json!({"type":if review{"enabled"}else{"disabled"}});if review{body["reasoning_effort"]=json!(if stage.starts_with("source-factual-")&&coverage::enabled(){"high"}else{"low"});}}
     let stage_start=Instant::now();
     let response=client.post(url).bearer_auth(key).timeout(remaining.min(Duration::from_secs(120))).json(&body).send().map_err(|e|super::safe_minutes_http_error(super::http_policy::Failure::from_reqwest(e)))?;
     let payload=super::http_policy::response_json(response,super::http_policy::MAX_RESPONSE_BYTES).map_err(super::safe_minutes_http_error)?;
@@ -179,6 +179,20 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
     let outcome=(|| {
         let reading_budget=json!({"mainCharacterBudget":if units.iter().map(|u|u.text.chars().count()).sum::<usize>()>8000{900}else{600},"pointsPerTopicMaximum":3});
         let draft=request(endpoint,model,key,client,DRAFT,json!({"sourceUnits":units,"readingBudget":reading_budget}),false,start,&mut trace,"draft")?;
+        let doc=if coverage::enabled() {
+            // The factual and coverage roles are independent semantic checks.
+            // A redundant model rewrite before them added latency and new claims.
+            let parsed=serde_json::from_str::<Document>(super::strip_code_fences(&draft).trim()).map_err(|e|format!("纪要JSON合同：{e}"))
+                .and_then(|doc|{validate(&doc,&units)?;Ok(doc)});
+            match parsed {
+                Ok(doc)=>doc,
+                Err(reason)=>{
+                    let fixed=request(endpoint,model,key,client,DRAFT,json!({"sourceUnits":units,"readingBudget":reading_budget,"previousResult":draft,"formatProblems":[reason],"instruction":"只修复JSON/结构与长度合同，不补事实，不改已清楚的内容；返回document本体JSON，不加review封套。"}),false,start,&mut trace,"draft-format-recovery")?;
+                    let doc:Document=serde_json::from_str(super::strip_code_fences(&fixed).trim()).map_err(|_|"纪要格式恢复未完成，原文保留。")?;
+                    validate(&doc,&units)?;doc
+                }
+            }
+        }else {
         let value=serde_json::from_str::<Value>(super::strip_code_fences(&draft).trim()).unwrap_or_else(|_|Value::String(draft.clone()));
         let mut payload=json!({"sourceUnits":units,"sourceConstraints":anchors,"readingBudget":reading_budget,"draft":value});
         let raw=request(endpoint,model,key,client,REVIEW,payload.clone(),true,start,&mut trace,"review")?;
@@ -193,6 +207,9 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         };
         if reviewed.review.blocking_issues.iter().any(|s|!s.trim().is_empty()){return Err("纪要仍有未解决的内容核对问题，已有结果和原文保留。".into());}
         let doc=reviewed.document;traced_document=Some(doc.clone());
+            doc
+        };
+        traced_document=Some(doc.clone());
         let doc=factual_audit::review_and_repair(endpoint,model,key,client,&doc,&units,start,&mut trace)?;
         let doc=if coverage::enabled(){coverage::complete(endpoint,model,key,client,&doc,&units,start,&mut trace)?}else{doc};
         traced_document=Some(doc.clone());
@@ -207,7 +224,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
     })();
     if let Ok(path)=std::env::var("COMPANION_TYPE_AUTOMATIC_BRIEF_TRACE_PATH") {
         if !path.is_empty(){if let Ok(mut f)=std::fs::OpenOptions::new().write(true).create_new(true).open(path) {
-            use std::io::Write;let _=serde_json::to_vec_pretty(&json!({"flow":"source-only draft then reviewed canonical brief","calls":trace,"acceptedStructure":outcome.is_ok(),"document":traced_document,"error":outcome.as_ref().err(),"sourceUnitCount":units.len(),"constraintCount":anchors.len(),"sourceConstraints":anchors,"seconds":start.elapsed().as_secs_f64(),"thinkingContentStored":false,"semanticAccuracyCertificate":false})).map(|v|f.write_all(&v));
+            use std::io::Write;let _=serde_json::to_vec_pretty(&json!({"flow":if coverage::enabled(){"source-only draft, independent factual audit and grounded question coverage"}else{"source-only draft then reviewed canonical brief"},"calls":trace,"acceptedStructure":outcome.is_ok(),"document":traced_document,"error":outcome.as_ref().err(),"sourceUnitCount":units.len(),"constraintCount":anchors.len(),"sourceConstraints":anchors,"seconds":start.elapsed().as_secs_f64(),"thinkingContentStored":false,"semanticAccuracyCertificate":false})).map(|v|f.write_all(&v));
         }}
     }
     outcome

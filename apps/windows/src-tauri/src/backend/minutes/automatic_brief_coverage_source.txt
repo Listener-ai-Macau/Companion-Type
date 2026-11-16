@@ -4,6 +4,6 @@ primarySourceIds为本窗口负责的原文，额外sourceUnits只是相邻上�
 读者需要的是讨论成果。致谢、串场、谁为什么提问、想引出什么讨论、比喻本身、背景举例不作为必要回答；不要将这些附在重要机制的问题后。
 每题只问一个核心问题，可连同该机制必需的实施条件，不放两个独立问句。question最多50字、最多一个问号，不嵌答案；以议题提问，不靠不确定姓名作提问前提。
 importance为essential或supporting。essential只指漏掉会改变主要结论、实用机制、取舍/范围或行动的信息；背景细节用supporting。
-每题给1至3处quote，每处不超180字，连续逐字来自输入sourceUnits.text，不改标点、不拼接、不加省略号；保留原文的自愿、条件、否定和改口。证据中至少一处来自primarySourceIds。
+sourceUnits每单位含sentences，句子id如e0001。每题evidence列1至8个实际句子e编号；由程序回取完整原话，不抄引文，不编编号，不用u编号代替。需要保留自愿、条件、否定、改口时，把相关句子编号一起列全。证据中至少一处来自primarySourceIds。
 含糊ASR词不当确定概念，不按常识补术语。用可确认的问题范围；不可确认的细枝末节不出题。主持已现场请人回答且已回答，不造会后任务。
-仅返回JSON，不给摘要答案或自评分：{"questions":[{"id":"q00","question":"具体核心问题？","importance":"essential","evidence":[{"source":"u000","quote":"连续逐字原话"}]}]}。
+仅返回JSON，不给摘要答案或自评分：{"questions":[{"id":"q00","question":"具体核心问题？","importance":"essential","evidence":["e0001","e0002"]}]}。
