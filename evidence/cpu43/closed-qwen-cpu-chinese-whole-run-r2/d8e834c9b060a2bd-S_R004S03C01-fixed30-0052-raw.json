@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0052",
+    "meeting": "S_R004S03C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\S_R004S03C01-fixed30-0052.wav",
+    "wavSha256": "5deb3fa2961e5ade2e26432f910b1dd6cd773c05b37f103030334c48fb2cc747",
+    "pcmSha256": "a3c63bbfedff8ce4e22b037116885ce789cadf9ed6522a585aa336715d631b42",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 24960000,
+    "sourceEndFrame": 25440000
+  },
+  "seconds": 12.114835899999889,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "我们的一个洗一个洗衣液活动，洗衣液活动的话，我们可以说买够四桶洗衣液，我们可以赠赠一个呢迷你洗衣机活动，这样的顾客这样的顾客感觉是超值的。比如些那个在外在外上班的一些人员吧，洗哎，我我我有洗衣液，但是没有洗衣机，还得用回家用手洗，这样的赠赠他。",
+    "raw_text": "language Chinese<asr_text>我们的一个洗一个洗衣液活动，洗衣液活动的话，我们可以说买够四桶洗衣液，我们可以赠赠一个呢迷你洗衣机活动，这样的顾客这样的顾客感觉是超值的。比如些那个在外在外上班的一些人员吧，洗哎，我我我有洗衣液，但是没有洗衣机，还得用回家用手洗，这样的赠赠他。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "我们的一个洗一个洗衣液活动，洗衣液活动的话，我们可以说买够四桶洗衣液，我们可以赠赠一个呢迷你洗衣机活动，这样的顾客这样的顾客感觉是超值的。比如些那个在外在外上班的一些人员吧，洗哎，我我我有洗衣液，但是没有洗衣机，还得用回家用手洗，这样的赠赠他。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 16.554000854492188,
+      "encode_ms": 2234.534912109375,
+      "decode_ms": 9771.1689453125
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>我们的一个洗一个洗衣液活动，洗衣液活动的话，我们可以说买够四桶洗衣液，我们可以赠赠一个呢迷你洗衣机活动，这样的顾客这样的顾客感觉是超值的。比如些那个在外在外上班的一些人员吧，洗哎，我我我有洗衣液，但是没有洗衣机，还得用回家用手洗，这样的赠赠他。",
+  "hypothesis": "我们的一个洗一个洗衣液活动，洗衣液活动的话，我们可以说买够四桶洗衣液，我们可以赠赠一个呢迷你洗衣机活动，这样的顾客这样的顾客感觉是超值的。比如些那个在外在外上班的一些人员吧，洗哎，我我我有洗衣液，但是没有洗衣机，还得用回家用手洗，这样的赠赠他。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0031",
+    "meeting": "20200623_S_R001S07C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\20200623_S_R001S07C01-fixed30-0031.wav",
+    "wavSha256": "832cd0e4f432620999eacdddea6876773e707312f1086c76c208562e90b4fc0c",
+    "pcmSha256": "8b35cc16293538901234b01a69fca9517db11f5cf926a61371acc9fc6788e418",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 14880000,
+    "sourceEndFrame": 15360000
+  },
+  "seconds": 17.062180300003092,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "是销售找到的。呃，有三个是呃来咱们公司的，说明咱们公司品质还是比较好的。嗯。还有两个是我推销通过销售找着的。哦。嗯，到时候咱们这个要让销售和他这个多联系，把咱公司的一些这个产品。嗯。嗯，就介绍面要给他。介绍详细。介绍详细。嗯。好的。",
+    "raw_text": "language Chinese<asr_text>是销售找到的。呃，有三个是呃来咱们公司的，说明咱们公司品质还是比较好的。嗯。还有两个是我推销通过销售找着的。哦。嗯，到时候咱们这个要让销售和他这个多联系，把咱公司的一些这个产品。嗯。嗯，就介绍面要给他。介绍详细。介绍详细。嗯。好的。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "是销售找到的。呃，有三个是呃来咱们公司的，说明咱们公司品质还是比较好的。嗯。还有两个是我推销通过销售找着的。哦。嗯，到时候咱们这个要让销售和他这个多联系，把咱公司的一些这个产品。嗯。嗯，就介绍面要给他。介绍详细。介绍详细。嗯。好的。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 24.62299919128418,
+      "encode_ms": 2860.736083984375,
+      "decode_ms": 14093.234375
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>是销售找到的。呃，有三个是呃来咱们公司的，说明咱们公司品质还是比较好的。嗯。还有两个是我推销通过销售找着的。哦。嗯，到时候咱们这个要让销售和他这个多联系，把咱公司的一些这个产品。嗯。嗯，就介绍面要给他。介绍详细。介绍详细。嗯。好的。",
+  "hypothesis": "是销售找到的。呃，有三个是呃来咱们公司的，说明咱们公司品质还是比较好的。嗯。还有两个是我推销通过销售找着的。哦。嗯，到时候咱们这个要让销售和他这个多联系，把咱公司的一些这个产品。嗯。嗯，就介绍面要给他。介绍详细。介绍详细。嗯。好的。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

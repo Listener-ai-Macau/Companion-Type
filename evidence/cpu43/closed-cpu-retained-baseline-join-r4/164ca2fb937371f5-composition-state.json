@@ -1,0 +1,44 @@
+{
+  "state": "COMPLETE_CPU_ALIGNMENT_CONTINUOUS_VOICES_ON_RETAINED_ASR_COMPOSITION_NOT_QUALIFIED",
+  "at": "2026-11-16T15:05:42.840245+08:00",
+  "meetings": [
+    {
+      "meeting": "S_R004S03C01",
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composed\\S_R004S03C01-model-output.json",
+      "documentSha256": "cdf0ad8ff9f0e179e7ae587819c159befcfcfc043a11d60900e24954d8250ea0",
+      "review": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composed\\S_R004S03C01-attribution-review.json",
+      "reviewSha256": "813a00ff1ce39ce98ccd9e2cc9c9717774a54699b322eb0f6bb8fff778da480e",
+      "alignmentUnits": 8201,
+      "invalidTimeUnits": 302,
+      "invalidOnsetUnits": 0,
+      "unknownSpeakerUnits": 8,
+      "alignmentInferenceSeconds": 322.6808842999744,
+      "utterances": 96
+    }
+  ],
+  "sourceAsrInferenceBackend": "Protected native GPU ASR reused; only timestamp classifier and independent speaker journal are CPU.",
+  "wholeAsrAlignmentSpeakerCpuRerun": false,
+  "newAsrNeuralCalls": 0,
+  "newSpeakerNeuralCalls": 0,
+  "noReferencesRead": true,
+  "existingProductJoinReusedExactly": true,
+  "originalAttributionMarginUnchanged": true,
+  "qualityQualified": false,
+  "productDefaultChanged": false,
+  "limits": {
+    "pid": 28052,
+    "cpuRate": 100,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 1.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 109707264,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

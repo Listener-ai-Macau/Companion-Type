@@ -50,8 +50,20 @@ def main():
     'loaderSha256':sha(Path(__file__).with_name('companion_cpu_aligner_loader_20261116.py')),'weightRoundtrip':receipt,'gpuUsed':False}
    atomic_json(a.run/'tiny-control.json',proof);state['tinyControlPassed']=True;save();del reference,mapped,inputs,left,right;gc.collect()
   processor=AutoProcessor.from_pretrained(B['modelRoot'],local_files_only=True)
+  reused={r['id']:r for r in B.get('reuseCompleted',[])}
+  if reused:
+   previous=B['reuseBinding'];assert sha(previous['file'])==previous['sha256'];old=read(previous['file'])
+   for key in ['workerSha256','helpers','modelRoot','modelSha256','cpuTorchSite']:assert old[key]==B[key]
   for case in B['cases']:
-   check();assert sha(case['wav'])==case['wavSha256'] and sha(case['rawAsrFile'])==case['rawAsrSha256'];assert read(case['rawAsrFile'])['hypothesis']==case['text']
+   check();assert sha(case['wav'])==case['wavSha256'] and sha(case['rawAsrFile'])==case['rawAsrSha256']
+   source_text=read(case['rawAsrFile'])
+   for key in case.get('rawAsrTextPath',['hypothesis']):source_text=source_text[key]
+   assert source_text==case['text']
+   if case['id'] in reused:
+    item=reused[case['id']];assert sha(item['file'])==item['sha256'];packet=read(item['file'])
+    assert packet['case']==case and packet['modelSha256']==B['modelSha256'] and packet['gpuUsed'] is False
+    assert packet['payload']['originalText']==case['text'] and packet['payload']['allOriginalCharactersPreserved']
+    state['completed'].append(item);state['reusedAcceptedLeaves']=state.get('reusedAcceptedLeaves',0)+1;save();continue
    state.update(state='ALIGNING_RETAINED_PUBLIC_ASR_TEXT_CPU',activeCase=case['id']);save()
    if not case['text']:
     payload={'originalText':'','units':[],'allOriginalCharactersPreserved':True,'neuralInferencePerformed':False,'seconds':0.,'wordTimeAccuracyQualified':False}

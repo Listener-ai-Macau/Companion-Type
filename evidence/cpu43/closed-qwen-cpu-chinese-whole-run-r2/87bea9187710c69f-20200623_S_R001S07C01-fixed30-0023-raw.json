@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0023",
+    "meeting": "20200623_S_R001S07C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\20200623_S_R001S07C01-fixed30-0023.wav",
+    "wavSha256": "80fe9b88d2baedca94097822258ce85fae8d0ad6ca97f90269e6653c456df403",
+    "pcmSha256": "3773f71d0511ecc46289b18bc4f50aceadbb60bc8699e0e14671a4a5b716819a",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 11040000,
+    "sourceEndFrame": 11520000
+  },
+  "seconds": 14.171144400002959,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "法律途径，然后走法律途径，起诉他。然后了，如果他名下有房产，那就控制，对吧？我们，嗯，需要我们结算。我们我们都有这方这方面的战略，有有有这样有有这样的公关战略。当然，这样的人是很少，嗯，一千个里面顶多出那么一个两个。我们要。",
+    "raw_text": "language Chinese<asr_text>法律途径，然后走法律途径，起诉他。然后了，如果他名下有房产，那就控制，对吧？我们，嗯，需要我们结算。我们我们都有这方这方面的战略，有有有这样有有这样的公关战略。当然，这样的人是很少，嗯，一千个里面顶多出那么一个两个。我们要。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "法律途径，然后走法律途径，起诉他。然后了，如果他名下有房产，那就控制，对吧？我们，嗯，需要我们结算。我们我们都有这方这方面的战略，有有有这样有有这样的公关战略。当然，这样的人是很少，嗯，一千个里面顶多出那么一个两个。我们要。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 21.2450008392334,
+      "encode_ms": 2856.154052734375,
+      "decode_ms": 11194.0068359375
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>法律途径，然后走法律途径，起诉他。然后了，如果他名下有房产，那就控制，对吧？我们，嗯，需要我们结算。我们我们都有这方这方面的战略，有有有这样有有这样的公关战略。当然，这样的人是很少，嗯，一千个里面顶多出那么一个两个。我们要。",
+  "hypothesis": "法律途径，然后走法律途径，起诉他。然后了，如果他名下有房产，那就控制，对吧？我们，嗯，需要我们结算。我们我们都有这方这方面的战略，有有有这样有有这样的公关战略。当然，这样的人是很少，嗯，一千个里面顶多出那么一个两个。我们要。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

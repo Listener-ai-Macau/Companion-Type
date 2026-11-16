@@ -1,0 +1,80 @@
+{
+  "at": "2026-11-16T14:11:15.858807+08:00",
+  "workerPython": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+  "workerSha256": "a68837b3121e7467ca6db0f188866ac54572a41e33e2f278fb9c18f5e83cddff",
+  "runnerSha256": "1d5f1aa0fd4bb0f1f0b6b1eab5e0c0fb2af769b536261973320b93fc75b844a9",
+  "cpuTorchSite": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-r2\\torch-cpu-site",
+  "modelRoot": "E:/CodexData/Companion/.model-cache/qwen-native-aligner-20261107/model",
+  "modelSha256": "00568245ceca5af1991d28562a75fe1ddc9bfeb041c27fda66947ea05c47fb86",
+  "helpers": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_cpu_aligner_loader_20261116.py": "3091bca3d7b6613bcfa39d0e90d0520caccbf4f8f065f7ffd8b08bd20e3c2848",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_windows_working_set_20261116.py": "014c2099f042ce4544fb61daa5fee7cf4785b7caafd97c1b89f781ba8480b9d3",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_alignment_text_20261107.py": "006aed03ba02ae339dd75ca75771614aa53fc407f5229774b70cf8692bec59bd",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\processing_qwen3_asr.py": "5ff7ace057ae959fb0cd551775cbbfdad8c003eb731bf0f1f39bfc6452ce86fa",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\modeling_qwen3_asr.py": "f6247469bc82ee40aa83909c530053d6bfbb1cfa8d34e74ff842f81f6c0bb2a4"
+  },
+  "cases": [
+    {
+      "id": "000077-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000077-root.wav",
+      "wavSha256": "9b5d6f84e97d3c43c8c611836e5edf0060c9ba2be4573a3013ba30793483ab52",
+      "pcmSha256": "cef3b82b1cfd82ebb3fe8042da2b4330748b1521cb7949c5575f2d6ed2442331",
+      "frames": 478535,
+      "sourceStartFrame": 36747542,
+      "sourceEndFrame": 37226077,
+      "text": "就行了。那行，那今天会议到此，你们下去该呃整理的整理，该呃培训的下属员工听培训，好。我。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000077-root.json",
+      "rawAsrSha256": "b9e0f87c2190bb4c219028a40418cfacdfab9010ffe9a5357707ac85971be53a",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000078-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000078-root.wav",
+      "wavSha256": "f12da8a2b5e3330a8ef59f87867dfc823af28dff7e79dd7aaafaa3dd822f9891",
+      "pcmSha256": "0cf726262e61c98a01a5f99845e31affc161dd0bf3db79214ab75de5cb26a692",
+      "frames": 7827,
+      "sourceStartFrame": 37226077,
+      "sourceEndFrame": 37233904,
+      "text": "嗯。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000078-root.json",
+      "rawAsrSha256": "be9f782b184dcc1c01319a1c41b41aac1a754020f26c8c57ec6e22f19a26666c",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    }
+  ],
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "cpuPercent": 25,
+  "computeThreads": 4,
+  "privateBytes": 2147483648,
+  "workingSetCeilingBytes": 1879048192,
+  "scope": "Existing preferred native single-mic no-overlap full development recording; one changed-input first-leaf pilot then unchanged full classifier port. No failed Q8 ASR expansion or new recognition.",
+  "keepRule": [
+    "Synthetic CPU standard and mapped logits/argmax exactly equal.",
+    "Original recognized ASR characters preserved exactly.",
+    "No frame truncation, no GPU kernels, original resource guards retained."
+  ],
+  "qualityQualified": false,
+  "timestampTruthMeasured": false,
+  "newWeightTraining": false,
+  "blindFinalHoldoutOpened": false,
+  "noFullExpansionOfRejectedQwenCpuAsr": true,
+  "reuseTinyControl": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\tiny-control.json",
+    "sha256": "ed9a5444cec54420f3dea7d6225141e86636d9a947d6ec6dff09dfc8ffcd6fa3"
+  },
+  "sourceAsrInferenceBackend": "Protected native GPU ASR reused; only timestamp classifier and independent speaker journal are CPU.",
+  "reuseCompleted": []
+}

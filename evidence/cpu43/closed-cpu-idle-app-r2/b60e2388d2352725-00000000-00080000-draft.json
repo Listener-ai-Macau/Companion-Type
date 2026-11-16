@@ -1,0 +1,80 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00080000-draft",
+    "recordingId": "2506f17a-6815-49b9-8172-a681e23c0bdb",
+    "configSha256": "400743a8a9929d483f60b5786c89fd6f57ab18757042adb517d7d9c3ae8f113e",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 80000,
+    "sourcePcm": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\audio.pcm",
+    "pcmSha256": "09a37a44830b7dae44354d2027c60ce6de08961213194754b6002215bc785fd3",
+    "language": "auto",
+    "blockFinal": false,
+    "publishedAtMonotonic": 52652.1979608,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "schema": "companion.local-moss-cpu.v1",
+    "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+    "nativeCommit": "275cd50",
+    "runtimeContractSha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff",
+    "workerSha256": "b743c30e2ea020a5a5d18bf9365c8cd68d6173068f29c44931ef4c5c3feb5107",
+    "languagePolicy": "Original bilingual model, language=None, no reference or count hints.",
+    "generation": "Unmodified native greedy/EOS, f16 KV, no repetition guard or word postediting."
+  },
+  "result": {
+    "text": "Just put it on the desk.",
+    "language": null,
+    "rawGeneratedIds": [],
+    "tokenIdsAvailable": false,
+    "rawDecoded": "[4.31][S01]Just put it on the desk.[5.00]",
+    "nativeResult": {
+      "text": "Just put it on the desk.",
+      "raw_text": "[4.31][S01]Just put it on the desk.[5.00]",
+      "language": "",
+      "timestamp_kind": "segment",
+      "segments": [
+        {
+          "text": "Just put it on the desk.",
+          "t0_ms": 4310,
+          "t1_ms": 5000,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        }
+      ],
+      "speaker_segments": [
+        {
+          "t0_ms": 4310,
+          "t1_ms": 5000,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        }
+      ],
+      "words": [],
+      "tokens": [],
+      "timings": {
+        "load_ms": 223.09800720214844,
+        "mel_ms": 17.6299991607666,
+        "encode_ms": 7165.56494140625,
+        "decode_ms": 1673.2490234375
+      }
+    },
+    "naturalEos": true,
+    "accepted": true,
+    "reviewRequired": true,
+    "seconds": 8.905887899993104,
+    "rawSpeakerIdsAreLocalToThisRequest": true,
+    "speakerIdentityVerified": false,
+    "wordsRewritten": false,
+    "qualityQualified": false,
+    "semanticError": null,
+    "unconfirmedAudioIntervals": []
+  }
+}

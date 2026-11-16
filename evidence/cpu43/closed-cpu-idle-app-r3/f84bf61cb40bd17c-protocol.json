@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-16T15:02:14.507506+08:00",
+  "scriptSha256": "5c47b95e6f18a5d98eaa4f9c7fb62fe8214ba4082ceed3d32e4f7acd5c7986ff",
+  "packageSha256": "1725f7e70dfb84a2b6570175a8700d3611f3cbb2e0778ed82b66990491c3a797",
+  "idlePolicy": {
+    "state": "CPU_IDLE_MODEL_RELEASE_FIXED_BEFORE_ACTUAL_PAUSE_RESUME_INTEGRATION_TEST",
+    "at": "2026-11-16T14:46:19.973159+08:00",
+    "oldProtectedSourceCommit": "f7c667cdb4c7cc79f1fc3c6631325926a8e983be",
+    "oldWorkerSha256": "071f5742d4d2d6a7a0ce84b367a1fd45927f5ce2c9e71f488fea82c40fa4eadf",
+    "newWorkerSha256": "b743c30e2ea020a5a5d18bf9365c8cd68d6173068f29c44931ef4c5c3feb5107",
+    "sourcePcmNativeSessionGenerationAndSaveCoreUnchanged": true,
+    "generationCoreSha256": "843ed39774bc75e710809916bc4b6048d1508027bfb852bf5b0c2fefbec91650",
+    "idleReleaseSeconds": 15,
+    "rootCause": "The existing follow loop can keep an already loaded model resident while source input is paused for the3h follow window. Existing model process ends on finalization, but no prior idle model release exists.",
+    "keepRule": [
+      "Actual model closes during input pause and its resident weight mapping is released.",
+      "Worker RSS drops by at least512MiB during the pause, while no new neural call occurs.",
+      "Resume reloads this model, preserves accepted draft files and every original audio sample.",
+      "Final text equals the previous protected CPU app run, finalization reuses the new stream cache without ASR rerun."
+    ],
+    "existingFixtureR3Preserved": true,
+    "noCrossVersionCacheMigrationClaim": true,
+    "productDefaultChanged": false,
+    "qualityQualified": false,
+    "newNeuralCalls": 0
+  },
+  "source": {
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "audioSeconds": 2109.813375,
+    "frames": 33757014,
+    "language": "English",
+    "testFrames": 1204000,
+    "testAudioSeconds": 75.25,
+    "sourceStartFrame": 0,
+    "pcmSha256": "f1bef19fef23964d6161c25ecf6aa69834e9312bfbe5e0bc7eaafd456210f06c",
+    "protocol": "Both paths submit exactly the same first75.25s real original mono PCM; live packets paced every5s, one byte-identical replay; offline intake sealed before inference. No microphones, speakers, private audio or clouds."
+  },
+  "pauseAfterSourceFrames": 480000,
+  "acceptedCacheKind": "first completed30s block",
+  "prior5sDraftPauseProof": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\idle-observation.json",
+  "priorDriverFailure": "Transient Windows preview-reader denial; bounded read retry is now independently verified. Prior accepted draft retained without rewrite.",
+  "localPublicInputOnly": true,
+  "nativeUiTested": false,
+  "qualityQualified": false
+}

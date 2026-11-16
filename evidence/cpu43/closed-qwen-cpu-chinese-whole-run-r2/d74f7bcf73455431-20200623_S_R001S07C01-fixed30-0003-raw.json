@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0003",
+    "meeting": "20200623_S_R001S07C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\20200623_S_R001S07C01-fixed30-0003.wav",
+    "wavSha256": "ab1d1c40722302ea6c35c58d5b3111ae639f5dfcd4ef7883cbd266f436d04d93",
+    "pcmSha256": "46257a27c90c0f31ff4fbf219e8e90c32556ba44ca3fb6bce88a55b1b208d036",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 1440000,
+    "sourceEndFrame": 1920000
+  },
+  "seconds": 13.230110700002115,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "有理由的、有征信的就给批嘛。所以说我们，嗯，给到的额度是，呃，从五万到三十万之间。呃，我们都会，证征信没有问题，我们都会放款。然后这个，因为这个市场嘛，潜力巨大，因为它面临的，嗯，面对的人群也广阔，有，呃，毕业的大学生，也有失业的、下岗的。",
+    "raw_text": "language Chinese<asr_text>有理由的、有征信的就给批嘛。所以说我们，嗯，给到的额度是，呃，从五万到三十万之间。呃，我们都会，证征信没有问题，我们都会放款。然后这个，因为这个市场嘛，潜力巨大，因为它面临的，嗯，面对的人群也广阔，有，呃，毕业的大学生，也有失业的、下岗的。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "有理由的、有征信的就给批嘛。所以说我们，嗯，给到的额度是，呃，从五万到三十万之间。呃，我们都会，证征信没有问题，我们都会放款。然后这个，因为这个市场嘛，潜力巨大，因为它面临的，嗯，面对的人群也广阔，有，呃，毕业的大学生，也有失业的、下岗的。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 22.84600067138672,
+      "encode_ms": 2412.010986328125,
+      "decode_ms": 10705.59765625
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>有理由的、有征信的就给批嘛。所以说我们，嗯，给到的额度是，呃，从五万到三十万之间。呃，我们都会，证征信没有问题，我们都会放款。然后这个，因为这个市场嘛，潜力巨大，因为它面临的，嗯，面对的人群也广阔，有，呃，毕业的大学生，也有失业的、下岗的。",
+  "hypothesis": "有理由的、有征信的就给批嘛。所以说我们，嗯，给到的额度是，呃，从五万到三十万之间。呃，我们都会，证征信没有问题，我们都会放款。然后这个，因为这个市场嘛，潜力巨大，因为它面临的，嗯，面对的人群也广阔，有，呃，毕业的大学生，也有失业的、下岗的。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

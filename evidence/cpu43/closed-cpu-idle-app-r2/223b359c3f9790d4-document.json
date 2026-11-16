@@ -1,0 +1,27 @@
+{
+  "isFinal": false,
+  "text": "Just put it on the desk.",
+  "utterances": [
+    {
+      "text": "Just put it on the desk.",
+      "startMs": 0.0,
+      "endMs": 5000.0,
+      "speaker": null,
+      "approximateTiming": true,
+      "block": 0,
+      "revision": "00000000-00080000-draft",
+      "blockFinal": false,
+      "language": null,
+      "decodeAccepted": true,
+      "reviewRequired": true,
+      "unconfirmedAudioIntervals": []
+    }
+  ],
+  "confirmedAudioFrames": 400000,
+  "finalDecodedFrames": 0,
+  "audioSealed": false,
+  "speakerIdentityVerified": false,
+  "reviewRequired": true,
+  "wordTimingVerified": false,
+  "qualityQualified": false
+}

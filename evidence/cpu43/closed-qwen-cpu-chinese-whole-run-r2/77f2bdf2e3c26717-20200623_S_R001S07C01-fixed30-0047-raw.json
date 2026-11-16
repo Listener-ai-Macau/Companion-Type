@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0047",
+    "meeting": "20200623_S_R001S07C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\20200623_S_R001S07C01-fixed30-0047.wav",
+    "wavSha256": "36cd5b7b57a40d16e09d06ef9345cfb6f8b3896bbb5e0b4d4ec2139fe3a5bae1",
+    "pcmSha256": "bb838f15b9d8680e7c7256cc96f939367c149ff0e8cc45af2eb137f220af6960",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 22560000,
+    "sourceEndFrame": 23040000
+  },
+  "seconds": 13.105383200003416,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "产的奔驰，然后，嗯，你说他没有能力吗？他肯定是有这个能力，所以说我们委担，然后，嗯，给了他的期限是两年偿还，对，然后分期一个月一还就行了。哦，我们像他这种车的话，我们也是，呃，如果他按不能按时给我们还贷款啊，对不起，你这车你就启动不了了。我们有软件控。",
+    "raw_text": "language Chinese<asr_text>产的奔驰，然后，嗯，你说他没有能力吗？他肯定是有这个能力，所以说我们委担，然后，嗯，给了他的期限是两年偿还，对，然后分期一个月一还就行了。哦，我们像他这种车的话，我们也是，呃，如果他按不能按时给我们还贷款啊，对不起，你这车你就启动不了了。我们有软件控。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "产的奔驰，然后，嗯，你说他没有能力吗？他肯定是有这个能力，所以说我们委担，然后，嗯，给了他的期限是两年偿还，对，然后分期一个月一还就行了。哦，我们像他这种车的话，我们也是，呃，如果他按不能按时给我们还贷款啊，对不起，你这车你就启动不了了。我们有软件控。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 25.85700035095215,
+      "encode_ms": 2846.2080078125,
+      "decode_ms": 10141.3115234375
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>产的奔驰，然后，嗯，你说他没有能力吗？他肯定是有这个能力，所以说我们委担，然后，嗯，给了他的期限是两年偿还，对，然后分期一个月一还就行了。哦，我们像他这种车的话，我们也是，呃，如果他按不能按时给我们还贷款啊，对不起，你这车你就启动不了了。我们有软件控。",
+  "hypothesis": "产的奔驰，然后，嗯，你说他没有能力吗？他肯定是有这个能力，所以说我们委担，然后，嗯，给了他的期限是两年偿还，对，然后分期一个月一还就行了。哦，我们像他这种车的话，我们也是，呃，如果他按不能按时给我们还贷款啊，对不起，你这车你就启动不了了。我们有软件控。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

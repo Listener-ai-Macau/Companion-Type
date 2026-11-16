@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0032",
+    "meeting": "20200623_S_R001S07C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\20200623_S_R001S07C01-fixed30-0032.wav",
+    "wavSha256": "fbe816bd1a7d64d027498ca34e538cdbff8630c6799367b77ef5f76ad85f940b",
+    "pcmSha256": "86140415fc49860b4219f9266826b2c3b919f52a4fd40130a826cc59e3034f68",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 15360000,
+    "sourceEndFrame": 15840000
+  },
+  "seconds": 11.639465299995209,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "然后他有一个这个心理上的准备，行吧？行，可以。行，这就咱们这个这个业务方面。呃，目前咱们公司现在有几几款产品呢？目前主打的几款。我们主打的就是小额的车贷，然后创业贷，然后呃，开开个冷饮店的话，开小贷，开。",
+    "raw_text": "language Chinese<asr_text>然后他有一个这个心理上的准备，行吧？行，可以。行，这就咱们这个这个业务方面。呃，目前咱们公司现在有几几款产品呢？目前主打的几款。我们主打的就是小额的车贷，然后创业贷，然后呃，开开个冷饮店的话，开小贷，开。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "然后他有一个这个心理上的准备，行吧？行，可以。行，这就咱们这个这个业务方面。呃，目前咱们公司现在有几几款产品呢？目前主打的几款。我们主打的就是小额的车贷，然后创业贷，然后呃，开开个冷饮店的话，开小贷，开。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 23.033000946044922,
+      "encode_ms": 2835.243896484375,
+      "decode_ms": 8702.673828125
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>然后他有一个这个心理上的准备，行吧？行，可以。行，这就咱们这个这个业务方面。呃，目前咱们公司现在有几几款产品呢？目前主打的几款。我们主打的就是小额的车贷，然后创业贷，然后呃，开开个冷饮店的话，开小贷，开。",
+  "hypothesis": "然后他有一个这个心理上的准备，行吧？行，可以。行，这就咱们这个这个业务方面。呃，目前咱们公司现在有几几款产品呢？目前主打的几款。我们主打的就是小额的车贷，然后创业贷，然后呃，开开个冷饮店的话，开小贷，开。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

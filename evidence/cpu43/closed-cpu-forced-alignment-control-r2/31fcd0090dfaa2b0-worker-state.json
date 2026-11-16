@@ -1,0 +1,55 @@
+{
+  "state": "COMPLETE_NATIVE_CPU_ALIGNMENT_CHARACTERS_PRESERVED_NOT_TIME_QUALIFIED",
+  "startedAt": "2026-11-16T14:33:07.981507+08:00",
+  "completed": [
+    {
+      "id": "ES2003b-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\ES2003b-seq-000-alignment.json",
+      "sha256": "38df5fc8bd71322434c36945bea68869d1043fa9c5d8325eeb6f5cbb3668725d",
+      "seconds": 1.3942506999956095
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\20200709_L_R002S01C01-seq-000-alignment.json",
+      "sha256": "d4adef2fac0c05cc60751fb7b4507beffc6056b314cff45a8b2658c0cbc9ed0c",
+      "seconds": 3.7997871000043233
+    }
+  ],
+  "newNeuralCalls": 2,
+  "modelLoaded": true,
+  "newWeightTraining": false,
+  "referenceWordsRead": false,
+  "speakerLabelsRead": false,
+  "qualityQualified": false,
+  "workingSetControl": {
+    "minimumBytes": 204800,
+    "maximumBytes": 1879048192,
+    "flags": 6,
+    "maximumEnforced": true,
+    "scope": "Current owned worker process only; no global/other-process/registry changes."
+  },
+  "limits": {
+    "pid": 30352,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 830205952,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "torchVersion": "2.11.0+cpu",
+  "torchModule": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-r2\\torch-cpu-site\\torch\\__init__.py",
+  "cudaCompiled": false,
+  "hipCompiled": false,
+  "transformersVersion": "5.22.1",
+  "tinyControlPassed": true,
+  "modelLoadSeconds": 2.641593100001046,
+  "finishedAt": "2026-11-16T14:33:54.016361+08:00"
+}

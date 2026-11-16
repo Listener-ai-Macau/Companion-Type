@@ -1,0 +1,15 @@
+{
+  "state": "INCOMPLETE_CPU_ALIGNMENT_RETAINED",
+  "startedAt": "2026-11-16T14:30:09.669692+08:00",
+  "privatePeakBytes": 191860736,
+  "familyWorkingSetPeakBytes": 216281088,
+  "systemAvailableMinBytes": 6522880000,
+  "qualityQualified": false,
+  "automaticRetries": 0,
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "pid": 17888,
+  "pidCreatedAt": 1794810609.684877,
+  "workerExitCode": 1,
+  "error": "AssertionError()",
+  "finishedAt": "2026-11-16T14:30:20.939851+08:00"
+}

@@ -1,0 +1,53 @@
+{
+  "state": "CPU_PCM_IDLE_MODEL_RELEASED_SOURCE_AND_RESULTS_RETAINED",
+  "startedAt": "2026-11-16T14:54:18.892150+08:00",
+  "completed": [
+    {
+      "job": "00000000-00080000-draft",
+      "block": 0,
+      "blockFinal": false,
+      "inputFrames": 80000,
+      "seconds": 8.905887899993104,
+      "accepted": true,
+      "resultFile": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\results\\00000000-00080000-draft.json"
+    }
+  ],
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "productDefaultChanged": false,
+  "tokenIdsAvailable": false,
+  "fullSpeakerJournalFinalized": false,
+  "draftPolicy": "One accepted nonempty draft per open block; empty/failed drafts may advance to the newest frozen prefix. Complete final blocks always run first.",
+  "limits": {
+    "pid": 13820,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 739614720,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "modelLoaded": false,
+  "modelLoads": 1,
+  "idleModelReleases": 1,
+  "idleReleaseSeconds": 15,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "activeJob": "00000000-00080000-draft",
+  "lastIdleRelease": {
+    "at": "2026-11-16T14:54:43.629336+08:00",
+    "beforeWorkingSetBytes": 1920090112,
+    "afterWorkingSetBytes": 41046016,
+    "beforePrivateBytes": 90783744,
+    "afterPrivateBytes": 29618176,
+    "confirmedFrames": 80000
+  }
+}

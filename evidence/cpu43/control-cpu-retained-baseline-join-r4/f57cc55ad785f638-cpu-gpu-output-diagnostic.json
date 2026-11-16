@@ -1,0 +1,577 @@
+{
+  "state": "CPU_GPU_SAME_RETAINED_ASR_ALIGNMENT_DIAGNOSTIC_NOT_TRUE_WORD_TIME_ACCEPTANCE",
+  "at": "2026-11-16T15:09:31.170143+08:00",
+  "leaves": 79,
+  "alignmentUnits": 8201,
+  "rawTimestampClassCount": 16402,
+  "identicalRawTimestampClasses": 16319,
+  "rawClassDeltaMedian": 0.0,
+  "rawClassDeltaP95": 0,
+  "decodedTimestampDeltaMedianSeconds": 0.0,
+  "decodedTimestampDeltaP95Seconds": 0.0,
+  "decodedTimestampDeltaMaxSeconds": 0.3200000000000003,
+  "oldGpuInvalidOrZeroDurationWordIntervals": 299,
+  "cpuInvalidOrZeroDurationWordIntervals": 302,
+  "inputAndCharactersExactlyEqual": true,
+  "newNeuralCalls": 0,
+  "bitwiseCpuGpuParityClaimed": false,
+  "trueWordTimeAccuracyMeasured": false,
+  "currentProductUsesOnsetsOnlyWithFixed60msNotWordDuration": true,
+  "wholeAsrWasPreviousProtectedGpuResult": true,
+  "files": [
+    {
+      "leaf": "000000-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000000-root.json",
+      "oldGpuSha256": "4fa9e5dcf77d31222566c2fa1011ecee3132a148111129648b2bf41d8c03d569",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\000000-root-alignment.json",
+      "cpuSha256": "fde9906550c39bfeea9633c68bc75323b2c819d98c4a272f71c61a87a9b67c85"
+    },
+    {
+      "leaf": "000001-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000001-root.json",
+      "oldGpuSha256": "7089a0c78427b308b1cc30a406410587a5c6fe9f4acb849c881eb74c75fe486b",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000001-root-alignment.json",
+      "cpuSha256": "acf9dca1fdba56356583852e1443179f30f23b36b4df8914f3c0ba26479cbea6"
+    },
+    {
+      "leaf": "000002-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000002-root.json",
+      "oldGpuSha256": "fa82d3ae31c3909376623666673bdb58c3a2e91eaa37eaddfc34ae71f6f6b80d",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000002-root-alignment.json",
+      "cpuSha256": "0e076eb526d480d55982b188ea30ed51c8d217135f6c6ae1a68ff90cf6d7076f"
+    },
+    {
+      "leaf": "000003-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000003-root.json",
+      "oldGpuSha256": "4b662432d22568ff287c04d66d69fbdd305353248a3c2ef7ec408d43ab5876ce",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000003-root-alignment.json",
+      "cpuSha256": "d6d5e236adf5d81210b2a04b25da62b273009dee445d053d4a471fcfc1a92319"
+    },
+    {
+      "leaf": "000004-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000004-root.json",
+      "oldGpuSha256": "a6c0614858e95cdbc378de113615b169abcf6b9116f98acc68e024e53db479e1",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000004-root-alignment.json",
+      "cpuSha256": "b6dc9810030dfecac87ca5e916ba99698cbc53755f990242f9cd8a386e35bcf4"
+    },
+    {
+      "leaf": "000005-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000005-root.json",
+      "oldGpuSha256": "a51ccfbed02d9da2ee7b5a3eff737a608e5edc08f4b3d55af1512d59be429aa1",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000005-root-alignment.json",
+      "cpuSha256": "a9b3eb3e22907c1b2152c74d747efb268f7bb6411287469646c8631ba6742a38"
+    },
+    {
+      "leaf": "000006-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000006-root.json",
+      "oldGpuSha256": "ea6bfff1369336b39e9454068ce9d98cdeead66f5d2af9fffe5e14045e9726bf",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000006-root-alignment.json",
+      "cpuSha256": "f49d63565710c5bb3a394fa2c1ab8fcbeeeb26671414b1ccb342fd1bafed630a"
+    },
+    {
+      "leaf": "000007-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000007-root.json",
+      "oldGpuSha256": "0fa008911494300ee6c411fa86b9189cc6193386999882a8811f3cf4c4885ba3",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000007-root-alignment.json",
+      "cpuSha256": "e46930f031e7cd0193c92e81df39a7714268233df63c7c093d9c5a6062b5183f"
+    },
+    {
+      "leaf": "000008-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000008-root.json",
+      "oldGpuSha256": "f9dd907c2b7d71ab5d8062a28678dfd88b463d41c258feaeb3f7d257bb7cb1f5",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000008-root-alignment.json",
+      "cpuSha256": "529a2ee314795bad5564ebec1ee1bb4b540c546eeb3730daa82a2c78af7d35c1"
+    },
+    {
+      "leaf": "000009-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000009-root.json",
+      "oldGpuSha256": "ab798362ea1c61444ade5366185ba5231a2bfdb1ec833223290aa881893e56cc",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000009-root-alignment.json",
+      "cpuSha256": "d47f9da2ffe1ed78de607df442064a8f5e5f600ec3b88b8fbbf844d98d035190"
+    },
+    {
+      "leaf": "000010-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000010-root.json",
+      "oldGpuSha256": "5bd34fbf9c4bda0722862cd8a0205c34477640491605956b6f9848db9c2b19b7",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000010-root-alignment.json",
+      "cpuSha256": "2d4ca9b3f8ce536e563ab499f8c510016258cdd0565f157ebcd069ca3ebe5fa9"
+    },
+    {
+      "leaf": "000011-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000011-root.json",
+      "oldGpuSha256": "0e5b12e0f32af2fb615ecb895628d6f23155194c6d1d59df8d646ab17cf46da9",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000011-root-alignment.json",
+      "cpuSha256": "f18c2b982dcbb866a5e22bd7601533f528ddfbe685b8f9c77b302e412475dfd9"
+    },
+    {
+      "leaf": "000012-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000012-root.json",
+      "oldGpuSha256": "30cd8b25db8c9b52d2780a1d74b621a20cd7c351f051bd853751346d0e1957ab",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000012-root-alignment.json",
+      "cpuSha256": "ed12e16ab45e9c835f735ad791287554e97443e03c825bb19a0bd5621399ca94"
+    },
+    {
+      "leaf": "000013-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000013-root.json",
+      "oldGpuSha256": "3738e282cedd74faa4627a8fd92124403af12a938e8177f35c479a0b926141a1",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000013-root-alignment.json",
+      "cpuSha256": "308d08ca7242f20bf1d33ada0aeb7ab424ccc94644823eee02c53c288700b56b"
+    },
+    {
+      "leaf": "000014-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000014-root.json",
+      "oldGpuSha256": "f448d7207c3ea710edc0a58895bb74a97df0f7cee3fc441be874c2e3c0f02743",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000014-root-alignment.json",
+      "cpuSha256": "540cfcbd8898ef11a5540fc0013d1002a88e3f5fa21c1b390da92b1a8dd322d7"
+    },
+    {
+      "leaf": "000015-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000015-root.json",
+      "oldGpuSha256": "878bf1c1f79cffb8cc2d8b4232015fbf65ff46b6ed5441588510b17321f97f8d",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000015-root-alignment.json",
+      "cpuSha256": "427be7902ec0c1fa218c0fa27467f15ce557d56bea1b1ad76959a64308e9e17e"
+    },
+    {
+      "leaf": "000016-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000016-root.json",
+      "oldGpuSha256": "cb6cb09e29ecf1e330b5d90e91bf225feaafea26622f87a90543e4b965ac61ca",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000016-root-alignment.json",
+      "cpuSha256": "7ff84d0ffd9d3d42ff410197e4a90bf0e2068f45dc38a34d8a9ccacb596a49bb"
+    },
+    {
+      "leaf": "000017-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000017-root.json",
+      "oldGpuSha256": "eae341e4aa47a43fb1653e18fa7fbb278b9d9f33349208463e063d95a4b84e8f",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000017-root-alignment.json",
+      "cpuSha256": "1b18ec124733330570e8c288f53529f076f8822c094932f32fdff0dcd56af56d"
+    },
+    {
+      "leaf": "000018-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000018-root.json",
+      "oldGpuSha256": "d0517f56b51c52ed22b91dbefa0d0edaa26de3e758641e086046ccb350389bf4",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000018-root-alignment.json",
+      "cpuSha256": "1e6ebd5e177f8910a6ab71119d2591b1febef33328323b08837699a88613a939"
+    },
+    {
+      "leaf": "000019-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000019-root.json",
+      "oldGpuSha256": "d0ff2ce4a3279e69c4ac0c1559fd20c410867bcd88b65c2479cbb80ceec46d8b",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000019-root-alignment.json",
+      "cpuSha256": "00c762f9fd94430745748a69ab38ba3e7581e28b97883f4fd5e976f3f916bb1c"
+    },
+    {
+      "leaf": "000020-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000020-root.json",
+      "oldGpuSha256": "a99c781ab9bd692d8683e28f218385a6cf2a90cd0e98dbff93d9597fd11361b1",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000020-root-alignment.json",
+      "cpuSha256": "456c2ff43e8a392a41ecb2c14aa917670f88fa8de47c8349ec0a6f9aad6fc6ed"
+    },
+    {
+      "leaf": "000021-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000021-root.json",
+      "oldGpuSha256": "db845360c52ede55af708759c93644f6e19b98063e47a0c812118ff6f825e60f",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000021-root-alignment.json",
+      "cpuSha256": "08329a0336ee19af07ed8513065101a313345edc46653173d10b9dab05d5b31b"
+    },
+    {
+      "leaf": "000022-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000022-root.json",
+      "oldGpuSha256": "5f1abc1cc181142d2f9ac3240bd4ec790533d3129b3bf17ec25efaf9119b7bcb",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000022-root-alignment.json",
+      "cpuSha256": "1de1819fb28d7cd369c234b00e9432604077c3bbf3110a0b78a483331fb029b7"
+    },
+    {
+      "leaf": "000023-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000023-root.json",
+      "oldGpuSha256": "f307f587fbf40ac565e3942cd232b95721e217d8ca41171dea3aaaba9e384fd7",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000023-root-alignment.json",
+      "cpuSha256": "3b98b70f0847032aaff87cc6ee3524c1c51309f1d7fa82532ac9bf41c32473b6"
+    },
+    {
+      "leaf": "000024-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000024-root.json",
+      "oldGpuSha256": "a3a50168ad2c3d5eabe5c3327735ee69bf97af1cf6e0a759c2713ca8bebd55f6",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000024-root-alignment.json",
+      "cpuSha256": "ec9f7f119896a066ab2d32931f287683e2fbc127ad0494fc818b0c18a7d49336"
+    },
+    {
+      "leaf": "000025-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000025-root.json",
+      "oldGpuSha256": "b452023f1fada7de6eaf9124715c78cc87ce1d5e4075ee2bd1c67b958c99c4ba",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000025-root-alignment.json",
+      "cpuSha256": "ab36bcc8f07a43d9986442d472c23a8b088b836ce6aebf4a897f6b0964f588c6"
+    },
+    {
+      "leaf": "000026-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000026-root.json",
+      "oldGpuSha256": "708a80d8645a0a3d656fd7a88025dbde29506515bd90a773fca7fdd2778c2ac1",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000026-root-alignment.json",
+      "cpuSha256": "3952b966a9030e71d2ef30705c6906a9d97340e86e65561e5061a013dcf5b89f"
+    },
+    {
+      "leaf": "000027-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000027-root.json",
+      "oldGpuSha256": "7209e877837f0b4ecf02261b10b135e6eecf4d860226a28fe91fb47f28cd36dc",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000027-root-alignment.json",
+      "cpuSha256": "53462a44315dd20dd76d92e0e14addc73d3eb01ff652166df228e4f1482c8cee"
+    },
+    {
+      "leaf": "000028-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000028-root.json",
+      "oldGpuSha256": "df3712bb8c173ca2adfadb1a963956a1088291207afd3a69647b4b4c5b4ce6c7",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000028-root-alignment.json",
+      "cpuSha256": "b4e929cc9bc9b9452715d0d24914f92d074042a5ff47866ae6a06483e3d4d29e"
+    },
+    {
+      "leaf": "000029-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000029-root.json",
+      "oldGpuSha256": "09dcdfa6122555810223dcc44c219e578bb6586dfb6bf859c513c31117695dc6",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000029-root-alignment.json",
+      "cpuSha256": "4542bceeb1304222c95d6acc6c1a622f4c90b42610df3266a435a62e63aef4c9"
+    },
+    {
+      "leaf": "000030-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000030-root.json",
+      "oldGpuSha256": "1d7ce9a117aeb308ca424a3a97d48a9bcc9451c2fa290679643365146120f2f4",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000030-root-alignment.json",
+      "cpuSha256": "79c7a58ff43c3738a6834328de633b036275d0e100a756fea7bd591848c3fbb6"
+    },
+    {
+      "leaf": "000031-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000031-root.json",
+      "oldGpuSha256": "f0b0ad301168b028610d3a877f263e21e433deb5ea41ab7a52187ba0af60483b",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000031-root-alignment.json",
+      "cpuSha256": "d1cb437d5cd27e47ad02efc981f53b6db94e6fc1d3d0d14ebd302a175a3062a1"
+    },
+    {
+      "leaf": "000032-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000032-root.json",
+      "oldGpuSha256": "4eca835a10e837c64248bb4073160d099740fd1e86a077709942eac22226cd4f",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000032-root-alignment.json",
+      "cpuSha256": "c91f6b16cf5a8f8baba8225ba4b354a7b06ac1dd40490cb558a5416c678ee1ae"
+    },
+    {
+      "leaf": "000033-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000033-root.json",
+      "oldGpuSha256": "a05a8b4d4ce9dbad33b2c601f27f7904ad96df9ce4ae62956db70dc15331f380",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000033-root-alignment.json",
+      "cpuSha256": "b499c2b5616e890cabb5791a2c2e78cd9c3ae04f9853d65bc29c8c0eb4be0639"
+    },
+    {
+      "leaf": "000034-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000034-root.json",
+      "oldGpuSha256": "e7a1594e026f2e18097b2814f865e0ac02cfce02f2d79f47a1aa9d51565a9c63",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000034-root-alignment.json",
+      "cpuSha256": "fc1348d3282b72328f727c106a848221e0052a412857d4fdf9b1b02d56717e19"
+    },
+    {
+      "leaf": "000035-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000035-root.json",
+      "oldGpuSha256": "54b4960547da585fcdb0b140165c7c3c856bbbb86803d02d88cc7b495c2e1260",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000035-root-alignment.json",
+      "cpuSha256": "62a8ecd56ac202088a42537c476835c53938a1fc7fbc13fc5f604d4b57aa1b16"
+    },
+    {
+      "leaf": "000036-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000036-root.json",
+      "oldGpuSha256": "7de895228c61c8b5048151649b7e93429107c2dcb5ce6dfa7d3e6ac8fae89dc8",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000036-root-alignment.json",
+      "cpuSha256": "e2c626a23342f310a543cb27633117ef7d9dc3ee99f0c30f433c8375d8c35d71"
+    },
+    {
+      "leaf": "000037-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000037-root.json",
+      "oldGpuSha256": "76a669b170353373ce71c7842ad7d196d99c5ae10e79bb7e6385b0bf0f4770c1",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000037-root-alignment.json",
+      "cpuSha256": "449dc15d1085a8d2af4f47cd7b21282c424f2c8500c6e564758427752d6adecf"
+    },
+    {
+      "leaf": "000038-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000038-root.json",
+      "oldGpuSha256": "05002d622d5549ff22b8c386df714d6de4a3ff240592ee8cb76a5fe1b0eb0f84",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000038-root-alignment.json",
+      "cpuSha256": "620cebebc468f1aeb7df3bc49aee9f927464b519c7a9bbd7442e11f72dc29931"
+    },
+    {
+      "leaf": "000039-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000039-root.json",
+      "oldGpuSha256": "3400636ce5215c9f1f36c33a2dc02ad2f8b0f98444c811d847c22769b0e47cd3",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000039-root-alignment.json",
+      "cpuSha256": "c533db4fb970ba9af29c2b7678cd09ba3d7b6b0675b7058e9651efab0b3c7dae"
+    },
+    {
+      "leaf": "000040-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000040-root.json",
+      "oldGpuSha256": "253e6b5e0a141b3b09d46fa12d01bfc43a80b8b0a5cc2722315083b063b82d7d",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000040-root-alignment.json",
+      "cpuSha256": "c525e38b3cd18d81662225b64b0090210348059b5627a5000e2ba512efd0dfe9"
+    },
+    {
+      "leaf": "000041-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000041-root.json",
+      "oldGpuSha256": "4aaeefb901cb94d21d3c5be9cd637aed84388ae9debab00dfc592097cbc09274",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000041-root-alignment.json",
+      "cpuSha256": "b19f2c226ebf70f3629c92b8be60ffb23712c63a275e5ea74b359d3329d753c7"
+    },
+    {
+      "leaf": "000042-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000042-root.json",
+      "oldGpuSha256": "52fcdd1401d0d7bb7dc9dad6f216b309a1cb3e98051d89a5103d3ab8ab608dd7",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000042-root-alignment.json",
+      "cpuSha256": "24661a2cb43bb7c5aec5c1599286725946301aa1ef19c640417516d20130057a"
+    },
+    {
+      "leaf": "000043-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000043-root.json",
+      "oldGpuSha256": "3bc7f108f0362b141d2c64796e99fd758bf58725b01d6ec7c552dad0e3d224a7",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000043-root-alignment.json",
+      "cpuSha256": "858aa7561239b367903dfa50200f728ed7d75074d09a49b32ec0f4fbc7229673"
+    },
+    {
+      "leaf": "000044-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000044-root.json",
+      "oldGpuSha256": "ccf091ea473d24f0f0ca1f1b6d8086fed9cdd0b2e9d124c4c44aa58da7ee6827",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000044-root-alignment.json",
+      "cpuSha256": "2d1716e8936513469ea5a54955b44a72aa5117eaaf4dbaceb2be7680e6e3ab79"
+    },
+    {
+      "leaf": "000045-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000045-root.json",
+      "oldGpuSha256": "766da305e1a9e79c8cbabb70b24dee24786ed350886c459e704585fc8fdd2bcc",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000045-root-alignment.json",
+      "cpuSha256": "b5547fd61d978989295c12b94e8b42c1421a8458ed538cce6a80b2df1cf5d1bf"
+    },
+    {
+      "leaf": "000046-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000046-root.json",
+      "oldGpuSha256": "643b08887a9dc338e63fd80d0186dc2fcaa58f7db6fa3bdb6786a4a8d2fce58c",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000046-root-alignment.json",
+      "cpuSha256": "b35d4693046a76ae00a45681fc46dea42432425c8ca57cd0297527357c9c79f4"
+    },
+    {
+      "leaf": "000047-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000047-root.json",
+      "oldGpuSha256": "d74ad15e0a5bf600f86c38a09ee17ae886d1a0fdb0e0122f03a05f8994fd8521",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000047-root-alignment.json",
+      "cpuSha256": "8910bbdbaa8e8e7ae724a5b2c6d69cd0fb720aaf08e5101a7a1110802861f992"
+    },
+    {
+      "leaf": "000048-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000048-root.json",
+      "oldGpuSha256": "5221d5209e6c2fff61662e4ed99e83becc962ebb6a6d2dcc55938cbb176899eb",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000048-root-alignment.json",
+      "cpuSha256": "da2cd9a1855bde7d23ae55e9a4a03a3d96e7d8f48a71a95133892ad4462ad45f"
+    },
+    {
+      "leaf": "000049-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000049-root.json",
+      "oldGpuSha256": "c8a926d36c4b72e6bced970ce56480125d7bad5648651acebdadb02297034366",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000049-root-alignment.json",
+      "cpuSha256": "8b97f1edcc2bda01a77e01fd2a7a639b27239b403d4969603790d72aa85fa5c0"
+    },
+    {
+      "leaf": "000050-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000050-root.json",
+      "oldGpuSha256": "2b2b85b8b4305f642f9a279125cb639018cc807c63866ebe51aef0c43dcb2135",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000050-root-alignment.json",
+      "cpuSha256": "3754c75395bea9e43215cf1e8a378e9173e75cdc22f8502722e681454ad2b35f"
+    },
+    {
+      "leaf": "000051-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000051-root.json",
+      "oldGpuSha256": "1eb0b291f6a6831e789fa157f16e5b87f3226993acac566c37cee379a139424f",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000051-root-alignment.json",
+      "cpuSha256": "5048f6ddd09fcc4d30e865e7773b2a1abd67043545f51a0525911dcee24bc19b"
+    },
+    {
+      "leaf": "000052-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000052-root.json",
+      "oldGpuSha256": "d354a59b7542501bec3df6ccd8454b1602ae5eb9fe617d162c7308c2a062dd87",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000052-root-alignment.json",
+      "cpuSha256": "0e16a31c4208a48df015f9efdb00be56db455534150f0d3f37cffa1f7403b09f"
+    },
+    {
+      "leaf": "000053-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000053-root.json",
+      "oldGpuSha256": "d50a3371f1ac9d260d64171dcdc4b45e161cfd663679263271acdd11ffa6fd1b",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000053-root-alignment.json",
+      "cpuSha256": "b27d0b592708cddc1d77f8a8f3980f4dd72f53f2de524c24a8f17a9c4141c879"
+    },
+    {
+      "leaf": "000054-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000054-root.json",
+      "oldGpuSha256": "cdc3abbf6df2d1db6fb01b2adc45aeb1a6fd37e419c91a1afd3324890b73ae06",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000054-root-alignment.json",
+      "cpuSha256": "22c41cddde85fefec92c209b39010a40d152a98021971f98b596c743130540c8"
+    },
+    {
+      "leaf": "000055-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000055-root.json",
+      "oldGpuSha256": "2ff165db6a7859569cbeb6d69d9d0ac8157809da67593abad7daa990d4de0af0",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000055-root-alignment.json",
+      "cpuSha256": "c776a795faf2d28e8eeaa883bea596a840ba165ff2411a727d4cd87388a448d1"
+    },
+    {
+      "leaf": "000056-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000056-root.json",
+      "oldGpuSha256": "5b9b397cf9ba18a895ac9e82d394eeb5c999c75690fb85e91afc8e343d9d614a",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000056-root-alignment.json",
+      "cpuSha256": "647a4a74d130735f5bee87cca1a0ca192962050a180e67751e2a886253154b54"
+    },
+    {
+      "leaf": "000057-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000057-root.json",
+      "oldGpuSha256": "865cba3f6ba82f852730a8450aad9fd89121976e64db9638a0598339334224e9",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000057-root-alignment.json",
+      "cpuSha256": "8421b2e0b90723efc80c2b135f09c20fefe663e016532fff003c4542766b951e"
+    },
+    {
+      "leaf": "000058-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000058-root.json",
+      "oldGpuSha256": "8df847a188279ea811717ac51d6694258d23de1432d89b11cf43127e0a4f01bf",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000058-root-alignment.json",
+      "cpuSha256": "2fb84eb20f725a9a88b58d03ab392370e72cc4c22c8cfff149c68afdaed1c2da"
+    },
+    {
+      "leaf": "000059-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000059-root.json",
+      "oldGpuSha256": "02e511d06c7781343bca65d48d3a733382330cc61e84e1aec69d701ea0de3d9b",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000059-root-alignment.json",
+      "cpuSha256": "2c0b76fb3eca4bcf7a2134e69031d96e892e0b3a7b4ef25487870963dd061dad"
+    },
+    {
+      "leaf": "000060-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000060-root.json",
+      "oldGpuSha256": "883ed763ae38eaee269fabf55701c88d84a137bfe7636b473fa3f7742677fdee",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000060-root-alignment.json",
+      "cpuSha256": "021389e38a7070af10adc2ebbc400e0b492e68559105976d505df4c8ecc477dd"
+    },
+    {
+      "leaf": "000061-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000061-root.json",
+      "oldGpuSha256": "7651f8adb82ec3ded6d647d40729373d9af4b13ab5c5ebc9dd06922653b2b704",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000061-root-alignment.json",
+      "cpuSha256": "95b6e7731d532a06a22caf64c570ac3ed83f2257dde9b7ae981f845d8f8a146a"
+    },
+    {
+      "leaf": "000062-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000062-root.json",
+      "oldGpuSha256": "f501501c5837492f1faf0e089c0574948c22f6b1dbf84d0ffd86b53a7e0e72e4",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000062-root-alignment.json",
+      "cpuSha256": "51ab07623fb37260c1b4dbf3f7fe636a32d466c138f7004786fc4f76e15e73dd"
+    },
+    {
+      "leaf": "000063-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000063-root.json",
+      "oldGpuSha256": "5a50b902e83655ab16e0539972759c89750fad268266c22a6e584039297e5368",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000063-root-alignment.json",
+      "cpuSha256": "b7edb3671931d83537240f2949ecce114eb3716da4afef26e313f2397763e993"
+    },
+    {
+      "leaf": "000064-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000064-root.json",
+      "oldGpuSha256": "7d3c6766be817c35350a1ee0888f90c914cf37cdef9fece7dd86bcdc61b158e3",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000064-root-alignment.json",
+      "cpuSha256": "47382f1714d2e4031892ada8c4f4c399863814ba43523d6a29d20f7f2644c71f"
+    },
+    {
+      "leaf": "000065-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000065-root.json",
+      "oldGpuSha256": "6a87632e950e165a93affa1d1675d6b8d780bd1e42e5a62a5ad90b194a64d89f",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000065-root-alignment.json",
+      "cpuSha256": "24fce465619f5ef25d7b94c506eb5c62356eb616785738f01ccda24a4f794cbb"
+    },
+    {
+      "leaf": "000066-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000066-root.json",
+      "oldGpuSha256": "72368745acaca7ef82d7679b1b242d3a0ddc8c527480a58d8e75e884015237fc",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000066-root-alignment.json",
+      "cpuSha256": "9b83d019d237eda34397efc784ce640f04ecc70be76e6e74e03fe83c526d3177"
+    },
+    {
+      "leaf": "000067-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000067-root.json",
+      "oldGpuSha256": "6028db83fb3facb6706bc558a4ac8af37c77e66fb2357da2004ebc110a4c40f9",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000067-root-alignment.json",
+      "cpuSha256": "5498aefcb013cdfe0d7c43d5e2e5f9feca468ee447326c8fa8f177ebacf8ee33"
+    },
+    {
+      "leaf": "000068-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000068-root.json",
+      "oldGpuSha256": "34213210668a15756929dd012436604248a80801f188048c2d39eb8c3407bb5f",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000068-root-alignment.json",
+      "cpuSha256": "db610f27ba97f3b6bde454e4df8ef7d8aab758ce5be421f7b0ee59d803405ae3"
+    },
+    {
+      "leaf": "000069-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000069-root.json",
+      "oldGpuSha256": "7df4b0264f21e5522bf3c4d20ad078c5cb6bfe8e8a2f39992ca038a0196c2ea2",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000069-root-alignment.json",
+      "cpuSha256": "e02fae3ea3bedf6bdb296c8fa181b7bc9456b826f3de4de67d1a85b0ae498478"
+    },
+    {
+      "leaf": "000070-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000070-root.json",
+      "oldGpuSha256": "5f35f4c8eb3ee717ba48522644de0759e4af8296c39e0f86902addfe0d4d3535",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000070-root-alignment.json",
+      "cpuSha256": "c00bcd1807944f08680a6f5160be7a5f9dc9fe5014e373714c5723cd8ac406ca"
+    },
+    {
+      "leaf": "000071-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000071-root.json",
+      "oldGpuSha256": "f644c3ebfa4509511f2b542818ad2a35975e55f7780edb2e8891db422b0d39a8",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000071-root-alignment.json",
+      "cpuSha256": "bd514f6a1fcb6726e8855a5ff200e8495bdda4c4c44827d7cb6800e917c5e793"
+    },
+    {
+      "leaf": "000072-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000072-root.json",
+      "oldGpuSha256": "07217119b04c0e9d8e968f1a59f9edc12da5cf17d466ceb824dd499795547063",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000072-root-alignment.json",
+      "cpuSha256": "3531a73834fe3f5982620b68bb977d7825fb00036cfdb31c109cd024054285fc"
+    },
+    {
+      "leaf": "000073-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000073-root.json",
+      "oldGpuSha256": "eeddfe02f3f5971c3935793f311785836cf98ec661f4989c99b3c9d181877c60",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000073-root-alignment.json",
+      "cpuSha256": "8931e89b78f14603313bab1bb5fde1f6f9417ff9b4e076a8ac48698c2ea459d0"
+    },
+    {
+      "leaf": "000074-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000074-root.json",
+      "oldGpuSha256": "91c8a34231a1b68331919b680b841eb48b90d3008877e5f49f4deac75c2cdeae",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000074-root-alignment.json",
+      "cpuSha256": "af5d28ebb489d25009ff74e7919201653374f597c6ba506679b9788badb9fad0"
+    },
+    {
+      "leaf": "000075-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000075-root.json",
+      "oldGpuSha256": "a2e98e993a050ee715779770bf67de1fda4555363c8cf2c5b884aead6ae5035e",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000075-root-alignment.json",
+      "cpuSha256": "e616f0ce72e68708f0b914977e8b3325a9f775586e17863d9652ccffbd178d91"
+    },
+    {
+      "leaf": "000076-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000076-root.json",
+      "oldGpuSha256": "534c8c4c6c450b76dd7d2100d88b85d7d2245b280253fef419b4da5e19477b40",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000076-root-alignment.json",
+      "cpuSha256": "42111a1ab8160e5d786a553a59cb32d7ed4e6b0e0e42d529ef10291a777e835f"
+    },
+    {
+      "leaf": "000077-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000077-root.json",
+      "oldGpuSha256": "2ca150a66ed42b0d49e571d4b07f1853caf4d9c5244a30443a36ecae46f26eed",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\000077-root-alignment.json",
+      "cpuSha256": "34ae7566c6f669cb3d8d6a405039c3a87f6a32e28fabc96798b6cfcc73c97d67"
+    },
+    {
+      "leaf": "000078-root",
+      "oldGpu": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\aligned\\S_R004S03C01\\000078-root.json",
+      "oldGpuSha256": "c8703e53eb9be6e50a1a1d4c8f7f2adb4ae71a16d2eced3f3d824840efd4942d",
+      "cpu": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\000078-root-alignment.json",
+      "cpuSha256": "e7e65387c75b137fe37d698d9044791cfbfb9f3df28f2aa40115298ef0203e56"
+    }
+  ],
+  "qualityQualified": false
+}

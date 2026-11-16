@@ -18,7 +18,19 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 def read_json(path):
-    return json.loads(Path(path).read_text(encoding='utf-8'))
+    deadline = time.monotonic()+3
+    while True:
+        try:
+            return json.loads(Path(path).read_text(encoding='utf-8'))
+        except PermissionError as error:
+            # Windows may deny a new reader briefly while another owner
+            # atomically publishes the replacement. CRT opens can report
+            # errno13 without a WinError; permanent denial still fails3s.
+            winerror = getattr(error,'winerror',None)
+            transient = winerror in (5,32,33) or (winerror is None and error.errno==13)
+            if os.name!='nt' or not transient or time.monotonic()>=deadline:
+                raise
+            time.sleep(.01)
 
 def atomic_json(path, value):
     path = Path(path)

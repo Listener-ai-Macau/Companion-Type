@@ -1,0 +1,59 @@
+{
+  "state": "FIXED_STATELESS_CPU_CLASSIFIER_MAX16_LEAVES_PER_OWNED_PROCESS_BEFORE_RECOVERY",
+  "at": "2026-11-16T14:50:38.844952+08:00",
+  "reason": "A long-lived CPU classifier completed61 retained leaves but private commit accumulated across varied shapes, then the unchanged2GiB family guard stopped it. Exact allocator/primitive-cache mechanism not yet proven. A bounded process lifetime releases its private allocations deterministically.",
+  "unchangedWorkerSha256": "a68837b3121e7467ca6db0f188866ac54572a41e33e2f278fb9c18f5e83cddff",
+  "failedRun": {
+    "state": "INCOMPLETE_CPU_ALIGNMENT_RETAINED",
+    "startedAt": "2026-11-16T14:42:06.559865+08:00",
+    "privatePeakBytes": 2899738624,
+    "familyWorkingSetPeakBytes": 1902370816,
+    "systemAvailableMinBytes": 2453118976,
+    "qualityQualified": false,
+    "automaticRetries": 0,
+    "neuralDeadline": "2026-11-16T15:40:00+08:00",
+    "pid": 32356,
+    "pidCreatedAt": 1794811326.562198,
+    "error": "MemoryError('Original2GiB family private guard')",
+    "finishedAt": "2026-11-16T14:46:56.453821+08:00"
+  },
+  "acceptedLeavesReused": 61,
+  "newLeaves": 18,
+  "batches": [
+    {
+      "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\batch-0",
+      "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0",
+      "cases": [
+        "000061-root",
+        "000062-root",
+        "000063-root",
+        "000064-root",
+        "000065-root",
+        "000066-root",
+        "000067-root",
+        "000068-root",
+        "000069-root",
+        "000070-root",
+        "000071-root",
+        "000072-root",
+        "000073-root",
+        "000074-root",
+        "000075-root",
+        "000076-root"
+      ]
+    },
+    {
+      "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\batch-1",
+      "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1",
+      "cases": [
+        "000077-root",
+        "000078-root"
+      ]
+    }
+  ],
+  "maximumLeavesPerProcess": 16,
+  "newModelOrPresetSearch": false,
+  "noSourceAudioRecut": true,
+  "speakerModelRemainsOneContinuousOriginalSourceState": true,
+  "qualityQualified": false
+}

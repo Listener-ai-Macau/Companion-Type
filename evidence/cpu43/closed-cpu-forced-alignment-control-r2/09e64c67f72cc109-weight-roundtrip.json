@@ -1,0 +1,17 @@
+{
+  "state": "EXACT_NATIVE_CPU_ALIGNER_READONLY_BF16_ALL_KEYS_ASSIGNED",
+  "weightSha256": "00568245ceca5af1991d28562a75fe1ddc9bfeb041c27fda66947ea05c47fb86",
+  "tensorCount": 708,
+  "tensorBytes": 1835457792,
+  "noPrivateWholeStateDictCopy": true,
+  "noWholeModelToEmpty": true,
+  "computedBuffersPreserved": [
+    "model.audio_tower.positional_embedding.positional_embedding",
+    "model.language_model.rotary_emb.inv_freq",
+    "model.language_model.rotary_emb.original_inv_freq"
+  ],
+  "gpuUsed": false,
+  "quantization": false,
+  "weightsChanged": false,
+  "seconds": 2.641593100001046
+}

@@ -1,0 +1,11 @@
+{
+  "state": "PASS_ACTUAL_CPU_IDLE_MODEL_UNLOAD_RELOAD_SOURCE_AND_CACHE_RECOVERY_TEXT_NO_REGRESSION_NOT_QUALITY_QUALIFIED",
+  "startedAt": "2026-11-16T15:07:25.865881+08:00",
+  "priorAcceptedFiles": {
+    "00000000-00240000-draft.json": "9d6a2caf4f14fdcf6671c90c8f82fb82138fc0f2814631b79614712e30983467",
+    "00000000-00480000-final.json": "4bbbdd9ba239a2d470307c815e49a7599ca2546bbbb71c16ab0419aebf7eaabb"
+  },
+  "priorHarnessFailureRetained": true,
+  "qualityQualified": false,
+  "finishedAt": "2026-11-16T15:09:38.475379+08:00"
+}

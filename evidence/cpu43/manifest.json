@@ -1,0 +1,2686 @@
+{
+  "at": "2026-11-16T15:17:54.107735+08:00",
+  "parent": "f7c667cdb4c7cc79f1fc3c6631325926a8e983be",
+  "entries": [
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\binding.json",
+      "file": "control-qwen-cpu-chinese-characterization-r2/3175d9af92321192-binding.json",
+      "bytes": 101977,
+      "sha256": "687294d8fca39204495f0abbbffd19a2a7af0c790fe120132291f471f6ec3daa"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\protocol.json",
+      "file": "control-qwen-cpu-chinese-characterization-r2/abe6980d3f32ba85-protocol.json",
+      "bytes": 1872,
+      "sha256": "8380038deb516529677931493318116ddf0cd0c955e9774e9ec48fb554e68659"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\scope-decision.json",
+      "file": "control-qwen-cpu-chinese-characterization-r2/5c5f9dc5591b4018-scope-decision.json",
+      "bytes": 1872,
+      "sha256": "8380038deb516529677931493318116ddf0cd0c955e9774e9ec48fb554e68659"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\scoring-binding.json",
+      "file": "control-qwen-cpu-chinese-characterization-r2/42d1a9c253ee4335-scoring-binding.json",
+      "bytes": 3321,
+      "sha256": "91eef90b42af4ec9aa67e1ceaa1cbf2e72fb9061ec329a4b2def45b345bad426"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\whole-score.json",
+      "file": "control-qwen-cpu-chinese-characterization-r2/db141e41927e51c1-whole-score.json",
+      "bytes": 6444,
+      "sha256": "050daa7d13ee24b608b8d7f0aeac97dd3c419d33b32025ce768af3ee809df1f5"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\whole-scoring-only.json",
+      "file": "control-qwen-cpu-chinese-characterization-r2/f4c5c276075394e6-whole-scoring-only.json",
+      "bytes": 5531,
+      "sha256": "e1163be50128d322254a40597d0db7fef4d99b1b29b3d33430c3b6f744f80a2d"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\binding.json",
+      "file": "control-cpu-forced-alignment-control-r1/9b1905543934fb4b-binding.json",
+      "bytes": 4415,
+      "sha256": "4eea53802cc3897c4a0d3a757873536665e873fbef2ba0864ba189e4bfb3216f"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\queue.json",
+      "file": "control-cpu-forced-alignment-control-r1/f8d30b7710fa9962-queue.json",
+      "bytes": 906,
+      "sha256": "037236566224325f22f3dcb7e20e3ca1d9d3acba7904996cc744db0b8d6739e6"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\binding.json",
+      "file": "control-cpu-forced-alignment-control-r2/828848307036f76c-binding.json",
+      "bytes": 4939,
+      "sha256": "efbb6e1cd6b4f3b84321f3dcd5ec0d30aa5690d72d8a439d38194000db97685c"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\queue.json",
+      "file": "control-cpu-forced-alignment-control-r2/bff02d7901cda84f-queue.json",
+      "bytes": 274,
+      "sha256": "c60bc176ff18d3e23ce1eafcd001ece27dca7e2b9b3f2ace5a674a0d2cfb6f93"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\binding.json",
+      "file": "control-cpu-retained-baseline-alignment-r1/2c6200afce18f236-binding.json",
+      "bytes": 114228,
+      "sha256": "e8da28849afd04117616bd4fdec1b5ac933a6bfd2148450eab3bdc0d34d5a9d7"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\composition-binding.json",
+      "file": "control-cpu-retained-baseline-alignment-r1/2794547b5fa33e25-composition-binding.json",
+      "bytes": 4153,
+      "sha256": "3af008adf9f5840befb823868bb608003ed4fb791c22839a950764223a3f25d0"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\frozen-audio-recognized-text-only.json",
+      "file": "control-cpu-retained-baseline-alignment-r1/a086380aa16d229c-frozen-audio-recognized-text-only.json",
+      "bytes": 110792,
+      "sha256": "6169fb7bb2740fd8b90039021341711d4a8b148a514b07b2e2e219ebe9dc3fab"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\original-native-raw-control.json",
+      "file": "control-cpu-retained-baseline-alignment-r1/be0022efddee9883-original-native-raw-control.json",
+      "bytes": 848,
+      "sha256": "3cd605528b8fd52bbd08a54fe52af169f57c92b74ad77e088d8ca167b530ed0d"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\preparation-failure-r1.json",
+      "file": "control-cpu-retained-baseline-alignment-r1/a9eb08cecde66106-preparation-failure-r1.json",
+      "bytes": 431,
+      "sha256": "31cfc9bc4fadc76f960f34a453aca4f1399933c48f8d556c94eac39a06ae0d89"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\preparation.json",
+      "file": "control-cpu-retained-baseline-alignment-r1/377fe51a043b52af-preparation.json",
+      "bytes": 1125,
+      "sha256": "0f5e40a025539b273a6ab512d02b6a8250dc356c5c2a09d0d61816663103cad9"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\run.json",
+      "file": "control-cpu-retained-baseline-alignment-r1/208d6c4612adf518-run.json",
+      "bytes": 952,
+      "sha256": "d9c8a9d2ab2870b0f8e15f96c8ae352ac5db2cf3b0b4f094cfa24b81e1d09405"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\scoring-binding.json",
+      "file": "control-cpu-retained-baseline-alignment-r1/232d9648bd318fc8-scoring-binding.json",
+      "bytes": 1740,
+      "sha256": "4c6a42885b7087bc7617c59ff7bd06607f833cebe4b04acbc174bc1d775cc2ae"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\whole-scoring-only.json",
+      "file": "control-cpu-retained-baseline-alignment-r1/3a971a5c569cbe55-whole-scoring-only.json",
+      "bytes": 3802,
+      "sha256": "8bac68b502b5e2aa2cdd39ae276cb2c8e670f5890e75ad5f83b5f68c25ec633c"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\worker-source-port-proof.json",
+      "file": "control-cpu-retained-baseline-alignment-r1/e595640e2d4bee18-worker-source-port-proof.json",
+      "bytes": 451,
+      "sha256": "060049804dc3c1fff6685685d4938e6cbb33f78e970497a5e49ddb0a0584ba9c"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\pilot\\binding.json",
+      "file": "control-cpu-retained-baseline-alignment-r1/b2d3c7144c1a5087-binding.json",
+      "bytes": 4519,
+      "sha256": "54050ea03f65dba0875fb6b62bc2cf1a5d9c34348b6aa503692143cc498ab8d5"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\binding.json",
+      "file": "control-cpu-retained-baseline-alignment-r2/01e7ab21b70fd2fb-binding.json",
+      "bytes": 114228,
+      "sha256": "e8da28849afd04117616bd4fdec1b5ac933a6bfd2148450eab3bdc0d34d5a9d7"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\composition-binding.json",
+      "file": "control-cpu-retained-baseline-alignment-r2/372ff63f7ff5193b-composition-binding.json",
+      "bytes": 4153,
+      "sha256": "3af008adf9f5840befb823868bb608003ed4fb791c22839a950764223a3f25d0"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\full-score.json",
+      "file": "control-cpu-retained-baseline-alignment-r2/62b6da71b97dbd99-full-score.json",
+      "bytes": 7145,
+      "sha256": "a8ed879b48ef096dfe9ca5ab97bc46bc7bfbc304bc73e09852025100067cee88"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\process-lifetime-policy.json",
+      "file": "control-cpu-retained-baseline-alignment-r2/639c993dff3e3aca-process-lifetime-policy.json",
+      "bytes": 2500,
+      "sha256": "8d382aba5d2ade4b9f2db661647693d455bf4a90b01156dfc0a2bb8f1e3c81ee"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\product-contract.json",
+      "file": "control-cpu-retained-baseline-alignment-r2/ea0fb89a555a88f0-product-contract.json",
+      "bytes": 345,
+      "sha256": "f170b537f7029adcd612d34e17a867adcc9548fc2543971b61e567877fd0bdd8"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\run.json",
+      "file": "control-cpu-retained-baseline-alignment-r2/448cacde4c483a07-run.json",
+      "bytes": 2847,
+      "sha256": "2d23a5596fc6ba6a5b6d58393569789039800042056c1949ebee6c2af02a7461"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\scoring-binding.json",
+      "file": "control-cpu-retained-baseline-alignment-r2/3280ef5be4106936-scoring-binding.json",
+      "bytes": 1740,
+      "sha256": "eec2049de5b69d884c22dc677fd82085344e0e320d4ce9f0861ada4e860d970e"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\whole-scoring-only.json",
+      "file": "control-cpu-retained-baseline-alignment-r2/243adb106ffc3ae0-whole-scoring-only.json",
+      "bytes": 3802,
+      "sha256": "8bac68b502b5e2aa2cdd39ae276cb2c8e670f5890e75ad5f83b5f68c25ec633c"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\batch-0\\binding.json",
+      "file": "control-cpu-retained-baseline-alignment-r2/c1969db0fdfd1c96-binding.json",
+      "bytes": 25656,
+      "sha256": "54b1c25bee2d69cd567bcd6174dfb3f954a37e026c92efc0d14f3b9edbd89790"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\batch-1\\binding.json",
+      "file": "control-cpu-retained-baseline-alignment-r2/c5794679d9e2b6db-binding.json",
+      "bytes": 5513,
+      "sha256": "10d0c622903b86c7a13d0505b53269cee0e1891ceb89e3d129b9aae53c6638bc"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r3\\binding.json",
+      "file": "control-cpu-retained-baseline-join-r3/b3af4121a301935d-binding.json",
+      "bytes": 114228,
+      "sha256": "e8da28849afd04117616bd4fdec1b5ac933a6bfd2148450eab3bdc0d34d5a9d7"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r3\\composition-binding.json",
+      "file": "control-cpu-retained-baseline-join-r3/9d2a529fddadfea9-composition-binding.json",
+      "bytes": 4878,
+      "sha256": "571f86fec0a05aa5e7d37976819c44e882f55978e0a459dede31593e9552c6d3"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r3\\composition-root-cause.json",
+      "file": "control-cpu-retained-baseline-join-r3/b52b2474c5e634eb-composition-root-cause.json",
+      "bytes": 1159,
+      "sha256": "ea59505984bc8eb6973e4ed2267689bb60d9b86fae4d1b6678745b8061bc0d3a"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r3\\scoring-binding.json",
+      "file": "control-cpu-retained-baseline-join-r3/a8ad41911019bfbe-scoring-binding.json",
+      "bytes": 1743,
+      "sha256": "e07fad381b5aef806c4c4213cfc24ec7ce7ec408cfdd51f5416f1595889fdc21"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r3\\whole-scoring-only.json",
+      "file": "control-cpu-retained-baseline-join-r3/2d60766d187fba70-whole-scoring-only.json",
+      "bytes": 3802,
+      "sha256": "8bac68b502b5e2aa2cdd39ae276cb2c8e670f5890e75ad5f83b5f68c25ec633c"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\binding.json",
+      "file": "control-cpu-retained-baseline-join-r4/ffc84b125222880f-binding.json",
+      "bytes": 114228,
+      "sha256": "e8da28849afd04117616bd4fdec1b5ac933a6bfd2148450eab3bdc0d34d5a9d7"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composition-binding.json",
+      "file": "control-cpu-retained-baseline-join-r4/bbee5a77b6510e76-composition-binding.json",
+      "bytes": 4878,
+      "sha256": "571f86fec0a05aa5e7d37976819c44e882f55978e0a459dede31593e9552c6d3"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composition-root-cause.json",
+      "file": "control-cpu-retained-baseline-join-r4/32f1d17f36afa747-composition-root-cause.json",
+      "bytes": 1159,
+      "sha256": "e7d180d444473fec2bf8488bc19bd3f63cdb4fa41142f1a563287d76eb4a6137"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\cpu-gpu-output-diagnostic.json",
+      "file": "control-cpu-retained-baseline-join-r4/f57cc55ad785f638-cpu-gpu-output-diagnostic.json",
+      "bytes": 47019,
+      "sha256": "4fedf51b5524614e3c364b194d0fa9cf298c7b472140731c7a8f36baf01fb5f4"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\full-score.json",
+      "file": "control-cpu-retained-baseline-join-r4/f01e23bbe5d190d1-full-score.json",
+      "bytes": 7165,
+      "sha256": "c574113127128f26d260299a88409776350d6a9b5c4d17c582b7fcd0796dab01"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\product-contract.json",
+      "file": "control-cpu-retained-baseline-join-r4/3640e569f17c44e8-product-contract.json",
+      "bytes": 556,
+      "sha256": "50a346916218a3facdc01843ffba896707a78ab989300e5378e098dd41103d7b"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\scoring-binding.json",
+      "file": "control-cpu-retained-baseline-join-r4/831cc6a5a070f837-scoring-binding.json",
+      "bytes": 1743,
+      "sha256": "197c2e81dd65cbac08fa8926c8b426bd1e35fec56339888213f1a4d4f172a0be"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\whole-scoring-only.json",
+      "file": "control-cpu-retained-baseline-join-r4/ec69a01301cfb70e-whole-scoring-only.json",
+      "bytes": 3802,
+      "sha256": "8bac68b502b5e2aa2cdd39ae276cb2c8e670f5890e75ad5f83b5f68c25ec633c"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r5\\binding.json",
+      "file": "control-cpu-pcm-candidate-r5/70c3c4faa355543c-binding.json",
+      "bytes": 11354,
+      "sha256": "329fae8363b70b532aa81d0c935fff91697ba13f0cf929c73fb6450e1b5aebda"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r5\\idle-policy-protocol.json",
+      "file": "control-cpu-pcm-candidate-r5/8f4d657608e33cba-idle-policy-protocol.json",
+      "bytes": 1410,
+      "sha256": "3616148aefbfc48b02dc8f615e56f88343a5d79677a9f2e2cbd3a0cee2d72591"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r5\\internal-app-fixture.json",
+      "file": "control-cpu-pcm-candidate-r5/d805a0b128597c69-internal-app-fixture.json",
+      "bytes": 698,
+      "sha256": "8ab7eb37ec96c0dec348f14c79e9ebceeabed8420844f227c3c4bbc90b78ad9c"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r5\\runtime-contract.json",
+      "file": "control-cpu-pcm-candidate-r5/e38b51623daaf92c-runtime-contract.json",
+      "bytes": 3214,
+      "sha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r6\\binding.json",
+      "file": "control-cpu-pcm-candidate-r6/6dac1fc1fd004a6c-binding.json",
+      "bytes": 11497,
+      "sha256": "1d657229500f316f7e02064787d4b5e983a05374034bf407e1d44923fbc14200"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r6\\idle-policy-protocol.json",
+      "file": "control-cpu-pcm-candidate-r6/ee4d0eb6d97b63a4-idle-policy-protocol.json",
+      "bytes": 1410,
+      "sha256": "3616148aefbfc48b02dc8f615e56f88343a5d79677a9f2e2cbd3a0cee2d72591"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r6\\internal-app-fixture.json",
+      "file": "control-cpu-pcm-candidate-r6/e43ef42133a983cf-internal-app-fixture.json",
+      "bytes": 698,
+      "sha256": "7ab7a77a9df1d66e01d62da5f4ec4637197ad1c016b9e4bae14dcbc5b9c8de97"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r6\\runtime-contract.json",
+      "file": "control-cpu-pcm-candidate-r6/71c17094d9bd8acd-runtime-contract.json",
+      "bytes": 3214,
+      "sha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0000-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/8c2d1309496fa7ed-20200623_S_R001S07C01-fixed30-0000-raw.json",
+      "bytes": 2823,
+      "sha256": "4ae7ec89bb933d4974baa7fc166f5436ae8c1ed8e10178d24187c26cfa75c36f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0001-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/626c4b89c201d60c-20200623_S_R001S07C01-fixed30-0001-raw.json",
+      "bytes": 3217,
+      "sha256": "224cbbb574b8d1dbd976296fd60d03b8e8beb65049eaef671b27b2b6bec25410"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0002-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/50e5d0387641f5e1-20200623_S_R001S07C01-fixed30-0002-raw.json",
+      "bytes": 3518,
+      "sha256": "d74afb0c07609f16c8286b1e67876adc82491c12f56a5b8d3136356efb629eee"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0003-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/d74f7bcf73455431-20200623_S_R001S07C01-fixed30-0003-raw.json",
+      "bytes": 3653,
+      "sha256": "054dbaf2a7b27e419f7b2713be6868cb779f14d76f79fd87e10c28402173347f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0004-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/e1a36d776228f440-20200623_S_R001S07C01-fixed30-0004-raw.json",
+      "bytes": 4046,
+      "sha256": "981e71f8601dacb881ac8f919b6f9d4f512ba3cad3b0203ee218f7544b7e1c62"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0005-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/b19904f41712126d-20200623_S_R001S07C01-fixed30-0005-raw.json",
+      "bytes": 4110,
+      "sha256": "356073e4ac934c12843bba0f5eb8d0e813960efd9bd6f4dd8013f780e3ec7bb8"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0006-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/dfd5ad59d56289f4-20200623_S_R001S07C01-fixed30-0006-raw.json",
+      "bytes": 4207,
+      "sha256": "433338b0a7073cac8181408c5382d109b7d773ae46c4fe3da0c3a6c8a31d8615"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0007-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/eeae06b89fd941ee-20200623_S_R001S07C01-fixed30-0007-raw.json",
+      "bytes": 3429,
+      "sha256": "91b784143ec5dff36a0c6a5653aae71f445ffe524f554adffac9b444c01eb383"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0008-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/c4027f86f21b063b-20200623_S_R001S07C01-fixed30-0008-raw.json",
+      "bytes": 3401,
+      "sha256": "3f5d369a4245ce3ea31cca5443f3f45651f1a28ef61aa08a561d58739474f85f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0009-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/1ec3a70f2d05802d-20200623_S_R001S07C01-fixed30-0009-raw.json",
+      "bytes": 3294,
+      "sha256": "a3aed87b821b27c7ae88131d3cab9d8a3db545e85b986b4c698a13fa27e62fc5"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0010-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/768b5c4072eeaf74-20200623_S_R001S07C01-fixed30-0010-raw.json",
+      "bytes": 3338,
+      "sha256": "86e2fbff3de36a6c41aeba8ca79a71a39fea7d485bba3976431264c69eba2181"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0011-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/864652e324d05f14-20200623_S_R001S07C01-fixed30-0011-raw.json",
+      "bytes": 3295,
+      "sha256": "d427e5fbf818c65f7a2b9b496d154ab9500116abb1a26bcb52e6e3737388aed9"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0012-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/e8e2ec65b52d6ebc-20200623_S_R001S07C01-fixed30-0012-raw.json",
+      "bytes": 3397,
+      "sha256": "4657d70359daaaf691d1c5b4b41bffd1fd48b06047295d3ea7187184e13658b1"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0013-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/6da3affe2154ba4e-20200623_S_R001S07C01-fixed30-0013-raw.json",
+      "bytes": 3848,
+      "sha256": "508de5cefac6678ced846187f7f9b8d788b83e6518601ba6dd4511a46360f27f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0014-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/8fbc6259274a3e01-20200623_S_R001S07C01-fixed30-0014-raw.json",
+      "bytes": 2710,
+      "sha256": "4c60042b5d02f031ddaaf5b014512b35a4f3d4fa776750d875c925ad297aa6a5"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0015-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/f30b68676001aca8-20200623_S_R001S07C01-fixed30-0015-raw.json",
+      "bytes": 3204,
+      "sha256": "19a1dd89e7679361237a3154e9668869fb34ec0b4e3ce978d7cb96ee855dda82"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0016-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/5de19809279de307-20200623_S_R001S07C01-fixed30-0016-raw.json",
+      "bytes": 2815,
+      "sha256": "14323f8cf2ace5cd33c0009ee184289f34f39e190f9c2954daac0e5456ae4b49"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0017-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/dd7db8e105eba5f9-20200623_S_R001S07C01-fixed30-0017-raw.json",
+      "bytes": 3144,
+      "sha256": "96161f148314f0fef6b0ecf003c811c28a6a4f634ce09c2909790811f02b9e6e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0018-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/ea0a0fc8df5979dd-20200623_S_R001S07C01-fixed30-0018-raw.json",
+      "bytes": 3489,
+      "sha256": "48de3948880bd99cbb88425f0f1c6ef2068e09d84f92f4d514794b23df867a58"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0019-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/a915fec831b2a7b8-20200623_S_R001S07C01-fixed30-0019-raw.json",
+      "bytes": 3817,
+      "sha256": "48efdfb528664ebc53c36a3214c26a93c6e6491cf1055659cace95077cd06284"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0020-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/346f2ccafe84c05e-20200623_S_R001S07C01-fixed30-0020-raw.json",
+      "bytes": 3816,
+      "sha256": "5bf9ad7aa0cba8a4d2c6772622c15f94332c87c1408d73d4f5dc64783b0bb9f0"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0021-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/c255a8ad444898f0-20200623_S_R001S07C01-fixed30-0021-raw.json",
+      "bytes": 3611,
+      "sha256": "0abac6a905fb97f6194e067fa8b65c0cd7c062b0a6f58f76946610758b6bb172"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0022-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/edf8c0d502ba19a3-20200623_S_R001S07C01-fixed30-0022-raw.json",
+      "bytes": 4092,
+      "sha256": "0268aae55c58bf0db6d47fc2c43a773fcb2745fc94cab50ccf4997e44658838e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0023-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/87bea9187710c69f-20200623_S_R001S07C01-fixed30-0023-raw.json",
+      "bytes": 3536,
+      "sha256": "59877e9426ec83f4545b4699d4b8047d977305d992e0e036221ad280da552b8d"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0024-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/085afc67d90b2886-20200623_S_R001S07C01-fixed30-0024-raw.json",
+      "bytes": 3852,
+      "sha256": "359e0310b253fef3599d9e3a373303efce549e051a5ca764e26eeb2f68e6ffda"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0025-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/1c47414d78252e18-20200623_S_R001S07C01-fixed30-0025-raw.json",
+      "bytes": 3550,
+      "sha256": "58dc7e8d877dd60de96992664364dddf7b1602b069972dab738c7ee65ab06d34"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0026-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/d6d2424685fd44cd-20200623_S_R001S07C01-fixed30-0026-raw.json",
+      "bytes": 3433,
+      "sha256": "eed7e5cbeacc8271aca77e4de3ef0bda4439bd9a1d9b19efcea5580a3302e5f6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0027-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/9d0fea58e658b569-20200623_S_R001S07C01-fixed30-0027-raw.json",
+      "bytes": 3583,
+      "sha256": "ece09aeeb792efebf13a9c3da3d7bd4ebe6faedd6b9a769672cfea8da904055f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0028-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/bdf2997e323a3bec-20200623_S_R001S07C01-fixed30-0028-raw.json",
+      "bytes": 3409,
+      "sha256": "7e076b97e4d32907f6349de086a0baf4d2f99440dc8b585a49d8f27cbd1d56c4"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0029-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/92152e25a019ae7e-20200623_S_R001S07C01-fixed30-0029-raw.json",
+      "bytes": 3897,
+      "sha256": "ebf17bcb0ede3ad5f8ab13974168f470e41ef00a3457b9eb5812d41bce0058bd"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0030-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/ec24981e832d2f3c-20200623_S_R001S07C01-fixed30-0030-raw.json",
+      "bytes": 3430,
+      "sha256": "cf75b177608c55a322eb5ffea5c47da9038891d660e0787b072b17b54c09c16c"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0031-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/b7887c91e239e123-20200623_S_R001S07C01-fixed30-0031-raw.json",
+      "bytes": 3593,
+      "sha256": "ea77395cc9a2022b5c128d10ebda2a785677c7ad775be820ae3fe173e8691f47"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0032-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/6cde55a1b717b708-20200623_S_R001S07C01-fixed30-0032-raw.json",
+      "bytes": 3386,
+      "sha256": "fdbf9a8b7e2f25ac89aa0282b96b39957293a2f14d0678d8bc53234cbbd399f0"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0033-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/12ab553aff3793d1-20200623_S_R001S07C01-fixed30-0033-raw.json",
+      "bytes": 3792,
+      "sha256": "aa570288b28d75767e20fc9fde0cff00767e238b82d4fe8287fcd3cdfd9d2855"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0034-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/cdd5f5ea5668d9c1-20200623_S_R001S07C01-fixed30-0034-raw.json",
+      "bytes": 3459,
+      "sha256": "a8ce85f646796da571dfbabe172560c8e42ef1539902a5751fc4b8ad077b3fdd"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0035-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/673a3daa399a082e-20200623_S_R001S07C01-fixed30-0035-raw.json",
+      "bytes": 3459,
+      "sha256": "3d8353b5915ef39d9565b04674b0100e6a687e81899c4c01eb54e448d86c31c3"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0036-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/81edfb0e36ed8dd2-20200623_S_R001S07C01-fixed30-0036-raw.json",
+      "bytes": 4092,
+      "sha256": "aa7a59cc35750d14e4c9aea7fd78bc7e8220b807290ef223c8355fee28d47857"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0037-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/9f6c284533f1d138-20200623_S_R001S07C01-fixed30-0037-raw.json",
+      "bytes": 3718,
+      "sha256": "4d47d0d3de66ab81c11eedf2cb67cc6e883a1303fcb5d5a55fee665b5f0a0b3f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0038-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/b7753bfbb9acba41-20200623_S_R001S07C01-fixed30-0038-raw.json",
+      "bytes": 3263,
+      "sha256": "31edafb9fd0dea33d171fb1a48b54a45c2e6b1c9f0cdb5981dfdf1f859ab90ce"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0039-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/74a7c75e71212fb9-20200623_S_R001S07C01-fixed30-0039-raw.json",
+      "bytes": 3654,
+      "sha256": "06afe528eaaaae3adb6d57871219ffa4b06b8c5f06032ad0b08a5186598487c5"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0040-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/2870cfe8916b021a-20200623_S_R001S07C01-fixed30-0040-raw.json",
+      "bytes": 3520,
+      "sha256": "f6c7617e38fab4829c60e4200d1e2314379a404fb7b3e8afd1a9cc1dea0bbae7"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0041-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/1f511b40766079b6-20200623_S_R001S07C01-fixed30-0041-raw.json",
+      "bytes": 3627,
+      "sha256": "52fed2b5eb2340962981e43678ad4a6938f733adeea9d6f9f378f66a03de059c"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0042-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/a5951b4bd5774a6d-20200623_S_R001S07C01-fixed30-0042-raw.json",
+      "bytes": 3836,
+      "sha256": "e05baf75527e8a1b8f67ede57173bf53cc79d4f826af18eb8dbce0f3479f4b69"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0043-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/edc820e323168523-20200623_S_R001S07C01-fixed30-0043-raw.json",
+      "bytes": 3807,
+      "sha256": "c3a58b1383878fb09a1b1cf1aefd60432440958b4579b04851c849f177fbae6c"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0044-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/dac42c5e50e47d5c-20200623_S_R001S07C01-fixed30-0044-raw.json",
+      "bytes": 3656,
+      "sha256": "46b103034ce36c5b750a4af49a95bb62a208304f85ee6ffa16020bb7a21673b4"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0045-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/a5f73bb06cf6b360-20200623_S_R001S07C01-fixed30-0045-raw.json",
+      "bytes": 3459,
+      "sha256": "f89b58ab6a30f8160da30bc3d271b7b1ef2a7a328015b58a33457373d0387ad3"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0046-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/39b640d34e23bc8b-20200623_S_R001S07C01-fixed30-0046-raw.json",
+      "bytes": 3817,
+      "sha256": "f7a75b9703149e5bb838f7b54a4e4836c873dda6ebc24bef259015d3fa288b34"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0047-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/77f2bdf2e3c26717-20200623_S_R001S07C01-fixed30-0047-raw.json",
+      "bytes": 3745,
+      "sha256": "2f825c8199c7012484274d69d413c8f796282257346b83c1b1ae67b6029ec764"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0048-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/8978c84901007618-20200623_S_R001S07C01-fixed30-0048-raw.json",
+      "bytes": 3609,
+      "sha256": "8caee65e39ee2220bb1cc70dcf3d0bc64155e4e1bd3f267ff7becd2375ed6118"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0049-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/9032d89fdd4f886f-20200623_S_R001S07C01-fixed30-0049-raw.json",
+      "bytes": 3472,
+      "sha256": "b1fdc18a9609ed5dba78bd2180b5ae6dbe746e3063dff318075d4742cb265985"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0050-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/85ac39dc1915e264-20200623_S_R001S07C01-fixed30-0050-raw.json",
+      "bytes": 3215,
+      "sha256": "7e8d5a5177b30bb377f9df1375b1c1ea9965674a6a0b3d73bc637994f4599e70"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0051-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/8f490b4be9781496-20200623_S_R001S07C01-fixed30-0051-raw.json",
+      "bytes": 3058,
+      "sha256": "6d6858a915f05c137f5b10bc37372b86977586a3d150202f2d0e7e602b90145a"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0052-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/fc23f969b7993b88-20200623_S_R001S07C01-fixed30-0052-raw.json",
+      "bytes": 3353,
+      "sha256": "cc92f64f4a2ccc8727f91823cadf4fbb0585d7f5f881155f3e569df848e89917"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0053-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/1c92f71efd906c10-20200623_S_R001S07C01-fixed30-0053-raw.json",
+      "bytes": 3956,
+      "sha256": "5c0b9dd6978e26bda50b3d21fcff190d8539b23552e5b8dbd04eb24437c525af"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0054-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/fdc720f70d3829c6-20200623_S_R001S07C01-fixed30-0054-raw.json",
+      "bytes": 4032,
+      "sha256": "6c28042646268dbe3aa455c4ddf5149f34e5391421a6d8ce1458b80ef05884a5"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0055-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/1b3ccf7e931f7cc9-20200623_S_R001S07C01-fixed30-0055-raw.json",
+      "bytes": 3718,
+      "sha256": "ecf24c4a39d2c6a71ae05c5293a879c2d2f851101b28741d81346accbc05fafd"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0056-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/d5237f76c24c73d1-20200623_S_R001S07C01-fixed30-0056-raw.json",
+      "bytes": 3625,
+      "sha256": "230f1e95d392b5f582a3dfd91d1c7bc49d4c6898858c7c27bfc44c0be72fbd76"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0057-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/bafa0a03d165853c-20200623_S_R001S07C01-fixed30-0057-raw.json",
+      "bytes": 3536,
+      "sha256": "afc67b5a899d30ed27588940795d71de4d5773a1b6e8b6ab9a82bbf6e96af576"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0058-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/120a10b54ce7d63d-20200623_S_R001S07C01-fixed30-0058-raw.json",
+      "bytes": 3610,
+      "sha256": "ed858c3e9035a3e3fe2a27a411f9d9176c2197d2309bdf7744b4e86998c6cb8b"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0059-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/6bffa1a550f1a298-20200623_S_R001S07C01-fixed30-0059-raw.json",
+      "bytes": 3706,
+      "sha256": "db425594fc0e7117dc82315531499369cb5ec062264f0646c087b3f455ddad4c"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0060-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/0277e32538d55af1-20200623_S_R001S07C01-fixed30-0060-raw.json",
+      "bytes": 3537,
+      "sha256": "87488002e6c93b0713f63cc438669d2fb78c4148a17570eb7267aae57d35c008"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0061-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/2f833e6ca8d3f05f-20200623_S_R001S07C01-fixed30-0061-raw.json",
+      "bytes": 3776,
+      "sha256": "db460727517be54d70003e1f90d4fe35c7e4aa91960d2c46a7c11929feee7177"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0062-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/e846fe353126b94e-20200623_S_R001S07C01-fixed30-0062-raw.json",
+      "bytes": 3502,
+      "sha256": "9531f48ccfccc688698e1cc3736e8923127ddcd8e6a948d1cc79f797bd41f397"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0063-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/9f8797e8b2b7d682-20200623_S_R001S07C01-fixed30-0063-raw.json",
+      "bytes": 4015,
+      "sha256": "eeacdc43d003d62fffd47ae63030294d8571cece806f802fd4f4e3e30bdeb04c"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0064-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/3eb3966f0e758a19-20200623_S_R001S07C01-fixed30-0064-raw.json",
+      "bytes": 4014,
+      "sha256": "61a507796c7f8ea88770ee514378b8b7003eb4e4ca0327e35cf73df3f4bee84c"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0065-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/426927b5abb712bb-20200623_S_R001S07C01-fixed30-0065-raw.json",
+      "bytes": 3912,
+      "sha256": "998f45d8b7a4983a4c67a60d5103a17abf679ab86da4a88a1dc757876fb98c89"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0066-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/8d49ce0e4834ea94-20200623_S_R001S07C01-fixed30-0066-raw.json",
+      "bytes": 3550,
+      "sha256": "f05f555863e45fd8c729e92c1451a06776c3ac3e1b1751483ffc12f6489ad3e8"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0067-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/b20f41a6dbcb3018-20200623_S_R001S07C01-fixed30-0067-raw.json",
+      "bytes": 2876,
+      "sha256": "ac391bcd6deffc82b1e59c2b010eac040108d6c956e1def676138d5be365b4b4"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0068-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/bed63d832ac30310-20200623_S_R001S07C01-fixed30-0068-raw.json",
+      "bytes": 1850,
+      "sha256": "436d14f876d96913ec351e5efceb32748442e1012942d71d96bf6f77fac76aad"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\inference-state.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/cd38e961ba1e6490-inference-state.json",
+      "bytes": 55754,
+      "sha256": "77e6649568bf77ac7547b9244b13838b6497a211c4b9e69512896db49ef72305"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\native.log",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/43f8583fab21df0a-native.log",
+      "bytes": 44993,
+      "sha256": "43cf2af9b4d3fb1a0a17e1bd5db20a237e99ed09186d5604ee18b9f6d4aa1d2f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\run.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/d096687dcc484402-run.json",
+      "bytes": 488,
+      "sha256": "ee93a0f8b7eb0828929d9516558ce1fd43e9ab0e635526e9f441413dedfd9268"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0001-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/46d824033e1dc636-S_R004S03C01-fixed30-0001-raw.json",
+      "bytes": 3791,
+      "sha256": "40aad80f07016371974b6059060b268c84f4fef235d10bac38dda60f5f57b724"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0002-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/9836cecd7935bb0c-S_R004S03C01-fixed30-0002-raw.json",
+      "bytes": 3670,
+      "sha256": "6d9357f650b1258bc70fe12192d3ba492107a2c15a44de4bb8c831c0e92047e9"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0003-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/369e2520e85112de-S_R004S03C01-fixed30-0003-raw.json",
+      "bytes": 3342,
+      "sha256": "b75a3915002f8d453a7d9b4e75cd892b3c1bea8daa6fab99a51eb748e725b25e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0004-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/ffd7dce46bb3ae30-S_R004S03C01-fixed30-0004-raw.json",
+      "bytes": 3627,
+      "sha256": "9ad81a02e6a7b53db7242f5216bd8d11efd860ac2bcb580ac040e0123aca7a58"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0005-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/bcd4862b09cf6d08-S_R004S03C01-fixed30-0005-raw.json",
+      "bytes": 3599,
+      "sha256": "963780e6a92eb098ad5c4a901de1da49317d76cafe0d9a0eccc2093e25cbf17e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0006-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/605101c23b61714d-S_R004S03C01-fixed30-0006-raw.json",
+      "bytes": 3341,
+      "sha256": "1323ab727c24b3300d7a008bf83d564c96ffacd20161db89fc3ab873c20cd0dc"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0007-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/6c615da143d07bf1-S_R004S03C01-fixed30-0007-raw.json",
+      "bytes": 3699,
+      "sha256": "ece2445710471c846312adaa10c53e55e6408f88b1eff0b0cdaa87f9c8630d42"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0008-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/949f41b4ff87d0b2-S_R004S03C01-fixed30-0008-raw.json",
+      "bytes": 3521,
+      "sha256": "faf23968bd0ce333ab2b38a61e78bc6266a61762b90146e98317d8dee50538b5"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0009-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/f6ecbe51c225d13a-S_R004S03C01-fixed30-0009-raw.json",
+      "bytes": 3598,
+      "sha256": "a10d003d33bf7dc5dc03fb03ab13639109159e2e7cf4294d140b5c6ac0f86b48"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0010-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/484f9100aa50dbff-S_R004S03C01-fixed30-0010-raw.json",
+      "bytes": 4183,
+      "sha256": "65042aaff255502a65c2c7ec238818be800f73a980700be3675750c3eaeef771"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0011-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/0e64e4f2d692f182-S_R004S03C01-fixed30-0011-raw.json",
+      "bytes": 3959,
+      "sha256": "365296c31ba24131b573552cf0e3c446510e8a3b055cb99cbc6a89a43d0c6219"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0012-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/4c79efe228f42349-S_R004S03C01-fixed30-0012-raw.json",
+      "bytes": 4166,
+      "sha256": "75a14419907b472e12b7a7cd641270533b2351df201ce3d19c280fa6c0c5e766"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0013-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/42038011e7985457-S_R004S03C01-fixed30-0013-raw.json",
+      "bytes": 4169,
+      "sha256": "0c256c05b84b64aff40e1328b6ba5e17746a346baef488f882daf08c1525e776"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0014-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/340f78e5af442150-S_R004S03C01-fixed30-0014-raw.json",
+      "bytes": 4153,
+      "sha256": "0fc89417cf92b92db534a186e7b73e757133e3b67161b5239525bc7d9f75af22"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0015-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/d6770d17d8f631a7-S_R004S03C01-fixed30-0015-raw.json",
+      "bytes": 4003,
+      "sha256": "8e2b7373601652f29c3953fcc49dd31b103d4475f1d8c3cd6afb3af3ed16fc7e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0016-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/e93ed17b0589cf17-S_R004S03C01-fixed30-0016-raw.json",
+      "bytes": 3882,
+      "sha256": "e0e9c04f5c15d9c2b7b7d80899034f9371cc2e4861c0eada3e9e9d0951aaada1"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0017-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/c634bfadebfef3f9-S_R004S03C01-fixed30-0017-raw.json",
+      "bytes": 4088,
+      "sha256": "2506a4ff742f71e8b588bb7ca7a2497ae9748967702b095de402162ef82dc367"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0018-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/fed1d25bf2eb796e-S_R004S03C01-fixed30-0018-raw.json",
+      "bytes": 4242,
+      "sha256": "5ce35c28582be8bd08101de5c57cc71b3c02dd2bc5b09e6ed5c2b3e207d9d5e3"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0019-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/00332ee3e6ae06dc-S_R004S03C01-fixed30-0019-raw.json",
+      "bytes": 4136,
+      "sha256": "babc391cb57f44b33710a129c7074cd024c726ad229869519d4fb0e926115f4f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0020-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/0bbcbaa84e8ad779-S_R004S03C01-fixed30-0020-raw.json",
+      "bytes": 3793,
+      "sha256": "fb5b28b6570e1d13baf4644b1fb6031dc03204a14ed74954f61572b0f388f693"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0021-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/0d40a668a2aa8026-S_R004S03C01-fixed30-0021-raw.json",
+      "bytes": 4126,
+      "sha256": "908aabc75fbe9a8f2ba3f2a8f204a6748f1a73c2a64b86a968cd9572df6281b0"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0022-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/48706c205b58316e-S_R004S03C01-fixed30-0022-raw.json",
+      "bytes": 4090,
+      "sha256": "d5c45419f02a6b7ab94bc81b58183235d951e1a04a0792c4b721b7c9704af0b6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0023-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/2055c50f644be22c-S_R004S03C01-fixed30-0023-raw.json",
+      "bytes": 4094,
+      "sha256": "99d85d88ee60a1cbfeb798a7338fc195e9505b331c298927ff3034a2da33c7b8"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0024-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/239d6d34ce2fd603-S_R004S03C01-fixed30-0024-raw.json",
+      "bytes": 3835,
+      "sha256": "658ce16a9a2415c397f5e6b43f7209c5bf3c7cdd4bb0c0ed880c180f377dd924"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0025-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/f5e78309b5d88448-S_R004S03C01-fixed30-0025-raw.json",
+      "bytes": 4094,
+      "sha256": "5e5d8a585cfcac5dbb979ff5bcbe2cc43bd2d78ce5bb9805d049e72a97b97fa5"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0026-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/6e14bb539cfe6598-S_R004S03C01-fixed30-0026-raw.json",
+      "bytes": 3970,
+      "sha256": "6ff5c6f513cae19d59cebca446eb3e4b89202b6f45121300aea0cfa5f92c315f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0027-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/ea1bff3659182af9-S_R004S03C01-fixed30-0027-raw.json",
+      "bytes": 3433,
+      "sha256": "1cdf11307d3cd1c159adaed649d76b3c30198c9d042db1c914cd31ccb5af8fd0"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0028-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/7659a7c41b7075d1-S_R004S03C01-fixed30-0028-raw.json",
+      "bytes": 3524,
+      "sha256": "b91774ca00703ff47bdd8067585625d50a5c0a2c55ce35eaefa3a34887d2c2d3"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0029-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/6748df0e7e0eb4ca-S_R004S03C01-fixed30-0029-raw.json",
+      "bytes": 3382,
+      "sha256": "a2c20e3b5e55409eba1bc92967262b12426b1716d75167c14f9332f5c65fe08b"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0030-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/5c1ae9f24c283bfa-S_R004S03C01-fixed30-0030-raw.json",
+      "bytes": 3508,
+      "sha256": "2bac3742dd2e48c0dffb07aa36194179a23cbbb7001af69d4589e1068302c457"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0031-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/946a6357aca2d5de-S_R004S03C01-fixed30-0031-raw.json",
+      "bytes": 3554,
+      "sha256": "d807168abc410bbefe1bc2f0a1c747a6c8251176373607f1bacd9cb0ccc1b1c6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0032-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/f87e6d623e46a66f-S_R004S03C01-fixed30-0032-raw.json",
+      "bytes": 3477,
+      "sha256": "ee1c37f23be6594a840ad2f1fa282a8345e8275e478922cee13e18eac76d8879"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0033-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/1f942b0e8c8298f2-S_R004S03C01-fixed30-0033-raw.json",
+      "bytes": 1820,
+      "sha256": "cfe52d3b0493b061f2a4b255c1c6e4956a6884c5409975d4e62c1018151b358a"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0034-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/73d1ee81a7ee40f4-S_R004S03C01-fixed30-0034-raw.json",
+      "bytes": 1820,
+      "sha256": "1e97ea86fe75f67b58987485e5c9c4c94abda2a9e3d4c9060fd52c134c36badb"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0035-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/a64873fc77037ccf-S_R004S03C01-fixed30-0035-raw.json",
+      "bytes": 2564,
+      "sha256": "d7a1f7891bc9bb071b4ca514ee9e3efe09bfce96ebf07dc7e8ca53bbe2689612"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0036-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/af1b8d01ff93b284-S_R004S03C01-fixed30-0036-raw.json",
+      "bytes": 3716,
+      "sha256": "eee6790b31671e9b01dec96efb71a1cc381e925b54c73728401c3d9a0fa1c282"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0037-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/d142cbafc58de16f-S_R004S03C01-fixed30-0037-raw.json",
+      "bytes": 3530,
+      "sha256": "963b475961a3b32bb7be84a6d9e61fc24da200ac05e8d30f7201a5d792dca785"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0038-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/978f7ccf42c987da-S_R004S03C01-fixed30-0038-raw.json",
+      "bytes": 3079,
+      "sha256": "59bda9f987eeee5ea24496aa465dbcaec1d0b9932585bc3047cefd9568471f93"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0039-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/dbddbdbbc8330b99-S_R004S03C01-fixed30-0039-raw.json",
+      "bytes": 3701,
+      "sha256": "042ccbedccafd1c6cbeef5fb5c51754376e75e71bafb15329472389682285223"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0040-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/fbbd713b1263b132-S_R004S03C01-fixed30-0040-raw.json",
+      "bytes": 3478,
+      "sha256": "dc8eb4e81d49ef508304ff6a68b816173986a81d0da96be91da8171863e12675"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0041-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/51a1f0b75d132b15-S_R004S03C01-fixed30-0041-raw.json",
+      "bytes": 3537,
+      "sha256": "8e03ddc19a18d9cb084536ccebc1042e07fef170a35e42a6b99785f211ae9ca9"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0042-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/e933bd9aa7884e2c-S_R004S03C01-fixed30-0042-raw.json",
+      "bytes": 3686,
+      "sha256": "fbfa853b14b7fec4df8bbdbd4124867c581ab545d330af9bbd00753bdaec98c4"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0043-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/2c48067c755a53b8-S_R004S03C01-fixed30-0043-raw.json",
+      "bytes": 3615,
+      "sha256": "6c54d9296d03c5eef7c96f37461021cabc856f1b445870dc53639b0860773530"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0044-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/79feeebd52a6d3de-S_R004S03C01-fixed30-0044-raw.json",
+      "bytes": 3600,
+      "sha256": "af0b6cda89955088d2622d61e7f2439ed5c83bc23b54fa6806b0cb22c7c3c167"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0045-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/bed29118b622e256-S_R004S03C01-fixed30-0045-raw.json",
+      "bytes": 3928,
+      "sha256": "7ddfd13f862f3c39b5372196bae661f9bbf03510453bdb15b37106c347ea3da8"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0046-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/0fc3cbb3e4417342-S_R004S03C01-fixed30-0046-raw.json",
+      "bytes": 3462,
+      "sha256": "ebde4b059a24a4e40afec31cb8d0893dc6a1efd434afab89e4dc324590eeca5c"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0047-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/bd6086b2b3162859-S_R004S03C01-fixed30-0047-raw.json",
+      "bytes": 3614,
+      "sha256": "b3a8203d48327726b5351e814f2eb161c8fff451f9bf956f7c83c49c930d419d"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0048-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/20a3db5592d90b09-S_R004S03C01-fixed30-0048-raw.json",
+      "bytes": 4079,
+      "sha256": "23563734ad47b97cec10c33f7a4da58eb3201dced98729d452ff2a68b2a5eb3e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0049-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/6440b616a218847e-S_R004S03C01-fixed30-0049-raw.json",
+      "bytes": 3868,
+      "sha256": "01eb524072a9510fe3b5918cab380b5e1b9fb13e547a0d01f64a0a4dbf656cff"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0050-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/5fd8ea511362aa49-S_R004S03C01-fixed30-0050-raw.json",
+      "bytes": 3328,
+      "sha256": "728b97cbc3b834905a3f86724530e2098851a58c2e0696cc112e743cd7283548"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0051-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/a14ceb3b71e86b17-S_R004S03C01-fixed30-0051-raw.json",
+      "bytes": 3721,
+      "sha256": "ecff48b329df74fa63327440740e38f1dca7198173a033acc3a5dd3e3389e219"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0052-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/d8e834c9b060a2bd-S_R004S03C01-fixed30-0052-raw.json",
+      "bytes": 3660,
+      "sha256": "056f0fe68f6bff91df5b8c344369dc00f597da0596104bda23e74728a00d3d2d"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0053-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/61ddb0d9cf7ac791-S_R004S03C01-fixed30-0053-raw.json",
+      "bytes": 3958,
+      "sha256": "fed9405b06f00ec6fbea518a86516a085c0c785696d130dd9a912839566fc481"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0054-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/838a7fe52c90dd62-S_R004S03C01-fixed30-0054-raw.json",
+      "bytes": 3733,
+      "sha256": "4d4ae9a7a5b9ae235ef3a88438e95f2e7cc4429fb7879886bd4abad245c72ce6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0055-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/43e332e6ec9f6dc9-S_R004S03C01-fixed30-0055-raw.json",
+      "bytes": 3418,
+      "sha256": "b9b0d916be89d1bb0c76ce64a5b89dfab55e7d4b0818df1be2413c15f6d0fc3b"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0056-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/957106d10aa4c5ef-S_R004S03C01-fixed30-0056-raw.json",
+      "bytes": 3524,
+      "sha256": "624986113399ef7cca9fb9d992a8161a7a6c28e61aa13dac10736a1d5b622df7"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0057-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/1a740e86c70a5eae-S_R004S03C01-fixed30-0057-raw.json",
+      "bytes": 3505,
+      "sha256": "41bf9b73efd0033055b51737a44e0916de01edd62f48daceecee2658e04f68d8"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0058-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/84bbb10e7b7164c7-S_R004S03C01-fixed30-0058-raw.json",
+      "bytes": 3670,
+      "sha256": "11e412f94302dcff97ec043e5ecbb835b8de05384b22cc9f6db512a56ec21764"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0059-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/e1d4e908b46a5591-S_R004S03C01-fixed30-0059-raw.json",
+      "bytes": 3570,
+      "sha256": "7d794bf9fb38c478316e6a6a854cd98c5adb763696afcd5c0184dea9d8806b96"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0060-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/2446fd529c02c91f-S_R004S03C01-fixed30-0060-raw.json",
+      "bytes": 3299,
+      "sha256": "b00212399183aa3bb2297f0cac75f0ba46ba5d93fe8d3dc9bedf9b5fb72c2b79"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0061-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/4168384f1d820b60-S_R004S03C01-fixed30-0061-raw.json",
+      "bytes": 3312,
+      "sha256": "20b457a92641e577b2cb3521def0175f1d0aacc0ca2011f3017285a9934af644"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0062-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/b84e859519607ac0-S_R004S03C01-fixed30-0062-raw.json",
+      "bytes": 3672,
+      "sha256": "37f6d69377ecc23d2b432515acf30c4e83c0ff8034d6249559ee45067f4e1dcc"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0063-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/29bbe7b13ca6531f-S_R004S03C01-fixed30-0063-raw.json",
+      "bytes": 3674,
+      "sha256": "cbda6fcab0ed13f3ace954c3a33bbcc5bbd121491615c205c5f9edae6163c20b"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0064-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/a5b82a7b46b1d937-S_R004S03C01-fixed30-0064-raw.json",
+      "bytes": 3777,
+      "sha256": "ceb08ab53a22f8126e004b46e5762021a143b6180e04970e777672ac2f0730e5"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0065-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/31c249f7fb00d22b-S_R004S03C01-fixed30-0065-raw.json",
+      "bytes": 3958,
+      "sha256": "acf435b432b4c092e8d49f65bf23575680d88f32d3459a9c50618a4c643c62ea"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0066-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/e60350fd75fcd0da-S_R004S03C01-fixed30-0066-raw.json",
+      "bytes": 3325,
+      "sha256": "f6dd82be6363769f3f04ceea3097057e6c57db64d783e0ea08cb844473589d80"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0067-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/6fc273f5f8a1bfe4-S_R004S03C01-fixed30-0067-raw.json",
+      "bytes": 3179,
+      "sha256": "b237055b56b2188d263054edacdd4eeaa9449a4386050d4515ff423abc30eb3e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0068-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/f0beaf94c77ef3d9-S_R004S03C01-fixed30-0068-raw.json",
+      "bytes": 3211,
+      "sha256": "8dca95ab23848d82e34cfc1d843ec48939e2af1364742b680d57946b051bf351"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0069-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/48ca285ec9519840-S_R004S03C01-fixed30-0069-raw.json",
+      "bytes": 3645,
+      "sha256": "53cca30c92de5efb2ffece874413caeba0110330023ed0ec182491aa32619caa"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0070-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/ac3b887868f3f4cb-S_R004S03C01-fixed30-0070-raw.json",
+      "bytes": 3479,
+      "sha256": "824e46c59ba7fde71684ed1ac1e88db081d84436b2874624a322d57143e7598d"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0071-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/47b1d6a3735d05e0-S_R004S03C01-fixed30-0071-raw.json",
+      "bytes": 3824,
+      "sha256": "3771728dd74597320803458d621efc3a3e0af21e32dfc9cf800a00e041048fac"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0072-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/4a636892e26e91ac-S_R004S03C01-fixed30-0072-raw.json",
+      "bytes": 3406,
+      "sha256": "1b2df03e31dbbf9c5c24b3e679f6c5188aed7c3db892b8ebdf8dc70ca1f7e687"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0073-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/72270eb55ae751b0-S_R004S03C01-fixed30-0073-raw.json",
+      "bytes": 4081,
+      "sha256": "11634e0e6b7e3b5ba9177e9576ea323bc0d80e3689ce39205814d2e043b72438"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0074-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/d1d8c09f84e082c4-S_R004S03C01-fixed30-0074-raw.json",
+      "bytes": 3463,
+      "sha256": "e9756737279897b3c44b0d65141f822a6c5c08ebd8f9083b35bfcad753e84913"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0075-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/e6ce7be8c04f920a-S_R004S03C01-fixed30-0075-raw.json",
+      "bytes": 3825,
+      "sha256": "4b817f44203024d8636a8af2bafba93a0b2d6f23abb10bbd53f50b1b5b1ac9a3"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0076-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/ffa865bf54b5a334-S_R004S03C01-fixed30-0076-raw.json",
+      "bytes": 3628,
+      "sha256": "2b84c0508a97010c8e3986fd30a26d19dbbde2e3f76427585e6a114da55531ec"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0077-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/ce1d8a78e76fcd74-S_R004S03C01-fixed30-0077-raw.json",
+      "bytes": 1824,
+      "sha256": "1dca25746fedba39deed59bc68c800d7c09134e63cb21ec02822d0eb785d202e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\worker.log",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/9a650c9eae096ca7-worker.log",
+      "bytes": 2034,
+      "sha256": "20773434851da5a3c5abaebee83596f88b8995e70814336f15bc4ebf76d88dd6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\composed\\20200623_S_R001S07C01-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/9429b92275b5becd-20200623_S_R001S07C01-raw.json",
+      "bytes": 49829,
+      "sha256": "ac699881eda3d35f846d93ee93f93908209c8cde87f3a6147825fa75265bdaa7"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\composed\\S_R004S03C01-raw.json",
+      "file": "closed-qwen-cpu-chinese-whole-run-r2/43f156cb61b446af-S_R004S03C01-raw.json",
+      "bytes": 56062,
+      "sha256": "ed2e8fd274c625e61493341023951ae125cd8c922586e5496668629f35e50d49"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\run.json",
+      "file": "closed-cpu-forced-alignment-control-r1/44a7ace92a6f0702-run.json",
+      "bytes": 480,
+      "sha256": "d708c3b8aa209bc1d3692fb040fb0b198651c34fe44fdafc8d73241ab3136e7c"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\worker-state.json",
+      "file": "closed-cpu-forced-alignment-control-r1/d39958aceb11b078-worker-state.json",
+      "bytes": 1165,
+      "sha256": "677f38f571bbb9aac9e388ed911183a2497bcda8dcee6f85d7aa0ece376cf7d9"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\worker.log",
+      "file": "closed-cpu-forced-alignment-control-r1/2d859645dc9975bc-worker.log",
+      "bytes": 462,
+      "sha256": "1ca2151a10274776749172583413836e14e3cc86d9daaab3f5b35ebc7dbd70c3"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\20200709_L_R002S01C01-seq-000-alignment.json",
+      "file": "closed-cpu-forced-alignment-control-r2/f4b878758ef615bd-20200709_L_R002S01C01-seq-000-alignment.json",
+      "bytes": 56038,
+      "sha256": "d4adef2fac0c05cc60751fb7b4507beffc6056b314cff45a8b2658c0cbc9ed0c"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\ES2003b-seq-000-alignment.json",
+      "file": "closed-cpu-forced-alignment-control-r2/ec15324141b84c9d-ES2003b-seq-000-alignment.json",
+      "bytes": 15004,
+      "sha256": "38df5fc8bd71322434c36945bea68869d1043fa9c5d8325eeb6f5cbb3668725d"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\run.json",
+      "file": "closed-cpu-forced-alignment-control-r2/5b92100f0aa70da9-run.json",
+      "bytes": 511,
+      "sha256": "b223533a1311ae6b53547ae1e213e8d693782e849dd488352f1fdb00b68a7143"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\tiny-control.json",
+      "file": "closed-cpu-forced-alignment-control-r2/32e261bc182130c4-tiny-control.json",
+      "bytes": 912,
+      "sha256": "ed9a5444cec54420f3dea7d6225141e86636d9a947d6ec6dff09dfc8ffcd6fa3"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\weight-roundtrip.json",
+      "file": "closed-cpu-forced-alignment-control-r2/09e64c67f72cc109-weight-roundtrip.json",
+      "bytes": 593,
+      "sha256": "f79b507e8f8f43a6d2816c789c44cbbda693d8b6bc2949bb4690c54d7e8070c7"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\worker-state.json",
+      "file": "closed-cpu-forced-alignment-control-r2/31fcd0090dfaa2b0-worker-state.json",
+      "bytes": 2132,
+      "sha256": "0f0200e64ace3fa65510e5b8a6b30dca032ba94a6ae3cca1f8206743e17b08d8"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\worker.log",
+      "file": "closed-cpu-forced-alignment-control-r2/606c784280473bea-worker.log",
+      "bytes": 2498,
+      "sha256": "a147cf9d6d614a00b3bfc050df6fb49bc40673e20c342971ade8585c1f04925b"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\tiny\\config.json",
+      "file": "closed-cpu-forced-alignment-control-r2/e60b4935d592e260-config.json",
+      "bytes": 7615,
+      "sha256": "46a05c2e392988d6611d9c7b45c5f8cadbd9920df79153eff0f27206ba722965"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\000000-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-pilot-r1/f038c142c41cd079-000000-root-alignment.json",
+      "bytes": 33202,
+      "sha256": "fde9906550c39bfeea9633c68bc75323b2c819d98c4a272f71c61a87a9b67c85"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\run.json",
+      "file": "closed-cpu-retained-baseline-alignment-pilot-r1/8003c74eacb24be3-run.json",
+      "bytes": 511,
+      "sha256": "1bc3618cf93cee2008c489915cb9084a5aa0d906edddecf36734bea7c08b8200"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\weight-roundtrip.json",
+      "file": "closed-cpu-retained-baseline-alignment-pilot-r1/d07f1b1ac56e763a-weight-roundtrip.json",
+      "bytes": 594,
+      "sha256": "4ea54adac591d258ae03faaef004f8e1ace469fd75af9926c48f85214504aac9"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\worker-state.json",
+      "file": "closed-cpu-retained-baseline-alignment-pilot-r1/c5a0349c86297b1e-worker-state.json",
+      "bytes": 1760,
+      "sha256": "17a5a3c3c76ae1b4d73dd846e48ae676802f08b610bb012475d67ce00b3fe412"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\worker.log",
+      "file": "closed-cpu-retained-baseline-alignment-pilot-r1/8c9a2e7077537adb-worker.log",
+      "bytes": 2175,
+      "sha256": "dcfe0eda36157953115cc450937af6b4ef0fd32222bc54ccd161545ec040e373"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000001-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/a8c53458513e461a-000001-root-alignment.json",
+      "bytes": 64200,
+      "sha256": "acf9dca1fdba56356583852e1443179f30f23b36b4df8914f3c0ba26479cbea6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000002-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/3cbebb376f660d8c-000002-root-alignment.json",
+      "bytes": 46740,
+      "sha256": "0e076eb526d480d55982b188ea30ed51c8d217135f6c6ae1a68ff90cf6d7076f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000003-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/3d170b3fa1f24968-000003-root-alignment.json",
+      "bytes": 37535,
+      "sha256": "d6d5e236adf5d81210b2a04b25da62b273009dee445d053d4a471fcfc1a92319"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000004-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/cc4fbf707c5ce596-000004-root-alignment.json",
+      "bytes": 50398,
+      "sha256": "b6dc9810030dfecac87ca5e916ba99698cbc53755f990242f9cd8a386e35bcf4"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000005-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/8782447cf10b8824-000005-root-alignment.json",
+      "bytes": 50318,
+      "sha256": "a9b3eb3e22907c1b2152c74d747efb268f7bb6411287469646c8631ba6742a38"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000006-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/6a66df8128f44c50-000006-root-alignment.json",
+      "bytes": 42609,
+      "sha256": "f49d63565710c5bb3a394fa2c1ab8fcbeeeb26671414b1ccb342fd1bafed630a"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000007-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/2d5d7b4383e8918e-000007-root-alignment.json",
+      "bytes": 51420,
+      "sha256": "e46930f031e7cd0193c92e81df39a7714268233df63c7c093d9c5a6062b5183f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000008-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/418c2629d71969ec-000008-root-alignment.json",
+      "bytes": 64406,
+      "sha256": "529a2ee314795bad5564ebec1ee1bb4b540c546eeb3730daa82a2c78af7d35c1"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000009-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/3848d57667c2e3e8-000009-root-alignment.json",
+      "bytes": 50415,
+      "sha256": "d47f9da2ffe1ed78de607df442064a8f5e5f600ec3b88b8fbbf844d98d035190"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000010-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/c5687ff5734c05d1-000010-root-alignment.json",
+      "bytes": 67449,
+      "sha256": "2d4ca9b3f8ce536e563ab499f8c510016258cdd0565f157ebcd069ca3ebe5fa9"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000011-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/60c8042db46b8703-000011-root-alignment.json",
+      "bytes": 50156,
+      "sha256": "f18c2b982dcbb866a5e22bd7601533f528ddfbe685b8f9c77b302e412475dfd9"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000012-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/beab533942f2c9d5-000012-root-alignment.json",
+      "bytes": 69482,
+      "sha256": "ed12e16ab45e9c835f735ad791287554e97443e03c825bb19a0bd5621399ca94"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000013-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/510dcc2300ac10b5-000013-root-alignment.json",
+      "bytes": 63171,
+      "sha256": "308d08ca7242f20bf1d33ada0aeb7ab424ccc94644823eee02c53c288700b56b"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000014-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/7ba2f59eb6701a16-000014-root-alignment.json",
+      "bytes": 78397,
+      "sha256": "540cfcbd8898ef11a5540fc0013d1002a88e3f5fa21c1b390da92b1a8dd322d7"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000015-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/3b38f57999019d71-000015-root-alignment.json",
+      "bytes": 70818,
+      "sha256": "427be7902ec0c1fa218c0fa27467f15ce557d56bea1b1ad76959a64308e9e17e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000016-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/a7c6fd5c5c7f53fe-000016-root-alignment.json",
+      "bytes": 61633,
+      "sha256": "7ff84d0ffd9d3d42ff410197e4a90bf0e2068f45dc38a34d8a9ccacb596a49bb"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000017-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/99172e78d02ed370-000017-root-alignment.json",
+      "bytes": 66896,
+      "sha256": "1b18ec124733330570e8c288f53529f076f8822c094932f32fdff0dcd56af56d"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000018-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/74b3b37b1e25b7ca-000018-root-alignment.json",
+      "bytes": 62642,
+      "sha256": "1e6ebd5e177f8910a6ab71119d2591b1febef33328323b08837699a88613a939"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000019-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/7854d4c476c8c85e-000019-root-alignment.json",
+      "bytes": 73011,
+      "sha256": "00c762f9fd94430745748a69ab38ba3e7581e28b97883f4fd5e976f3f916bb1c"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000020-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/8c171f74f57b89c4-000020-root-alignment.json",
+      "bytes": 54583,
+      "sha256": "456c2ff43e8a392a41ecb2c14aa917670f88fa8de47c8349ec0a6f9aad6fc6ed"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000021-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/7f0f7d834028027b-000021-root-alignment.json",
+      "bytes": 57894,
+      "sha256": "08329a0336ee19af07ed8513065101a313345edc46653173d10b9dab05d5b31b"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000022-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/9760c5bb53707f56-000022-root-alignment.json",
+      "bytes": 76865,
+      "sha256": "1de1819fb28d7cd369c234b00e9432604077c3bbf3110a0b78a483331fb029b7"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000023-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/a35df6205c8d1c3d-000023-root-alignment.json",
+      "bytes": 62256,
+      "sha256": "3b98b70f0847032aaff87cc6ee3524c1c51309f1d7fa82532ac9bf41c32473b6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000024-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/17ba54931caba23f-000024-root-alignment.json",
+      "bytes": 71180,
+      "sha256": "ec9f7f119896a066ab2d32931f287683e2fbc127ad0494fc818b0c18a7d49336"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000025-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/04f91e55914c963b-000025-root-alignment.json",
+      "bytes": 72682,
+      "sha256": "ab36bcc8f07a43d9986442d472c23a8b088b836ce6aebf4a897f6b0964f588c6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000026-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/af2f624fe42858fc-000026-root-alignment.json",
+      "bytes": 71926,
+      "sha256": "3952b966a9030e71d2ef30705c6906a9d97340e86e65561e5061a013dcf5b89f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000027-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/d4f7c502d4b4c27d-000027-root-alignment.json",
+      "bytes": 47215,
+      "sha256": "53462a44315dd20dd76d92e0e14addc73d3eb01ff652166df228e4f1482c8cee"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000028-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/a984c659ed39e28d-000028-root-alignment.json",
+      "bytes": 48785,
+      "sha256": "b4e929cc9bc9b9452715d0d24914f92d074042a5ff47866ae6a06483e3d4d29e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000029-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/f7e8c135d75583fb-000029-root-alignment.json",
+      "bytes": 46702,
+      "sha256": "4542bceeb1304222c95d6acc6c1a622f4c90b42610df3266a435a62e63aef4c9"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000030-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/fff88fd78c8c7e56-000030-root-alignment.json",
+      "bytes": 45140,
+      "sha256": "79c7a58ff43c3738a6834328de633b036275d0e100a756fea7bd591848c3fbb6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000031-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/af788476a41ec773-000031-root-alignment.json",
+      "bytes": 48672,
+      "sha256": "d1cb437d5cd27e47ad02efc981f53b6db94e6fc1d3d0d14ebd302a175a3062a1"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000032-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/45c561a9ed54fb80-000032-root-alignment.json",
+      "bytes": 47989,
+      "sha256": "c91f6b16cf5a8f8baba8225ba4b354a7b06ac1dd40490cb558a5416c678ee1ae"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000033-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/2cff65b7013c1311-000033-root-alignment.json",
+      "bytes": 1361,
+      "sha256": "b499c2b5616e890cabb5791a2c2e78cd9c3ae04f9853d65bc29c8c0eb4be0639"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000034-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/7f131eb09be3f23c-000034-root-alignment.json",
+      "bytes": 1361,
+      "sha256": "fc1348d3282b72328f727c106a848221e0052a412857d4fdf9b1b02d56717e19"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000035-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/ab569dad7c564999-000035-root-alignment.json",
+      "bytes": 1361,
+      "sha256": "62a8ecd56ac202088a42537c476835c53938a1fc7fbc13fc5f604d4b57aa1b16"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000036-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/7234ab10edf4833a-000036-root-alignment.json",
+      "bytes": 46671,
+      "sha256": "e2c626a23342f310a543cb27633117ef7d9dc3ee99f0c30f433c8375d8c35d71"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000037-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/07dd9dd2c1031989-000037-root-alignment.json",
+      "bytes": 54046,
+      "sha256": "449dc15d1085a8d2af4f47cd7b21282c424f2c8500c6e564758427752d6adecf"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000038-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/d6c0577365ac5136-000038-root-alignment.json",
+      "bytes": 43389,
+      "sha256": "620cebebc468f1aeb7df3bc49aee9f927464b519c7a9bbd7442e11f72dc29931"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000039-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/b016dd89894bf8bf-000039-root-alignment.json",
+      "bytes": 30792,
+      "sha256": "c533db4fb970ba9af29c2b7678cd09ba3d7b6b0675b7058e9651efab0b3c7dae"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000040-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/27d15181a63a4064-000040-root-alignment.json",
+      "bytes": 54748,
+      "sha256": "c525e38b3cd18d81662225b64b0090210348059b5627a5000e2ba512efd0dfe9"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000041-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/9f4c4781695e1696-000041-root-alignment.json",
+      "bytes": 45654,
+      "sha256": "b19f2c226ebf70f3629c92b8be60ffb23712c63a275e5ea74b359d3329d753c7"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000042-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/56822a21a9b25996-000042-root-alignment.json",
+      "bytes": 67162,
+      "sha256": "24661a2cb43bb7c5aec5c1599286725946301aa1ef19c640417516d20130057a"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000043-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/c8a7ec5438ce4bae-000043-root-alignment.json",
+      "bytes": 51413,
+      "sha256": "858aa7561239b367903dfa50200f728ed7d75074d09a49b32ec0f4fbc7229673"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000044-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/78949342d40b2a6a-000044-root-alignment.json",
+      "bytes": 45716,
+      "sha256": "2d1716e8936513469ea5a54955b44a72aa5117eaaf4dbaceb2be7680e6e3ab79"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000045-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/46698e94702de607-000045-root-alignment.json",
+      "bytes": 58852,
+      "sha256": "b5547fd61d978989295c12b94e8b42c1421a8458ed538cce6a80b2df1cf5d1bf"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000046-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/092e8ec91c16eeee-000046-root-alignment.json",
+      "bytes": 61974,
+      "sha256": "b35d4693046a76ae00a45681fc46dea42432425c8ca57cd0297527357c9c79f4"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000047-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/9e1848f036c72297-000047-root-alignment.json",
+      "bytes": 43494,
+      "sha256": "8910bbdbaa8e8e7ae724a5b2c6d69cd0fb720aaf08e5101a7a1110802861f992"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000048-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/d94c47c7bb59ea98-000048-root-alignment.json",
+      "bytes": 65241,
+      "sha256": "da2cd9a1855bde7d23ae55e9a4a03a3d96e7d8f48a71a95133892ad4462ad45f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000049-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/11a3a87eef93b75e-000049-root-alignment.json",
+      "bytes": 73488,
+      "sha256": "8b97f1edcc2bda01a77e01fd2a7a639b27239b403d4969603790d72aa85fa5c0"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000050-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/820a53b947c05325-000050-root-alignment.json",
+      "bytes": 45429,
+      "sha256": "3754c75395bea9e43215cf1e8a378e9173e75cdc22f8502722e681454ad2b35f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000051-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/a0f59f90ca345415-000051-root-alignment.json",
+      "bytes": 45760,
+      "sha256": "5048f6ddd09fcc4d30e865e7773b2a1abd67043545f51a0525911dcee24bc19b"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000052-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/ba74d1585650909e-000052-root-alignment.json",
+      "bytes": 51284,
+      "sha256": "0e16a31c4208a48df015f9efdb00be56db455534150f0d3f37cffa1f7403b09f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000053-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/5829acad424e91dd-000053-root-alignment.json",
+      "bytes": 67288,
+      "sha256": "b27d0b592708cddc1d77f8a8f3980f4dd72f53f2de524c24a8f17a9c4141c879"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000054-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/2e06690b8741395c-000054-root-alignment.json",
+      "bytes": 63980,
+      "sha256": "22c41cddde85fefec92c209b39010a40d152a98021971f98b596c743130540c8"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000055-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/a62df45d5a768cde-000055-root-alignment.json",
+      "bytes": 52520,
+      "sha256": "c776a795faf2d28e8eeaa883bea596a840ba165ff2411a727d4cd87388a448d1"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000056-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/559d9bf8a6b9079f-000056-root-alignment.json",
+      "bytes": 43320,
+      "sha256": "647a4a74d130735f5bee87cca1a0ca192962050a180e67751e2a886253154b54"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000057-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/16acecf5cfb13532-000057-root-alignment.json",
+      "bytes": 59080,
+      "sha256": "8421b2e0b90723efc80c2b135f09c20fefe663e016532fff003c4542766b951e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000058-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/7d489a172a8c8d06-000058-root-alignment.json",
+      "bytes": 54675,
+      "sha256": "2fb84eb20f725a9a88b58d03ab392370e72cc4c22c8cfff149c68afdaed1c2da"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000059-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/0ab46249781d228b-000059-root-alignment.json",
+      "bytes": 58411,
+      "sha256": "2c0b76fb3eca4bcf7a2134e69031d96e892e0b3a7b4ef25487870963dd061dad"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000060-root-alignment.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/879e5ab106ec0373-000060-root-alignment.json",
+      "bytes": 55255,
+      "sha256": "021389e38a7070af10adc2ebbc400e0b492e68559105976d505df4c8ecc477dd"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\run.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/97b5283b0c803ab5-run.json",
+      "bytes": 491,
+      "sha256": "afc6d9ea5e31bd8c38637b425cd9212114e703b5bb17d7620320294138c5ff98"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\weight-roundtrip.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/800bf8481ec187b3-weight-roundtrip.json",
+      "bytes": 594,
+      "sha256": "fed4b154b4e3968fbc8e6308d65442f6e89c196ff491be2b121a885cbcd7f9d7"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\worker-state.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/36351922ff8e3eca-worker-state.json",
+      "bytes": 20674,
+      "sha256": "5b077e09682a2e4f8ea77c3fdc51cf21a35fcf44561973a9c2273d70891a1136"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\worker.log",
+      "file": "closed-cpu-retained-baseline-alignment-full-r1/b8edc8a2395e472b-worker.log",
+      "bytes": 873,
+      "sha256": "649ef95ddc50ca32cd2c45c22027c6b51872241a77b039fa560fc6f7716e7d1f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r2\\composition-state.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r2/934a47b0e3140d14-composition-state.json",
+      "bytes": 1789,
+      "sha256": "6eaf024f1a25ebe452ed813f2e8fe733c607dfc40bcb014acb843b8b6ed3ef80"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r2\\run.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r2/9795950a7cdd2e82-run.json",
+      "bytes": 2847,
+      "sha256": "2d23a5596fc6ba6a5b6d58393569789039800042056c1949ebee6c2af02a7461"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r2\\worker-state.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r2/2d23574df4647e0d-worker-state.json",
+      "bytes": 27988,
+      "sha256": "0378eeee41931312187d0c908dd60fa64cab351d1e1f48ba5ef628db8e5f4cee"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r2\\composed\\S_R004S03C01-attribution-review.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r2/cdb89886d84b133a-S_R004S03C01-attribution-review.json",
+      "bytes": 7508661,
+      "sha256": "326e22c42f7b13a627126fbe1f02f3f5c5f0d455f26fa387e49ec96f65c7677c"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r2\\composed\\S_R004S03C01-model-output.json",
+      "file": "closed-cpu-retained-baseline-alignment-full-r2/03a5aaec29e2b725-S_R004S03C01-model-output.json",
+      "bytes": 1138424,
+      "sha256": "d842bd6f2cefcf730844aac6b7c1e2cd0c787610b9b739d24171eb8d8bc8a8d5"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000061-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/9ccfd19f5332b151-000061-root-alignment.json",
+      "bytes": 44889,
+      "sha256": "95b6e7731d532a06a22caf64c570ac3ed83f2257dde9b7ae981f845d8f8a146a"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000062-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/4916f90bb79968bc-000062-root-alignment.json",
+      "bytes": 65678,
+      "sha256": "51ab07623fb37260c1b4dbf3f7fe636a32d466c138f7004786fc4f76e15e73dd"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000063-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/d49649aa84598f34-000063-root-alignment.json",
+      "bytes": 47934,
+      "sha256": "b7edb3671931d83537240f2949ecce114eb3716da4afef26e313f2397763e993"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000064-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/511f8418ed9a0ddc-000064-root-alignment.json",
+      "bytes": 61798,
+      "sha256": "47382f1714d2e4031892ada8c4f4c399863814ba43523d6a29d20f7f2644c71f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000065-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/68c8fdb96eaf07eb-000065-root-alignment.json",
+      "bytes": 55900,
+      "sha256": "24fce465619f5ef25d7b94c506eb5c62356eb616785738f01ccda24a4f794cbb"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000066-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/80a3bf46d028be8e-000066-root-alignment.json",
+      "bytes": 45040,
+      "sha256": "9b83d019d237eda34397efc784ce640f04ecc70be76e6e74e03fe83c526d3177"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000067-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/a08a337a42891ea5-000067-root-alignment.json",
+      "bytes": 37839,
+      "sha256": "5498aefcb013cdfe0d7c43d5e2e5f9feca468ee447326c8fa8f177ebacf8ee33"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000068-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/de5957fd40f6397a-000068-root-alignment.json",
+      "bytes": 44669,
+      "sha256": "db610f27ba97f3b6bde454e4df8ef7d8aab758ce5be421f7b0ee59d803405ae3"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000069-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/0c706f8f58e83dc9-000069-root-alignment.json",
+      "bytes": 52759,
+      "sha256": "e02fae3ea3bedf6bdb296c8fa181b7bc9456b826f3de4de67d1a85b0ae498478"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000070-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/e76e70cb1bf8bc72-000070-root-alignment.json",
+      "bytes": 41644,
+      "sha256": "c00bcd1807944f08680a6f5160be7a5f9dc9fe5014e373714c5723cd8ac406ca"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000071-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/576263ce8dad55b6-000071-root-alignment.json",
+      "bytes": 60421,
+      "sha256": "bd514f6a1fcb6726e8855a5ff200e8495bdda4c4c44827d7cb6800e917c5e793"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000072-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/2cc14fa1eb5fa3f5-000072-root-alignment.json",
+      "bytes": 54445,
+      "sha256": "3531a73834fe3f5982620b68bb977d7825fb00036cfdb31c109cd024054285fc"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000073-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/ec39f17b5711553c-000073-root-alignment.json",
+      "bytes": 58433,
+      "sha256": "8931e89b78f14603313bab1bb5fde1f6f9417ff9b4e076a8ac48698c2ea459d0"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000074-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/d7f48fc28e3e6cda-000074-root-alignment.json",
+      "bytes": 51887,
+      "sha256": "af5d28ebb489d25009ff74e7919201653374f597c6ba506679b9788badb9fad0"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000075-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/e3fdf65a8d71e0a7-000075-root-alignment.json",
+      "bytes": 66803,
+      "sha256": "e616f0ce72e68708f0b914977e8b3325a9f775586e17863d9652ccffbd178d91"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000076-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/d6ac44289981926a-000076-root-alignment.json",
+      "bytes": 56952,
+      "sha256": "42111a1ab8160e5d786a553a59cb32d7ed4e6b0e0e42d529ef10291a777e835f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\run.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/26bb102c8f74b1fb-run.json",
+      "bytes": 513,
+      "sha256": "0b5344fb305798cedc9d9fa543c1c381f68ba1244bbcaf2b922e90e807f25ed0"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\weight-roundtrip.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/639d6f9002aad042-weight-roundtrip.json",
+      "bytes": 594,
+      "sha256": "85040891c56dfb58bac989579c431cae83d3dfa960a4501811c1743175fbb7bc"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\worker-state.json",
+      "file": "closed-cpu-alignment-recovery-batch-0/1a35c8cfb7eb685b-worker-state.json",
+      "bytes": 6360,
+      "sha256": "43155fc33661bd21bc4fd172fdccf5eb99364c60e1970a328af0e0182e043640"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\worker.log",
+      "file": "closed-cpu-alignment-recovery-batch-0/0c1af27bc5b9e3ad-worker.log",
+      "bytes": 2177,
+      "sha256": "b158a37fde02da1e10570b15f791a0ef9edf9c9936238fa450255d9238246836"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\000077-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-1/671b936e4b66aa56-000077-root-alignment.json",
+      "bytes": 19392,
+      "sha256": "34ae7566c6f669cb3d8d6a405039c3a87f6a32e28fabc96798b6cfcc73c97d67"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\000078-root-alignment.json",
+      "file": "closed-cpu-alignment-recovery-batch-1/008f9b11a971c92b-000078-root-alignment.json",
+      "bytes": 1971,
+      "sha256": "e7e65387c75b137fe37d698d9044791cfbfb9f3df28f2aa40115298ef0203e56"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\run.json",
+      "file": "closed-cpu-alignment-recovery-batch-1/298f61290c363e38-run.json",
+      "bytes": 510,
+      "sha256": "eca1d2c7ee859cf5bee7f842ade7a97d238ae2d16e8940b736d111aa4cc9d29a"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\weight-roundtrip.json",
+      "file": "closed-cpu-alignment-recovery-batch-1/06b4727f8f052d45-weight-roundtrip.json",
+      "bytes": 594,
+      "sha256": "476d29b79ce71a6c9f289bdc5ecfb370c49721d6065d6dcb7e8033459a931b33"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\worker-state.json",
+      "file": "closed-cpu-alignment-recovery-batch-1/b44340a04fec0aaf-worker-state.json",
+      "bytes": 2059,
+      "sha256": "718f9ac8449e6a1d05a13671165972e4adfa8a1c8f6c2a5aa060c0784feefdff"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\worker.log",
+      "file": "closed-cpu-alignment-recovery-batch-1/771a1326cf62c2e3-worker.log",
+      "bytes": 2175,
+      "sha256": "f67dc29fd552282b25a40f83b9f344e484adcdac8305c52661b1ded7918dcb9e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composition-state.json",
+      "file": "closed-cpu-retained-baseline-join-r4/164ca2fb937371f5-composition-state.json",
+      "bytes": 1867,
+      "sha256": "3b2a758425fc2015f252e822666c15041c6193140d514e79382ad623bbb7e464"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\worker-state.json",
+      "file": "closed-cpu-retained-baseline-join-r4/dccb712222ec822e-worker-state.json",
+      "bytes": 27988,
+      "sha256": "0378eeee41931312187d0c908dd60fa64cab351d1e1f48ba5ef628db8e5f4cee"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composed\\S_R004S03C01-attribution-review.json",
+      "file": "closed-cpu-retained-baseline-join-r4/38522c893dcee552-S_R004S03C01-attribution-review.json",
+      "bytes": 9651179,
+      "sha256": "813a00ff1ce39ce98ccd9e2cc9c9717774a54699b322eb0f6bb8fff778da480e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composed\\S_R004S03C01-exclusive-view.json",
+      "file": "closed-cpu-retained-baseline-join-r4/2315ded0a10e7c01-S_R004S03C01-exclusive-view.json",
+      "bytes": 27142,
+      "sha256": "36bd729d67564ef0d2814b3fb6349acf9e95b6f76fa766f89d1fea2a4524e6db"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composed\\S_R004S03C01-model-output.json",
+      "file": "closed-cpu-retained-baseline-join-r4/7eae2c6948d34c1d-S_R004S03C01-model-output.json",
+      "bytes": 95811,
+      "sha256": "cdf0ad8ff9f0e179e7ae587819c159befcfcfc043a11d60900e24954d8250ea0"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r1\\run.json",
+      "file": "closed-cpu-idle-app-r1/1729be1729ceb33e-run.json",
+      "bytes": 270,
+      "sha256": "a8084d60fe2a36101b82c8272fb16d5bd38daaa5ba2fabf0e35609844dc9b05f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\bundle.json",
+      "file": "closed-cpu-idle-app-r2/98d6416517433949-bundle.json",
+      "bytes": 7984,
+      "sha256": "fc221e3f2b05ed35378c82a8b45544afdf20d980a58137c11c44e895afff03e0"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\idle-observation.json",
+      "file": "closed-cpu-idle-app-r2/7e56934e67b2f408-idle-observation.json",
+      "bytes": 500,
+      "sha256": "a4fa6ec42779bb9325b2a5d1d7853d0ad72c185a6bb4ac3472ab8657e446669d"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\protocol.json",
+      "file": "closed-cpu-idle-app-r2/5725daf057a4879a-protocol.json",
+      "bytes": 2522,
+      "sha256": "73d5fc11941afd234afcc620a88c7722e7eb3df39fc4facbfca2f171d62d2ef6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\run.json",
+      "file": "closed-cpu-idle-app-r2/7c77545432ab434d-run.json",
+      "bytes": 294,
+      "sha256": "4ce7decfcdd30ebc553638192b0a4ac37021c851fa8a2b26f3aa5f8491852cb1"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream-manifest.json",
+      "file": "closed-cpu-idle-app-r2/77a6aab5b39c49d7-stream-manifest.json",
+      "bytes": 538,
+      "sha256": "3a558a021b3bd77bb9c7abf1c6f1cedc5abe0a65c330d69104920b4442d51c76"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream.stderr.log",
+      "file": "closed-cpu-idle-app-r2/cba78cbc008f1c95-stream.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream.stdout.log",
+      "file": "closed-cpu-idle-app-r2/a07423714bd5745c-stream.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\decoder-run-1794812057400218600.log",
+      "file": "closed-cpu-idle-app-r2/ebf1ed02977da522-decoder-run-1794812057400218600.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\preview.json",
+      "file": "closed-cpu-idle-app-r2/bedb20f649115f14-preview.json",
+      "bytes": 279,
+      "sha256": "76960fcb02df3387c3b2f468d2b6f26d8aaa450f75ee33ae735b99e0a71acb93"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\sealed.json",
+      "file": "closed-cpu-idle-app-r2/d54d26bd4cebd0a4-sealed.json",
+      "bytes": 27,
+      "sha256": "58250f4776423081e105866e64507393616e857a703ecf9e17588f3eb4a24362"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\decoder-run-1794812057400218600\\document.json",
+      "file": "closed-cpu-idle-app-r2/223b359c3f9790d4-document.json",
+      "bytes": 658,
+      "sha256": "39e78f96cb7822367c48b02e43c303b7adda8197956ea894a268a93e56c2fc37"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\decoder-run-1794812057400218600\\native.log",
+      "file": "closed-cpu-idle-app-r2/1ec93668d28c8d25-native.log",
+      "bytes": 195,
+      "sha256": "e8917322bf4685a9a0673082c9c0ca5ea83b2eb7f6f5903731ac0b1f739d7c37"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\decoder-run-1794812057400218600\\run.json",
+      "file": "closed-cpu-idle-app-r2/d7e9a714651b9926-run.json",
+      "bytes": 399,
+      "sha256": "8ef5de2736d16e718d90175bd07e46752f01f75f71102a303fdfcdc35571837a"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\decoder-run-1794812057400218600\\worker-state.json",
+      "file": "closed-cpu-idle-app-r2/1e0ae172011cccad-worker-state.json",
+      "bytes": 1853,
+      "sha256": "7c2e02b6a9b7ed1e6eda528abf72c22dc440f2ebe8f98d920abf8e045fcc7e42"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\decoder-run-1794812057400218600\\worker.log",
+      "file": "closed-cpu-idle-app-r2/bce04f9e747457c2-worker.log",
+      "bytes": 175,
+      "sha256": "a88ebd8bf9eb20a139cca60ccaa26c0db93dfbc985b4cc6945faed8961dbdbc8"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\session.json",
+      "file": "closed-cpu-idle-app-r2/dc16e7ab845b1ae2-session.json",
+      "bytes": 498,
+      "sha256": "fd580714b87c6c40cb39bfef2abae714c2611d12a0cee5f4e16f18ee04e77bcd"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\requests\\00000000-00080000-draft.json",
+      "file": "closed-cpu-idle-app-r2/a7ba469d5f9bc5b2-00000000-00080000-draft.json",
+      "bytes": 630,
+      "sha256": "0c9034c6a2d2d5eecbbb437a3177fa8bea862b9c03d761fe28bd88568799f522"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\requests\\00000000-00160000-draft.json",
+      "file": "closed-cpu-idle-app-r2/e94b604acb2e9903-00000000-00160000-draft.json",
+      "bytes": 631,
+      "sha256": "09716cd84fb77069fd54a08bf30fb0b0361a7a1a029c3b42c90b68171bb3aac6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\requests\\00000000-00240000-draft.json",
+      "file": "closed-cpu-idle-app-r2/c82ad427ee9a9769-00000000-00240000-draft.json",
+      "bytes": 631,
+      "sha256": "1d3bff7a2a067b334e6234fa4f8dc9cb34235bb7080da16ff887790f637f5ddb"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\requests\\00000000-00320000-draft.json",
+      "file": "closed-cpu-idle-app-r2/08fba56ddcf9f2b7-00000000-00320000-draft.json",
+      "bytes": 630,
+      "sha256": "48999f29ed49db4a07da28362b8a3f215133903686c8864bb3d8cf83e766c209"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\requests\\00000000-00400000-draft.json",
+      "file": "closed-cpu-idle-app-r2/81b7bbe7106ed695-00000000-00400000-draft.json",
+      "bytes": 631,
+      "sha256": "c6720e26b63a2d6c5bd014abacf1e6272e146ebf20d12462e04f8a5aeed6b3b6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\results\\00000000-00080000-draft.json",
+      "file": "closed-cpu-idle-app-r2/b60e2388d2352725-00000000-00080000-draft.json",
+      "bytes": 2715,
+      "sha256": "fffbc9872f218c23ae93c88ddc477e536231f7b0c13c80e5528806a7a75c6018"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\bundle.json",
+      "file": "closed-cpu-idle-app-r3/4f77bb5aeb85a9d8-bundle.json",
+      "bytes": 7984,
+      "sha256": "7978cac11c70d7e1ab0cb39eb65d74ecff8742c1b4000646301b78faa41d0dfb"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\protocol.json",
+      "file": "closed-cpu-idle-app-r3/f84bf61cb40bd17c-protocol.json",
+      "bytes": 2920,
+      "sha256": "b7d032d5329e6fc6612ed49da1827d5b0f3bba6a7d6eca53caecc408030e47a8"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\run.json",
+      "file": "closed-cpu-idle-app-r3/c18a6e7c650d36b1-run.json",
+      "bytes": 270,
+      "sha256": "3b963f02fd17d89280a8247e33f8fe8d05b8b95382667ea28f012aa66ca58129"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream-manifest.json",
+      "file": "closed-cpu-idle-app-r3/5b5a4be21ac0fc31-stream-manifest.json",
+      "bytes": 538,
+      "sha256": "eb92a67fe9b97eedda4c0843a33f971ff0a1cf458b4d9dcd21614f78cc7508d9"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream.stderr.log",
+      "file": "closed-cpu-idle-app-r3/ee47cc9813420d54-stream.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream.stdout.log",
+      "file": "closed-cpu-idle-app-r3/bf3f56eeebc9e470-stream.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\attribution-evidence.json",
+      "file": "closed-cpu-idle-app-r3/8d691d5ed2571c05-attribution-evidence.json",
+      "bytes": 4261,
+      "sha256": "832828873f349c85a3b3652e257586b1fd63bdb6c5ffcc8af4916110a4eaa624"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\final-binding.json",
+      "file": "closed-cpu-idle-app-r3/8424a87c11082018-final-binding.json",
+      "bytes": 423,
+      "sha256": "2d5430b1db839f450c8d7e13ce85db0c5530fabf45d6f18eda26d72331d39486"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\final-document.json",
+      "file": "closed-cpu-idle-app-r3/018c99c20f161547-final-document.json",
+      "bytes": 7669,
+      "sha256": "87a0b10505eac3bb3cc0623a2f8b9648ab2fe7a0fa50e9579d1cc72e2e30ddaf"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\input-binding.json",
+      "file": "closed-cpu-idle-app-r3/99d05aad2e8a2111-input-binding.json",
+      "bytes": 757,
+      "sha256": "1664851a143ebd3d3e23745d16801eb6162069438544232dc37b98b50aca1625"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\job.json",
+      "file": "closed-cpu-idle-app-r3/cf70dabfe8b72930-job.json",
+      "bytes": 1495,
+      "sha256": "93364479dc8a0897f7d04a8cefa2a1d6de117657d415630db25aee4b1fa5ae4b"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\stream-cache-lineage.json",
+      "file": "closed-cpu-idle-app-r3/9583ccaef9ae3177-stream-cache-lineage.json",
+      "bytes": 402,
+      "sha256": "00e4847179bc16ad890d0cb59f193206293fee1af4feb56ba824bd9b7e505386"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\logs\\cpu-speaker-1794812971599080300.log",
+      "file": "closed-cpu-idle-app-r3/5ba5a3eb65b91357-cpu-speaker-1794812971599080300.log",
+      "bytes": 1689,
+      "sha256": "08f702d9a93fb840d59f010aa94c86654e033018cfe8d4f576bfc58329b3f105"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\audio-only.json",
+      "file": "closed-cpu-idle-app-r3/4068652a5564fd50-audio-only.json",
+      "bytes": 374,
+      "sha256": "66ca50967e7d5d47f6733ce4fda3c7383dd041c0a6b90907c9f1db4a2fb98866"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\binding.json",
+      "file": "closed-cpu-idle-app-r3/463f48049a2469a4-binding.json",
+      "bytes": 7196,
+      "sha256": "15d349cc67f814ccbe736d39daa39208433fa026fc4cf1e4ad380638758b2091"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\protocol.json",
+      "file": "closed-cpu-idle-app-r3/d1c554d47ceeb983-protocol.json",
+      "bytes": 4768,
+      "sha256": "ebe9f494625df3b33b6881716fa2aee28792719e61248a48dc5c1b67e7237c24"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\probabilities\\local-87cfc3334a980f0e\\probabilities.json",
+      "file": "closed-cpu-idle-app-r3/cef394f0dec97cc4-probabilities.json",
+      "bytes": 734,
+      "sha256": "c66fd0574e87e1c7866c2c59fbb59f717b8575287b991ae2a3d06dadf335c54f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\results\\local-87cfc3334a980f0e\\completed-state.json",
+      "file": "closed-cpu-idle-app-r3/a83befcc2326bb19-completed-state.json",
+      "bytes": 1836,
+      "sha256": "193f0ca4637d32086abd375c8ea11cd5f4834de5678c77e2ea9d7c8826d1b113"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\results\\local-87cfc3334a980f0e\\speaker-journal.json",
+      "file": "closed-cpu-idle-app-r3/86f1848aa5e43e95-speaker-journal.json",
+      "bytes": 2724,
+      "sha256": "026e6dc55dd5d2a26c93d53d8c034542d208acfccc287649faf194ee3f58b718"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\results\\local-87cfc3334a980f0e\\state.json",
+      "file": "closed-cpu-idle-app-r3/3c5c6ae5c2a65692-state.json",
+      "bytes": 1836,
+      "sha256": "193f0ca4637d32086abd375c8ea11cd5f4834de5678c77e2ea9d7c8826d1b113"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\final-manifest.json",
+      "file": "closed-cpu-idle-app-r3/0343443d636e89fe-final-manifest.json",
+      "bytes": 520,
+      "sha256": "4df2bf7251c855f0580d2ca71cbbff86d6a98ffc091dda3d598ac5e7037729d8"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\idle-observation.json",
+      "file": "closed-cpu-idle-app-r3/fbf9926c986532b1-idle-observation.json",
+      "bytes": 460,
+      "sha256": "efb7ad997b2ceb9385ac9dc903835a74189e3ec543c9d61af36a2b19a6b9ffdf"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\result.json",
+      "file": "closed-cpu-idle-app-r3/7d99c3d0beb83248-result.json",
+      "bytes": 1173,
+      "sha256": "04db6fae200d4114a7ed97e60e9e7a32a59070f4631d8dd607175d5143204368"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\run.json",
+      "file": "closed-cpu-idle-app-r3/e00cf36658b4577e-run.json",
+      "bytes": 545,
+      "sha256": "cf448d1352331ed8d010cdf655d551691db4d75e92834807c9281149e67f8d9a"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\stream.stderr.log",
+      "file": "closed-cpu-idle-app-r3/b07b16ff8d2f020f-stream.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\stream.stdout.log",
+      "file": "closed-cpu-idle-app-r3/cb8560d0829835ef-stream.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\final-call\\stderr.log",
+      "file": "closed-cpu-idle-app-r3/90d7610c889c592d-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\final-call\\stdout.json",
+      "file": "closed-cpu-idle-app-r3/d6e7de4862323b88-stdout.json",
+      "bytes": 6298,
+      "sha256": "eadfde3e9625480f6d9ece3f6befb9c7399532768137234b5d820a67a207a1d8"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\reopen-call\\stderr.log",
+      "file": "closed-cpu-idle-app-r3/cf2fdc4b564b4273-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\reopen-call\\stdout.json",
+      "file": "closed-cpu-idle-app-r3/13c812b08e05f1bc-stdout.json",
+      "bytes": 7669,
+      "sha256": "87a0b10505eac3bb3cc0623a2f8b9648ab2fe7a0fa50e9579d1cc72e2e30ddaf"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812535214715800.log",
+      "file": "closed-cpu-idle-app-r3/7ba8cf9bb3091ca7-decoder-run-1794812535214715800.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812906569260700.log",
+      "file": "closed-cpu-idle-app-r3/ae50d0b323f2b5b5-decoder-run-1794812906569260700.log",
+      "bytes": 538,
+      "sha256": "e3fb0733f6963e85cea5b8ae42beeb4ae5348b7579735f6d69a7506983461bf1"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\preview.json",
+      "file": "closed-cpu-idle-app-r3/c69531a2bc2fcbbe-preview.json",
+      "bytes": 1079,
+      "sha256": "8fe6fe42388f5c151618a31144171cc6c8c3a71f153e723276e8cfe759e01bee"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\sealed.json",
+      "file": "closed-cpu-idle-app-r3/870fe29c84fb2778-sealed.json",
+      "bytes": 27,
+      "sha256": "58250f4776423081e105866e64507393616e857a703ecf9e17588f3eb4a24362"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\stream-receipt.json",
+      "file": "closed-cpu-idle-app-r3/89fb80980856675d-stream-receipt.json",
+      "bytes": 401,
+      "sha256": "8d2805384fe4f1d92eb9b2cfc649a77cfd278206a232caed1a7173905d99aa86"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812535214715800\\document.json",
+      "file": "closed-cpu-idle-app-r3/0e44901c0f92c160-document.json",
+      "bytes": 1357,
+      "sha256": "742bfe3f4e434a859d5952bbe7232519ae9b6d857825edab826a11613df31099"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812535214715800\\native.log",
+      "file": "closed-cpu-idle-app-r3/dd61c5b0cf16a09b-native.log",
+      "bytes": 234,
+      "sha256": "45d9bd6ae03d17ed8d1f7f82f3c7b352fe8791127d0005b951f10a70e535e61d"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812535214715800\\run.json",
+      "file": "closed-cpu-idle-app-r3/e77673184cc4838a-run.json",
+      "bytes": 398,
+      "sha256": "b5c63592e17de5235f77a2caf8f4d196a71c9a9e02a2b64b9d29e91691f3d53f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812535214715800\\worker-state.json",
+      "file": "closed-cpu-idle-app-r3/78688f3d45bb9020-worker-state.json",
+      "bytes": 2216,
+      "sha256": "2e843af4ba55908374b793c9a3a1a234c337914065d4f85d7755d00642b5d598"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812535214715800\\worker.log",
+      "file": "closed-cpu-idle-app-r3/ffcf591e129acace-worker.log",
+      "bytes": 175,
+      "sha256": "908ac4e812c3482d92d10a42001e5307e1492efd704848f34c58754403406745"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812906569260700\\document.json",
+      "file": "closed-cpu-idle-app-r3/5910cce300873231-document.json",
+      "bytes": 2955,
+      "sha256": "c8df0d0da20b36870fa37da915b26232dbaedbe7ee9d76063ee747e09c26f661"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812906569260700\\native.log",
+      "file": "closed-cpu-idle-app-r3/e83ff816e5e5fa7b-native.log",
+      "bytes": 468,
+      "sha256": "b1a4fb3010be69dae569d6e3c7b72c5d017836c08891dba70a6c62b2fd6569ff"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812906569260700\\run.json",
+      "file": "closed-cpu-idle-app-r3/efb0c0c74d0f9807-run.json",
+      "bytes": 569,
+      "sha256": "62d759e723bb1a85a4bad4f506bb45eaaff1c4584ba4cd398ba137aa0f362323"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812906569260700\\worker-state.json",
+      "file": "closed-cpu-idle-app-r3/70cbca31aa13eb9b-worker-state.json",
+      "bytes": 2988,
+      "sha256": "b18f3b13cffb6e91e7ffa83e538ba8a117f2eba84a19df6c9ea2e809235235a6"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812906569260700\\worker.log",
+      "file": "closed-cpu-idle-app-r3/e1af1011647ae345-worker.log",
+      "bytes": 1576,
+      "sha256": "aa2ee1155e8306408508fdc24231806fe2b5a28e0011c0c6a87eb8037476ae21"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\session.json",
+      "file": "closed-cpu-idle-app-r3/cbaa455e38695493-session.json",
+      "bytes": 579,
+      "sha256": "0f7addd469dc48c791bc4b4352639d29609307c155806b9d8b2ad55fec2ad972"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000000-00080000-draft.json",
+      "file": "closed-cpu-idle-app-r3/49f29a2d815fa7e6-00000000-00080000-draft.json",
+      "bytes": 630,
+      "sha256": "429ffd807a89cf641056f01ba53983a76f11249bc3ada74f5d215f2c3861cd88"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000000-00160000-draft.json",
+      "file": "closed-cpu-idle-app-r3/7b445fd8c6809105-00000000-00160000-draft.json",
+      "bytes": 631,
+      "sha256": "c40bee779facf38bb6bfe4d88fb2f3a6427ac4dd1cc4f2e46299190a3d70804f"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000000-00240000-draft.json",
+      "file": "closed-cpu-idle-app-r3/ceb136dffc7e46b9-00000000-00240000-draft.json",
+      "bytes": 631,
+      "sha256": "34f446867ac5e5eb0816619d292aa68f0b0deec357c201cb11d282581ce7c6d5"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000000-00320000-draft.json",
+      "file": "closed-cpu-idle-app-r3/c1dee0a2785cd8fe-00000000-00320000-draft.json",
+      "bytes": 631,
+      "sha256": "c5cc46a96dbc976eb82c903fc9e70c308e90ba68911adea31a3351656bba2b6e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000000-00400000-draft.json",
+      "file": "closed-cpu-idle-app-r3/3e5ad904d9611113-00000000-00400000-draft.json",
+      "bytes": 631,
+      "sha256": "9eca23a6b6e5b54493201336763bebd44e62d9cbeeff5e4f689390bdf5cac538"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000000-00480000-final.json",
+      "file": "closed-cpu-idle-app-r3/6ce007663a774e00-00000000-00480000-final.json",
+      "bytes": 629,
+      "sha256": "b1873d40d375e493197f7253ae82ab97fa1a5ecf0d858b2033f3777a12f2898e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000001-00080000-draft.json",
+      "file": "closed-cpu-idle-app-r3/f420e4b04ba637e9-00000001-00080000-draft.json",
+      "bytes": 636,
+      "sha256": "23140dfddf52df1dc56416e21b87440d50beaada2757a4a490391ab1da546a70"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000001-00160000-draft.json",
+      "file": "closed-cpu-idle-app-r3/01193da043839257-00000001-00160000-draft.json",
+      "bytes": 636,
+      "sha256": "e9bf7944d929d8cc20150af59dc713071f7b5a36dbf0f83cb5aec7be7c32c766"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000001-00240000-draft.json",
+      "file": "closed-cpu-idle-app-r3/cdc6ea6d017f89a7-00000001-00240000-draft.json",
+      "bytes": 635,
+      "sha256": "299fc8fc75ac5d7782bb0f79fcb4f1e14dd6ba06f8e2bf2d7d2d97f6da72c71b"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000001-00320000-draft.json",
+      "file": "closed-cpu-idle-app-r3/4a513bd04908b104-00000001-00320000-draft.json",
+      "bytes": 636,
+      "sha256": "3d071ddbd7190e8d310b0c57373afd3641dd1045cadec04e7956265bfd1f7cc1"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000001-00400000-draft.json",
+      "file": "closed-cpu-idle-app-r3/56b417572d910f3f-00000001-00400000-draft.json",
+      "bytes": 636,
+      "sha256": "ac8e8422bb97ab73d66fa8b64991fb90a83104d9fc14abf9870666e3e4afdb68"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000001-00480000-final.json",
+      "file": "closed-cpu-idle-app-r3/33573a0cbeb93f35-00000001-00480000-final.json",
+      "bytes": 635,
+      "sha256": "f4d0b6fd1011ec62be63740801b789bd1cdac6ec85ee60e227b1cee99c2f27ca"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000002-00080000-draft.json",
+      "file": "closed-cpu-idle-app-r3/8151e7528668f3ba-00000002-00080000-draft.json",
+      "bytes": 637,
+      "sha256": "840212d3510782634a29069ab15117b1edbbfac867a0c0bf3d1bf1c32be41019"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000002-00160000-draft.json",
+      "file": "closed-cpu-idle-app-r3/8ebb8904faac109d-00000002-00160000-draft.json",
+      "bytes": 637,
+      "sha256": "9b00a944300476e64ba390c6c88014f1a462dedb7f2c880d1044f6388223ebe9"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000002-00240000-draft.json",
+      "file": "closed-cpu-idle-app-r3/6e72b289ef019701-00000002-00240000-draft.json",
+      "bytes": 636,
+      "sha256": "4ffaa32aa48d51ba0332d0bebb3359ab59b4e7a413b22388efed4f925c6e6bab"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000002-00244000-final.json",
+      "file": "closed-cpu-idle-app-r3/0ad2d57c6bc55dcb-00000002-00244000-final.json",
+      "bytes": 636,
+      "sha256": "814185e7dcc5a691d54afce2ebdb918429e70ca59aa8b6a68fc0a4420c630752"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\results\\00000000-00240000-draft.json",
+      "file": "closed-cpu-idle-app-r3/7e75fb7075d00342-00000000-00240000-draft.json",
+      "bytes": 3700,
+      "sha256": "9d6a2caf4f14fdcf6671c90c8f82fb82138fc0f2814631b79614712e30983467"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\results\\00000000-00480000-final.json",
+      "file": "closed-cpu-idle-app-r3/f7cd8a536ef03c3a-00000000-00480000-final.json",
+      "bytes": 7999,
+      "sha256": "4bbbdd9ba239a2d470307c815e49a7599ca2546bbbb71c16ab0419aebf7eaabb"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\results\\00000001-00240000-draft.json",
+      "file": "closed-cpu-idle-app-r3/4de18d1d43c4e3d8-00000001-00240000-draft.json",
+      "bytes": 4599,
+      "sha256": "1262e6d4985198d1abcbafb493c3731a7c18dc3b72a2712b0b749d799f5d6767"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\results\\00000001-00480000-final.json",
+      "file": "closed-cpu-idle-app-r3/da1599e4c4a4aefe-00000001-00480000-final.json",
+      "bytes": 6023,
+      "sha256": "84a05d39d1dfb30a8b8e00dba5f8f66382cca645a8b52bc4f3ccc6ec709045aa"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\results\\00000002-00080000-draft.json",
+      "file": "closed-cpu-idle-app-r3/f41b0b16497c5937-00000002-00080000-draft.json",
+      "bytes": 3060,
+      "sha256": "a42aa72f3953e3a1061a10d9a5e37318c5dc9f9e78c7ff18e069ebcc48cdd8ed"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\results\\00000002-00244000-final.json",
+      "file": "closed-cpu-idle-app-r3/9bd8f6dc41123ce0-00000002-00244000-final.json",
+      "bytes": 3635,
+      "sha256": "514281cc1b5f4e22114005bede7701505654336ee375375874f34e9a3696abc7"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r1\\invalid.json",
+      "file": "closed-windows-reader-retry-r1/31a565ffb235defb-invalid.json",
+      "bytes": 1,
+      "sha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r1\\published.json",
+      "file": "closed-windows-reader-retry-r1/e125f1ac21e24e1f-published.json",
+      "bytes": 24,
+      "sha256": "8a1cc7127a13876236238a0bf5c3f2b23756b70e5422f2fef8cc84fe66ca5beb"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r1\\result.json",
+      "file": "closed-windows-reader-retry-r1/15e9eff7f314a332-result.json",
+      "bytes": 329,
+      "sha256": "bd5be538237854263333251a0646ee9e989429ddd662722b59a5a5801e161834"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r2\\invalid.json",
+      "file": "closed-windows-reader-retry-r2/ccde9231eacacda3-invalid.json",
+      "bytes": 1,
+      "sha256": "021fb596db81e6d02bf3d2586ee3981fe519f275c0ac9ca76bbcf2ebb4097d96"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r2\\published.json",
+      "file": "closed-windows-reader-retry-r2/8bbd040c753e0084-published.json",
+      "bytes": 24,
+      "sha256": "8a1cc7127a13876236238a0bf5c3f2b23756b70e5422f2fef8cc84fe66ca5beb"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r2\\result.json",
+      "file": "closed-windows-reader-retry-r2/5210b18339587cb4-result.json",
+      "bytes": 344,
+      "sha256": "6cc8931b5afaa9842ef84fd516a6a6f60db723320175bb19a02da21e90408b1d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\training-source-audit.json",
+      "file": "training-readiness-not-model-progress/136c8628cf7e6909-training-source-audit.json",
+      "bytes": 2924,
+      "sha256": "e2b78650603e2df4abe2ddae8966267c7f6477f592f5b0ca856792287c51b43e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-parameter-coverage.json",
+      "file": "training-readiness-not-model-progress/1d51685291ff7e35-acoustic-parameter-coverage.json",
+      "bytes": 2491,
+      "sha256": "a977e5188177ccddc21251315efcb3537b0a7a0f155aad46abfc6285fb5f9827"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r5\\package.json",
+      "file": "internal-expiring-fixture-only/27491698e3cd79da-package.json",
+      "bytes": 13363,
+      "sha256": "1725f7e70dfb84a2b6570175a8700d3611f3cbb2e0778ed82b66990491c3a797"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r5\\bundle.json",
+      "file": "internal-expiring-fixture-only/e117bf0e5f85ce5c-bundle.json",
+      "bytes": 8002,
+      "sha256": "6a4b8e97aa80b2f899a94f0d9289d3a5bb8ee5acf6e41ef0b26b7a9b04f41234"
+    },
+    {
+      "source": "work\\prepare_cpu_alignment_control_20261116.py",
+      "file": "work-source/5930c59c5fbe02b3-prepare_cpu_alignment_control_20261116.py",
+      "bytes": 3739,
+      "sha256": "bdecdea62b94639cfcea91b1a2b4107f242c83d79929e4af7b4bc967b44b5c7e"
+    },
+    {
+      "source": "work\\start_cpu_alignment_after_whole_20261116.py",
+      "file": "work-source/406ecd06f1b963f8-start_cpu_alignment_after_whole_20261116.py",
+      "bytes": 2985,
+      "sha256": "75df47a8ceb927d00cb40808f35fcd211d5162dff8c9d09a6404e9f1845bf1ff"
+    },
+    {
+      "source": "work\\start_cpu_alignment_control_r2_20261116.py",
+      "file": "work-source/5a4d6bd376d29b6e-start_cpu_alignment_control_r2_20261116.py",
+      "bytes": 2925,
+      "sha256": "0566886b069d9e8172f1a2f4872ef96e9eb61655ba20e8da0941f65f49ad0771"
+    },
+    {
+      "source": "work\\prepare_retained_baseline_cpu_alignment_20261116.py",
+      "file": "work-source/974438c2b0a7e2cb-prepare_retained_baseline_cpu_alignment_20261116.py",
+      "bytes": 7835,
+      "sha256": "349f320bf045a16264613cd53dea8e8b6028992b3b2898db64c83d08d56d4c93"
+    },
+    {
+      "source": "work\\run_retained_baseline_cpu_alignment_20261116.py",
+      "file": "work-source/9a8e5a29273c401f-run_retained_baseline_cpu_alignment_20261116.py",
+      "bytes": 3951,
+      "sha256": "f0d6dd211118f1ae89c9151539d2e763946f0aabfe9e2cd87c223e936a98901b"
+    },
+    {
+      "source": "work\\recover_cpu_alignment_process_batches_20261116.py",
+      "file": "work-source/e1d67da77c3024ba-recover_cpu_alignment_process_batches_20261116.py",
+      "bytes": 6450,
+      "sha256": "284524513d0c7b5ddc97ac8b54076a4817f3d1dfc90362d0d7d423121f805a17"
+    },
+    {
+      "source": "work\\reuse_established_cpu_speaker_join_20261116.py",
+      "file": "work-source/c4f483d44641237b-reuse_established_cpu_speaker_join_20261116.py",
+      "bytes": 4161,
+      "sha256": "b829132ffc71bc9c045265249c85c330028fa1ef6591d2a1163988e3d997b5ce"
+    },
+    {
+      "source": "work\\reuse_established_cpu_speaker_join_r4_20261116.py",
+      "file": "work-source/1ef698e64ff51e90-reuse_established_cpu_speaker_join_r4_20261116.py",
+      "bytes": 4221,
+      "sha256": "9a9776282910ada742577a248a94f41c2f70ee8d89c94a8de8a3bd970d4719e6"
+    },
+    {
+      "source": "work\\run_established_join_r4_20261116.py",
+      "file": "work-source/35074f1118459068-run_established_join_r4_20261116.py",
+      "bytes": 695,
+      "sha256": "e0c1c76fc8d48bcd3113792435566fe9041687bcbe7220ddf1d54197dc50317c"
+    },
+    {
+      "source": "work\\prepare_cpu_idle_model_release_20261116.py",
+      "file": "work-source/32259cf8e70b33e9-prepare_cpu_idle_model_release_20261116.py",
+      "bytes": 3038,
+      "sha256": "dfcc2fc48a8cad616d0bd3e0796cbdf028b6176dfe7d4d9bf934268b745460e5"
+    },
+    {
+      "source": "work\\run_cpu_idle_application_20261116.py",
+      "file": "work-source/1345b67e550d5302-run_cpu_idle_application_20261116.py",
+      "bytes": 9060,
+      "sha256": "5c47b95e6f18a5d98eaa4f9c7fb62fe8214ba4082ceed3d32e4f7acd5c7986ff"
+    },
+    {
+      "source": "work\\resume_cpu_idle_application_20261116.py",
+      "file": "work-source/908f0ca758a998bf-resume_cpu_idle_application_20261116.py",
+      "bytes": 7783,
+      "sha256": "26ae81601affe0154e79c7de52fbc1fb6d266d476f7d03794bfb1b2b86f31280"
+    },
+    {
+      "source": "work\\check_windows_json_reader_retry_20261116.py",
+      "file": "work-source/d7b35d897fa030d2-check_windows_json_reader_retry_20261116.py",
+      "bytes": 2032,
+      "sha256": "77e7d8a49694980aca2561f797ba569eafdae8867a21dbab454bb91fb5ccacdd"
+    },
+    {
+      "source": "work\\audit_cpu_gpu_alignment_outputs_20261116.py",
+      "file": "work-source/1e05304e48a0a6b7-audit_cpu_gpu_alignment_outputs_20261116.py",
+      "bytes": 3031,
+      "sha256": "8d97687fc61bef669d0bb04695ff5787a44f7bf965e7dcb1a1fdf5cb335cd2f8"
+    },
+    {
+      "source": "work\\audit_official_training_entry_20261116.py",
+      "file": "work-source/b4b133dadb336d84-audit_official_training_entry_20261116.py",
+      "bytes": 3631,
+      "sha256": "9fa08f8a2ab4a290bc34694c9905dec8c6d04f0006beed00e1c8ba945ff7093b"
+    },
+    {
+      "source": "work\\audit_acoustic_parameter_coverage_20261116.py",
+      "file": "work-source/5af3f0574cfaa46b-audit_acoustic_parameter_coverage_20261116.py",
+      "bytes": 3452,
+      "sha256": "fdd23f36ee8548afa6ffcafa34004ef25aa9c2ccac9f1c3f128da134af9a5629"
+    },
+    {
+      "source": "work\\record_cpu_afternoon_results_20261116.py",
+      "file": "work-source/67cda2c1ee8cd280-record_cpu_afternoon_results_20261116.py",
+      "bytes": 10295,
+      "sha256": "453afe0d0c8167751afbf8d6769a401b65f65ac15abbfad4e960670f1a3d8cf2"
+    },
+    {
+      "source": "work\\prepare_cpu_internal_app_fixture_frozen_r4_20261116.py",
+      "file": "work-source/92894494ca57fab1-prepare_cpu_internal_app_fixture_frozen_r4_20261116.py",
+      "bytes": 7479,
+      "sha256": "91bff12b071318236ff391b8078097d011a5bc8f1df7d025f95cdd5bd3220dd4"
+    },
+    {
+      "source": "work\\prepare_cpu_internal_app_fixture_frozen_r5_20261116.py",
+      "file": "work-source/8597e78c2517c0ec-prepare_cpu_internal_app_fixture_frozen_r5_20261116.py",
+      "bytes": 7479,
+      "sha256": "e4d273abe5f8ef2a1b6c4955afee3134b0606dd440a97ba0518a6da8daddeb58"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "file": "progress-snapshot/e560a1b1fa7bdeea-bilingual_progress.json",
+      "bytes": 339771,
+      "sha256": "1095b396a0de38e0bda8e941b3b74db1a932169262ad0e67ab5b3817c1d430ee"
+    },
+    {
+      "source": "work\\cpu-checkpoint43.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 126182,
+      "sha256": "1f77d19d5a0a0f380e35352f714c44082926b354960b26e28c8858f65faaf675"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/companion_local_pcm_session_20261114.py": "182006e169fd89ab4fdc5990f3b76138a49181863c4db3ccb26d23c18f0dc7b9",
+    "src/companion_local_moss_cpu_worker_20261116.py": "b743c30e2ea020a5a5d18bf9365c8cd68d6173068f29c44931ef4c5c3feb5107",
+    "src/cpu_forced_alignment_worker_20261116.py": "a68837b3121e7467ca6db0f188866ac54572a41e33e2f278fb9c18f5e83cddff",
+    "src/compose_cpu_qwen_alignment_20261116.py": "8c60c903e3f44088b13954a34e04cb5c0432a923075b7b47c55edb1d26b3c39b",
+    "src/score_cpu_qwen_alignment_20261116.py": "0082636a785d700fed5213ff5ecb39d3681ef07b268fe93097e74183a9dc0344",
+    "src/compose_cpu_established_speaker_join_20261116.py": "b041af8c8a543fd731bb2d74cfd4d8b032230bda867915593bb0b35a66a9a2dc"
+  },
+  "state": "CPU_COMPONENTS_AND_IDLE_MEMORY_VERIFIED_BILINGUAL_MODEL_QUALITY_REJECTED_NO_DEFAULT_PROMOTION",
+  "cpuChinesePortBothWholeRegressionsRetained": true,
+  "retainedNativeGpuAsrNotMisreportedAsCpuAsr": true,
+  "cpuAlignmentContinuousVoicesOnRetainedTextPassedSharedRustContract": true,
+  "idleModelResidentMemoryDroppedToAbout41MiBAndActualResumeCachePassed": true,
+  "nativeUiAndCardNotTested": true,
+  "privateGuardFailureAndProvisionalAssemblerFailureRetained": true,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "productDefaultChanged": false,
+  "finalHoldoutOpened": false,
+  "rawTrainingAudioAndLabelJsonlExcludedFromGit": true,
+  "modelAndRuntimeBinaryFilesExcludedFromGit": true
+}

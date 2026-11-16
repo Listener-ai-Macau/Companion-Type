@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0021",
+    "meeting": "20200623_S_R001S07C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\20200623_S_R001S07C01-fixed30-0021.wav",
+    "wavSha256": "8dc897c9ad5c2f830ca13f5becf38482af536315ba9fefe4480b43668a9889d2",
+    "pcmSha256": "949938d66037e9de5b674921c614c82a0967284e9727151a339074b2c1330ba3",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 10080000,
+    "sourceEndFrame": 10560000
+  },
+  "seconds": 11.255773599994427,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "还三年，你这样总体总体下来的金额要更多了，但是没有办法呀，他的收入达不到那个，所以说他只能只能选择长期，对。加了这个分期这个呃时间，我们对分期啊，让自己自己，因为因为我们告知他了，对吧？你你不还，如果你一味的欠着不还，就会形成你征信。",
+    "raw_text": "language Chinese<asr_text>还三年，你这样总体总体下来的金额要更多了，但是没有办法呀，他的收入达不到那个，所以说他只能只能选择长期，对。加了这个分期这个呃时间，我们对分期啊，让自己自己，因为因为我们告知他了，对吧？你你不还，如果你一味的欠着不还，就会形成你征信。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "还三年，你这样总体总体下来的金额要更多了，但是没有办法呀，他的收入达不到那个，所以说他只能只能选择长期，对。加了这个分期这个呃时间，我们对分期啊，让自己自己，因为因为我们告知他了，对吧？你你不还，如果你一味的欠着不还，就会形成你征信。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 20.559999465942383,
+      "encode_ms": 2149.80908203125,
+      "decode_ms": 8990.0537109375
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>还三年，你这样总体总体下来的金额要更多了，但是没有办法呀，他的收入达不到那个，所以说他只能只能选择长期，对。加了这个分期这个呃时间，我们对分期啊，让自己自己，因为因为我们告知他了，对吧？你你不还，如果你一味的欠着不还，就会形成你征信。",
+  "hypothesis": "还三年，你这样总体总体下来的金额要更多了，但是没有办法呀，他的收入达不到那个，所以说他只能只能选择长期，对。加了这个分期这个呃时间，我们对分期啊，让自己自己，因为因为我们告知他了，对吧？你你不还，如果你一味的欠着不还，就会形成你征信。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

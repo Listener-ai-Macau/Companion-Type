@@ -1,0 +1,74 @@
+{
+  "state": "COMPLETE_RETAINED_NATIVE_ASR_CPU_ALIGNMENT_VOICES_FULL_RECORDING_CHARACTERIZATION_NOT_QUALIFIED",
+  "startedAt": "2026-11-16T14:50:38.847473+08:00",
+  "reusedLeaves": 61,
+  "completedRecoveryBatches": [
+    {
+      "batch": {
+        "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\batch-0",
+        "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0",
+        "cases": [
+          "000061-root",
+          "000062-root",
+          "000063-root",
+          "000064-root",
+          "000065-root",
+          "000066-root",
+          "000067-root",
+          "000068-root",
+          "000069-root",
+          "000070-root",
+          "000071-root",
+          "000072-root",
+          "000073-root",
+          "000074-root",
+          "000075-root",
+          "000076-root"
+        ]
+      },
+      "execution": {
+        "state": "COMPLETE_NATIVE_CPU_ALIGNMENT_CHARACTERS_PRESERVED_NOT_TIME_QUALIFIED",
+        "startedAt": "2026-11-16T14:51:38.979701+08:00",
+        "privatePeakBytes": 1316294656,
+        "familyWorkingSetPeakBytes": 1890828288,
+        "systemAvailableMinBytes": 5584785408,
+        "qualityQualified": false,
+        "automaticRetries": 0,
+        "neuralDeadline": "2026-11-16T15:40:00+08:00",
+        "pid": 25344,
+        "pidCreatedAt": 1794811898.9883983,
+        "workerExitCode": 0,
+        "completedInputs": 16,
+        "finishedAt": "2026-11-16T14:52:55.907223+08:00"
+      }
+    },
+    {
+      "batch": {
+        "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\batch-1",
+        "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1",
+        "cases": [
+          "000077-root",
+          "000078-root"
+        ]
+      },
+      "execution": {
+        "state": "COMPLETE_NATIVE_CPU_ALIGNMENT_CHARACTERS_PRESERVED_NOT_TIME_QUALIFIED",
+        "startedAt": "2026-11-16T14:52:56.021405+08:00",
+        "privatePeakBytes": 682360832,
+        "familyWorkingSetPeakBytes": 1890795520,
+        "systemAvailableMinBytes": 5747593216,
+        "qualityQualified": false,
+        "automaticRetries": 0,
+        "neuralDeadline": "2026-11-16T15:40:00+08:00",
+        "pid": 19480,
+        "pidCreatedAt": 1794811976.024202,
+        "workerExitCode": 0,
+        "completedInputs": 2,
+        "finishedAt": "2026-11-16T14:53:11.367025+08:00"
+      }
+    }
+  ],
+  "qualityQualified": false,
+  "sharedRustDocumentContractPassed": false,
+  "finishedAt": "2026-11-16T14:53:16.012534+08:00"
+}

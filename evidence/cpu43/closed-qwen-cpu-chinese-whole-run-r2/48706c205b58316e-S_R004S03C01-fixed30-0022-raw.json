@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0022",
+    "meeting": "S_R004S03C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\S_R004S03C01-fixed30-0022.wav",
+    "wavSha256": "85a669a9ee834b2d18f62ccedee1e59c303af692328b5d57615ac23228475926",
+    "pcmSha256": "92b340a2141916306d826f61cacf3d61ddc8b7136f03004ca27d0e0b825df670",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 10560000,
+    "sourceEndFrame": 11040000
+  },
+  "seconds": 12.513705899997149,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "根本就没有时间去洗菜摘菜去，这样呢就是提给他们提供了一些方便。完了以后呢，他们来超市买，买完了以后回去好来洗一下，就可以就是那个嗯，就可以炒菜吃了，就是方便他们嘛。呃，针对这些人群，我们也有一个这样的一个策划。嗯，再一个就是我们还超市有一个，就是买蔬菜区的话，呃，就是买买够买够三十的话，我们就是针对。",
+    "raw_text": "language Chinese<asr_text>根本就没有时间去洗菜摘菜去，这样呢就是提给他们提供了一些方便。完了以后呢，他们来超市买，买完了以后回去好来洗一下，就可以就是那个嗯，就可以炒菜吃了，就是方便他们嘛。呃，针对这些人群，我们也有一个这样的一个策划。嗯，再一个就是我们还超市有一个，就是买蔬菜区的话，呃，就是买买够买够三十的话，我们就是针对。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "根本就没有时间去洗菜摘菜去，这样呢就是提给他们提供了一些方便。完了以后呢，他们来超市买，买完了以后回去好来洗一下，就可以就是那个嗯，就可以炒菜吃了，就是方便他们嘛。呃，针对这些人群，我们也有一个这样的一个策划。嗯，再一个就是我们还超市有一个，就是买蔬菜区的话，呃，就是买买够买够三十的话，我们就是针对。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 28.80900001525879,
+      "encode_ms": 2138.694091796875,
+      "decode_ms": 10255.59375
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>根本就没有时间去洗菜摘菜去，这样呢就是提给他们提供了一些方便。完了以后呢，他们来超市买，买完了以后回去好来洗一下，就可以就是那个嗯，就可以炒菜吃了，就是方便他们嘛。呃，针对这些人群，我们也有一个这样的一个策划。嗯，再一个就是我们还超市有一个，就是买蔬菜区的话，呃，就是买买够买够三十的话，我们就是针对。",
+  "hypothesis": "根本就没有时间去洗菜摘菜去，这样呢就是提给他们提供了一些方便。完了以后呢，他们来超市买，买完了以后回去好来洗一下，就可以就是那个嗯，就可以炒菜吃了，就是方便他们嘛。呃，针对这些人群，我们也有一个这样的一个策划。嗯，再一个就是我们还超市有一个，就是买蔬菜区的话，呃，就是买买够买够三十的话，我们就是针对。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

@@ -1,0 +1,38 @@
+{
+  "state": "PREPARED_ONE_RETAINED_NATIVE_ASR_FULL_MEETING_CPU_CLASSIFIER_PILOT_THEN_FULL_NOT_NEW_ASR",
+  "at": "2026-11-16T14:38:57.881862+08:00",
+  "leaves": 79,
+  "frames": 37233904,
+  "originalRawTextErrors": {
+    "referenceUnits": 8325,
+    "hypothesisUnits": 8205,
+    "errors": 461,
+    "errorRate": 0.055375375375375374,
+    "counts": {
+      "replace": 225,
+      "delete": 178,
+      "insert": 58
+    }
+  },
+  "sourceAsrBackendIsPreviousGpu": true,
+  "wholePipelineCpuRerun": false,
+  "failedQ8WholeExpansion": false,
+  "noTrainingOrQualityImprovementClaim": true,
+  "newNeuralCalls": 0,
+  "limits": {
+    "pid": 28252,
+    "cpuRate": 100,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 1.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 91176960,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

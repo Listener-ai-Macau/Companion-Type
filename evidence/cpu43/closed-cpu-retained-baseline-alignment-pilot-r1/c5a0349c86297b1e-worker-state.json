@@ -1,0 +1,48 @@
+{
+  "state": "COMPLETE_NATIVE_CPU_ALIGNMENT_CHARACTERS_PRESERVED_NOT_TIME_QUALIFIED",
+  "startedAt": "2026-11-16T14:40:53.671257+08:00",
+  "completed": [
+    {
+      "id": "000000-root",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\000000-root-alignment.json",
+      "sha256": "fde9906550c39bfeea9633c68bc75323b2c819d98c4a272f71c61a87a9b67c85",
+      "seconds": 3.2323669999968843
+    }
+  ],
+  "newNeuralCalls": 1,
+  "modelLoaded": true,
+  "newWeightTraining": false,
+  "referenceWordsRead": false,
+  "speakerLabelsRead": false,
+  "qualityQualified": false,
+  "workingSetControl": {
+    "minimumBytes": 204800,
+    "maximumBytes": 1879048192,
+    "flags": 6,
+    "maximumEnforced": true,
+    "scope": "Current owned worker process only; no global/other-process/registry changes."
+  },
+  "limits": {
+    "pid": 10124,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 791822336,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "torchVersion": "2.11.0+cpu",
+  "torchModule": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-r2\\torch-cpu-site\\torch\\__init__.py",
+  "cudaCompiled": false,
+  "hipCompiled": false,
+  "transformersVersion": "5.22.1",
+  "modelLoadSeconds": 1.7315228000006755,
+  "finishedAt": "2026-11-16T14:41:04.993768+08:00"
+}

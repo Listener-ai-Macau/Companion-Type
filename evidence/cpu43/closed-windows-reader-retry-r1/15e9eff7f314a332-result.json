@@ -1,0 +1,8 @@
+{
+  "state": "PASS_WINDOWS_TEMPORARY_READER_DENIAL_BOUNDED_RETRY_PERMANENT_DENIAL_AND_CORRUPT_JSON_STILL_FAIL",
+  "temporaryDenialSeconds": 0.25,
+  "permanentDenialSeconds": 3.0,
+  "sourceBytesUnchanged": true,
+  "newNeuralCalls": 0,
+  "helperSha256": "8249d9a8112327e340a076a8c4a36dfa343d825b8e98b66920d4a8a0f4ad2abf"
+}

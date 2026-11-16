@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0021",
+    "meeting": "S_R004S03C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\S_R004S03C01-fixed30-0021.wav",
+    "wavSha256": "e6b1284caba15f3e7dcbefc43ee941939ffe7451300b7909d38e34e16f013a96",
+    "pcmSha256": "71ad8006f31859c3b49bacd35183c98371eb3e621b423d13c8f81c9d26a8eca9",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 10080000,
+    "sourceEndFrame": 10560000
+  },
+  "seconds": 12.900830099999439,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "我们针对的客户程度不同，呃，比如说有的人他就是着急买菜呀，他就是需要我们已经精装包好的，就是说，呃，也回家也不需要摘。完了以后呢，我们就是超市有专门的这项服务，呃，然后就是提前就是把菜洗干净，给它包装好。当然了，这个价格上呢也会稍微的高一点，呃，比普通的菜呢要高一点。针对一些像年轻的人群啊，他们回家以后。",
+    "raw_text": "language Chinese<asr_text>我们针对的客户程度不同，呃，比如说有的人他就是着急买菜呀，他就是需要我们已经精装包好的，就是说，呃，也回家也不需要摘。完了以后呢，我们就是超市有专门的这项服务，呃，然后就是提前就是把菜洗干净，给它包装好。当然了，这个价格上呢也会稍微的高一点，呃，比普通的菜呢要高一点。针对一些像年轻的人群啊，他们回家以后。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "我们针对的客户程度不同，呃，比如说有的人他就是着急买菜呀，他就是需要我们已经精装包好的，就是说，呃，也回家也不需要摘。完了以后呢，我们就是超市有专门的这项服务，呃，然后就是提前就是把菜洗干净，给它包装好。当然了，这个价格上呢也会稍微的高一点，呃，比普通的菜呢要高一点。针对一些像年轻的人群啊，他们回家以后。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 28.214000701904297,
+      "encode_ms": 2268.593017578125,
+      "decode_ms": 10506.3564453125
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>我们针对的客户程度不同，呃，比如说有的人他就是着急买菜呀，他就是需要我们已经精装包好的，就是说，呃，也回家也不需要摘。完了以后呢，我们就是超市有专门的这项服务，呃，然后就是提前就是把菜洗干净，给它包装好。当然了，这个价格上呢也会稍微的高一点，呃，比普通的菜呢要高一点。针对一些像年轻的人群啊，他们回家以后。",
+  "hypothesis": "我们针对的客户程度不同，呃，比如说有的人他就是着急买菜呀，他就是需要我们已经精装包好的，就是说，呃，也回家也不需要摘。完了以后呢，我们就是超市有专门的这项服务，呃，然后就是提前就是把菜洗干净，给它包装好。当然了，这个价格上呢也会稍微的高一点，呃，比普通的菜呢要高一点。针对一些像年轻的人群啊，他们回家以后。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

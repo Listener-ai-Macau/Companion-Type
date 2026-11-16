@@ -1,0 +1,14 @@
+{
+  "state": "INCOMPLETE_CPU_ALIGNMENT_RETAINED",
+  "startedAt": "2026-11-16T14:42:06.559865+08:00",
+  "privatePeakBytes": 2899738624,
+  "familyWorkingSetPeakBytes": 1902370816,
+  "systemAvailableMinBytes": 2453118976,
+  "qualityQualified": false,
+  "automaticRetries": 0,
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "pid": 32356,
+  "pidCreatedAt": 1794811326.562198,
+  "error": "MemoryError('Original2GiB family private guard')",
+  "finishedAt": "2026-11-16T14:46:56.453821+08:00"
+}

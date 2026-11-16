@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0077",
+    "meeting": "S_R004S03C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\S_R004S03C01-fixed30-0077.wav",
+    "wavSha256": "3fc34ceb60231d6824d744b8b6856a34b3f99deba7bb94f5f806b51b07b6758b",
+    "pcmSha256": "6d1d938f1d2947be824118045a6034ffe66ec1c6b58f819bc3f11fa10855efc0",
+    "frames": 273904,
+    "audioSeconds": 17.119,
+    "sourceStartFrame": 36960000,
+    "sourceEndFrame": 37233904
+  },
+  "seconds": 3.9950833000038983,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "",
+    "raw_text": "language None<asr_text>",
+    "language": "",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "",
+        "t0_ms": 0,
+        "t1_ms": 17119,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 12.611000061035156,
+      "encode_ms": 1245.5570068359375,
+      "decode_ms": 2643.126953125
+    }
+  },
+  "rawDecoded": "language None<asr_text>",
+  "hypothesis": "",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

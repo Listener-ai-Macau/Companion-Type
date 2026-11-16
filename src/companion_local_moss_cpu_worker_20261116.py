@@ -1,7 +1,7 @@
 """Candidate CPU consumer for the existing durable incremental/offline PCM session."""
 from pathlib import Path
 from datetime import datetime
-import argparse,ctypes,dataclasses,hashlib,json,os,sys,threading,time
+import argparse,contextlib,ctypes,dataclasses,gc,hashlib,json,os,sys,threading,time,psutil
 os.environ.update(OMP_NUM_THREADS='4',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='4',TRANSCRIBE_NO_REPETITION_GUARD='1')
 from moss_windows_resource_limits_20261104 import WorkerLimits,CpuRate
 from practical_io_20261107 import atomic_json
@@ -62,8 +62,9 @@ def main():
    'generation':'Unmodified native greedy/EOS, f16 KV, no repetition guard or word postediting.'}
   for file in (session.root/'results').glob('*.json'):
    assert read_json(file)['inferenceBinding']==inference_binding,'Preserve the old session; cached model/runtime/language policy differs'
-  with cpp.Model(B['model']['file'],backend='cpu',no_mmap=False) as model:
-   assert model.device.kind=='cpu';state.update(backend=model.backend,device=model.device.description);save()
+  idle_seconds=B.get('modelIdleReleaseSeconds',15.);assert 15<=idle_seconds<=60
+  model=None;last_busy=time.monotonic();state.update(modelLoaded=False,modelLoads=0,idleModelReleases=0,idleReleaseSeconds=idle_seconds)
+  with contextlib.ExitStack() as models:
    while True:
     if stopping():raise InterruptedError('Owned stop/deadline; confirmed PCM and immutable results retained')
     jobs=scheduled_jobs(session)
@@ -72,7 +73,17 @@ def main():
      if document['isFinal']:break
      if session.state()['sealed']:state['state']='CPU_PCM_SEALED_WITH_UNACCEPTED_OUTPUTS_RETAINED';break
      if time.monotonic()-began>=a.follow_seconds:state['state']='CPU_PCM_FOLLOW_WINDOW_ENDED_SOURCE_RETAINED';break
+     if model is not None and time.monotonic()-last_busy>=idle_seconds:
+      before=psutil.Process().memory_info();models.close();model=None;gc.collect();after=psutil.Process().memory_info()
+      state.update(state='CPU_PCM_IDLE_MODEL_RELEASED_SOURCE_AND_RESULTS_RETAINED',modelLoaded=False,idleModelReleases=state['idleModelReleases']+1,
+       lastIdleRelease={'at':datetime.now().astimezone().isoformat(),'beforeWorkingSetBytes':before.rss,'afterWorkingSetBytes':after.rss,
+        'beforePrivateBytes':before.private,'afterPrivateBytes':after.private,'confirmedFrames':session.state()['confirmedFrames']});save()
      time.sleep(.25);continue
+    if model is None:
+     if psutil.virtual_memory().available<int(3.18*1024**3):
+      state['state']='CPU_PCM_WAITING_ORIGINAL_RAM_START_GATE_BEFORE_MODEL_RELOAD';save();time.sleep(.25);continue
+     model=models.enter_context(cpp.Model(B['model']['file'],backend='cpu',no_mmap=False));assert model.device.kind=='cpu'
+     state.update(modelLoaded=True,modelLoads=state['modelLoads']+1,backend=model.backend,device=model.device.description);save()
     job=jobs[0];pcm=session.read_request_pcm(job);samples=np.frombuffer(pcm,dtype='<i2').astype(np.float32)/32768
     state.update(state='RUNNING_CANDIDATE_CPU_PCM_REQUEST',activeJob=job['jobId']);save();tick=time.perf_counter();result=None;semantic_error=None;aborted_error=None
     with model.session(n_threads=4,kv_type='f16',n_ctx=65536) as native:
@@ -98,7 +109,7 @@ def main():
     session.save_result(job,payload,inference_binding=inference_binding)
     document=session.document();atomic_json(a.run/'document.json',document,progress=True)
     state['completed'].append({'job':job['jobId'],'block':job['block'],'blockFinal':job['blockFinal'],'inputFrames':job['endFrame']-job['startFrame'],
-     'seconds':payload['seconds'],'accepted':payload['accepted'],'resultFile':str(session.root/'results'/(job['jobId']+'.json'))});save()
+     'seconds':payload['seconds'],'accepted':payload['accepted'],'resultFile':str(session.root/'results'/(job['jobId']+'.json'))});last_busy=time.monotonic();save()
    if session.document()['isFinal']:state['state']='COMPLETE_CPU_PCM_FINAL_TEXT_SPEAKERS_PENDING_NOT_QUALIFIED'
  except BaseException as error:state.update(state='INCOMPLETE_CPU_PCM_RETAINED',error=repr(error));raise
  finally:state['finishedAt']=datetime.now().astimezone().isoformat();save();cookie.close()

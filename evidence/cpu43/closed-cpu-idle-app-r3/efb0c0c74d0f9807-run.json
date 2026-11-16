@@ -1,0 +1,17 @@
+{
+  "state": "CPU_PCM_ATTEMPT_COMPLETE_REVIEW_PENDING",
+  "startedAt": "2026-11-16T15:08:26.664045+08:00",
+  "privatePeakBytes": 739684352,
+  "familyWorkingSetPeakBytes": 2214256640,
+  "systemAvailableMinBytes": 9598730240,
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "productDefaultChanged": false,
+  "automaticRetries": 0,
+  "pid": 20828,
+  "pidCreatedAt": 1794812906.6672316,
+  "workerExitCode": 0,
+  "workerState": "COMPLETE_CPU_PCM_FINAL_TEXT_SPEAKERS_PENDING_NOT_QUALIFIED",
+  "finishedAt": "2026-11-16T15:09:31.220125+08:00"
+}

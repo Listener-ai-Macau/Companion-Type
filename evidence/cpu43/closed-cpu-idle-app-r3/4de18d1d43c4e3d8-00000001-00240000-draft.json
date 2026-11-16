@@ -1,0 +1,152 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000001-00240000-draft",
+    "recordingId": "75f8707c-47c2-4bbf-8ba8-0502820dd272",
+    "configSha256": "b8ac6f68635b26be58bec0984797f7fc05c38b6603998053fbfac3a3892cb99d",
+    "block": 1,
+    "startFrame": 480000,
+    "endFrame": 720000,
+    "sourcePcm": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\audio.pcm",
+    "pcmSha256": "ec1da49844b79196552227e3e66f0f178d4ce2b7745826536332ec8eb7b7912a",
+    "language": "auto",
+    "blockFinal": false,
+    "publishedAtMonotonic": 53502.785278,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "schema": "companion.local-moss-cpu.v1",
+    "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+    "nativeCommit": "275cd50",
+    "runtimeContractSha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff",
+    "workerSha256": "b743c30e2ea020a5a5d18bf9365c8cd68d6173068f29c44931ef4c5c3feb5107",
+    "languagePolicy": "Original bilingual model, language=None, no reference or count hints.",
+    "generation": "Unmodified native greedy/EOS, f16 KV, no repetition guard or word postediting."
+  },
+  "result": {
+    "text": "I'm sorry. Okay. Here we go. Excellent. Right.",
+    "language": null,
+    "rawGeneratedIds": [],
+    "tokenIdsAvailable": false,
+    "rawDecoded": "[4.41][S01]I'm sorry.[4.89][9.41][S02]Okay.[10.23][11.81][S03]Here we go.[12.15][12.86][S04]Excellent.[13.25][13.28][S02]Right.[13.61]",
+    "nativeResult": {
+      "text": "I'm sorry. Okay. Here we go. Excellent. Right.",
+      "raw_text": "[4.41][S01]I'm sorry.[4.89][9.41][S02]Okay.[10.23][11.81][S03]Here we go.[12.15][12.86][S04]Excellent.[13.25][13.28][S02]Right.[13.61]",
+      "language": "",
+      "timestamp_kind": "segment",
+      "segments": [
+        {
+          "text": "I'm sorry.",
+          "t0_ms": 4410,
+          "t1_ms": 4890,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        },
+        {
+          "text": "Okay.",
+          "t0_ms": 9410,
+          "t1_ms": 10230,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 2
+        },
+        {
+          "text": "Here we go.",
+          "t0_ms": 11810,
+          "t1_ms": 12150,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 3
+        },
+        {
+          "text": "Excellent.",
+          "t0_ms": 12860,
+          "t1_ms": 13250,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 4
+        },
+        {
+          "text": "Right.",
+          "t0_ms": 13280,
+          "t1_ms": 13610,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 2
+        }
+      ],
+      "speaker_segments": [
+        {
+          "t0_ms": 4410,
+          "t1_ms": 4890,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 9410,
+          "t1_ms": 10230,
+          "speaker_id": 2,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 11810,
+          "t1_ms": 12150,
+          "speaker_id": 3,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 12860,
+          "t1_ms": 13250,
+          "speaker_id": 4,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 13280,
+          "t1_ms": 13610,
+          "speaker_id": 2,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        }
+      ],
+      "words": [],
+      "tokens": [],
+      "timings": {
+        "load_ms": 220.1999969482422,
+        "mel_ms": 15.673999786376953,
+        "encode_ms": 6047.8798828125,
+        "decode_ms": 4618.296875
+      }
+    },
+    "naturalEos": true,
+    "accepted": true,
+    "reviewRequired": true,
+    "seconds": 10.712565699999686,
+    "rawSpeakerIdsAreLocalToThisRequest": true,
+    "speakerIdentityVerified": false,
+    "wordsRewritten": false,
+    "qualityQualified": false,
+    "semanticError": null,
+    "unconfirmedAudioIntervals": []
+  }
+}

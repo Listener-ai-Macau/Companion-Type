@@ -1,0 +1,98 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00240000-draft",
+    "recordingId": "75f8707c-47c2-4bbf-8ba8-0502820dd272",
+    "configSha256": "b8ac6f68635b26be58bec0984797f7fc05c38b6603998053fbfac3a3892cb99d",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 240000,
+    "sourcePcm": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\audio.pcm",
+    "pcmSha256": "6ee11083cd3761d56c9b262ef1225c6e0982a424cd4f608daa55ffa5d5e9dbb9",
+    "language": "auto",
+    "blockFinal": false,
+    "publishedAtMonotonic": 53131.4256501,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "schema": "companion.local-moss-cpu.v1",
+    "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+    "nativeCommit": "275cd50",
+    "runtimeContractSha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff",
+    "workerSha256": "b743c30e2ea020a5a5d18bf9365c8cd68d6173068f29c44931ef4c5c3feb5107",
+    "languagePolicy": "Original bilingual model, language=None, no reference or count hints.",
+    "generation": "Unmodified native greedy/EOS, f16 KV, no repetition guard or word postediting."
+  },
+  "result": {
+    "text": "Just put it on the desk, all I see is desktop. No, on the desktop you'll find you should find that there's a project documents link.",
+    "language": null,
+    "rawGeneratedIds": [],
+    "tokenIdsAvailable": false,
+    "rawDecoded": "[4.31][S01]Just put it on the desk, all I see is desktop.[6.61][7.04][S02]No, on the desktop you'll find you should find that there's a project documents link.[11.51]",
+    "nativeResult": {
+      "text": "Just put it on the desk, all I see is desktop. No, on the desktop you'll find you should find that there's a project documents link.",
+      "raw_text": "[4.31][S01]Just put it on the desk, all I see is desktop.[6.61][7.04][S02]No, on the desktop you'll find you should find that there's a project documents link.[11.51]",
+      "language": "",
+      "timestamp_kind": "segment",
+      "segments": [
+        {
+          "text": "Just put it on the desk, all I see is desktop.",
+          "t0_ms": 4310,
+          "t1_ms": 6610,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        },
+        {
+          "text": "No, on the desktop you'll find you should find that there's a project documents link.",
+          "t0_ms": 7040,
+          "t1_ms": 11510,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 2
+        }
+      ],
+      "speaker_segments": [
+        {
+          "t0_ms": 4310,
+          "t1_ms": 6610,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 7040,
+          "t1_ms": 11510,
+          "speaker_id": 2,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        }
+      ],
+      "words": [],
+      "tokens": [],
+      "timings": {
+        "load_ms": 223.94200134277344,
+        "mel_ms": 14.086000442504883,
+        "encode_ms": 6618.78076171875,
+        "decode_ms": 3767.90087890625
+      }
+    },
+    "naturalEos": true,
+    "accepted": true,
+    "reviewRequired": true,
+    "seconds": 10.432528700002877,
+    "rawSpeakerIdsAreLocalToThisRequest": true,
+    "speakerIdentityVerified": false,
+    "wordsRewritten": false,
+    "qualityQualified": false,
+    "semanticError": null,
+    "unconfirmedAudioIntervals": []
+  }
+}

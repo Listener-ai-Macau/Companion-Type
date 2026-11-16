@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0048",
+    "meeting": "20200623_S_R001S07C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\20200623_S_R001S07C01-fixed30-0048.wav",
+    "wavSha256": "1365a5ef2b7cbecba62b37e0ca3c465aef5dc5ac33dc6a71ba1e804258ba038e",
+    "pcmSha256": "faf4d92058a4db57753bcb2421e4d3b2fee1003b4f0a4301c213bfc4a649c777",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 23040000,
+    "sourceEndFrame": 23520000
+  },
+  "seconds": 14.13651199999731,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "控制他这个车，所以提前都给告知，别到时候你开的车跑山里头了，发起我们这儿给锁住了，到期了你不还贷款，完了你你你在无人区嘛，你怎么办？对吧？都给告知。嗯。这个，嗯，提前的给他说好借款协议。对。嗯，还有就是咱们这个，目前咱这个，嗯，刚才。",
+    "raw_text": "language Chinese<asr_text>控制他这个车，所以提前都给告知，别到时候你开的车跑山里头了，发起我们这儿给锁住了，到期了你不还贷款，完了你你你在无人区嘛，你怎么办？对吧？都给告知。嗯。这个，嗯，提前的给他说好借款协议。对。嗯，还有就是咱们这个，目前咱这个，嗯，刚才。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "控制他这个车，所以提前都给告知，别到时候你开的车跑山里头了，发起我们这儿给锁住了，到期了你不还贷款，完了你你你在无人区嘛，你怎么办？对吧？都给告知。嗯。这个，嗯，提前的给他说好借款协议。对。嗯，还有就是咱们这个，目前咱这个，嗯，刚才。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 22.48200035095215,
+      "encode_ms": 2875.887939453125,
+      "decode_ms": 11143.02734375
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>控制他这个车，所以提前都给告知，别到时候你开的车跑山里头了，发起我们这儿给锁住了，到期了你不还贷款，完了你你你在无人区嘛，你怎么办？对吧？都给告知。嗯。这个，嗯，提前的给他说好借款协议。对。嗯，还有就是咱们这个，目前咱这个，嗯，刚才。",
+  "hypothesis": "控制他这个车，所以提前都给告知，别到时候你开的车跑山里头了，发起我们这儿给锁住了，到期了你不还贷款，完了你你你在无人区嘛，你怎么办？对吧？都给告知。嗯。这个，嗯，提前的给他说好借款协议。对。嗯，还有就是咱们这个，目前咱这个，嗯，刚才。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

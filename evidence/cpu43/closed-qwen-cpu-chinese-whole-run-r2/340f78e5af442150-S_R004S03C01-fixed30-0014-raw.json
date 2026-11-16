@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0014",
+    "meeting": "S_R004S03C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\S_R004S03C01-fixed30-0014.wav",
+    "wavSha256": "2c1021c32af0f17f03a00bef565fa76f00cefceddd08f02a54f48c963a4d4cde",
+    "pcmSha256": "8fee8f8e4862809d898eacdf352ab3fb4ce420d2238ffac3d65ccd6d8b25b2e8",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 6720000,
+    "sourceEndFrame": 7200000
+  },
+  "seconds": 11.762037400003464,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "而且现在天也冷了，也也马上就要零下了。你去外面买菜，好多那个菜它都滴滴答答的，都有冻的那个冰凌茬儿。在我们超市是绝对不允许有这种情情况出现的。而且超市的商品呢，嗯，堆放呢，这个层次上也有要求，不能超过四层。层数太多的话，就是说给人眼睛观上去有一种呃不太好的这种感觉。而且这个上下呀，包括这个呃排放的顺序呀，也都",
+    "raw_text": "language Chinese<asr_text>而且现在天也冷了，也也马上就要零下了。你去外面买菜，好多那个菜它都滴滴答答的，都有冻的那个冰凌茬儿。在我们超市是绝对不允许有这种情情况出现的。而且超市的商品呢，嗯，堆放呢，这个层次上也有要求，不能超过四层。层数太多的话，就是说给人眼睛观上去有一种呃不太好的这种感觉。而且这个上下呀，包括这个呃排放的顺序呀，也都",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "而且现在天也冷了，也也马上就要零下了。你去外面买菜，好多那个菜它都滴滴答答的，都有冻的那个冰凌茬儿。在我们超市是绝对不允许有这种情情况出现的。而且超市的商品呢，嗯，堆放呢，这个层次上也有要求，不能超过四层。层数太多的话，就是说给人眼睛观上去有一种呃不太好的这种感觉。而且这个上下呀，包括这个呃排放的顺序呀，也都",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 20.309999465942383,
+      "encode_ms": 1975.5999755859375,
+      "decode_ms": 9679.052734375
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>而且现在天也冷了，也也马上就要零下了。你去外面买菜，好多那个菜它都滴滴答答的，都有冻的那个冰凌茬儿。在我们超市是绝对不允许有这种情情况出现的。而且超市的商品呢，嗯，堆放呢，这个层次上也有要求，不能超过四层。层数太多的话，就是说给人眼睛观上去有一种呃不太好的这种感觉。而且这个上下呀，包括这个呃排放的顺序呀，也都",
+  "hypothesis": "而且现在天也冷了，也也马上就要零下了。你去外面买菜，好多那个菜它都滴滴答答的，都有冻的那个冰凌茬儿。在我们超市是绝对不允许有这种情情况出现的。而且超市的商品呢，嗯，堆放呢，这个层次上也有要求，不能超过四层。层数太多的话，就是说给人眼睛观上去有一种呃不太好的这种感觉。而且这个上下呀，包括这个呃排放的顺序呀，也都",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

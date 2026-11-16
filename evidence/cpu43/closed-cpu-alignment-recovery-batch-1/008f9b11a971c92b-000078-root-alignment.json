@@ -1,0 +1,54 @@
+{
+  "case": {
+    "id": "000078-root",
+    "meeting": "S_R004S03C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000078-root.wav",
+    "wavSha256": "f12da8a2b5e3330a8ef59f87867dfc823af28dff7e79dd7aaafaa3dd822f9891",
+    "pcmSha256": "0cf726262e61c98a01a5f99845e31affc161dd0bf3db79214ab75de5cb26a692",
+    "frames": 7827,
+    "sourceStartFrame": 37226077,
+    "sourceEndFrame": 37233904,
+    "text": "嗯。",
+    "language": "Chinese",
+    "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000078-root.json",
+    "rawAsrSha256": "be9f782b184dcc1c01319a1c41b41aac1a754020f26c8c57ec6e22f19a26666c",
+    "rawAsrTextPath": [
+      "raw",
+      "text"
+    ],
+    "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+  },
+  "payload": {
+    "originalText": "嗯。",
+    "rawTimestampClassIds": [
+      0,
+      0
+    ],
+    "units": [
+      {
+        "alignmentUnit": "嗯",
+        "textStartCodepoint": 0,
+        "textEndCodepoint": 2,
+        "text": "嗯。",
+        "textStartUtf16": 0,
+        "textEndUtf16": 2,
+        "predictedStartSeconds": 0.0,
+        "predictedEndSeconds": 0.0,
+        "absoluteStartSeconds": null,
+        "absoluteEndSeconds": null,
+        "positiveAndInOriginalLeafBounds": false,
+        "timestampVerifiedAgainstTruth": false
+      }
+    ],
+    "allOriginalCharactersPreserved": true,
+    "neuralInferencePerformed": true,
+    "seconds": 0.26140599999780534,
+    "inputNotTruncated": true,
+    "validMelFrames": 50,
+    "unresolvedTimeUnits": 1,
+    "wordTimeAccuracyQualified": false
+  },
+  "modelSha256": "00568245ceca5af1991d28562a75fe1ddc9bfeb041c27fda66947ea05c47fb86",
+  "gpuUsed": false,
+  "qualityQualified": false
+}

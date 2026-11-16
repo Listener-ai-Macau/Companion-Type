@@ -1,0 +1,229 @@
+{
+  "state": "COMPLETE_CPU_ALIGNMENT_VOICES_ON_RETAINED_NATIVE_ASR_FULL_MEETING_SCORED_NOT_PRODUCT_QUALIFIED",
+  "at": "2026-11-16T15:05:44.565945+08:00",
+  "meetings": [
+    {
+      "meeting": "S_R004S03C01",
+      "rawText": {
+        "referenceUnits": 8325,
+        "hypothesisUnits": 8205,
+        "errors": 461,
+        "errorRate": 0.055375375375375374,
+        "counts": {
+          "replace": 225,
+          "delete": 178,
+          "insert": 58
+        }
+      },
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 483,
+        "referenceUnits": 8325,
+        "errorRate": 0.058018018018018015,
+        "unknownUnitsForcedUnmatched": 8,
+        "perPerson": [
+          {
+            "speaker": "001-M",
+            "referenceUnits": 1983,
+            "hypothesisUnits": 1936,
+            "errors": 198,
+            "errorRate": 0.09984871406959153,
+            "counts": {
+              "replace": 109,
+              "delete": 68,
+              "insert": 21
+            }
+          },
+          {
+            "speaker": "002-F",
+            "referenceUnits": 650,
+            "hypothesisUnits": 649,
+            "errors": 7,
+            "errorRate": 0.010769230769230769,
+            "counts": {
+              "replace": 4,
+              "delete": 2,
+              "insert": 1
+            }
+          },
+          {
+            "speaker": "003-F",
+            "referenceUnits": 1681,
+            "hypothesisUnits": 1660,
+            "errors": 71,
+            "errorRate": 0.042236763831052945,
+            "counts": {
+              "replace": 26,
+              "delete": 33,
+              "insert": 12
+            }
+          },
+          {
+            "speaker": "004-F",
+            "referenceUnits": 2402,
+            "hypothesisUnits": 2370,
+            "errors": 83,
+            "errorRate": 0.03455453788509576,
+            "counts": {
+              "replace": 27,
+              "delete": 44,
+              "insert": 12
+            }
+          },
+          {
+            "speaker": "005-F",
+            "referenceUnits": 1609,
+            "hypothesisUnits": 1582,
+            "errors": 116,
+            "errorRate": 0.07209446861404599,
+            "counts": {
+              "replace": 59,
+              "delete": 42,
+              "insert": 15
+            }
+          }
+        ],
+        "mappingScope": "One raw continuous CPU Nemotron activity identity for the whole original meeting; no lexical or per-window identity fitting."
+      },
+      "personTextOneWholeMeetingPermutationDiagnostic": {
+        "referenceUnits": 8325,
+        "errors": 483,
+        "errorRate": 0.058018018018018015,
+        "unknownUnitsForcedUnmatched": 8,
+        "perPerson": [
+          {
+            "referenceSpeaker": "001-M",
+            "anonymousSpeaker": "0",
+            "referenceUnits": 1983,
+            "hypothesisUnits": 1936,
+            "errors": 198,
+            "errorRate": 0.09984871406959153,
+            "counts": {
+              "replace": 109,
+              "delete": 68,
+              "insert": 21
+            }
+          },
+          {
+            "referenceSpeaker": "002-F",
+            "anonymousSpeaker": "1",
+            "referenceUnits": 650,
+            "hypothesisUnits": 649,
+            "errors": 7,
+            "errorRate": 0.010769230769230769,
+            "counts": {
+              "replace": 4,
+              "delete": 2,
+              "insert": 1
+            }
+          },
+          {
+            "referenceSpeaker": "003-F",
+            "anonymousSpeaker": "4",
+            "referenceUnits": 1681,
+            "hypothesisUnits": 1660,
+            "errors": 71,
+            "errorRate": 0.042236763831052945,
+            "counts": {
+              "replace": 26,
+              "delete": 33,
+              "insert": 12
+            }
+          },
+          {
+            "referenceSpeaker": "004-F",
+            "anonymousSpeaker": "2",
+            "referenceUnits": 2402,
+            "hypothesisUnits": 2370,
+            "errors": 83,
+            "errorRate": 0.03455453788509576,
+            "counts": {
+              "replace": 27,
+              "delete": 44,
+              "insert": 12
+            }
+          },
+          {
+            "referenceSpeaker": "005-F",
+            "anonymousSpeaker": "3",
+            "referenceUnits": 1609,
+            "hypothesisUnits": 1582,
+            "errors": 116,
+            "errorRate": 0.07209446861404599,
+            "counts": {
+              "replace": 59,
+              "delete": 42,
+              "insert": 15
+            }
+          }
+        ],
+        "mappingForScoringOnly": true,
+        "oneWholeMeetingPermutation": true
+      },
+      "originalReferenceRawContinuousSpeakerDER": {
+        "referenceSpeakerSeconds": 2074.389489999999,
+        "missSeconds": 64.77143099999974,
+        "falseAlarmSeconds": 12.321921000001133,
+        "confusionSeconds": 1.3699999999999992,
+        "errorSeconds": 78.46335200000087,
+        "DER": 0.03782479248870515,
+        "identityForScoringOnly": {
+          "speaker_0": "001-M",
+          "speaker_1": "002-F",
+          "speaker_2": "004-F",
+          "speaker_3": "005-F",
+          "speaker_4": "003-F"
+        }
+      },
+      "rawTextGatePass": false,
+      "personTextGatePass": false,
+      "derGatePass": true,
+      "originalBaselineRawText": {
+        "referenceUnits": 8325,
+        "hypothesisUnits": 8205,
+        "errors": 461,
+        "errorRate": 0.055375375375375374,
+        "counts": {
+          "replace": 225,
+          "delete": 178,
+          "insert": 58
+        }
+      },
+      "originalBaselinePersonErrorRate": 0.058018018018018015,
+      "originalBaselineDER": 0.03855615562340746,
+      "invalidTimeUnits": 302,
+      "unknownSpeakerUnits": 8,
+      "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composed\\S_R004S03C01-model-output.json",
+      "documentSha256": "cdf0ad8ff9f0e179e7ae587819c159befcfcfc043a11d60900e24954d8250ea0",
+      "qualityQualified": false
+    }
+  ],
+  "sourceAsrInferenceBackend": "Protected native GPU ASR reused; only timestamp classifier and independent speaker journal are CPU.",
+  "wholeAsrAlignmentSpeakerCpuRerun": false,
+  "rawAsrErrorsUnchangedThroughComposition": true,
+  "allUnknownWordsForcedUnmatched": true,
+  "originalGatesAndScorerHelpersUnchanged": true,
+  "englishUniversalCpuPortRejectionRetained": true,
+  "actualInstalledNativeAppTested": false,
+  "newWeightTraining": false,
+  "trueWordTimeAccuracyMeasured": false,
+  "finalBlindHoldoutOpened": false,
+  "factsMeasured": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 24208,
+    "cpuRate": 100,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 1.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 101998592,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

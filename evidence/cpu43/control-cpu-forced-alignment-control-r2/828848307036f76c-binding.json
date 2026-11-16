@@ -1,0 +1,67 @@
+{
+  "at": "2026-11-16T14:11:15.858807+08:00",
+  "workerPython": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+  "workerSha256": "a9d11ac42d796f89f19e4b69fefb3528921f1b47590a1c9d665647c25b6ff370",
+  "runnerSha256": "1d5f1aa0fd4bb0f1f0b6b1eab5e0c0fb2af769b536261973320b93fc75b844a9",
+  "cpuTorchSite": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-r2\\torch-cpu-site",
+  "modelRoot": "E:/CodexData/Companion/.model-cache/qwen-native-aligner-20261107/model",
+  "modelSha256": "00568245ceca5af1991d28562a75fe1ddc9bfeb041c27fda66947ea05c47fb86",
+  "helpers": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_cpu_aligner_loader_20261116.py": "3091bca3d7b6613bcfa39d0e90d0520caccbf4f8f065f7ffd8b08bd20e3c2848",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_windows_working_set_20261116.py": "014c2099f042ce4544fb61daa5fee7cf4785b7caafd97c1b89f781ba8480b9d3",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_alignment_text_20261107.py": "006aed03ba02ae339dd75ca75771614aa53fc407f5229774b70cf8692bec59bd",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+  },
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+      "wavSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+      "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92",
+      "frames": 192800,
+      "audioSeconds": 12.05,
+      "language": "English",
+      "text": "Just put it on the desk. All I see is desk. No, on the desktop you'll find. You should find that there's a project documents link. Oh, actually, just.",
+      "rawAsrFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\ES2003b-seq-000-raw.json",
+      "rawAsrSha256": "49df452eed0aa6cc1f94bad97a1e474b28d65d188f3989470e582510e8ce80bf"
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-000",
+      "condition": "sequential-original-room",
+      "meeting": "20200709_L_R002S01C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\20200709_L_R002S01C01-seq-000.wav",
+      "wavSha256": "0e3615a5dc8437ca3129e82d269dbf3419fefd5871dde831d8898eb01b4f85bf",
+      "pcmSha256": "1693f208b2d6103a4cfc69b36b47a833fb913bd3becd2e42c02c6db4a5f10a30",
+      "frames": 436001,
+      "audioSeconds": 27.2500625,
+      "language": "Chinese",
+      "text": "嗯，今天呢，把大家叫来，咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的嗯汇报和总结。因为上半年其实由由由于受到疫情的影响，想必大家这个工作都有一些新的进程。然后现在咱们就先从教练部这边简单的总结一下上半年的情况。上半年的情况主要是有像一些。",
+      "rawAsrFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-port-run-r1\\20200709_L_R002S01C01-seq-000-raw.json",
+      "rawAsrSha256": "eea7f47001d1e7143631e82a1482d7ab9880d54ec49517cab4fbabf4684bc456"
+    }
+  ],
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "cpuPercent": 25,
+  "computeThreads": 4,
+  "privateBytes": 2147483648,
+  "workingSetCeilingBytes": 1879048192,
+  "scope": "Port the existing fixed native timestamp classifier to CPU, after a synthetic standard-versus-mmap exact-logit control. Use recognized text only. No model selection or training.",
+  "keepRule": [
+    "Synthetic CPU standard and mapped logits/argmax exactly equal.",
+    "Original recognized ASR characters preserved exactly.",
+    "No frame truncation, no GPU kernels, original resource guards retained."
+  ],
+  "qualityQualified": false,
+  "timestampTruthMeasured": false,
+  "newWeightTraining": false,
+  "blindFinalHoldoutOpened": false,
+  "correctedBeforeAnyModelNeuralCall": {
+    "previousRun": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\worker-state.json",
+    "sha256": "677f38f571bbb9aac9e388ed911183a2497bcda8dcee6f85d7aa0ece376cf7d9",
+    "rootCause": "The prior preparation incorrectly inherited the CPP scoring Python, which lacks Transformers; select the pinned processor dependency environment with the isolated official CPU Torch overlay. No model/math/limits change."
+  },
+  "noFullExpansionOfRejectedQwenCpuAsr": true
+}

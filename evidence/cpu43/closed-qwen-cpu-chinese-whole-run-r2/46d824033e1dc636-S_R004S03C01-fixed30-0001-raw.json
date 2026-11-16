@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0001",
+    "meeting": "S_R004S03C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\S_R004S03C01-fixed30-0001.wav",
+    "wavSha256": "f5c8f06081d43e0e5f6b95bc83a0ac5f406fc65ca88856148d027bdd59fe6207",
+    "pcmSha256": "fe10febde3dc371fa5a945e6409e64b260b19432fc317c05f9fa83812962b24f",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 480000,
+    "sourceEndFrame": 960000
+  },
+  "seconds": 11.243133899995883,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "嗯，比往期的要好，呃，明显的客流量也客流量也多了，啊，咱这个销售这个呃营业额也上去了，啊，这都是大家或者在座的呃努力的出现的状况，估计工作各位在下也出了在下边也出了不少的呃力气，呃也做了很多的这个呃营销的一些方案，呃，希望大家以后啊要继续保持呃这种工作状态，呃。",
+    "raw_text": "language Chinese<asr_text>嗯，比往期的要好，呃，明显的客流量也客流量也多了，啊，咱这个销售这个呃营业额也上去了，啊，这都是大家或者在座的呃努力的出现的状况，估计工作各位在下也出了在下边也出了不少的呃力气，呃也做了很多的这个呃营销的一些方案，呃，希望大家以后啊要继续保持呃这种工作状态，呃。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "嗯，比往期的要好，呃，明显的客流量也客流量也多了，啊，咱这个销售这个呃营业额也上去了，啊，这都是大家或者在座的呃努力的出现的状况，估计工作各位在下也出了在下边也出了不少的呃力气，呃也做了很多的这个呃营销的一些方案，呃，希望大家以后啊要继续保持呃这种工作状态，呃。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 14.49899959564209,
+      "encode_ms": 1857.0880126953125,
+      "decode_ms": 9321.9267578125
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>嗯，比往期的要好，呃，明显的客流量也客流量也多了，啊，咱这个销售这个呃营业额也上去了，啊，这都是大家或者在座的呃努力的出现的状况，估计工作各位在下也出了在下边也出了不少的呃力气，呃也做了很多的这个呃营销的一些方案，呃，希望大家以后啊要继续保持呃这种工作状态，呃。",
+  "hypothesis": "嗯，比往期的要好，呃，明显的客流量也客流量也多了，啊，咱这个销售这个呃营业额也上去了，啊，这都是大家或者在座的呃努力的出现的状况，估计工作各位在下也出了在下边也出了不少的呃力气，呃也做了很多的这个呃营销的一些方案，呃，希望大家以后啊要继续保持呃这种工作状态，呃。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

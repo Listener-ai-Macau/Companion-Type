@@ -1,0 +1,49 @@
+{
+  "composerSha256": "8c60c903e3f44088b13954a34e04cb5c0432a923075b7b47c55edb1d26b3c39b",
+  "sourceAsrInferenceBackend": "Protected native GPU ASR reused; only timestamp classifier and independent speaker journal are CPU.",
+  "speakerSources": {
+    "S_R004S03C01": {
+      "probabilities": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\probabilities\\S_R004S03C01\\probabilities.npy",
+      "probabilitiesSha256": "9d848c84c83077676aee355ae27fd800ce114161fe988cf4be54a667aa814125",
+      "frames": 232712,
+      "cadence": 0.009999999776482582,
+      "audioSeconds": 2327.119,
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceJournal": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\S_R004S03C01\\speaker-journal.json",
+      "sourceJournalSha256": "aaf9cc62ce3c6c98ae73d7e8380b9ba87378c98f1b8c12fc74561549a2d48a7e",
+      "producer": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\S_R004S03C01\\completed-state.json",
+      "producerSha256": "96cdb9d83df33f99e19bf9fb4eab6e56eed649175dc936d314f2d997c15789a2",
+      "protocol": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\protocol.json",
+      "protocolSha256": "f4ad45f327cbb307738c1c50809ff2a9cbaff2f1a099d35c3ab128b2e9035321",
+      "modelSha256": "5c7947680e6060e0d88cbbdd432bcee2b3edd2d3ea04c242326b067947e2027e",
+      "backendOriginallyVulkan": false,
+      "executionDevice": "cpu",
+      "probabilityManifest": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\probabilities\\S_R004S03C01\\probabilities.json",
+      "probabilityManifestSha256": "b5f58d7bc3b2626f9d232b6c45468fba5754138905873e8d40d27ddfa8d1700e",
+      "comparisonOriginalGpuSource": {
+        "probabilities": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\precision-r1\\full-probabilities\\S_R004S03C01\\probabilities.npy",
+        "probabilitiesSha256": "e017f5573bcc85e41ab5ac2d4fcb8b207fc6311d9d4fc62e873ebab3ebcf7a68",
+        "frames": 232712,
+        "cadence": 0.009999999776482582,
+        "audioSeconds": 2327.119,
+        "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+        "sourceJournal": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\S_R004S03C01\\speaker-journal.json",
+        "sourceJournalSha256": "b09b2b1680959074a1a11de0aa7c6e89bf579798d6e2a45e1d058f6b2b07b4c8",
+        "producer": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\results\\S_R004S03C01\\completed-state.json",
+        "producerSha256": "7b6cbaf0eb236e63c6c1dc6eb586ff158a24a9d1534b79cf7214fce85ac6cc38",
+        "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\native8-f16-full-r1\\protocol.json",
+        "protocolSha256": "84e6f69666b1058fe8b1df26b310b34ab0560933e6e49c2a3b404b050ea8c808",
+        "modelSha256": "5c7947680e6060e0d88cbbdd432bcee2b3edd2d3ea04c242326b067947e2027e",
+        "backendOriginallyVulkan": true,
+        "probabilityManifest": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\precision-r1\\full-probabilities\\S_R004S03C01\\probabilities.json",
+        "probabilityManifestSha256": "9e131e0e83b74a352ea89384e92f98d97d06865237573bfc279faeff563f3818"
+      }
+    }
+  },
+  "files": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_transcript_20261107.py": "40bbae911774dd8fefe8e467267167596b39ab85e3ab83b09788e7771ed5d3bd",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\frozen-audio-recognized-text-only.json": "6169fb7bb2740fd8b90039021341711d4a8b148a514b07b2e2e219ebe9dc3fab"
+  },
+  "inheritedMarginSeconds": 0.06,
+  "qualityQualified": false
+}

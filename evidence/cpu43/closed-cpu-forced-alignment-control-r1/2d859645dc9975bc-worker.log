@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\cpu_forced_alignment_worker_20261116.py", line 85, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\cpu_forced_alignment_worker_20261116.py", line 28, in main
+    import torch,transformers,numpy as np
+ModuleNotFoundError: No module named 'transformers'

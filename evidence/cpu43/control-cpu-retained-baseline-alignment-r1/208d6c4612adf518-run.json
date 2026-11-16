@@ -1,0 +1,10 @@
+{
+  "state": "INCOMPLETE_BASELINE_COMPONENT_PORT_RETAINED_NO_AUTOMATIC_RETRY",
+  "startedAt": "2026-11-16T14:39:53.431869+08:00",
+  "sourceAsrBackend": "protected previous GPU result, no ASR rerun",
+  "newAsrNeuralCalls": 0,
+  "newSpeakerNeuralCalls": 0,
+  "qualityQualified": false,
+  "error": "CalledProcessError(1, ['E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe', 'C:\\\\Users\\\\Billy\\\\Desktop\\\\Denzic\\\\Companion\\\\model-research\\\\src\\\\run_cpu_forced_alignment_20261116.py', '--control', 'C:\\\\Users\\\\Billy\\\\Desktop\\\\Denzic\\\\Companion\\\\docs\\\\handoffs\\\\20261109-paired-real-meeting\\\\bilingual-local20261114\\\\d1d2-execution\\\\joint-architecture-r1\\\\cpu-retained-baseline-alignment-r1', '--run', 'E:\\\\CodexData\\\\Companion\\\\product-d1d2-20261114\\\\joint-architecture-r1\\\\cpu-retained-baseline-alignment-full-r1'])",
+  "finishedAt": "2026-11-16T14:46:56.485247+08:00"
+}

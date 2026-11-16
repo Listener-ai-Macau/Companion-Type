@@ -1,0 +1,33 @@
+{
+  "state": "CHARACTERIZE_CHINESE_COMPONENT_ONLY_UNIVERSAL_PORT_REJECTION_UNCHANGED",
+  "at": "2026-11-16T13:32:57.262522+08:00",
+  "originalDecision": "REJECT_QWEN_CPU_PORT_DEPLOYMENT_REGRESSION_NO_QUANTIZATION_GRID",
+  "originalScore": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\score.json",
+  "originalScoreSha256": "aca561fdaeee0bf45b14865476732ba5f992eba05ce3119db55f2a6eafe062ef",
+  "reason": "The universal CPU port failed English and remains rejected. Both independent Chinese clip sources matched or improved the protected native baseline(35->35,38->37). The user wants Chinese/English handled by suitable components and asks how users without GPU run. Characterize only the existing preferred Chinese component on both complete original recordings; this does not overturn the original bilingual keep rule, permit default promotion, or claim a trained/qualified model.",
+  "scopeChangeBeforeWholeOutputs": true,
+  "universalGateStillFailed": true,
+  "quantContextOrPromptGrid": false,
+  "modelPresetUnchanged": "Qwen1.7B Q8_0/f16KV/nCtx2048",
+  "languagePolicy": "Whole input uses auto, matching the existing complete-recording native baseline. The prior clip regression used per-case known languages, matching its separate frozen clip baseline.",
+  "originalProductGatesUnchanged": true,
+  "chineseWholeCharacterization": [
+    "S_R004S03C01",
+    "20200623_S_R001S07C01"
+  ],
+  "originalRawBaselines": {
+    "S_R004S03C01": {
+      "errors": 461,
+      "units": 8325
+    },
+    "20200623_S_R001S07C01": {
+      "errors": 1037,
+      "units": 7153
+    }
+  },
+  "qualityQualified": false,
+  "saleQualified": false,
+  "productDefaultChanged": false,
+  "wholeSpeakerWordAlignmentNotEvaluated": true,
+  "finalHoldoutOpened": false
+}

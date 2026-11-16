@@ -387,3 +387,11 @@ src/companion_cpu_aligner_loader_20261116.py -text -whitespace
 src/cpu_forced_alignment_worker_20261116.py -text -whitespace
 
 src/run_cpu_forced_alignment_20261116.py -text -whitespace
+
+evidence/cpu43/** -text -whitespace
+
+src/compose_cpu_qwen_alignment_20261116.py -text -whitespace
+
+src/score_cpu_qwen_alignment_20261116.py -text -whitespace
+
+src/compose_cpu_established_speaker_join_20261116.py -text -whitespace

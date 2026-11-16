@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0019",
+    "meeting": "20200623_S_R001S07C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\20200623_S_R001S07C01-fixed30-0019.wav",
+    "wavSha256": "31201cc36715e0c6223493f362830e83a8813cfd4cfdf9be2a1fbf2fedc18467",
+    "pcmSha256": "1869176bc4e54149151ba73aa8d0ea3d63b938d43c2a3bfd452a0c424610da3a",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 9120000,
+    "sourceEndFrame": 9600000
+  },
+  "seconds": 11.89388780000445,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "他现在工作也不是太稳定，现在因为这疫情也没什么好工作，也是打零工的。他现在有有了他就还，但是还还不完，也也算是在在还款了。已经。这方面针针对这边针对这个事情有什么想法？嗯，是这样的，因为嗯国家嗯瘟疫闹的，然后呢他确实还不了，我们没有办法，所以说我们呢嗯短期内呢。",
+    "raw_text": "language Chinese<asr_text>他现在工作也不是太稳定，现在因为这疫情也没什么好工作，也是打零工的。他现在有有了他就还，但是还还不完，也也算是在在还款了。已经。这方面针针对这边针对这个事情有什么想法？嗯，是这样的，因为嗯国家嗯瘟疫闹的，然后呢他确实还不了，我们没有办法，所以说我们呢嗯短期内呢。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "他现在工作也不是太稳定，现在因为这疫情也没什么好工作，也是打零工的。他现在有有了他就还，但是还还不完，也也算是在在还款了。已经。这方面针针对这边针对这个事情有什么想法？嗯，是这样的，因为嗯国家嗯瘟疫闹的，然后呢他确实还不了，我们没有办法，所以说我们呢嗯短期内呢。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 19.30900001525879,
+      "encode_ms": 2161.990966796875,
+      "decode_ms": 9622.689453125
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>他现在工作也不是太稳定，现在因为这疫情也没什么好工作，也是打零工的。他现在有有了他就还，但是还还不完，也也算是在在还款了。已经。这方面针针对这边针对这个事情有什么想法？嗯，是这样的，因为嗯国家嗯瘟疫闹的，然后呢他确实还不了，我们没有办法，所以说我们呢嗯短期内呢。",
+  "hypothesis": "他现在工作也不是太稳定，现在因为这疫情也没什么好工作，也是打零工的。他现在有有了他就还，但是还还不完，也也算是在在还款了。已经。这方面针针对这边针对这个事情有什么想法？嗯，是这样的，因为嗯国家嗯瘟疫闹的，然后呢他确实还不了，我们没有办法，所以说我们呢嗯短期内呢。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

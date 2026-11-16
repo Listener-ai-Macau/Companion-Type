@@ -1,0 +1,22 @@
+{
+  "state": "CPU_IDLE_MODEL_RELEASE_FIXED_BEFORE_ACTUAL_PAUSE_RESUME_INTEGRATION_TEST",
+  "at": "2026-11-16T14:46:19.973159+08:00",
+  "oldProtectedSourceCommit": "f7c667cdb4c7cc79f1fc3c6631325926a8e983be",
+  "oldWorkerSha256": "071f5742d4d2d6a7a0ce84b367a1fd45927f5ce2c9e71f488fea82c40fa4eadf",
+  "newWorkerSha256": "b743c30e2ea020a5a5d18bf9365c8cd68d6173068f29c44931ef4c5c3feb5107",
+  "sourcePcmNativeSessionGenerationAndSaveCoreUnchanged": true,
+  "generationCoreSha256": "843ed39774bc75e710809916bc4b6048d1508027bfb852bf5b0c2fefbec91650",
+  "idleReleaseSeconds": 15,
+  "rootCause": "The existing follow loop can keep an already loaded model resident while source input is paused for the3h follow window. Existing model process ends on finalization, but no prior idle model release exists.",
+  "keepRule": [
+    "Actual model closes during input pause and its resident weight mapping is released.",
+    "Worker RSS drops by at least512MiB during the pause, while no new neural call occurs.",
+    "Resume reloads this model, preserves accepted draft files and every original audio sample.",
+    "Final text equals the previous protected CPU app run, finalization reuses the new stream cache without ASR rerun."
+  ],
+  "existingFixtureR3Preserved": true,
+  "noCrossVersionCacheMigrationClaim": true,
+  "productDefaultChanged": false,
+  "qualityQualified": false,
+  "newNeuralCalls": 0
+}

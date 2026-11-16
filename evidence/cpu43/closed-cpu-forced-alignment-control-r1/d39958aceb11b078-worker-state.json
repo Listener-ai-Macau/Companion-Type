@@ -1,0 +1,36 @@
+{
+  "state": "INCOMPLETE_CPU_ALIGNMENT_RETAINED",
+  "startedAt": "2026-11-16T14:30:09.776775+08:00",
+  "completed": [],
+  "newNeuralCalls": 0,
+  "modelLoaded": false,
+  "newWeightTraining": false,
+  "referenceWordsRead": false,
+  "speakerLabelsRead": false,
+  "qualityQualified": false,
+  "workingSetControl": {
+    "minimumBytes": 204800,
+    "maximumBytes": 1879048192,
+    "flags": 6,
+    "maximumEnforced": true,
+    "scope": "Current owned worker process only; no global/other-process/registry changes."
+  },
+  "limits": {
+    "pid": 30308,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 196382720,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "error": "ModuleNotFoundError(\"No module named 'transformers'\")",
+  "finishedAt": "2026-11-16T14:30:20.412408+08:00"
+}

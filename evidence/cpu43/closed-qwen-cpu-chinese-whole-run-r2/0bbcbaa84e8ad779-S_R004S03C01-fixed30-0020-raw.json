@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0020",
+    "meeting": "S_R004S03C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\S_R004S03C01-fixed30-0020.wav",
+    "wavSha256": "98013a87696ae3262fd9e59137e0732efe2ff8559e6b213050d8b90ca171744a",
+    "pcmSha256": "515107e004ba61c78b69bf0e1bd27deb54608aabf763f2a68466253eb1b25b01",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 9600000,
+    "sourceEndFrame": 10080000
+  },
+  "seconds": 13.119231800003035,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "那那个菜就不能吃了，而且就卖不出去，就直接当垃圾扔掉了。嗯，再一个就是像我刚才说的这个需要冷藏的豆芽呀、豆腐呀、豆腐皮儿呀，它是需要保鲜冷呃保鲜那个程度比较好的那个，你就得放到这个保鲜柜里边去呃储藏去。嗯嗯，然后其实我们每天呢都有一些呃精装精包装的一些菜品，嗯。",
+    "raw_text": "language Chinese<asr_text>那那个菜就不能吃了，而且就卖不出去，就直接当垃圾扔掉了。嗯，再一个就是像我刚才说的这个需要冷藏的豆芽呀、豆腐呀、豆腐皮儿呀，它是需要保鲜冷呃保鲜那个程度比较好的那个，你就得放到这个保鲜柜里边去呃储藏去。嗯嗯，然后其实我们每天呢都有一些呃精装精包装的一些菜品，嗯。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "那那个菜就不能吃了，而且就卖不出去，就直接当垃圾扔掉了。嗯，再一个就是像我刚才说的这个需要冷藏的豆芽呀、豆腐呀、豆腐皮儿呀，它是需要保鲜冷呃保鲜那个程度比较好的那个，你就得放到这个保鲜柜里边去呃储藏去。嗯嗯，然后其实我们每天呢都有一些呃精装精包装的一些菜品，嗯。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 21.884000778198242,
+      "encode_ms": 2289.10107421875,
+      "decode_ms": 10711.810546875
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>那那个菜就不能吃了，而且就卖不出去，就直接当垃圾扔掉了。嗯，再一个就是像我刚才说的这个需要冷藏的豆芽呀、豆腐呀、豆腐皮儿呀，它是需要保鲜冷呃保鲜那个程度比较好的那个，你就得放到这个保鲜柜里边去呃储藏去。嗯嗯，然后其实我们每天呢都有一些呃精装精包装的一些菜品，嗯。",
+  "hypothesis": "那那个菜就不能吃了，而且就卖不出去，就直接当垃圾扔掉了。嗯，再一个就是像我刚才说的这个需要冷藏的豆芽呀、豆腐呀、豆腐皮儿呀，它是需要保鲜冷呃保鲜那个程度比较好的那个，你就得放到这个保鲜柜里边去呃储藏去。嗯嗯，然后其实我们每天呢都有一些呃精装精包装的一些菜品，嗯。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

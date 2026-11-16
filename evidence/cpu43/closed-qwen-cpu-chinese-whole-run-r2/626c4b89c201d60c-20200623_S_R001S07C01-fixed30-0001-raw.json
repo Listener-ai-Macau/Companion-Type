@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0001",
+    "meeting": "20200623_S_R001S07C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\20200623_S_R001S07C01-fixed30-0001.wav",
+    "wavSha256": "cb1218661656b30807627c28e431e8cbfcac9dacc8488ae916374c28a50192e6",
+    "pcmSha256": "7faaf33811c8d39e8fa74d431dbc3be73180ec3e732c2b8d80bf32c858e16b92",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 480000,
+    "sourceEndFrame": 960000
+  },
+  "seconds": 10.938800299998547,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "呃，总结会对月度总结会，目前各部门儿像这个各部门儿的一个情况，在会上做一个这个呃汇报。嗯，从这个呃战略部。呃，我们现在面临嗯人群比较广阔，比方说车贷，小额的车贷，我们也是一个大项吧。",
+    "raw_text": "language Chinese<asr_text>呃，总结会对月度总结会，目前各部门儿像这个各部门儿的一个情况，在会上做一个这个呃汇报。嗯，从这个呃战略部。呃，我们现在面临嗯人群比较广阔，比方说车贷，小额的车贷，我们也是一个大项吧。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "呃，总结会对月度总结会，目前各部门儿像这个各部门儿的一个情况，在会上做一个这个呃汇报。嗯，从这个呃战略部。呃，我们现在面临嗯人群比较广阔，比方说车贷，小额的车贷，我们也是一个大项吧。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 28.36400032043457,
+      "encode_ms": 1965.7120361328125,
+      "decode_ms": 8849.865234375
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>呃，总结会对月度总结会，目前各部门儿像这个各部门儿的一个情况，在会上做一个这个呃汇报。嗯，从这个呃战略部。呃，我们现在面临嗯人群比较广阔，比方说车贷，小额的车贷，我们也是一个大项吧。",
+  "hypothesis": "呃，总结会对月度总结会，目前各部门儿像这个各部门儿的一个情况，在会上做一个这个呃汇报。嗯，从这个呃战略部。呃，我们现在面临嗯人群比较广阔，比方说车贷，小额的车贷，我们也是一个大项吧。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

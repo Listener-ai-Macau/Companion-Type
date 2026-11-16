@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0041",
+    "meeting": "S_R004S03C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\S_R004S03C01-fixed30-0041.wav",
+    "wavSha256": "69fd63595dd803364de2f70dc7d37afeaa0114d8b461a4836a26ed652d763319",
+    "pcmSha256": "8a4e24bc03ce4ab8f1d7cb0a633113655689746e8dce1e8934765e8cd59cbd9f",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 19680000,
+    "sourceEndFrame": 20160000
+  },
+  "seconds": 10.787908099999186,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "然后赠他一个什么曲奇饼干啦，什么嗯那种小糕点什么的，还有就是可以嗯就是嗯比如说今天做一那种曲奇饼干的专场，然后明天做那种糕点的专场，然后换一天做那种面包的专场，然后这样交叉着来就会吸引更多的顾客，嗯还有就是这种充值满就送，就是。",
+    "raw_text": "language Chinese<asr_text>然后赠他一个什么曲奇饼干啦，什么嗯那种小糕点什么的，还有就是可以嗯就是嗯比如说今天做一那种曲奇饼干的专场，然后明天做那种糕点的专场，然后换一天做那种面包的专场，然后这样交叉着来就会吸引更多的顾客，嗯还有就是这种充值满就送，就是。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "然后赠他一个什么曲奇饼干啦，什么嗯那种小糕点什么的，还有就是可以嗯就是嗯比如说今天做一那种曲奇饼干的专场，然后明天做那种糕点的专场，然后换一天做那种面包的专场，然后这样交叉着来就会吸引更多的顾客，嗯还有就是这种充值满就送，就是。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 19.6299991607666,
+      "encode_ms": 2126.85595703125,
+      "decode_ms": 8549.2685546875
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>然后赠他一个什么曲奇饼干啦，什么嗯那种小糕点什么的，还有就是可以嗯就是嗯比如说今天做一那种曲奇饼干的专场，然后明天做那种糕点的专场，然后换一天做那种面包的专场，然后这样交叉着来就会吸引更多的顾客，嗯还有就是这种充值满就送，就是。",
+  "hypothesis": "然后赠他一个什么曲奇饼干啦，什么嗯那种小糕点什么的，还有就是可以嗯就是嗯比如说今天做一那种曲奇饼干的专场，然后明天做那种糕点的专场，然后换一天做那种面包的专场，然后这样交叉着来就会吸引更多的顾客，嗯还有就是这种充值满就送，就是。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

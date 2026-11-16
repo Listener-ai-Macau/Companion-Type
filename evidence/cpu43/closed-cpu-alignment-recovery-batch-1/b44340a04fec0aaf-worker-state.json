@@ -1,0 +1,54 @@
+{
+  "state": "COMPLETE_NATIVE_CPU_ALIGNMENT_CHARACTERS_PRESERVED_NOT_TIME_QUALIFIED",
+  "startedAt": "2026-11-16T14:52:56.109931+08:00",
+  "completed": [
+    {
+      "id": "000077-root",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\000077-root-alignment.json",
+      "sha256": "34ae7566c6f669cb3d8d6a405039c3a87f6a32e28fabc96798b6cfcc73c97d67",
+      "seconds": 2.7437501000022166
+    },
+    {
+      "id": "000078-root",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\000078-root-alignment.json",
+      "sha256": "e7e65387c75b137fe37d698d9044791cfbfb9f3df28f2aa40115298ef0203e56",
+      "seconds": 0.26140599999780534
+    }
+  ],
+  "newNeuralCalls": 2,
+  "modelLoaded": true,
+  "newWeightTraining": false,
+  "referenceWordsRead": false,
+  "speakerLabelsRead": false,
+  "qualityQualified": false,
+  "workingSetControl": {
+    "minimumBytes": 204800,
+    "maximumBytes": 1879048192,
+    "flags": 6,
+    "maximumEnforced": true,
+    "scope": "Current owned worker process only; no global/other-process/registry changes."
+  },
+  "limits": {
+    "pid": 29516,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 791601152,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "torchVersion": "2.11.0+cpu",
+  "torchModule": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-r2\\torch-cpu-site\\torch\\__init__.py",
+  "cudaCompiled": false,
+  "hipCompiled": false,
+  "transformersVersion": "5.22.1",
+  "modelLoadSeconds": 1.8187516999969375,
+  "finishedAt": "2026-11-16T14:53:09.880018+08:00"
+}

@@ -1,0 +1,25 @@
+{
+  "state": "PASS_CPU_STANDARD_AND_MAPPED_TINY_ALIGNER_EXACT_LOGITS",
+  "syntheticOnly": true,
+  "speechQualityMeasured": false,
+  "torchVersion": "2.11.0+cpu",
+  "loaderSha256": "3091bca3d7b6613bcfa39d0e90d0520caccbf4f8f065f7ffd8b08bd20e3c2848",
+  "weightRoundtrip": {
+    "state": "EXACT_NATIVE_CPU_ALIGNER_READONLY_BF16_ALL_KEYS_ASSIGNED",
+    "weightSha256": "6451a43f2719d6030b110bcb2ba457a5cee6fedc7f8bdc768bb972c7d48a9abc",
+    "tensorCount": 54,
+    "tensorBytes": 81664,
+    "noPrivateWholeStateDictCopy": true,
+    "noWholeModelToEmpty": true,
+    "computedBuffersPreserved": [
+      "model.audio_tower.positional_embedding.positional_embedding",
+      "model.language_model.rotary_emb.inv_freq",
+      "model.language_model.rotary_emb.original_inv_freq"
+    ],
+    "gpuUsed": false,
+    "quantization": false,
+    "weightsChanged": false,
+    "seconds": 0.03843310000229394
+  },
+  "gpuUsed": false
+}

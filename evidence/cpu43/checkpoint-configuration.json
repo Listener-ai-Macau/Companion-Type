@@ -1,0 +1,1796 @@
+{
+  "revision": 43,
+  "evidenceDirectory": "evidence/cpu43",
+  "commitMessage": "Bound CPU classifier lifetime and unload idle ASR model; preserve raw-text regressions and exact product join",
+  "sources": [
+    "src/companion_local_pcm_session_20261114.py",
+    "src/companion_local_moss_cpu_worker_20261116.py",
+    "src/cpu_forced_alignment_worker_20261116.py",
+    "src/compose_cpu_qwen_alignment_20261116.py",
+    "src/score_cpu_qwen_alignment_20261116.py",
+    "src/compose_cpu_established_speaker_join_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\binding.json",
+      "name": "control-qwen-cpu-chinese-characterization-r2/3175d9af92321192-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\protocol.json",
+      "name": "control-qwen-cpu-chinese-characterization-r2/abe6980d3f32ba85-protocol.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\scope-decision.json",
+      "name": "control-qwen-cpu-chinese-characterization-r2/5c5f9dc5591b4018-scope-decision.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\scoring-binding.json",
+      "name": "control-qwen-cpu-chinese-characterization-r2/42d1a9c253ee4335-scoring-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\whole-score.json",
+      "name": "control-qwen-cpu-chinese-characterization-r2/db141e41927e51c1-whole-score.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\whole-scoring-only.json",
+      "name": "control-qwen-cpu-chinese-characterization-r2/f4c5c276075394e6-whole-scoring-only.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\binding.json",
+      "name": "control-cpu-forced-alignment-control-r1/9b1905543934fb4b-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\queue.json",
+      "name": "control-cpu-forced-alignment-control-r1/f8d30b7710fa9962-queue.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\binding.json",
+      "name": "control-cpu-forced-alignment-control-r2/828848307036f76c-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\queue.json",
+      "name": "control-cpu-forced-alignment-control-r2/bff02d7901cda84f-queue.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\binding.json",
+      "name": "control-cpu-retained-baseline-alignment-r1/2c6200afce18f236-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\composition-binding.json",
+      "name": "control-cpu-retained-baseline-alignment-r1/2794547b5fa33e25-composition-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\frozen-audio-recognized-text-only.json",
+      "name": "control-cpu-retained-baseline-alignment-r1/a086380aa16d229c-frozen-audio-recognized-text-only.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\original-native-raw-control.json",
+      "name": "control-cpu-retained-baseline-alignment-r1/be0022efddee9883-original-native-raw-control.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\preparation-failure-r1.json",
+      "name": "control-cpu-retained-baseline-alignment-r1/a9eb08cecde66106-preparation-failure-r1.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\preparation.json",
+      "name": "control-cpu-retained-baseline-alignment-r1/377fe51a043b52af-preparation.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\run.json",
+      "name": "control-cpu-retained-baseline-alignment-r1/208d6c4612adf518-run.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\scoring-binding.json",
+      "name": "control-cpu-retained-baseline-alignment-r1/232d9648bd318fc8-scoring-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\whole-scoring-only.json",
+      "name": "control-cpu-retained-baseline-alignment-r1/3a971a5c569cbe55-whole-scoring-only.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\worker-source-port-proof.json",
+      "name": "control-cpu-retained-baseline-alignment-r1/e595640e2d4bee18-worker-source-port-proof.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\pilot\\binding.json",
+      "name": "control-cpu-retained-baseline-alignment-r1/b2d3c7144c1a5087-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\binding.json",
+      "name": "control-cpu-retained-baseline-alignment-r2/01e7ab21b70fd2fb-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\composition-binding.json",
+      "name": "control-cpu-retained-baseline-alignment-r2/372ff63f7ff5193b-composition-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\full-score.json",
+      "name": "control-cpu-retained-baseline-alignment-r2/62b6da71b97dbd99-full-score.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\process-lifetime-policy.json",
+      "name": "control-cpu-retained-baseline-alignment-r2/639c993dff3e3aca-process-lifetime-policy.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\product-contract.json",
+      "name": "control-cpu-retained-baseline-alignment-r2/ea0fb89a555a88f0-product-contract.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\run.json",
+      "name": "control-cpu-retained-baseline-alignment-r2/448cacde4c483a07-run.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\scoring-binding.json",
+      "name": "control-cpu-retained-baseline-alignment-r2/3280ef5be4106936-scoring-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\whole-scoring-only.json",
+      "name": "control-cpu-retained-baseline-alignment-r2/243adb106ffc3ae0-whole-scoring-only.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\batch-0\\binding.json",
+      "name": "control-cpu-retained-baseline-alignment-r2/c1969db0fdfd1c96-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\batch-1\\binding.json",
+      "name": "control-cpu-retained-baseline-alignment-r2/c5794679d9e2b6db-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r3\\binding.json",
+      "name": "control-cpu-retained-baseline-join-r3/b3af4121a301935d-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r3\\composition-binding.json",
+      "name": "control-cpu-retained-baseline-join-r3/9d2a529fddadfea9-composition-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r3\\composition-root-cause.json",
+      "name": "control-cpu-retained-baseline-join-r3/b52b2474c5e634eb-composition-root-cause.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r3\\scoring-binding.json",
+      "name": "control-cpu-retained-baseline-join-r3/a8ad41911019bfbe-scoring-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r3\\whole-scoring-only.json",
+      "name": "control-cpu-retained-baseline-join-r3/2d60766d187fba70-whole-scoring-only.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\binding.json",
+      "name": "control-cpu-retained-baseline-join-r4/ffc84b125222880f-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composition-binding.json",
+      "name": "control-cpu-retained-baseline-join-r4/bbee5a77b6510e76-composition-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composition-root-cause.json",
+      "name": "control-cpu-retained-baseline-join-r4/32f1d17f36afa747-composition-root-cause.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\cpu-gpu-output-diagnostic.json",
+      "name": "control-cpu-retained-baseline-join-r4/f57cc55ad785f638-cpu-gpu-output-diagnostic.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\full-score.json",
+      "name": "control-cpu-retained-baseline-join-r4/f01e23bbe5d190d1-full-score.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\product-contract.json",
+      "name": "control-cpu-retained-baseline-join-r4/3640e569f17c44e8-product-contract.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\scoring-binding.json",
+      "name": "control-cpu-retained-baseline-join-r4/831cc6a5a070f837-scoring-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\whole-scoring-only.json",
+      "name": "control-cpu-retained-baseline-join-r4/ec69a01301cfb70e-whole-scoring-only.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r5\\binding.json",
+      "name": "control-cpu-pcm-candidate-r5/70c3c4faa355543c-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r5\\idle-policy-protocol.json",
+      "name": "control-cpu-pcm-candidate-r5/8f4d657608e33cba-idle-policy-protocol.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r5\\internal-app-fixture.json",
+      "name": "control-cpu-pcm-candidate-r5/d805a0b128597c69-internal-app-fixture.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r5\\runtime-contract.json",
+      "name": "control-cpu-pcm-candidate-r5/e38b51623daaf92c-runtime-contract.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r6\\binding.json",
+      "name": "control-cpu-pcm-candidate-r6/6dac1fc1fd004a6c-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r6\\idle-policy-protocol.json",
+      "name": "control-cpu-pcm-candidate-r6/ee4d0eb6d97b63a4-idle-policy-protocol.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r6\\internal-app-fixture.json",
+      "name": "control-cpu-pcm-candidate-r6/e43ef42133a983cf-internal-app-fixture.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r6\\runtime-contract.json",
+      "name": "control-cpu-pcm-candidate-r6/71c17094d9bd8acd-runtime-contract.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0000-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/8c2d1309496fa7ed-20200623_S_R001S07C01-fixed30-0000-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0001-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/626c4b89c201d60c-20200623_S_R001S07C01-fixed30-0001-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0002-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/50e5d0387641f5e1-20200623_S_R001S07C01-fixed30-0002-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0003-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/d74f7bcf73455431-20200623_S_R001S07C01-fixed30-0003-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0004-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/e1a36d776228f440-20200623_S_R001S07C01-fixed30-0004-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0005-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/b19904f41712126d-20200623_S_R001S07C01-fixed30-0005-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0006-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/dfd5ad59d56289f4-20200623_S_R001S07C01-fixed30-0006-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0007-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/eeae06b89fd941ee-20200623_S_R001S07C01-fixed30-0007-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0008-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/c4027f86f21b063b-20200623_S_R001S07C01-fixed30-0008-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0009-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/1ec3a70f2d05802d-20200623_S_R001S07C01-fixed30-0009-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0010-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/768b5c4072eeaf74-20200623_S_R001S07C01-fixed30-0010-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0011-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/864652e324d05f14-20200623_S_R001S07C01-fixed30-0011-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0012-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/e8e2ec65b52d6ebc-20200623_S_R001S07C01-fixed30-0012-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0013-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/6da3affe2154ba4e-20200623_S_R001S07C01-fixed30-0013-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0014-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/8fbc6259274a3e01-20200623_S_R001S07C01-fixed30-0014-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0015-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/f30b68676001aca8-20200623_S_R001S07C01-fixed30-0015-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0016-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/5de19809279de307-20200623_S_R001S07C01-fixed30-0016-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0017-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/dd7db8e105eba5f9-20200623_S_R001S07C01-fixed30-0017-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0018-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/ea0a0fc8df5979dd-20200623_S_R001S07C01-fixed30-0018-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0019-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/a915fec831b2a7b8-20200623_S_R001S07C01-fixed30-0019-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0020-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/346f2ccafe84c05e-20200623_S_R001S07C01-fixed30-0020-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0021-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/c255a8ad444898f0-20200623_S_R001S07C01-fixed30-0021-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0022-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/edf8c0d502ba19a3-20200623_S_R001S07C01-fixed30-0022-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0023-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/87bea9187710c69f-20200623_S_R001S07C01-fixed30-0023-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0024-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/085afc67d90b2886-20200623_S_R001S07C01-fixed30-0024-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0025-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/1c47414d78252e18-20200623_S_R001S07C01-fixed30-0025-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0026-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/d6d2424685fd44cd-20200623_S_R001S07C01-fixed30-0026-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0027-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/9d0fea58e658b569-20200623_S_R001S07C01-fixed30-0027-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0028-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/bdf2997e323a3bec-20200623_S_R001S07C01-fixed30-0028-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0029-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/92152e25a019ae7e-20200623_S_R001S07C01-fixed30-0029-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0030-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/ec24981e832d2f3c-20200623_S_R001S07C01-fixed30-0030-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0031-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/b7887c91e239e123-20200623_S_R001S07C01-fixed30-0031-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0032-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/6cde55a1b717b708-20200623_S_R001S07C01-fixed30-0032-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0033-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/12ab553aff3793d1-20200623_S_R001S07C01-fixed30-0033-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0034-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/cdd5f5ea5668d9c1-20200623_S_R001S07C01-fixed30-0034-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0035-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/673a3daa399a082e-20200623_S_R001S07C01-fixed30-0035-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0036-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/81edfb0e36ed8dd2-20200623_S_R001S07C01-fixed30-0036-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0037-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/9f6c284533f1d138-20200623_S_R001S07C01-fixed30-0037-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0038-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/b7753bfbb9acba41-20200623_S_R001S07C01-fixed30-0038-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0039-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/74a7c75e71212fb9-20200623_S_R001S07C01-fixed30-0039-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0040-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/2870cfe8916b021a-20200623_S_R001S07C01-fixed30-0040-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0041-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/1f511b40766079b6-20200623_S_R001S07C01-fixed30-0041-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0042-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/a5951b4bd5774a6d-20200623_S_R001S07C01-fixed30-0042-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0043-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/edc820e323168523-20200623_S_R001S07C01-fixed30-0043-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0044-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/dac42c5e50e47d5c-20200623_S_R001S07C01-fixed30-0044-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0045-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/a5f73bb06cf6b360-20200623_S_R001S07C01-fixed30-0045-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0046-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/39b640d34e23bc8b-20200623_S_R001S07C01-fixed30-0046-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0047-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/77f2bdf2e3c26717-20200623_S_R001S07C01-fixed30-0047-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0048-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/8978c84901007618-20200623_S_R001S07C01-fixed30-0048-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0049-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/9032d89fdd4f886f-20200623_S_R001S07C01-fixed30-0049-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0050-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/85ac39dc1915e264-20200623_S_R001S07C01-fixed30-0050-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0051-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/8f490b4be9781496-20200623_S_R001S07C01-fixed30-0051-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0052-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/fc23f969b7993b88-20200623_S_R001S07C01-fixed30-0052-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0053-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/1c92f71efd906c10-20200623_S_R001S07C01-fixed30-0053-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0054-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/fdc720f70d3829c6-20200623_S_R001S07C01-fixed30-0054-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0055-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/1b3ccf7e931f7cc9-20200623_S_R001S07C01-fixed30-0055-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0056-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/d5237f76c24c73d1-20200623_S_R001S07C01-fixed30-0056-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0057-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/bafa0a03d165853c-20200623_S_R001S07C01-fixed30-0057-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0058-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/120a10b54ce7d63d-20200623_S_R001S07C01-fixed30-0058-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0059-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/6bffa1a550f1a298-20200623_S_R001S07C01-fixed30-0059-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0060-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/0277e32538d55af1-20200623_S_R001S07C01-fixed30-0060-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0061-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/2f833e6ca8d3f05f-20200623_S_R001S07C01-fixed30-0061-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0062-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/e846fe353126b94e-20200623_S_R001S07C01-fixed30-0062-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0063-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/9f8797e8b2b7d682-20200623_S_R001S07C01-fixed30-0063-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0064-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/3eb3966f0e758a19-20200623_S_R001S07C01-fixed30-0064-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0065-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/426927b5abb712bb-20200623_S_R001S07C01-fixed30-0065-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0066-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/8d49ce0e4834ea94-20200623_S_R001S07C01-fixed30-0066-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0067-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/b20f41a6dbcb3018-20200623_S_R001S07C01-fixed30-0067-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\20200623_S_R001S07C01-fixed30-0068-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/bed63d832ac30310-20200623_S_R001S07C01-fixed30-0068-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\inference-state.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/cd38e961ba1e6490-inference-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\native.log",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/43f8583fab21df0a-native.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\run.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/d096687dcc484402-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0001-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/46d824033e1dc636-S_R004S03C01-fixed30-0001-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0002-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/9836cecd7935bb0c-S_R004S03C01-fixed30-0002-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0003-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/369e2520e85112de-S_R004S03C01-fixed30-0003-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0004-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/ffd7dce46bb3ae30-S_R004S03C01-fixed30-0004-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0005-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/bcd4862b09cf6d08-S_R004S03C01-fixed30-0005-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0006-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/605101c23b61714d-S_R004S03C01-fixed30-0006-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0007-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/6c615da143d07bf1-S_R004S03C01-fixed30-0007-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0008-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/949f41b4ff87d0b2-S_R004S03C01-fixed30-0008-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0009-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/f6ecbe51c225d13a-S_R004S03C01-fixed30-0009-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0010-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/484f9100aa50dbff-S_R004S03C01-fixed30-0010-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0011-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/0e64e4f2d692f182-S_R004S03C01-fixed30-0011-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0012-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/4c79efe228f42349-S_R004S03C01-fixed30-0012-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0013-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/42038011e7985457-S_R004S03C01-fixed30-0013-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0014-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/340f78e5af442150-S_R004S03C01-fixed30-0014-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0015-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/d6770d17d8f631a7-S_R004S03C01-fixed30-0015-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0016-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/e93ed17b0589cf17-S_R004S03C01-fixed30-0016-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0017-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/c634bfadebfef3f9-S_R004S03C01-fixed30-0017-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0018-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/fed1d25bf2eb796e-S_R004S03C01-fixed30-0018-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0019-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/00332ee3e6ae06dc-S_R004S03C01-fixed30-0019-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0020-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/0bbcbaa84e8ad779-S_R004S03C01-fixed30-0020-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0021-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/0d40a668a2aa8026-S_R004S03C01-fixed30-0021-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0022-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/48706c205b58316e-S_R004S03C01-fixed30-0022-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0023-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/2055c50f644be22c-S_R004S03C01-fixed30-0023-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0024-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/239d6d34ce2fd603-S_R004S03C01-fixed30-0024-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0025-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/f5e78309b5d88448-S_R004S03C01-fixed30-0025-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0026-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/6e14bb539cfe6598-S_R004S03C01-fixed30-0026-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0027-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/ea1bff3659182af9-S_R004S03C01-fixed30-0027-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0028-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/7659a7c41b7075d1-S_R004S03C01-fixed30-0028-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0029-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/6748df0e7e0eb4ca-S_R004S03C01-fixed30-0029-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0030-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/5c1ae9f24c283bfa-S_R004S03C01-fixed30-0030-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0031-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/946a6357aca2d5de-S_R004S03C01-fixed30-0031-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0032-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/f87e6d623e46a66f-S_R004S03C01-fixed30-0032-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0033-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/1f942b0e8c8298f2-S_R004S03C01-fixed30-0033-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0034-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/73d1ee81a7ee40f4-S_R004S03C01-fixed30-0034-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0035-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/a64873fc77037ccf-S_R004S03C01-fixed30-0035-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0036-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/af1b8d01ff93b284-S_R004S03C01-fixed30-0036-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0037-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/d142cbafc58de16f-S_R004S03C01-fixed30-0037-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0038-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/978f7ccf42c987da-S_R004S03C01-fixed30-0038-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0039-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/dbddbdbbc8330b99-S_R004S03C01-fixed30-0039-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0040-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/fbbd713b1263b132-S_R004S03C01-fixed30-0040-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0041-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/51a1f0b75d132b15-S_R004S03C01-fixed30-0041-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0042-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/e933bd9aa7884e2c-S_R004S03C01-fixed30-0042-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0043-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/2c48067c755a53b8-S_R004S03C01-fixed30-0043-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0044-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/79feeebd52a6d3de-S_R004S03C01-fixed30-0044-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0045-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/bed29118b622e256-S_R004S03C01-fixed30-0045-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0046-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/0fc3cbb3e4417342-S_R004S03C01-fixed30-0046-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0047-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/bd6086b2b3162859-S_R004S03C01-fixed30-0047-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0048-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/20a3db5592d90b09-S_R004S03C01-fixed30-0048-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0049-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/6440b616a218847e-S_R004S03C01-fixed30-0049-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0050-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/5fd8ea511362aa49-S_R004S03C01-fixed30-0050-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0051-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/a14ceb3b71e86b17-S_R004S03C01-fixed30-0051-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0052-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/d8e834c9b060a2bd-S_R004S03C01-fixed30-0052-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0053-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/61ddb0d9cf7ac791-S_R004S03C01-fixed30-0053-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0054-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/838a7fe52c90dd62-S_R004S03C01-fixed30-0054-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0055-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/43e332e6ec9f6dc9-S_R004S03C01-fixed30-0055-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0056-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/957106d10aa4c5ef-S_R004S03C01-fixed30-0056-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0057-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/1a740e86c70a5eae-S_R004S03C01-fixed30-0057-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0058-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/84bbb10e7b7164c7-S_R004S03C01-fixed30-0058-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0059-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/e1d4e908b46a5591-S_R004S03C01-fixed30-0059-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0060-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/2446fd529c02c91f-S_R004S03C01-fixed30-0060-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0061-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/4168384f1d820b60-S_R004S03C01-fixed30-0061-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0062-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/b84e859519607ac0-S_R004S03C01-fixed30-0062-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0063-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/29bbe7b13ca6531f-S_R004S03C01-fixed30-0063-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0064-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/a5b82a7b46b1d937-S_R004S03C01-fixed30-0064-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0065-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/31c249f7fb00d22b-S_R004S03C01-fixed30-0065-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0066-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/e60350fd75fcd0da-S_R004S03C01-fixed30-0066-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0067-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/6fc273f5f8a1bfe4-S_R004S03C01-fixed30-0067-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0068-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/f0beaf94c77ef3d9-S_R004S03C01-fixed30-0068-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0069-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/48ca285ec9519840-S_R004S03C01-fixed30-0069-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0070-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/ac3b887868f3f4cb-S_R004S03C01-fixed30-0070-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0071-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/47b1d6a3735d05e0-S_R004S03C01-fixed30-0071-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0072-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/4a636892e26e91ac-S_R004S03C01-fixed30-0072-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0073-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/72270eb55ae751b0-S_R004S03C01-fixed30-0073-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0074-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/d1d8c09f84e082c4-S_R004S03C01-fixed30-0074-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0075-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/e6ce7be8c04f920a-S_R004S03C01-fixed30-0075-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0076-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/ffa865bf54b5a334-S_R004S03C01-fixed30-0076-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\S_R004S03C01-fixed30-0077-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/ce1d8a78e76fcd74-S_R004S03C01-fixed30-0077-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\worker.log",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/9a650c9eae096ca7-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\composed\\20200623_S_R001S07C01-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/9429b92275b5becd-20200623_S_R001S07C01-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\composed\\S_R004S03C01-raw.json",
+      "name": "closed-qwen-cpu-chinese-whole-run-r2/43f156cb61b446af-S_R004S03C01-raw.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\run.json",
+      "name": "closed-cpu-forced-alignment-control-r1/44a7ace92a6f0702-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\worker-state.json",
+      "name": "closed-cpu-forced-alignment-control-r1/d39958aceb11b078-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r1\\worker.log",
+      "name": "closed-cpu-forced-alignment-control-r1/2d859645dc9975bc-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\20200709_L_R002S01C01-seq-000-alignment.json",
+      "name": "closed-cpu-forced-alignment-control-r2/f4b878758ef615bd-20200709_L_R002S01C01-seq-000-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\ES2003b-seq-000-alignment.json",
+      "name": "closed-cpu-forced-alignment-control-r2/ec15324141b84c9d-ES2003b-seq-000-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\run.json",
+      "name": "closed-cpu-forced-alignment-control-r2/5b92100f0aa70da9-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\tiny-control.json",
+      "name": "closed-cpu-forced-alignment-control-r2/32e261bc182130c4-tiny-control.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\weight-roundtrip.json",
+      "name": "closed-cpu-forced-alignment-control-r2/09e64c67f72cc109-weight-roundtrip.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\worker-state.json",
+      "name": "closed-cpu-forced-alignment-control-r2/31fcd0090dfaa2b0-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\worker.log",
+      "name": "closed-cpu-forced-alignment-control-r2/606c784280473bea-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\tiny\\config.json",
+      "name": "closed-cpu-forced-alignment-control-r2/e60b4935d592e260-config.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\000000-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-pilot-r1/f038c142c41cd079-000000-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\run.json",
+      "name": "closed-cpu-retained-baseline-alignment-pilot-r1/8003c74eacb24be3-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\weight-roundtrip.json",
+      "name": "closed-cpu-retained-baseline-alignment-pilot-r1/d07f1b1ac56e763a-weight-roundtrip.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\worker-state.json",
+      "name": "closed-cpu-retained-baseline-alignment-pilot-r1/c5a0349c86297b1e-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\worker.log",
+      "name": "closed-cpu-retained-baseline-alignment-pilot-r1/8c9a2e7077537adb-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000001-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/a8c53458513e461a-000001-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000002-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/3cbebb376f660d8c-000002-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000003-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/3d170b3fa1f24968-000003-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000004-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/cc4fbf707c5ce596-000004-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000005-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/8782447cf10b8824-000005-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000006-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/6a66df8128f44c50-000006-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000007-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/2d5d7b4383e8918e-000007-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000008-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/418c2629d71969ec-000008-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000009-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/3848d57667c2e3e8-000009-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000010-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/c5687ff5734c05d1-000010-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000011-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/60c8042db46b8703-000011-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000012-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/beab533942f2c9d5-000012-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000013-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/510dcc2300ac10b5-000013-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000014-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/7ba2f59eb6701a16-000014-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000015-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/3b38f57999019d71-000015-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000016-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/a7c6fd5c5c7f53fe-000016-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000017-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/99172e78d02ed370-000017-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000018-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/74b3b37b1e25b7ca-000018-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000019-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/7854d4c476c8c85e-000019-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000020-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/8c171f74f57b89c4-000020-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000021-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/7f0f7d834028027b-000021-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000022-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/9760c5bb53707f56-000022-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000023-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/a35df6205c8d1c3d-000023-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000024-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/17ba54931caba23f-000024-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000025-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/04f91e55914c963b-000025-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000026-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/af2f624fe42858fc-000026-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000027-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/d4f7c502d4b4c27d-000027-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000028-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/a984c659ed39e28d-000028-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000029-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/f7e8c135d75583fb-000029-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000030-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/fff88fd78c8c7e56-000030-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000031-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/af788476a41ec773-000031-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000032-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/45c561a9ed54fb80-000032-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000033-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/2cff65b7013c1311-000033-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000034-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/7f131eb09be3f23c-000034-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000035-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/ab569dad7c564999-000035-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000036-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/7234ab10edf4833a-000036-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000037-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/07dd9dd2c1031989-000037-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000038-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/d6c0577365ac5136-000038-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000039-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/b016dd89894bf8bf-000039-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000040-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/27d15181a63a4064-000040-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000041-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/9f4c4781695e1696-000041-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000042-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/56822a21a9b25996-000042-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000043-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/c8a7ec5438ce4bae-000043-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000044-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/78949342d40b2a6a-000044-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000045-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/46698e94702de607-000045-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000046-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/092e8ec91c16eeee-000046-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000047-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/9e1848f036c72297-000047-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000048-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/d94c47c7bb59ea98-000048-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000049-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/11a3a87eef93b75e-000049-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000050-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/820a53b947c05325-000050-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000051-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/a0f59f90ca345415-000051-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000052-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/ba74d1585650909e-000052-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000053-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/5829acad424e91dd-000053-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000054-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/2e06690b8741395c-000054-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000055-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/a62df45d5a768cde-000055-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000056-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/559d9bf8a6b9079f-000056-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000057-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/16acecf5cfb13532-000057-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000058-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/7d489a172a8c8d06-000058-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000059-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/0ab46249781d228b-000059-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\000060-root-alignment.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/879e5ab106ec0373-000060-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\run.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/97b5283b0c803ab5-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\weight-roundtrip.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/800bf8481ec187b3-weight-roundtrip.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\worker-state.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/36351922ff8e3eca-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r1\\worker.log",
+      "name": "closed-cpu-retained-baseline-alignment-full-r1/b8edc8a2395e472b-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r2\\composition-state.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r2/934a47b0e3140d14-composition-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r2\\run.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r2/9795950a7cdd2e82-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r2\\worker-state.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r2/2d23574df4647e0d-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r2\\composed\\S_R004S03C01-attribution-review.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r2/cdb89886d84b133a-S_R004S03C01-attribution-review.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r2\\composed\\S_R004S03C01-model-output.json",
+      "name": "closed-cpu-retained-baseline-alignment-full-r2/03a5aaec29e2b725-S_R004S03C01-model-output.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000061-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/9ccfd19f5332b151-000061-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000062-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/4916f90bb79968bc-000062-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000063-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/d49649aa84598f34-000063-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000064-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/511f8418ed9a0ddc-000064-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000065-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/68c8fdb96eaf07eb-000065-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000066-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/80a3bf46d028be8e-000066-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000067-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/a08a337a42891ea5-000067-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000068-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/de5957fd40f6397a-000068-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000069-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/0c706f8f58e83dc9-000069-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000070-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/e76e70cb1bf8bc72-000070-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000071-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/576263ce8dad55b6-000071-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000072-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/2cc14fa1eb5fa3f5-000072-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000073-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/ec39f17b5711553c-000073-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000074-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/d7f48fc28e3e6cda-000074-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000075-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/e3fdf65a8d71e0a7-000075-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\000076-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/d6ac44289981926a-000076-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\run.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/26bb102c8f74b1fb-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\weight-roundtrip.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/639d6f9002aad042-weight-roundtrip.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\worker-state.json",
+      "name": "closed-cpu-alignment-recovery-batch-0/1a35c8cfb7eb685b-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-0\\worker.log",
+      "name": "closed-cpu-alignment-recovery-batch-0/0c1af27bc5b9e3ad-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\000077-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-1/671b936e4b66aa56-000077-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\000078-root-alignment.json",
+      "name": "closed-cpu-alignment-recovery-batch-1/008f9b11a971c92b-000078-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\run.json",
+      "name": "closed-cpu-alignment-recovery-batch-1/298f61290c363e38-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\weight-roundtrip.json",
+      "name": "closed-cpu-alignment-recovery-batch-1/06b4727f8f052d45-weight-roundtrip.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\worker-state.json",
+      "name": "closed-cpu-alignment-recovery-batch-1/b44340a04fec0aaf-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-alignment-recovery-batch-1\\worker.log",
+      "name": "closed-cpu-alignment-recovery-batch-1/771a1326cf62c2e3-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composition-state.json",
+      "name": "closed-cpu-retained-baseline-join-r4/164ca2fb937371f5-composition-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\worker-state.json",
+      "name": "closed-cpu-retained-baseline-join-r4/dccb712222ec822e-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composed\\S_R004S03C01-attribution-review.json",
+      "name": "closed-cpu-retained-baseline-join-r4/38522c893dcee552-S_R004S03C01-attribution-review.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composed\\S_R004S03C01-exclusive-view.json",
+      "name": "closed-cpu-retained-baseline-join-r4/2315ded0a10e7c01-S_R004S03C01-exclusive-view.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composed\\S_R004S03C01-model-output.json",
+      "name": "closed-cpu-retained-baseline-join-r4/7eae2c6948d34c1d-S_R004S03C01-model-output.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r1\\run.json",
+      "name": "closed-cpu-idle-app-r1/1729be1729ceb33e-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\bundle.json",
+      "name": "closed-cpu-idle-app-r2/98d6416517433949-bundle.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\idle-observation.json",
+      "name": "closed-cpu-idle-app-r2/7e56934e67b2f408-idle-observation.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\protocol.json",
+      "name": "closed-cpu-idle-app-r2/5725daf057a4879a-protocol.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\run.json",
+      "name": "closed-cpu-idle-app-r2/7c77545432ab434d-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream-manifest.json",
+      "name": "closed-cpu-idle-app-r2/77a6aab5b39c49d7-stream-manifest.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream.stderr.log",
+      "name": "closed-cpu-idle-app-r2/cba78cbc008f1c95-stream.stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream.stdout.log",
+      "name": "closed-cpu-idle-app-r2/a07423714bd5745c-stream.stdout.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\decoder-run-1794812057400218600.log",
+      "name": "closed-cpu-idle-app-r2/ebf1ed02977da522-decoder-run-1794812057400218600.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\preview.json",
+      "name": "closed-cpu-idle-app-r2/bedb20f649115f14-preview.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\sealed.json",
+      "name": "closed-cpu-idle-app-r2/d54d26bd4cebd0a4-sealed.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\decoder-run-1794812057400218600\\document.json",
+      "name": "closed-cpu-idle-app-r2/223b359c3f9790d4-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\decoder-run-1794812057400218600\\native.log",
+      "name": "closed-cpu-idle-app-r2/1ec93668d28c8d25-native.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\decoder-run-1794812057400218600\\run.json",
+      "name": "closed-cpu-idle-app-r2/d7e9a714651b9926-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\decoder-run-1794812057400218600\\worker-state.json",
+      "name": "closed-cpu-idle-app-r2/1e0ae172011cccad-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\decoder-run-1794812057400218600\\worker.log",
+      "name": "closed-cpu-idle-app-r2/bce04f9e747457c2-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\session.json",
+      "name": "closed-cpu-idle-app-r2/dc16e7ab845b1ae2-session.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\requests\\00000000-00080000-draft.json",
+      "name": "closed-cpu-idle-app-r2/a7ba469d5f9bc5b2-00000000-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\requests\\00000000-00160000-draft.json",
+      "name": "closed-cpu-idle-app-r2/e94b604acb2e9903-00000000-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\requests\\00000000-00240000-draft.json",
+      "name": "closed-cpu-idle-app-r2/c82ad427ee9a9769-00000000-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\requests\\00000000-00320000-draft.json",
+      "name": "closed-cpu-idle-app-r2/08fba56ddcf9f2b7-00000000-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\requests\\00000000-00400000-draft.json",
+      "name": "closed-cpu-idle-app-r2/81b7bbe7106ed695-00000000-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r2\\stream\\session\\results\\00000000-00080000-draft.json",
+      "name": "closed-cpu-idle-app-r2/b60e2388d2352725-00000000-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\bundle.json",
+      "name": "closed-cpu-idle-app-r3/4f77bb5aeb85a9d8-bundle.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\protocol.json",
+      "name": "closed-cpu-idle-app-r3/f84bf61cb40bd17c-protocol.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\run.json",
+      "name": "closed-cpu-idle-app-r3/c18a6e7c650d36b1-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream-manifest.json",
+      "name": "closed-cpu-idle-app-r3/5b5a4be21ac0fc31-stream-manifest.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream.stderr.log",
+      "name": "closed-cpu-idle-app-r3/ee47cc9813420d54-stream.stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream.stdout.log",
+      "name": "closed-cpu-idle-app-r3/bf3f56eeebc9e470-stream.stdout.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\attribution-evidence.json",
+      "name": "closed-cpu-idle-app-r3/8d691d5ed2571c05-attribution-evidence.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\final-binding.json",
+      "name": "closed-cpu-idle-app-r3/8424a87c11082018-final-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\final-document.json",
+      "name": "closed-cpu-idle-app-r3/018c99c20f161547-final-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\input-binding.json",
+      "name": "closed-cpu-idle-app-r3/99d05aad2e8a2111-input-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\job.json",
+      "name": "closed-cpu-idle-app-r3/cf70dabfe8b72930-job.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\stream-cache-lineage.json",
+      "name": "closed-cpu-idle-app-r3/9583ccaef9ae3177-stream-cache-lineage.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\logs\\cpu-speaker-1794812971599080300.log",
+      "name": "closed-cpu-idle-app-r3/5ba5a3eb65b91357-cpu-speaker-1794812971599080300.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\audio-only.json",
+      "name": "closed-cpu-idle-app-r3/4068652a5564fd50-audio-only.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\binding.json",
+      "name": "closed-cpu-idle-app-r3/463f48049a2469a4-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\protocol.json",
+      "name": "closed-cpu-idle-app-r3/d1c554d47ceeb983-protocol.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\probabilities\\local-87cfc3334a980f0e\\probabilities.json",
+      "name": "closed-cpu-idle-app-r3/cef394f0dec97cc4-probabilities.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\results\\local-87cfc3334a980f0e\\completed-state.json",
+      "name": "closed-cpu-idle-app-r3/a83befcc2326bb19-completed-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\results\\local-87cfc3334a980f0e\\speaker-journal.json",
+      "name": "closed-cpu-idle-app-r3/86f1848aa5e43e95-speaker-journal.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\final-jobs\\87cfc3334a980f0e8719ed33492c264417c2f7bfa57164916130f57cea3fa92f\\speaker-attempt-1794812971593821300\\results\\local-87cfc3334a980f0e\\state.json",
+      "name": "closed-cpu-idle-app-r3/3c5c6ae5c2a65692-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\final-manifest.json",
+      "name": "closed-cpu-idle-app-r3/0343443d636e89fe-final-manifest.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\idle-observation.json",
+      "name": "closed-cpu-idle-app-r3/fbf9926c986532b1-idle-observation.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\result.json",
+      "name": "closed-cpu-idle-app-r3/7d99c3d0beb83248-result.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\run.json",
+      "name": "closed-cpu-idle-app-r3/e00cf36658b4577e-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\stream.stderr.log",
+      "name": "closed-cpu-idle-app-r3/b07b16ff8d2f020f-stream.stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\stream.stdout.log",
+      "name": "closed-cpu-idle-app-r3/cb8560d0829835ef-stream.stdout.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\final-call\\stderr.log",
+      "name": "closed-cpu-idle-app-r3/90d7610c889c592d-stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\final-call\\stdout.json",
+      "name": "closed-cpu-idle-app-r3/d6e7de4862323b88-stdout.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\reopen-call\\stderr.log",
+      "name": "closed-cpu-idle-app-r3/cf2fdc4b564b4273-stderr.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\reopen-call\\stdout.json",
+      "name": "closed-cpu-idle-app-r3/13c812b08e05f1bc-stdout.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812535214715800.log",
+      "name": "closed-cpu-idle-app-r3/7ba8cf9bb3091ca7-decoder-run-1794812535214715800.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812906569260700.log",
+      "name": "closed-cpu-idle-app-r3/ae50d0b323f2b5b5-decoder-run-1794812906569260700.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\preview.json",
+      "name": "closed-cpu-idle-app-r3/c69531a2bc2fcbbe-preview.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\sealed.json",
+      "name": "closed-cpu-idle-app-r3/870fe29c84fb2778-sealed.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\stream-receipt.json",
+      "name": "closed-cpu-idle-app-r3/89fb80980856675d-stream-receipt.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812535214715800\\document.json",
+      "name": "closed-cpu-idle-app-r3/0e44901c0f92c160-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812535214715800\\native.log",
+      "name": "closed-cpu-idle-app-r3/dd61c5b0cf16a09b-native.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812535214715800\\run.json",
+      "name": "closed-cpu-idle-app-r3/e77673184cc4838a-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812535214715800\\worker-state.json",
+      "name": "closed-cpu-idle-app-r3/78688f3d45bb9020-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812535214715800\\worker.log",
+      "name": "closed-cpu-idle-app-r3/ffcf591e129acace-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812906569260700\\document.json",
+      "name": "closed-cpu-idle-app-r3/5910cce300873231-document.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812906569260700\\native.log",
+      "name": "closed-cpu-idle-app-r3/e83ff816e5e5fa7b-native.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812906569260700\\run.json",
+      "name": "closed-cpu-idle-app-r3/efb0c0c74d0f9807-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812906569260700\\worker-state.json",
+      "name": "closed-cpu-idle-app-r3/70cbca31aa13eb9b-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\decoder-run-1794812906569260700\\worker.log",
+      "name": "closed-cpu-idle-app-r3/e1af1011647ae345-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\session.json",
+      "name": "closed-cpu-idle-app-r3/cbaa455e38695493-session.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000000-00080000-draft.json",
+      "name": "closed-cpu-idle-app-r3/49f29a2d815fa7e6-00000000-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000000-00160000-draft.json",
+      "name": "closed-cpu-idle-app-r3/7b445fd8c6809105-00000000-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000000-00240000-draft.json",
+      "name": "closed-cpu-idle-app-r3/ceb136dffc7e46b9-00000000-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000000-00320000-draft.json",
+      "name": "closed-cpu-idle-app-r3/c1dee0a2785cd8fe-00000000-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000000-00400000-draft.json",
+      "name": "closed-cpu-idle-app-r3/3e5ad904d9611113-00000000-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000000-00480000-final.json",
+      "name": "closed-cpu-idle-app-r3/6ce007663a774e00-00000000-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000001-00080000-draft.json",
+      "name": "closed-cpu-idle-app-r3/f420e4b04ba637e9-00000001-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000001-00160000-draft.json",
+      "name": "closed-cpu-idle-app-r3/01193da043839257-00000001-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000001-00240000-draft.json",
+      "name": "closed-cpu-idle-app-r3/cdc6ea6d017f89a7-00000001-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000001-00320000-draft.json",
+      "name": "closed-cpu-idle-app-r3/4a513bd04908b104-00000001-00320000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000001-00400000-draft.json",
+      "name": "closed-cpu-idle-app-r3/56b417572d910f3f-00000001-00400000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000001-00480000-final.json",
+      "name": "closed-cpu-idle-app-r3/33573a0cbeb93f35-00000001-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000002-00080000-draft.json",
+      "name": "closed-cpu-idle-app-r3/8151e7528668f3ba-00000002-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000002-00160000-draft.json",
+      "name": "closed-cpu-idle-app-r3/8ebb8904faac109d-00000002-00160000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000002-00240000-draft.json",
+      "name": "closed-cpu-idle-app-r3/6e72b289ef019701-00000002-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\requests\\00000002-00244000-final.json",
+      "name": "closed-cpu-idle-app-r3/0ad2d57c6bc55dcb-00000002-00244000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\results\\00000000-00240000-draft.json",
+      "name": "closed-cpu-idle-app-r3/7e75fb7075d00342-00000000-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\results\\00000000-00480000-final.json",
+      "name": "closed-cpu-idle-app-r3/f7cd8a536ef03c3a-00000000-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\results\\00000001-00240000-draft.json",
+      "name": "closed-cpu-idle-app-r3/4de18d1d43c4e3d8-00000001-00240000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\results\\00000001-00480000-final.json",
+      "name": "closed-cpu-idle-app-r3/da1599e4c4a4aefe-00000001-00480000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\results\\00000002-00080000-draft.json",
+      "name": "closed-cpu-idle-app-r3/f41b0b16497c5937-00000002-00080000-draft.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\stream\\session\\results\\00000002-00244000-final.json",
+      "name": "closed-cpu-idle-app-r3/9bd8f6dc41123ce0-00000002-00244000-final.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r1\\invalid.json",
+      "name": "closed-windows-reader-retry-r1/31a565ffb235defb-invalid.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r1\\published.json",
+      "name": "closed-windows-reader-retry-r1/e125f1ac21e24e1f-published.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r1\\result.json",
+      "name": "closed-windows-reader-retry-r1/15e9eff7f314a332-result.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r2\\invalid.json",
+      "name": "closed-windows-reader-retry-r2/ccde9231eacacda3-invalid.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r2\\published.json",
+      "name": "closed-windows-reader-retry-r2/8bbd040c753e0084-published.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r2\\result.json",
+      "name": "closed-windows-reader-retry-r2/5210b18339587cb4-result.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\training-source-audit.json",
+      "name": "training-readiness-not-model-progress/136c8628cf7e6909-training-source-audit.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-parameter-coverage.json",
+      "name": "training-readiness-not-model-progress/1d51685291ff7e35-acoustic-parameter-coverage.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r5\\package.json",
+      "name": "internal-expiring-fixture-only/27491698e3cd79da-package.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-internal-app-fixture-r5\\bundle.json",
+      "name": "internal-expiring-fixture-only/e117bf0e5f85ce5c-bundle.json"
+    },
+    {
+      "source": "work\\prepare_cpu_alignment_control_20261116.py",
+      "name": "work-source/5930c59c5fbe02b3-prepare_cpu_alignment_control_20261116.py"
+    },
+    {
+      "source": "work\\start_cpu_alignment_after_whole_20261116.py",
+      "name": "work-source/406ecd06f1b963f8-start_cpu_alignment_after_whole_20261116.py"
+    },
+    {
+      "source": "work\\start_cpu_alignment_control_r2_20261116.py",
+      "name": "work-source/5a4d6bd376d29b6e-start_cpu_alignment_control_r2_20261116.py"
+    },
+    {
+      "source": "work\\prepare_retained_baseline_cpu_alignment_20261116.py",
+      "name": "work-source/974438c2b0a7e2cb-prepare_retained_baseline_cpu_alignment_20261116.py"
+    },
+    {
+      "source": "work\\run_retained_baseline_cpu_alignment_20261116.py",
+      "name": "work-source/9a8e5a29273c401f-run_retained_baseline_cpu_alignment_20261116.py"
+    },
+    {
+      "source": "work\\recover_cpu_alignment_process_batches_20261116.py",
+      "name": "work-source/e1d67da77c3024ba-recover_cpu_alignment_process_batches_20261116.py"
+    },
+    {
+      "source": "work\\reuse_established_cpu_speaker_join_20261116.py",
+      "name": "work-source/c4f483d44641237b-reuse_established_cpu_speaker_join_20261116.py"
+    },
+    {
+      "source": "work\\reuse_established_cpu_speaker_join_r4_20261116.py",
+      "name": "work-source/1ef698e64ff51e90-reuse_established_cpu_speaker_join_r4_20261116.py"
+    },
+    {
+      "source": "work\\run_established_join_r4_20261116.py",
+      "name": "work-source/35074f1118459068-run_established_join_r4_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_idle_model_release_20261116.py",
+      "name": "work-source/32259cf8e70b33e9-prepare_cpu_idle_model_release_20261116.py"
+    },
+    {
+      "source": "work\\run_cpu_idle_application_20261116.py",
+      "name": "work-source/1345b67e550d5302-run_cpu_idle_application_20261116.py"
+    },
+    {
+      "source": "work\\resume_cpu_idle_application_20261116.py",
+      "name": "work-source/908f0ca758a998bf-resume_cpu_idle_application_20261116.py"
+    },
+    {
+      "source": "work\\check_windows_json_reader_retry_20261116.py",
+      "name": "work-source/d7b35d897fa030d2-check_windows_json_reader_retry_20261116.py"
+    },
+    {
+      "source": "work\\audit_cpu_gpu_alignment_outputs_20261116.py",
+      "name": "work-source/1e05304e48a0a6b7-audit_cpu_gpu_alignment_outputs_20261116.py"
+    },
+    {
+      "source": "work\\audit_official_training_entry_20261116.py",
+      "name": "work-source/b4b133dadb336d84-audit_official_training_entry_20261116.py"
+    },
+    {
+      "source": "work\\audit_acoustic_parameter_coverage_20261116.py",
+      "name": "work-source/5af3f0574cfaa46b-audit_acoustic_parameter_coverage_20261116.py"
+    },
+    {
+      "source": "work\\record_cpu_afternoon_results_20261116.py",
+      "name": "work-source/67cda2c1ee8cd280-record_cpu_afternoon_results_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_internal_app_fixture_frozen_r4_20261116.py",
+      "name": "work-source/92894494ca57fab1-prepare_cpu_internal_app_fixture_frozen_r4_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_internal_app_fixture_frozen_r5_20261116.py",
+      "name": "work-source/8597e78c2517c0ec-prepare_cpu_internal_app_fixture_frozen_r5_20261116.py"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "name": "progress-snapshot/e560a1b1fa7bdeea-bilingual_progress.json"
+    }
+  ],
+  "claims": {
+    "state": "CPU_COMPONENTS_AND_IDLE_MEMORY_VERIFIED_BILINGUAL_MODEL_QUALITY_REJECTED_NO_DEFAULT_PROMOTION",
+    "cpuChinesePortBothWholeRegressionsRetained": true,
+    "retainedNativeGpuAsrNotMisreportedAsCpuAsr": true,
+    "cpuAlignmentContinuousVoicesOnRetainedTextPassedSharedRustContract": true,
+    "idleModelResidentMemoryDroppedToAbout41MiBAndActualResumeCachePassed": true,
+    "nativeUiAndCardNotTested": true,
+    "privateGuardFailureAndProvisionalAssemblerFailureRetained": true,
+    "newWeightTraining": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "productDefaultChanged": false,
+    "finalHoldoutOpened": false,
+    "rawTrainingAudioAndLabelJsonlExcludedFromGit": true,
+    "modelAndRuntimeBinaryFilesExcludedFromGit": true
+  }
+}

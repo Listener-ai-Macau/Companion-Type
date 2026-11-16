@@ -1,0 +1,10 @@
+{
+  "state": "INCOMPLETE_QUEUE_RETAINED_NO_AUTOMATIC_RETRY",
+  "startedAt": "2026-11-16T14:26:24.082390+08:00",
+  "automaticNeuralRetries": 0,
+  "requiredStableMemorySeconds": 60,
+  "qualityQualified": false,
+  "availableBytesAtLaunch": 6688641024,
+  "error": "CalledProcessError(1, ['E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe', 'C:\\\\Users\\\\Billy\\\\Desktop\\\\Denzic\\\\Companion\\\\model-research\\\\src\\\\run_cpu_forced_alignment_20261116.py', '--control', 'C:\\\\Users\\\\Billy\\\\Desktop\\\\Denzic\\\\Companion\\\\docs\\\\handoffs\\\\20261109-paired-real-meeting\\\\bilingual-local20261114\\\\d1d2-execution\\\\joint-architecture-r1\\\\cpu-forced-alignment-control-r1', '--run', 'E:\\\\CodexData\\\\Companion\\\\product-d1d2-20261114\\\\joint-architecture-r1\\\\cpu-forced-alignment-control-r1'])",
+  "finishedAt": "2026-11-16T14:30:20.956207+08:00"
+}

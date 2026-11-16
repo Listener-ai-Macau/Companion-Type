@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0016",
+    "meeting": "S_R004S03C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\S_R004S03C01-fixed30-0016.wav",
+    "wavSha256": "ec814c0e08ffa8ffd2e8dd83ea0442b58475ca68ef79540e265ed46d2ecfa9c6",
+    "pcmSha256": "e7b7827591e774aa5223fd373e0b88c16a7eb5767e8cebbb42d9390d032e2855",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 7680000,
+    "sourceEndFrame": 8160000
+  },
+  "seconds": 13.21998120000353,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "保持它这个呃新鲜，保持它的新鲜度吧，算是，嗯，然后那个严禁蘸水的菜，有些这个菜它不能蘸水，那就要放到那个离这个菜叶叶菜的这个产品呢，要要远一点儿，放在这个喷雾口远一点的那个时间，而且我们菜的这个销售期限呢也是有时间限制的，是一天，嗯，比如说今天我们这个菜没有卖出去，比如说。",
+    "raw_text": "language Chinese<asr_text>保持它这个呃新鲜，保持它的新鲜度吧，算是，嗯，然后那个严禁蘸水的菜，有些这个菜它不能蘸水，那就要放到那个离这个菜叶叶菜的这个产品呢，要要远一点儿，放在这个喷雾口远一点的那个时间，而且我们菜的这个销售期限呢也是有时间限制的，是一天，嗯，比如说今天我们这个菜没有卖出去，比如说。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "保持它这个呃新鲜，保持它的新鲜度吧，算是，嗯，然后那个严禁蘸水的菜，有些这个菜它不能蘸水，那就要放到那个离这个菜叶叶菜的这个产品呢，要要远一点儿，放在这个喷雾口远一点的那个时间，而且我们菜的这个销售期限呢也是有时间限制的，是一天，嗯，比如说今天我们这个菜没有卖出去，比如说。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 19.55900001525879,
+      "encode_ms": 2311.720947265625,
+      "decode_ms": 10784.6650390625
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>保持它这个呃新鲜，保持它的新鲜度吧，算是，嗯，然后那个严禁蘸水的菜，有些这个菜它不能蘸水，那就要放到那个离这个菜叶叶菜的这个产品呢，要要远一点儿，放在这个喷雾口远一点的那个时间，而且我们菜的这个销售期限呢也是有时间限制的，是一天，嗯，比如说今天我们这个菜没有卖出去，比如说。",
+  "hypothesis": "保持它这个呃新鲜，保持它的新鲜度吧，算是，嗯，然后那个严禁蘸水的菜，有些这个菜它不能蘸水，那就要放到那个离这个菜叶叶菜的这个产品呢，要要远一点儿，放在这个喷雾口远一点的那个时间，而且我们菜的这个销售期限呢也是有时间限制的，是一天，嗯，比如说今天我们这个菜没有卖出去，比如说。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

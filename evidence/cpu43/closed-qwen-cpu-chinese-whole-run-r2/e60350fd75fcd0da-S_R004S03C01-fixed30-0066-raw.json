@@ -1,0 +1,59 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0066",
+    "meeting": "S_R004S03C01",
+    "language": "Chinese",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r1\\audio\\S_R004S03C01-fixed30-0066.wav",
+    "wavSha256": "7e3b7beacd26cc65292f6cba20b4cbba833f2048a11d60c40b1382809f18891f",
+    "pcmSha256": "0bc2808c8257af10bdf9d966716e21bb4f929cb35c851361d2ddf3d1c04f6a0a",
+    "frames": 480000,
+    "audioSeconds": 30.0,
+    "sourceStartFrame": 31680000,
+    "sourceEndFrame": 32160000
+  },
+  "seconds": 9.771860099994228,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "9a0d81792dfea2d5f278b8a63deb3ea6e02139ce42c2301f32ea19c4f77526b7",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "味道还是可以的话，就可以给他们推荐一些。这样的话，也可以更好的把这些保质期短的一些酸奶呢销售出去。这样的也是这样的价钱呢，跟原来也不是说相差太多，而且我们也可以把它更好的推销出去，让顾客呢感受到实惠。",
+    "raw_text": "language Chinese<asr_text>味道还是可以的话，就可以给他们推荐一些。这样的话，也可以更好的把这些保质期短的一些酸奶呢销售出去。这样的也是这样的价钱呢，跟原来也不是说相差太多，而且我们也可以把它更好的推销出去，让顾客呢感受到实惠。",
+    "language": "zh",
+    "timestamp_kind": "none",
+    "segments": [
+      {
+        "text": "味道还是可以的话，就可以给他们推荐一些。这样的话，也可以更好的把这些保质期短的一些酸奶呢销售出去。这样的也是这样的价钱呢，跟原来也不是说相差太多，而且我们也可以把它更好的推销出去，让顾客呢感受到实惠。",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 225.45700073242188,
+      "mel_ms": 25.2189998626709,
+      "encode_ms": 2118.35009765625,
+      "decode_ms": 7541.259765625
+    }
+  },
+  "rawDecoded": "language Chinese<asr_text>味道还是可以的话，就可以给他们推荐一些。这样的话，也可以更好的把这些保质期短的一些酸奶呢销售出去。这样的也是这样的价钱呢，跟原来也不是说相差太多，而且我们也可以把它更好的推销出去，让顾客呢感受到实惠。",
+  "hypothesis": "味道还是可以的话，就可以给他们推荐一些。这样的话，也可以更好的把这些保质期短的一些酸奶呢销售出去。这样的也是这样的价钱呢，跟原来也不是说相差太多，而且我们也可以把它更好的推销出去，让顾客呢感受到实惠。",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

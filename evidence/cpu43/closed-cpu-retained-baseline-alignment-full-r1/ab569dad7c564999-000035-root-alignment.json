@@ -1,0 +1,32 @@
+{
+  "case": {
+    "id": "000035-root",
+    "meeting": "S_R004S03C01",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000035-root.wav",
+    "wavSha256": "a4d74ef1abf24c0d1d9a4572cfa1e2d843663855c7c2c693f19a933b5494a0e5",
+    "pcmSha256": "8568d6b117678d53edec66018e6d52abe48837f64aebd6aee0153ddf2001ea51",
+    "frames": 400000,
+    "sourceStartFrame": 16607725,
+    "sourceEndFrame": 17007725,
+    "text": "",
+    "language": "Chinese",
+    "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000035-root.json",
+    "rawAsrSha256": "0784df4fcbd2b4875b36346858c5442940e6c9550217d2da26c47eea85414bca",
+    "rawAsrTextPath": [
+      "raw",
+      "text"
+    ],
+    "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+  },
+  "payload": {
+    "originalText": "",
+    "units": [],
+    "allOriginalCharactersPreserved": true,
+    "neuralInferencePerformed": false,
+    "seconds": 0.0,
+    "wordTimeAccuracyQualified": false
+  },
+  "modelSha256": "00568245ceca5af1991d28562a75fe1ddc9bfeb041c27fda66947ea05c47fb86",
+  "gpuUsed": false,
+  "qualityQualified": false
+}

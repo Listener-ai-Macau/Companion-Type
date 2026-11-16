@@ -1,0 +1,14 @@
+{
+  "state": "RESTORE_EXISTING_PRODUCT_ONSET_JOIN_BEFORE_RESCORE_ZERO_NEW_NEURAL_CALLS",
+  "at": "2026-11-16T15:03:06.771595+08:00",
+  "previousComposition": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-full-r2\\composition-state.json",
+  "previousCompositionSha256": "6eaf024f1a25ebe452ed813f2e8fe733c607dfc40bcb014acb843b8b6ed3ef80",
+  "sourceOfRegression": "The new provisional assembler used the earlier full-word interval policy and omitted leaf separators from utterances. The current established product uses onset plus/minus60ms, keeps all source separators, and carries the original predicted exclusive attribution view with raw multi-voice evidence. Reuse that exact existing helper instead of changing any model result or reference.",
+  "establishedProductHelperSha256": "77fe80c965ed76ca5e9a32480e9c918c7718fb749276ce481c824689d97ce393",
+  "previousR6HelperSha256": "c19b0e012f83d4683b40badb2a1d8b2cc1a23e95f805ae49586043afa0c800bb",
+  "modelOutputsReused": 79,
+  "newNeuralCalls": 0,
+  "qualityGateChanged": false,
+  "referenceEdits": false,
+  "qualityQualified": false
+}

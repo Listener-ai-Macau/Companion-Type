@@ -1,0 +1,6 @@
+{
+  "state": "PREPARATION_ASSERTION_BEFORE_ANY_MODEL_CALL",
+  "sourceSha256": "ba3aaa9603d0ab59130dbb6c2facdcf04da217e96995280b386b69e8b21f2b88",
+  "cause": "The protected plan includes3 exact-digital-silence leaves with no neural call and naturalEos=None. They must be verified as exact zero PCM, not required to have a generated EOS.33 earlier PCM files retained and will be checked before reuse.",
+  "newNeuralCalls": 0
+}
