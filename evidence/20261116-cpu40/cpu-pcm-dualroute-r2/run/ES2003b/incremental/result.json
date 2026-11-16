@@ -1,0 +1,170 @@
+{
+  "state": "PASS_ACTUAL_CPU_PCM_PHASE_NOT_QUALITY_QUALIFIED",
+  "live": true,
+  "meeting": "ES2003b",
+  "frames": 1204000,
+  "firstTextSeconds": 14.208003600004304,
+  "firstCompleteBlockSeconds": 49.11996460000228,
+  "ingressSealSeconds": 75.2969138000044,
+  "finalDocumentSeconds": 86.8285892999993,
+  "firstTextBeforeInputSeal": true,
+  "finalIntervals": [
+    {
+      "startFrame": 0,
+      "endFrame": 480000,
+      "pcmSha256": "35b7576e94da66661d218bfb8af5217f5f4cf86bd25a51abaea613a0081f9998"
+    },
+    {
+      "startFrame": 480000,
+      "endFrame": 960000,
+      "pcmSha256": "430cd7b84479ebf5e821cf8768c777caac86ee7368645f0e6c7c719dea3817c4"
+    },
+    {
+      "startFrame": 960000,
+      "endFrame": 1204000,
+      "pcmSha256": "46a1b564da5323ef109d20a99a011e6f1b0ab593c30d45db439964779746b76c"
+    }
+  ],
+  "finalRawDecoded": [
+    "[4.33][S01]Just put it on the desk, all I see is desktop.[6.61][7.04][S02]No, on the desktop you'll find you should find that there's a project documents link.[11.51][15.55][S02]Oh, actually just there.[16.55][16.36][S01]Project documents, yeah.[17.45][17.47][S02]Yeah, that's it. If you dump it in there.[19.45][19.53][S01]What's the username?[20.28][21.53][S02]The username.[22.11][22.54][S01]What's the username in there as well?[23.83][25.88][S03]You can connect to it with any username actually, there's no restriction.[28.51]",
+    "[4.41][S01]That was sorry.[4.91][9.41][S02]Well, that'll train you.[10.29][11.81][S03]Here we go.[12.15][12.85][S02]Excellent, right.[13.61][15.49][S02]Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um[24.89][26.79][S02]we'll start with the minutes of the last meeting, not a lot.[29.97]",
+    "[0.00][S01]We've introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote[15.22]"
+  ],
+  "finalText": "Just put it on the desk, all I see is desktop. No, on the desktop you'll find you should find that there's a project documents link. Oh, actually just there. Project documents, yeah. Yeah, that's it. If you dump it in there. What's the username? The username. What's the username in there as well? You can connect to it with any username actually, there's no restriction.\nThat was sorry. Well, that'll train you. Here we go. Excellent, right. Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um we'll start with the minutes of the last meeting, not a lot.\nWe've introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote",
+  "document": {
+    "isFinal": true,
+    "text": "Just put it on the desk, all I see is desktop. No, on the desktop you'll find you should find that there's a project documents link. Oh, actually just there. Project documents, yeah. Yeah, that's it. If you dump it in there. What's the username? The username. What's the username in there as well? You can connect to it with any username actually, there's no restriction.\nThat was sorry. Well, that'll train you. Here we go. Excellent, right. Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um we'll start with the minutes of the last meeting, not a lot.\nWe've introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote",
+    "utterances": [
+      {
+        "text": "Just put it on the desk, all I see is desktop. No, on the desktop you'll find you should find that there's a project documents link. Oh, actually just there. Project documents, yeah. Yeah, that's it. If you dump it in there. What's the username? The username. What's the username in there as well? You can connect to it with any username actually, there's no restriction.",
+        "startMs": 0.0,
+        "endMs": 30000.0,
+        "speaker": null,
+        "approximateTiming": true,
+        "block": 0,
+        "revision": "00000000-00480000-final",
+        "blockFinal": true,
+        "language": null,
+        "decodeAccepted": true,
+        "reviewRequired": true,
+        "unconfirmedAudioIntervals": []
+      },
+      {
+        "text": "That was sorry. Well, that'll train you. Here we go. Excellent, right. Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um we'll start with the minutes of the last meeting, not a lot.",
+        "startMs": 30000.0,
+        "endMs": 60000.0,
+        "speaker": null,
+        "approximateTiming": true,
+        "block": 1,
+        "revision": "00000001-00480000-final",
+        "blockFinal": true,
+        "language": null,
+        "decodeAccepted": true,
+        "reviewRequired": true,
+        "unconfirmedAudioIntervals": []
+      },
+      {
+        "text": "We've introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote",
+        "startMs": 60000.0,
+        "endMs": 75250.0,
+        "speaker": null,
+        "approximateTiming": true,
+        "block": 2,
+        "revision": "00000002-00244000-final",
+        "blockFinal": true,
+        "language": null,
+        "decodeAccepted": true,
+        "reviewRequired": true,
+        "unconfirmedAudioIntervals": []
+      }
+    ],
+    "confirmedAudioFrames": 1204000,
+    "finalDecodedFrames": 1204000,
+    "audioSealed": true,
+    "speakerIdentityVerified": false,
+    "reviewRequired": true,
+    "wordTimingVerified": false,
+    "qualityQualified": false
+  },
+  "nativeModules": {
+    "workerPid": 32468,
+    "cpuKernelModules": [
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-base.dll",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-cascadelake.dll",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml.dll",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\transcribe.dll"
+    ],
+    "optionalGpuComputeModules": []
+  },
+  "decoderRun": {
+    "state": "CPU_PCM_ATTEMPT_COMPLETE_REVIEW_PENDING",
+    "startedAt": "2026-11-16T12:41:51.940160+08:00",
+    "privatePeakBytes": 738680832,
+    "familyWorkingSetPeakBytes": 2211917824,
+    "systemAvailableMinBytes": 3692081152,
+    "localOnly": true,
+    "sourceUploaded": false,
+    "qualityQualified": false,
+    "productDefaultChanged": false,
+    "automaticRetries": 0,
+    "pid": 6656,
+    "pidCreatedAt": 1794804111.944406,
+    "workerExitCode": 0,
+    "workerState": "COMPLETE_CPU_PCM_FINAL_TEXT_SPEAKERS_PENDING_NOT_QUALIFIED",
+    "finishedAt": "2026-11-16T12:43:19.338617+08:00"
+  },
+  "completedRequests": [
+    {
+      "job": "00000000-00080000-draft",
+      "block": 0,
+      "blockFinal": false,
+      "inputFrames": 80000,
+      "seconds": 8.880498600003193,
+      "accepted": true,
+      "resultFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\results\\00000000-00080000-draft.json"
+    },
+    {
+      "job": "00000000-00480000-final",
+      "block": 0,
+      "blockFinal": true,
+      "inputFrames": 480000,
+      "seconds": 18.930201999995916,
+      "accepted": true,
+      "resultFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\results\\00000000-00480000-final.json"
+    },
+    {
+      "job": "00000001-00240000-draft",
+      "block": 1,
+      "blockFinal": false,
+      "inputFrames": 240000,
+      "seconds": 11.384551100003591,
+      "accepted": true,
+      "resultFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\results\\00000001-00240000-draft.json"
+    },
+    {
+      "job": "00000001-00480000-final",
+      "block": 1,
+      "blockFinal": true,
+      "inputFrames": 480000,
+      "seconds": 15.684631800002535,
+      "accepted": true,
+      "resultFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\results\\00000001-00480000-final.json"
+    },
+    {
+      "job": "00000002-00244000-final",
+      "block": 2,
+      "blockFinal": true,
+      "inputFrames": 244000,
+      "seconds": 10.46517060000042,
+      "accepted": true,
+      "resultFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\results\\00000002-00244000-final.json"
+    }
+  ],
+  "modelNativeInferencePerformed": true,
+  "gpuComputeUsed": false,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "speakerIdentityVerified": false,
+  "cardHardwareUsed": false,
+  "inputIsPacedPublicFileReplay": true
+}

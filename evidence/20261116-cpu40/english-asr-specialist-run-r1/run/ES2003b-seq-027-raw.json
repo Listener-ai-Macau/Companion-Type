@@ -1,0 +1,98 @@
+{
+  "case": {
+    "id": "ES2003b-seq-027",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-027.wav",
+    "wavSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+    "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+    "frames": 162401,
+    "audioSeconds": 10.1500625,
+    "language": "English"
+  },
+  "seconds": 9.061481599994295,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I'm pointing at my laptop. We put the fetch into... Real reaction. And such. So, um... Mr. Spoden. Is that not the name?",
+    "raw_text": "<|0.00|> I'm pointing at my laptop.<|2.00|><|2.00|> We put the fetch into...<|4.00|><|4.00|> Real reaction.<|6.00|><|6.00|> And such. So, um...<|8.00|><|8.00|> Mr. Spoden. Is that not the name?<|10.16|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I'm pointing at my laptop.",
+        "t0_ms": 0,
+        "t1_ms": 2000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "We put the fetch into...",
+        "t0_ms": 2000,
+        "t1_ms": 4000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Real reaction.",
+        "t0_ms": 4000,
+        "t1_ms": 6000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "And such. So, um...",
+        "t0_ms": 6000,
+        "t1_ms": 8000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Mr. Spoden. Is that not the name?",
+        "t0_ms": 8000,
+        "t1_ms": 10160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 224.90899658203125,
+      "mel_ms": 15.673999786376953,
+      "encode_ms": 8606.8974609375,
+      "decode_ms": 432.32501220703125
+    }
+  },
+  "rawDecoded": "<|0.00|> I'm pointing at my laptop.<|2.00|><|2.00|> We put the fetch into...<|4.00|><|4.00|> Real reaction.<|6.00|><|6.00|> And such. So, um...<|8.00|><|8.00|> Mr. Spoden. Is that not the name?<|10.16|>",
+  "hypothesis": "I'm pointing at my laptop. We put the fetch into... Real reaction. And such. So, um... Mr. Spoden. Is that not the name?",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

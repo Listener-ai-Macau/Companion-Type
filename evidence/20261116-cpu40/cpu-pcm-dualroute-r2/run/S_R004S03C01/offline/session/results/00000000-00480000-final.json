@@ -1,0 +1,188 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000000-00480000-final",
+    "recordingId": "7968429c-0c1e-4a3a-8054-337b1cff8c31",
+    "configSha256": "ac838862e6ba8cac0e7ac048193d450f82163a6b3760df96e9ab428668291abc",
+    "block": 0,
+    "startFrame": 0,
+    "endFrame": 480000,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\session\\audio.pcm",
+    "pcmSha256": "ce1131d47fe7ef35953b5687b954147887804d605823ac9814ad5d48267911a7",
+    "language": "auto",
+    "blockFinal": true,
+    "publishedAtMonotonic": 44934.1435343,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "schema": "companion.local-moss-cpu.v1",
+    "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+    "nativeCommit": "275cd50",
+    "runtimeContractSha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff",
+    "workerSha256": "071f5742d4d2d6a7a0ce84b367a1fd45927f5ce2c9e71f488fea82c40fa4eadf",
+    "languagePolicy": "Original bilingual model, language=None, no reference or count hints.",
+    "generation": "Unmodified native greedy/EOS, f16 KV, no repetition guard or word postediting."
+  },
+  "result": {
+    "text": "零零一超市主管。 零零六A。 零零七B。 零零八C。 零零九D。 把各个区的这个咱这个负责人啊叫过来，来简单呃做一个交流。 呃，咱超市啊近期的销售啊。",
+    "language": null,
+    "rawGeneratedIds": [],
+    "tokenIdsAvailable": false,
+    "rawDecoded": "[6.18][S01]零零一超市主管。[7.78][12.34][S02]零零六A。[13.48][14.43][S03]零零七B。[15.68][17.34][S04]零零八C。[18.41][18.72][S05]零零九D。[19.65][22.71][S01]把各个区的这个咱这个负责人啊叫过来，来简单呃做一个交流。[26.88][27.36][S01]呃，咱超市啊近期的销售啊。[29.94]",
+    "nativeResult": {
+      "text": "零零一超市主管。 零零六A。 零零七B。 零零八C。 零零九D。 把各个区的这个咱这个负责人啊叫过来，来简单呃做一个交流。 呃，咱超市啊近期的销售啊。",
+      "raw_text": "[6.18][S01]零零一超市主管。[7.78][12.34][S02]零零六A。[13.48][14.43][S03]零零七B。[15.68][17.34][S04]零零八C。[18.41][18.72][S05]零零九D。[19.65][22.71][S01]把各个区的这个咱这个负责人啊叫过来，来简单呃做一个交流。[26.88][27.36][S01]呃，咱超市啊近期的销售啊。[29.94]",
+      "language": "",
+      "timestamp_kind": "segment",
+      "segments": [
+        {
+          "text": "零零一超市主管。",
+          "t0_ms": 6180,
+          "t1_ms": 7780,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        },
+        {
+          "text": "零零六A。",
+          "t0_ms": 12340,
+          "t1_ms": 13480,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 2
+        },
+        {
+          "text": "零零七B。",
+          "t0_ms": 14430,
+          "t1_ms": 15680,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 3
+        },
+        {
+          "text": "零零八C。",
+          "t0_ms": 17340,
+          "t1_ms": 18410,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 4
+        },
+        {
+          "text": "零零九D。",
+          "t0_ms": 18720,
+          "t1_ms": 19650,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 5
+        },
+        {
+          "text": "把各个区的这个咱这个负责人啊叫过来，来简单呃做一个交流。",
+          "t0_ms": 22710,
+          "t1_ms": 26880,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        },
+        {
+          "text": "呃，咱超市啊近期的销售啊。",
+          "t0_ms": 27360,
+          "t1_ms": 29940,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        }
+      ],
+      "speaker_segments": [
+        {
+          "t0_ms": 6180,
+          "t1_ms": 7780,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 12340,
+          "t1_ms": 13480,
+          "speaker_id": 2,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 14430,
+          "t1_ms": 15680,
+          "speaker_id": 3,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 17340,
+          "t1_ms": 18410,
+          "speaker_id": 4,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 18720,
+          "t1_ms": 19650,
+          "speaker_id": 5,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 22710,
+          "t1_ms": 26880,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 27360,
+          "t1_ms": 29940,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        }
+      ],
+      "words": [],
+      "tokens": [],
+      "timings": {
+        "load_ms": 627.4619750976562,
+        "mel_ms": 24.198999404907227,
+        "encode_ms": 7826.4990234375,
+        "decode_ms": 12234.470703125
+      }
+    },
+    "naturalEos": true,
+    "accepted": true,
+    "reviewRequired": true,
+    "seconds": 20.190866100005223,
+    "rawSpeakerIdsAreLocalToThisRequest": true,
+    "speakerIdentityVerified": false,
+    "wordsRewritten": false,
+    "qualityQualified": false,
+    "semanticError": null,
+    "unconfirmedAudioIntervals": []
+  }
+}

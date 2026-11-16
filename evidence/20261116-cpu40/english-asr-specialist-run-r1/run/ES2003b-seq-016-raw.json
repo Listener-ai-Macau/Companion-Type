@@ -1,0 +1,128 @@
+{
+  "case": {
+    "id": "ES2003b-seq-016",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-016.wav",
+    "wavSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+    "pcmSha256": "7e8c174955670b930e9b657a8fdcbea730374845ac6668f4a916ddc867ee7f6e",
+    "frames": 473280,
+    "audioSeconds": 29.58,
+    "language": "English"
+  },
+  "seconds": 9.241583500006527,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "So I can understand your point and I would agree with you but this is our design spec for now. Great to say. Does that, would that include access to say interactive functions on digital or cable? Yeah. I would say so yes because then we have to be able to control the remote boxes and that is a separate unit. I think that, I would say that the design spec is not a separate unit.",
+    "raw_text": "<|0.00|> So I can understand your point and I would agree with you but this is our design spec<|7.00|><|7.00|> for now.<|8.00|><|8.00|> Great to say.<|9.00|><|9.00|> Does that, would that include access to say interactive functions on digital or cable?<|18.00|><|18.00|> Yeah.<|19.00|><|19.00|> I would say so yes because then we have to be able to control the remote boxes and that<|25.00|><|25.00|> is a separate unit.<|28.00|><|28.00|> I think that, I would say that the design spec is not a separate unit.<|29.58|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "So I can understand your point and I would agree with you but this is our design spec",
+        "t0_ms": 0,
+        "t1_ms": 7000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "for now.",
+        "t0_ms": 7000,
+        "t1_ms": 8000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Great to say.",
+        "t0_ms": 8000,
+        "t1_ms": 9000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Does that, would that include access to say interactive functions on digital or cable?",
+        "t0_ms": 9000,
+        "t1_ms": 18000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 18000,
+        "t1_ms": 19000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "I would say so yes because then we have to be able to control the remote boxes and that",
+        "t0_ms": 19000,
+        "t1_ms": 25000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "is a separate unit.",
+        "t0_ms": 25000,
+        "t1_ms": 28000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "I think that, I would say that the design spec is not a separate unit.",
+        "t0_ms": 28000,
+        "t1_ms": 29580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 224.90899658203125,
+      "mel_ms": 13.434000015258789,
+      "encode_ms": 8469.5048828125,
+      "decode_ms": 750.02001953125
+    }
+  },
+  "rawDecoded": "<|0.00|> So I can understand your point and I would agree with you but this is our design spec<|7.00|><|7.00|> for now.<|8.00|><|8.00|> Great to say.<|9.00|><|9.00|> Does that, would that include access to say interactive functions on digital or cable?<|18.00|><|18.00|> Yeah.<|19.00|><|19.00|> I would say so yes because then we have to be able to control the remote boxes and that<|25.00|><|25.00|> is a separate unit.<|28.00|><|28.00|> I think that, I would say that the design spec is not a separate unit.<|29.58|>",
+  "hypothesis": "So I can understand your point and I would agree with you but this is our design spec for now. Great to say. Does that, would that include access to say interactive functions on digital or cable? Yeah. I would say so yes because then we have to be able to control the remote boxes and that is a separate unit. I think that, I would say that the design spec is not a separate unit.",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

@@ -1,0 +1,16 @@
+{
+  "state": "INCOMPLETE_CPU_PCM_ATTEMPT_RETAINED",
+  "startedAt": "2026-11-16T12:33:35.482307+08:00",
+  "privatePeakBytes": 738164736,
+  "familyWorkingSetPeakBytes": 2186608640,
+  "systemAvailableMinBytes": 3078639616,
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "productDefaultChanged": false,
+  "automaticRetries": 0,
+  "pid": 6580,
+  "pidCreatedAt": 1794803615.4860215,
+  "error": "InterruptedError('Confirmed PCM, accepted results and partials retained')",
+  "finishedAt": "2026-11-16T12:34:35.968886+08:00"
+}

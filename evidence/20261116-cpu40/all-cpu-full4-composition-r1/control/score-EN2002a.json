@@ -1,0 +1,314 @@
+{
+  "at": "2026-11-16T12:32:17.851062+08:00",
+  "meeting": "EN2002a",
+  "language": "English",
+  "audioSeconds": 2142.709375,
+  "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+  "baselineRawText": {
+    "referenceUnits": 7632,
+    "hypothesisUnits": 5665,
+    "errors": 2623,
+    "errorRate": 0.3436844863731656,
+    "counts": {
+      "replace": 546,
+      "delete": 2022,
+      "insert": 55
+    }
+  },
+  "baselinePersonErrorRate": null,
+  "baselineDER": 0.310766316505023,
+  "baselineEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\english-full-wer-r1.json",
+  "scoringManifestSha256": "234ea8b756701993e17674fabb0cf12e69e22649ca9aa905f694a160b08863d2",
+  "scorerSha256": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "originalGatesChanged": false,
+  "recordingsArePreviouslySeenDevelopmentCasesNotBlindHoldout": true,
+  "newNeuralCalls": 0,
+  "state": "COMPLETE_JOINT_WHOLE_MEETING_SCORED_NOT_PRODUCT_QUALIFIED",
+  "candidateOutputSha256": "7d211797e319a19832935aa6ac68c0dee67c42e1b72722d60bedab2470a48a05",
+  "rawText": {
+    "referenceUnits": 7632,
+    "hypothesisUnits": 7101,
+    "errors": 2618,
+    "errorRate": 0.34302935010482183,
+    "counts": {
+      "replace": 1205,
+      "delete": 972,
+      "insert": 441
+    }
+  },
+  "personText": {
+    "referenceUnits": 7632,
+    "errors": 2328,
+    "errorRate": 0.3050314465408805,
+    "unknownUnitsForcedUnmatched": 81,
+    "perPerson": [
+      {
+        "referenceSpeaker": "A",
+        "anonymousSpeaker": "S01",
+        "referenceUnits": 1883,
+        "hypothesisUnits": 1693,
+        "errors": 557,
+        "errorRate": 0.29580456718003184,
+        "counts": {
+          "replace": 269,
+          "delete": 239,
+          "insert": 49
+        }
+      },
+      {
+        "referenceSpeaker": "B",
+        "anonymousSpeaker": "S03",
+        "referenceUnits": 1362,
+        "hypothesisUnits": 1089,
+        "errors": 552,
+        "errorRate": 0.4052863436123348,
+        "counts": {
+          "replace": 205,
+          "delete": 310,
+          "insert": 37
+        }
+      },
+      {
+        "referenceSpeaker": "C",
+        "anonymousSpeaker": "S02",
+        "referenceUnits": 2790,
+        "hypothesisUnits": 2797,
+        "errors": 570,
+        "errorRate": 0.20430107526881722,
+        "counts": {
+          "replace": 263,
+          "delete": 150,
+          "insert": 157
+        }
+      },
+      {
+        "referenceSpeaker": "D",
+        "anonymousSpeaker": "S00",
+        "referenceUnits": 1597,
+        "hypothesisUnits": 1441,
+        "errors": 568,
+        "errorRate": 0.35566687539135877,
+        "counts": {
+          "replace": 292,
+          "delete": 216,
+          "insert": 60
+        }
+      }
+    ],
+    "mappingForScoringOnly": true,
+    "oneWholeMeetingPermutation": true
+  },
+  "originalReferenceDER": {
+    "referenceSpeakerSeconds": 2530.2599999999975,
+    "missSeconds": 621.09,
+    "falseAlarmSeconds": 26.799999999997702,
+    "confusionSeconds": 80.38000000000174,
+    "errorSeconds": 728.2699999999994,
+    "DER": 0.28782417617161876,
+    "identityForScoringOnly": {
+      "S00": "MEE071",
+      "S01": "MEE073",
+      "S02": "FEO072",
+      "S03": "FEO070"
+    }
+  },
+  "invalidTimeSegmentIndices": [],
+  "residualUnparsed": [
+    {
+      "beforeSegment": 4,
+      "text": "\nOh, well then start.\n"
+    },
+    {
+      "beforeSegment": 7,
+      "text": "\nIt's all all we need to talk about.\n"
+    },
+    {
+      "beforeSegment": 14,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 23,
+      "text": "\nOkay.\n"
+    },
+    {
+      "beforeSegment": 24,
+      "text": "\nSo yeah.\n"
+    },
+    {
+      "beforeSegment": 37,
+      "text": "\nThe left click highlights it.\n"
+    },
+    {
+      "beforeSegment": 80,
+      "text": "\nExactly, I know.\nTrue.\n"
+    },
+    {
+      "beforeSegment": 82,
+      "text": "\nMm.\n"
+    },
+    {
+      "beforeSegment": 102,
+      "text": "\nWell\n"
+    },
+    {
+      "beforeSegment": 110,
+      "text": "\nUm.\n"
+    },
+    {
+      "beforeSegment": 111,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 122,
+      "text": "\nYeah, alright, well.\n"
+    },
+    {
+      "beforeSegment": 124,
+      "text": "\nEven if it's one thing happening.\n"
+    },
+    {
+      "beforeSegment": 216,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 218,
+      "text": "\nNo.\n"
+    },
+    {
+      "beforeSegment": 317,
+      "text": "\nYeah, sounds good.\n"
+    },
+    {
+      "beforeSegment": 318,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 390,
+      "text": "\nOr a case.\n"
+    },
+    {
+      "beforeSegment": 400,
+      "text": "\nYeah, I got it.\n"
+    },
+    {
+      "beforeSegment": 410,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 415,
+      "text": "\nMm.\n"
+    },
+    {
+      "beforeSegment": 433,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 463,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 466,
+      "text": "\nMm-hmm, libraries.\n"
+    },
+    {
+      "beforeSegment": 472,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 516,
+      "text": "\nHmm.\n"
+    },
+    {
+      "beforeSegment": 518,
+      "text": "\nVery clear, very clear.\n"
+    },
+    {
+      "beforeSegment": 565,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 621,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 643,
+      "text": "\nMm.\n"
+    },
+    {
+      "beforeSegment": 645,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 660,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 857,
+      "text": "\nWhat?\n"
+    },
+    {
+      "beforeSegment": 858,
+      "text": "\nYeah, we will probably\n"
+    },
+    {
+      "beforeSegment": 867,
+      "text": "\nYeah.\nUm.\n"
+    },
+    {
+      "beforeSegment": 876,
+      "text": "\nMm.\n"
+    },
+    {
+      "beforeSegment": 893,
+      "text": "\nOf course.\n"
+    },
+    {
+      "beforeSegment": 899,
+      "text": "\nOop.\n"
+    },
+    {
+      "beforeSegment": 909,
+      "text": "\nYeah."
+    }
+  ],
+  "allNativeLexicalContentCounted": true,
+  "parsedSegments": 909,
+  "rawTextGate": false,
+  "personTextGate": false,
+  "derGate": false,
+  "rawEditsReduced": 5,
+  "rawRelativeErrorReduction": 0.0019062142584826535,
+  "externalMfaTimingDiagnostic": {
+    "referenceSpeakerSeconds": 1907.9019999999978,
+    "missSeconds": 251.90099999999745,
+    "falseAlarmSeconds": 279.96899999999783,
+    "confusionSeconds": 83.84800000000061,
+    "errorSeconds": 615.717999999996,
+    "DER": 0.322719930059299,
+    "identityForScoringOnly": {
+      "S00": "MEE071",
+      "S01": "MEE073",
+      "S02": "FEO072",
+      "S03": "FEO070"
+    },
+    "notHumanVerifiedAndDoesNotReplaceOriginalGate": true
+  },
+  "limits": {
+    "pid": 29932,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 63352832,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

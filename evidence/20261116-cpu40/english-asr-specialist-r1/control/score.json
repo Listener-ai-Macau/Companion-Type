@@ -1,0 +1,5259 @@
+{
+  "state": "REJECT_ENGLISH_SPECIALIST_CLIP_CONTRAST_NO_PARAMETER_GRID",
+  "at": "2026-11-16T12:32:06.909401+08:00",
+  "aggregate": {
+    "cases": 12,
+    "referenceUnits": 709,
+    "errors": 195,
+    "errorRate": 0.2750352609308886,
+    "mossErrors": 124,
+    "mossErrorRate": 0.17489421720733428,
+    "qwenErrors": 141,
+    "qwenErrorRate": 0.19887165021156558,
+    "relativeErrorReductionVsMoss": -0.5725806451612904,
+    "inferenceSeconds": 113.27531779999845,
+    "audioSeconds": 265.56006249999996,
+    "substitutions": 69,
+    "deletions": 99,
+    "insertions": 27
+  },
+  "meetings": [
+    {
+      "meeting": "ES2003b",
+      "cases": 6,
+      "referenceUnits": 290,
+      "errors": 81,
+      "errorRate": 0.2793103448275862,
+      "mossErrors": 51,
+      "mossErrorRate": 0.17586206896551723,
+      "qwenErrors": 60,
+      "qwenErrorRate": 0.20689655172413793,
+      "relativeErrorReductionVsMoss": -0.5882352941176471,
+      "inferenceSeconds": 55.77129580000474,
+      "audioSeconds": 123.9900625,
+      "substitutions": 24,
+      "deletions": 44,
+      "insertions": 13
+    },
+    {
+      "meeting": "EN2001a",
+      "cases": 6,
+      "referenceUnits": 419,
+      "errors": 114,
+      "errorRate": 0.2720763723150358,
+      "mossErrors": 73,
+      "mossErrorRate": 0.17422434367541767,
+      "qwenErrors": 81,
+      "qwenErrorRate": 0.19331742243436753,
+      "relativeErrorReductionVsMoss": -0.5616438356164384,
+      "inferenceSeconds": 57.50402199999371,
+      "audioSeconds": 141.57,
+      "substitutions": 45,
+      "deletions": 55,
+      "insertions": 14
+    }
+  ],
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "meeting": "ES2003b",
+      "role": "validation",
+      "reference": "Just put it on the deskt desktop No on the desktop you'll find you should find that there's a project documents link A well actually just",
+      "hypothesis": "just put it on the desktop, all I see is desktop.",
+      "nativeRaw": "<|0.00|> just put it on the desktop, all I see is desktop.<|12.06|>",
+      "errors": 20,
+      "referenceUnits": 26,
+      "hypothesisUnits": 11,
+      "rate": 0.7692307692307693,
+      "substitutions": 5,
+      "deletions": 15,
+      "insertions": 0,
+      "editOperations": [
+        {
+          "operation": "replace",
+          "referenceIndex": 5,
+          "hypothesisIndex": 5,
+          "reference": [
+            "put",
+            "it",
+            "on",
+            "the",
+            "deskt",
+            "desktop",
+            "no",
+            "on",
+            "the"
+          ],
+          "hypothesis": [
+            "put",
+            "it",
+            "on",
+            "the",
+            "desktop",
+            "all",
+            "i",
+            "see",
+            "is"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 6,
+          "hypothesisIndex": 6,
+          "reference": [
+            "it",
+            "on",
+            "the",
+            "deskt",
+            "desktop",
+            "no",
+            "on",
+            "the",
+            "desktop"
+          ],
+          "hypothesis": [
+            "it",
+            "on",
+            "the",
+            "desktop",
+            "all",
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 7,
+          "hypothesisIndex": 7,
+          "reference": [
+            "on",
+            "the",
+            "deskt",
+            "desktop",
+            "no",
+            "on",
+            "the",
+            "desktop",
+            "you'll"
+          ],
+          "hypothesis": [
+            "on",
+            "the",
+            "desktop",
+            "all",
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 8,
+          "hypothesisIndex": 8,
+          "reference": [
+            "the",
+            "deskt",
+            "desktop",
+            "no",
+            "on",
+            "the",
+            "desktop",
+            "you'll",
+            "find"
+          ],
+          "hypothesis": [
+            "the",
+            "desktop",
+            "all",
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 9,
+          "hypothesisIndex": 9,
+          "reference": [
+            "deskt",
+            "desktop",
+            "no",
+            "on",
+            "the",
+            "desktop",
+            "you'll",
+            "find",
+            "you"
+          ],
+          "hypothesis": [
+            "desktop",
+            "all",
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 11,
+          "hypothesisIndex": 11,
+          "reference": [
+            "no",
+            "on",
+            "the",
+            "desktop",
+            "you'll",
+            "find",
+            "you",
+            "should",
+            "find"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 12,
+          "hypothesisIndex": 11,
+          "reference": [
+            "on",
+            "the",
+            "desktop",
+            "you'll",
+            "find",
+            "you",
+            "should",
+            "find",
+            "that"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 13,
+          "hypothesisIndex": 11,
+          "reference": [
+            "the",
+            "desktop",
+            "you'll",
+            "find",
+            "you",
+            "should",
+            "find",
+            "that",
+            "there's"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 14,
+          "hypothesisIndex": 11,
+          "reference": [
+            "desktop",
+            "you'll",
+            "find",
+            "you",
+            "should",
+            "find",
+            "that",
+            "there's",
+            "a"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 15,
+          "hypothesisIndex": 11,
+          "reference": [
+            "you'll",
+            "find",
+            "you",
+            "should",
+            "find",
+            "that",
+            "there's",
+            "a",
+            "project"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 16,
+          "hypothesisIndex": 11,
+          "reference": [
+            "find",
+            "you",
+            "should",
+            "find",
+            "that",
+            "there's",
+            "a",
+            "project",
+            "documents"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 17,
+          "hypothesisIndex": 11,
+          "reference": [
+            "you",
+            "should",
+            "find",
+            "that",
+            "there's",
+            "a",
+            "project",
+            "documents",
+            "link"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 18,
+          "hypothesisIndex": 11,
+          "reference": [
+            "should",
+            "find",
+            "that",
+            "there's",
+            "a",
+            "project",
+            "documents",
+            "link",
+            "a"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 19,
+          "hypothesisIndex": 11,
+          "reference": [
+            "find",
+            "that",
+            "there's",
+            "a",
+            "project",
+            "documents",
+            "link",
+            "a",
+            "well"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 20,
+          "hypothesisIndex": 11,
+          "reference": [
+            "that",
+            "there's",
+            "a",
+            "project",
+            "documents",
+            "link",
+            "a",
+            "well",
+            "actually"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 21,
+          "hypothesisIndex": 11,
+          "reference": [
+            "there's",
+            "a",
+            "project",
+            "documents",
+            "link",
+            "a",
+            "well",
+            "actually",
+            "just"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 22,
+          "hypothesisIndex": 11,
+          "reference": [
+            "a",
+            "project",
+            "documents",
+            "link",
+            "a",
+            "well",
+            "actually",
+            "just"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 23,
+          "hypothesisIndex": 11,
+          "reference": [
+            "project",
+            "documents",
+            "link",
+            "a",
+            "well",
+            "actually",
+            "just"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 24,
+          "hypothesisIndex": 11,
+          "reference": [
+            "documents",
+            "link",
+            "a",
+            "well",
+            "actually",
+            "just"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 25,
+          "hypothesisIndex": 11,
+          "reference": [
+            "link",
+            "a",
+            "well",
+            "actually",
+            "just"
+          ],
+          "hypothesis": [
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        }
+      ],
+      "mossRawErrors": 6,
+      "qwenRawErrors": 7,
+      "audioSeconds": 12.05,
+      "inferenceSeconds": 9.344919399998616
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "meeting": "ES2003b",
+      "role": "validation",
+      "reference": "and the remote's only trained for you it's a bit impractical to have just voice recognition by itself So you can have voice recognition and a regular remote But imagine you got rid of the regular remote part then you can design the remote to look any way you want it to look because there are no restrictions on physical size or shape it it could be as fancy as you want it to be you know it could be like a lollipop or something like that something weird like that As long as the voice recognition stuff works that's that's fine Okay",
+      "hypothesis": "than the remote's only 20 per year. It's been impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part. Then you can design the remote to look any way you want it to look because there are no restrictions on physical size or shape. It can be as fancy as you want it to be. It could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's fine.",
+      "nativeRaw": "<|0.00|> than the remote's only 20 per year.<|1.62|><|1.62|> It's been impractical to have just voice recognition by itself.<|4.62|><|4.62|> So you can have voice recognition and a regular remote.<|8.46|><|8.46|> But imagine you got rid of the regular remote part.<|11.16|><|11.16|> Then you can design the remote to look any way you want it to look<|15.04|><|15.04|> because there are no restrictions on physical size or shape.<|19.78|><|19.78|> It can be as fancy as you want it to be.<|22.16|><|22.16|> It could be like a lollipop, something like that,<|24.04|><|24.04|> something weird like that.<|25.76|><|25.76|> As long as the voice recognition stuff works, that's fine.<|29.76|>",
+      "errors": 13,
+      "referenceUnits": 103,
+      "hypothesisUnits": 96,
+      "rate": 0.1262135922330097,
+      "substitutions": 6,
+      "deletions": 7,
+      "insertions": 0,
+      "editOperations": [
+        {
+          "operation": "replace",
+          "referenceIndex": 0,
+          "hypothesisIndex": 0,
+          "reference": [
+            "and",
+            "the",
+            "remote's",
+            "only",
+            "trained"
+          ],
+          "hypothesis": [
+            "than",
+            "the",
+            "remote's",
+            "only",
+            "20"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 4,
+          "hypothesisIndex": 4,
+          "reference": [
+            "and",
+            "the",
+            "remote's",
+            "only",
+            "trained",
+            "for",
+            "you",
+            "it's",
+            "a"
+          ],
+          "hypothesis": [
+            "than",
+            "the",
+            "remote's",
+            "only",
+            "20",
+            "per",
+            "year",
+            "it's",
+            "been"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 5,
+          "hypothesisIndex": 5,
+          "reference": [
+            "the",
+            "remote's",
+            "only",
+            "trained",
+            "for",
+            "you",
+            "it's",
+            "a",
+            "bit"
+          ],
+          "hypothesis": [
+            "the",
+            "remote's",
+            "only",
+            "20",
+            "per",
+            "year",
+            "it's",
+            "been",
+            "impractical"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 6,
+          "hypothesisIndex": 6,
+          "reference": [
+            "remote's",
+            "only",
+            "trained",
+            "for",
+            "you",
+            "it's",
+            "a",
+            "bit",
+            "impractical"
+          ],
+          "hypothesis": [
+            "remote's",
+            "only",
+            "20",
+            "per",
+            "year",
+            "it's",
+            "been",
+            "impractical",
+            "to"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 8,
+          "hypothesisIndex": 8,
+          "reference": [
+            "trained",
+            "for",
+            "you",
+            "it's",
+            "a",
+            "bit",
+            "impractical",
+            "to",
+            "have"
+          ],
+          "hypothesis": [
+            "20",
+            "per",
+            "year",
+            "it's",
+            "been",
+            "impractical",
+            "to",
+            "have",
+            "just"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 9,
+          "hypothesisIndex": 9,
+          "reference": [
+            "for",
+            "you",
+            "it's",
+            "a",
+            "bit",
+            "impractical",
+            "to",
+            "have",
+            "just"
+          ],
+          "hypothesis": [
+            "per",
+            "year",
+            "it's",
+            "been",
+            "impractical",
+            "to",
+            "have",
+            "just",
+            "voice"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 64,
+          "hypothesisIndex": 63,
+          "reference": [
+            "size",
+            "or",
+            "shape",
+            "it",
+            "it",
+            "could",
+            "be",
+            "as",
+            "fancy"
+          ],
+          "hypothesis": [
+            "size",
+            "or",
+            "shape",
+            "it",
+            "can",
+            "be",
+            "as",
+            "fancy",
+            "as"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 65,
+          "hypothesisIndex": 64,
+          "reference": [
+            "or",
+            "shape",
+            "it",
+            "it",
+            "could",
+            "be",
+            "as",
+            "fancy",
+            "as"
+          ],
+          "hypothesis": [
+            "or",
+            "shape",
+            "it",
+            "can",
+            "be",
+            "as",
+            "fancy",
+            "as",
+            "you"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 75,
+          "hypothesisIndex": 73,
+          "reference": [
+            "want",
+            "it",
+            "to",
+            "be",
+            "you",
+            "know",
+            "it",
+            "could",
+            "be"
+          ],
+          "hypothesis": [
+            "want",
+            "it",
+            "to",
+            "be",
+            "it",
+            "could",
+            "be",
+            "like",
+            "a"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 76,
+          "hypothesisIndex": 73,
+          "reference": [
+            "it",
+            "to",
+            "be",
+            "you",
+            "know",
+            "it",
+            "could",
+            "be",
+            "like"
+          ],
+          "hypothesis": [
+            "want",
+            "it",
+            "to",
+            "be",
+            "it",
+            "could",
+            "be",
+            "like",
+            "a"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 83,
+          "hypothesisIndex": 79,
+          "reference": [
+            "be",
+            "like",
+            "a",
+            "lollipop",
+            "or",
+            "something",
+            "like",
+            "that",
+            "something"
+          ],
+          "hypothesis": [
+            "be",
+            "like",
+            "a",
+            "lollipop",
+            "something",
+            "like",
+            "that",
+            "something",
+            "weird"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 100,
+          "hypothesisIndex": 95,
+          "reference": [
+            "recognition",
+            "stuff",
+            "works",
+            "that's",
+            "that's",
+            "fine",
+            "okay"
+          ],
+          "hypothesis": [
+            "recognition",
+            "stuff",
+            "works",
+            "that's",
+            "fine"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 102,
+          "hypothesisIndex": 96,
+          "reference": [
+            "works",
+            "that's",
+            "that's",
+            "fine",
+            "okay"
+          ],
+          "hypothesis": [
+            "stuff",
+            "works",
+            "that's",
+            "fine"
+          ]
+        }
+      ],
+      "mossRawErrors": 7,
+      "qwenRawErrors": 12,
+      "audioSeconds": 29.75,
+      "inferenceSeconds": 10.013091100001475
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "meeting": "ES2003b",
+      "role": "validation",
+      "reference": "yeah and you just click file save as Oh right Okay Uh right I'm responsible for working design uh this is basically the inside going on of the the uh remote",
+      "hypothesis": "and just quickly fast I'm responsible for our working design this is basically the inside going on with the remote",
+      "nativeRaw": "<|0.00|> and just quickly fast<|1.44|><|1.44|> I'm responsible for our working design<|23.06|><|23.06|> this is basically the<|25.60|><|25.60|> inside going on with the<|27.70|><|28.96|> remote<|29.72|>",
+      "errors": 16,
+      "referenceUnits": 31,
+      "hypothesisUnits": 20,
+      "rate": 0.5161290322580645,
+      "substitutions": 3,
+      "deletions": 12,
+      "insertions": 1,
+      "editOperations": [
+        {
+          "operation": "delete",
+          "referenceIndex": 0,
+          "hypothesisIndex": 0,
+          "reference": [
+            "yeah",
+            "and",
+            "you",
+            "just",
+            "click"
+          ],
+          "hypothesis": [
+            "and",
+            "just",
+            "quickly",
+            "fast",
+            "i'm"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 2,
+          "hypothesisIndex": 1,
+          "reference": [
+            "yeah",
+            "and",
+            "you",
+            "just",
+            "click",
+            "file",
+            "save"
+          ],
+          "hypothesis": [
+            "and",
+            "just",
+            "quickly",
+            "fast",
+            "i'm",
+            "responsible"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 4,
+          "hypothesisIndex": 2,
+          "reference": [
+            "yeah",
+            "and",
+            "you",
+            "just",
+            "click",
+            "file",
+            "save",
+            "as",
+            "oh"
+          ],
+          "hypothesis": [
+            "and",
+            "just",
+            "quickly",
+            "fast",
+            "i'm",
+            "responsible",
+            "for"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 5,
+          "hypothesisIndex": 3,
+          "reference": [
+            "and",
+            "you",
+            "just",
+            "click",
+            "file",
+            "save",
+            "as",
+            "oh",
+            "right"
+          ],
+          "hypothesis": [
+            "and",
+            "just",
+            "quickly",
+            "fast",
+            "i'm",
+            "responsible",
+            "for",
+            "our"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 6,
+          "hypothesisIndex": 4,
+          "reference": [
+            "you",
+            "just",
+            "click",
+            "file",
+            "save",
+            "as",
+            "oh",
+            "right",
+            "okay"
+          ],
+          "hypothesis": [
+            "and",
+            "just",
+            "quickly",
+            "fast",
+            "i'm",
+            "responsible",
+            "for",
+            "our",
+            "working"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 7,
+          "hypothesisIndex": 4,
+          "reference": [
+            "just",
+            "click",
+            "file",
+            "save",
+            "as",
+            "oh",
+            "right",
+            "okay",
+            "uh"
+          ],
+          "hypothesis": [
+            "and",
+            "just",
+            "quickly",
+            "fast",
+            "i'm",
+            "responsible",
+            "for",
+            "our",
+            "working"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 8,
+          "hypothesisIndex": 4,
+          "reference": [
+            "click",
+            "file",
+            "save",
+            "as",
+            "oh",
+            "right",
+            "okay",
+            "uh",
+            "right"
+          ],
+          "hypothesis": [
+            "and",
+            "just",
+            "quickly",
+            "fast",
+            "i'm",
+            "responsible",
+            "for",
+            "our",
+            "working"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 9,
+          "hypothesisIndex": 4,
+          "reference": [
+            "file",
+            "save",
+            "as",
+            "oh",
+            "right",
+            "okay",
+            "uh",
+            "right",
+            "i'm"
+          ],
+          "hypothesis": [
+            "and",
+            "just",
+            "quickly",
+            "fast",
+            "i'm",
+            "responsible",
+            "for",
+            "our",
+            "working"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 10,
+          "hypothesisIndex": 4,
+          "reference": [
+            "save",
+            "as",
+            "oh",
+            "right",
+            "okay",
+            "uh",
+            "right",
+            "i'm",
+            "responsible"
+          ],
+          "hypothesis": [
+            "and",
+            "just",
+            "quickly",
+            "fast",
+            "i'm",
+            "responsible",
+            "for",
+            "our",
+            "working"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 11,
+          "hypothesisIndex": 4,
+          "reference": [
+            "as",
+            "oh",
+            "right",
+            "okay",
+            "uh",
+            "right",
+            "i'm",
+            "responsible",
+            "for"
+          ],
+          "hypothesis": [
+            "and",
+            "just",
+            "quickly",
+            "fast",
+            "i'm",
+            "responsible",
+            "for",
+            "our",
+            "working"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 12,
+          "hypothesisIndex": 4,
+          "reference": [
+            "oh",
+            "right",
+            "okay",
+            "uh",
+            "right",
+            "i'm",
+            "responsible",
+            "for",
+            "working"
+          ],
+          "hypothesis": [
+            "and",
+            "just",
+            "quickly",
+            "fast",
+            "i'm",
+            "responsible",
+            "for",
+            "our",
+            "working"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 16,
+          "hypothesisIndex": 7,
+          "reference": [
+            "right",
+            "i'm",
+            "responsible",
+            "for",
+            "working",
+            "design",
+            "uh",
+            "this",
+            "is"
+          ],
+          "hypothesis": [
+            "fast",
+            "i'm",
+            "responsible",
+            "for",
+            "our",
+            "working",
+            "design",
+            "this",
+            "is"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 18,
+          "hypothesisIndex": 10,
+          "reference": [
+            "responsible",
+            "for",
+            "working",
+            "design",
+            "uh",
+            "this",
+            "is",
+            "basically",
+            "the"
+          ],
+          "hypothesis": [
+            "for",
+            "our",
+            "working",
+            "design",
+            "this",
+            "is",
+            "basically",
+            "the",
+            "inside"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 26,
+          "hypothesisIndex": 17,
+          "reference": [
+            "the",
+            "inside",
+            "going",
+            "on",
+            "of",
+            "the",
+            "the",
+            "uh",
+            "remote"
+          ],
+          "hypothesis": [
+            "the",
+            "inside",
+            "going",
+            "on",
+            "with",
+            "the",
+            "remote"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 28,
+          "hypothesisIndex": 19,
+          "reference": [
+            "going",
+            "on",
+            "of",
+            "the",
+            "the",
+            "uh",
+            "remote"
+          ],
+          "hypothesis": [
+            "going",
+            "on",
+            "with",
+            "the",
+            "remote"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 29,
+          "hypothesisIndex": 19,
+          "reference": [
+            "on",
+            "of",
+            "the",
+            "the",
+            "uh",
+            "remote"
+          ],
+          "hypothesis": [
+            "going",
+            "on",
+            "with",
+            "the",
+            "remote"
+          ]
+        }
+      ],
+      "mossRawErrors": 11,
+      "qwenRawErrors": 12,
+      "audioSeconds": 29.72,
+      "inferenceSeconds": 8.908190200003446
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "meeting": "ES2003b",
+      "role": "validation",
+      "reference": "So I can understand your point and I would agree with you but this is our design spec for now 'Fraid to say Um Does that um would that include um access to say interactive functions on digital or cable Yeah I would say so yes because then we have to be able to control the remote boxes and that is a separate unit Um I think that it I would say that the design",
+      "hypothesis": "So I can understand your point and I would agree with you but this is our design spec for now. Great to say. Does that, would that include access to say interactive functions on digital or cable? Yeah. I would say so yes because then we have to be able to control the remote boxes and that is a separate unit. I think that, I would say that the design spec is not a separate unit.",
+      "nativeRaw": "<|0.00|> So I can understand your point and I would agree with you but this is our design spec<|7.00|><|7.00|> for now.<|8.00|><|8.00|> Great to say.<|9.00|><|9.00|> Does that, would that include access to say interactive functions on digital or cable?<|18.00|><|18.00|> Yeah.<|19.00|><|19.00|> I would say so yes because then we have to be able to control the remote boxes and that<|25.00|><|25.00|> is a separate unit.<|28.00|><|28.00|> I think that, I would say that the design spec is not a separate unit.<|29.58|>",
+      "errors": 12,
+      "referenceUnits": 75,
+      "hypothesisUnits": 76,
+      "rate": 0.16,
+      "substitutions": 1,
+      "deletions": 5,
+      "insertions": 6,
+      "editOperations": [
+        {
+          "operation": "replace",
+          "referenceIndex": 20,
+          "hypothesisIndex": 20,
+          "reference": [
+            "design",
+            "spec",
+            "for",
+            "now",
+            "fraid",
+            "to",
+            "say",
+            "um",
+            "does"
+          ],
+          "hypothesis": [
+            "design",
+            "spec",
+            "for",
+            "now",
+            "great",
+            "to",
+            "say",
+            "does",
+            "that"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 23,
+          "hypothesisIndex": 23,
+          "reference": [
+            "now",
+            "fraid",
+            "to",
+            "say",
+            "um",
+            "does",
+            "that",
+            "um",
+            "would"
+          ],
+          "hypothesis": [
+            "now",
+            "great",
+            "to",
+            "say",
+            "does",
+            "that",
+            "would",
+            "that",
+            "include"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 26,
+          "hypothesisIndex": 25,
+          "reference": [
+            "say",
+            "um",
+            "does",
+            "that",
+            "um",
+            "would",
+            "that",
+            "include",
+            "um"
+          ],
+          "hypothesis": [
+            "to",
+            "say",
+            "does",
+            "that",
+            "would",
+            "that",
+            "include",
+            "access",
+            "to"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 30,
+          "hypothesisIndex": 28,
+          "reference": [
+            "um",
+            "would",
+            "that",
+            "include",
+            "um",
+            "access",
+            "to",
+            "say",
+            "interactive"
+          ],
+          "hypothesis": [
+            "that",
+            "would",
+            "that",
+            "include",
+            "access",
+            "to",
+            "say",
+            "interactive",
+            "functions"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 64,
+          "hypothesisIndex": 61,
+          "reference": [
+            "is",
+            "a",
+            "separate",
+            "unit",
+            "um",
+            "i",
+            "think",
+            "that",
+            "it"
+          ],
+          "hypothesis": [
+            "is",
+            "a",
+            "separate",
+            "unit",
+            "i",
+            "think",
+            "that",
+            "i",
+            "would"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 68,
+          "hypothesisIndex": 64,
+          "reference": [
+            "um",
+            "i",
+            "think",
+            "that",
+            "it",
+            "i",
+            "would",
+            "say",
+            "that"
+          ],
+          "hypothesis": [
+            "unit",
+            "i",
+            "think",
+            "that",
+            "i",
+            "would",
+            "say",
+            "that",
+            "the"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 75,
+          "hypothesisIndex": 70,
+          "reference": [
+            "say",
+            "that",
+            "the",
+            "design"
+          ],
+          "hypothesis": [
+            "say",
+            "that",
+            "the",
+            "design",
+            "spec",
+            "is",
+            "not",
+            "a",
+            "separate"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 75,
+          "hypothesisIndex": 71,
+          "reference": [
+            "say",
+            "that",
+            "the",
+            "design"
+          ],
+          "hypothesis": [
+            "that",
+            "the",
+            "design",
+            "spec",
+            "is",
+            "not",
+            "a",
+            "separate",
+            "unit"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 75,
+          "hypothesisIndex": 72,
+          "reference": [
+            "say",
+            "that",
+            "the",
+            "design"
+          ],
+          "hypothesis": [
+            "the",
+            "design",
+            "spec",
+            "is",
+            "not",
+            "a",
+            "separate",
+            "unit"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 75,
+          "hypothesisIndex": 73,
+          "reference": [
+            "say",
+            "that",
+            "the",
+            "design"
+          ],
+          "hypothesis": [
+            "design",
+            "spec",
+            "is",
+            "not",
+            "a",
+            "separate",
+            "unit"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 75,
+          "hypothesisIndex": 74,
+          "reference": [
+            "say",
+            "that",
+            "the",
+            "design"
+          ],
+          "hypothesis": [
+            "spec",
+            "is",
+            "not",
+            "a",
+            "separate",
+            "unit"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 75,
+          "hypothesisIndex": 75,
+          "reference": [
+            "say",
+            "that",
+            "the",
+            "design"
+          ],
+          "hypothesis": [
+            "is",
+            "not",
+            "a",
+            "separate",
+            "unit"
+          ]
+        }
+      ],
+      "mossRawErrors": 8,
+      "qwenRawErrors": 9,
+      "audioSeconds": 29.58,
+      "inferenceSeconds": 9.241583500006527
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "meeting": "ES2003b",
+      "role": "validation",
+      "reference": "Plus that's a nice wee design touch Yeah So by the sounds of it with what we're suggesting so far your design um the user interface is still quite open you could go for quite an interesting design",
+      "hypothesis": "Plus that's a nice video set. So by the sense that what we're suggesting so far, your design, the user interface is still quite open. You could go for quite an interesting design.",
+      "nativeRaw": "<|0.00|> Plus that's a nice video set.<|2.50|><|2.50|> So by the sense that what we're suggesting so far,<|5.20|><|5.20|> your design, the user interface is still quite open.<|10.10|><|10.10|> You could go for quite an interesting design.<|12.74|>",
+      "errors": 9,
+      "referenceUnits": 38,
+      "hypothesisUnits": 33,
+      "rate": 0.23684210526315788,
+      "substitutions": 4,
+      "deletions": 5,
+      "insertions": 0,
+      "editOperations": [
+        {
+          "operation": "replace",
+          "referenceIndex": 4,
+          "hypothesisIndex": 4,
+          "reference": [
+            "plus",
+            "that's",
+            "a",
+            "nice",
+            "wee",
+            "design",
+            "touch",
+            "yeah",
+            "so"
+          ],
+          "hypothesis": [
+            "plus",
+            "that's",
+            "a",
+            "nice",
+            "video",
+            "set",
+            "so",
+            "by",
+            "the"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 5,
+          "hypothesisIndex": 5,
+          "reference": [
+            "that's",
+            "a",
+            "nice",
+            "wee",
+            "design",
+            "touch",
+            "yeah",
+            "so",
+            "by"
+          ],
+          "hypothesis": [
+            "that's",
+            "a",
+            "nice",
+            "video",
+            "set",
+            "so",
+            "by",
+            "the",
+            "sense"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 6,
+          "hypothesisIndex": 6,
+          "reference": [
+            "a",
+            "nice",
+            "wee",
+            "design",
+            "touch",
+            "yeah",
+            "so",
+            "by",
+            "the"
+          ],
+          "hypothesis": [
+            "a",
+            "nice",
+            "video",
+            "set",
+            "so",
+            "by",
+            "the",
+            "sense",
+            "that"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 7,
+          "hypothesisIndex": 6,
+          "reference": [
+            "nice",
+            "wee",
+            "design",
+            "touch",
+            "yeah",
+            "so",
+            "by",
+            "the",
+            "sounds"
+          ],
+          "hypothesis": [
+            "a",
+            "nice",
+            "video",
+            "set",
+            "so",
+            "by",
+            "the",
+            "sense",
+            "that"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 11,
+          "hypothesisIndex": 9,
+          "reference": [
+            "yeah",
+            "so",
+            "by",
+            "the",
+            "sounds",
+            "of",
+            "it",
+            "with",
+            "what"
+          ],
+          "hypothesis": [
+            "set",
+            "so",
+            "by",
+            "the",
+            "sense",
+            "that",
+            "what",
+            "we're",
+            "suggesting"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 12,
+          "hypothesisIndex": 10,
+          "reference": [
+            "so",
+            "by",
+            "the",
+            "sounds",
+            "of",
+            "it",
+            "with",
+            "what",
+            "we're"
+          ],
+          "hypothesis": [
+            "so",
+            "by",
+            "the",
+            "sense",
+            "that",
+            "what",
+            "we're",
+            "suggesting",
+            "so"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 13,
+          "hypothesisIndex": 11,
+          "reference": [
+            "by",
+            "the",
+            "sounds",
+            "of",
+            "it",
+            "with",
+            "what",
+            "we're",
+            "suggesting"
+          ],
+          "hypothesis": [
+            "by",
+            "the",
+            "sense",
+            "that",
+            "what",
+            "we're",
+            "suggesting",
+            "so",
+            "far"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 14,
+          "hypothesisIndex": 11,
+          "reference": [
+            "the",
+            "sounds",
+            "of",
+            "it",
+            "with",
+            "what",
+            "we're",
+            "suggesting",
+            "so"
+          ],
+          "hypothesis": [
+            "by",
+            "the",
+            "sense",
+            "that",
+            "what",
+            "we're",
+            "suggesting",
+            "so",
+            "far"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 22,
+          "hypothesisIndex": 18,
+          "reference": [
+            "so",
+            "far",
+            "your",
+            "design",
+            "um",
+            "the",
+            "user",
+            "interface",
+            "is"
+          ],
+          "hypothesis": [
+            "so",
+            "far",
+            "your",
+            "design",
+            "the",
+            "user",
+            "interface",
+            "is",
+            "still"
+          ]
+        }
+      ],
+      "mossRawErrors": 4,
+      "qwenRawErrors": 6,
+      "audioSeconds": 12.74,
+      "inferenceSeconds": 9.202030000000377
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "meeting": "ES2003b",
+      "role": "validation",
+      "reference": "I'm pointing at my laptop what in God Real reaction and such So um The slogan is",
+      "hypothesis": "I'm pointing at my laptop. We put the fetch into... Real reaction. And such. So, um... Mr. Spoden. Is that not the name?",
+      "nativeRaw": "<|0.00|> I'm pointing at my laptop.<|2.00|><|2.00|> We put the fetch into...<|4.00|><|4.00|> Real reaction.<|6.00|><|6.00|> And such. So, um...<|8.00|><|8.00|> Mr. Spoden. Is that not the name?<|10.16|>",
+      "errors": 11,
+      "referenceUnits": 17,
+      "hypothesisUnits": 23,
+      "rate": 0.6470588235294118,
+      "substitutions": 5,
+      "deletions": 0,
+      "insertions": 6,
+      "editOperations": [
+        {
+          "operation": "insert",
+          "referenceIndex": 5,
+          "hypothesisIndex": 5,
+          "reference": [
+            "pointing",
+            "at",
+            "my",
+            "laptop",
+            "what",
+            "in",
+            "god",
+            "real",
+            "reaction"
+          ],
+          "hypothesis": [
+            "pointing",
+            "at",
+            "my",
+            "laptop",
+            "we",
+            "put",
+            "the",
+            "fetch",
+            "into"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 5,
+          "hypothesisIndex": 6,
+          "reference": [
+            "pointing",
+            "at",
+            "my",
+            "laptop",
+            "what",
+            "in",
+            "god",
+            "real",
+            "reaction"
+          ],
+          "hypothesis": [
+            "at",
+            "my",
+            "laptop",
+            "we",
+            "put",
+            "the",
+            "fetch",
+            "into",
+            "real"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 5,
+          "hypothesisIndex": 7,
+          "reference": [
+            "pointing",
+            "at",
+            "my",
+            "laptop",
+            "what",
+            "in",
+            "god",
+            "real",
+            "reaction"
+          ],
+          "hypothesis": [
+            "my",
+            "laptop",
+            "we",
+            "put",
+            "the",
+            "fetch",
+            "into",
+            "real",
+            "reaction"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 6,
+          "hypothesisIndex": 8,
+          "reference": [
+            "at",
+            "my",
+            "laptop",
+            "what",
+            "in",
+            "god",
+            "real",
+            "reaction",
+            "and"
+          ],
+          "hypothesis": [
+            "laptop",
+            "we",
+            "put",
+            "the",
+            "fetch",
+            "into",
+            "real",
+            "reaction",
+            "and"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 7,
+          "hypothesisIndex": 9,
+          "reference": [
+            "my",
+            "laptop",
+            "what",
+            "in",
+            "god",
+            "real",
+            "reaction",
+            "and",
+            "such"
+          ],
+          "hypothesis": [
+            "we",
+            "put",
+            "the",
+            "fetch",
+            "into",
+            "real",
+            "reaction",
+            "and",
+            "such"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 14,
+          "hypothesisIndex": 16,
+          "reference": [
+            "and",
+            "such",
+            "so",
+            "um",
+            "the",
+            "slogan",
+            "is"
+          ],
+          "hypothesis": [
+            "and",
+            "such",
+            "so",
+            "um",
+            "mr",
+            "spoden",
+            "is",
+            "that",
+            "not"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 15,
+          "hypothesisIndex": 17,
+          "reference": [
+            "such",
+            "so",
+            "um",
+            "the",
+            "slogan",
+            "is"
+          ],
+          "hypothesis": [
+            "such",
+            "so",
+            "um",
+            "mr",
+            "spoden",
+            "is",
+            "that",
+            "not",
+            "the"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 17,
+          "hypothesisIndex": 19,
+          "reference": [
+            "um",
+            "the",
+            "slogan",
+            "is"
+          ],
+          "hypothesis": [
+            "um",
+            "mr",
+            "spoden",
+            "is",
+            "that",
+            "not",
+            "the",
+            "name"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 17,
+          "hypothesisIndex": 20,
+          "reference": [
+            "um",
+            "the",
+            "slogan",
+            "is"
+          ],
+          "hypothesis": [
+            "mr",
+            "spoden",
+            "is",
+            "that",
+            "not",
+            "the",
+            "name"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 17,
+          "hypothesisIndex": 21,
+          "reference": [
+            "um",
+            "the",
+            "slogan",
+            "is"
+          ],
+          "hypothesis": [
+            "spoden",
+            "is",
+            "that",
+            "not",
+            "the",
+            "name"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 17,
+          "hypothesisIndex": 22,
+          "reference": [
+            "um",
+            "the",
+            "slogan",
+            "is"
+          ],
+          "hypothesis": [
+            "is",
+            "that",
+            "not",
+            "the",
+            "name"
+          ]
+        }
+      ],
+      "mossRawErrors": 15,
+      "qwenRawErrors": 14,
+      "audioSeconds": 10.1500625,
+      "inferenceSeconds": 9.061481599994295
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "meeting": "EN2001a",
+      "role": "validation",
+      "reference": "Hmm Like duplication of effort and stuff and um yeah he was saying that we should maybe uh think about having a prototype for week six which is",
+      "hypothesis": "duplication of effort and stuff and yeah you should think about having a prototype for week 6 which is",
+      "nativeRaw": "<|0.00|> duplication of effort and stuff and yeah you should think about having a prototype for week 6 which is<|11.72|>",
+      "errors": 11,
+      "referenceUnits": 28,
+      "hypothesisUnits": 19,
+      "rate": 0.39285714285714285,
+      "substitutions": 2,
+      "deletions": 9,
+      "insertions": 0,
+      "editOperations": [
+        {
+          "operation": "delete",
+          "referenceIndex": 0,
+          "hypothesisIndex": 0,
+          "reference": [
+            "hmm",
+            "like",
+            "duplication",
+            "of",
+            "effort"
+          ],
+          "hypothesis": [
+            "duplication",
+            "of",
+            "effort",
+            "and",
+            "stuff"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 1,
+          "hypothesisIndex": 0,
+          "reference": [
+            "hmm",
+            "like",
+            "duplication",
+            "of",
+            "effort",
+            "and"
+          ],
+          "hypothesis": [
+            "duplication",
+            "of",
+            "effort",
+            "and",
+            "stuff"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 8,
+          "hypothesisIndex": 6,
+          "reference": [
+            "effort",
+            "and",
+            "stuff",
+            "and",
+            "um",
+            "yeah",
+            "he",
+            "was",
+            "saying"
+          ],
+          "hypothesis": [
+            "effort",
+            "and",
+            "stuff",
+            "and",
+            "yeah",
+            "you",
+            "should",
+            "think",
+            "about"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 10,
+          "hypothesisIndex": 7,
+          "reference": [
+            "stuff",
+            "and",
+            "um",
+            "yeah",
+            "he",
+            "was",
+            "saying",
+            "that",
+            "we"
+          ],
+          "hypothesis": [
+            "and",
+            "stuff",
+            "and",
+            "yeah",
+            "you",
+            "should",
+            "think",
+            "about",
+            "having"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 11,
+          "hypothesisIndex": 8,
+          "reference": [
+            "and",
+            "um",
+            "yeah",
+            "he",
+            "was",
+            "saying",
+            "that",
+            "we",
+            "should"
+          ],
+          "hypothesis": [
+            "stuff",
+            "and",
+            "yeah",
+            "you",
+            "should",
+            "think",
+            "about",
+            "having",
+            "a"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 12,
+          "hypothesisIndex": 8,
+          "reference": [
+            "um",
+            "yeah",
+            "he",
+            "was",
+            "saying",
+            "that",
+            "we",
+            "should",
+            "maybe"
+          ],
+          "hypothesis": [
+            "stuff",
+            "and",
+            "yeah",
+            "you",
+            "should",
+            "think",
+            "about",
+            "having",
+            "a"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 13,
+          "hypothesisIndex": 8,
+          "reference": [
+            "yeah",
+            "he",
+            "was",
+            "saying",
+            "that",
+            "we",
+            "should",
+            "maybe",
+            "uh"
+          ],
+          "hypothesis": [
+            "stuff",
+            "and",
+            "yeah",
+            "you",
+            "should",
+            "think",
+            "about",
+            "having",
+            "a"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 14,
+          "hypothesisIndex": 8,
+          "reference": [
+            "he",
+            "was",
+            "saying",
+            "that",
+            "we",
+            "should",
+            "maybe",
+            "uh",
+            "think"
+          ],
+          "hypothesis": [
+            "stuff",
+            "and",
+            "yeah",
+            "you",
+            "should",
+            "think",
+            "about",
+            "having",
+            "a"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 16,
+          "hypothesisIndex": 9,
+          "reference": [
+            "saying",
+            "that",
+            "we",
+            "should",
+            "maybe",
+            "uh",
+            "think",
+            "about",
+            "having"
+          ],
+          "hypothesis": [
+            "and",
+            "yeah",
+            "you",
+            "should",
+            "think",
+            "about",
+            "having",
+            "a",
+            "prototype"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 17,
+          "hypothesisIndex": 9,
+          "reference": [
+            "that",
+            "we",
+            "should",
+            "maybe",
+            "uh",
+            "think",
+            "about",
+            "having",
+            "a"
+          ],
+          "hypothesis": [
+            "and",
+            "yeah",
+            "you",
+            "should",
+            "think",
+            "about",
+            "having",
+            "a",
+            "prototype"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 25,
+          "hypothesisIndex": 16,
+          "reference": [
+            "a",
+            "prototype",
+            "for",
+            "week",
+            "six",
+            "which",
+            "is"
+          ],
+          "hypothesis": [
+            "a",
+            "prototype",
+            "for",
+            "week",
+            "6",
+            "which",
+            "is"
+          ]
+        }
+      ],
+      "mossRawErrors": 4,
+      "qwenRawErrors": 5,
+      "audioSeconds": 11.71,
+      "inferenceSeconds": 8.733737700000347
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "meeting": "EN2001a",
+      "role": "validation",
+      "reference": "And in that way we could probably use the same algorithm and just like make vir like one or two ifs that say okay if you are on a whole document uh a whole series level and that was a double-click then don't just go into that um segment but load a new file or something like it but in general use the same algorithm That would be an alternative if we can't actually load the whole thing and Mm 'Cause also like even if we maybe this whole like maybe I'm worrying too much about the whole series in one thing display because actually I",
+      "hypothesis": "And in that way we could probably use the same algorithm and just make one or two ifs that say, OK, if you are on whole series level and that was a double click, then don't just go into that segment but load a new file or something like that. But in general use the same algorithm. That would be an alternative if you can't actually load the whole thing in. Because also, even if we... Maybe I'm worrying too much about the whole series in one thing displayed because actually",
+      "nativeRaw": "<|0.00|> And in that way we could probably use the same algorithm and just make one or two ifs<|5.00|><|5.00|> that say, OK, if you are on whole series level and that was a double click, then don't just<|11.60|><|11.60|> go into that segment but load a new file or something like that.<|15.20|><|15.20|> But in general use the same algorithm.<|16.60|><|16.60|> That would be an alternative if you can't actually load the whole thing in.<|21.60|><|21.60|> Because also, even if we...<|24.80|><|24.80|> Maybe I'm worrying too much about the whole series in one thing displayed because actually<|29.72|>",
+      "errors": 22,
+      "referenceUnits": 107,
+      "hypothesisUnits": 91,
+      "rate": 0.205607476635514,
+      "substitutions": 6,
+      "deletions": 16,
+      "insertions": 0,
+      "editOperations": [
+        {
+          "operation": "delete",
+          "referenceIndex": 13,
+          "hypothesisIndex": 13,
+          "reference": [
+            "same",
+            "algorithm",
+            "and",
+            "just",
+            "like",
+            "make",
+            "vir",
+            "like",
+            "one"
+          ],
+          "hypothesis": [
+            "same",
+            "algorithm",
+            "and",
+            "just",
+            "make",
+            "one",
+            "or",
+            "two",
+            "ifs"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 15,
+          "hypothesisIndex": 14,
+          "reference": [
+            "and",
+            "just",
+            "like",
+            "make",
+            "vir",
+            "like",
+            "one",
+            "or",
+            "two"
+          ],
+          "hypothesis": [
+            "algorithm",
+            "and",
+            "just",
+            "make",
+            "one",
+            "or",
+            "two",
+            "ifs",
+            "that"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 16,
+          "hypothesisIndex": 14,
+          "reference": [
+            "just",
+            "like",
+            "make",
+            "vir",
+            "like",
+            "one",
+            "or",
+            "two",
+            "ifs"
+          ],
+          "hypothesis": [
+            "algorithm",
+            "and",
+            "just",
+            "make",
+            "one",
+            "or",
+            "two",
+            "ifs",
+            "that"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 23,
+          "hypothesisIndex": 20,
+          "reference": [
+            "two",
+            "ifs",
+            "that",
+            "say",
+            "okay",
+            "if",
+            "you",
+            "are",
+            "on"
+          ],
+          "hypothesis": [
+            "two",
+            "ifs",
+            "that",
+            "say",
+            "ok",
+            "if",
+            "you",
+            "are",
+            "on"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 28,
+          "hypothesisIndex": 25,
+          "reference": [
+            "if",
+            "you",
+            "are",
+            "on",
+            "a",
+            "whole",
+            "document",
+            "uh",
+            "a"
+          ],
+          "hypothesis": [
+            "if",
+            "you",
+            "are",
+            "on",
+            "whole",
+            "series",
+            "level",
+            "and",
+            "that"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 30,
+          "hypothesisIndex": 26,
+          "reference": [
+            "are",
+            "on",
+            "a",
+            "whole",
+            "document",
+            "uh",
+            "a",
+            "whole",
+            "series"
+          ],
+          "hypothesis": [
+            "you",
+            "are",
+            "on",
+            "whole",
+            "series",
+            "level",
+            "and",
+            "that",
+            "was"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 31,
+          "hypothesisIndex": 26,
+          "reference": [
+            "on",
+            "a",
+            "whole",
+            "document",
+            "uh",
+            "a",
+            "whole",
+            "series",
+            "level"
+          ],
+          "hypothesis": [
+            "you",
+            "are",
+            "on",
+            "whole",
+            "series",
+            "level",
+            "and",
+            "that",
+            "was"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 32,
+          "hypothesisIndex": 26,
+          "reference": [
+            "a",
+            "whole",
+            "document",
+            "uh",
+            "a",
+            "whole",
+            "series",
+            "level",
+            "and"
+          ],
+          "hypothesis": [
+            "you",
+            "are",
+            "on",
+            "whole",
+            "series",
+            "level",
+            "and",
+            "that",
+            "was"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 33,
+          "hypothesisIndex": 26,
+          "reference": [
+            "whole",
+            "document",
+            "uh",
+            "a",
+            "whole",
+            "series",
+            "level",
+            "and",
+            "that"
+          ],
+          "hypothesis": [
+            "you",
+            "are",
+            "on",
+            "whole",
+            "series",
+            "level",
+            "and",
+            "that",
+            "was"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 48,
+          "hypothesisIndex": 40,
+          "reference": [
+            "just",
+            "go",
+            "into",
+            "that",
+            "um",
+            "segment",
+            "but",
+            "load",
+            "a"
+          ],
+          "hypothesis": [
+            "just",
+            "go",
+            "into",
+            "that",
+            "segment",
+            "but",
+            "load",
+            "a",
+            "new"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 58,
+          "hypothesisIndex": 49,
+          "reference": [
+            "file",
+            "or",
+            "something",
+            "like",
+            "it",
+            "but",
+            "in",
+            "general",
+            "use"
+          ],
+          "hypothesis": [
+            "file",
+            "or",
+            "something",
+            "like",
+            "that",
+            "but",
+            "in",
+            "general",
+            "use"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 72,
+          "hypothesisIndex": 63,
+          "reference": [
+            "be",
+            "an",
+            "alternative",
+            "if",
+            "we",
+            "can't",
+            "actually",
+            "load",
+            "the"
+          ],
+          "hypothesis": [
+            "be",
+            "an",
+            "alternative",
+            "if",
+            "you",
+            "can't",
+            "actually",
+            "load",
+            "the"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 79,
+          "hypothesisIndex": 70,
+          "reference": [
+            "load",
+            "the",
+            "whole",
+            "thing",
+            "and",
+            "mm",
+            "cause",
+            "also",
+            "like"
+          ],
+          "hypothesis": [
+            "load",
+            "the",
+            "whole",
+            "thing",
+            "in",
+            "because",
+            "also",
+            "even",
+            "if"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 80,
+          "hypothesisIndex": 71,
+          "reference": [
+            "the",
+            "whole",
+            "thing",
+            "and",
+            "mm",
+            "cause",
+            "also",
+            "like",
+            "even"
+          ],
+          "hypothesis": [
+            "the",
+            "whole",
+            "thing",
+            "in",
+            "because",
+            "also",
+            "even",
+            "if",
+            "we"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 81,
+          "hypothesisIndex": 72,
+          "reference": [
+            "whole",
+            "thing",
+            "and",
+            "mm",
+            "cause",
+            "also",
+            "like",
+            "even",
+            "if"
+          ],
+          "hypothesis": [
+            "whole",
+            "thing",
+            "in",
+            "because",
+            "also",
+            "even",
+            "if",
+            "we",
+            "maybe"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 83,
+          "hypothesisIndex": 73,
+          "reference": [
+            "and",
+            "mm",
+            "cause",
+            "also",
+            "like",
+            "even",
+            "if",
+            "we",
+            "maybe"
+          ],
+          "hypothesis": [
+            "thing",
+            "in",
+            "because",
+            "also",
+            "even",
+            "if",
+            "we",
+            "maybe",
+            "i'm"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 88,
+          "hypothesisIndex": 77,
+          "reference": [
+            "even",
+            "if",
+            "we",
+            "maybe",
+            "this",
+            "whole",
+            "like",
+            "maybe",
+            "i'm"
+          ],
+          "hypothesis": [
+            "even",
+            "if",
+            "we",
+            "maybe",
+            "i'm",
+            "worrying",
+            "too",
+            "much",
+            "about"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 89,
+          "hypothesisIndex": 77,
+          "reference": [
+            "if",
+            "we",
+            "maybe",
+            "this",
+            "whole",
+            "like",
+            "maybe",
+            "i'm",
+            "worrying"
+          ],
+          "hypothesis": [
+            "even",
+            "if",
+            "we",
+            "maybe",
+            "i'm",
+            "worrying",
+            "too",
+            "much",
+            "about"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 90,
+          "hypothesisIndex": 77,
+          "reference": [
+            "we",
+            "maybe",
+            "this",
+            "whole",
+            "like",
+            "maybe",
+            "i'm",
+            "worrying",
+            "too"
+          ],
+          "hypothesis": [
+            "even",
+            "if",
+            "we",
+            "maybe",
+            "i'm",
+            "worrying",
+            "too",
+            "much",
+            "about"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 91,
+          "hypothesisIndex": 77,
+          "reference": [
+            "maybe",
+            "this",
+            "whole",
+            "like",
+            "maybe",
+            "i'm",
+            "worrying",
+            "too",
+            "much"
+          ],
+          "hypothesis": [
+            "even",
+            "if",
+            "we",
+            "maybe",
+            "i'm",
+            "worrying",
+            "too",
+            "much",
+            "about"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 103,
+          "hypothesisIndex": 88,
+          "reference": [
+            "series",
+            "in",
+            "one",
+            "thing",
+            "display",
+            "because",
+            "actually",
+            "i"
+          ],
+          "hypothesis": [
+            "series",
+            "in",
+            "one",
+            "thing",
+            "displayed",
+            "because",
+            "actually"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 106,
+          "hypothesisIndex": 91,
+          "reference": [
+            "thing",
+            "display",
+            "because",
+            "actually",
+            "i"
+          ],
+          "hypothesis": [
+            "thing",
+            "displayed",
+            "because",
+            "actually"
+          ]
+        }
+      ],
+      "mossRawErrors": 8,
+      "qwenRawErrors": 10,
+      "audioSeconds": 29.72,
+      "inferenceSeconds": 9.35483209999802
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "meeting": "EN2001a",
+      "role": "validation",
+      "reference": "be difficult yeah Yeah I know but uh b I guess we can do it like several people together it's probably just those people have to work together a lot and very closely and just make sure that they're always f understand what the other one is doing Yeah Well I guess the important thing is to get the crucial m modules built Or at least",
+      "hypothesis": "be difficult. I guess we can do it with several people together, it's probably just that people have to work together a lot and very closely and just make sure that they always understand what the other one is doing. Yeah. I guess the important thing is to get the crucial modules built. Or at least.",
+      "nativeRaw": "<|0.00|> be difficult. I guess we can do it with several people together, it's probably just that people<|7.00|><|7.00|> have to work together a lot and very closely and just make sure that they always understand<|14.00|><|14.00|> what the other one is doing. Yeah. I guess the important thing is to get the crucial<|20.00|><|20.00|> modules built. Or at least.<|22.68|>",
+      "errors": 13,
+      "referenceUnits": 66,
+      "hypothesisUnits": 56,
+      "rate": 0.19696969696969696,
+      "substitutions": 3,
+      "deletions": 10,
+      "insertions": 0,
+      "editOperations": [
+        {
+          "operation": "delete",
+          "referenceIndex": 2,
+          "hypothesisIndex": 2,
+          "reference": [
+            "be",
+            "difficult",
+            "yeah",
+            "yeah",
+            "i",
+            "know",
+            "but"
+          ],
+          "hypothesis": [
+            "be",
+            "difficult",
+            "i",
+            "guess",
+            "we",
+            "can",
+            "do"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 3,
+          "hypothesisIndex": 2,
+          "reference": [
+            "be",
+            "difficult",
+            "yeah",
+            "yeah",
+            "i",
+            "know",
+            "but",
+            "uh"
+          ],
+          "hypothesis": [
+            "be",
+            "difficult",
+            "i",
+            "guess",
+            "we",
+            "can",
+            "do"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 5,
+          "hypothesisIndex": 3,
+          "reference": [
+            "difficult",
+            "yeah",
+            "yeah",
+            "i",
+            "know",
+            "but",
+            "uh",
+            "b",
+            "i"
+          ],
+          "hypothesis": [
+            "be",
+            "difficult",
+            "i",
+            "guess",
+            "we",
+            "can",
+            "do",
+            "it"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 6,
+          "hypothesisIndex": 3,
+          "reference": [
+            "yeah",
+            "yeah",
+            "i",
+            "know",
+            "but",
+            "uh",
+            "b",
+            "i",
+            "guess"
+          ],
+          "hypothesis": [
+            "be",
+            "difficult",
+            "i",
+            "guess",
+            "we",
+            "can",
+            "do",
+            "it"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 7,
+          "hypothesisIndex": 3,
+          "reference": [
+            "yeah",
+            "i",
+            "know",
+            "but",
+            "uh",
+            "b",
+            "i",
+            "guess",
+            "we"
+          ],
+          "hypothesis": [
+            "be",
+            "difficult",
+            "i",
+            "guess",
+            "we",
+            "can",
+            "do",
+            "it"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 8,
+          "hypothesisIndex": 3,
+          "reference": [
+            "i",
+            "know",
+            "but",
+            "uh",
+            "b",
+            "i",
+            "guess",
+            "we",
+            "can"
+          ],
+          "hypothesis": [
+            "be",
+            "difficult",
+            "i",
+            "guess",
+            "we",
+            "can",
+            "do",
+            "it"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 9,
+          "hypothesisIndex": 3,
+          "reference": [
+            "know",
+            "but",
+            "uh",
+            "b",
+            "i",
+            "guess",
+            "we",
+            "can",
+            "do"
+          ],
+          "hypothesis": [
+            "be",
+            "difficult",
+            "i",
+            "guess",
+            "we",
+            "can",
+            "do",
+            "it"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 15,
+          "hypothesisIndex": 8,
+          "reference": [
+            "we",
+            "can",
+            "do",
+            "it",
+            "like",
+            "several",
+            "people",
+            "together",
+            "it's"
+          ],
+          "hypothesis": [
+            "we",
+            "can",
+            "do",
+            "it",
+            "with",
+            "several",
+            "people",
+            "together",
+            "it's"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 22,
+          "hypothesisIndex": 15,
+          "reference": [
+            "together",
+            "it's",
+            "probably",
+            "just",
+            "those",
+            "people",
+            "have",
+            "to",
+            "work"
+          ],
+          "hypothesis": [
+            "together",
+            "it's",
+            "probably",
+            "just",
+            "that",
+            "people",
+            "have",
+            "to",
+            "work"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 38,
+          "hypothesisIndex": 31,
+          "reference": [
+            "just",
+            "make",
+            "sure",
+            "that",
+            "they're",
+            "always",
+            "f",
+            "understand",
+            "what"
+          ],
+          "hypothesis": [
+            "just",
+            "make",
+            "sure",
+            "that",
+            "they",
+            "always",
+            "understand",
+            "what",
+            "the"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 40,
+          "hypothesisIndex": 33,
+          "reference": [
+            "sure",
+            "that",
+            "they're",
+            "always",
+            "f",
+            "understand",
+            "what",
+            "the",
+            "other"
+          ],
+          "hypothesis": [
+            "sure",
+            "that",
+            "they",
+            "always",
+            "understand",
+            "what",
+            "the",
+            "other",
+            "one"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 49,
+          "hypothesisIndex": 41,
+          "reference": [
+            "one",
+            "is",
+            "doing",
+            "yeah",
+            "well",
+            "i",
+            "guess",
+            "the",
+            "important"
+          ],
+          "hypothesis": [
+            "one",
+            "is",
+            "doing",
+            "yeah",
+            "i",
+            "guess",
+            "the",
+            "important",
+            "thing"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 60,
+          "hypothesisIndex": 51,
+          "reference": [
+            "to",
+            "get",
+            "the",
+            "crucial",
+            "m",
+            "modules",
+            "built",
+            "or",
+            "at"
+          ],
+          "hypothesis": [
+            "to",
+            "get",
+            "the",
+            "crucial",
+            "modules",
+            "built",
+            "or",
+            "at",
+            "least"
+          ]
+        }
+      ],
+      "mossRawErrors": 10,
+      "qwenRawErrors": 13,
+      "audioSeconds": 22.67,
+      "inferenceSeconds": 9.229728600003
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "meeting": "EN2001a",
+      "role": "validation",
+      "reference": "I do like I mean there's not guarantee that anything stays there but overnight it'll stay And I think the temps usually have Ah yeah but that would have to be the temp directory off the machine you can S_S_H_ into directory of S_S_H_ Yeah but I can do it from that session can't I You can compress it from a remote session and S_C_P_ it from the same session Yeah they wou they'd they'd probably hate you for doing it",
+      "hypothesis": "I mean there's no guarantee that anything stays there but overnight it will stay. I think the temps usually have. Aye, but that would have to be the temp directory of the machine you can SSH into directory of SSH. Yeah, but I can do it from that session, don't I? I can compress it from a remote session and then see it from the same session. Yeah, they probably hate you for doing it.",
+      "nativeRaw": "<|0.00|> I mean there's no guarantee that anything stays there but overnight it will stay.<|4.00|><|4.00|> I think the temps usually have.<|7.00|><|10.00|> Aye, but that would have to be the temp directory of the machine you can SSH into directory of SSH.<|16.00|><|16.00|> Yeah, but I can do it from that session, don't I?<|19.00|><|19.00|> I can compress it from a remote session and then see it from the same session.<|24.00|><|27.00|> Yeah, they probably hate you for doing it.<|29.76|>",
+      "errors": 24,
+      "referenceUnits": 87,
+      "hypothesisUnits": 75,
+      "rate": 0.27586206896551724,
+      "substitutions": 10,
+      "deletions": 13,
+      "insertions": 1,
+      "editOperations": [
+        {
+          "operation": "delete",
+          "referenceIndex": 1,
+          "hypothesisIndex": 1,
+          "reference": [
+            "i",
+            "do",
+            "like",
+            "i",
+            "mean",
+            "there's"
+          ],
+          "hypothesis": [
+            "i",
+            "mean",
+            "there's",
+            "no",
+            "guarantee",
+            "that"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 2,
+          "hypothesisIndex": 1,
+          "reference": [
+            "i",
+            "do",
+            "like",
+            "i",
+            "mean",
+            "there's",
+            "not"
+          ],
+          "hypothesis": [
+            "i",
+            "mean",
+            "there's",
+            "no",
+            "guarantee",
+            "that"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 3,
+          "hypothesisIndex": 1,
+          "reference": [
+            "i",
+            "do",
+            "like",
+            "i",
+            "mean",
+            "there's",
+            "not",
+            "guarantee"
+          ],
+          "hypothesis": [
+            "i",
+            "mean",
+            "there's",
+            "no",
+            "guarantee",
+            "that"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 6,
+          "hypothesisIndex": 3,
+          "reference": [
+            "like",
+            "i",
+            "mean",
+            "there's",
+            "not",
+            "guarantee",
+            "that",
+            "anything",
+            "stays"
+          ],
+          "hypothesis": [
+            "i",
+            "mean",
+            "there's",
+            "no",
+            "guarantee",
+            "that",
+            "anything",
+            "stays"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 14,
+          "hypothesisIndex": 11,
+          "reference": [
+            "stays",
+            "there",
+            "but",
+            "overnight",
+            "it'll",
+            "stay",
+            "and",
+            "i",
+            "think"
+          ],
+          "hypothesis": [
+            "stays",
+            "there",
+            "but",
+            "overnight",
+            "it",
+            "will",
+            "stay",
+            "i",
+            "think"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 14,
+          "hypothesisIndex": 12,
+          "reference": [
+            "stays",
+            "there",
+            "but",
+            "overnight",
+            "it'll",
+            "stay",
+            "and",
+            "i",
+            "think"
+          ],
+          "hypothesis": [
+            "there",
+            "but",
+            "overnight",
+            "it",
+            "will",
+            "stay",
+            "i",
+            "think",
+            "the"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 16,
+          "hypothesisIndex": 14,
+          "reference": [
+            "but",
+            "overnight",
+            "it'll",
+            "stay",
+            "and",
+            "i",
+            "think",
+            "the",
+            "temps"
+          ],
+          "hypothesis": [
+            "overnight",
+            "it",
+            "will",
+            "stay",
+            "i",
+            "think",
+            "the",
+            "temps",
+            "usually"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 23,
+          "hypothesisIndex": 20,
+          "reference": [
+            "the",
+            "temps",
+            "usually",
+            "have",
+            "ah",
+            "yeah",
+            "but",
+            "that",
+            "would"
+          ],
+          "hypothesis": [
+            "the",
+            "temps",
+            "usually",
+            "have",
+            "aye",
+            "but",
+            "that",
+            "would",
+            "have"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 24,
+          "hypothesisIndex": 21,
+          "reference": [
+            "temps",
+            "usually",
+            "have",
+            "ah",
+            "yeah",
+            "but",
+            "that",
+            "would",
+            "have"
+          ],
+          "hypothesis": [
+            "temps",
+            "usually",
+            "have",
+            "aye",
+            "but",
+            "that",
+            "would",
+            "have",
+            "to"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 34,
+          "hypothesisIndex": 30,
+          "reference": [
+            "be",
+            "the",
+            "temp",
+            "directory",
+            "off",
+            "the",
+            "machine",
+            "you",
+            "can"
+          ],
+          "hypothesis": [
+            "be",
+            "the",
+            "temp",
+            "directory",
+            "of",
+            "the",
+            "machine",
+            "you",
+            "can"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 39,
+          "hypothesisIndex": 35,
+          "reference": [
+            "the",
+            "machine",
+            "you",
+            "can",
+            "s",
+            "s",
+            "h",
+            "into",
+            "directory"
+          ],
+          "hypothesis": [
+            "the",
+            "machine",
+            "you",
+            "can",
+            "ssh",
+            "into",
+            "directory",
+            "of",
+            "ssh"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 40,
+          "hypothesisIndex": 36,
+          "reference": [
+            "machine",
+            "you",
+            "can",
+            "s",
+            "s",
+            "h",
+            "into",
+            "directory",
+            "of"
+          ],
+          "hypothesis": [
+            "machine",
+            "you",
+            "can",
+            "ssh",
+            "into",
+            "directory",
+            "of",
+            "ssh",
+            "yeah"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 41,
+          "hypothesisIndex": 36,
+          "reference": [
+            "you",
+            "can",
+            "s",
+            "s",
+            "h",
+            "into",
+            "directory",
+            "of",
+            "s"
+          ],
+          "hypothesis": [
+            "machine",
+            "you",
+            "can",
+            "ssh",
+            "into",
+            "directory",
+            "of",
+            "ssh",
+            "yeah"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 45,
+          "hypothesisIndex": 39,
+          "reference": [
+            "h",
+            "into",
+            "directory",
+            "of",
+            "s",
+            "s",
+            "h",
+            "yeah",
+            "but"
+          ],
+          "hypothesis": [
+            "ssh",
+            "into",
+            "directory",
+            "of",
+            "ssh",
+            "yeah",
+            "but",
+            "i",
+            "can"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 46,
+          "hypothesisIndex": 40,
+          "reference": [
+            "into",
+            "directory",
+            "of",
+            "s",
+            "s",
+            "h",
+            "yeah",
+            "but",
+            "i"
+          ],
+          "hypothesis": [
+            "into",
+            "directory",
+            "of",
+            "ssh",
+            "yeah",
+            "but",
+            "i",
+            "can",
+            "do"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 47,
+          "hypothesisIndex": 40,
+          "reference": [
+            "directory",
+            "of",
+            "s",
+            "s",
+            "h",
+            "yeah",
+            "but",
+            "i",
+            "can"
+          ],
+          "hypothesis": [
+            "into",
+            "directory",
+            "of",
+            "ssh",
+            "yeah",
+            "but",
+            "i",
+            "can",
+            "do"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 57,
+          "hypothesisIndex": 49,
+          "reference": [
+            "it",
+            "from",
+            "that",
+            "session",
+            "can't",
+            "i",
+            "you",
+            "can",
+            "compress"
+          ],
+          "hypothesis": [
+            "it",
+            "from",
+            "that",
+            "session",
+            "don't",
+            "i",
+            "i",
+            "can",
+            "compress"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 59,
+          "hypothesisIndex": 51,
+          "reference": [
+            "that",
+            "session",
+            "can't",
+            "i",
+            "you",
+            "can",
+            "compress",
+            "it",
+            "from"
+          ],
+          "hypothesis": [
+            "that",
+            "session",
+            "don't",
+            "i",
+            "i",
+            "can",
+            "compress",
+            "it",
+            "from"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 68,
+          "hypothesisIndex": 60,
+          "reference": [
+            "a",
+            "remote",
+            "session",
+            "and",
+            "s",
+            "c",
+            "p",
+            "it",
+            "from"
+          ],
+          "hypothesis": [
+            "a",
+            "remote",
+            "session",
+            "and",
+            "then",
+            "see",
+            "it",
+            "from",
+            "the"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 69,
+          "hypothesisIndex": 61,
+          "reference": [
+            "remote",
+            "session",
+            "and",
+            "s",
+            "c",
+            "p",
+            "it",
+            "from",
+            "the"
+          ],
+          "hypothesis": [
+            "remote",
+            "session",
+            "and",
+            "then",
+            "see",
+            "it",
+            "from",
+            "the",
+            "same"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 70,
+          "hypothesisIndex": 62,
+          "reference": [
+            "session",
+            "and",
+            "s",
+            "c",
+            "p",
+            "it",
+            "from",
+            "the",
+            "same"
+          ],
+          "hypothesis": [
+            "session",
+            "and",
+            "then",
+            "see",
+            "it",
+            "from",
+            "the",
+            "same",
+            "session"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 78,
+          "hypothesisIndex": 69,
+          "reference": [
+            "same",
+            "session",
+            "yeah",
+            "they",
+            "wou",
+            "they'd",
+            "they'd",
+            "probably",
+            "hate"
+          ],
+          "hypothesis": [
+            "same",
+            "session",
+            "yeah",
+            "they",
+            "probably",
+            "hate",
+            "you",
+            "for",
+            "doing"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 79,
+          "hypothesisIndex": 69,
+          "reference": [
+            "session",
+            "yeah",
+            "they",
+            "wou",
+            "they'd",
+            "they'd",
+            "probably",
+            "hate",
+            "you"
+          ],
+          "hypothesis": [
+            "same",
+            "session",
+            "yeah",
+            "they",
+            "probably",
+            "hate",
+            "you",
+            "for",
+            "doing"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 80,
+          "hypothesisIndex": 69,
+          "reference": [
+            "yeah",
+            "they",
+            "wou",
+            "they'd",
+            "they'd",
+            "probably",
+            "hate",
+            "you",
+            "for"
+          ],
+          "hypothesis": [
+            "same",
+            "session",
+            "yeah",
+            "they",
+            "probably",
+            "hate",
+            "you",
+            "for",
+            "doing"
+          ]
+        }
+      ],
+      "mossRawErrors": 12,
+      "qwenRawErrors": 23,
+      "audioSeconds": 29.75,
+      "inferenceSeconds": 10.49227389999578
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "meeting": "EN2001a",
+      "role": "validation",
+      "reference": "that we can treat it with the same algorithm or But I mean it could be as many nodes as you want Like this one could be deeper maybe say So then you'd start with all your utterances here and when you go up to get topic segments you go to here here here here here here here That might be a bit confusing though 'cause you have things on different levels Yeah I'm also not sure how we can go from from bottom-up I have always thought it's like more that oh",
+      "hypothesis": "deadbeat have treated with the same algorithm one. But I mean it could be as many nodes as you want. Like this one could be deeper maybe. So then you start with all your utterances here. And when you go up to get topic segments. You go to here, here, here. Here, here, here, here. That might be a bit confusing though. Because you have things on different levels. Yeah I'm also not sure how we can go from. From what to map out. I've always thought it's like. More that. Ah.",
+      "nativeRaw": "<|0.00|> deadbeat have treated with the same algorithm one.<|1.84|><|1.84|> But I mean it could be as many nodes as you want.<|3.92|><|4.60|> Like this one could be deeper maybe.<|5.98|><|8.04|> So then you start with all your utterances here.<|11.04|><|11.52|> And when you go up to get topic segments.<|13.32|><|13.60|> You go to here, here, here.<|15.10|><|15.52|> Here, here, here, here.<|16.46|><|18.50|> That might be a bit confusing though.<|20.08|><|20.08|> Because you have things on different levels.<|21.56|><|23.34|> Yeah I'm also not sure how we can go from.<|25.34|><|25.60|> From what to map out.<|27.10|><|27.20|> I've always thought it's like.<|27.94|><|28.24|> More that.<|28.60|><|29.30|> Ah.<|29.60|>",
+      "errors": 15,
+      "referenceUnits": 94,
+      "hypothesisUnits": 92,
+      "rate": 0.1595744680851064,
+      "substitutions": 11,
+      "deletions": 3,
+      "insertions": 1,
+      "editOperations": [
+        {
+          "operation": "replace",
+          "referenceIndex": 0,
+          "hypothesisIndex": 0,
+          "reference": [
+            "that",
+            "we",
+            "can",
+            "treat",
+            "it"
+          ],
+          "hypothesis": [
+            "deadbeat",
+            "have",
+            "treated",
+            "with",
+            "the"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 1,
+          "hypothesisIndex": 1,
+          "reference": [
+            "that",
+            "we",
+            "can",
+            "treat",
+            "it",
+            "with"
+          ],
+          "hypothesis": [
+            "deadbeat",
+            "have",
+            "treated",
+            "with",
+            "the",
+            "same"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 2,
+          "hypothesisIndex": 2,
+          "reference": [
+            "that",
+            "we",
+            "can",
+            "treat",
+            "it",
+            "with",
+            "the"
+          ],
+          "hypothesis": [
+            "deadbeat",
+            "have",
+            "treated",
+            "with",
+            "the",
+            "same",
+            "algorithm"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 3,
+          "hypothesisIndex": 3,
+          "reference": [
+            "that",
+            "we",
+            "can",
+            "treat",
+            "it",
+            "with",
+            "the",
+            "same"
+          ],
+          "hypothesis": [
+            "deadbeat",
+            "have",
+            "treated",
+            "with",
+            "the",
+            "same",
+            "algorithm",
+            "one"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 4,
+          "hypothesisIndex": 3,
+          "reference": [
+            "that",
+            "we",
+            "can",
+            "treat",
+            "it",
+            "with",
+            "the",
+            "same",
+            "algorithm"
+          ],
+          "hypothesis": [
+            "deadbeat",
+            "have",
+            "treated",
+            "with",
+            "the",
+            "same",
+            "algorithm",
+            "one"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 9,
+          "hypothesisIndex": 7,
+          "reference": [
+            "with",
+            "the",
+            "same",
+            "algorithm",
+            "or",
+            "but",
+            "i",
+            "mean",
+            "it"
+          ],
+          "hypothesis": [
+            "with",
+            "the",
+            "same",
+            "algorithm",
+            "one",
+            "but",
+            "i",
+            "mean",
+            "it"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 29,
+          "hypothesisIndex": 27,
+          "reference": [
+            "could",
+            "be",
+            "deeper",
+            "maybe",
+            "say",
+            "so",
+            "then",
+            "you'd",
+            "start"
+          ],
+          "hypothesis": [
+            "could",
+            "be",
+            "deeper",
+            "maybe",
+            "so",
+            "then",
+            "you",
+            "start",
+            "with"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 32,
+          "hypothesisIndex": 29,
+          "reference": [
+            "maybe",
+            "say",
+            "so",
+            "then",
+            "you'd",
+            "start",
+            "with",
+            "all",
+            "your"
+          ],
+          "hypothesis": [
+            "deeper",
+            "maybe",
+            "so",
+            "then",
+            "you",
+            "start",
+            "with",
+            "all",
+            "your"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 65,
+          "hypothesisIndex": 62,
+          "reference": [
+            "a",
+            "bit",
+            "confusing",
+            "though",
+            "cause",
+            "you",
+            "have",
+            "things",
+            "on"
+          ],
+          "hypothesis": [
+            "a",
+            "bit",
+            "confusing",
+            "though",
+            "because",
+            "you",
+            "have",
+            "things",
+            "on"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 83,
+          "hypothesisIndex": 80,
+          "reference": [
+            "can",
+            "go",
+            "from",
+            "from",
+            "bottom",
+            "up",
+            "i",
+            "have",
+            "always"
+          ],
+          "hypothesis": [
+            "can",
+            "go",
+            "from",
+            "from",
+            "what",
+            "to",
+            "map",
+            "out",
+            "i've"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 83,
+          "hypothesisIndex": 81,
+          "reference": [
+            "can",
+            "go",
+            "from",
+            "from",
+            "bottom",
+            "up",
+            "i",
+            "have",
+            "always"
+          ],
+          "hypothesis": [
+            "go",
+            "from",
+            "from",
+            "what",
+            "to",
+            "map",
+            "out",
+            "i've",
+            "always"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 84,
+          "hypothesisIndex": 82,
+          "reference": [
+            "go",
+            "from",
+            "from",
+            "bottom",
+            "up",
+            "i",
+            "have",
+            "always",
+            "thought"
+          ],
+          "hypothesis": [
+            "from",
+            "from",
+            "what",
+            "to",
+            "map",
+            "out",
+            "i've",
+            "always",
+            "thought"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 85,
+          "hypothesisIndex": 83,
+          "reference": [
+            "from",
+            "from",
+            "bottom",
+            "up",
+            "i",
+            "have",
+            "always",
+            "thought",
+            "it's"
+          ],
+          "hypothesis": [
+            "from",
+            "what",
+            "to",
+            "map",
+            "out",
+            "i've",
+            "always",
+            "thought",
+            "it's"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 86,
+          "hypothesisIndex": 84,
+          "reference": [
+            "from",
+            "bottom",
+            "up",
+            "i",
+            "have",
+            "always",
+            "thought",
+            "it's",
+            "like"
+          ],
+          "hypothesis": [
+            "what",
+            "to",
+            "map",
+            "out",
+            "i've",
+            "always",
+            "thought",
+            "it's",
+            "like"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 93,
+          "hypothesisIndex": 91,
+          "reference": [
+            "it's",
+            "like",
+            "more",
+            "that",
+            "oh"
+          ],
+          "hypothesis": [
+            "it's",
+            "like",
+            "more",
+            "that",
+            "ah"
+          ]
+        }
+      ],
+      "mossRawErrors": 14,
+      "qwenRawErrors": 10,
+      "audioSeconds": 29.6,
+      "inferenceSeconds": 10.548876299995754
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "meeting": "EN2001a",
+      "role": "validation",
+      "reference": "I'm f Once we start doing it it will all become more or less obvious I think anyway Yeah It's just we are half-way through the project time table That's just what freaks me out Um",
+      "hypothesis": "ONCE WE START DOING IT IT WILL BECOMES MORE THAN SO I GUESS I DON'T CAN YOU RECOMMEND IT? IT'S JUST WE ARE HALFWAY THROUGH THE PROJECT TIME BUT THE LIST JUST FREAKS ME OUT. YES. WHAT TIME IS IT? WHEN YOU GET TO IT?",
+      "nativeRaw": "<|0.00|> ONCE WE START DOING IT IT WILL BECOMES MORE THAN SO I GUESS I DON'T<|4.72|><|4.72|> CAN YOU RECOMMEND IT?<|6.72|><|6.72|> IT'S JUST WE ARE HALFWAY THROUGH THE PROJECT TIME BUT THE LIST<|8.80|><|8.80|> JUST FREAKS ME OUT.<|10.80|><|10.80|> YES.<|12.80|><|12.80|> WHAT TIME IS IT?<|14.80|><|14.80|> WHEN YOU GET TO IT?<|18.12|>",
+      "errors": 29,
+      "referenceUnits": 37,
+      "hypothesisUnits": 45,
+      "rate": 0.7837837837837838,
+      "substitutions": 13,
+      "deletions": 4,
+      "insertions": 12,
+      "editOperations": [
+        {
+          "operation": "delete",
+          "referenceIndex": 0,
+          "hypothesisIndex": 0,
+          "reference": [
+            "i'm",
+            "f",
+            "once",
+            "we",
+            "start"
+          ],
+          "hypothesis": [
+            "once",
+            "we",
+            "start",
+            "doing",
+            "it"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 1,
+          "hypothesisIndex": 0,
+          "reference": [
+            "i'm",
+            "f",
+            "once",
+            "we",
+            "start",
+            "doing"
+          ],
+          "hypothesis": [
+            "once",
+            "we",
+            "start",
+            "doing",
+            "it"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 9,
+          "hypothesisIndex": 7,
+          "reference": [
+            "doing",
+            "it",
+            "it",
+            "will",
+            "all",
+            "become",
+            "more",
+            "or",
+            "less"
+          ],
+          "hypothesis": [
+            "doing",
+            "it",
+            "it",
+            "will",
+            "becomes",
+            "more",
+            "than",
+            "so",
+            "i"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 10,
+          "hypothesisIndex": 8,
+          "reference": [
+            "it",
+            "it",
+            "will",
+            "all",
+            "become",
+            "more",
+            "or",
+            "less",
+            "obvious"
+          ],
+          "hypothesis": [
+            "it",
+            "it",
+            "will",
+            "becomes",
+            "more",
+            "than",
+            "so",
+            "i",
+            "guess"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 11,
+          "hypothesisIndex": 9,
+          "reference": [
+            "it",
+            "will",
+            "all",
+            "become",
+            "more",
+            "or",
+            "less",
+            "obvious",
+            "i"
+          ],
+          "hypothesis": [
+            "it",
+            "will",
+            "becomes",
+            "more",
+            "than",
+            "so",
+            "i",
+            "guess",
+            "i"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 12,
+          "hypothesisIndex": 10,
+          "reference": [
+            "will",
+            "all",
+            "become",
+            "more",
+            "or",
+            "less",
+            "obvious",
+            "i",
+            "think"
+          ],
+          "hypothesis": [
+            "will",
+            "becomes",
+            "more",
+            "than",
+            "so",
+            "i",
+            "guess",
+            "i",
+            "don't"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 13,
+          "hypothesisIndex": 11,
+          "reference": [
+            "all",
+            "become",
+            "more",
+            "or",
+            "less",
+            "obvious",
+            "i",
+            "think",
+            "anyway"
+          ],
+          "hypothesis": [
+            "becomes",
+            "more",
+            "than",
+            "so",
+            "i",
+            "guess",
+            "i",
+            "don't",
+            "can"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 14,
+          "hypothesisIndex": 12,
+          "reference": [
+            "become",
+            "more",
+            "or",
+            "less",
+            "obvious",
+            "i",
+            "think",
+            "anyway",
+            "yeah"
+          ],
+          "hypothesis": [
+            "more",
+            "than",
+            "so",
+            "i",
+            "guess",
+            "i",
+            "don't",
+            "can",
+            "you"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 16,
+          "hypothesisIndex": 14,
+          "reference": [
+            "or",
+            "less",
+            "obvious",
+            "i",
+            "think",
+            "anyway",
+            "yeah",
+            "it's",
+            "just"
+          ],
+          "hypothesis": [
+            "so",
+            "i",
+            "guess",
+            "i",
+            "don't",
+            "can",
+            "you",
+            "recommend",
+            "it"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 16,
+          "hypothesisIndex": 15,
+          "reference": [
+            "or",
+            "less",
+            "obvious",
+            "i",
+            "think",
+            "anyway",
+            "yeah",
+            "it's",
+            "just"
+          ],
+          "hypothesis": [
+            "i",
+            "guess",
+            "i",
+            "don't",
+            "can",
+            "you",
+            "recommend",
+            "it",
+            "it's"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 16,
+          "hypothesisIndex": 16,
+          "reference": [
+            "or",
+            "less",
+            "obvious",
+            "i",
+            "think",
+            "anyway",
+            "yeah",
+            "it's",
+            "just"
+          ],
+          "hypothesis": [
+            "guess",
+            "i",
+            "don't",
+            "can",
+            "you",
+            "recommend",
+            "it",
+            "it's",
+            "just"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 17,
+          "hypothesisIndex": 17,
+          "reference": [
+            "less",
+            "obvious",
+            "i",
+            "think",
+            "anyway",
+            "yeah",
+            "it's",
+            "just",
+            "we"
+          ],
+          "hypothesis": [
+            "i",
+            "don't",
+            "can",
+            "you",
+            "recommend",
+            "it",
+            "it's",
+            "just",
+            "we"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 18,
+          "hypothesisIndex": 18,
+          "reference": [
+            "obvious",
+            "i",
+            "think",
+            "anyway",
+            "yeah",
+            "it's",
+            "just",
+            "we",
+            "are"
+          ],
+          "hypothesis": [
+            "don't",
+            "can",
+            "you",
+            "recommend",
+            "it",
+            "it's",
+            "just",
+            "we",
+            "are"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 23,
+          "hypothesisIndex": 23,
+          "reference": [
+            "it's",
+            "just",
+            "we",
+            "are",
+            "half",
+            "way",
+            "through",
+            "the",
+            "project"
+          ],
+          "hypothesis": [
+            "it's",
+            "just",
+            "we",
+            "are",
+            "halfway",
+            "through",
+            "the",
+            "project",
+            "time"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 24,
+          "hypothesisIndex": 24,
+          "reference": [
+            "just",
+            "we",
+            "are",
+            "half",
+            "way",
+            "through",
+            "the",
+            "project",
+            "time"
+          ],
+          "hypothesis": [
+            "just",
+            "we",
+            "are",
+            "halfway",
+            "through",
+            "the",
+            "project",
+            "time",
+            "but"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 29,
+          "hypothesisIndex": 28,
+          "reference": [
+            "through",
+            "the",
+            "project",
+            "time",
+            "table",
+            "that's",
+            "just",
+            "what",
+            "freaks"
+          ],
+          "hypothesis": [
+            "through",
+            "the",
+            "project",
+            "time",
+            "but",
+            "the",
+            "list",
+            "just",
+            "freaks"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 29,
+          "hypothesisIndex": 29,
+          "reference": [
+            "through",
+            "the",
+            "project",
+            "time",
+            "table",
+            "that's",
+            "just",
+            "what",
+            "freaks"
+          ],
+          "hypothesis": [
+            "the",
+            "project",
+            "time",
+            "but",
+            "the",
+            "list",
+            "just",
+            "freaks",
+            "me"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 30,
+          "hypothesisIndex": 30,
+          "reference": [
+            "the",
+            "project",
+            "time",
+            "table",
+            "that's",
+            "just",
+            "what",
+            "freaks",
+            "me"
+          ],
+          "hypothesis": [
+            "project",
+            "time",
+            "but",
+            "the",
+            "list",
+            "just",
+            "freaks",
+            "me",
+            "out"
+          ]
+        },
+        {
+          "operation": "delete",
+          "referenceIndex": 32,
+          "hypothesisIndex": 32,
+          "reference": [
+            "time",
+            "table",
+            "that's",
+            "just",
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesis": [
+            "but",
+            "the",
+            "list",
+            "just",
+            "freaks",
+            "me",
+            "out",
+            "yes",
+            "what"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 36,
+          "hypothesisIndex": 35,
+          "reference": [
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesis": [
+            "just",
+            "freaks",
+            "me",
+            "out",
+            "yes",
+            "what",
+            "time",
+            "is",
+            "it"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 36,
+          "hypothesisIndex": 36,
+          "reference": [
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesis": [
+            "freaks",
+            "me",
+            "out",
+            "yes",
+            "what",
+            "time",
+            "is",
+            "it",
+            "when"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 36,
+          "hypothesisIndex": 37,
+          "reference": [
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesis": [
+            "me",
+            "out",
+            "yes",
+            "what",
+            "time",
+            "is",
+            "it",
+            "when",
+            "you"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 36,
+          "hypothesisIndex": 38,
+          "reference": [
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesis": [
+            "out",
+            "yes",
+            "what",
+            "time",
+            "is",
+            "it",
+            "when",
+            "you",
+            "get"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 36,
+          "hypothesisIndex": 39,
+          "reference": [
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesis": [
+            "yes",
+            "what",
+            "time",
+            "is",
+            "it",
+            "when",
+            "you",
+            "get",
+            "to"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 36,
+          "hypothesisIndex": 40,
+          "reference": [
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesis": [
+            "what",
+            "time",
+            "is",
+            "it",
+            "when",
+            "you",
+            "get",
+            "to",
+            "it"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 36,
+          "hypothesisIndex": 41,
+          "reference": [
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesis": [
+            "time",
+            "is",
+            "it",
+            "when",
+            "you",
+            "get",
+            "to",
+            "it"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 36,
+          "hypothesisIndex": 42,
+          "reference": [
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesis": [
+            "is",
+            "it",
+            "when",
+            "you",
+            "get",
+            "to",
+            "it"
+          ]
+        },
+        {
+          "operation": "insert",
+          "referenceIndex": 36,
+          "hypothesisIndex": 43,
+          "reference": [
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesis": [
+            "it",
+            "when",
+            "you",
+            "get",
+            "to",
+            "it"
+          ]
+        },
+        {
+          "operation": "replace",
+          "referenceIndex": 36,
+          "hypothesisIndex": 44,
+          "reference": [
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesis": [
+            "when",
+            "you",
+            "get",
+            "to",
+            "it"
+          ]
+        }
+      ],
+      "mossRawErrors": 25,
+      "qwenRawErrors": 20,
+      "audioSeconds": 18.12,
+      "inferenceSeconds": 9.144573400000809
+    }
+  ],
+  "advanceGate": {
+    "maximumEnglishErrors": 99,
+    "referenceUnits": 709,
+    "relativeReductionVsFixedMoss124ErrorsAtLeast": 0.2,
+    "eachMeetingErrorsAtMostMossBaseline": true,
+    "all12CompleteWithoutMemoryOrDecodeFailure": true,
+    "actionIfPass": "One complete original English meeting per source under the same frozen ASR settings; no default promotion from clips alone.",
+    "actionIfFail": "Retain raw failure and stop this candidate; no temperature/quantization/beam grid."
+  },
+  "advanceToWholeEnglish": false,
+  "scorerSha256": "e374a4e9bf667d21bbaa8a13479e74673682ccc339a2ffa7469c17d3d6b0677d",
+  "scoringBindingSha256": "e2c551289a1c0a3805f98112eddb9b35a73b70e7e5bca9cc4cef3de74ce3ad31",
+  "runSha256": "fe906cb7377a85972dac52ef57d0c6e349a90e0d5073f5fd1be9508e65ba7c27",
+  "neuralRun": {
+    "state": "COMPLETE_ENGLISH_SPECIALIST_CLIPS_SCORING_PENDING",
+    "startedAt": "2026-11-16T12:30:11.141484+08:00",
+    "privatePeakBytes": 526999552,
+    "familyWorkingSetPeakBytes": 1064902656,
+    "systemAvailableMinBytes": 4189896704,
+    "qualityQualified": false,
+    "automaticRetries": 0,
+    "neuralDeadline": "2026-11-16T15:40:00+08:00",
+    "pid": 30412,
+    "pidCreatedAt": 1794803411.1445663,
+    "workerExitCode": 0,
+    "completedInputs": 12,
+    "finishedAt": "2026-11-16T12:32:06.701301+08:00"
+  },
+  "modelSha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+  "rawTextProductGatePass": false,
+  "allFillersPartialWordsNumbersKept": true,
+  "gatesChanged": false,
+  "speakerAttributionEvaluated": false,
+  "DERMeasuredByThisContrast": false,
+  "wholeMeetingAcceptance": false,
+  "blindFinalHoldoutOpened": false,
+  "newWeightTraining": false,
+  "productDefaultChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "next": "Stop candidate. Retain exact outputs and no parameter/quantization grid.",
+  "limits": {
+    "pid": 16812,
+    "cpuRate": 100,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 1.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 16203776,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

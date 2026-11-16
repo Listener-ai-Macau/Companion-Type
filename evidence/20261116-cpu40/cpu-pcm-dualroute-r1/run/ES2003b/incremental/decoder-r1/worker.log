@@ -1,0 +1,18 @@
+load_backend: loaded CPU backend from E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpu-pcm-candidate-r1\runtime-cpu-only\ggml-cpu-cascadelake.dll
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\companion_local_moss_cpu_worker_20261116.py", line 106, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\companion_local_moss_cpu_worker_20261116.py", line 97, in main
+    atomic_json(a.run/(job['jobId']+'-interrupted.json'),{'request':job,'result':payload});raise aborted_error
+                                                                                           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\companion_local_moss_cpu_worker_20261116.py", line 84, in main
+    try:result=native.run(samples,language=None,timestamps='segment',diarize='on',keep_special_tags=True,spec_k_drafts=0)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpp-r1\python\transcribe_cpp\__init__.py", line 1569, in run
+    _check(_lib.transcribe_run(h, array, n_samples, _byref(params)),
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpp-r1\python\transcribe_cpp\__init__.py", line 438, in _check
+    raise_for_status(status, _status_string(status), context)
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\cpp-r1\python\transcribe_cpp\errors.py", line 186, in raise_for_status
+    raise exception_for_status(status, status_string, context)
+transcribe_cpp.errors.Aborted: transcribe_run: aborted by callback (status 13)

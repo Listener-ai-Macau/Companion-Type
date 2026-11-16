@@ -1,0 +1,108 @@
+{
+  "case": {
+    "id": "EN2001a-a2-069",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-069.wav",
+    "wavSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+    "pcmSha256": "01439b3125f9e794a9ffae891fd0cccc470ae701397a2b889487dc87d166bb39",
+    "frames": 476000,
+    "audioSeconds": 29.75,
+    "language": "English"
+  },
+  "seconds": 10.49227389999578,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I mean there's no guarantee that anything stays there but overnight it will stay. I think the temps usually have. Aye, but that would have to be the temp directory of the machine you can SSH into directory of SSH. Yeah, but I can do it from that session, don't I? I can compress it from a remote session and then see it from the same session. Yeah, they probably hate you for doing it.",
+    "raw_text": "<|0.00|> I mean there's no guarantee that anything stays there but overnight it will stay.<|4.00|><|4.00|> I think the temps usually have.<|7.00|><|10.00|> Aye, but that would have to be the temp directory of the machine you can SSH into directory of SSH.<|16.00|><|16.00|> Yeah, but I can do it from that session, don't I?<|19.00|><|19.00|> I can compress it from a remote session and then see it from the same session.<|24.00|><|27.00|> Yeah, they probably hate you for doing it.<|29.76|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I mean there's no guarantee that anything stays there but overnight it will stay.",
+        "t0_ms": 0,
+        "t1_ms": 4000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "I think the temps usually have.",
+        "t0_ms": 4000,
+        "t1_ms": 7000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Aye, but that would have to be the temp directory of the machine you can SSH into directory of SSH.",
+        "t0_ms": 10000,
+        "t1_ms": 16000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Yeah, but I can do it from that session, don't I?",
+        "t0_ms": 16000,
+        "t1_ms": 19000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "I can compress it from a remote session and then see it from the same session.",
+        "t0_ms": 19000,
+        "t1_ms": 24000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Yeah, they probably hate you for doing it.",
+        "t0_ms": 27000,
+        "t1_ms": 29760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 224.90899658203125,
+      "mel_ms": 13.793000221252441,
+      "encode_ms": 9636.1611328125,
+      "decode_ms": 833.8740234375
+    }
+  },
+  "rawDecoded": "<|0.00|> I mean there's no guarantee that anything stays there but overnight it will stay.<|4.00|><|4.00|> I think the temps usually have.<|7.00|><|10.00|> Aye, but that would have to be the temp directory of the machine you can SSH into directory of SSH.<|16.00|><|16.00|> Yeah, but I can do it from that session, don't I?<|19.00|><|19.00|> I can compress it from a remote session and then see it from the same session.<|24.00|><|27.00|> Yeah, they probably hate you for doing it.<|29.76|>",
+  "hypothesis": "I mean there's no guarantee that anything stays there but overnight it will stay. I think the temps usually have. Aye, but that would have to be the temp directory of the machine you can SSH into directory of SSH. Yeah, but I can do it from that session, don't I? I can compress it from a remote session and then see it from the same session. Yeah, they probably hate you for doing it.",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

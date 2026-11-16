@@ -1,0 +1,57 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000001-00320000-draft",
+    "recordingId": "6118c3c0-dda4-4425-a86d-a060cddf9275",
+    "configSha256": "da987dd3c48dc632b9459fb3b09149ed0b1122ca63886c0101b52cb7faa52ffe",
+    "block": 1,
+    "startFrame": 480000,
+    "endFrame": 800000,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\audio.pcm",
+    "pcmSha256": "37aa6fde51d1ed7faf3d806cfc777a89c67fadee1505cf0f2fc52e3848abb7f1",
+    "language": "auto",
+    "blockFinal": false,
+    "publishedAtMonotonic": 44260.2174549,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "result": {
+    "text": "",
+    "language": null,
+    "rawGeneratedIds": [],
+    "tokenIdsAvailable": false,
+    "rawDecoded": "",
+    "nativeResult": {
+      "text": "",
+      "raw_text": "",
+      "language": "",
+      "timestamp_kind": "none",
+      "segments": [],
+      "speaker_segments": [],
+      "words": [],
+      "tokens": [],
+      "timings": {
+        "load_ms": 1760.7449951171875,
+        "mel_ms": 16.447999954223633,
+        "encode_ms": 7282.63720703125,
+        "decode_ms": 0.0
+      }
+    },
+    "naturalEos": false,
+    "accepted": false,
+    "reviewRequired": true,
+    "seconds": 9.81285659999412,
+    "rawSpeakerIdsAreLocalToThisRequest": true,
+    "speakerIdentityVerified": false,
+    "wordsRewritten": false,
+    "qualityQualified": false,
+    "semanticError": "Aborted('transcribe_run: aborted by callback (status 13)')",
+    "unconfirmedAudioIntervals": [
+      {
+        "startFrame": 480000,
+        "endFrame": 800000,
+        "reason": "incomplete_native_output"
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "state": "INCOMPLETE_LOCAL_CPU_MEETING_RETAINED",
+  "startedAt": "2026-11-16T12:51:48.437206+08:00",
+  "attempts": [],
+  "binding": {
+    "inputSha256": "384d8041d487ca851a9eef7f6631664cc3bc6d9e9f4bfd10fee11ccc0e23b42a",
+    "bundleSha256": "52e956e542e970b00292778aebea2f6dd8582ac1bde1c6ef05434f45391af8b0"
+  },
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "error": "FileNotFoundError(2, 'No such file or directory')",
+  "finishedAt": "2026-11-16T12:51:48.509216+08:00"
+}

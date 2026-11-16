@@ -1,0 +1,11 @@
+{
+  "sourceSha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6",
+  "newNeuralCalls": 0,
+  "errorType": "PermissionError",
+  "error": "PermissionError(13, '\u62d2\u7edd\u8bbf\u95ee\u3002')",
+  "errno": 13,
+  "winerror": 5,
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\reproduce_pcm_windows_reader_collision_20261116.py\", line 10, in <module>\n    try:session.append(0,b'\\0\\0'*2);result['unexpectedPass']=True\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_pcm_session_20261114.py\", line 128, in append\n    atomic_json(self.meta,value)\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_pcm_session_20261114.py\", line 28, in atomic_json\n    os.replace(temporary, path)\nPermissionError: [WinError 5] \u62d2\u7edd\u8bbf\u95ee\u3002: 'E:\\\\CodexData\\\\Companion\\\\product-d1d2-20261114\\\\joint-architecture-r1\\\\cpu-pcm-reader-collision-r1\\\\session\\\\session.json.6682470767554673b7addb16f8ab2eba.tmp' -> 'E:\\\\CodexData\\\\Companion\\\\product-d1d2-20261114\\\\joint-architecture-r1\\\\cpu-pcm-reader-collision-r1\\\\session\\\\session.json'\n",
+  "durablePcmBytes": 4,
+  "confirmedFrames": 0
+}

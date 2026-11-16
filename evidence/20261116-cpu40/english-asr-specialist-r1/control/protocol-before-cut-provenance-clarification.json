@@ -1,0 +1,201 @@
+{
+  "at": "2026-11-16T12:19:35.771876+08:00",
+  "state": "FROZEN_ONE_ENGLISH_ASR_SPECIALIST_CONTRAST_BEFORE_INFERENCE",
+  "modelSource": {
+    "state": "PUBLIC_SINGLE_SPECIALIST_METADATA_READ_NO_MODEL_DOWNLOAD_OR_INFERENCE",
+    "at": "2026-11-16T12:13:08.397898+08:00",
+    "url": "https://huggingface.co/api/models/handy-computer/whisper-large-v3-turbo-gguf?blobs=true",
+    "repository": "handy-computer/whisper-large-v3-turbo-gguf",
+    "revision": "18ada752005f5fddef499256f9a458d0b37a203a",
+    "gated": false,
+    "file": {
+      "rfilename": "whisper-large-v3-turbo-Q8_0.gguf",
+      "blobId": "2b42d8484b2f39d4d3a35dc8367980faeb3b2d96",
+      "size": 886381728,
+      "lfs": {
+        "sha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+        "size": 886381728,
+        "pointerSize": 134
+      }
+    },
+    "newNeuralCalls": 0,
+    "qualityQualified": false
+  },
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+      "wavSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+      "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92",
+      "frames": 192800,
+      "audioSeconds": 12.05,
+      "language": "English"
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-005.wav",
+      "wavSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+      "pcmSha256": "ec8c4c16829d1d95404cb3fd3fcd8ee32cc310edaaf7b8901d562a90696b04e7",
+      "frames": 476000,
+      "audioSeconds": 29.75,
+      "language": "English"
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-010.wav",
+      "wavSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+      "pcmSha256": "e087cf4e22224bfc9c3ad810c56bd3595ad7343c30b6d53fc5c1ce00d445b32f",
+      "frames": 475520,
+      "audioSeconds": 29.72,
+      "language": "English"
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-016.wav",
+      "wavSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+      "pcmSha256": "7e8c174955670b930e9b657a8fdcbea730374845ac6668f4a916ddc867ee7f6e",
+      "frames": 473280,
+      "audioSeconds": 29.58,
+      "language": "English"
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-021.wav",
+      "wavSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+      "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f",
+      "frames": 203840,
+      "audioSeconds": 12.74,
+      "language": "English"
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "condition": "sequential-original-room",
+      "meeting": "ES2003b",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-027.wav",
+      "wavSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+      "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+      "frames": 162401,
+      "audioSeconds": 10.1500625,
+      "language": "English"
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "condition": "sequential-original-room",
+      "meeting": "EN2001a",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-000.wav",
+      "wavSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+      "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f",
+      "frames": 187360,
+      "audioSeconds": 11.71,
+      "language": "English"
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "condition": "sequential-original-room",
+      "meeting": "EN2001a",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-023.wav",
+      "wavSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+      "pcmSha256": "490510a15ef6f46ebac736fb41e975068df6e61349ac7f589c257fe724ae9d33",
+      "frames": 475520,
+      "audioSeconds": 29.72,
+      "language": "English"
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "condition": "sequential-original-room",
+      "meeting": "EN2001a",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-046.wav",
+      "wavSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+      "pcmSha256": "7c06b4b1859d19da0fe23e80c043ebb406245e57d456d2776536102c041cc8a4",
+      "frames": 362720,
+      "audioSeconds": 22.67,
+      "language": "English"
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "condition": "sequential-original-room",
+      "meeting": "EN2001a",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-069.wav",
+      "wavSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+      "pcmSha256": "01439b3125f9e794a9ffae891fd0cccc470ae701397a2b889487dc87d166bb39",
+      "frames": 476000,
+      "audioSeconds": 29.75,
+      "language": "English"
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "condition": "sequential-original-room",
+      "meeting": "EN2001a",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-092.wav",
+      "wavSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+      "pcmSha256": "14091b430e04787c3694b572f922d0a4da22a3ce4f10cc7978dde91fa4797bb7",
+      "frames": 473600,
+      "audioSeconds": 29.6,
+      "language": "English"
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "condition": "sequential-original-room",
+      "meeting": "EN2001a",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-116.wav",
+      "wavSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+      "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f",
+      "frames": 289920,
+      "audioSeconds": 18.12,
+      "language": "English"
+    }
+  ],
+  "inputCohort": "Existing StageA-r2 12 English validation clips from ES2003b and EN2001a, already used for development; not a blind test.",
+  "selectionReason": "Full4 fixed30MOSS regresses both Chinese recordings and leaves English aggregate27.74% raw errors. Keep protected Chinese Qwen. Test only one dedicated mature English ASR rather than tuning a universal model.",
+  "settings": {
+    "backend": "cpu",
+    "nativeThreads": 4,
+    "cpuPercent": 25,
+    "familyPrivateBytes": 2147483648,
+    "modelPreset": "publisher-recommended Q8_0 only",
+    "language": "en",
+    "task": "transcribe",
+    "timestamps": "segment",
+    "diarize": "off",
+    "familyOptions": "upstream defaults; no reference text/prompt/vocabulary/prefix",
+    "wordRewrite": false,
+    "referenceSelectedCuts": false,
+    "extraVAD": false,
+    "denoise": false,
+    "parameterGrid": false
+  },
+  "advanceGate": {
+    "maximumEnglishErrors": 99,
+    "referenceUnits": 709,
+    "relativeReductionVsFixedMoss124ErrorsAtLeast": 0.2,
+    "eachMeetingErrorsAtMostMossBaseline": true,
+    "all12CompleteWithoutMemoryOrDecodeFailure": true,
+    "actionIfPass": "One complete original English meeting per source under the same frozen ASR settings; no default promotion from clips alone.",
+    "actionIfFail": "Retain raw failure and stop this candidate; no temperature/quantization/beam grid."
+  },
+  "originalProductGatesUnchanged": {
+    "rawAndEachPersonErrorRateBelow": 0.05,
+    "DERZeroCollarAtMost": 0.1,
+    "factRecallAtLeast": 0.95,
+    "criticalFactsWrong": 0
+  },
+  "speakerAttributionNotProvedByAsrText": true,
+  "wordTimestampsNotSupportedByThisPort": true,
+  "finalHoldoutOpened": false,
+  "newNeuralCalls": 0,
+  "newWeightTraining": false,
+  "productDefaultChanged": false,
+  "qualityQualified": false,
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "reportDeadline": "2026-11-16T16:00:00+08:00"
+}

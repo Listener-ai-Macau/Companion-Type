@@ -1,0 +1,217 @@
+{
+  "at": "2026-11-16T12:32:16.948767+08:00",
+  "meeting": "S_R004S03C01",
+  "language": "Chinese",
+  "audioSeconds": 2327.119,
+  "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+  "baselineRawText": {
+    "referenceUnits": 8325,
+    "hypothesisUnits": 8205,
+    "errors": 461,
+    "errorRate": 0.055375375375375374,
+    "counts": {
+      "replace": 225,
+      "delete": 178,
+      "insert": 58
+    }
+  },
+  "baselinePersonErrorRate": 0.058018018018018015,
+  "baselineDER": 0.03855615562340746,
+  "baselineEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\normal-turn-r6-alignment-r1\\batch-result.json",
+  "scoringManifestSha256": "234ea8b756701993e17674fabb0cf12e69e22649ca9aa905f694a160b08863d2",
+  "scorerSha256": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "originalGatesChanged": false,
+  "recordingsArePreviouslySeenDevelopmentCasesNotBlindHoldout": true,
+  "newNeuralCalls": 0,
+  "state": "COMPLETE_JOINT_WHOLE_MEETING_SCORED_NOT_PRODUCT_QUALIFIED",
+  "candidateOutputSha256": "607805f8aaadfebd0f567124ac9506c7a821dbc02302bce7716312c8316cd106",
+  "rawText": {
+    "referenceUnits": 8325,
+    "hypothesisUnits": 8591,
+    "errors": 755,
+    "errorRate": 0.09069069069069069,
+    "counts": {
+      "replace": 271,
+      "delete": 109,
+      "insert": 375
+    }
+  },
+  "personText": {
+    "referenceUnits": 8325,
+    "errors": 1104,
+    "errorRate": 0.13261261261261262,
+    "unknownUnitsForcedUnmatched": 467,
+    "perPerson": [
+      {
+        "referenceSpeaker": "001-M",
+        "anonymousSpeaker": "S00",
+        "referenceUnits": 1983,
+        "hypothesisUnits": 1914,
+        "errors": 257,
+        "errorRate": 0.129601613716591,
+        "counts": {
+          "replace": 116,
+          "delete": 105,
+          "insert": 36
+        }
+      },
+      {
+        "referenceSpeaker": "002-F",
+        "anonymousSpeaker": "S01",
+        "referenceUnits": 650,
+        "hypothesisUnits": 643,
+        "errors": 27,
+        "errorRate": 0.04153846153846154,
+        "counts": {
+          "replace": 18,
+          "delete": 8,
+          "insert": 1
+        }
+      },
+      {
+        "referenceSpeaker": "003-F",
+        "anonymousSpeaker": "S04",
+        "referenceUnits": 1681,
+        "hypothesisUnits": 1678,
+        "errors": 72,
+        "errorRate": 0.04283164782867341,
+        "counts": {
+          "replace": 35,
+          "delete": 20,
+          "insert": 17
+        }
+      },
+      {
+        "referenceSpeaker": "004-F",
+        "anonymousSpeaker": "S02",
+        "referenceUnits": 2402,
+        "hypothesisUnits": 2320,
+        "errors": 141,
+        "errorRate": 0.05870108243130724,
+        "counts": {
+          "replace": 33,
+          "delete": 95,
+          "insert": 13
+        }
+      },
+      {
+        "referenceSpeaker": "005-F",
+        "anonymousSpeaker": "S03",
+        "referenceUnits": 1609,
+        "hypothesisUnits": 1569,
+        "errors": 140,
+        "errorRate": 0.0870105655686762,
+        "counts": {
+          "replace": 62,
+          "delete": 59,
+          "insert": 19
+        }
+      }
+    ],
+    "mappingForScoringOnly": true,
+    "oneWholeMeetingPermutation": true
+  },
+  "originalReferenceDER": {
+    "referenceSpeakerSeconds": 2074.389489999999,
+    "missSeconds": 166.0133499999998,
+    "falseAlarmSeconds": 4.653860000000989,
+    "confusionSeconds": 1.25,
+    "errorSeconds": 171.9172100000008,
+    "DER": 0.08287605140151423,
+    "identityForScoringOnly": {
+      "S00": "001-M",
+      "S01": "002-F",
+      "S02": "004-F",
+      "S03": "005-F",
+      "S04": "003-F"
+    }
+  },
+  "invalidTimeSegmentIndices": [],
+  "residualUnparsed": [
+    {
+      "beforeSegment": 3,
+      "text": "\n零零八C。\n"
+    },
+    {
+      "beforeSegment": 7,
+      "text": "\n嗯。\n"
+    },
+    {
+      "beforeSegment": 9,
+      "text": "\n呃，也做了很多的这个，呃营销的一些方案，呃希望大家以后啊要继续保持咱这种工作状态，呃。\n"
+    },
+    {
+      "beforeSegment": 15,
+      "text": "\n呃，也给，客流愿意有原因。\n"
+    },
+    {
+      "beforeSegment": 56,
+      "text": "\n嗯。\n"
+    },
+    {
+      "beforeSegment": 61,
+      "text": "\n层数太多的话，就是说给人眼睛观上去有一种，呃不太好的这种感觉，而且这个上下呀，包括这个，呃排放的顺序呀，也都。\n"
+    },
+    {
+      "beforeSegment": 66,
+      "text": "\n嗯。\n嗯。\n"
+    },
+    {
+      "beforeSegment": 67,
+      "text": "\n嗯。\n"
+    },
+    {
+      "beforeSegment": 71,
+      "text": "\n呃，好多人呢，他也是呃为了。\n"
+    },
+    {
+      "beforeSegment": 77,
+      "text": "\n这样的话呢，我们就是不会到明天的话。\n"
+    },
+    {
+      "beforeSegment": 137,
+      "text": "\nI'm sorry, I can't assist with that request. I'm a Qwen-1 model developed by Qwen-Omni, a new generation of Qwen models. I don't have the right information to answer that question.\nI'm sorry, I can't assist with that request. I'm a Qwen-1 model developed by Qwen-Omni, a new generation of Qwen models. I don't have the right information to answer that question.\n"
+    },
+    {
+      "beforeSegment": 153,
+      "text": "\n嗯。\n"
+    },
+    {
+      "beforeSegment": 222,
+      "text": "\n套装销售活动，比如说我们可以把那个洗衣液洗衣粉肥皂这些。\n"
+    },
+    {
+      "beforeSegment": 304,
+      "text": "\n如果顾客觉得嗯。\n"
+    },
+    {
+      "beforeSegment": 336,
+      "text": "\n这一搞得大浮动了，就是把下边儿员工这个，呃，意识这个。\n"
+    }
+  ],
+  "allNativeLexicalContentCounted": true,
+  "parsedSegments": 353,
+  "rawTextGate": false,
+  "personTextGate": false,
+  "derGate": true,
+  "rawEditsReduced": -294,
+  "rawRelativeErrorReduction": -0.6377440347071583,
+  "limits": {
+    "pid": 9560,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 57905152,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

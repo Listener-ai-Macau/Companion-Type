@@ -1,0 +1,3856 @@
+{
+  "state": "ERROR_DIAGNOSTIC_ONLY_ORIGINAL_ALL_WORD_SCORES_UNCHANGED",
+  "at": "2026-11-16T12:38:00.538186+08:00",
+  "totals": {
+    "qwen": {
+      "insert": 15,
+      "otherLexical": 126,
+      "replace": 54,
+      "delete": 72,
+      "errors": 141,
+      "referenceUnits": 709,
+      "filler": 15
+    },
+    "moss": {
+      "insert": 34,
+      "otherLexical": 121,
+      "replace": 68,
+      "delete": 22,
+      "errors": 124,
+      "referenceUnits": 709,
+      "filler": 3
+    },
+    "whisper": {
+      "replace": 69,
+      "otherLexical": 178,
+      "delete": 99,
+      "errors": 195,
+      "referenceUnits": 709,
+      "filler": 17,
+      "insert": 27
+    }
+  },
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "meeting": "ES2003b",
+      "reference": "Just put it on the deskt desktop No on the desktop you'll find you should find that there's a project documents link A well actually just",
+      "speakers": {
+        "B": {
+          "referenceUnits": 19,
+          "wordIntervalSamples": 89120,
+          "pcmRmsDbfs": -48.93955397253346
+        },
+        "C": {
+          "referenceUnits": 7,
+          "wordIntervalSamples": 34560,
+          "pcmRmsDbfs": -43.950464794882045
+        }
+      },
+      "models": {
+        "qwen": {
+          "hypothesis": "Just put it on the desk. All I see is desk. No, on the desktop you'll find. You should find that there's a project documents link. Well, actually, just.",
+          "counts": {
+            "insert": 4,
+            "otherLexical": 7,
+            "replace": 2,
+            "delete": 1,
+            "errors": 7,
+            "referenceUnits": 26
+          },
+          "referenceSideErrorsBySpeaker": {
+            "C": {
+              "replace": 2
+            },
+            "B": {
+              "delete": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "insert",
+              "token": "desk",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "all",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "see",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "deskt",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "desktop",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "a",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            }
+          ]
+        },
+        "moss": {
+          "hypothesis": "Just put it on the desk, all I see is desktop. No, on the desktop you'll find you should find that there's a project documents link. Well actually just.",
+          "counts": {
+            "insert": 4,
+            "otherLexical": 6,
+            "replace": 1,
+            "delete": 1,
+            "errors": 6,
+            "referenceUnits": 26
+          },
+          "referenceSideErrorsBySpeaker": {
+            "C": {
+              "replace": 1
+            },
+            "B": {
+              "delete": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "insert",
+              "token": "desk",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "all",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "see",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "deskt",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "a",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            }
+          ]
+        },
+        "whisper": {
+          "hypothesis": "just put it on the desktop, all I see is desktop.",
+          "counts": {
+            "replace": 5,
+            "otherLexical": 20,
+            "delete": 15,
+            "errors": 20,
+            "referenceUnits": 26
+          },
+          "referenceSideErrorsBySpeaker": {
+            "C": {
+              "replace": 2
+            },
+            "B": {
+              "replace": 3,
+              "delete": 15
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "deskt",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "desktop",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "no",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "on",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "the",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "you'll",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "find",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "should",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "find",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "that",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "there's",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "a",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "project",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "documents",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "link",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "a",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "well",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "actually",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "just",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "meeting": "ES2003b",
+      "reference": "and the remote's only trained for you it's a bit impractical to have just voice recognition by itself So you can have voice recognition and a regular remote But imagine you got rid of the regular remote part then you can design the remote to look any way you want it to look because there are no restrictions on physical size or shape it it could be as fancy as you want it to be you know it could be like a lollipop or something like that something weird like that As long as the voice recognition stuff works that's that's fine Okay",
+      "speakers": {
+        "B": {
+          "referenceUnits": 1,
+          "wordIntervalSamples": 7680,
+          "pcmRmsDbfs": -53.372541802376965
+        },
+        "C": {
+          "referenceUnits": 102,
+          "wordIntervalSamples": 460960,
+          "pcmRmsDbfs": -47.876196206942396
+        }
+      },
+      "models": {
+        "qwen": {
+          "hypothesis": "The new remote, so I'm training for you. It's been impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part. Then you can design the remote to look any way you want it to look because there's no restrictions on physical size or shape. It it could be as fancy as you want it to be. You know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine.",
+          "counts": {
+            "insert": 1,
+            "otherLexical": 12,
+            "replace": 7,
+            "delete": 4,
+            "errors": 12,
+            "referenceUnits": 103
+          },
+          "referenceSideErrorsBySpeaker": {
+            "C": {
+              "replace": 7,
+              "delete": 3
+            },
+            "B": {
+              "delete": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "insert",
+              "token": "the",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "and",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "the",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "remote's",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "only",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "trained",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "a",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "bit",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "there",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "are",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "or",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "okay",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            }
+          ]
+        },
+        "moss": {
+          "hypothesis": "than the remote something twenty per year, it's a bit impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part, then you can design the remote to look any way you want it to look, because there are no restrictions on physical size or shape. It it could be as fancy as you want it to be, you know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine. Okay.",
+          "counts": {
+            "replace": 6,
+            "otherLexical": 7,
+            "delete": 1,
+            "errors": 7,
+            "referenceUnits": 103
+          },
+          "referenceSideErrorsBySpeaker": {
+            "C": {
+              "replace": 6,
+              "delete": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "and",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "remote's",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "only",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "trained",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "for",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "or",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            }
+          ]
+        },
+        "whisper": {
+          "hypothesis": "than the remote's only 20 per year. It's been impractical to have just voice recognition by itself. So you can have voice recognition and a regular remote. But imagine you got rid of the regular remote part. Then you can design the remote to look any way you want it to look because there are no restrictions on physical size or shape. It can be as fancy as you want it to be. It could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's fine.",
+          "counts": {
+            "replace": 6,
+            "otherLexical": 13,
+            "delete": 7,
+            "errors": 13,
+            "referenceUnits": 103
+          },
+          "referenceSideErrorsBySpeaker": {
+            "C": {
+              "replace": 6,
+              "delete": 6
+            },
+            "B": {
+              "delete": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "and",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "trained",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "for",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "a",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "bit",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "it",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "could",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "know",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "or",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "that's",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "okay",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "meeting": "ES2003b",
+      "reference": "yeah and you just click file save as Oh right Okay Uh right I'm responsible for working design uh this is basically the inside going on of the the uh remote",
+      "speakers": {
+        "B": {
+          "referenceUnits": 1,
+          "wordIntervalSamples": 5440,
+          "pcmRmsDbfs": -56.73994519228921
+        },
+        "C": {
+          "referenceUnits": 8,
+          "wordIntervalSamples": 31360,
+          "pcmRmsDbfs": -54.65239978544084
+        },
+        "D": {
+          "referenceUnits": 22,
+          "wordIntervalSamples": 152304,
+          "pcmRmsDbfs": -48.974421850358844
+        }
+      },
+      "models": {
+        "qwen": {
+          "hypothesis": "Okay. Uh, I'm responsible for working design. Uh, this is basically the inside going on of the the remote.",
+          "counts": {
+            "delete": 12,
+            "otherLexical": 11,
+            "filler": 1,
+            "errors": 12,
+            "referenceUnits": 31
+          },
+          "referenceSideErrorsBySpeaker": {
+            "C": {
+              "delete": 8
+            },
+            "D": {
+              "delete": 4
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "yeah",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "and",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "just",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "click",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "file",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "save",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "as",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "oh",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "right",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "right",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "uh",
+              "category": "filler",
+              "referenceSpeaker": "D"
+            }
+          ]
+        },
+        "moss": {
+          "hypothesis": "Yeah, and just go fast eight times. Alright. Okay. Uh I'm responsible for our working design, uh this is basically the insight going on with the the uh remote",
+          "counts": {
+            "delete": 3,
+            "otherLexical": 11,
+            "replace": 7,
+            "insert": 1,
+            "errors": 11,
+            "referenceUnits": 31
+          },
+          "referenceSideErrorsBySpeaker": {
+            "C": {
+              "delete": 1,
+              "replace": 4
+            },
+            "D": {
+              "replace": 3,
+              "delete": 2
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "click",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "file",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "save",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "as",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "oh",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "right",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "right",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "insert",
+              "token": "our",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "inside",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "of",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            }
+          ]
+        },
+        "whisper": {
+          "hypothesis": "and just quickly fast I'm responsible for our working design this is basically the inside going on with the remote",
+          "counts": {
+            "delete": 12,
+            "otherLexical": 13,
+            "replace": 3,
+            "filler": 3,
+            "insert": 1,
+            "errors": 16,
+            "referenceUnits": 31
+          },
+          "referenceSideErrorsBySpeaker": {
+            "C": {
+              "delete": 4,
+              "replace": 2
+            },
+            "D": {
+              "delete": 7,
+              "replace": 1
+            },
+            "B": {
+              "delete": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "yeah",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "click",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "file",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "save",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "as",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "oh",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "right",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "okay",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "uh",
+              "category": "filler",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "right",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "insert",
+              "token": "our",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "delete",
+              "token": "uh",
+              "category": "filler",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "of",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "the",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "uh",
+              "category": "filler",
+              "referenceSpeaker": "D"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "meeting": "ES2003b",
+      "reference": "So I can understand your point and I would agree with you but this is our design spec for now 'Fraid to say Um Does that um would that include um access to say interactive functions on digital or cable Yeah I would say so yes because then we have to be able to control the remote boxes and that is a separate unit Um I think that it I would say that the design",
+      "speakers": {
+        "A": {
+          "referenceUnits": 16,
+          "wordIntervalSamples": 102400,
+          "pcmRmsDbfs": -52.24060008283005
+        },
+        "B": {
+          "referenceUnits": 58,
+          "wordIntervalSamples": 321024,
+          "pcmRmsDbfs": -51.32706266049746
+        },
+        "C": {
+          "referenceUnits": 1,
+          "wordIntervalSamples": 7360,
+          "pcmRmsDbfs": -55.545919278793654
+        }
+      },
+      "models": {
+        "qwen": {
+          "hypothesis": "So I can understand your point, and I would agree with you, but this is our design spec for now, actually. Does that would that include access to say interactive functions on digital cable? Yeah, I would say so, yes, because then we have to be able to control the remote boxes, and that is a separate unit. I think that I would say that the design.",
+          "counts": {
+            "replace": 1,
+            "otherLexical": 5,
+            "delete": 8,
+            "filler": 4,
+            "errors": 9,
+            "referenceUnits": 75
+          },
+          "referenceSideErrorsBySpeaker": {
+            "B": {
+              "replace": 1,
+              "delete": 5
+            },
+            "A": {
+              "delete": 3
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "fraid",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "to",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "say",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "or",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "it",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            }
+          ]
+        },
+        "moss": {
+          "hypothesis": "So I can understand your point and I would agree with you, but this is our design spec for now. Great to see it. Um. Well does that um would that include um access to say interactive functions on digital or cable? Yeah. I'm to say so yes, because then we have to be able to control the remote boxes and that is a separate unit. Um I think the I would say that the design",
+          "counts": {
+            "replace": 5,
+            "otherLexical": 8,
+            "insert": 2,
+            "delete": 1,
+            "errors": 8,
+            "referenceUnits": 75
+          },
+          "referenceSideErrorsBySpeaker": {
+            "B": {
+              "replace": 5,
+              "delete": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "fraid",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "insert",
+              "token": "see",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "say",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "insert",
+              "token": "well",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "would",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "that",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "it",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            }
+          ]
+        },
+        "whisper": {
+          "hypothesis": "So I can understand your point and I would agree with you but this is our design spec for now. Great to say. Does that, would that include access to say interactive functions on digital or cable? Yeah. I would say so yes because then we have to be able to control the remote boxes and that is a separate unit. I think that, I would say that the design spec is not a separate unit.",
+          "counts": {
+            "replace": 1,
+            "otherLexical": 8,
+            "delete": 5,
+            "filler": 4,
+            "insert": 6,
+            "errors": 12,
+            "referenceUnits": 75
+          },
+          "referenceSideErrorsBySpeaker": {
+            "B": {
+              "replace": 1,
+              "delete": 3
+            },
+            "A": {
+              "delete": 2
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "fraid",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "it",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "insert",
+              "token": "spec",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "is",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "not",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "a",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "separate",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "unit",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "meeting": "ES2003b",
+      "reference": "Plus that's a nice wee design touch Yeah So by the sounds of it with what we're suggesting so far your design um the user interface is still quite open you could go for quite an interesting design",
+      "speakers": {
+        "A": {
+          "referenceUnits": 7,
+          "wordIntervalSamples": 25760,
+          "pcmRmsDbfs": -56.3563334660682
+        },
+        "B": {
+          "referenceUnits": 30,
+          "wordIntervalSamples": 163680,
+          "pcmRmsDbfs": -50.96065969410251
+        },
+        "C": {
+          "referenceUnits": 1,
+          "wordIntervalSamples": 4640,
+          "pcmRmsDbfs": -44.07147305361182
+        }
+      },
+      "models": {
+        "qwen": {
+          "hypothesis": "Plus, that's a nice redesign. So, by the sounds of it, with what we're suggesting so far, your design, the user interface, is still quite open. We could go for quite an interesting design.",
+          "counts": {
+            "replace": 2,
+            "otherLexical": 5,
+            "delete": 4,
+            "filler": 1,
+            "errors": 6,
+            "referenceUnits": 38
+          },
+          "referenceSideErrorsBySpeaker": {
+            "A": {
+              "replace": 1,
+              "delete": 2
+            },
+            "C": {
+              "delete": 1
+            },
+            "B": {
+              "delete": 1,
+              "replace": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "wee",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "design",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "touch",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "yeah",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            }
+          ]
+        },
+        "moss": {
+          "hypothesis": "Plus that's a nice wee detail, yeah. Okay. Yeah. So by the sounds of it, what we're suggesting so far, your design um the user interface is still quite open, you could go for quite an interesting design.",
+          "counts": {
+            "insert": 1,
+            "otherLexical": 4,
+            "replace": 2,
+            "delete": 1,
+            "errors": 4,
+            "referenceUnits": 38
+          },
+          "referenceSideErrorsBySpeaker": {
+            "A": {
+              "replace": 2
+            },
+            "B": {
+              "delete": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "insert",
+              "token": "detail",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "design",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "replace",
+              "token": "touch",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "with",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            }
+          ]
+        },
+        "whisper": {
+          "hypothesis": "Plus that's a nice video set. So by the sense that what we're suggesting so far, your design, the user interface is still quite open. You could go for quite an interesting design.",
+          "counts": {
+            "replace": 4,
+            "otherLexical": 8,
+            "delete": 5,
+            "filler": 1,
+            "errors": 9,
+            "referenceUnits": 38
+          },
+          "referenceSideErrorsBySpeaker": {
+            "A": {
+              "replace": 2,
+              "delete": 1
+            },
+            "C": {
+              "delete": 1
+            },
+            "B": {
+              "replace": 2,
+              "delete": 3
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "wee",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "replace",
+              "token": "design",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "touch",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "yeah",
+              "category": "otherLexical",
+              "referenceSpeaker": "C"
+            },
+            {
+              "operation": "replace",
+              "token": "sounds",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "of",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "it",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "with",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "B"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "meeting": "ES2003b",
+      "reference": "I'm pointing at my laptop what in God Real reaction and such So um The slogan is",
+      "speakers": {
+        "B": {
+          "referenceUnits": 14,
+          "wordIntervalSamples": 107170,
+          "pcmRmsDbfs": -50.496941507874325
+        },
+        "D": {
+          "referenceUnits": 3,
+          "wordIntervalSamples": 16801,
+          "pcmRmsDbfs": -43.203323729085184
+        }
+      },
+      "models": {
+        "qwen": {
+          "hypothesis": "We put the passion into real action and such. So that's the slogan. Is that not the name?",
+          "counts": {
+            "replace": 7,
+            "otherLexical": 13,
+            "delete": 3,
+            "filler": 1,
+            "insert": 4,
+            "errors": 14,
+            "referenceUnits": 17
+          },
+          "referenceSideErrorsBySpeaker": {
+            "B": {
+              "replace": 7,
+              "delete": 3
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "i'm",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "pointing",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "at",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "my",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "laptop",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "what",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "in",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "delete",
+              "token": "god",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "reaction",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "insert",
+              "token": "that",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "not",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "the",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "name",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            }
+          ]
+        },
+        "moss": {
+          "hypothesis": "I'm pointing at my laptop, but we're clocking. We put the fashion into. Real reaction and such, so um so. That's the slogan, is that not the name? Slogan.",
+          "counts": {
+            "insert": 12,
+            "otherLexical": 15,
+            "replace": 3,
+            "errors": 15,
+            "referenceUnits": 17
+          },
+          "referenceSideErrorsBySpeaker": {
+            "B": {
+              "replace": 3
+            }
+          },
+          "operations": [
+            {
+              "operation": "insert",
+              "token": "but",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "we're",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "clocking",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "we",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "put",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "what",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "in",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "god",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "insert",
+              "token": "so",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "that's",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "that",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "not",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "the",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "name",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "slogan",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            }
+          ]
+        },
+        "whisper": {
+          "hypothesis": "I'm pointing at my laptop. We put the fetch into... Real reaction. And such. So, um... Mr. Spoden. Is that not the name?",
+          "counts": {
+            "insert": 6,
+            "otherLexical": 11,
+            "replace": 5,
+            "errors": 11,
+            "referenceUnits": 17
+          },
+          "referenceSideErrorsBySpeaker": {
+            "B": {
+              "replace": 3
+            },
+            "D": {
+              "replace": 2
+            }
+          },
+          "operations": [
+            {
+              "operation": "insert",
+              "token": "we",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "put",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "what",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "in",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "god",
+              "category": "otherLexical",
+              "referenceSpeaker": "B"
+            },
+            {
+              "operation": "replace",
+              "token": "the",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "slogan",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "insert",
+              "token": "that",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "not",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "the",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "name",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "meeting": "EN2001a",
+      "reference": "Hmm Like duplication of effort and stuff and um yeah he was saying that we should maybe uh think about having a prototype for week six which is",
+      "speakers": {
+        "A": {
+          "referenceUnits": 27,
+          "wordIntervalSamples": 170240,
+          "pcmRmsDbfs": -49.2246471098895
+        },
+        "E": {
+          "referenceUnits": 1,
+          "wordIntervalSamples": 6720,
+          "pcmRmsDbfs": -49.87233342611329
+        }
+      },
+      "models": {
+        "qwen": {
+          "hypothesis": "Like duplication of effort and stuff, and yeah, saying that we should maybe think about having a prototype for week six, which is.",
+          "counts": {
+            "delete": 5,
+            "filler": 3,
+            "otherLexical": 2,
+            "errors": 5,
+            "referenceUnits": 28
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "delete": 1
+            },
+            "A": {
+              "delete": 4
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "hmm",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "he",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "was",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "uh",
+              "category": "filler",
+              "referenceSpeaker": "A"
+            }
+          ]
+        },
+        "moss": {
+          "hypothesis": "But like duplication of effort and stuff and mm yeah, you're saying that we should maybe uh think about having a prototype for week six, which is",
+          "counts": {
+            "replace": 3,
+            "filler": 2,
+            "otherLexical": 2,
+            "delete": 1,
+            "errors": 4,
+            "referenceUnits": 28
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "replace": 1
+            },
+            "A": {
+              "replace": 2,
+              "delete": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "hmm",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "replace",
+              "token": "he",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "was",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            }
+          ]
+        },
+        "whisper": {
+          "hypothesis": "duplication of effort and stuff and yeah you should think about having a prototype for week 6 which is",
+          "counts": {
+            "delete": 9,
+            "filler": 3,
+            "otherLexical": 8,
+            "replace": 2,
+            "errors": 11,
+            "referenceUnits": 28
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "delete": 1
+            },
+            "A": {
+              "delete": 8,
+              "replace": 2
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "hmm",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "like",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "replace",
+              "token": "he",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "was",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "saying",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "that",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "we",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "maybe",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "uh",
+              "category": "filler",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "replace",
+              "token": "six",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "meeting": "EN2001a",
+      "reference": "And in that way we could probably use the same algorithm and just like make vir like one or two ifs that say okay if you are on a whole document uh a whole series level and that was a double-click then don't just go into that um segment but load a new file or something like it but in general use the same algorithm That would be an alternative if we can't actually load the whole thing and Mm 'Cause also like even if we maybe this whole like maybe I'm worrying too much about the whole series in one thing display because actually I",
+      "speakers": {
+        "A": {
+          "referenceUnits": 1,
+          "wordIntervalSamples": 2240,
+          "pcmRmsDbfs": -50.75542487844995
+        },
+        "E": {
+          "referenceUnits": 106,
+          "wordIntervalSamples": 434240,
+          "pcmRmsDbfs": -46.79080797328935
+        }
+      },
+      "models": {
+        "qwen": {
+          "hypothesis": "And in that way, we could probably use the same algorithm, and just like make like one or two ifs that say, okay, if you are on a whole document, a whole series level, that was a double click, then don't just go into that segment, but load a new file or something like it. But in general, use the same algorithm. That would be an alternative if you can't actually load the whole thing in. Because also, like, even if we, maybe this whole like, maybe I'm worrying too much about the whole series in one thing displayed because actually.",
+          "counts": {
+            "delete": 6,
+            "otherLexical": 7,
+            "filler": 3,
+            "replace": 4,
+            "errors": 10,
+            "referenceUnits": 107
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "delete": 6,
+              "replace": 3
+            },
+            "A": {
+              "replace": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "vir",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "uh",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "and",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "we",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "and",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "mm",
+              "category": "filler",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "cause",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "display",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            }
+          ]
+        },
+        "moss": {
+          "hypothesis": "And in that way we could probably use the same algorithm and just like make ver like one or two ifs that say okay if you are on whole document uh whole series level and that was a double click then don't just go into left um segment but load a new file or something like it but in general use the same algorithm that would be in alternative if you can't actually load the whole thing and Mm. 'Cause also like even if we maybe this whole like maybe I'm worrying too much about the whole series in one thing displayed because actually",
+          "counts": {
+            "replace": 5,
+            "otherLexical": 8,
+            "delete": 3,
+            "errors": 8,
+            "referenceUnits": 107
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "replace": 5,
+              "delete": 3
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "vir",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "a",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "a",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "that",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "an",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "we",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "display",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            }
+          ]
+        },
+        "whisper": {
+          "hypothesis": "And in that way we could probably use the same algorithm and just make one or two ifs that say, OK, if you are on whole series level and that was a double click, then don't just go into that segment but load a new file or something like that. But in general use the same algorithm. That would be an alternative if you can't actually load the whole thing in. Because also, even if we... Maybe I'm worrying too much about the whole series in one thing displayed because actually",
+          "counts": {
+            "delete": 16,
+            "otherLexical": 19,
+            "replace": 6,
+            "filler": 3,
+            "errors": 22,
+            "referenceUnits": 107
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "delete": 16,
+              "replace": 5
+            },
+            "A": {
+              "replace": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "like",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "vir",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "like",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "okay",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "a",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "document",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "uh",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "a",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "whole",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "it",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "we",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "and",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "mm",
+              "category": "filler",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "cause",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "like",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "this",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "whole",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "like",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "maybe",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "display",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "meeting": "EN2001a",
+      "reference": "be difficult yeah Yeah I know but uh b I guess we can do it like several people together it's probably just those people have to work together a lot and very closely and just make sure that they're always f understand what the other one is doing Yeah Well I guess the important thing is to get the crucial m modules built Or at least",
+      "speakers": {
+        "A": {
+          "referenceUnits": 18,
+          "wordIntervalSamples": 93440,
+          "pcmRmsDbfs": -51.21844490653734
+        },
+        "D": {
+          "referenceUnits": 3,
+          "wordIntervalSamples": 11520,
+          "pcmRmsDbfs": -54.681143657010985
+        },
+        "E": {
+          "referenceUnits": 45,
+          "wordIntervalSamples": 180960,
+          "pcmRmsDbfs": -53.1361094913136
+        }
+      },
+      "models": {
+        "qwen": {
+          "hypothesis": "It'd be difficult, yeah. I know we, I guess we can do it like several people together. Probably just they have to work together a lot and very closely, and just make sure that they always understand what the other one's doing. Yeah. Well, I guess the important thing is to get the crucial modules built, or at least.",
+          "counts": {
+            "insert": 1,
+            "otherLexical": 12,
+            "delete": 8,
+            "replace": 4,
+            "filler": 1,
+            "errors": 13,
+            "referenceUnits": 66
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "delete": 7,
+              "replace": 4
+            },
+            "A": {
+              "delete": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "insert",
+              "token": "it'd",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "delete",
+              "token": "yeah",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "but",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "uh",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "b",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "it's",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "those",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "people",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "they're",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "f",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "one",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "is",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "m",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            }
+          ]
+        },
+        "moss": {
+          "hypothesis": "Be difficult, yeah. I know I we uh I guess we can do it like several people together, it's probably just they have people have to work together a lot and very closely and just make sure that they always understand what the other one's doing. Yeah. Well I guess the important thing is to get the crucial m modules built. Or at least.",
+          "counts": {
+            "delete": 4,
+            "otherLexical": 10,
+            "insert": 2,
+            "replace": 4,
+            "errors": 10,
+            "referenceUnits": 66
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "delete": 4,
+              "replace": 4
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "yeah",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "insert",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "but",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "b",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "insert",
+              "token": "they",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "those",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "they're",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "f",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "one",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "is",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            }
+          ]
+        },
+        "whisper": {
+          "hypothesis": "be difficult. I guess we can do it with several people together, it's probably just that people have to work together a lot and very closely and just make sure that they always understand what the other one is doing. Yeah. I guess the important thing is to get the crucial modules built. Or at least.",
+          "counts": {
+            "delete": 10,
+            "otherLexical": 12,
+            "filler": 1,
+            "replace": 3,
+            "errors": 13,
+            "referenceUnits": 66
+          },
+          "referenceSideErrorsBySpeaker": {
+            "A": {
+              "delete": 3
+            },
+            "E": {
+              "delete": 7,
+              "replace": 3
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "yeah",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "yeah",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "know",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "but",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "uh",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "b",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "like",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "those",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "they're",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "f",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "well",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            },
+            {
+              "operation": "delete",
+              "token": "m",
+              "category": "otherLexical",
+              "referenceSpeaker": "A"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "meeting": "EN2001a",
+      "reference": "I do like I mean there's not guarantee that anything stays there but overnight it'll stay And I think the temps usually have Ah yeah but that would have to be the temp directory off the machine you can S_S_H_ into directory of S_S_H_ Yeah but I can do it from that session can't I You can compress it from a remote session and S_C_P_ it from the same session Yeah they wou they'd they'd probably hate you for doing it",
+      "speakers": {
+        "D": {
+          "referenceUnits": 28,
+          "wordIntervalSamples": 111200,
+          "pcmRmsDbfs": -53.85911264121547
+        },
+        "E": {
+          "referenceUnits": 59,
+          "wordIntervalSamples": 244000,
+          "pcmRmsDbfs": -49.59189437239751
+        }
+      },
+      "models": {
+        "qwen": {
+          "hypothesis": "Like I mean, there's no guarantee that anything stays there, but overnight it'll stay. And I think the temps usually. Ah, yeah, but that would have to be the temp directory of the machine you can ssh into directly off ssh. Yeah, but I can do it from that session, can't I? I can compress it from a remote session in SCP in the same session. Yeah, they they they probably hate you for doing it.",
+          "counts": {
+            "delete": 11,
+            "otherLexical": 23,
+            "replace": 12,
+            "errors": 23,
+            "referenceUnits": 87
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "delete": 8,
+              "replace": 8
+            },
+            "D": {
+              "replace": 4,
+              "delete": 3
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "do",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "not",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "have",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "off",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "s",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "s",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "h",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "directory",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "of",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "s",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "s",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "h",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "and",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "s",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "c",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "p",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "it",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "from",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "wou",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "they'd",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "they'd",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            }
+          ]
+        },
+        "moss": {
+          "hypothesis": "I don't like I mean there's no guarantee that anything stays there, but overnight it'll stay. But I think the temps usually uh Ah yeah, but that would have to be the temp directory of the machine in S. S. H. into directory of S. S. H. Yeah, but I can do it from that session, don't I? I can compress it from a remote session and S. C. P. it from the same session. Yeah, they w they they probably hate you for doing it.",
+          "counts": {
+            "replace": 11,
+            "otherLexical": 12,
+            "delete": 1,
+            "errors": 12,
+            "referenceUnits": 87
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "replace": 9,
+              "delete": 1
+            },
+            "D": {
+              "replace": 2
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "do",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "not",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "and",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "have",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "off",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "can",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "can't",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "wou",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "they'd",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "they'd",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            }
+          ]
+        },
+        "whisper": {
+          "hypothesis": "I mean there's no guarantee that anything stays there but overnight it will stay. I think the temps usually have. Aye, but that would have to be the temp directory of the machine you can SSH into directory of SSH. Yeah, but I can do it from that session, don't I? I can compress it from a remote session and then see it from the same session. Yeah, they probably hate you for doing it.",
+          "counts": {
+            "delete": 13,
+            "otherLexical": 23,
+            "replace": 10,
+            "insert": 1,
+            "filler": 1,
+            "errors": 24,
+            "referenceUnits": 87
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "delete": 12,
+              "replace": 6
+            },
+            "D": {
+              "replace": 4,
+              "delete": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "do",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "like",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "not",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "insert",
+              "token": "it",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "it'll",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "and",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "ah",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "yeah",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "off",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "s",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "s",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "h",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "s",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "s",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "h",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "can't",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "s",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "c",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "p",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "wou",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "they'd",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "they'd",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "meeting": "EN2001a",
+      "reference": "that we can treat it with the same algorithm or But I mean it could be as many nodes as you want Like this one could be deeper maybe say So then you'd start with all your utterances here and when you go up to get topic segments you go to here here here here here here here That might be a bit confusing though 'cause you have things on different levels Yeah I'm also not sure how we can go from from bottom-up I have always thought it's like more that oh",
+      "speakers": {
+        "D": {
+          "referenceUnits": 62,
+          "wordIntervalSamples": 248320,
+          "pcmRmsDbfs": -52.26840501238769
+        },
+        "E": {
+          "referenceUnits": 32,
+          "wordIntervalSamples": 130080,
+          "pcmRmsDbfs": -47.630022743113116
+        }
+      },
+      "models": {
+        "qwen": {
+          "hypothesis": "That we can treat it with the same algorithm. Well, but I mean, it could be as many nodes as you want. Like this one could be deeper, maybe. So, so then you start with all your utterances here, and when you go up to get topic segments, you go to here, here, here, here, here, here. That might be a bit confusing though, because you have things on different levels. Yeah, I'm not sure how we can go from from bottom up. I've always thought it like more that, ah.",
+          "counts": {
+            "replace": 7,
+            "otherLexical": 10,
+            "delete": 3,
+            "errors": 10,
+            "referenceUnits": 94
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "replace": 4,
+              "delete": 2
+            },
+            "D": {
+              "replace": 3,
+              "delete": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "or",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "say",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "you'd",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "here",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "cause",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "also",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "have",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "it's",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "oh",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            }
+          ]
+        },
+        "moss": {
+          "hypothesis": "That'd be completed with the same algorithm or. But I mean it could be as many nodes as you want, like this one could be deeper maybe. So so then you'd start with all your utterances here, and when you go up to get topic segments, you go to here here here here here here here. That might be a bit confusing though, 'cause you have things on different levels. Yeah, I'm also not sure how we can go from from what to map like or sort of like more that ah.",
+          "counts": {
+            "replace": 12,
+            "otherLexical": 14,
+            "delete": 2,
+            "errors": 14,
+            "referenceUnits": 94
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "replace": 11,
+              "delete": 2
+            },
+            "D": {
+              "replace": 1
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "that",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "we",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "can",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "treat",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "it",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "say",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "bottom",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "up",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "have",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "always",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "thought",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "it's",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "oh",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            }
+          ]
+        },
+        "whisper": {
+          "hypothesis": "deadbeat have treated with the same algorithm one. But I mean it could be as many nodes as you want. Like this one could be deeper maybe. So then you start with all your utterances here. And when you go up to get topic segments. You go to here, here, here. Here, here, here, here. That might be a bit confusing though. Because you have things on different levels. Yeah I'm also not sure how we can go from. From what to map out. I've always thought it's like. More that. Ah.",
+          "counts": {
+            "replace": 11,
+            "otherLexical": 15,
+            "delete": 3,
+            "insert": 1,
+            "errors": 15,
+            "referenceUnits": 94
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "replace": 9,
+              "delete": 2
+            },
+            "D": {
+              "delete": 1,
+              "replace": 2
+            }
+          },
+          "operations": [
+            {
+              "operation": "replace",
+              "token": "that",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "we",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "can",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "treat",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "it",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "or",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "say",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "you'd",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "cause",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "insert",
+              "token": "what",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "bottom",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "up",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "i",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "have",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "oh",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "meeting": "EN2001a",
+      "reference": "I'm f Once we start doing it it will all become more or less obvious I think anyway Yeah It's just we are half-way through the project time table That's just what freaks me out Um",
+      "speakers": {
+        "D": {
+          "referenceUnits": 16,
+          "wordIntervalSamples": 64640,
+          "pcmRmsDbfs": -47.033749972517825
+        },
+        "E": {
+          "referenceUnits": 21,
+          "wordIntervalSamples": 129328,
+          "pcmRmsDbfs": -38.24299742030302
+        }
+      },
+      "models": {
+        "qwen": {
+          "hypothesis": "Once we start doing it, it will become more and more obvious, I think. Anyway, it's just stuff going through the wrong time, but this one just freaks me out. Yes. What time is it?",
+          "counts": {
+            "delete": 7,
+            "otherLexical": 19,
+            "replace": 8,
+            "insert": 5,
+            "filler": 1,
+            "errors": 20,
+            "referenceUnits": 37
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "delete": 6,
+              "replace": 6
+            },
+            "D": {
+              "delete": 1,
+              "replace": 2
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "i'm",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "f",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "all",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "or",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "less",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "delete",
+              "token": "yeah",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "we",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "are",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "half",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "way",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "project",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "insert",
+              "token": "but",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "table",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "that's",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "what",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "insert",
+              "token": "yes",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "what",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "time",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "is",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            }
+          ]
+        },
+        "moss": {
+          "hypothesis": "Once we start doing it, it will become more and more obvious, I think, than you're making. Yeah. It's just we are halfway through the project time, but that's what's just freaked me out. It's a step forward. Yes. What time is it? Wait, two.",
+          "counts": {
+            "delete": 4,
+            "otherLexical": 24,
+            "replace": 9,
+            "insert": 12,
+            "filler": 1,
+            "errors": 25,
+            "referenceUnits": 37
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "delete": 3,
+              "replace": 6
+            },
+            "D": {
+              "delete": 1,
+              "replace": 3
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "i'm",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "f",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "all",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "or",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "less",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "insert",
+              "token": "than",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "you're",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "anyway",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "half",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "way",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "table",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "insert",
+              "token": "what's",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "freaked",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "me",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "out",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "it's",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "a",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "step",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "forward",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "yes",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "time",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "freaks",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "me",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "out",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            }
+          ]
+        },
+        "whisper": {
+          "hypothesis": "ONCE WE START DOING IT IT WILL BECOMES MORE THAN SO I GUESS I DON'T CAN YOU RECOMMEND IT? IT'S JUST WE ARE HALFWAY THROUGH THE PROJECT TIME BUT THE LIST JUST FREAKS ME OUT. YES. WHAT TIME IS IT? WHEN YOU GET TO IT?",
+          "counts": {
+            "delete": 4,
+            "otherLexical": 28,
+            "replace": 13,
+            "insert": 12,
+            "filler": 1,
+            "errors": 29,
+            "referenceUnits": 37
+          },
+          "referenceSideErrorsBySpeaker": {
+            "E": {
+              "delete": 4,
+              "replace": 5
+            },
+            "D": {
+              "replace": 8
+            }
+          },
+          "operations": [
+            {
+              "operation": "delete",
+              "token": "i'm",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "f",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "all",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "become",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "more",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "or",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "less",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "obvious",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "insert",
+              "token": "don't",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "can",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "think",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "anyway",
+              "category": "otherLexical",
+              "referenceSpeaker": "D"
+            },
+            {
+              "operation": "replace",
+              "token": "yeah",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "half",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "way",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "insert",
+              "token": "but",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "table",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "replace",
+              "token": "that's",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "delete",
+              "token": "what",
+              "category": "otherLexical",
+              "referenceSpeaker": "E"
+            },
+            {
+              "operation": "insert",
+              "token": "yes",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "what",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "time",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "is",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "it",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "when",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "you",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "get",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "insert",
+              "token": "to",
+              "category": "otherLexical",
+              "referenceSpeaker": null
+            },
+            {
+              "operation": "replace",
+              "token": "um",
+              "category": "filler",
+              "referenceSpeaker": "E"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "newNeuralCalls": 0,
+  "weightsChanged": false,
+  "qualityQualified": false,
+  "notes": [
+    "All195/124/141 errors remain in original strict scores; filler/digit tags are descriptive only.",
+    "Reference-side lexical edit attribution uses one Levenshtein alignment and is a diagnostic, not person-attributed WER or inferred speaker identity.",
+    "PCM RMS on official word intervals is an acoustic level indicator, not measured SNR, microphone distance or proof of causality.",
+    "These12 clips were annotation-selected nonoverlap development cases; no blind/generalization claim."
+  ],
+  "sources": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\score.json": "80d253d39c96d24fbddde8ef9d0dd84c55e52aea16f3ac12952013f902027388",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\score.json": "48a266fb161a1c2424901761f35c5bc0719eeb789671f18bdfb0e365c84409c3",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\raw-text-baseline.json": "cc469e7acfda616f9dcc4775c722e6d5fbca3c77e7acccc6f750130099b2b8f4",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json": "1bd61c8c2b9438a520b0f16879d94d7e320f1a7ea7fec72d74ad7d1047909f83"
+  },
+  "limits": {
+    "pid": 13912,
+    "cpuRate": 50,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 0.5,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 37134336,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

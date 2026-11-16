@@ -1,0 +1,138 @@
+{
+  "state": "COMPLETE_ENGLISH_SPECIALIST_CLIPS_SCORING_PENDING",
+  "startedAt": "2026-11-16T12:30:11.987215+08:00",
+  "completed": [
+    {
+      "id": "ES2003b-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\ES2003b-seq-000-raw.json",
+      "sha256": "032375dc5dcf4b56c55be137c3ed2951e2ce6da1b18c4f0f019b36c2b7b251d5",
+      "seconds": 9.344919399998616,
+      "audioSeconds": 12.05
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\ES2003b-seq-005-raw.json",
+      "sha256": "cfd65794996404971bddb8986f69f044133e344ce878953ab37185422df81b5e",
+      "seconds": 10.013091100001475,
+      "audioSeconds": 29.75
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\ES2003b-seq-010-raw.json",
+      "sha256": "19c18353155ca4fbb9631bbfad3b8d135d702672826953ea2d4cf01f0a423253",
+      "seconds": 8.908190200003446,
+      "audioSeconds": 29.72
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\ES2003b-seq-016-raw.json",
+      "sha256": "27706abd7dc82ea8bc2d70ca9e9448f7626b87eacfee2629bfb801580b058e9a",
+      "seconds": 9.241583500006527,
+      "audioSeconds": 29.58
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\ES2003b-seq-021-raw.json",
+      "sha256": "947e7e3ae8b501acb8f99baa2d7fc1accf4021a4f5daafceb86dfb310b49ac4d",
+      "seconds": 9.202030000000377,
+      "audioSeconds": 12.74
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\ES2003b-seq-027-raw.json",
+      "sha256": "6827e6c8dd941d6e97cf468a049bc57685ec614ae40bd2c58eb2df46552e9ad5",
+      "seconds": 9.061481599994295,
+      "audioSeconds": 10.1500625
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\EN2001a-a2-000-raw.json",
+      "sha256": "bbc19d200d11a21e97ff2601939af9a19483729512feb7d9b8e0f9443009932b",
+      "seconds": 8.733737700000347,
+      "audioSeconds": 11.71
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\EN2001a-a2-023-raw.json",
+      "sha256": "b03f5daf4bb5664c5bb0bc87a82b6d9fe89f106a269826f6135c026ee4f56c40",
+      "seconds": 9.35483209999802,
+      "audioSeconds": 29.72
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\EN2001a-a2-046-raw.json",
+      "sha256": "5f98edbb12e46eb7b1d4d6c3cd68b7062efc08520a292231833983493be64129",
+      "seconds": 9.229728600003,
+      "audioSeconds": 22.67
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\EN2001a-a2-069-raw.json",
+      "sha256": "6a836e18328b6b0d125fdf3af8881b982a5dbdd5744613bb5b3bc8ac63a93b7c",
+      "seconds": 10.49227389999578,
+      "audioSeconds": 29.75
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\EN2001a-a2-092-raw.json",
+      "sha256": "60aa012c9500e177ae8b5ac8635f6abf41fc0f8897ce45f3025265dfd4170d57",
+      "seconds": 10.548876299995754,
+      "audioSeconds": 29.6
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\EN2001a-a2-116-raw.json",
+      "sha256": "cdc2c6e6087e41ca346263e3f2f9c59dc73518ed9ca404f475e2b31783a9ed2e",
+      "seconds": 9.144573400000809,
+      "audioSeconds": 18.12
+    }
+  ],
+  "newWeightTraining": false,
+  "productDefaultChanged": false,
+  "qualityQualified": false,
+  "referencesRead": false,
+  "trueSpeakerCountsRead": false,
+  "executionDevice": "cpu",
+  "inferenceSettings": {
+    "backend": "cpu",
+    "nativeThreads": 4,
+    "cpuPercent": 25,
+    "familyPrivateBytes": 2147483648,
+    "modelPreset": "publisher-recommended Q8_0 only",
+    "language": "en",
+    "task": "transcribe",
+    "timestamps": "segment",
+    "diarize": "off",
+    "familyOptions": "upstream defaults; no reference text/prompt/vocabulary/prefix",
+    "wordRewrite": false,
+    "extraVAD": false,
+    "denoise": false,
+    "parameterGrid": false,
+    "additionalCandidateDependentCuts": false,
+    "cohortCutsOriginallyAnnotationSelected": true
+  },
+  "speakerAttributionVerified": false,
+  "wordTimestampsVerified": false,
+  "limits": {
+    "pid": 24768,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 524951552,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelArch": "whisper",
+  "modelSha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+  "nativeCommit": "275cd50",
+  "finishedAt": "2026-11-16T12:32:06.227811+08:00"
+}

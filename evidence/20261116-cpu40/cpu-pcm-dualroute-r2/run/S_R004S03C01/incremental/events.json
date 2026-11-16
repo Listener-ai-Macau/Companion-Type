@@ -1,0 +1,449 @@
+[
+  {
+    "seconds": 0.014457100005529355,
+    "event": "document",
+    "confirmedFrames": 0,
+    "finalDecodedFrames": 0,
+    "textCharacters": 0,
+    "isFinal": false,
+    "revisions": []
+  },
+  {
+    "seconds": 5.033964599999308,
+    "event": "packet",
+    "startFrame": 0,
+    "endFrame": 80000,
+    "ack": {
+      "confirmedFrames": 80000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 5.087510900004418,
+    "event": "document",
+    "confirmedFrames": 80000,
+    "finalDecodedFrames": 0,
+    "textCharacters": 0,
+    "isFinal": false,
+    "revisions": []
+  },
+  {
+    "seconds": 10.022794299999077,
+    "event": "packet",
+    "startFrame": 80000,
+    "endFrame": 160000,
+    "ack": {
+      "confirmedFrames": 160000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 10.032937299998594,
+    "event": "byte_identical_retransmission",
+    "ack": {
+      "confirmedFrames": 160000,
+      "newFrames": 0,
+      "duplicate": true,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 10.065687800000887,
+    "event": "document",
+    "confirmedFrames": 160000,
+    "finalDecodedFrames": 0,
+    "textCharacters": 0,
+    "isFinal": false,
+    "revisions": []
+  },
+  {
+    "seconds": 14.61461170000257,
+    "event": "document",
+    "confirmedFrames": 160000,
+    "finalDecodedFrames": 0,
+    "textCharacters": 9,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00080000-draft"
+    ]
+  },
+  {
+    "seconds": 15.018593300002976,
+    "event": "packet",
+    "startFrame": 160000,
+    "endFrame": 240000,
+    "ack": {
+      "confirmedFrames": 240000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 15.07131500000105,
+    "event": "document",
+    "confirmedFrames": 240000,
+    "finalDecodedFrames": 0,
+    "textCharacters": 9,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00080000-draft"
+    ]
+  },
+  {
+    "seconds": 20.02168630000233,
+    "event": "packet",
+    "startFrame": 240000,
+    "endFrame": 320000,
+    "ack": {
+      "confirmedFrames": 320000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 20.02536659999896,
+    "event": "document",
+    "confirmedFrames": 320000,
+    "finalDecodedFrames": 0,
+    "textCharacters": 9,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00080000-draft"
+    ]
+  },
+  {
+    "seconds": 25.016240400000243,
+    "event": "packet",
+    "startFrame": 320000,
+    "endFrame": 400000,
+    "ack": {
+      "confirmedFrames": 400000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 25.088237100004335,
+    "event": "document",
+    "confirmedFrames": 400000,
+    "finalDecodedFrames": 0,
+    "textCharacters": 9,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00080000-draft"
+    ]
+  },
+  {
+    "seconds": 30.013920000004873,
+    "event": "packet",
+    "startFrame": 400000,
+    "endFrame": 480000,
+    "ack": {
+      "confirmedFrames": 480000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 30.037414500002342,
+    "event": "document",
+    "confirmedFrames": 480000,
+    "finalDecodedFrames": 0,
+    "textCharacters": 9,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00080000-draft"
+    ]
+  },
+  {
+    "seconds": 35.040478700000676,
+    "event": "packet",
+    "startFrame": 480000,
+    "endFrame": 560000,
+    "ack": {
+      "confirmedFrames": 560000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 35.1042854000043,
+    "event": "document",
+    "confirmedFrames": 560000,
+    "finalDecodedFrames": 0,
+    "textCharacters": 9,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00080000-draft"
+    ]
+  },
+  {
+    "seconds": 40.03070239999943,
+    "event": "packet",
+    "startFrame": 560000,
+    "endFrame": 640000,
+    "ack": {
+      "confirmedFrames": 640000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 40.07586589999846,
+    "event": "document",
+    "confirmedFrames": 640000,
+    "finalDecodedFrames": 0,
+    "textCharacters": 9,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00080000-draft"
+    ]
+  },
+  {
+    "seconds": 45.0448508000045,
+    "event": "packet",
+    "startFrame": 640000,
+    "endFrame": 720000,
+    "ack": {
+      "confirmedFrames": 720000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 45.058603800003766,
+    "event": "document",
+    "confirmedFrames": 720000,
+    "finalDecodedFrames": 0,
+    "textCharacters": 9,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00080000-draft"
+    ]
+  },
+  {
+    "seconds": 47.39345790000516,
+    "event": "document",
+    "confirmedFrames": 720000,
+    "finalDecodedFrames": 480000,
+    "textCharacters": 75,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00480000-final"
+    ]
+  },
+  {
+    "seconds": 50.02944450000359,
+    "event": "packet",
+    "startFrame": 720000,
+    "endFrame": 800000,
+    "ack": {
+      "confirmedFrames": 800000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 50.04088939999929,
+    "event": "document",
+    "confirmedFrames": 800000,
+    "finalDecodedFrames": 480000,
+    "textCharacters": 75,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00480000-final"
+    ]
+  },
+  {
+    "seconds": 55.03448230000504,
+    "event": "packet",
+    "startFrame": 800000,
+    "endFrame": 880000,
+    "ack": {
+      "confirmedFrames": 880000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 55.12009240000043,
+    "event": "document",
+    "confirmedFrames": 880000,
+    "finalDecodedFrames": 480000,
+    "textCharacters": 75,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00480000-final"
+    ]
+  },
+  {
+    "seconds": 59.516353300001356,
+    "event": "document",
+    "confirmedFrames": 880000,
+    "finalDecodedFrames": 480000,
+    "textCharacters": 145,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00480000-final",
+      "00000001-00240000-draft"
+    ]
+  },
+  {
+    "seconds": 60.028874300005555,
+    "event": "document",
+    "confirmedFrames": 960000,
+    "finalDecodedFrames": 480000,
+    "textCharacters": 145,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00480000-final",
+      "00000001-00240000-draft"
+    ]
+  },
+  {
+    "seconds": 60.038122900004964,
+    "event": "packet",
+    "startFrame": 880000,
+    "endFrame": 960000,
+    "ack": {
+      "confirmedFrames": 960000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 65.04148330000316,
+    "event": "packet",
+    "startFrame": 960000,
+    "endFrame": 1040000,
+    "ack": {
+      "confirmedFrames": 1040000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 65.11647090000042,
+    "event": "document",
+    "confirmedFrames": 1040000,
+    "finalDecodedFrames": 480000,
+    "textCharacters": 145,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00480000-final",
+      "00000001-00240000-draft"
+    ]
+  },
+  {
+    "seconds": 70.0455787000028,
+    "event": "packet",
+    "startFrame": 1040000,
+    "endFrame": 1120000,
+    "ack": {
+      "confirmedFrames": 1120000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 70.10621620000165,
+    "event": "document",
+    "confirmedFrames": 1120000,
+    "finalDecodedFrames": 480000,
+    "textCharacters": 145,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00480000-final",
+      "00000001-00240000-draft"
+    ]
+  },
+  {
+    "seconds": 75.03332210000372,
+    "event": "packet",
+    "startFrame": 1120000,
+    "endFrame": 1200000,
+    "ack": {
+      "confirmedFrames": 1200000,
+      "newFrames": 80000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 75.13450300000113,
+    "event": "document",
+    "confirmedFrames": 1200000,
+    "finalDecodedFrames": 480000,
+    "textCharacters": 145,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00480000-final",
+      "00000001-00240000-draft"
+    ]
+  },
+  {
+    "seconds": 75.25802150000527,
+    "event": "packet",
+    "startFrame": 1200000,
+    "endFrame": 1204000,
+    "ack": {
+      "confirmedFrames": 1204000,
+      "newFrames": 4000,
+      "duplicate": false,
+      "unconfirmedTailBytes": 0
+    }
+  },
+  {
+    "seconds": 75.35046359999978,
+    "event": "document",
+    "confirmedFrames": 1204000,
+    "finalDecodedFrames": 480000,
+    "textCharacters": 145,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00480000-final",
+      "00000001-00240000-draft"
+    ]
+  },
+  {
+    "seconds": 77.7018836999996,
+    "event": "document",
+    "confirmedFrames": 1204000,
+    "finalDecodedFrames": 960000,
+    "textCharacters": 220,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00480000-final",
+      "00000001-00480000-final"
+    ]
+  },
+  {
+    "seconds": 89.64985760000127,
+    "event": "document",
+    "confirmedFrames": 1204000,
+    "finalDecodedFrames": 1204000,
+    "textCharacters": 294,
+    "isFinal": true,
+    "revisions": [
+      "00000000-00480000-final",
+      "00000001-00480000-final",
+      "00000002-00244000-final"
+    ]
+  }
+]

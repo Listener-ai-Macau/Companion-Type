@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "ES2003b-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+    "wavSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+    "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92",
+    "frames": 192800,
+    "audioSeconds": 12.05,
+    "language": "English"
+  },
+  "seconds": 9.344919399998616,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "just put it on the desktop, all I see is desktop.",
+    "raw_text": "<|0.00|> just put it on the desktop, all I see is desktop.<|12.06|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "just put it on the desktop, all I see is desktop.",
+        "t0_ms": 0,
+        "t1_ms": 12060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 224.90899658203125,
+      "mel_ms": 14.164999961853027,
+      "encode_ms": 8876.759765625,
+      "decode_ms": 443.1199951171875
+    }
+  },
+  "rawDecoded": "<|0.00|> just put it on the desktop, all I see is desktop.<|12.06|>",
+  "hypothesis": "just put it on the desktop, all I see is desktop.",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

@@ -1,0 +1,1485 @@
+{
+  "at": "2026-11-16T12:57:39.714274+08:00",
+  "parent": "fface572c2b4f272b2ed408c48f4a71710f8120d",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-native8-r2\\audio-only.json",
+      "file": "cpu-native8-r2/control/audio-only.json",
+      "bytes": 1367,
+      "sha256": "94d9db30f05fc0c8794186ee08d1527daec453e93eb15b422e79ba67cdd40289"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-native8-r2\\binding.json",
+      "file": "cpu-native8-r2/control/binding.json",
+      "bytes": 6905,
+      "sha256": "e47f6e1c528d03c71720c722456ef1e49d5f4fd9c6ea1a0e4425cc79fb69b335"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-native8-r2\\protocol.json",
+      "file": "cpu-native8-r2/control/protocol.json",
+      "bytes": 4657,
+      "sha256": "f4ad45f327cbb307738c1c50809ff2a9cbaff2f1a099d35c3ab128b2e9035321"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\all-cpu-full4-composition-r1\\binding.json",
+      "file": "all-cpu-full4-composition-r1/control/binding.json",
+      "bytes": 140143,
+      "sha256": "eed3e76552290fcb5ec7f2d45f8f57998701ef2f1a26227cdac336d7ae90deb2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composition-source-binding.json",
+      "file": "all-cpu-full4-composition-r1/control/composition-source-binding.json",
+      "bytes": 4287,
+      "sha256": "73bf0efb02710947afe264e3c11ba4e6a67a3716bec96808824c2e3174335e75"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\all-cpu-full4-composition-r1\\full-score.json",
+      "file": "all-cpu-full4-composition-r1/control/full-score.json",
+      "bytes": 35116,
+      "sha256": "2e508c7baaf5bcb88c33b92c5bfe7e5cbc9fed12efe53e614e2d584d76835046"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\all-cpu-full4-composition-r1\\predicted-speaker-bindings.json",
+      "file": "all-cpu-full4-composition-r1/control/predicted-speaker-bindings.json",
+      "bytes": 13969,
+      "sha256": "8471169367004e0cdcfb6f4b8042c98ac6c1e5de701bdbb355702018e65f94ab"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\all-cpu-full4-composition-r1\\score-20200623_S_R001S07C01.json",
+      "file": "all-cpu-full4-composition-r1/control/score-20200623_S_R001S07C01.json",
+      "bytes": 5918,
+      "sha256": "b4fe225d5ce5aec22a1e001ab0d6a01809bad2c8aec17e48bcd9551f06f9a6ce"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\all-cpu-full4-composition-r1\\score-EN2002a.json",
+      "file": "all-cpu-full4-composition-r1/control/score-EN2002a.json",
+      "bytes": 7447,
+      "sha256": "c30594ccb27bbd4beef3182f9c870c8cb291579f43c70ab1e0ddbffb0a89fd9a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\all-cpu-full4-composition-r1\\score-ES2003b.json",
+      "file": "all-cpu-full4-composition-r1/control/score-ES2003b.json",
+      "bytes": 5982,
+      "sha256": "445c01418f9ca70230bdde1ecb6f4ecd4d9b8ed7ab8911a99846408796186155"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\all-cpu-full4-composition-r1\\score-S_R004S03C01.json",
+      "file": "all-cpu-full4-composition-r1/control/score-S_R004S03C01.json",
+      "bytes": 6477,
+      "sha256": "3baf87202d3d1efc7056e90db10fdc35cf4a0c3e6ede4f1f5fa6bc98552a137d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\all-cpu-full4-composition-r1\\whole-scoring-only.json",
+      "file": "all-cpu-full4-composition-r1/control/whole-scoring-only.json",
+      "bytes": 9998,
+      "sha256": "234ea8b756701993e17674fabb0cf12e69e22649ca9aa905f694a160b08863d2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\binding-before-cut-provenance-clarification.json",
+      "file": "english-asr-specialist-r1/control/binding-before-cut-provenance-clarification.json",
+      "bytes": 15059,
+      "sha256": "beda7f2bb9e919cab5a6ee7cfc7a088e8e04c54eb7f9f6bd96c01455110cdb4a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\binding.json",
+      "file": "english-asr-specialist-r1/control/binding.json",
+      "bytes": 15123,
+      "sha256": "014d883223bb91c79174836979681169a1c8af398e691143c192c18fcfaf4dc1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\execution.log",
+      "file": "english-asr-specialist-r1/control/execution.log",
+      "bytes": 465,
+      "sha256": "c2362c6f1629075409c873e9cd0f9c752a4e96180c31e926bf414de9c9184000"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\model-ready.json",
+      "file": "english-asr-specialist-r1/control/model-ready.json",
+      "bytes": 477,
+      "sha256": "9ee98820de42af512d4d98d4d41fb963b2ea5da72fe68fefd19127788c756adf"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\protocol-before-cut-provenance-clarification.json",
+      "file": "english-asr-specialist-r1/control/protocol-before-cut-provenance-clarification.json",
+      "bytes": 8751,
+      "sha256": "74ca0aa8f669af7b6b863e5c566aac942c176feb7abc8ad18e915b84ce71e1ac"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\protocol.json",
+      "file": "english-asr-specialist-r1/control/protocol.json",
+      "bytes": 9249,
+      "sha256": "b2ff52c15b686f6524a72d890d2f8e3b5b718b8b326572c60b72b8f6dbfa82f2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\publisher-metadata.json",
+      "file": "english-asr-specialist-r1/control/publisher-metadata.json",
+      "bytes": 6624,
+      "sha256": "34f18d65e57b2b8d49bfd96eb955fb6124875824fc3c76b93cfd0fdf4672410d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\retained-error-diagnostic.json",
+      "file": "english-asr-specialist-r1/control/retained-error-diagnostic.json",
+      "bytes": 125495,
+      "sha256": "f312e55040f6d15560e7da41e7dc8eb83d60cf79026ec191b0b4c90c38431b42"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\score.json",
+      "file": "english-asr-specialist-r1/control/score.json",
+      "bytes": 121690,
+      "sha256": "80d253d39c96d24fbddde8ef9d0dd84c55e52aea16f3ac12952013f902027388"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\scoring-binding-before-cut-provenance-clarification.json",
+      "file": "english-asr-specialist-r1/control/scoring-binding-before-cut-provenance-clarification.json",
+      "bytes": 1911,
+      "sha256": "a568fa9994e5e89392f60126476c52642664503a5f3df1ddd854a52e2ecc47d1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\scoring-binding.json",
+      "file": "english-asr-specialist-r1/control/scoring-binding.json",
+      "bytes": 1911,
+      "sha256": "e2c551289a1c0a3805f98112eddb9b35a73b70e7e5bca9cc4cef3de74ce3ad31"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\scoring.log",
+      "file": "english-asr-specialist-r1/control/scoring.log",
+      "bytes": 1329,
+      "sha256": "5b4c39702ef4e88be299f74d801ac3275754374c4e30356c5e9de44328d22471"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\source.json",
+      "file": "english-asr-specialist-r1/control/source.json",
+      "bytes": 745,
+      "sha256": "085c8c7393a35fdc14ef339f215636f45a9fa16978b376f392980043f2256e8d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r2\\binding.json",
+      "file": "cpu-pcm-candidate-r2/control/binding.json",
+      "bytes": 10541,
+      "sha256": "34f500134fe910ddd3faf071493b2b059f6edac23f4fe3c591f0a12a0b6022b6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r2\\dualroute-protocol.json",
+      "file": "cpu-pcm-candidate-r2/control/dualroute-protocol.json",
+      "bytes": 4806,
+      "sha256": "59adb6ddae6610613c5b5645e3982495dc96f132e6183591920af5e030c1c43f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r2\\internal-app-fixture.json",
+      "file": "cpu-pcm-candidate-r2/control/internal-app-fixture.json",
+      "bytes": 698,
+      "sha256": "c2899216815d4c5e1eeb2c95999a9b81a6d8709245f54b13a34ae73bdec0af9a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r2\\runtime-contract.json",
+      "file": "cpu-pcm-candidate-r2/control/runtime-contract.json",
+      "bytes": 3214,
+      "sha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r3\\binding.json",
+      "file": "cpu-pcm-candidate-r3/control/binding.json",
+      "bytes": 10687,
+      "sha256": "acfc80cef571d064fa54329e2b696992b1d33f0b792786a90171964687af5a56"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r3\\dualroute-protocol.json",
+      "file": "cpu-pcm-candidate-r3/control/dualroute-protocol.json",
+      "bytes": 4806,
+      "sha256": "59adb6ddae6610613c5b5645e3982495dc96f132e6183591920af5e030c1c43f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r3\\internal-app-fixture.json",
+      "file": "cpu-pcm-candidate-r3/control/internal-app-fixture.json",
+      "bytes": 698,
+      "sha256": "110c77c80554afaed8bb59eda5b80e20f827c131634321d9765b5bcdfc537602"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r3\\runtime-contract.json",
+      "file": "cpu-pcm-candidate-r3/control/runtime-contract.json",
+      "bytes": 3214,
+      "sha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\20200623_S_R001S07C01-activity.log",
+      "file": "cpu-native8-r2/run/20200623_S_R001S07C01-activity.log",
+      "bytes": 1703,
+      "sha256": "b2cd2a3fd24b9205eeed9280daf35941a024571ba1c791fe50fe4769c75ece35"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\audio-only.json",
+      "file": "cpu-native8-r2/run/audio-only.json",
+      "bytes": 1367,
+      "sha256": "94d9db30f05fc0c8794186ee08d1527daec453e93eb15b422e79ba67cdd40289"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\binding.json",
+      "file": "cpu-native8-r2/run/binding.json",
+      "bytes": 6905,
+      "sha256": "e47f6e1c528d03c71720c722456ef1e49d5f4fd9c6ea1a0e4425cc79fb69b335"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\EN2002a-activity.log",
+      "file": "cpu-native8-r2/run/EN2002a-activity.log",
+      "bytes": 1694,
+      "sha256": "62bf6cdddbb8f4e01a59fbc8757956e9d8aa0134706ade52651ac0125fa87e24"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\ES2003b-activity.log",
+      "file": "cpu-native8-r2/run/ES2003b-activity.log",
+      "bytes": 1693,
+      "sha256": "7a342143274ffcfbcad33ac40e26ba1418ab02b04e01227933a39a33bc86c7f5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\protocol.json",
+      "file": "cpu-native8-r2/run/protocol.json",
+      "bytes": 4657,
+      "sha256": "f4ad45f327cbb307738c1c50809ff2a9cbaff2f1a099d35c3ab128b2e9035321"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\run.json",
+      "file": "cpu-native8-r2/run/run.json",
+      "bytes": 3034,
+      "sha256": "335325030d67d23f28bae83b144aedd03e7cc2b3534c7d667b51e49b562f2d7d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\S_R004S03C01-activity.log",
+      "file": "cpu-native8-r2/run/S_R004S03C01-activity.log",
+      "bytes": 1696,
+      "sha256": "becb812f79a61883b1e8bad192510408162a7e88383a948402c7c7452f05ed8c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\probabilities\\20200623_S_R001S07C01\\probabilities.json",
+      "file": "cpu-native8-r2/run/probabilities/20200623_S_R001S07C01/probabilities.json",
+      "bytes": 739,
+      "sha256": "c6b3590724ed4bd80170363d1a09639c08aa8eaede8535a4af6aa82ed61a249e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\probabilities\\EN2002a\\probabilities.json",
+      "file": "cpu-native8-r2/run/probabilities/EN2002a/probabilities.json",
+      "bytes": 739,
+      "sha256": "cc17d6351e047837dd665d72d5f6eec5bf1749b419b3e394ae9bb3486efe238c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\probabilities\\ES2003b\\probabilities.json",
+      "file": "cpu-native8-r2/run/probabilities/ES2003b/probabilities.json",
+      "bytes": 739,
+      "sha256": "a18c406a9d7e930ae3c5e0d0318cfadd71779cc43603a26a391349dc8ccb62d4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\probabilities\\S_R004S03C01\\probabilities.json",
+      "file": "cpu-native8-r2/run/probabilities/S_R004S03C01/probabilities.json",
+      "bytes": 739,
+      "sha256": "b5f58d7bc3b2626f9d232b6c45468fba5754138905873e8d40d27ddfa8d1700e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\20200623_S_R001S07C01\\completed-state.json",
+      "file": "cpu-native8-r2/run/results/20200623_S_R001S07C01/completed-state.json",
+      "bytes": 1850,
+      "sha256": "05a510c7040049dd6d23fcf717f01358276002d0135dbb33ed40659522db8e63"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\20200623_S_R001S07C01\\speaker-journal.json",
+      "file": "cpu-native8-r2/run/results/20200623_S_R001S07C01/speaker-journal.json",
+      "bytes": 75918,
+      "sha256": "2af917d836d56e326ede293eb1d3cc0c7134f0dadc87b1a06e3dc3414adfd9d8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\20200623_S_R001S07C01\\state.json",
+      "file": "cpu-native8-r2/run/results/20200623_S_R001S07C01/state.json",
+      "bytes": 1850,
+      "sha256": "05a510c7040049dd6d23fcf717f01358276002d0135dbb33ed40659522db8e63"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\EN2002a\\completed-state.json",
+      "file": "cpu-native8-r2/run/results/EN2002a/completed-state.json",
+      "bytes": 1841,
+      "sha256": "d798a2392ca76fc73bb2431c2f2235885244b1fd68331b5e2a0c925ba58864f8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\EN2002a\\speaker-journal.json",
+      "file": "cpu-native8-r2/run/results/EN2002a/speaker-journal.json",
+      "bytes": 157041,
+      "sha256": "a8f0af97c8e7bff38ee790fc8a5e0311645ab5358d036f8acc1ed21fb55b5980"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\EN2002a\\state.json",
+      "file": "cpu-native8-r2/run/results/EN2002a/state.json",
+      "bytes": 1841,
+      "sha256": "d798a2392ca76fc73bb2431c2f2235885244b1fd68331b5e2a0c925ba58864f8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\ES2003b\\completed-state.json",
+      "file": "cpu-native8-r2/run/results/ES2003b/completed-state.json",
+      "bytes": 1840,
+      "sha256": "7162324514b4ca309add0b686a77b7eae7f81ad83f2ffeb013a061562baf8a16"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\ES2003b\\speaker-journal.json",
+      "file": "cpu-native8-r2/run/results/ES2003b/speaker-journal.json",
+      "bytes": 98358,
+      "sha256": "b13e2733572c7395a48b5b6621ad398c8d66cf36ce010603ea17afd8f3734417"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\ES2003b\\state.json",
+      "file": "cpu-native8-r2/run/results/ES2003b/state.json",
+      "bytes": 1840,
+      "sha256": "7162324514b4ca309add0b686a77b7eae7f81ad83f2ffeb013a061562baf8a16"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\S_R004S03C01\\completed-state.json",
+      "file": "cpu-native8-r2/run/results/S_R004S03C01/completed-state.json",
+      "bytes": 1843,
+      "sha256": "96cdb9d83df33f99e19bf9fb4eab6e56eed649175dc936d314f2d997c15789a2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\S_R004S03C01\\speaker-journal.json",
+      "file": "cpu-native8-r2/run/results/S_R004S03C01/speaker-journal.json",
+      "bytes": 24844,
+      "sha256": "aaf9cc62ce3c6c98ae73d7e8380b9ba87378c98f1b8c12fc74561549a2d48a7e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r2\\results\\S_R004S03C01\\state.json",
+      "file": "cpu-native8-r2/run/results/S_R004S03C01/state.json",
+      "bytes": 1843,
+      "sha256": "96cdb9d83df33f99e19bf9fb4eab6e56eed649175dc936d314f2d997c15789a2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composition-state.json",
+      "file": "all-cpu-full4-composition-r1/run/composition-state.json",
+      "bytes": 2764,
+      "sha256": "06b03a93fa5cb52dba4a3a3550c63499ccd8e1fa058d802de40384ef8aa038ee"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composition.log",
+      "file": "all-cpu-full4-composition-r1/run/composition.log",
+      "bytes": 1962,
+      "sha256": "6747173ff92a7ffb95c339e22eceb6e5cf21d2b36a8d8c165172a650f0bc6c63"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\inference-state.json",
+      "file": "all-cpu-full4-composition-r1/run/inference-state.json",
+      "bytes": 109639,
+      "sha256": "77c96c1110040b27f9bd6826129050fc4654ec04fa7245f8d54d97a143dd5dd8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\pinned-20200623_S_R001S07C01.log",
+      "file": "all-cpu-full4-composition-r1/run/pinned-20200623_S_R001S07C01.log",
+      "bytes": 1853,
+      "sha256": "59e6cf2b09970ab3d39cd7ebee2dd14c5a031b9a46ce01471359611af036017c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\pinned-EN2002a.log",
+      "file": "all-cpu-full4-composition-r1/run/pinned-EN2002a.log",
+      "bytes": 1819,
+      "sha256": "a53d90d5781473e5422754da2f6a1fd893efab379f142612f2fbb0e3ee7703d8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\pinned-ES2003b.log",
+      "file": "all-cpu-full4-composition-r1/run/pinned-ES2003b.log",
+      "bytes": 1799,
+      "sha256": "bf3a4680f446d354c2a6a827061581c7cca8697edbeaa22efb77291f66e4e81f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\pinned-S_R004S03C01.log",
+      "file": "all-cpu-full4-composition-r1/run/pinned-S_R004S03C01.log",
+      "bytes": 2044,
+      "sha256": "a4cb61daae9dcb5e896422c652c79cd5508698ea70d8c65a4423c47f6be428b4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\run.json",
+      "file": "all-cpu-full4-composition-r1/run/run.json",
+      "bytes": 722,
+      "sha256": "c2239806762d3615081807829b179ffbe322da193f1d42a413d07d63eb0b3623"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\summary.log",
+      "file": "all-cpu-full4-composition-r1/run/summary.log",
+      "bytes": 9092,
+      "sha256": "2aac1a6337276ae480c08b26bcca4e46f3f623df55e892b4bb2119fe59b59d64"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\20200623_S_R001S07C01-composition.json",
+      "file": "all-cpu-full4-composition-r1/run/composed/20200623_S_R001S07C01-composition.json",
+      "bytes": 226031,
+      "sha256": "c87054e54222f7a5cb1157ba09c6c91440c7b28594c13fac037364e0a701ae3a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\20200623_S_R001S07C01-primary-speaker-journal.json",
+      "file": "all-cpu-full4-composition-r1/run/composed/20200623_S_R001S07C01-primary-speaker-journal.json",
+      "bytes": 76350,
+      "sha256": "fb6b2353782fee8d8eb2ff9f6c4e1e65291c1738f9251b80f49fdac12d82e3d9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\20200623_S_R001S07C01-raw.json",
+      "file": "all-cpu-full4-composition-r1/run/composed/20200623_S_R001S07C01-raw.json",
+      "bytes": 42648,
+      "sha256": "84a5e6b34408ed5ebd7b45cfc5974f6bc997613562ddac2bdedfb01632058393"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\EN2002a-composition.json",
+      "file": "all-cpu-full4-composition-r1/run/composed/EN2002a-composition.json",
+      "bytes": 299913,
+      "sha256": "487a49fc366ddcfce3cadbee83570c7f42500ec7437275898e33d4e58c25d3aa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\EN2002a-primary-speaker-journal.json",
+      "file": "all-cpu-full4-composition-r1/run/composed/EN2002a-primary-speaker-journal.json",
+      "bytes": 150709,
+      "sha256": "0112c4811ac935de0b20b3ce382af54191c40165efe9189a2ad7025834c96cff"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\EN2002a-raw.json",
+      "file": "all-cpu-full4-composition-r1/run/composed/EN2002a-raw.json",
+      "bytes": 58197,
+      "sha256": "7d211797e319a19832935aa6ac68c0dee67c42e1b72722d60bedab2470a48a05"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\ES2003b-composition.json",
+      "file": "all-cpu-full4-composition-r1/run/composed/ES2003b-composition.json",
+      "bytes": 165737,
+      "sha256": "7bcada9592d3a88f3170077a708cdf0b2363c5006ea41ef9d0481d89ca17c9f8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\ES2003b-primary-speaker-journal.json",
+      "file": "all-cpu-full4-composition-r1/run/composed/ES2003b-primary-speaker-journal.json",
+      "bytes": 95921,
+      "sha256": "691be18ec445e75310a876de650282437888ef4e9f09d9850a5781f3dcbbb8db"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\ES2003b-raw.json",
+      "file": "all-cpu-full4-composition-r1/run/composed/ES2003b-raw.json",
+      "bytes": 38962,
+      "sha256": "a94588469b9a69e4872c0618b4d3760e1ac749e3cdd266ef94df369ba7f0b376"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\S_R004S03C01-composition.json",
+      "file": "all-cpu-full4-composition-r1/run/composed/S_R004S03C01-composition.json",
+      "bytes": 159520,
+      "sha256": "180b5c7267ddd57f1cc4dff7ea5755707a5988b8c4d978c6533ec961aef9c3c0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\S_R004S03C01-primary-speaker-journal.json",
+      "file": "all-cpu-full4-composition-r1/run/composed/S_R004S03C01-primary-speaker-journal.json",
+      "bytes": 24195,
+      "sha256": "e4ec5baebe1a431e27d1fb4c2a122d43ce80e0b49662694e5486749eb2ef2869"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\S_R004S03C01-raw.json",
+      "file": "all-cpu-full4-composition-r1/run/composed/S_R004S03C01-raw.json",
+      "bytes": 39051,
+      "sha256": "607805f8aaadfebd0f567124ac9506c7a821dbc02302bce7716312c8316cd106"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\EN2001a-a2-000-raw.json",
+      "file": "english-asr-specialist-run-r1/run/EN2001a-a2-000-raw.json",
+      "bytes": 2246,
+      "sha256": "bbc19d200d11a21e97ff2601939af9a19483729512feb7d9b8e0f9443009932b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\EN2001a-a2-023-raw.json",
+      "file": "english-asr-specialist-run-r1/run/EN2001a-a2-023-raw.json",
+      "bytes": 5548,
+      "sha256": "b03f5daf4bb5664c5bb0bc87a82b6d9fe89f106a269826f6135c026ee4f56c40"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\EN2001a-a2-046-raw.json",
+      "file": "english-asr-specialist-run-r1/run/EN2001a-a2-046-raw.json",
+      "bytes": 3947,
+      "sha256": "5f98edbb12e46eb7b1d4d6c3cd68b7062efc08520a292231833983493be64129"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\EN2001a-a2-069-raw.json",
+      "file": "english-asr-specialist-run-r1/run/EN2001a-a2-069-raw.json",
+      "bytes": 4849,
+      "sha256": "6a836e18328b6b0d125fdf3af8881b982a5dbdd5744613bb5b3bc8ac63a93b7c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\EN2001a-a2-092-raw.json",
+      "file": "english-asr-specialist-run-r1/run/EN2001a-a2-092-raw.json",
+      "bytes": 7208,
+      "sha256": "60aa012c9500e177ae8b5ac8635f6abf41fc0f8897ce45f3025265dfd4170d57"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\EN2001a-a2-116-raw.json",
+      "file": "english-asr-specialist-run-r1/run/EN2001a-a2-116-raw.json",
+      "bytes": 4223,
+      "sha256": "cdc2c6e6087e41ca346263e3f2f9c59dc73518ed9ca404f475e2b31783a9ed2e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\ES2003b-seq-000-raw.json",
+      "file": "english-asr-specialist-run-r1/run/ES2003b-seq-000-raw.json",
+      "bytes": 1982,
+      "sha256": "032375dc5dcf4b56c55be137c3ed2951e2ce6da1b18c4f0f019b36c2b7b251d5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\ES2003b-seq-005-raw.json",
+      "file": "english-asr-specialist-run-r1/run/ES2003b-seq-005-raw.json",
+      "bytes": 6441,
+      "sha256": "cfd65794996404971bddb8986f69f044133e344ce878953ab37185422df81b5e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\ES2003b-seq-010-raw.json",
+      "file": "english-asr-specialist-run-r1/run/ES2003b-seq-010-raw.json",
+      "bytes": 3258,
+      "sha256": "19c18353155ca4fbb9631bbfad3b8d135d702672826953ea2d4cf01f0a423253"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\ES2003b-seq-016-raw.json",
+      "file": "english-asr-specialist-run-r1/run/ES2003b-seq-016-raw.json",
+      "bytes": 5298,
+      "sha256": "27706abd7dc82ea8bc2d70ca9e9448f7626b87eacfee2629bfb801580b058e9a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\ES2003b-seq-021-raw.json",
+      "file": "english-asr-specialist-run-r1/run/ES2003b-seq-021-raw.json",
+      "bytes": 3338,
+      "sha256": "947e7e3ae8b501acb8f99baa2d7fc1accf4021a4f5daafceb86dfb310b49ac4d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\ES2003b-seq-027-raw.json",
+      "file": "english-asr-specialist-run-r1/run/ES2003b-seq-027-raw.json",
+      "bytes": 3280,
+      "sha256": "6827e6c8dd941d6e97cf468a049bc57685ec614ae40bd2c58eb2df46552e9ad5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\inference-state.json",
+      "file": "english-asr-specialist-run-r1/run/inference-state.json",
+      "bytes": 5804,
+      "sha256": "7eb3cc25e9fd61364e3012bda0d88e9d0713099561e9b6ad4b9ee22057fd4a77"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\run.json",
+      "file": "english-asr-specialist-run-r1/run/run.json",
+      "bytes": 492,
+      "sha256": "fe906cb7377a85972dac52ef57d0c6e349a90e0d5073f5fd1be9508e65ba7c27"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-asr-specialist-run-r1\\worker.log",
+      "file": "english-asr-specialist-run-r1/run/worker.log",
+      "bytes": 1752,
+      "sha256": "ebcf37645a18a75963bc0e96706d238227d3fbbb94c72d8bed3565443646abde"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\controller.log",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/controller.log",
+      "bytes": 522,
+      "sha256": "6a02d49d15110dd10566b39c5e61714857ec2ab343f489fe3eb4f981df9e776b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\decoder-r1\\00000001-00320000-draft-interrupted.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/decoder-r1/00000001-00320000-draft-interrupted.json",
+      "bytes": 1697,
+      "sha256": "d3ede91b143735579a01f0101774024bf53c99ec5cb795565d249b3e2145e41b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\decoder-r1\\document.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/decoder-r1/document.json",
+      "bytes": 1357,
+      "sha256": "dbc27682d44d45e9e5f4be06987194c8f32da8d46d5cc37312ef692f08b62f81"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\decoder-r1\\run.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/decoder-r1/run.json",
+      "bytes": 550,
+      "sha256": "5089ee01f4bf158e0c5a39058b74ce66c503de36d52de884cbaa8a6704336195"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\decoder-r1\\worker-state.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/decoder-r1/worker-state.json",
+      "bytes": 1985,
+      "sha256": "c154f8b5e14318c6514a1945c192c5cd98ab75d1ad81792ba370afd7a28723cd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\decoder-r1\\worker.log",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/decoder-r1/worker.log",
+      "bytes": 1844,
+      "sha256": "edbcf023d3b5ebdbf044449da7ea65c0856062fed034bae5990de09224b34284"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\session.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/session.json",
+      "bytes": 528,
+      "sha256": "902d5187831359f428db00e9530be36ad7153d6fa9de0b55271a3813d5d24598"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\requests\\00000000-00080000-draft.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/requests/00000000-00080000-draft.json",
+      "bytes": 642,
+      "sha256": "2b27c176e0a6548e80423cc6cf6bcab37a3cc808007810c3debf537b8ab56eea"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\requests\\00000000-00160000-draft.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/requests/00000000-00160000-draft.json",
+      "bytes": 643,
+      "sha256": "e765bad4b79ef5046a6cb728f1d0d0085727ada852af678dc2ffb08db9a5d15f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\requests\\00000000-00240000-draft.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/requests/00000000-00240000-draft.json",
+      "bytes": 643,
+      "sha256": "7f0e7b3e89739d9a20578edf255330a126271ae63bc50470f319748fc5894fd7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\requests\\00000000-00320000-draft.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/requests/00000000-00320000-draft.json",
+      "bytes": 643,
+      "sha256": "892e17275ece059d826d9ddb43665a0e9bc7c492a9db05f54107adb1a89c6094"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\requests\\00000000-00400000-draft.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/requests/00000000-00400000-draft.json",
+      "bytes": 643,
+      "sha256": "0aa6452a6f85d12631bdf755cea052880cb93aeecb735154f24d1d077d0d425e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\requests\\00000000-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/requests/00000000-00480000-final.json",
+      "bytes": 642,
+      "sha256": "31ed508c78e9ce077716f5e3229848cb2f85a3d5f0e593be1a01cb4eb71fcaaa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\requests\\00000001-00080000-draft.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/requests/00000001-00080000-draft.json",
+      "bytes": 648,
+      "sha256": "7a5707611a5c90e7eefc93496f0f652df8e637054d8c33c7657c008c13a2e700"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\requests\\00000001-00160000-draft.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/requests/00000001-00160000-draft.json",
+      "bytes": 648,
+      "sha256": "9b0094dab0beadd27ecc735e2812a00b7ff02ecb7ddd86a7c07ef85d7165b6c1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\requests\\00000001-00240000-draft.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/requests/00000001-00240000-draft.json",
+      "bytes": 648,
+      "sha256": "e54dbaf8fa3ab68a9f51e1c51843959ce3a0b6bc5332a185f2f957bcdeba1faf"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\requests\\00000001-00320000-draft.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/requests/00000001-00320000-draft.json",
+      "bytes": 648,
+      "sha256": "43e2c479a1025fe2f1699380671694b38129b2b756a99b216c46cffabac217d7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\requests\\00000001-00400000-draft.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/requests/00000001-00400000-draft.json",
+      "bytes": 648,
+      "sha256": "f986566724bdc7cda8928ba08aa776cb8a9f2547894ecd67f7276a018f4a7964"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\requests\\00000001-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/requests/00000001-00480000-final.json",
+      "bytes": 647,
+      "sha256": "688cc4325245c13dfea47f7659eda89c7fade0073956dbeeb0f651035e46d08d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\results\\00000000-00080000-draft.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/results/00000000-00080000-draft.json",
+      "bytes": 2731,
+      "sha256": "38b89211c4ef5fdf7c5c121bf95f25be128d8ae0172bd2df87bd2ab8422737e2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\results\\00000000-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r1/run/ES2003b/incremental/session/results/00000000-00480000-final.json",
+      "bytes": 8013,
+      "sha256": "aa931ad4c4836155545e1f5879214e8e6d05d37f50fe844deb6439b57e430813"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\progress.json",
+      "file": "cpu-pcm-dualroute-r2/run/progress.json",
+      "bytes": 1526,
+      "sha256": "c4e88edb6e1c187bea556259d4ea2ce9c8acc3e1991f74420b00d9e82bef6ef0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\result.json",
+      "file": "cpu-pcm-dualroute-r2/run/result.json",
+      "bytes": 2011,
+      "sha256": "3837ad10815a596cc1dcc7afa5c17bfe24292414a330a4fb87277a5fe9126370"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\controller.log",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/controller.log",
+      "bytes": 536,
+      "sha256": "a329d23b0d3ea60a20cb467a3873251713e5df3dd11a067ee681e474dc51afb8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\events.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/events.json",
+      "bytes": 9609,
+      "sha256": "5e7719a9c6ae692579d9547fe8ae7882219614d80a8e0181a345c61f866880d4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\result.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/result.json",
+      "bytes": 9295,
+      "sha256": "d1acfd30c4e84de80008950c4b61c917618487b6adbea0732ff45ac70654a557"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\decoder-r1\\document.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/decoder-r1/document.json",
+      "bytes": 2955,
+      "sha256": "c8df0d0da20b36870fa37da915b26232dbaedbe7ee9d76063ee747e09c26f661"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\decoder-r1\\run.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/decoder-r1/run.json",
+      "bytes": 567,
+      "sha256": "c3f0676f945f090a8373e1b8523498f4b0bba757a20cc21de104bf243c52c055"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\decoder-r1\\worker-state.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/decoder-r1/worker-state.json",
+      "bytes": 3058,
+      "sha256": "34167b1fc1535c012423189bd4c8ad0e43b08149545bfc756c2a4f1573f70bfd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\decoder-r1\\worker.log",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/decoder-r1/worker.log",
+      "bytes": 1257,
+      "sha256": "20f583c1edd88d6bfa7d17102c940a8c65238a5ccae4500dbcad9ae8d2f8c4db"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\session.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/session.json",
+      "bytes": 579,
+      "sha256": "7895e56601f432cd9ce95b5f1527484d9179d05dbb62dbdb71928dc385e6fd83"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000000-00080000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000000-00080000-draft.json",
+      "bytes": 642,
+      "sha256": "51b5c2ef27d939c69351e4ea4946e3ea7e8344e75c1619862887183203bb36cd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000000-00160000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000000-00160000-draft.json",
+      "bytes": 643,
+      "sha256": "89069be14fc23befe0ebbedfe8554bbc5fd620948d707891cb50b0cb301572ca"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000000-00240000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000000-00240000-draft.json",
+      "bytes": 643,
+      "sha256": "5f8864c6fab1c3d0771a4714b40f48672cb716ea6355c6fe34d700d355eceac0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000000-00320000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000000-00320000-draft.json",
+      "bytes": 642,
+      "sha256": "c634cf898f641ad7257c82f42c6e834bf0b233b4154a37461a5dabe27a3e2e1b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000000-00400000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000000-00400000-draft.json",
+      "bytes": 643,
+      "sha256": "46d140fcae197fe12882d7c5789d8caf55bcc9353ae4b0ae597355a27ab62bd2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000000-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000000-00480000-final.json",
+      "bytes": 642,
+      "sha256": "127be0bf8f16b7596c3c2c87e33c0a23616dbb54e72145a060f8566da58bd7d7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000001-00080000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000001-00080000-draft.json",
+      "bytes": 648,
+      "sha256": "c7debcec7cfb5a0f970afa199c5e5cace947378e334c9e3ed1945b31312355ad"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000001-00160000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000001-00160000-draft.json",
+      "bytes": 648,
+      "sha256": "2babfd9cefc56a7f069c9356a21f3ff2672298b6bcdd3504e8d7a517f9e68829"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000001-00240000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000001-00240000-draft.json",
+      "bytes": 648,
+      "sha256": "c99c117be7de4508758bb6cd517b737642475bb0769f4caabf156c59539c0ae9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000001-00320000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000001-00320000-draft.json",
+      "bytes": 648,
+      "sha256": "018bb171a531e590bf68a2e14fb1b261af844b9343b63e027a766580418d0697"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000001-00400000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000001-00400000-draft.json",
+      "bytes": 648,
+      "sha256": "d6637f1cad42fc89bd2bd26f2cf7cc6a63289ee9739639105b389e187b8a75f6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000001-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000001-00480000-final.json",
+      "bytes": 647,
+      "sha256": "5e315a1cb6cf510a8f69eec83cf2148423bdbea77b063c1e7571b40f4c42c988"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000002-00080000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000002-00080000-draft.json",
+      "bytes": 649,
+      "sha256": "3f40acd75cee254669df3ffa0db4528381fd157eb23046e4b596d5718aa6a62c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000002-00160000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000002-00160000-draft.json",
+      "bytes": 649,
+      "sha256": "e08f8c64262210f76548a770ab57eac041f84822d52cab0a9edef7113b81b43e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000002-00240000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000002-00240000-draft.json",
+      "bytes": 649,
+      "sha256": "e09601007b430aa8142cabda3aa17ddd3ad031d4aefe25d50ffff2ea33896819"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\requests\\00000002-00244000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/requests/00000002-00244000-final.json",
+      "bytes": 647,
+      "sha256": "3bba31e4132c366658703398f9446409644642bd8049c8ee6ec76c9296c3bcd6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\results\\00000000-00080000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/results/00000000-00080000-draft.json",
+      "bytes": 2730,
+      "sha256": "89866eacf92e4ed01119417a8a6d5ffe7a3e32bef7f1e6a1aebf5daa0668818b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\results\\00000000-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/results/00000000-00480000-final.json",
+      "bytes": 8009,
+      "sha256": "eb228a9076d1e535b18412bc7840fdd7ad0bfb45f717091693e8a1370b4080e7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\results\\00000001-00240000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/results/00000001-00240000-draft.json",
+      "bytes": 4615,
+      "sha256": "0a906c41ac1d4e08566d401d7f499a0ae087375ef0d37ade6a7c4db9e71d20bc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\results\\00000001-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/results/00000001-00480000-final.json",
+      "bytes": 6040,
+      "sha256": "69af7151bed49b399272de64f15cdefcbcad427f72e815a7d99ee11c2fe956dc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\incremental\\session\\results\\00000002-00244000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/incremental/session/results/00000002-00244000-final.json",
+      "bytes": 3646,
+      "sha256": "a91b5aeae2cc372bfb2b681888aeb1627c95db97355dbcaee982b77b694fe569"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\controller.log",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/controller.log",
+      "bytes": 538,
+      "sha256": "1baee277d57d6357d061418ab035e00f62d9559c2c0d90ea060795545ecd4e11"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\events.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/events.json",
+      "bytes": 1023,
+      "sha256": "161b5ac5965eb75bec47d966738d5b0654aeaf95cc940cdea08b9fb76cc13b1c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\result.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/result.json",
+      "bytes": 8531,
+      "sha256": "38d40e09a730a13165aeb014262e9f4673173161ed59b0c9905199ac813b74d0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\decoder-r1\\document.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/decoder-r1/document.json",
+      "bytes": 2955,
+      "sha256": "c8df0d0da20b36870fa37da915b26232dbaedbe7ee9d76063ee747e09c26f661"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\decoder-r1\\run.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/decoder-r1/run.json",
+      "bytes": 569,
+      "sha256": "585680bfdd7f4346172358e28f1a3a7942925de39922b4b32f3258ba05265438"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\decoder-r1\\worker-state.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/decoder-r1/worker-state.json",
+      "bytes": 2301,
+      "sha256": "2ef400a837670cfcc37504f60ad0a74afbc13f4f09dfbb963dc44343ea2195e5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\decoder-r1\\worker.log",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/decoder-r1/worker.log",
+      "bytes": 1257,
+      "sha256": "4b4a3abcda5246d53a3788df158be8d5a0d3f19039d13348458f5324d080f058"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\session\\session.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/session/session.json",
+      "bytes": 579,
+      "sha256": "d43f2b3e344275c9b9b0e2e2f46e30bafc3f823b0d00f31daf414b7cd2e70033"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\session\\requests\\00000000-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/session/requests/00000000-00480000-final.json",
+      "bytes": 638,
+      "sha256": "99f1f71aef8aa1927b6c072b4aad7437261f441fcaee4fffd947c51e05fef2d1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\session\\requests\\00000001-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/session/requests/00000001-00480000-final.json",
+      "bytes": 643,
+      "sha256": "ff1960afb4d4a40d5cfbf47ab884c27f7bbba95354d815aa2c3fdab0b61f1b42"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\session\\requests\\00000002-00240000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/session/requests/00000002-00240000-draft.json",
+      "bytes": 645,
+      "sha256": "b15efb0a3240231ad803761ed5ffb867b974f3254d1b5e7c188cdadefb79d94b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\session\\requests\\00000002-00244000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/session/requests/00000002-00244000-final.json",
+      "bytes": 644,
+      "sha256": "1136ce816e460b00fa654db8e8afedf88e62d59d0837cdc48ec457861e4a755c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\session\\results\\00000000-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/session/results/00000000-00480000-final.json",
+      "bytes": 8006,
+      "sha256": "978758108207823ffc2eb6363dd92c07a161f8d0040275f8b71af1edc8062425"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\session\\results\\00000001-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/session/results/00000001-00480000-final.json",
+      "bytes": 6030,
+      "sha256": "7b0925e41115187df7400b5e76678c5b390123eccf25f1d0a541d7d013b0a061"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\ES2003b\\offline\\session\\results\\00000002-00244000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/ES2003b/offline/session/results/00000002-00244000-final.json",
+      "bytes": 3646,
+      "sha256": "48d5038a570ec8cb90e849ace9d53ec6f81b700a9724e1f6d7c89d9c14daecd0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\controller.log",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/controller.log",
+      "bytes": 537,
+      "sha256": "a524c0d0ad14fa65f32fa57348d8f1100b0c0f9ca42fb16d61d0844ea2a91d8d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\events.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/events.json",
+      "bytes": 9633,
+      "sha256": "b0b97ed2d6597468e10d9f789d905fcb2c0816667d9ce132ee7ff9577a39bbca"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\result.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/result.json",
+      "bytes": 9391,
+      "sha256": "a374acb8cdb473f2b608d1891828796591836a76e3a189f59ca175b5c7e2dbc2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\decoder-r1\\document.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/decoder-r1/document.json",
+      "bytes": 3007,
+      "sha256": "0e74d4c241fbdd82d96b2dd268abd06f8dc0d8f4f6d52642b2fcec7e5595c8d2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\decoder-r1\\run.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/decoder-r1/run.json",
+      "bytes": 568,
+      "sha256": "2088c5dbceebdbd0995cb94326fa1d512233469ae62338fc94344681d8a171df"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\decoder-r1\\worker-state.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/decoder-r1/worker-state.json",
+      "bytes": 3081,
+      "sha256": "5df137ec1c08c8760cde3d90bcae9420dc20acc5e8ebeac6b95d8cf59aca7d7d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\decoder-r1\\worker.log",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/decoder-r1/worker.log",
+      "bytes": 1257,
+      "sha256": "3498519ed4e501af9ed7f208a08cc500de25c61e38099f4799c6bd69c18eb1b2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\session.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/session.json",
+      "bytes": 579,
+      "sha256": "24ad3fc4a840e63196d5d898ed0a841bb4694d0148b516e9425925e87a503cca"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000000-00080000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000000-00080000-draft.json",
+      "bytes": 647,
+      "sha256": "94c0a12a5ae90fc5bc50cca89a3a7e8736674043c45777c60e0c6a6b09c405fa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000000-00160000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000000-00160000-draft.json",
+      "bytes": 648,
+      "sha256": "c8ab8d62f84fe6c281bdd88e4f3da7776c2810591b6738e5f3d5c3b9b5506a82"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000000-00240000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000000-00240000-draft.json",
+      "bytes": 647,
+      "sha256": "e05165628c2820794064d546d069f8038f6dc786408b15f8c6a0af3a49e24543"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000000-00320000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000000-00320000-draft.json",
+      "bytes": 648,
+      "sha256": "a5e8befe00a7e5204247c5a53cdfcd3d25b84383d1c89814a2e6ddbc1e87e5b1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000000-00400000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000000-00400000-draft.json",
+      "bytes": 648,
+      "sha256": "39882965d649487d391301f9b29f8b036c6f492ada986e8363adc989a68da618"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000000-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000000-00480000-final.json",
+      "bytes": 647,
+      "sha256": "532737493e9be9ac432604b2f5124e45d71210cdb5a745b16df75f5be685860d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000001-00080000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000001-00080000-draft.json",
+      "bytes": 652,
+      "sha256": "804885a6124c9301a7f4d5c4ada755d1c7e48e3668b7bb96092fa20cac9ad06d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000001-00160000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000001-00160000-draft.json",
+      "bytes": 653,
+      "sha256": "f399c1c80a31639240ecab557be53118828e7fe5a16bda4d2990c95c9cbfa811"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000001-00240000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000001-00240000-draft.json",
+      "bytes": 653,
+      "sha256": "e35863cf283e5d97a0381e010d5b55edafcebdd93a4dda4756960e2d6ef57a9d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000001-00320000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000001-00320000-draft.json",
+      "bytes": 653,
+      "sha256": "633a2cae838fc7dace8b1405f9c35a32a135535af0d25fda3fe7d653f1954312"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000001-00400000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000001-00400000-draft.json",
+      "bytes": 653,
+      "sha256": "c6818d2c3416a1a7ef37a2ca9caa00477810dabd572ad28df35fb5ad9c4858b2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000001-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000001-00480000-final.json",
+      "bytes": 652,
+      "sha256": "bd02d87218715edfa07b85b3db0ddcc3069d7295404408a39ca96af172bb4c06"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000002-00080000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000002-00080000-draft.json",
+      "bytes": 654,
+      "sha256": "4de3c530c488cd386eeb1ddee503b9bd3038552f538110b13203f0f2015bee23"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000002-00160000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000002-00160000-draft.json",
+      "bytes": 654,
+      "sha256": "63b38269252c65f4642870278bffafefb1134125dcf58093e62278ce2d17cd98"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000002-00240000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000002-00240000-draft.json",
+      "bytes": 654,
+      "sha256": "c05182e328ae505dd2adc1d19e605021df8a5540c06138867e2fa08d76081a0e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\requests\\00000002-00244000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/requests/00000002-00244000-final.json",
+      "bytes": 652,
+      "sha256": "68be1449c48c66c897e7248ebb80aac4e0ad360ae3859b4431b030df74a355a4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\results\\00000000-00080000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/results/00000000-00080000-draft.json",
+      "bytes": 2439,
+      "sha256": "2166f247d73fef4983d66b4bf3e261f9e8460bedcb5bbae291da7de9f0bda01d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\results\\00000000-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/results/00000000-00480000-final.json",
+      "bytes": 6296,
+      "sha256": "8f0bd1e118d117d7ae958362c4a82a3282f1ae8340779796113f6fb1db729eba"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\results\\00000001-00240000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/results/00000001-00240000-draft.json",
+      "bytes": 4510,
+      "sha256": "bc06dba6766f25424a48d0f50b82023f1399a87c4ab2b701d70c620bd56d892e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\results\\00000001-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/results/00000001-00480000-final.json",
+      "bytes": 6495,
+      "sha256": "0fc9b715b813fda06d101c522ae04427ad89f13e5bb9733ee0e71b37d55c0d8c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\results\\00000002-00244000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/incremental/session/results/00000002-00244000-final.json",
+      "bytes": 4152,
+      "sha256": "9e2005240d95cc3ec8c91d87bb4029f6e499a650187b4a27e17cefccc16586c0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\controller.log",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/controller.log",
+      "bytes": 538,
+      "sha256": "3993152ad506afd5001fd78e05a0796c45987e63b79c5fb2f473275248b87e9f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\events.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/events.json",
+      "bytes": 1022,
+      "sha256": "0fa5d2aa1426645a88480632956e6d517a7d9a7bfd31717e6200b41d37907e1d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\result.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/result.json",
+      "bytes": 8620,
+      "sha256": "f974fe6225057ae4ee4cd48e9aab98b3912a5155080bce9c329f0cc8d796616a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\decoder-r1\\document.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/decoder-r1/document.json",
+      "bytes": 3007,
+      "sha256": "0e74d4c241fbdd82d96b2dd268abd06f8dc0d8f4f6d52642b2fcec7e5595c8d2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\decoder-r1\\run.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/decoder-r1/run.json",
+      "bytes": 569,
+      "sha256": "4d0218403eb9c08aa0cd32752bff447e2892538396602b0ec42cea3e66649982"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\decoder-r1\\worker-state.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/decoder-r1/worker-state.json",
+      "bytes": 2318,
+      "sha256": "69302c1ce683d7faad80edc93e25639911f1fdd966ee2f1270263a5b5bf29f80"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\decoder-r1\\worker.log",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/decoder-r1/worker.log",
+      "bytes": 1257,
+      "sha256": "d958d42d2de243de8e378ddb3494748b1d34c5ecdb1b797bbb9b0eadaa3c94a9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\session\\session.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/session/session.json",
+      "bytes": 579,
+      "sha256": "9ba1b490027f9a0b1cd156734bdea9ced410b1135d73f929cbf355e3eaebbf63"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\session\\requests\\00000000-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/session/requests/00000000-00480000-final.json",
+      "bytes": 643,
+      "sha256": "56b7b3eeb1892e5c8dcc68d7b65d17327e837c0585a2f4c39a690a99d9186048"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\session\\requests\\00000001-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/session/requests/00000001-00480000-final.json",
+      "bytes": 647,
+      "sha256": "0c2d02d81874fd55905c28c305c4734cdf4a5d603b6e706352609d0f60b7f477"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\session\\requests\\00000002-00240000-draft.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/session/requests/00000002-00240000-draft.json",
+      "bytes": 650,
+      "sha256": "50fe781dffe49cb5569b536271a110aade86e1c7b912766167ffe9c50a39e427"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\session\\requests\\00000002-00244000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/session/requests/00000002-00244000-final.json",
+      "bytes": 649,
+      "sha256": "b0dcce20b245763ba52280c7e2e10432b3b502a00e52a51ff4ccbf5d1cc1844c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\session\\results\\00000000-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/session/results/00000000-00480000-final.json",
+      "bytes": 6298,
+      "sha256": "8c98979822d5fc8841ae4056d72809628c2dd2f5d831d6fc913abe7f0bcda109"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\session\\results\\00000001-00480000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/session/results/00000001-00480000-final.json",
+      "bytes": 6490,
+      "sha256": "6bffdb96c298cd8848037c96ac9548f5adb9cbcc8840b9f04ce7176ba08c9bd4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\session\\results\\00000002-00244000-final.json",
+      "file": "cpu-pcm-dualroute-r2/run/S_R004S03C01/offline/session/results/00000002-00244000-final.json",
+      "bytes": 4144,
+      "sha256": "e9b3fb5468fb22244d4135c76f076601be4453760c5007aa10ac308be35b1c54"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-reader-collision-r1\\result.json",
+      "file": "cpu-pcm-reader-collision-r1/run/result.json",
+      "bytes": 1343,
+      "sha256": "93c3b563430c97439dbca976bf5dd639277516cc8877c4726681daf5259ba25c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-reader-collision-r1\\session-source-before-fix.py",
+      "file": "cpu-pcm-reader-collision-r1/run/session-source-before-fix.py",
+      "bytes": 14770,
+      "sha256": "f1bdb08fa1ba11ea866e57aa3fa95170f4bc09902d37a90359fe2c02baee53d6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-reader-collision-r1\\session\\session.json",
+      "file": "cpu-pcm-reader-collision-r1/run/session/session.json",
+      "bytes": 441,
+      "sha256": "36b31f2f1ac7bf73baadfa70c1796342f084b0ea7954ee2ddd293ff8686f5bb3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-reader-collision-fix-r1\\result.json",
+      "file": "cpu-pcm-reader-collision-fix-r1/run/result.json",
+      "bytes": 1551,
+      "sha256": "78daf41b5fe2b406426417a04281179d55d58b3ab2c49a1492f4c7d717c94930"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-reader-collision-fix-r1\\owner\\session.json",
+      "file": "cpu-pcm-reader-collision-fix-r1/run/owner/session.json",
+      "bytes": 495,
+      "sha256": "ae3885eab98ccd2c36adb1a4ba065b0ea3dcbf6857a44a3fd5b6b74477cfe91b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-reader-collision-fix-r1\\permanent-reader\\session.json",
+      "file": "cpu-pcm-reader-collision-fix-r1/run/permanent-reader/session.json",
+      "bytes": 495,
+      "sha256": "cb981c585fb2fbbbe40f33988064e7660971022f517ac39ffabbd30c3984dbba"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-reader-collision-fix-r1\\reader\\session.json",
+      "file": "cpu-pcm-reader-collision-fix-r1/run/reader/session.json",
+      "bytes": 545,
+      "sha256": "3e891dd5bf77f30a048d78b260a6a9aa724e0e038348e5cf509ea139ec4d302e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-reader-collision-fix-r1\\reader\\requests\\00000000-00000160-final.json",
+      "file": "cpu-pcm-reader-collision-fix-r1/run/reader/requests/00000000-00000160-final.json",
+      "bytes": 626,
+      "sha256": "42f77bfeff88f1a377e8223c6ada9bdad83c51daefa954be5ec6b76572f0e76f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-short-temp-proof-r1\\result.json",
+      "file": "cpu-pcm-short-temp-proof-r1/run/result.json",
+      "bytes": 521,
+      "sha256": "be3cc25527390b2f882e8fa5a75ffd1de0262f9fb9b1a87f7ee388fb783e24bb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-short-temp-proof-r1\\pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\\session\\session.json",
+      "file": "cpu-pcm-short-temp-proof-r1/run/pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp/session/session.json",
+      "bytes": 547,
+      "sha256": "bee14b92fbeb58c8023decb00d74ee970bc67f496d7a5ae4c764067f3478940e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-short-temp-proof-r1\\pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\\session\\requests\\00000000-00080000-draft.json",
+      "file": "long-path/f01a77c9f67110a1-00000000-00080000-draft.json",
+      "bytes": 713,
+      "sha256": "0008252934286d62c6a31435c9972859cbc140f4fab4148f68b3103814aa9668"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-short-temp-proof-r1\\pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp\\session\\requests\\00000000-00096000-final.json",
+      "file": "long-path/4f34e46137344612-00000000-00096000-final.json",
+      "bytes": 712,
+      "sha256": "0157c14b3cd3304cd6dd361753f502f0ee103da1f6f65a9b9139a05fc2cf2b05"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r1\\protocol.json",
+      "file": "cpu-app-schema-test-r1/run/protocol.json",
+      "bytes": 2250,
+      "sha256": "24004b2ae2666b3a5d9099325bdfec90787cf23d46f97bd7449c223925ab98c9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r1\\ES2003b\\offline-bundle.json",
+      "file": "cpu-app-schema-test-r1/run/ES2003b/offline-bundle.json",
+      "bytes": 7798,
+      "sha256": "52e956e542e970b00292778aebea2f6dd8582ac1bde1c6ef05434f45391af8b0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r1\\ES2003b\\offline-manifest.json",
+      "file": "cpu-app-schema-test-r1/run/ES2003b/offline-manifest.json",
+      "bytes": 429,
+      "sha256": "384d8041d487ca851a9eef7f6631664cc3bc6d9e9f4bfd10fee11ccc0e23b42a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r1\\ES2003b\\offline-call\\stderr.log",
+      "file": "cpu-app-schema-test-r1/run/ES2003b/offline-call/stderr.log",
+      "bytes": 2445,
+      "sha256": "fe3d5dd2a4cf96f0ad7161e5803cebb48498fbc026315e633c69d44d914ceeec"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r1\\ES2003b\\offline-call\\stdout.json",
+      "file": "cpu-app-schema-test-r1/run/ES2003b/offline-call/stdout.json",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r1\\ES2003b\\offline-jobs\\85194fd7d62f54db1c1dd15aa5b9ce6bf937a2ae9e8c1c017b55c7bed5ceb3a9\\input-binding.json",
+      "file": "cpu-app-schema-test-r1/run/ES2003b/offline-jobs/85194fd7d62f54db1c1dd15aa5b9ce6bf937a2ae9e8c1c017b55c7bed5ceb3a9/input-binding.json",
+      "bytes": 784,
+      "sha256": "e3bcd632d1eca41d73287d9b952cf1d51f3e2ab2c9c88ba362c2aab12165b40a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r1\\ES2003b\\offline-jobs\\85194fd7d62f54db1c1dd15aa5b9ce6bf937a2ae9e8c1c017b55c7bed5ceb3a9\\job.json",
+      "file": "cpu-app-schema-test-r1/run/ES2003b/offline-jobs/85194fd7d62f54db1c1dd15aa5b9ce6bf937a2ae9e8c1c017b55c7bed5ceb3a9/job.json",
+      "bytes": 525,
+      "sha256": "95adeea2ded6ffe2be831b2bb52563310ef665ae9f478173735a56b4afc85bdd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-app-schema-test-r1\\ES2003b\\offline-jobs\\85194fd7d62f54db1c1dd15aa5b9ce6bf937a2ae9e8c1c017b55c7bed5ceb3a9\\asr-session\\session.json",
+      "file": "cpu-app-schema-test-r1/run/ES2003b/offline-jobs/85194fd7d62f54db1c1dd15aa5b9ce6bf937a2ae9e8c1c017b55c7bed5ceb3a9/asr-session/session.json",
+      "bytes": 497,
+      "sha256": "21d0bb2df11abd393fc7824e484e82092f68e4f93ae3ff7d60895dbd5acc0caa"
+    },
+    {
+      "source": "work\\prepare_english_specialist_20261116.py",
+      "file": "preparation/prepare_english_specialist_20261116.py",
+      "bytes": 5244,
+      "sha256": "c3af64f2f52df4bd3b825060c10483a7bd3dad08178b80c07c40c3f5140c784a"
+    },
+    {
+      "source": "work\\freeze_english_specialist_runtime_20261116.py",
+      "file": "preparation/freeze_english_specialist_runtime_20261116.py",
+      "bytes": 2272,
+      "sha256": "63b9ed036f244820e31c930d2f47ded100d1e6bb869880be67b0dde1806eec9d"
+    },
+    {
+      "source": "work\\run_fixed_english_after_speaker_20261116.py",
+      "file": "preparation/run_fixed_english_after_speaker_20261116.py",
+      "bytes": 1915,
+      "sha256": "c75a52223e12f53631f98c38d6dc13d6c9b4d34e1061e569803a25a6671bda1e"
+    },
+    {
+      "source": "work\\audit_english_farfield_errors_20261116.py",
+      "file": "preparation/audit_english_farfield_errors_20261116.py",
+      "bytes": 5280,
+      "sha256": "2e4c377cd18268644f45a23cccb4964518abe43d879ff9d2ffaddfd3c0424ade"
+    },
+    {
+      "source": "work\\prepare_all_cpu_full4_composition_20261116.py",
+      "file": "preparation/prepare_all_cpu_full4_composition_20261116.py",
+      "bytes": 5921,
+      "sha256": "02a3aba56cb3e56a917f1b96935bfe83320f82c6b70b2f4375a00911024e3c6a"
+    },
+    {
+      "source": "work\\score_all_cpu_full4_20261116.py",
+      "file": "preparation/score_all_cpu_full4_20261116.py",
+      "bytes": 2094,
+      "sha256": "f8d15a1f25358ec0aaf8cb98be970861261d0b6758f96413d55637aace4b6602"
+    },
+    {
+      "source": "work\\run_cpu_pcm_dualroute_20261116.py",
+      "file": "preparation/run_cpu_pcm_dualroute_20261116.py",
+      "bytes": 9744,
+      "sha256": "db10a22b1d698d6636496d559c9f7268d6eb2956c09fa5aec07004cb3502d663"
+    },
+    {
+      "source": "work\\reproduce_pcm_windows_reader_collision_20261116.py",
+      "file": "preparation/reproduce_pcm_windows_reader_collision_20261116.py",
+      "bytes": 1158,
+      "sha256": "15e1db4a048e9cb06d22b8db220c54be61fd9a263d3e6be8e2b02861af09a421"
+    },
+    {
+      "source": "work\\check_pcm_windows_commit_fix_20261116.py",
+      "file": "preparation/check_pcm_windows_commit_fix_20261116.py",
+      "bytes": 3238,
+      "sha256": "2a9a94474565cb78101053a54d71b1c4d971a51039c7bd4af9f9ccae170ca9a9"
+    },
+    {
+      "source": "work\\prepare_cpu_pcm_dualroute_fix_20261116.py",
+      "file": "preparation/prepare_cpu_pcm_dualroute_fix_20261116.py",
+      "bytes": 2170,
+      "sha256": "086eb8d912cbff67620b71ab83b099ba70daadaed3165586296c7fbe97758841"
+    },
+    {
+      "source": "work\\prepare_cpu_pcm_short_temporary_fix_20261116.py",
+      "file": "preparation/prepare_cpu_pcm_short_temporary_fix_20261116.py",
+      "bytes": 2183,
+      "sha256": "51aadfeeddb42c3ae7811d6ce0e256c647772524c990ceebc0a98c695320bd82"
+    },
+    {
+      "source": "work\\prepare_cpu_internal_app_fixture_20261116.py",
+      "file": "preparation/prepare_cpu_internal_app_fixture_20261116.py",
+      "bytes": 1705,
+      "sha256": "673c090b2f8cb56f7c35756384a94b693dfe035eb37e973b38fb97bc5214c978"
+    },
+    {
+      "source": "work\\prepare_cpu_internal_app_fixture_frozen_20261116.py",
+      "file": "preparation/prepare_cpu_internal_app_fixture_frozen_20261116.py",
+      "bytes": 7443,
+      "sha256": "436381bb2af17a5041efe0e1d1eda4291fa6d176a30beacdc89e225581fd7236"
+    },
+    {
+      "source": "work\\prepare_cpu_internal_app_fixture_frozen_r2_20261116.py",
+      "file": "preparation/prepare_cpu_internal_app_fixture_frozen_r2_20261116.py",
+      "bytes": 7443,
+      "sha256": "06e91fed9b919b9203fa1a6024c7e04d253a92f9045b21d1c0567b42fbf1f1eb"
+    },
+    {
+      "source": "work\\run_cpu_application_schema_20261116.py",
+      "file": "preparation/run_cpu_application_schema_20261116.py",
+      "bytes": 9000,
+      "sha256": "4e17b96cfc3890304f6ad836f1ba1249ab10106ec527e3c9fa97709738d48677"
+    },
+    {
+      "source": "work\\prepare_cpu_checkpoint40_20261116.py",
+      "file": "preparation/prepare_cpu_checkpoint40_20261116.py",
+      "bytes": 3861,
+      "sha256": "7a8849183ceba3b3e222e4ceadb5dffac94e381bfde3d4284e0f1a0bc8025f6a"
+    },
+    {
+      "source": "work\\cpu-checkpoint40.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 66728,
+      "sha256": "c5307e6ca2be8695cb909910aaf54b5b072aa8921511fa2843f78805b4d49bd6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4193,
+      "sha256": "2765183d65ebbc010f0808a76da74b88ae49cb1b45933b4ec854865fce3daa76"
+    }
+  ],
+  "sources": {
+    "src/english_specialist_cpu_worker_20261116.py": "cc75ee5fa893e86474b5434a5eb2733a83bf0fee5d27692390f8bb90e11bca0d",
+    "src/run_english_specialist_cpu_20261116.py": "23500f170ba1ef90accf672ae54557f10b78ec9321c73ec2a7c07abcdebe07db",
+    "src/score_english_specialist_cpu_20261116.py": "e374a4e9bf667d21bbaa8a13479e74673682ccc339a2ffa7469c17d3d6b0677d",
+    "src/compose_cpu_native8_full4_20261116.py": "137662fddd081de3abe77ac438f41a567616c72c3d49033e70bdb04c47e703d3",
+    "src/score_all_cpu_full4_summary_20261116.py": "e495616841ef9f426e58804eb3a08189a4c13303fefd3d846fd08837d03c5107",
+    "src/companion_local_pcm_session_20261114.py": "4fc0f32bc986bccf6c90e8b65e81b251dbc79b476d0399a0e4670fac931df548",
+    "src/companion_cpu_guarded_stage_20261116.py": "5864d173181c844aa9c3726e67b7ace8aa108021183315c633cbc9b1747ab37f",
+    "src/companion_local_moss_cpu_pipeline_20261116.py": "901405d1c12a2d0510f93d2e085e74717b9adbab68eab5804d452db27a642b08",
+    "src/companion_local_paths_20261116.py": "cc4cc430bae71cba0fcdc4f122349ba248628503f1ab1ff5480d08409bddcb6c",
+    "src/companion_local_moss_cpu_stream_20261116.py": "ddf022478c9415ef44ff87ba30071145fe50d563bf1ca90770f957a885fb2372"
+  },
+  "state": "FULL4_CPU_SPEAKER_AND_BILINGUAL_LIVE_OFFLINE_PASS_QUALITY_FAILED_APPLICATION_ENTRY_IN_PROGRESS",
+  "fullCpuSpeakerRecordings": 4,
+  "allCpuAsrSpeakerQualityScoresRetained": true,
+  "whisperFixedEnglishContrastRejected195Of709": true,
+  "newParameterGrid": false,
+  "actualCpuIncrementalAndOfflineFinalTextExact": true,
+  "windowsReaderCollisionReproducedAndFixed": true,
+  "windowsLongTempPathFailureReproducedAndFixed": true,
+  "actualAppSchemaIntegrationComplete": false,
+  "liveAppSchemaTestOutputsExcluded": true,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "productDefaultChanged": false,
+  "installedPackageChanged": false
+}

@@ -1,0 +1,118 @@
+{
+  "case": {
+    "id": "EN2001a-a2-023",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-023.wav",
+    "wavSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+    "pcmSha256": "490510a15ef6f46ebac736fb41e975068df6e61349ac7f589c257fe724ae9d33",
+    "frames": 475520,
+    "audioSeconds": 29.72,
+    "language": "English"
+  },
+  "seconds": 9.35483209999802,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "And in that way we could probably use the same algorithm and just make one or two ifs that say, OK, if you are on whole series level and that was a double click, then don't just go into that segment but load a new file or something like that. But in general use the same algorithm. That would be an alternative if you can't actually load the whole thing in. Because also, even if we... Maybe I'm worrying too much about the whole series in one thing displayed because actually",
+    "raw_text": "<|0.00|> And in that way we could probably use the same algorithm and just make one or two ifs<|5.00|><|5.00|> that say, OK, if you are on whole series level and that was a double click, then don't just<|11.60|><|11.60|> go into that segment but load a new file or something like that.<|15.20|><|15.20|> But in general use the same algorithm.<|16.60|><|16.60|> That would be an alternative if you can't actually load the whole thing in.<|21.60|><|21.60|> Because also, even if we...<|24.80|><|24.80|> Maybe I'm worrying too much about the whole series in one thing displayed because actually<|29.72|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "And in that way we could probably use the same algorithm and just make one or two ifs",
+        "t0_ms": 0,
+        "t1_ms": 5000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "that say, OK, if you are on whole series level and that was a double click, then don't just",
+        "t0_ms": 5000,
+        "t1_ms": 11600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "go into that segment but load a new file or something like that.",
+        "t0_ms": 11600,
+        "t1_ms": 15200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "But in general use the same algorithm.",
+        "t0_ms": 15200,
+        "t1_ms": 16600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "That would be an alternative if you can't actually load the whole thing in.",
+        "t0_ms": 16600,
+        "t1_ms": 21600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Because also, even if we...",
+        "t0_ms": 21600,
+        "t1_ms": 24800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Maybe I'm worrying too much about the whole series in one thing displayed because actually",
+        "t0_ms": 24800,
+        "t1_ms": 29720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 224.90899658203125,
+      "mel_ms": 13.086000442504883,
+      "encode_ms": 8424.333984375,
+      "decode_ms": 908.6220092773438
+    }
+  },
+  "rawDecoded": "<|0.00|> And in that way we could probably use the same algorithm and just make one or two ifs<|5.00|><|5.00|> that say, OK, if you are on whole series level and that was a double click, then don't just<|11.60|><|11.60|> go into that segment but load a new file or something like that.<|15.20|><|15.20|> But in general use the same algorithm.<|16.60|><|16.60|> That would be an alternative if you can't actually load the whole thing in.<|21.60|><|21.60|> Because also, even if we...<|24.80|><|24.80|> Maybe I'm worrying too much about the whole series in one thing displayed because actually<|29.72|>",
+  "hypothesis": "And in that way we could probably use the same algorithm and just make one or two ifs that say, OK, if you are on whole series level and that was a double click, then don't just go into that segment but load a new file or something like that. But in general use the same algorithm. That would be an alternative if you can't actually load the whole thing in. Because also, even if we... Maybe I'm worrying too much about the whole series in one thing displayed because actually",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

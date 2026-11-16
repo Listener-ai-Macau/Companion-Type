@@ -1,0 +1,188 @@
+{
+  "case": {
+    "id": "EN2001a-a2-092",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-092.wav",
+    "wavSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+    "pcmSha256": "14091b430e04787c3694b572f922d0a4da22a3ce4f10cc7978dde91fa4797bb7",
+    "frames": 473600,
+    "audioSeconds": 29.6,
+    "language": "English"
+  },
+  "seconds": 10.548876299995754,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "deadbeat have treated with the same algorithm one. But I mean it could be as many nodes as you want. Like this one could be deeper maybe. So then you start with all your utterances here. And when you go up to get topic segments. You go to here, here, here. Here, here, here, here. That might be a bit confusing though. Because you have things on different levels. Yeah I'm also not sure how we can go from. From what to map out. I've always thought it's like. More that. Ah.",
+    "raw_text": "<|0.00|> deadbeat have treated with the same algorithm one.<|1.84|><|1.84|> But I mean it could be as many nodes as you want.<|3.92|><|4.60|> Like this one could be deeper maybe.<|5.98|><|8.04|> So then you start with all your utterances here.<|11.04|><|11.52|> And when you go up to get topic segments.<|13.32|><|13.60|> You go to here, here, here.<|15.10|><|15.52|> Here, here, here, here.<|16.46|><|18.50|> That might be a bit confusing though.<|20.08|><|20.08|> Because you have things on different levels.<|21.56|><|23.34|> Yeah I'm also not sure how we can go from.<|25.34|><|25.60|> From what to map out.<|27.10|><|27.20|> I've always thought it's like.<|27.94|><|28.24|> More that.<|28.60|><|29.30|> Ah.<|29.60|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "deadbeat have treated with the same algorithm one.",
+        "t0_ms": 0,
+        "t1_ms": 1840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "But I mean it could be as many nodes as you want.",
+        "t0_ms": 1840,
+        "t1_ms": 3920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Like this one could be deeper maybe.",
+        "t0_ms": 4600,
+        "t1_ms": 5980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "So then you start with all your utterances here.",
+        "t0_ms": 8040,
+        "t1_ms": 11040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "And when you go up to get topic segments.",
+        "t0_ms": 11520,
+        "t1_ms": 13320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "You go to here, here, here.",
+        "t0_ms": 13600,
+        "t1_ms": 15100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Here, here, here, here.",
+        "t0_ms": 15520,
+        "t1_ms": 16460,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "That might be a bit confusing though.",
+        "t0_ms": 18500,
+        "t1_ms": 20080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Because you have things on different levels.",
+        "t0_ms": 20080,
+        "t1_ms": 21560,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Yeah I'm also not sure how we can go from.",
+        "t0_ms": 23340,
+        "t1_ms": 25340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "From what to map out.",
+        "t0_ms": 25600,
+        "t1_ms": 27100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "I've always thought it's like.",
+        "t0_ms": 27200,
+        "t1_ms": 27940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "More that.",
+        "t0_ms": 28240,
+        "t1_ms": 28600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Ah.",
+        "t0_ms": 29300,
+        "t1_ms": 29600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 224.90899658203125,
+      "mel_ms": 13.131999969482422,
+      "encode_ms": 9444.9306640625,
+      "decode_ms": 1082.969970703125
+    }
+  },
+  "rawDecoded": "<|0.00|> deadbeat have treated with the same algorithm one.<|1.84|><|1.84|> But I mean it could be as many nodes as you want.<|3.92|><|4.60|> Like this one could be deeper maybe.<|5.98|><|8.04|> So then you start with all your utterances here.<|11.04|><|11.52|> And when you go up to get topic segments.<|13.32|><|13.60|> You go to here, here, here.<|15.10|><|15.52|> Here, here, here, here.<|16.46|><|18.50|> That might be a bit confusing though.<|20.08|><|20.08|> Because you have things on different levels.<|21.56|><|23.34|> Yeah I'm also not sure how we can go from.<|25.34|><|25.60|> From what to map out.<|27.10|><|27.20|> I've always thought it's like.<|27.94|><|28.24|> More that.<|28.60|><|29.30|> Ah.<|29.60|>",
+  "hypothesis": "deadbeat have treated with the same algorithm one. But I mean it could be as many nodes as you want. Like this one could be deeper maybe. So then you start with all your utterances here. And when you go up to get topic segments. You go to here, here, here. Here, here, here, here. That might be a bit confusing though. Because you have things on different levels. Yeah I'm also not sure how we can go from. From what to map out. I've always thought it's like. More that. Ah.",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

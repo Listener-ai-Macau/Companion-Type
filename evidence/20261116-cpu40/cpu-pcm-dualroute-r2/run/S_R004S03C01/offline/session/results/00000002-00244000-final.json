@@ -1,0 +1,98 @@
+{
+  "request": {
+    "schema": 1,
+    "jobId": "00000002-00244000-final",
+    "recordingId": "7968429c-0c1e-4a3a-8054-337b1cff8c31",
+    "configSha256": "ac838862e6ba8cac0e7ac048193d450f82163a6b3760df96e9ab428668291abc",
+    "block": 2,
+    "startFrame": 960000,
+    "endFrame": 1204000,
+    "sourcePcm": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\offline\\session\\audio.pcm",
+    "pcmSha256": "fa435977289dbfdca6852751909030a69c53f86aadbdaa50466c49729b7808df",
+    "language": "auto",
+    "blockFinal": true,
+    "publishedAtMonotonic": 44934.1953895,
+    "wholeRecordingFinal": false,
+    "speaker": null
+  },
+  "inferenceBinding": {
+    "schema": "companion.local-moss-cpu.v1",
+    "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+    "nativeCommit": "275cd50",
+    "runtimeContractSha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff",
+    "workerSha256": "071f5742d4d2d6a7a0ce84b367a1fd45927f5ce2c9e71f488fea82c40fa4eadf",
+    "languagePolicy": "Original bilingual model, language=None, no reference or count hints.",
+    "generation": "Unmodified native greedy/EOS, f16 KV, no repetition guard or word postediting."
+  },
+  "result": {
+    "text": "下面呢，就是看看各位还有没有，呃，工程上的一些要求或者需求，呃，给我这个主管提一下，我这边儿尽量，呃，满足各位的，呃，呃，需求。 呃，在我的能力。",
+    "language": null,
+    "rawGeneratedIds": [],
+    "tokenIdsAvailable": false,
+    "rawDecoded": "[0.25][S01]下面呢，就是看看各位还有没有，呃，工程上的一些要求或者需求，呃，给我这个主管提一下，我这边儿尽量，呃，满足各位的，呃，呃，需求。[13.21][13.51][S01]呃，在我的能力。[15.23]",
+    "nativeResult": {
+      "text": "下面呢，就是看看各位还有没有，呃，工程上的一些要求或者需求，呃，给我这个主管提一下，我这边儿尽量，呃，满足各位的，呃，呃，需求。 呃，在我的能力。",
+      "raw_text": "[0.25][S01]下面呢，就是看看各位还有没有，呃，工程上的一些要求或者需求，呃，给我这个主管提一下，我这边儿尽量，呃，满足各位的，呃，呃，需求。[13.21][13.51][S01]呃，在我的能力。[15.23]",
+      "language": "",
+      "timestamp_kind": "segment",
+      "segments": [
+        {
+          "text": "下面呢，就是看看各位还有没有，呃，工程上的一些要求或者需求，呃，给我这个主管提一下，我这边儿尽量，呃，满足各位的，呃，呃，需求。",
+          "t0_ms": 250,
+          "t1_ms": 13210,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        },
+        {
+          "text": "呃，在我的能力。",
+          "t0_ms": 13510,
+          "t1_ms": 15230,
+          "first_word": 0,
+          "n_words": 0,
+          "first_token": 0,
+          "n_tokens": 0,
+          "speaker_id": 1
+        }
+      ],
+      "speaker_segments": [
+        {
+          "t0_ms": 250,
+          "t1_ms": 13210,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        },
+        {
+          "t0_ms": 13510,
+          "t1_ms": 15230,
+          "speaker_id": 1,
+          "p": {
+            "nativeNonfinite": "nan"
+          }
+        }
+      ],
+      "words": [],
+      "tokens": [],
+      "timings": {
+        "load_ms": 627.4619750976562,
+        "mel_ms": 22.56800079345703,
+        "encode_ms": 7339.2587890625,
+        "decode_ms": 4512.580078125
+      }
+    },
+    "naturalEos": true,
+    "accepted": true,
+    "reviewRequired": true,
+    "seconds": 11.934016100000008,
+    "rawSpeakerIdsAreLocalToThisRequest": true,
+    "speakerIdentityVerified": false,
+    "wordsRewritten": false,
+    "qualityQualified": false,
+    "semanticError": null,
+    "unconfirmedAudioIntervals": []
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "state": "PASS_ACTUAL_CPU_PCM_PHASE_NOT_QUALITY_QUALIFIED",
+  "live": true,
+  "meeting": "S_R004S03C01",
+  "frames": 1204000,
+  "firstTextSeconds": 14.61461170000257,
+  "firstCompleteBlockSeconds": 47.39345790000516,
+  "ingressSealSeconds": 75.28774089999933,
+  "finalDocumentSeconds": 89.64985760000127,
+  "firstTextBeforeInputSeal": true,
+  "finalIntervals": [
+    {
+      "startFrame": 0,
+      "endFrame": 480000,
+      "pcmSha256": "ce1131d47fe7ef35953b5687b954147887804d605823ac9814ad5d48267911a7"
+    },
+    {
+      "startFrame": 480000,
+      "endFrame": 960000,
+      "pcmSha256": "fe10febde3dc371fa5a945e6409e64b260b19432fc317c05f9fa83812962b24f"
+    },
+    {
+      "startFrame": 960000,
+      "endFrame": 1204000,
+      "pcmSha256": "fa435977289dbfdca6852751909030a69c53f86aadbdaa50466c49729b7808df"
+    }
+  ],
+  "finalRawDecoded": [
+    "[6.18][S01]零零一超市主管。[7.78][12.34][S02]零零六A。[13.48][14.43][S03]零零七B。[15.68][17.34][S04]零零八C。[18.41][18.72][S05]零零九D。[19.65][22.71][S01]把各个区的这个咱这个负责人啊叫过来，来简单呃做一个交流。[26.88][27.36][S01]呃，咱超市啊近期的销售啊。[29.94]",
+    "[0.01][S01]嗯，比往期的要好，啊明显的客流量也。[4.21][3.91][S02]嗯。[4.25][4.21][S01]呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。[9.35][10.59][S01]呃，这都是大家伙儿在做的，呃努力的出现的状况，估计工作各位在下也出了，在下边儿也出了不少的，呃力气。[20.65][20.95][S01]呃，也做了很多的这个，呃营销的一些方案，呃希望大家以后啊要继续保持咱这种工作状态，呃。[30.01]",
+    "[0.25][S01]下面呢，就是看看各位还有没有，呃，工程上的一些要求或者需求，呃，给我这个主管提一下，我这边儿尽量，呃，满足各位的，呃，呃，需求。[13.21][13.51][S01]呃，在我的能力。[15.23]"
+  ],
+  "finalText": "零零一超市主管。 零零六A。 零零七B。 零零八C。 零零九D。 把各个区的这个咱这个负责人啊叫过来，来简单呃做一个交流。 呃，咱超市啊近期的销售啊。\n嗯，比往期的要好，啊明显的客流量也。 嗯。 呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。 呃，这都是大家伙儿在做的，呃努力的出现的状况，估计工作各位在下也出了，在下边儿也出了不少的，呃力气。 呃，也做了很多的这个，呃营销的一些方案，呃希望大家以后啊要继续保持咱这种工作状态，呃。\n下面呢，就是看看各位还有没有，呃，工程上的一些要求或者需求，呃，给我这个主管提一下，我这边儿尽量，呃，满足各位的，呃，呃，需求。 呃，在我的能力。",
+  "document": {
+    "isFinal": true,
+    "text": "零零一超市主管。 零零六A。 零零七B。 零零八C。 零零九D。 把各个区的这个咱这个负责人啊叫过来，来简单呃做一个交流。 呃，咱超市啊近期的销售啊。\n嗯，比往期的要好，啊明显的客流量也。 嗯。 呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。 呃，这都是大家伙儿在做的，呃努力的出现的状况，估计工作各位在下也出了，在下边儿也出了不少的，呃力气。 呃，也做了很多的这个，呃营销的一些方案，呃希望大家以后啊要继续保持咱这种工作状态，呃。\n下面呢，就是看看各位还有没有，呃，工程上的一些要求或者需求，呃，给我这个主管提一下，我这边儿尽量，呃，满足各位的，呃，呃，需求。 呃，在我的能力。",
+    "utterances": [
+      {
+        "text": "零零一超市主管。 零零六A。 零零七B。 零零八C。 零零九D。 把各个区的这个咱这个负责人啊叫过来，来简单呃做一个交流。 呃，咱超市啊近期的销售啊。",
+        "startMs": 0.0,
+        "endMs": 30000.0,
+        "speaker": null,
+        "approximateTiming": true,
+        "block": 0,
+        "revision": "00000000-00480000-final",
+        "blockFinal": true,
+        "language": null,
+        "decodeAccepted": true,
+        "reviewRequired": true,
+        "unconfirmedAudioIntervals": []
+      },
+      {
+        "text": "嗯，比往期的要好，啊明显的客流量也。 嗯。 呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。 呃，这都是大家伙儿在做的，呃努力的出现的状况，估计工作各位在下也出了，在下边儿也出了不少的，呃力气。 呃，也做了很多的这个，呃营销的一些方案，呃希望大家以后啊要继续保持咱这种工作状态，呃。",
+        "startMs": 30000.0,
+        "endMs": 60000.0,
+        "speaker": null,
+        "approximateTiming": true,
+        "block": 1,
+        "revision": "00000001-00480000-final",
+        "blockFinal": true,
+        "language": null,
+        "decodeAccepted": true,
+        "reviewRequired": true,
+        "unconfirmedAudioIntervals": []
+      },
+      {
+        "text": "下面呢，就是看看各位还有没有，呃，工程上的一些要求或者需求，呃，给我这个主管提一下，我这边儿尽量，呃，满足各位的，呃，呃，需求。 呃，在我的能力。",
+        "startMs": 60000.0,
+        "endMs": 75250.0,
+        "speaker": null,
+        "approximateTiming": true,
+        "block": 2,
+        "revision": "00000002-00244000-final",
+        "blockFinal": true,
+        "language": null,
+        "decodeAccepted": true,
+        "reviewRequired": true,
+        "unconfirmedAudioIntervals": []
+      }
+    ],
+    "confirmedAudioFrames": 1204000,
+    "finalDecodedFrames": 1204000,
+    "audioSealed": true,
+    "speakerIdentityVerified": false,
+    "reviewRequired": true,
+    "wordTimingVerified": false,
+    "qualityQualified": false
+  },
+  "nativeModules": {
+    "workerPid": 29444,
+    "cpuKernelModules": [
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-base.dll",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml-cpu-cascadelake.dll",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\ggml.dll",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-cpu-only\\transcribe.dll"
+    ],
+    "optionalGpuComputeModules": []
+  },
+  "decoderRun": {
+    "state": "CPU_PCM_ATTEMPT_COMPLETE_REVIEW_PENDING",
+    "startedAt": "2026-11-16T12:44:09.024374+08:00",
+    "privatePeakBytes": 738926592,
+    "familyWorkingSetPeakBytes": 2197327872,
+    "systemAvailableMinBytes": 3449200640,
+    "localOnly": true,
+    "sourceUploaded": false,
+    "qualityQualified": false,
+    "productDefaultChanged": false,
+    "automaticRetries": 0,
+    "pid": 31096,
+    "pidCreatedAt": 1794804249.028094,
+    "workerExitCode": 0,
+    "workerState": "COMPLETE_CPU_PCM_FINAL_TEXT_SPEAKERS_PENDING_NOT_QUALIFIED",
+    "finishedAt": "2026-11-16T12:45:39.265011+08:00"
+  },
+  "completedRequests": [
+    {
+      "job": "00000000-00080000-draft",
+      "block": 0,
+      "blockFinal": false,
+      "inputFrames": 80000,
+      "seconds": 9.4383439000012,
+      "accepted": true,
+      "resultFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\results\\00000000-00080000-draft.json"
+    },
+    {
+      "job": "00000000-00480000-final",
+      "block": 0,
+      "blockFinal": true,
+      "inputFrames": 480000,
+      "seconds": 17.29536519999965,
+      "accepted": true,
+      "resultFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\results\\00000000-00480000-final.json"
+    },
+    {
+      "job": "00000001-00240000-draft",
+      "block": 1,
+      "blockFinal": false,
+      "inputFrames": 240000,
+      "seconds": 12.115410200000042,
+      "accepted": true,
+      "resultFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\results\\00000001-00240000-draft.json"
+    },
+    {
+      "job": "00000001-00480000-final",
+      "block": 1,
+      "blockFinal": true,
+      "inputFrames": 480000,
+      "seconds": 17.575268100001267,
+      "accepted": true,
+      "resultFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\results\\00000001-00480000-final.json"
+    },
+    {
+      "job": "00000002-00244000-final",
+      "block": 2,
+      "blockFinal": true,
+      "inputFrames": 244000,
+      "seconds": 11.882009399996605,
+      "accepted": true,
+      "resultFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r2\\S_R004S03C01\\incremental\\session\\results\\00000002-00244000-final.json"
+    }
+  ],
+  "modelNativeInferencePerformed": true,
+  "gpuComputeUsed": false,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "speakerIdentityVerified": false,
+  "cardHardwareUsed": false,
+  "inputIsPacedPublicFileReplay": true
+}

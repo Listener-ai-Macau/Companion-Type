@@ -1,0 +1,47 @@
+[
+  {
+    "seconds": 0.015335900003265124,
+    "event": "document",
+    "confirmedFrames": 1204000,
+    "finalDecodedFrames": 0,
+    "textCharacters": 0,
+    "isFinal": false,
+    "revisions": []
+  },
+  {
+    "seconds": 23.447308599999815,
+    "event": "document",
+    "confirmedFrames": 1204000,
+    "finalDecodedFrames": 480000,
+    "textCharacters": 75,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00480000-final"
+    ]
+  },
+  {
+    "seconds": 41.47828049999953,
+    "event": "document",
+    "confirmedFrames": 1204000,
+    "finalDecodedFrames": 960000,
+    "textCharacters": 220,
+    "isFinal": false,
+    "revisions": [
+      "00000000-00480000-final",
+      "00000001-00480000-final"
+    ]
+  },
+  {
+    "seconds": 53.469426000003295,
+    "event": "document",
+    "confirmedFrames": 1204000,
+    "finalDecodedFrames": 1204000,
+    "textCharacters": 294,
+    "isFinal": true,
+    "revisions": [
+      "00000000-00480000-final",
+      "00000001-00480000-final",
+      "00000002-00244000-final"
+    ]
+  }
+]

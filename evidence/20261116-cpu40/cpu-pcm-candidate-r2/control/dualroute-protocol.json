@@ -1,0 +1,91 @@
+{
+  "at": "2026-11-16T10:53:24.138531+08:00",
+  "cases": [
+    {
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "audioSeconds": 2109.813375,
+      "frames": 33757014,
+      "language": "English",
+      "testFrames": 1204000,
+      "testAudioSeconds": 75.25,
+      "sourceStartFrame": 0,
+      "pcmSha256": "f1bef19fef23964d6161c25ecf6aa69834e9312bfbe5e0bc7eaafd456210f06c",
+      "protocol": "Both paths submit exactly the same first75.25s real original mono PCM; live packets paced every5s, one byte-identical replay; offline intake sealed before inference. No microphones, speakers, private audio or clouds."
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "audioSeconds": 2327.119,
+      "frames": 37233904,
+      "language": "Chinese",
+      "testFrames": 1204000,
+      "testAudioSeconds": 75.25,
+      "sourceStartFrame": 0,
+      "pcmSha256": "a1a779247fb2ae9f39bcb10ff3a7775ff5f204b3f76e895797d2049589c83e47",
+      "protocol": "Both paths submit exactly the same first75.25s real original mono PCM; live packets paced every5s, one byte-identical replay; offline intake sealed before inference. No microphones, speakers, private audio or clouds."
+    }
+  ],
+  "cpuPercent": 25,
+  "nativeThreads": 4,
+  "privateBytes": 2147483648,
+  "testScope": "Actual candidate CPU ASR integration through existing durable PcmSession; transcript equality across incremental/offline final blocks, live first text and completion timing. Does not qualify speaker identity/quality/card or Android.",
+  "acceptance": [
+    "All original PCM bytes and final intervals equal, no missing/duplicate acknowledged source.",
+    "Actual native CPU ASR, no optional Vulkan plugin in the isolated candidate runtime.",
+    "Both final documents cover all original frames, all completed blocks reach natural EOS.",
+    "Final texts and raw decoded final blocks match across live and offline paths.",
+    "First nonempty text while source is still being ingested; report observed timing even if this fails.",
+    "First two complete30s outputs reproduce the already completed full-source native CPU candidate for the same source bytes."
+  ],
+  "noNeuralCallsDuringPreparation": true,
+  "qualityQualified": false,
+  "productDefaultChanged": false,
+  "originalFullCandidateFirstTwoChunks": {
+    "ES2003b": [
+      {
+        "id": "ES2003b-fixed30-0000",
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0000-raw.json",
+        "sha256": "aa44c10e648136a9a9cae4f860b5ee66f8d602d50ff2a609c02d604ccbb3881d",
+        "seconds": 20.210316199998488,
+        "audioSeconds": 30.0,
+        "naturalEos": true
+      },
+      {
+        "id": "ES2003b-fixed30-0001",
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0001-raw.json",
+        "sha256": "2c4aa59fa11276ba4e8c3a36f49625b9f9fade34ebb5ee0f33075370c71e3085",
+        "seconds": 18.599426499997207,
+        "audioSeconds": 30.0,
+        "naturalEos": true
+      }
+    ],
+    "S_R004S03C01": [
+      {
+        "id": "S_R004S03C01-fixed30-0000",
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r2\\S_R004S03C01-fixed30-0000-raw.json",
+        "sha256": "e67fb153f23789997c590063f5a9d239f19db49bfc9ed7e810e36088ac6db08d",
+        "seconds": 19.036797300002945,
+        "audioSeconds": 30.0,
+        "naturalEos": true
+      },
+      {
+        "id": "S_R004S03C01-fixed30-0001",
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r2\\S_R004S03C01-fixed30-0001-raw.json",
+        "sha256": "a49d7963377d284c6bd15fc2d6aa8ef8a5e69645ebd65a8839d7e90fb4771418",
+        "seconds": 23.446668599994155,
+        "audioSeconds": 30.0,
+        "naturalEos": true
+      }
+    ]
+  },
+  "actualTestScriptSha256": "41ed396006003e919bb76de0efaad416db040137279c307d5885b8c58d324707",
+  "scriptSha256": "db10a22b1d698d6636496d559c9f7268d6eb2956c09fa5aec07004cb3502d663",
+  "preparationOnlyChanges": [
+    "Windows state commit/intake concurrency fix and failure-event persistence; no model/settings/audio change."
+  ],
+  "previousFailedRoot": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1",
+  "newNeuralCallsForFixProof": 0
+}

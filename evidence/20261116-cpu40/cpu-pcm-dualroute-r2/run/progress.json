@@ -1,0 +1,43 @@
+{
+  "completed": [
+    {
+      "meeting": "ES2003b",
+      "language": "English",
+      "audioSeconds": 75.25,
+      "firstLiveTextSeconds": 14.208003600004304,
+      "liveInputSealSeconds": 75.2969138000044,
+      "liveFinalDocumentSeconds": 86.8285892999993,
+      "offlineFinalDocumentSeconds": 48.83670849999908,
+      "liveTextVisibleBeforeSeal": true,
+      "incrementalAndOfflineFinalRawTextExactlyEqual": true,
+      "firstTwoChunksMatchOriginalWholeCandidateExactly": true,
+      "allFinalFramesCoveredExactlyOnce": true,
+      "byteIdenticalReplayAcceptedWithoutExtraSource": true,
+      "gpuComputeModulesLoaded": false,
+      "cpuPercent": 25,
+      "nativeThreads": 4,
+      "qualityQualified": false,
+      "sourceUploaded": false
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "language": "Chinese",
+      "audioSeconds": 75.25,
+      "firstLiveTextSeconds": 14.61461170000257,
+      "liveInputSealSeconds": 75.28774089999933,
+      "liveFinalDocumentSeconds": 89.64985760000127,
+      "offlineFinalDocumentSeconds": 53.469426000003295,
+      "liveTextVisibleBeforeSeal": true,
+      "incrementalAndOfflineFinalRawTextExactlyEqual": true,
+      "firstTwoChunksMatchOriginalWholeCandidateExactly": true,
+      "allFinalFramesCoveredExactlyOnce": true,
+      "byteIdenticalReplayAcceptedWithoutExtraSource": true,
+      "gpuComputeModulesLoaded": false,
+      "cpuPercent": 25,
+      "nativeThreads": 4,
+      "qualityQualified": false,
+      "sourceUploaded": false
+    }
+  ],
+  "qualityQualified": false
+}

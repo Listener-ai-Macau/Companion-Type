@@ -5,9 +5,11 @@ from companion_local_pcm_session_20261114 import PcmSession,atomic_json,exclusiv
 from companion_windows_power_request_20261115 import PowerLease
 from moss_windows_resource_limits_20261104 import SystemRamPressure
 from practical_io_20261107 import stop_owned_family
+from companion_local_paths_20261116 import local_path
 def run(manifest,bundle):
  assert manifest['schema']=='companion.local-meeting-stream.v1' and manifest['localOnly'] is True and manifest['language']=='auto'
- root=Path(manifest['sessionPath']);raw=Path(manifest['pcmPath']);status=Path(manifest['statusPath']);recording=str(uuid.UUID(manifest['recordingId']))
+ assert all(Path(manifest[k]).is_absolute() for k in ['sessionPath','pcmPath','statusPath'])
+ root=local_path(manifest['sessionPath']);raw=local_path(manifest['pcmPath']);status=local_path(manifest['statusPath']);recording=str(uuid.UUID(manifest['recordingId']))
  assert root.is_absolute() and raw.is_absolute() and status.is_absolute();source=Path(__file__).resolve().parent
  pressure=SystemRamPressure();child=owned=None;supervisor=psutil.Process(os.getpid());peak=0;started=time.monotonic();root.parent.mkdir(parents=True,exist_ok=True)
  with exclusive_file(root.parent/'stream.lock'),PowerLease():

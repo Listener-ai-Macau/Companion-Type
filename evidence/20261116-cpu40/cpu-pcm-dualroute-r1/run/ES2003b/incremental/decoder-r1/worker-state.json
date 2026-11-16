@@ -1,0 +1,52 @@
+{
+  "state": "INCOMPLETE_CPU_PCM_RETAINED",
+  "startedAt": "2026-11-16T12:33:37.714013+08:00",
+  "completed": [
+    {
+      "job": "00000000-00080000-draft",
+      "block": 0,
+      "blockFinal": false,
+      "inputFrames": 80000,
+      "seconds": 10.192231699998956,
+      "accepted": true,
+      "resultFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\results\\00000000-00080000-draft.json"
+    },
+    {
+      "job": "00000000-00480000-final",
+      "block": 0,
+      "blockFinal": true,
+      "inputFrames": 480000,
+      "seconds": 20.183979000001273,
+      "accepted": true,
+      "resultFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-pcm-dualroute-r1\\ES2003b\\incremental\\session\\results\\00000000-00480000-final.json"
+    }
+  ],
+  "localOnly": true,
+  "sourceUploaded": false,
+  "qualityQualified": false,
+  "productDefaultChanged": false,
+  "tokenIdsAvailable": false,
+  "fullSpeakerJournalFinalized": false,
+  "draftPolicy": "One accepted nonempty draft per open block; empty/failed drafts may advance to the newest frozen prefix. Complete final blocks always run first.",
+  "limits": {
+    "pid": 30220,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 746811392,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "activeJob": "00000001-00320000-draft",
+  "error": "Aborted('transcribe_run: aborted by callback (status 13)')",
+  "finishedAt": "2026-11-16T12:34:35.906707+08:00"
+}

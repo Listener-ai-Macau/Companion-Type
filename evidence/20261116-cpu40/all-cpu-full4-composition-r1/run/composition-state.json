@@ -1,0 +1,71 @@
+{
+  "at": "2026-11-16T12:32:15.191194+08:00",
+  "state": "COMPLETE_CPU_FIXED_FULL4_COMPOSITION_NOT_QUALIFIED",
+  "meetings": [
+    {
+      "meeting": "ES2003b",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\ES2003b-raw.json",
+      "sha256": "a94588469b9a69e4872c0618b4d3760e1ac749e3cdd266ef94df369ba7f0b376",
+      "frames": 33757014,
+      "audioSeconds": 2109.813375,
+      "cpuAsrInferenceSeconds": 1312.8183298000222,
+      "chunks": 71,
+      "incompleteOutputChunks": [],
+      "invalidTimeCount": 2
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\S_R004S03C01-raw.json",
+      "sha256": "607805f8aaadfebd0f567124ac9506c7a821dbc02302bce7716312c8316cd106",
+      "frames": 37233904,
+      "audioSeconds": 2327.119,
+      "cpuAsrInferenceSeconds": 1386.5060023000115,
+      "chunks": 78,
+      "incompleteOutputChunks": [],
+      "invalidTimeCount": 8
+    },
+    {
+      "meeting": "EN2002a",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\EN2002a-raw.json",
+      "sha256": "7d211797e319a19832935aa6ac68c0dee67c42e1b72722d60bedab2470a48a05",
+      "frames": 34283350,
+      "audioSeconds": 2142.709375,
+      "cpuAsrInferenceSeconds": 1865.9974673999604,
+      "chunks": 72,
+      "incompleteOutputChunks": [],
+      "invalidTimeCount": 1
+    },
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\all-cpu-full4-composition-r1\\composed\\20200623_S_R001S07C01-raw.json",
+      "sha256": "84a5e6b34408ed5ebd7b45cfc5974f6bc997613562ddac2bdedfb01632058393",
+      "frames": 32789784,
+      "audioSeconds": 2049.3615,
+      "cpuAsrInferenceSeconds": 1488.4639399000007,
+      "chunks": 69,
+      "incompleteOutputChunks": [],
+      "invalidTimeCount": 9
+    }
+  ],
+  "composerSha256": "67dee92709a98a2ebfe71f633c61a52736bfc4af8d62cedc574f2133705f4bfc",
+  "referenceRead": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false,
+  "newTraining": false,
+  "limits": {
+    "pid": 13800,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 73920512,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

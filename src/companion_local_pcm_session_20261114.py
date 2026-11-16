@@ -4,10 +4,11 @@ No neural runtime, network, reference text, VAD dropping or lexical deduplicatio
 The receiver stays independent of the inference consumer. Growing-block drafts
 are replaced by revision; closed blocks cover every confirmed sample once.
 """
-from contextlib import contextmanager
+from contextlib import contextmanager, ExitStack
 from datetime import datetime, timezone
 from pathlib import Path
 import hashlib, json, os, time, uuid
+from companion_local_paths_20261116 import local_path
 
 RATE = 16000
 FRAME_BYTES = 2
@@ -21,11 +22,25 @@ def read_json(path):
 
 def atomic_json(path, value):
     path = Path(path)
-    temporary = path.with_name(path.name+'.'+uuid.uuid4().hex+'.tmp')
+    # Keep temporary names independent of a request's already long filename.
+    # App cache roots include a64-character content hash; appending another
+    # filename+UUID can exceed Windows MAX_PATH before the final path does.
+    temporary = path.with_name('.tmp-'+uuid.uuid4().hex)
     with temporary.open('x', encoding='utf-8') as stream:
         json.dump(value, stream, ensure_ascii=False, indent=2)
         stream.write('\n'); stream.flush(); os.fsync(stream.fileno())
-    os.replace(temporary, path)
+    # A concurrent ordinary Windows reader can briefly deny rename/delete
+    # sharing. Keep the fsynced new file and retry only the atomic commit;
+    # never rewrite PCM or expose a partially written JSON to that reader.
+    deadline = time.monotonic()+3
+    while True:
+        try:
+            os.replace(temporary, path)
+            break
+        except PermissionError as error:
+            if os.name!='nt' or error.winerror not in (5,32,33) or time.monotonic()>=deadline:
+                raise
+            time.sleep(.01)
 
 class SessionConflict(ValueError):
     pass
@@ -60,7 +75,7 @@ def exclusive_file(path):
 
 class PcmSession:
     def __init__(self, directory):
-        self.root = Path(directory).resolve()
+        self.root = local_path(directory)
         self.meta = self.root/'session.json'
         self.audio = self.root/'audio.pcm'
 
@@ -86,7 +101,19 @@ class PcmSession:
 
     @contextmanager
     def locked(self):
-        with exclusive_file(self.root/'intake.lock'):
+        # Intake/reconcile are short durable transactions. Waiting here is
+        # limited to ownership acquisition; conflicts raised by the body
+        # (gaps, changed replay bytes or EOS) must still fail immediately.
+        deadline = time.monotonic()+3
+        with ExitStack() as stack:
+            while True:
+                try:
+                    stack.enter_context(exclusive_file(self.root/'intake.lock'))
+                    break
+                except SessionConflict as error:
+                    if not isinstance(error.__cause__,OSError) or time.monotonic()>=deadline:
+                        raise
+                    time.sleep(.01)
             yield
 
     def state(self):
@@ -204,7 +231,7 @@ class PcmSession:
         canonical=read_json(self.root/'requests'/(job['jobId']+'.json'))
         value=self.state()
         if (canonical!=job or job['configSha256']!=value['configSha256']
-                or Path(job['sourcePcm']).resolve()!=self.audio
+                or local_path(job['sourcePcm'])!=self.audio
                 or not 0<=job['startFrame']<job['endFrame']<=value['confirmedFrames']
                 or job['endFrame']-job['startFrame']>value['config']['blockFrames']):
             raise SessionConflict('Frozen source interval/configuration changed')

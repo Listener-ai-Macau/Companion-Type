@@ -1,0 +1,88 @@
+{
+  "case": {
+    "id": "ES2003b-seq-021",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-021.wav",
+    "wavSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+    "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f",
+    "frames": 203840,
+    "audioSeconds": 12.74,
+    "language": "English"
+  },
+  "seconds": 9.202030000000377,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Plus that's a nice video set. So by the sense that what we're suggesting so far, your design, the user interface is still quite open. You could go for quite an interesting design.",
+    "raw_text": "<|0.00|> Plus that's a nice video set.<|2.50|><|2.50|> So by the sense that what we're suggesting so far,<|5.20|><|5.20|> your design, the user interface is still quite open.<|10.10|><|10.10|> You could go for quite an interesting design.<|12.74|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Plus that's a nice video set.",
+        "t0_ms": 0,
+        "t1_ms": 2500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "So by the sense that what we're suggesting so far,",
+        "t0_ms": 2500,
+        "t1_ms": 5200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "your design, the user interface is still quite open.",
+        "t0_ms": 5200,
+        "t1_ms": 10100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "You could go for quite an interesting design.",
+        "t0_ms": 10100,
+        "t1_ms": 12740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 224.90899658203125,
+      "mel_ms": 12.968000411987305,
+      "encode_ms": 8741.0703125,
+      "decode_ms": 441.2799987792969
+    }
+  },
+  "rawDecoded": "<|0.00|> Plus that's a nice video set.<|2.50|><|2.50|> So by the sense that what we're suggesting so far,<|5.20|><|5.20|> your design, the user interface is still quite open.<|10.10|><|10.10|> You could go for quite an interesting design.<|12.74|>",
+  "hypothesis": "Plus that's a nice video set. So by the sense that what we're suggesting so far, your design, the user interface is still quite open. You could go for quite an interesting design.",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

@@ -1,0 +1,58 @@
+{
+  "case": {
+    "id": "EN2001a-a2-000",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-000.wav",
+    "wavSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+    "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f",
+    "frames": 187360,
+    "audioSeconds": 11.71,
+    "language": "English"
+  },
+  "seconds": 8.733737700000347,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "duplication of effort and stuff and yeah you should think about having a prototype for week 6 which is",
+    "raw_text": "<|0.00|> duplication of effort and stuff and yeah you should think about having a prototype for week 6 which is<|11.72|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "duplication of effort and stuff and yeah you should think about having a prototype for week 6 which is",
+        "t0_ms": 0,
+        "t1_ms": 11720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 224.90899658203125,
+      "mel_ms": 13.449999809265137,
+      "encode_ms": 8410.2666015625,
+      "decode_ms": 304.1210021972656
+    }
+  },
+  "rawDecoded": "<|0.00|> duplication of effort and stuff and yeah you should think about having a prototype for week 6 which is<|11.72|>",
+  "hypothesis": "duplication of effort and stuff and yeah you should think about having a prototype for week 6 which is",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

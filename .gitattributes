@@ -341,3 +341,21 @@ src/companion_local_moss_cpu_stream_20261116.py -text -whitespace
 src/companion_local_moss_cpu_pipeline_20261116.py -text -whitespace
 
 evidence/20261116-full4-cpu-regression-decision-and-speaker-ram-stop/** -text -whitespace
+
+evidence/20261116-cpu40/** -text -whitespace
+
+src/english_specialist_cpu_worker_20261116.py -text -whitespace
+
+src/run_english_specialist_cpu_20261116.py -text -whitespace
+
+src/score_english_specialist_cpu_20261116.py -text -whitespace
+
+src/compose_cpu_native8_full4_20261116.py -text -whitespace
+
+src/score_all_cpu_full4_summary_20261116.py -text -whitespace
+
+src/companion_local_pcm_session_20261114.py -text -whitespace
+
+src/companion_cpu_guarded_stage_20261116.py -text -whitespace
+
+src/companion_local_paths_20261116.py -text -whitespace

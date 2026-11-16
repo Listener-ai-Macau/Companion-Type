@@ -1,0 +1,219 @@
+{
+  "at": "2026-11-16T12:32:18.874003+08:00",
+  "meeting": "20200623_S_R001S07C01",
+  "language": "Chinese",
+  "audioSeconds": 2049.3615,
+  "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+  "baselineRawText": {
+    "referenceUnits": 7153,
+    "hypothesisUnits": 6747,
+    "errors": 1037,
+    "errorRate": 0.1449741367258493,
+    "counts": {
+      "replace": 421,
+      "delete": 511,
+      "insert": 105
+    }
+  },
+  "baselinePersonErrorRate": 0.27065566895009086,
+  "baselineDER": 0.1584147453575932,
+  "baselineEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\combination-study-r1\\result.json",
+  "scoringManifestSha256": "234ea8b756701993e17674fabb0cf12e69e22649ca9aa905f694a160b08863d2",
+  "scorerSha256": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "originalGatesChanged": false,
+  "recordingsArePreviouslySeenDevelopmentCasesNotBlindHoldout": true,
+  "newNeuralCalls": 0,
+  "state": "COMPLETE_JOINT_WHOLE_MEETING_SCORED_NOT_PRODUCT_QUALIFIED",
+  "candidateOutputSha256": "84a5e6b34408ed5ebd7b45cfc5974f6bc997613562ddac2bdedfb01632058393",
+  "rawText": {
+    "referenceUnits": 7153,
+    "hypothesisUnits": 7149,
+    "errors": 1098,
+    "errorRate": 0.1535020271214875,
+    "counts": {
+      "replace": 448,
+      "delete": 327,
+      "insert": 323
+    }
+  },
+  "personText": {
+    "referenceUnits": 7153,
+    "errors": 1811,
+    "errorRate": 0.25318048371312735,
+    "unknownUnitsForcedUnmatched": 145,
+    "perPerson": [
+      {
+        "referenceSpeaker": "001-M",
+        "anonymousSpeaker": "S03",
+        "referenceUnits": 3248,
+        "hypothesisUnits": 3365,
+        "errors": 447,
+        "errorRate": 0.1376231527093596,
+        "counts": {
+          "replace": 122,
+          "delete": 104,
+          "insert": 221
+        }
+      },
+      {
+        "referenceSpeaker": "003-M",
+        "anonymousSpeaker": "S02",
+        "referenceUnits": 521,
+        "hypothesisUnits": 271,
+        "errors": 290,
+        "errorRate": 0.5566218809980806,
+        "counts": {
+          "replace": 18,
+          "delete": 261,
+          "insert": 11
+        }
+      },
+      {
+        "referenceSpeaker": "004-M",
+        "anonymousSpeaker": "S01",
+        "referenceUnits": 1389,
+        "hypothesisUnits": 1392,
+        "errors": 451,
+        "errorRate": 0.32469402447804174,
+        "counts": {
+          "replace": 112,
+          "delete": 168,
+          "insert": 171
+        }
+      },
+      {
+        "referenceSpeaker": "006-M",
+        "anonymousSpeaker": "S00",
+        "referenceUnits": 1995,
+        "hypothesisUnits": 1976,
+        "errors": 478,
+        "errorRate": 0.23959899749373434,
+        "counts": {
+          "replace": 235,
+          "delete": 131,
+          "insert": 112
+        }
+      }
+    ],
+    "mappingForScoringOnly": true,
+    "oneWholeMeetingPermutation": true
+  },
+  "originalReferenceDER": {
+    "referenceSpeakerSeconds": 1833.9097710178464,
+    "missSeconds": 186.3362409797624,
+    "falseAlarmSeconds": 103.2664699619155,
+    "confusionSeconds": 126.68134577533458,
+    "errorSeconds": 416.2840567170125,
+    "DER": 0.2269926597784409,
+    "identityForScoringOnly": {
+      "S00": "006-M",
+      "S01": "004-M",
+      "S02": "003-M",
+      "S03": "001-M"
+    }
+  },
+  "invalidTimeSegmentIndices": [],
+  "residualUnparsed": [
+    {
+      "beforeSegment": 33,
+      "text": "\n毕业的大学生，也有失业的下岗。\n"
+    },
+    {
+      "beforeSegment": 72,
+      "text": "\n嗯。\n"
+    },
+    {
+      "beforeSegment": 78,
+      "text": "\n嗯。\n"
+    },
+    {
+      "beforeSegment": 79,
+      "text": "\n嗯。\n"
+    },
+    {
+      "beforeSegment": 113,
+      "text": "\n呃在上个月，呃整体来说还是呃比较平缓的吧，但是。\n"
+    },
+    {
+      "beforeSegment": 141,
+      "text": "\n提呃提短信提醒他还款，包括他的额度什么日期还款日都提醒他，啊提前还款。\n"
+    },
+    {
+      "beforeSegment": 229,
+      "text": "\n嗯。\n"
+    },
+    {
+      "beforeSegment": 230,
+      "text": "\n嗯。\n"
+    },
+    {
+      "beforeSegment": 241,
+      "text": "\n呃，进行调查，呃，用户会进行。\n"
+    },
+    {
+      "beforeSegment": 249,
+      "text": "\n对，有一个是泛。\n"
+    },
+    {
+      "beforeSegment": 351,
+      "text": "\n就是有个别的话，呃，最多是两年。\n"
+    },
+    {
+      "beforeSegment": 404,
+      "text": "\n嗯，也是。\n"
+    },
+    {
+      "beforeSegment": 411,
+      "text": "\n大额的咱们肯定会针对一些这个。\n"
+    },
+    {
+      "beforeSegment": 417,
+      "text": "\n毕竟能买得起三十万以上的车的。\n"
+    },
+    {
+      "beforeSegment": 444,
+      "text": "\n嗯。\n"
+    },
+    {
+      "beforeSegment": 468,
+      "text": "\n如果不还的话。\n"
+    },
+    {
+      "beforeSegment": 469,
+      "text": "\n嗯。\n"
+    },
+    {
+      "beforeSegment": 597,
+      "text": "\n不是。\n哎。\n"
+    },
+    {
+      "beforeSegment": 637,
+      "text": "\n好的。\n"
+    }
+  ],
+  "allNativeLexicalContentCounted": true,
+  "parsedSegments": 638,
+  "rawTextGate": false,
+  "personTextGate": false,
+  "derGate": false,
+  "rawEditsReduced": -61,
+  "rawRelativeErrorReduction": -0.058823529411764705,
+  "limits": {
+    "pid": 31988,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 93700096,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

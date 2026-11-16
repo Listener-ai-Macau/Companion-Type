@@ -3,7 +3,9 @@ from pathlib import Path
 from datetime import datetime
 import argparse,hashlib,json,os,sys,time
 from companion_local_pcm_session_20261114 import PcmSession,atomic_json,exclusive_file
-from companion_local_meeting_pipeline_20261115 import canonical_audio,asr_session,run_stage
+from companion_local_meeting_pipeline_20261115 import canonical_audio,asr_session
+from companion_cpu_guarded_stage_20261116 import run_cpu_stage
+from companion_local_paths_20261116 import local_path
 from companion_windows_power_request_20261115 import PowerLease
 S=Path(__file__).resolve().parent
 read=lambda p:json.loads(Path(p).read_text(encoding='utf-8'))
@@ -22,7 +24,7 @@ def main():
  assert manifest['schema']=='companion.local-meeting-input.v1' and manifest['localOnly'] is True and manifest['finalize'] is True and manifest['language']=='auto'
  assert manifest['files'] and all(set(x)=={'path','sha256','pcmBytes'} for x in manifest['files'])
  identity=hashlib.sha256(json.dumps({'sources':[x['sha256'] for x in manifest['files']],'bundleSha256':sha(a.bundle)},sort_keys=True).encode()).hexdigest()
- root=Path(manifest['artifactRoot']) if manifest.get('artifactRoot') else Path(bundle['workRoot'])/identity;root.mkdir(parents=True,exist_ok=True)
+ root=local_path(manifest['artifactRoot'] if manifest.get('artifactRoot') else Path(bundle['workRoot'])/identity);root.mkdir(parents=True,exist_ok=True)
  with exclusive_file(root/'pipeline.lock'),PowerLease():
   binding={'inputSha256':sha(a.manifest),'bundleSha256':sha(a.bundle)};target=root/'job.json'
   state=read(target) if target.exists() else {'state':'PREPARING_LOCAL_CPU_MEETING','startedAt':datetime.now().astimezone().isoformat(),'attempts':[]}
@@ -46,8 +48,8 @@ def main():
    local={**bundle,'ownedStreamRoots':[p for p in roots if compatible(p)],'completedPcmCaches':[]}
    session,reused=asr_session(root,local,audio);state.update(asrSession=str(session.root),adoptedCompatibleStreamCache=session.root!=root/'asr-session');atomic_json(target,state)
    timeout=min(14400,audio['audioSeconds']*2+300)
-   if session.pending():run_stage(root,state,'cpu-asr',[sys.executable,str(S/'run_local_moss_cpu_decoder_20261116.py'),'--session',str(session.root),
-    '--control',bundle['cpuPcmControl'],'--run',str(root/('asr-run-'+str(time.time_ns())))],timeout=timeout)
+   if session.pending():run_cpu_stage(root,state,'cpu-asr',[sys.executable,str(S/'run_local_moss_cpu_decoder_20261116.py'),'--session',str(session.root),
+    '--control',bundle['cpuPcmControl'],'--run',str(root/('asr-run-'+str(time.time_ns())))],timeout=timeout,deadline=bundle['neuralDeadline'])
    assert session.document()['isFinal'],'Complete original CPU ASR is still pending'
    proof=read(bundle['cpuSpeakerExecutionProof']);assert proof['state']=='COMPLETE_CPU_ONLY_NATIVE8_FULL4_NOT_QUALIFIED' and proof['cpu61ControlPassed']
    case={'meeting':'local-'+identity[:16],**{k:audio[k] for k in ['audio','audioSha256','audioSeconds']}}
@@ -64,8 +66,8 @@ def main():
    terminal=speaker/'results'/case['meeting']/'completed-state.json'
    if not terminal.exists() or read(terminal)['state']!='COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED':
     with exclusive_file(Path('E:/CodexData/Companion/.model-cache/local-qwen-decoder.lock')):
-     run_stage(root,state,'cpu-speaker',[control['workerPython'],str(S/'cpu25_nemotron_wrapper_20261116.py'),
-      '--control',str(speaker),'--index','0','--phase','activity'],timeout=timeout)
+     run_cpu_stage(root,state,'cpu-speaker',[control['workerPython'],str(S/'cpu25_nemotron_wrapper_20261116.py'),
+      '--control',str(speaker),'--index','0','--phase','activity'],timeout=timeout,deadline=bundle['neuralDeadline'])
    sys.path.append(bundle['postprocessSitePackages'])
    from companion_moss_speaker_document_20261116 import join_recording
    document,trace=join_recording(session,audio=audio,probability_root=Path(read(speaker/'protocol.json')['probabilityCacheRoot'])/case['meeting'],speaker_result_root=speaker/'results'/case['meeting'])

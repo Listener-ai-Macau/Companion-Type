@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\run_local_moss_cpu_decoder_20261116.py", line 50, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\run_local_moss_cpu_decoder_20261116.py", line 34, in main
+    raise InterruptedError('Confirmed PCM, accepted results and partials retained')
+InterruptedError: Confirmed PCM, accepted results and partials retained

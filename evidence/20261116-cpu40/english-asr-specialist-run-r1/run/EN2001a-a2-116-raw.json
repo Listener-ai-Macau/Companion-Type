@@ -1,0 +1,118 @@
+{
+  "case": {
+    "id": "EN2001a-a2-116",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-116.wav",
+    "wavSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+    "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f",
+    "frames": 289920,
+    "audioSeconds": 18.12,
+    "language": "English"
+  },
+  "seconds": 9.144573400000809,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "ONCE WE START DOING IT IT WILL BECOMES MORE THAN SO I GUESS I DON'T CAN YOU RECOMMEND IT? IT'S JUST WE ARE HALFWAY THROUGH THE PROJECT TIME BUT THE LIST JUST FREAKS ME OUT. YES. WHAT TIME IS IT? WHEN YOU GET TO IT?",
+    "raw_text": "<|0.00|> ONCE WE START DOING IT IT WILL BECOMES MORE THAN SO I GUESS I DON'T<|4.72|><|4.72|> CAN YOU RECOMMEND IT?<|6.72|><|6.72|> IT'S JUST WE ARE HALFWAY THROUGH THE PROJECT TIME BUT THE LIST<|8.80|><|8.80|> JUST FREAKS ME OUT.<|10.80|><|10.80|> YES.<|12.80|><|12.80|> WHAT TIME IS IT?<|14.80|><|14.80|> WHEN YOU GET TO IT?<|18.12|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "ONCE WE START DOING IT IT WILL BECOMES MORE THAN SO I GUESS I DON'T",
+        "t0_ms": 0,
+        "t1_ms": 4720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "CAN YOU RECOMMEND IT?",
+        "t0_ms": 4720,
+        "t1_ms": 6720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "IT'S JUST WE ARE HALFWAY THROUGH THE PROJECT TIME BUT THE LIST",
+        "t0_ms": 6720,
+        "t1_ms": 8800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "JUST FREAKS ME OUT.",
+        "t0_ms": 8800,
+        "t1_ms": 10800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "YES.",
+        "t0_ms": 10800,
+        "t1_ms": 12800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "WHAT TIME IS IT?",
+        "t0_ms": 12800,
+        "t1_ms": 14800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "WHEN YOU GET TO IT?",
+        "t0_ms": 14800,
+        "t1_ms": 18120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 224.90899658203125,
+      "mel_ms": 13.87600040435791,
+      "encode_ms": 8431.9521484375,
+      "decode_ms": 692.541015625
+    }
+  },
+  "rawDecoded": "<|0.00|> ONCE WE START DOING IT IT WILL BECOMES MORE THAN SO I GUESS I DON'T<|4.72|><|4.72|> CAN YOU RECOMMEND IT?<|6.72|><|6.72|> IT'S JUST WE ARE HALFWAY THROUGH THE PROJECT TIME BUT THE LIST<|8.80|><|8.80|> JUST FREAKS ME OUT.<|10.80|><|10.80|> YES.<|12.80|><|12.80|> WHAT TIME IS IT?<|14.80|><|14.80|> WHEN YOU GET TO IT?<|18.12|>",
+  "hypothesis": "ONCE WE START DOING IT IT WILL BECOMES MORE THAN SO I GUESS I DON'T CAN YOU RECOMMEND IT? IT'S JUST WE ARE HALFWAY THROUGH THE PROJECT TIME BUT THE LIST JUST FREAKS ME OUT. YES. WHAT TIME IS IT? WHEN YOU GET TO IT?",
+  "hypothesisSource": "Native Result.text, no external rewrites; full raw native result retained.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "speakerAttributionVerified": false
+}

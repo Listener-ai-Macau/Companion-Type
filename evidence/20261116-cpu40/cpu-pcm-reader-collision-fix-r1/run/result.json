@@ -1,0 +1,52 @@
+{
+  "state": "PASS_ACTUAL_WINDOWS_ATOMIC_COMMIT_OWNERSHIP_AND_DURABLE_REPLAY",
+  "at": "2026-11-16T12:39:02.322852+08:00",
+  "sourceSha256": "9fdf7f8c1ac45532c4a203992aec540c2bd8588eee9538def3b8fbeae4073798",
+  "cases": [
+    {
+      "case": "temporary_open_reader_commit_waits_then_succeeds",
+      "ack": {
+        "confirmedFrames": 160,
+        "newFrames": 160,
+        "duplicate": false,
+        "unconfirmedTailBytes": 0
+      },
+      "seconds": 0.20299999999406282
+    },
+    {
+      "case": "temporary_intake_owner_serializes",
+      "ack": {
+        "confirmedFrames": 160,
+        "newFrames": 160,
+        "duplicate": false,
+        "unconfirmedTailBytes": 0
+      },
+      "seconds": 0.2190000000045984
+    },
+    {
+      "case": "persistent_reader_fails_bounded_then_exact_replay_recovers_without_duplication",
+      "error": "PermissionError(13, '拒绝访问。')",
+      "type": "PermissionError",
+      "winerror": 5,
+      "seconds": 3.0,
+      "replayAck": {
+        "confirmedFrames": 160,
+        "newFrames": 160,
+        "duplicate": false,
+        "unconfirmedTailBytes": 0
+      }
+    },
+    {
+      "case": "gap",
+      "error": "Audio gap; request the missing interval before acknowledging this packet",
+      "seconds": 0.014999999999417923
+    },
+    {
+      "case": "changed_replay",
+      "error": "Retransmitted audio differs; retain both caller data and original file",
+      "seconds": 0.0
+    }
+  ],
+  "newNeuralCalls": 0,
+  "recognitionQualityClaim": false
+}
