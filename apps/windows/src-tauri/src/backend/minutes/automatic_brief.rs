@@ -6,6 +6,8 @@ use serde_json::{json,Value};
 use crate::companion_v1::{CompanionV1ActionItem,CompanionV1HostSession,CompanionV1MeetingMinutes,MinutesTemplate};
 #[path="automatic_brief_factual_audit.rs"]
 mod factual_audit;
+#[path="automatic_brief_coverage.rs"]
+mod coverage;
 
 const DRAFT:&str=include_str!("automatic_brief_draft.txt");
 const REVIEW:&str=include_str!("automatic_brief_review.txt");
@@ -150,7 +152,7 @@ fn render(doc:&Document,units:&[Unit],speaker:Option<&str>)->String {
 }
 fn source_first_input(input:&Value)->String {
     let Some(object)=input.as_object()else{return input.to_string();};
-    let priority=["sourceUnits","sourceConstraints","readingBudget","previousDocument","document","draft","checkClaims","auditProblems","deletionOnlyPaths"];
+    let priority=["sourceUnits","sourceConstraints","readingBudget","previousDocument","document","draft","checkClaims","summaryUnits","questions","pairs","auditProblems","deletionOnlyPaths"];
     let mut fields=Vec::new();
     for key in priority {if let Some(value)=object.get(key){fields.push(format!("{}:{}",json!(key),value));}}
     for(key,value)in object {if !priority.contains(&key.as_str()){fields.push(format!("{}:{}",json!(key),value));}}
@@ -162,7 +164,7 @@ fn request(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,p
     super::super::meeting_processing_job::check_current()?;
     let url=super::http_policy::endpoint(endpoint).map_err(super::safe_minutes_http_error)?;
     let mut body=json!({"model":model,"response_format":{"type":"json_object"},"max_tokens":if review{24576}else{8192},"messages":[{"role":"system","content":prompt},{"role":"user","content":source_first_input(&input)}]});
-    if model.to_ascii_lowercase().starts_with("deepseek-"){body["thinking"]=json!({"type":if review{"enabled"}else{"disabled"}});if review{body["reasoning_effort"]=json!("low");}}
+    if model.to_ascii_lowercase().starts_with("deepseek-"){body["thinking"]=json!({"type":if review{"enabled"}else{"disabled"}});if review{body["reasoning_effort"]=json!(if stage.starts_with("source-factual-"){"high"}else{"low"});}}
     let stage_start=Instant::now();
     let response=client.post(url).bearer_auth(key).timeout(remaining.min(Duration::from_secs(120))).json(&body).send().map_err(|e|super::safe_minutes_http_error(super::http_policy::Failure::from_reqwest(e)))?;
     let payload=super::http_policy::response_json(response,super::http_policy::MAX_RESPONSE_BYTES).map_err(super::safe_minutes_http_error)?;
@@ -192,6 +194,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         if reviewed.review.blocking_issues.iter().any(|s|!s.trim().is_empty()){return Err("纪要仍有未解决的内容核对问题，已有结果和原文保留。".into());}
         let doc=reviewed.document;traced_document=Some(doc.clone());
         let doc=factual_audit::review_and_repair(endpoint,model,key,client,&doc,&units,start,&mut trace)?;
+        let doc=if coverage::enabled(){coverage::complete(endpoint,model,key,client,&doc,&units,start,&mut trace)?}else{doc};
         traced_document=Some(doc.clone());
         let mut minutes=base.clone();
         minutes.source="llm_deepseek".into();minutes.quality="final".into();minutes.processing=None;minutes.llm_note=None;

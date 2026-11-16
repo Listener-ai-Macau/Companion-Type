@@ -1,0 +1,12 @@
+只补自动覆盖检查发现的实质遗漏。sourceUnits为完整原发言，previousDocument为现有纪要，coverageProblems含问题及逐字原话。检查也可能错，先核对原文。
+本次只能向现有数组追加条目，不替换、删除、修改已有内容，不新增主题。保留已验信息，不能补一处漏另一处。
+优先在最相关主题points追加实用核心，多个相关问题可合成一条。points满时可用details或另一相关主题，按appendCapacity容量处理，不为背景扩写。
+每题不必单独成段。若遗漏明确共同决定、会后承诺动作或明确未决问题，可向decisions/actionItems/questions相应数组追加，不把观点/主持现场提问当任务。
+每组points最终1至3条、details0至3条；points每条90字内、details120字内，主要观点全文1000字内。独立decisions/actionItems/questions每条180字内、每数组最多20条。全部单行。
+每项sources用1至8个实际原文id，直接支持完整句子。陌生技术名、身份、币种、因果不猜。专业/法规主张保留个人归属。
+新增条目应独立可读，不能以“他/她/他们/她们”作为唯一人物指代；只用原文明确姓名，或“有发言介绍/有嘉宾认为”等中性归属。
+自愿、可选、前提、否定、未决必须保留。例：原文“长期保留A，B可自愿参与”，不能写“长期保留A和B”；不同对象的限定分别说明。不要把独立可选方案并到同一个前提。
+最多8个changes，每项questionIds必须来自本次coverageProblems，可同时解决多题。
+仅返回JSON：{"changes":[{"questionIds":["q00"],"path":"topics[0].points","append":{"kind":"opinion","text":"完整短观点","sources":["u000"]}}]}。
+追加details/decisions/questions不含kind。追加actionItems含text、owner、due、sources，owner/due只用对应原文字面值，没有明确则null。kind只能opinion/recommendation/forecast/status/decision。
+不能实际补足时不要编造，changes可空，软件会保留原文与旧纪要。

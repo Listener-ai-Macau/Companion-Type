@@ -159,11 +159,23 @@ fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSe
     let repaired:Document=serde_json::from_value(value).map_err(|_|fail())?;super::validate(&repaired,units)?;Ok(repaired)
 }
 pub(super) fn review_and_repair(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
+    review_and_repair_since(endpoint,model,key,client,doc,units,None,start,trace)
+}
+fn unverified_claims(doc:&Document,verified:Option<&Document>)->Vec<Value> {
+    let previous=verified.map(claims).unwrap_or_default().into_iter().map(|claim|(claim["path"].as_str().unwrap().to_string(),claim)).collect::<HashMap<_,_>>();
+    claims(doc).into_iter().filter(|claim|previous.get(claim["path"].as_str().unwrap())!=Some(claim)).collect()
+}
+// The caller keeps the same immutable source and a document just verified in
+// this invocation. Unchanged claims retain that evidence; new/changed claims
+// still see the complete original source, never a model inventory.
+pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
     let source=sentences(units);
     let wire=units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>();
     let mut current=doc.clone();let mut attempted=HashSet::new();let mut recovered_format=false;
     for round in 0..=2 {
-        let mut expected=claims(&current);emphasize_source_scope(&mut expected,&source);
+        let mut expected=unverified_claims(&current,verified);
+        if expected.is_empty(){return Ok(current);}
+        emphasize_source_scope(&mut expected,&source);
         let stage=match round{0=>"source-factual-audit",1=>"source-factual-reaudit",_=>"source-factual-reaudit-2"};
         let payload=json!({"sourceUnits":wire,"document":current,"checkClaims":expected});
         let raw=super::request(endpoint,model,key,client,PROMPT,payload.clone(),true,start,trace,stage)?;
@@ -202,6 +214,15 @@ pub(super) fn review_and_repair(endpoint:&str,model:&str,key:&str,client:&reqwes
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn automatic_brief_fact_keeps_only_unchanged_in_call_claims_verified(){
+        let original:Document=serde_json::from_value(json!({"purpose":"采购前提","topics":[{"title":"预算","points":[{"kind":"status","text":"预算尚未审批。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap();
+        assert!(unverified_claims(&original,Some(&original)).is_empty());
+        let mut next=original.clone();next.topics[0].details.push(serde_json::from_value(json!({"text":"不得先采购。","sources":["u000"]})).unwrap());
+        let pending=unverified_claims(&next,Some(&original));assert_eq!(pending.len(),1);assert_eq!(pending[0]["path"],"topics[0].details[0]");
+        next.topics[0].points[0].kind=serde_json::from_value(json!("decision")).unwrap();
+        let pending=unverified_claims(&next,Some(&original));assert_eq!(pending.len(),2);assert!(pending.iter().any(|p|p["path"]=="topics[0].points[0]"));
+    }
     fn source()->Vec<Unit>{vec![Unit{id:"u000".into(),text:"李敏：预算尚未审批。\n\n权限测试未完成，暂不上线。".into()}]}
     fn expected()->Vec<Value>{vec![json!({"path":"purpose","text":"验证后再评估上线"}),json!({"path":"topics[0].points[0]","kind":"status","text":"预算尚未审批"})]}
     fn audit()->Value{json!({"claimAudit":[{"path":"purpose","status":"supported","reason":"原文明确未通过前不上线","evidence":["e0001"]},{"path":"topics[0].points[0]","status":"supported","reason":"原文明确尚未审批","evidence":["e0000"]}]})}
