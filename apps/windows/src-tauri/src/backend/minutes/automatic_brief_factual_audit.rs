@@ -10,9 +10,9 @@ const REPAIR:&str=include_str!("automatic_brief_factual_repair.txt");
 struct Sentence {id:String,source:String,text:String}
 #[derive(Debug,Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
-struct Audit {claim_audit:Vec<Claim>}
+struct Audit {claim_audit:Vec<Claim>,#[serde(rename="type")]format_kind:Option<String>}
 #[derive(Debug,Deserialize)]
-struct Claim {path:String,status:String,reason:String,evidence:Vec<String>,#[serde(flatten)]echoed:HashMap<String,Value>}
+struct Claim {path:String,status:String,reason:String,evidence:Vec<String>,clarity:Option<String>,#[serde(rename="unclearText")]unclear_text:Option<String>,#[serde(flatten)]echoed:HashMap<String,Value>}
 
 fn sentences(units:&[Unit])->Vec<Sentence> {
     let mut out:Vec<Sentence>=Vec::new();
@@ -64,12 +64,18 @@ fn emphasize_source_scope(claims:&mut[Value],source:&[Sentence]) {
     }
 }
 fn decode(raw:&str,expected:&[Value],source:&[Sentence])->Result<Audit,String> {
-    let audit:Audit=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|"纪要内容审核没有返回完整结果，已有结果保留。".to_string())?;
+    decode_contract(raw,expected,source,super::coverage::enabled())
+}
+fn decode_contract(raw:&str,expected:&[Value],source:&[Sentence],require_clarity:bool)->Result<Audit,String> {
+    let mut audit:Audit=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|"纪要内容审核没有返回完整结果，已有结果保留。".to_string())?;
+    // Some providers echo the requested JSON format descriptor. It has no
+    // semantic authority; any other root field/value still fails closed.
+    if audit.format_kind.as_deref().is_some_and(|v|v!="json_object"){return Err("纪要审核格式标记无效，已有结果保留。".into());}
     if audit.claim_audit.len()!=expected.len()||audit.claim_audit.len()>160{return Err("纪要内容审核未覆盖全部陈述，已有结果保留。".into());}
     let paths=expected.iter().map(|v|(v["path"].as_str().unwrap(),v)).collect::<HashMap<_,_>>();
     let evidence=source.iter().filter(|s|!s.text.trim().is_empty()).map(|s|s.id.as_str()).collect::<HashSet<_>>();
     let mut seen=HashSet::new();let mut issues=0;
-    for claim in &audit.claim_audit {
+    for claim in &mut audit.claim_audit {
         let Some(original)=paths.get(claim.path.as_str())else{return Err("纪要审核引用了不存在的陈述，已有结果保留。".into());};
         if !seen.insert(&claim.path)||claim.reason.trim().is_empty()||claim.reason.chars().count()>300
             ||!matches!(claim.status.as_str(),"supported"|"overstated"|"unsupported"|"unclear")
@@ -83,6 +89,18 @@ fn decode(raw:&str,expected:&[Value],source:&[Sentence])->Result<Audit,String> {
         if claim.echoed.iter().any(|(key,value)|!matches!(key.as_str(),"kind"|"text"|"sources"|"owner"|"due")||original.get(key)!=Some(value)) {
             return Err("纪要审核的陈述元数据不匹配，已有结果保留。".into());
         }
+        match claim.clarity.as_deref(){
+            Some("unclear")=>{
+                let phrase=claim.unclear_text.as_deref().filter(|s|!s.trim().is_empty()).ok_or("纪要审核未定位含混表达，已有结果保留。")?;
+                if phrase.chars().count()>180||!["text","owner","due"].iter().any(|key|original.get(*key).and_then(Value::as_str).is_some_and(|text|text.contains(phrase))){return Err("纪要审核的含混表达不属于本条陈述，已有结果保留。".into());}
+                // Literal source support cannot certify a readable meaning.
+                // Preserve every existing negative verdict; only veto a pass.
+                if claim.status=="supported"{claim.status="unclear".into();}
+            },
+            Some("clear")=>if claim.unclear_text.as_ref().is_some_and(|s|!s.is_empty()){return Err("纪要审核的清晰性结论不一致，已有结果保留。".into());},
+            None if !require_clarity=>if claim.unclear_text.as_ref().is_some_and(|s|!s.is_empty()){return Err("纪要审核缺少清晰性结论，已有结果保留。".into());},
+            _=>return Err("纪要审核未分别核对出处和含义，已有结果保留。".into()),
+        }
         if claim.status!="supported"{issues+=1;}
     }
     let _=issues;
@@ -91,7 +109,7 @@ fn decode(raw:&str,expected:&[Value],source:&[Sentence])->Result<Audit,String> {
 fn readable_negative_paths(raw:&str)->HashSet<String> {
     raw.char_indices().filter(|(_,c)|*c=='{').filter_map(|(i,_)|
         serde_json::Deserializer::from_str(&raw[i..]).into_iter::<Claim>().next().and_then(Result::ok)
-    ).filter(|c|matches!(c.status.as_str(),"overstated"|"unsupported"|"unclear")).map(|c|c.path).collect()
+    ).filter(|c|matches!(c.status.as_str(),"overstated"|"unsupported"|"unclear")||c.clarity.as_deref()==Some("unclear")).map(|c|c.path).collect()
 }
 fn preserves_negative_paths(audit:&Audit,negative:&HashSet<String>)->bool {
     negative.iter().all(|path|audit.claim_audit.iter().any(|c|&c.path==path&&c.status!="supported"))
@@ -122,7 +140,7 @@ fn bind_supported_sources(doc:&Document,audit:&Audit,source:&[Sentence],units:&[
 fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,wire:&Value,expected:&[Value],source:&[Sentence],stage:&str,start:Instant,trace:&mut Vec<Value>,recovered_format:&AtomicBool)->Result<Audit,String>{
     // Each independent batch still sees the complete immutable source and
     // document. Bound concurrency to three; every claim needs a verdict.
-    if expected.is_empty(){return Ok(Audit{claim_audit:Vec::new()});}
+    if expected.is_empty(){return Ok(Audit{claim_audit:Vec::new(),format_kind:None});}
     let batches=if super::coverage::enabled(){expected.len().div_ceil(4).clamp(1,3)}else{1};let size=expected.len().div_ceil(batches);
     let token=super::super::super::meeting_processing_job::current();check_cancellation(token.as_ref())?;
     let results=std::thread::scope(|scope|{
@@ -161,7 +179,7 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     check_cancellation(token.as_ref())?;
     if let Some(error)=error{return Err(error);}
     if claims.len()!=expected.len(){return Err("纪要审核未覆盖全部陈述，已有结果保留。".into());}
-    Ok(Audit{claim_audit:claims})
+    Ok(Audit{claim_audit:claims,format_kind:None})
 }
 fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,units:&[Unit])->Result<Document,String> {
     let fail=||"纪要修正没有遵守受影响范围，已有结果保留。".to_string();
@@ -258,7 +276,7 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
         for verdict in audit.claim_audit.iter().filter(|c|c.status=="supported") {
             if let Some(claim)=audited_claims.iter().find(|c|c["path"].as_str()==Some(verdict.path.as_str())){verified_claims.insert(verdict.path.clone(),claim.clone());}
         }
-        let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|json!({"path":c.path,"status":c.status,"reason":c.reason,"evidence":c.evidence})).collect::<Vec<_>>();
+        let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|json!({"path":c.path,"status":c.status,"clarity":c.clarity,"unclearText":c.unclear_text,"reason":c.reason,"evidence":c.evidence})).collect::<Vec<_>>();
         if issues.is_empty(){return Ok(current);}
         let allowed=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|c.path.clone()).collect::<HashSet<_>>();
         // Repeated feedback stops. In the gated coverage candidate, a rewrite
@@ -302,6 +320,17 @@ mod tests {
         assert_eq!(fixed.topics[0].points[0].sources,vec!["u001"]);assert_eq!(fixed.topics[0].points[0].text,doc.topics[0].points[0].text);assert_eq!(serde_json::to_value(&fixed.topics[0].points[0].kind).unwrap(),serde_json::to_value(&doc.topics[0].points[0].kind).unwrap());
         raw["claimAudit"][0]["status"]=json!("unclear");let negative:Audit=serde_json::from_value(raw).unwrap();
         assert_eq!(bind_supported_sources(&doc,&negative,&sentences(&units),&units).unwrap().topics[0].points[0].sources,doc.topics[0].points[0].sources);
+    }
+    #[test]
+    fn automatic_brief_literal_support_cannot_override_an_unclear_meaning(){
+        let units=vec![Unit{id:"u000".into(),text:"希望有一个牵牛单位或联盟来组织。".into()}];
+        let expected=vec![json!({"path":"topics[0].points[0]","text":"建议设牵牛单位或联盟。","sources":["u000"]})];
+        let good=json!({"type":"json_object","claimAudit":[{"path":"topics[0].points[0]","status":"supported","clarity":"unclear","unclearText":"牵牛单位","reason":"字面出现但具体称谓含混","evidence":["e0000"]}]});
+        let source=sentences(&units);let audit=decode_contract(&good.to_string(),&expected,&source,true).unwrap();assert_eq!(audit.claim_audit[0].status,"unclear");
+        for bad in [good.clone(),good.clone(),good.clone(),good.clone()].into_iter().enumerate().map(|(i,mut v)|{match i{0=>{v["claimAudit"][0].as_object_mut().unwrap().remove("clarity");},1=>v["claimAudit"][0]["unclearText"]=json!("原文没有这段"),2=>v["type"]=json!("approved"),_=>v["passed"]=json!(true)};v}){assert!(decode_contract(&bad.to_string(),&expected,&source,true).is_err());}
+        let malformed=format!("{{\"claimAudit\":[{},",good["claimAudit"][0]);let negative=readable_negative_paths(&malformed);assert!(negative.contains("topics[0].points[0]"));
+        let mut erased=good;erased["claimAudit"][0]["clarity"]=json!("clear");erased["claimAudit"][0]["unclearText"]=Value::Null;
+        assert!(!preserves_negative_paths(&decode_contract(&erased.to_string(),&expected,&source,true).unwrap(),&negative));
     }
     #[test]
     fn automatic_brief_fact_keeps_only_unchanged_in_call_claims_verified(){

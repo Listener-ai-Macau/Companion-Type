@@ -23,3 +23,9 @@ evidence只列实际原文句子e编号，最多8个；supported/overstated/uncl
 如果输入含previousMalformedAudit，只做本次完整核对结果的JSON语法恢复，不能为了返回格式而抹掉其中已经明确指出的负面结论。
 
 checkClaims中的sourceScopeEvidence是程序从该陈述引用的原文中截出的范围/条件原句，帮助定位，未做语义改写；完整上下文仍在sourceUnits。特别核对这些限定是否随相应判断保留，但不能把任意一个限定强套给不相关判断。它不是参考答案或覆盖清单。
+
+
+本次机器合同把两个判断分开，不能用其中一个代替另一个。每条仍给status判断原文是否支持；另外必须给clarity判断本次原话能否确认纪要所写的确定含义，值只能clear或unclear。
+即使字面出现、因此status可为supported，语义不通、实指不明确、识别含混而被正文当成确定概念时，clarity仍应unclear。不能因相同字形就判clear，也不能只因不熟悉专业词就判unclear；要依据本次完整上下文。
+clarity为unclear时，unclearText必须是该陈述text/owner/due中原样存在的具体短片段，指出尚不能确认的表达；clarity为clear时unclearText为null。reason说明本次依据。不要改写纪要，不提供替代技术词。
+每个checkClaims仍必须且只能返回一项。返回JSON：{"claimAudit":[{"path":"purpose","status":"supported","clarity":"clear","unclearText":null,"reason":"具体依据","evidence":["e0001"]}]}。
