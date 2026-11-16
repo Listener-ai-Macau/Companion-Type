@@ -44,6 +44,23 @@ fn claims(doc:&Document)->Vec<Value> {
     for (i,p) in doc.action_items.iter().enumerate(){out.push(json!({"path":format!("actionItems[{i}]"),"text":p.text,"owner":p.owner,"due":p.due,"sources":p.sources}));}
     out
 }
+fn emphasize_source_scope(claims:&mut[Value],source:&[Sentence]) {
+    let partial=["一些","有些","部分","某些"];
+    let qualifiers=["一些","有些","部分","某些","只有","如果","前提","不一定"];
+    for claim in claims {
+        let Some(ids)=claim.get("sources").and_then(Value::as_array)else{continue;};
+        let mut found=source.iter().filter(|s|ids.iter().any(|id|id.as_str()==Some(s.source.as_str()))&&qualifiers.iter().any(|w|s.text.contains(w))).collect::<Vec<_>>();
+        found.sort_by_key(|s|(!partial.iter().any(|w|s.text.contains(w)),s.id.as_str()));
+        let excerpts=found.into_iter().take(2).map(|s|{
+            let chars=s.text.chars().collect::<Vec<_>>();
+            let marker=qualifiers.iter().filter_map(|w|s.text.find(w)).min().unwrap_or(0);
+            let offset=s.text[..marker].chars().count().saturating_sub(30);
+            let text=if chars.len()>100{chars.into_iter().skip(offset).take(100).collect::<String>()}else{s.text.clone()};
+            json!({"id":s.id,"text":text})
+        }).collect::<Vec<_>>();
+        claim["sourceScopeEvidence"]=json!(excerpts);
+    }
+}
 fn decode(raw:&str,expected:&[Value],source:&[Sentence])->Result<Audit,String> {
     let audit:Audit=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|"纪要内容审核没有返回完整结果，已有结果保留。".to_string())?;
     if audit.claim_audit.len()!=expected.len()||audit.claim_audit.len()>160{return Err("纪要内容审核未覆盖全部陈述，已有结果保留。".into());}
@@ -67,11 +84,19 @@ fn decode(raw:&str,expected:&[Value],source:&[Sentence])->Result<Audit,String> {
     let _=issues;
     Ok(audit)
 }
+fn readable_negative_paths(raw:&str)->HashSet<String> {
+    raw.char_indices().filter(|(_,c)|*c=='{').filter_map(|(i,_)|
+        serde_json::Deserializer::from_str(&raw[i..]).into_iter::<Claim>().next().and_then(Result::ok)
+    ).filter(|c|matches!(c.status.as_str(),"overstated"|"unsupported"|"unclear")).map(|c|c.path).collect()
+}
+fn preserves_negative_paths(audit:&Audit,negative:&HashSet<String>)->bool {
+    negative.iter().all(|path|audit.claim_audit.iter().any(|c|&c.path==path&&c.status!="supported"))
+}
 fn validate(raw:&str,expected:&[Value],source:&[Sentence])->Result<(),String> {
     let audit=decode(raw,expected,source)?;let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").count();
     if issues>0{Err(format!("纪要仍有{issues}处表述需要核对，本次未发布为完成结果；原文和已有纪要保留。"))}else{Ok(())}
 }
-fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,units:&[Unit])->Result<Document,String> {
+fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,units:&[Unit])->Result<Document,String> {
     let fail=||"纪要修正没有遵守受影响范围，已有结果保留。".to_string();
     let changes:Value=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|fail())?;
     let root=changes.as_object().ok_or_else(fail)?;
@@ -81,7 +106,7 @@ fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,units:&[Unit])-
     let mut value=serde_json::to_value(doc).map_err(|_|fail())?;let mut seen=HashSet::new();let mut removals=Vec::new();
     for edit in edits {
         let row=edit.as_object().ok_or_else(fail)?;
-        if row.keys().any(|k|!matches!(k.as_str(),"path"|"text"|"remove"|"kind"|"owner"|"due")){return Err(fail());}
+        if row.keys().any(|k|!matches!(k.as_str(),"path"|"text"|"remove"|"kind"|"owner"|"due"|"delete")){return Err(fail());}
         let path=row.get("path").and_then(Value::as_str).ok_or_else(fail)?;
         if !allowed.contains(path)||!seen.insert(path.to_string()){return Err(fail());}
         let pointer=format!("/{}",path.replace('[',"/").replace(']',"").replace('.',"/"));
@@ -91,8 +116,25 @@ fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,units:&[Unit])-
         }
         if row.get("remove").is_some_and(|v|v!=&json!(false)){return Err(fail());}
         let target=value.pointer_mut(&pointer).ok_or_else(fail)?;
+        if let Some(parts)=row.get("delete") {
+            if !unclear.contains(path)||row.len()!=2{return Err(fail());}
+            let parts=parts.as_array().ok_or_else(fail)?;if parts.is_empty()||parts.len()>12{return Err(fail());}
+            let original=if path=="purpose"||path.ends_with(".title"){target.as_str()}else{target.get("text").and_then(Value::as_str)}.ok_or_else(fail)?;
+            let mut shortened=original.to_string();
+            for part in parts {let fragment=part.as_str().ok_or_else(fail)?;if fragment.is_empty()||shortened.matches(fragment).count()!=1{return Err(fail());}shortened=shortened.replacen(fragment,"",1);}
+            if path=="purpose"||path.ends_with(".title"){*target=json!(shortened);}else{target.as_object_mut().ok_or_else(fail)?.insert("text".into(),json!(shortened));}
+            continue;
+        }
+        if unclear.contains(path)&&row.contains_key("text"){return Err(fail());}
         if let Some(text)=row.get("text") {
             if !text.is_string(){return Err(fail());}
+            if unclear.contains(path) {
+                let original=if path=="purpose"||path.ends_with(".title"){target.as_str()}else{target.get("text").and_then(Value::as_str)}.ok_or_else(fail)?;
+                // Unclear ASR must not be converted into another invented
+                // paraphrase. Only deletion from the existing claim is allowed.
+                let mut remaining=original.chars();
+                if !text.as_str().unwrap().chars().all(|c|remaining.by_ref().any(|old|old==c)){return Err(fail());}
+            }
             if path=="purpose"||path.ends_with(".title"){*target=text.clone();}else{target.as_object_mut().ok_or_else(fail)?.insert("text".into(),text.clone());}
         }
         for field in ["kind","owner","due"] {
@@ -119,12 +161,27 @@ fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,units:&[Unit])-
 pub(super) fn review_and_repair(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
     let source=sentences(units);
     let wire=units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>();
-    let mut current=doc.clone();let mut attempted=HashSet::new();
+    let mut current=doc.clone();let mut attempted=HashSet::new();let mut recovered_format=false;
     for round in 0..=2 {
-        let expected=claims(&current);
+        let mut expected=claims(&current);emphasize_source_scope(&mut expected,&source);
         let stage=match round{0=>"source-factual-audit",1=>"source-factual-reaudit",_=>"source-factual-reaudit-2"};
-        let raw=super::request(endpoint,model,key,client,PROMPT,json!({"sourceUnits":wire,"document":current,"checkClaims":expected}),true,start,trace,stage)?;
-        let audit=decode(&raw,&expected,&source)?;
+        let payload=json!({"sourceUnits":wire,"document":current,"checkClaims":expected});
+        let raw=super::request(endpoint,model,key,client,PROMPT,payload.clone(),true,start,trace,stage)?;
+        let audit=match decode(&raw,&expected,&source) {
+            Ok(audit)=>audit,
+            Err(error) if !recovered_format&&serde_json::from_str::<Value>(super::super::strip_code_fences(&raw).trim()).is_err()=>{
+                // Only broken JSON syntax permits one format recovery. Negative
+                // verdicts already readable from that response cannot disappear.
+                recovered_format=true;let negative=readable_negative_paths(&raw);
+                let mut payload=payload;payload["previousMalformedAudit"]=json!(raw);
+                payload["formatProblem"]=json!("上次JSON语法损坏。按相同完整原文和陈述修复JSON，不删除已指出的负面结论；仍须逐项核对全部陈述，不能只给passed。");
+                let fixed=super::request(endpoint,model,key,client,PROMPT,payload,true,start,trace,&format!("{stage}-format-recovery"))?;
+                let audit=decode(&fixed,&expected,&source)?;
+                if !preserves_negative_paths(&audit,&negative){return Err("纪要审核格式恢复改变了已指出的问题，已有结果保留。".into());}
+                let _=error;audit
+            },
+            Err(error)=>return Err(error),
+        };
         let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|json!({"path":c.path,"status":c.status,"reason":c.reason,"evidence":c.evidence})).collect::<Vec<_>>();
         if issues.is_empty(){return Ok(current);}
         let allowed=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|c.path.clone()).collect::<HashSet<_>>();
@@ -134,9 +191,10 @@ pub(super) fn review_and_repair(endpoint:&str,model:&str,key:&str,client:&reqwes
             validate(&raw,&expected,&source)?;
             return Err("纪要复审仍有未解决表述，已有结果保留。".into());
         }
+        let unclear=audit.claim_audit.iter().filter(|c|c.status=="unclear").map(|c|c.path.clone()).collect::<HashSet<_>>();
         let stage=if round==0{"source-factual-repair"}else{"source-factual-repair-2"};
-        let raw=super::request(endpoint,model,key,client,REPAIR,json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues}),false,start,trace,stage)?;
-        current=apply_changes(&raw,&current,&allowed,units)?;attempted.extend(allowed);
+        let raw=super::request(endpoint,model,key,client,REPAIR,json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,"deletionOnlyPaths":unclear}),false,start,trace,stage)?;
+        current=apply_changes(&raw,&current,&allowed,&unclear,units)?;attempted.extend(allowed);
     }
     Err("纪要复审未完成，已有结果保留。".into())
 }
@@ -147,6 +205,25 @@ mod tests {
     fn source()->Vec<Unit>{vec![Unit{id:"u000".into(),text:"李敏：预算尚未审批。\n\n权限测试未完成，暂不上线。".into()}]}
     fn expected()->Vec<Value>{vec![json!({"path":"purpose","text":"验证后再评估上线"}),json!({"path":"topics[0].points[0]","kind":"status","text":"预算尚未审批"})]}
     fn audit()->Value{json!({"claimAudit":[{"path":"purpose","status":"supported","reason":"原文明确未通过前不上线","evidence":["e0001"]},{"path":"topics[0].points[0]","status":"supported","reason":"原文明确尚未审批","evidence":["e0000"]}]})}
+    #[test]
+    fn automatic_brief_scope_attention_uses_only_bounded_original_cited_text(){
+        let units=vec![Unit{id:"u000".into(),text:"部分常规产品精度已足够，新研发设备仍有差距。如果条件满足再评估。".into()},Unit{id:"u001".into(),text:"另一些无关产品的报告。".into()}];
+        let source=sentences(&units);let mut checks=vec![json!({"path":"topics[0].points[0]","text":"产品精度已足够","sources":["u000"]})];
+        emphasize_source_scope(&mut checks,&source);
+        let quoted=checks[0]["sourceScopeEvidence"].as_array().unwrap();assert_eq!(quoted.len(),2);
+        assert!(quoted[0]["text"].as_str().unwrap().contains("部分"));
+        for q in quoted {let original=source.iter().find(|s|s.id==q["id"].as_str().unwrap()).unwrap();assert_eq!(original.source,"u000");assert!(original.text.contains(q["text"].as_str().unwrap()));assert!(q["text"].as_str().unwrap().chars().count()<=100);}
+    }
+    #[test]
+    fn automatic_brief_broken_json_recovery_cannot_erase_a_readable_rejection(){
+        let mut bad=audit();bad["claimAudit"][0]["status"]=json!("overstated");
+        let broken=format!("{{\"claimAudit\":[{},{{\"path\":\"broken",bad["claimAudit"][0]);
+        let negative=readable_negative_paths(&broken);assert!(negative.contains("purpose"));
+        let accepted=decode(&audit().to_string(),&expected(),&sentences(&source())).unwrap();
+        assert!(!preserves_negative_paths(&accepted,&negative));
+        let rejected=decode(&bad.to_string(),&expected(),&sentences(&source())).unwrap();
+        assert!(preserves_negative_paths(&rejected,&negative));
+    }
     #[test]
     fn automatic_brief_fact_sentence_projection_keeps_all_source_bytes(){
         let units=source();let split=sentences(&units);assert_eq!(split.iter().map(|s|s.text.as_str()).collect::<String>(),units[0].text);
@@ -173,15 +250,25 @@ mod tests {
         v["claimAudit"][1]["kind"]=json!("decision");assert!(validate(&v.to_string(),&expected(),&sentences(&source())).is_err());
     }
     #[test]
+    fn automatic_brief_unclear_repair_cannot_invent_a_new_paraphrase(){
+        let doc:Document=serde_json::from_value(json!({"purpose":"确认采购前提","topics":[{"title":"审批","points":[{"kind":"status","text":"方案趋势严重，预算尚未审批，不能先采购。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap();
+        let units=vec![Unit{id:"u000".into(),text:"方案那个趋势，预算还没批，不要先采购。".into()}];
+        let allowed=HashSet::from(["topics[0].points[0]".to_string()]);
+        let fixed=json!({"changes":[{"path":"topics[0].points[0]","delete":["方案趋势严重，"]}]}).to_string();
+        assert!(apply_changes(&fixed,&doc,&allowed,&allowed,&units).is_ok());
+        let invented=json!({"changes":[{"path":"topics[0].points[0]","text":"方案在趋势上问题严重，预算尚未审批，不能先采购。"}]}).to_string();
+        assert!(apply_changes(&invented,&doc,&allowed,&allowed,&units).is_err());
+    }
+    #[test]
     fn automatic_brief_fact_repair_changes_only_audited_fields(){
         let doc:Document=serde_json::from_value(json!({"purpose":"校长与学校发展","topics":[{"title":"校长作用","points":[{"kind":"opinion","text":"校长影响地方教育。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap();
         let units=vec![Unit{id:"u000".into(),text:"有嘉宾认为，一位优秀校长会影响当地教育水平。".into()}];
         let allowed=HashSet::from(["topics[0].points[0]".to_string()]);
         let raw=json!({"changes":[{"path":"topics[0].points[0]","text":"有嘉宾认为，一位优秀校长影响地方教育。"}]}).to_string();
-        let fixed=apply_changes(&raw,&doc,&allowed,&units).unwrap();assert_eq!(fixed.purpose,doc.purpose);assert_eq!(fixed.topics.len(),1);assert_eq!(fixed.topics[0].points.len(),1);
+        let fixed=apply_changes(&raw,&doc,&allowed,&HashSet::new(),&units).unwrap();assert_eq!(fixed.purpose,doc.purpose);assert_eq!(fixed.topics.len(),1);assert_eq!(fixed.topics[0].points.len(),1);
         assert!(fixed.topics[0].points[0].text.contains("优秀"));
         for patch in [json!({"changes":[{"path":"purpose","text":"改整场主题"}]}),json!({"changes":[{"path":"topics[0].points[0]","sources":["u999"]}]}),json!({"changes":[{"path":"topics[0].points[0]","remove":true}]})] {
-            assert!(apply_changes(&patch.to_string(),&doc,&allowed,&units).is_err());
+            assert!(apply_changes(&patch.to_string(),&doc,&allowed,&HashSet::new(),&units).is_err());
         }
     }
 }

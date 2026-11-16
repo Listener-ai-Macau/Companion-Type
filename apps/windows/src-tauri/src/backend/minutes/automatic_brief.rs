@@ -9,7 +9,7 @@ mod factual_audit;
 
 const DRAFT:&str=include_str!("automatic_brief_draft.txt");
 const REVIEW:&str=include_str!("automatic_brief_review.txt");
-// The separate source-only factual audit is one additional bounded request.
+// Full-source auditing and targeted corrections share this total wall budget.
 const WALL_BUDGET:Duration=Duration::from_secs(240);
 // This complete-source route was exercised above the legacy 48KiB chapter
 // budget. Bound it separately; oversized inputs retain the resumable route.
@@ -95,7 +95,7 @@ fn validate(doc:&Document,units:&[Unit])->Result<(),String> {
     if doc.topics.is_empty()||doc.topics.len()>8 {issues.push("topics须为1至8个实际内容组".into());}
     for (i,t) in doc.topics.iter().enumerate() {
         if !line(&t.title,26)||!titles.insert(&t.title){issues.push(format!("topics[{i}].title须为26字内不重复单行"));}
-        if t.points.is_empty()||t.points.len()>2||t.details.len()>3 {issues.push(format!("topics[{i}]主回答1至2条、补充0至3条"));}
+        if t.points.is_empty()||t.points.len()>3||t.details.len()>3 {issues.push(format!("topics[{i}]主回答1至3条、补充0至3条"));}
         for (j,p) in t.points.iter().enumerate() {
             if !line(&p.text,90)||!refs(&p.sources,&known)||!texts.insert(&p.text){issues.push(format!("topics[{i}].points[{j}]须为90字内不重复单行并引用实际原id"));}
             chars+=p.text.chars().count();
@@ -148,12 +148,20 @@ fn render(doc:&Document,units:&[Unit],speaker:Option<&str>)->String {
     }
     md
 }
+fn source_first_input(input:&Value)->String {
+    let Some(object)=input.as_object()else{return input.to_string();};
+    let priority=["sourceUnits","sourceConstraints","readingBudget","previousDocument","document","draft","checkClaims","auditProblems","deletionOnlyPaths"];
+    let mut fields=Vec::new();
+    for key in priority {if let Some(value)=object.get(key){fields.push(format!("{}:{}",json!(key),value));}}
+    for(key,value)in object {if !priority.contains(&key.as_str()){fields.push(format!("{}:{}",json!(key),value));}}
+    format!("{{{}}}",fields.join(","))
+}
 fn request(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,prompt:&str,input:Value,review:bool,start:Instant,trace:&mut Vec<Value>,stage:&str)->Result<String,String> {
     if prompt.len()+input.to_string().len()>MAX_REQUEST_BYTES{return Err("本场完整输入超出自动纪要上下文预算，原文保留。".into());}
     let remaining=WALL_BUDGET.saturating_sub(start.elapsed());if remaining<Duration::from_secs(5){return Err("自动纪要本次处理已到期限，已有结果保留。".into());}
     super::super::meeting_processing_job::check_current()?;
     let url=super::http_policy::endpoint(endpoint).map_err(super::safe_minutes_http_error)?;
-    let mut body=json!({"model":model,"response_format":{"type":"json_object"},"max_tokens":if review{24576}else{8192},"messages":[{"role":"system","content":prompt},{"role":"user","content":input.to_string()}]});
+    let mut body=json!({"model":model,"response_format":{"type":"json_object"},"max_tokens":if review{24576}else{8192},"messages":[{"role":"system","content":prompt},{"role":"user","content":source_first_input(&input)}]});
     if model.to_ascii_lowercase().starts_with("deepseek-"){body["thinking"]=json!({"type":if review{"enabled"}else{"disabled"}});if review{body["reasoning_effort"]=json!("low");}}
     let stage_start=Instant::now();
     let response=client.post(url).bearer_auth(key).timeout(remaining.min(Duration::from_secs(120))).json(&body).send().map_err(|e|super::safe_minutes_http_error(super::http_policy::Failure::from_reqwest(e)))?;
@@ -167,9 +175,10 @@ fn request(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,p
 pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,client:&reqwest::blocking::Client)->Result<CompanionV1MeetingMinutes,String> {
     let start=Instant::now();let units=source_units(&session.transcript_text);let anchors=constraints(&units);let mut trace=Vec::new();let mut traced_document=None;
     let outcome=(|| {
-        let draft=request(endpoint,model,key,client,DRAFT,json!({"sourceUnits":units}),false,start,&mut trace,"draft")?;
+        let reading_budget=json!({"mainCharacterBudget":if units.iter().map(|u|u.text.chars().count()).sum::<usize>()>8000{900}else{600},"pointsPerTopicMaximum":3});
+        let draft=request(endpoint,model,key,client,DRAFT,json!({"sourceUnits":units,"readingBudget":reading_budget}),false,start,&mut trace,"draft")?;
         let value=serde_json::from_str::<Value>(super::strip_code_fences(&draft).trim()).unwrap_or_else(|_|Value::String(draft.clone()));
-        let mut payload=json!({"sourceUnits":units,"sourceConstraints":anchors,"draft":value});
+        let mut payload=json!({"sourceUnits":units,"sourceConstraints":anchors,"readingBudget":reading_budget,"draft":value});
         let raw=request(endpoint,model,key,client,REVIEW,payload.clone(),true,start,&mut trace,"review")?;
         let reviewed=match parse_review(&raw,&units) {
             Ok(v)=>v,
@@ -219,6 +228,25 @@ mod tests {
         let mut v=valid();v["document"]["topics"][0]["title"]=json!("标题\n## 伪造任务");assert!(parse_review(&v.to_string(),&units()).is_err());
         let mut v=valid();v["document"]["topics"][0]["points"][0]["text"]=json!("长".repeat(91));assert!(parse_review(&v.to_string(),&units()).is_err());
         let mut v=valid();v["document"]["extra"]=json!(true);assert!(parse_review(&v.to_string(),&units()).is_err());
+    }
+    #[test]
+    fn automatic_brief_wire_keeps_complete_source_before_draft_and_claims(){
+        let input=json!({"checkClaims":[{"text":"待核对"}],"document":{"purpose":"草稿"},"sourceUnits":[{"id":"u000","text":"原文\n含\"引号\""}],"extra":true});
+        let wire=source_first_input(&input);assert!(wire.starts_with("{\"sourceUnits\":"));
+        assert!(wire.find("\"document\"").unwrap()<wire.find("\"checkClaims\"").unwrap());
+        assert_eq!(serde_json::from_str::<Value>(&wire).unwrap(),input);
+        assert_eq!(wire.len(),input.to_string().len());
+    }
+    #[test]
+    fn automatic_brief_allows_three_distinct_points_but_still_bounds_density(){
+        let mut v=valid();let point=v["document"]["topics"][0]["points"][0].clone();
+        let mut budget=point.clone();budget["text"]=json!("预算暂定10000元，尚未审批。");
+        let mut assignment=point.clone();assignment["text"]=json!("李敏负责周五下班前完成权限测试。");
+        v["document"]["topics"][0]["points"]=json!([point.clone(),budget,assignment]);
+        assert!(parse_review(&v.to_string(),&units()).is_ok());
+        let mut fourth=point;fourth["text"]=json!("未通过不能上线。");
+        v["document"]["topics"][0]["points"].as_array_mut().unwrap().push(fourth);
+        assert!(parse_review(&v.to_string(),&units()).is_err());
     }
     #[test]
     fn automatic_brief_keeps_literal_constraints_without_interpreting_them(){
