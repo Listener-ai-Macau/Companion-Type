@@ -12,8 +12,7 @@ struct Sentence {id:String,source:String,text:String}
 #[serde(rename_all="camelCase",deny_unknown_fields)]
 struct Audit {claim_audit:Vec<Claim>}
 #[derive(Debug,Deserialize)]
-#[serde(deny_unknown_fields)]
-struct Claim {path:String,status:String,reason:String,evidence:Vec<String>,kind:Option<String>}
+struct Claim {path:String,status:String,reason:String,evidence:Vec<String>,#[serde(flatten)]echoed:HashMap<String,Value>}
 
 fn sentences(units:&[Unit])->Vec<Sentence> {
     let mut out:Vec<Sentence>=Vec::new();
@@ -79,8 +78,10 @@ fn decode(raw:&str,expected:&[Value],source:&[Sentence])->Result<Audit,String> {
             ||(claim.status!="unsupported"&&claim.evidence.is_empty()) {
             return Err("纪要内容审核的依据不完整，已有结果保留。".into());
         }
-        if claim.kind.as_ref().is_some_and(|k|original.get("kind").and_then(Value::as_str)!=Some(k.as_str())) {
-            return Err("纪要审核的陈述类型不匹配，已有结果保留。".into());
+        // A reviewer may echo supplied claim metadata. Accept only exact
+        // echoes, including null owner/due; unknown or changed fields fail.
+        if claim.echoed.iter().any(|(key,value)|!matches!(key.as_str(),"kind"|"text"|"sources"|"owner"|"due")||original.get(key)!=Some(value)) {
+            return Err("纪要审核的陈述元数据不匹配，已有结果保留。".into());
         }
         if claim.status!="supported"{issues+=1;}
     }
@@ -287,6 +288,15 @@ mod tests {
     fn automatic_brief_fact_only_accepts_a_matching_optional_kind_echo(){
         let mut v=audit();v["claimAudit"][1]["kind"]=json!("status");assert!(validate(&v.to_string(),&expected(),&sentences(&source())).is_ok());
         v["claimAudit"][1]["kind"]=json!("decision");assert!(validate(&v.to_string(),&expected(),&sentences(&source())).is_err());
+    }
+    #[test]
+    fn automatic_brief_fact_echo_keeps_action_owner_due_and_unknown_fields_strict(){
+        let expected=vec![json!({"path":"actionItems[0]","text":"提交报告。","owner":"李敏","due":null,"sources":["u000"]})];
+        let good=json!({"claimAudit":[{"path":"actionItems[0]","status":"supported","reason":"受控协议响应","evidence":["e0000"],"text":"提交报告。","owner":"李敏","due":null,"sources":["u000"]}]});
+        let source=sentences(&source());assert!(decode(&good.to_string(),&expected,&source).is_ok());
+        for(key,value)in[("owner",json!("李明")),("owner",Value::Null),("due",json!("周五")),("text",json!("批准报告。")),("sources",json!(["u999"])),("passed",json!(true))]{
+            let mut bad=good.clone();bad["claimAudit"][0][key]=value;assert!(decode(&bad.to_string(),&expected,&source).is_err());
+        }
     }
     #[test]
     fn automatic_brief_unclear_repair_cannot_invent_a_new_paraphrase(){
