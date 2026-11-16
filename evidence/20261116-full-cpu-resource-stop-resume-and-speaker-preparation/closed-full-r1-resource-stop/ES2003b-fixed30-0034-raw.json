@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0034",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 16320000,
+    "sourceEndFrame": 16800000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "80b24a08989ff400a6bdc384bb1140ee78755ccdfbeb9374f373bb7588e537c4",
+  "seconds": 17.872943599999417,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Oh sorry, oh I'm interrupting you. Oh yeah. No, it's it's Yeah. Okay, alright. Um. Right, we can probably skip that. So, we've had some stuff put forward, um along with the new user requirements. Um we've had a lot of kind of info actually so far. I am",
+    "raw_text": "[0.00][S01]Oh sorry, oh I'm interrupting you. Oh yeah.[2.00][1.73][S02]No, it's it's[2.61][2.71][S01]Yeah. Okay, alright. Um.[6.07][11.94][S01]Right, we can probably skip that. So, we've had some stuff put forward, um along with the new user requirements.[20.76][25.45][S01]Um we've had a lot of kind of info actually so far. I am[29.83]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Oh sorry, oh I'm interrupting you. Oh yeah.",
+        "t0_ms": 0,
+        "t1_ms": 2000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "No, it's it's",
+        "t0_ms": 1730,
+        "t1_ms": 2610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah. Okay, alright. Um.",
+        "t0_ms": 2710,
+        "t1_ms": 6070,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Right, we can probably skip that. So, we've had some stuff put forward, um along with the new user requirements.",
+        "t0_ms": 11940,
+        "t1_ms": 20760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um we've had a lot of kind of info actually so far. I am",
+        "t0_ms": 25450,
+        "t1_ms": 29830,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1730,
+        "t1_ms": 2610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2710,
+        "t1_ms": 6070,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11940,
+        "t1_ms": 20760,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25450,
+        "t1_ms": 29830,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 17.833999633789062,
+      "encode_ms": 7375.15185546875,
+      "decode_ms": 10443.2880859375
+    }
+  },
+  "rawDecoded": "[0.00][S01]Oh sorry, oh I'm interrupting you. Oh yeah.[2.00][1.73][S02]No, it's it's[2.61][2.71][S01]Yeah. Okay, alright. Um.[6.07][11.94][S01]Right, we can probably skip that. So, we've had some stuff put forward, um along with the new user requirements.[20.76][25.45][S01]Um we've had a lot of kind of info actually so far. I am[29.83]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

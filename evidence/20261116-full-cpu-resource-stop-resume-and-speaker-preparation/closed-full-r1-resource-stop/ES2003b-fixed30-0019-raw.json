@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0019",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 9120000,
+    "sourceEndFrame": 9600000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "4142f324fb46390bd9b36c34f72cb785b6e27b27b6457b6c870d8f5f315a8847",
+  "seconds": 17.332559199996467,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Mm. Be you'd be able to control in multiple devices, but uh there's still stuff of relevance, so press on. Yeah, we looked at a looked at a a couple of our uh remote control models just for an idea of basic design principles. Um Okay. Mm. And wasn't really satisfied with what I saw, I have to say. So there's more sort of springboard for uh how these could be improved on.",
+    "raw_text": "[0.00][S01]Mm.[0.30][0.44][S02]Be you'd be able to control in multiple devices, but uh there's still stuff of relevance, so press on. Yeah, we looked at a looked at a a couple of our uh remote control models just for an idea of basic design principles. Um[18.06][5.64][S01]Okay.[6.00][18.98][S01]Mm.[19.44][19.58][S02]And wasn't really satisfied with what I saw, I have to say. So there's more sort of springboard for uh how these could be improved on.[28.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Mm.",
+        "t0_ms": 0,
+        "t1_ms": 300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Be you'd be able to control in multiple devices, but uh there's still stuff of relevance, so press on. Yeah, we looked at a looked at a a couple of our uh remote control models just for an idea of basic design principles. Um",
+        "t0_ms": 440,
+        "t1_ms": 18060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 5640,
+        "t1_ms": 6000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 18980,
+        "t1_ms": 19440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "And wasn't really satisfied with what I saw, I have to say. So there's more sort of springboard for uh how these could be improved on.",
+        "t0_ms": 19580,
+        "t1_ms": 28000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 300,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 440,
+        "t1_ms": 18060,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5640,
+        "t1_ms": 6000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18980,
+        "t1_ms": 19440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19580,
+        "t1_ms": 28000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 13.817999839782715,
+      "encode_ms": 6992.31787109375,
+      "decode_ms": 10292.6845703125
+    }
+  },
+  "rawDecoded": "[0.00][S01]Mm.[0.30][0.44][S02]Be you'd be able to control in multiple devices, but uh there's still stuff of relevance, so press on. Yeah, we looked at a looked at a a couple of our uh remote control models just for an idea of basic design principles. Um[18.06][5.64][S01]Okay.[6.00][18.98][S01]Mm.[19.44][19.58][S02]And wasn't really satisfied with what I saw, I have to say. So there's more sort of springboard for uh how these could be improved on.[28.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

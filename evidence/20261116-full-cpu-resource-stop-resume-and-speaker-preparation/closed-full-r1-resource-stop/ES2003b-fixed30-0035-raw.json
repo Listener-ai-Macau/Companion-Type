@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0035",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 16800000,
+    "sourceEndFrame": 17280000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "1848da103032e939eddcbf33f00a9fa379ba4817540b24583efc93d05edd7945",
+  "seconds": 15.92131320000044,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I hear what the marketing expert's saying about um voice activated control, however, I've got a couple of worries about that. The power required um and the ability Cost is good. cost it seems like for a embedded system this could cause us issues. Um for example, you see that there's fairly robust services on uh computers via uh via voice, I. B. M. do um drag and dictate.",
+    "raw_text": "[0.00][S01]I hear what the marketing expert's saying about um voice activated control, however, I've got a couple of worries about that. The power required um and the ability[13.50][13.34][S02]Cost is good.[14.14][13.50][S01]cost it seems like for a embedded system this could cause us issues. Um for example, you see that there's fairly robust services on uh computers via uh via voice, I. B. M. do um drag and dictate.[29.88]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I hear what the marketing expert's saying about um voice activated control, however, I've got a couple of worries about that. The power required um and the ability",
+        "t0_ms": 0,
+        "t1_ms": 13500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Cost is good.",
+        "t0_ms": 13340,
+        "t1_ms": 14140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "cost it seems like for a embedded system this could cause us issues. Um for example, you see that there's fairly robust services on uh computers via uh via voice, I. B. M. do um drag and dictate.",
+        "t0_ms": 13500,
+        "t1_ms": 29880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 13500,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13340,
+        "t1_ms": 14140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13500,
+        "t1_ms": 29880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 16.257999420166016,
+      "encode_ms": 7360.4912109375,
+      "decode_ms": 8507.4404296875
+    }
+  },
+  "rawDecoded": "[0.00][S01]I hear what the marketing expert's saying about um voice activated control, however, I've got a couple of worries about that. The power required um and the ability[13.50][13.34][S02]Cost is good.[14.14][13.50][S01]cost it seems like for a embedded system this could cause us issues. Um for example, you see that there's fairly robust services on uh computers via uh via voice, I. B. M. do um drag and dictate.[29.88]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

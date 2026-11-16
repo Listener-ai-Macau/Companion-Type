@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0016",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 7680000,
+    "sourceEndFrame": 8160000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "31cac0735b01f26cf40d7f9e454398bfcdc24aa0b42cdf9872132818fd7332dd",
+  "seconds": 18.050412700002198,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "And remote control. And uh what if you have visitors come round, they stay the night, they wanna use the T. V. they can't use the remote because they speak differently to you. Um how do you account for regional accents and stuff like that? Uh will people return the remote control? But I think a lot of young people will buy the remote control if they have the money, you know, so well, or at least have the money. But will they return it after a while because it's not as fast as pressing a button, it's not practical. So. Yeah.",
+    "raw_text": "[0.00][S01]And remote control. And uh what if you have visitors come round, they stay the night, they wanna use the T. V. they can't use the remote because they speak differently to you. Um how do you account for regional accents and stuff like that? Uh will people return the remote control? But I think a lot of young people will buy the remote control if they have the money, you know, so well, or at least have the money. But will they return it after a while because it's not as fast as pressing a button, it's not practical. So.[29.44][29.32][S02]Yeah.[29.62]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "And remote control. And uh what if you have visitors come round, they stay the night, they wanna use the T. V. they can't use the remote because they speak differently to you. Um how do you account for regional accents and stuff like that? Uh will people return the remote control? But I think a lot of young people will buy the remote control if they have the money, you know, so well, or at least have the money. But will they return it after a while because it's not as fast as pressing a button, it's not practical. So.",
+        "t0_ms": 0,
+        "t1_ms": 29440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 29320,
+        "t1_ms": 29620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 29440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29320,
+        "t1_ms": 29620,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 24.04800033569336,
+      "encode_ms": 8024.7138671875,
+      "decode_ms": 9966.919921875
+    }
+  },
+  "rawDecoded": "[0.00][S01]And remote control. And uh what if you have visitors come round, they stay the night, they wanna use the T. V. they can't use the remote because they speak differently to you. Um how do you account for regional accents and stuff like that? Uh will people return the remote control? But I think a lot of young people will buy the remote control if they have the money, you know, so well, or at least have the money. But will they return it after a while because it's not as fast as pressing a button, it's not practical. So.[29.44][29.32][S02]Yeah.[29.62]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

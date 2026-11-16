@@ -1,0 +1,66 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0008",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 3840000,
+    "sourceEndFrame": 4320000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "7cbf33b950f854859fefb3f8c83b3a695ab3e38c94c7e756c4f264ef879a317e",
+  "seconds": 17.086149200004,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "It takes me a few minutes to find it. Most buttons are not used anymore. Like you said, teletext is outdated now. I remember trying to load a D. V. D. player recently and there were so many buttons. It took me, I don't know, maybe ten minutes to to go through each button, 'cause you have to press the shift button to access the yo buttons. You know, it's just a lot of stuff that no one really uses. And if they do, not very often. Takes too long to manage in remote control. I've seen some",
+    "raw_text": "[0.00][S01]It takes me a few minutes to find it. Most buttons are not used anymore. Like you said, teletext is outdated now. I remember trying to load a D. V. D. player recently and there were so many buttons. It took me, I don't know, maybe ten minutes to to go through each button, 'cause you have to press the shift button to access the yo buttons. You know, it's just a lot of stuff that no one really uses. And if they do, not very often. Takes too long to manage in remote control. I've seen some[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "It takes me a few minutes to find it. Most buttons are not used anymore. Like you said, teletext is outdated now. I remember trying to load a D. V. D. player recently and there were so many buttons. It took me, I don't know, maybe ten minutes to to go through each button, 'cause you have to press the shift button to access the yo buttons. You know, it's just a lot of stuff that no one really uses. And if they do, not very often. Takes too long to manage in remote control. I've seen some",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 28.28700065612793,
+      "encode_ms": 7639.703125,
+      "decode_ms": 9386.0478515625
+    }
+  },
+  "rawDecoded": "[0.00][S01]It takes me a few minutes to find it. Most buttons are not used anymore. Like you said, teletext is outdated now. I remember trying to load a D. V. D. player recently and there were so many buttons. It took me, I don't know, maybe ten minutes to to go through each button, 'cause you have to press the shift button to access the yo buttons. You know, it's just a lot of stuff that no one really uses. And if they do, not very often. Takes too long to manage in remote control. I've seen some[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

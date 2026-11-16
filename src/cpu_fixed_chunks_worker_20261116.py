@@ -33,6 +33,14 @@ def main():
   import numpy as np
   import transcribe_cpp as cpp
   assert cpp.native_version()=='0.4.2' and cpp.native_commit().startswith('275cd50')
+  plans={r['id']:r for r in B['cases']};retained=set()
+  for item in B.get('resumeCompleted',[]):
+   assert sha(item['file'])==item['sha256'];packet=read(item['file']);case=plans[item['id']]
+   assert packet['case']==case and packet['originalChunkInputComplete'] and packet['modelSha256']==model_info['sha256']
+   assert packet['backend']=='CPU' and packet['nativeCommit']==cpp.native_commit() and item['id'] not in retained
+   retained.add(item['id']);state['completed'].append(item);state['sourceFramesProcessed']+=case['frames']
+   if not packet['naturalEos']:state['incompleteOutputCases'].append(item['id'])
+  state.update(resumedCompleteInputs=len(retained),resumeSource=B.get('resumeSource'));save()
   def log(level,message):
    with lock:
     with (a.run/'native.log').open('a',encoding='utf-8') as f:f.write(str(level)+' '+message)
@@ -50,12 +58,13 @@ def main():
     while not watch_stop.wait(10):save()
    threading.Thread(target=observe,daemon=True).start()
    for case in B['cases']:
+    if case['id'] in retained:continue
     if (a.run/'stop.request').exists() or datetime.now().astimezone()>=datetime.fromisoformat(B['neuralDeadline']):raise InterruptedError('Owned stop/deadline, complete windows and inputs retained')
     state.update(state='RUNNING_CPU_FIXED_ORIGINAL_CHUNKS',activeCase=case['id'],activeMeeting=case['meeting']);save()
     with wave.open(case['audio'],'rb') as wav:
      wav.setpos(case['sourceStartFrame']);pcm=wav.readframes(case['frames']);assert len(pcm)==case['frames']*2
     pcm_sha=hashlib.sha256(pcm).hexdigest();samples=np.frombuffer(pcm,dtype='<i2').astype(np.float32)/32768
-    tick=time.perf_counter();result=None;semantic_error=None
+    tick=time.perf_counter();result=None;semantic_error=None;aborted_error=None
     with model.session(n_threads=4,kv_type='f16',n_ctx=65536) as session:
      done=threading.Event()
      def cancel():
@@ -64,6 +73,7 @@ def main():
      task=threading.Thread(target=cancel,daemon=True);task.start()
      try:result=session.run(samples,language=None,timestamps='segment',diarize='on',keep_special_tags=True,spec_k_drafts=0)
      except cpp.OutputTruncated as error:result=error.partial_result;semantic_error=repr(error)
+     except cpp.Aborted as error:result=error.partial_result;semantic_error=repr(error);aborted_error=error
      finally:done.set();task.join(timeout=1)
      truncated=bool(cpp._lib.transcribe_was_truncated(session._h))
     assert result is not None
@@ -73,6 +83,9 @@ def main():
      'wasTruncated':truncated,'semanticError':semantic_error,'originalChunkInputComplete':True,'speakerIdsScopedToThisInput':True,
      'referenceRead':False,'wordsRewritten':False,'newWeightTraining':False,'wholeMeetingAcceptance':False,'qualityQualified':False}
     target=a.run/(case['id']+'-raw.json');atomic_json(target,packet)
+    if aborted_error is not None:
+     state.setdefault('interruptedOutputs',[]).append({'id':case['id'],'file':str(target),'sha256':sha(target),'reason':semantic_error})
+     save();raise aborted_error
     if not packet['naturalEos']:state['incompleteOutputCases'].append(case['id'])
     state['completed'].append({'id':case['id'],'file':str(target),'sha256':sha(target),'seconds':packet['seconds'],'audioSeconds':case['audioSeconds'],'naturalEos':packet['naturalEos']})
     state['sourceFramesProcessed']+=case['frames'];save();del samples,result,pcm;gc.collect()

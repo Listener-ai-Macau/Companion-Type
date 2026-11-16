@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0021",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 10080000,
+    "sourceEndFrame": 10560000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "7ce0a191f2a239ba69eb548299c798b211b428cac65f07ca70d12fc336f7c751",
+  "seconds": 15.776752199999464,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "That the that the device has the remote control controls and most of these functions are not going to be used. It creates a rather user unfriendly interface. On the other hand, there's a user focused approach that pairs things down to just what what is most likely to get used um with uh uh and of course there is a certain amount of some loss of function here obviously, but mostly that's relatively peripheral.",
+    "raw_text": "[0.00][S01]That the that the device has the remote control controls and most of these functions are not going to be used. It creates a rather user unfriendly interface. On the other hand, there's a user focused approach that pairs things down to just what what is most likely to get used um[20.20][21.80][S01]with uh uh and of course there is a certain amount of some loss of function here obviously, but mostly that's relatively peripheral.[29.88]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "That the that the device has the remote control controls and most of these functions are not going to be used. It creates a rather user unfriendly interface. On the other hand, there's a user focused approach that pairs things down to just what what is most likely to get used um",
+        "t0_ms": 0,
+        "t1_ms": 20200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "with uh uh and of course there is a certain amount of some loss of function here obviously, but mostly that's relatively peripheral.",
+        "t0_ms": 21800,
+        "t1_ms": 29880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 20200,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21800,
+        "t1_ms": 29880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 17.832000732421875,
+      "encode_ms": 7890.40185546875,
+      "decode_ms": 7836.55615234375
+    }
+  },
+  "rawDecoded": "[0.00][S01]That the that the device has the remote control controls and most of these functions are not going to be used. It creates a rather user unfriendly interface. On the other hand, there's a user focused approach that pairs things down to just what what is most likely to get used um[20.20][21.80][S01]with uh uh and of course there is a certain amount of some loss of function here obviously, but mostly that's relatively peripheral.[29.88]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

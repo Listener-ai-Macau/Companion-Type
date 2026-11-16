@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0002",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 960000,
+    "sourceEndFrame": 1440000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "c35ad279f3ff0ab002014947322734ba4c4485a425e0ca933123a90579dcde7f",
+  "seconds": 15.408737600002496,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "So that's really the same, introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote control as well. Um it's come to my attention the following, teletext has become outdated due to the popular popularity of the internet, remote controls should only be used for the T. V.",
+    "raw_text": "[0.00][S01]So that's really the same, introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote control as well.[16.00][18.64][S01]Um it's come to my attention the following, teletext has become outdated due to the popular popularity of the internet, remote controls should only be used for the T. V.[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "So that's really the same, introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote control as well.",
+        "t0_ms": 0,
+        "t1_ms": 16000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um it's come to my attention the following, teletext has become outdated due to the popular popularity of the internet, remote controls should only be used for the T. V.",
+        "t0_ms": 18640,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 16000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18640,
+        "t1_ms": 29940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 19.128000259399414,
+      "encode_ms": 7248.66796875,
+      "decode_ms": 8089.4990234375
+    }
+  },
+  "rawDecoded": "[0.00][S01]So that's really the same, introduced ourselves, discussed the possibility of a macro facility, interac interacting the T. V. a bit more, um mentioning of bar code, joystick for user manipulation, um and ergonomics of the remote control as well.[16.00][18.64][S01]Um it's come to my attention the following, teletext has become outdated due to the popular popularity of the internet, remote controls should only be used for the T. V.[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

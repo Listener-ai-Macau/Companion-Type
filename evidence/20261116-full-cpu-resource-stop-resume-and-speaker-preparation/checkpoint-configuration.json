@@ -1,0 +1,146 @@
+{
+  "revision": 36,
+  "evidenceDirectory": "evidence/20261116-full-cpu-resource-stop-resume-and-speaker-preparation",
+  "commitMessage": "Preserve CPU resource-stop39 inputs and add exact resume plus CPU-only native8 control",
+  "sources": [
+    "src/cpu_fixed_chunks_worker_20261116.py",
+    "src/run_cpu_fixed_chunks_20261116.py",
+    "src/compose_cpu_fixed_whole_20261116.py",
+    "src/score_cpu_fixed_whole_summary_20261116.py",
+    "src/cpu25_nemotron_wrapper_20261116.py",
+    "src/run_cpu25_nemotron_20261116.py"
+  ],
+  "closedDirectories": [
+    {
+      "directory": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1",
+      "stateFile": "run.json",
+      "requiredState": "INCOMPLETE_CPU_FIXED_CHUNKS_RETAINED",
+      "label": "closed-full-r1-resource-stop"
+    }
+  ],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r1\\binding.json",
+      "name": "cpu-fixed-whole-r1/binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r1\\composition-source-binding.json",
+      "name": "cpu-fixed-whole-r1/composition-source-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r1\\predicted-speaker-bindings.json",
+      "name": "cpu-fixed-whole-r1/predicted-speaker-bindings.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r1\\scoring-binding.json",
+      "name": "cpu-fixed-whole-r1/scoring-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r1\\whole-scoring-only.json",
+      "name": "cpu-fixed-whole-r1/whole-scoring-only.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\before-rttm-fidelity-summary-source.py",
+      "name": "cpu-fixed-whole-r2/before-rttm-fidelity-summary-source.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\binding.json",
+      "name": "cpu-fixed-whole-r2/binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\composition-source-binding-before-rttm-fidelity.json",
+      "name": "cpu-fixed-whole-r2/composition-source-binding-before-rttm-fidelity.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\composition-source-binding.json",
+      "name": "cpu-fixed-whole-r2/composition-source-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\predicted-speaker-bindings.json",
+      "name": "cpu-fixed-whole-r2/predicted-speaker-bindings.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\scoring-binding.json",
+      "name": "cpu-fixed-whole-r2/scoring-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\whole-scoring-only.json",
+      "name": "cpu-fixed-whole-r2/whole-scoring-only.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-native8-r1\\audio-only.json",
+      "name": "cpu-native8-r1/audio-only.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-native8-r1\\binding.json",
+      "name": "cpu-native8-r1/binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-native8-r1\\protocol.json",
+      "name": "cpu-native8-r1/protocol.json"
+    },
+    {
+      "source": "work\\freeze_full_cpu_speaker_bindings_20261116.py",
+      "name": "preparation/freeze_full_cpu_speaker_bindings_20261116.py"
+    },
+    {
+      "source": "work\\freeze_full_cpu_composition_source_20261116.py",
+      "name": "preparation/freeze_full_cpu_composition_source_20261116.py"
+    },
+    {
+      "source": "work\\fix_full_cpu_scoring_rttm_fidelity_20261116.py",
+      "name": "preparation/fix_full_cpu_scoring_rttm_fidelity_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_fixed_resume_20261116.py",
+      "name": "preparation/prepare_cpu_fixed_resume_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu25_nemotron_20261116.py",
+      "name": "preparation/prepare_cpu25_nemotron_20261116.py"
+    },
+    {
+      "source": "work\\refresh_cpu_day_20261116.py",
+      "name": "preparation/refresh_cpu_day_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_checkpoint36_20261116.py",
+      "name": "preparation/prepare_cpu_checkpoint36_20261116.py"
+    },
+    {
+      "source": "work\\upstream-nemo-cpu-v030\\src-asr-diar-diarizer.cpp",
+      "name": "upstream-thread-proof/src-asr-diar-diarizer.cpp"
+    },
+    {
+      "source": "work\\upstream-nemo-cpu-v030\\src-runtime-ggml-backend.cpp",
+      "name": "upstream-thread-proof/src-runtime-ggml-backend.cpp"
+    },
+    {
+      "source": "work\\upstream-nemo-cpu-v030\\src-runtime-ggml-runtime.h",
+      "name": "upstream-thread-proof/src-runtime-ggml-runtime.h"
+    },
+    {
+      "source": "work\\upstream-nemo-cpu-v030\\src-runtime-ggml-session.cpp",
+      "name": "upstream-thread-proof/src-runtime-ggml-session.cpp"
+    }
+  ],
+  "claims": {
+    "state": "CPU_FULL39_RETAINED_RESOURCE_RECOVERED_EXACT_RESUME_SOURCE_AND_CPU_SPEAKER_CONTROL_FROZEN",
+    "cpuPercent": 25,
+    "computeThreadsMaximum": 4,
+    "privateLimitBytes": 2147483648,
+    "originalActualLowMemoryGuardUnchanged": true,
+    "retainedFullInputWindows": 39,
+    "retainedSourceSeconds": 1170,
+    "privateGuardNotReached": true,
+    "actualWindowsLowMemoryStop": true,
+    "activeFullAsrOutputsExcluded": true,
+    "wholeMeetingResults": 0,
+    "newWeightTraining": false,
+    "productDefaultChanged": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "cpuSpeakerNeuralExecutionDuringPreparation": false,
+    "cpuSpeakerBinaryOnly": true
+  }
+}

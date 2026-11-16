@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0007",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 3360000,
+    "sourceEndFrame": 3840000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "a9a9898125c6d4276f12a83ca4b0bd262cd87e39ffad509971193e3a0d0940f5",
+  "seconds": 16.50166060000629,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "And some very specific questions and we got a lot of good feedback. Please bear in mind this is only a hundred people, so even when the groups are divided into fifteen to twenty five, twenty five to thirty five, there's only maybe ten people, fifteen people in each group, okay. So, we got some of the best stuff we got. Remotes are often lost. I often lose my remote control at the back of the couch someplace, and even if it's not lost permanently,",
+    "raw_text": "[0.00][S01]And some very specific questions and we got a lot of good feedback. Please bear in mind this is only a hundred people, so even when the groups are divided into fifteen to twenty five, twenty five to thirty five, there's only maybe ten people, fifteen people in each group, okay.[17.64][19.52][S01]So, we got some of the best stuff we got. Remotes are often lost. I often lose my remote control at the back of the couch someplace, and even if it's not lost permanently,[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "And some very specific questions and we got a lot of good feedback. Please bear in mind this is only a hundred people, so even when the groups are divided into fifteen to twenty five, twenty five to thirty five, there's only maybe ten people, fifteen people in each group, okay.",
+        "t0_ms": 0,
+        "t1_ms": 17640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "So, we got some of the best stuff we got. Remotes are often lost. I often lose my remote control at the back of the couch someplace, and even if it's not lost permanently,",
+        "t0_ms": 19520,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 17640,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19520,
+        "t1_ms": 29940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 26.291000366210938,
+      "encode_ms": 7559.18896484375,
+      "decode_ms": 8881.443359375
+    }
+  },
+  "rawDecoded": "[0.00][S01]And some very specific questions and we got a lot of good feedback. Please bear in mind this is only a hundred people, so even when the groups are divided into fifteen to twenty five, twenty five to thirty five, there's only maybe ten people, fifteen people in each group, okay.[17.64][19.52][S01]So, we got some of the best stuff we got. Remotes are often lost. I often lose my remote control at the back of the couch someplace, and even if it's not lost permanently,[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

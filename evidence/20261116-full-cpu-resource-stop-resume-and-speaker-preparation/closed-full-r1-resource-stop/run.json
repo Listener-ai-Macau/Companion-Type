@@ -1,0 +1,16 @@
+{
+  "state": "INCOMPLETE_CPU_FIXED_CHUNKS_RETAINED",
+  "startedAt": "2026-11-16T10:03:48.335685+08:00",
+  "privatePeakBytes": 758845440,
+  "familyWorkingSetPeakBytes": 2238279680,
+  "systemAvailableMinBytes": 798863360,
+  "qualityQualified": false,
+  "wholeMeetingAcceptance": false,
+  "automaticRetries": 0,
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "reportDeadline": "2026-11-16T16:00:00+08:00",
+  "pid": 2536,
+  "pidCreatedAt": 1794794628.339074,
+  "error": "InterruptedError('Preserve completed original windows and full sources')",
+  "finishedAt": "2026-11-16T10:15:38.175737+08:00"
+}

@@ -1,0 +1,66 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0023",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 11040000,
+    "sourceEndFrame": 11520000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "fdc5fb6b236128925f61bcac2ee1bf9dcded2830dc2725e409c545cf557f08f9",
+  "seconds": 14.478729499998735,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "My only view is that we should definitely be going for a user focused design, um but uh the pro I think the problem with a lot of these are user focused designs that are about is that they make assumptions and attacks about what uh what's given users going to uh want mo want to do fro wanted to do most. So something that's uh something that is more programmable.",
+    "raw_text": "[0.00][S01]My only view is that we should definitely be going for a user focused design, um but uh the pro I think the problem with a lot of these are user focused designs that are about is that they make assumptions and attacks about what uh what's given users going to uh want mo want to do fro wanted to do most. So something that's uh something that is more programmable.[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "My only view is that we should definitely be going for a user focused design, um but uh the pro I think the problem with a lot of these are user focused designs that are about is that they make assumptions and attacks about what uh what's given users going to uh want mo want to do fro wanted to do most. So something that's uh something that is more programmable.",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 14.664999961853027,
+      "encode_ms": 7376.4638671875,
+      "decode_ms": 7050.65087890625
+    }
+  },
+  "rawDecoded": "[0.00][S01]My only view is that we should definitely be going for a user focused design, um but uh the pro I think the problem with a lot of these are user focused designs that are about is that they make assumptions and attacks about what uh what's given users going to uh want mo want to do fro wanted to do most. So something that's uh something that is more programmable.[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

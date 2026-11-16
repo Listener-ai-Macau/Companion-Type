@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0025",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 12000000,
+    "sourceEndFrame": 12480000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "c571dae856f0282913d61a0e4859c8797674beb3cc037bcb5bd25d2f47c2f5f6",
+  "seconds": 16.5543073000008,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Sort of cha changing between different modes for the device, it'll tell you just exactly what uh in each direction of the uh of the um joystick's going to do or what what each function button's going to do. Um this is actually s s s I guess slightly taking inspiration up with uh games controllers and the PlayStation controller, you have four basic function buttons that are just marked with uh distinctive uh geometrical shapes.",
+    "raw_text": "[0.00][S01]Sort of cha changing between different modes for the device, it'll tell you just exactly what uh in each direction of the uh[7.70][10.34][S01]of the um joystick's going to do or what what each function button's going to do. Um this is actually s s s I guess slightly taking inspiration up with uh games controllers and the PlayStation controller, you have four basic function buttons that are just marked with uh distinctive uh geometrical shapes.[29.86]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Sort of cha changing between different modes for the device, it'll tell you just exactly what uh in each direction of the uh",
+        "t0_ms": 0,
+        "t1_ms": 7700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "of the um joystick's going to do or what what each function button's going to do. Um this is actually s s s I guess slightly taking inspiration up with uh games controllers and the PlayStation controller, you have four basic function buttons that are just marked with uh distinctive uh geometrical shapes.",
+        "t0_ms": 10340,
+        "t1_ms": 29860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 7700,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10340,
+        "t1_ms": 29860,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 14.87600040435791,
+      "encode_ms": 8197.736328125,
+      "decode_ms": 8306.7265625
+    }
+  },
+  "rawDecoded": "[0.00][S01]Sort of cha changing between different modes for the device, it'll tell you just exactly what uh in each direction of the uh[7.70][10.34][S01]of the um joystick's going to do or what what each function button's going to do. Um this is actually s s s I guess slightly taking inspiration up with uh games controllers and the PlayStation controller, you have four basic function buttons that are just marked with uh distinctive uh geometrical shapes.[29.86]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,13 @@
+{
+  "sourceControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\overnight-r5",
+  "sourceManifestSha256": "234ea8b756701993e17674fabb0cf12e69e22649ca9aa905f694a160b08863d2",
+  "originalScorerSha256": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9",
+  "selectionBasedOnStageAValidation": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\score.json",
+  "selectionResultSha256": "48a266fb161a1c2424901761f35c5bc0719eeb789671f18bdfb0e365c84409c3",
+  "referencesPassedToInference": false,
+  "originalGatesChanged": false,
+  "wholeInputs": 4,
+  "wholeAudioSeconds": 8629.003250000002,
+  "chunks": 290,
+  "attributionPolicy": "MOSS raw words and segment times; infer native local Sxx-to-global Nemotron IDs by maximum overlap against the unchanged predicted full-source exclusive journal. No reference labels/counts/text used; unmatched/residual words remain UNKNOWN. Scoring uses the already frozen whole-meeting Nemotron-to-reference mapping, no per-window reference remapping."
+}

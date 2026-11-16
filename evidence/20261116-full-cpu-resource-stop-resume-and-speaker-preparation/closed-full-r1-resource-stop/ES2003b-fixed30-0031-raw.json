@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0031",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 14880000,
+    "sourceEndFrame": 15360000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "1a3486de020301b719008ad1d5c6056e7c60eaa60b3be7a2cd193a528052d4e5",
+  "seconds": 19.00277150000329,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Or would that take too much power, would we need more um components in there to supply the power. Um the joystick is another thing, if we're gonna add that, um there'd be more components to deal with that. Mm-hmm. Um so uh we need to I don't know exactly what that's the design of the the the layout of the uh",
+    "raw_text": "[0.00][S01]Or would that take too much power, would we need more um components in there to supply the power. Um[7.56][8.74][S01]the joystick is another thing, if we're gonna add that, um there'd be more components to deal with that.[14.84][15.20][S02]Mm-hmm.[15.60][15.60][S01]Um[16.22][17.26][S01]so uh we need to[20.02][21.84][S01]I don't know exactly what[22.88][25.76][S01]that's the design of the the the layout of the uh[29.18]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Or would that take too much power, would we need more um components in there to supply the power. Um",
+        "t0_ms": 0,
+        "t1_ms": 7560,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "the joystick is another thing, if we're gonna add that, um there'd be more components to deal with that.",
+        "t0_ms": 8740,
+        "t1_ms": 14840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 15200,
+        "t1_ms": 15600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Um",
+        "t0_ms": 15600,
+        "t1_ms": 16220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "so uh we need to",
+        "t0_ms": 17260,
+        "t1_ms": 20020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I don't know exactly what",
+        "t0_ms": 21840,
+        "t1_ms": 22880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "that's the design of the the the layout of the uh",
+        "t0_ms": 25760,
+        "t1_ms": 29180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 7560,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8740,
+        "t1_ms": 14840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15200,
+        "t1_ms": 15600,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15600,
+        "t1_ms": 16220,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17260,
+        "t1_ms": 20020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21840,
+        "t1_ms": 22880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25760,
+        "t1_ms": 29180,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 23.94499969482422,
+      "encode_ms": 7396.63720703125,
+      "decode_ms": 11518.4931640625
+    }
+  },
+  "rawDecoded": "[0.00][S01]Or would that take too much power, would we need more um components in there to supply the power. Um[7.56][8.74][S01]the joystick is another thing, if we're gonna add that, um there'd be more components to deal with that.[14.84][15.20][S02]Mm-hmm.[15.60][15.60][S01]Um[16.22][17.26][S01]so uh we need to[20.02][21.84][S01]I don't know exactly what[22.88][25.76][S01]that's the design of the the the layout of the uh[29.18]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

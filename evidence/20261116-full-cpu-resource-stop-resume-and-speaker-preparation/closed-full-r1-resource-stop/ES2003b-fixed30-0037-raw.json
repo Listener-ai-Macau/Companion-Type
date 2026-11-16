@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0037",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 17760000,
+    "sourceEndFrame": 18240000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "566fe10f40def912dfa3c13c2ce409cc53d009b70d6902874af66428fbe28987",
+  "seconds": 18.94225490000099,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "It's almost like having a small T not TVs to say, but if you can control almost all of the functionality from the display, I don't know how much power an L. C. D. would take, but it might be quite low. Mm. That'll be on the remote just telling you what's on, or uh interacted L. C. D. but. Well literally if you can imagine the display maybe slightly larger than um those on a uh mobile phone, something where you can read a an M.",
+    "raw_text": "[0.00][S01]It's almost like having a small[1.82][3.66][S01]T not TVs to say, but if you can control almost all of the functionality from the display, I don't know how much power an L. C. D. would take, but it might be quite low.[13.82][12.16][S02]Mm.[12.40][14.32][S02]That'll be on the remote just telling you what's on, or uh interacted L. C. D. but.[20.54][18.91][S01]Well literally if you can imagine the display maybe slightly larger than um those on a uh mobile phone, something where you can read a an M.[29.95]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "It's almost like having a small",
+        "t0_ms": 0,
+        "t1_ms": 1820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "T not TVs to say, but if you can control almost all of the functionality from the display, I don't know how much power an L. C. D. would take, but it might be quite low.",
+        "t0_ms": 3660,
+        "t1_ms": 13820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 12160,
+        "t1_ms": 12400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "That'll be on the remote just telling you what's on, or uh interacted L. C. D. but.",
+        "t0_ms": 14320,
+        "t1_ms": 20540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Well literally if you can imagine the display maybe slightly larger than um those on a uh mobile phone, something where you can read a an M.",
+        "t0_ms": 18910,
+        "t1_ms": 29950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 1820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3660,
+        "t1_ms": 13820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12160,
+        "t1_ms": 12400,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14320,
+        "t1_ms": 20540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18910,
+        "t1_ms": 29950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 14.031999588012695,
+      "encode_ms": 7496.8837890625,
+      "decode_ms": 11397.251953125
+    }
+  },
+  "rawDecoded": "[0.00][S01]It's almost like having a small[1.82][3.66][S01]T not TVs to say, but if you can control almost all of the functionality from the display, I don't know how much power an L. C. D. would take, but it might be quite low.[13.82][12.16][S02]Mm.[12.40][14.32][S02]That'll be on the remote just telling you what's on, or uh interacted L. C. D. but.[20.54][18.91][S01]Well literally if you can imagine the display maybe slightly larger than um those on a uh mobile phone, something where you can read a an M.[29.95]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

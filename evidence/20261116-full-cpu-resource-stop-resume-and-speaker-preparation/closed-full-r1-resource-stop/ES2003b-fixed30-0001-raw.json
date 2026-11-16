@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0001",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 480000,
+    "sourceEndFrame": 960000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "430cd7b84479ebf5e821cf8768c777caac86ee7368645f0e6c7c719dea3817c4",
+  "seconds": 18.599426499997207,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "That was sorry. Well, that'll train you. Here we go. Excellent, right. Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um we'll start with the minutes of the last meeting, not a lot.",
+    "raw_text": "[4.41][S01]That was sorry.[4.91][9.41][S02]Well, that'll train you.[10.29][11.81][S03]Here we go.[12.15][12.85][S02]Excellent, right.[13.61][15.49][S02]Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um[24.89][26.79][S02]we'll start with the minutes of the last meeting, not a lot.[29.97]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "That was sorry.",
+        "t0_ms": 4410,
+        "t1_ms": 4910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Well, that'll train you.",
+        "t0_ms": 9410,
+        "t1_ms": 10290,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Here we go.",
+        "t0_ms": 11810,
+        "t1_ms": 12150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Excellent, right.",
+        "t0_ms": 12850,
+        "t1_ms": 13610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um",
+        "t0_ms": 15490,
+        "t1_ms": 24890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "we'll start with the minutes of the last meeting, not a lot.",
+        "t0_ms": 26790,
+        "t1_ms": 29970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 4410,
+        "t1_ms": 4910,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9410,
+        "t1_ms": 10290,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11810,
+        "t1_ms": 12150,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12850,
+        "t1_ms": 13610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15490,
+        "t1_ms": 24890,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26790,
+        "t1_ms": 29970,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 18.638999938964844,
+      "encode_ms": 7490.10009765625,
+      "decode_ms": 11037.1025390625
+    }
+  },
+  "rawDecoded": "[4.41][S01]That was sorry.[4.91][9.41][S02]Well, that'll train you.[10.29][11.81][S03]Here we go.[12.15][12.85][S02]Excellent, right.[13.61][15.49][S02]Hopefully that's us ready to uh to go. So, functional design meeting, we'll flesh out some of the uh stuff. Um[24.89][26.79][S02]we'll start with the minutes of the last meeting, not a lot.[29.97]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

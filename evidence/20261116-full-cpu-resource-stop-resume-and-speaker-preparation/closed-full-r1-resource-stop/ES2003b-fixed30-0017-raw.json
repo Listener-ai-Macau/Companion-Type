@@ -1,0 +1,300 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0017",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 8160000,
+    "sourceEndFrame": 8640000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "b14330823c43dd224389fa020965909ab3acbe94fb4780c744ed089dfdee3c02",
+  "seconds": 26.56826269999874,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "These are things I think we should consider. I think it's cool. If you could spee uh if you could uh speed it up a bit please. I'm sorry. Sure, I'm about there, yeah. I think it's cool. Sorry. But there definitely some considerations. Do you think? Excellent, right. Um. Mm. Here from the User Interface Design, I think, from India. Um. Okay. You've got your presentation now, is it on the is it okay? Yeah, that's the one that's in the hall. Do we have with the",
+    "raw_text": "[0.47][S01]These are things I think we should consider. I think it's cool.[3.33][3.52][S02]If you could spee uh if you could uh speed it up a bit please.[7.23][5.21][S01]I'm sorry.[5.55][7.28][S01]Sure, I'm about there, yeah. I think it's cool.[9.55][7.78][S02]Sorry.[8.11][10.62][S01]But there definitely some considerations.[13.21][13.95][S01]Do you think?[14.39][14.88][S02]Excellent, right. Um.[16.83][16.24][S01]Mm.[16.47][19.21][S02]Here from the User Interface Design, I think, from India. Um.[24.87][23.35][S03]Okay.[23.73][26.03][S02]You've got your presentation now, is it on the is it okay?[29.83][27.72][S03]Yeah, that's the one that's in the hall.[29.01][28.84][S04]Do we have with the[29.97]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "These are things I think we should consider. I think it's cool.",
+        "t0_ms": 470,
+        "t1_ms": 3330,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "If you could spee uh if you could uh speed it up a bit please.",
+        "t0_ms": 3520,
+        "t1_ms": 7230,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "I'm sorry.",
+        "t0_ms": 5210,
+        "t1_ms": 5550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Sure, I'm about there, yeah. I think it's cool.",
+        "t0_ms": 7280,
+        "t1_ms": 9550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Sorry.",
+        "t0_ms": 7780,
+        "t1_ms": 8110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "But there definitely some considerations.",
+        "t0_ms": 10620,
+        "t1_ms": 13210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Do you think?",
+        "t0_ms": 13950,
+        "t1_ms": 14390,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Excellent, right. Um.",
+        "t0_ms": 14880,
+        "t1_ms": 16830,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 16240,
+        "t1_ms": 16470,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Here from the User Interface Design, I think, from India. Um.",
+        "t0_ms": 19210,
+        "t1_ms": 24870,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 23350,
+        "t1_ms": 23730,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "You've got your presentation now, is it on the is it okay?",
+        "t0_ms": 26030,
+        "t1_ms": 29830,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, that's the one that's in the hall.",
+        "t0_ms": 27720,
+        "t1_ms": 29010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Do we have with the",
+        "t0_ms": 28840,
+        "t1_ms": 29970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 470,
+        "t1_ms": 3330,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3520,
+        "t1_ms": 7230,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5210,
+        "t1_ms": 5550,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7280,
+        "t1_ms": 9550,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7780,
+        "t1_ms": 8110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10620,
+        "t1_ms": 13210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13950,
+        "t1_ms": 14390,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14880,
+        "t1_ms": 16830,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16240,
+        "t1_ms": 16470,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19210,
+        "t1_ms": 24870,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23350,
+        "t1_ms": 23730,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26030,
+        "t1_ms": 29830,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27720,
+        "t1_ms": 29010,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28840,
+        "t1_ms": 29970,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 18.983999252319336,
+      "encode_ms": 7384.64990234375,
+      "decode_ms": 19130.216796875
+    }
+  },
+  "rawDecoded": "[0.47][S01]These are things I think we should consider. I think it's cool.[3.33][3.52][S02]If you could spee uh if you could uh speed it up a bit please.[7.23][5.21][S01]I'm sorry.[5.55][7.28][S01]Sure, I'm about there, yeah. I think it's cool.[9.55][7.78][S02]Sorry.[8.11][10.62][S01]But there definitely some considerations.[13.21][13.95][S01]Do you think?[14.39][14.88][S02]Excellent, right. Um.[16.83][16.24][S01]Mm.[16.47][19.21][S02]Here from the User Interface Design, I think, from India. Um.[24.87][23.35][S03]Okay.[23.73][26.03][S02]You've got your presentation now, is it on the is it okay?[29.83][27.72][S03]Yeah, that's the one that's in the hall.[29.01][28.84][S04]Do we have with the[29.97]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

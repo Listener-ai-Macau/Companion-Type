@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0033",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 15840000,
+    "sourceEndFrame": 16320000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "0f0389771acabff52ee6db6c21977eec7ee7f76f0497e24fbd07c9a356bfe3de",
+  "seconds": 17.583171199999924,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Or it's obviously connected to the chip and the user interface obviously contains everything. With a switch turning on, infrared bulb uh will contact the T. V. and you'll have whatever toys or T. V. player, bulb turn on, say it's on. Uh so do we need on and control uh different bulbs to decide, or different light bulbs would be easier? Um I don't know, what we should decide on that. Okay, well.",
+    "raw_text": "[0.00][S01]Or it's obviously connected to the chip and the user interface obviously contains everything. With a switch turning on, infrared bulb uh will contact the T. V. and[11.08][12.26][S01]you'll have whatever toys or T. V. player, bulb turn on, say it's on. Uh so do we need on and control uh different bulbs to decide, or different light bulbs would be easier? Um I don't know, what we should decide on that.[27.64][28.32][S02]Okay, well.[29.20]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Or it's obviously connected to the chip and the user interface obviously contains everything. With a switch turning on, infrared bulb uh will contact the T. V. and",
+        "t0_ms": 0,
+        "t1_ms": 11080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "you'll have whatever toys or T. V. player, bulb turn on, say it's on. Uh so do we need on and control uh different bulbs to decide, or different light bulbs would be easier? Um I don't know, what we should decide on that.",
+        "t0_ms": 12260,
+        "t1_ms": 27640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay, well.",
+        "t0_ms": 28320,
+        "t1_ms": 29200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 11080,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12260,
+        "t1_ms": 27640,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28320,
+        "t1_ms": 29200,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 20.694000244140625,
+      "encode_ms": 8531.57421875,
+      "decode_ms": 8989.68359375
+    }
+  },
+  "rawDecoded": "[0.00][S01]Or it's obviously connected to the chip and the user interface obviously contains everything. With a switch turning on, infrared bulb uh will contact the T. V. and[11.08][12.26][S01]you'll have whatever toys or T. V. player, bulb turn on, say it's on. Uh so do we need on and control uh different bulbs to decide, or different light bulbs would be easier? Um I don't know, what we should decide on that.[27.64][28.32][S02]Okay, well.[29.20]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

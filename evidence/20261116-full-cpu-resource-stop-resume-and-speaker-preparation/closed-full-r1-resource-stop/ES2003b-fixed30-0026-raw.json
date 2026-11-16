@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0026",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 12480000,
+    "sourceEndFrame": 12960000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "316d0334a176a7f406185afe97e3486c00e2684fabb4c53b848d8b0cdc9f5d6f",
+  "seconds": 21.83491380000487,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "But then. 呃呃and then dependent on what you're doing with it, what game and stuff um those uh those factors events are further specified, so it's taken taken the lead from that. Okay. Yep. Right, um we could hear from our industrial engineer, because I know. That's it. Yeah, uh I was still working on stuff, I haven't got finished, um alright. What to save on, where do I have to save it?",
+    "raw_text": "[0.00][S01]But then.[0.50][0.32][S02]呃呃and then dependent on what you're doing with it, what game and stuff um those uh those factors events are further specified, so it's taken taken the lead from that.[11.00][12.30][S02]Okay.[12.66][12.68][S03]Yep.[12.92][14.98][S03]Right, um we could hear from our industrial engineer, because I know.[21.20][15.30][S01]That's it.[15.70][20.30][S01]Yeah, uh I was still working on stuff, I haven't got finished, um alright.[25.62][27.14][S01]What to save on, where do I have to save it?[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "But then.",
+        "t0_ms": 0,
+        "t1_ms": 500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃呃and then dependent on what you're doing with it, what game and stuff um those uh those factors events are further specified, so it's taken taken the lead from that.",
+        "t0_ms": 320,
+        "t1_ms": 11000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 12300,
+        "t1_ms": 12660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yep.",
+        "t0_ms": 12680,
+        "t1_ms": 12920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Right, um we could hear from our industrial engineer, because I know.",
+        "t0_ms": 14980,
+        "t1_ms": 21200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "That's it.",
+        "t0_ms": 15300,
+        "t1_ms": 15700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, uh I was still working on stuff, I haven't got finished, um alright.",
+        "t0_ms": 20300,
+        "t1_ms": 25620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "What to save on, where do I have to save it?",
+        "t0_ms": 27140,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 500,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 320,
+        "t1_ms": 11000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12300,
+        "t1_ms": 12660,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12680,
+        "t1_ms": 12920,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14980,
+        "t1_ms": 21200,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15300,
+        "t1_ms": 15700,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20300,
+        "t1_ms": 25620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27140,
+        "t1_ms": 29940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 13.875,
+      "encode_ms": 7517.7548828125,
+      "decode_ms": 14262.83984375
+    }
+  },
+  "rawDecoded": "[0.00][S01]But then.[0.50][0.32][S02]呃呃and then dependent on what you're doing with it, what game and stuff um those uh those factors events are further specified, so it's taken taken the lead from that.[11.00][12.30][S02]Okay.[12.66][12.68][S03]Yep.[12.92][14.98][S03]Right, um we could hear from our industrial engineer, because I know.[21.20][15.30][S01]That's it.[15.70][20.30][S01]Yeah, uh I was still working on stuff, I haven't got finished, um alright.[25.62][27.14][S01]What to save on, where do I have to save it?[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

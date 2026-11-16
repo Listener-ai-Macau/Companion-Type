@@ -313,3 +313,13 @@ evidence/20261116-cpu32-scored-and-fixed-full4-preparation/** -text -whitespace
 src/cpu_fixed_chunks_worker_20261116.py -text -whitespace
 
 src/run_cpu_fixed_chunks_20261116.py -text -whitespace
+
+evidence/20261116-full-cpu-resource-stop-resume-and-speaker-preparation/** -text -whitespace
+
+src/compose_cpu_fixed_whole_20261116.py -text -whitespace
+
+src/score_cpu_fixed_whole_summary_20261116.py -text -whitespace
+
+src/cpu25_nemotron_wrapper_20261116.py -text -whitespace
+
+src/run_cpu25_nemotron_20261116.py -text -whitespace

@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0018",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 8640000,
+    "sourceEndFrame": 9120000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "7fa73cd2c99b0fefe9ea84c6afc4b2fb270056b592a3c1595602503bf6666168",
+  "seconds": 20.492988799996965,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "You know. There was a oops. Oh. Oh. But the. Technical functions. Yeah. I started making stuff up, you know, got me in my thing. Okay. Okay, so a brief run-through of the um of the technical functions of the remote. I don't it's uh the the the presentation is uh already slightly obsolete because I had uh had in mind something that would uh",
+    "raw_text": "[0.00][S01]You know.[0.50][1.24][S02]There was a oops.[2.50][2.68][S01]Oh.[2.92][3.44][S02]Oh.[3.62][4.82][S02]But the.[5.18][6.08][S01]Technical functions.[6.96][8.16][S01]Yeah.[8.38][8.52][S02]I started making stuff up, you know, got me in my thing.[11.04][16.28][S03]Okay.[16.70][17.34][S04]Okay, so a brief run-through of the um of the technical functions of the remote. I don't it's uh the the the presentation is uh already slightly obsolete because I had uh had in mind something that would uh[29.42]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "You know.",
+        "t0_ms": 0,
+        "t1_ms": 500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "There was a oops.",
+        "t0_ms": 1240,
+        "t1_ms": 2500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Oh.",
+        "t0_ms": 2680,
+        "t1_ms": 2920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh.",
+        "t0_ms": 3440,
+        "t1_ms": 3620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "But the.",
+        "t0_ms": 4820,
+        "t1_ms": 5180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Technical functions.",
+        "t0_ms": 6080,
+        "t1_ms": 6960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 8160,
+        "t1_ms": 8380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I started making stuff up, you know, got me in my thing.",
+        "t0_ms": 8520,
+        "t1_ms": 11040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 16280,
+        "t1_ms": 16700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Okay, so a brief run-through of the um of the technical functions of the remote. I don't it's uh the the the presentation is uh already slightly obsolete because I had uh had in mind something that would uh",
+        "t0_ms": 17340,
+        "t1_ms": 29420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 500,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1240,
+        "t1_ms": 2500,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2680,
+        "t1_ms": 2920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3440,
+        "t1_ms": 3620,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4820,
+        "t1_ms": 5180,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6080,
+        "t1_ms": 6960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8160,
+        "t1_ms": 8380,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8520,
+        "t1_ms": 11040,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16280,
+        "t1_ms": 16700,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17340,
+        "t1_ms": 29420,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 15.708999633789062,
+      "encode_ms": 7179.64794921875,
+      "decode_ms": 13260.1982421875
+    }
+  },
+  "rawDecoded": "[0.00][S01]You know.[0.50][1.24][S02]There was a oops.[2.50][2.68][S01]Oh.[2.92][3.44][S02]Oh.[3.62][4.82][S02]But the.[5.18][6.08][S01]Technical functions.[6.96][8.16][S01]Yeah.[8.38][8.52][S02]I started making stuff up, you know, got me in my thing.[11.04][16.28][S03]Okay.[16.70][17.34][S04]Okay, so a brief run-through of the um of the technical functions of the remote. I don't it's uh the the the presentation is uh already slightly obsolete because I had uh had in mind something that would uh[29.42]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

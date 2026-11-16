@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0015",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 7200000,
+    "sourceEndFrame": 7680000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "032408c01f8af664bb91a0d8d248c81704a6339b7c1f04c397dde1d10761cd0f",
+  "seconds": 18.703234499997052,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "So and then we have an extra bit added to it. So I'm pretty sure people will buy the remote, but is it practical to have voice recognition system and a remote control, I think is a big question. Um will people will people be willing to wait for the the period that it'll take to train the remote, 'cause I think it will the remote will uh get better over time with the same user the user. But for the first week or for the first two weeks are you willing to wait, are you willing to have a bad",
+    "raw_text": "[0.00][S01]So and then we have an extra bit added to it.[3.00][4.94][S01]So I'm pretty sure people will buy the remote, but is it practical to have voice recognition system and a remote control, I think is a big question.[12.08][12.78][S01]Um will people will people be willing to wait for the the period that it'll take to train the remote, 'cause I think it will the remote will uh get better over time with the same user the user.[25.24][25.88][S01]But for the first week or for the first two weeks are you willing to wait, are you willing to have a bad[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "So and then we have an extra bit added to it.",
+        "t0_ms": 0,
+        "t1_ms": 3000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "So I'm pretty sure people will buy the remote, but is it practical to have voice recognition system and a remote control, I think is a big question.",
+        "t0_ms": 4940,
+        "t1_ms": 12080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um will people will people be willing to wait for the the period that it'll take to train the remote, 'cause I think it will the remote will uh get better over time with the same user the user.",
+        "t0_ms": 12780,
+        "t1_ms": 25240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "But for the first week or for the first two weeks are you willing to wait, are you willing to have a bad",
+        "t0_ms": 25880,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 3000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4940,
+        "t1_ms": 12080,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12780,
+        "t1_ms": 25240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25880,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 20.85099983215332,
+      "encode_ms": 7540.73291015625,
+      "decode_ms": 11107.810546875
+    }
+  },
+  "rawDecoded": "[0.00][S01]So and then we have an extra bit added to it.[3.00][4.94][S01]So I'm pretty sure people will buy the remote, but is it practical to have voice recognition system and a remote control, I think is a big question.[12.08][12.78][S01]Um will people will people be willing to wait for the the period that it'll take to train the remote, 'cause I think it will the remote will uh get better over time with the same user the user.[25.24][25.88][S01]But for the first week or for the first two weeks are you willing to wait, are you willing to have a bad[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

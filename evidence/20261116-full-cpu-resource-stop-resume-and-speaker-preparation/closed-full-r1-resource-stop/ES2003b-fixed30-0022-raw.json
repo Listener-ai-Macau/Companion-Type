@@ -1,0 +1,66 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0022",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 10560000,
+    "sourceEndFrame": 11040000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "a57a2f318ac82e0738dce13a23d624afc68d5bb03f7aed66392a41309d9c1d65",
+  "seconds": 15.417679400001362,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Functions and so you go for something that's fairly intuitive to use and um well for the for the most part for a T. V. remote it's uh that that would be channel control and volume uh and if you if if you if you all wanted to incorporate uh control with D. V. D. V. D. or uh V. C. R. into that then there's the play, pause, stop, rewind, fast forward, backward, so forth um.",
+    "raw_text": "[0.00][S01]Functions and so you go for something that's fairly intuitive to use and um well for the for the most part for a T. V. remote it's uh that that would be channel control and volume uh and if you if if you if you all wanted to incorporate uh control with D. V. D. V. D. or uh V. C. R. into that then there's the play, pause, stop, rewind, fast forward, backward, so forth um.[28.28]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Functions and so you go for something that's fairly intuitive to use and um well for the for the most part for a T. V. remote it's uh that that would be channel control and volume uh and if you if if you if you all wanted to incorporate uh control with D. V. D. V. D. or uh V. C. R. into that then there's the play, pause, stop, rewind, fast forward, backward, so forth um.",
+        "t0_ms": 0,
+        "t1_ms": 28280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 28280,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 14.244999885559082,
+      "encode_ms": 7401.65185546875,
+      "decode_ms": 7967.78076171875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Functions and so you go for something that's fairly intuitive to use and um well for the for the most part for a T. V. remote it's uh that that would be channel control and volume uh and if you if if you if you all wanted to incorporate uh control with D. V. D. V. D. or uh V. C. R. into that then there's the play, pause, stop, rewind, fast forward, backward, so forth um.[28.28]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

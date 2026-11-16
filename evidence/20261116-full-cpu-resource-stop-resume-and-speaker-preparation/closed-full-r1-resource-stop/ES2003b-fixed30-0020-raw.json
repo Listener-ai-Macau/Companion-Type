@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0020",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 9600000,
+    "sourceEndFrame": 10080000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8fce3cc8c1eca17f5a780be5a95412fff8c4ad7c148838a5c84bcef1c492dde5",
+  "seconds": 17.77239499999996,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Um I Um. Basically the job of the device is to send commands to an appliance, in this case the television set, um to say you're getting off your backside um. And there's two main trends in in the in design practice. On the one hand, and this uh this particularly relates to the sort of earliest models where it with you know uh so so many buttons on it, it's about the size of the television set um and you every possible function",
+    "raw_text": "[0.00][S01]Um I[0.90][0.78][S02]Um.[1.04][1.48][S01]Basically the job of the device is to send commands to an appliance, in this case the television set, um to say you're getting off your backside um.[10.94][11.86][S01]And there's two main trends in in the in design practice. On the one hand, and this uh this particularly relates to the sort of earliest models where it with you know uh so so many buttons on it, it's about the size of the television set um and you every possible function[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Um I",
+        "t0_ms": 0,
+        "t1_ms": 900,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um.",
+        "t0_ms": 780,
+        "t1_ms": 1040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Basically the job of the device is to send commands to an appliance, in this case the television set, um to say you're getting off your backside um.",
+        "t0_ms": 1480,
+        "t1_ms": 10940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "And there's two main trends in in the in design practice. On the one hand, and this uh this particularly relates to the sort of earliest models where it with you know uh so so many buttons on it, it's about the size of the television set um and you every possible function",
+        "t0_ms": 11860,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 900,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 780,
+        "t1_ms": 1040,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1480,
+        "t1_ms": 10940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11860,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 14.571000099182129,
+      "encode_ms": 7212.5791015625,
+      "decode_ms": 10512.232421875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Um I[0.90][0.78][S02]Um.[1.04][1.48][S01]Basically the job of the device is to send commands to an appliance, in this case the television set, um to say you're getting off your backside um.[10.94][11.86][S01]And there's two main trends in in the in design practice. On the one hand, and this uh this particularly relates to the sort of earliest models where it with you know uh so so many buttons on it, it's about the size of the television set um and you every possible function[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

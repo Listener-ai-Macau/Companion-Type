@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0028",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 13440000,
+    "sourceEndFrame": 13920000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "1857eb8fc31a2a1e5ac4cd433c6b16bb5b5c70e1c10d7d8b8642a5072bfde72d",
+  "seconds": 17.14028479999979,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Um. Are you planning it okay, or? It's actually closing now though, but I say it's. Or like if you go to line or whichever line. No, it doesn't go there. Yeah, and just go fast eight times.",
+    "raw_text": "[3.19][S01]Um.[3.75][15.56][S02]Are you planning it okay, or?[17.03][17.78][S01]It's actually closing now though, but I say it's.[20.51][21.15][S03]Or like if you go to line or whichever line.[24.91][24.83][S01]No, it doesn't go there.[25.75][25.89][S03]Yeah, and just go fast eight times.[27.85]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Um.",
+        "t0_ms": 3190,
+        "t1_ms": 3750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Are you planning it okay, or?",
+        "t0_ms": 15560,
+        "t1_ms": 17030,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "It's actually closing now though, but I say it's.",
+        "t0_ms": 17780,
+        "t1_ms": 20510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Or like if you go to line or whichever line.",
+        "t0_ms": 21150,
+        "t1_ms": 24910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "No, it doesn't go there.",
+        "t0_ms": 24830,
+        "t1_ms": 25750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, and just go fast eight times.",
+        "t0_ms": 25890,
+        "t1_ms": 27850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 3190,
+        "t1_ms": 3750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15560,
+        "t1_ms": 17030,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17780,
+        "t1_ms": 20510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21150,
+        "t1_ms": 24910,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24830,
+        "t1_ms": 25750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25890,
+        "t1_ms": 27850,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 15.291999816894531,
+      "encode_ms": 7252.11181640625,
+      "decode_ms": 9837.73046875
+    }
+  },
+  "rawDecoded": "[3.19][S01]Um.[3.75][15.56][S02]Are you planning it okay, or?[17.03][17.78][S01]It's actually closing now though, but I say it's.[20.51][21.15][S03]Or like if you go to line or whichever line.[24.91][24.83][S01]No, it doesn't go there.[25.75][25.89][S03]Yeah, and just go fast eight times.[27.85]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

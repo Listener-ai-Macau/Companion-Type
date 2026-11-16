@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0029",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 13920000,
+    "sourceEndFrame": 14400000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "7f6335521189b1cd3eb58f2366f5b6ec0e55d40cb338a440bfababa8f5c3f9c1",
+  "seconds": 16.052608500001952,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Alright. Okay. Uh I'm responsible for our working design. Uh this is basically the inside going on with the the uh remote control. So we have the energy source, we have the user interface, this this is what I've",
+    "raw_text": "[0.00][S01]Alright.[6.74][9.20][S01]Okay.[9.72][16.28][S02]Uh I'm responsible for our working design. Uh this is basically the inside going on with the the uh remote control. So we have the energy source, we have the user interface, this this is what I've[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Alright.",
+        "t0_ms": 0,
+        "t1_ms": 6740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 9200,
+        "t1_ms": 9720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Uh I'm responsible for our working design. Uh this is basically the inside going on with the the uh remote control. So we have the energy source, we have the user interface, this this is what I've",
+        "t0_ms": 16280,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 6740,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9200,
+        "t1_ms": 9720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16280,
+        "t1_ms": 30000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 13.854999542236328,
+      "encode_ms": 8832.5537109375,
+      "decode_ms": 7171.73193359375
+    }
+  },
+  "rawDecoded": "[0.00][S01]Alright.[6.74][9.20][S01]Okay.[9.72][16.28][S02]Uh I'm responsible for our working design. Uh this is basically the inside going on with the the uh remote control. So we have the energy source, we have the user interface, this this is what I've[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,66 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0009",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 4320000,
+    "sourceEndFrame": 4800000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "24654cd3134702d0ac20d648cb62709594da125008e4c3c7727173ec0dcddb5e",
+  "seconds": 15.847810399995069,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Remote controls that are big, they have a lot of buttons, you have to hold down more than one key at one time to do something, they're just not great to use. We just got a lot of bad complaints about remote controls, people do not like remote controls. Some of the good stuff we got. Between the age of fifteen and twenty five, most people will be willing to pay extra for voice recognition software. I don't get excited here, I've got more to say on that. Most people will be willing to pay for that, Adam.",
+    "raw_text": "[0.00][S01]Remote controls that are big, they have a lot of buttons, you have to hold down more than one key at one time to do something, they're just not great to use. We just got a lot of bad complaints about remote controls, people do not like remote controls. Some of the good stuff we got. Between the age of fifteen and twenty five, most people will be willing to pay extra for voice recognition software. I don't get excited here, I've got more to say on that. Most people will be willing to pay for that, Adam.[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Remote controls that are big, they have a lot of buttons, you have to hold down more than one key at one time to do something, they're just not great to use. We just got a lot of bad complaints about remote controls, people do not like remote controls. Some of the good stuff we got. Between the age of fifteen and twenty five, most people will be willing to pay extra for voice recognition software. I don't get excited here, I've got more to say on that. Most people will be willing to pay for that, Adam.",
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 27.558000564575195,
+      "encode_ms": 6885.58203125,
+      "decode_ms": 8896.837890625
+    }
+  },
+  "rawDecoded": "[0.00][S01]Remote controls that are big, they have a lot of buttons, you have to hold down more than one key at one time to do something, they're just not great to use. We just got a lot of bad complaints about remote controls, people do not like remote controls. Some of the good stuff we got. Between the age of fifteen and twenty five, most people will be willing to pay extra for voice recognition software. I don't get excited here, I've got more to say on that. Most people will be willing to pay for that, Adam.[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0014",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 6720000,
+    "sourceEndFrame": 7200000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8a653e22cb11c1a589adfd9ec60d0d4c95e9b2d4d3eb4807bdc50f5344fdcf41",
+  "seconds": 20.74021999999968,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Then you can design the remote to look any way you want it to look, because there are no restrictions on physical size or shape. It it could be as fancy as you want it to be, you know, it could be like a lollipop, something like that, something weird like that. As long as the voice recognition stuff works, that's that's fine. Okay. Yeah. So we had the free birds, we had the design bit. We have the the fancy bit, right, the voice recognition is fancy, it's cool, it's different, it's radical.",
+    "raw_text": "[0.00][S01]Then you can design the remote to look any way you want it to look, because there are no restrictions on physical size or shape.[8.88][9.28][S01]It it could be as fancy as you want it to be, you know, it could be like a lollipop, something like that, something weird like that.[14.80][15.28][S01]As long as the voice recognition stuff works, that's that's fine.[18.54][18.84][S02]Okay.[19.30][19.26][S03]Yeah.[19.62][19.78][S01]So we had the free birds, we had the design bit.[22.68][23.38][S01]We have the the fancy bit, right, the voice recognition is fancy, it's cool, it's different, it's radical.[29.34]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Then you can design the remote to look any way you want it to look, because there are no restrictions on physical size or shape.",
+        "t0_ms": 0,
+        "t1_ms": 8880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "It it could be as fancy as you want it to be, you know, it could be like a lollipop, something like that, something weird like that.",
+        "t0_ms": 9280,
+        "t1_ms": 14800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "As long as the voice recognition stuff works, that's that's fine.",
+        "t0_ms": 15280,
+        "t1_ms": 18540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 18840,
+        "t1_ms": 19300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 19260,
+        "t1_ms": 19620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "So we had the free birds, we had the design bit.",
+        "t0_ms": 19780,
+        "t1_ms": 22680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "We have the the fancy bit, right, the voice recognition is fancy, it's cool, it's different, it's radical.",
+        "t0_ms": 23380,
+        "t1_ms": 29340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 8880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9280,
+        "t1_ms": 14800,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15280,
+        "t1_ms": 18540,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18840,
+        "t1_ms": 19300,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19260,
+        "t1_ms": 19620,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19780,
+        "t1_ms": 22680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23380,
+        "t1_ms": 29340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 19.285999298095703,
+      "encode_ms": 7129.0087890625,
+      "decode_ms": 13553.1943359375
+    }
+  },
+  "rawDecoded": "[0.00][S01]Then you can design the remote to look any way you want it to look, because there are no restrictions on physical size or shape.[8.88][9.28][S01]It it could be as fancy as you want it to be, you know, it could be like a lollipop, something like that, something weird like that.[14.80][15.28][S01]As long as the voice recognition stuff works, that's that's fine.[18.54][18.84][S02]Okay.[19.30][19.26][S03]Yeah.[19.62][19.78][S01]So we had the free birds, we had the design bit.[22.68][23.38][S01]We have the the fancy bit, right, the voice recognition is fancy, it's cool, it's different, it's radical.[29.34]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

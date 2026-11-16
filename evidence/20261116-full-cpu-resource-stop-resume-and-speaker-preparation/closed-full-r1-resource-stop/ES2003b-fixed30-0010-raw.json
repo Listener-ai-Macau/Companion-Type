@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0010",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 4800000,
+    "sourceEndFrame": 5280000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "820655c8355bb26302bd3f957d40a92663908f8936e42450a5f2a0f555ff3382",
+  "seconds": 17.12911050000548,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Most people want remote controls to be pretty, they want it to be fancy. They they want it to be different. Everybody has a white remote control with black buttons and a red button and a green button. Not everybody wants that. Finally, my opinion. Yeah. The voice recognition thing is cool. And uh voice recognition, the software, open source software exist already. It's a bit sketchy at sometimes uh, you're not gonna get get always ac-",
+    "raw_text": "[0.00][S01]Most people want remote controls to be pretty, they want it to be fancy. They they want it to be different. Everybody has a white remote control with black buttons and a red button and a green button. Not everybody wants that.[13.62][14.98][S01]Finally, my opinion.[16.32][16.88][S02]Yeah.[17.10][18.26][S01]The voice recognition thing is cool. And uh voice recognition, the software, open source software exist already. It's a bit sketchy at sometimes uh, you're not gonna get get always ac-[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Most people want remote controls to be pretty, they want it to be fancy. They they want it to be different. Everybody has a white remote control with black buttons and a red button and a green button. Not everybody wants that.",
+        "t0_ms": 0,
+        "t1_ms": 13620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Finally, my opinion.",
+        "t0_ms": 14980,
+        "t1_ms": 16320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 16880,
+        "t1_ms": 17100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "The voice recognition thing is cool. And uh voice recognition, the software, open source software exist already. It's a bit sketchy at sometimes uh, you're not gonna get get always ac-",
+        "t0_ms": 18260,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 13620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14980,
+        "t1_ms": 16320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16880,
+        "t1_ms": 17100,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18260,
+        "t1_ms": 29940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 22.606000900268555,
+      "encode_ms": 7386.98388671875,
+      "decode_ms": 9685.0849609375
+    }
+  },
+  "rawDecoded": "[0.00][S01]Most people want remote controls to be pretty, they want it to be fancy. They they want it to be different. Everybody has a white remote control with black buttons and a red button and a green button. Not everybody wants that.[13.62][14.98][S01]Finally, my opinion.[16.32][16.88][S02]Yeah.[17.10][18.26][S01]The voice recognition thing is cool. And uh voice recognition, the software, open source software exist already. It's a bit sketchy at sometimes uh, you're not gonna get get always ac-[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

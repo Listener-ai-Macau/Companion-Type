@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0030",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 14400000,
+    "sourceEndFrame": 14880000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "839b7026c6d15cbff0c6f2bdeafc91770c2e95cbfd0ffa142f64261dbfb98924",
+  "seconds": 15.835103700002946,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I've seen uh the sender will push the button, the chip will respond uh and then the judicial signal sent to the T. V. so uh uh if you go to the next slide it's it's the uh what do we need on the user interface, do we need uh many buttons or do we need many light bulbs that could be easier to uh to realise which appliances are on or not um.",
+    "raw_text": "[0.00][S01]I've seen uh the sender will push the button, the chip will respond uh and then the judicial signal sent to the T. V. so uh[10.14][11.94][S01]uh if you go to the next slide it's it's the uh what do we need on the user interface, do we need uh many buttons or do we need many light bulbs that could be easier to uh to realise which appliances are on or not um.[29.82]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I've seen uh the sender will push the button, the chip will respond uh and then the judicial signal sent to the T. V. so uh",
+        "t0_ms": 0,
+        "t1_ms": 10140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "uh if you go to the next slide it's it's the uh what do we need on the user interface, do we need uh many buttons or do we need many light bulbs that could be easier to uh to realise which appliances are on or not um.",
+        "t0_ms": 11940,
+        "t1_ms": 29820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 10140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11940,
+        "t1_ms": 29820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 18.749000549316406,
+      "encode_ms": 7587.4541015625,
+      "decode_ms": 8191.337890625
+    }
+  },
+  "rawDecoded": "[0.00][S01]I've seen uh the sender will push the button, the chip will respond uh and then the judicial signal sent to the T. V. so uh[10.14][11.94][S01]uh if you go to the next slide it's it's the uh what do we need on the user interface, do we need uh many buttons or do we need many light bulbs that could be easier to uh to realise which appliances are on or not um.[29.82]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

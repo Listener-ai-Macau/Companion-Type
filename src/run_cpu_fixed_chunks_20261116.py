@@ -22,13 +22,15 @@ def main():
  save()
  with exclusive_file(Path('E:/CodexData/Companion/.model-cache/local-qwen-decoder.lock')),PowerLease():
   try:
-   assert not pressure.low()
+   assert not pressure.low() and psutil.virtual_memory().available>=B.get('minimumAvailableBeforeLoadBytes',0)
    with (a.run/'worker.log').open('xb') as log:
     child=subprocess.Popen([B['workerPython'],str(worker),'--control',str(a.control),'--run',str(a.run)],stdout=log,stderr=subprocess.STDOUT,
      creationflags=subprocess.CREATE_NO_WINDOW|subprocess.BELOW_NORMAL_PRIORITY_CLASS)
     owned=psutil.Process(child.pid);state.update(state='RUNNING_CPU_FIXED_CHUNKS',pid=child.pid,pidCreatedAt=owned.create_time());save();last=0.
     while child.poll() is None:
      if pressure.low() or (a.run/'stop.request').exists() or datetime.now().astimezone()>=datetime.fromisoformat(B['neuralDeadline']):
+      state['stopReason']='actual_windows_low_memory' if pressure.low() else ('owned_stop_request' if (a.run/'stop.request').exists() else 'neural_deadline')
+      state['availableBytesAtStop']=psutil.virtual_memory().available;save()
       (a.run/'stop.request').write_text('Actual Windows low RAM, owned stop or Owner deadline.\n',encoding='utf-8')
       try:child.wait(timeout=8)
       except subprocess.TimeoutExpired:stop_owned_family(child,owned)

@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0012",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 5760000,
+    "sourceEndFrame": 6240000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "d4d3b917f86eb2ec47b5f9440366bca4df5df11ab3d42f8754314dd2e8323324",
+  "seconds": 16.133978199999547,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Microphone control ninety eight percent of the time for changing channels and has to flickering through channels. So if you have to say up up up up if you have to do that all the time, I think people might get a bit fed up with that and they may return it. However, oh, because the voice recognition software exists already, there's no need to spend money on research and development. But this doesn't mean the need for microphones in the in the remote control, which is an unusual feature.",
+    "raw_text": "[0.00][S01]Microphone control ninety eight percent of the time for changing channels and has to flickering through channels. So if you have to say up up up up if you have to do that all the time, I think people might get a bit fed up with that and they may return it.[13.58][14.88][S01]However, oh, because the voice recognition software exists already, there's no need to spend money on research and development. But this doesn't mean the need for microphones in the in the remote control, which is an unusual feature.[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Microphone control ninety eight percent of the time for changing channels and has to flickering through channels. So if you have to say up up up up if you have to do that all the time, I think people might get a bit fed up with that and they may return it.",
+        "t0_ms": 0,
+        "t1_ms": 13580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "However, oh, because the voice recognition software exists already, there's no need to spend money on research and development. But this doesn't mean the need for microphones in the in the remote control, which is an unusual feature.",
+        "t0_ms": 14880,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 13580,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14880,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 24.72599983215332,
+      "encode_ms": 7086.06298828125,
+      "decode_ms": 8989.470703125
+    }
+  },
+  "rawDecoded": "[0.00][S01]Microphone control ninety eight percent of the time for changing channels and has to flickering through channels. So if you have to say up up up up if you have to do that all the time, I think people might get a bit fed up with that and they may return it.[13.58][14.88][S01]However, oh, because the voice recognition software exists already, there's no need to spend money on research and development. But this doesn't mean the need for microphones in the in the remote control, which is an unusual feature.[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

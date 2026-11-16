@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0006",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 2880000,
+    "sourceEndFrame": 3360000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "5cf6de8a432dbced5754c6b41f4691ab0b5f1e15579ae6b7fa35e7342ee3afe4",
+  "seconds": 20.084938199994212,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "But it depends. That's alright. Okay. You do you want me to just cycle through it for you or? Oh yeah, that'd be fine, that'd be great, okay. Question requirement by any Ebenezer. Yeah. Okay. Okay, so um we did some research. We asked one hundred people their opinions on remote controls. We had some uh open ended questions. Just what are your opinions on the remote control? Got a lot of responses. And we",
+    "raw_text": "[0.39][S01]But it depends.[1.49][2.05][S02]That's alright.[2.61][3.04][S01]Okay.[3.41][3.28][S03]You do you want me to just cycle through it for you or?[6.11][6.44][S01]Oh yeah, that'd be fine, that'd be great, okay. Question requirement by any Ebenezer.[10.75][7.58][S03]Yeah.[7.87][12.71][S03]Okay.[13.11][14.67][S01]Okay, so um we did some research. We asked one hundred people their opinions on remote controls. We had some uh open ended questions. Just what are your opinions on the remote control? Got a lot of responses. And we[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "But it depends.",
+        "t0_ms": 390,
+        "t1_ms": 1490,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "That's alright.",
+        "t0_ms": 2050,
+        "t1_ms": 2610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 3040,
+        "t1_ms": 3410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "You do you want me to just cycle through it for you or?",
+        "t0_ms": 3280,
+        "t1_ms": 6110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Oh yeah, that'd be fine, that'd be great, okay. Question requirement by any Ebenezer.",
+        "t0_ms": 6440,
+        "t1_ms": 10750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 7580,
+        "t1_ms": 7870,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 12710,
+        "t1_ms": 13110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Okay, so um we did some research. We asked one hundred people their opinions on remote controls. We had some uh open ended questions. Just what are your opinions on the remote control? Got a lot of responses. And we",
+        "t0_ms": 14670,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 390,
+        "t1_ms": 1490,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2050,
+        "t1_ms": 2610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3040,
+        "t1_ms": 3410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3280,
+        "t1_ms": 6110,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6440,
+        "t1_ms": 10750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7580,
+        "t1_ms": 7870,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12710,
+        "t1_ms": 13110,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14670,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 20.73699951171875,
+      "encode_ms": 7345.05322265625,
+      "decode_ms": 12677.841796875
+    }
+  },
+  "rawDecoded": "[0.39][S01]But it depends.[1.49][2.05][S02]That's alright.[2.61][3.04][S01]Okay.[3.41][3.28][S03]You do you want me to just cycle through it for you or?[6.11][6.44][S01]Oh yeah, that'd be fine, that'd be great, okay. Question requirement by any Ebenezer.[10.75][7.58][S03]Yeah.[7.87][12.71][S03]Okay.[13.11][14.67][S01]Okay, so um we did some research. We asked one hundred people their opinions on remote controls. We had some uh open ended questions. Just what are your opinions on the remote control? Got a lot of responses. And we[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

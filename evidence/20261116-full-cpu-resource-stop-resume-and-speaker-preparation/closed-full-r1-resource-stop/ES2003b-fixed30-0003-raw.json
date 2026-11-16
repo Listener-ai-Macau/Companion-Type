@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0003",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 1440000,
+    "sourceEndFrame": 1920000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "64601f2293b08ad21bbbfd600a08f06004658c675d0eedbf074647d93d3af37a",
+  "seconds": 14.348952000000281,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Um due for a time to market and possibly also cost issues. Um also key is the corporate image should stay recognisable. Um uh your colour and slogan of course is down at the bottom there. Um now just to say quickly, uh I would have thought that only being used for the television, the macro facility may now not",
+    "raw_text": "[0.00][S01]Um due for a time to market and possibly also cost issues. Um also key is the corporate image should stay recognisable. Um[11.04][12.64][S01]uh your colour and slogan of course is down at the bottom there. Um now just to say quickly, uh I would have thought that only being used for the television, the macro facility may now not[29.91]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Um due for a time to market and possibly also cost issues. Um also key is the corporate image should stay recognisable. Um",
+        "t0_ms": 0,
+        "t1_ms": 11040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "uh your colour and slogan of course is down at the bottom there. Um now just to say quickly, uh I would have thought that only being used for the television, the macro facility may now not",
+        "t0_ms": 12640,
+        "t1_ms": 29910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 11040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12640,
+        "t1_ms": 29910,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 14.274999618530273,
+      "encode_ms": 7388.84716796875,
+      "decode_ms": 6898.958984375
+    }
+  },
+  "rawDecoded": "[0.00][S01]Um due for a time to market and possibly also cost issues. Um also key is the corporate image should stay recognisable. Um[11.04][12.64][S01]uh your colour and slogan of course is down at the bottom there. Um now just to say quickly, uh I would have thought that only being used for the television, the macro facility may now not[29.91]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

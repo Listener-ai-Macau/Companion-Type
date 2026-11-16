@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0011",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 5280000,
+    "sourceEndFrame": 5760000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "45c21efdafa28bc3bcd4ec975bdcaa9ad449edd819d9e21f1d2dde103c9ed75a",
+  "seconds": 16.916779599996516,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Proper results, but for a very fixed number of words, you know, you have how many different words can you have for a remote control, up, down, left, right, channel five, channel seven, you know, how many, you can't have that many words, for a fixed vocabulary it works quite well. I'm pretty sure people will buy it, but after a while people may wanna return it, because if you have to to say s I mean, most people use a remote control for switching to channels, and they say they do that about ninety eight percent of the time, using a",
+    "raw_text": "[0.00][S01]Proper results, but for a very fixed number of words, you know, you have how many different words can you have for a remote control, up, down, left, right, channel five, channel seven, you know, how many, you can't have that many words, for a fixed vocabulary it works quite well.[14.42][15.56][S01]I'm pretty sure people will buy it, but after a while people may wanna return it, because if you have to to say s I mean, most people use a remote control for switching to channels, and they say they do that about ninety eight percent of the time, using a[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Proper results, but for a very fixed number of words, you know, you have how many different words can you have for a remote control, up, down, left, right, channel five, channel seven, you know, how many, you can't have that many words, for a fixed vocabulary it works quite well.",
+        "t0_ms": 0,
+        "t1_ms": 14420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I'm pretty sure people will buy it, but after a while people may wanna return it, because if you have to to say s I mean, most people use a remote control for switching to channels, and they say they do that about ninety eight percent of the time, using a",
+        "t0_ms": 15560,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 14420,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15560,
+        "t1_ms": 29940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 21.586000442504883,
+      "encode_ms": 7294.94677734375,
+      "decode_ms": 9562.2060546875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Proper results, but for a very fixed number of words, you know, you have how many different words can you have for a remote control, up, down, left, right, channel five, channel seven, you know, how many, you can't have that many words, for a fixed vocabulary it works quite well.[14.42][15.56][S01]I'm pretty sure people will buy it, but after a while people may wanna return it, because if you have to to say s I mean, most people use a remote control for switching to channels, and they say they do that about ninety eight percent of the time, using a[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

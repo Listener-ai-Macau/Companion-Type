@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0027",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 12960000,
+    "sourceEndFrame": 13440000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "6b770b83c4ed804eb208b61f8db5784007f337ae4f5350ce8b05725264d25e8e",
+  "seconds": 14.214040099999693,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "If you look in the desktop you'll find that there's a link to the project folder or project documents. If you save it now we can open it up from here. Um. Desktop, I guess.",
+    "raw_text": "[0.00][S01]If you look in the desktop you'll find that there's a link to the project folder or project documents. If you save it now we can open it up from here.[8.44][13.84][S02]Um.[14.30][14.58][S01]Desktop, I guess.[15.48]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "If you look in the desktop you'll find that there's a link to the project folder or project documents. If you save it now we can open it up from here.",
+        "t0_ms": 0,
+        "t1_ms": 8440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um.",
+        "t0_ms": 13840,
+        "t1_ms": 14300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Desktop, I guess.",
+        "t0_ms": 14580,
+        "t1_ms": 15480,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 8440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13840,
+        "t1_ms": 14300,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14580,
+        "t1_ms": 15480,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 15.739999771118164,
+      "encode_ms": 7381.11279296875,
+      "decode_ms": 6780.62109375
+    }
+  },
+  "rawDecoded": "[0.00][S01]If you look in the desktop you'll find that there's a link to the project folder or project documents. If you save it now we can open it up from here.[8.44][13.84][S02]Um.[14.30][14.58][S01]Desktop, I guess.[15.48]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

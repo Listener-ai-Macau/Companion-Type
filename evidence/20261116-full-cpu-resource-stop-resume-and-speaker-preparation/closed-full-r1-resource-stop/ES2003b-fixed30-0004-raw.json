@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0004",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 1920000,
+    "sourceEndFrame": 2400000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "1a045ca1ae22741b51ec1649a6eeef599ed9e9ed4c5f66feee925184d5483a49",
+  "seconds": 17.292119400000956,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "be required. Mm. Um or it's functionality would have been of limited use so to the point in my opinion anyway that it might not be worth pursuing. Um if anybody disagrees we can uh definitely say so. Um and hopefully we'll just crack on and we'll get everything going. Um I'd like to if possible hear from our marketing expert first to help us gain an idea of where we're going to go. So um I'll just load up your presentation.",
+    "raw_text": "[0.00][S01]be required.[1.00][1.20][S02]Mm.[1.54][2.04][S01]Um or it's functionality would have been of limited use so to the point in my opinion anyway that it might not be worth pursuing. Um if anybody disagrees we can uh definitely say so. Um and hopefully we'll just crack on and we'll get everything going. Um I'd like to if possible hear from our marketing expert first to help us gain an idea of where we're going to go. So um I'll just load up your presentation.[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "be required.",
+        "t0_ms": 0,
+        "t1_ms": 1000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 1200,
+        "t1_ms": 1540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Um or it's functionality would have been of limited use so to the point in my opinion anyway that it might not be worth pursuing. Um if anybody disagrees we can uh definitely say so. Um and hopefully we'll just crack on and we'll get everything going. Um I'd like to if possible hear from our marketing expert first to help us gain an idea of where we're going to go. So um I'll just load up your presentation.",
+        "t0_ms": 2040,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 1000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1200,
+        "t1_ms": 1540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2040,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 14.258000373840332,
+      "encode_ms": 7449.89306640625,
+      "decode_ms": 9789.59375
+    }
+  },
+  "rawDecoded": "[0.00][S01]be required.[1.00][1.20][S02]Mm.[1.54][2.04][S01]Um or it's functionality would have been of limited use so to the point in my opinion anyway that it might not be worth pursuing. Um if anybody disagrees we can uh definitely say so. Um and hopefully we'll just crack on and we'll get everything going. Um I'd like to if possible hear from our marketing expert first to help us gain an idea of where we're going to go. So um I'll just load up your presentation.[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

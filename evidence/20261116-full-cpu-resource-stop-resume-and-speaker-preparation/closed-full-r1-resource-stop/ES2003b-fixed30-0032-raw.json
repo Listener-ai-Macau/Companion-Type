@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0032",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 15360000,
+    "sourceEndFrame": 15840000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "d937e314fd74c349c05957327f5c79d30850f7e0d5b1769f869dedbb53d38b2b",
+  "seconds": 19.27682740000455,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Electronic design, but um I'll see if there'll be more details once we decide what we're planning to use your interface. Okay, so that'll be decided, I guess. Uh, and the next slide. Alright, yeah. Um, if you go to the next slide then, I just used it. It was a mess, uh, I was just putting adding it together at the end there. Uh Yeah, don't worry about it, Tony. Yeah. Uh, so yeah, the uh",
+    "raw_text": "[0.00][S01]Electronic design, but um I'll see if there'll be more details once we decide what we're planning to use your interface. Okay, so that'll be decided, I guess.[9.80][11.82][S01]Uh, and the next slide. Alright, yeah.[15.00][17.04][S01]Um, if you go to the next slide then, I just used it. It was a mess, uh, I was just putting adding it together at the end there. Uh[26.04][25.42][S02]Yeah, don't worry about it, Tony. Yeah.[27.56][27.14][S01]Uh, so yeah, the uh[29.88]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Electronic design, but um I'll see if there'll be more details once we decide what we're planning to use your interface. Okay, so that'll be decided, I guess.",
+        "t0_ms": 0,
+        "t1_ms": 9800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Uh, and the next slide. Alright, yeah.",
+        "t0_ms": 11820,
+        "t1_ms": 15000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um, if you go to the next slide then, I just used it. It was a mess, uh, I was just putting adding it together at the end there. Uh",
+        "t0_ms": 17040,
+        "t1_ms": 26040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, don't worry about it, Tony. Yeah.",
+        "t0_ms": 25420,
+        "t1_ms": 27560,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Uh, so yeah, the uh",
+        "t0_ms": 27140,
+        "t1_ms": 29880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 9800,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11820,
+        "t1_ms": 15000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17040,
+        "t1_ms": 26040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25420,
+        "t1_ms": 27560,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27140,
+        "t1_ms": 29880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 21.843000411987305,
+      "encode_ms": 7571.55908203125,
+      "decode_ms": 11640.2724609375
+    }
+  },
+  "rawDecoded": "[0.00][S01]Electronic design, but um I'll see if there'll be more details once we decide what we're planning to use your interface. Okay, so that'll be decided, I guess.[9.80][11.82][S01]Uh, and the next slide. Alright, yeah.[15.00][17.04][S01]Um, if you go to the next slide then, I just used it. It was a mess, uh, I was just putting adding it together at the end there. Uh[26.04][25.42][S02]Yeah, don't worry about it, Tony. Yeah.[27.56][27.14][S01]Uh, so yeah, the uh[29.88]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

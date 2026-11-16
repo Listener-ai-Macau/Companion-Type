@@ -1,0 +1,210 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0000",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 0,
+    "sourceEndFrame": 480000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "35b7576e94da66661d218bfb8af5217f5f4cf86bd25a51abaea613a0081f9998",
+  "seconds": 20.210316199998488,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Just put it on the desk, all I see is desktop. No, on the desktop you'll find you should find that there's a project documents link. Oh, actually just there. Project documents, yeah. Yeah, that's it. If you dump it in there. What's the username? The username. What's the username in there as well? You can connect to it with any username actually, there's no restriction.",
+    "raw_text": "[4.33][S01]Just put it on the desk, all I see is desktop.[6.61][7.04][S02]No, on the desktop you'll find you should find that there's a project documents link.[11.51][15.55][S02]Oh, actually just there.[16.55][16.36][S01]Project documents, yeah.[17.45][17.47][S02]Yeah, that's it. If you dump it in there.[19.45][19.53][S01]What's the username?[20.28][21.53][S02]The username.[22.11][22.54][S01]What's the username in there as well?[23.83][25.88][S03]You can connect to it with any username actually, there's no restriction.[28.51]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Just put it on the desk, all I see is desktop.",
+        "t0_ms": 4330,
+        "t1_ms": 6610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "No, on the desktop you'll find you should find that there's a project documents link.",
+        "t0_ms": 7040,
+        "t1_ms": 11510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Oh, actually just there.",
+        "t0_ms": 15550,
+        "t1_ms": 16550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Project documents, yeah.",
+        "t0_ms": 16360,
+        "t1_ms": 17450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, that's it. If you dump it in there.",
+        "t0_ms": 17470,
+        "t1_ms": 19450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "What's the username?",
+        "t0_ms": 19530,
+        "t1_ms": 20280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "The username.",
+        "t0_ms": 21530,
+        "t1_ms": 22110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "What's the username in there as well?",
+        "t0_ms": 22540,
+        "t1_ms": 23830,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "You can connect to it with any username actually, there's no restriction.",
+        "t0_ms": 25880,
+        "t1_ms": 28510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 4330,
+        "t1_ms": 6610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7040,
+        "t1_ms": 11510,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15550,
+        "t1_ms": 16550,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16360,
+        "t1_ms": 17450,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17470,
+        "t1_ms": 19450,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19530,
+        "t1_ms": 20280,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21530,
+        "t1_ms": 22110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22540,
+        "t1_ms": 23830,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25880,
+        "t1_ms": 28510,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 16.475000381469727,
+      "encode_ms": 6911.5732421875,
+      "decode_ms": 13209.3984375
+    }
+  },
+  "rawDecoded": "[4.33][S01]Just put it on the desk, all I see is desktop.[6.61][7.04][S02]No, on the desktop you'll find you should find that there's a project documents link.[11.51][15.55][S02]Oh, actually just there.[16.55][16.36][S01]Project documents, yeah.[17.45][17.47][S02]Yeah, that's it. If you dump it in there.[19.45][19.53][S01]What's the username?[20.28][21.53][S02]The username.[22.11][22.54][S01]What's the username in there as well?[23.83][25.88][S03]You can connect to it with any username actually, there's no restriction.[28.51]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

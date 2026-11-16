@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0038",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 18240000,
+    "sourceEndFrame": 18720000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "d01b596b2a67e984ceca5f3d921933903c2b01f82aabe1a0923b8c7cea3228f7",
+  "seconds": 22.28006209999876,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Paralink to information traverse maybe quite a few menus. If we maybe use mobile phones as a good example, they usually incorporate they have the keypad and then ever all the other functionality is usually associated inside by traversing around. Mm. That could be one possibility. Um and then we could have like say the common buttons as you say, volume control, changing channels. I I I think the the ro the um sort of default functions for the joystick would be up and down for uh",
+    "raw_text": "[0.00][S01]Paralink to information traverse maybe quite a few menus. If we maybe use mobile phones as a good example, they usually incorporate they have the keypad and then ever all the other functionality is usually associated inside by traversing around.[12.80][12.84][S02]Mm.[13.06][13.46][S01]That could be one possibility. Um and then we could have like say the common buttons as you say, volume control, changing channels.[23.10][23.32][S02]I I I think the the ro the um sort of default functions for the joystick would be up and down for uh[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Paralink to information traverse maybe quite a few menus. If we maybe use mobile phones as a good example, they usually incorporate they have the keypad and then ever all the other functionality is usually associated inside by traversing around.",
+        "t0_ms": 0,
+        "t1_ms": 12800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 12840,
+        "t1_ms": 13060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "That could be one possibility. Um and then we could have like say the common buttons as you say, volume control, changing channels.",
+        "t0_ms": 13460,
+        "t1_ms": 23100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I I I think the the ro the um sort of default functions for the joystick would be up and down for uh",
+        "t0_ms": 23320,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 12800,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12840,
+        "t1_ms": 13060,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13460,
+        "t1_ms": 23100,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23320,
+        "t1_ms": 30000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 216.2220001220703,
+      "mel_ms": 22.850000381469727,
+      "encode_ms": 9050.7568359375,
+      "decode_ms": 13167.9423828125
+    }
+  },
+  "rawDecoded": "[0.00][S01]Paralink to information traverse maybe quite a few menus. If we maybe use mobile phones as a good example, they usually incorporate they have the keypad and then ever all the other functionality is usually associated inside by traversing around.[12.80][12.84][S02]Mm.[13.06][13.46][S01]That could be one possibility. Um and then we could have like say the common buttons as you say, volume control, changing channels.[23.10][23.32][S02]I I I think the the ro the um sort of default functions for the joystick would be up and down for uh[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}
