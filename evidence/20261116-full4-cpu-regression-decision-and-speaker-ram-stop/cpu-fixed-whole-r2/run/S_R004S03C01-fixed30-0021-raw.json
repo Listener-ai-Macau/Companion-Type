@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0021",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 10080000,
+    "sourceEndFrame": 10560000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "71ad8006f31859c3b49bacd35183c98371eb3e621b423d13c8f81c9d26a8eca9",
+  "seconds": 17.855281999996805,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "我们针对的客户程度不同，呃比如说有的人他就是着急买菜呀，他就是需要我们已经精装包好的，就是说呃也回家也不需要宅。 完了以后呢，我们就是超市有专门的这项服务，呃然后就是提前就是把菜洗干净，给它包装好。 当然了，这个价格上呢也会稍微的高一点儿，呃比普通的菜呢要高一点儿，针对一些像年轻的人群呀，他们回家以后。",
+    "raw_text": "[0.02][S01]我们针对的客户程度不同，呃比如说有的人他就是着急买菜呀，他就是需要我们已经精装包好的，就是说呃也回家也不需要宅。[12.32][12.32][S01]完了以后呢，我们就是超市有专门的这项服务，呃然后就是提前就是把菜洗干净，给它包装好。[21.18][21.18][S01]当然了，这个价格上呢也会稍微的高一点儿，呃比普通的菜呢要高一点儿，针对一些像年轻的人群呀，他们回家以后。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "我们针对的客户程度不同，呃比如说有的人他就是着急买菜呀，他就是需要我们已经精装包好的，就是说呃也回家也不需要宅。",
+        "t0_ms": 20,
+        "t1_ms": 12320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "完了以后呢，我们就是超市有专门的这项服务，呃然后就是提前就是把菜洗干净，给它包装好。",
+        "t0_ms": 12320,
+        "t1_ms": 21180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "当然了，这个价格上呢也会稍微的高一点儿，呃比普通的菜呢要高一点儿，针对一些像年轻的人群呀，他们回家以后。",
+        "t0_ms": 21180,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 20,
+        "t1_ms": 12320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12320,
+        "t1_ms": 21180,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21180,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.118999481201172,
+      "encode_ms": 7607.3291015625,
+      "decode_ms": 10186.64453125
+    }
+  },
+  "rawDecoded": "[0.02][S01]我们针对的客户程度不同，呃比如说有的人他就是着急买菜呀，他就是需要我们已经精装包好的，就是说呃也回家也不需要宅。[12.32][12.32][S01]完了以后呢，我们就是超市有专门的这项服务，呃然后就是提前就是把菜洗干净，给它包装好。[21.18][21.18][S01]当然了，这个价格上呢也会稍微的高一点儿，呃比普通的菜呢要高一点儿，针对一些像年轻的人群呀，他们回家以后。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

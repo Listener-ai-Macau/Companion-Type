@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0065",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 31200000,
+    "sourceEndFrame": 31680000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "0bac6bbe376be7572b446dd7b47eced5e154685a0ae08bed35930adfb4fee9a3",
+  "seconds": 18.155517700004566,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Sure. Okay. Um any last comments anybody would like to put forward, anything that they think has been missed out? Bit of wide open questionnaire of course. Mm. Feel free to email me if you think that uh we've screwed something up and wanna get it rectified as soon as possible. Right. Okay, yeah. So I should just look at uh the speaker, at the speaker and an M. D.",
+    "raw_text": "[0.35][S01]Sure.[0.63][1.36][S02]Okay. Um any last comments anybody would like to put forward, anything that they think has been missed out? Bit of wide open questionnaire of course.[10.01][13.12][S02]Mm.[13.41][17.01][S02]Feel free to email me if you think that uh we've screwed something up and wanna get it rectified as soon as possible.[22.11][24.59][S02]Right.[24.87][24.61][S01]Okay, yeah.[25.41][25.72][S03]So I should just look at uh the speaker, at the speaker and an M. D.[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Sure.",
+        "t0_ms": 350,
+        "t1_ms": 630,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay. Um any last comments anybody would like to put forward, anything that they think has been missed out? Bit of wide open questionnaire of course.",
+        "t0_ms": 1360,
+        "t1_ms": 10010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 13120,
+        "t1_ms": 13410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Feel free to email me if you think that uh we've screwed something up and wanna get it rectified as soon as possible.",
+        "t0_ms": 17010,
+        "t1_ms": 22110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Right.",
+        "t0_ms": 24590,
+        "t1_ms": 24870,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay, yeah.",
+        "t0_ms": 24610,
+        "t1_ms": 25410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "So I should just look at uh the speaker, at the speaker and an M. D.",
+        "t0_ms": 25720,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 350,
+        "t1_ms": 630,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1360,
+        "t1_ms": 10010,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13120,
+        "t1_ms": 13410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17010,
+        "t1_ms": 22110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24590,
+        "t1_ms": 24870,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24610,
+        "t1_ms": 25410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25720,
+        "t1_ms": 29940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.347000122070312,
+      "encode_ms": 6693.06396484375,
+      "decode_ms": 11401.34765625
+    }
+  },
+  "rawDecoded": "[0.35][S01]Sure.[0.63][1.36][S02]Okay. Um any last comments anybody would like to put forward, anything that they think has been missed out? Bit of wide open questionnaire of course.[10.01][13.12][S02]Mm.[13.41][17.01][S02]Feel free to email me if you think that uh we've screwed something up and wanna get it rectified as soon as possible.[22.11][24.59][S02]Right.[24.87][24.61][S01]Okay, yeah.[25.41][25.72][S03]So I should just look at uh the speaker, at the speaker and an M. D.[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0008",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 3840000,
+    "sourceEndFrame": 4320000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "a9d71abda559c131a61b2c5e077de85e8893bfef7454d4e0f525ab4fe96fc50d",
+  "seconds": 16.710921699996106,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "我这边儿还不太清楚，还是大家比我要清楚，因为大家都在呃超市内部呃。 呃。 工作的，我这边主管只是偶尔巡查一次，呃巡查巡查看看工作，呃大家工作的情况，我对客户这块儿不太了解。 呃客户对你的产品比较感兴趣，希望大家呃把自己的问题呃说说一说，呃。",
+    "raw_text": "[0.35][S01]我这边儿还不太清楚，还是大家比我要清楚，因为大家都在呃超市内部呃。[7.83][8.51][S01]呃。[9.15][9.88][S01]工作的，我这边主管只是偶尔巡查一次，呃巡查巡查看看工作，呃大家工作的情况，我对客户这块儿不太了解。[19.81][20.06][S01]呃客户对你的产品比较感兴趣，希望大家呃把自己的问题呃说说一说，呃。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "我这边儿还不太清楚，还是大家比我要清楚，因为大家都在呃超市内部呃。",
+        "t0_ms": 350,
+        "t1_ms": 7830,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃。",
+        "t0_ms": 8510,
+        "t1_ms": 9150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "工作的，我这边主管只是偶尔巡查一次，呃巡查巡查看看工作，呃大家工作的情况，我对客户这块儿不太了解。",
+        "t0_ms": 9880,
+        "t1_ms": 19810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃客户对你的产品比较感兴趣，希望大家呃把自己的问题呃说说一说，呃。",
+        "t0_ms": 20060,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 350,
+        "t1_ms": 7830,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8510,
+        "t1_ms": 9150,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9880,
+        "t1_ms": 19810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20060,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.39900016784668,
+      "encode_ms": 7373.6650390625,
+      "decode_ms": 9288.2509765625
+    }
+  },
+  "rawDecoded": "[0.35][S01]我这边儿还不太清楚，还是大家比我要清楚，因为大家都在呃超市内部呃。[7.83][8.51][S01]呃。[9.15][9.88][S01]工作的，我这边主管只是偶尔巡查一次，呃巡查巡查看看工作，呃大家工作的情况，我对客户这块儿不太了解。[19.81][20.06][S01]呃客户对你的产品比较感兴趣，希望大家呃把自己的问题呃说说一说，呃。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

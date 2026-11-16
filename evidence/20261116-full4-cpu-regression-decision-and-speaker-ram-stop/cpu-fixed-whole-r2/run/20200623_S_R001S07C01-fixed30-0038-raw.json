@@ -1,0 +1,300 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0038",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 18240000,
+    "sourceEndFrame": 18720000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "14ec005295a2750a4d5c9b9c8468d73753030b4828d38599e488e3a16453385f",
+  "seconds": 23.58747079999739,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "嗯，这个车贷。 嗯，这这些都是这都是一些这个。 三十万以下的车吗？ 对。 十万。 呃，一般情况下就是十万以。 十万以上，三十万以下。 嗯，三十万以下。 然后是分期付款，一年以内。 嗯。 一年以内。 一年以内。 嗯。 就是有个别的话，呃，最多是两年。",
+    "raw_text": "[0.35][S01]嗯，这个车贷。[1.79][2.88][S01]嗯，这这些都是这都是一些这个。[7.04][7.99][S01]三十万以下的车吗？[9.65][10.51][S02]对。[11.03][11.48][S02]十万。[12.45][12.96][S02]呃，一般情况下就是十万以。[15.68][16.22][S02]十万以上，三十万以下。[18.41][18.41][S01]嗯，三十万以下。[20.07][20.14][S02]然后是分期付款，一年以内。[23.34][21.81][S01]嗯。[22.35][23.68][S01]一年以内。[24.81][24.34][S02]一年以内。[25.35][25.44][S01]嗯。[26.01][26.21][S02]就是有个别的话，呃，最多是两年。[30.01]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "嗯，这个车贷。",
+        "t0_ms": 350,
+        "t1_ms": 1790,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，这这些都是这都是一些这个。",
+        "t0_ms": 2880,
+        "t1_ms": 7040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "三十万以下的车吗？",
+        "t0_ms": 7990,
+        "t1_ms": 9650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对。",
+        "t0_ms": 10510,
+        "t1_ms": 11030,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "十万。",
+        "t0_ms": 11480,
+        "t1_ms": 12450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，一般情况下就是十万以。",
+        "t0_ms": 12960,
+        "t1_ms": 15680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "十万以上，三十万以下。",
+        "t0_ms": 16220,
+        "t1_ms": 18410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，三十万以下。",
+        "t0_ms": 18410,
+        "t1_ms": 20070,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后是分期付款，一年以内。",
+        "t0_ms": 20140,
+        "t1_ms": 23340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 21810,
+        "t1_ms": 22350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "一年以内。",
+        "t0_ms": 23680,
+        "t1_ms": 24810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "一年以内。",
+        "t0_ms": 24340,
+        "t1_ms": 25350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 25440,
+        "t1_ms": 26010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就是有个别的话，呃，最多是两年。",
+        "t0_ms": 26210,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 350,
+        "t1_ms": 1790,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2880,
+        "t1_ms": 7040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7990,
+        "t1_ms": 9650,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10510,
+        "t1_ms": 11030,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11480,
+        "t1_ms": 12450,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12960,
+        "t1_ms": 15680,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16220,
+        "t1_ms": 18410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18410,
+        "t1_ms": 20070,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20140,
+        "t1_ms": 23340,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21810,
+        "t1_ms": 22350,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23680,
+        "t1_ms": 24810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24340,
+        "t1_ms": 25350,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25440,
+        "t1_ms": 26010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26210,
+        "t1_ms": 30010,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 21.410999298095703,
+      "encode_ms": 6822.80078125,
+      "decode_ms": 16702.59765625
+    }
+  },
+  "rawDecoded": "[0.35][S01]嗯，这个车贷。[1.79][2.88][S01]嗯，这这些都是这都是一些这个。[7.04][7.99][S01]三十万以下的车吗？[9.65][10.51][S02]对。[11.03][11.48][S02]十万。[12.45][12.96][S02]呃，一般情况下就是十万以。[15.68][16.22][S02]十万以上，三十万以下。[18.41][18.41][S01]嗯，三十万以下。[20.07][20.14][S02]然后是分期付款，一年以内。[23.34][21.81][S01]嗯。[22.35][23.68][S01]一年以内。[24.81][24.34][S02]一年以内。[25.35][25.44][S01]嗯。[26.01][26.21][S02]就是有个别的话，呃，最多是两年。[30.01]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

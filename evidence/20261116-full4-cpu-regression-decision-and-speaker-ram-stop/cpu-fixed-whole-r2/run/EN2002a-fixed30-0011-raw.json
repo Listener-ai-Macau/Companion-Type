@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0011",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 5280000,
+    "sourceEndFrame": 5760000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "13fa919b490a9c872aaebdc356d1e773344e42e9d08b208bf5877ec4736c5826",
+  "seconds": 26.957638199994108,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "It is interesting, so why not give it to him. Yeah, yeah, hmm. Um. I I think we should do it, I mean. Yeah. I mean, I guess maybe we could have that as another thing of like well if you get speech characterization that someone talks a lot in a certain topic and then if you I don't know click on that topic you get everything that's in that topic or whatever and in that group, but yeah. Yeah, I mean that's that's still another level further, I mean we're not even there yet, you know, it doesn't No, no, no, no. Right. It's in public.",
+    "raw_text": "[0.00][S01]It is interesting, so why not give it to him.[2.28][2.74][S02]Yeah, yeah, hmm.[3.52][3.84][S03]Um.[4.16][4.04][S01]I I think we should do it, I mean.[5.48][5.32][S03]Yeah.[5.74][6.48][S04]I mean, I guess maybe we could have that as another thing of like well if you get speech characterization that someone talks a lot in a certain topic and then if you I don't know click on that topic you get[21.08][22.10][S04]everything that's in that topic or whatever and in that group, but yeah.[26.22][24.72][S01]Yeah, I mean that's that's still another level further, I mean we're not even there yet, you know, it doesn't[29.84][28.84][S04]No, no, no, no.[29.54][29.48][S02]Right.[29.84][29.50][S01]It's in public.[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "It is interesting, so why not give it to him.",
+        "t0_ms": 0,
+        "t1_ms": 2280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, yeah, hmm.",
+        "t0_ms": 2740,
+        "t1_ms": 3520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Um.",
+        "t0_ms": 3840,
+        "t1_ms": 4160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I I think we should do it, I mean.",
+        "t0_ms": 4040,
+        "t1_ms": 5480,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 5320,
+        "t1_ms": 5740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I mean, I guess maybe we could have that as another thing of like well if you get speech characterization that someone talks a lot in a certain topic and then if you I don't know click on that topic you get",
+        "t0_ms": 6480,
+        "t1_ms": 21080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "everything that's in that topic or whatever and in that group, but yeah.",
+        "t0_ms": 22100,
+        "t1_ms": 26220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah, I mean that's that's still another level further, I mean we're not even there yet, you know, it doesn't",
+        "t0_ms": 24720,
+        "t1_ms": 29840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "No, no, no, no.",
+        "t0_ms": 28840,
+        "t1_ms": 29540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Right.",
+        "t0_ms": 29480,
+        "t1_ms": 29840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "It's in public.",
+        "t0_ms": 29500,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2280,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2740,
+        "t1_ms": 3520,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3840,
+        "t1_ms": 4160,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4040,
+        "t1_ms": 5480,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5320,
+        "t1_ms": 5740,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6480,
+        "t1_ms": 21080,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22100,
+        "t1_ms": 26220,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24720,
+        "t1_ms": 29840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28840,
+        "t1_ms": 29540,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29480,
+        "t1_ms": 29840,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29500,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.137999534606934,
+      "encode_ms": 10391.46484375,
+      "decode_ms": 16516.5078125
+    }
+  },
+  "rawDecoded": "[0.00][S01]It is interesting, so why not give it to him.[2.28][2.74][S02]Yeah, yeah, hmm.[3.52][3.84][S03]Um.[4.16][4.04][S01]I I think we should do it, I mean.[5.48][5.32][S03]Yeah.[5.74][6.48][S04]I mean, I guess maybe we could have that as another thing of like well if you get speech characterization that someone talks a lot in a certain topic and then if you I don't know click on that topic you get[21.08][22.10][S04]everything that's in that topic or whatever and in that group, but yeah.[26.22][24.72][S01]Yeah, I mean that's that's still another level further, I mean we're not even there yet, you know, it doesn't[29.84][28.84][S04]No, no, no, no.[29.54][29.48][S02]Right.[29.84][29.50][S01]It's in public.[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

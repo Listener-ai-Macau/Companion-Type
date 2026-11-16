@@ -1,0 +1,300 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0059",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 28320000,
+    "sourceEndFrame": 28800000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "c02fcdccfdc238123ce2db6ff02f20cc7644fd376968ed1949e7ad864699c7c4",
+  "seconds": 25.297562100000505,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Stuff what we wanna search for is not quite agreed on, we never agreed on what we wanna be able to search for. No, it's not, is it, yeah. True. So Decide on that on the weekend. Yeah, do you wanna, you know, just get together and think about the different types of search we could possibly do and then Yeah. Mm-hmm. then we could discuss at next meeting which options we really wanna include. Yeah. That would probably involve researching the query language a bit as well to see what that can do. Yeah. Yeah. It would be nice to, I dunno.",
+    "raw_text": "[0.00][S01]Stuff what we wanna search for is not quite agreed on, we never agreed on what we wanna be able to search for.[6.52][6.60][S02]No, it's not, is it, yeah.[7.70][7.02][S03]True.[7.34][7.78][S01]So[8.24][8.16][S02]Decide on that on the weekend.[9.64][9.78][S01]Yeah, do you wanna, you know, just get together and think about the different types of search we could possibly do and then[14.76][11.08][S03]Yeah.[11.32][15.04][S04]Mm-hmm.[15.42][15.48][S01]then we could discuss at next meeting which options we really wanna include.[19.30][21.12][S03]Yeah.[21.36][21.34][S01]That would probably involve researching the query language a bit as well to see what that can do.[26.00][24.88][S03]Yeah.[25.14][26.44][S04]Yeah.[26.78][28.70][S04]It would be nice to, I dunno.[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Stuff what we wanna search for is not quite agreed on, we never agreed on what we wanna be able to search for.",
+        "t0_ms": 0,
+        "t1_ms": 6520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "No, it's not, is it, yeah.",
+        "t0_ms": 6600,
+        "t1_ms": 7700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "True.",
+        "t0_ms": 7020,
+        "t1_ms": 7340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "So",
+        "t0_ms": 7780,
+        "t1_ms": 8240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Decide on that on the weekend.",
+        "t0_ms": 8160,
+        "t1_ms": 9640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, do you wanna, you know, just get together and think about the different types of search we could possibly do and then",
+        "t0_ms": 9780,
+        "t1_ms": 14760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 11080,
+        "t1_ms": 11320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 15040,
+        "t1_ms": 15420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "then we could discuss at next meeting which options we really wanna include.",
+        "t0_ms": 15480,
+        "t1_ms": 19300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 21120,
+        "t1_ms": 21360,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "That would probably involve researching the query language a bit as well to see what that can do.",
+        "t0_ms": 21340,
+        "t1_ms": 26000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 24880,
+        "t1_ms": 25140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 26440,
+        "t1_ms": 26780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "It would be nice to, I dunno.",
+        "t0_ms": 28700,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 6520,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6600,
+        "t1_ms": 7700,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7020,
+        "t1_ms": 7340,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7780,
+        "t1_ms": 8240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8160,
+        "t1_ms": 9640,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9780,
+        "t1_ms": 14760,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11080,
+        "t1_ms": 11320,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15040,
+        "t1_ms": 15420,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15480,
+        "t1_ms": 19300,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21120,
+        "t1_ms": 21360,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21340,
+        "t1_ms": 26000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24880,
+        "t1_ms": 25140,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26440,
+        "t1_ms": 26780,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28700,
+        "t1_ms": 30000,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.996000289916992,
+      "encode_ms": 7023.56201171875,
+      "decode_ms": 18223.591796875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Stuff what we wanna search for is not quite agreed on, we never agreed on what we wanna be able to search for.[6.52][6.60][S02]No, it's not, is it, yeah.[7.70][7.02][S03]True.[7.34][7.78][S01]So[8.24][8.16][S02]Decide on that on the weekend.[9.64][9.78][S01]Yeah, do you wanna, you know, just get together and think about the different types of search we could possibly do and then[14.76][11.08][S03]Yeah.[11.32][15.04][S04]Mm-hmm.[15.42][15.48][S01]then we could discuss at next meeting which options we really wanna include.[19.30][21.12][S03]Yeah.[21.36][21.34][S01]That would probably involve researching the query language a bit as well to see what that can do.[26.00][24.88][S03]Yeah.[25.14][26.44][S04]Yeah.[26.78][28.70][S04]It would be nice to, I dunno.[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

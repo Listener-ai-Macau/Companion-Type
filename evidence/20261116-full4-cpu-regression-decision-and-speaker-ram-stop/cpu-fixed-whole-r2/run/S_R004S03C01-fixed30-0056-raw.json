@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0056",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 26880000,
+    "sourceEndFrame": 27360000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "075f02345b39d2acecedfab044174d9309af5bc15b5d86a7d55ae8386e9ade4d",
+  "seconds": 18.630977599998005,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "也需要那个。 比如说那个做一些那个广告宣，呃广告宣传的海报。 然后还有一些就是说我们可以增。 在门口呢，我们也可以增加一些那个艺术陈，艺术形式的陈列，比如说。 把肥皂啊做成一，呃摆放成一个那个。 船的造型啦，或者是说摆放一个其，呃那个。 动物的一个造型啊。",
+    "raw_text": "[0.35][S01]也需要那个。[1.53][4.12][S01]比如说那个做一些那个广告宣，呃广告宣传的海报。[7.61][12.86][S01]然后还有一些就是说我们可以增。[15.72][15.72][S01]在门口呢，我们也可以增加一些那个艺术陈，艺术形式的陈列，比如说。[21.16][21.16][S01]把肥皂啊做成一，呃摆放成一个那个。[24.44][24.81][S01]船的造型啦，或者是说摆放一个其，呃那个。[28.68][28.68][S01]动物的一个造型啊。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "也需要那个。",
+        "t0_ms": 350,
+        "t1_ms": 1530,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "比如说那个做一些那个广告宣，呃广告宣传的海报。",
+        "t0_ms": 4120,
+        "t1_ms": 7610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后还有一些就是说我们可以增。",
+        "t0_ms": 12860,
+        "t1_ms": 15720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "在门口呢，我们也可以增加一些那个艺术陈，艺术形式的陈列，比如说。",
+        "t0_ms": 15720,
+        "t1_ms": 21160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "把肥皂啊做成一，呃摆放成一个那个。",
+        "t0_ms": 21160,
+        "t1_ms": 24440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "船的造型啦，或者是说摆放一个其，呃那个。",
+        "t0_ms": 24810,
+        "t1_ms": 28680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "动物的一个造型啊。",
+        "t0_ms": 28680,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 350,
+        "t1_ms": 1530,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4120,
+        "t1_ms": 7610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12860,
+        "t1_ms": 15720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15720,
+        "t1_ms": 21160,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21160,
+        "t1_ms": 24440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24810,
+        "t1_ms": 28680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28680,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 27.37299919128418,
+      "encode_ms": 7137.65576171875,
+      "decode_ms": 11432.185546875
+    }
+  },
+  "rawDecoded": "[0.35][S01]也需要那个。[1.53][4.12][S01]比如说那个做一些那个广告宣，呃广告宣传的海报。[7.61][12.86][S01]然后还有一些就是说我们可以增。[15.72][15.72][S01]在门口呢，我们也可以增加一些那个艺术陈，艺术形式的陈列，比如说。[21.16][21.16][S01]把肥皂啊做成一，呃摆放成一个那个。[24.44][24.81][S01]船的造型啦，或者是说摆放一个其，呃那个。[28.68][28.68][S01]动物的一个造型啊。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

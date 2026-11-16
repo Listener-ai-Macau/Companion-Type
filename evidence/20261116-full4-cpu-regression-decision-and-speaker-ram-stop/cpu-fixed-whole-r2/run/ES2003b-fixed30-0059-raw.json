@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0059",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 28320000,
+    "sourceEndFrame": 28800000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "7a932566a47eb1e775cb1c93103354179118b0bbfb8f726cb8d04035864aa327",
+  "seconds": 19.69662309999694,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "And um an o an okay button. I mean so something I found with joystick on mob on the joysticks on mobile phones is that a lot of the time the device mistakes. You've tried to move it in one direction or the other for pushing down for okay or vice versa and that's really irritating. Yeah. Mm. Mm. Okay. Mm. And the the the other des design constraint I think we should bear in mind is that people are r you know very much used to using a remote control one handedly uh",
+    "raw_text": "[0.53][S01]And um an o an okay button. I mean so something I found with joystick on mob on the joysticks on mobile phones is that a lot of the time the device mistakes. You've tried to move it in one direction or the other for pushing down for okay or vice versa and that's really irritating.[19.41][3.58][S02]Yeah.[3.87][6.98][S02]Mm.[7.21][9.28][S02]Mm.[9.51][16.82][S02]Okay.[17.13][19.35][S02]Mm.[19.63][21.04][S01]And the the the other des design constraint I think we should bear in mind is that people are r you know very much used to using a remote control one handedly uh[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "And um an o an okay button. I mean so something I found with joystick on mob on the joysticks on mobile phones is that a lot of the time the device mistakes. You've tried to move it in one direction or the other for pushing down for okay or vice versa and that's really irritating.",
+        "t0_ms": 530,
+        "t1_ms": 19410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 3580,
+        "t1_ms": 3870,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 6980,
+        "t1_ms": 7210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 9280,
+        "t1_ms": 9510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 16820,
+        "t1_ms": 17130,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 19350,
+        "t1_ms": 19630,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "And the the the other des design constraint I think we should bear in mind is that people are r you know very much used to using a remote control one handedly uh",
+        "t0_ms": 21040,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 530,
+        "t1_ms": 19410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3580,
+        "t1_ms": 3870,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6980,
+        "t1_ms": 7210,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9280,
+        "t1_ms": 9510,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16820,
+        "t1_ms": 17130,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19350,
+        "t1_ms": 19630,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21040,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.90999984741211,
+      "encode_ms": 6982.19677734375,
+      "decode_ms": 12656.091796875
+    }
+  },
+  "rawDecoded": "[0.53][S01]And um an o an okay button. I mean so something I found with joystick on mob on the joysticks on mobile phones is that a lot of the time the device mistakes. You've tried to move it in one direction or the other for pushing down for okay or vice versa and that's really irritating.[19.41][3.58][S02]Yeah.[3.87][6.98][S02]Mm.[7.21][9.28][S02]Mm.[9.51][16.82][S02]Okay.[17.13][19.35][S02]Mm.[19.63][21.04][S01]And the the the other des design constraint I think we should bear in mind is that people are r you know very much used to using a remote control one handedly uh[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0052",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 24960000,
+    "sourceEndFrame": 25440000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "a3c63bbfedff8ce4e22b037116885ce789cadf9ed6522a585aa336715d631b42",
+  "seconds": 16.170579999998154,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "我们的一个洗，一个洗衣液活动，洗衣液活动的话，我们可以说买够。 四桶洗衣液，我们可以赠赠一个呢，迷你洗衣机活动。 这样的顾客，这样的顾客感觉是超值的。 比如些那个在外，在外上班的一些人员吧，洗，哎，他我我我有洗衣液，但是没有洗衣机，还得回家用手洗，这样的赠赠他。",
+    "raw_text": "[1.75][S01]我们的一个洗，一个洗衣液活动，洗衣液活动的话，我们可以说买够。[6.62][9.84][S01]四桶洗衣液，我们可以赠赠一个呢，迷你洗衣机活动。[14.28][15.08][S01]这样的顾客，这样的顾客感觉是超值的。[18.82][20.92][S01]比如些那个在外，在外上班的一些人员吧，洗，哎，他我我我有洗衣液，但是没有洗衣机，还得回家用手洗，这样的赠赠他。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "我们的一个洗，一个洗衣液活动，洗衣液活动的话，我们可以说买够。",
+        "t0_ms": 1750,
+        "t1_ms": 6620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "四桶洗衣液，我们可以赠赠一个呢，迷你洗衣机活动。",
+        "t0_ms": 9840,
+        "t1_ms": 14280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这样的顾客，这样的顾客感觉是超值的。",
+        "t0_ms": 15080,
+        "t1_ms": 18820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "比如些那个在外，在外上班的一些人员吧，洗，哎，他我我我有洗衣液，但是没有洗衣机，还得回家用手洗，这样的赠赠他。",
+        "t0_ms": 20920,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 1750,
+        "t1_ms": 6620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9840,
+        "t1_ms": 14280,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15080,
+        "t1_ms": 18820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20920,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 27.034000396728516,
+      "encode_ms": 6958.1640625,
+      "decode_ms": 9149.3984375
+    }
+  },
+  "rawDecoded": "[1.75][S01]我们的一个洗，一个洗衣液活动，洗衣液活动的话，我们可以说买够。[6.62][9.84][S01]四桶洗衣液，我们可以赠赠一个呢，迷你洗衣机活动。[14.28][15.08][S01]这样的顾客，这样的顾客感觉是超值的。[18.82][20.92][S01]比如些那个在外，在外上班的一些人员吧，洗，哎，他我我我有洗衣液，但是没有洗衣机，还得回家用手洗，这样的赠赠他。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

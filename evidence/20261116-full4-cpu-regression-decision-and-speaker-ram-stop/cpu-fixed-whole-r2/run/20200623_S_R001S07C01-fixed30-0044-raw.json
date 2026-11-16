@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0044",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 21120000,
+    "sourceEndFrame": 21600000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "1e002e5212bafc71425f38575135af41f3c461fbdda9c7fa98eb5649fea2875a",
+  "seconds": 22.326995600000373,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "高，这样我们收益也好。 嗯。 嗯，也是。 那那个三十万以上呢？ 三十万以上，我们暂时还没有开拓，也如果如果我们呃短期的这个。 嗯。 小额贷款回收的好的话，我们可以考虑一下三十万往五十万迈进的这个。 战略。 嗯，大额的这个可以考虑一下。 嗯。 大额的咱们肯定会针对一些这个。",
+    "raw_text": "[0.01][S01]高，这样我们收益也好。[1.81][2.12][S02]嗯。[2.51][2.58][S03]嗯，也是。[4.01][5.12][S02]那那个三十万以上呢？[6.75][7.12][S01]三十万以上，我们暂时还没有开拓，也如果如果我们呃短期的这个。[16.55][11.55][S02]嗯。[11.95][17.22][S01]小额贷款回收的好的话，我们可以考虑一下三十万往五十万迈进的这个。[22.85][23.02][S02]战略。[23.55][23.98][S01]嗯，大额的这个可以考虑一下。[26.05][26.12][S02]嗯。[26.55][27.22][S02]大额的咱们肯定会针对一些这个。[30.01]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "高，这样我们收益也好。",
+        "t0_ms": 10,
+        "t1_ms": 1810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 2120,
+        "t1_ms": 2510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，也是。",
+        "t0_ms": 2580,
+        "t1_ms": 4010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "那那个三十万以上呢？",
+        "t0_ms": 5120,
+        "t1_ms": 6750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "三十万以上，我们暂时还没有开拓，也如果如果我们呃短期的这个。",
+        "t0_ms": 7120,
+        "t1_ms": 16550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 11550,
+        "t1_ms": 11950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "小额贷款回收的好的话，我们可以考虑一下三十万往五十万迈进的这个。",
+        "t0_ms": 17220,
+        "t1_ms": 22850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "战略。",
+        "t0_ms": 23020,
+        "t1_ms": 23550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，大额的这个可以考虑一下。",
+        "t0_ms": 23980,
+        "t1_ms": 26050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 26120,
+        "t1_ms": 26550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "大额的咱们肯定会针对一些这个。",
+        "t0_ms": 27220,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 1810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2120,
+        "t1_ms": 2510,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2580,
+        "t1_ms": 4010,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5120,
+        "t1_ms": 6750,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7120,
+        "t1_ms": 16550,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11550,
+        "t1_ms": 11950,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17220,
+        "t1_ms": 22850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23020,
+        "t1_ms": 23550,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23980,
+        "t1_ms": 26050,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26120,
+        "t1_ms": 26550,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27220,
+        "t1_ms": 30010,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 27.981000900268555,
+      "encode_ms": 7183.18701171875,
+      "decode_ms": 15082.328125
+    }
+  },
+  "rawDecoded": "[0.01][S01]高，这样我们收益也好。[1.81][2.12][S02]嗯。[2.51][2.58][S03]嗯，也是。[4.01][5.12][S02]那那个三十万以上呢？[6.75][7.12][S01]三十万以上，我们暂时还没有开拓，也如果如果我们呃短期的这个。[16.55][11.55][S02]嗯。[11.95][17.22][S01]小额贷款回收的好的话，我们可以考虑一下三十万往五十万迈进的这个。[22.85][23.02][S02]战略。[23.55][23.98][S01]嗯，大额的这个可以考虑一下。[26.05][26.12][S02]嗯。[26.55][27.22][S02]大额的咱们肯定会针对一些这个。[30.01]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

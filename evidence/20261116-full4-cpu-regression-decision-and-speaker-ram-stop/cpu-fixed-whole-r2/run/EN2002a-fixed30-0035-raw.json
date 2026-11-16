@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0035",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 16800000,
+    "sourceEndFrame": 17280000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8cf5a80049970c09c5888c1dd644ff739fc0f56831632cddf076a45f441ead17",
+  "seconds": 22.09037960000569,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "But yeah, the basics isn't it, okay, that's okay. Yeah. Yeah. Yeah, that's handy. Uh mm, yeah. So you think it shouldn't be too difficult? Hmm. Mm. I don't know, I'm I was a bit worried about when well, when he when he talked about this with um file, messing around with files, I mean how much do we actually need to do like extracting things from the X. M. L. files and stuff to be able to do the indexing? Hmm. Oh, I see. Yeah. Yeah.",
+    "raw_text": "[0.00][S01]But yeah, the basics isn't it, okay, that's okay.[2.24][0.62][S02]Yeah.[0.88][2.02][S03]Yeah.[2.32][3.12][S03]Yeah, that's handy. Uh mm, yeah. So you think it shouldn't be too difficult?[7.88][4.10][S01]Hmm.[4.30][5.08][S01]Mm.[5.38][10.12][S04]I don't know, I'm I was a bit worried about when well, when he when he talked about this with um file, messing around with files, I mean how much do we actually need to do like extracting things from the X. M. L. files and stuff to be able to do the indexing?[27.64][26.02][S01]Hmm.[26.32][27.96][S03]Oh, I see. Yeah.[29.64][29.62][S01]Yeah.[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "But yeah, the basics isn't it, okay, that's okay.",
+        "t0_ms": 0,
+        "t1_ms": 2240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 620,
+        "t1_ms": 880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 2020,
+        "t1_ms": 2320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, that's handy. Uh mm, yeah. So you think it shouldn't be too difficult?",
+        "t0_ms": 3120,
+        "t1_ms": 7880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 4100,
+        "t1_ms": 4300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 5080,
+        "t1_ms": 5380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I don't know, I'm I was a bit worried about when well, when he when he talked about this with um file, messing around with files, I mean how much do we actually need to do like extracting things from the X. M. L. files and stuff to be able to do the indexing?",
+        "t0_ms": 10120,
+        "t1_ms": 27640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 26020,
+        "t1_ms": 26320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh, I see. Yeah.",
+        "t0_ms": 27960,
+        "t1_ms": 29640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 29620,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 620,
+        "t1_ms": 880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2020,
+        "t1_ms": 2320,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3120,
+        "t1_ms": 7880,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4100,
+        "t1_ms": 4300,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5080,
+        "t1_ms": 5380,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10120,
+        "t1_ms": 27640,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26020,
+        "t1_ms": 26320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27960,
+        "t1_ms": 29640,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29620,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.675000190734863,
+      "encode_ms": 6766.548828125,
+      "decode_ms": 15277.5849609375
+    }
+  },
+  "rawDecoded": "[0.00][S01]But yeah, the basics isn't it, okay, that's okay.[2.24][0.62][S02]Yeah.[0.88][2.02][S03]Yeah.[2.32][3.12][S03]Yeah, that's handy. Uh mm, yeah. So you think it shouldn't be too difficult?[7.88][4.10][S01]Hmm.[4.30][5.08][S01]Mm.[5.38][10.12][S04]I don't know, I'm I was a bit worried about when well, when he when he talked about this with um file, messing around with files, I mean how much do we actually need to do like extracting things from the X. M. L. files and stuff to be able to do the indexing?[27.64][26.02][S01]Hmm.[26.32][27.96][S03]Oh, I see. Yeah.[29.64][29.62][S01]Yeah.[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

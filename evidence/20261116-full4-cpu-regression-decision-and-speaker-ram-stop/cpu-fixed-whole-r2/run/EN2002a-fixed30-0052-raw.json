@@ -1,0 +1,264 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0052",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 24960000,
+    "sourceEndFrame": 25440000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "3792ce0293ce7132df8843cf204f9a3464b919b8264e3fd94b4fc6b5829bf8b1",
+  "seconds": 23.076962200000708,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Hmm. Yeah, I'll be happy when this week is over. Yeah. True. Happy halfway, please cautious over. Yeah. I don't know, is that about it then? I don't know. Yeah. Anything else we need to discuss? Uh-huh. Did we wanna meet before we talk to Steve next week? Well, I don't know. We'll probably get some work done over the weekend, so I don't know if after D N L G or something, maybe just have a little quick",
+    "raw_text": "[0.52][S01]Hmm.[0.84][1.64][S02]Yeah, I'll be happy when this week is over.[3.68][4.28][S03]Yeah.[4.62][4.76][S01]True.[5.02][5.32][S04]Happy halfway, please cautious over.[6.92][7.08][S02]Yeah.[7.42][10.48][S02]I don't know, is that about it then? I don't know.[11.76][11.86][S04]Yeah.[12.10][12.56][S02]Anything else we need to discuss?[14.68][14.32][S04]Uh-huh.[14.72][16.50][S02]Did we wanna meet before we talk to Steve next week?[20.58][22.96][S02]Well, I don't know. We'll probably get some work done over the weekend, so I don't know if after D N L G or something, maybe just have a little quick[29.92]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Hmm.",
+        "t0_ms": 520,
+        "t1_ms": 840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, I'll be happy when this week is over.",
+        "t0_ms": 1640,
+        "t1_ms": 3680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 4280,
+        "t1_ms": 4620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "True.",
+        "t0_ms": 4760,
+        "t1_ms": 5020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Happy halfway, please cautious over.",
+        "t0_ms": 5320,
+        "t1_ms": 6920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 7080,
+        "t1_ms": 7420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "I don't know, is that about it then? I don't know.",
+        "t0_ms": 10480,
+        "t1_ms": 11760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 11860,
+        "t1_ms": 12100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Anything else we need to discuss?",
+        "t0_ms": 12560,
+        "t1_ms": 14680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Uh-huh.",
+        "t0_ms": 14320,
+        "t1_ms": 14720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Did we wanna meet before we talk to Steve next week?",
+        "t0_ms": 16500,
+        "t1_ms": 20580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Well, I don't know. We'll probably get some work done over the weekend, so I don't know if after D N L G or something, maybe just have a little quick",
+        "t0_ms": 22960,
+        "t1_ms": 29920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 520,
+        "t1_ms": 840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1640,
+        "t1_ms": 3680,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4280,
+        "t1_ms": 4620,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4760,
+        "t1_ms": 5020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5320,
+        "t1_ms": 6920,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7080,
+        "t1_ms": 7420,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10480,
+        "t1_ms": 11760,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11860,
+        "t1_ms": 12100,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12560,
+        "t1_ms": 14680,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14320,
+        "t1_ms": 14720,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16500,
+        "t1_ms": 20580,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22960,
+        "t1_ms": 29920,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.890999794006348,
+      "encode_ms": 7636.1767578125,
+      "decode_ms": 15391.70703125
+    }
+  },
+  "rawDecoded": "[0.52][S01]Hmm.[0.84][1.64][S02]Yeah, I'll be happy when this week is over.[3.68][4.28][S03]Yeah.[4.62][4.76][S01]True.[5.02][5.32][S04]Happy halfway, please cautious over.[6.92][7.08][S02]Yeah.[7.42][10.48][S02]I don't know, is that about it then? I don't know.[11.76][11.86][S04]Yeah.[12.10][12.56][S02]Anything else we need to discuss?[14.68][14.32][S04]Uh-huh.[14.72][16.50][S02]Did we wanna meet before we talk to Steve next week?[20.58][22.96][S02]Well, I don't know. We'll probably get some work done over the weekend, so I don't know if after D N L G or something, maybe just have a little quick[29.92]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0053",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 25440000,
+    "sourceEndFrame": 25920000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "b4ea3143b7a635af989d9d3901f3b4309df719376363b57b5f491154a759bec8",
+  "seconds": 16.37034670000139,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "那个洗迷你洗衣机呢，最起码的我小型的衣物啊，都可以到时候也可以方便他的他，方便他的呃洗涤，增加一些那个洗衣液的销售。 还有就是说的一个绑赠活动，绑赠的话我们是那个，比如说我们要买洗发水儿，买洗发水儿的话，本来他是本来只是买洗发水儿的，然后我们可以到时候赠他一个那个。 护发的一个护发素，或者是一个那。",
+    "raw_text": "[0.02][S01]那个洗迷你洗衣机呢，最起码的我小型的衣物啊，都可以到时候也可以方便他的他，方便他的呃洗涤，增加一些那个洗衣液的销售。[10.92][13.94][S01]还有就是说的一个绑赠活动，绑赠的话我们是那个，比如说我们要买洗发水儿，买洗发水儿的话，本来他是本来只是买洗发水儿的，然后我们可以到时候赠他一个那个。[26.78][27.24][S01]护发的一个护发素，或者是一个那。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "那个洗迷你洗衣机呢，最起码的我小型的衣物啊，都可以到时候也可以方便他的他，方便他的呃洗涤，增加一些那个洗衣液的销售。",
+        "t0_ms": 20,
+        "t1_ms": 10920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有就是说的一个绑赠活动，绑赠的话我们是那个，比如说我们要买洗发水儿，买洗发水儿的话，本来他是本来只是买洗发水儿的，然后我们可以到时候赠他一个那个。",
+        "t0_ms": 13940,
+        "t1_ms": 26780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "护发的一个护发素，或者是一个那。",
+        "t0_ms": 27240,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 20,
+        "t1_ms": 10920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13940,
+        "t1_ms": 26780,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27240,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 27.80500030517578,
+      "encode_ms": 7149.14990234375,
+      "decode_ms": 9159.6279296875
+    }
+  },
+  "rawDecoded": "[0.02][S01]那个洗迷你洗衣机呢，最起码的我小型的衣物啊，都可以到时候也可以方便他的他，方便他的呃洗涤，增加一些那个洗衣液的销售。[10.92][13.94][S01]还有就是说的一个绑赠活动，绑赠的话我们是那个，比如说我们要买洗发水儿，买洗发水儿的话，本来他是本来只是买洗发水儿的，然后我们可以到时候赠他一个那个。[26.78][27.24][S01]护发的一个护发素，或者是一个那。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

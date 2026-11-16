@@ -1,0 +1,318 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0025",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 12000000,
+    "sourceEndFrame": 12480000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "db1cb3e4d10c9040667b0c04b0cc5f6c33310bb6e92dadfc8f29b7527b807945",
+  "seconds": 31.164840699995693,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "True. Yeah. Unless can you I don't suppose you can minimise them and stuff like that? I guess that Yeah, you can minimise them. Yeah, yeah. Mm. Can can you do that? Okay. Okay, well that's alright, yeah. Yeah. Of course you can actually, yes. Yeah, like a lot of these can be like once we get the disfluencies out then we can, you know, transcript with all the disfluency, transcript with the deflu disfluency, have all these, you know, have all these sort of using the same window and so we can put a lot of Yeah, that's true. They're they're definitely Yeah, they're definitely gonna be in the same window, yeah. and probably mutually um what It's close, it's close. discreant mutual Yeah, that",
+    "raw_text": "[1.80][S01]True.[2.00][2.03][S02]Yeah. Unless can you I don't suppose you can minimise them and stuff like that?[6.31][3.84][S03]I guess that[4.40][6.34][S03]Yeah, you can minimise them. Yeah, yeah.[8.22][6.50][S01]Mm.[6.66][6.98][S02]Can can you do that?[7.84][8.37][S01]Okay.[8.68][8.87][S02]Okay, well that's alright, yeah. Yeah. Of course you can actually, yes.[12.11][12.18][S01]Yeah, like a lot of these can be like once we get the disfluencies out then we can, you know, transcript with all the disfluency, transcript with the deflu disfluency, have all these, you know, have all these sort of using the same window and so we can put a lot of[23.94][19.69][S03]Yeah, that's true. They're they're definitely[21.60][23.07][S03]Yeah, they're definitely gonna be in the same window, yeah.[25.14][24.60][S01]and probably mutually um what[27.12][27.78][S03]It's close, it's close.[28.72][28.07][S01]discreant mutual[29.03][29.60][S03]Yeah, that[29.96]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "True.",
+        "t0_ms": 1800,
+        "t1_ms": 2000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah. Unless can you I don't suppose you can minimise them and stuff like that?",
+        "t0_ms": 2030,
+        "t1_ms": 6310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "I guess that",
+        "t0_ms": 3840,
+        "t1_ms": 4400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, you can minimise them. Yeah, yeah.",
+        "t0_ms": 6340,
+        "t1_ms": 8220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 6500,
+        "t1_ms": 6660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Can can you do that?",
+        "t0_ms": 6980,
+        "t1_ms": 7840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 8370,
+        "t1_ms": 8680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay, well that's alright, yeah. Yeah. Of course you can actually, yes.",
+        "t0_ms": 8870,
+        "t1_ms": 12110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, like a lot of these can be like once we get the disfluencies out then we can, you know, transcript with all the disfluency, transcript with the deflu disfluency, have all these, you know, have all these sort of using the same window and so we can put a lot of",
+        "t0_ms": 12180,
+        "t1_ms": 23940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, that's true. They're they're definitely",
+        "t0_ms": 19690,
+        "t1_ms": 21600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, they're definitely gonna be in the same window, yeah.",
+        "t0_ms": 23070,
+        "t1_ms": 25140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "and probably mutually um what",
+        "t0_ms": 24600,
+        "t1_ms": 27120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "It's close, it's close.",
+        "t0_ms": 27780,
+        "t1_ms": 28720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "discreant mutual",
+        "t0_ms": 28070,
+        "t1_ms": 29030,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, that",
+        "t0_ms": 29600,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 1800,
+        "t1_ms": 2000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2030,
+        "t1_ms": 6310,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3840,
+        "t1_ms": 4400,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6340,
+        "t1_ms": 8220,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6500,
+        "t1_ms": 6660,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6980,
+        "t1_ms": 7840,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8370,
+        "t1_ms": 8680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8870,
+        "t1_ms": 12110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12180,
+        "t1_ms": 23940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19690,
+        "t1_ms": 21600,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23070,
+        "t1_ms": 25140,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24600,
+        "t1_ms": 27120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27780,
+        "t1_ms": 28720,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28070,
+        "t1_ms": 29030,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29600,
+        "t1_ms": 29960,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 15.741000175476074,
+      "encode_ms": 7615.5751953125,
+      "decode_ms": 23495.353515625
+    }
+  },
+  "rawDecoded": "[1.80][S01]True.[2.00][2.03][S02]Yeah. Unless can you I don't suppose you can minimise them and stuff like that?[6.31][3.84][S03]I guess that[4.40][6.34][S03]Yeah, you can minimise them. Yeah, yeah.[8.22][6.50][S01]Mm.[6.66][6.98][S02]Can can you do that?[7.84][8.37][S01]Okay.[8.68][8.87][S02]Okay, well that's alright, yeah. Yeah. Of course you can actually, yes.[12.11][12.18][S01]Yeah, like a lot of these can be like once we get the disfluencies out then we can, you know, transcript with all the disfluency, transcript with the deflu disfluency, have all these, you know, have all these sort of using the same window and so we can put a lot of[23.94][19.69][S03]Yeah, that's true. They're they're definitely[21.60][23.07][S03]Yeah, they're definitely gonna be in the same window, yeah.[25.14][24.60][S01]and probably mutually um what[27.12][27.78][S03]It's close, it's close.[28.72][28.07][S01]discreant mutual[29.03][29.60][S03]Yeah, that[29.96]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

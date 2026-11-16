@@ -1,0 +1,336 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0055",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 26400000,
+    "sourceEndFrame": 26880000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "82626647b289f2844bb01f8887945f9f756582363803a165fe9ca8d4d5cf9a85",
+  "seconds": 27.292994499999622,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "高铁你不能坐。 嗯。 要什么汽车，对，你也高消费消费不了。 高消费，不能高消费。 嗯。 中国也不是说也制约你了，然后如果你的孩子，你你。 嗯。 上学。 就别说好的学校了，赖的学校一看你这东西就不受了。 这就是你的。 难处。 很大，将来你孩子现在小上户口你都成问题。 嗯。 对。 你现在没，呃。 这这方面咱们可以做个这个宣传片儿。",
+    "raw_text": "[0.01][S01]高铁你不能坐。[1.01][1.22][S02]嗯。[1.64][2.33][S01]要什么汽车，对，你也高消费消费不了。[6.21][2.44][S02]高消费，不能高消费。[4.21][6.31][S02]嗯。[6.67][7.06][S01]中国也不是说也制约你了，然后如果你的孩子，你你。[11.81][9.24][S02]嗯。[9.57][12.99][S01]上学。[13.71][14.58][S01]就别说好的学校了，赖的学校一看你这东西就不受了。[18.24][18.91][S01]这就是你的。[19.75][20.58][S01]难处。[21.25][21.98][S01]很大，将来你孩子现在小上户口你都成问题。[25.31][22.22][S02]嗯。[22.64][25.58][S02]对。[25.91][26.34][S01]你现在没，呃。[27.25][27.06][S02]这这方面咱们可以做个这个宣传片儿。[29.85]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "高铁你不能坐。",
+        "t0_ms": 10,
+        "t1_ms": 1010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 1220,
+        "t1_ms": 1640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "要什么汽车，对，你也高消费消费不了。",
+        "t0_ms": 2330,
+        "t1_ms": 6210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "高消费，不能高消费。",
+        "t0_ms": 2440,
+        "t1_ms": 4210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 6310,
+        "t1_ms": 6670,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "中国也不是说也制约你了，然后如果你的孩子，你你。",
+        "t0_ms": 7060,
+        "t1_ms": 11810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 9240,
+        "t1_ms": 9570,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "上学。",
+        "t0_ms": 12990,
+        "t1_ms": 13710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就别说好的学校了，赖的学校一看你这东西就不受了。",
+        "t0_ms": 14580,
+        "t1_ms": 18240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这就是你的。",
+        "t0_ms": 18910,
+        "t1_ms": 19750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "难处。",
+        "t0_ms": 20580,
+        "t1_ms": 21250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "很大，将来你孩子现在小上户口你都成问题。",
+        "t0_ms": 21980,
+        "t1_ms": 25310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 22220,
+        "t1_ms": 22640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对。",
+        "t0_ms": 25580,
+        "t1_ms": 25910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "你现在没，呃。",
+        "t0_ms": 26340,
+        "t1_ms": 27250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这这方面咱们可以做个这个宣传片儿。",
+        "t0_ms": 27060,
+        "t1_ms": 29850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 1010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1220,
+        "t1_ms": 1640,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2330,
+        "t1_ms": 6210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2440,
+        "t1_ms": 4210,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6310,
+        "t1_ms": 6670,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7060,
+        "t1_ms": 11810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9240,
+        "t1_ms": 9570,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12990,
+        "t1_ms": 13710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14580,
+        "t1_ms": 18240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18910,
+        "t1_ms": 19750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20580,
+        "t1_ms": 21250,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21980,
+        "t1_ms": 25310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22220,
+        "t1_ms": 22640,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25580,
+        "t1_ms": 25910,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26340,
+        "t1_ms": 27250,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27060,
+        "t1_ms": 29850,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.952999114990234,
+      "encode_ms": 7522.39404296875,
+      "decode_ms": 19713.83203125
+    }
+  },
+  "rawDecoded": "[0.01][S01]高铁你不能坐。[1.01][1.22][S02]嗯。[1.64][2.33][S01]要什么汽车，对，你也高消费消费不了。[6.21][2.44][S02]高消费，不能高消费。[4.21][6.31][S02]嗯。[6.67][7.06][S01]中国也不是说也制约你了，然后如果你的孩子，你你。[11.81][9.24][S02]嗯。[9.57][12.99][S01]上学。[13.71][14.58][S01]就别说好的学校了，赖的学校一看你这东西就不受了。[18.24][18.91][S01]这就是你的。[19.75][20.58][S01]难处。[21.25][21.98][S01]很大，将来你孩子现在小上户口你都成问题。[25.31][22.22][S02]嗯。[22.64][25.58][S02]对。[25.91][26.34][S01]你现在没，呃。[27.25][27.06][S02]这这方面咱们可以做个这个宣传片儿。[29.85]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

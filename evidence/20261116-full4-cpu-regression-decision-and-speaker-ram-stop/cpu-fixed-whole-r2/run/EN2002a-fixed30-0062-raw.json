@@ -1,0 +1,534 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0062",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 29760000,
+    "sourceEndFrame": 30240000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "f99b443f67d91416898eaaef5490903de70175ca8c86e553ffa533a9c5c37583",
+  "seconds": 34.05167829999846,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I mean. Something like that, and then if I have a class I can run off and do it anyway. Yeah. Pick your time. Yeah. Okay. Alright. Um yeah, I can I win one. Okay. So Monday Monday might be good, um. Yeah. What Monday? Yeah. Fourteen six? Yeah. Yeah, this Monday, just. Anytime, um not at not at noon or two or four. Um late afternoon. No, in between those, yeah, like one or three or. Three o'clock? Sure. Actually yeah. T t t possibly. S three's alright, yeah, well the one times the N R G four is like. Yeah. It's four A M. Unless you wanna do it, absolutely.",
+    "raw_text": "[0.00][S01]I mean.[0.32][0.00][S02]Something like that, and then if I have a class I can run off and do it anyway.[2.82][2.58][S01]Yeah.[2.86][2.72][S03]Pick your time.[3.40][3.64][S02]Yeah.[3.84][4.40][S04]Okay.[4.80][4.46][S01]Alright.[4.92][5.12][S01]Um yeah, I can I win one.[7.02][6.16][S03]Okay.[6.52][6.22][S02]So Monday Monday might be good, um.[8.20][8.14][S01]Yeah.[8.42][8.66][S03]What Monday?[9.30][10.24][S02]Yeah.[10.48][10.30][S01]Fourteen six?[10.86][10.92][S02]Yeah.[11.12][11.04][S01]Yeah, this Monday, just.[12.12][12.34][S02]Anytime, um not at not at noon or two or four.[16.24][13.10][S04]Um late afternoon.[14.78][17.68][S02]No, in between those, yeah, like one or three or.[20.54][20.94][S03]Three o'clock?[21.64][21.96][S02]Sure.[22.16][22.30][S03]Actually yeah.[23.10][23.58][S02]T t t possibly.[24.72][24.26][S04]S three's alright, yeah, well the one times the N R G four is like.[28.12][26.88][S01]Yeah.[27.12][28.32][S01]It's four A M.[29.00][28.88][S03]Unless you wanna do it, absolutely.[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I mean.",
+        "t0_ms": 0,
+        "t1_ms": 320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Something like that, and then if I have a class I can run off and do it anyway.",
+        "t0_ms": 0,
+        "t1_ms": 2820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 2580,
+        "t1_ms": 2860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Pick your time.",
+        "t0_ms": 2720,
+        "t1_ms": 3400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 3640,
+        "t1_ms": 3840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 4400,
+        "t1_ms": 4800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Alright.",
+        "t0_ms": 4460,
+        "t1_ms": 4920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um yeah, I can I win one.",
+        "t0_ms": 5120,
+        "t1_ms": 7020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 6160,
+        "t1_ms": 6520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "So Monday Monday might be good, um.",
+        "t0_ms": 6220,
+        "t1_ms": 8200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 8140,
+        "t1_ms": 8420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "What Monday?",
+        "t0_ms": 8660,
+        "t1_ms": 9300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 10240,
+        "t1_ms": 10480,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Fourteen six?",
+        "t0_ms": 10300,
+        "t1_ms": 10860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 10920,
+        "t1_ms": 11120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, this Monday, just.",
+        "t0_ms": 11040,
+        "t1_ms": 12120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Anytime, um not at not at noon or two or four.",
+        "t0_ms": 12340,
+        "t1_ms": 16240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Um late afternoon.",
+        "t0_ms": 13100,
+        "t1_ms": 14780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "No, in between those, yeah, like one or three or.",
+        "t0_ms": 17680,
+        "t1_ms": 20540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Three o'clock?",
+        "t0_ms": 20940,
+        "t1_ms": 21640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Sure.",
+        "t0_ms": 21960,
+        "t1_ms": 22160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Actually yeah.",
+        "t0_ms": 22300,
+        "t1_ms": 23100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "T t t possibly.",
+        "t0_ms": 23580,
+        "t1_ms": 24720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "S three's alright, yeah, well the one times the N R G four is like.",
+        "t0_ms": 24260,
+        "t1_ms": 28120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 26880,
+        "t1_ms": 27120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "It's four A M.",
+        "t0_ms": 28320,
+        "t1_ms": 29000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Unless you wanna do it, absolutely.",
+        "t0_ms": 28880,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 0,
+        "t1_ms": 2820,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2580,
+        "t1_ms": 2860,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2720,
+        "t1_ms": 3400,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3640,
+        "t1_ms": 3840,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4400,
+        "t1_ms": 4800,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4460,
+        "t1_ms": 4920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5120,
+        "t1_ms": 7020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6160,
+        "t1_ms": 6520,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6220,
+        "t1_ms": 8200,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8140,
+        "t1_ms": 8420,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8660,
+        "t1_ms": 9300,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10240,
+        "t1_ms": 10480,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10300,
+        "t1_ms": 10860,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10920,
+        "t1_ms": 11120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11040,
+        "t1_ms": 12120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12340,
+        "t1_ms": 16240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13100,
+        "t1_ms": 14780,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17680,
+        "t1_ms": 20540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20940,
+        "t1_ms": 21640,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21960,
+        "t1_ms": 22160,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22300,
+        "t1_ms": 23100,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23580,
+        "t1_ms": 24720,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24260,
+        "t1_ms": 28120,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26880,
+        "t1_ms": 27120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28320,
+        "t1_ms": 29000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28880,
+        "t1_ms": 29980,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.069000244140625,
+      "encode_ms": 6658.06005859375,
+      "decode_ms": 27339.287109375
+    }
+  },
+  "rawDecoded": "[0.00][S01]I mean.[0.32][0.00][S02]Something like that, and then if I have a class I can run off and do it anyway.[2.82][2.58][S01]Yeah.[2.86][2.72][S03]Pick your time.[3.40][3.64][S02]Yeah.[3.84][4.40][S04]Okay.[4.80][4.46][S01]Alright.[4.92][5.12][S01]Um yeah, I can I win one.[7.02][6.16][S03]Okay.[6.52][6.22][S02]So Monday Monday might be good, um.[8.20][8.14][S01]Yeah.[8.42][8.66][S03]What Monday?[9.30][10.24][S02]Yeah.[10.48][10.30][S01]Fourteen six?[10.86][10.92][S02]Yeah.[11.12][11.04][S01]Yeah, this Monday, just.[12.12][12.34][S02]Anytime, um not at not at noon or two or four.[16.24][13.10][S04]Um late afternoon.[14.78][17.68][S02]No, in between those, yeah, like one or three or.[20.54][20.94][S03]Three o'clock?[21.64][21.96][S02]Sure.[22.16][22.30][S03]Actually yeah.[23.10][23.58][S02]T t t possibly.[24.72][24.26][S04]S three's alright, yeah, well the one times the N R G four is like.[28.12][26.88][S01]Yeah.[27.12][28.32][S01]It's four A M.[29.00][28.88][S03]Unless you wanna do it, absolutely.[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

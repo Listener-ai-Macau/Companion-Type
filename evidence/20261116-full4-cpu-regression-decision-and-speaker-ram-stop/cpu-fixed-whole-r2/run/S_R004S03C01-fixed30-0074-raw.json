@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0074",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 35520000,
+    "sourceEndFrame": 36000000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "939a1eb82c909ccdcba6f9adf2b9cff28254e25397aa1d02b6fc5df27dcc2b59",
+  "seconds": 20.043773799996416,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "车或者小小拉车，及时的呃送到咱那个。 现现在那个柜房区那儿，以便下个客户继续使用。 呃。 别的我这块儿也就没什么了，呃，下边儿你们呃各个部门儿再进行讨论一下，呃。 咱们把这个季度的销售啊，要比上个季度好，不能要不好吧，也要维持在平衡，因为。",
+    "raw_text": "[0.02][S01]车或者小小拉车，及时的呃送到咱那个。[5.32][6.32][S01]现现在那个柜房区那儿，以便下个客户继续使用。[10.54][11.22][S01]呃。[11.98][12.74][S01]别的我这块儿也就没什么了，呃，下边儿你们呃各个部门儿再进行讨论一下，呃。[20.94][21.73][S01]咱们把这个季度的销售啊，要比上个季度好，不能要不好吧，也要维持在平衡，因为。[29.99]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "车或者小小拉车，及时的呃送到咱那个。",
+        "t0_ms": 20,
+        "t1_ms": 5320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "现现在那个柜房区那儿，以便下个客户继续使用。",
+        "t0_ms": 6320,
+        "t1_ms": 10540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃。",
+        "t0_ms": 11220,
+        "t1_ms": 11980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "别的我这块儿也就没什么了，呃，下边儿你们呃各个部门儿再进行讨论一下，呃。",
+        "t0_ms": 12740,
+        "t1_ms": 20940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "咱们把这个季度的销售啊，要比上个季度好，不能要不好吧，也要维持在平衡，因为。",
+        "t0_ms": 21730,
+        "t1_ms": 29990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 20,
+        "t1_ms": 5320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6320,
+        "t1_ms": 10540,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11220,
+        "t1_ms": 11980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12740,
+        "t1_ms": 20940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21730,
+        "t1_ms": 29990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.083999633789062,
+      "encode_ms": 7597.5927734375,
+      "decode_ms": 12393.744140625
+    }
+  },
+  "rawDecoded": "[0.02][S01]车或者小小拉车，及时的呃送到咱那个。[5.32][6.32][S01]现现在那个柜房区那儿，以便下个客户继续使用。[10.54][11.22][S01]呃。[11.98][12.74][S01]别的我这块儿也就没什么了，呃，下边儿你们呃各个部门儿再进行讨论一下，呃。[20.94][21.73][S01]咱们把这个季度的销售啊，要比上个季度好，不能要不好吧，也要维持在平衡，因为。[29.99]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

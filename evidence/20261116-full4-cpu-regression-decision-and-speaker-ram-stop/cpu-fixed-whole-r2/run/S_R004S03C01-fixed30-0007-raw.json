@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0007",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 3360000,
+    "sourceEndFrame": 3840000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "ad7ca2b4a45b0b8897422197eb4ba861e5cbfd104c8c44b5f61429751e9adc14",
+  "seconds": 17.534593200005475,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "进行一下，呃，优惠活动，呃，或者咱们嗯。 呃，不好卖的产品呢，是否要进行下架，呃，这就需要各位来进行一个评判。 我这边儿只是看到你们日常的一些工作状态，一些报表情况，这个包括我这边儿一些出库，呃，入库这些。 呃，东西，哪些多哪些少我能看得见，但是，呃，顾客们对哪些消费比较感兴趣，这块儿。",
+    "raw_text": "[0.01][S01]进行一下，呃，优惠活动，呃，或者咱们嗯。[5.31][6.14][S01]呃，不好卖的产品呢，是否要进行下架，呃，这就需要各位来进行一个评判。[12.71][13.18][S01]我这边儿只是看到你们日常的一些工作状态，一些报表情况，这个包括我这边儿一些出库，呃，入库这些。[22.51][22.75][S01]呃，东西，哪些多哪些少我能看得见，但是，呃，顾客们对哪些消费比较感兴趣，这块儿。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "进行一下，呃，优惠活动，呃，或者咱们嗯。",
+        "t0_ms": 10,
+        "t1_ms": 5310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，不好卖的产品呢，是否要进行下架，呃，这就需要各位来进行一个评判。",
+        "t0_ms": 6140,
+        "t1_ms": 12710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "我这边儿只是看到你们日常的一些工作状态，一些报表情况，这个包括我这边儿一些出库，呃，入库这些。",
+        "t0_ms": 13180,
+        "t1_ms": 22510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，东西，哪些多哪些少我能看得见，但是，呃，顾客们对哪些消费比较感兴趣，这块儿。",
+        "t0_ms": 22750,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 5310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6140,
+        "t1_ms": 12710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13180,
+        "t1_ms": 22510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22750,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.081999778747559,
+      "encode_ms": 7253.26806640625,
+      "decode_ms": 10230.2216796875
+    }
+  },
+  "rawDecoded": "[0.01][S01]进行一下，呃，优惠活动，呃，或者咱们嗯。[5.31][6.14][S01]呃，不好卖的产品呢，是否要进行下架，呃，这就需要各位来进行一个评判。[12.71][13.18][S01]我这边儿只是看到你们日常的一些工作状态，一些报表情况，这个包括我这边儿一些出库，呃，入库这些。[22.51][22.75][S01]呃，东西，哪些多哪些少我能看得见，但是，呃，顾客们对哪些消费比较感兴趣，这块儿。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

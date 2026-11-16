@@ -1,0 +1,238 @@
+{
+  "at": "2026-11-16T11:53:25.497152+08:00",
+  "meeting": "ES2003b",
+  "language": "English",
+  "audioSeconds": 2109.813375,
+  "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+  "baselineRawText": {
+    "referenceUnits": 5781,
+    "hypothesisUnits": 4969,
+    "errors": 1384,
+    "errorRate": 0.23940494724096179,
+    "counts": {
+      "replace": 426,
+      "delete": 885,
+      "insert": 73
+    }
+  },
+  "baselinePersonErrorRate": 0.38713025428126624,
+  "baselineDER": 0.26018102941320864,
+  "baselineEvidence": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\ordinary-english-full-wer-r1.json",
+  "scoringManifestSha256": "234ea8b756701993e17674fabb0cf12e69e22649ca9aa905f694a160b08863d2",
+  "scorerSha256": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "originalGatesChanged": false,
+  "recordingsArePreviouslySeenDevelopmentCasesNotBlindHoldout": true,
+  "newNeuralCalls": 0,
+  "state": "COMPLETE_JOINT_WHOLE_MEETING_SCORED_NOT_PRODUCT_QUALIFIED",
+  "candidateOutputSha256": "89d17e1a00d66183a621187012771991d026dba5d2c98c98167d2107219543b7",
+  "rawText": {
+    "referenceUnits": 5781,
+    "hypothesisUnits": 5691,
+    "errors": 1103,
+    "errorRate": 0.1907974398892925,
+    "counts": {
+      "replace": 531,
+      "delete": 331,
+      "insert": 241
+    }
+  },
+  "personText": {
+    "referenceUnits": 5781,
+    "errors": 1141,
+    "errorRate": 0.19737069711122643,
+    "unknownUnitsForcedUnmatched": 50,
+    "perPerson": [
+      {
+        "referenceSpeaker": "A",
+        "anonymousSpeaker": "S02",
+        "referenceUnits": 1419,
+        "hypothesisUnits": 1335,
+        "errors": 348,
+        "errorRate": 0.2452431289640592,
+        "counts": {
+          "replace": 162,
+          "delete": 135,
+          "insert": 51
+        }
+      },
+      {
+        "referenceSpeaker": "B",
+        "anonymousSpeaker": "S01",
+        "referenceUnits": 2289,
+        "hypothesisUnits": 2215,
+        "errors": 312,
+        "errorRate": 0.1363040629095675,
+        "counts": {
+          "replace": 150,
+          "delete": 118,
+          "insert": 44
+        }
+      },
+      {
+        "referenceSpeaker": "C",
+        "anonymousSpeaker": "S00",
+        "referenceUnits": 1543,
+        "hypothesisUnits": 1599,
+        "errors": 279,
+        "errorRate": 0.18081659105638367,
+        "counts": {
+          "replace": 119,
+          "delete": 52,
+          "insert": 108
+        }
+      },
+      {
+        "referenceSpeaker": "D",
+        "anonymousSpeaker": "S03",
+        "referenceUnits": 530,
+        "hypothesisUnits": 492,
+        "errors": 152,
+        "errorRate": 0.28679245283018867,
+        "counts": {
+          "replace": 82,
+          "delete": 54,
+          "insert": 16
+        }
+      }
+    ],
+    "mappingForScoringOnly": true,
+    "oneWholeMeetingPermutation": true
+  },
+  "originalReferenceDER": {
+    "referenceSpeakerSeconds": 1958.649999999878,
+    "missSeconds": 164.23999999999592,
+    "falseAlarmSeconds": 52.100000000120346,
+    "confusionSeconds": 26.52000000000196,
+    "errorSeconds": 242.86000000011825,
+    "DER": 0.12399356699774507,
+    "identityForScoringOnly": {
+      "S00": "C",
+      "S01": "B",
+      "S02": "A",
+      "S03": "D"
+    }
+  },
+  "invalidTimeSegmentIndices": [],
+  "residualUnparsed": [
+    {
+      "beforeSegment": 8,
+      "text": "\nYou can connect to it with any username actually, there's no restriction.\nThat was sorry.\n"
+    },
+    {
+      "beforeSegment": 27,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 29,
+      "text": "\nOkay.\n"
+    },
+    {
+      "beforeSegment": 31,
+      "text": "\nThat's alright.\n"
+    },
+    {
+      "beforeSegment": 43,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 52,
+      "text": "\nOkay.\n"
+    },
+    {
+      "beforeSegment": 60,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 73,
+      "text": "\nDo we have with the\n"
+    },
+    {
+      "beforeSegment": 81,
+      "text": "\nOkay.\n"
+    },
+    {
+      "beforeSegment": 88,
+      "text": "\nUm.\n"
+    },
+    {
+      "beforeSegment": 121,
+      "text": "\nMm-hmm.\n"
+    },
+    {
+      "beforeSegment": 154,
+      "text": "\nMm.\n"
+    },
+    {
+      "beforeSegment": 160,
+      "text": "\nAlthough we could\n"
+    },
+    {
+      "beforeSegment": 208,
+      "text": "\nMm.\n"
+    },
+    {
+      "beforeSegment": 316,
+      "text": "\nRight.\n"
+    },
+    {
+      "beforeSegment": 317,
+      "text": "\nYeah.\n"
+    },
+    {
+      "beforeSegment": 318,
+      "text": "\nOkay.\n"
+    },
+    {
+      "beforeSegment": 335,
+      "text": "\nMm-hmm.\n"
+    },
+    {
+      "beforeSegment": 343,
+      "text": "\nThough, one thing that we've almost not talked\n"
+    },
+    {
+      "beforeSegment": 366,
+      "text": "\nOkay."
+    }
+  ],
+  "allNativeLexicalContentCounted": true,
+  "parsedSegments": 366,
+  "rawTextGate": false,
+  "personTextGate": false,
+  "derGate": false,
+  "rawEditsReduced": 281,
+  "rawRelativeErrorReduction": 0.20303468208092484,
+  "externalMfaTimingDiagnostic": {
+    "referenceSpeakerSeconds": 1497.0030000000004,
+    "missSeconds": 44.486,
+    "falseAlarmSeconds": 393.9930000000021,
+    "confusionSeconds": 1452.5170000000005,
+    "errorSeconds": 1890.9960000000026,
+    "DER": 1.2631878493229487,
+    "identityForScoringOnly": {
+      "S00": "C",
+      "S01": "B",
+      "S02": "A",
+      "S03": "D"
+    },
+    "notHumanVerifiedAndDoesNotReplaceOriginalGate": true
+  },
+  "limits": {
+    "pid": 30188,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 62144512,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

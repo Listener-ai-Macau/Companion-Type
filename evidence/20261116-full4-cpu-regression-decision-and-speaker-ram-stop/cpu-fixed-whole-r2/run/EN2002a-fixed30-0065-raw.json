@@ -1,0 +1,516 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0065",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 31200000,
+    "sourceEndFrame": 31680000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "3b4308855ba7e4b543317ac4b4f6b06b5900e190b497acb1bec14b359ec9a860",
+  "seconds": 37.33115839999664,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "It's pretty much. And there's a photocopier with the code on it, yeah, there. Really? Nice. Really? It's got all the That's coming handy. Oh well, I'm just Hey, we can we can photocopy our uh assignment if we what. For the uh for part about I've got it on my computer, what else is on my computer. Yeah. Yeah, well the comments, I'm thinking. So what time do we say? I just think it's better to do afterwards, then we have all the time we need. Uh Yeah, it's true, so after D. L. G. Oh right. Yeah, then have half an hour and then we'll we'll surely run out. Yeah. Yeah, yeah. Yeah. Yeah. Okay. Well As long as D. L. G. doesn't go",
+    "raw_text": "[0.00][S01]It's pretty much.[0.60][0.69][S02]And there's a photocopier with the code on it, yeah, there.[3.74][2.68][S03]Really?[3.04][3.93][S01]Nice.[4.28][4.71][S03]Really?[5.14][4.72][S02]It's got all the[5.34][5.47][S01]That's coming handy.[6.12][6.56][S03]Oh well, I'm just[8.40][7.71][S01]Hey, we can we can photocopy our uh assignment if we what.[11.48][8.31][S04]For the uh for part about[9.84][12.56][S03]I've got it on my computer, what else is on my computer.[15.24][12.99][S04]Yeah.[13.24][14.03][S01]Yeah, well the comments, I'm thinking.[15.38][15.89][S04]So what time do we say?[17.68][18.03][S03]I just think it's better to do afterwards, then we have all the time we need.[20.92][18.06][S02]Uh[18.32][20.60][S01]Yeah, it's true, so after D. L. G.[22.32][21.00][S02]Oh right.[21.36][21.35][S03]Yeah, then have half an hour and then we'll we'll surely run out.[24.16][21.98][S04]Yeah.[22.26][23.13][S02]Yeah, yeah.[23.66][23.28][S01]Yeah.[23.62][25.32][S04]Yeah.[25.54][27.06][S03]Okay.[27.94][28.66][S03]Well[28.94][28.74][S01]As long as D. L. G. doesn't go[29.96]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "It's pretty much.",
+        "t0_ms": 0,
+        "t1_ms": 600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "And there's a photocopier with the code on it, yeah, there.",
+        "t0_ms": 690,
+        "t1_ms": 3740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Really?",
+        "t0_ms": 2680,
+        "t1_ms": 3040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Nice.",
+        "t0_ms": 3930,
+        "t1_ms": 4280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Really?",
+        "t0_ms": 4710,
+        "t1_ms": 5140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "It's got all the",
+        "t0_ms": 4720,
+        "t1_ms": 5340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "That's coming handy.",
+        "t0_ms": 5470,
+        "t1_ms": 6120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh well, I'm just",
+        "t0_ms": 6560,
+        "t1_ms": 8400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Hey, we can we can photocopy our uh assignment if we what.",
+        "t0_ms": 7710,
+        "t1_ms": 11480,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "For the uh for part about",
+        "t0_ms": 8310,
+        "t1_ms": 9840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "I've got it on my computer, what else is on my computer.",
+        "t0_ms": 12560,
+        "t1_ms": 15240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 12990,
+        "t1_ms": 13240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah, well the comments, I'm thinking.",
+        "t0_ms": 14030,
+        "t1_ms": 15380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "So what time do we say?",
+        "t0_ms": 15890,
+        "t1_ms": 17680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "I just think it's better to do afterwards, then we have all the time we need.",
+        "t0_ms": 18030,
+        "t1_ms": 20920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Uh",
+        "t0_ms": 18060,
+        "t1_ms": 18320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, it's true, so after D. L. G.",
+        "t0_ms": 20600,
+        "t1_ms": 22320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh right.",
+        "t0_ms": 21000,
+        "t1_ms": 21360,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, then have half an hour and then we'll we'll surely run out.",
+        "t0_ms": 21350,
+        "t1_ms": 24160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 21980,
+        "t1_ms": 22260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah, yeah.",
+        "t0_ms": 23130,
+        "t1_ms": 23660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 23280,
+        "t1_ms": 23620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 25320,
+        "t1_ms": 25540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 27060,
+        "t1_ms": 27940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Well",
+        "t0_ms": 28660,
+        "t1_ms": 28940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "As long as D. L. G. doesn't go",
+        "t0_ms": 28740,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 600,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 690,
+        "t1_ms": 3740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2680,
+        "t1_ms": 3040,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3930,
+        "t1_ms": 4280,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4710,
+        "t1_ms": 5140,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4720,
+        "t1_ms": 5340,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5470,
+        "t1_ms": 6120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6560,
+        "t1_ms": 8400,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7710,
+        "t1_ms": 11480,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8310,
+        "t1_ms": 9840,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12560,
+        "t1_ms": 15240,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12990,
+        "t1_ms": 13240,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14030,
+        "t1_ms": 15380,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15890,
+        "t1_ms": 17680,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18030,
+        "t1_ms": 20920,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18060,
+        "t1_ms": 18320,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20600,
+        "t1_ms": 22320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21000,
+        "t1_ms": 21360,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21350,
+        "t1_ms": 24160,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21980,
+        "t1_ms": 22260,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23130,
+        "t1_ms": 23660,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23280,
+        "t1_ms": 23620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25320,
+        "t1_ms": 25540,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27060,
+        "t1_ms": 27940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28660,
+        "t1_ms": 28940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28740,
+        "t1_ms": 29960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.95199966430664,
+      "encode_ms": 7015.77587890625,
+      "decode_ms": 30264.51953125
+    }
+  },
+  "rawDecoded": "[0.00][S01]It's pretty much.[0.60][0.69][S02]And there's a photocopier with the code on it, yeah, there.[3.74][2.68][S03]Really?[3.04][3.93][S01]Nice.[4.28][4.71][S03]Really?[5.14][4.72][S02]It's got all the[5.34][5.47][S01]That's coming handy.[6.12][6.56][S03]Oh well, I'm just[8.40][7.71][S01]Hey, we can we can photocopy our uh assignment if we what.[11.48][8.31][S04]For the uh for part about[9.84][12.56][S03]I've got it on my computer, what else is on my computer.[15.24][12.99][S04]Yeah.[13.24][14.03][S01]Yeah, well the comments, I'm thinking.[15.38][15.89][S04]So what time do we say?[17.68][18.03][S03]I just think it's better to do afterwards, then we have all the time we need.[20.92][18.06][S02]Uh[18.32][20.60][S01]Yeah, it's true, so after D. L. G.[22.32][21.00][S02]Oh right.[21.36][21.35][S03]Yeah, then have half an hour and then we'll we'll surely run out.[24.16][21.98][S04]Yeah.[22.26][23.13][S02]Yeah, yeah.[23.66][23.28][S01]Yeah.[23.62][25.32][S04]Yeah.[25.54][27.06][S03]Okay.[27.94][28.66][S03]Well[28.94][28.74][S01]As long as D. L. G. doesn't go[29.96]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

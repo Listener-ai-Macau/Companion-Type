@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0017",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 8160000,
+    "sourceEndFrame": 8640000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "f0644c4a3ed35f45c7f090b958ee56e834446a5865fa4b7977d592be0c9d2017",
+  "seconds": 17.33641589999752,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "这个叶子菜，菜这个绿叶儿菜，今天我们没有卖完，到到每天下午的五点呢，我们就要出一些这个特价菜。 就是我们把这个菜呢，需要就是呃给它促销出去，比如说一块钱一斤的菜，我们可能到了下午五点以后呢，我们就是。 呃，八毛钱或者是五毛钱，我们就出清仓出去了，这样的话我们就是每天都是有新鲜的菜。 呃，好多人呢，他也是呃为了。",
+    "raw_text": "[0.01][S01]这个叶子菜，菜这个绿叶儿菜，今天我们没有卖完，到到每天下午的五点呢，我们就要出一些这个特价菜。[9.35][9.52][S01]就是我们把这个菜呢，需要就是呃给它促销出去，比如说一块钱一斤的菜，我们可能到了下午五点以后呢，我们就是。[18.85][19.04][S01]呃，八毛钱或者是五毛钱，我们就出清仓出去了，这样的话我们就是每天都是有新鲜的菜。[27.34][27.61][S01]呃，好多人呢，他也是呃为了。[30.01]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "这个叶子菜，菜这个绿叶儿菜，今天我们没有卖完，到到每天下午的五点呢，我们就要出一些这个特价菜。",
+        "t0_ms": 10,
+        "t1_ms": 9350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就是我们把这个菜呢，需要就是呃给它促销出去，比如说一块钱一斤的菜，我们可能到了下午五点以后呢，我们就是。",
+        "t0_ms": 9520,
+        "t1_ms": 18850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，八毛钱或者是五毛钱，我们就出清仓出去了，这样的话我们就是每天都是有新鲜的菜。",
+        "t0_ms": 19040,
+        "t1_ms": 27340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，好多人呢，他也是呃为了。",
+        "t0_ms": 27610,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 9350,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9520,
+        "t1_ms": 18850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19040,
+        "t1_ms": 27340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27610,
+        "t1_ms": 30010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 27.049999237060547,
+      "encode_ms": 7121.77001953125,
+      "decode_ms": 10156.205078125
+    }
+  },
+  "rawDecoded": "[0.01][S01]这个叶子菜，菜这个绿叶儿菜，今天我们没有卖完，到到每天下午的五点呢，我们就要出一些这个特价菜。[9.35][9.52][S01]就是我们把这个菜呢，需要就是呃给它促销出去，比如说一块钱一斤的菜，我们可能到了下午五点以后呢，我们就是。[18.85][19.04][S01]呃，八毛钱或者是五毛钱，我们就出清仓出去了，这样的话我们就是每天都是有新鲜的菜。[27.34][27.61][S01]呃，好多人呢，他也是呃为了。[30.01]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

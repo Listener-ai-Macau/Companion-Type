@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0058",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 27840000,
+    "sourceEndFrame": 28320000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "609d04cdd1920c5d7cb0e70f1068c6b816799c15979759a0f1fad89c103563a2",
+  "seconds": 22.396927900001174,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "难免会出现。 嗯，还有咱们各公司，咱们这些这些行业的贷款公司，咱们也都是信息的一些这个。 共享。 对对对，信息共享。 对，共享，对这方面。 嗯，嗯，别的，呃。 就是诚信问题的一些部门，嗯，但是在别的方面，咱们公司还是做很保密的。 嗯。 嗯。 对。 这方面做的，咱们到时候可以跟这个，嗯，用户去说。",
+    "raw_text": "[0.01][S01]难免会出现。[0.95][1.15][S02]嗯，还有咱们各公司，咱们这些这些行业的贷款公司，咱们也都是信息的一些这个。[9.05][8.95][S03]共享。[9.51][9.52][S01]对对对，信息共享。[10.68][9.81][S02]对，共享，对这方面。[11.85][12.35][S02]嗯，嗯，别的，呃。[16.01][16.95][S02]就是诚信问题的一些部门，嗯，但是在别的方面，咱们公司还是做很保密的。[23.47][19.12][S03]嗯。[19.55][23.58][S03]嗯。[23.97][23.78][S01]对。[24.14][24.34][S02]这方面做的，咱们到时候可以跟这个，嗯，用户去说。[29.55]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "难免会出现。",
+        "t0_ms": 10,
+        "t1_ms": 950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，还有咱们各公司，咱们这些这些行业的贷款公司，咱们也都是信息的一些这个。",
+        "t0_ms": 1150,
+        "t1_ms": 9050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "共享。",
+        "t0_ms": 8950,
+        "t1_ms": 9510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "对对对，信息共享。",
+        "t0_ms": 9520,
+        "t1_ms": 10680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对，共享，对这方面。",
+        "t0_ms": 9810,
+        "t1_ms": 11850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，嗯，别的，呃。",
+        "t0_ms": 12350,
+        "t1_ms": 16010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "就是诚信问题的一些部门，嗯，但是在别的方面，咱们公司还是做很保密的。",
+        "t0_ms": 16950,
+        "t1_ms": 23470,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 19120,
+        "t1_ms": 19550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 23580,
+        "t1_ms": 23970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "对。",
+        "t0_ms": 23780,
+        "t1_ms": 24140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这方面做的，咱们到时候可以跟这个，嗯，用户去说。",
+        "t0_ms": 24340,
+        "t1_ms": 29550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1150,
+        "t1_ms": 9050,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8950,
+        "t1_ms": 9510,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9520,
+        "t1_ms": 10680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9810,
+        "t1_ms": 11850,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12350,
+        "t1_ms": 16010,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16950,
+        "t1_ms": 23470,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19120,
+        "t1_ms": 19550,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23580,
+        "t1_ms": 23970,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23780,
+        "t1_ms": 24140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24340,
+        "t1_ms": 29550,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 26.083999633789062,
+      "encode_ms": 7468.93505859375,
+      "decode_ms": 14868.3623046875
+    }
+  },
+  "rawDecoded": "[0.01][S01]难免会出现。[0.95][1.15][S02]嗯，还有咱们各公司，咱们这些这些行业的贷款公司，咱们也都是信息的一些这个。[9.05][8.95][S03]共享。[9.51][9.52][S01]对对对，信息共享。[10.68][9.81][S02]对，共享，对这方面。[11.85][12.35][S02]嗯，嗯，别的，呃。[16.01][16.95][S02]就是诚信问题的一些部门，嗯，但是在别的方面，咱们公司还是做很保密的。[23.47][19.12][S03]嗯。[19.55][23.58][S03]嗯。[23.97][23.78][S01]对。[24.14][24.34][S02]这方面做的，咱们到时候可以跟这个，嗯，用户去说。[29.55]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

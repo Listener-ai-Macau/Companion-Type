@@ -1,0 +1,210 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0049",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 23520000,
+    "sourceEndFrame": 24000000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "ea48bc613cf29c5f67d3682aa9da0fda27328b0428d72d2757c45c6e443b5977",
+  "seconds": 21.232551500004774,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "结算这边儿也说了，咱们这个催缴的一些方式，嗯，那然后这边儿业务这边儿有什么想要分享看法吗？ 咱们可以增加一个这个结算这方面的方式吗？ 嗯，缺少联系方式的话。 增加一个结算，增加一个结算方式。 嗯。 当。 啊，结算方式。 对。 结算方式的话。",
+    "raw_text": "[0.02][S01]结算这边儿也说了，咱们这个催缴的一些方式，嗯，那然后这边儿业务这边儿有什么想要分享看法吗？[10.21][10.48][S01]咱们可以增加一个这个结算这方面的方式吗？[14.11][14.12][S02]嗯，缺少联系方式的话。[16.61][18.28][S01]增加一个结算，增加一个结算方式。[22.21][18.34][S02]嗯。[18.94][18.81][S02]当。[19.25][22.88][S02]啊，结算方式。[24.14][24.24][S01]对。[24.75][26.34][S02]结算方式的话。[28.25]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "结算这边儿也说了，咱们这个催缴的一些方式，嗯，那然后这边儿业务这边儿有什么想要分享看法吗？",
+        "t0_ms": 20,
+        "t1_ms": 10210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "咱们可以增加一个这个结算这方面的方式吗？",
+        "t0_ms": 10480,
+        "t1_ms": 14110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，缺少联系方式的话。",
+        "t0_ms": 14120,
+        "t1_ms": 16610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "增加一个结算，增加一个结算方式。",
+        "t0_ms": 18280,
+        "t1_ms": 22210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 18340,
+        "t1_ms": 18940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "当。",
+        "t0_ms": 18810,
+        "t1_ms": 19250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "啊，结算方式。",
+        "t0_ms": 22880,
+        "t1_ms": 24140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对。",
+        "t0_ms": 24240,
+        "t1_ms": 24750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "结算方式的话。",
+        "t0_ms": 26340,
+        "t1_ms": 28250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 20,
+        "t1_ms": 10210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10480,
+        "t1_ms": 14110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14120,
+        "t1_ms": 16610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18280,
+        "t1_ms": 22210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18340,
+        "t1_ms": 18940,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18810,
+        "t1_ms": 19250,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22880,
+        "t1_ms": 24140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24240,
+        "t1_ms": 24750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26340,
+        "t1_ms": 28250,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 28.351999282836914,
+      "encode_ms": 6868.69287109375,
+      "decode_ms": 14301.60546875
+    }
+  },
+  "rawDecoded": "[0.02][S01]结算这边儿也说了，咱们这个催缴的一些方式，嗯，那然后这边儿业务这边儿有什么想要分享看法吗？[10.21][10.48][S01]咱们可以增加一个这个结算这方面的方式吗？[14.11][14.12][S02]嗯，缺少联系方式的话。[16.61][18.28][S01]增加一个结算，增加一个结算方式。[22.21][18.34][S02]嗯。[18.94][18.81][S02]当。[19.25][22.88][S02]啊，结算方式。[24.14][24.24][S01]对。[24.75][26.34][S02]结算方式的话。[28.25]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

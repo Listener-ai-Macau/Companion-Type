@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0044",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 21120000,
+    "sourceEndFrame": 21600000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "6c096592add361dbfd56cac4157ad543cf07dc356b0f1ec54754061428b20452",
+  "seconds": 21.158999400002358,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Text, say. Yeah, yeah, 'cause that's the uh the guy could declare a variable, doesn't it, and it could probably take the yeah. Yeah. And then, yeah, because every every year all of these um these files have got um the an I. D. and all the transcript files have got the string, I don't know what it is, words or text or something in it, so just search us for those files, okay. Right. Right. What do you like, is there a open thingy or?",
+    "raw_text": "[0.00][S01]Text, say.[0.70][0.84][S02]Yeah, yeah, 'cause that's the uh the guy could declare a variable, doesn't it, and it could probably take the yeah.[6.80][3.88][S01]Yeah.[4.20][5.16][S01]And then, yeah, because every every year all of these um[10.04][11.40][S01]these files have got um the an I. D. and all the transcript files have got the string, I don't know what it is, words or text or something in it, so just search us for those files, okay.[22.72][22.86][S02]Right.[23.22][23.22][S01]Right.[23.50][25.58][S03]What do you like, is there a open thingy or?[29.30]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Text, say.",
+        "t0_ms": 0,
+        "t1_ms": 700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, yeah, 'cause that's the uh the guy could declare a variable, doesn't it, and it could probably take the yeah.",
+        "t0_ms": 840,
+        "t1_ms": 6800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 3880,
+        "t1_ms": 4200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "And then, yeah, because every every year all of these um",
+        "t0_ms": 5160,
+        "t1_ms": 10040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "these files have got um the an I. D. and all the transcript files have got the string, I don't know what it is, words or text or something in it, so just search us for those files, okay.",
+        "t0_ms": 11400,
+        "t1_ms": 22720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Right.",
+        "t0_ms": 22860,
+        "t1_ms": 23220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Right.",
+        "t0_ms": 23220,
+        "t1_ms": 23500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "What do you like, is there a open thingy or?",
+        "t0_ms": 25580,
+        "t1_ms": 29300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 700,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 840,
+        "t1_ms": 6800,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3880,
+        "t1_ms": 4200,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5160,
+        "t1_ms": 10040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11400,
+        "t1_ms": 22720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22860,
+        "t1_ms": 23220,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23220,
+        "t1_ms": 23500,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25580,
+        "t1_ms": 29300,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 19.106000900268555,
+      "encode_ms": 7774.09716796875,
+      "decode_ms": 13327.66015625
+    }
+  },
+  "rawDecoded": "[0.00][S01]Text, say.[0.70][0.84][S02]Yeah, yeah, 'cause that's the uh the guy could declare a variable, doesn't it, and it could probably take the yeah.[6.80][3.88][S01]Yeah.[4.20][5.16][S01]And then, yeah, because every every year all of these um[10.04][11.40][S01]these files have got um the an I. D. and all the transcript files have got the string, I don't know what it is, words or text or something in it, so just search us for those files, okay.[22.72][22.86][S02]Right.[23.22][23.22][S01]Right.[23.50][25.58][S03]What do you like, is there a open thingy or?[29.30]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0041",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 19680000,
+    "sourceEndFrame": 20160000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8a4e24bc03ce4ab8f1d7cb0a633113655689746e8dce1e8934765e8cd59cbd9f",
+  "seconds": 16.328834200001438,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "然后赠他一个什么曲奇饼干啦，什么嗯那种小糕点什么的。 还有就是可以，嗯，就是。 嗯，比如说今天做一那种曲奇饼干的专场，然后明天做那种糕点的专场。 然后换一天做那种面包的专场，然后这样交叉着来，就会吸引更多的顾客。 嗯，还有就是这种充值满就送，就是。",
+    "raw_text": "[0.00][S01]然后赠他一个什么曲奇饼干啦，什么嗯那种小糕点什么的。[7.44][8.12][S01]还有就是可以，嗯，就是。[11.62][12.32][S01]嗯，比如说今天做一那种曲奇饼干的专场，然后明天做那种糕点的专场。[18.98][19.04][S01]然后换一天做那种面包的专场，然后这样交叉着来，就会吸引更多的顾客。[25.18][25.58][S01]嗯，还有就是这种充值满就送，就是。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "然后赠他一个什么曲奇饼干啦，什么嗯那种小糕点什么的。",
+        "t0_ms": 0,
+        "t1_ms": 7440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有就是可以，嗯，就是。",
+        "t0_ms": 8120,
+        "t1_ms": 11620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，比如说今天做一那种曲奇饼干的专场，然后明天做那种糕点的专场。",
+        "t0_ms": 12320,
+        "t1_ms": 18980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后换一天做那种面包的专场，然后这样交叉着来，就会吸引更多的顾客。",
+        "t0_ms": 19040,
+        "t1_ms": 25180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，还有就是这种充值满就送，就是。",
+        "t0_ms": 25580,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 7440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8120,
+        "t1_ms": 11620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12320,
+        "t1_ms": 18980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19040,
+        "t1_ms": 25180,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25580,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 21.42799949645996,
+      "encode_ms": 6678.68701171875,
+      "decode_ms": 9597.7236328125
+    }
+  },
+  "rawDecoded": "[0.00][S01]然后赠他一个什么曲奇饼干啦，什么嗯那种小糕点什么的。[7.44][8.12][S01]还有就是可以，嗯，就是。[11.62][12.32][S01]嗯，比如说今天做一那种曲奇饼干的专场，然后明天做那种糕点的专场。[18.98][19.04][S01]然后换一天做那种面包的专场，然后这样交叉着来，就会吸引更多的顾客。[25.18][25.58][S01]嗯，还有就是这种充值满就送，就是。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

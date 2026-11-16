@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0014",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 6720000,
+    "sourceEndFrame": 7200000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "1c805f9441b09d9d8de6bc7c416490e480eebea86d8e4109380fc5be5c9415ca",
+  "seconds": 19.44966690000001,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "All observations and when then we have the interlinking by right click basically. Right. Actually yeah, like uh another common thing like we have it so set up that um if you double click and it goes to a default thing on the menu, I mean that's kind of a typical kind of action that would happen. If you double click on a particular topic or something then it goes to sort of like a default view, so it'll be like all the Double click. Oh. um cases of that topic either whatever we decide the default to be, whether it's in all meetings or just in one meeting and just show up the particular",
+    "raw_text": "[0.00][S01]All observations and when then we have the interlinking by right click basically.[4.10][4.56][S02]Right.[4.80][6.08][S02]Actually yeah, like uh another common thing like we have it so set up that um if you double click and it goes to a default thing on the menu, I mean that's kind of a typical kind of action that would happen. If you double click on a particular topic or something then it goes to sort of like a default view, so it'll be like all the[22.04][15.38][S01]Double click.[15.96][20.72][S01]Oh.[21.16][22.92][S02]um cases of that topic either whatever we decide the default to be, whether it's in all meetings or just in one meeting and just show up the particular[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "All observations and when then we have the interlinking by right click basically.",
+        "t0_ms": 0,
+        "t1_ms": 4100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Right.",
+        "t0_ms": 4560,
+        "t1_ms": 4800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Actually yeah, like uh another common thing like we have it so set up that um if you double click and it goes to a default thing on the menu, I mean that's kind of a typical kind of action that would happen. If you double click on a particular topic or something then it goes to sort of like a default view, so it'll be like all the",
+        "t0_ms": 6080,
+        "t1_ms": 22040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Double click.",
+        "t0_ms": 15380,
+        "t1_ms": 15960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh.",
+        "t0_ms": 20720,
+        "t1_ms": 21160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "um cases of that topic either whatever we decide the default to be, whether it's in all meetings or just in one meeting and just show up the particular",
+        "t0_ms": 22920,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 4100,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4560,
+        "t1_ms": 4800,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6080,
+        "t1_ms": 22040,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15380,
+        "t1_ms": 15960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20720,
+        "t1_ms": 21160,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22920,
+        "t1_ms": 30000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.079000473022461,
+      "encode_ms": 6993.712890625,
+      "decode_ms": 12406.1328125
+    }
+  },
+  "rawDecoded": "[0.00][S01]All observations and when then we have the interlinking by right click basically.[4.10][4.56][S02]Right.[4.80][6.08][S02]Actually yeah, like uh another common thing like we have it so set up that um if you double click and it goes to a default thing on the menu, I mean that's kind of a typical kind of action that would happen. If you double click on a particular topic or something then it goes to sort of like a default view, so it'll be like all the[22.04][15.38][S01]Double click.[15.96][20.72][S01]Oh.[21.16][22.92][S02]um cases of that topic either whatever we decide the default to be, whether it's in all meetings or just in one meeting and just show up the particular[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,264 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0032",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 15360000,
+    "sourceEndFrame": 15840000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "86140415fc49860b4219f9266826b2c3b919f52a4fd40130a826cc59e3034f68",
+  "seconds": 24.132886899998994,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "让他有一个这个心理上的准备。 嗯。 行吧。 行可以。 行，这就是咱们这个，嗯。 这个业务方面。 还有目前咱们公司现在有几车几款产品呢，目前主打的几款产品。 我们主打的是小额的车贷，然后创业贷。 嗯。 嗯。 然后，呃。 开，开个冷饮店的话，开小袋儿，开。",
+    "raw_text": "[0.25][S01]让他有一个这个心理上的准备。[3.21][3.18][S02]嗯。[3.72][3.88][S01]行吧。[4.51][4.58][S02]行可以。[5.72][6.01][S01]行，这就是咱们这个，嗯。[9.01][9.94][S01]这个业务方面。[11.01][11.66][S01]还有目前咱们公司现在有几车几款产品呢，目前主打的几款产品。[17.41][17.62][S02]我们主打的是小额的车贷，然后创业贷。[22.15][20.65][S01]嗯。[21.15][22.15][S01]嗯。[22.65][22.71][S02]然后，呃。[24.85][25.91][S02]开，开个冷饮店的话，开小袋儿，开。[29.99]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "让他有一个这个心理上的准备。",
+        "t0_ms": 250,
+        "t1_ms": 3210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 3180,
+        "t1_ms": 3720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "行吧。",
+        "t0_ms": 3880,
+        "t1_ms": 4510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "行可以。",
+        "t0_ms": 4580,
+        "t1_ms": 5720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "行，这就是咱们这个，嗯。",
+        "t0_ms": 6010,
+        "t1_ms": 9010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这个业务方面。",
+        "t0_ms": 9940,
+        "t1_ms": 11010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有目前咱们公司现在有几车几款产品呢，目前主打的几款产品。",
+        "t0_ms": 11660,
+        "t1_ms": 17410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "我们主打的是小额的车贷，然后创业贷。",
+        "t0_ms": 17620,
+        "t1_ms": 22150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 20650,
+        "t1_ms": 21150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 22150,
+        "t1_ms": 22650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后，呃。",
+        "t0_ms": 22710,
+        "t1_ms": 24850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "开，开个冷饮店的话，开小袋儿，开。",
+        "t0_ms": 25910,
+        "t1_ms": 29990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 250,
+        "t1_ms": 3210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3180,
+        "t1_ms": 3720,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3880,
+        "t1_ms": 4510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4580,
+        "t1_ms": 5720,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6010,
+        "t1_ms": 9010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9940,
+        "t1_ms": 11010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11660,
+        "t1_ms": 17410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17620,
+        "t1_ms": 22150,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20650,
+        "t1_ms": 21150,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22150,
+        "t1_ms": 22650,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22710,
+        "t1_ms": 24850,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25910,
+        "t1_ms": 29990,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.909000396728516,
+      "encode_ms": 7992.2158203125,
+      "decode_ms": 16092.8310546875
+    }
+  },
+  "rawDecoded": "[0.25][S01]让他有一个这个心理上的准备。[3.21][3.18][S02]嗯。[3.72][3.88][S01]行吧。[4.51][4.58][S02]行可以。[5.72][6.01][S01]行，这就是咱们这个，嗯。[9.01][9.94][S01]这个业务方面。[11.01][11.66][S01]还有目前咱们公司现在有几车几款产品呢，目前主打的几款产品。[17.41][17.62][S02]我们主打的是小额的车贷，然后创业贷。[22.15][20.65][S01]嗯。[21.15][22.15][S01]嗯。[22.65][22.71][S02]然后，呃。[24.85][25.91][S02]开，开个冷饮店的话，开小袋儿，开。[29.99]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

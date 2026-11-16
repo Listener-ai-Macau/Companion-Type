@@ -1,0 +1,210 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0031",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 14880000,
+    "sourceEndFrame": 15360000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8b35cc16293538901234b01a69fca9517db11f5cf926a61371acc9fc6788e418",
+  "seconds": 22.346619199997804,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "是。 销售找到的。 呃，有三个是呃，来咱们公司的，说明咱们公司品质还是比较好的，还有两个是通过推销，通过销售找着的。 嗯。 哦。 嗯，到时候咱们这个要让销售和他这个多联系，把咱公司的一些这个产品，嗯，这这方面要给他说一说，介绍详细一点，嗯。 嗯。 介绍详细。 嗯，好的。",
+    "raw_text": "[0.98][S01]是。[1.72][1.21][S02]销售找到的。[2.41][3.52][S01]呃，有三个是呃，来咱们公司的，说明咱们公司品质还是比较好的，还有两个是通过推销，通过销售找着的。[14.81][9.38][S02]嗯。[9.84][14.81][S02]哦。[15.34][16.98][S02]嗯，到时候咱们这个要让销售和他这个多联系，把咱公司的一些这个产品，嗯，这这方面要给他说一说，介绍详细一点，嗯。[30.00][24.52][S01]嗯。[24.94][26.88][S01]介绍详细。[27.78][28.98][S01]嗯，好的。[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "是。",
+        "t0_ms": 980,
+        "t1_ms": 1720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "销售找到的。",
+        "t0_ms": 1210,
+        "t1_ms": 2410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，有三个是呃，来咱们公司的，说明咱们公司品质还是比较好的，还有两个是通过推销，通过销售找着的。",
+        "t0_ms": 3520,
+        "t1_ms": 14810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 9380,
+        "t1_ms": 9840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "哦。",
+        "t0_ms": 14810,
+        "t1_ms": 15340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，到时候咱们这个要让销售和他这个多联系，把咱公司的一些这个产品，嗯，这这方面要给他说一说，介绍详细一点，嗯。",
+        "t0_ms": 16980,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 24520,
+        "t1_ms": 24940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "介绍详细。",
+        "t0_ms": 26880,
+        "t1_ms": 27780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，好的。",
+        "t0_ms": 28980,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 980,
+        "t1_ms": 1720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1210,
+        "t1_ms": 2410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3520,
+        "t1_ms": 14810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9380,
+        "t1_ms": 9840,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14810,
+        "t1_ms": 15340,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16980,
+        "t1_ms": 30000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24520,
+        "t1_ms": 24940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26880,
+        "t1_ms": 27780,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28980,
+        "t1_ms": 29940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 15.11299991607666,
+      "encode_ms": 8248.232421875,
+      "decode_ms": 14047.3798828125
+    }
+  },
+  "rawDecoded": "[0.98][S01]是。[1.72][1.21][S02]销售找到的。[2.41][3.52][S01]呃，有三个是呃，来咱们公司的，说明咱们公司品质还是比较好的，还有两个是通过推销，通过销售找着的。[14.81][9.38][S02]嗯。[9.84][14.81][S02]哦。[15.34][16.98][S02]嗯，到时候咱们这个要让销售和他这个多联系，把咱公司的一些这个产品，嗯，这这方面要给他说一说，介绍详细一点，嗯。[30.00][24.52][S01]嗯。[24.94][26.88][S01]介绍详细。[27.78][28.98][S01]嗯，好的。[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

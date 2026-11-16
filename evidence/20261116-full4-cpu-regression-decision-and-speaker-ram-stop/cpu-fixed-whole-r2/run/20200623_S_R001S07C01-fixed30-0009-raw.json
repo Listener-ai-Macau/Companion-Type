@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0009",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 4320000,
+    "sourceEndFrame": 4800000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "c218bdaf9ec32f0fe7ccb43ba6b3037d5ae7ca7042670d2f1cc0b33d3fa5d84f",
+  "seconds": 21.467935200002103,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "要遵循，对。 呃，还有就是，呃，在。 贷款的前提吧，就是要，呃。 保证他的贷款人的信誉吧。 嗯。 然后我们之前一定，呃，一定是，呃，考核他的信誉度的。 呃。 然后就是办理贷款的审查工作嘛，都都是方方面面都是要，都是会做全的。",
+    "raw_text": "[0.01][S01]要遵循，对。[1.31][1.93][S01]呃，还有就是，呃，在。[4.45][5.23][S01]贷款的前提吧，就是要，呃。[8.91][9.55][S01]保证他的贷款人的信誉吧。[12.51][12.83][S02]嗯。[13.25][14.04][S01]然后我们之前一定，呃，一定是，呃，考核他的信誉度的。[19.55][21.01][S01]呃。[21.59][23.58][S01]然后就是办理贷款的审查工作嘛，都都是方方面面都是要，都是会做全的。[29.99]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "要遵循，对。",
+        "t0_ms": 10,
+        "t1_ms": 1310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，还有就是，呃，在。",
+        "t0_ms": 1930,
+        "t1_ms": 4450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "贷款的前提吧，就是要，呃。",
+        "t0_ms": 5230,
+        "t1_ms": 8910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "保证他的贷款人的信誉吧。",
+        "t0_ms": 9550,
+        "t1_ms": 12510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 12830,
+        "t1_ms": 13250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "然后我们之前一定，呃，一定是，呃，考核他的信誉度的。",
+        "t0_ms": 14040,
+        "t1_ms": 19550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃。",
+        "t0_ms": 21010,
+        "t1_ms": 21590,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后就是办理贷款的审查工作嘛，都都是方方面面都是要，都是会做全的。",
+        "t0_ms": 23580,
+        "t1_ms": 29990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 1310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1930,
+        "t1_ms": 4450,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5230,
+        "t1_ms": 8910,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9550,
+        "t1_ms": 12510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12830,
+        "t1_ms": 13250,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14040,
+        "t1_ms": 19550,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21010,
+        "t1_ms": 21590,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23580,
+        "t1_ms": 29990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 28.726999282836914,
+      "encode_ms": 8203.29296875,
+      "decode_ms": 13193.5986328125
+    }
+  },
+  "rawDecoded": "[0.01][S01]要遵循，对。[1.31][1.93][S01]呃，还有就是，呃，在。[4.45][5.23][S01]贷款的前提吧，就是要，呃。[8.91][9.55][S01]保证他的贷款人的信誉吧。[12.51][12.83][S02]嗯。[13.25][14.04][S01]然后我们之前一定，呃，一定是，呃，考核他的信誉度的。[19.55][21.01][S01]呃。[21.59][23.58][S01]然后就是办理贷款的审查工作嘛，都都是方方面面都是要，都是会做全的。[29.99]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

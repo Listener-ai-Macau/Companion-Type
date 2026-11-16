@@ -1,0 +1,460 @@
+{
+  "at": "2026-11-16T12:13:06.613896+08:00",
+  "state": "REJECT_FIXED30_MOSS_AS_UNIVERSAL_PRODUCT_ASR_KEEP_EXISTING_CHINESE_BASELINE",
+  "score": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\full-score.json",
+  "scoreSha256": "a5172f7ea06cc1cdae4baa456977162534797c97bfa6c679baf2efea93cac63a",
+  "originalFourFullInputsAnd290EosComplete": true,
+  "groups": [
+    {
+      "language": "English",
+      "completeOriginalMeetings": 2,
+      "audioSeconds": 4252.52275,
+      "referenceUnits": 13413,
+      "rawErrors": 3721,
+      "rawErrorRate": 0.2774174308506673,
+      "baselineRawErrors": 4007,
+      "baselineRawErrorRate": 0.29874002833072394,
+      "fixedSpeakerAttributedErrors": 3469,
+      "fixedSpeakerAttributedErrorRate": 0.25862968761649147,
+      "cpuAsrInferenceSeconds": 3178.8157971999826,
+      "asrRealTimeFactor": 0.7475129432758432,
+      "allChunksNaturalEos": true,
+      "everyMeetingImprovesRawText": true,
+      "everyMeetingPassesRawGate": false,
+      "qualityQualified": false
+    },
+    {
+      "language": "Chinese",
+      "completeOriginalMeetings": 2,
+      "audioSeconds": 4376.4805,
+      "referenceUnits": 15478,
+      "rawErrors": 1853,
+      "rawErrorRate": 0.11971830985915492,
+      "baselineRawErrors": 1498,
+      "baselineRawErrorRate": 0.09678253004264117,
+      "fixedSpeakerAttributedErrors": 2913,
+      "fixedSpeakerAttributedErrorRate": 0.18820261015635095,
+      "cpuAsrInferenceSeconds": 2874.969942200012,
+      "asrRealTimeFactor": 0.6569136871968269,
+      "allChunksNaturalEos": true,
+      "everyMeetingImprovesRawText": false,
+      "everyMeetingPassesRawGate": false,
+      "qualityQualified": false
+    }
+  ],
+  "meetings": [
+    {
+      "meeting": "ES2003b",
+      "rawText": {
+        "referenceUnits": 5781,
+        "hypothesisUnits": 5691,
+        "errors": 1103,
+        "errorRate": 0.1907974398892925,
+        "counts": {
+          "replace": 531,
+          "delete": 331,
+          "insert": 241
+        }
+      },
+      "baselineRawText": {
+        "referenceUnits": 5781,
+        "hypothesisUnits": 4969,
+        "errors": 1384,
+        "errorRate": 0.23940494724096179,
+        "counts": {
+          "replace": 426,
+          "delete": 885,
+          "insert": 73
+        }
+      },
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 1141,
+        "referenceUnits": 5781,
+        "errorRate": 0.19737069711122643,
+        "unknownUnitsForcedUnmatched": 50,
+        "perPerson": [
+          {
+            "speaker": "A",
+            "referenceUnits": 1419,
+            "hypothesisUnits": 1335,
+            "errors": 348,
+            "errorRate": 0.2452431289640592,
+            "counts": {
+              "replace": 162,
+              "delete": 135,
+              "insert": 51
+            }
+          },
+          {
+            "speaker": "B",
+            "referenceUnits": 2289,
+            "hypothesisUnits": 2215,
+            "errors": 312,
+            "errorRate": 0.1363040629095675,
+            "counts": {
+              "replace": 150,
+              "delete": 118,
+              "insert": 44
+            }
+          },
+          {
+            "speaker": "C",
+            "referenceUnits": 1543,
+            "hypothesisUnits": 1599,
+            "errors": 279,
+            "errorRate": 0.18081659105638367,
+            "counts": {
+              "replace": 119,
+              "delete": 52,
+              "insert": 108
+            }
+          },
+          {
+            "speaker": "D",
+            "referenceUnits": 530,
+            "hypothesisUnits": 492,
+            "errors": 152,
+            "errorRate": 0.28679245283018867,
+            "counts": {
+              "replace": 82,
+              "delete": 54,
+              "insert": 16
+            }
+          }
+        ],
+        "mappingScope": "One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment."
+      },
+      "primaryRawJournalDER": {
+        "referenceSpeakerSeconds": 1958.649999999878,
+        "missSeconds": 488.3916319999852,
+        "falseAlarmSeconds": 13.661632000108053,
+        "confusionSeconds": 7.55031000000346,
+        "errorSeconds": 509.60357400009667,
+        "DER": 0.260181029790993,
+        "identityForScoringOnly": {
+          "speaker_0": "C",
+          "speaker_1": "B",
+          "speaker_2": "A",
+          "speaker_3": "D"
+        }
+      },
+      "rawEditsReduced": 281,
+      "cpuAsrInferenceSeconds": 1312.8183298000222
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "rawText": {
+        "referenceUnits": 8325,
+        "hypothesisUnits": 8591,
+        "errors": 755,
+        "errorRate": 0.09069069069069069,
+        "counts": {
+          "replace": 271,
+          "delete": 109,
+          "insert": 375
+        }
+      },
+      "baselineRawText": {
+        "referenceUnits": 8325,
+        "hypothesisUnits": 8205,
+        "errors": 461,
+        "errorRate": 0.055375375375375374,
+        "counts": {
+          "replace": 225,
+          "delete": 178,
+          "insert": 58
+        }
+      },
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 1104,
+        "referenceUnits": 8325,
+        "errorRate": 0.13261261261261262,
+        "unknownUnitsForcedUnmatched": 467,
+        "perPerson": [
+          {
+            "speaker": "001-M",
+            "referenceUnits": 1983,
+            "hypothesisUnits": 1914,
+            "errors": 257,
+            "errorRate": 0.129601613716591,
+            "counts": {
+              "replace": 116,
+              "delete": 105,
+              "insert": 36
+            }
+          },
+          {
+            "speaker": "002-F",
+            "referenceUnits": 650,
+            "hypothesisUnits": 643,
+            "errors": 27,
+            "errorRate": 0.04153846153846154,
+            "counts": {
+              "replace": 18,
+              "delete": 8,
+              "insert": 1
+            }
+          },
+          {
+            "speaker": "003-F",
+            "referenceUnits": 1681,
+            "hypothesisUnits": 1678,
+            "errors": 72,
+            "errorRate": 0.04283164782867341,
+            "counts": {
+              "replace": 35,
+              "delete": 20,
+              "insert": 17
+            }
+          },
+          {
+            "speaker": "004-F",
+            "referenceUnits": 2402,
+            "hypothesisUnits": 2320,
+            "errors": 141,
+            "errorRate": 0.05870108243130724,
+            "counts": {
+              "replace": 33,
+              "delete": 95,
+              "insert": 13
+            }
+          },
+          {
+            "speaker": "005-F",
+            "referenceUnits": 1609,
+            "hypothesisUnits": 1569,
+            "errors": 140,
+            "errorRate": 0.0870105655686762,
+            "counts": {
+              "replace": 62,
+              "delete": 59,
+              "insert": 19
+            }
+          }
+        ],
+        "mappingScope": "One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment."
+      },
+      "primaryRawJournalDER": {
+        "referenceSpeakerSeconds": 2074.389489999999,
+        "missSeconds": 65.91499699999912,
+        "falseAlarmSeconds": 12.695487000001684,
+        "confusionSeconds": 1.3699999999999992,
+        "errorSeconds": 79.98048400000081,
+        "DER": 0.038556155623407466,
+        "identityForScoringOnly": {
+          "speaker_0": "001-M",
+          "speaker_1": "002-F",
+          "speaker_2": "004-F",
+          "speaker_3": "005-F",
+          "speaker_4": "003-F"
+        }
+      },
+      "rawEditsReduced": -294,
+      "cpuAsrInferenceSeconds": 1386.5060023000115
+    },
+    {
+      "meeting": "EN2002a",
+      "rawText": {
+        "referenceUnits": 7632,
+        "hypothesisUnits": 7101,
+        "errors": 2618,
+        "errorRate": 0.34302935010482183,
+        "counts": {
+          "replace": 1205,
+          "delete": 972,
+          "insert": 441
+        }
+      },
+      "baselineRawText": {
+        "referenceUnits": 7632,
+        "hypothesisUnits": 5665,
+        "errors": 2623,
+        "errorRate": 0.3436844863731656,
+        "counts": {
+          "replace": 546,
+          "delete": 2022,
+          "insert": 55
+        }
+      },
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 2328,
+        "referenceUnits": 7632,
+        "errorRate": 0.3050314465408805,
+        "unknownUnitsForcedUnmatched": 81,
+        "perPerson": [
+          {
+            "speaker": "A",
+            "referenceUnits": 1883,
+            "hypothesisUnits": 1688,
+            "errors": 558,
+            "errorRate": 0.2963356346255975,
+            "counts": {
+              "replace": 265,
+              "delete": 244,
+              "insert": 49
+            }
+          },
+          {
+            "speaker": "B",
+            "referenceUnits": 1362,
+            "hypothesisUnits": 1089,
+            "errors": 552,
+            "errorRate": 0.4052863436123348,
+            "counts": {
+              "replace": 205,
+              "delete": 310,
+              "insert": 37
+            }
+          },
+          {
+            "speaker": "C",
+            "referenceUnits": 2790,
+            "hypothesisUnits": 2797,
+            "errors": 570,
+            "errorRate": 0.20430107526881722,
+            "counts": {
+              "replace": 263,
+              "delete": 150,
+              "insert": 157
+            }
+          },
+          {
+            "speaker": "D",
+            "referenceUnits": 1597,
+            "hypothesisUnits": 1446,
+            "errors": 567,
+            "errorRate": 0.35504070131496557,
+            "counts": {
+              "replace": 296,
+              "delete": 211,
+              "insert": 60
+            }
+          }
+        ],
+        "mappingScope": "One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment."
+      },
+      "primaryRawJournalDER": {
+        "referenceSpeakerSeconds": 2530.26,
+        "missSeconds": 724.893519000002,
+        "falseAlarmSeconds": 29.963519000000858,
+        "confusionSeconds": 31.4625419999988,
+        "errorSeconds": 786.3195800000017,
+        "DER": 0.31076631650502384,
+        "identityForScoringOnly": {
+          "speaker_0": "MEE071",
+          "speaker_1": "MEE073",
+          "speaker_2": "FEO072",
+          "speaker_3": "FEO070"
+        }
+      },
+      "rawEditsReduced": 5,
+      "cpuAsrInferenceSeconds": 1865.9974673999604
+    },
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "rawText": {
+        "referenceUnits": 7153,
+        "hypothesisUnits": 7149,
+        "errors": 1098,
+        "errorRate": 0.1535020271214875,
+        "counts": {
+          "replace": 448,
+          "delete": 327,
+          "insert": 323
+        }
+      },
+      "baselineRawText": {
+        "referenceUnits": 7153,
+        "hypothesisUnits": 6747,
+        "errors": 1037,
+        "errorRate": 0.1449741367258493,
+        "counts": {
+          "replace": 421,
+          "delete": 511,
+          "insert": 105
+        }
+      },
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 1809,
+        "referenceUnits": 7153,
+        "errorRate": 0.2529008807493359,
+        "unknownUnitsForcedUnmatched": 142,
+        "perPerson": [
+          {
+            "speaker": "001-M",
+            "referenceUnits": 3248,
+            "hypothesisUnits": 3365,
+            "errors": 447,
+            "errorRate": 0.1376231527093596,
+            "counts": {
+              "replace": 122,
+              "delete": 104,
+              "insert": 221
+            }
+          },
+          {
+            "speaker": "003-M",
+            "referenceUnits": 521,
+            "hypothesisUnits": 271,
+            "errors": 290,
+            "errorRate": 0.5566218809980806,
+            "counts": {
+              "replace": 18,
+              "delete": 261,
+              "insert": 11
+            }
+          },
+          {
+            "speaker": "004-M",
+            "referenceUnits": 1389,
+            "hypothesisUnits": 1392,
+            "errors": 451,
+            "errorRate": 0.32469402447804174,
+            "counts": {
+              "replace": 112,
+              "delete": 168,
+              "insert": 171
+            }
+          },
+          {
+            "speaker": "006-M",
+            "referenceUnits": 1995,
+            "hypothesisUnits": 1979,
+            "errors": 479,
+            "errorRate": 0.24010025062656642,
+            "counts": {
+              "replace": 235,
+              "delete": 130,
+              "insert": 114
+            }
+          }
+        ],
+        "mappingScope": "One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment."
+      },
+      "primaryRawJournalDER": {
+        "referenceSpeakerSeconds": 1833.9097710178462,
+        "missSeconds": 81.12372958413522,
+        "falseAlarmSeconds": 83.34395856628664,
+        "confusionSeconds": 126.05066323417299,
+        "errorSeconds": 290.51835138459484,
+        "DER": 0.15841474644815975,
+        "identityForScoringOnly": {
+          "speaker_0": "006-M",
+          "speaker_1": "004-M",
+          "speaker_2": "003-M",
+          "speaker_3": "001-M"
+        }
+      },
+      "rawEditsReduced": -61,
+      "cpuAsrInferenceSeconds": 1488.4639399000007
+    }
+  ],
+  "deploymentFeasibleOnThisCpu": true,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "newWeightTraining": false,
+  "productDefaultChanged": false,
+  "reason": "Original4 complete recordings contradict the short-window-only improvement: Chinese ordinary461->755errors and hard1037->1098; English1384->1103 and2623->2618. No cross-language general gain; original protected Chinese ASR remains preferred. Native CPU/transport work is reusable engineering evidence, not a qualified model release.",
+  "correction": "First derived summary incorrectly mixed EN2002a participant IDs with A-D word names. The frozen reference-only alias map fixed that CPU scorer; original text, original pinned full scorer and reference bytes/gates never changed. Raw multi-voice DER remains authoritative and unchanged; exclusive DER is only diagnostic.",
+  "next": "Complete independent CPU-only speaker runtime verification when the unchanged RAM gate recovers. Freeze one dedicated-ASR English contrast on the same existing validation inputs before considering domain training; no parameter grid, no Chinese baseline replacement. The same failed universalMOSS candidate is not expanded to more full meetings or packaged as a default."
+}

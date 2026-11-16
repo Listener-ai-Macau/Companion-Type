@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0046",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 22080000,
+    "sourceEndFrame": 22560000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "b78164b32727bffa43a5109a4c35f76c300b3e3fc42dc4b0d43f8fa58771a402",
+  "seconds": 17.46456770000077,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "单价，呃一举两得，这样消费者他也愿意来来你这儿买。 嗯，你这个这样的话，这种咱这个店儿的销量也会上去。 他他可能也会给你介绍那种新顾客。 嗯，这就是我的这种销售方案。 然后说下我们的那日化区嘛，日化区，然后我们的首先呢，我们的。",
+    "raw_text": "[0.01][S01]单价，呃一举两得，这样消费者他也愿意来来你这儿买。[4.95][5.28][S01]嗯，你这个这样的话，这种咱这个店儿的销量也会上去。[10.37][11.18][S01]他他可能也会给你介绍那种新顾客。[14.65][15.32][S01]嗯，这就是我的这种销售方案。[18.77][25.01][S02]然后说下我们的那日化区嘛，日化区，然后我们的首先呢，我们的。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "单价，呃一举两得，这样消费者他也愿意来来你这儿买。",
+        "t0_ms": 10,
+        "t1_ms": 4950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，你这个这样的话，这种咱这个店儿的销量也会上去。",
+        "t0_ms": 5280,
+        "t1_ms": 10370,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "他他可能也会给你介绍那种新顾客。",
+        "t0_ms": 11180,
+        "t1_ms": 14650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，这就是我的这种销售方案。",
+        "t0_ms": 15320,
+        "t1_ms": 18770,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后说下我们的那日化区嘛，日化区，然后我们的首先呢，我们的。",
+        "t0_ms": 25010,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 4950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5280,
+        "t1_ms": 10370,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11180,
+        "t1_ms": 14650,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15320,
+        "t1_ms": 18770,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25010,
+        "t1_ms": 30000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 15.994999885559082,
+      "encode_ms": 7337.5400390625,
+      "decode_ms": 10074.1904296875
+    }
+  },
+  "rawDecoded": "[0.01][S01]单价，呃一举两得，这样消费者他也愿意来来你这儿买。[4.95][5.28][S01]嗯，你这个这样的话，这种咱这个店儿的销量也会上去。[10.37][11.18][S01]他他可能也会给你介绍那种新顾客。[14.65][15.32][S01]嗯，这就是我的这种销售方案。[18.77][25.01][S02]然后说下我们的那日化区嘛，日化区，然后我们的首先呢，我们的。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

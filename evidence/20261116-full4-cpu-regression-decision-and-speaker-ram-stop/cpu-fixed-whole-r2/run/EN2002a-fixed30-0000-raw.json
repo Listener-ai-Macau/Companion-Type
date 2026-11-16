@@ -1,0 +1,390 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0000",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 0,
+    "sourceEndFrame": 480000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "2b7cbd430f02a5be02fa72e69d7b6f793effa73667e9b13b8fb198ef27e4548c",
+  "seconds": 30.285787400003755,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Funky. I wonder how much of the meetings is talking about the stuff at the meetings. Yeah exactly, yeah, yeah, yeah. No, no, no, they stop. Oh, well then start. Okay. Okay. Right. It's all all we need to talk about. Shall we Has anybody Well, shall we just go round and everyone says what they what they've been doing. Has anybody done anything? Not a lot. Well, I'd say. Right. Yeah. Okay, sounds like you've done some. Yeah, sorry.",
+    "raw_text": "[0.45][S01]Funky.[0.91][0.92][S02]I wonder how much of the meetings is talking about the stuff at the meetings.[3.61][3.58][S03]Yeah exactly, yeah, yeah, yeah.[5.34][5.38][S01]No, no, no, they stop.[6.35][6.36][S04]Oh, well then start.[7.65][8.54][S03]Okay.[8.95][8.76][S01]Okay.[9.21][11.82][S01]Right.[12.21][12.14][S04]It's all all we need to talk about.[14.55][13.14][S03]Shall we[13.55][14.92][S01]Has anybody[15.47][15.16][S03]Well, shall we just go round and everyone says what they what they've been doing.[19.01][19.04][S01]Has anybody done anything?[19.95][21.42][S02]Not a lot.[22.05][24.15][S03]Well, I'd say.[25.04][25.46][S02]Right.[25.75][25.75][S04]Yeah.[26.06][26.38][S02]Okay, sounds like you've done some.[27.85][28.44][S01]Yeah, sorry.[29.15]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Funky.",
+        "t0_ms": 450,
+        "t1_ms": 910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I wonder how much of the meetings is talking about the stuff at the meetings.",
+        "t0_ms": 920,
+        "t1_ms": 3610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah exactly, yeah, yeah, yeah.",
+        "t0_ms": 3580,
+        "t1_ms": 5340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "No, no, no, they stop.",
+        "t0_ms": 5380,
+        "t1_ms": 6350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh, well then start.",
+        "t0_ms": 6360,
+        "t1_ms": 7650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 8540,
+        "t1_ms": 8950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 8760,
+        "t1_ms": 9210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Right.",
+        "t0_ms": 11820,
+        "t1_ms": 12210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "It's all all we need to talk about.",
+        "t0_ms": 12140,
+        "t1_ms": 14550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Shall we",
+        "t0_ms": 13140,
+        "t1_ms": 13550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Has anybody",
+        "t0_ms": 14920,
+        "t1_ms": 15470,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Well, shall we just go round and everyone says what they what they've been doing.",
+        "t0_ms": 15160,
+        "t1_ms": 19010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Has anybody done anything?",
+        "t0_ms": 19040,
+        "t1_ms": 19950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Not a lot.",
+        "t0_ms": 21420,
+        "t1_ms": 22050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Well, I'd say.",
+        "t0_ms": 24150,
+        "t1_ms": 25040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Right.",
+        "t0_ms": 25460,
+        "t1_ms": 25750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 25750,
+        "t1_ms": 26060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Okay, sounds like you've done some.",
+        "t0_ms": 26380,
+        "t1_ms": 27850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, sorry.",
+        "t0_ms": 28440,
+        "t1_ms": 29150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 450,
+        "t1_ms": 910,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 920,
+        "t1_ms": 3610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3580,
+        "t1_ms": 5340,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5380,
+        "t1_ms": 6350,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6360,
+        "t1_ms": 7650,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8540,
+        "t1_ms": 8950,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8760,
+        "t1_ms": 9210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11820,
+        "t1_ms": 12210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12140,
+        "t1_ms": 14550,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13140,
+        "t1_ms": 13550,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14920,
+        "t1_ms": 15470,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15160,
+        "t1_ms": 19010,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19040,
+        "t1_ms": 19950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21420,
+        "t1_ms": 22050,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24150,
+        "t1_ms": 25040,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25460,
+        "t1_ms": 25750,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25750,
+        "t1_ms": 26060,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26380,
+        "t1_ms": 27850,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28440,
+        "t1_ms": 29150,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 16.517000198364258,
+      "encode_ms": 7432.68603515625,
+      "decode_ms": 22802.0234375
+    }
+  },
+  "rawDecoded": "[0.45][S01]Funky.[0.91][0.92][S02]I wonder how much of the meetings is talking about the stuff at the meetings.[3.61][3.58][S03]Yeah exactly, yeah, yeah, yeah.[5.34][5.38][S01]No, no, no, they stop.[6.35][6.36][S04]Oh, well then start.[7.65][8.54][S03]Okay.[8.95][8.76][S01]Okay.[9.21][11.82][S01]Right.[12.21][12.14][S04]It's all all we need to talk about.[14.55][13.14][S03]Shall we[13.55][14.92][S01]Has anybody[15.47][15.16][S03]Well, shall we just go round and everyone says what they what they've been doing.[19.01][19.04][S01]Has anybody done anything?[19.95][21.42][S02]Not a lot.[22.05][24.15][S03]Well, I'd say.[25.04][25.46][S02]Right.[25.75][25.75][S04]Yeah.[26.06][26.38][S02]Okay, sounds like you've done some.[27.85][28.44][S01]Yeah, sorry.[29.15]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

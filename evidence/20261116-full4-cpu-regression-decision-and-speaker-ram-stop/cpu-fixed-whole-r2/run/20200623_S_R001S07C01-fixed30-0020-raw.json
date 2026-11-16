@@ -1,0 +1,300 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0020",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 9600000,
+    "sourceEndFrame": 10080000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "4a8d9dfd2087efe1f164f6384e44206539432ed6e3da855cedfad024378e382c",
+  "seconds": 26.333827700000256,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "嗯，又挣不来钱，所以说他确实是不行的话，就让他。 加长分期。 加长。 就是说。 把这个。 原来一年所还的，你现在让你需要两年或者三年，但是你这个。 嗯。 告知你了，你这样的话，你。 所要交的利息会更高。 嗯。 这样，但是三年的话，你全期你一个月需要还一千。 嗯。 你现在不，你这一个月你就需要给我们。 四百就可以了，但是你的。",
+    "raw_text": "[0.35][S01]嗯，又挣不来钱，所以说他确实是不行的话，就让他。[4.11][4.78][S01]加长分期。[5.97][6.48][S02]加长。[7.11][6.84][S01]就是说。[7.75][8.01][S01]把这个。[8.95][10.05][S01]原来一年所还的，你现在让你需要两年或者三年，但是你这个。[15.68][14.34][S02]嗯。[14.84][16.98][S01]告知你了，你这样的话，你。[18.91][19.46][S01]所要交的利息会更高。[21.02][21.04][S02]嗯。[21.57][21.55][S01]这样，但是三年的话，你全期你一个月需要还一千。[24.81][24.78][S02]嗯。[25.31][25.14][S01]你现在不，你这一个月你就需要给我们。[27.65][27.98][S01]四百就可以了，但是你的。[29.81]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "嗯，又挣不来钱，所以说他确实是不行的话，就让他。",
+        "t0_ms": 350,
+        "t1_ms": 4110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "加长分期。",
+        "t0_ms": 4780,
+        "t1_ms": 5970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "加长。",
+        "t0_ms": 6480,
+        "t1_ms": 7110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "就是说。",
+        "t0_ms": 6840,
+        "t1_ms": 7750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "把这个。",
+        "t0_ms": 8010,
+        "t1_ms": 8950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "原来一年所还的，你现在让你需要两年或者三年，但是你这个。",
+        "t0_ms": 10050,
+        "t1_ms": 15680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 14340,
+        "t1_ms": 14840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "告知你了，你这样的话，你。",
+        "t0_ms": 16980,
+        "t1_ms": 18910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "所要交的利息会更高。",
+        "t0_ms": 19460,
+        "t1_ms": 21020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 21040,
+        "t1_ms": 21570,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "这样，但是三年的话，你全期你一个月需要还一千。",
+        "t0_ms": 21550,
+        "t1_ms": 24810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 24780,
+        "t1_ms": 25310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "你现在不，你这一个月你就需要给我们。",
+        "t0_ms": 25140,
+        "t1_ms": 27650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "四百就可以了，但是你的。",
+        "t0_ms": 27980,
+        "t1_ms": 29810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 350,
+        "t1_ms": 4110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4780,
+        "t1_ms": 5970,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6480,
+        "t1_ms": 7110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6840,
+        "t1_ms": 7750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8010,
+        "t1_ms": 8950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10050,
+        "t1_ms": 15680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14340,
+        "t1_ms": 14840,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16980,
+        "t1_ms": 18910,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19460,
+        "t1_ms": 21020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21040,
+        "t1_ms": 21570,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21550,
+        "t1_ms": 24810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24780,
+        "t1_ms": 25310,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25140,
+        "t1_ms": 27650,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27980,
+        "t1_ms": 29810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 22.615999221801758,
+      "encode_ms": 7529.7421875,
+      "decode_ms": 18747.34765625
+    }
+  },
+  "rawDecoded": "[0.35][S01]嗯，又挣不来钱，所以说他确实是不行的话，就让他。[4.11][4.78][S01]加长分期。[5.97][6.48][S02]加长。[7.11][6.84][S01]就是说。[7.75][8.01][S01]把这个。[8.95][10.05][S01]原来一年所还的，你现在让你需要两年或者三年，但是你这个。[15.68][14.34][S02]嗯。[14.84][16.98][S01]告知你了，你这样的话，你。[18.91][19.46][S01]所要交的利息会更高。[21.02][21.04][S02]嗯。[21.57][21.55][S01]这样，但是三年的话，你全期你一个月需要还一千。[24.81][24.78][S02]嗯。[25.31][25.14][S01]你现在不，你这一个月你就需要给我们。[27.65][27.98][S01]四百就可以了，但是你的。[29.81]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

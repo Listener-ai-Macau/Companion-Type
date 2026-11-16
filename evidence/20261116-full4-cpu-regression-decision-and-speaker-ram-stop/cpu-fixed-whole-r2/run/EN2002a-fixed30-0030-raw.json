@@ -1,0 +1,480 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0030",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 14400000,
+    "sourceEndFrame": 14880000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "84f36d32f9ec48e2576a79bdf6684f6e266692d34995d62fb6cf0369055f5216",
+  "seconds": 37.37137309999525,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Um. Like if we're gonna just try and like take a look or something, try and just plug into I think you can, which No. I don't know, can we access other people's? You can make if you make it world readable, then anybody can. Well, if you just tell us the directory and just make the file readable, then we know the directory to get in and and just Yeah. Yeah, sure. and maybe maybe we can edit it. I don't know if it's readable at the moment, but you can sure have a have a look. No. I think by default they are. It no, they're not world readable, they're not they're they're default they're only default then only you can read them like you can see them, but you can't read them. Yeah. No, or Oh. Yeah. Oh right. Okay. Okay, right, well I'll make that readable then. Okay, alright. Okay. Yeah. Um so",
+    "raw_text": "[0.37][S01]Um.[0.95][0.85][S02]Like if we're gonna just try and like take a look or something, try and just plug into I think you can, which[5.97][1.68][S01]No.[2.31][3.32][S01]I don't know, can we access other people's?[5.15][5.04][S03]You can make if you make it world readable, then anybody can.[7.52][7.28][S02]Well, if you just tell us the directory and just make the file readable, then we know the directory to get in and and just[12.66][10.52][S03]Yeah.[10.83][12.41][S01]Yeah, sure.[13.63][13.62][S02]and maybe maybe we can edit it.[15.08][14.53][S01]I don't know if it's readable at the moment, but you can sure have a have a look.[17.27][16.84][S03]No.[17.15][17.02][S02]I think by default they are.[18.11][17.71][S03]It no, they're not world readable, they're not they're they're default they're only default then only you can read them like you can see them, but you can't read them.[25.38][18.32][S01]Yeah.[18.65][19.51][S02]No, or[20.11][20.14][S01]Oh.[20.41][22.51][S02]Yeah.[22.74][23.62][S01]Oh right.[24.11][23.81][S02]Okay.[24.15][25.58][S01]Okay, right, well I'll make that readable then.[27.71][25.66][S02]Okay, alright.[26.54][27.83][S03]Okay.[28.11][28.01][S03]Yeah.[28.31][28.79][S01]Um so[29.99]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Um.",
+        "t0_ms": 370,
+        "t1_ms": 950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Like if we're gonna just try and like take a look or something, try and just plug into I think you can, which",
+        "t0_ms": 850,
+        "t1_ms": 5970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "No.",
+        "t0_ms": 1680,
+        "t1_ms": 2310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I don't know, can we access other people's?",
+        "t0_ms": 3320,
+        "t1_ms": 5150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "You can make if you make it world readable, then anybody can.",
+        "t0_ms": 5040,
+        "t1_ms": 7520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Well, if you just tell us the directory and just make the file readable, then we know the directory to get in and and just",
+        "t0_ms": 7280,
+        "t1_ms": 12660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 10520,
+        "t1_ms": 10830,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, sure.",
+        "t0_ms": 12410,
+        "t1_ms": 13630,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "and maybe maybe we can edit it.",
+        "t0_ms": 13620,
+        "t1_ms": 15080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "I don't know if it's readable at the moment, but you can sure have a have a look.",
+        "t0_ms": 14530,
+        "t1_ms": 17270,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "No.",
+        "t0_ms": 16840,
+        "t1_ms": 17150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I think by default they are.",
+        "t0_ms": 17020,
+        "t1_ms": 18110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "It no, they're not world readable, they're not they're they're default they're only default then only you can read them like you can see them, but you can't read them.",
+        "t0_ms": 17710,
+        "t1_ms": 25380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 18320,
+        "t1_ms": 18650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "No, or",
+        "t0_ms": 19510,
+        "t1_ms": 20110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Oh.",
+        "t0_ms": 20140,
+        "t1_ms": 20410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 22510,
+        "t1_ms": 22740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Oh right.",
+        "t0_ms": 23620,
+        "t1_ms": 24110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 23810,
+        "t1_ms": 24150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay, right, well I'll make that readable then.",
+        "t0_ms": 25580,
+        "t1_ms": 27710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay, alright.",
+        "t0_ms": 25660,
+        "t1_ms": 26540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 27830,
+        "t1_ms": 28110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 28010,
+        "t1_ms": 28310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Um so",
+        "t0_ms": 28790,
+        "t1_ms": 29990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 370,
+        "t1_ms": 950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 850,
+        "t1_ms": 5970,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1680,
+        "t1_ms": 2310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3320,
+        "t1_ms": 5150,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5040,
+        "t1_ms": 7520,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7280,
+        "t1_ms": 12660,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10520,
+        "t1_ms": 10830,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12410,
+        "t1_ms": 13630,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13620,
+        "t1_ms": 15080,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14530,
+        "t1_ms": 17270,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16840,
+        "t1_ms": 17150,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17020,
+        "t1_ms": 18110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17710,
+        "t1_ms": 25380,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18320,
+        "t1_ms": 18650,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19510,
+        "t1_ms": 20110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20140,
+        "t1_ms": 20410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22510,
+        "t1_ms": 22740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23620,
+        "t1_ms": 24110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23810,
+        "t1_ms": 24150,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25580,
+        "t1_ms": 27710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25660,
+        "t1_ms": 26540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27830,
+        "t1_ms": 28110,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28010,
+        "t1_ms": 28310,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28790,
+        "t1_ms": 29990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.591999053955078,
+      "encode_ms": 7373.3720703125,
+      "decode_ms": 29932.21484375
+    }
+  },
+  "rawDecoded": "[0.37][S01]Um.[0.95][0.85][S02]Like if we're gonna just try and like take a look or something, try and just plug into I think you can, which[5.97][1.68][S01]No.[2.31][3.32][S01]I don't know, can we access other people's?[5.15][5.04][S03]You can make if you make it world readable, then anybody can.[7.52][7.28][S02]Well, if you just tell us the directory and just make the file readable, then we know the directory to get in and and just[12.66][10.52][S03]Yeah.[10.83][12.41][S01]Yeah, sure.[13.63][13.62][S02]and maybe maybe we can edit it.[15.08][14.53][S01]I don't know if it's readable at the moment, but you can sure have a have a look.[17.27][16.84][S03]No.[17.15][17.02][S02]I think by default they are.[18.11][17.71][S03]It no, they're not world readable, they're not they're they're default they're only default then only you can read them like you can see them, but you can't read them.[25.38][18.32][S01]Yeah.[18.65][19.51][S02]No, or[20.11][20.14][S01]Oh.[20.41][22.51][S02]Yeah.[22.74][23.62][S01]Oh right.[24.11][23.81][S02]Okay.[24.15][25.58][S01]Okay, right, well I'll make that readable then.[27.71][25.66][S02]Okay, alright.[26.54][27.83][S03]Okay.[28.11][28.01][S03]Yeah.[28.31][28.79][S01]Um so[29.99]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

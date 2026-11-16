@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0028",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 13440000,
+    "sourceEndFrame": 13920000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "0a6d9636b09ceff33fc31685828504b52626e7ef0800d8c7621c6e678635692f",
+  "seconds": 22.56731050000235,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "饭店。 呃。 还有一个就是五金椅之类的。 然后呢，我们会准备好材料儿清单，然后申请表儿接待申请书。 啊，还有我们的调查报告。 呃。 他的实际情况咱们要掌握。 对，呃，我们会把调查报告做的，呃，进一步做的详细一些。 详细一点。 嗯。 然后在。",
+    "raw_text": "[0.01][S01]饭店。[0.43][1.38][S01]呃。[1.99][2.96][S01]还有一个就是五金椅之类的。[4.99][7.72][S01]然后呢，我们会准备好材料儿清单，然后申请表儿接待申请书。[13.16][13.72][S01]啊，还有我们的调查报告。[15.95][17.18][S01]呃。[17.73][17.94][S02]他的实际情况咱们要掌握。[19.97][20.01][S01]对，呃，我们会把调查报告做的，呃，进一步做的详细一些。[26.95][25.58][S02]详细一点。[26.41][27.32][S01]嗯。[27.79][28.88][S01]然后在。[29.93]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "饭店。",
+        "t0_ms": 10,
+        "t1_ms": 430,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃。",
+        "t0_ms": 1380,
+        "t1_ms": 1990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有一个就是五金椅之类的。",
+        "t0_ms": 2960,
+        "t1_ms": 4990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后呢，我们会准备好材料儿清单，然后申请表儿接待申请书。",
+        "t0_ms": 7720,
+        "t1_ms": 13160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "啊，还有我们的调查报告。",
+        "t0_ms": 13720,
+        "t1_ms": 15950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃。",
+        "t0_ms": 17180,
+        "t1_ms": 17730,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "他的实际情况咱们要掌握。",
+        "t0_ms": 17940,
+        "t1_ms": 19970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对，呃，我们会把调查报告做的，呃，进一步做的详细一些。",
+        "t0_ms": 20010,
+        "t1_ms": 26950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "详细一点。",
+        "t0_ms": 25580,
+        "t1_ms": 26410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 27320,
+        "t1_ms": 27790,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后在。",
+        "t0_ms": 28880,
+        "t1_ms": 29930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 430,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1380,
+        "t1_ms": 1990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2960,
+        "t1_ms": 4990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7720,
+        "t1_ms": 13160,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13720,
+        "t1_ms": 15950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17180,
+        "t1_ms": 17730,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17940,
+        "t1_ms": 19970,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20010,
+        "t1_ms": 26950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25580,
+        "t1_ms": 26410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27320,
+        "t1_ms": 27790,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28880,
+        "t1_ms": 29930,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 15.512999534606934,
+      "encode_ms": 7408.18017578125,
+      "decode_ms": 15106.677734375
+    }
+  },
+  "rawDecoded": "[0.01][S01]饭店。[0.43][1.38][S01]呃。[1.99][2.96][S01]还有一个就是五金椅之类的。[4.99][7.72][S01]然后呢，我们会准备好材料儿清单，然后申请表儿接待申请书。[13.16][13.72][S01]啊，还有我们的调查报告。[15.95][17.18][S01]呃。[17.73][17.94][S02]他的实际情况咱们要掌握。[19.97][20.01][S01]对，呃，我们会把调查报告做的，呃，进一步做的详细一些。[26.95][25.58][S02]详细一点。[26.41][27.32][S01]嗯。[27.79][28.88][S01]然后在。[29.93]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

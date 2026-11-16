@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0051",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 24480000,
+    "sourceEndFrame": 24960000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "ad1ee546df17fe6a80687a736e885f143ce4eca5a196f0c17d6934aaaae3c8a4",
+  "seconds": 17.575069200000144,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "他的损失可能会更大。 嗯。 呃，还有。 还有就是。 嗯，像呃亲人呐，或者呃。 啊，就亲人这方面儿，呃，也应该进行催促吧。 啊，不应该只联系本人，呃，啊朋友啊亲人呐，呃，应该都要。",
+    "raw_text": "[0.01][S01]他的损失可能会更大。[1.81][2.12][S02]嗯。[2.54][3.14][S01]呃，还有。[4.11][5.94][S01]还有就是。[7.03][8.52][S01]嗯，像呃亲人呐，或者呃。[13.35][14.54][S01]啊，就亲人这方面儿，呃，也应该进行催促吧。[19.88][21.45][S01]啊，不应该只联系本人，呃，啊朋友啊亲人呐，呃，应该都要。[28.85]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "他的损失可能会更大。",
+        "t0_ms": 10,
+        "t1_ms": 1810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 2120,
+        "t1_ms": 2540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，还有。",
+        "t0_ms": 3140,
+        "t1_ms": 4110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有就是。",
+        "t0_ms": 5940,
+        "t1_ms": 7030,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，像呃亲人呐，或者呃。",
+        "t0_ms": 8520,
+        "t1_ms": 13350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "啊，就亲人这方面儿，呃，也应该进行催促吧。",
+        "t0_ms": 14540,
+        "t1_ms": 19880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "啊，不应该只联系本人，呃，啊朋友啊亲人呐，呃，应该都要。",
+        "t0_ms": 21450,
+        "t1_ms": 28850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 1810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2120,
+        "t1_ms": 2540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3140,
+        "t1_ms": 4110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5940,
+        "t1_ms": 7030,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8520,
+        "t1_ms": 13350,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14540,
+        "t1_ms": 19880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21450,
+        "t1_ms": 28850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.677000045776367,
+      "encode_ms": 7144.8408203125,
+      "decode_ms": 10377.3251953125
+    }
+  },
+  "rawDecoded": "[0.01][S01]他的损失可能会更大。[1.81][2.12][S02]嗯。[2.54][3.14][S01]呃，还有。[4.11][5.94][S01]还有就是。[7.03][8.52][S01]嗯，像呃亲人呐，或者呃。[13.35][14.54][S01]啊，就亲人这方面儿，呃，也应该进行催促吧。[19.88][21.45][S01]啊，不应该只联系本人，呃，啊朋友啊亲人呐，呃，应该都要。[28.85]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

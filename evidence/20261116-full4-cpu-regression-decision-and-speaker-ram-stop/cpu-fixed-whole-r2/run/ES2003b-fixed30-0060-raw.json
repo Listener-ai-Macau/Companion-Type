@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0060",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 28800000,
+    "sourceEndFrame": 29280000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "2fabf401b253b8f35370e93d578765708ae9d521ac267570a3d0dd58105c760a",
+  "seconds": 17.65339710000262,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Um so we need to make sure that e even with the joystick, you know, something that can just sit comfortably in the palm of the hand and have the joystick just controlled by the thumb. Okay. So um well I'd say that sounds like a rough idea. Do we incorporate the idea of trying to f locate the remote control again via a beeping noise? Yeah, I think so. Well I think because it's so small it might be in I mean if we only have like two or three buttons, it might be essential to have",
+    "raw_text": "[0.00][S01]Um so we need to make sure that e even with the joystick, you know, something that can just sit comfortably in the palm of the hand and have the joystick just controlled by the thumb.[8.86][9.56][S02]Okay. So um well I'd say that sounds like a rough idea. Do we incorporate the idea of trying to f locate the remote control again via a beeping noise?[21.14][22.04][S01]Yeah, I think so.[22.88][23.10][S03]Well I think because it's so small it might be in I mean if we only have like two or three buttons, it might be essential to have[29.34]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Um so we need to make sure that e even with the joystick, you know, something that can just sit comfortably in the palm of the hand and have the joystick just controlled by the thumb.",
+        "t0_ms": 0,
+        "t1_ms": 8860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay. So um well I'd say that sounds like a rough idea. Do we incorporate the idea of trying to f locate the remote control again via a beeping noise?",
+        "t0_ms": 9560,
+        "t1_ms": 21140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, I think so.",
+        "t0_ms": 22040,
+        "t1_ms": 22880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Well I think because it's so small it might be in I mean if we only have like two or three buttons, it might be essential to have",
+        "t0_ms": 23100,
+        "t1_ms": 29340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 8860,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9560,
+        "t1_ms": 21140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22040,
+        "t1_ms": 22880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23100,
+        "t1_ms": 29340,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 23.60099983215332,
+      "encode_ms": 7148.8720703125,
+      "decode_ms": 10448.9697265625
+    }
+  },
+  "rawDecoded": "[0.00][S01]Um so we need to make sure that e even with the joystick, you know, something that can just sit comfortably in the palm of the hand and have the joystick just controlled by the thumb.[8.86][9.56][S02]Okay. So um well I'd say that sounds like a rough idea. Do we incorporate the idea of trying to f locate the remote control again via a beeping noise?[21.14][22.04][S01]Yeah, I think so.[22.88][23.10][S03]Well I think because it's so small it might be in I mean if we only have like two or three buttons, it might be essential to have[29.34]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0055",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 26400000,
+    "sourceEndFrame": 26880000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "fd15f99788e44c7e1b159460053b46ca6cbd1871532c31fc5f159896818e9561",
+  "seconds": 18.538255899999058,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "底下呢可以增，呃增加增加些那个。 玻璃板，玻璃板底下呢可以增加些那个灯光的陈列，呃然后来。 以呃提，呃来营造用那个。 更更更更好的展现一下产品的那个。 呃陈列。 然后还有一些就是那个。 广，呃广告海报的一些那个宣传，然后我们我们店里。",
+    "raw_text": "[0.01][S01]底下呢可以增，呃增加增加些那个。[2.89][4.28][S01]玻璃板，玻璃板底下呢可以增加些那个灯光的陈列，呃然后来。[9.01][10.71][S01]以呃提，呃来营造用那个。[13.81][15.16][S01]更更更更好的展现一下产品的那个。[17.99][18.74][S01]呃陈列。[19.57][21.79][S01]然后还有一些就是那个。[23.44][24.01][S01]广，呃广告海报的一些那个宣传，然后我们我们店里。[29.89]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "底下呢可以增，呃增加增加些那个。",
+        "t0_ms": 10,
+        "t1_ms": 2890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "玻璃板，玻璃板底下呢可以增加些那个灯光的陈列，呃然后来。",
+        "t0_ms": 4280,
+        "t1_ms": 9010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "以呃提，呃来营造用那个。",
+        "t0_ms": 10710,
+        "t1_ms": 13810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "更更更更好的展现一下产品的那个。",
+        "t0_ms": 15160,
+        "t1_ms": 17990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃陈列。",
+        "t0_ms": 18740,
+        "t1_ms": 19570,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后还有一些就是那个。",
+        "t0_ms": 21790,
+        "t1_ms": 23440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "广，呃广告海报的一些那个宣传，然后我们我们店里。",
+        "t0_ms": 24010,
+        "t1_ms": 29890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 2890,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4280,
+        "t1_ms": 9010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10710,
+        "t1_ms": 13810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15160,
+        "t1_ms": 17990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18740,
+        "t1_ms": 19570,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21790,
+        "t1_ms": 23440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24010,
+        "t1_ms": 29890,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.687999725341797,
+      "encode_ms": 7030.62109375,
+      "decode_ms": 11447.8193359375
+    }
+  },
+  "rawDecoded": "[0.01][S01]底下呢可以增，呃增加增加些那个。[2.89][4.28][S01]玻璃板，玻璃板底下呢可以增加些那个灯光的陈列，呃然后来。[9.01][10.71][S01]以呃提，呃来营造用那个。[13.81][15.16][S01]更更更更好的展现一下产品的那个。[17.99][18.74][S01]呃陈列。[19.57][21.79][S01]然后还有一些就是那个。[23.44][24.01][S01]广，呃广告海报的一些那个宣传，然后我们我们店里。[29.89]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

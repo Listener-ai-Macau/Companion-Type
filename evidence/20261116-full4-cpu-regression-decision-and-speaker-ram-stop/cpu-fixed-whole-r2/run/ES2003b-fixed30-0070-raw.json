@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0070",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 33600000,
+    "sourceEndFrame": 33757014,
+    "frames": 157014,
+    "audioSeconds": 9.813375
+  },
+  "pcmSha256": "3e51e7b434ba1d8f37a232e3468fb4da73ee56b3f999700c606aaa00819d2c3c",
+  "seconds": 10.071323600001051,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Okay. Okay.",
+    "raw_text": "[0.00][S01]Okay.[0.24][9.62][S01]Okay.[9.82]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Okay.",
+        "t0_ms": 0,
+        "t1_ms": 240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 9620,
+        "t1_ms": 9820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9620,
+        "t1_ms": 9820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 16.041000366210938,
+      "encode_ms": 7533.0810546875,
+      "decode_ms": 2489.23291015625
+    }
+  },
+  "rawDecoded": "[0.00][S01]Okay.[0.24][9.62][S01]Okay.[9.82]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

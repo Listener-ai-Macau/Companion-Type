@@ -1,0 +1,166 @@
+{
+  "revision": 39,
+  "evidenceDirectory": "evidence/20261116-full4-cpu-regression-decision-and-speaker-ram-stop",
+  "commitMessage": "Retain complete four-meeting CPU ASR and reject universal regression; correct reference aliases without changing gates",
+  "sources": [
+    "src/score_cpu_fixed_whole_summary_20261116.py",
+    "src/run_cpu25_nemotron_20261116.py"
+  ],
+  "closedDirectories": [
+    {
+      "directory": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r2",
+      "stateFile": "run.json",
+      "requiredState": "COMPLETE_CPU_FIXED_CHUNKS_COMPOSITION_AND_SCORING_PENDING",
+      "label": "cpu-fixed-whole-r2/run"
+    }
+  ],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\before-rttm-fidelity-summary-source.py",
+      "name": "cpu-fixed-whole-r2/control/before-rttm-fidelity-summary-source.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\binding.json",
+      "name": "cpu-fixed-whole-r2/control/binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\composition-source-binding-before-reference-alias-fix.json",
+      "name": "cpu-fixed-whole-r2/control/composition-source-binding-before-reference-alias-fix.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\composition-source-binding-before-rttm-fidelity.json",
+      "name": "cpu-fixed-whole-r2/control/composition-source-binding-before-rttm-fidelity.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\composition-source-binding.json",
+      "name": "cpu-fixed-whole-r2/control/composition-source-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\decision.json",
+      "name": "cpu-fixed-whole-r2/control/decision.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\full-score-before-reference-alias-fix.json",
+      "name": "cpu-fixed-whole-r2/control/full-score-before-reference-alias-fix.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\full-score.json",
+      "name": "cpu-fixed-whole-r2/control/full-score.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\predicted-speaker-bindings.json",
+      "name": "cpu-fixed-whole-r2/control/predicted-speaker-bindings.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\score-20200623_S_R001S07C01.json",
+      "name": "cpu-fixed-whole-r2/control/score-20200623_S_R001S07C01.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\score-EN2002a.json",
+      "name": "cpu-fixed-whole-r2/control/score-EN2002a.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\score-ES2003b.json",
+      "name": "cpu-fixed-whole-r2/control/score-ES2003b.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\score-S_R004S03C01.json",
+      "name": "cpu-fixed-whole-r2/control/score-S_R004S03C01.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\scoring-binding.json",
+      "name": "cpu-fixed-whole-r2/control/scoring-binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\summary-source-before-reference-alias-fix.py",
+      "name": "cpu-fixed-whole-r2/control/summary-source-before-reference-alias-fix.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\whole-scoring-only.json",
+      "name": "cpu-fixed-whole-r2/control/whole-scoring-only.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-native8-r1\\audio-only.json",
+      "name": "cpu-native8-r1/control/audio-only.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-native8-r1\\binding.json",
+      "name": "cpu-native8-r1/control/binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-native8-r1\\protocol.json",
+      "name": "cpu-native8-r1/control/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-native8-r1\\runner-before-control-proof-resume.py",
+      "name": "cpu-native8-r1/control/runner-before-control-proof-resume.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r1\\run.json",
+      "name": "cpu-native8-r1/run.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\cpu-runtime-abi-control.json",
+      "name": "cpu-pcm-candidate-r1/cpu-runtime-abi-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\publisher-metadata.json",
+      "name": "english-asr-specialist-r1/publisher-metadata.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\source.json",
+      "name": "english-asr-specialist-r1/source.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-asr-specialist-r1\\protocol.json",
+      "name": "english-asr-specialist-r1/protocol.json"
+    },
+    {
+      "source": "work\\run_cpu_full4_scoring_20261116.py",
+      "name": "preparation/run_cpu_full4_scoring_20261116.py"
+    },
+    {
+      "source": "work\\fix_full_cpu_reference_alias_20261116.py",
+      "name": "preparation/fix_full_cpu_reference_alias_20261116.py"
+    },
+    {
+      "source": "work\\record_cpu_full4_decision_20261116.py",
+      "name": "preparation/record_cpu_full4_decision_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_native8_recovery_20261116.py",
+      "name": "preparation/prepare_cpu_native8_recovery_20261116.py"
+    },
+    {
+      "source": "work\\probe_cpu_only_runtime_abi_20261116.py",
+      "name": "preparation/probe_cpu_only_runtime_abi_20261116.py"
+    },
+    {
+      "source": "work\\fetch_english_specialist_metadata_20261116.py",
+      "name": "preparation/fetch_english_specialist_metadata_20261116.py"
+    },
+    {
+      "source": "work\\prepare_english_specialist_20261116.py",
+      "name": "preparation/prepare_english_specialist_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_checkpoint39_20261116.py",
+      "name": "preparation/prepare_cpu_checkpoint39_20261116.py"
+    }
+  ],
+  "claims": {
+    "state": "FULL4_CPU_ASR_COMPLETE_UNIVERSAL_CANDIDATE_REJECTED_CHINESE_BASELINE_PROTECTED",
+    "originalFullInputs": 4,
+    "completeNaturalEosChunks": 290,
+    "referenceAliasSummaryErrorRetainedAndCorrected": true,
+    "rawMultiVoiceDERRemainsAuthoritative": true,
+    "cpuSpeaker61SecondsCabiAndCliPassed": true,
+    "cpuSpeakerFullInputsComplete": false,
+    "cpuSpeakerWholeStoppedByActualWindowsLowMemory": true,
+    "newWeightTraining": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "productDefaultChanged": false,
+    "installedPackageChanged": false
+  }
+}

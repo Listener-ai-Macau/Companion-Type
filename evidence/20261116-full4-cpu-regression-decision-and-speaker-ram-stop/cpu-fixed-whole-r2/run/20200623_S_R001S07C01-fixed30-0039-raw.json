@@ -1,0 +1,264 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0039",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 18720000,
+    "sourceEndFrame": 19200000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "c1645a13077837e0d7d666c38ea84fe3f91725dc28670ccf195d2c025c5c71fa",
+  "seconds": 23.576721800003725,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "年号是四个月。 嗯。 不再做长期。 嗯。 业务这方面对这个有什么看法？ 呃，这方面儿，我觉得取消呃小额的同月贷款吧，还是有必要的，毕竟现在的。 呃，贷款人数也不是很多，而且贷款金额。 我我说这个车车车贷这个。 啊对，还有，呃。 十万。 嗯，以上这个三十万以下这个。 对，第二方面说的这个车贷，先说完这个。",
+    "raw_text": "[0.01][S01]年号是四个月。[0.85][1.28][S02]嗯。[1.74][1.78][S01]不再做长期。[2.72][2.92][S02]嗯。[3.34][5.98][S02]业务这方面对这个有什么看法？[8.11][9.78][S03]呃，这方面儿，我觉得取消呃小额的同月贷款吧，还是有必要的，毕竟现在的。[17.24][17.68][S03]呃，贷款人数也不是很多，而且贷款金额。[20.88][19.48][S02]我我说这个车车车贷这个。[22.04][22.04][S03]啊对，还有，呃。[23.68][23.12][S02]十万。[24.12][24.52][S02]嗯，以上这个三十万以下这个。[26.74][26.88][S03]对，第二方面说的这个车贷，先说完这个。[29.42]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "年号是四个月。",
+        "t0_ms": 10,
+        "t1_ms": 850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 1280,
+        "t1_ms": 1740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "不再做长期。",
+        "t0_ms": 1780,
+        "t1_ms": 2720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 2920,
+        "t1_ms": 3340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "业务这方面对这个有什么看法？",
+        "t0_ms": 5980,
+        "t1_ms": 8110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，这方面儿，我觉得取消呃小额的同月贷款吧，还是有必要的，毕竟现在的。",
+        "t0_ms": 9780,
+        "t1_ms": 17240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "呃，贷款人数也不是很多，而且贷款金额。",
+        "t0_ms": 17680,
+        "t1_ms": 20880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "我我说这个车车车贷这个。",
+        "t0_ms": 19480,
+        "t1_ms": 22040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "啊对，还有，呃。",
+        "t0_ms": 22040,
+        "t1_ms": 23680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "十万。",
+        "t0_ms": 23120,
+        "t1_ms": 24120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，以上这个三十万以下这个。",
+        "t0_ms": 24520,
+        "t1_ms": 26740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对，第二方面说的这个车贷，先说完这个。",
+        "t0_ms": 26880,
+        "t1_ms": 29420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1280,
+        "t1_ms": 1740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1780,
+        "t1_ms": 2720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2920,
+        "t1_ms": 3340,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5980,
+        "t1_ms": 8110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9780,
+        "t1_ms": 17240,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17680,
+        "t1_ms": 20880,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19480,
+        "t1_ms": 22040,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22040,
+        "t1_ms": 23680,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23120,
+        "t1_ms": 24120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24520,
+        "t1_ms": 26740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26880,
+        "t1_ms": 29420,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 16.95800018310547,
+      "encode_ms": 7406.3232421875,
+      "decode_ms": 16115.7724609375
+    }
+  },
+  "rawDecoded": "[0.01][S01]年号是四个月。[0.85][1.28][S02]嗯。[1.74][1.78][S01]不再做长期。[2.72][2.92][S02]嗯。[3.34][5.98][S02]业务这方面对这个有什么看法？[8.11][9.78][S03]呃，这方面儿，我觉得取消呃小额的同月贷款吧，还是有必要的，毕竟现在的。[17.24][17.68][S03]呃，贷款人数也不是很多，而且贷款金额。[20.88][19.48][S02]我我说这个车车车贷这个。[22.04][22.04][S03]啊对，还有，呃。[23.68][23.12][S02]十万。[24.12][24.52][S02]嗯，以上这个三十万以下这个。[26.74][26.88][S03]对，第二方面说的这个车贷，先说完这个。[29.42]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

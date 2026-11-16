@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0010",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 4800000,
+    "sourceEndFrame": 5280000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "831adbbba3c4770a2c00be308b43c6345adfb31e364621981bc6560f92e0b7cb",
+  "seconds": 17.56267370000569,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "说实话，我们那个超市的这个，嗯，买菜的这这一块儿呢，啊还人流量还是比较大的。 因为超市里面相对于外面的环境的话，它比较暖和一点儿，嗯，所以说呢，啊，比前一段时间呢，嗯，销售的要好一些。 嗯，再一个呢，就是超市里面还比较安全一点，像疫情的话，嗯，大家进超市都有戴口罩，而且我们的防护措施呢，做的也比较的好。 嗯，所以说呢，这。",
+    "raw_text": "[0.00][S01]说实话，我们那个超市的这个，嗯，买菜的这这一块儿呢，啊还人流量还是比较大的。[6.82][6.82][S01]因为超市里面相对于外面的环境的话，它比较暖和一点儿，嗯，所以说呢，啊，比前一段时间呢，嗯，销售的要好一些。[16.88][17.12][S01]嗯，再一个呢，就是超市里面还比较安全一点，像疫情的话，嗯，大家进超市都有戴口罩，而且我们的防护措施呢，做的也比较的好。[27.12][28.22][S01]嗯，所以说呢，这。[29.96]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "说实话，我们那个超市的这个，嗯，买菜的这这一块儿呢，啊还人流量还是比较大的。",
+        "t0_ms": 0,
+        "t1_ms": 6820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "因为超市里面相对于外面的环境的话，它比较暖和一点儿，嗯，所以说呢，啊，比前一段时间呢，嗯，销售的要好一些。",
+        "t0_ms": 6820,
+        "t1_ms": 16880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，再一个呢，就是超市里面还比较安全一点，像疫情的话，嗯，大家进超市都有戴口罩，而且我们的防护措施呢，做的也比较的好。",
+        "t0_ms": 17120,
+        "t1_ms": 27120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，所以说呢，这。",
+        "t0_ms": 28220,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 6820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6820,
+        "t1_ms": 16880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17120,
+        "t1_ms": 27120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28220,
+        "t1_ms": 29960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.437999725341797,
+      "encode_ms": 7277.85986328125,
+      "decode_ms": 10236.693359375
+    }
+  },
+  "rawDecoded": "[0.00][S01]说实话，我们那个超市的这个，嗯，买菜的这这一块儿呢，啊还人流量还是比较大的。[6.82][6.82][S01]因为超市里面相对于外面的环境的话，它比较暖和一点儿，嗯，所以说呢，啊，比前一段时间呢，嗯，销售的要好一些。[16.88][17.12][S01]嗯，再一个呢，就是超市里面还比较安全一点，像疫情的话，嗯，大家进超市都有戴口罩，而且我们的防护措施呢，做的也比较的好。[27.12][28.22][S01]嗯，所以说呢，这。[29.96]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

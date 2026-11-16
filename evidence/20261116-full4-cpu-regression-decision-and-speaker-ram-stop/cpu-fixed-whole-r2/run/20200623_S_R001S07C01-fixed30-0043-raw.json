@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0043",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 20640000,
+    "sourceEndFrame": 21120000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "87171046858954b14b3c67f104998948f01ff3039dade466242feef6fdc7ded1",
+  "seconds": 22.84256910000113,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "咱们后期就是不打算再做这个，小的这个，嗯我因为一年。 我给你分几个月还，还是还是就是说你。 就借你三个月呀，三个月你就立马就给我还了，对不对？ 嗯。 嗯。 就是说。 我们还是偏向于这个十万，超过十十万以上，这个的话，呃做个长期一年或者两年的，这样的话我们的呃。 十万以上。 嗯。 利率。",
+    "raw_text": "[0.01][S01]咱们后期就是不打算再做这个，小的这个，嗯我因为一年。[5.51][6.16][S01]我给你分几个月还，还是还是就是说你。[10.12][10.73][S01]就借你三个月呀，三个月你就立马就给我还了，对不对？[14.51][13.84][S02]嗯。[14.24][14.48][S02]嗯。[14.88][15.28][S01]就是说。[16.34][17.16][S01]我们还是偏向于这个十万，超过十十万以上，这个的话，呃做个长期一年或者两年的，这样的话我们的呃。[28.84][19.74][S02]十万以上。[20.54][26.08][S02]嗯。[26.46][29.52][S01]利率。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "咱们后期就是不打算再做这个，小的这个，嗯我因为一年。",
+        "t0_ms": 10,
+        "t1_ms": 5510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "我给你分几个月还，还是还是就是说你。",
+        "t0_ms": 6160,
+        "t1_ms": 10120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就借你三个月呀，三个月你就立马就给我还了，对不对？",
+        "t0_ms": 10730,
+        "t1_ms": 14510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 13840,
+        "t1_ms": 14240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 14480,
+        "t1_ms": 14880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "就是说。",
+        "t0_ms": 15280,
+        "t1_ms": 16340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "我们还是偏向于这个十万，超过十十万以上，这个的话，呃做个长期一年或者两年的，这样的话我们的呃。",
+        "t0_ms": 17160,
+        "t1_ms": 28840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "十万以上。",
+        "t0_ms": 19740,
+        "t1_ms": 20540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 26080,
+        "t1_ms": 26460,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "利率。",
+        "t0_ms": 29520,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 5510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6160,
+        "t1_ms": 10120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10730,
+        "t1_ms": 14510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13840,
+        "t1_ms": 14240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14480,
+        "t1_ms": 14880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15280,
+        "t1_ms": 16340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17160,
+        "t1_ms": 28840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19740,
+        "t1_ms": 20540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26080,
+        "t1_ms": 26460,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29520,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.857999801635742,
+      "encode_ms": 7297.5771484375,
+      "decode_ms": 15495.2998046875
+    }
+  },
+  "rawDecoded": "[0.01][S01]咱们后期就是不打算再做这个，小的这个，嗯我因为一年。[5.51][6.16][S01]我给你分几个月还，还是还是就是说你。[10.12][10.73][S01]就借你三个月呀，三个月你就立马就给我还了，对不对？[14.51][13.84][S02]嗯。[14.24][14.48][S02]嗯。[14.88][15.28][S01]就是说。[16.34][17.16][S01]我们还是偏向于这个十万，超过十十万以上，这个的话，呃做个长期一年或者两年的，这样的话我们的呃。[28.84][19.74][S02]十万以上。[20.54][26.08][S02]嗯。[26.46][29.52][S01]利率。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

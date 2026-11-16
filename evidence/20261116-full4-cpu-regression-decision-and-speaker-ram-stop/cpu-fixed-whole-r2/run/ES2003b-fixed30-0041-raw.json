@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0041",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 19680000,
+    "sourceEndFrame": 20160000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "7dd445f8e5fbbe59280650ce9fd9c5c50691873ffe1c5bce27419b4bad365a14",
+  "seconds": 18.6147318000003,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "After a nice little game. Right. That does nothing else. That would be my feeling as well, I think we could possibly create quite useful user interface. Um now I mean I don't sorry, go for it. Sure. The idea of a remote with a menu and the joystick, I think like I if I was gonna have the volume, the remote controls, then I would want one. But I think we don't have a specific audience, you know, like what is our target audience, what niche are niche are we trying to market and corner?",
+    "raw_text": "[0.00][S01]After a nice little game.[1.00][0.24][S02]Right.[0.60][1.66][S01]That does nothing else.[2.74][3.48][S02]That would be my feeling as well, I think we could possibly create quite useful user interface. Um now I mean I don't sorry, go for it.[11.00][9.18][S03]Sure.[9.60][11.72][S03]The idea of a remote with a menu and the joystick, I think like I if I was gonna have the volume, the remote controls, then I would want one. But I think we don't have a specific audience, you know, like what is our target audience, what niche are niche are we trying to market and corner?[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "After a nice little game.",
+        "t0_ms": 0,
+        "t1_ms": 1000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Right.",
+        "t0_ms": 240,
+        "t1_ms": 600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "That does nothing else.",
+        "t0_ms": 1660,
+        "t1_ms": 2740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "That would be my feeling as well, I think we could possibly create quite useful user interface. Um now I mean I don't sorry, go for it.",
+        "t0_ms": 3480,
+        "t1_ms": 11000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Sure.",
+        "t0_ms": 9180,
+        "t1_ms": 9600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "The idea of a remote with a menu and the joystick, I think like I if I was gonna have the volume, the remote controls, then I would want one. But I think we don't have a specific audience, you know, like what is our target audience, what niche are niche are we trying to market and corner?",
+        "t0_ms": 11720,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 1000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 240,
+        "t1_ms": 600,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1660,
+        "t1_ms": 2740,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3480,
+        "t1_ms": 11000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9180,
+        "t1_ms": 9600,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11720,
+        "t1_ms": 29940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 26.827999114990234,
+      "encode_ms": 6825.4912109375,
+      "decode_ms": 11726.1328125
+    }
+  },
+  "rawDecoded": "[0.00][S01]After a nice little game.[1.00][0.24][S02]Right.[0.60][1.66][S01]That does nothing else.[2.74][3.48][S02]That would be my feeling as well, I think we could possibly create quite useful user interface. Um now I mean I don't sorry, go for it.[11.00][9.18][S03]Sure.[9.60][11.72][S03]The idea of a remote with a menu and the joystick, I think like I if I was gonna have the volume, the remote controls, then I would want one. But I think we don't have a specific audience, you know, like what is our target audience, what niche are niche are we trying to market and corner?[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0067",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 32160000,
+    "sourceEndFrame": 32640000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "89a5401c862200ea10ec6cba76af62330e8911cc0fd66221e63b74c355483070",
+  "seconds": 16.185398100002203,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "就是说但凡需要借钱的人，他超过十万他们才会找我们，小额的他们一般不会找我们。 嗯，行，那咱今天的会就先开到这儿。 好的，主任。 好的。 好的。",
+    "raw_text": "[0.01][S01]就是说但凡需要借钱的人，他超过十万他们才会找我们，小额的他们一般不会找我们。[7.05][7.16][S02]嗯，行，那咱今天的会就先开到这儿。[10.65][10.85][S01]好的，主任。[11.49][11.49][S03]好的。[12.11][11.88][S01]好的。[12.35]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "就是说但凡需要借钱的人，他超过十万他们才会找我们，小额的他们一般不会找我们。",
+        "t0_ms": 10,
+        "t1_ms": 7050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，行，那咱今天的会就先开到这儿。",
+        "t0_ms": 7160,
+        "t1_ms": 10650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "好的，主任。",
+        "t0_ms": 10850,
+        "t1_ms": 11490,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "好的。",
+        "t0_ms": 11490,
+        "t1_ms": 12110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "好的。",
+        "t0_ms": 11880,
+        "t1_ms": 12350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 7050,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7160,
+        "t1_ms": 10650,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10850,
+        "t1_ms": 11490,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11490,
+        "t1_ms": 12110,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11880,
+        "t1_ms": 12350,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 23.17799949645996,
+      "encode_ms": 7324.51416015625,
+      "decode_ms": 8801.6796875
+    }
+  },
+  "rawDecoded": "[0.01][S01]就是说但凡需要借钱的人，他超过十万他们才会找我们，小额的他们一般不会找我们。[7.05][7.16][S02]嗯，行，那咱今天的会就先开到这儿。[10.65][10.85][S01]好的，主任。[11.49][11.49][S03]好的。[12.11][11.88][S01]好的。[12.35]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

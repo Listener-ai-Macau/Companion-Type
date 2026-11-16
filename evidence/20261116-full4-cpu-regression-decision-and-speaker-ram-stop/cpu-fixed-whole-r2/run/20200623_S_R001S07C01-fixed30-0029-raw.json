@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0029",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 13920000,
+    "sourceEndFrame": 14400000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "13ba101b517bf24bb63d1d9977cf8cbe2836be4d7a66891dbc6ecf4ed8125763",
+  "seconds": 23.491158099997847,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "进行审批吧，审批和审查。 行。 张伟这边儿有什么想要补充的吗？针对这个案子。 这个嘛，我们后期会派人看他这个店是否盈利，然后盈利的多少，然后来。 嗯。 呃，确保一下儿他，看他能不能够定期的给我们还款，这样避免一下儿我们的损失。 嗯。 别到时候儿不能定期的收回贷款，也是我们。 呃，咱们要看一下儿他这个偿贷款能力。 对。",
+    "raw_text": "[0.02][S01]进行审批吧，审批和审查。[2.12][3.04][S02]行。[3.32][4.44][S02]张伟这边儿有什么想要补充的吗？针对这个案子。[7.94][8.51][S03]这个嘛，我们后期会派人看他这个店是否盈利，然后盈利的多少，然后来。[16.32][12.88][S02]嗯。[13.32][16.92][S03]呃，确保一下儿他，看他能不能够定期的给我们还款，这样避免一下儿我们的损失。[23.52][21.28][S02]嗯。[21.72][23.89][S03]别到时候儿不能定期的收回贷款，也是我们。[27.62][26.84][S02]呃，咱们要看一下儿他这个偿贷款能力。[29.78][29.74][S03]对。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "进行审批吧，审批和审查。",
+        "t0_ms": 20,
+        "t1_ms": 2120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "行。",
+        "t0_ms": 3040,
+        "t1_ms": 3320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "张伟这边儿有什么想要补充的吗？针对这个案子。",
+        "t0_ms": 4440,
+        "t1_ms": 7940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "这个嘛，我们后期会派人看他这个店是否盈利，然后盈利的多少，然后来。",
+        "t0_ms": 8510,
+        "t1_ms": 16320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 12880,
+        "t1_ms": 13320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，确保一下儿他，看他能不能够定期的给我们还款，这样避免一下儿我们的损失。",
+        "t0_ms": 16920,
+        "t1_ms": 23520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 21280,
+        "t1_ms": 21720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "别到时候儿不能定期的收回贷款，也是我们。",
+        "t0_ms": 23890,
+        "t1_ms": 27620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "呃，咱们要看一下儿他这个偿贷款能力。",
+        "t0_ms": 26840,
+        "t1_ms": 29780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对。",
+        "t0_ms": 29740,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 20,
+        "t1_ms": 2120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3040,
+        "t1_ms": 3320,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4440,
+        "t1_ms": 7940,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8510,
+        "t1_ms": 16320,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12880,
+        "t1_ms": 13320,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16920,
+        "t1_ms": 23520,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21280,
+        "t1_ms": 21720,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23890,
+        "t1_ms": 27620,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26840,
+        "t1_ms": 29780,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29740,
+        "t1_ms": 30000,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.983999252319336,
+      "encode_ms": 7392.21484375,
+      "decode_ms": 16040.412109375
+    }
+  },
+  "rawDecoded": "[0.02][S01]进行审批吧，审批和审查。[2.12][3.04][S02]行。[3.32][4.44][S02]张伟这边儿有什么想要补充的吗？针对这个案子。[7.94][8.51][S03]这个嘛，我们后期会派人看他这个店是否盈利，然后盈利的多少，然后来。[16.32][12.88][S02]嗯。[13.32][16.92][S03]呃，确保一下儿他，看他能不能够定期的给我们还款，这样避免一下儿我们的损失。[23.52][21.28][S02]嗯。[21.72][23.89][S03]别到时候儿不能定期的收回贷款，也是我们。[27.62][26.84][S02]呃，咱们要看一下儿他这个偿贷款能力。[29.78][29.74][S03]对。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

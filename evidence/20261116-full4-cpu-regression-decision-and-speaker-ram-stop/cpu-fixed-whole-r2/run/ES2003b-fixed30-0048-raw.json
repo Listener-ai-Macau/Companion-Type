@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0048",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 23040000,
+    "sourceEndFrame": 23520000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "12a686826f86777ae6cf1ccdf2fb15c4b585b450347a78dd9ec8a374ee397943",
+  "seconds": 18.00220769999578,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Well y you want one that will do the job for all of them. Um if all you're replacing is one of the you know, however many remotes you have in your living room, um you you certainly separate remotes for everything else. I just think that uh possibly Yeah. Well, this is a requirement that we have to stick to, I'm afraid. This isn't one that I've just arbitrarily decided on. So um this is this is one of the solid ones that has to be obeyed for now. Yeah. Mm.",
+    "raw_text": "[0.00][S01]Well y you want one that will do the job for all of them. Um if all you're replacing is one of the you know, however many remotes you have in your living room, um you you certainly separate remotes for everything else. I just think that uh possibly[16.48][3.68][S02]Yeah.[3.94][15.62][S03]Well, this is a requirement that we have to stick to, I'm afraid. This isn't one that I've just arbitrarily decided on. So um this is this is one of the solid ones that has to be obeyed for now.[28.72][21.96][S01]Yeah.[22.26][28.85][S01]Mm.[29.18]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Well y you want one that will do the job for all of them. Um if all you're replacing is one of the you know, however many remotes you have in your living room, um you you certainly separate remotes for everything else. I just think that uh possibly",
+        "t0_ms": 0,
+        "t1_ms": 16480,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 3680,
+        "t1_ms": 3940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Well, this is a requirement that we have to stick to, I'm afraid. This isn't one that I've just arbitrarily decided on. So um this is this is one of the solid ones that has to be obeyed for now.",
+        "t0_ms": 15620,
+        "t1_ms": 28720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 21960,
+        "t1_ms": 22260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 28850,
+        "t1_ms": 29180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 16480,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3680,
+        "t1_ms": 3940,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15620,
+        "t1_ms": 28720,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21960,
+        "t1_ms": 22260,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28850,
+        "t1_ms": 29180,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.574999809265137,
+      "encode_ms": 7081.97802734375,
+      "decode_ms": 10871.0244140625
+    }
+  },
+  "rawDecoded": "[0.00][S01]Well y you want one that will do the job for all of them. Um if all you're replacing is one of the you know, however many remotes you have in your living room, um you you certainly separate remotes for everything else. I just think that uh possibly[16.48][3.68][S02]Yeah.[3.94][15.62][S03]Well, this is a requirement that we have to stick to, I'm afraid. This isn't one that I've just arbitrarily decided on. So um this is this is one of the solid ones that has to be obeyed for now.[28.72][21.96][S01]Yeah.[22.26][28.85][S01]Mm.[29.18]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

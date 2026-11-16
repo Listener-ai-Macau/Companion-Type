@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0058",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 27840000,
+    "sourceEndFrame": 28320000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "150ad3a3bde17f89540f1dc0323a2a643cb71225f56ca71d559f732f01807c95",
+  "seconds": 19.9282766000033,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "卫生纸的这个质感。 然后这是我们的一些正常品啊，还有比较好的一些产品的销售，然后我们针对一些那个。 比较不好，呃，销售不好的产品呢，我们进行了一下那个。 末尾淘汰制，比如说这个产品呐，然后。 连续三个月，它都是在最末尾的。 呃，最末尾三位的，然后我们就是说。 销售特别，呃，销售。",
+    "raw_text": "[0.35][S01]卫生纸的这个质感。[1.93][5.38][S01]然后这是我们的一些正常品啊，还有比较好的一些产品的销售，然后我们针对一些那个。[11.35][11.85][S01]比较不好，呃，销售不好的产品呢，我们进行了一下那个。[17.01][17.92][S01]末尾淘汰制，比如说这个产品呐，然后。[21.21][22.01][S01]连续三个月，它都是在最末尾的。[25.18][25.18][S01]呃，最末尾三位的，然后我们就是说。[28.14][28.14][S01]销售特别，呃，销售。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "卫生纸的这个质感。",
+        "t0_ms": 350,
+        "t1_ms": 1930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后这是我们的一些正常品啊，还有比较好的一些产品的销售，然后我们针对一些那个。",
+        "t0_ms": 5380,
+        "t1_ms": 11350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "比较不好，呃，销售不好的产品呢，我们进行了一下那个。",
+        "t0_ms": 11850,
+        "t1_ms": 17010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "末尾淘汰制，比如说这个产品呐，然后。",
+        "t0_ms": 17920,
+        "t1_ms": 21210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "连续三个月，它都是在最末尾的。",
+        "t0_ms": 22010,
+        "t1_ms": 25180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，最末尾三位的，然后我们就是说。",
+        "t0_ms": 25180,
+        "t1_ms": 28140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "销售特别，呃，销售。",
+        "t0_ms": 28140,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 350,
+        "t1_ms": 1930,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5380,
+        "t1_ms": 11350,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11850,
+        "t1_ms": 17010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17920,
+        "t1_ms": 21210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22010,
+        "t1_ms": 25180,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25180,
+        "t1_ms": 28140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28140,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 15.590999603271484,
+      "encode_ms": 7050.49609375,
+      "decode_ms": 12826.1142578125
+    }
+  },
+  "rawDecoded": "[0.35][S01]卫生纸的这个质感。[1.93][5.38][S01]然后这是我们的一些正常品啊，还有比较好的一些产品的销售，然后我们针对一些那个。[11.35][11.85][S01]比较不好，呃，销售不好的产品呢，我们进行了一下那个。[17.01][17.92][S01]末尾淘汰制，比如说这个产品呐，然后。[21.21][22.01][S01]连续三个月，它都是在最末尾的。[25.18][25.18][S01]呃，最末尾三位的，然后我们就是说。[28.14][28.14][S01]销售特别，呃，销售。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

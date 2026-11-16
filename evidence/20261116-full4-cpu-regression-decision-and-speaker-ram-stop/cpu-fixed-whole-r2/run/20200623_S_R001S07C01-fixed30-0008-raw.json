@@ -1,0 +1,282 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0008",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 3840000,
+    "sourceEndFrame": 4320000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "e7aad06063e8bb3f2e7aeb5558b711c021f5d11eeff876c94b58c1134e0578f1",
+  "seconds": 24.655331499998283,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "十几单。 十几单。 嗯。 然后整体带的额度嘛，呃每个人平均下来就是，呃十五万左右。 嗯。 嗯。 十五万左右，小额的这些。 嗯。 呃，然后。 嗯。 然后我们部门儿也是严格执行了，呃岗位职责嘛，然后遵循了国家的各种，呃法律嘛。 嗯。 对，法律方面咱们一定要。",
+    "raw_text": "[0.25][S01]十几单。[0.95][1.21][S02]十几单。[1.89][1.82][S03]嗯。[2.25][3.49][S01]然后整体带的额度嘛，呃每个人平均下来就是，呃十五万左右。[10.57][6.31][S02]嗯。[6.71][9.01][S02]嗯。[9.35][10.61][S02]十五万左右，小额的这些。[12.65][11.58][S01]嗯。[12.01][13.34][S01]呃，然后。[14.35][14.55][S03]嗯。[15.21][16.58][S01]然后我们部门儿也是严格执行了，呃岗位职责嘛，然后遵循了国家的各种，呃法律嘛。[27.75][22.28][S03]嗯。[22.81][27.77][S02]对，法律方面咱们一定要。[29.81]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "十几单。",
+        "t0_ms": 250,
+        "t1_ms": 950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "十几单。",
+        "t0_ms": 1210,
+        "t1_ms": 1890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 1820,
+        "t1_ms": 2250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "然后整体带的额度嘛，呃每个人平均下来就是，呃十五万左右。",
+        "t0_ms": 3490,
+        "t1_ms": 10570,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 6310,
+        "t1_ms": 6710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 9010,
+        "t1_ms": 9350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "十五万左右，小额的这些。",
+        "t0_ms": 10610,
+        "t1_ms": 12650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 11580,
+        "t1_ms": 12010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，然后。",
+        "t0_ms": 13340,
+        "t1_ms": 14350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 14550,
+        "t1_ms": 15210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "然后我们部门儿也是严格执行了，呃岗位职责嘛，然后遵循了国家的各种，呃法律嘛。",
+        "t0_ms": 16580,
+        "t1_ms": 27750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 22280,
+        "t1_ms": 22810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "对，法律方面咱们一定要。",
+        "t0_ms": 27770,
+        "t1_ms": 29810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 250,
+        "t1_ms": 950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1210,
+        "t1_ms": 1890,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1820,
+        "t1_ms": 2250,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3490,
+        "t1_ms": 10570,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6310,
+        "t1_ms": 6710,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9010,
+        "t1_ms": 9350,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10610,
+        "t1_ms": 12650,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11580,
+        "t1_ms": 12010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13340,
+        "t1_ms": 14350,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14550,
+        "t1_ms": 15210,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16580,
+        "t1_ms": 27750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22280,
+        "t1_ms": 22810,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27770,
+        "t1_ms": 29810,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.72599983215332,
+      "encode_ms": 7715.55615234375,
+      "decode_ms": 16858.384765625
+    }
+  },
+  "rawDecoded": "[0.25][S01]十几单。[0.95][1.21][S02]十几单。[1.89][1.82][S03]嗯。[2.25][3.49][S01]然后整体带的额度嘛，呃每个人平均下来就是，呃十五万左右。[10.57][6.31][S02]嗯。[6.71][9.01][S02]嗯。[9.35][10.61][S02]十五万左右，小额的这些。[12.65][11.58][S01]嗯。[12.01][13.34][S01]呃，然后。[14.35][14.55][S03]嗯。[15.21][16.58][S01]然后我们部门儿也是严格执行了，呃岗位职责嘛，然后遵循了国家的各种，呃法律嘛。[27.75][22.28][S03]嗯。[22.81][27.77][S02]对，法律方面咱们一定要。[29.81]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

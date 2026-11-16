@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0027",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 12960000,
+    "sourceEndFrame": 13440000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "19d64e7cd1eeef8863e96b5707f59a1885f6011b36e00591441d24cc372d6600",
+  "seconds": 18.982695800004876,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Yeah. Yeah. And finally the prototype he spoke about, what kind of prototype could we produce? When is it February? 'Cause I'm I'm just, you know, I go into the lab and I say like what am I gonna change today, you know, and it kind of just it just develops. I'm not aiming for anything. Do we wanna aim for something? Um.",
+    "raw_text": "[0.33][S01]Yeah.[0.63][1.14][S02]Yeah.[1.45][6.52][S01]And finally the prototype he spoke about, what kind of prototype could we produce?[12.43][13.05][S03]When is it February?[13.91][14.28][S01]'Cause I'm I'm just, you know, I go into the lab and I say like what am I gonna change today, you know, and it kind of just it just develops. I'm not aiming for anything. Do we wanna aim for something?[26.41][27.79][S03]Um.[28.71]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Yeah.",
+        "t0_ms": 330,
+        "t1_ms": 630,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 1140,
+        "t1_ms": 1450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "And finally the prototype he spoke about, what kind of prototype could we produce?",
+        "t0_ms": 6520,
+        "t1_ms": 12430,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "When is it February?",
+        "t0_ms": 13050,
+        "t1_ms": 13910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "'Cause I'm I'm just, you know, I go into the lab and I say like what am I gonna change today, you know, and it kind of just it just develops. I'm not aiming for anything. Do we wanna aim for something?",
+        "t0_ms": 14280,
+        "t1_ms": 26410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um.",
+        "t0_ms": 27790,
+        "t1_ms": 28710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 330,
+        "t1_ms": 630,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1140,
+        "t1_ms": 1450,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6520,
+        "t1_ms": 12430,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13050,
+        "t1_ms": 13910,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14280,
+        "t1_ms": 26410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27790,
+        "t1_ms": 28710,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.75100040435791,
+      "encode_ms": 7466.8251953125,
+      "decode_ms": 11467.4951171875
+    }
+  },
+  "rawDecoded": "[0.33][S01]Yeah.[0.63][1.14][S02]Yeah.[1.45][6.52][S01]And finally the prototype he spoke about, what kind of prototype could we produce?[12.43][13.05][S03]When is it February?[13.91][14.28][S01]'Cause I'm I'm just, you know, I go into the lab and I say like what am I gonna change today, you know, and it kind of just it just develops. I'm not aiming for anything. Do we wanna aim for something?[26.41][27.79][S03]Um.[28.71]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

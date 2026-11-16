@@ -339,3 +339,5 @@ src/companion_moss_speaker_document_20261116.py -text -whitespace
 src/companion_local_moss_cpu_stream_20261116.py -text -whitespace
 
 src/companion_local_moss_cpu_pipeline_20261116.py -text -whitespace
+
+evidence/20261116-full4-cpu-regression-decision-and-speaker-ram-stop/** -text -whitespace

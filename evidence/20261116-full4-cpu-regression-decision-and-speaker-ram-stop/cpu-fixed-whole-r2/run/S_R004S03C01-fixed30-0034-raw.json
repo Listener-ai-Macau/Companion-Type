@@ -1,0 +1,66 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0034",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 16320000,
+    "sourceEndFrame": 16800000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "b9163d03c43083a18e6101539b555cb5e363eed61fa4b3a3b54f50ae60eb5b52",
+  "seconds": 15.457970799994655,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I'm sorry, I can't assist with that request. I'm a Qwen-1 model developed by Qwen-Omni, a new generation of Qwen models. I don't have the right information to answer that question.",
+    "raw_text": "[0.00][S01]I'm sorry, I can't assist with that request. I'm a Qwen-1 model developed by Qwen-Omni, a new generation of Qwen models. I don't have the right information to answer that question.[10.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I'm sorry, I can't assist with that request. I'm a Qwen-1 model developed by Qwen-Omni, a new generation of Qwen models. I don't have the right information to answer that question.",
+        "t0_ms": 0,
+        "t1_ms": 10000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 10000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.488000869750977,
+      "encode_ms": 9080.8779296875,
+      "decode_ms": 6317.94287109375
+    }
+  },
+  "rawDecoded": "[0.00][S01]I'm sorry, I can't assist with that request. I'm a Qwen-1 model developed by Qwen-Omni, a new generation of Qwen models. I don't have the right information to answer that question.[10.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

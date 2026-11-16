@@ -1,0 +1,336 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0061",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 29280000,
+    "sourceEndFrame": 29760000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "51f26401755702b150ebecb663e6d8dbca21d00bc6c70a6a435487c49f696131",
+  "seconds": 27.91109719999804,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Everything's basic, all set up and then just yeah, just jump right in. Yeah, can do that. Yeah. Showing you the bits, the code. Yeah. Yeah. Next week's sample. Yeah. That's cool. In the morning, of course. Oh yeah, well this time I am the detective, but if I'm not there, you can't do anything. Yeah. Yeah, right. Well, the thing is, yeah, yeah, something like that could happen any time, 'cause uh, yeah, like my schedule is like a class, break, class, break, class, you know, that sort of, some some. Yeah, I suppose I'm gonna take an hour just to get in anyway. Yeah, I know, exactly, exactly, that's what I'm thinking, so. Yeah, yeah, yeah.",
+    "raw_text": "[0.00][S01]Everything's basic, all set up and then just yeah, just jump right in.[3.30][0.54][S02]Yeah, can do that.[1.26][1.52][S03]Yeah.[1.82][2.44][S02]Showing you the bits, the code.[4.32][4.42][S01]Yeah.[4.64][5.72][S01]Yeah.[5.92][5.92][S04]Next week's sample.[6.82][6.02][S03]Yeah.[6.28][6.44][S01]That's cool.[6.84][9.74][S01]In the morning, of course.[10.84][11.00][S02]Oh yeah, well this time I am the detective, but if I'm not there, you can't do anything.[17.68][14.98][S01]Yeah.[15.32][17.32][S01]Yeah, right. Well, the thing is, yeah, yeah, something like that could happen any time, 'cause uh, yeah, like my schedule is like a class, break, class, break, class, you know, that sort of, some some.[27.64][26.30][S02]Yeah, I suppose I'm gonna take an hour just to get in anyway.[28.62][27.72][S01]Yeah, I know, exactly, exactly, that's what I'm thinking, so.[29.96][28.54][S03]Yeah, yeah, yeah.[29.22]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Everything's basic, all set up and then just yeah, just jump right in.",
+        "t0_ms": 0,
+        "t1_ms": 3300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, can do that.",
+        "t0_ms": 540,
+        "t1_ms": 1260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 1520,
+        "t1_ms": 1820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Showing you the bits, the code.",
+        "t0_ms": 2440,
+        "t1_ms": 4320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 4420,
+        "t1_ms": 4640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 5720,
+        "t1_ms": 5920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Next week's sample.",
+        "t0_ms": 5920,
+        "t1_ms": 6820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 6020,
+        "t1_ms": 6280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "That's cool.",
+        "t0_ms": 6440,
+        "t1_ms": 6840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "In the morning, of course.",
+        "t0_ms": 9740,
+        "t1_ms": 10840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh yeah, well this time I am the detective, but if I'm not there, you can't do anything.",
+        "t0_ms": 11000,
+        "t1_ms": 17680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 14980,
+        "t1_ms": 15320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, right. Well, the thing is, yeah, yeah, something like that could happen any time, 'cause uh, yeah, like my schedule is like a class, break, class, break, class, you know, that sort of, some some.",
+        "t0_ms": 17320,
+        "t1_ms": 27640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, I suppose I'm gonna take an hour just to get in anyway.",
+        "t0_ms": 26300,
+        "t1_ms": 28620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, I know, exactly, exactly, that's what I'm thinking, so.",
+        "t0_ms": 27720,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, yeah, yeah.",
+        "t0_ms": 28540,
+        "t1_ms": 29220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 3300,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 540,
+        "t1_ms": 1260,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1520,
+        "t1_ms": 1820,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2440,
+        "t1_ms": 4320,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4420,
+        "t1_ms": 4640,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5720,
+        "t1_ms": 5920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5920,
+        "t1_ms": 6820,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6020,
+        "t1_ms": 6280,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6440,
+        "t1_ms": 6840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9740,
+        "t1_ms": 10840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11000,
+        "t1_ms": 17680,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14980,
+        "t1_ms": 15320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17320,
+        "t1_ms": 27640,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26300,
+        "t1_ms": 28620,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27720,
+        "t1_ms": 29960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28540,
+        "t1_ms": 29220,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 21.416000366210938,
+      "encode_ms": 7366.68017578125,
+      "decode_ms": 20484.888671875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Everything's basic, all set up and then just yeah, just jump right in.[3.30][0.54][S02]Yeah, can do that.[1.26][1.52][S03]Yeah.[1.82][2.44][S02]Showing you the bits, the code.[4.32][4.42][S01]Yeah.[4.64][5.72][S01]Yeah.[5.92][5.92][S04]Next week's sample.[6.82][6.02][S03]Yeah.[6.28][6.44][S01]That's cool.[6.84][9.74][S01]In the morning, of course.[10.84][11.00][S02]Oh yeah, well this time I am the detective, but if I'm not there, you can't do anything.[17.68][14.98][S01]Yeah.[15.32][17.32][S01]Yeah, right. Well, the thing is, yeah, yeah, something like that could happen any time, 'cause uh, yeah, like my schedule is like a class, break, class, break, class, you know, that sort of, some some.[27.64][26.30][S02]Yeah, I suppose I'm gonna take an hour just to get in anyway.[28.62][27.72][S01]Yeah, I know, exactly, exactly, that's what I'm thinking, so.[29.96][28.54][S03]Yeah, yeah, yeah.[29.22]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

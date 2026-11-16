@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0062",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 29760000,
+    "sourceEndFrame": 30240000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "fa8348b110acd60612357a0da5801bd30101f46e76a9d1c1681107ffc36f1549",
+  "seconds": 17.61731249999866,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "行。 还有就是我觉得可以增添一个，呃在APP上增添，嗯小额贷款。 在收集了，呃一定程度上的证件信息以后。 呃进可以进行生活贷款，但是这个生活贷款是有限度是有额度的。 呃，就是比较小。 如果他不还，您同样可以打电话催促，也可以是是这样。",
+    "raw_text": "[0.65][S01]行。[1.05][1.55][S01]还有就是我觉得可以增添一个，呃在APP上增添，嗯小额贷款。[8.85][9.38][S01]在收集了，呃一定程度上的证件信息以后。[15.88][16.38][S01]呃进可以进行生活贷款，但是这个生活贷款是有限度是有额度的。[21.34][21.95][S01]呃，就是比较小。[23.48][25.71][S01]如果他不还，您同样可以打电话催促，也可以是是这样。[29.99]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "行。",
+        "t0_ms": 650,
+        "t1_ms": 1050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有就是我觉得可以增添一个，呃在APP上增添，嗯小额贷款。",
+        "t0_ms": 1550,
+        "t1_ms": 8850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "在收集了，呃一定程度上的证件信息以后。",
+        "t0_ms": 9380,
+        "t1_ms": 15880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃进可以进行生活贷款，但是这个生活贷款是有限度是有额度的。",
+        "t0_ms": 16380,
+        "t1_ms": 21340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，就是比较小。",
+        "t0_ms": 21950,
+        "t1_ms": 23480,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "如果他不还，您同样可以打电话催促，也可以是是这样。",
+        "t0_ms": 25710,
+        "t1_ms": 29990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 650,
+        "t1_ms": 1050,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1550,
+        "t1_ms": 8850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9380,
+        "t1_ms": 15880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16380,
+        "t1_ms": 21340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21950,
+        "t1_ms": 23480,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25710,
+        "t1_ms": 29990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 22.01300048828125,
+      "encode_ms": 7041.912109375,
+      "decode_ms": 10515.83203125
+    }
+  },
+  "rawDecoded": "[0.65][S01]行。[1.05][1.55][S01]还有就是我觉得可以增添一个，呃在APP上增添，嗯小额贷款。[8.85][9.38][S01]在收集了，呃一定程度上的证件信息以后。[15.88][16.38][S01]呃进可以进行生活贷款，但是这个生活贷款是有限度是有额度的。[21.34][21.95][S01]呃，就是比较小。[23.48][25.71][S01]如果他不还，您同样可以打电话催促，也可以是是这样。[29.99]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0045",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 21600000,
+    "sourceEndFrame": 22080000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "80634c3e271763ce4b5cf41c4179453bc203584412a99617fc4e6e0c7cfd0154",
+  "seconds": 22.092145099995832,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "What do you like well what did you do to like how did you figure out that this uses mixed search like um is it Um well it's in the code just that it you know it you ha you define a search object and then you'd search that string. I had to figure out how to how to do the same thing for the summary, that's how I Okay. Okay. had to had to understand how to do the transcr how they did the transcript to do the summary myself. Oh, see, I was So did you have to write it in the way that they wrote it, is that what you did? Yeah.",
+    "raw_text": "[0.00][S01]What do you like well what did you do to like how did you figure out that this uses mixed search like um is it[8.12][7.82][S02]Um well it's in the code just that it you know it you ha you define a search object and then you'd search that string. I had to figure out how to how to do the same thing for the summary, that's how I[20.38][11.22][S01]Okay.[11.58][14.90][S01]Okay.[15.30][22.00][S02]had to had to understand how to do the transcr how they did the transcript to do the summary myself.[26.54][22.08][S03]Oh, see, I was[23.14][26.60][S03]So did you have to write it in the way that they wrote it, is that what you did?[29.22][29.30][S02]Yeah.[29.72]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "What do you like well what did you do to like how did you figure out that this uses mixed search like um is it",
+        "t0_ms": 0,
+        "t1_ms": 8120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um well it's in the code just that it you know it you ha you define a search object and then you'd search that string. I had to figure out how to how to do the same thing for the summary, that's how I",
+        "t0_ms": 7820,
+        "t1_ms": 20380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 11220,
+        "t1_ms": 11580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 14900,
+        "t1_ms": 15300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "had to had to understand how to do the transcr how they did the transcript to do the summary myself.",
+        "t0_ms": 22000,
+        "t1_ms": 26540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Oh, see, I was",
+        "t0_ms": 22080,
+        "t1_ms": 23140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "So did you have to write it in the way that they wrote it, is that what you did?",
+        "t0_ms": 26600,
+        "t1_ms": 29220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 29300,
+        "t1_ms": 29720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 8120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7820,
+        "t1_ms": 20380,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11220,
+        "t1_ms": 11580,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14900,
+        "t1_ms": 15300,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22000,
+        "t1_ms": 26540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22080,
+        "t1_ms": 23140,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26600,
+        "t1_ms": 29220,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29300,
+        "t1_ms": 29720,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.407999992370605,
+      "encode_ms": 7036.4951171875,
+      "decode_ms": 15007.0537109375
+    }
+  },
+  "rawDecoded": "[0.00][S01]What do you like well what did you do to like how did you figure out that this uses mixed search like um is it[8.12][7.82][S02]Um well it's in the code just that it you know it you ha you define a search object and then you'd search that string. I had to figure out how to how to do the same thing for the summary, that's how I[20.38][11.22][S01]Okay.[11.58][14.90][S01]Okay.[15.30][22.00][S02]had to had to understand how to do the transcr how they did the transcript to do the summary myself.[26.54][22.08][S03]Oh, see, I was[23.14][26.60][S03]So did you have to write it in the way that they wrote it, is that what you did?[29.22][29.30][S02]Yeah.[29.72]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

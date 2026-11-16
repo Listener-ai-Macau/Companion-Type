@@ -1,0 +1,300 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0047",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 22560000,
+    "sourceEndFrame": 23040000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "bb838f15b9d8680e7c7256cc96f939367c149ff0e8cc45af2eb137f220af6960",
+  "seconds": 24.222597899999528,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "产的奔驰。 嗯。 然后，嗯，你说他没有能力嘛，他肯定是有这个能力。 嗯。 所以说我们有过一单。 然后，嗯。 给了他的期限是两年偿还。 两年偿还。 对，然后分期一个月一还就行了。 嗯。 哦，我们像他这种车的话，我们也是，呃，如果。 他按不能按时给我们还贷款了，对不起，你这车你就启动不了了。 嗯。 我们有软件。",
+    "raw_text": "[0.01][S01]产的奔驰。[0.93][1.01][S02]嗯。[1.45][1.65][S01]然后，嗯，你说他没有能力嘛，他肯定是有这个能力。[5.25][5.32][S02]嗯。[5.75][5.78][S01]所以说我们有过一单。[7.79][8.18][S01]然后，嗯。[10.29][11.33][S01]给了他的期限是两年偿还。[13.85][13.68][S02]两年偿还。[14.55][14.42][S01]对，然后分期一个月一还就行了。[17.21][17.31][S02]嗯。[17.79][17.78][S01]哦，我们像他这种车的话，我们也是，呃，如果。[21.85][22.28][S01]他按不能按时给我们还贷款了，对不起，你这车你就启动不了了。[27.79][27.91][S02]嗯。[28.35][28.21][S01]我们有软件。[29.97]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "产的奔驰。",
+        "t0_ms": 10,
+        "t1_ms": 930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 1010,
+        "t1_ms": 1450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "然后，嗯，你说他没有能力嘛，他肯定是有这个能力。",
+        "t0_ms": 1650,
+        "t1_ms": 5250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 5320,
+        "t1_ms": 5750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "所以说我们有过一单。",
+        "t0_ms": 5780,
+        "t1_ms": 7790,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后，嗯。",
+        "t0_ms": 8180,
+        "t1_ms": 10290,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "给了他的期限是两年偿还。",
+        "t0_ms": 11330,
+        "t1_ms": 13850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "两年偿还。",
+        "t0_ms": 13680,
+        "t1_ms": 14550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对，然后分期一个月一还就行了。",
+        "t0_ms": 14420,
+        "t1_ms": 17210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 17310,
+        "t1_ms": 17790,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "哦，我们像他这种车的话，我们也是，呃，如果。",
+        "t0_ms": 17780,
+        "t1_ms": 21850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "他按不能按时给我们还贷款了，对不起，你这车你就启动不了了。",
+        "t0_ms": 22280,
+        "t1_ms": 27790,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 27910,
+        "t1_ms": 28350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "我们有软件。",
+        "t0_ms": 28210,
+        "t1_ms": 29970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 930,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1010,
+        "t1_ms": 1450,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1650,
+        "t1_ms": 5250,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5320,
+        "t1_ms": 5750,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5780,
+        "t1_ms": 7790,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8180,
+        "t1_ms": 10290,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11330,
+        "t1_ms": 13850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13680,
+        "t1_ms": 14550,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14420,
+        "t1_ms": 17210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17310,
+        "t1_ms": 17790,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17780,
+        "t1_ms": 21850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22280,
+        "t1_ms": 27790,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27910,
+        "t1_ms": 28350,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28210,
+        "t1_ms": 29970,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 22.677000045776367,
+      "encode_ms": 6879.6201171875,
+      "decode_ms": 17286.529296875
+    }
+  },
+  "rawDecoded": "[0.01][S01]产的奔驰。[0.93][1.01][S02]嗯。[1.45][1.65][S01]然后，嗯，你说他没有能力嘛，他肯定是有这个能力。[5.25][5.32][S02]嗯。[5.75][5.78][S01]所以说我们有过一单。[7.79][8.18][S01]然后，嗯。[10.29][11.33][S01]给了他的期限是两年偿还。[13.85][13.68][S02]两年偿还。[14.55][14.42][S01]对，然后分期一个月一还就行了。[17.21][17.31][S02]嗯。[17.79][17.78][S01]哦，我们像他这种车的话，我们也是，呃，如果。[21.85][22.28][S01]他按不能按时给我们还贷款了，对不起，你这车你就启动不了了。[27.79][27.91][S02]嗯。[28.35][28.21][S01]我们有软件。[29.97]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

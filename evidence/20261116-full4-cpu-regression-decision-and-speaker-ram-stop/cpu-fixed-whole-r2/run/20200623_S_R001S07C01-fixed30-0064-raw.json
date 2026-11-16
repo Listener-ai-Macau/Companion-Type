@@ -1,0 +1,318 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0064",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 30720000,
+    "sourceEndFrame": 31200000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "bf0bef9fff7095f5f80c3dfb2c7b5623cd06f88c7c5c63129624e11341d5612c",
+  "seconds": 25.45557330000156,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "基本上。 而这个行业。 小的我们就不在做，明白吗？ 行业当中很多这个大型的公司在，像京东百年儿啊，他们有有这方面业务。 对。 你包括支付宝也好，然后。 很难竞争，给他们咱们跟他们跟跟他们竞争。 呃。 对我们也我们也。 嗯。 对，微微，微是微微贷啊，他们都是因为他们是做的这种。 专专业的，他们专业做这方面。 哎。 咱们这个负责领域就是这个十万三十万。 对，我们。",
+    "raw_text": "[0.01][S01]基本上。[0.73][1.21][S02]而这个行业。[2.31][1.82][S01]小的我们就不在做，明白吗？[3.75][3.65][S02]行业当中很多这个大型的公司在，像京东百年儿啊，他们有有这方面业务。[10.61][8.88][S01]对。[9.25][10.62][S01]你包括支付宝也好，然后。[12.61][13.12][S02]很难竞争，给他们咱们跟他们跟跟他们竞争。[17.05][13.14][S01]呃。[13.55][14.58][S01]对我们也我们也。[15.81][17.84][S02]嗯。[18.25][18.08][S01]对，微微，微是微微贷啊，他们都是因为他们是做的这种。[22.87][22.78][S02]专专业的，他们专业做这方面。[24.95][23.64][S01]哎。[24.04][25.46][S02]咱们这个负责领域就是这个十万三十万。[28.93][29.01][S01]对，我们。[29.91]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "基本上。",
+        "t0_ms": 10,
+        "t1_ms": 730,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "而这个行业。",
+        "t0_ms": 1210,
+        "t1_ms": 2310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "小的我们就不在做，明白吗？",
+        "t0_ms": 1820,
+        "t1_ms": 3750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "行业当中很多这个大型的公司在，像京东百年儿啊，他们有有这方面业务。",
+        "t0_ms": 3650,
+        "t1_ms": 10610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对。",
+        "t0_ms": 8880,
+        "t1_ms": 9250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "你包括支付宝也好，然后。",
+        "t0_ms": 10620,
+        "t1_ms": 12610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "很难竞争，给他们咱们跟他们跟跟他们竞争。",
+        "t0_ms": 13120,
+        "t1_ms": 17050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃。",
+        "t0_ms": 13140,
+        "t1_ms": 13550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对我们也我们也。",
+        "t0_ms": 14580,
+        "t1_ms": 15810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 17840,
+        "t1_ms": 18250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对，微微，微是微微贷啊，他们都是因为他们是做的这种。",
+        "t0_ms": 18080,
+        "t1_ms": 22870,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "专专业的，他们专业做这方面。",
+        "t0_ms": 22780,
+        "t1_ms": 24950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "哎。",
+        "t0_ms": 23640,
+        "t1_ms": 24040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "咱们这个负责领域就是这个十万三十万。",
+        "t0_ms": 25460,
+        "t1_ms": 28930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对，我们。",
+        "t0_ms": 29010,
+        "t1_ms": 29910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 730,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1210,
+        "t1_ms": 2310,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1820,
+        "t1_ms": 3750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3650,
+        "t1_ms": 10610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8880,
+        "t1_ms": 9250,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10620,
+        "t1_ms": 12610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13120,
+        "t1_ms": 17050,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13140,
+        "t1_ms": 13550,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14580,
+        "t1_ms": 15810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17840,
+        "t1_ms": 18250,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18080,
+        "t1_ms": 22870,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22780,
+        "t1_ms": 24950,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23640,
+        "t1_ms": 24040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25460,
+        "t1_ms": 28930,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29010,
+        "t1_ms": 29910,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.268999099731445,
+      "encode_ms": 7040.90576171875,
+      "decode_ms": 18355.6953125
+    }
+  },
+  "rawDecoded": "[0.01][S01]基本上。[0.73][1.21][S02]而这个行业。[2.31][1.82][S01]小的我们就不在做，明白吗？[3.75][3.65][S02]行业当中很多这个大型的公司在，像京东百年儿啊，他们有有这方面业务。[10.61][8.88][S01]对。[9.25][10.62][S01]你包括支付宝也好，然后。[12.61][13.12][S02]很难竞争，给他们咱们跟他们跟跟他们竞争。[17.05][13.14][S01]呃。[13.55][14.58][S01]对我们也我们也。[15.81][17.84][S02]嗯。[18.25][18.08][S01]对，微微，微是微微贷啊，他们都是因为他们是做的这种。[22.87][22.78][S02]专专业的，他们专业做这方面。[24.95][23.64][S01]哎。[24.04][25.46][S02]咱们这个负责领域就是这个十万三十万。[28.93][29.01][S01]对，我们。[29.91]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

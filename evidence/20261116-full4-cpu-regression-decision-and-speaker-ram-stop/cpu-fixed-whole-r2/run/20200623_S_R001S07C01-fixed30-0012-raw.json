@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0012",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 5760000,
+    "sourceEndFrame": 6240000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "4c4ff29075847a5b545ccac561fe7971a35230bfd0ca7c3b80e521fee932a779",
+  "seconds": 19.123049900001206,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "呃更重要的是我们呃做到了，呃管理规范化，程序化和科学化。 呃。 在业务方面。 目前咱们这个业务方面，嗯在这个同类型的行业当中，咱们的业务量。 嗯。 上个月呃有所增加吗？ 呃在上个月，呃整体来说还是呃比较平缓的吧，但是。",
+    "raw_text": "[0.03][S01]呃更重要的是我们呃做到了，呃管理规范化，程序化和科学化。[6.55][7.52][S01]呃。[8.11][8.35][S02]在业务方面。[9.71][12.31][S02]目前咱们这个业务方面，嗯在这个同类型的行业当中，咱们的业务量。[19.37][20.01][S02]嗯。[20.85][21.68][S02]上个月呃有所增加吗？[24.01][24.58][S01]呃在上个月，呃整体来说还是呃比较平缓的吧，但是。[30.01]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "呃更重要的是我们呃做到了，呃管理规范化，程序化和科学化。",
+        "t0_ms": 30,
+        "t1_ms": 6550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃。",
+        "t0_ms": 7520,
+        "t1_ms": 8110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "在业务方面。",
+        "t0_ms": 8350,
+        "t1_ms": 9710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "目前咱们这个业务方面，嗯在这个同类型的行业当中，咱们的业务量。",
+        "t0_ms": 12310,
+        "t1_ms": 19370,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 20010,
+        "t1_ms": 20850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "上个月呃有所增加吗？",
+        "t0_ms": 21680,
+        "t1_ms": 24010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃在上个月，呃整体来说还是呃比较平缓的吧，但是。",
+        "t0_ms": 24580,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 30,
+        "t1_ms": 6550,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7520,
+        "t1_ms": 8110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8350,
+        "t1_ms": 9710,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12310,
+        "t1_ms": 19370,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20010,
+        "t1_ms": 20850,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21680,
+        "t1_ms": 24010,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24580,
+        "t1_ms": 30010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 22.98200035095215,
+      "encode_ms": 7195.8662109375,
+      "decode_ms": 11869.5498046875
+    }
+  },
+  "rawDecoded": "[0.03][S01]呃更重要的是我们呃做到了，呃管理规范化，程序化和科学化。[6.55][7.52][S01]呃。[8.11][8.35][S02]在业务方面。[9.71][12.31][S02]目前咱们这个业务方面，嗯在这个同类型的行业当中，咱们的业务量。[19.37][20.01][S02]嗯。[20.85][21.68][S02]上个月呃有所增加吗？[24.01][24.58][S01]呃在上个月，呃整体来说还是呃比较平缓的吧，但是。[30.01]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

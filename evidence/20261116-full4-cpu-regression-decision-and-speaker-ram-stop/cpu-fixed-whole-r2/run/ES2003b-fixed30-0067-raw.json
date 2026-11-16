@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0067",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 32160000,
+    "sourceEndFrame": 32640000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "617815efa1fb99693ae2ce7dd54eadb7d6ef499cf2708f0c44e80abe972392f2",
+  "seconds": 18.92209699999512,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Yeah. The electronics can be s either placed externally or internally, makes no difference to the final product of the actual remote control, so that's good. Is maybe gives us a new potential market. Good. Okay. Thank you. Yeah, I think I mean if we if we get a major television manufacturer say, oh yeah, we'll have that, save us the dollar, then that's you know vast amounts of sales. Okay. Though, one thing that we've almost not talked",
+    "raw_text": "[0.71][S01]Yeah.[0.97][0.78][S02]The electronics can be s either placed externally or internally, makes no difference to the final product of the actual remote control, so that's good. Is maybe gives us a new potential market.[10.68][12.76][S03]Good.[12.98][14.41][S01]Okay.[14.73][15.68][S03]Thank you.[15.96][16.44][S01]Yeah, I think I mean if we if we get a major television manufacturer say, oh yeah, we'll have that, save us the dollar, then that's you know vast amounts of sales.[25.31][26.48][S01]Okay.[26.88][27.74][S02]Though, one thing that we've almost not talked[30.01]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Yeah.",
+        "t0_ms": 710,
+        "t1_ms": 970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "The electronics can be s either placed externally or internally, makes no difference to the final product of the actual remote control, so that's good. Is maybe gives us a new potential market.",
+        "t0_ms": 780,
+        "t1_ms": 10680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Good.",
+        "t0_ms": 12760,
+        "t1_ms": 12980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 14410,
+        "t1_ms": 14730,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Thank you.",
+        "t0_ms": 15680,
+        "t1_ms": 15960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, I think I mean if we if we get a major television manufacturer say, oh yeah, we'll have that, save us the dollar, then that's you know vast amounts of sales.",
+        "t0_ms": 16440,
+        "t1_ms": 25310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 26480,
+        "t1_ms": 26880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Though, one thing that we've almost not talked",
+        "t0_ms": 27740,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 710,
+        "t1_ms": 970,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 780,
+        "t1_ms": 10680,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12760,
+        "t1_ms": 12980,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14410,
+        "t1_ms": 14730,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15680,
+        "t1_ms": 15960,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16440,
+        "t1_ms": 25310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26480,
+        "t1_ms": 26880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27740,
+        "t1_ms": 30010,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.109999656677246,
+      "encode_ms": 6798.673828125,
+      "decode_ms": 12074.451171875
+    }
+  },
+  "rawDecoded": "[0.71][S01]Yeah.[0.97][0.78][S02]The electronics can be s either placed externally or internally, makes no difference to the final product of the actual remote control, so that's good. Is maybe gives us a new potential market.[10.68][12.76][S03]Good.[12.98][14.41][S01]Okay.[14.73][15.68][S03]Thank you.[15.96][16.44][S01]Yeah, I think I mean if we if we get a major television manufacturer say, oh yeah, we'll have that, save us the dollar, then that's you know vast amounts of sales.[25.31][26.48][S01]Okay.[26.88][27.74][S02]Though, one thing that we've almost not talked[30.01]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

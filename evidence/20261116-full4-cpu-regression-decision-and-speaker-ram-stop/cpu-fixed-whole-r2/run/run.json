@@ -1,0 +1,18 @@
+{
+  "state": "COMPLETE_CPU_FIXED_CHUNKS_COMPOSITION_AND_SCORING_PENDING",
+  "startedAt": "2026-11-16T10:21:47.649673+08:00",
+  "privatePeakBytes": 761769984,
+  "familyWorkingSetPeakBytes": 2243706880,
+  "systemAvailableMinBytes": 1282686976,
+  "qualityQualified": false,
+  "wholeMeetingAcceptance": false,
+  "automaticRetries": 0,
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "reportDeadline": "2026-11-16T16:00:00+08:00",
+  "pid": 28304,
+  "pidCreatedAt": 1794795707.6526446,
+  "workerExitCode": 0,
+  "completedInputs": 290,
+  "incompleteOutputCases": [],
+  "finishedAt": "2026-11-16T11:51:18.555741+08:00"
+}

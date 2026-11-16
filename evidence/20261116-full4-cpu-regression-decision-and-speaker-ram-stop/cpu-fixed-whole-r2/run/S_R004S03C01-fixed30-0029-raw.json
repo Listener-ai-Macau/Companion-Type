@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0029",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 13920000,
+    "sourceEndFrame": 14400000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "61f2652a51e87384e89fd307f76e15cf6bd2eb74ce61fa4758f0c7a0b9c0e9de",
+  "seconds": 20.634397500005434,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "呃，就是嗯，D I Y蛋糕制作的。 嗯，这这些地方，然后。 还有就是。 仅仅也可以。 设立一个糕点销售区。 然后形成一个井然有序的这种店面。 就是给顾客一种那种轻松轻松，就是比较。 呃。 这种这种氛围吧。 从装修上就是要就是这种还是要以。",
+    "raw_text": "[0.00][S01]呃，就是嗯，D I Y蛋糕制作的。[3.98][4.24][S01]嗯，这这些地方，然后。[6.92][7.12][S01]还有就是。[8.76][9.30][S01]仅仅也可以。[10.82][10.82][S01]设立一个糕点销售区。[13.36][13.36][S01]然后形成一个井然有序的这种店面。[17.08][17.08][S01]就是给顾客一种那种轻松轻松，就是比较。[21.88][22.18][S01]呃。[23.02][23.54][S01]这种这种氛围吧。[25.58][25.58][S01]从装修上就是要就是这种还是要以。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "呃，就是嗯，D I Y蛋糕制作的。",
+        "t0_ms": 0,
+        "t1_ms": 3980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，这这些地方，然后。",
+        "t0_ms": 4240,
+        "t1_ms": 6920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有就是。",
+        "t0_ms": 7120,
+        "t1_ms": 8760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "仅仅也可以。",
+        "t0_ms": 9300,
+        "t1_ms": 10820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "设立一个糕点销售区。",
+        "t0_ms": 10820,
+        "t1_ms": 13360,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后形成一个井然有序的这种店面。",
+        "t0_ms": 13360,
+        "t1_ms": 17080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就是给顾客一种那种轻松轻松，就是比较。",
+        "t0_ms": 17080,
+        "t1_ms": 21880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃。",
+        "t0_ms": 22180,
+        "t1_ms": 23020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这种这种氛围吧。",
+        "t0_ms": 23540,
+        "t1_ms": 25580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "从装修上就是要就是这种还是要以。",
+        "t0_ms": 25580,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 3980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4240,
+        "t1_ms": 6920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7120,
+        "t1_ms": 8760,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9300,
+        "t1_ms": 10820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10820,
+        "t1_ms": 13360,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13360,
+        "t1_ms": 17080,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17080,
+        "t1_ms": 21880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22180,
+        "t1_ms": 23020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23540,
+        "t1_ms": 25580,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25580,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 35.91899871826172,
+      "encode_ms": 7258.89306640625,
+      "decode_ms": 13302.2353515625
+    }
+  },
+  "rawDecoded": "[0.00][S01]呃，就是嗯，D I Y蛋糕制作的。[3.98][4.24][S01]嗯，这这些地方，然后。[6.92][7.12][S01]还有就是。[8.76][9.30][S01]仅仅也可以。[10.82][10.82][S01]设立一个糕点销售区。[13.36][13.36][S01]然后形成一个井然有序的这种店面。[17.08][17.08][S01]就是给顾客一种那种轻松轻松，就是比较。[21.88][22.18][S01]呃。[23.02][23.54][S01]这种这种氛围吧。[25.58][25.58][S01]从装修上就是要就是这种还是要以。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

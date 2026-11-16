@@ -1,0 +1,336 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0038",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 18240000,
+    "sourceEndFrame": 18720000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "1e82e009c52d74d8136cd2c57bb84360cea31fe1b3e18b196d8ed9e7a5b76297",
+  "seconds": 24.86360170000262,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Collaborating with file things, I mean if you already started on on recording stuff, I guess we can Yeah. Yeah, yeah, absolutely, yeah. Should share as much as possible. Yeah. Mm-hmm, libraries. Yeah. Yeah. Should we, I don't know. Meet up and see what we could do, I mean, I don't know, see what you've done and see what we need when we know more, what we need maybe. Yeah. Next week sometime. Yeah. Yeah, exactly. Yeah. Exactly.",
+    "raw_text": "[0.00][S01]Collaborating with file things, I mean if you already started on on recording stuff, I guess we can[8.32][2.22][S02]Yeah.[2.54][5.68][S03]Yeah, yeah, absolutely, yeah.[7.50][8.88][S03]Should share as much as possible.[10.22][10.22][S01]Yeah.[10.64][10.76][S02]Mm-hmm, libraries.[11.92][12.74][S03]Yeah.[13.04][13.38][S01]Yeah.[13.66][15.16][S01]Should we, I don't know.[16.34][18.26][S01]Meet up and see what we could do, I mean, I don't know, see what you've done and see what we need when we know more, what we need maybe.[26.88][24.62][S03]Yeah.[24.92][27.28][S03]Next week sometime.[28.24][27.38][S02]Yeah.[27.66][28.02][S04]Yeah, exactly.[29.88][28.40][S01]Yeah.[28.72][29.40][S04]Exactly.[29.96]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Collaborating with file things, I mean if you already started on on recording stuff, I guess we can",
+        "t0_ms": 0,
+        "t1_ms": 8320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 2220,
+        "t1_ms": 2540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, yeah, absolutely, yeah.",
+        "t0_ms": 5680,
+        "t1_ms": 7500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Should share as much as possible.",
+        "t0_ms": 8880,
+        "t1_ms": 10220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 10220,
+        "t1_ms": 10640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm, libraries.",
+        "t0_ms": 10760,
+        "t1_ms": 11920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 12740,
+        "t1_ms": 13040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 13380,
+        "t1_ms": 13660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Should we, I don't know.",
+        "t0_ms": 15160,
+        "t1_ms": 16340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Meet up and see what we could do, I mean, I don't know, see what you've done and see what we need when we know more, what we need maybe.",
+        "t0_ms": 18260,
+        "t1_ms": 26880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 24620,
+        "t1_ms": 24920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Next week sometime.",
+        "t0_ms": 27280,
+        "t1_ms": 28240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 27380,
+        "t1_ms": 27660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, exactly.",
+        "t0_ms": 28020,
+        "t1_ms": 29880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 28400,
+        "t1_ms": 28720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Exactly.",
+        "t0_ms": 29400,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 8320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2220,
+        "t1_ms": 2540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5680,
+        "t1_ms": 7500,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8880,
+        "t1_ms": 10220,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10220,
+        "t1_ms": 10640,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10760,
+        "t1_ms": 11920,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12740,
+        "t1_ms": 13040,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13380,
+        "t1_ms": 13660,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15160,
+        "t1_ms": 16340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18260,
+        "t1_ms": 26880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24620,
+        "t1_ms": 24920,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27280,
+        "t1_ms": 28240,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27380,
+        "t1_ms": 27660,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28020,
+        "t1_ms": 29880,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28400,
+        "t1_ms": 28720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29400,
+        "t1_ms": 29960,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.160999298095703,
+      "encode_ms": 6855.89794921875,
+      "decode_ms": 17950.388671875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Collaborating with file things, I mean if you already started on on recording stuff, I guess we can[8.32][2.22][S02]Yeah.[2.54][5.68][S03]Yeah, yeah, absolutely, yeah.[7.50][8.88][S03]Should share as much as possible.[10.22][10.22][S01]Yeah.[10.64][10.76][S02]Mm-hmm, libraries.[11.92][12.74][S03]Yeah.[13.04][13.38][S01]Yeah.[13.66][15.16][S01]Should we, I don't know.[16.34][18.26][S01]Meet up and see what we could do, I mean, I don't know, see what you've done and see what we need when we know more, what we need maybe.[26.88][24.62][S03]Yeah.[24.92][27.28][S03]Next week sometime.[28.24][27.38][S02]Yeah.[27.66][28.02][S04]Yeah, exactly.[29.88][28.40][S01]Yeah.[28.72][29.40][S04]Exactly.[29.96]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

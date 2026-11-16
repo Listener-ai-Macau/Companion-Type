@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0043",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 20640000,
+    "sourceEndFrame": 21120000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "288f702a629086609a3790b79fac0d990738f37dbf1e13e9ccdb99b7d07031e1",
+  "seconds": 23.998560899999575,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Actual search, this is just when you open w you know, to load the transcript for example. Okay. Yeah. To find the transcript for a certain meeting, it does does an N X T search for the string, I don't know, transcript or text or whatever. Yeah. Mm. Okay. For and it what like it just has an open variable transcript, this whatever, find everything that's got that and then like. Yeah. Yeah, so I don't know if you've looked at the search query language, but it's like a dollar A. Yeah, uh-huh.",
+    "raw_text": "[0.00][S01]Actual search, this is just when you open w you know, to load the transcript for example.[5.02][1.12][S02]Okay.[1.46][5.18][S02]Yeah.[5.44][5.74][S01]To find the transcript for a certain meeting, it does does an N X T search for the string, I don't know, transcript or text or whatever.[16.80][6.98][S02]Yeah.[7.24][15.68][S03]Mm.[15.88][16.04][S02]Okay.[16.40][16.96][S03]For and it what like it just has an open variable transcript, this whatever, find everything that's got that and then like.[23.72][20.68][S01]Yeah.[20.96][23.24][S01]Yeah, so I don't know if you've looked at the search query language, but it's like a dollar A.[29.44][29.50][S03]Yeah, uh-huh.[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Actual search, this is just when you open w you know, to load the transcript for example.",
+        "t0_ms": 0,
+        "t1_ms": 5020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 1120,
+        "t1_ms": 1460,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 5180,
+        "t1_ms": 5440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "To find the transcript for a certain meeting, it does does an N X T search for the string, I don't know, transcript or text or whatever.",
+        "t0_ms": 5740,
+        "t1_ms": 16800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 6980,
+        "t1_ms": 7240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 15680,
+        "t1_ms": 15880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 16040,
+        "t1_ms": 16400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "For and it what like it just has an open variable transcript, this whatever, find everything that's got that and then like.",
+        "t0_ms": 16960,
+        "t1_ms": 23720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 20680,
+        "t1_ms": 20960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, so I don't know if you've looked at the search query language, but it's like a dollar A.",
+        "t0_ms": 23240,
+        "t1_ms": 29440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, uh-huh.",
+        "t0_ms": 29500,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 5020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1120,
+        "t1_ms": 1460,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5180,
+        "t1_ms": 5440,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5740,
+        "t1_ms": 16800,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6980,
+        "t1_ms": 7240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15680,
+        "t1_ms": 15880,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16040,
+        "t1_ms": 16400,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16960,
+        "t1_ms": 23720,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20680,
+        "t1_ms": 20960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23240,
+        "t1_ms": 29440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29500,
+        "t1_ms": 29980,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 24.25,
+      "encode_ms": 6708.8818359375,
+      "decode_ms": 17223.267578125
+    }
+  },
+  "rawDecoded": "[0.00][S01]Actual search, this is just when you open w you know, to load the transcript for example.[5.02][1.12][S02]Okay.[1.46][5.18][S02]Yeah.[5.44][5.74][S01]To find the transcript for a certain meeting, it does does an N X T search for the string, I don't know, transcript or text or whatever.[16.80][6.98][S02]Yeah.[7.24][15.68][S03]Mm.[15.88][16.04][S02]Okay.[16.40][16.96][S03]For and it what like it just has an open variable transcript, this whatever, find everything that's got that and then like.[23.72][20.68][S01]Yeah.[20.96][23.24][S01]Yeah, so I don't know if you've looked at the search query language, but it's like a dollar A.[29.44][29.50][S03]Yeah, uh-huh.[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

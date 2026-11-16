@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0015",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 7200000,
+    "sourceEndFrame": 7680000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "41558f6c49e46b40a1a740979aecea02f91fa9c6b7f7e39b4d4682da75e53981",
+  "seconds": 16.912823799997568,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "都是呃有要求的，嗯，然后我们像一些那个冷鲜的这个产品呀，我们都有冷柜。 呃，我们是需要放到冷柜里去冷藏的，像这普通的菜呀，土豆儿啥的，你可以呃不用冷藏，但是有一些东西是需要冷藏的，我们就是需要放到冷藏柜里面去陈列去。 嗯，然后叶儿菜类的，叶儿菜类的是就是每天要求这个员工啊，都需要去喷水。 嗯，在这个。",
+    "raw_text": "[0.00][S01]都是呃有要求的，嗯，然后我们像一些那个冷鲜的这个产品呀，我们都有冷柜。[8.02][8.02][S01]呃，我们是需要放到冷柜里去冷藏的，像这普通的菜呀，土豆儿啥的，你可以呃不用冷藏，但是有一些东西是需要冷藏的，我们就是需要放到冷藏柜里面去陈列去。[20.02][20.44][S01]嗯，然后叶儿菜类的，叶儿菜类的是就是每天要求这个员工啊，都需要去喷水。[27.22][28.16][S01]嗯，在这个。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "都是呃有要求的，嗯，然后我们像一些那个冷鲜的这个产品呀，我们都有冷柜。",
+        "t0_ms": 0,
+        "t1_ms": 8020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，我们是需要放到冷柜里去冷藏的，像这普通的菜呀，土豆儿啥的，你可以呃不用冷藏，但是有一些东西是需要冷藏的，我们就是需要放到冷藏柜里面去陈列去。",
+        "t0_ms": 8020,
+        "t1_ms": 20020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，然后叶儿菜类的，叶儿菜类的是就是每天要求这个员工啊，都需要去喷水。",
+        "t0_ms": 20440,
+        "t1_ms": 27220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，在这个。",
+        "t0_ms": 28160,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 8020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8020,
+        "t1_ms": 20020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20440,
+        "t1_ms": 27220,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28160,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.239999771118164,
+      "encode_ms": 6871.384765625,
+      "decode_ms": 9981.7265625
+    }
+  },
+  "rawDecoded": "[0.00][S01]都是呃有要求的，嗯，然后我们像一些那个冷鲜的这个产品呀，我们都有冷柜。[8.02][8.02][S01]呃，我们是需要放到冷柜里去冷藏的，像这普通的菜呀，土豆儿啥的，你可以呃不用冷藏，但是有一些东西是需要冷藏的，我们就是需要放到冷藏柜里面去陈列去。[20.02][20.44][S01]嗯，然后叶儿菜类的，叶儿菜类的是就是每天要求这个员工啊，都需要去喷水。[27.22][28.16][S01]嗯，在这个。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

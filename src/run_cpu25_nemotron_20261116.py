@@ -24,7 +24,18 @@ def main():
  with exclusive_file(Path('E:/CodexData/Companion/.model-cache/local-qwen-decoder.lock')),PowerLease():
   try:
    assert not pressure.low() and psutil.virtual_memory().available>=int(3.18*1024**3)
+   if B.get('reusedCpu61Control'):
+    prior=B['reusedCpu61Control'];assert sha(prior['run'])==prior['runSha256']
+    previous=read(prior['run']);old_protocol=read(prior['protocol']);current_protocol=read(a.run/'protocol.json')
+    assert {k:v for k,v in old_protocol.items() if k!='probabilityCacheRoot'}=={k:v for k,v in current_protocol.items() if k!='probabilityCacheRoot'}
+    assert read(prior['binding'])['wrapperSha256']==B['wrapperSha256']
+    for item,expected in zip(previous['results'][:2],['COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED','PASS_NATIVE61_C_ABI_AND_OFFICIAL_CLI_SEGMENTS']):
+     assert item['phase'] in ['activity','cli-control'] and item['state']==expected and item['exitCode']==0 and sha(item['file'])==item['sha256']
+     assert read(item['file'])['gpuUsed'] is False
+    assert len(previous['results'])>=2
+    state.update(cpu61ControlPassed=True,reusedCpu61Control=prior);save()
    for index,case in enumerate(cases):
+    if index==0 and B.get('reusedCpu61Control'):continue
     for phase in (['activity','cli-control'] if index==0 else ['activity']):
      if (a.run/'stop.request').exists() or datetime.now().astimezone()>=datetime.fromisoformat(B['neuralDeadline']):raise InterruptedError('Owned stop/deadline')
      tick=time.perf_counter();state.update(state='RUNNING_CPU_ONLY_NATIVE8',activeMeeting=case['meeting'],activePhase=phase);save()

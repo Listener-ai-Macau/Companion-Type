@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0018",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 8640000,
+    "sourceEndFrame": 9120000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "389d92950110a05cbae928a589e7811f7be8f013efdd5e68bcaf2eb8d29d9f64",
+  "seconds": 21.119288699999743,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "都还了吗？ 呃，有个别一个两个到现在还没还。 啊是，嗯。 针对这个你有什么这个处理的办法吗？ 嗯，对处理办法就是，第一就是主要还是催他还款。 嗯。 其这个他那个电话能打通吗？ 电话现在是只能打通。 能打通，他们为什么不还款有过了解吗？ 嗯。 有过。",
+    "raw_text": "[0.45][S01]都还了吗？[1.41][2.35][S02]呃，有个别一个两个到现在还没还。[6.11][6.15][S01]啊是，嗯。[8.71][9.45][S01]针对这个你有什么这个处理的办法吗？[13.51][13.88][S02]嗯，对处理办法就是，第一就是主要还是催他还款。[18.61][18.54][S01]嗯。[19.21][20.24][S01]其这个他那个电话能打通吗？[23.71][23.98][S02]电话现在是只能打通。[25.95][25.95][S01]能打通，他们为什么不还款有过了解吗？[28.95][26.61][S02]嗯。[27.05][29.21][S02]有过。[29.97]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "都还了吗？",
+        "t0_ms": 450,
+        "t1_ms": 1410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，有个别一个两个到现在还没还。",
+        "t0_ms": 2350,
+        "t1_ms": 6110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "啊是，嗯。",
+        "t0_ms": 6150,
+        "t1_ms": 8710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "针对这个你有什么这个处理的办法吗？",
+        "t0_ms": 9450,
+        "t1_ms": 13510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，对处理办法就是，第一就是主要还是催他还款。",
+        "t0_ms": 13880,
+        "t1_ms": 18610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 18540,
+        "t1_ms": 19210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "其这个他那个电话能打通吗？",
+        "t0_ms": 20240,
+        "t1_ms": 23710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "电话现在是只能打通。",
+        "t0_ms": 23980,
+        "t1_ms": 25950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "能打通，他们为什么不还款有过了解吗？",
+        "t0_ms": 25950,
+        "t1_ms": 28950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 26610,
+        "t1_ms": 27050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "有过。",
+        "t0_ms": 29210,
+        "t1_ms": 29970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 450,
+        "t1_ms": 1410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2350,
+        "t1_ms": 6110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6150,
+        "t1_ms": 8710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9450,
+        "t1_ms": 13510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13880,
+        "t1_ms": 18610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18540,
+        "t1_ms": 19210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20240,
+        "t1_ms": 23710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23980,
+        "t1_ms": 25950,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25950,
+        "t1_ms": 28950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26610,
+        "t1_ms": 27050,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29210,
+        "t1_ms": 29970,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 22.760000228881836,
+      "encode_ms": 6782.255859375,
+      "decode_ms": 14279.314453125
+    }
+  },
+  "rawDecoded": "[0.45][S01]都还了吗？[1.41][2.35][S02]呃，有个别一个两个到现在还没还。[6.11][6.15][S01]啊是，嗯。[8.71][9.45][S01]针对这个你有什么这个处理的办法吗？[13.51][13.88][S02]嗯，对处理办法就是，第一就是主要还是催他还款。[18.61][18.54][S01]嗯。[19.21][20.24][S01]其这个他那个电话能打通吗？[23.71][23.98][S02]电话现在是只能打通。[25.95][25.95][S01]能打通，他们为什么不还款有过了解吗？[28.95][26.61][S02]嗯。[27.05][29.21][S02]有过。[29.97]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

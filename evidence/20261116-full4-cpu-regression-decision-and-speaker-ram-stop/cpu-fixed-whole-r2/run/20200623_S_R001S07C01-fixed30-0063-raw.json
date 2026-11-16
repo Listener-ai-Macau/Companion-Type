@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0063",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 30240000,
+    "sourceEndFrame": 30720000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "b5d2a354a318af3d0340110d9148009ea11c3841d76f4f6d96bb807a88fc64dd",
+  "seconds": 19.168375000001106,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "一般的小额贷款，因为因为咱们前期也是说了，为什么不做了，因为。 他们一般的人手里都有信用卡，信用卡也都养，把他额度都养在三万左右。 他一个人他手机，呃不一个人不是，他一个人他的信用卡不只是一张卡，有的人甚至有两张三张或者四张五张。 他们用信用卡去倒的这些人，他们就不会选择我们。 所以说我们。 不是。 哎。",
+    "raw_text": "[0.01][S01]一般的小额贷款，因为因为咱们前期也是说了，为什么不做了，因为。[5.93][7.16][S01]他们一般的人手里都有信用卡，信用卡也都养，把他额度都养在三万左右。[12.81][13.05][S01]他一个人他手机，呃不一个人不是，他一个人他的信用卡不只是一张卡，有的人甚至有两张三张或者四张五张。[22.01][22.34][S01]他们用信用卡去倒的这些人，他们就不会选择我们。[27.51][28.08][S01]所以说我们。[29.25][28.11][S02]不是。[28.61][29.55][S02]哎。[29.95]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "一般的小额贷款，因为因为咱们前期也是说了，为什么不做了，因为。",
+        "t0_ms": 10,
+        "t1_ms": 5930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "他们一般的人手里都有信用卡，信用卡也都养，把他额度都养在三万左右。",
+        "t0_ms": 7160,
+        "t1_ms": 12810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "他一个人他手机，呃不一个人不是，他一个人他的信用卡不只是一张卡，有的人甚至有两张三张或者四张五张。",
+        "t0_ms": 13050,
+        "t1_ms": 22010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "他们用信用卡去倒的这些人，他们就不会选择我们。",
+        "t0_ms": 22340,
+        "t1_ms": 27510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "所以说我们。",
+        "t0_ms": 28080,
+        "t1_ms": 29250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "不是。",
+        "t0_ms": 28110,
+        "t1_ms": 28610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "哎。",
+        "t0_ms": 29550,
+        "t1_ms": 29950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 5930,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7160,
+        "t1_ms": 12810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13050,
+        "t1_ms": 22010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22340,
+        "t1_ms": 27510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28080,
+        "t1_ms": 29250,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28110,
+        "t1_ms": 28610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29550,
+        "t1_ms": 29950,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 21.611000061035156,
+      "encode_ms": 7130.080078125,
+      "decode_ms": 11982.77734375
+    }
+  },
+  "rawDecoded": "[0.01][S01]一般的小额贷款，因为因为咱们前期也是说了，为什么不做了，因为。[5.93][7.16][S01]他们一般的人手里都有信用卡，信用卡也都养，把他额度都养在三万左右。[12.81][13.05][S01]他一个人他手机，呃不一个人不是，他一个人他的信用卡不只是一张卡，有的人甚至有两张三张或者四张五张。[22.01][22.34][S01]他们用信用卡去倒的这些人，他们就不会选择我们。[27.51][28.08][S01]所以说我们。[29.25][28.11][S02]不是。[28.61][29.55][S02]哎。[29.95]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

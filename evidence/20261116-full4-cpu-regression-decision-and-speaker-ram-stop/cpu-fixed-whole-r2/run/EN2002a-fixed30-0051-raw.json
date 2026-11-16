@@ -1,0 +1,282 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0051",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 24480000,
+    "sourceEndFrame": 24960000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "a845be111b4e5bd6e052150e79e8d321efbed37e380a75979d7575b00aa999b8",
+  "seconds": 24.13470889999735,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Is that in informatics course or? Yeah, it's uh nine nine quarters or ten or something, yeah. Yeah. How would like digital, uh okay. Okay. Well I suppose uh yeah. And then uh I'm doing palo programming languages and systems. Hmm. Which we had one exercise as well and that's in like Friday. Well I'm not doing any backhand things, so you know. Big lady. So, it's big, yeah. Hmm.",
+    "raw_text": "[0.00][S01]Is that in informatics course or?[2.80][2.88][S02]Yeah, it's uh nine nine quarters or ten or something, yeah.[7.64][3.14][S01]Yeah.[3.56][4.22][S01]How would like digital, uh okay.[6.62][7.38][S01]Okay.[7.74][7.78][S03]Well I suppose uh yeah.[8.96][8.96][S02]And then uh I'm doing palo programming languages and systems.[13.82][14.18][S03]Hmm.[14.48][14.88][S02]Which we had one exercise as well and that's in like Friday.[17.80][21.46][S02]Well I'm not doing any backhand things, so you know.[23.60][27.00][S02]Big lady.[27.62][27.24][S02]So, it's big, yeah.[29.30][29.50][S01]Hmm.[29.96]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Is that in informatics course or?",
+        "t0_ms": 0,
+        "t1_ms": 2800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, it's uh nine nine quarters or ten or something, yeah.",
+        "t0_ms": 2880,
+        "t1_ms": 7640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 3140,
+        "t1_ms": 3560,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "How would like digital, uh okay.",
+        "t0_ms": 4220,
+        "t1_ms": 6620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 7380,
+        "t1_ms": 7740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Well I suppose uh yeah.",
+        "t0_ms": 7780,
+        "t1_ms": 8960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "And then uh I'm doing palo programming languages and systems.",
+        "t0_ms": 8960,
+        "t1_ms": 13820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 14180,
+        "t1_ms": 14480,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Which we had one exercise as well and that's in like Friday.",
+        "t0_ms": 14880,
+        "t1_ms": 17800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Well I'm not doing any backhand things, so you know.",
+        "t0_ms": 21460,
+        "t1_ms": 23600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Big lady.",
+        "t0_ms": 27000,
+        "t1_ms": 27620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "So, it's big, yeah.",
+        "t0_ms": 27240,
+        "t1_ms": 29300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 29500,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2800,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2880,
+        "t1_ms": 7640,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3140,
+        "t1_ms": 3560,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4220,
+        "t1_ms": 6620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7380,
+        "t1_ms": 7740,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7780,
+        "t1_ms": 8960,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8960,
+        "t1_ms": 13820,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14180,
+        "t1_ms": 14480,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14880,
+        "t1_ms": 17800,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21460,
+        "t1_ms": 23600,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27000,
+        "t1_ms": 27620,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27240,
+        "t1_ms": 29300,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29500,
+        "t1_ms": 29960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 28.31100082397461,
+      "encode_ms": 7261.76806640625,
+      "decode_ms": 16807.88671875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Is that in informatics course or?[2.80][2.88][S02]Yeah, it's uh nine nine quarters or ten or something, yeah.[7.64][3.14][S01]Yeah.[3.56][4.22][S01]How would like digital, uh okay.[6.62][7.38][S01]Okay.[7.74][7.78][S03]Well I suppose uh yeah.[8.96][8.96][S02]And then uh I'm doing palo programming languages and systems.[13.82][14.18][S03]Hmm.[14.48][14.88][S02]Which we had one exercise as well and that's in like Friday.[17.80][21.46][S02]Well I'm not doing any backhand things, so you know.[23.60][27.00][S02]Big lady.[27.62][27.24][S02]So, it's big, yeah.[29.30][29.50][S01]Hmm.[29.96]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

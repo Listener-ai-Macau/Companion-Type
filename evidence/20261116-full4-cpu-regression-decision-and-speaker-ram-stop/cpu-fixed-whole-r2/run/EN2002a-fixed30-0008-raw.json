@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0008",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 3840000,
+    "sourceEndFrame": 4320000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "b667de0239b99f9b773dd74c0ee87f8d5ab23bb4aa14d0967e329f42f5e8215d",
+  "seconds": 23.375484600001073,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I guess in in in meeting browser one point one you can have a menu instead of a button. Exactly, I know. True. Right, this one. Mm, it's a bridge. Um but actually what we could do is on in that menu as well we could have an option that pops up a window with all the all the meetings that that user has been in. Mm. Like a search for that user. Yeah. Is that gonna be useful or too much or? I guess so, so what did you part of the m the menu?",
+    "raw_text": "[0.00][S01]I guess in in in meeting browser one point one you can have a menu instead of a button.[4.92][3.10][S02]Exactly, I know.[4.22][5.56][S02]True.[5.92][7.26][S01]Right, this one.[8.66][8.76][S03]Mm, it's a bridge. Um but actually what we could do is on in that menu as well we could have an option that pops up a window with all the all the meetings that that user has been in.[20.02][19.98][S02]Mm.[20.26][21.12][S03]Like a search for that user.[23.18][23.38][S01]Yeah.[23.78][24.34][S03]Is that gonna be useful or too much or?[26.72][27.60][S01]I guess so, so what did you part of the m the menu?[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I guess in in in meeting browser one point one you can have a menu instead of a button.",
+        "t0_ms": 0,
+        "t1_ms": 4920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Exactly, I know.",
+        "t0_ms": 3100,
+        "t1_ms": 4220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "True.",
+        "t0_ms": 5560,
+        "t1_ms": 5920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Right, this one.",
+        "t0_ms": 7260,
+        "t1_ms": 8660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm, it's a bridge. Um but actually what we could do is on in that menu as well we could have an option that pops up a window with all the all the meetings that that user has been in.",
+        "t0_ms": 8760,
+        "t1_ms": 20020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 19980,
+        "t1_ms": 20260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Like a search for that user.",
+        "t0_ms": 21120,
+        "t1_ms": 23180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 23380,
+        "t1_ms": 23780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Is that gonna be useful or too much or?",
+        "t0_ms": 24340,
+        "t1_ms": 26720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I guess so, so what did you part of the m the menu?",
+        "t0_ms": 27600,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 4920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3100,
+        "t1_ms": 4220,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5560,
+        "t1_ms": 5920,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7260,
+        "t1_ms": 8660,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8760,
+        "t1_ms": 20020,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19980,
+        "t1_ms": 20260,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21120,
+        "t1_ms": 23180,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23380,
+        "t1_ms": 23780,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24340,
+        "t1_ms": 26720,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27600,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.053000450134277,
+      "encode_ms": 6794.48779296875,
+      "decode_ms": 16532.37890625
+    }
+  },
+  "rawDecoded": "[0.00][S01]I guess in in in meeting browser one point one you can have a menu instead of a button.[4.92][3.10][S02]Exactly, I know.[4.22][5.56][S02]True.[5.92][7.26][S01]Right, this one.[8.66][8.76][S03]Mm, it's a bridge. Um but actually what we could do is on in that menu as well we could have an option that pops up a window with all the all the meetings that that user has been in.[20.02][19.98][S02]Mm.[20.26][21.12][S03]Like a search for that user.[23.18][23.38][S01]Yeah.[23.78][24.34][S03]Is that gonna be useful or too much or?[26.72][27.60][S01]I guess so, so what did you part of the m the menu?[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

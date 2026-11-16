@@ -1,0 +1,264 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0069",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 33120000,
+    "sourceEndFrame": 33600000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "3af2ae994573b80f989cffc69d5f48dc6546de0c8e4fd19a73eb99335f7f4e0f",
+  "seconds": 31.36578830000508,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "On top. So I'm not too concerned that we haven't gone into depth about that, but it might be something we could consider when we're thinking about shapes. Mm. Well, she's might put things to be very important, so. In fact, we might like to put slowly on and um possibly two hours to signify the company, rather than a real reaction. Mm-hmm. Mm. Yeah, I thought the uh the double R could perhaps uh be the uh the enter button. Sounds good. Maybe, yeah. And I'd say, but that's us for now. Yeah. Okay.",
+    "raw_text": "[0.00][S01]On top. So I'm not too concerned that we haven't gone into depth about that, but it might be something we could consider when we're thinking about shapes.[8.44][1.20][S02]Mm.[1.54][9.74][S02]Well, she's might put things to be very important, so.[11.92][10.00][S01]In fact, we might like to put slowly on and um possibly two hours to signify the company, rather than a real reaction.[17.92][13.22][S02]Mm-hmm.[13.54][13.56][S03]Mm.[13.84][18.26][S03]Yeah, I thought the uh the double R could perhaps uh be the uh the enter button.[24.82][25.96][S01]Sounds good.[26.44][26.28][S02]Maybe, yeah.[26.96][27.44][S01]And I'd say, but that's us for now.[28.90][29.22][S02]Yeah.[29.46][29.78][S01]Okay.[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "On top. So I'm not too concerned that we haven't gone into depth about that, but it might be something we could consider when we're thinking about shapes.",
+        "t0_ms": 0,
+        "t1_ms": 8440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 1200,
+        "t1_ms": 1540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Well, she's might put things to be very important, so.",
+        "t0_ms": 9740,
+        "t1_ms": 11920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "In fact, we might like to put slowly on and um possibly two hours to signify the company, rather than a real reaction.",
+        "t0_ms": 10000,
+        "t1_ms": 17920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 13220,
+        "t1_ms": 13540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 13560,
+        "t1_ms": 13840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, I thought the uh the double R could perhaps uh be the uh the enter button.",
+        "t0_ms": 18260,
+        "t1_ms": 24820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Sounds good.",
+        "t0_ms": 25960,
+        "t1_ms": 26440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Maybe, yeah.",
+        "t0_ms": 26280,
+        "t1_ms": 26960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "And I'd say, but that's us for now.",
+        "t0_ms": 27440,
+        "t1_ms": 28900,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 29220,
+        "t1_ms": 29460,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 29780,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 8440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1200,
+        "t1_ms": 1540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9740,
+        "t1_ms": 11920,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10000,
+        "t1_ms": 17920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13220,
+        "t1_ms": 13540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13560,
+        "t1_ms": 13840,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18260,
+        "t1_ms": 24820,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25960,
+        "t1_ms": 26440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26280,
+        "t1_ms": 26960,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27440,
+        "t1_ms": 28900,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29220,
+        "t1_ms": 29460,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29780,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.01200008392334,
+      "encode_ms": 7402.14990234375,
+      "decode_ms": 23910.408203125
+    }
+  },
+  "rawDecoded": "[0.00][S01]On top. So I'm not too concerned that we haven't gone into depth about that, but it might be something we could consider when we're thinking about shapes.[8.44][1.20][S02]Mm.[1.54][9.74][S02]Well, she's might put things to be very important, so.[11.92][10.00][S01]In fact, we might like to put slowly on and um possibly two hours to signify the company, rather than a real reaction.[17.92][13.22][S02]Mm-hmm.[13.54][13.56][S03]Mm.[13.84][18.26][S03]Yeah, I thought the uh the double R could perhaps uh be the uh the enter button.[24.82][25.96][S01]Sounds good.[26.44][26.28][S02]Maybe, yeah.[26.96][27.44][S01]And I'd say, but that's us for now.[28.90][29.22][S02]Yeah.[29.46][29.78][S01]Okay.[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0063",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 30240000,
+    "sourceEndFrame": 30720000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "e82d2ab64695a7fed9836c8dc3cc79c36b660b2a4f95dea22a45e86b9981e82e",
+  "seconds": 18.962818300002255,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "展架。 更好的向顾客们展示。 然后最重要的一点呢，是我们要向这些顾客们介绍牛奶的一些功效，一些价格，让他们感觉到就是今天的这个活动是比较实惠的，性价比也高。 而且牛奶呢是。 这个对于人们的这个生活也是必不可少的，像老人他需要补充这个钙质。 和一些纯牛奶的。",
+    "raw_text": "[0.00][S01]展架。[0.62][1.54][S01]更好的向顾客们展示。[3.84][5.28][S01]然后最重要的一点呢，是我们要向这些顾客们介绍牛奶的一些功效，一些价格，让他们感觉到就是今天的这个活动是比较实惠的，性价比也高。[17.72][18.04][S01]而且牛奶呢是。[19.44][20.62][S01]这个对于人们的这个生活也是必不可少的，像老人他需要补充这个钙质。[28.32][28.88][S01]和一些纯牛奶的。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "展架。",
+        "t0_ms": 0,
+        "t1_ms": 620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "更好的向顾客们展示。",
+        "t0_ms": 1540,
+        "t1_ms": 3840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后最重要的一点呢，是我们要向这些顾客们介绍牛奶的一些功效，一些价格，让他们感觉到就是今天的这个活动是比较实惠的，性价比也高。",
+        "t0_ms": 5280,
+        "t1_ms": 17720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "而且牛奶呢是。",
+        "t0_ms": 18040,
+        "t1_ms": 19440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这个对于人们的这个生活也是必不可少的，像老人他需要补充这个钙质。",
+        "t0_ms": 20620,
+        "t1_ms": 28320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "和一些纯牛奶的。",
+        "t0_ms": 28880,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1540,
+        "t1_ms": 3840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5280,
+        "t1_ms": 17720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18040,
+        "t1_ms": 19440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20620,
+        "t1_ms": 28320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28880,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.283000946044922,
+      "encode_ms": 7874.35498046875,
+      "decode_ms": 11026.63671875
+    }
+  },
+  "rawDecoded": "[0.00][S01]展架。[0.62][1.54][S01]更好的向顾客们展示。[3.84][5.28][S01]然后最重要的一点呢，是我们要向这些顾客们介绍牛奶的一些功效，一些价格，让他们感觉到就是今天的这个活动是比较实惠的，性价比也高。[17.72][18.04][S01]而且牛奶呢是。[19.44][20.62][S01]这个对于人们的这个生活也是必不可少的，像老人他需要补充这个钙质。[28.32][28.88][S01]和一些纯牛奶的。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

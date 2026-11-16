@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0010",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 4800000,
+    "sourceEndFrame": 5280000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "ba6e03e04e445b0e3f4eda255a7af34c22e096b3c95fef2e7c569094558c8a8e",
+  "seconds": 24.357111099998292,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Evolve the speaker character to to the to the best. Yeah, it's true, it'd be nice to have it in connect interconnected. Okay. Well Yeah, like maybe tie that in with dialogue acts or something as well, I mean speaker characterization tied into I don't know, t just some way to sort of leverage that information, like we have it, we're doing it, but what how does it help the browsing, or what can it give us in the browsing? Well, you mean the the speaker characterization? Yeah. Oh well, yeah, I mean. Yeah. I don't know about that. I mean it's the speaker characterization is a bit like you said, I mean it's like a nice thing, we don't we're not actually sure what the user wants with it, but",
+    "raw_text": "[0.00][S01]Evolve the speaker character to to the to the best.[2.32][0.98][S02]Yeah, it's true, it'd be nice to have it in connect interconnected.[3.50][1.58][S03]Okay.[1.88][2.10][S04]Well[2.34][3.34][S03]Yeah, like maybe tie that in with dialogue acts or something as well, I mean speaker characterization tied into I don't know, t just some way to sort of leverage that information, like we have it, we're doing it, but what how does it help the browsing, or what can it give us in the browsing?[17.08][16.58][S02]Well, you mean the the speaker characterization?[18.34][17.88][S03]Yeah.[18.12][18.56][S02]Oh well, yeah, I mean.[19.78][19.22][S03]Yeah.[19.44][21.34][S02]I don't know about that. I mean it's the speaker characterization is a bit like you said, I mean it's like a nice thing, we don't we're not actually sure what the user wants with it, but[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Evolve the speaker character to to the to the best.",
+        "t0_ms": 0,
+        "t1_ms": 2320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, it's true, it'd be nice to have it in connect interconnected.",
+        "t0_ms": 980,
+        "t1_ms": 3500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 1580,
+        "t1_ms": 1880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Well",
+        "t0_ms": 2100,
+        "t1_ms": 2340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah, like maybe tie that in with dialogue acts or something as well, I mean speaker characterization tied into I don't know, t just some way to sort of leverage that information, like we have it, we're doing it, but what how does it help the browsing, or what can it give us in the browsing?",
+        "t0_ms": 3340,
+        "t1_ms": 17080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Well, you mean the the speaker characterization?",
+        "t0_ms": 16580,
+        "t1_ms": 18340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 17880,
+        "t1_ms": 18120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Oh well, yeah, I mean.",
+        "t0_ms": 18560,
+        "t1_ms": 19780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 19220,
+        "t1_ms": 19440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I don't know about that. I mean it's the speaker characterization is a bit like you said, I mean it's like a nice thing, we don't we're not actually sure what the user wants with it, but",
+        "t0_ms": 21340,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 980,
+        "t1_ms": 3500,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1580,
+        "t1_ms": 1880,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2100,
+        "t1_ms": 2340,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3340,
+        "t1_ms": 17080,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16580,
+        "t1_ms": 18340,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17880,
+        "t1_ms": 18120,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18560,
+        "t1_ms": 19780,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19220,
+        "t1_ms": 19440,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21340,
+        "t1_ms": 30000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 15.12399959564209,
+      "encode_ms": 7004.98876953125,
+      "decode_ms": 17293.017578125
+    }
+  },
+  "rawDecoded": "[0.00][S01]Evolve the speaker character to to the to the best.[2.32][0.98][S02]Yeah, it's true, it'd be nice to have it in connect interconnected.[3.50][1.58][S03]Okay.[1.88][2.10][S04]Well[2.34][3.34][S03]Yeah, like maybe tie that in with dialogue acts or something as well, I mean speaker characterization tied into I don't know, t just some way to sort of leverage that information, like we have it, we're doing it, but what how does it help the browsing, or what can it give us in the browsing?[17.08][16.58][S02]Well, you mean the the speaker characterization?[18.34][17.88][S03]Yeah.[18.12][18.56][S02]Oh well, yeah, I mean.[19.78][19.22][S03]Yeah.[19.44][21.34][S02]I don't know about that. I mean it's the speaker characterization is a bit like you said, I mean it's like a nice thing, we don't we're not actually sure what the user wants with it, but[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

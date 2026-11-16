@@ -1,0 +1,210 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0021",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 10080000,
+    "sourceEndFrame": 10560000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "84217b9d1b73439197214cecfcd234e89f79cf312a432e41cb47cfb82a9c5d02",
+  "seconds": 22.82118189999892,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Probably not, probably just two or two or three of whatever, whatever they're looking at with dialogue acts, whatever. Okay, there's. Probably not, no, yeah, two or three maybe, but yeah, but yeah, it depends. I mean I I really wanna put the summary in somewhere, you know. And the summary, for example, it's typical, you open the window, you read through it, you might click on, you know, close it again straight away. Mm-hmm. Yeah, yeah. But it'd be good to have it there. I think it's I think it's fine, yeah, I think I'll do this one, yeah. But well, couldn't we, I mean, you probably, I don't know if you wanna have like the the full transcription and the summary at the same time. So maybe you can just like.",
+    "raw_text": "[0.00][S01]Probably not, probably just two or two or three of whatever, whatever they're looking at with dialogue acts, whatever. Okay, there's.[6.36][0.96][S02]Probably not, no, yeah, two or three maybe, but yeah, but yeah, it depends. I mean I I really wanna put the summary in somewhere, you know.[9.00][9.88][S01]And the summary, for example, it's typical, you open the window, you read through it, you might click on, you know, close it again straight away.[15.86][9.88][S01]Mm-hmm.[10.18][16.20][S03]Yeah, yeah.[16.76][16.54][S02]But it'd be good to have it there.[17.82][17.18][S03]I think it's I think it's fine, yeah, I think I'll do this one, yeah.[19.78][18.30][S04]But well, couldn't we, I mean, you probably, I don't know if you wanna have like the the full transcription and the summary at the same time.[26.16][27.54][S04]So maybe you can just like.[29.28]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Probably not, probably just two or two or three of whatever, whatever they're looking at with dialogue acts, whatever. Okay, there's.",
+        "t0_ms": 0,
+        "t1_ms": 6360,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Probably not, no, yeah, two or three maybe, but yeah, but yeah, it depends. I mean I I really wanna put the summary in somewhere, you know.",
+        "t0_ms": 960,
+        "t1_ms": 9000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "And the summary, for example, it's typical, you open the window, you read through it, you might click on, you know, close it again straight away.",
+        "t0_ms": 9880,
+        "t1_ms": 15860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 9880,
+        "t1_ms": 10180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, yeah.",
+        "t0_ms": 16200,
+        "t1_ms": 16760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "But it'd be good to have it there.",
+        "t0_ms": 16540,
+        "t1_ms": 17820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "I think it's I think it's fine, yeah, I think I'll do this one, yeah.",
+        "t0_ms": 17180,
+        "t1_ms": 19780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "But well, couldn't we, I mean, you probably, I don't know if you wanna have like the the full transcription and the summary at the same time.",
+        "t0_ms": 18300,
+        "t1_ms": 26160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "So maybe you can just like.",
+        "t0_ms": 27540,
+        "t1_ms": 29280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 6360,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 960,
+        "t1_ms": 9000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9880,
+        "t1_ms": 15860,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9880,
+        "t1_ms": 10180,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16200,
+        "t1_ms": 16760,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16540,
+        "t1_ms": 17820,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17180,
+        "t1_ms": 19780,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18300,
+        "t1_ms": 26160,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27540,
+        "t1_ms": 29280,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.89799976348877,
+      "encode_ms": 6749.30712890625,
+      "decode_ms": 16023.4140625
+    }
+  },
+  "rawDecoded": "[0.00][S01]Probably not, probably just two or two or three of whatever, whatever they're looking at with dialogue acts, whatever. Okay, there's.[6.36][0.96][S02]Probably not, no, yeah, two or three maybe, but yeah, but yeah, it depends. I mean I I really wanna put the summary in somewhere, you know.[9.00][9.88][S01]And the summary, for example, it's typical, you open the window, you read through it, you might click on, you know, close it again straight away.[15.86][9.88][S01]Mm-hmm.[10.18][16.20][S03]Yeah, yeah.[16.76][16.54][S02]But it'd be good to have it there.[17.82][17.18][S03]I think it's I think it's fine, yeah, I think I'll do this one, yeah.[19.78][18.30][S04]But well, couldn't we, I mean, you probably, I don't know if you wanna have like the the full transcription and the summary at the same time.[26.16][27.54][S04]So maybe you can just like.[29.28]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

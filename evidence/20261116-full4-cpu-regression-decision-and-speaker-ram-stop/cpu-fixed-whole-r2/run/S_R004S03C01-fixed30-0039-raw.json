@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0039",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 18720000,
+    "sourceEndFrame": 19200000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "11077dee7119ec58430a804ceaa0d297eaa8ecae3993ae4162fad2a3d0a732f1",
+  "seconds": 19.32548809999571,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "呃，活动嘛，尤其是这个周六日，呃，可以搞一些这种促销活动。 嗯，比如说，呃，比如说限本周六日，呃，全场七折，疯狂抢购什么的，然后就是。 嗯，一个月两个月用一次啦，就是，嗯，就就行，太多的话就是影，会也会影响自身的利益。 嗯。 然后就是，主要就是吸引人气。 还有。",
+    "raw_text": "[0.25][S01]呃，活动嘛，尤其是这个周六日，呃，可以搞一些这种促销活动。[6.95][7.14][S01]嗯，比如说，呃，比如说限本周六日，呃，全场七折，疯狂抢购什么的，然后就是。[16.01][16.25][S01]嗯，一个月两个月用一次啦，就是，嗯，就就行，太多的话就是影，会也会影响自身的利益。[24.45][24.74][S01]嗯。[25.48][26.06][S01]然后就是，主要就是吸引人气。[29.03][29.51][S01]还有。[29.99]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "呃，活动嘛，尤其是这个周六日，呃，可以搞一些这种促销活动。",
+        "t0_ms": 250,
+        "t1_ms": 6950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，比如说，呃，比如说限本周六日，呃，全场七折，疯狂抢购什么的，然后就是。",
+        "t0_ms": 7140,
+        "t1_ms": 16010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，一个月两个月用一次啦，就是，嗯，就就行，太多的话就是影，会也会影响自身的利益。",
+        "t0_ms": 16250,
+        "t1_ms": 24450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 24740,
+        "t1_ms": 25480,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后就是，主要就是吸引人气。",
+        "t0_ms": 26060,
+        "t1_ms": 29030,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有。",
+        "t0_ms": 29510,
+        "t1_ms": 29990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 250,
+        "t1_ms": 6950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7140,
+        "t1_ms": 16010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16250,
+        "t1_ms": 24450,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24740,
+        "t1_ms": 25480,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26060,
+        "t1_ms": 29030,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29510,
+        "t1_ms": 29990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.258000373840332,
+      "encode_ms": 7274.748046875,
+      "decode_ms": 12003.162109375
+    }
+  },
+  "rawDecoded": "[0.25][S01]呃，活动嘛，尤其是这个周六日，呃，可以搞一些这种促销活动。[6.95][7.14][S01]嗯，比如说，呃，比如说限本周六日，呃，全场七折，疯狂抢购什么的，然后就是。[16.01][16.25][S01]嗯，一个月两个月用一次啦，就是，嗯，就就行，太多的话就是影，会也会影响自身的利益。[24.45][24.74][S01]嗯。[25.48][26.06][S01]然后就是，主要就是吸引人气。[29.03][29.51][S01]还有。[29.99]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

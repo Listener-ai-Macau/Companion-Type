@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0058",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 27840000,
+    "sourceEndFrame": 28320000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "c53f1870d1ad75a40fb7b14c08c8bc66ffeff2eee9a312c64b9b9467e6f09d91",
+  "seconds": 22.79784389999986,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Isn't it? Yeah, it's it's quite messy actually. It's it's a once up again. It's actually all these all these um things are are nicked from um you know all these drop down menus and tick boxes are nicked from Google online. A screenshot of Google, ooh. Could that be that? That's quite something. This is so much fun. Maybe you should make it exist then. It's gonna be a little difficult, more difficult. Yeah, I mean I was going to, but you know the whole drop down menus and",
+    "raw_text": "[0.00][S01]Isn't it?[0.30][0.50][S02]Yeah, it's it's quite messy actually.[2.60][2.60][S03]It's it's a once up again.[3.80][3.28][S01]It's actually all these all these um things are are nicked from um you know all these drop down menus and tick boxes are nicked from Google online.[10.34][13.78][S01]A screenshot of Google, ooh.[15.44][16.88][S01]Could that be that?[17.52][19.64][S02]That's quite something.[20.44][19.76][S01]This is so much fun.[20.72][19.98][S04]Maybe you should make it exist then.[21.62][23.58][S01]It's gonna be a little difficult, more difficult. Yeah, I mean I was going to, but you know the whole drop down menus and[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Isn't it?",
+        "t0_ms": 0,
+        "t1_ms": 300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, it's it's quite messy actually.",
+        "t0_ms": 500,
+        "t1_ms": 2600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "It's it's a once up again.",
+        "t0_ms": 2600,
+        "t1_ms": 3800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "It's actually all these all these um things are are nicked from um you know all these drop down menus and tick boxes are nicked from Google online.",
+        "t0_ms": 3280,
+        "t1_ms": 10340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "A screenshot of Google, ooh.",
+        "t0_ms": 13780,
+        "t1_ms": 15440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Could that be that?",
+        "t0_ms": 16880,
+        "t1_ms": 17520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "That's quite something.",
+        "t0_ms": 19640,
+        "t1_ms": 20440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "This is so much fun.",
+        "t0_ms": 19760,
+        "t1_ms": 20720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Maybe you should make it exist then.",
+        "t0_ms": 19980,
+        "t1_ms": 21620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "It's gonna be a little difficult, more difficult. Yeah, I mean I was going to, but you know the whole drop down menus and",
+        "t0_ms": 23580,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 300,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 500,
+        "t1_ms": 2600,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2600,
+        "t1_ms": 3800,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3280,
+        "t1_ms": 10340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13780,
+        "t1_ms": 15440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16880,
+        "t1_ms": 17520,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19640,
+        "t1_ms": 20440,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19760,
+        "t1_ms": 20720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19980,
+        "t1_ms": 21620,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23580,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.235000610351562,
+      "encode_ms": 6840.5791015625,
+      "decode_ms": 15900.9052734375
+    }
+  },
+  "rawDecoded": "[0.00][S01]Isn't it?[0.30][0.50][S02]Yeah, it's it's quite messy actually.[2.60][2.60][S03]It's it's a once up again.[3.80][3.28][S01]It's actually all these all these um things are are nicked from um you know all these drop down menus and tick boxes are nicked from Google online.[10.34][13.78][S01]A screenshot of Google, ooh.[15.44][16.88][S01]Could that be that?[17.52][19.64][S02]That's quite something.[20.44][19.76][S01]This is so much fun.[20.72][19.98][S04]Maybe you should make it exist then.[21.62][23.58][S01]It's gonna be a little difficult, more difficult. Yeah, I mean I was going to, but you know the whole drop down menus and[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

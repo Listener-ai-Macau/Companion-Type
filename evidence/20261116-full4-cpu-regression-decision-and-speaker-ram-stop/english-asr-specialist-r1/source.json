@@ -1,0 +1,20 @@
+{
+  "state": "PUBLIC_SINGLE_SPECIALIST_METADATA_READ_NO_MODEL_DOWNLOAD_OR_INFERENCE",
+  "at": "2026-11-16T12:13:08.397898+08:00",
+  "url": "https://huggingface.co/api/models/handy-computer/whisper-large-v3-turbo-gguf?blobs=true",
+  "repository": "handy-computer/whisper-large-v3-turbo-gguf",
+  "revision": "18ada752005f5fddef499256f9a458d0b37a203a",
+  "gated": false,
+  "file": {
+    "rfilename": "whisper-large-v3-turbo-Q8_0.gguf",
+    "blobId": "2b42d8484b2f39d4d3a35dc8367980faeb3b2d96",
+    "size": 886381728,
+    "lfs": {
+      "sha256": "257aa7ec9121c22c167d5e2c49e3e76b4ba0e6e27ebc13074eba0a80f8190220",
+      "size": 886381728,
+      "pointerSize": 134
+    }
+  },
+  "newNeuralCalls": 0,
+  "qualityQualified": false
+}

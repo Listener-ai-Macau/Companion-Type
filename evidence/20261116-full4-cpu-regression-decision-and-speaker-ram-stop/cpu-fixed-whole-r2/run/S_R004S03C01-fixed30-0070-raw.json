@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0070",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 33600000,
+    "sourceEndFrame": 34080000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "b11edb17017ce0ef1a743c0ca395d0aff0c8ecc5acf7d3af528a340b0350f3fc",
+  "seconds": 16.105510599998524,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "今天超市今日特价商品。 咱这个特价商品一定要瞩目，每个部门儿每天都有特价商品。 这个一定要放到那儿，就是我现在有的部门儿还往这儿放一放，有的部门儿啊甚至就是呃还在自己的零售台那儿放着。 嗯，咱这块儿一定要注意起来，啊，有的部门儿。",
+    "raw_text": "[0.29][S01]今天超市今日特价商品。[3.99][5.58][S01]咱这个特价商品一定要瞩目，每个部门儿每天都有特价商品。[11.81][14.61][S01]这个一定要放到那儿，就是我现在有的部门儿还往这儿放一放，有的部门儿啊甚至就是呃还在自己的零售台那儿放着。[25.12][25.52][S01]嗯，咱这块儿一定要注意起来，啊，有的部门儿。[29.91]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "今天超市今日特价商品。",
+        "t0_ms": 290,
+        "t1_ms": 3990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "咱这个特价商品一定要瞩目，每个部门儿每天都有特价商品。",
+        "t0_ms": 5580,
+        "t1_ms": 11810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这个一定要放到那儿，就是我现在有的部门儿还往这儿放一放，有的部门儿啊甚至就是呃还在自己的零售台那儿放着。",
+        "t0_ms": 14610,
+        "t1_ms": 25120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，咱这块儿一定要注意起来，啊，有的部门儿。",
+        "t0_ms": 25520,
+        "t1_ms": 29910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 290,
+        "t1_ms": 3990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5580,
+        "t1_ms": 11810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14610,
+        "t1_ms": 25120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25520,
+        "t1_ms": 29910,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.191999435424805,
+      "encode_ms": 6886.13818359375,
+      "decode_ms": 9155.7744140625
+    }
+  },
+  "rawDecoded": "[0.29][S01]今天超市今日特价商品。[3.99][5.58][S01]咱这个特价商品一定要瞩目，每个部门儿每天都有特价商品。[11.81][14.61][S01]这个一定要放到那儿，就是我现在有的部门儿还往这儿放一放，有的部门儿啊甚至就是呃还在自己的零售台那儿放着。[25.12][25.52][S01]嗯，咱这块儿一定要注意起来，啊，有的部门儿。[29.91]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

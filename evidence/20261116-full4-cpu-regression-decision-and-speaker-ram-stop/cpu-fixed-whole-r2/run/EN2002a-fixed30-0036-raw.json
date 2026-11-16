@@ -1,0 +1,282 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0036",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 17280000,
+    "sourceEndFrame": 17760000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "9dab758a72f781713283c0076c80d44640fdb1ba9cce9215562354cf0996363d",
+  "seconds": 25.64266779999889,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "You have to convert it to some sort of format, I suppose. Yeah. I've been trying to write something to read the X M L and get rid of it. And I can get rid of it, but I'm having trouble putting it anywhere else. So it'll come up on the screen. No. Okay. At the moment I haven't managed to put it into a vector or whatever in Java to play with it, but I guess it's not very difficult. Yeah, Java. Okay. Mm. What are you running in Java or yeah, okay. Right. Mm-hmm. It's only a little bunch of files. I mean you should look at look have a look at the the browser code then, because",
+    "raw_text": "[0.00][S01]You have to convert it to some sort of format, I suppose.[2.60][2.64][S02]Yeah.[2.86][3.40][S03]I've been trying to write something to read the X M L and get rid of it. And I can get rid of it, but I'm having trouble putting it anywhere else. So it'll come up on the screen.[13.40][12.44][S01]No.[12.74][15.48][S01]Okay.[16.02][16.38][S04]At the moment I haven't managed to put it into a vector or whatever in Java to play with it, but I guess it's not very difficult. Yeah, Java.[23.30][19.60][S01]Okay.[19.92][21.14][S02]Mm.[21.36][21.20][S01]What are you running in Java or yeah, okay.[23.78][23.88][S02]Right.[24.08][24.74][S04]Mm-hmm.[24.98][26.14][S01]It's only a little bunch of files.[28.50][26.72][S01]I mean you should look at look have a look at the the browser code then, because[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "You have to convert it to some sort of format, I suppose.",
+        "t0_ms": 0,
+        "t1_ms": 2600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 2640,
+        "t1_ms": 2860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "I've been trying to write something to read the X M L and get rid of it. And I can get rid of it, but I'm having trouble putting it anywhere else. So it'll come up on the screen.",
+        "t0_ms": 3400,
+        "t1_ms": 13400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "No.",
+        "t0_ms": 12440,
+        "t1_ms": 12740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 15480,
+        "t1_ms": 16020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "At the moment I haven't managed to put it into a vector or whatever in Java to play with it, but I guess it's not very difficult. Yeah, Java.",
+        "t0_ms": 16380,
+        "t1_ms": 23300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 19600,
+        "t1_ms": 19920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 21140,
+        "t1_ms": 21360,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "What are you running in Java or yeah, okay.",
+        "t0_ms": 21200,
+        "t1_ms": 23780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Right.",
+        "t0_ms": 23880,
+        "t1_ms": 24080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 24740,
+        "t1_ms": 24980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "It's only a little bunch of files.",
+        "t0_ms": 26140,
+        "t1_ms": 28500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I mean you should look at look have a look at the the browser code then, because",
+        "t0_ms": 26720,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2600,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2640,
+        "t1_ms": 2860,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3400,
+        "t1_ms": 13400,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12440,
+        "t1_ms": 12740,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15480,
+        "t1_ms": 16020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16380,
+        "t1_ms": 23300,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19600,
+        "t1_ms": 19920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21140,
+        "t1_ms": 21360,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21200,
+        "t1_ms": 23780,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23880,
+        "t1_ms": 24080,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24740,
+        "t1_ms": 24980,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26140,
+        "t1_ms": 28500,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26720,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.630000114440918,
+      "encode_ms": 7248.921875,
+      "decode_ms": 18345.525390625
+    }
+  },
+  "rawDecoded": "[0.00][S01]You have to convert it to some sort of format, I suppose.[2.60][2.64][S02]Yeah.[2.86][3.40][S03]I've been trying to write something to read the X M L and get rid of it. And I can get rid of it, but I'm having trouble putting it anywhere else. So it'll come up on the screen.[13.40][12.44][S01]No.[12.74][15.48][S01]Okay.[16.02][16.38][S04]At the moment I haven't managed to put it into a vector or whatever in Java to play with it, but I guess it's not very difficult. Yeah, Java.[23.30][19.60][S01]Okay.[19.92][21.14][S02]Mm.[21.36][21.20][S01]What are you running in Java or yeah, okay.[23.78][23.88][S02]Right.[24.08][24.74][S04]Mm-hmm.[24.98][26.14][S01]It's only a little bunch of files.[28.50][26.72][S01]I mean you should look at look have a look at the the browser code then, because[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

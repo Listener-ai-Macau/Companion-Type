@@ -1,0 +1,372 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0017",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 8160000,
+    "sourceEndFrame": 8640000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8a4c2c846d5863f556d102eb4b6d4d755c17d3a6c30223532f3eb6e22da79b87",
+  "seconds": 26.088129600000684,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "It's not it's not the end of the world. Especially if you haven't touched pad. Yeah yeah. And then she goes oh. Yeah. It doesn't break it. Well I'll I'll check what it does on on um double click at the moment. Yeah. Okay. 'Cause I think it might do something, but. Yeah. It's good for. Yeah. But I don't I don't I d really don't see anything obvious that that. Yeah. I mean if we can think of something like. Hmm. So.",
+    "raw_text": "[0.00][S01]It's not it's not the end of the world.[1.10][1.82][S02]Especially if you haven't touched pad.[3.10][3.54][S01]Yeah yeah.[4.38][4.24][S02]And then she goes oh.[5.24][5.58][S01]Yeah.[5.84][7.44][S01]It doesn't break it.[8.44][7.62][S02]Well I'll I'll check what it does on on um double click at the moment.[11.30][11.62][S03]Yeah.[11.92][11.76][S01]Okay.[12.10][11.98][S02]'Cause I think it might do something, but.[13.78][12.58][S03]Yeah.[12.98][14.46][S03]It's good for.[15.42][15.12][S02]Yeah.[15.46][16.56][S02]But I don't I don't I d really don't see anything obvious that that.[20.34][16.88][S01]Yeah.[17.14][22.30][S02]I mean if we can think of something like.[23.64][24.86][S01]Hmm.[25.06][28.66][S03]So.[29.06]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "It's not it's not the end of the world.",
+        "t0_ms": 0,
+        "t1_ms": 1100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Especially if you haven't touched pad.",
+        "t0_ms": 1820,
+        "t1_ms": 3100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah yeah.",
+        "t0_ms": 3540,
+        "t1_ms": 4380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "And then she goes oh.",
+        "t0_ms": 4240,
+        "t1_ms": 5240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 5580,
+        "t1_ms": 5840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "It doesn't break it.",
+        "t0_ms": 7440,
+        "t1_ms": 8440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Well I'll I'll check what it does on on um double click at the moment.",
+        "t0_ms": 7620,
+        "t1_ms": 11300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 11620,
+        "t1_ms": 11920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 11760,
+        "t1_ms": 12100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "'Cause I think it might do something, but.",
+        "t0_ms": 11980,
+        "t1_ms": 13780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 12580,
+        "t1_ms": 12980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "It's good for.",
+        "t0_ms": 14460,
+        "t1_ms": 15420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 15120,
+        "t1_ms": 15460,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "But I don't I don't I d really don't see anything obvious that that.",
+        "t0_ms": 16560,
+        "t1_ms": 20340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 16880,
+        "t1_ms": 17140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I mean if we can think of something like.",
+        "t0_ms": 22300,
+        "t1_ms": 23640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 24860,
+        "t1_ms": 25060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "So.",
+        "t0_ms": 28660,
+        "t1_ms": 29060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 1100,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1820,
+        "t1_ms": 3100,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3540,
+        "t1_ms": 4380,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4240,
+        "t1_ms": 5240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5580,
+        "t1_ms": 5840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7440,
+        "t1_ms": 8440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7620,
+        "t1_ms": 11300,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11620,
+        "t1_ms": 11920,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11760,
+        "t1_ms": 12100,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11980,
+        "t1_ms": 13780,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12580,
+        "t1_ms": 12980,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14460,
+        "t1_ms": 15420,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15120,
+        "t1_ms": 15460,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16560,
+        "t1_ms": 20340,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16880,
+        "t1_ms": 17140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22300,
+        "t1_ms": 23640,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24860,
+        "t1_ms": 25060,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28660,
+        "t1_ms": 29060,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 26.444000244140625,
+      "encode_ms": 6929.0771484375,
+      "decode_ms": 19094.685546875
+    }
+  },
+  "rawDecoded": "[0.00][S01]It's not it's not the end of the world.[1.10][1.82][S02]Especially if you haven't touched pad.[3.10][3.54][S01]Yeah yeah.[4.38][4.24][S02]And then she goes oh.[5.24][5.58][S01]Yeah.[5.84][7.44][S01]It doesn't break it.[8.44][7.62][S02]Well I'll I'll check what it does on on um double click at the moment.[11.30][11.62][S03]Yeah.[11.92][11.76][S01]Okay.[12.10][11.98][S02]'Cause I think it might do something, but.[13.78][12.58][S03]Yeah.[12.98][14.46][S03]It's good for.[15.42][15.12][S02]Yeah.[15.46][16.56][S02]But I don't I don't I d really don't see anything obvious that that.[20.34][16.88][S01]Yeah.[17.14][22.30][S02]I mean if we can think of something like.[23.64][24.86][S01]Hmm.[25.06][28.66][S03]So.[29.06]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

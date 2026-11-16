@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0019",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 9120000,
+    "sourceEndFrame": 9600000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "e82887828fdc17c7f2c3a53b99cf3a0b00d6ba6f46e0702abf7fe05f7dce1388",
+  "seconds": 17.328069199997117,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "清仓的，比如说看着这个菜很多，还而且还今天还还没有卖完，嗯，然后就会有有一部分去出清去。 呃，其实那个出清菜的话，我们每天都会呃针对于上一天的这个销售的程度，今天大概订多少菜，其实我们心里也是有数的。 就是偶尔遇到了这些需要出清的，我们就会按出清的方式去给他呃清出去，清仓。 这样的话呢，我们就是不会到明天的话。",
+    "raw_text": "[0.01][S01]清仓的，比如说看着这个菜很多，还而且还今天还还没有卖完，嗯，然后就会有有一部分去出清去。[8.75][8.88][S01]呃，其实那个出清菜的话，我们每天都会呃针对于上一天的这个销售的程度，今天大概订多少菜，其实我们心里也是有数的。[18.99][19.06][S01]就是偶尔遇到了这些需要出清的，我们就会按出清的方式去给他呃清出去，清仓。[26.55][26.94][S01]这样的话呢，我们就是不会到明天的话。[30.01]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "清仓的，比如说看着这个菜很多，还而且还今天还还没有卖完，嗯，然后就会有有一部分去出清去。",
+        "t0_ms": 10,
+        "t1_ms": 8750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，其实那个出清菜的话，我们每天都会呃针对于上一天的这个销售的程度，今天大概订多少菜，其实我们心里也是有数的。",
+        "t0_ms": 8880,
+        "t1_ms": 18990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就是偶尔遇到了这些需要出清的，我们就会按出清的方式去给他呃清出去，清仓。",
+        "t0_ms": 19060,
+        "t1_ms": 26550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这样的话呢，我们就是不会到明天的话。",
+        "t0_ms": 26940,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 8750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8880,
+        "t1_ms": 18990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19060,
+        "t1_ms": 26550,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26940,
+        "t1_ms": 30010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 26.14699935913086,
+      "encode_ms": 6843.3388671875,
+      "decode_ms": 10423.6318359375
+    }
+  },
+  "rawDecoded": "[0.01][S01]清仓的，比如说看着这个菜很多，还而且还今天还还没有卖完，嗯，然后就会有有一部分去出清去。[8.75][8.88][S01]呃，其实那个出清菜的话，我们每天都会呃针对于上一天的这个销售的程度，今天大概订多少菜，其实我们心里也是有数的。[18.99][19.06][S01]就是偶尔遇到了这些需要出清的，我们就会按出清的方式去给他呃清出去，清仓。[26.55][26.94][S01]这样的话呢，我们就是不会到明天的话。[30.01]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

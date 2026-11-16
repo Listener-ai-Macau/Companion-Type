@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0006",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 2880000,
+    "sourceEndFrame": 3360000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "f56e1e99a3973322268643e0634bd878caed83a4e23d677de1928ed1cb969698",
+  "seconds": 21.98606160000054,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "甚至有的人会用了十年二十年。 对吧，现在大的手机号儿，嗯，有的用个十几年的都已经有了。 小的，因为我们呢，因为诚信问题，他一看这个人手机号儿都用了十来年了，就说明这个人。 诚信没有问题。 他要是一直在换手机号儿，怕别人找他的人，这些人就没有诚信了。 所以说一般的手机号儿，用个一个月两个月的，像这样的，那就会影响他的贷款额度了。 手机。",
+    "raw_text": "[0.01][S01]甚至有的人会用了十年二十年。[1.95][2.81][S01]对吧，现在大的手机号儿，嗯，有的用个十几年的都已经有了。[7.13][7.88][S01]小的，因为我们呢，因为诚信问题，他一看这个人手机号儿都用了十来年了，就说明这个人。[15.31][16.68][S01]诚信没有问题。[17.93][18.83][S01]他要是一直在换手机号儿，怕别人找他的人，这些人就没有诚信了。[22.81][23.14][S01]所以说一般的手机号儿，用个一个月两个月的，像这样的，那就会影响他的贷款额度了。[28.72][29.68][S01]手机。[29.99]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "甚至有的人会用了十年二十年。",
+        "t0_ms": 10,
+        "t1_ms": 1950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对吧，现在大的手机号儿，嗯，有的用个十几年的都已经有了。",
+        "t0_ms": 2810,
+        "t1_ms": 7130,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "小的，因为我们呢，因为诚信问题，他一看这个人手机号儿都用了十来年了，就说明这个人。",
+        "t0_ms": 7880,
+        "t1_ms": 15310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "诚信没有问题。",
+        "t0_ms": 16680,
+        "t1_ms": 17930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "他要是一直在换手机号儿，怕别人找他的人，这些人就没有诚信了。",
+        "t0_ms": 18830,
+        "t1_ms": 22810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "所以说一般的手机号儿，用个一个月两个月的，像这样的，那就会影响他的贷款额度了。",
+        "t0_ms": 23140,
+        "t1_ms": 28720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "手机。",
+        "t0_ms": 29680,
+        "t1_ms": 29990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 1950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2810,
+        "t1_ms": 7130,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7880,
+        "t1_ms": 15310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16680,
+        "t1_ms": 17930,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18830,
+        "t1_ms": 22810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23140,
+        "t1_ms": 28720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29680,
+        "t1_ms": 29990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 21.000999450683594,
+      "encode_ms": 8493.767578125,
+      "decode_ms": 13437.67578125
+    }
+  },
+  "rawDecoded": "[0.01][S01]甚至有的人会用了十年二十年。[1.95][2.81][S01]对吧，现在大的手机号儿，嗯，有的用个十几年的都已经有了。[7.13][7.88][S01]小的，因为我们呢，因为诚信问题，他一看这个人手机号儿都用了十来年了，就说明这个人。[15.31][16.68][S01]诚信没有问题。[17.93][18.83][S01]他要是一直在换手机号儿，怕别人找他的人，这些人就没有诚信了。[22.81][23.14][S01]所以说一般的手机号儿，用个一个月两个月的，像这样的，那就会影响他的贷款额度了。[28.72][29.68][S01]手机。[29.99]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0010",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 4800000,
+    "sourceEndFrame": 5280000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "caeae40e93b47cc4f6104f29240ff386e4f2183f75952582f4fd987b2b46d612",
+  "seconds": 19.99121400000149,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "呃，还有还有还会有充充分的证据，啊。 然后做好了，呃，分析预测的工作，然后还有评估论证啊等等等等。 嗯。 嗯。 嗯，还有。 我们还会防止啊，还有减少啊信贷的资产，呃，损失嘛。 嗯。 呃，确保确保确保公司还会确保公司，呃，贷款。",
+    "raw_text": "[0.84][S01]呃，还有还有还会有充充分的证据，啊。[4.64][5.52][S01]然后做好了，呃，分析预测的工作，然后还有评估论证啊等等等等。[12.68][9.44][S02]嗯。[9.88][12.74][S02]嗯。[13.24][14.84][S01]嗯，还有。[16.84][17.52][S01]我们还会防止啊，还有减少啊信贷的资产，呃，损失嘛。[22.86][23.58][S02]嗯。[24.14][25.18][S01]呃，确保确保确保公司还会确保公司，呃，贷款。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "呃，还有还有还会有充充分的证据，啊。",
+        "t0_ms": 840,
+        "t1_ms": 4640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后做好了，呃，分析预测的工作，然后还有评估论证啊等等等等。",
+        "t0_ms": 5520,
+        "t1_ms": 12680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 9440,
+        "t1_ms": 9880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 12740,
+        "t1_ms": 13240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，还有。",
+        "t0_ms": 14840,
+        "t1_ms": 16840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "我们还会防止啊，还有减少啊信贷的资产，呃，损失嘛。",
+        "t0_ms": 17520,
+        "t1_ms": 22860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 23580,
+        "t1_ms": 24140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，确保确保确保公司还会确保公司，呃，贷款。",
+        "t0_ms": 25180,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 840,
+        "t1_ms": 4640,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5520,
+        "t1_ms": 12680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9440,
+        "t1_ms": 9880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12740,
+        "t1_ms": 13240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14840,
+        "t1_ms": 16840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17520,
+        "t1_ms": 22860,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23580,
+        "t1_ms": 24140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25180,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.573999404907227,
+      "encode_ms": 7371.30712890625,
+      "decode_ms": 12564.2783203125
+    }
+  },
+  "rawDecoded": "[0.84][S01]呃，还有还有还会有充充分的证据，啊。[4.64][5.52][S01]然后做好了，呃，分析预测的工作，然后还有评估论证啊等等等等。[12.68][9.44][S02]嗯。[9.88][12.74][S02]嗯。[13.24][14.84][S01]嗯，还有。[16.84][17.52][S01]我们还会防止啊，还有减少啊信贷的资产，呃，损失嘛。[22.86][23.58][S02]嗯。[24.14][25.18][S01]呃，确保确保确保公司还会确保公司，呃，贷款。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

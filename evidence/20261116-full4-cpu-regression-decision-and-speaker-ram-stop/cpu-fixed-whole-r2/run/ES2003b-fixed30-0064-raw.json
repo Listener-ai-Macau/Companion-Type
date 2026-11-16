@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0064",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 30720000,
+    "sourceEndFrame": 31200000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "fad7d9ae1cd50ebd8d5b34e94417f54c70be01013f8e22f95e56dd2f2955e080",
+  "seconds": 19.90883649999887,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Right. Well, I can give you the frequency what people what options people use the most often. I guess that's gonna be important in the defining the the software side of the interface, right? You want stuff that are more Yeah. If you could maybe as well see what people think about the idea this minimalist approach we've taken where of a joystick to control the very basic functions and then the idea of manipulating it like you would a mobile. I don't know how easy that will be within the time frame, but could be something we could maybe look into. Okay. Okay. Hmm. Sure.",
+    "raw_text": "[0.00][S01]Right.[0.24][0.60][S02]Well, I can give you the frequency what people what options people use the most often. I guess that's gonna be important in the defining the the software side of the interface, right? You want stuff that are more[12.34][12.22][S03]Yeah.[12.44][12.68][S04]If you could maybe as well see what people think about the idea this minimalist approach we've taken where of a joystick to control the very basic functions and then the idea of manipulating it like you would a mobile. I don't know how easy that will be within the time frame, but could be something we could maybe look into.[29.14][21.00][S01]Okay.[21.26][24.94][S02]Okay.[25.24][27.84][S02]Hmm.[28.04][29.24][S02]Sure.[29.58]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Right.",
+        "t0_ms": 0,
+        "t1_ms": 240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Well, I can give you the frequency what people what options people use the most often. I guess that's gonna be important in the defining the the software side of the interface, right? You want stuff that are more",
+        "t0_ms": 600,
+        "t1_ms": 12340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 12220,
+        "t1_ms": 12440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "If you could maybe as well see what people think about the idea this minimalist approach we've taken where of a joystick to control the very basic functions and then the idea of manipulating it like you would a mobile. I don't know how easy that will be within the time frame, but could be something we could maybe look into.",
+        "t0_ms": 12680,
+        "t1_ms": 29140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 21000,
+        "t1_ms": 21260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 24940,
+        "t1_ms": 25240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 27840,
+        "t1_ms": 28040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Sure.",
+        "t0_ms": 29240,
+        "t1_ms": 29580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 600,
+        "t1_ms": 12340,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12220,
+        "t1_ms": 12440,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12680,
+        "t1_ms": 29140,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21000,
+        "t1_ms": 21260,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24940,
+        "t1_ms": 25240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27840,
+        "t1_ms": 28040,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29240,
+        "t1_ms": 29580,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 22.104000091552734,
+      "encode_ms": 6481.64697265625,
+      "decode_ms": 13372.60546875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Right.[0.24][0.60][S02]Well, I can give you the frequency what people what options people use the most often. I guess that's gonna be important in the defining the the software side of the interface, right? You want stuff that are more[12.34][12.22][S03]Yeah.[12.44][12.68][S04]If you could maybe as well see what people think about the idea this minimalist approach we've taken where of a joystick to control the very basic functions and then the idea of manipulating it like you would a mobile. I don't know how easy that will be within the time frame, but could be something we could maybe look into.[29.14][21.00][S01]Okay.[21.26][24.94][S02]Okay.[25.24][27.84][S02]Hmm.[28.04][29.24][S02]Sure.[29.58]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

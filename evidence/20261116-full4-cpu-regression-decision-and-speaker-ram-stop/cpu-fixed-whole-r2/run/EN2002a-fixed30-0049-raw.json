@@ -1,0 +1,282 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0049",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 23520000,
+    "sourceEndFrame": 24000000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "581af5b5f71759129d908a15e65cc884f35bd3c17f76a0d8e8e4f4149739f3b0",
+  "seconds": 22.71321539999917,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Well, should you finally want to explore any other. Yeah. Yeah, it's very sad. Oh dear. Well, how's how's your how's your um uh quantifier raising? Well. Hmm, yeah. I can't remember what I'm supposed to do by the way, am I supposed to do the summarisation thing you bought? Mm. Mm. No. Who was doing that? You do.",
+    "raw_text": "[0.00][S01]Well, should you finally want to explore any other.[2.34][0.88][S02]Yeah.[1.20][3.74][S03]Yeah, it's very sad.[4.64][4.22][S02]Oh dear.[5.12][5.46][S01]Well, how's how's your how's your um uh quantifier raising?[9.52][5.68][S02]Well.[6.04][10.10][S03]Hmm, yeah.[11.26][13.10][S02]I can't remember what I'm supposed to do by the way, am I supposed to do the summarisation thing you bought?[17.54][18.74][S03]Mm.[19.14][23.32][S03]Mm.[23.66][24.00][S02]No.[24.30][25.52][S03]Who was doing that?[26.14][29.30][S02]You do.[29.66]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Well, should you finally want to explore any other.",
+        "t0_ms": 0,
+        "t1_ms": 2340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 880,
+        "t1_ms": 1200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, it's very sad.",
+        "t0_ms": 3740,
+        "t1_ms": 4640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Oh dear.",
+        "t0_ms": 4220,
+        "t1_ms": 5120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Well, how's how's your how's your um uh quantifier raising?",
+        "t0_ms": 5460,
+        "t1_ms": 9520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Well.",
+        "t0_ms": 5680,
+        "t1_ms": 6040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Hmm, yeah.",
+        "t0_ms": 10100,
+        "t1_ms": 11260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I can't remember what I'm supposed to do by the way, am I supposed to do the summarisation thing you bought?",
+        "t0_ms": 13100,
+        "t1_ms": 17540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 18740,
+        "t1_ms": 19140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 23320,
+        "t1_ms": 23660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "No.",
+        "t0_ms": 24000,
+        "t1_ms": 24300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Who was doing that?",
+        "t0_ms": 25520,
+        "t1_ms": 26140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "You do.",
+        "t0_ms": 29300,
+        "t1_ms": 29660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 880,
+        "t1_ms": 1200,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3740,
+        "t1_ms": 4640,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4220,
+        "t1_ms": 5120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5460,
+        "t1_ms": 9520,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5680,
+        "t1_ms": 6040,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10100,
+        "t1_ms": 11260,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13100,
+        "t1_ms": 17540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18740,
+        "t1_ms": 19140,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23320,
+        "t1_ms": 23660,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24000,
+        "t1_ms": 24300,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25520,
+        "t1_ms": 26140,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29300,
+        "t1_ms": 29660,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.507999420166016,
+      "encode_ms": 7221.60498046875,
+      "decode_ms": 15437.2548828125
+    }
+  },
+  "rawDecoded": "[0.00][S01]Well, should you finally want to explore any other.[2.34][0.88][S02]Yeah.[1.20][3.74][S03]Yeah, it's very sad.[4.64][4.22][S02]Oh dear.[5.12][5.46][S01]Well, how's how's your how's your um uh quantifier raising?[9.52][5.68][S02]Well.[6.04][10.10][S03]Hmm, yeah.[11.26][13.10][S02]I can't remember what I'm supposed to do by the way, am I supposed to do the summarisation thing you bought?[17.54][18.74][S03]Mm.[19.14][23.32][S03]Mm.[23.66][24.00][S02]No.[24.30][25.52][S03]Who was doing that?[26.14][29.30][S02]You do.[29.66]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

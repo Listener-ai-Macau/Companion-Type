@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0020",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 9600000,
+    "sourceEndFrame": 10080000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "515107e004ba61c78b69bf0e1bd27deb54608aabf763f2a68466253eb1b25b01",
+  "seconds": 20.443143099997542,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "那能个菜就不能吃了，而且就卖不出去，就直接当垃圾扔掉了。 嗯，再一个就是像我刚才说的这个需要冷藏的豆芽儿呀，豆腐呀，豆腐皮儿啊，它是需要保鲜冷，呃保鲜那个程度比较好的那个，你就得放到这个。 呃保鲜柜里边儿去，呃储藏去。 嗯。 嗯，然后其实我们每天呢都有一些，呃精装精包装的一些菜品，嗯。",
+    "raw_text": "[0.02][S01]那能个菜就不能吃了，而且就卖不出去，就直接当垃圾扔掉了。[4.22][5.42][S01]嗯，再一个就是像我刚才说的这个需要冷藏的豆芽儿呀，豆腐呀，豆腐皮儿啊，它是需要保鲜冷，呃保鲜那个程度比较好的那个，你就得放到这个。[17.48][17.48][S01]呃保鲜柜里边儿去，呃储藏去。[20.58][21.34][S01]嗯。[22.18][22.81][S01]嗯，然后其实我们每天呢都有一些，呃精装精包装的一些菜品，嗯。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "那能个菜就不能吃了，而且就卖不出去，就直接当垃圾扔掉了。",
+        "t0_ms": 20,
+        "t1_ms": 4220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，再一个就是像我刚才说的这个需要冷藏的豆芽儿呀，豆腐呀，豆腐皮儿啊，它是需要保鲜冷，呃保鲜那个程度比较好的那个，你就得放到这个。",
+        "t0_ms": 5420,
+        "t1_ms": 17480,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃保鲜柜里边儿去，呃储藏去。",
+        "t0_ms": 17480,
+        "t1_ms": 20580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 21340,
+        "t1_ms": 22180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，然后其实我们每天呢都有一些，呃精装精包装的一些菜品，嗯。",
+        "t0_ms": 22810,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 20,
+        "t1_ms": 4220,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5420,
+        "t1_ms": 17480,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17480,
+        "t1_ms": 20580,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21340,
+        "t1_ms": 22180,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22810,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.507999420166016,
+      "encode_ms": 8680.0654296875,
+      "decode_ms": 11706.37109375
+    }
+  },
+  "rawDecoded": "[0.02][S01]那能个菜就不能吃了，而且就卖不出去，就直接当垃圾扔掉了。[4.22][5.42][S01]嗯，再一个就是像我刚才说的这个需要冷藏的豆芽儿呀，豆腐呀，豆腐皮儿啊，它是需要保鲜冷，呃保鲜那个程度比较好的那个，你就得放到这个。[17.48][17.48][S01]呃保鲜柜里边儿去，呃储藏去。[20.58][21.34][S01]嗯。[22.18][22.81][S01]嗯，然后其实我们每天呢都有一些，呃精装精包装的一些菜品，嗯。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0071",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 34080000,
+    "sourceEndFrame": 34283350,
+    "frames": 203350,
+    "audioSeconds": 12.709375
+  },
+  "pcmSha256": "aff70968f1f1902b8296fde1d6e0b605598dcb61b92292f6407c0a9653f80e1f",
+  "seconds": 12.6406913000028,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Should we turn these off or what? We're done now. Hmm. Is she still here? Guess you are. Yeah.",
+    "raw_text": "[1.45][S01]Should we turn these off or what?[2.65][3.88][S02]We're done now.[4.85][6.63][S01]Hmm.[7.03][9.25][S01]Is she still here?[10.21][10.78][S02]Guess you are.[11.51][11.55][S01]Yeah.[12.71]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Should we turn these off or what?",
+        "t0_ms": 1450,
+        "t1_ms": 2650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "We're done now.",
+        "t0_ms": 3880,
+        "t1_ms": 4850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 6630,
+        "t1_ms": 7030,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Is she still here?",
+        "t0_ms": 9250,
+        "t1_ms": 10210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Guess you are.",
+        "t0_ms": 10780,
+        "t1_ms": 11510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 11550,
+        "t1_ms": 12710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 1450,
+        "t1_ms": 2650,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3880,
+        "t1_ms": 4850,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6630,
+        "t1_ms": 7030,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9250,
+        "t1_ms": 10210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10780,
+        "t1_ms": 11510,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11550,
+        "t1_ms": 12710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.309999465942383,
+      "encode_ms": 6944.4580078125,
+      "decode_ms": 5640.19677734375
+    }
+  },
+  "rawDecoded": "[1.45][S01]Should we turn these off or what?[2.65][3.88][S02]We're done now.[4.85][6.63][S01]Hmm.[7.03][9.25][S01]Is she still here?[10.21][10.78][S02]Guess you are.[11.51][11.55][S01]Yeah.[12.71]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

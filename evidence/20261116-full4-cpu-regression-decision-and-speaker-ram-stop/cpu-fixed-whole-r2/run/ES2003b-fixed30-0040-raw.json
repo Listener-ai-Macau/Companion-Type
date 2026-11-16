@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0040",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 19200000,
+    "sourceEndFrame": 19680000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "ba669f47c68f69dbc345b3db0100affeb123622ff0c4a5ab803f7b7d5653a08e",
+  "seconds": 16.622694999998203,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Mm though I mean I w I wouldn't say that uh we could probably probably be required to um I mean mo most of the mobile phone displays you see these days are coloured, but we should probably try and just stick to black and white. Although we could It's si it's si it's simply to keep and keep the unit cost down um and colour could be a sort of subsequent development that uh you know cost a bit of extra money if w w w w once everyone's got the first unit oh colour's out.",
+    "raw_text": "[0.00][S01]Mm though I mean I w I wouldn't say that uh we could probably probably be required to um I mean mo most of the mobile phone displays you see these days are coloured, but we should probably try and just stick to black and white.[14.14][14.58][S02]Although we could[15.12][14.60][S01]It's si it's si it's simply to keep and keep the unit cost down um and colour could be a sort of subsequent development that uh[23.84][24.42][S01]you know cost a bit of extra money if w w w w once everyone's got the first unit oh colour's out.[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Mm though I mean I w I wouldn't say that uh we could probably probably be required to um I mean mo most of the mobile phone displays you see these days are coloured, but we should probably try and just stick to black and white.",
+        "t0_ms": 0,
+        "t1_ms": 14140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Although we could",
+        "t0_ms": 14580,
+        "t1_ms": 15120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "It's si it's si it's simply to keep and keep the unit cost down um and colour could be a sort of subsequent development that uh",
+        "t0_ms": 14600,
+        "t1_ms": 23840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "you know cost a bit of extra money if w w w w once everyone's got the first unit oh colour's out.",
+        "t0_ms": 24420,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 14140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14580,
+        "t1_ms": 15120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14600,
+        "t1_ms": 23840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24420,
+        "t1_ms": 29940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.17099952697754,
+      "encode_ms": 6689.65185546875,
+      "decode_ms": 9861.5869140625
+    }
+  },
+  "rawDecoded": "[0.00][S01]Mm though I mean I w I wouldn't say that uh we could probably probably be required to um I mean mo most of the mobile phone displays you see these days are coloured, but we should probably try and just stick to black and white.[14.14][14.58][S02]Although we could[15.12][14.60][S01]It's si it's si it's simply to keep and keep the unit cost down um and colour could be a sort of subsequent development that uh[23.84][24.42][S01]you know cost a bit of extra money if w w w w once everyone's got the first unit oh colour's out.[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

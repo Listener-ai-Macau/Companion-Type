@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0031",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 14880000,
+    "sourceEndFrame": 15360000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "bc932474c3b16ae9aac788fc4ea8ab166afa67ec6f5fa89192ce77909eaf2346",
+  "seconds": 17.454378599999472,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "嗯。 还有就是。 嗯，咱可以就是促进就是这个打折优惠，就是每次就是不同种类的蛋糕，嗯，不不限于一种，嗯，让顾客有机会品尝到店内的每种蛋糕。 就是比如说在嗯节日期间有优惠，嗯，比如说买大大蛋糕送小蛋糕，也可以办理这个优惠积积分卡，嗯。 嗯。",
+    "raw_text": "[0.00][S01]嗯。[0.52][1.74][S01]还有就是。[2.98][3.56][S01]嗯，咱可以就是促进就是这个打折优惠，就是每次就是不同种类的蛋糕，嗯，不不限于一种，嗯，让顾客有机会品尝到店内的每种蛋糕。[17.32][17.62][S01]就是比如说在嗯节日期间有优惠，嗯，比如说买大大蛋糕送小蛋糕，也可以办理这个优惠积积分卡，嗯。[28.02][29.52][S01]嗯。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "嗯。",
+        "t0_ms": 0,
+        "t1_ms": 520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有就是。",
+        "t0_ms": 1740,
+        "t1_ms": 2980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，咱可以就是促进就是这个打折优惠，就是每次就是不同种类的蛋糕，嗯，不不限于一种，嗯，让顾客有机会品尝到店内的每种蛋糕。",
+        "t0_ms": 3560,
+        "t1_ms": 17320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就是比如说在嗯节日期间有优惠，嗯，比如说买大大蛋糕送小蛋糕，也可以办理这个优惠积积分卡，嗯。",
+        "t0_ms": 17620,
+        "t1_ms": 28020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 29520,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 520,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1740,
+        "t1_ms": 2980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3560,
+        "t1_ms": 17320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17620,
+        "t1_ms": 28020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29520,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 15.071999549865723,
+      "encode_ms": 7346.5830078125,
+      "decode_ms": 10056.0048828125
+    }
+  },
+  "rawDecoded": "[0.00][S01]嗯。[0.52][1.74][S01]还有就是。[2.98][3.56][S01]嗯，咱可以就是促进就是这个打折优惠，就是每次就是不同种类的蛋糕，嗯，不不限于一种，嗯，让顾客有机会品尝到店内的每种蛋糕。[17.32][17.62][S01]就是比如说在嗯节日期间有优惠，嗯，比如说买大大蛋糕送小蛋糕，也可以办理这个优惠积积分卡，嗯。[28.02][29.52][S01]嗯。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

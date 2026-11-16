@@ -1,0 +1,3292 @@
+{
+  "workerPython": "E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe",
+  "cppControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpp-r1",
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "reportDeadline": "2026-11-16T16:00:00+08:00",
+  "ownerCpuBudgetPermission": {
+    "at": "2026-11-16T09:33:57.370019+08:00",
+    "quote": "允许约 25% CPU，继续后台实测",
+    "maximumComputeThreads": 4,
+    "privateBytesUnchanged": 2147483648
+  },
+  "cpuPercent": 25,
+  "computeThreads": 4,
+  "privateBytes": 2147483648,
+  "at": "2026-11-16T10:21:46.106088+08:00",
+  "workerSha256": "99c50f5cf2a557961f56151d690fdfa89095178dae7187ef3a5d7fdd6d2b490d",
+  "runnerSha256": "51520934f95b087c244fd0866f20eeb4e959d6eec706cacbc6d14c9d7ef11cbb",
+  "meetings": [
+    {
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "audioSeconds": 2109.813375,
+      "frames": 33757014,
+      "language": "English"
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "audioSeconds": 2327.119,
+      "frames": 37233904,
+      "language": "Chinese"
+    },
+    {
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "audioSeconds": 2142.709375,
+      "frames": 34283350,
+      "language": "English"
+    },
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "audioSeconds": 2049.3615,
+      "frames": 32789784,
+      "language": "Chinese"
+    }
+  ],
+  "cases": [
+    {
+      "id": "ES2003b-fixed30-0000",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 0,
+      "sourceEndFrame": 480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0001",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 480000,
+      "sourceEndFrame": 960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0002",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 960000,
+      "sourceEndFrame": 1440000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0003",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 1440000,
+      "sourceEndFrame": 1920000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0004",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 1920000,
+      "sourceEndFrame": 2400000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0005",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 2400000,
+      "sourceEndFrame": 2880000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0006",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 2880000,
+      "sourceEndFrame": 3360000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0007",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 3360000,
+      "sourceEndFrame": 3840000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0008",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 3840000,
+      "sourceEndFrame": 4320000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0009",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 4320000,
+      "sourceEndFrame": 4800000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0010",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 4800000,
+      "sourceEndFrame": 5280000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0011",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 5280000,
+      "sourceEndFrame": 5760000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0012",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 5760000,
+      "sourceEndFrame": 6240000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0013",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 6240000,
+      "sourceEndFrame": 6720000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0014",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 6720000,
+      "sourceEndFrame": 7200000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0015",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 7200000,
+      "sourceEndFrame": 7680000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0016",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 7680000,
+      "sourceEndFrame": 8160000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0017",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 8160000,
+      "sourceEndFrame": 8640000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0018",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 8640000,
+      "sourceEndFrame": 9120000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0019",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 9120000,
+      "sourceEndFrame": 9600000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0020",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 9600000,
+      "sourceEndFrame": 10080000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0021",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 10080000,
+      "sourceEndFrame": 10560000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0022",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 10560000,
+      "sourceEndFrame": 11040000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0023",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 11040000,
+      "sourceEndFrame": 11520000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0024",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 11520000,
+      "sourceEndFrame": 12000000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0025",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 12000000,
+      "sourceEndFrame": 12480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0026",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 12480000,
+      "sourceEndFrame": 12960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0027",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 12960000,
+      "sourceEndFrame": 13440000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0028",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 13440000,
+      "sourceEndFrame": 13920000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0029",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 13920000,
+      "sourceEndFrame": 14400000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0030",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 14400000,
+      "sourceEndFrame": 14880000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0031",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 14880000,
+      "sourceEndFrame": 15360000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0032",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 15360000,
+      "sourceEndFrame": 15840000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0033",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 15840000,
+      "sourceEndFrame": 16320000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0034",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 16320000,
+      "sourceEndFrame": 16800000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0035",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 16800000,
+      "sourceEndFrame": 17280000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0036",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 17280000,
+      "sourceEndFrame": 17760000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0037",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 17760000,
+      "sourceEndFrame": 18240000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0038",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 18240000,
+      "sourceEndFrame": 18720000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0039",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 18720000,
+      "sourceEndFrame": 19200000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0040",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 19200000,
+      "sourceEndFrame": 19680000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0041",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 19680000,
+      "sourceEndFrame": 20160000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0042",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 20160000,
+      "sourceEndFrame": 20640000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0043",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 20640000,
+      "sourceEndFrame": 21120000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0044",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 21120000,
+      "sourceEndFrame": 21600000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0045",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 21600000,
+      "sourceEndFrame": 22080000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0046",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 22080000,
+      "sourceEndFrame": 22560000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0047",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 22560000,
+      "sourceEndFrame": 23040000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0048",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 23040000,
+      "sourceEndFrame": 23520000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0049",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 23520000,
+      "sourceEndFrame": 24000000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0050",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 24000000,
+      "sourceEndFrame": 24480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0051",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 24480000,
+      "sourceEndFrame": 24960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0052",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 24960000,
+      "sourceEndFrame": 25440000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0053",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 25440000,
+      "sourceEndFrame": 25920000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0054",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 25920000,
+      "sourceEndFrame": 26400000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0055",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 26400000,
+      "sourceEndFrame": 26880000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0056",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 26880000,
+      "sourceEndFrame": 27360000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0057",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 27360000,
+      "sourceEndFrame": 27840000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0058",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 27840000,
+      "sourceEndFrame": 28320000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0059",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 28320000,
+      "sourceEndFrame": 28800000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0060",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 28800000,
+      "sourceEndFrame": 29280000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0061",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 29280000,
+      "sourceEndFrame": 29760000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0062",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 29760000,
+      "sourceEndFrame": 30240000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0063",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 30240000,
+      "sourceEndFrame": 30720000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0064",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 30720000,
+      "sourceEndFrame": 31200000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0065",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 31200000,
+      "sourceEndFrame": 31680000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0066",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 31680000,
+      "sourceEndFrame": 32160000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0067",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 32160000,
+      "sourceEndFrame": 32640000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0068",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 32640000,
+      "sourceEndFrame": 33120000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0069",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 33120000,
+      "sourceEndFrame": 33600000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "ES2003b-fixed30-0070",
+      "meeting": "ES2003b",
+      "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+      "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceStartFrame": 33600000,
+      "sourceEndFrame": 33757014,
+      "frames": 157014,
+      "audioSeconds": 9.813375
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0000",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 0,
+      "sourceEndFrame": 480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0001",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 480000,
+      "sourceEndFrame": 960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0002",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 960000,
+      "sourceEndFrame": 1440000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0003",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 1440000,
+      "sourceEndFrame": 1920000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0004",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 1920000,
+      "sourceEndFrame": 2400000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0005",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 2400000,
+      "sourceEndFrame": 2880000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0006",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 2880000,
+      "sourceEndFrame": 3360000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0007",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 3360000,
+      "sourceEndFrame": 3840000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0008",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 3840000,
+      "sourceEndFrame": 4320000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0009",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 4320000,
+      "sourceEndFrame": 4800000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0010",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 4800000,
+      "sourceEndFrame": 5280000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0011",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 5280000,
+      "sourceEndFrame": 5760000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0012",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 5760000,
+      "sourceEndFrame": 6240000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0013",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 6240000,
+      "sourceEndFrame": 6720000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0014",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 6720000,
+      "sourceEndFrame": 7200000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0015",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 7200000,
+      "sourceEndFrame": 7680000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0016",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 7680000,
+      "sourceEndFrame": 8160000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0017",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 8160000,
+      "sourceEndFrame": 8640000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0018",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 8640000,
+      "sourceEndFrame": 9120000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0019",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 9120000,
+      "sourceEndFrame": 9600000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0020",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 9600000,
+      "sourceEndFrame": 10080000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0021",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 10080000,
+      "sourceEndFrame": 10560000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0022",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 10560000,
+      "sourceEndFrame": 11040000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0023",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 11040000,
+      "sourceEndFrame": 11520000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0024",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 11520000,
+      "sourceEndFrame": 12000000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0025",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 12000000,
+      "sourceEndFrame": 12480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0026",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 12480000,
+      "sourceEndFrame": 12960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0027",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 12960000,
+      "sourceEndFrame": 13440000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0028",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 13440000,
+      "sourceEndFrame": 13920000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0029",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 13920000,
+      "sourceEndFrame": 14400000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0030",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 14400000,
+      "sourceEndFrame": 14880000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0031",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 14880000,
+      "sourceEndFrame": 15360000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0032",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 15360000,
+      "sourceEndFrame": 15840000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0033",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 15840000,
+      "sourceEndFrame": 16320000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0034",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 16320000,
+      "sourceEndFrame": 16800000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0035",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 16800000,
+      "sourceEndFrame": 17280000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0036",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 17280000,
+      "sourceEndFrame": 17760000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0037",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 17760000,
+      "sourceEndFrame": 18240000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0038",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 18240000,
+      "sourceEndFrame": 18720000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0039",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 18720000,
+      "sourceEndFrame": 19200000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0040",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 19200000,
+      "sourceEndFrame": 19680000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0041",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 19680000,
+      "sourceEndFrame": 20160000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0042",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 20160000,
+      "sourceEndFrame": 20640000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0043",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 20640000,
+      "sourceEndFrame": 21120000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0044",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 21120000,
+      "sourceEndFrame": 21600000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0045",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 21600000,
+      "sourceEndFrame": 22080000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0046",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 22080000,
+      "sourceEndFrame": 22560000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0047",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 22560000,
+      "sourceEndFrame": 23040000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0048",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 23040000,
+      "sourceEndFrame": 23520000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0049",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 23520000,
+      "sourceEndFrame": 24000000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0050",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 24000000,
+      "sourceEndFrame": 24480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0051",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 24480000,
+      "sourceEndFrame": 24960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0052",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 24960000,
+      "sourceEndFrame": 25440000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0053",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 25440000,
+      "sourceEndFrame": 25920000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0054",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 25920000,
+      "sourceEndFrame": 26400000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0055",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 26400000,
+      "sourceEndFrame": 26880000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0056",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 26880000,
+      "sourceEndFrame": 27360000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0057",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 27360000,
+      "sourceEndFrame": 27840000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0058",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 27840000,
+      "sourceEndFrame": 28320000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0059",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 28320000,
+      "sourceEndFrame": 28800000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0060",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 28800000,
+      "sourceEndFrame": 29280000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0061",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 29280000,
+      "sourceEndFrame": 29760000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0062",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 29760000,
+      "sourceEndFrame": 30240000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0063",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 30240000,
+      "sourceEndFrame": 30720000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0064",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 30720000,
+      "sourceEndFrame": 31200000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0065",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 31200000,
+      "sourceEndFrame": 31680000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0066",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 31680000,
+      "sourceEndFrame": 32160000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0067",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 32160000,
+      "sourceEndFrame": 32640000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0068",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 32640000,
+      "sourceEndFrame": 33120000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0069",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 33120000,
+      "sourceEndFrame": 33600000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0070",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 33600000,
+      "sourceEndFrame": 34080000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0071",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 34080000,
+      "sourceEndFrame": 34560000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0072",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 34560000,
+      "sourceEndFrame": 35040000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0073",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 35040000,
+      "sourceEndFrame": 35520000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0074",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 35520000,
+      "sourceEndFrame": 36000000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0075",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 36000000,
+      "sourceEndFrame": 36480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0076",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 36480000,
+      "sourceEndFrame": 36960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "S_R004S03C01-fixed30-0077",
+      "meeting": "S_R004S03C01",
+      "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+      "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+      "sourceStartFrame": 36960000,
+      "sourceEndFrame": 37233904,
+      "frames": 273904,
+      "audioSeconds": 17.119
+    },
+    {
+      "id": "EN2002a-fixed30-0000",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 0,
+      "sourceEndFrame": 480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0001",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 480000,
+      "sourceEndFrame": 960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0002",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 960000,
+      "sourceEndFrame": 1440000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0003",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 1440000,
+      "sourceEndFrame": 1920000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0004",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 1920000,
+      "sourceEndFrame": 2400000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0005",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 2400000,
+      "sourceEndFrame": 2880000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0006",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 2880000,
+      "sourceEndFrame": 3360000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0007",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 3360000,
+      "sourceEndFrame": 3840000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0008",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 3840000,
+      "sourceEndFrame": 4320000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0009",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 4320000,
+      "sourceEndFrame": 4800000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0010",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 4800000,
+      "sourceEndFrame": 5280000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0011",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 5280000,
+      "sourceEndFrame": 5760000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0012",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 5760000,
+      "sourceEndFrame": 6240000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0013",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 6240000,
+      "sourceEndFrame": 6720000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0014",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 6720000,
+      "sourceEndFrame": 7200000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0015",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 7200000,
+      "sourceEndFrame": 7680000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0016",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 7680000,
+      "sourceEndFrame": 8160000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0017",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 8160000,
+      "sourceEndFrame": 8640000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0018",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 8640000,
+      "sourceEndFrame": 9120000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0019",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 9120000,
+      "sourceEndFrame": 9600000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0020",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 9600000,
+      "sourceEndFrame": 10080000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0021",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 10080000,
+      "sourceEndFrame": 10560000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0022",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 10560000,
+      "sourceEndFrame": 11040000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0023",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 11040000,
+      "sourceEndFrame": 11520000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0024",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 11520000,
+      "sourceEndFrame": 12000000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0025",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 12000000,
+      "sourceEndFrame": 12480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0026",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 12480000,
+      "sourceEndFrame": 12960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0027",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 12960000,
+      "sourceEndFrame": 13440000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0028",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 13440000,
+      "sourceEndFrame": 13920000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0029",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 13920000,
+      "sourceEndFrame": 14400000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0030",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 14400000,
+      "sourceEndFrame": 14880000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0031",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 14880000,
+      "sourceEndFrame": 15360000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0032",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 15360000,
+      "sourceEndFrame": 15840000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0033",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 15840000,
+      "sourceEndFrame": 16320000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0034",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 16320000,
+      "sourceEndFrame": 16800000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0035",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 16800000,
+      "sourceEndFrame": 17280000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0036",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 17280000,
+      "sourceEndFrame": 17760000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0037",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 17760000,
+      "sourceEndFrame": 18240000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0038",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 18240000,
+      "sourceEndFrame": 18720000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0039",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 18720000,
+      "sourceEndFrame": 19200000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0040",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 19200000,
+      "sourceEndFrame": 19680000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0041",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 19680000,
+      "sourceEndFrame": 20160000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0042",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 20160000,
+      "sourceEndFrame": 20640000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0043",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 20640000,
+      "sourceEndFrame": 21120000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0044",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 21120000,
+      "sourceEndFrame": 21600000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0045",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 21600000,
+      "sourceEndFrame": 22080000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0046",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 22080000,
+      "sourceEndFrame": 22560000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0047",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 22560000,
+      "sourceEndFrame": 23040000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0048",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 23040000,
+      "sourceEndFrame": 23520000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0049",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 23520000,
+      "sourceEndFrame": 24000000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0050",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 24000000,
+      "sourceEndFrame": 24480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0051",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 24480000,
+      "sourceEndFrame": 24960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0052",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 24960000,
+      "sourceEndFrame": 25440000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0053",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 25440000,
+      "sourceEndFrame": 25920000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0054",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 25920000,
+      "sourceEndFrame": 26400000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0055",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 26400000,
+      "sourceEndFrame": 26880000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0056",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 26880000,
+      "sourceEndFrame": 27360000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0057",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 27360000,
+      "sourceEndFrame": 27840000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0058",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 27840000,
+      "sourceEndFrame": 28320000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0059",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 28320000,
+      "sourceEndFrame": 28800000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0060",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 28800000,
+      "sourceEndFrame": 29280000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0061",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 29280000,
+      "sourceEndFrame": 29760000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0062",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 29760000,
+      "sourceEndFrame": 30240000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0063",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 30240000,
+      "sourceEndFrame": 30720000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0064",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 30720000,
+      "sourceEndFrame": 31200000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0065",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 31200000,
+      "sourceEndFrame": 31680000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0066",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 31680000,
+      "sourceEndFrame": 32160000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0067",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 32160000,
+      "sourceEndFrame": 32640000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0068",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 32640000,
+      "sourceEndFrame": 33120000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0069",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 33120000,
+      "sourceEndFrame": 33600000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0070",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 33600000,
+      "sourceEndFrame": 34080000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "EN2002a-fixed30-0071",
+      "meeting": "EN2002a",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+      "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+      "sourceStartFrame": 34080000,
+      "sourceEndFrame": 34283350,
+      "frames": 203350,
+      "audioSeconds": 12.709375
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0000",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 0,
+      "sourceEndFrame": 480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0001",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 480000,
+      "sourceEndFrame": 960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0002",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 960000,
+      "sourceEndFrame": 1440000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0003",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 1440000,
+      "sourceEndFrame": 1920000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0004",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 1920000,
+      "sourceEndFrame": 2400000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0005",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 2400000,
+      "sourceEndFrame": 2880000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0006",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 2880000,
+      "sourceEndFrame": 3360000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0007",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 3360000,
+      "sourceEndFrame": 3840000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0008",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 3840000,
+      "sourceEndFrame": 4320000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0009",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 4320000,
+      "sourceEndFrame": 4800000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0010",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 4800000,
+      "sourceEndFrame": 5280000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0011",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 5280000,
+      "sourceEndFrame": 5760000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0012",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 5760000,
+      "sourceEndFrame": 6240000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0013",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 6240000,
+      "sourceEndFrame": 6720000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0014",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 6720000,
+      "sourceEndFrame": 7200000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0015",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 7200000,
+      "sourceEndFrame": 7680000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0016",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 7680000,
+      "sourceEndFrame": 8160000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0017",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 8160000,
+      "sourceEndFrame": 8640000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0018",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 8640000,
+      "sourceEndFrame": 9120000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0019",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 9120000,
+      "sourceEndFrame": 9600000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0020",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 9600000,
+      "sourceEndFrame": 10080000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0021",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 10080000,
+      "sourceEndFrame": 10560000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0022",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 10560000,
+      "sourceEndFrame": 11040000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0023",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 11040000,
+      "sourceEndFrame": 11520000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0024",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 11520000,
+      "sourceEndFrame": 12000000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0025",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 12000000,
+      "sourceEndFrame": 12480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0026",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 12480000,
+      "sourceEndFrame": 12960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0027",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 12960000,
+      "sourceEndFrame": 13440000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0028",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 13440000,
+      "sourceEndFrame": 13920000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0029",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 13920000,
+      "sourceEndFrame": 14400000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0030",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 14400000,
+      "sourceEndFrame": 14880000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0031",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 14880000,
+      "sourceEndFrame": 15360000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0032",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 15360000,
+      "sourceEndFrame": 15840000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0033",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 15840000,
+      "sourceEndFrame": 16320000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0034",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 16320000,
+      "sourceEndFrame": 16800000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0035",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 16800000,
+      "sourceEndFrame": 17280000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0036",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 17280000,
+      "sourceEndFrame": 17760000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0037",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 17760000,
+      "sourceEndFrame": 18240000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0038",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 18240000,
+      "sourceEndFrame": 18720000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0039",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 18720000,
+      "sourceEndFrame": 19200000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0040",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 19200000,
+      "sourceEndFrame": 19680000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0041",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 19680000,
+      "sourceEndFrame": 20160000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0042",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 20160000,
+      "sourceEndFrame": 20640000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0043",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 20640000,
+      "sourceEndFrame": 21120000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0044",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 21120000,
+      "sourceEndFrame": 21600000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0045",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 21600000,
+      "sourceEndFrame": 22080000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0046",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 22080000,
+      "sourceEndFrame": 22560000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0047",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 22560000,
+      "sourceEndFrame": 23040000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0048",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 23040000,
+      "sourceEndFrame": 23520000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0049",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 23520000,
+      "sourceEndFrame": 24000000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0050",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 24000000,
+      "sourceEndFrame": 24480000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0051",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 24480000,
+      "sourceEndFrame": 24960000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0052",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 24960000,
+      "sourceEndFrame": 25440000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0053",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 25440000,
+      "sourceEndFrame": 25920000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0054",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 25920000,
+      "sourceEndFrame": 26400000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0055",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 26400000,
+      "sourceEndFrame": 26880000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0056",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 26880000,
+      "sourceEndFrame": 27360000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0057",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 27360000,
+      "sourceEndFrame": 27840000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0058",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 27840000,
+      "sourceEndFrame": 28320000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0059",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 28320000,
+      "sourceEndFrame": 28800000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0060",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 28800000,
+      "sourceEndFrame": 29280000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0061",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 29280000,
+      "sourceEndFrame": 29760000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0062",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 29760000,
+      "sourceEndFrame": 30240000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0063",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 30240000,
+      "sourceEndFrame": 30720000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0064",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 30720000,
+      "sourceEndFrame": 31200000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0065",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 31200000,
+      "sourceEndFrame": 31680000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0066",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 31680000,
+      "sourceEndFrame": 32160000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0067",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 32160000,
+      "sourceEndFrame": 32640000,
+      "frames": 480000,
+      "audioSeconds": 30.0
+    },
+    {
+      "id": "20200623_S_R001S07C01-fixed30-0068",
+      "meeting": "20200623_S_R001S07C01",
+      "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+      "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+      "sourceStartFrame": 32640000,
+      "sourceEndFrame": 32789784,
+      "frames": 149784,
+      "audioSeconds": 9.3615
+    }
+  ],
+  "helpers": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\cpu_window_joint_worker_20261116.py": "290e5664bb3cf2762571bdbed581736b020abb40d40a95f348b64d490352f7ee"
+  },
+  "scope": "The same4 original complete development recordings; every original16k mono PCM frame exactly once in fixed30s nonoverlap windows, final short tail retained. No annotation-assisted boundary or VAD omission.",
+  "outputPolicy": "No automatic retries, repetition cleanup, filler deletion or numerical rewriting. Incomplete EOS packets are preserved and counted; continue other original windows, never silently discard failed windows.",
+  "compositionFrozenBeforeOutputs": "MOSS raw words and segment times; infer native local Sxx-to-global Nemotron IDs by maximum overlap against the unchanged predicted full-source exclusive journal. No reference labels/counts/text used; unmatched/residual words remain UNKNOWN. Scoring uses the already frozen whole-meeting Nemotron-to-reference mapping, no per-window reference remapping.",
+  "fullSequenceSpeakerIdentityResetsForbidden": true,
+  "originalContinuousContextModelExperimentRetained6501Tokens": true,
+  "newTraining": false,
+  "qualityQualified": false,
+  "wholeMeetingAcceptance": false,
+  "productDefaultChanged": false,
+  "resumeCompleted": [
+    {
+      "id": "ES2003b-fixed30-0000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0000-raw.json",
+      "sha256": "aa44c10e648136a9a9cae4f860b5ee66f8d602d50ff2a609c02d604ccbb3881d",
+      "seconds": 20.210316199998488,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0001",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0001-raw.json",
+      "sha256": "2c4aa59fa11276ba4e8c3a36f49625b9f9fade34ebb5ee0f33075370c71e3085",
+      "seconds": 18.599426499997207,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0002",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0002-raw.json",
+      "sha256": "16d7261146213f8455d2ab5d84cbba99b4a13b5fd3f4bd13fb3131ab768c5341",
+      "seconds": 15.408737600002496,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0003",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0003-raw.json",
+      "sha256": "94160565be69d08c79b9139f09c23afb287f6864eda97726c907152d0d7fff71",
+      "seconds": 14.348952000000281,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0004",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0004-raw.json",
+      "sha256": "626c1bae13d8f5fd51e71bf05d7a54069fccd5fd2b01de0e39f367e7c80c64c6",
+      "seconds": 17.292119400000956,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0005",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0005-raw.json",
+      "sha256": "9fe6a96f8034ee2d91f64f9801da03c80fd98205edd5c8da323facce1b6c89f2",
+      "seconds": 23.436481400000048,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0006",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0006-raw.json",
+      "sha256": "8da778b3bec416c15e9ace49a779f2d6275691001d39d94923d8c5c530843d22",
+      "seconds": 20.084938199994212,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0007",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0007-raw.json",
+      "sha256": "0a0ac99d359c0734142a6ab5bb416545116e9c6cee4cfe68b6448c5c9f25db1b",
+      "seconds": 16.50166060000629,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0008",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0008-raw.json",
+      "sha256": "e70d1b31097448ff141b6381e670ec55d99bfa7eae05ae6048b7adc2b98f8d79",
+      "seconds": 17.086149200004,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0009",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0009-raw.json",
+      "sha256": "629efa208c05eb6ff07487ce7194813a9b52a457933496dc7116e64a64e24d0c",
+      "seconds": 15.847810399995069,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0010",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0010-raw.json",
+      "sha256": "c4acfd14d6484d0e4db3a3d2e58778d1152f382a345796e9cd294edf96edf7a0",
+      "seconds": 17.12911050000548,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0011",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0011-raw.json",
+      "sha256": "5ee01bd0e5a0d9d6de73be7a09ed703a016eacf5ddd20e7dba1a5e6c5da38312",
+      "seconds": 16.916779599996516,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0012",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0012-raw.json",
+      "sha256": "b30f06d7259de14934d32ea25d1c5c0447a85e7b5ca492649e1660d6399a188d",
+      "seconds": 16.133978199999547,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0013",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0013-raw.json",
+      "sha256": "4f540718564c0aeede83030983b1984d4d632139c3c56c7dcdae87519e3679ed",
+      "seconds": 16.287738400002127,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0014",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0014-raw.json",
+      "sha256": "37291434014b0672610a32a50d11725bdbd00219a3b5343748a18ae393780dfc",
+      "seconds": 20.74021999999968,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0015",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0015-raw.json",
+      "sha256": "e4891dbdeddc4bde7bc3ed0deb43305580c545275234f36fa708e420592235bb",
+      "seconds": 18.703234499997052,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0016",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0016-raw.json",
+      "sha256": "7744bdca831b0c00e5bce7565f33ce7486a50f03e41bd96f7ab4ae711c9d2d33",
+      "seconds": 18.050412700002198,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0017",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0017-raw.json",
+      "sha256": "7388d18df170e523be9c2d68487bdc49cfb91b7f08164c03db0ee03b988ce81a",
+      "seconds": 26.56826269999874,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0018",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0018-raw.json",
+      "sha256": "304d94e26375cb29fb8414c033a06abb22803a231204fc7504dee53e8c2d53ea",
+      "seconds": 20.492988799996965,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0019",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0019-raw.json",
+      "sha256": "230c0dd595d55ee3e104a702a22fff5a86214abc11a2923c190c4bb689a6d2a1",
+      "seconds": 17.332559199996467,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0020",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0020-raw.json",
+      "sha256": "26ab9a0f578cd5b9dd8e64aa8d6b1ea05a777f3adc837fc96fba79f2403726bb",
+      "seconds": 17.77239499999996,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0021",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0021-raw.json",
+      "sha256": "6daaa59711e67a6a557ee7593daf932959a4624f646eafe3840e9d6256095360",
+      "seconds": 15.776752199999464,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0022",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0022-raw.json",
+      "sha256": "5341a3731f598e37316cd35eeed52ed36e3d3878da0b578b68fa6b4e1a36e6b6",
+      "seconds": 15.417679400001362,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0023",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0023-raw.json",
+      "sha256": "20ca098680cfad38d72941ce1006b11dd85398f50108053ad9863940b44b9352",
+      "seconds": 14.478729499998735,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0024",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0024-raw.json",
+      "sha256": "4ffb43a54b73dd02bb791fdab7a2d39ab47c3d72ef809323de1a0978e62838c6",
+      "seconds": 15.850835699995514,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0025",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0025-raw.json",
+      "sha256": "2fa3854742cb178facdbe2142a9dd931e228751ae5199ce94fb49f547dcf00ef",
+      "seconds": 16.5543073000008,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0026",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0026-raw.json",
+      "sha256": "f81b44d001ade18bb63e7fe86822a07d2bcaf7fae9cae1aaf6a009893760d64c",
+      "seconds": 21.83491380000487,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0027",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0027-raw.json",
+      "sha256": "731c0dbdb4be37e7532906406b729a97d1d9c8802e8ed9447cac4b188716e2a5",
+      "seconds": 14.214040099999693,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0028",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0028-raw.json",
+      "sha256": "ac0f452d589de2fe2f8bc425cc57deacda240140b7be8e775d4cf70a89c26554",
+      "seconds": 17.14028479999979,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0029",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0029-raw.json",
+      "sha256": "518a1e62421d257d2c3656173b90a52a98d5a7bc3e30f3877462979dc5b4a69b",
+      "seconds": 16.052608500001952,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0030",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0030-raw.json",
+      "sha256": "036456d3b664e952770ed3877e97f1758a5172972ef1efb03a563ef8a6ecce56",
+      "seconds": 15.835103700002946,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0031",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0031-raw.json",
+      "sha256": "ac7f017f7e0da799dc0dc61ee1545facdfe377b1bdd00eeab41a4ccee9d77d48",
+      "seconds": 19.00277150000329,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0032",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0032-raw.json",
+      "sha256": "8906b270cefe48283e88ba206cd7ffdc3a244149191cd354f40e74636f257097",
+      "seconds": 19.27682740000455,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0033",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0033-raw.json",
+      "sha256": "3bb4d2891abb1ef2fea4c2629284af0526f6ea128dcbf30f7b8a7983078f4385",
+      "seconds": 17.583171199999924,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0034",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0034-raw.json",
+      "sha256": "9e491326e523498ebc4401124c5147a09e6b7b72fc9d9d1f7bde40d0fe53ff53",
+      "seconds": 17.872943599999417,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0035",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0035-raw.json",
+      "sha256": "0e8e598a29cb3aa3f094bc6f82eb43ddf6a2ee71d7cd40757d6ba5c4bd45ea91",
+      "seconds": 15.92131320000044,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0036",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0036-raw.json",
+      "sha256": "8c9cfab515496831b16aa6714c6120e656266644598691e1776c59b707a45bc4",
+      "seconds": 15.61135149999609,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0037",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0037-raw.json",
+      "sha256": "648d9fca4d087f9dd2df5322f3951ba1f1af5c5ef094334b39cbaa6a930a5304",
+      "seconds": 18.94225490000099,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    },
+    {
+      "id": "ES2003b-fixed30-0038",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\ES2003b-fixed30-0038-raw.json",
+      "sha256": "cdf8ce26d1946203c953f7f33a8c1bee8f7f2b3347feb3d14db22fc093e2417a",
+      "seconds": 22.28006209999876,
+      "audioSeconds": 30.0,
+      "naturalEos": true
+    }
+  ],
+  "resumeSource": {
+    "state": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\inference-state.json",
+    "stateSha256": "26bbfbc0847144343b83a94da6e0871e7dff41fb09affd6271f4d85ecf13ac3f",
+    "priorRun": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r1\\run.json",
+    "priorRunSha256": "c7ace13fa6eee0aa9c7cb093fbb8c792d9fb4a390f6c3af7245e50512fda6087",
+    "reason": "Actual Windows low-memory signal; prior39 complete inputs retained without rerun, interrupted40th input resumes from its unchanged start. No model failure or memory-cap increase.",
+    "observedPriorAvailableMinimumBytes": 798863360,
+    "availableAtPreparationBytes": 4498685952
+  },
+  "minimumAvailableBeforeLoadBytes": 3414499000
+}

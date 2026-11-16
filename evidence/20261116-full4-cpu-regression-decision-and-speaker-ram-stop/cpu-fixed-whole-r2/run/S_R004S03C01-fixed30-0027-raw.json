@@ -1,0 +1,210 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0027",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 12960000,
+    "sourceEndFrame": 13440000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "58c93ab2c87f0b03ff477602f07edd59d013012b0c9330bd7fc83e80218eb871",
+  "seconds": 20.564313399998355,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "就买了吧，然后就是促进他的销售吧，算是。 嗯，我先想到的就有这么多，我先说这么多吧。 看大家有什么需要说的没。 嗯，那我说吧。 我这个蛋糕。 蛋糕店儿这这块儿，嗯。 我想说的就是。 因为是蛋糕嘛，就是糕点之类的，然后就是。 嗯。",
+    "raw_text": "[0.00][S01]就买了吧，然后就是促进他的销售吧，算是。[3.62][3.98][S01]嗯，我先想到的就有这么多，我先说这么多吧。[8.32][8.98][S01]看大家有什么需要说的没。[10.74][15.04][S02]嗯，那我说吧。[16.72][17.24][S02]我这个蛋糕。[19.14][19.72][S02]蛋糕店儿这这块儿，嗯。[22.24][22.68][S02]我想说的就是。[24.10][24.70][S02]因为是蛋糕嘛，就是糕点之类的，然后就是。[28.40][28.78][S02]嗯。[29.52]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "就买了吧，然后就是促进他的销售吧，算是。",
+        "t0_ms": 0,
+        "t1_ms": 3620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，我先想到的就有这么多，我先说这么多吧。",
+        "t0_ms": 3980,
+        "t1_ms": 8320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "看大家有什么需要说的没。",
+        "t0_ms": 8980,
+        "t1_ms": 10740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，那我说吧。",
+        "t0_ms": 15040,
+        "t1_ms": 16720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "我这个蛋糕。",
+        "t0_ms": 17240,
+        "t1_ms": 19140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "蛋糕店儿这这块儿，嗯。",
+        "t0_ms": 19720,
+        "t1_ms": 22240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "我想说的就是。",
+        "t0_ms": 22680,
+        "t1_ms": 24100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "因为是蛋糕嘛，就是糕点之类的，然后就是。",
+        "t0_ms": 24700,
+        "t1_ms": 28400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 28780,
+        "t1_ms": 29520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 3620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3980,
+        "t1_ms": 8320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8980,
+        "t1_ms": 10740,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15040,
+        "t1_ms": 16720,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17240,
+        "t1_ms": 19140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19720,
+        "t1_ms": 22240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22680,
+        "t1_ms": 24100,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24700,
+        "t1_ms": 28400,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28780,
+        "t1_ms": 29520,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.474000930786133,
+      "encode_ms": 7307.3232421875,
+      "decode_ms": 13201.068359375
+    }
+  },
+  "rawDecoded": "[0.00][S01]就买了吧，然后就是促进他的销售吧，算是。[3.62][3.98][S01]嗯，我先想到的就有这么多，我先说这么多吧。[8.32][8.98][S01]看大家有什么需要说的没。[10.74][15.04][S02]嗯，那我说吧。[16.72][17.24][S02]我这个蛋糕。[19.14][19.72][S02]蛋糕店儿这这块儿，嗯。[22.24][22.68][S02]我想说的就是。[24.10][24.70][S02]因为是蛋糕嘛，就是糕点之类的，然后就是。[28.40][28.78][S02]嗯。[29.52]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

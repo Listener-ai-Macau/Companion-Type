@@ -1,0 +1,372 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0013",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 6240000,
+    "sourceEndFrame": 6720000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "f6b25aa9eded710f4a09704a814187cf71187e62d7b8651b389036f41ad43fda",
+  "seconds": 27.45948700000008,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "The topic window, you wanna somehow click be able to click on a topic and it pops up with all the meetings that contain that. Right, yeah. Mm. Yeah. Yep. So we could do that in a similar way, do it right click as well. Mm-hmm. So Okay, yeah. And have a different menu for that. So this dot is for um Uh consistent throughout, so. Yeah. Yeah. On the speaker. So yeah, so we have basically two options of of browsing the meetings is by either And this dot is a um searching and opening individual",
+    "raw_text": "[0.00][S01]The topic window, you wanna somehow click be able to click on a topic and it pops up with all the meetings that contain that.[7.68][7.64][S02]Right, yeah.[8.26][8.14][S03]Mm.[8.42][8.58][S01]Yeah.[8.88][8.98][S02]Yep.[9.22][9.52][S01]So we could do that in a similar way, do it right click as well.[12.02][10.00][S04]Mm-hmm.[10.44][11.38][S04]So[11.82][12.22][S02]Okay, yeah.[13.06][12.76][S01]And have a different menu for that.[14.72][12.90][S04]So this dot is for um[14.92][14.14][S02]Uh consistent throughout, so.[15.98][16.10][S01]Yeah.[16.50][16.50][S02]Yeah.[16.76][16.88][S04]On the speaker.[18.08][19.58][S01]So yeah, so we have basically two options of of browsing the meetings is by either[25.94][20.30][S04]And this dot is a[21.58][26.88][S01]um searching and opening individual[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "The topic window, you wanna somehow click be able to click on a topic and it pops up with all the meetings that contain that.",
+        "t0_ms": 0,
+        "t1_ms": 7680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Right, yeah.",
+        "t0_ms": 7640,
+        "t1_ms": 8260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 8140,
+        "t1_ms": 8420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 8580,
+        "t1_ms": 8880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yep.",
+        "t0_ms": 8980,
+        "t1_ms": 9220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "So we could do that in a similar way, do it right click as well.",
+        "t0_ms": 9520,
+        "t1_ms": 12020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 10000,
+        "t1_ms": 10440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "So",
+        "t0_ms": 11380,
+        "t1_ms": 11820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Okay, yeah.",
+        "t0_ms": 12220,
+        "t1_ms": 13060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "And have a different menu for that.",
+        "t0_ms": 12760,
+        "t1_ms": 14720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "So this dot is for um",
+        "t0_ms": 12900,
+        "t1_ms": 14920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Uh consistent throughout, so.",
+        "t0_ms": 14140,
+        "t1_ms": 15980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 16100,
+        "t1_ms": 16500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 16500,
+        "t1_ms": 16760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "On the speaker.",
+        "t0_ms": 16880,
+        "t1_ms": 18080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "So yeah, so we have basically two options of of browsing the meetings is by either",
+        "t0_ms": 19580,
+        "t1_ms": 25940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "And this dot is a",
+        "t0_ms": 20300,
+        "t1_ms": 21580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "um searching and opening individual",
+        "t0_ms": 26880,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 7680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7640,
+        "t1_ms": 8260,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8140,
+        "t1_ms": 8420,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8580,
+        "t1_ms": 8880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8980,
+        "t1_ms": 9220,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9520,
+        "t1_ms": 12020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10000,
+        "t1_ms": 10440,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11380,
+        "t1_ms": 11820,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12220,
+        "t1_ms": 13060,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12760,
+        "t1_ms": 14720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12900,
+        "t1_ms": 14920,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14140,
+        "t1_ms": 15980,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16100,
+        "t1_ms": 16500,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16500,
+        "t1_ms": 16760,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16880,
+        "t1_ms": 18080,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19580,
+        "t1_ms": 25940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20300,
+        "t1_ms": 21580,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26880,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.196000099182129,
+      "encode_ms": 7242.298828125,
+      "decode_ms": 20166.98828125
+    }
+  },
+  "rawDecoded": "[0.00][S01]The topic window, you wanna somehow click be able to click on a topic and it pops up with all the meetings that contain that.[7.68][7.64][S02]Right, yeah.[8.26][8.14][S03]Mm.[8.42][8.58][S01]Yeah.[8.88][8.98][S02]Yep.[9.22][9.52][S01]So we could do that in a similar way, do it right click as well.[12.02][10.00][S04]Mm-hmm.[10.44][11.38][S04]So[11.82][12.22][S02]Okay, yeah.[13.06][12.76][S01]And have a different menu for that.[14.72][12.90][S04]So this dot is for um[14.92][14.14][S02]Uh consistent throughout, so.[15.98][16.10][S01]Yeah.[16.50][16.50][S02]Yeah.[16.76][16.88][S04]On the speaker.[18.08][19.58][S01]So yeah, so we have basically two options of of browsing the meetings is by either[25.94][20.30][S04]And this dot is a[21.58][26.88][S01]um searching and opening individual[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

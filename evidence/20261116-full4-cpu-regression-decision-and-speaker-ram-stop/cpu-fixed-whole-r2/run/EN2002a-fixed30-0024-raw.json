@@ -1,0 +1,300 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0024",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 11520000,
+    "sourceEndFrame": 12000000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "79b935bfd760e991122c5364d5c836a36b461a1f34979c588960356068696d3d",
+  "seconds": 28.08513110000058,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Like transcription summary, like two letters and you just press all of which yeah. Yeah. Yeah. Or checkmarks even have two of them check boxes. Yeah, that'll reduce the number of um windows you needed, wouldn't it, which is probably good. 'Cause otherwise Photoshop has a lot of windows, if you have to use Photoshop's got loads and you're always could forever going oh get out of the way, there's always stuff in the way isn't there. Yeah. Yeah, but Yeah, a lot of that. But I mean people get used to it, I mean w when you use a Windows or the next format uh you have a lot of windows open, how do you manage them? Yes. Yeah. You do, yeah. Yeah. Mm-hmm. Yeah.",
+    "raw_text": "[0.00][S01]Like transcription summary, like two letters and you just press all of which yeah.[5.20][1.84][S02]Yeah.[2.12][3.92][S03]Yeah.[4.22][5.06][S02]Or checkmarks even have two of them check boxes.[7.24][6.14][S03]Yeah, that'll reduce the number of um windows you needed, wouldn't it, which is probably good. 'Cause otherwise Photoshop has a lot of windows, if you have to use Photoshop's got loads and you're always could forever going oh get out of the way, there's always stuff in the way isn't there.[18.18][9.24][S02]Yeah.[9.52][16.74][S02]Yeah, but[17.24][18.98][S04]Yeah, a lot of that.[20.42][20.40][S01]But I mean people get used to it, I mean w when you use a Windows or the next format uh you have a lot of windows open, how do you manage them?[28.70][20.46][S03]Yes.[20.82][21.34][S02]Yeah.[21.60][27.76][S03]You do, yeah. Yeah.[29.68][27.84][S02]Mm-hmm.[28.14][29.40][S02]Yeah.[29.66]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Like transcription summary, like two letters and you just press all of which yeah.",
+        "t0_ms": 0,
+        "t1_ms": 5200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 1840,
+        "t1_ms": 2120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 3920,
+        "t1_ms": 4220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Or checkmarks even have two of them check boxes.",
+        "t0_ms": 5060,
+        "t1_ms": 7240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, that'll reduce the number of um windows you needed, wouldn't it, which is probably good. 'Cause otherwise Photoshop has a lot of windows, if you have to use Photoshop's got loads and you're always could forever going oh get out of the way, there's always stuff in the way isn't there.",
+        "t0_ms": 6140,
+        "t1_ms": 18180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 9240,
+        "t1_ms": 9520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, but",
+        "t0_ms": 16740,
+        "t1_ms": 17240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, a lot of that.",
+        "t0_ms": 18980,
+        "t1_ms": 20420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "But I mean people get used to it, I mean w when you use a Windows or the next format uh you have a lot of windows open, how do you manage them?",
+        "t0_ms": 20400,
+        "t1_ms": 28700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yes.",
+        "t0_ms": 20460,
+        "t1_ms": 20820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 21340,
+        "t1_ms": 21600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "You do, yeah. Yeah.",
+        "t0_ms": 27760,
+        "t1_ms": 29680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 27840,
+        "t1_ms": 28140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 29400,
+        "t1_ms": 29660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 5200,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1840,
+        "t1_ms": 2120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3920,
+        "t1_ms": 4220,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5060,
+        "t1_ms": 7240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6140,
+        "t1_ms": 18180,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9240,
+        "t1_ms": 9520,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16740,
+        "t1_ms": 17240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18980,
+        "t1_ms": 20420,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20400,
+        "t1_ms": 28700,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20460,
+        "t1_ms": 20820,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21340,
+        "t1_ms": 21600,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27760,
+        "t1_ms": 29680,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27840,
+        "t1_ms": 28140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29400,
+        "t1_ms": 29660,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 19.843000411987305,
+      "encode_ms": 7578.4921875,
+      "decode_ms": 20445.3671875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Like transcription summary, like two letters and you just press all of which yeah.[5.20][1.84][S02]Yeah.[2.12][3.92][S03]Yeah.[4.22][5.06][S02]Or checkmarks even have two of them check boxes.[7.24][6.14][S03]Yeah, that'll reduce the number of um windows you needed, wouldn't it, which is probably good. 'Cause otherwise Photoshop has a lot of windows, if you have to use Photoshop's got loads and you're always could forever going oh get out of the way, there's always stuff in the way isn't there.[18.18][9.24][S02]Yeah.[9.52][16.74][S02]Yeah, but[17.24][18.98][S04]Yeah, a lot of that.[20.42][20.40][S01]But I mean people get used to it, I mean w when you use a Windows or the next format uh you have a lot of windows open, how do you manage them?[28.70][20.46][S03]Yes.[20.82][21.34][S02]Yeah.[21.60][27.76][S03]You do, yeah. Yeah.[29.68][27.84][S02]Mm-hmm.[28.14][29.40][S02]Yeah.[29.66]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

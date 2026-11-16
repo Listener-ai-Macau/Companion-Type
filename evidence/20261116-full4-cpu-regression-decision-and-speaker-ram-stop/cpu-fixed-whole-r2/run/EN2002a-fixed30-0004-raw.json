@@ -1,0 +1,210 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0004",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 1920000,
+    "sourceEndFrame": 2400000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "04e52172c15a00d5b5965cf74e34df06ac43bf6e77c8e583788d27d61aa517e3",
+  "seconds": 39.52630510000017,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "button, so that you actually in the transcription box, but so that you click on a button and then it opens whatever that speaker characterisation is. The problem is the the left click is already used because it highlights that um that part of speech or whatever that what he's meant saying, you know. The the left cli right. The left click highlights it. Yeah. Right. So that you can Double click, right. I don't know what happens when you double click actually, but that'd be a bit annoying if you have left click for one thing.",
+    "raw_text": "[0.00][S01]button, so that you actually in the transcription box, but so that you click on a button and then it opens whatever that speaker characterisation is. The problem is the the left click is already used because it highlights that um[14.82][16.62][S01]that part of speech or whatever that what he's meant saying, you know.[19.60][18.76][S02]The the left cli right.[20.38][20.62][S03]The left click highlights it.[22.02][20.88][S01]Yeah.[21.12][22.12][S02]Right.[22.42][22.58][S01]So that you can[23.66][23.02][S04]Double click, right.[24.00][25.14][S01]I don't know what happens when you double click actually, but that'd be a bit annoying if you have left click for one thing.[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "button, so that you actually in the transcription box, but so that you click on a button and then it opens whatever that speaker characterisation is. The problem is the the left click is already used because it highlights that um",
+        "t0_ms": 0,
+        "t1_ms": 14820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "that part of speech or whatever that what he's meant saying, you know.",
+        "t0_ms": 16620,
+        "t1_ms": 19600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "The the left cli right.",
+        "t0_ms": 18760,
+        "t1_ms": 20380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "The left click highlights it.",
+        "t0_ms": 20620,
+        "t1_ms": 22020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 20880,
+        "t1_ms": 21120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Right.",
+        "t0_ms": 22120,
+        "t1_ms": 22420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "So that you can",
+        "t0_ms": 22580,
+        "t1_ms": 23660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Double click, right.",
+        "t0_ms": 23020,
+        "t1_ms": 24000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "I don't know what happens when you double click actually, but that'd be a bit annoying if you have left click for one thing.",
+        "t0_ms": 25140,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 14820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16620,
+        "t1_ms": 19600,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18760,
+        "t1_ms": 20380,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20620,
+        "t1_ms": 22020,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20880,
+        "t1_ms": 21120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22120,
+        "t1_ms": 22420,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22580,
+        "t1_ms": 23660,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23020,
+        "t1_ms": 24000,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25140,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 22.871000289916992,
+      "encode_ms": 15995.2861328125,
+      "decode_ms": 23474.48046875
+    }
+  },
+  "rawDecoded": "[0.00][S01]button, so that you actually in the transcription box, but so that you click on a button and then it opens whatever that speaker characterisation is. The problem is the the left click is already used because it highlights that um[14.82][16.62][S01]that part of speech or whatever that what he's meant saying, you know.[19.60][18.76][S02]The the left cli right.[20.38][20.62][S03]The left click highlights it.[22.02][20.88][S01]Yeah.[21.12][22.12][S02]Right.[22.42][22.58][S01]So that you can[23.66][23.02][S04]Double click, right.[24.00][25.14][S01]I don't know what happens when you double click actually, but that'd be a bit annoying if you have left click for one thing.[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

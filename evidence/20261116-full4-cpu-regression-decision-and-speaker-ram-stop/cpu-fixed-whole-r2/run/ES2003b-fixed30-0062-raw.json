@@ -1,0 +1,318 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0062",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 29760000,
+    "sourceEndFrame": 30240000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "c27a527062ae5be979da6d1882780a25e89b2eeacec4ac6a6e4d4211609da9ae",
+  "seconds": 25.572047100002237,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "It might be better with the sound possibly, we could maybe incorporate Yeah. Those little keyrings have both, so. In in truth that considering the cost of an L E D, we could just incorporate it anyway, the L E Ds could be surprisingly bright now. Yeah. Yeah. Yeah. But. I don't know, blue ones particularly. Um. Plus that's a nice little effect. Yeah. So by the sounds of it, with what we're suggesting so far, your design um the user interface is still quite open, we could go for quite an interesting design. Mm-hmm. 'Cause we're only gonna have a very few key and",
+    "raw_text": "[0.00][S01]It might be better with the sound possibly, we could maybe incorporate[2.94][1.94][S02]Yeah.[2.30][2.38][S03]Those little keyrings have both, so.[5.00][4.84][S01]In in truth that considering the cost of an L E D, we could just incorporate it anyway, the L E Ds could be surprisingly bright now.[12.36][8.66][S03]Yeah.[8.94][10.30][S03]Yeah.[10.64][12.50][S03]Yeah.[12.82][12.74][S02]But.[12.96][13.48][S04]I don't know, blue ones particularly.[15.10][13.86][S01]Um.[14.24][15.34][S02]Plus that's a nice little effect.[16.60][17.24][S03]Yeah.[17.56][17.86][S01]So by the sounds of it, with what we're suggesting so far, your design um the user interface is still quite open, we could go for quite an interesting design.[27.32][28.14][S02]Mm-hmm.[28.50][28.16][S01]'Cause we're only gonna have a very few key and[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "It might be better with the sound possibly, we could maybe incorporate",
+        "t0_ms": 0,
+        "t1_ms": 2940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 1940,
+        "t1_ms": 2300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Those little keyrings have both, so.",
+        "t0_ms": 2380,
+        "t1_ms": 5000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "In in truth that considering the cost of an L E D, we could just incorporate it anyway, the L E Ds could be surprisingly bright now.",
+        "t0_ms": 4840,
+        "t1_ms": 12360,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 8660,
+        "t1_ms": 8940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 10300,
+        "t1_ms": 10640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 12500,
+        "t1_ms": 12820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "But.",
+        "t0_ms": 12740,
+        "t1_ms": 12960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "I don't know, blue ones particularly.",
+        "t0_ms": 13480,
+        "t1_ms": 15100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Um.",
+        "t0_ms": 13860,
+        "t1_ms": 14240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Plus that's a nice little effect.",
+        "t0_ms": 15340,
+        "t1_ms": 16600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 17240,
+        "t1_ms": 17560,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "So by the sounds of it, with what we're suggesting so far, your design um the user interface is still quite open, we could go for quite an interesting design.",
+        "t0_ms": 17860,
+        "t1_ms": 27320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 28140,
+        "t1_ms": 28500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "'Cause we're only gonna have a very few key and",
+        "t0_ms": 28160,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1940,
+        "t1_ms": 2300,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2380,
+        "t1_ms": 5000,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4840,
+        "t1_ms": 12360,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8660,
+        "t1_ms": 8940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10300,
+        "t1_ms": 10640,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12500,
+        "t1_ms": 12820,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12740,
+        "t1_ms": 12960,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13480,
+        "t1_ms": 15100,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13860,
+        "t1_ms": 14240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15340,
+        "t1_ms": 16600,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17240,
+        "t1_ms": 17560,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17860,
+        "t1_ms": 27320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28140,
+        "t1_ms": 28500,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28160,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 19.777999877929688,
+      "encode_ms": 6831.3818359375,
+      "decode_ms": 18682.572265625
+    }
+  },
+  "rawDecoded": "[0.00][S01]It might be better with the sound possibly, we could maybe incorporate[2.94][1.94][S02]Yeah.[2.30][2.38][S03]Those little keyrings have both, so.[5.00][4.84][S01]In in truth that considering the cost of an L E D, we could just incorporate it anyway, the L E Ds could be surprisingly bright now.[12.36][8.66][S03]Yeah.[8.94][10.30][S03]Yeah.[10.64][12.50][S03]Yeah.[12.82][12.74][S02]But.[12.96][13.48][S04]I don't know, blue ones particularly.[15.10][13.86][S01]Um.[14.24][15.34][S02]Plus that's a nice little effect.[16.60][17.24][S03]Yeah.[17.56][17.86][S01]So by the sounds of it, with what we're suggesting so far, your design um the user interface is still quite open, we could go for quite an interesting design.[27.32][28.14][S02]Mm-hmm.[28.50][28.16][S01]'Cause we're only gonna have a very few key and[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

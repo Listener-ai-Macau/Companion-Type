@@ -1,0 +1,264 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0007",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 3360000,
+    "sourceEndFrame": 3840000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "d3fb7a2cf8dbfe75eeefa02c25689433ba9aca7cde1d5f3631bd50143106822e",
+  "seconds": 26.463796900003217,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "一号的使用时间越长，那么它的额度就会越高。 嗯。 哦。 嗯，行。 嗯。 上次业务情况，上次业务部。 嗯，上次业务吧，呃，经过这这个月的，呃，整体情况吧还是比较好的。 呃。 上个月上个月整体情况比较良好。 嗯，对。 嗯，停了多少单呀？ 呃，大概有十。",
+    "raw_text": "[0.01][S01]一号的使用时间越长，那么它的额度就会越高。[3.91][4.25][S02]嗯。[4.71][4.85][S01]哦。[5.21][5.45][S02]嗯，行。[6.25][8.18][S02]嗯。[8.85][10.35][S02]上次业务情况，上次业务部。[12.77][13.31][S03]嗯，上次业务吧，呃，经过这这个月的，呃，整体情况吧还是比较好的。[21.11][21.91][S03]呃。[22.51][21.95][S02]上个月上个月整体情况比较良好。[24.73][24.75][S03]嗯，对。[25.47][25.65][S02]嗯，停了多少单呀？[27.33][27.88][S03]呃，大概有十。[29.99]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "一号的使用时间越长，那么它的额度就会越高。",
+        "t0_ms": 10,
+        "t1_ms": 3910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 4250,
+        "t1_ms": 4710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "哦。",
+        "t0_ms": 4850,
+        "t1_ms": 5210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，行。",
+        "t0_ms": 5450,
+        "t1_ms": 6250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 8180,
+        "t1_ms": 8850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "上次业务情况，上次业务部。",
+        "t0_ms": 10350,
+        "t1_ms": 12770,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，上次业务吧，呃，经过这这个月的，呃，整体情况吧还是比较好的。",
+        "t0_ms": 13310,
+        "t1_ms": 21110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "呃。",
+        "t0_ms": 21910,
+        "t1_ms": 22510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "上个月上个月整体情况比较良好。",
+        "t0_ms": 21950,
+        "t1_ms": 24730,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，对。",
+        "t0_ms": 24750,
+        "t1_ms": 25470,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "嗯，停了多少单呀？",
+        "t0_ms": 25650,
+        "t1_ms": 27330,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，大概有十。",
+        "t0_ms": 27880,
+        "t1_ms": 29990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 3910,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4250,
+        "t1_ms": 4710,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4850,
+        "t1_ms": 5210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5450,
+        "t1_ms": 6250,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8180,
+        "t1_ms": 8850,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10350,
+        "t1_ms": 12770,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13310,
+        "t1_ms": 21110,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21910,
+        "t1_ms": 22510,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21950,
+        "t1_ms": 24730,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24750,
+        "t1_ms": 25470,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25650,
+        "t1_ms": 27330,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27880,
+        "t1_ms": 29990,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.746999740600586,
+      "encode_ms": 8175.1640625,
+      "decode_ms": 18227.244140625
+    }
+  },
+  "rawDecoded": "[0.01][S01]一号的使用时间越长，那么它的额度就会越高。[3.91][4.25][S02]嗯。[4.71][4.85][S01]哦。[5.21][5.45][S02]嗯，行。[6.25][8.18][S02]嗯。[8.85][10.35][S02]上次业务情况，上次业务部。[12.77][13.31][S03]嗯，上次业务吧，呃，经过这这个月的，呃，整体情况吧还是比较好的。[21.11][21.91][S03]呃。[22.51][21.95][S02]上个月上个月整体情况比较良好。[24.73][24.75][S03]嗯，对。[25.47][25.65][S02]嗯，停了多少单呀？[27.33][27.88][S03]呃，大概有十。[29.99]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

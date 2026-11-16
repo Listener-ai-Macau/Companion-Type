@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0049",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 23520000,
+    "sourceEndFrame": 24000000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "528bdc314b9905ca660e08cb6368ec68b8bd225c2451b80cebe0bd4ae66443c2",
+  "seconds": 16.76667670000461,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "So I can understand your point and I would agree with you, but this is our design spec for now. Great to see. Um. Well does that um would that include um access to say interactive functions on digital or cable? Yeah. I'm to say so yes, because then we have to be able to control the remote boxes and that is a separate unit. Um I think the I would say that the design spec",
+    "raw_text": "[0.00][S01]So I can understand your point and I would agree with you, but this is our design spec for now. Great to see. Um.[9.94][10.66][S02]Well does that um would that include um access to say interactive functions on digital or cable?[17.16][17.42][S03]Yeah.[17.76][19.42][S01]I'm to say so yes, because then we have to be able to control the remote boxes and that is a separate unit. Um I think the I would say that the design spec[29.96]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "So I can understand your point and I would agree with you, but this is our design spec for now. Great to see. Um.",
+        "t0_ms": 0,
+        "t1_ms": 9940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Well does that um would that include um access to say interactive functions on digital or cable?",
+        "t0_ms": 10660,
+        "t1_ms": 17160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 17420,
+        "t1_ms": 17760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I'm to say so yes, because then we have to be able to control the remote boxes and that is a separate unit. Um I think the I would say that the design spec",
+        "t0_ms": 19420,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 9940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10660,
+        "t1_ms": 17160,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17420,
+        "t1_ms": 17760,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19420,
+        "t1_ms": 29960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.137999534606934,
+      "encode_ms": 6827.0322265625,
+      "decode_ms": 9890.1865234375
+    }
+  },
+  "rawDecoded": "[0.00][S01]So I can understand your point and I would agree with you, but this is our design spec for now. Great to see. Um.[9.94][10.66][S02]Well does that um would that include um access to say interactive functions on digital or cable?[17.16][17.42][S03]Yeah.[17.76][19.42][S01]I'm to say so yes, because then we have to be able to control the remote boxes and that is a separate unit. Um I think the I would say that the design spec[29.96]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

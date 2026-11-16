@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0021",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 10080000,
+    "sourceEndFrame": 10560000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "949938d66037e9de5b674921c614c82a0967284e9727151a339074b2c1330ba3",
+  "seconds": 22.491049900003418,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "还三年，你这样总体总体下来的金额要更多了。 嗯。 嗯。 但是没有办法呀，他的收入达不到那个，所以说只能只能选择长期，对。 对。 加上这个。 嗯，加上这个分期这个呃时时间。 我们对分期啊，让自己自因为因为我们告知他了，对吧，你你不还。 嗯。 如果你一味的欠着不还，就会形成你征信。",
+    "raw_text": "[0.12][S01]还三年，你这样总体总体下来的金额要更多了。[5.41][1.05][S02]嗯。[1.45][5.41][S02]嗯。[5.88][6.65][S01]但是没有办法呀，他的收入达不到那个，所以说只能只能选择长期，对。[13.05][10.25][S02]对。[10.72][11.78][S02]加上这个。[12.98][13.62][S02]嗯，加上这个分期这个呃时时间。[18.12][18.05][S01]我们对分期啊，让自己自因为因为我们告知他了，对吧，你你不还。[23.55][23.55][S02]嗯。[24.05][23.99][S01]如果你一味的欠着不还，就会形成你征信。[29.85]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "还三年，你这样总体总体下来的金额要更多了。",
+        "t0_ms": 120,
+        "t1_ms": 5410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 1050,
+        "t1_ms": 1450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 5410,
+        "t1_ms": 5880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "但是没有办法呀，他的收入达不到那个，所以说只能只能选择长期，对。",
+        "t0_ms": 6650,
+        "t1_ms": 13050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对。",
+        "t0_ms": 10250,
+        "t1_ms": 10720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "加上这个。",
+        "t0_ms": 11780,
+        "t1_ms": 12980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，加上这个分期这个呃时时间。",
+        "t0_ms": 13620,
+        "t1_ms": 18120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "我们对分期啊，让自己自因为因为我们告知他了，对吧，你你不还。",
+        "t0_ms": 18050,
+        "t1_ms": 23550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 23550,
+        "t1_ms": 24050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "如果你一味的欠着不还，就会形成你征信。",
+        "t0_ms": 23990,
+        "t1_ms": 29850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 120,
+        "t1_ms": 5410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1050,
+        "t1_ms": 1450,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5410,
+        "t1_ms": 5880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6650,
+        "t1_ms": 13050,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10250,
+        "t1_ms": 10720,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11780,
+        "t1_ms": 12980,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13620,
+        "t1_ms": 18120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18050,
+        "t1_ms": 23550,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23550,
+        "t1_ms": 24050,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23990,
+        "t1_ms": 29850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 19.459999084472656,
+      "encode_ms": 7729.52001953125,
+      "decode_ms": 14704.921875
+    }
+  },
+  "rawDecoded": "[0.12][S01]还三年，你这样总体总体下来的金额要更多了。[5.41][1.05][S02]嗯。[1.45][5.41][S02]嗯。[5.88][6.65][S01]但是没有办法呀，他的收入达不到那个，所以说只能只能选择长期，对。[13.05][10.25][S02]对。[10.72][11.78][S02]加上这个。[12.98][13.62][S02]嗯，加上这个分期这个呃时时间。[18.12][18.05][S01]我们对分期啊，让自己自因为因为我们告知他了，对吧，你你不还。[23.55][23.55][S02]嗯。[24.05][23.99][S01]如果你一味的欠着不还，就会形成你征信。[29.85]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

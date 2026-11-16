@@ -1,0 +1,282 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0052",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 24960000,
+    "sourceEndFrame": 25440000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "e50aac914790dbe909f88c03bb7c249df0fb39bd73cd48b473ce0c62c699e518",
+  "seconds": 23.85831550000148,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "呃，都要通知到。 嗯。 呃，以防失信的名单也可能会给带给别人更大的危害。 嗯。 这边儿呢，这边儿。 嗯。 这个。 当然我们追债的时候，可能会。 打电话。 给他的亲戚，比如说我告诉他，他借我们钱不还。 嗯。 对吧，这样的话，亲戚啊朋友啊都知道他。 话。",
+    "raw_text": "[0.35][S01]呃，都要通知到。[2.11][2.45][S02]嗯。[2.95][3.08][S01]呃，以防失信的名单也可能会给带给别人更大的危害。[8.65][8.94][S02]嗯。[9.55][11.06][S02]这边儿呢，这边儿。[12.41][12.64][S03]嗯。[13.21][14.56][S03]这个。[15.71][16.34][S03]当然我们追债的时候，可能会。[18.93][19.78][S03]打电话。[20.71][20.98][S03]给他的亲戚，比如说我告诉他，他借我们钱不还。[24.15][24.51][S02]嗯。[25.01][25.04][S03]对吧，这样的话，亲戚啊朋友啊都知道他。[28.45][29.71][S03]话。[29.99]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "呃，都要通知到。",
+        "t0_ms": 350,
+        "t1_ms": 2110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 2450,
+        "t1_ms": 2950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，以防失信的名单也可能会给带给别人更大的危害。",
+        "t0_ms": 3080,
+        "t1_ms": 8650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 8940,
+        "t1_ms": 9550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "这边儿呢，这边儿。",
+        "t0_ms": 11060,
+        "t1_ms": 12410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 12640,
+        "t1_ms": 13210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "这个。",
+        "t0_ms": 14560,
+        "t1_ms": 15710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "当然我们追债的时候，可能会。",
+        "t0_ms": 16340,
+        "t1_ms": 18930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "打电话。",
+        "t0_ms": 19780,
+        "t1_ms": 20710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "给他的亲戚，比如说我告诉他，他借我们钱不还。",
+        "t0_ms": 20980,
+        "t1_ms": 24150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 24510,
+        "t1_ms": 25010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对吧，这样的话，亲戚啊朋友啊都知道他。",
+        "t0_ms": 25040,
+        "t1_ms": 28450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "话。",
+        "t0_ms": 29710,
+        "t1_ms": 29990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 350,
+        "t1_ms": 2110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2450,
+        "t1_ms": 2950,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3080,
+        "t1_ms": 8650,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8940,
+        "t1_ms": 9550,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11060,
+        "t1_ms": 12410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12640,
+        "t1_ms": 13210,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14560,
+        "t1_ms": 15710,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16340,
+        "t1_ms": 18930,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19780,
+        "t1_ms": 20710,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20980,
+        "t1_ms": 24150,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24510,
+        "t1_ms": 25010,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25040,
+        "t1_ms": 28450,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29710,
+        "t1_ms": 29990,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 23.99799919128418,
+      "encode_ms": 6872.2138671875,
+      "decode_ms": 16930.83203125
+    }
+  },
+  "rawDecoded": "[0.35][S01]呃，都要通知到。[2.11][2.45][S02]嗯。[2.95][3.08][S01]呃，以防失信的名单也可能会给带给别人更大的危害。[8.65][8.94][S02]嗯。[9.55][11.06][S02]这边儿呢，这边儿。[12.41][12.64][S03]嗯。[13.21][14.56][S03]这个。[15.71][16.34][S03]当然我们追债的时候，可能会。[18.93][19.78][S03]打电话。[20.71][20.98][S03]给他的亲戚，比如说我告诉他，他借我们钱不还。[24.15][24.51][S02]嗯。[25.01][25.04][S03]对吧，这样的话，亲戚啊朋友啊都知道他。[28.45][29.71][S03]话。[29.99]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

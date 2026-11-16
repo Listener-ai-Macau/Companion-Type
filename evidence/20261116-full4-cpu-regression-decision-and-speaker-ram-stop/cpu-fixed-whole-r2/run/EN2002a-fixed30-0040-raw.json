@@ -1,0 +1,282 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0040",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 19200000,
+    "sourceEndFrame": 19680000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "502ec2530d43bc36bdfd61b436b7392605a10a68d3a6140dc961210ac467b429",
+  "seconds": 24.21491039999819,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "But it was I had to sit there and think about it for a bit, which is a bit really, I think. Yeah, but I spent I think. She's so stupid. Yeah, that's fun. Oh yeah. Mm. Okay. So yeah, I was thinking the weekend probably to uh start attacking this seriously. I'm just um you know, hopefully have something by next week that we can sort of try and integrate into the goo. Um. Yeah, I'll probably be there. Yeah. Mm-hmm. Yeah. Okay. I think that should be possible. Well, um the browsers I use it now or as uh now it was there.",
+    "raw_text": "[0.00][S01]But it was I had to sit there and think about it for a bit, which is a bit really, I think. Yeah, but I spent I think.[5.28][0.84][S02]She's so stupid.[1.88][5.82][S03]Yeah, that's fun.[6.78][9.26][S03]Oh yeah.[9.68][9.90][S02]Mm.[10.22][10.92][S03]Okay. So yeah, I was thinking the weekend probably to uh start attacking this seriously. I'm just um you know, hopefully have something by next week that we can sort of try and integrate into the goo.[22.64][11.82][S02]Um.[12.30][14.14][S02]Yeah, I'll probably be there.[15.26][15.98][S01]Yeah.[16.30][23.04][S02]Mm-hmm. Yeah.[24.10][23.52][S03]Okay.[23.86][25.00][S03]I think that should be possible.[26.02][25.12][S02]Well, um the browsers I use it now or as uh now it was there.[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "But it was I had to sit there and think about it for a bit, which is a bit really, I think. Yeah, but I spent I think.",
+        "t0_ms": 0,
+        "t1_ms": 5280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "She's so stupid.",
+        "t0_ms": 840,
+        "t1_ms": 1880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, that's fun.",
+        "t0_ms": 5820,
+        "t1_ms": 6780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Oh yeah.",
+        "t0_ms": 9260,
+        "t1_ms": 9680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 9900,
+        "t1_ms": 10220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay. So yeah, I was thinking the weekend probably to uh start attacking this seriously. I'm just um you know, hopefully have something by next week that we can sort of try and integrate into the goo.",
+        "t0_ms": 10920,
+        "t1_ms": 22640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Um.",
+        "t0_ms": 11820,
+        "t1_ms": 12300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, I'll probably be there.",
+        "t0_ms": 14140,
+        "t1_ms": 15260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 15980,
+        "t1_ms": 16300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm. Yeah.",
+        "t0_ms": 23040,
+        "t1_ms": 24100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 23520,
+        "t1_ms": 23860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I think that should be possible.",
+        "t0_ms": 25000,
+        "t1_ms": 26020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Well, um the browsers I use it now or as uh now it was there.",
+        "t0_ms": 25120,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 5280,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 840,
+        "t1_ms": 1880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5820,
+        "t1_ms": 6780,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9260,
+        "t1_ms": 9680,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9900,
+        "t1_ms": 10220,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10920,
+        "t1_ms": 22640,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11820,
+        "t1_ms": 12300,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14140,
+        "t1_ms": 15260,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15980,
+        "t1_ms": 16300,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23040,
+        "t1_ms": 24100,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23520,
+        "t1_ms": 23860,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25000,
+        "t1_ms": 26020,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25120,
+        "t1_ms": 30000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 23.577999114990234,
+      "encode_ms": 6988.59814453125,
+      "decode_ms": 17168.443359375
+    }
+  },
+  "rawDecoded": "[0.00][S01]But it was I had to sit there and think about it for a bit, which is a bit really, I think. Yeah, but I spent I think.[5.28][0.84][S02]She's so stupid.[1.88][5.82][S03]Yeah, that's fun.[6.78][9.26][S03]Oh yeah.[9.68][9.90][S02]Mm.[10.22][10.92][S03]Okay. So yeah, I was thinking the weekend probably to uh start attacking this seriously. I'm just um you know, hopefully have something by next week that we can sort of try and integrate into the goo.[22.64][11.82][S02]Um.[12.30][14.14][S02]Yeah, I'll probably be there.[15.26][15.98][S01]Yeah.[16.30][23.04][S02]Mm-hmm. Yeah.[24.10][23.52][S03]Okay.[23.86][25.00][S03]I think that should be possible.[26.02][25.12][S02]Well, um the browsers I use it now or as uh now it was there.[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

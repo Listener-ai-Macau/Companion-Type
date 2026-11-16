@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0025",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 12000000,
+    "sourceEndFrame": 12480000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "2665dcf48b6f35ec5218fc1455ab2b22e9fe1f8ced64eee364565cd954694979",
+  "seconds": 17.43029870000464,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "市场价的，我们专门针针对出来两三种菜，就是我们是比如说市场的土豆儿是一块钱，然后在我们超市里面土豆儿就可以卖到。 哦，六毛钱一斤，呃，然后就是他进超市买菜，他可能想想买到一些便宜的东西。 其实他买菜也不一定非得买土豆儿，他有可能需要别的东西，其他的东西，这样就是他买完土豆儿还可以买别的东西，然后嗯其他的菜他可能也需要。",
+    "raw_text": "[0.00][S01]市场价的，我们专门针针对出来两三种菜，就是我们是比如说市场的土豆儿是一块钱，然后在我们超市里面土豆儿就可以卖到。[11.42][11.42][S01]哦，六毛钱一斤，呃，然后就是他进超市买菜，他可能想想买到一些便宜的东西。[19.04][19.32][S01]其实他买菜也不一定非得买土豆儿，他有可能需要别的东西，其他的东西，这样就是他买完土豆儿还可以买别的东西，然后嗯其他的菜他可能也需要。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "市场价的，我们专门针针对出来两三种菜，就是我们是比如说市场的土豆儿是一块钱，然后在我们超市里面土豆儿就可以卖到。",
+        "t0_ms": 0,
+        "t1_ms": 11420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "哦，六毛钱一斤，呃，然后就是他进超市买菜，他可能想想买到一些便宜的东西。",
+        "t0_ms": 11420,
+        "t1_ms": 19040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "其实他买菜也不一定非得买土豆儿，他有可能需要别的东西，其他的东西，这样就是他买完土豆儿还可以买别的东西，然后嗯其他的菜他可能也需要。",
+        "t0_ms": 19320,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 11420,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11420,
+        "t1_ms": 19040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19320,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.56599998474121,
+      "encode_ms": 7024.17919921875,
+      "decode_ms": 10345.4404296875
+    }
+  },
+  "rawDecoded": "[0.00][S01]市场价的，我们专门针针对出来两三种菜，就是我们是比如说市场的土豆儿是一块钱，然后在我们超市里面土豆儿就可以卖到。[11.42][11.42][S01]哦，六毛钱一斤，呃，然后就是他进超市买菜，他可能想想买到一些便宜的东西。[19.04][19.32][S01]其实他买菜也不一定非得买土豆儿，他有可能需要别的东西，其他的东西，这样就是他买完土豆儿还可以买别的东西，然后嗯其他的菜他可能也需要。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

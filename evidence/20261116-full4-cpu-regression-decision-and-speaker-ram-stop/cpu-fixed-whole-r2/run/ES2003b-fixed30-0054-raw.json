@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0054",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 25920000,
+    "sourceEndFrame": 26400000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "56dcc6aec8aeacf89b626259e1d16184b5495656a5821b85c501adec632b168a",
+  "seconds": 20.727266699999745,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "It would be to give its location away on the remote unit. Yeah. Yeah, I think it's a good idea. And that could be something could um depressurise a bit. Yeah, that's a good idea. And that way, because we're attaching what would be a small button to the T. V. again, say what, it'd be a small transmitter, um, porch battery type scenario I'd say. Or something that if it was problems enough that you could actually even just um I don't know, power and elsewhere, so that might be something to",
+    "raw_text": "[0.00][S01]It would be to give its location away on the remote unit.[3.14][3.32][S02]Yeah.[3.56][3.86][S03]Yeah, I think it's a good idea.[4.94][4.24][S01]And that could be something could um depressurise a bit.[6.74][5.73][S02]Yeah, that's a good idea.[6.45][7.84][S01]And that way, because we're attaching what would be a small button to the T. V. again, say what, it'd be a small transmitter, um, porch battery type scenario I'd say.[18.94][20.01][S01]Or something that if it was problems enough that you could actually even just um[25.30][27.43][S01]I don't know, power and elsewhere, so that might be something to[29.96]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "It would be to give its location away on the remote unit.",
+        "t0_ms": 0,
+        "t1_ms": 3140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 3320,
+        "t1_ms": 3560,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, I think it's a good idea.",
+        "t0_ms": 3860,
+        "t1_ms": 4940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "And that could be something could um depressurise a bit.",
+        "t0_ms": 4240,
+        "t1_ms": 6740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, that's a good idea.",
+        "t0_ms": 5730,
+        "t1_ms": 6450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "And that way, because we're attaching what would be a small button to the T. V. again, say what, it'd be a small transmitter, um, porch battery type scenario I'd say.",
+        "t0_ms": 7840,
+        "t1_ms": 18940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Or something that if it was problems enough that you could actually even just um",
+        "t0_ms": 20010,
+        "t1_ms": 25300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I don't know, power and elsewhere, so that might be something to",
+        "t0_ms": 27430,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 3140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3320,
+        "t1_ms": 3560,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3860,
+        "t1_ms": 4940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4240,
+        "t1_ms": 6740,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5730,
+        "t1_ms": 6450,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7840,
+        "t1_ms": 18940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20010,
+        "t1_ms": 25300,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27430,
+        "t1_ms": 29960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 23.100000381469727,
+      "encode_ms": 6677.38916015625,
+      "decode_ms": 13993.0771484375
+    }
+  },
+  "rawDecoded": "[0.00][S01]It would be to give its location away on the remote unit.[3.14][3.32][S02]Yeah.[3.56][3.86][S03]Yeah, I think it's a good idea.[4.94][4.24][S01]And that could be something could um depressurise a bit.[6.74][5.73][S02]Yeah, that's a good idea.[6.45][7.84][S01]And that way, because we're attaching what would be a small button to the T. V. again, say what, it'd be a small transmitter, um, porch battery type scenario I'd say.[18.94][20.01][S01]Or something that if it was problems enough that you could actually even just um[25.30][27.43][S01]I don't know, power and elsewhere, so that might be something to[29.96]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

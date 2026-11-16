@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0062",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 29760000,
+    "sourceEndFrame": 30240000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8b439361cb04c5992991a77cb521abb3b1b40d19e375071a7513201c40545f10",
+  "seconds": 17.809027500006778,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "一层，而其他产品以及本土商品呢。 集中归放在二层的乳制品区，主要包括一些什么君乐宝，养乐多，莫力酸这些之类的。 这些商家产品呢是各有优势的，单品陈列类呢比较多，并且呢我们在超市都放置了。 各相应的这种促销人员。 主要呢是。 陈列上呢主要依托乳制品区的冰柜作为。",
+    "raw_text": "[0.00][S01]一层，而其他产品以及本土商品呢。[3.64][4.32][S01]集中归放在二层的乳制品区，主要包括一些什么君乐宝，养乐多，莫力酸这些之类的。[12.12][12.48][S01]这些商家产品呢是各有优势的，单品陈列类呢比较多，并且呢我们在超市都放置了。[19.88][20.24][S01]各相应的这种促销人员。[22.94][23.72][S01]主要呢是。[24.62][25.64][S01]陈列上呢主要依托乳制品区的冰柜作为。[29.82]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "一层，而其他产品以及本土商品呢。",
+        "t0_ms": 0,
+        "t1_ms": 3640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "集中归放在二层的乳制品区，主要包括一些什么君乐宝，养乐多，莫力酸这些之类的。",
+        "t0_ms": 4320,
+        "t1_ms": 12120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这些商家产品呢是各有优势的，单品陈列类呢比较多，并且呢我们在超市都放置了。",
+        "t0_ms": 12480,
+        "t1_ms": 19880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "各相应的这种促销人员。",
+        "t0_ms": 20240,
+        "t1_ms": 22940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "主要呢是。",
+        "t0_ms": 23720,
+        "t1_ms": 24620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "陈列上呢主要依托乳制品区的冰柜作为。",
+        "t0_ms": 25640,
+        "t1_ms": 29820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 3640,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4320,
+        "t1_ms": 12120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12480,
+        "t1_ms": 19880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20240,
+        "t1_ms": 22940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23720,
+        "t1_ms": 24620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25640,
+        "t1_ms": 29820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 16.812000274658203,
+      "encode_ms": 7042.10498046875,
+      "decode_ms": 10714.70703125
+    }
+  },
+  "rawDecoded": "[0.00][S01]一层，而其他产品以及本土商品呢。[3.64][4.32][S01]集中归放在二层的乳制品区，主要包括一些什么君乐宝，养乐多，莫力酸这些之类的。[12.12][12.48][S01]这些商家产品呢是各有优势的，单品陈列类呢比较多，并且呢我们在超市都放置了。[19.88][20.24][S01]各相应的这种促销人员。[22.94][23.72][S01]主要呢是。[24.62][25.64][S01]陈列上呢主要依托乳制品区的冰柜作为。[29.82]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,264 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0022",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 10560000,
+    "sourceEndFrame": 11040000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "743c876d66b86534298b0c7c0b5a15357d72118683ec5f6222d1f1a01bbd5c16",
+  "seconds": 25.084792100002232,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "不诚信，然后你不诚信的话，你将来你坐火车，对吧，你孩子的就学都会成问题。 嗯。 嗯。 对，我们得告诉他。 所以说我们，对，我们都已经直面的告诉他了，所以说你。 为了杜绝你的诚信问题，我们把这个期限给你加长。 嗯。 如果这个你还不能还，那对不起了，那你的诚信有问题了，我们呢也只能忍痛割爱了，你自己看着办吧。 嗯。 行，到时候咱们要经，起诉他。 对吧。 我们要。",
+    "raw_text": "[1.12][S01]不诚信，然后你不诚信的话，你将来你坐火车，对吧，你孩子的就学都会成问题。[7.78][3.52][S02]嗯。[3.88][5.24][S02]嗯。[5.64][7.84][S02]对，我们得告诉他。[9.34][8.42][S01]所以说我们，对，我们都已经直面的告诉他了，所以说你。[12.04][13.28][S01]为了杜绝你的诚信问题，我们把这个期限给你加长。[17.52][17.72][S02]嗯。[18.22][18.32][S01]如果这个你还不能还，那对不起了，那你的诚信有问题了，我们呢也只能忍痛割爱了，你自己看着办吧。[26.11][22.88][S02]嗯。[23.34][26.68][S02]行，到时候咱们要经，起诉他。[29.94][26.82][S01]对吧。[27.32][28.62][S01]我们要。[29.34]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "不诚信，然后你不诚信的话，你将来你坐火车，对吧，你孩子的就学都会成问题。",
+        "t0_ms": 1120,
+        "t1_ms": 7780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 3520,
+        "t1_ms": 3880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 5240,
+        "t1_ms": 5640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对，我们得告诉他。",
+        "t0_ms": 7840,
+        "t1_ms": 9340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "所以说我们，对，我们都已经直面的告诉他了，所以说你。",
+        "t0_ms": 8420,
+        "t1_ms": 12040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "为了杜绝你的诚信问题，我们把这个期限给你加长。",
+        "t0_ms": 13280,
+        "t1_ms": 17520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 17720,
+        "t1_ms": 18220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "如果这个你还不能还，那对不起了，那你的诚信有问题了，我们呢也只能忍痛割爱了，你自己看着办吧。",
+        "t0_ms": 18320,
+        "t1_ms": 26110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 22880,
+        "t1_ms": 23340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "行，到时候咱们要经，起诉他。",
+        "t0_ms": 26680,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对吧。",
+        "t0_ms": 26820,
+        "t1_ms": 27320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "我们要。",
+        "t0_ms": 28620,
+        "t1_ms": 29340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 1120,
+        "t1_ms": 7780,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3520,
+        "t1_ms": 3880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5240,
+        "t1_ms": 5640,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7840,
+        "t1_ms": 9340,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8420,
+        "t1_ms": 12040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13280,
+        "t1_ms": 17520,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17720,
+        "t1_ms": 18220,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18320,
+        "t1_ms": 26110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22880,
+        "t1_ms": 23340,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26680,
+        "t1_ms": 29940,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26820,
+        "t1_ms": 27320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28620,
+        "t1_ms": 29340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 24.242000579833984,
+      "encode_ms": 7462.3388671875,
+      "decode_ms": 17561.1484375
+    }
+  },
+  "rawDecoded": "[1.12][S01]不诚信，然后你不诚信的话，你将来你坐火车，对吧，你孩子的就学都会成问题。[7.78][3.52][S02]嗯。[3.88][5.24][S02]嗯。[5.64][7.84][S02]对，我们得告诉他。[9.34][8.42][S01]所以说我们，对，我们都已经直面的告诉他了，所以说你。[12.04][13.28][S01]为了杜绝你的诚信问题，我们把这个期限给你加长。[17.52][17.72][S02]嗯。[18.22][18.32][S01]如果这个你还不能还，那对不起了，那你的诚信有问题了，我们呢也只能忍痛割爱了，你自己看着办吧。[26.11][22.88][S02]嗯。[23.34][26.68][S02]行，到时候咱们要经，起诉他。[29.94][26.82][S01]对吧。[27.32][28.62][S01]我们要。[29.34]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

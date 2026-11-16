@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0035",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 16800000,
+    "sourceEndFrame": 17280000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "ee5504c794f0dd7aa33a0a6a0f47abd277de9c4262ca27c97bb708344e725eaf",
+  "seconds": 13.461169399997743,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "还有就是一一嗯针对一些那种小情侣比较浪漫的那种，就是嗯这男朋友送给他们就是女朋友这个的。 嗯。",
+    "raw_text": "[19.63][S01]还有就是一一嗯针对一些那种小情侣比较浪漫的那种，就是嗯这男朋友送给他们就是女朋友这个的。[29.68][29.68][S01]嗯。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "还有就是一一嗯针对一些那种小情侣比较浪漫的那种，就是嗯这男朋友送给他们就是女朋友这个的。",
+        "t0_ms": 19630,
+        "t1_ms": 29680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 29680,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 19630,
+        "t1_ms": 29680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29680,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 16.53499984741211,
+      "encode_ms": 7680.11083984375,
+      "decode_ms": 5729.912109375
+    }
+  },
+  "rawDecoded": "[19.63][S01]还有就是一一嗯针对一些那种小情侣比较浪漫的那种，就是嗯这男朋友送给他们就是女朋友这个的。[29.68][29.68][S01]嗯。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

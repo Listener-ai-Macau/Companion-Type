@@ -1,0 +1,210 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0055",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 26400000,
+    "sourceEndFrame": 26880000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "04235c07a46d6a3cc3a0d75fa6a9deac3495cc81eeb2befb6e16995220e522aa",
+  "seconds": 19.39124429999356,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Like you're saying, yeah. Well actually do we wanna set a date for interim prototype? Specifically, a date? Um s well you decide I don't have very much for my prototype so. The progress report is June twenty The third of February. Of February. So so it's like two weeks basically. Um yeah. Well, how about",
+    "raw_text": "[1.13][S01]Like you're saying, yeah. Well actually do we wanna set a date for interim prototype?[5.83][6.98][S01]Specifically, a date?[8.13][10.85][S02]Um s well you decide I don't have very much for my prototype so.[14.33][17.78][S02]The progress report is June twenty[20.45][20.88][S03]The third of February.[23.03][22.95][S02]Of February.[24.23][25.31][S04]So so it's like two weeks basically.[27.51][27.28][S03]Um yeah.[28.83][28.91][S02]Well, how about[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Like you're saying, yeah. Well actually do we wanna set a date for interim prototype?",
+        "t0_ms": 1130,
+        "t1_ms": 5830,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Specifically, a date?",
+        "t0_ms": 6980,
+        "t1_ms": 8130,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um s well you decide I don't have very much for my prototype so.",
+        "t0_ms": 10850,
+        "t1_ms": 14330,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "The progress report is June twenty",
+        "t0_ms": 17780,
+        "t1_ms": 20450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "The third of February.",
+        "t0_ms": 20880,
+        "t1_ms": 23030,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Of February.",
+        "t0_ms": 22950,
+        "t1_ms": 24230,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "So so it's like two weeks basically.",
+        "t0_ms": 25310,
+        "t1_ms": 27510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Um yeah.",
+        "t0_ms": 27280,
+        "t1_ms": 28830,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Well, how about",
+        "t0_ms": 28910,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 1130,
+        "t1_ms": 5830,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6980,
+        "t1_ms": 8130,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10850,
+        "t1_ms": 14330,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17780,
+        "t1_ms": 20450,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20880,
+        "t1_ms": 23030,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22950,
+        "t1_ms": 24230,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25310,
+        "t1_ms": 27510,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27280,
+        "t1_ms": 28830,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28910,
+        "t1_ms": 30000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 21.50200080871582,
+      "encode_ms": 6960.580078125,
+      "decode_ms": 12377.47265625
+    }
+  },
+  "rawDecoded": "[1.13][S01]Like you're saying, yeah. Well actually do we wanna set a date for interim prototype?[5.83][6.98][S01]Specifically, a date?[8.13][10.85][S02]Um s well you decide I don't have very much for my prototype so.[14.33][17.78][S02]The progress report is June twenty[20.45][20.88][S03]The third of February.[23.03][22.95][S02]Of February.[24.23][25.31][S04]So so it's like two weeks basically.[27.51][27.28][S03]Um yeah.[28.83][28.91][S02]Well, how about[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

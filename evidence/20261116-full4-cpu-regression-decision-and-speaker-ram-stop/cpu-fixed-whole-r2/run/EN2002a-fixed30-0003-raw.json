@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0003",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 1440000,
+    "sourceEndFrame": 1920000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "eccd2467e8d15716c4aec72d945764822e35da4bde734f601c56adabc768a522",
+  "seconds": 34.31485399999656,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "The transcription box has got a summarise bo button which doesn't do anything yet. Um now I wonder how we wanna do, you know, we want a pop-up window with the speaker characterisation. Yeah. Um either we could do that, you know, when does a pop-up come, either we can when you click on the the I. D., any sort of I. D. in the transcription box. Or we can put an extra button, extra few buttons next to summarise.",
+    "raw_text": "[0.00][S01]The transcription box has got a summarise bo button which doesn't do anything yet. Um now I wonder how we wanna do, you know, we want a pop-up window with the speaker characterisation.[13.90][16.12][S02]Yeah.[16.64][16.20][S01]Um either we could do that, you know, when does a pop-up come, either we can when you click on the the I. D., any sort of I. D. in the transcription box.[25.02][25.82][S01]Or we can put an extra button, extra few buttons next to summarise.[29.96]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "The transcription box has got a summarise bo button which doesn't do anything yet. Um now I wonder how we wanna do, you know, we want a pop-up window with the speaker characterisation.",
+        "t0_ms": 0,
+        "t1_ms": 13900,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 16120,
+        "t1_ms": 16640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Um either we could do that, you know, when does a pop-up come, either we can when you click on the the I. D., any sort of I. D. in the transcription box.",
+        "t0_ms": 16200,
+        "t1_ms": 25020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Or we can put an extra button, extra few buttons next to summarise.",
+        "t0_ms": 25820,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 13900,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16120,
+        "t1_ms": 16640,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16200,
+        "t1_ms": 25020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25820,
+        "t1_ms": 29960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 19.086000442504883,
+      "encode_ms": 15036.361328125,
+      "decode_ms": 19223.716796875
+    }
+  },
+  "rawDecoded": "[0.00][S01]The transcription box has got a summarise bo button which doesn't do anything yet. Um now I wonder how we wanna do, you know, we want a pop-up window with the speaker characterisation.[13.90][16.12][S02]Yeah.[16.64][16.20][S01]Um either we could do that, you know, when does a pop-up come, either we can when you click on the the I. D., any sort of I. D. in the transcription box.[25.02][25.82][S01]Or we can put an extra button, extra few buttons next to summarise.[29.96]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

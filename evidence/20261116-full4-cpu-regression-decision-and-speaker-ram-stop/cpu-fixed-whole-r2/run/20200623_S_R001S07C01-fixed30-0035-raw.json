@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0035",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 16800000,
+    "sourceEndFrame": 17280000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "d44de19e0403ebcda8de4f8827ae8720fa8b91f4152fdc0185739a72a0d634ed",
+  "seconds": 17.22504299999855,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "那已经没有了，那咱们这个，呃，战略你觉得这这个可不可以这个。 这个咱公司不再做这个业务了。 对，因为这个小额贷，嗯，小额农业贷款的，因为因为市场，嗯，农民的形势有的不容乐观，我们的。 呃，回收呢不是很好，因为农民们他们养猪，养。",
+    "raw_text": "[0.01][S01]那已经没有了，那咱们这个，呃，战略你觉得这这个可不可以这个。[7.35][8.41][S01]这个咱公司不再做这个业务了。[10.75][10.99][S02]对，因为这个小额贷，嗯，小额农业贷款的，因为因为市场，嗯，农民的形势有的不容乐观，我们的。[22.91][23.28][S02]呃，回收呢不是很好，因为农民们他们养猪，养。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "那已经没有了，那咱们这个，呃，战略你觉得这这个可不可以这个。",
+        "t0_ms": 10,
+        "t1_ms": 7350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这个咱公司不再做这个业务了。",
+        "t0_ms": 8410,
+        "t1_ms": 10750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对，因为这个小额贷，嗯，小额农业贷款的，因为因为市场，嗯，农民的形势有的不容乐观，我们的。",
+        "t0_ms": 10990,
+        "t1_ms": 22910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，回收呢不是很好，因为农民们他们养猪，养。",
+        "t0_ms": 23280,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 7350,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8410,
+        "t1_ms": 10750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10990,
+        "t1_ms": 22910,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23280,
+        "t1_ms": 29980,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 19.40399932861328,
+      "encode_ms": 7600.8818359375,
+      "decode_ms": 9566.6435546875
+    }
+  },
+  "rawDecoded": "[0.01][S01]那已经没有了，那咱们这个，呃，战略你觉得这这个可不可以这个。[7.35][8.41][S01]这个咱公司不再做这个业务了。[10.75][10.99][S02]对，因为这个小额贷，嗯，小额农业贷款的，因为因为市场，嗯，农民的形势有的不容乐观，我们的。[22.91][23.28][S02]呃，回收呢不是很好，因为农民们他们养猪，养。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

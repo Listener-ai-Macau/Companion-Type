@@ -33,9 +33,14 @@ def main():
   primary=read(directory/(meeting+'-primary-speaker-journal.json'));primary_rows=[dict(r,speaker='speaker_'+str(r['speaker'])) for r in primary['segments']]
   primary_der=activity_score(activity,primary_rows,case['audioSeconds'],identity=raw_der['identityForScoringOnly'])
   refs=defaultdict(list);hyps=defaultdict(list);unknown=[]
+  # The frozen EN2002a activity reference uses participant IDs (MEE/FEO),
+  # while its word XML uses A/B/C/D. Reuse the already-frozen reference-only
+  # alias map; never derive a new per-window permutation from candidate words.
+  aliases={original:external.rsplit('.',1)[-1] for external,original in case.get('mfaToOriginalNames',{}).items()}
   for r in reference:refs[r['speaker']].extend(units(r['text'],lang))
   for r in doc['rows']:
    native=r['nativeGlobalSpeaker'];person=raw_der['identityForScoringOnly'].get('speaker_'+str(native)) if native is not None else None
+   person=aliases.get(person,person)
    (unknown if person is None else hyps[person]).extend(units(r['text'],lang))
   persons=[{'speaker':s,**measure(refs[s],hyps[s])} for s in sorted(set(refs)|set(hyps))]
   fixed_errors=sum(r['errors'] for r in persons)+len(unknown);denominator=sum(len(v) for v in refs.values());assert denominator==len(refunits)
@@ -54,12 +59,13 @@ def main():
    'personTextOneWholeMeetingPermutation':permuted,'baselinePersonErrorRate':case.get('baselinePersonErrorRate'),
    'personTextFixedOriginalActivityIdentity':{'errors':fixed_errors,'referenceUnits':denominator,'errorRate':fixed_errors/denominator,'unknownUnitsForcedUnmatched':len(unknown),'perPerson':persons,
     'mappingScope':'One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment.'},
-   'originalNemotronRawDERReproduced':raw_der,'primaryNemotronExclusiveDER':primary_der,'secondaryMossNativeTimeDER':native_time,
+   'originalNemotronRawDERReproduced':raw_der,'primaryRawJournalDER':raw_der,'exclusiveAttributionDERDiagnostic':primary_der,'secondaryMossNativeTimeDER':native_time,
+   'activityReferenceToLexicalReferenceAliasesForScoringOnly':aliases,
    'baselineDER':case['baselineDER'],'cpuAsrInferenceSeconds':packet['cpuAsrInferenceSeconds'],
    'asrRealTimeFactor':packet['cpuAsrInferenceSeconds']/case['audioSeconds'],
    'rawGatePass':packet['naturalEos'] and raw['errorRate']<.05,
    'fixedPersonGatePass':packet['naturalEos'] and fixed_errors/denominator<.05 and all(r['errorRate'] is not None and r['errorRate']<.05 for r in persons),
-   'primaryDERGatePass':primary_der['DER']<=.1,'factsGateMeasured':False,'qualityQualified':False}
+   'primaryDERGatePass':raw_der['DER']<=.1,'nativeTimeGatePass':not packet['invalidOriginalTimeSegments'],'factsGateMeasured':False,'qualityQualified':False}
   outputs.append(row);groups[lang].append(row)
  aggregate=[]
  for lang,rows in groups.items():
@@ -73,7 +79,7 @@ def main():
   'summaryScorerSha256':sha(__file__),'wholeScoringManifestSha256':sha(a.control/'whole-scoring-only.json'),'compositionStateSha256':sha(a.run/'composition-state.json'),
   'execution':read(a.run/'run.json'),'noReferenceInputToNeuralModels':True,'originalGatesChanged':False,'wholeMeetingAcceptance':False,'qualityQualified':False,'saleQualified':False,
   'blindFinalHoldoutOpened':False,'newWeightTraining':False,'productDefaultChanged':False,'fullCpuSpeakerModelRuntimeMeasured':False,
-  'limitations':['All4 recordings are previously seen development/regression cases, not a blind final cohort.','Fixed30s nonoverlap chunks keep all input audio; native output may omit boundary speech and all such errors remain counted.','The primary whole-source Nemotron journal reuses original GPU predictions; CPU speaker execution remains a separate required check.','MOSS native-time DER is a secondary diagnostic; it does not replace the primary activity journal or recover simultaneous voices.','Any incomplete EOS window remains visible and cannot pass complete-output gates.','Unknown words and all original numbers/fillers remain counted; no post-editing or reference corrections.','Facts and critical facts have not been accepted.'],
+  'limitations':['All4 recordings are previously seen development/regression cases, not a blind final cohort.','Fixed30s nonoverlap chunks keep all input audio; native output may omit boundary speech and all such errors remain counted.','The authoritative raw multi-voice Nemotron journal reuses original GPU predictions; its original DER remains unchanged. CPU speaker execution remains a separate required check.','The exclusive journal is used only for text attribution. Its DER is diagnostic and cannot stand in for overlap acceptance.','MOSS native-time DER is a secondary diagnostic; it does not replace the primary activity journal or recover simultaneous voices.','Any incomplete EOS window remains visible and cannot pass complete-output gates.','Unknown words and all original numbers/fillers remain counted; no post-editing or reference corrections.','EN2002a fixed activity-to-word scoring uses the frozen reference-only participant-ID/A-D alias map. No per-window candidate-dependent relabeling.','Facts and critical facts have not been accepted.'],
   'limits':limits.query()}
- atomic_json(a.control/'full-score.json',result);print(json.dumps({'state':result['state'],'groups':aggregate,'meetings':[{k:r[k] for k in ['meeting','rawText','rawEditsReduced','personTextFixedOriginalActivityIdentity','primaryNemotronExclusiveDER','secondaryMossNativeTimeDER']} for r in outputs]},ensure_ascii=False))
+ atomic_json(a.control/'full-score.json',result);print(json.dumps({'state':result['state'],'groups':aggregate,'meetings':[{k:r[k] for k in ['meeting','rawText','rawEditsReduced','personTextFixedOriginalActivityIdentity','primaryRawJournalDER','secondaryMossNativeTimeDER']} for r in outputs]},ensure_ascii=False))
 if __name__=='__main__':main()

@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0053",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 25440000,
+    "sourceEndFrame": 25920000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "817fde8657e05c80e706bee50e38d5a6f488a2fde21c2859a69dab86bdc9af29",
+  "seconds": 20.664556800002174,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I had one of those and my brother and my dad could have beat me up because it it went off all the time accidentally. Mm. Okay, similar. I think. Well the other option of course is that um the I was gonna say clapping um The clapping one. um digital telephones uh for example one unit has of course you have to have that base unit somewhere where there's a button, but maybe it's a button that you attach to the T V. To the television. Mm-hmm. Something which you when you press that",
+    "raw_text": "[0.00][S01]I had one of those and my brother and my dad could have beat me up because it it went off all the time accidentally.[7.28][0.48][S02]Mm.[0.74][1.02][S03]Okay, similar.[1.92][2.52][S02]I think.[3.06][7.46][S02]Well the other option of course is that um the I was gonna say clapping um[13.34][9.42][S01]The clapping one.[10.24][15.94][S02]um digital telephones uh for example one unit has of course you have to have that base unit somewhere where there's a button, but maybe it's a button that you attach to the T V.[26.50][26.38][S01]To the television.[27.14][26.82][S03]Mm-hmm.[27.16][27.58][S02]Something which you when you press that[29.82]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I had one of those and my brother and my dad could have beat me up because it it went off all the time accidentally.",
+        "t0_ms": 0,
+        "t1_ms": 7280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 480,
+        "t1_ms": 740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay, similar.",
+        "t0_ms": 1020,
+        "t1_ms": 1920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I think.",
+        "t0_ms": 2520,
+        "t1_ms": 3060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Well the other option of course is that um the I was gonna say clapping um",
+        "t0_ms": 7460,
+        "t1_ms": 13340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "The clapping one.",
+        "t0_ms": 9420,
+        "t1_ms": 10240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "um digital telephones uh for example one unit has of course you have to have that base unit somewhere where there's a button, but maybe it's a button that you attach to the T V.",
+        "t0_ms": 15940,
+        "t1_ms": 26500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "To the television.",
+        "t0_ms": 26380,
+        "t1_ms": 27140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 26820,
+        "t1_ms": 27160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Something which you when you press that",
+        "t0_ms": 27580,
+        "t1_ms": 29820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 7280,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 480,
+        "t1_ms": 740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1020,
+        "t1_ms": 1920,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2520,
+        "t1_ms": 3060,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7460,
+        "t1_ms": 13340,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9420,
+        "t1_ms": 10240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15940,
+        "t1_ms": 26500,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26380,
+        "t1_ms": 27140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26820,
+        "t1_ms": 27160,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27580,
+        "t1_ms": 29820,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.030000686645508,
+      "encode_ms": 6639.94384765625,
+      "decode_ms": 13970.904296875
+    }
+  },
+  "rawDecoded": "[0.00][S01]I had one of those and my brother and my dad could have beat me up because it it went off all the time accidentally.[7.28][0.48][S02]Mm.[0.74][1.02][S03]Okay, similar.[1.92][2.52][S02]I think.[3.06][7.46][S02]Well the other option of course is that um the I was gonna say clapping um[13.34][9.42][S01]The clapping one.[10.24][15.94][S02]um digital telephones uh for example one unit has of course you have to have that base unit somewhere where there's a button, but maybe it's a button that you attach to the T V.[26.50][26.38][S01]To the television.[27.14][26.82][S03]Mm-hmm.[27.16][27.58][S02]Something which you when you press that[29.82]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

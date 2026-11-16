@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0011",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 5280000,
+    "sourceEndFrame": 5760000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "7a3ed9f93f36e308d99038f8d979425b40f4c49004234afe709d525f3640670f",
+  "seconds": 17.223514800003613,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "段儿时间呢，销售还可以，呃，但是呢，呃，我对大家的要求呢也非常的高，嗯，其实每天呢都有去细心的去检查，去看看大家有没有做到位。 嗯，首先呢，就是说比如说我们这个呃菜的话，我们的陈列是有标准的，那你嗯摆放的品种呀，大小啊，嗯，包括它应该在上呀在下呀，都是有要求的。 嗯，所有的商品呢，都是经过。",
+    "raw_text": "[0.01][S01]段儿时间呢，销售还可以，呃，但是呢，呃，我对大家的要求呢也非常的高，嗯，其实每天呢都有去细心的去检查，去看看大家有没有做到位。[12.11][12.55][S01]嗯，首先呢，就是说比如说我们这个呃菜的话，我们的陈列是有标准的，那你嗯摆放的品种呀，大小啊，嗯，包括它应该在上呀在下呀，都是有要求的。[27.61][27.94][S01]嗯，所有的商品呢，都是经过。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "段儿时间呢，销售还可以，呃，但是呢，呃，我对大家的要求呢也非常的高，嗯，其实每天呢都有去细心的去检查，去看看大家有没有做到位。",
+        "t0_ms": 10,
+        "t1_ms": 12110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，首先呢，就是说比如说我们这个呃菜的话，我们的陈列是有标准的，那你嗯摆放的品种呀，大小啊，嗯，包括它应该在上呀在下呀，都是有要求的。",
+        "t0_ms": 12550,
+        "t1_ms": 27610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，所有的商品呢，都是经过。",
+        "t0_ms": 27940,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 12110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12550,
+        "t1_ms": 27610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27940,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.842000007629395,
+      "encode_ms": 6915.5322265625,
+      "decode_ms": 10257.861328125
+    }
+  },
+  "rawDecoded": "[0.01][S01]段儿时间呢，销售还可以，呃，但是呢，呃，我对大家的要求呢也非常的高，嗯，其实每天呢都有去细心的去检查，去看看大家有没有做到位。[12.11][12.55][S01]嗯，首先呢，就是说比如说我们这个呃菜的话，我们的陈列是有标准的，那你嗯摆放的品种呀，大小啊，嗯，包括它应该在上呀在下呀，都是有要求的。[27.61][27.94][S01]嗯，所有的商品呢，都是经过。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

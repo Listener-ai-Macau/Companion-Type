@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0076",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 36480000,
+    "sourceEndFrame": 36960000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "d56a488dbdc3a8b0ac04d6e465e656fceeb58db8f3a6cc24fd5ccf8b8f4ae87d",
+  "seconds": 15.681794099997205,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "具体的呃解释一下，以防就是呃在过程中出现一些呃不该出的问题出了，有出现问题不及时汇报的。 我这块儿倒没什么，有有什么问题，你们及时向我汇报，呃就行了。 行，今天会议到此，你们下去该呃整理的整理，该呃培训的下与员工进行培训，好。",
+    "raw_text": "[0.01][S01]具体的呃解释一下，以防就是呃在过程中出现一些呃不该出的问题出了，有出现问题不及时汇报的。[10.85][11.88][S01]我这块儿倒没什么，有有什么问题，你们及时向我汇报，呃就行了。[17.54][18.11][S01]行，今天会议到此，你们下去该呃整理的整理，该呃培训的下与员工进行培训，好。[25.95]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "具体的呃解释一下，以防就是呃在过程中出现一些呃不该出的问题出了，有出现问题不及时汇报的。",
+        "t0_ms": 10,
+        "t1_ms": 10850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "我这块儿倒没什么，有有什么问题，你们及时向我汇报，呃就行了。",
+        "t0_ms": 11880,
+        "t1_ms": 17540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "行，今天会议到此，你们下去该呃整理的整理，该呃培训的下与员工进行培训，好。",
+        "t0_ms": 18110,
+        "t1_ms": 25950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 10850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11880,
+        "t1_ms": 17540,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18110,
+        "t1_ms": 25950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.468000411987305,
+      "encode_ms": 7045.705078125,
+      "decode_ms": 8581.3583984375
+    }
+  },
+  "rawDecoded": "[0.01][S01]具体的呃解释一下，以防就是呃在过程中出现一些呃不该出的问题出了，有出现问题不及时汇报的。[10.85][11.88][S01]我这块儿倒没什么，有有什么问题，你们及时向我汇报，呃就行了。[17.54][18.11][S01]行，今天会议到此，你们下去该呃整理的整理，该呃培训的下与员工进行培训，好。[25.95]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

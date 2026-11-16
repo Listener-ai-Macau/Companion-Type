@@ -1,0 +1,264 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0065",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 31200000,
+    "sourceEndFrame": 31680000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8b15496606469eace66a369e635c2e71744eaa3eb16c0424342c30586f855c32",
+  "seconds": 23.672692899999674,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "嗯，不做十万以下的。 十万三十万这个区间，咱们这个做公司咱咱们公司的一个生存环境吧，还有就是这种太小了的这种三万五万。 嗯。 对。 人家也不，说实话，因为他们现在信用卡比较广泛。 这种。 嗯。 他们。 小额的信用卡，两三万的人很很多。 但是大额的信用卡的人就少了。 或者他们这个很很多就是因为他这个。 嗯，因为。",
+    "raw_text": "[0.02][S01]嗯，不做十万以下的。[1.54][2.22][S02]十万三十万这个区间，咱们这个做公司咱咱们公司的一个生存环境吧，还有就是这种太小了的这种三万五万。[12.42][4.32][S01]嗯。[4.74][8.31][S01]对。[8.68][12.79][S01]人家也不，说实话，因为他们现在信用卡比较广泛。[16.75][12.82][S02]这种。[13.32][17.02][S02]嗯。[17.54][17.46][S01]他们。[18.02][18.58][S01]小额的信用卡，两三万的人很很多。[21.66][22.14][S01]但是大额的信用卡的人就少了。[24.12][24.15][S02]或者他们这个很很多就是因为他这个。[27.64][28.34][S02]嗯，因为。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "嗯，不做十万以下的。",
+        "t0_ms": 20,
+        "t1_ms": 1540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "十万三十万这个区间，咱们这个做公司咱咱们公司的一个生存环境吧，还有就是这种太小了的这种三万五万。",
+        "t0_ms": 2220,
+        "t1_ms": 12420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 4320,
+        "t1_ms": 4740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对。",
+        "t0_ms": 8310,
+        "t1_ms": 8680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "人家也不，说实话，因为他们现在信用卡比较广泛。",
+        "t0_ms": 12790,
+        "t1_ms": 16750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这种。",
+        "t0_ms": 12820,
+        "t1_ms": 13320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 17020,
+        "t1_ms": 17540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "他们。",
+        "t0_ms": 17460,
+        "t1_ms": 18020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "小额的信用卡，两三万的人很很多。",
+        "t0_ms": 18580,
+        "t1_ms": 21660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "但是大额的信用卡的人就少了。",
+        "t0_ms": 22140,
+        "t1_ms": 24120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "或者他们这个很很多就是因为他这个。",
+        "t0_ms": 24150,
+        "t1_ms": 27640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，因为。",
+        "t0_ms": 28340,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 20,
+        "t1_ms": 1540,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2220,
+        "t1_ms": 12420,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4320,
+        "t1_ms": 4740,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8310,
+        "t1_ms": 8680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12790,
+        "t1_ms": 16750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12820,
+        "t1_ms": 13320,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17020,
+        "t1_ms": 17540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17460,
+        "t1_ms": 18020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18580,
+        "t1_ms": 21660,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22140,
+        "t1_ms": 24120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24150,
+        "t1_ms": 27640,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28340,
+        "t1_ms": 29980,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 27.163000106811523,
+      "encode_ms": 7420.9130859375,
+      "decode_ms": 16189.5068359375
+    }
+  },
+  "rawDecoded": "[0.02][S01]嗯，不做十万以下的。[1.54][2.22][S02]十万三十万这个区间，咱们这个做公司咱咱们公司的一个生存环境吧，还有就是这种太小了的这种三万五万。[12.42][4.32][S01]嗯。[4.74][8.31][S01]对。[8.68][12.79][S01]人家也不，说实话，因为他们现在信用卡比较广泛。[16.75][12.82][S02]这种。[13.32][17.02][S02]嗯。[17.54][17.46][S01]他们。[18.02][18.58][S01]小额的信用卡，两三万的人很很多。[21.66][22.14][S01]但是大额的信用卡的人就少了。[24.12][24.15][S02]或者他们这个很很多就是因为他这个。[27.64][28.34][S02]嗯，因为。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

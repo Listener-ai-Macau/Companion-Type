@@ -1,0 +1,210 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0057",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 27360000,
+    "sourceEndFrame": 27840000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "e2636fd91adc79bc2b1ce7b80b29bbf737440d7e09f81d9c057af5bcf2aec779",
+  "seconds": 21.29005750000215,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "What people use a remote control for most um power is used like once per hour, channel selection is used one hundred and sixty eight per hour, that's by far the biggest one. Okay. Mm-hmm. And then teletext is still here, that's uh fourteen, and volume selection. Go. Volume selection, okay, yep. The teletext we're gambling with and we're gonna say it's dead, the way we do it though. No, yeah, okay, I could Yeah, um. So, well sorry, we could maybe even go as",
+    "raw_text": "[0.00][S01]What people use a remote control for most um power is used like once per hour, channel selection is used one hundred and sixty eight per hour, that's by far the biggest one.[12.80][3.24][S02]Okay.[3.72][10.00][S02]Mm-hmm.[10.40][13.50][S01]And then teletext is still here, that's uh fourteen, and volume selection.[19.14][17.62][S02]Go.[18.04][19.30][S02]Volume selection, okay, yep. The teletext we're gambling with and we're gonna say it's dead, the way we do it though.[25.14][23.12][S01]No, yeah, okay, I could[24.58][25.68][S01]Yeah, um.[26.60][27.06][S02]So, well sorry, we could maybe even go as[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "What people use a remote control for most um power is used like once per hour, channel selection is used one hundred and sixty eight per hour, that's by far the biggest one.",
+        "t0_ms": 0,
+        "t1_ms": 12800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 3240,
+        "t1_ms": 3720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 10000,
+        "t1_ms": 10400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "And then teletext is still here, that's uh fourteen, and volume selection.",
+        "t0_ms": 13500,
+        "t1_ms": 19140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Go.",
+        "t0_ms": 17620,
+        "t1_ms": 18040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Volume selection, okay, yep. The teletext we're gambling with and we're gonna say it's dead, the way we do it though.",
+        "t0_ms": 19300,
+        "t1_ms": 25140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "No, yeah, okay, I could",
+        "t0_ms": 23120,
+        "t1_ms": 24580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, um.",
+        "t0_ms": 25680,
+        "t1_ms": 26600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "So, well sorry, we could maybe even go as",
+        "t0_ms": 27060,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 12800,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3240,
+        "t1_ms": 3720,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10000,
+        "t1_ms": 10400,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13500,
+        "t1_ms": 19140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17620,
+        "t1_ms": 18040,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19300,
+        "t1_ms": 25140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23120,
+        "t1_ms": 24580,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25680,
+        "t1_ms": 26600,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27060,
+        "t1_ms": 29940,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.43199920654297,
+      "encode_ms": 7197.5380859375,
+      "decode_ms": 14033.1953125
+    }
+  },
+  "rawDecoded": "[0.00][S01]What people use a remote control for most um power is used like once per hour, channel selection is used one hundred and sixty eight per hour, that's by far the biggest one.[12.80][3.24][S02]Okay.[3.72][10.00][S02]Mm-hmm.[10.40][13.50][S01]And then teletext is still here, that's uh fourteen, and volume selection.[19.14][17.62][S02]Go.[18.04][19.30][S02]Volume selection, okay, yep. The teletext we're gambling with and we're gonna say it's dead, the way we do it though.[25.14][23.12][S01]No, yeah, okay, I could[24.58][25.68][S01]Yeah, um.[26.60][27.06][S02]So, well sorry, we could maybe even go as[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

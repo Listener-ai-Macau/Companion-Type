@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0019",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 9120000,
+    "sourceEndFrame": 9600000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "9bc48208f41b06612539aa30714ec4d462a335a6836be59d28f2797e91c6e8e9",
+  "seconds": 23.30085319999489,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Audio, but at the moment no, but. Yeah, yeah, yeah, I mean we might use them while but to work with them, but do we wanna integrate them uh so that when you browse you can. Yeah. We might want to be able to say, oh just give me what that person's saying. Do you though, I mean it's not gonna make much sense if you listen to it on its own, do you? No. Unless um you can't hear it properly or something, somebody's talking over somebody else or something, well. We'll just say no for now and put it in maybe or something like that, yeah. No, mm, yeah. Yeah. Yeah, 'cause otherwise it will de it will increase the amount of data.",
+    "raw_text": "[0.00][S01]Audio, but at the moment no, but.[2.82][0.00][S02]Yeah, yeah, yeah, I mean we might use them while but to work with them, but do we wanna integrate them uh so that when you browse you can.[7.42][3.62][S03]Yeah.[4.12][7.92][S01]We might want to be able to say, oh just give me what that person's saying.[10.94][11.38][S02]Do you though, I mean it's not gonna make much sense if you listen to it on its own, do you?[15.02][11.94][S03]No.[12.44][15.04][S01]Unless um you can't hear it properly or something, somebody's talking over somebody else or something, well.[19.62][21.32][S01]We'll just say no for now and put it in maybe or something like that, yeah.[24.00][22.88][S02]No, mm, yeah.[24.58][25.96][S02]Yeah.[26.30][26.80][S01]Yeah, 'cause otherwise it will de it will increase the amount of data.[29.96]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Audio, but at the moment no, but.",
+        "t0_ms": 0,
+        "t1_ms": 2820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, yeah, yeah, I mean we might use them while but to work with them, but do we wanna integrate them uh so that when you browse you can.",
+        "t0_ms": 0,
+        "t1_ms": 7420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 3620,
+        "t1_ms": 4120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "We might want to be able to say, oh just give me what that person's saying.",
+        "t0_ms": 7920,
+        "t1_ms": 10940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Do you though, I mean it's not gonna make much sense if you listen to it on its own, do you?",
+        "t0_ms": 11380,
+        "t1_ms": 15020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "No.",
+        "t0_ms": 11940,
+        "t1_ms": 12440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Unless um you can't hear it properly or something, somebody's talking over somebody else or something, well.",
+        "t0_ms": 15040,
+        "t1_ms": 19620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "We'll just say no for now and put it in maybe or something like that, yeah.",
+        "t0_ms": 21320,
+        "t1_ms": 24000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "No, mm, yeah.",
+        "t0_ms": 22880,
+        "t1_ms": 24580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 25960,
+        "t1_ms": 26300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, 'cause otherwise it will de it will increase the amount of data.",
+        "t0_ms": 26800,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 0,
+        "t1_ms": 7420,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3620,
+        "t1_ms": 4120,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7920,
+        "t1_ms": 10940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11380,
+        "t1_ms": 15020,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11940,
+        "t1_ms": 12440,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15040,
+        "t1_ms": 19620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21320,
+        "t1_ms": 24000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22880,
+        "t1_ms": 24580,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25960,
+        "t1_ms": 26300,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26800,
+        "t1_ms": 29960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.66699981689453,
+      "encode_ms": 6815.40283203125,
+      "decode_ms": 16424.818359375
+    }
+  },
+  "rawDecoded": "[0.00][S01]Audio, but at the moment no, but.[2.82][0.00][S02]Yeah, yeah, yeah, I mean we might use them while but to work with them, but do we wanna integrate them uh so that when you browse you can.[7.42][3.62][S03]Yeah.[4.12][7.92][S01]We might want to be able to say, oh just give me what that person's saying.[10.94][11.38][S02]Do you though, I mean it's not gonna make much sense if you listen to it on its own, do you?[15.02][11.94][S03]No.[12.44][15.04][S01]Unless um you can't hear it properly or something, somebody's talking over somebody else or something, well.[19.62][21.32][S01]We'll just say no for now and put it in maybe or something like that, yeah.[24.00][22.88][S02]No, mm, yeah.[24.58][25.96][S02]Yeah.[26.30][26.80][S01]Yeah, 'cause otherwise it will de it will increase the amount of data.[29.96]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

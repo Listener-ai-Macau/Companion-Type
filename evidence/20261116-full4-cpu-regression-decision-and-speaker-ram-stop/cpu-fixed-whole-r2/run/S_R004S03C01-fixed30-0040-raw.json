@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0040",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 19200000,
+    "sourceEndFrame": 19680000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "f43e9adaede4ecd5b1eded2f88e33e85ff61e7d06eb439af5ccfd120879917bc",
+  "seconds": 16.67089180000039,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "就是嗯，比如说呃，过两个月之后可以搞一下那种周六日，呃，限本周六日购买返二十元代金劵儿。 嗯，看着力度挺大挺大的，但是这这个代金劵儿就是限下次购买使用，等于两次消消费。 嗯。 然后就是。 还还可以就是买二赠一，比如说买两个小蛋糕，然后。",
+    "raw_text": "[0.00][S01]就是嗯，比如说呃，过两个月之后可以搞一下那种周六日，呃，限本周六日购买返二十元代金劵儿。[10.82][11.12][S01]嗯，看着力度挺大挺大的，但是这这个代金劵儿就是限下次购买使用，等于两次消消费。[20.42][20.86][S01]嗯。[21.62][23.58][S01]然后就是。[24.82][25.38][S01]还还可以就是买二赠一，比如说买两个小蛋糕，然后。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "就是嗯，比如说呃，过两个月之后可以搞一下那种周六日，呃，限本周六日购买返二十元代金劵儿。",
+        "t0_ms": 0,
+        "t1_ms": 10820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，看着力度挺大挺大的，但是这这个代金劵儿就是限下次购买使用，等于两次消消费。",
+        "t0_ms": 11120,
+        "t1_ms": 20420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 20860,
+        "t1_ms": 21620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后就是。",
+        "t0_ms": 23580,
+        "t1_ms": 24820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还还可以就是买二赠一，比如说买两个小蛋糕，然后。",
+        "t0_ms": 25380,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 10820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11120,
+        "t1_ms": 20420,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20860,
+        "t1_ms": 21620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23580,
+        "t1_ms": 24820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25380,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 22.007999420166016,
+      "encode_ms": 6730.1767578125,
+      "decode_ms": 9887.7314453125
+    }
+  },
+  "rawDecoded": "[0.00][S01]就是嗯，比如说呃，过两个月之后可以搞一下那种周六日，呃，限本周六日购买返二十元代金劵儿。[10.82][11.12][S01]嗯，看着力度挺大挺大的，但是这这个代金劵儿就是限下次购买使用，等于两次消消费。[20.42][20.86][S01]嗯。[21.62][23.58][S01]然后就是。[24.82][25.38][S01]还还可以就是买二赠一，比如说买两个小蛋糕，然后。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

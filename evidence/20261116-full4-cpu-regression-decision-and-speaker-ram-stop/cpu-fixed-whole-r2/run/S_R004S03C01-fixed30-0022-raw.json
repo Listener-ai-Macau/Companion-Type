@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0022",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 10560000,
+    "sourceEndFrame": 11040000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "92b340a2141916306d826f61cacf3d61ddc8b7136f03004ca27d0e0b825df670",
+  "seconds": 17.62718949999544,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "我根本就没有时间去洗菜择菜去，这样呢，就是提给他们提供了一些方便，完了以后呢，他们来超市买，买完了以后回去好来洗一下。 就可以就是那个，嗯，就可以炒菜吃了，就是方便他们嘛，呃，针对这些人群，我们也有一个这样的一个策划。 嗯，再一个就是，我们还超市有一个，呃，就是买蔬菜区的话，呃，就是买买购买够三十的话，我们就是针对。",
+    "raw_text": "[0.00][S01]我根本就没有时间去洗菜择菜去，这样呢，就是提给他们提供了一些方便，完了以后呢，他们来超市买，买完了以后回去好来洗一下。[9.72][9.72][S01]就可以就是那个，嗯，就可以炒菜吃了，就是方便他们嘛，呃，针对这些人群，我们也有一个这样的一个策划。[19.78][19.78][S01]嗯，再一个就是，我们还超市有一个，呃，就是买蔬菜区的话，呃，就是买买购买够三十的话，我们就是针对。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "我根本就没有时间去洗菜择菜去，这样呢，就是提给他们提供了一些方便，完了以后呢，他们来超市买，买完了以后回去好来洗一下。",
+        "t0_ms": 0,
+        "t1_ms": 9720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就可以就是那个，嗯，就可以炒菜吃了，就是方便他们嘛，呃，针对这些人群，我们也有一个这样的一个策划。",
+        "t0_ms": 9720,
+        "t1_ms": 19780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，再一个就是，我们还超市有一个，呃，就是买蔬菜区的话，呃，就是买买购买够三十的话，我们就是针对。",
+        "t0_ms": 19780,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 9720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9720,
+        "t1_ms": 19780,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19780,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 24.572999954223633,
+      "encode_ms": 7681.0390625,
+      "decode_ms": 9885.01953125
+    }
+  },
+  "rawDecoded": "[0.00][S01]我根本就没有时间去洗菜择菜去，这样呢，就是提给他们提供了一些方便，完了以后呢，他们来超市买，买完了以后回去好来洗一下。[9.72][9.72][S01]就可以就是那个，嗯，就可以炒菜吃了，就是方便他们嘛，呃，针对这些人群，我们也有一个这样的一个策划。[19.78][19.78][S01]嗯，再一个就是，我们还超市有一个，呃，就是买蔬菜区的话，呃，就是买买购买够三十的话，我们就是针对。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

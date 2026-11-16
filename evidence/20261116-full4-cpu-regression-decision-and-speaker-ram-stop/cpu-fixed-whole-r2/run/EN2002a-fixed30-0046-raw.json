@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0046",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 22080000,
+    "sourceEndFrame": 22560000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "f4b9e71f09dba676c958b51d2878833cd2fdaa7292a0e99393ea61d7d583a502",
+  "seconds": 23.0307188999941,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Just search for specific string. Alright. Make it back. So you could just, you know, you could use that when you if you wanna um take the data out. Fished the data out, I was just thinking that, yeah. Yeah. Yeah. If you have a a question about what the the code means or where to find the code that you wanna, you know, whatever you wanna do, then just send me an email. Mm. I can explain it, yeah. Have you annotated your code?",
+    "raw_text": "[0.00][S01]Just search for specific string.[2.96][3.42][S02]Alright.[3.74][5.24][S02]Make it back.[5.80][5.42][S01]So you could just, you know, you could use that when you if you wanna um take the data out.[11.08][11.24][S02]Fished the data out, I was just thinking that, yeah.[13.12][12.08][S01]Yeah.[12.36][13.08][S01]Yeah.[13.40][16.66][S01]If you have a a question about what the the code means or where to find the code that you wanna, you know, whatever you wanna do, then just send me an email.[25.54][25.72][S02]Mm.[25.88][26.82][S01]I can explain it, yeah.[28.50][28.84][S02]Have you annotated your code?[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Just search for specific string.",
+        "t0_ms": 0,
+        "t1_ms": 2960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Alright.",
+        "t0_ms": 3420,
+        "t1_ms": 3740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Make it back.",
+        "t0_ms": 5240,
+        "t1_ms": 5800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "So you could just, you know, you could use that when you if you wanna um take the data out.",
+        "t0_ms": 5420,
+        "t1_ms": 11080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Fished the data out, I was just thinking that, yeah.",
+        "t0_ms": 11240,
+        "t1_ms": 13120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 12080,
+        "t1_ms": 12360,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 13080,
+        "t1_ms": 13400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "If you have a a question about what the the code means or where to find the code that you wanna, you know, whatever you wanna do, then just send me an email.",
+        "t0_ms": 16660,
+        "t1_ms": 25540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 25720,
+        "t1_ms": 25880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "I can explain it, yeah.",
+        "t0_ms": 26820,
+        "t1_ms": 28500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Have you annotated your code?",
+        "t0_ms": 28840,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3420,
+        "t1_ms": 3740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5240,
+        "t1_ms": 5800,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5420,
+        "t1_ms": 11080,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11240,
+        "t1_ms": 13120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12080,
+        "t1_ms": 12360,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13080,
+        "t1_ms": 13400,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16660,
+        "t1_ms": 25540,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25720,
+        "t1_ms": 25880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26820,
+        "t1_ms": 28500,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28840,
+        "t1_ms": 29980,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.321999549865723,
+      "encode_ms": 7605.81591796875,
+      "decode_ms": 15376.0078125
+    }
+  },
+  "rawDecoded": "[0.00][S01]Just search for specific string.[2.96][3.42][S02]Alright.[3.74][5.24][S02]Make it back.[5.80][5.42][S01]So you could just, you know, you could use that when you if you wanna um take the data out.[11.08][11.24][S02]Fished the data out, I was just thinking that, yeah.[13.12][12.08][S01]Yeah.[12.36][13.08][S01]Yeah.[13.40][16.66][S01]If you have a a question about what the the code means or where to find the code that you wanna, you know, whatever you wanna do, then just send me an email.[25.54][25.72][S02]Mm.[25.88][26.82][S01]I can explain it, yeah.[28.50][28.84][S02]Have you annotated your code?[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0058",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 27840000,
+    "sourceEndFrame": 28320000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "14808899f6248dfe70ee5f472aa4eb5e6114d761d084977fb46b1958c5b63454",
+  "seconds": 15.311309199998504,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Bar saying power button, small joystick, L. C. D. and then what, maybe is it one more button to say that you're using the menu system and the possibility of pushing down on the joystick to say okay. So we're having very very few buttons involved and navigation around the menu for most things. Actually Actually I would say maybe two two function buttons, they y we're now using the menus button.",
+    "raw_text": "[0.00][S01]Bar saying power button, small joystick, L. C. D. and then what, maybe is it one more button to say that you're using the menu system and the possibility of pushing down on the joystick to say okay. So we're having very very few buttons involved and navigation around the menu for most things.[22.86][20.16][S02]Actually[20.54][23.56][S02]Actually I would say maybe two two function buttons, they y we're now using the menus button.[29.92]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Bar saying power button, small joystick, L. C. D. and then what, maybe is it one more button to say that you're using the menu system and the possibility of pushing down on the joystick to say okay. So we're having very very few buttons involved and navigation around the menu for most things.",
+        "t0_ms": 0,
+        "t1_ms": 22860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Actually",
+        "t0_ms": 20160,
+        "t1_ms": 20540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Actually I would say maybe two two function buttons, they y we're now using the menus button.",
+        "t0_ms": 23560,
+        "t1_ms": 29920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 22860,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20160,
+        "t1_ms": 20540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23560,
+        "t1_ms": 29920,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 26.479000091552734,
+      "encode_ms": 6895.916015625,
+      "decode_ms": 8353.4248046875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Bar saying power button, small joystick, L. C. D. and then what, maybe is it one more button to say that you're using the menu system and the possibility of pushing down on the joystick to say okay. So we're having very very few buttons involved and navigation around the menu for most things.[22.86][20.16][S02]Actually[20.54][23.56][S02]Actually I would say maybe two two function buttons, they y we're now using the menus button.[29.92]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

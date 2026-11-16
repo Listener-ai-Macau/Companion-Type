@@ -1,0 +1,84 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0046",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 22080000,
+    "sourceEndFrame": 22560000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "3057307b08a735db0cbee66defd5e8507a73290be62fbae8625c58039e9e94fc",
+  "seconds": 15.05489099999977,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "T but uh but uh but then ob obviously if uh you know if you if you wanted to access further functions you you you then get sort of menu navigation I mean with things like cha with things like tuning in channels um you know adjusting bright uh brightness and you know fiddly things that no one really bothers with most T. V. s these days actually have menus anyway so this would be a fairly rational way of integrating of",
+    "raw_text": "[0.00][S01]T but uh but uh but then ob obviously if uh[5.00][6.38][S01]you know if you if you wanted to access further functions you you you then get sort of menu navigation I mean with things like cha with things like tuning in channels um you know adjusting bright uh brightness and you know fiddly things that no one really bothers with most T. V. s these days actually have menus anyway so this would be a fairly rational way of integrating of[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "T but uh but uh but then ob obviously if uh",
+        "t0_ms": 0,
+        "t1_ms": 5000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "you know if you if you wanted to access further functions you you you then get sort of menu navigation I mean with things like cha with things like tuning in channels um you know adjusting bright uh brightness and you know fiddly things that no one really bothers with most T. V. s these days actually have menus anyway so this would be a fairly rational way of integrating of",
+        "t0_ms": 6380,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 5000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6380,
+        "t1_ms": 29940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.55900001525879,
+      "encode_ms": 7342.2548828125,
+      "decode_ms": 7653.330078125
+    }
+  },
+  "rawDecoded": "[0.00][S01]T but uh but uh but then ob obviously if uh[5.00][6.38][S01]you know if you if you wanted to access further functions you you you then get sort of menu navigation I mean with things like cha with things like tuning in channels um you know adjusting bright uh brightness and you know fiddly things that no one really bothers with most T. V. s these days actually have menus anyway so this would be a fairly rational way of integrating of[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0048",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 23040000,
+    "sourceEndFrame": 23520000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "e98b91a2d92ebb67868785c2efedbb33a5d66150c8ec618253378da320a8d394",
+  "seconds": 18.65625259999797,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "感觉一下，这个护肤品到底适不适合这个，呃，他的那个肤质，因为每个人跟每个人的肤质是不一样的。 嗯，有比较呃干的，有有的人皮肤是干皮的或者油皮的，他的呃。 用品，因为他没有用过这种呃呃产品，他肯定不知道他适不适合这种产品。 比如有些有些人容易过敏呐，是吧，然后我们可以现场体验一下。 如果说感觉良好的话，他可以现场购买。",
+    "raw_text": "[0.00][S01]感觉一下，这个护肤品到底适不适合这个，呃，他的那个肤质，因为每个人跟每个人的肤质是不一样的。[7.94][7.94][S01]嗯，有比较呃干的，有有的人皮肤是干皮的或者油皮的，他的呃。[15.82][16.04][S01]用品，因为他没有用过这种呃呃产品，他肯定不知道他适不适合这种产品。[22.18][22.18][S01]比如有些有些人容易过敏呐，是吧，然后我们可以现场体验一下。[26.50][26.50][S01]如果说感觉良好的话，他可以现场购买。[29.96]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "感觉一下，这个护肤品到底适不适合这个，呃，他的那个肤质，因为每个人跟每个人的肤质是不一样的。",
+        "t0_ms": 0,
+        "t1_ms": 7940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，有比较呃干的，有有的人皮肤是干皮的或者油皮的，他的呃。",
+        "t0_ms": 7940,
+        "t1_ms": 15820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "用品，因为他没有用过这种呃呃产品，他肯定不知道他适不适合这种产品。",
+        "t0_ms": 16040,
+        "t1_ms": 22180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "比如有些有些人容易过敏呐，是吧，然后我们可以现场体验一下。",
+        "t0_ms": 22180,
+        "t1_ms": 26500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "如果说感觉良好的话，他可以现场购买。",
+        "t0_ms": 26500,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 7940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7940,
+        "t1_ms": 15820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16040,
+        "t1_ms": 22180,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22180,
+        "t1_ms": 26500,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26500,
+        "t1_ms": 29960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.743999481201172,
+      "encode_ms": 7289.51611328125,
+      "decode_ms": 11311.396484375
+    }
+  },
+  "rawDecoded": "[0.00][S01]感觉一下，这个护肤品到底适不适合这个，呃，他的那个肤质，因为每个人跟每个人的肤质是不一样的。[7.94][7.94][S01]嗯，有比较呃干的，有有的人皮肤是干皮的或者油皮的，他的呃。[15.82][16.04][S01]用品，因为他没有用过这种呃呃产品，他肯定不知道他适不适合这种产品。[22.18][22.18][S01]比如有些有些人容易过敏呐，是吧，然后我们可以现场体验一下。[26.50][26.50][S01]如果说感觉良好的话，他可以现场购买。[29.96]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

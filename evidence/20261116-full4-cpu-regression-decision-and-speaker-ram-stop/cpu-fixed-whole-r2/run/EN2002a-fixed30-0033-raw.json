@@ -1,0 +1,372 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0033",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 15840000,
+    "sourceEndFrame": 16320000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8d43564791e6be1d390d0887eb804fb4082030c6784fbabb47463ac6a830c37e",
+  "seconds": 26.517829999997048,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Title jump of ones. Can tell you what I'm an S. P. T. Yeah, I got it. Prince. Oh um I don't know I basically I started like browsing a bit just like trying to see if there's anything out there to use sort of um just Mm-hmm. What what were you doing again? Mm-hmm. Yeah so yeah so. All the searching stuff. Yeah. Yeah, really. Yeah. Yeah. File stuff and uh the next search query and all that. Yeah yeah. Could just okay. Hmm.",
+    "raw_text": "[1.93][S01]Title jump of ones.[2.89][4.68][S02]Can tell you what I'm an S. P. T.[6.25][6.68][S03]Yeah, I got it.[7.41][7.45][S04]Prince.[7.83][9.91][S02]Oh um I don't know I basically I started like browsing a bit just like trying to see if there's anything out there to use sort of um just[21.45][19.84][S05]Mm-hmm.[20.15][21.41][S05]What what were you doing again?[22.75][22.86][S04]Mm-hmm.[23.31][23.38][S02]Yeah so yeah so.[25.55][23.84][S01]All the searching stuff.[24.71][24.84][S05]Yeah.[25.15][25.45][S04]Yeah, really.[26.21][25.81][S04]Yeah.[26.11][25.84][S03]Yeah.[26.15][26.11][S04]File stuff and uh the next search query and all that.[28.71][26.78][S02]Yeah yeah.[27.45][28.00][S02]Could just okay.[29.31][29.38][S04]Hmm.[29.61]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Title jump of ones.",
+        "t0_ms": 1930,
+        "t1_ms": 2890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Can tell you what I'm an S. P. T.",
+        "t0_ms": 4680,
+        "t1_ms": 6250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, I got it.",
+        "t0_ms": 6680,
+        "t1_ms": 7410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Prince.",
+        "t0_ms": 7450,
+        "t1_ms": 7830,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Oh um I don't know I basically I started like browsing a bit just like trying to see if there's anything out there to use sort of um just",
+        "t0_ms": 9910,
+        "t1_ms": 21450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 19840,
+        "t1_ms": 20150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 5
+      },
+      {
+        "text": "What what were you doing again?",
+        "t0_ms": 21410,
+        "t1_ms": 22750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 5
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 22860,
+        "t1_ms": 23310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah so yeah so.",
+        "t0_ms": 23380,
+        "t1_ms": 25550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "All the searching stuff.",
+        "t0_ms": 23840,
+        "t1_ms": 24710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 24840,
+        "t1_ms": 25150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 5
+      },
+      {
+        "text": "Yeah, really.",
+        "t0_ms": 25450,
+        "t1_ms": 26210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 25810,
+        "t1_ms": 26110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 25840,
+        "t1_ms": 26150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "File stuff and uh the next search query and all that.",
+        "t0_ms": 26110,
+        "t1_ms": 28710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah yeah.",
+        "t0_ms": 26780,
+        "t1_ms": 27450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Could just okay.",
+        "t0_ms": 28000,
+        "t1_ms": 29310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 29380,
+        "t1_ms": 29610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 1930,
+        "t1_ms": 2890,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4680,
+        "t1_ms": 6250,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6680,
+        "t1_ms": 7410,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7450,
+        "t1_ms": 7830,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9910,
+        "t1_ms": 21450,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19840,
+        "t1_ms": 20150,
+        "speaker_id": 5,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21410,
+        "t1_ms": 22750,
+        "speaker_id": 5,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22860,
+        "t1_ms": 23310,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23380,
+        "t1_ms": 25550,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23840,
+        "t1_ms": 24710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24840,
+        "t1_ms": 25150,
+        "speaker_id": 5,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25450,
+        "t1_ms": 26210,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25810,
+        "t1_ms": 26110,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25840,
+        "t1_ms": 26150,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26110,
+        "t1_ms": 28710,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26780,
+        "t1_ms": 27450,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28000,
+        "t1_ms": 29310,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29380,
+        "t1_ms": 29610,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.880000114440918,
+      "encode_ms": 6718.69384765625,
+      "decode_ms": 19750.615234375
+    }
+  },
+  "rawDecoded": "[1.93][S01]Title jump of ones.[2.89][4.68][S02]Can tell you what I'm an S. P. T.[6.25][6.68][S03]Yeah, I got it.[7.41][7.45][S04]Prince.[7.83][9.91][S02]Oh um I don't know I basically I started like browsing a bit just like trying to see if there's anything out there to use sort of um just[21.45][19.84][S05]Mm-hmm.[20.15][21.41][S05]What what were you doing again?[22.75][22.86][S04]Mm-hmm.[23.31][23.38][S02]Yeah so yeah so.[25.55][23.84][S01]All the searching stuff.[24.71][24.84][S05]Yeah.[25.15][25.45][S04]Yeah, really.[26.21][25.81][S04]Yeah.[26.11][25.84][S03]Yeah.[26.15][26.11][S04]File stuff and uh the next search query and all that.[28.71][26.78][S02]Yeah yeah.[27.45][28.00][S02]Could just okay.[29.31][29.38][S04]Hmm.[29.61]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

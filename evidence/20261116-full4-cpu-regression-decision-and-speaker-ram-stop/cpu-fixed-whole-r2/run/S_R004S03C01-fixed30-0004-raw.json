@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0004",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 1920000,
+    "sourceEndFrame": 2400000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "ab341f3b98ecee769a9dfa3f5887b05f24848897d4c903a1cb5fc0841325b3ad",
+  "seconds": 17.21920769999997,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "也估计这就是疫情已经结束了嘛，会不太严重了，那个超市客流量人员也非常非常多，尤其是呃周六周日这几天。 呃人流院都是爆满，也不算爆满吧，就是人流院源源不断，来呃进行。 呃超市采购，呃周一至五呢，人流量还是稍微少一些，呃周一至五主要是呃一些老年人，呃。",
+    "raw_text": "[0.02][S01]也估计这就是疫情已经结束了嘛，会不太严重了，那个超市客流量人员也非常非常多，尤其是呃周六周日这几天。[10.42][10.62][S01]呃人流院都是爆满，也不算爆满吧，就是人流院源源不断，来呃进行。[18.44][19.44][S01]呃超市采购，呃周一至五呢，人流量还是稍微少一些，呃周一至五主要是呃一些老年人，呃。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "也估计这就是疫情已经结束了嘛，会不太严重了，那个超市客流量人员也非常非常多，尤其是呃周六周日这几天。",
+        "t0_ms": 20,
+        "t1_ms": 10420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃人流院都是爆满，也不算爆满吧，就是人流院源源不断，来呃进行。",
+        "t0_ms": 10620,
+        "t1_ms": 18440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃超市采购，呃周一至五呢，人流量还是稍微少一些，呃周一至五主要是呃一些老年人，呃。",
+        "t0_ms": 19440,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 20,
+        "t1_ms": 10420,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10620,
+        "t1_ms": 18440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19440,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 17.74799919128418,
+      "encode_ms": 7491.8828125,
+      "decode_ms": 9676.4423828125
+    }
+  },
+  "rawDecoded": "[0.02][S01]也估计这就是疫情已经结束了嘛，会不太严重了，那个超市客流量人员也非常非常多，尤其是呃周六周日这几天。[10.42][10.62][S01]呃人流院都是爆满，也不算爆满吧，就是人流院源源不断，来呃进行。[18.44][19.44][S01]呃超市采购，呃周一至五呢，人流量还是稍微少一些，呃周一至五主要是呃一些老年人，呃。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

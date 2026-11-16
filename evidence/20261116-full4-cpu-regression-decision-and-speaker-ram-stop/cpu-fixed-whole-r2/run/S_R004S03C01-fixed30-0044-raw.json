@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0044",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 21120000,
+    "sourceEndFrame": 21600000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "45965a7c22539d1cf32f26636c716d0edb3d3bcbf9fed293d24aa50ce46fb5bb",
+  "seconds": 21.88317079999979,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "蛋糕店儿，大型商场。 都会，嗯，比如说满了一百，然后加。 呃，八块八，九块九换购一个商品，或者换购一个卫生纸，就是这种日常需要的用品。 嗯。 也是非常不错的。 然后。 比如说像一些老顾客。 老顾客的话，嗯，就是。 嗯，有有那个有可以。 可以就是加上那种计。",
+    "raw_text": "[0.00][S01]蛋糕店儿，大型商场。[1.82][1.82][S01]都会，嗯，比如说满了一百，然后加。[5.40][5.40][S01]呃，八块八，九块九换购一个商品，或者换购一个卫生纸，就是这种日常需要的用品。[13.24][13.24][S01]嗯。[14.18][14.18][S01]也是非常不错的。[16.78][17.80][S01]然后。[18.78][19.62][S01]比如说像一些老顾客。[21.68][21.68][S01]老顾客的话，嗯，就是。[25.02][25.02][S01]嗯，有有那个有可以。[27.54][27.98][S01]可以就是加上那种计。[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "蛋糕店儿，大型商场。",
+        "t0_ms": 0,
+        "t1_ms": 1820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "都会，嗯，比如说满了一百，然后加。",
+        "t0_ms": 1820,
+        "t1_ms": 5400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，八块八，九块九换购一个商品，或者换购一个卫生纸，就是这种日常需要的用品。",
+        "t0_ms": 5400,
+        "t1_ms": 13240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 13240,
+        "t1_ms": 14180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "也是非常不错的。",
+        "t0_ms": 14180,
+        "t1_ms": 16780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后。",
+        "t0_ms": 17800,
+        "t1_ms": 18780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "比如说像一些老顾客。",
+        "t0_ms": 19620,
+        "t1_ms": 21680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "老顾客的话，嗯，就是。",
+        "t0_ms": 21680,
+        "t1_ms": 25020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，有有那个有可以。",
+        "t0_ms": 25020,
+        "t1_ms": 27540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "可以就是加上那种计。",
+        "t0_ms": 27980,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 1820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1820,
+        "t1_ms": 5400,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5400,
+        "t1_ms": 13240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13240,
+        "t1_ms": 14180,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14180,
+        "t1_ms": 16780,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17800,
+        "t1_ms": 18780,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19620,
+        "t1_ms": 21680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21680,
+        "t1_ms": 25020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25020,
+        "t1_ms": 27540,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27980,
+        "t1_ms": 29940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 19.093000411987305,
+      "encode_ms": 7391.02294921875,
+      "decode_ms": 14436.9326171875
+    }
+  },
+  "rawDecoded": "[0.00][S01]蛋糕店儿，大型商场。[1.82][1.82][S01]都会，嗯，比如说满了一百，然后加。[5.40][5.40][S01]呃，八块八，九块九换购一个商品，或者换购一个卫生纸，就是这种日常需要的用品。[13.24][13.24][S01]嗯。[14.18][14.18][S01]也是非常不错的。[16.78][17.80][S01]然后。[18.78][19.62][S01]比如说像一些老顾客。[21.68][21.68][S01]老顾客的话，嗯，就是。[25.02][25.02][S01]嗯，有有那个有可以。[27.54][27.98][S01]可以就是加上那种计。[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

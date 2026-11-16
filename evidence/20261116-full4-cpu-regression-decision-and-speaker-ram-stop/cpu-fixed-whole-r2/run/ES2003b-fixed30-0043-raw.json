@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0043",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 20640000,
+    "sourceEndFrame": 21120000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8e95adb00e0854bc640b2df31bf6ee3a8da69f57d6982047a4e2fba46ec0d2c4",
+  "seconds": 17.238769999996293,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Section of the people out there, so. I think that's better. Um I mean I imagine as well that the actual L. C. D. and maybe to a certain extent the joystick as well would be for the additional functionality which maybe doesn't get used as often, maybe it makes it easy for them to figure out how to um Mm. change the channels as in the frequencies and such for reprogramming it um and you can still have the main buttons that allow the people to turn the machine on and off the",
+    "raw_text": "[0.00][S01]Section of the people out there, so.[1.86][1.92][S02]I think that's better.[2.68][3.14][S01]Um I mean I imagine as well that the actual L. C. D. and maybe to a certain extent the joystick as well would be for the additional functionality which maybe doesn't get used as often, maybe it makes it easy for them to figure out how to um[19.26][10.58][S02]Mm.[10.84][20.82][S01]change the channels as in the frequencies and such for reprogramming it um and you can still have the main buttons that allow the people to turn the machine on and off the[29.92]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Section of the people out there, so.",
+        "t0_ms": 0,
+        "t1_ms": 1860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I think that's better.",
+        "t0_ms": 1920,
+        "t1_ms": 2680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Um I mean I imagine as well that the actual L. C. D. and maybe to a certain extent the joystick as well would be for the additional functionality which maybe doesn't get used as often, maybe it makes it easy for them to figure out how to um",
+        "t0_ms": 3140,
+        "t1_ms": 19260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 10580,
+        "t1_ms": 10840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "change the channels as in the frequencies and such for reprogramming it um and you can still have the main buttons that allow the people to turn the machine on and off the",
+        "t0_ms": 20820,
+        "t1_ms": 29920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 1860,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1920,
+        "t1_ms": 2680,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3140,
+        "t1_ms": 19260,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10580,
+        "t1_ms": 10840,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20820,
+        "t1_ms": 29920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.842000007629395,
+      "encode_ms": 6797.23291015625,
+      "decode_ms": 10395.0341796875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Section of the people out there, so.[1.86][1.92][S02]I think that's better.[2.68][3.14][S01]Um I mean I imagine as well that the actual L. C. D. and maybe to a certain extent the joystick as well would be for the additional functionality which maybe doesn't get used as often, maybe it makes it easy for them to figure out how to um[19.26][10.58][S02]Mm.[10.84][20.82][S01]change the channels as in the frequencies and such for reprogramming it um and you can still have the main buttons that allow the people to turn the machine on and off the[29.92]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

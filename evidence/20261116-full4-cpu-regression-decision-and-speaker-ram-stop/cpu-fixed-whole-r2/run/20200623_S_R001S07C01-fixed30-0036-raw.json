@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0036",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 17280000,
+    "sourceEndFrame": 17760000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "4386cb4310657da6bd7d025af4fa5e732d03f1964b457ecd099550dce3326b73",
+  "seconds": 18.967522399994778,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "然后贷款，哎这个还行，但是种大地的话有一些，嗯。 就是回收不是很好，然后呢，我们决定就是说把这个贷款嗯下架了，不再做这个。 对。 嗯，既然咱这个结算这边儿没有了，就直接就下架了，也不用这个去催催收什么的。 对。 对也不用催收了，然后呢，这个这个贷款放在里面放，我们现在呃主抓一下这个，嗯，汽车的。",
+    "raw_text": "[0.00][S01]然后贷款，哎这个还行，但是种大地的话有一些，嗯。[5.42][6.28][S01]就是回收不是很好，然后呢，我们决定就是说把这个贷款嗯下架了，不再做这个。[13.62][8.64][S02]对。[9.04][13.54][S02]嗯，既然咱这个结算这边儿没有了，就直接就下架了，也不用这个去催催收什么的。[21.12][18.02][S01]对。[18.44][21.06][S01]对也不用催收了，然后呢，这个这个贷款放在里面放，我们现在呃主抓一下这个，嗯，汽车的。[29.82]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "然后贷款，哎这个还行，但是种大地的话有一些，嗯。",
+        "t0_ms": 0,
+        "t1_ms": 5420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就是回收不是很好，然后呢，我们决定就是说把这个贷款嗯下架了，不再做这个。",
+        "t0_ms": 6280,
+        "t1_ms": 13620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对。",
+        "t0_ms": 8640,
+        "t1_ms": 9040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，既然咱这个结算这边儿没有了，就直接就下架了，也不用这个去催催收什么的。",
+        "t0_ms": 13540,
+        "t1_ms": 21120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对。",
+        "t0_ms": 18020,
+        "t1_ms": 18440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对也不用催收了，然后呢，这个这个贷款放在里面放，我们现在呃主抓一下这个，嗯，汽车的。",
+        "t0_ms": 21060,
+        "t1_ms": 29820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 5420,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6280,
+        "t1_ms": 13620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8640,
+        "t1_ms": 9040,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13540,
+        "t1_ms": 21120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18020,
+        "t1_ms": 18440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21060,
+        "t1_ms": 29820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.17300033569336,
+      "encode_ms": 6846.27392578125,
+      "decode_ms": 12066.6474609375
+    }
+  },
+  "rawDecoded": "[0.00][S01]然后贷款，哎这个还行，但是种大地的话有一些，嗯。[5.42][6.28][S01]就是回收不是很好，然后呢，我们决定就是说把这个贷款嗯下架了，不再做这个。[13.62][8.64][S02]对。[9.04][13.54][S02]嗯，既然咱这个结算这边儿没有了，就直接就下架了，也不用这个去催催收什么的。[21.12][18.02][S01]对。[18.44][21.06][S01]对也不用催收了，然后呢，这个这个贷款放在里面放，我们现在呃主抓一下这个，嗯，汽车的。[29.82]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

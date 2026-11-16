@@ -1,0 +1,318 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0060",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 28800000,
+    "sourceEndFrame": 29280000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "0eb95e6f035870969c02b1c477c07091c4cea0add8ed060c0ebcb8295fa02a7c",
+  "seconds": 27.58585419999872,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Um yeah, and you can sort of show us a bit, you know, already so we don't sort of have to do all the we can, you know, just like figuring out stuff. Oh, just like the basics of like No. No, already, well. Sure. Just like accessing the corpus and stuff. Accessing. Oh yeah. Yeah, just like all the unseeing the code and just sort of how just to see the basics of what you've done, like just get a a quick look over and just Can take it for a tutorial, so. just sort Yeah. Yeah, or like like you know the class paths, all that sort of thing, like just just say okay, well here's, you know. Yeah. Yeah.",
+    "raw_text": "[0.00][S01]Um yeah, and you can sort of show us a bit, you know, already so we don't sort of have to do all the we can, you know, just like figuring out stuff.[9.84][10.24][S02]Oh, just like the basics of like[11.90][10.62][S03]No.[10.94][12.08][S03]No, already, well.[12.98][13.56][S02]Sure.[13.78][13.88][S03]Just like accessing the corpus and stuff.[16.32][14.80][S01]Accessing.[15.24][16.26][S03]Oh yeah.[16.64][16.80][S02]Yeah, just like all the unseeing the code and just sort of how just to see the basics of what you've done, like just get a a quick look over and just[22.84][23.04][S04]Can take it for a tutorial, so.[24.68][23.36][S02]just sort[23.84][23.48][S03]Yeah.[23.74][24.50][S02]Yeah, or like like you know the class paths, all that sort of thing, like just just say okay, well here's, you know.[29.88][24.64][S03]Yeah.[24.88][29.68][S03]Yeah.[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Um yeah, and you can sort of show us a bit, you know, already so we don't sort of have to do all the we can, you know, just like figuring out stuff.",
+        "t0_ms": 0,
+        "t1_ms": 9840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh, just like the basics of like",
+        "t0_ms": 10240,
+        "t1_ms": 11900,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "No.",
+        "t0_ms": 10620,
+        "t1_ms": 10940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "No, already, well.",
+        "t0_ms": 12080,
+        "t1_ms": 12980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Sure.",
+        "t0_ms": 13560,
+        "t1_ms": 13780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Just like accessing the corpus and stuff.",
+        "t0_ms": 13880,
+        "t1_ms": 16320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Accessing.",
+        "t0_ms": 14800,
+        "t1_ms": 15240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh yeah.",
+        "t0_ms": 16260,
+        "t1_ms": 16640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, just like all the unseeing the code and just sort of how just to see the basics of what you've done, like just get a a quick look over and just",
+        "t0_ms": 16800,
+        "t1_ms": 22840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Can take it for a tutorial, so.",
+        "t0_ms": 23040,
+        "t1_ms": 24680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "just sort",
+        "t0_ms": 23360,
+        "t1_ms": 23840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 23480,
+        "t1_ms": 23740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, or like like you know the class paths, all that sort of thing, like just just say okay, well here's, you know.",
+        "t0_ms": 24500,
+        "t1_ms": 29880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 24640,
+        "t1_ms": 24880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 29680,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 9840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10240,
+        "t1_ms": 11900,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10620,
+        "t1_ms": 10940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12080,
+        "t1_ms": 12980,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13560,
+        "t1_ms": 13780,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13880,
+        "t1_ms": 16320,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14800,
+        "t1_ms": 15240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16260,
+        "t1_ms": 16640,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16800,
+        "t1_ms": 22840,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23040,
+        "t1_ms": 24680,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23360,
+        "t1_ms": 23840,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23480,
+        "t1_ms": 23740,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24500,
+        "t1_ms": 29880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24640,
+        "t1_ms": 24880,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29680,
+        "t1_ms": 29940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.5939998626709,
+      "encode_ms": 7004.85595703125,
+      "decode_ms": 20524.080078125
+    }
+  },
+  "rawDecoded": "[0.00][S01]Um yeah, and you can sort of show us a bit, you know, already so we don't sort of have to do all the we can, you know, just like figuring out stuff.[9.84][10.24][S02]Oh, just like the basics of like[11.90][10.62][S03]No.[10.94][12.08][S03]No, already, well.[12.98][13.56][S02]Sure.[13.78][13.88][S03]Just like accessing the corpus and stuff.[16.32][14.80][S01]Accessing.[15.24][16.26][S03]Oh yeah.[16.64][16.80][S02]Yeah, just like all the unseeing the code and just sort of how just to see the basics of what you've done, like just get a a quick look over and just[22.84][23.04][S04]Can take it for a tutorial, so.[24.68][23.36][S02]just sort[23.84][23.48][S03]Yeah.[23.74][24.50][S02]Yeah, or like like you know the class paths, all that sort of thing, like just just say okay, well here's, you know.[29.88][24.64][S03]Yeah.[24.88][29.68][S03]Yeah.[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

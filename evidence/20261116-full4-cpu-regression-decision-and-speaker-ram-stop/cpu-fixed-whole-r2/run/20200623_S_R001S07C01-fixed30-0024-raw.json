@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0024",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 11520000,
+    "sourceEndFrame": 12000000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "3200664b53867dc43864bbbd8c414d5079d7493d3af414ceeaf136aecf29ae75",
+  "seconds": 19.573674400002346,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "提示到告诉他这个如果不还款有什么后果。 对他因为。 就跟滚雪球一样，你越不还，它滚的会越大。 因为我我们虽然不是高利贷，但是按我们这个计算的话，它的。 利润也会越来越大。 都会告知他，如果你不还，就说你或者你。 你现在就说你不能按月还，你按年还，两年还三年还，对我们会给他。 咱这儿肯定。",
+    "raw_text": "[0.01][S01]提示到告诉他这个如果不还款有什么后果。[3.93][4.18][S02]对他因为。[5.88][6.68][S02]就跟滚雪球一样，你越不还，它滚的会越大。[9.88][10.86][S02]因为我我们虽然不是高利贷，但是按我们这个计算的话，它的。[16.48][17.35][S02]利润也会越来越大。[18.75][19.41][S02]都会告知他，如果你不还，就说你或者你。[23.12][23.74][S02]你现在就说你不能按月还，你按年还，两年还三年还，对我们会给他。[29.98][27.88][S01]咱这儿肯定。[28.82]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "提示到告诉他这个如果不还款有什么后果。",
+        "t0_ms": 10,
+        "t1_ms": 3930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对他因为。",
+        "t0_ms": 4180,
+        "t1_ms": 5880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "就跟滚雪球一样，你越不还，它滚的会越大。",
+        "t0_ms": 6680,
+        "t1_ms": 9880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "因为我我们虽然不是高利贷，但是按我们这个计算的话，它的。",
+        "t0_ms": 10860,
+        "t1_ms": 16480,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "利润也会越来越大。",
+        "t0_ms": 17350,
+        "t1_ms": 18750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "都会告知他，如果你不还，就说你或者你。",
+        "t0_ms": 19410,
+        "t1_ms": 23120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "你现在就说你不能按月还，你按年还，两年还三年还，对我们会给他。",
+        "t0_ms": 23740,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "咱这儿肯定。",
+        "t0_ms": 27880,
+        "t1_ms": 28820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 3930,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4180,
+        "t1_ms": 5880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6680,
+        "t1_ms": 9880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10860,
+        "t1_ms": 16480,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17350,
+        "t1_ms": 18750,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19410,
+        "t1_ms": 23120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23740,
+        "t1_ms": 29980,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27880,
+        "t1_ms": 28820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.631000518798828,
+      "encode_ms": 6899.06201171875,
+      "decode_ms": 12623.4853515625
+    }
+  },
+  "rawDecoded": "[0.01][S01]提示到告诉他这个如果不还款有什么后果。[3.93][4.18][S02]对他因为。[5.88][6.68][S02]就跟滚雪球一样，你越不还，它滚的会越大。[9.88][10.86][S02]因为我我们虽然不是高利贷，但是按我们这个计算的话，它的。[16.48][17.35][S02]利润也会越来越大。[18.75][19.41][S02]都会告知他，如果你不还，就说你或者你。[23.12][23.74][S02]你现在就说你不能按月还，你按年还，两年还三年还，对我们会给他。[29.98][27.88][S01]咱这儿肯定。[28.82]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

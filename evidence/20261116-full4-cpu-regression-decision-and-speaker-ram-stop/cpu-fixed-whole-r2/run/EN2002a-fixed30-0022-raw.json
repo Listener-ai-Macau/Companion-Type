@@ -1,0 +1,372 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0022",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 10560000,
+    "sourceEndFrame": 11040000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "6dfec80e2e99f0fe507cfdf6b488a8e53eb8fba2ba6ca9621ebb32f95f3207da",
+  "seconds": 29.64780189999874,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Use the s same window for transcription and summary. Mm. It's like have a tab there, or something like that, choose to keep things up. I was just Yeah, yeah. Tabs are nice. I like tabs, yeah. Yeah. Yeah, tabbed, good, MZilla style. That's true. Yeah. Yeah, yeah. That's right, I'm not sure, yeah. I don't know if you can say it. Does anybody know how to do that? Can you, yeah, Java, I don't think Java knows how to do that really, maybe, yeah, you probably can, but fair enough. Yeah. No, I don't remember. Oh. True. I'm sure, I'm sure you can do anything, yeah. Yeah. If you really knew what you're doing, but I don't know. It's a bit of a cripple, Java's with knowing to get the aid, isn't it, sometimes. It's a bit",
+    "raw_text": "[0.00][S01]Use the s same window for transcription and summary.[3.36][1.96][S02]Mm.[2.26][3.62][S02]It's like have a tab there, or something like that, choose to keep things up.[6.80][5.00][S01]I was just Yeah, yeah. Tabs are nice. I like tabs, yeah.[10.14][5.32][S03]Yeah.[5.68][9.12][S04]Yeah, tabbed, good, MZilla style.[10.76][10.18][S03]That's true.[10.92][10.88][S01]Yeah.[11.14][11.14][S03]Yeah, yeah. That's right, I'm not sure, yeah.[15.02][14.90][S01]I don't know if you can say it.[15.92][15.20][S04]Does anybody know how to do that? Can you, yeah, Java, I don't think Java knows how to do that really, maybe, yeah, you probably can, but fair enough.[21.72][16.30][S03]Yeah.[16.66][17.26][S01]No, I don't remember.[18.44][17.84][S02]Oh.[18.24][18.90][S03]True.[19.42][20.28][S03]I'm sure, I'm sure you can do anything, yeah.[23.26][20.74][S01]Yeah.[21.10][22.94][S04]If you really knew what you're doing, but I don't know. It's a bit of a cripple, Java's with knowing to get the aid, isn't it, sometimes. It's a bit[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Use the s same window for transcription and summary.",
+        "t0_ms": 0,
+        "t1_ms": 3360,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 1960,
+        "t1_ms": 2260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "It's like have a tab there, or something like that, choose to keep things up.",
+        "t0_ms": 3620,
+        "t1_ms": 6800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "I was just Yeah, yeah. Tabs are nice. I like tabs, yeah.",
+        "t0_ms": 5000,
+        "t1_ms": 10140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 5320,
+        "t1_ms": 5680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, tabbed, good, MZilla style.",
+        "t0_ms": 9120,
+        "t1_ms": 10760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "That's true.",
+        "t0_ms": 10180,
+        "t1_ms": 10920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 10880,
+        "t1_ms": 11140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, yeah. That's right, I'm not sure, yeah.",
+        "t0_ms": 11140,
+        "t1_ms": 15020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I don't know if you can say it.",
+        "t0_ms": 14900,
+        "t1_ms": 15920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Does anybody know how to do that? Can you, yeah, Java, I don't think Java knows how to do that really, maybe, yeah, you probably can, but fair enough.",
+        "t0_ms": 15200,
+        "t1_ms": 21720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 16300,
+        "t1_ms": 16660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "No, I don't remember.",
+        "t0_ms": 17260,
+        "t1_ms": 18440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh.",
+        "t0_ms": 17840,
+        "t1_ms": 18240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "True.",
+        "t0_ms": 18900,
+        "t1_ms": 19420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I'm sure, I'm sure you can do anything, yeah.",
+        "t0_ms": 20280,
+        "t1_ms": 23260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 20740,
+        "t1_ms": 21100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "If you really knew what you're doing, but I don't know. It's a bit of a cripple, Java's with knowing to get the aid, isn't it, sometimes. It's a bit",
+        "t0_ms": 22940,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 3360,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1960,
+        "t1_ms": 2260,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3620,
+        "t1_ms": 6800,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5000,
+        "t1_ms": 10140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5320,
+        "t1_ms": 5680,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9120,
+        "t1_ms": 10760,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10180,
+        "t1_ms": 10920,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10880,
+        "t1_ms": 11140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11140,
+        "t1_ms": 15020,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14900,
+        "t1_ms": 15920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15200,
+        "t1_ms": 21720,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16300,
+        "t1_ms": 16660,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17260,
+        "t1_ms": 18440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17840,
+        "t1_ms": 18240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18900,
+        "t1_ms": 19420,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20280,
+        "t1_ms": 23260,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20740,
+        "t1_ms": 21100,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22940,
+        "t1_ms": 29980,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.189000129699707,
+      "encode_ms": 6521.67578125,
+      "decode_ms": 23074.724609375
+    }
+  },
+  "rawDecoded": "[0.00][S01]Use the s same window for transcription and summary.[3.36][1.96][S02]Mm.[2.26][3.62][S02]It's like have a tab there, or something like that, choose to keep things up.[6.80][5.00][S01]I was just Yeah, yeah. Tabs are nice. I like tabs, yeah.[10.14][5.32][S03]Yeah.[5.68][9.12][S04]Yeah, tabbed, good, MZilla style.[10.76][10.18][S03]That's true.[10.92][10.88][S01]Yeah.[11.14][11.14][S03]Yeah, yeah. That's right, I'm not sure, yeah.[15.02][14.90][S01]I don't know if you can say it.[15.92][15.20][S04]Does anybody know how to do that? Can you, yeah, Java, I don't think Java knows how to do that really, maybe, yeah, you probably can, but fair enough.[21.72][16.30][S03]Yeah.[16.66][17.26][S01]No, I don't remember.[18.44][17.84][S02]Oh.[18.24][18.90][S03]True.[19.42][20.28][S03]I'm sure, I'm sure you can do anything, yeah.[23.26][20.74][S01]Yeah.[21.10][22.94][S04]If you really knew what you're doing, but I don't know. It's a bit of a cripple, Java's with knowing to get the aid, isn't it, sometimes. It's a bit[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

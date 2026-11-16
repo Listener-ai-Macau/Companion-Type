@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0042",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 20160000,
+    "sourceEndFrame": 20640000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "470aa909220d0bad801188f43fc24abb9103e5af52b52f14c3b47560f70eab6d",
+  "seconds": 25.311246299999766,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "That is pretty bizarre. So they don't, you know, they don't say look in that in that folder, but they say search everything. Yeah. That is pretty bizarre, right. Hmm. Well they did say it wasn't the most efficient. And it does load up quite quickly, it's not you know, it's not too bad. But you know, you could have a lot of Very clear, very clear. Okay. But wha what is it like a window where you have to r write a search query or is it just what's behind it so or what where No, this is not the",
+    "raw_text": "[1.62][S01]That is pretty bizarre.[2.44][3.69][S02]So they don't, you know, they don't say look in that in that folder, but they say search everything.[9.01][7.14][S01]Yeah.[7.68][10.46][S01]That is pretty bizarre, right.[11.58][12.78][S03]Hmm.[12.96][13.86][S04]Well they did say it wasn't the most efficient.[15.44][17.53][S02]And it does load up quite quickly, it's not you know, it's not too bad. But you know, you could have a lot of[22.88][17.88][S03]Very clear, very clear.[18.94][20.41][S05]Okay.[20.86][21.69][S05]But wha what is it like a window where you have to r write a search query or is it just what's behind it so or what where[29.88][29.13][S02]No, this is not the[29.99]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "That is pretty bizarre.",
+        "t0_ms": 1620,
+        "t1_ms": 2440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "So they don't, you know, they don't say look in that in that folder, but they say search everything.",
+        "t0_ms": 3690,
+        "t1_ms": 9010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 7140,
+        "t1_ms": 7680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "That is pretty bizarre, right.",
+        "t0_ms": 10460,
+        "t1_ms": 11580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 12780,
+        "t1_ms": 12960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Well they did say it wasn't the most efficient.",
+        "t0_ms": 13860,
+        "t1_ms": 15440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "And it does load up quite quickly, it's not you know, it's not too bad. But you know, you could have a lot of",
+        "t0_ms": 17530,
+        "t1_ms": 22880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Very clear, very clear.",
+        "t0_ms": 17880,
+        "t1_ms": 18940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 20410,
+        "t1_ms": 20860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 5
+      },
+      {
+        "text": "But wha what is it like a window where you have to r write a search query or is it just what's behind it so or what where",
+        "t0_ms": 21690,
+        "t1_ms": 29880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 5
+      },
+      {
+        "text": "No, this is not the",
+        "t0_ms": 29130,
+        "t1_ms": 29990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 1620,
+        "t1_ms": 2440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3690,
+        "t1_ms": 9010,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7140,
+        "t1_ms": 7680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10460,
+        "t1_ms": 11580,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12780,
+        "t1_ms": 12960,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13860,
+        "t1_ms": 15440,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17530,
+        "t1_ms": 22880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17880,
+        "t1_ms": 18940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20410,
+        "t1_ms": 20860,
+        "speaker_id": 5,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21690,
+        "t1_ms": 29880,
+        "speaker_id": 5,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29130,
+        "t1_ms": 29990,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 22.76799964904785,
+      "encode_ms": 7963.3369140625,
+      "decode_ms": 17289.5
+    }
+  },
+  "rawDecoded": "[1.62][S01]That is pretty bizarre.[2.44][3.69][S02]So they don't, you know, they don't say look in that in that folder, but they say search everything.[9.01][7.14][S01]Yeah.[7.68][10.46][S01]That is pretty bizarre, right.[11.58][12.78][S03]Hmm.[12.96][13.86][S04]Well they did say it wasn't the most efficient.[15.44][17.53][S02]And it does load up quite quickly, it's not you know, it's not too bad. But you know, you could have a lot of[22.88][17.88][S03]Very clear, very clear.[18.94][20.41][S05]Okay.[20.86][21.69][S05]But wha what is it like a window where you have to r write a search query or is it just what's behind it so or what where[29.88][29.13][S02]No, this is not the[29.99]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

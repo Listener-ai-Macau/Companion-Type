@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0014",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 6720000,
+    "sourceEndFrame": 7200000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8fee8f8e4862809d898eacdf352ab3fb4ce420d2238ffac3d65ccd6d8b25b2e8",
+  "seconds": 17.029228800005512,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "而且现在天也冷了，也也马上就要零下了，你去外面儿买菜，好多那个菜，它都滴滴答啦的，都有冻的那个冰凌茬儿。 在我们超市是绝对不允许有这种情形情况出现的，而且超市的商品呢，嗯堆放呢，这个层次上也有要求，不能超过四层。 层数太多的话，就是说给人眼睛观上去有一种，呃不太好的这种感觉，而且这个上下呀，包括这个，呃排放的顺序呀，也都。",
+    "raw_text": "[0.01][S01]而且现在天也冷了，也也马上就要零下了，你去外面儿买菜，好多那个菜，它都滴滴答啦的，都有冻的那个冰凌茬儿。[8.65][8.65][S01]在我们超市是绝对不允许有这种情形情况出现的，而且超市的商品呢，嗯堆放呢，这个层次上也有要求，不能超过四层。[18.89][18.89][S01]层数太多的话，就是说给人眼睛观上去有一种，呃不太好的这种感觉，而且这个上下呀，包括这个，呃排放的顺序呀，也都。[30.01]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "而且现在天也冷了，也也马上就要零下了，你去外面儿买菜，好多那个菜，它都滴滴答啦的，都有冻的那个冰凌茬儿。",
+        "t0_ms": 10,
+        "t1_ms": 8650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "在我们超市是绝对不允许有这种情形情况出现的，而且超市的商品呢，嗯堆放呢，这个层次上也有要求，不能超过四层。",
+        "t0_ms": 8650,
+        "t1_ms": 18890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "层数太多的话，就是说给人眼睛观上去有一种，呃不太好的这种感觉，而且这个上下呀，包括这个，呃排放的顺序呀，也都。",
+        "t0_ms": 18890,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 8650,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8650,
+        "t1_ms": 18890,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18890,
+        "t1_ms": 30010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 21.34000015258789,
+      "encode_ms": 7006.662109375,
+      "decode_ms": 9966.775390625
+    }
+  },
+  "rawDecoded": "[0.01][S01]而且现在天也冷了，也也马上就要零下了，你去外面儿买菜，好多那个菜，它都滴滴答啦的，都有冻的那个冰凌茬儿。[8.65][8.65][S01]在我们超市是绝对不允许有这种情形情况出现的，而且超市的商品呢，嗯堆放呢，这个层次上也有要求，不能超过四层。[18.89][18.89][S01]层数太多的话，就是说给人眼睛观上去有一种，呃不太好的这种感觉，而且这个上下呀，包括这个，呃排放的顺序呀，也都。[30.01]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0067",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 32160000,
+    "sourceEndFrame": 32640000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "5cf7bb05e2a2ab69553d363e5392bdd45e00dd843cbd2c5d7169ac48a5cae310",
+  "seconds": 21.911189400001604,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "然后我这边就是这样。 其实啊大家说的都不错，呃但是。 总体来说呀，呃。 这是你们就是日常这块儿的一些工作内容，但具体的一些你看，销售销售策略啊。 都是有新意的，还有一些。 老旧的。 嗯老旧的也要。",
+    "raw_text": "[2.98][S01]然后我这边就是这样。[4.54][8.24][S02]其实啊大家说的都不错，呃但是。[11.88][13.22][S02]总体来说呀，呃。[15.24][15.94][S02]这是你们就是日常这块儿的一些工作内容，但具体的一些你看，销售销售策略啊。[23.54][23.98][S02]都是有新意的，还有一些。[27.12][27.38][S02]老旧的。[28.32][28.74][S02]嗯老旧的也要。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "然后我这边就是这样。",
+        "t0_ms": 2980,
+        "t1_ms": 4540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "其实啊大家说的都不错，呃但是。",
+        "t0_ms": 8240,
+        "t1_ms": 11880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "总体来说呀，呃。",
+        "t0_ms": 13220,
+        "t1_ms": 15240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "这是你们就是日常这块儿的一些工作内容，但具体的一些你看，销售销售策略啊。",
+        "t0_ms": 15940,
+        "t1_ms": 23540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "都是有新意的，还有一些。",
+        "t0_ms": 23980,
+        "t1_ms": 27120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "老旧的。",
+        "t0_ms": 27380,
+        "t1_ms": 28320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯老旧的也要。",
+        "t0_ms": 28740,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 2980,
+        "t1_ms": 4540,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8240,
+        "t1_ms": 11880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13220,
+        "t1_ms": 15240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15940,
+        "t1_ms": 23540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23980,
+        "t1_ms": 27120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27380,
+        "t1_ms": 28320,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28740,
+        "t1_ms": 30000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.1299991607666,
+      "encode_ms": 8976.4775390625,
+      "decode_ms": 12873.6328125
+    }
+  },
+  "rawDecoded": "[2.98][S01]然后我这边就是这样。[4.54][8.24][S02]其实啊大家说的都不错，呃但是。[11.88][13.22][S02]总体来说呀，呃。[15.24][15.94][S02]这是你们就是日常这块儿的一些工作内容，但具体的一些你看，销售销售策略啊。[23.54][23.98][S02]都是有新意的，还有一些。[27.12][27.38][S02]老旧的。[28.32][28.74][S02]嗯老旧的也要。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0060",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 28800000,
+    "sourceEndFrame": 29280000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "df175404dc19dc1d5d001779d9529bb212d5817ef8f5414b6d08d5ea7d35adb7",
+  "seconds": 17.571951400001126,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "然后那个，然后我们便于上些那个新品的，呃新品的那啥新品的那个。 呃，把这，就把这个，把它这个地方腾出来，然后，呃。 给别的产品增加些那个新品的比较好的那个产品呐，我们可以，呃那个。 扩大一些那个。 牌面儿。",
+    "raw_text": "[5.15][S01]然后那个，然后我们便于上些那个新品的，呃新品的那啥新品的那个。[11.71][12.05][S01]呃，把这，就把这个，把它这个地方腾出来，然后，呃。[16.12][16.32][S01]给别的产品增加些那个新品的比较好的那个产品呐，我们可以，呃那个。[22.11][23.14][S01]扩大一些那个。[24.41][25.86][S01]牌面儿。[26.61]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "然后那个，然后我们便于上些那个新品的，呃新品的那啥新品的那个。",
+        "t0_ms": 5150,
+        "t1_ms": 11710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，把这，就把这个，把它这个地方腾出来，然后，呃。",
+        "t0_ms": 12050,
+        "t1_ms": 16120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "给别的产品增加些那个新品的比较好的那个产品呐，我们可以，呃那个。",
+        "t0_ms": 16320,
+        "t1_ms": 22110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "扩大一些那个。",
+        "t0_ms": 23140,
+        "t1_ms": 24410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "牌面儿。",
+        "t0_ms": 25860,
+        "t1_ms": 26610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 5150,
+        "t1_ms": 11710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12050,
+        "t1_ms": 16120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16320,
+        "t1_ms": 22110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23140,
+        "t1_ms": 24410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25860,
+        "t1_ms": 26610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.076000213623047,
+      "encode_ms": 7652.8427734375,
+      "decode_ms": 9868.8134765625
+    }
+  },
+  "rawDecoded": "[5.15][S01]然后那个，然后我们便于上些那个新品的，呃新品的那啥新品的那个。[11.71][12.05][S01]呃，把这，就把这个，把它这个地方腾出来，然后，呃。[16.12][16.32][S01]给别的产品增加些那个新品的比较好的那个产品呐，我们可以，呃那个。[22.11][23.14][S01]扩大一些那个。[24.41][25.86][S01]牌面儿。[26.61]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

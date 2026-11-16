@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0014",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 6720000,
+    "sourceEndFrame": 7200000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "df1103204655156f4b42337cd78180117ef9f35cbc72bbb84e38e489b142330f",
+  "seconds": 17.30250199999864,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "行业之呃之间还是。 嗯在呃上风阶段。 嗯，是啊，上风期。 嗯，对。 还是比较稳定，比同行业的哎要是要领先一点儿。 嗯，阶段阶段怎么样？ 目前还算比较好的，嗯。",
+    "raw_text": "[0.01][S01]行业之呃之间还是。[1.95][2.82][S01]嗯在呃上风阶段。[5.13][5.32][S02]嗯，是啊，上风期。[7.04][7.28][S01]嗯，对。[7.94][10.18][S01]还是比较稳定，比同行业的哎要是要领先一点儿。[14.68][17.51][S02]嗯，阶段阶段怎么样？[19.75][26.38][S03]目前还算比较好的，嗯。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "行业之呃之间还是。",
+        "t0_ms": 10,
+        "t1_ms": 1950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯在呃上风阶段。",
+        "t0_ms": 2820,
+        "t1_ms": 5130,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，是啊，上风期。",
+        "t0_ms": 5320,
+        "t1_ms": 7040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，对。",
+        "t0_ms": 7280,
+        "t1_ms": 7940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还是比较稳定，比同行业的哎要是要领先一点儿。",
+        "t0_ms": 10180,
+        "t1_ms": 14680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，阶段阶段怎么样？",
+        "t0_ms": 17510,
+        "t1_ms": 19750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "目前还算比较好的，嗯。",
+        "t0_ms": 26380,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 1950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2820,
+        "t1_ms": 5130,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5320,
+        "t1_ms": 7040,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7280,
+        "t1_ms": 7940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10180,
+        "t1_ms": 14680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17510,
+        "t1_ms": 19750,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26380,
+        "t1_ms": 29980,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 17.851999282836914,
+      "encode_ms": 7266.13916015625,
+      "decode_ms": 9985.8798828125
+    }
+  },
+  "rawDecoded": "[0.01][S01]行业之呃之间还是。[1.95][2.82][S01]嗯在呃上风阶段。[5.13][5.32][S02]嗯，是啊，上风期。[7.04][7.28][S01]嗯，对。[7.94][10.18][S01]还是比较稳定，比同行业的哎要是要领先一点儿。[14.68][17.51][S02]嗯，阶段阶段怎么样？[19.75][26.38][S03]目前还算比较好的，嗯。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

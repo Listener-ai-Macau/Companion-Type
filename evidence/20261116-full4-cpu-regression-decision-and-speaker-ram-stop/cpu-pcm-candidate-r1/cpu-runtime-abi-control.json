@@ -1,0 +1,33 @@
+{
+  "state": "PASS_CPU_ONLY_NATIVE_ABI_AND_DEVICE_INVENTORY_NO_MODEL",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "devices": [
+    {
+      "kind": "cpu",
+      "description": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     "
+    }
+  ],
+  "sourceBindingSha256": "e7526c774486507c92798018daec1f6bd8539fcd05df247e39339405475aca89",
+  "runtimeContractSha256": "3f81eb028aaf86b25f4d70b294596fb548c739f3cc106faba778a95bc49966ff",
+  "modelLoaded": false,
+  "newNeuralCalls": 0,
+  "gpuDeviceEnumerated": false,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 29016,
+    "cpuRate": 50,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 0.5,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 16838656,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

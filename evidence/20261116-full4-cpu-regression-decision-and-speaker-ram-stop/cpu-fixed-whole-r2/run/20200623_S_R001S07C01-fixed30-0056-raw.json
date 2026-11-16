@@ -1,0 +1,210 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0056",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 26880000,
+    "sourceEndFrame": 27360000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "a4948929103abc6f8fd24c6fca3bf31c83584ccc73a242f09677bc611186d8fb",
+  "seconds": 20.72649519999686,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "对。 嗯，那，每每个人贷贷款这个收入材料。 好。 好，你你别你自己，你就耍赖，你就不不去赚钱不去还钱，没事儿。 嗯。 你越不去赚钱，你越逃不了身，得了，你自己慢慢儿，给他给他看不了两三天，他自己就知道自己去挣钱去还钱了。 对，嗯。 嗯。 嗯，这方面咱们要怎么说呢，要，嗯，现在这个赖。",
+    "raw_text": "[0.01][S01]对。[0.31][0.32][S02]嗯，那，每每个人贷贷款这个收入材料。[4.61][1.01][S01]好。[1.33][3.68][S01]好，你你别你自己，你就耍赖，你就不不去赚钱不去还钱，没事儿。[10.24][9.32][S02]嗯。[9.71][11.42][S01]你越不去赚钱，你越逃不了身，得了，你自己慢慢儿，给他给他看不了两三天，他自己就知道自己去挣钱去还钱了。[20.15][20.25][S02]对，嗯。[21.05][20.68][S01]嗯。[21.05][23.44][S02]嗯，这方面咱们要怎么说呢，要，嗯，现在这个赖。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "对。",
+        "t0_ms": 10,
+        "t1_ms": 310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，那，每每个人贷贷款这个收入材料。",
+        "t0_ms": 320,
+        "t1_ms": 4610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "好。",
+        "t0_ms": 1010,
+        "t1_ms": 1330,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "好，你你别你自己，你就耍赖，你就不不去赚钱不去还钱，没事儿。",
+        "t0_ms": 3680,
+        "t1_ms": 10240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 9320,
+        "t1_ms": 9710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "你越不去赚钱，你越逃不了身，得了，你自己慢慢儿，给他给他看不了两三天，他自己就知道自己去挣钱去还钱了。",
+        "t0_ms": 11420,
+        "t1_ms": 20150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对，嗯。",
+        "t0_ms": 20250,
+        "t1_ms": 21050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 20680,
+        "t1_ms": 21050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，这方面咱们要怎么说呢，要，嗯，现在这个赖。",
+        "t0_ms": 23440,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 320,
+        "t1_ms": 4610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1010,
+        "t1_ms": 1330,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3680,
+        "t1_ms": 10240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9320,
+        "t1_ms": 9710,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11420,
+        "t1_ms": 20150,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20250,
+        "t1_ms": 21050,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20680,
+        "t1_ms": 21050,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23440,
+        "t1_ms": 30000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 22.905000686645508,
+      "encode_ms": 7127.55322265625,
+      "decode_ms": 13542.5380859375
+    }
+  },
+  "rawDecoded": "[0.01][S01]对。[0.31][0.32][S02]嗯，那，每每个人贷贷款这个收入材料。[4.61][1.01][S01]好。[1.33][3.68][S01]好，你你别你自己，你就耍赖，你就不不去赚钱不去还钱，没事儿。[10.24][9.32][S02]嗯。[9.71][11.42][S01]你越不去赚钱，你越逃不了身，得了，你自己慢慢儿，给他给他看不了两三天，他自己就知道自己去挣钱去还钱了。[20.15][20.25][S02]对，嗯。[21.05][20.68][S01]嗯。[21.05][23.44][S02]嗯，这方面咱们要怎么说呢，要，嗯，现在这个赖。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

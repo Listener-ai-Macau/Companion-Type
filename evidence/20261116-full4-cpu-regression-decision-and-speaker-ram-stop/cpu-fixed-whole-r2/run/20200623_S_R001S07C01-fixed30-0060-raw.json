@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0060",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 28800000,
+    "sourceEndFrame": 29280000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "e03e2ce0a9beaeaf74c5dae9bb6624cb3e3591ce1652a4237fc5a49737e6ada4",
+  "seconds": 20.535420500003966,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "绑定他的手机号，然后查询运运用年限，然后呃出自动出额度。 对，不仅要绑定他手机号，还有还有要个，呃相关手机号，家里呢也要。 对。 还要填，呃亲戚，呃直系亲属。 对。 或亲属或者亲戚的都要填，然后嗯不能少于三个，然后我们然后才开始放贷。 对。 对。",
+    "raw_text": "[0.01][S01]绑定他的手机号，然后查询运运用年限，然后呃出自动出额度。[7.91][8.21][S02]对，不仅要绑定他手机号，还有还有要个，呃相关手机号，家里呢也要。[15.61][14.25][S01]对。[14.63][15.52][S01]还要填，呃亲戚，呃直系亲属。[19.61][19.55][S02]对。[19.93][20.06][S01]或亲属或者亲戚的都要填，然后嗯不能少于三个，然后我们然后才开始放贷。[29.01][26.05][S02]对。[26.41][29.24][S02]对。[29.61]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "绑定他的手机号，然后查询运运用年限，然后呃出自动出额度。",
+        "t0_ms": 10,
+        "t1_ms": 7910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对，不仅要绑定他手机号，还有还有要个，呃相关手机号，家里呢也要。",
+        "t0_ms": 8210,
+        "t1_ms": 15610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对。",
+        "t0_ms": 14250,
+        "t1_ms": 14630,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还要填，呃亲戚，呃直系亲属。",
+        "t0_ms": 15520,
+        "t1_ms": 19610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对。",
+        "t0_ms": 19550,
+        "t1_ms": 19930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "或亲属或者亲戚的都要填，然后嗯不能少于三个，然后我们然后才开始放贷。",
+        "t0_ms": 20060,
+        "t1_ms": 29010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对。",
+        "t0_ms": 26050,
+        "t1_ms": 26410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对。",
+        "t0_ms": 29240,
+        "t1_ms": 29610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 7910,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8210,
+        "t1_ms": 15610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14250,
+        "t1_ms": 14630,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15520,
+        "t1_ms": 19610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19550,
+        "t1_ms": 19930,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20060,
+        "t1_ms": 29010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26050,
+        "t1_ms": 26410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29240,
+        "t1_ms": 29610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.798999786376953,
+      "encode_ms": 7748.123046875,
+      "decode_ms": 12730.6162109375
+    }
+  },
+  "rawDecoded": "[0.01][S01]绑定他的手机号，然后查询运运用年限，然后呃出自动出额度。[7.91][8.21][S02]对，不仅要绑定他手机号，还有还有要个，呃相关手机号，家里呢也要。[15.61][14.25][S01]对。[14.63][15.52][S01]还要填，呃亲戚，呃直系亲属。[19.61][19.55][S02]对。[19.93][20.06][S01]或亲属或者亲戚的都要填，然后嗯不能少于三个，然后我们然后才开始放贷。[29.01][26.05][S02]对。[26.41][29.24][S02]对。[29.61]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

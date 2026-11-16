@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0047",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 22560000,
+    "sourceEndFrame": 23040000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8bc8f96f6741132ed051f06ca9dca9d34b24de6e581a0900820f4a079e6ba203",
+  "seconds": 17.57065259999945,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "精品护肤去嘛，然后我们可以增加一些那个，向厂家申请，申请一些那个，呃，试用装，来现场给顾客，呃，现场试用，增加一下顾客的那个体验。 如果你觉得合适，如果顾客觉得合适呢，他可以呃，现场进行了，呃，现场进行购买，增加他的那个，购买欲望，嗯，然后，还有。 嗯，嗯，感感觉可以现场。",
+    "raw_text": "[0.00][S01]精品护肤去嘛，然后我们可以增加一些那个，向厂家申请，申请一些那个，呃，试用装，来现场给顾客，呃，现场试用，增加一下顾客的那个体验。[13.84][14.04][S01]如果你觉得合适，如果顾客觉得合适呢，他可以呃，现场进行了，呃，现场进行购买，增加他的那个，购买欲望，嗯，然后，还有。[25.14][27.86][S01]嗯，嗯，感感觉可以现场。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "精品护肤去嘛，然后我们可以增加一些那个，向厂家申请，申请一些那个，呃，试用装，来现场给顾客，呃，现场试用，增加一下顾客的那个体验。",
+        "t0_ms": 0,
+        "t1_ms": 13840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "如果你觉得合适，如果顾客觉得合适呢，他可以呃，现场进行了，呃，现场进行购买，增加他的那个，购买欲望，嗯，然后，还有。",
+        "t0_ms": 14040,
+        "t1_ms": 25140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，嗯，感感觉可以现场。",
+        "t0_ms": 27860,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 13840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14040,
+        "t1_ms": 25140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27860,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.17300033569336,
+      "encode_ms": 7289.23193359375,
+      "decode_ms": 10231.6728515625
+    }
+  },
+  "rawDecoded": "[0.00][S01]精品护肤去嘛，然后我们可以增加一些那个，向厂家申请，申请一些那个，呃，试用装，来现场给顾客，呃，现场试用，增加一下顾客的那个体验。[13.84][14.04][S01]如果你觉得合适，如果顾客觉得合适呢，他可以呃，现场进行了，呃，现场进行购买，增加他的那个，购买欲望，嗯，然后，还有。[25.14][27.86][S01]嗯，嗯，感感觉可以现场。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0066",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 31680000,
+    "sourceEndFrame": 32160000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "10c4c909e7b873d4fc22ddcd752d2bbcd4618fb313feb245fc39773b109690a7",
+  "seconds": 21.155051299996558,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "那个收益很小，因为大型公司人家不是靠这个。 呃，质量是什么，人家靠数量，人家有这个资本，有这个。 对。 呃，有这个。 经济实力，咱们公司因为这方面呃。 不算太强，所以需要。 呃，咱们这个生存。 对，咱公司这个定位要这个。 呃，去执行下去，就十万到三十万。 对，我们这儿发现就是。",
+    "raw_text": "[0.01][S01]那个收益很小，因为大型公司人家不是靠这个。[4.01][4.62][S01]呃，质量是什么，人家靠数量，人家有这个资本，有这个。[9.04][7.24][S02]对。[7.71][9.84][S01]呃，有这个。[10.93][11.48][S01]经济实力，咱们公司因为这方面呃。[15.44][16.22][S01]不算太强，所以需要。[18.61][19.15][S01]呃，咱们这个生存。[21.44][22.36][S01]对，咱公司这个定位要这个。[24.88][25.31][S01]呃，去执行下去，就十万到三十万。[28.55][28.58][S02]对，我们这儿发现就是。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "那个收益很小，因为大型公司人家不是靠这个。",
+        "t0_ms": 10,
+        "t1_ms": 4010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，质量是什么，人家靠数量，人家有这个资本，有这个。",
+        "t0_ms": 4620,
+        "t1_ms": 9040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对。",
+        "t0_ms": 7240,
+        "t1_ms": 7710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，有这个。",
+        "t0_ms": 9840,
+        "t1_ms": 10930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "经济实力，咱们公司因为这方面呃。",
+        "t0_ms": 11480,
+        "t1_ms": 15440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "不算太强，所以需要。",
+        "t0_ms": 16220,
+        "t1_ms": 18610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，咱们这个生存。",
+        "t0_ms": 19150,
+        "t1_ms": 21440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对，咱公司这个定位要这个。",
+        "t0_ms": 22360,
+        "t1_ms": 24880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，去执行下去，就十万到三十万。",
+        "t0_ms": 25310,
+        "t1_ms": 28550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对，我们这儿发现就是。",
+        "t0_ms": 28580,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 4010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4620,
+        "t1_ms": 9040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7240,
+        "t1_ms": 7710,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9840,
+        "t1_ms": 10930,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11480,
+        "t1_ms": 15440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16220,
+        "t1_ms": 18610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19150,
+        "t1_ms": 21440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22360,
+        "t1_ms": 24880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25310,
+        "t1_ms": 28550,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28580,
+        "t1_ms": 29980,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 23.22599983215332,
+      "encode_ms": 7152.283203125,
+      "decode_ms": 13941.228515625
+    }
+  },
+  "rawDecoded": "[0.01][S01]那个收益很小，因为大型公司人家不是靠这个。[4.01][4.62][S01]呃，质量是什么，人家靠数量，人家有这个资本，有这个。[9.04][7.24][S02]对。[7.71][9.84][S01]呃，有这个。[10.93][11.48][S01]经济实力，咱们公司因为这方面呃。[15.44][16.22][S01]不算太强，所以需要。[18.61][19.15][S01]呃，咱们这个生存。[21.44][22.36][S01]对，咱公司这个定位要这个。[24.88][25.31][S01]呃，去执行下去，就十万到三十万。[28.55][28.58][S02]对，我们这儿发现就是。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

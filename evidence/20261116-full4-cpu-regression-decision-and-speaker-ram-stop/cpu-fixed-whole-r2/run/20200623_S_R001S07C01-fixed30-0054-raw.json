@@ -1,0 +1,300 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0054",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 25920000,
+    "sourceEndFrame": 26400000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "38069bce13934bef1d76b621c0de3a49ae56e230c1d4e34658c546ee1f264a39",
+  "seconds": 25.321683900001517,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "以后，以后这些人还会跟你交往吗？ 对。 对吧，他们就会考虑了，当然你说这个途径也是可以的。 对。 但是二呢，我们就说了，我们。 这是第一啊，我们才告知你。 这知识，后边儿呢，后边儿的话，对不起啊，你自己。 嗯。 都不给你自己台阶下来，是吧？ 嗯。 这样的话，马上我们就要征信上见了。 征信上对于你来说，就是你行动，你的行动受阻。 嗯。 火车。",
+    "raw_text": "[0.01][S01]以后，以后这些人还会跟你交往吗？[2.41][2.53][S02]对。[2.89][2.98][S01]对吧，他们就会考虑了，当然你说这个途径也是可以的。[6.51][3.41][S02]对。[3.75][7.03][S01]但是二呢，我们就说了，我们。[8.79][9.68][S01]这是第一啊，我们才告知你。[11.93][12.68][S01]这知识，后边儿呢，后边儿的话，对不起啊，你自己。[16.89][13.64][S02]嗯。[14.05][17.52][S01]都不给你自己台阶下来，是吧？[19.91][20.01][S02]嗯。[20.37][20.68][S01]这样的话，马上我们就要征信上见了。[23.71][24.25][S01]征信上对于你来说，就是你行动，你的行动受阻。[28.01][29.04][S02]嗯。[29.41][29.24][S01]火车。[29.97]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "以后，以后这些人还会跟你交往吗？",
+        "t0_ms": 10,
+        "t1_ms": 2410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对。",
+        "t0_ms": 2530,
+        "t1_ms": 2890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对吧，他们就会考虑了，当然你说这个途径也是可以的。",
+        "t0_ms": 2980,
+        "t1_ms": 6510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对。",
+        "t0_ms": 3410,
+        "t1_ms": 3750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "但是二呢，我们就说了，我们。",
+        "t0_ms": 7030,
+        "t1_ms": 8790,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这是第一啊，我们才告知你。",
+        "t0_ms": 9680,
+        "t1_ms": 11930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这知识，后边儿呢，后边儿的话，对不起啊，你自己。",
+        "t0_ms": 12680,
+        "t1_ms": 16890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 13640,
+        "t1_ms": 14050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "都不给你自己台阶下来，是吧？",
+        "t0_ms": 17520,
+        "t1_ms": 19910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 20010,
+        "t1_ms": 20370,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "这样的话，马上我们就要征信上见了。",
+        "t0_ms": 20680,
+        "t1_ms": 23710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "征信上对于你来说，就是你行动，你的行动受阻。",
+        "t0_ms": 24250,
+        "t1_ms": 28010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 29040,
+        "t1_ms": 29410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "火车。",
+        "t0_ms": 29240,
+        "t1_ms": 29970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 2410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2530,
+        "t1_ms": 2890,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2980,
+        "t1_ms": 6510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3410,
+        "t1_ms": 3750,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7030,
+        "t1_ms": 8790,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9680,
+        "t1_ms": 11930,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12680,
+        "t1_ms": 16890,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13640,
+        "t1_ms": 14050,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17520,
+        "t1_ms": 19910,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20010,
+        "t1_ms": 20370,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20680,
+        "t1_ms": 23710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24250,
+        "t1_ms": 28010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29040,
+        "t1_ms": 29410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29240,
+        "t1_ms": 29970,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 19.333999633789062,
+      "encode_ms": 7504.5078125,
+      "decode_ms": 17763.99609375
+    }
+  },
+  "rawDecoded": "[0.01][S01]以后，以后这些人还会跟你交往吗？[2.41][2.53][S02]对。[2.89][2.98][S01]对吧，他们就会考虑了，当然你说这个途径也是可以的。[6.51][3.41][S02]对。[3.75][7.03][S01]但是二呢，我们就说了，我们。[8.79][9.68][S01]这是第一啊，我们才告知你。[11.93][12.68][S01]这知识，后边儿呢，后边儿的话，对不起啊，你自己。[16.89][13.64][S02]嗯。[14.05][17.52][S01]都不给你自己台阶下来，是吧？[19.91][20.01][S02]嗯。[20.37][20.68][S01]这样的话，马上我们就要征信上见了。[23.71][24.25][S01]征信上对于你来说，就是你行动，你的行动受阻。[28.01][29.04][S02]嗯。[29.41][29.24][S01]火车。[29.97]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

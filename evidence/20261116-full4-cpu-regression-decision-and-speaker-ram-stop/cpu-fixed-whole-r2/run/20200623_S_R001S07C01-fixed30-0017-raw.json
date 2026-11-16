@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0017",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 8160000,
+    "sourceEndFrame": 8640000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "e62584e374a3197754b40668682b34dde7ca780f58be8ee60f5d70ee8bab18bb",
+  "seconds": 18.07489359999454,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "嗯，上个月咱们部门儿这个催收这这方面，上个月嗯这个催收。 嗯有。 嗯，上个月咱们这个催收任务有多少？ 上个月的催收。 对，因为上个月的催收任务多少是吧？ 嗯。 呃，上个月。 还算可以，不不是太多的。",
+    "raw_text": "[1.98][S01]嗯，上个月咱们部门儿这个催收这这方面，上个月嗯这个催收。[10.44][12.12][S01]嗯有。[12.84][13.55][S01]嗯，上个月咱们这个催收任务有多少？[16.94][17.78][S01]上个月的催收。[19.14][19.48][S02]对，因为上个月的催收任务多少是吧？[22.14][22.14][S01]嗯。[22.68][23.12][S02]呃，上个月。[24.64][26.32][S02]还算可以，不不是太多的。[28.84]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "嗯，上个月咱们部门儿这个催收这这方面，上个月嗯这个催收。",
+        "t0_ms": 1980,
+        "t1_ms": 10440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯有。",
+        "t0_ms": 12120,
+        "t1_ms": 12840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，上个月咱们这个催收任务有多少？",
+        "t0_ms": 13550,
+        "t1_ms": 16940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "上个月的催收。",
+        "t0_ms": 17780,
+        "t1_ms": 19140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对，因为上个月的催收任务多少是吧？",
+        "t0_ms": 19480,
+        "t1_ms": 22140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 22140,
+        "t1_ms": 22680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，上个月。",
+        "t0_ms": 23120,
+        "t1_ms": 24640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "还算可以，不不是太多的。",
+        "t0_ms": 26320,
+        "t1_ms": 28840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 1980,
+        "t1_ms": 10440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12120,
+        "t1_ms": 12840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13550,
+        "t1_ms": 16940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17780,
+        "t1_ms": 19140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19480,
+        "t1_ms": 22140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22140,
+        "t1_ms": 22680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23120,
+        "t1_ms": 24640,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26320,
+        "t1_ms": 28840,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 27.25200080871582,
+      "encode_ms": 6756.865234375,
+      "decode_ms": 11256.6376953125
+    }
+  },
+  "rawDecoded": "[1.98][S01]嗯，上个月咱们部门儿这个催收这这方面，上个月嗯这个催收。[10.44][12.12][S01]嗯有。[12.84][13.55][S01]嗯，上个月咱们这个催收任务有多少？[16.94][17.78][S01]上个月的催收。[19.14][19.48][S02]对，因为上个月的催收任务多少是吧？[22.14][22.14][S01]嗯。[22.68][23.12][S02]呃，上个月。[24.64][26.32][S02]还算可以，不不是太多的。[28.84]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

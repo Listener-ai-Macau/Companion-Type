@@ -1,0 +1,264 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0050",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 24000000,
+    "sourceEndFrame": 24480000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "608d095feb14d02da5c7c62932397b22f68134633cb2dad9e03de48be0d39896",
+  "seconds": 23.035130799995386,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "怎么怎么催收呢？ 啊。 嗯，首先呢。 咱肯定是要把它如果不还的话，肯定是要呃列入失信名单的。 嗯，还有就是。 呃，抵押这这这一块儿。 咱们可以有更充分的抵押。 嗯。 就是。 把抵押物再提升一点嘛。 嗯。 如果不还的话。",
+    "raw_text": "[0.01][S01]怎么怎么催收呢？[1.31][2.35][S02]啊。[2.81][4.05][S02]嗯，首先呢。[5.45][6.06][S02]咱肯定是要把它如果不还的话，肯定是要呃列入失信名单的。[11.38][12.88][S02]嗯，还有就是。[15.05][15.56][S02]呃，抵押这这这一块儿。[18.24][18.65][S02]咱们可以有更充分的抵押。[20.73][21.31][S01]嗯。[21.85][22.16][S02]就是。[23.01][25.04][S02]把抵押物再提升一点嘛。[27.62][27.65][S01]嗯。[28.15][28.66][S02]如果不还的话。[30.01]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "怎么怎么催收呢？",
+        "t0_ms": 10,
+        "t1_ms": 1310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "啊。",
+        "t0_ms": 2350,
+        "t1_ms": 2810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，首先呢。",
+        "t0_ms": 4050,
+        "t1_ms": 5450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "咱肯定是要把它如果不还的话，肯定是要呃列入失信名单的。",
+        "t0_ms": 6060,
+        "t1_ms": 11380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，还有就是。",
+        "t0_ms": 12880,
+        "t1_ms": 15050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，抵押这这这一块儿。",
+        "t0_ms": 15560,
+        "t1_ms": 18240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "咱们可以有更充分的抵押。",
+        "t0_ms": 18650,
+        "t1_ms": 20730,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 21310,
+        "t1_ms": 21850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就是。",
+        "t0_ms": 22160,
+        "t1_ms": 23010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "把抵押物再提升一点嘛。",
+        "t0_ms": 25040,
+        "t1_ms": 27620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 27650,
+        "t1_ms": 28150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "如果不还的话。",
+        "t0_ms": 28660,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 1310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2350,
+        "t1_ms": 2810,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4050,
+        "t1_ms": 5450,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6060,
+        "t1_ms": 11380,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12880,
+        "t1_ms": 15050,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15560,
+        "t1_ms": 18240,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18650,
+        "t1_ms": 20730,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21310,
+        "t1_ms": 21850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22160,
+        "t1_ms": 23010,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25040,
+        "t1_ms": 27620,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27650,
+        "t1_ms": 28150,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28660,
+        "t1_ms": 30010,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.437999725341797,
+      "encode_ms": 7835.1318359375,
+      "decode_ms": 15144.5537109375
+    }
+  },
+  "rawDecoded": "[0.01][S01]怎么怎么催收呢？[1.31][2.35][S02]啊。[2.81][4.05][S02]嗯，首先呢。[5.45][6.06][S02]咱肯定是要把它如果不还的话，肯定是要呃列入失信名单的。[11.38][12.88][S02]嗯，还有就是。[15.05][15.56][S02]呃，抵押这这这一块儿。[18.24][18.65][S02]咱们可以有更充分的抵押。[20.73][21.31][S01]嗯。[21.85][22.16][S02]就是。[23.01][25.04][S02]把抵押物再提升一点嘛。[27.62][27.65][S01]嗯。[28.15][28.66][S02]如果不还的话。[30.01]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

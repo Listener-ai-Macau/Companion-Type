@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0001",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 480000,
+    "sourceEndFrame": 960000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "fe10febde3dc371fa5a945e6409e64b260b19432fc317c05f9fa83812962b24f",
+  "seconds": 23.446668599994155,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "嗯，比往期的要好，啊明显的客流量也。 嗯。 呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。 呃，这都是大家伙儿在做的，呃努力的出现的状况，估计工作各位在下也出了，在下边儿也出了不少的，呃力气。 呃，也做了很多的这个，呃营销的一些方案，呃希望大家以后啊要继续保持咱这种工作状态，呃。",
+    "raw_text": "[0.01][S01]嗯，比往期的要好，啊明显的客流量也。[4.21][3.91][S02]嗯。[4.25][4.21][S01]呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。[9.35][10.59][S01]呃，这都是大家伙儿在做的，呃努力的出现的状况，估计工作各位在下也出了，在下边儿也出了不少的，呃力气。[20.65][20.95][S01]呃，也做了很多的这个，呃营销的一些方案，呃希望大家以后啊要继续保持咱这种工作状态，呃。[30.01]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "嗯，比往期的要好，啊明显的客流量也。",
+        "t0_ms": 10,
+        "t1_ms": 4210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 3910,
+        "t1_ms": 4250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。",
+        "t0_ms": 4210,
+        "t1_ms": 9350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，这都是大家伙儿在做的，呃努力的出现的状况，估计工作各位在下也出了，在下边儿也出了不少的，呃力气。",
+        "t0_ms": 10590,
+        "t1_ms": 20650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，也做了很多的这个，呃营销的一些方案，呃希望大家以后啊要继续保持咱这种工作状态，呃。",
+        "t0_ms": 20950,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 4210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3910,
+        "t1_ms": 4250,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4210,
+        "t1_ms": 9350,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10590,
+        "t1_ms": 20650,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20950,
+        "t1_ms": 30010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 28.885000228881836,
+      "encode_ms": 7841.13623046875,
+      "decode_ms": 15534.7509765625
+    }
+  },
+  "rawDecoded": "[0.01][S01]嗯，比往期的要好，啊明显的客流量也。[4.21][3.91][S02]嗯。[4.25][4.21][S01]呃，客流量也多了，啊咱这个销售这个，呃营业额也上去了。[9.35][10.59][S01]呃，这都是大家伙儿在做的，呃努力的出现的状况，估计工作各位在下也出了，在下边儿也出了不少的，呃力气。[20.65][20.95][S01]呃，也做了很多的这个，呃营销的一些方案，呃希望大家以后啊要继续保持咱这种工作状态，呃。[30.01]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

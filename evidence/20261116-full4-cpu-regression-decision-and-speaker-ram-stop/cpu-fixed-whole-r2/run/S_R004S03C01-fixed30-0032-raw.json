@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0032",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 15360000,
+    "sourceEndFrame": 15840000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "26374ad83d06c95b59855fb218ed4a5271f9cb2140e406a23922810c95e311ea",
+  "seconds": 15.957031200006895,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "还有就是这个，嗯，嗯，这嗯这个蛋糕店的这个人群分类，就是呃一方面就是这个学校的在学在校学生。 嗯，就是年级吧，就是十八到二十六左右，嗯。 嗯，呃，主要就是他们的就是经济来源来自于父母嘛，嗯，就是销售肯定就是不会太贵的这种商品。",
+    "raw_text": "[0.00][S01]还有就是这个，嗯，嗯，这嗯这个蛋糕店的这个人群分类，就是呃一方面就是这个学校的在学在校学生。[11.82][11.82][S01]嗯，就是年级吧，就是十八到二十六左右，嗯。[16.56][17.82][S01]嗯，呃，主要就是他们的就是经济来源来自于父母嘛，嗯，就是销售肯定就是不会太贵的这种商品。[27.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "还有就是这个，嗯，嗯，这嗯这个蛋糕店的这个人群分类，就是呃一方面就是这个学校的在学在校学生。",
+        "t0_ms": 0,
+        "t1_ms": 11820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，就是年级吧，就是十八到二十六左右，嗯。",
+        "t0_ms": 11820,
+        "t1_ms": 16560,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，呃，主要就是他们的就是经济来源来自于父母嘛，嗯，就是销售肯定就是不会太贵的这种商品。",
+        "t0_ms": 17820,
+        "t1_ms": 27980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 11820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11820,
+        "t1_ms": 16560,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17820,
+        "t1_ms": 27980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.04800033569336,
+      "encode_ms": 7357.27099609375,
+      "decode_ms": 8548.9814453125
+    }
+  },
+  "rawDecoded": "[0.00][S01]还有就是这个，嗯，嗯，这嗯这个蛋糕店的这个人群分类，就是呃一方面就是这个学校的在学在校学生。[11.82][11.82][S01]嗯，就是年级吧，就是十八到二十六左右，嗯。[16.56][17.82][S01]嗯，呃，主要就是他们的就是经济来源来自于父母嘛，嗯，就是销售肯定就是不会太贵的这种商品。[27.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

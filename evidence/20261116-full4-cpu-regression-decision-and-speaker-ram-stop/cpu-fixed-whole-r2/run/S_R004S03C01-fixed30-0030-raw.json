@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0030",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 14400000,
+    "sourceEndFrame": 14880000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "f1803e0579fce1dbb435cbacc08f0b8949d1900ede6b644b03c3da3e6ad58a55",
+  "seconds": 18.394888900002115,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "这种蛋黄粉红淡紫色主为主。 嗯，就是营造一种温馨的感觉，嗯，比如说在店内粘点儿一，嗯，粘贴一些这种，嗯。 制作蛋糕的这个过，制作蛋糕过程的这个照片儿啦，啊，还有这些，嗯。 就是很温馨的一些场景什么的，就是可以起到起到一个很好的宣传效果。 嗯。",
+    "raw_text": "[0.00][S01]这种蛋黄粉红淡紫色主为主。[4.04][5.18][S01]嗯，就是营造一种温馨的感觉，嗯，比如说在店内粘点儿一，嗯，粘贴一些这种，嗯。[13.04][13.48][S01]制作蛋糕的这个过，制作蛋糕过程的这个照片儿啦，啊，还有这些，嗯。[21.44][22.18][S01]就是很温馨的一些场景什么的，就是可以起到起到一个很好的宣传效果。[29.26][29.78][S01]嗯。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "这种蛋黄粉红淡紫色主为主。",
+        "t0_ms": 0,
+        "t1_ms": 4040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，就是营造一种温馨的感觉，嗯，比如说在店内粘点儿一，嗯，粘贴一些这种，嗯。",
+        "t0_ms": 5180,
+        "t1_ms": 13040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "制作蛋糕的这个过，制作蛋糕过程的这个照片儿啦，啊，还有这些，嗯。",
+        "t0_ms": 13480,
+        "t1_ms": 21440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就是很温馨的一些场景什么的，就是可以起到起到一个很好的宣传效果。",
+        "t0_ms": 22180,
+        "t1_ms": 29260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 29780,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 4040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5180,
+        "t1_ms": 13040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13480,
+        "t1_ms": 21440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22180,
+        "t1_ms": 29260,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29780,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.395000457763672,
+      "encode_ms": 7149.26513671875,
+      "decode_ms": 11192.759765625
+    }
+  },
+  "rawDecoded": "[0.00][S01]这种蛋黄粉红淡紫色主为主。[4.04][5.18][S01]嗯，就是营造一种温馨的感觉，嗯，比如说在店内粘点儿一，嗯，粘贴一些这种，嗯。[13.04][13.48][S01]制作蛋糕的这个过，制作蛋糕过程的这个照片儿啦，啊，还有这些，嗯。[21.44][22.18][S01]就是很温馨的一些场景什么的，就是可以起到起到一个很好的宣传效果。[29.26][29.78][S01]嗯。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

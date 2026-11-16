@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0005",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 2400000,
+    "sourceEndFrame": 2880000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "66360c796c998c757f5620288e825cb5f3b3a49d6b8659639278ea65f2f24940",
+  "seconds": 24.818985100006103,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "都要找我们来进行一些小额的，小额的贷款。 嗯，目前在这个战略发展上面，你还有想要说的吗？未来的可以有哪款哪种呢？ 呃，未来的话我们要做一个APP的软件，然后呢更加的透明，然后让贷款的人呢，他的只要征信合适，我们就可以给他。 嗯。 嗯。 放额十万二十万都是没有问题的。 嗯。 然后了绑定他的手机号，因为人这个手机号呢，他一用的话就会用。",
+    "raw_text": "[0.01][S01]都要找我们来进行一些小额的，小额的贷款。[3.69][3.68][S02]嗯，目前在这个战略发展上面，你还有想要说的吗？未来的可以有哪款哪种呢？[10.44][10.58][S01]呃，未来的话我们要做一个APP的软件，然后呢更加的透明，然后让贷款的人呢，他的只要征信合适，我们就可以给他。[22.08][13.71][S02]嗯。[14.14][15.71][S02]嗯。[16.16][22.28][S01]放额十万二十万都是没有问题的。[24.88][24.88][S02]嗯。[25.31][25.34][S01]然后了绑定他的手机号，因为人这个手机号呢，他一用的话就会用。[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "都要找我们来进行一些小额的，小额的贷款。",
+        "t0_ms": 10,
+        "t1_ms": 3690,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，目前在这个战略发展上面，你还有想要说的吗？未来的可以有哪款哪种呢？",
+        "t0_ms": 3680,
+        "t1_ms": 10440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，未来的话我们要做一个APP的软件，然后呢更加的透明，然后让贷款的人呢，他的只要征信合适，我们就可以给他。",
+        "t0_ms": 10580,
+        "t1_ms": 22080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 13710,
+        "t1_ms": 14140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 15710,
+        "t1_ms": 16160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "放额十万二十万都是没有问题的。",
+        "t0_ms": 22280,
+        "t1_ms": 24880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 24880,
+        "t1_ms": 25310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "然后了绑定他的手机号，因为人这个手机号呢，他一用的话就会用。",
+        "t0_ms": 25340,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 3690,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3680,
+        "t1_ms": 10440,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10580,
+        "t1_ms": 22080,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13710,
+        "t1_ms": 14140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15710,
+        "t1_ms": 16160,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22280,
+        "t1_ms": 24880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24880,
+        "t1_ms": 25310,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25340,
+        "t1_ms": 29940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 27.000999450683594,
+      "encode_ms": 8973.9970703125,
+      "decode_ms": 15781.6103515625
+    }
+  },
+  "rawDecoded": "[0.01][S01]都要找我们来进行一些小额的，小额的贷款。[3.69][3.68][S02]嗯，目前在这个战略发展上面，你还有想要说的吗？未来的可以有哪款哪种呢？[10.44][10.58][S01]呃，未来的话我们要做一个APP的软件，然后呢更加的透明，然后让贷款的人呢，他的只要征信合适，我们就可以给他。[22.08][13.71][S02]嗯。[14.14][15.71][S02]嗯。[16.16][22.28][S01]放额十万二十万都是没有问题的。[24.88][24.88][S02]嗯。[25.31][25.34][S01]然后了绑定他的手机号，因为人这个手机号呢，他一用的话就会用。[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

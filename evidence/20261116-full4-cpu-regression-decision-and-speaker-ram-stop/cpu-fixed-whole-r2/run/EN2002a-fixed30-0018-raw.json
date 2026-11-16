@@ -1,0 +1,282 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0018",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 8640000,
+    "sourceEndFrame": 9120000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "6b26553b485575a39b18cac3bf94abe809190b5b8d8eb33a14df75c26809df30",
+  "seconds": 23.664173500001198,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I guess it depends on the the Yeah, what you're clicking on. Oh sorry. So um yeah, another thing. Mm. Single audio files, do we wanna use them or not? We don't know yet, do we, David? Do you mean single channel? Yeah, single cha those single channel files, do we want them? I mean. Single cha Mm. Probably not, but we might need them for this fluencys if we try to do it. Yeah.",
+    "raw_text": "[2.31][S01]I guess it depends on the[3.51][4.25][S01]the[4.49][6.25][S02]Yeah, what you're clicking on.[7.69][8.06][S01]Oh sorry.[8.99][8.51][S02]So um yeah, another thing.[11.89][9.81][S03]Mm.[10.01][13.68][S01]Single audio files, do we wanna use them or not?[16.61][18.61][S03]We don't know yet, do we, David? Do you mean single channel?[21.57][21.76][S01]Yeah, single cha those single channel files, do we want them? I mean.[25.21][21.91][S02]Single cha[22.41][22.57][S03]Mm.[22.97][25.81][S03]Probably not, but we might need them for this fluencys if we try to do it.[29.95][29.34][S01]Yeah.[29.89]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I guess it depends on the",
+        "t0_ms": 2310,
+        "t1_ms": 3510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "the",
+        "t0_ms": 4250,
+        "t1_ms": 4490,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, what you're clicking on.",
+        "t0_ms": 6250,
+        "t1_ms": 7690,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Oh sorry.",
+        "t0_ms": 8060,
+        "t1_ms": 8990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "So um yeah, another thing.",
+        "t0_ms": 8510,
+        "t1_ms": 11890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 9810,
+        "t1_ms": 10010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Single audio files, do we wanna use them or not?",
+        "t0_ms": 13680,
+        "t1_ms": 16610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "We don't know yet, do we, David? Do you mean single channel?",
+        "t0_ms": 18610,
+        "t1_ms": 21570,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, single cha those single channel files, do we want them? I mean.",
+        "t0_ms": 21760,
+        "t1_ms": 25210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Single cha",
+        "t0_ms": 21910,
+        "t1_ms": 22410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 22570,
+        "t1_ms": 22970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Probably not, but we might need them for this fluencys if we try to do it.",
+        "t0_ms": 25810,
+        "t1_ms": 29950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 29340,
+        "t1_ms": 29890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 2310,
+        "t1_ms": 3510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4250,
+        "t1_ms": 4490,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6250,
+        "t1_ms": 7690,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8060,
+        "t1_ms": 8990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8510,
+        "t1_ms": 11890,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9810,
+        "t1_ms": 10010,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13680,
+        "t1_ms": 16610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18610,
+        "t1_ms": 21570,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21760,
+        "t1_ms": 25210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21910,
+        "t1_ms": 22410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22570,
+        "t1_ms": 22970,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25810,
+        "t1_ms": 29950,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29340,
+        "t1_ms": 29890,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 22.11199951171875,
+      "encode_ms": 6837.26123046875,
+      "decode_ms": 16769.099609375
+    }
+  },
+  "rawDecoded": "[2.31][S01]I guess it depends on the[3.51][4.25][S01]the[4.49][6.25][S02]Yeah, what you're clicking on.[7.69][8.06][S01]Oh sorry.[8.99][8.51][S02]So um yeah, another thing.[11.89][9.81][S03]Mm.[10.01][13.68][S01]Single audio files, do we wanna use them or not?[16.61][18.61][S03]We don't know yet, do we, David? Do you mean single channel?[21.57][21.76][S01]Yeah, single cha those single channel files, do we want them? I mean.[25.21][21.91][S02]Single cha[22.41][22.57][S03]Mm.[22.97][25.81][S03]Probably not, but we might need them for this fluencys if we try to do it.[29.95][29.34][S01]Yeah.[29.89]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0005",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 2400000,
+    "sourceEndFrame": 2880000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "99a604ca95cb3743b91ae52ed8c91d608cec4974fd0732047ac284a5910f060b",
+  "seconds": 20.992739499997697,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "And double click or something else. Mm-hmm. Um I think so yeah, when you left click it you can for example set set the marker there so that the the audio goes from there I think. Um so we can't put it on left click, we could put it on right click, we could for example have a little menu that pops up. Yeah, that would be quite good, that's right. So right click on a menu, you know, and you can click on speaker characterization, that pops the window. What else could we have in the menu?",
+    "raw_text": "[0.00][S01]And double click or something else.[1.80][2.38][S02]Mm-hmm.[2.80][2.92][S01]Um I think so yeah, when you left click it you can for example set set the marker there so that the the audio goes from there I think.[10.68][12.68][S01]Um so we can't put it on left click, we could put it on right click, we could for example have a little menu that pops up.[18.70][19.44][S03]Yeah, that would be quite good, that's right.[20.76][20.66][S01]So right click on a menu, you know, and you can click on speaker characterization, that pops the window.[26.66][26.90][S03]What else could we have in the menu?[29.84]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "And double click or something else.",
+        "t0_ms": 0,
+        "t1_ms": 1800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 2380,
+        "t1_ms": 2800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Um I think so yeah, when you left click it you can for example set set the marker there so that the the audio goes from there I think.",
+        "t0_ms": 2920,
+        "t1_ms": 10680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um so we can't put it on left click, we could put it on right click, we could for example have a little menu that pops up.",
+        "t0_ms": 12680,
+        "t1_ms": 18700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, that would be quite good, that's right.",
+        "t0_ms": 19440,
+        "t1_ms": 20760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "So right click on a menu, you know, and you can click on speaker characterization, that pops the window.",
+        "t0_ms": 20660,
+        "t1_ms": 26660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "What else could we have in the menu?",
+        "t0_ms": 26900,
+        "t1_ms": 29840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 1800,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2380,
+        "t1_ms": 2800,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2920,
+        "t1_ms": 10680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12680,
+        "t1_ms": 18700,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19440,
+        "t1_ms": 20760,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20660,
+        "t1_ms": 26660,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26900,
+        "t1_ms": 29840,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.840999603271484,
+      "encode_ms": 7313.6328125,
+      "decode_ms": 13630.3056640625
+    }
+  },
+  "rawDecoded": "[0.00][S01]And double click or something else.[1.80][2.38][S02]Mm-hmm.[2.80][2.92][S01]Um I think so yeah, when you left click it you can for example set set the marker there so that the the audio goes from there I think.[10.68][12.68][S01]Um so we can't put it on left click, we could put it on right click, we could for example have a little menu that pops up.[18.70][19.44][S03]Yeah, that would be quite good, that's right.[20.76][20.66][S01]So right click on a menu, you know, and you can click on speaker characterization, that pops the window.[26.66][26.90][S03]What else could we have in the menu?[29.84]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

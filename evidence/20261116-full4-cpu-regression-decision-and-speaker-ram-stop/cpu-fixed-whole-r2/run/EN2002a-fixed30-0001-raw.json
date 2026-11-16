@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0001",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 480000,
+    "sourceEndFrame": 960000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "8548889a155c93283e93c02aefade5cd119709fc6104ebf86949fe5c8681d822",
+  "seconds": 23.09152929999982,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "'Kay, well I've got a browser now, which already don't. Whoops. Good start. Mm-hmm. Oh, I dropped mine as well. Give it this. It's possibly a good start. Okay. Okay. So yeah. So yeah, we've got a browser with um which comes up automatically with the transcription box and the topics, and then when you go",
+    "raw_text": "[0.00][S01]'Kay, well I've got a browser now, which already don't.[4.60][3.00][S02]Whoops.[3.54][5.48][S02]Good start.[5.98][6.30][S01]Mm-hmm.[6.62][8.04][S02]Oh, I dropped mine as well.[9.06][12.94][S03]Give it this.[13.40][13.76][S02]It's possibly a good start.[14.98][18.28][S04]Okay.[18.72][18.72][S01]Okay.[19.02][19.32][S04]So yeah.[20.02][20.34][S01]So yeah, we've got a browser with um which comes up automatically with the transcription box and the topics, and then when you go[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "'Kay, well I've got a browser now, which already don't.",
+        "t0_ms": 0,
+        "t1_ms": 4600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Whoops.",
+        "t0_ms": 3000,
+        "t1_ms": 3540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Good start.",
+        "t0_ms": 5480,
+        "t1_ms": 5980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 6300,
+        "t1_ms": 6620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh, I dropped mine as well.",
+        "t0_ms": 8040,
+        "t1_ms": 9060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Give it this.",
+        "t0_ms": 12940,
+        "t1_ms": 13400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "It's possibly a good start.",
+        "t0_ms": 13760,
+        "t1_ms": 14980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 18280,
+        "t1_ms": 18720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 18720,
+        "t1_ms": 19020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "So yeah.",
+        "t0_ms": 19320,
+        "t1_ms": 20020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "So yeah, we've got a browser with um which comes up automatically with the transcription box and the topics, and then when you go",
+        "t0_ms": 20340,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 4600,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3000,
+        "t1_ms": 3540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5480,
+        "t1_ms": 5980,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6300,
+        "t1_ms": 6620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8040,
+        "t1_ms": 9060,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12940,
+        "t1_ms": 13400,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13760,
+        "t1_ms": 14980,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18280,
+        "t1_ms": 18720,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18720,
+        "t1_ms": 19020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19320,
+        "t1_ms": 20020,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20340,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 21.364999771118164,
+      "encode_ms": 7424.5478515625,
+      "decode_ms": 15609.927734375
+    }
+  },
+  "rawDecoded": "[0.00][S01]'Kay, well I've got a browser now, which already don't.[4.60][3.00][S02]Whoops.[3.54][5.48][S02]Good start.[5.98][6.30][S01]Mm-hmm.[6.62][8.04][S02]Oh, I dropped mine as well.[9.06][12.94][S03]Give it this.[13.40][13.76][S02]It's possibly a good start.[14.98][18.28][S04]Okay.[18.72][18.72][S01]Okay.[19.02][19.32][S04]So yeah.[20.02][20.34][S01]So yeah, we've got a browser with um which comes up automatically with the transcription box and the topics, and then when you go[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

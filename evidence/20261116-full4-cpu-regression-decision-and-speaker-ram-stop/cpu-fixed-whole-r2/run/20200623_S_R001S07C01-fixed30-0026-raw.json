@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0026",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 12480000,
+    "sourceEndFrame": 12960000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "bea386222d2a0cdd90899952d0d3203699c2ed955f89a2b6391b60c8f6390502",
+  "seconds": 19.51291759999731,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "呃，创业的人嘛，呃，创业的大学生嘛，跟我联系了，需要呃，贷二十五万。 嗯。 二十五万。 对，有有两个二十五万的和三个二十万的人。 嗯。 呃，然后呢，呃，我们会严格的按照程序，然后先向客户申请，然后我们再呃，进行。 嗯。 呃，进行调查，呃，用户会进行。",
+    "raw_text": "[0.12][S01]呃，创业的人嘛，呃，创业的大学生嘛，跟我联系了，需要呃，贷二十五万。[8.24][1.62][S02]嗯。[2.11][8.35][S02]二十五万。[9.28][9.28][S01]对，有有两个二十五万的和三个二十万的人。[14.44][15.04][S02]嗯。[15.55][16.02][S01]呃，然后呢，呃，我们会严格的按照程序，然后先向客户申请，然后我们再呃，进行。[26.42][23.22][S02]嗯。[23.81][27.42][S01]呃，进行调查，呃，用户会进行。[30.04]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "呃，创业的人嘛，呃，创业的大学生嘛，跟我联系了，需要呃，贷二十五万。",
+        "t0_ms": 120,
+        "t1_ms": 8240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 1620,
+        "t1_ms": 2110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "二十五万。",
+        "t0_ms": 8350,
+        "t1_ms": 9280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对，有有两个二十五万的和三个二十万的人。",
+        "t0_ms": 9280,
+        "t1_ms": 14440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 15040,
+        "t1_ms": 15550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，然后呢，呃，我们会严格的按照程序，然后先向客户申请，然后我们再呃，进行。",
+        "t0_ms": 16020,
+        "t1_ms": 26420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 23220,
+        "t1_ms": 23810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "呃，进行调查，呃，用户会进行。",
+        "t0_ms": 27420,
+        "t1_ms": 30040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 120,
+        "t1_ms": 8240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1620,
+        "t1_ms": 2110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8350,
+        "t1_ms": 9280,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9280,
+        "t1_ms": 14440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15040,
+        "t1_ms": 15550,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16020,
+        "t1_ms": 26420,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23220,
+        "t1_ms": 23810,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27420,
+        "t1_ms": 30040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 23.14900016784668,
+      "encode_ms": 7153.55419921875,
+      "decode_ms": 12299.6572265625
+    }
+  },
+  "rawDecoded": "[0.12][S01]呃，创业的人嘛，呃，创业的大学生嘛，跟我联系了，需要呃，贷二十五万。[8.24][1.62][S02]嗯。[2.11][8.35][S02]二十五万。[9.28][9.28][S01]对，有有两个二十五万的和三个二十万的人。[14.44][15.04][S02]嗯。[15.55][16.02][S01]呃，然后呢，呃，我们会严格的按照程序，然后先向客户申请，然后我们再呃，进行。[26.42][23.22][S02]嗯。[23.81][27.42][S01]呃，进行调查，呃，用户会进行。[30.04]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

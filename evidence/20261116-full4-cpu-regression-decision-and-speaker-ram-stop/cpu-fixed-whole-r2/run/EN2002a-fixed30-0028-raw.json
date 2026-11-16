@@ -1,0 +1,336 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0028",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 13440000,
+    "sourceEndFrame": 13920000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "0167c01676433a6efa2d745f285da3fa984159b0ae429c58378a1bd06cc3f01c",
+  "seconds": 28.118098300001293,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I'm I'm pretty much getting there anyway, to be honest, it's not it's not gonna be a lot more uh Yeah. I guess it is, I mean just to try and I mean for us to to be able to do something that we can include with your thing, so so we yeah yeah. Yeah. Yeah, that's what we need, yeah. Something just slightly more than just that on its own. Yeah. Oh. Mm yeah. Yeah, so we can plug it in and just Yeah. Yeah, just so see the integration works sort of between the I think uh Mm true. Yeah, definitely. Um Mm. So I guess that's what",
+    "raw_text": "[1.51][S01]I'm I'm pretty much getting there anyway, to be honest, it's not it's not gonna be a lot more uh[6.61][4.88][S02]Yeah.[5.15][6.62][S03]I guess it is, I mean just to try and I mean for us to to be able to do something that we can include with your thing, so so we yeah yeah.[16.31][14.58][S02]Yeah.[14.85][14.71][S04]Yeah, that's what we need, yeah. Something just slightly more than just that on its own.[18.83][15.82][S02]Yeah.[16.11][16.44][S01]Oh.[16.85][18.45][S03]Mm yeah.[19.11][18.54][S02]Yeah, so we can plug it in and just[20.05][19.85][S04]Yeah.[20.11][20.06][S03]Yeah, just so see the integration works sort of between the I think uh[24.63][25.06][S01]Mm true.[25.75][25.34][S04]Yeah, definitely.[26.35][26.83][S03]Um[27.25][28.46][S02]Mm.[28.89][28.88][S03]So I guess that's what[29.81]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I'm I'm pretty much getting there anyway, to be honest, it's not it's not gonna be a lot more uh",
+        "t0_ms": 1510,
+        "t1_ms": 6610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 4880,
+        "t1_ms": 5150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "I guess it is, I mean just to try and I mean for us to to be able to do something that we can include with your thing, so so we yeah yeah.",
+        "t0_ms": 6620,
+        "t1_ms": 16310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 14580,
+        "t1_ms": 14850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, that's what we need, yeah. Something just slightly more than just that on its own.",
+        "t0_ms": 14710,
+        "t1_ms": 18830,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 15820,
+        "t1_ms": 16110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Oh.",
+        "t0_ms": 16440,
+        "t1_ms": 16850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm yeah.",
+        "t0_ms": 18450,
+        "t1_ms": 19110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, so we can plug it in and just",
+        "t0_ms": 18540,
+        "t1_ms": 20050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 19850,
+        "t1_ms": 20110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah, just so see the integration works sort of between the I think uh",
+        "t0_ms": 20060,
+        "t1_ms": 24630,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Mm true.",
+        "t0_ms": 25060,
+        "t1_ms": 25750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, definitely.",
+        "t0_ms": 25340,
+        "t1_ms": 26350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Um",
+        "t0_ms": 26830,
+        "t1_ms": 27250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 28460,
+        "t1_ms": 28890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "So I guess that's what",
+        "t0_ms": 28880,
+        "t1_ms": 29810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 1510,
+        "t1_ms": 6610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4880,
+        "t1_ms": 5150,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6620,
+        "t1_ms": 16310,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14580,
+        "t1_ms": 14850,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14710,
+        "t1_ms": 18830,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15820,
+        "t1_ms": 16110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16440,
+        "t1_ms": 16850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18450,
+        "t1_ms": 19110,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18540,
+        "t1_ms": 20050,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19850,
+        "t1_ms": 20110,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20060,
+        "t1_ms": 24630,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25060,
+        "t1_ms": 25750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25340,
+        "t1_ms": 26350,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26830,
+        "t1_ms": 27250,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28460,
+        "t1_ms": 28890,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28880,
+        "t1_ms": 29810,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.875,
+      "encode_ms": 7105.830078125,
+      "decode_ms": 20961.775390625
+    }
+  },
+  "rawDecoded": "[1.51][S01]I'm I'm pretty much getting there anyway, to be honest, it's not it's not gonna be a lot more uh[6.61][4.88][S02]Yeah.[5.15][6.62][S03]I guess it is, I mean just to try and I mean for us to to be able to do something that we can include with your thing, so so we yeah yeah.[16.31][14.58][S02]Yeah.[14.85][14.71][S04]Yeah, that's what we need, yeah. Something just slightly more than just that on its own.[18.83][15.82][S02]Yeah.[16.11][16.44][S01]Oh.[16.85][18.45][S03]Mm yeah.[19.11][18.54][S02]Yeah, so we can plug it in and just[20.05][19.85][S04]Yeah.[20.11][20.06][S03]Yeah, just so see the integration works sort of between the I think uh[24.63][25.06][S01]Mm true.[25.75][25.34][S04]Yeah, definitely.[26.35][26.83][S03]Um[27.25][28.46][S02]Mm.[28.89][28.88][S03]So I guess that's what[29.81]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,264 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0032",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 15360000,
+    "sourceEndFrame": 15840000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "4062f1d85e9cd1b798935c65e52be21a77f89cc181c60505a5ada57bbe9b3997",
+  "seconds": 21.548092999997607,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Or the N browser. The N browser? Yes. Or a case. For meetings. N for meetings. Hope you hope you never have to look in my directory, it's just pure chaos. Really? No, I'm I'm extremely organized, really. I've got goals, everything, I love goals. Mine is serious chaos. Falls everywhere. Mm. Yep, so that's me, do someone else want to talk about this stuff?",
+    "raw_text": "[0.00][S01]Or the N browser.[1.76][2.48][S02]The N browser?[3.58][3.66][S01]Yes.[4.22][3.98][S03]Or a case.[4.68][4.02][S02]For meetings.[4.72][4.44][S01]N for meetings.[5.52][6.32][S02]Hope you hope you never have to look in my directory, it's just pure chaos.[10.00][10.00][S01]Really? No, I'm I'm extremely organized, really. I've got goals, everything, I love goals.[15.94][16.08][S02]Mine is serious chaos.[17.82][20.06][S02]Falls everywhere.[20.84][26.30][S01]Mm.[26.64][26.50][S01]Yep, so that's me, do someone else want to talk about this stuff?[29.28]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Or the N browser.",
+        "t0_ms": 0,
+        "t1_ms": 1760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "The N browser?",
+        "t0_ms": 2480,
+        "t1_ms": 3580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yes.",
+        "t0_ms": 3660,
+        "t1_ms": 4220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Or a case.",
+        "t0_ms": 3980,
+        "t1_ms": 4680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "For meetings.",
+        "t0_ms": 4020,
+        "t1_ms": 4720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "N for meetings.",
+        "t0_ms": 4440,
+        "t1_ms": 5520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Hope you hope you never have to look in my directory, it's just pure chaos.",
+        "t0_ms": 6320,
+        "t1_ms": 10000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Really? No, I'm I'm extremely organized, really. I've got goals, everything, I love goals.",
+        "t0_ms": 10000,
+        "t1_ms": 15940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mine is serious chaos.",
+        "t0_ms": 16080,
+        "t1_ms": 17820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Falls everywhere.",
+        "t0_ms": 20060,
+        "t1_ms": 20840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 26300,
+        "t1_ms": 26640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yep, so that's me, do someone else want to talk about this stuff?",
+        "t0_ms": 26500,
+        "t1_ms": 29280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 1760,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2480,
+        "t1_ms": 3580,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3660,
+        "t1_ms": 4220,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3980,
+        "t1_ms": 4680,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4020,
+        "t1_ms": 4720,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4440,
+        "t1_ms": 5520,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6320,
+        "t1_ms": 10000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10000,
+        "t1_ms": 15940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16080,
+        "t1_ms": 17820,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20060,
+        "t1_ms": 20840,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26300,
+        "t1_ms": 26640,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26500,
+        "t1_ms": 29280,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.79800033569336,
+      "encode_ms": 6984.716796875,
+      "decode_ms": 14515.2578125
+    }
+  },
+  "rawDecoded": "[0.00][S01]Or the N browser.[1.76][2.48][S02]The N browser?[3.58][3.66][S01]Yes.[4.22][3.98][S03]Or a case.[4.68][4.02][S02]For meetings.[4.72][4.44][S01]N for meetings.[5.52][6.32][S02]Hope you hope you never have to look in my directory, it's just pure chaos.[10.00][10.00][S01]Really? No, I'm I'm extremely organized, really. I've got goals, everything, I love goals.[15.94][16.08][S02]Mine is serious chaos.[17.82][20.06][S02]Falls everywhere.[20.84][26.30][S01]Mm.[26.64][26.50][S01]Yep, so that's me, do someone else want to talk about this stuff?[29.28]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

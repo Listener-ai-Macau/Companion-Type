@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0068",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 32640000,
+    "sourceEndFrame": 33120000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "967be3c1ffd4b381e8dfb3b44ee265ed33c218dce35d6daa081e08f9f30f9f9f",
+  "seconds": 22.54767360000551,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "About it all, my apologies for that. Um user interface, we also need to maybe get the slogan in here. Um it's I'm pointing at my laptop, come on. Yeah. Fashion. Mm we put the fashion to. Real Reaction and such, so um. That's the slogan, is that not an aim? As long as you yeah, as long as you put the fashion in electronics, so. Oh sorry. Yeah, I'll put that as a. My apologies, no it could well be, I was probably with that. Um I think that's a l almost a last minute thing we can just incorporate into the actual plastic on",
+    "raw_text": "[0.00][S01]About it all, my apologies for that. Um user interface, we also need to maybe get the slogan in here. Um it's I'm pointing at my laptop, come on.[10.40][1.85][S02]Yeah.[2.07][7.51][S03]Fashion.[7.93][10.21][S02]Mm we put the fashion to.[11.91][13.22][S01]Real Reaction and such, so um.[16.52][16.48][S02]That's the slogan, is that not an aim?[17.94][17.28][S03]As long as you yeah, as long as you put the fashion in electronics, so.[20.80][18.26][S01]Oh sorry.[18.74][20.49][S02]Yeah, I'll put that as a.[22.08][21.56][S01]My apologies, no it could well be, I was probably with that. Um I think that's a l almost a last minute thing we can just incorporate into the actual plastic on[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "About it all, my apologies for that. Um user interface, we also need to maybe get the slogan in here. Um it's I'm pointing at my laptop, come on.",
+        "t0_ms": 0,
+        "t1_ms": 10400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 1850,
+        "t1_ms": 2070,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Fashion.",
+        "t0_ms": 7510,
+        "t1_ms": 7930,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Mm we put the fashion to.",
+        "t0_ms": 10210,
+        "t1_ms": 11910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Real Reaction and such, so um.",
+        "t0_ms": 13220,
+        "t1_ms": 16520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "That's the slogan, is that not an aim?",
+        "t0_ms": 16480,
+        "t1_ms": 17940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "As long as you yeah, as long as you put the fashion in electronics, so.",
+        "t0_ms": 17280,
+        "t1_ms": 20800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Oh sorry.",
+        "t0_ms": 18260,
+        "t1_ms": 18740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, I'll put that as a.",
+        "t0_ms": 20490,
+        "t1_ms": 22080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "My apologies, no it could well be, I was probably with that. Um I think that's a l almost a last minute thing we can just incorporate into the actual plastic on",
+        "t0_ms": 21560,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 10400,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1850,
+        "t1_ms": 2070,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7510,
+        "t1_ms": 7930,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10210,
+        "t1_ms": 11910,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13220,
+        "t1_ms": 16520,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16480,
+        "t1_ms": 17940,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17280,
+        "t1_ms": 20800,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18260,
+        "t1_ms": 18740,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20490,
+        "t1_ms": 22080,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21560,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.38599967956543,
+      "encode_ms": 6779.92822265625,
+      "decode_ms": 15719.0908203125
+    }
+  },
+  "rawDecoded": "[0.00][S01]About it all, my apologies for that. Um user interface, we also need to maybe get the slogan in here. Um it's I'm pointing at my laptop, come on.[10.40][1.85][S02]Yeah.[2.07][7.51][S03]Fashion.[7.93][10.21][S02]Mm we put the fashion to.[11.91][13.22][S01]Real Reaction and such, so um.[16.52][16.48][S02]That's the slogan, is that not an aim?[17.94][17.28][S03]As long as you yeah, as long as you put the fashion in electronics, so.[20.80][18.26][S01]Oh sorry.[18.74][20.49][S02]Yeah, I'll put that as a.[22.08][21.56][S01]My apologies, no it could well be, I was probably with that. Um I think that's a l almost a last minute thing we can just incorporate into the actual plastic on[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

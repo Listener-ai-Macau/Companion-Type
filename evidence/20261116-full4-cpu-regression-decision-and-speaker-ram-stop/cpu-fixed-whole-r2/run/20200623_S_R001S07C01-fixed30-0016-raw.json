@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0016",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 7680000,
+    "sourceEndFrame": 8160000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "082bcebff2e49f858604615082f815e4b3408f6624f5f00054d4680cfc0aaa33",
+  "seconds": 15.294606200004637,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "还有就是有的那种特别难缠的，我们会上门儿催收还款。 嗯。 我们呃还。 提呃提短信提醒他还款，包括他的额度什么日期还款日都提醒他，啊提前还款。 嗯。",
+    "raw_text": "[2.31][S01]还有就是有的那种特别难缠的，我们会上门儿催收还款。[8.25][8.52][S02]嗯。[8.95][12.86][S01]我们呃还。[14.65][17.51][S01]提呃提短信提醒他还款，包括他的额度什么日期还款日都提醒他，啊提前还款。[30.01][21.34][S02]嗯。[21.85]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "还有就是有的那种特别难缠的，我们会上门儿催收还款。",
+        "t0_ms": 2310,
+        "t1_ms": 8250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 8520,
+        "t1_ms": 8950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "我们呃还。",
+        "t0_ms": 12860,
+        "t1_ms": 14650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "提呃提短信提醒他还款，包括他的额度什么日期还款日都提醒他，啊提前还款。",
+        "t0_ms": 17510,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 21340,
+        "t1_ms": 21850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 2310,
+        "t1_ms": 8250,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8520,
+        "t1_ms": 8950,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12860,
+        "t1_ms": 14650,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17510,
+        "t1_ms": 30010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21340,
+        "t1_ms": 21850,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 31.344999313354492,
+      "encode_ms": 6778.64990234375,
+      "decode_ms": 8451.603515625
+    }
+  },
+  "rawDecoded": "[2.31][S01]还有就是有的那种特别难缠的，我们会上门儿催收还款。[8.25][8.52][S02]嗯。[8.95][12.86][S01]我们呃还。[14.65][17.51][S01]提呃提短信提醒他还款，包括他的额度什么日期还款日都提醒他，啊提前还款。[30.01][21.34][S02]嗯。[21.85]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

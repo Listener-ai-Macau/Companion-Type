@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0026",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 12480000,
+    "sourceEndFrame": 12960000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "3d6beba86a98259efe6b714df018231ceb7297c30013679fa3e51c69c5e46c60",
+  "seconds": 18.005905600002734,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "然后就是一个捆绑，也算是一个看不见的捆绑式的一个销售吧。 嗯。 嗯，然后然后那个，呃，他就是可以针对于这些人群呀，人群的不同，然后价格的不同。 呃，从这方面下手，然后让呃更多的人走进我们的超市。 完了以后呢，发现那个超市有好多这个他需要东西，然后不需要的东西，他有可能也是也可能说啊，今天来了。",
+    "raw_text": "[0.00][S01]然后就是一个捆绑，也算是一个看不见的捆绑式的一个销售吧。[5.24][5.24][S01]嗯。[6.72][6.72][S01]嗯，然后然后那个，呃，他就是可以针对于这些人群呀，人群的不同，然后价格的不同。[16.74][16.74][S01]呃，从这方面下手，然后让呃更多的人走进我们的超市。[21.64][21.64][S01]完了以后呢，发现那个超市有好多这个他需要东西，然后不需要的东西，他有可能也是也可能说啊，今天来了。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "然后就是一个捆绑，也算是一个看不见的捆绑式的一个销售吧。",
+        "t0_ms": 0,
+        "t1_ms": 5240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 5240,
+        "t1_ms": 6720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，然后然后那个，呃，他就是可以针对于这些人群呀，人群的不同，然后价格的不同。",
+        "t0_ms": 6720,
+        "t1_ms": 16740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，从这方面下手，然后让呃更多的人走进我们的超市。",
+        "t0_ms": 16740,
+        "t1_ms": 21640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "完了以后呢，发现那个超市有好多这个他需要东西，然后不需要的东西，他有可能也是也可能说啊，今天来了。",
+        "t0_ms": 21640,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 5240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5240,
+        "t1_ms": 6720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6720,
+        "t1_ms": 16740,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16740,
+        "t1_ms": 21640,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21640,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.285999298095703,
+      "encode_ms": 7410.39501953125,
+      "decode_ms": 10538.4658203125
+    }
+  },
+  "rawDecoded": "[0.00][S01]然后就是一个捆绑，也算是一个看不见的捆绑式的一个销售吧。[5.24][5.24][S01]嗯。[6.72][6.72][S01]嗯，然后然后那个，呃，他就是可以针对于这些人群呀，人群的不同，然后价格的不同。[16.74][16.74][S01]呃，从这方面下手，然后让呃更多的人走进我们的超市。[21.64][21.64][S01]完了以后呢，发现那个超市有好多这个他需要东西，然后不需要的东西，他有可能也是也可能说啊，今天来了。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

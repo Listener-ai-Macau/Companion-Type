@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0071",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 34080000,
+    "sourceEndFrame": 34560000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "161fb45b29745da35fdd901bb1f2c2d37f738532373c2ea242d801de66e2af8b",
+  "seconds": 18.86511239999527,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "你们自己负责的这块儿负责起来，下边儿员工也要提醒及时的巡查。 还有就是，呃。 下边儿员工，你们一定要对把这个对待客户这块儿一定要积极主动。 呃，一旦客户遇到呃不明白的商品要及时进行回答。 呃，比如，呃，这个标签儿那个，你们一定要注意，咱们不要贴错，以防就是客户去结账的时候，呃。",
+    "raw_text": "[0.02][S01]你们自己负责的这块儿负责起来，下边儿员工也要提醒及时的巡查。[4.98][6.29][S01]还有就是，呃。[7.62][8.24][S01]下边儿员工，你们一定要对把这个对待客户这块儿一定要积极主动。[13.42][14.18][S01]呃，一旦客户遇到呃不明白的商品要及时进行回答。[19.52][19.93][S01]呃，比如，呃，这个标签儿那个，你们一定要注意，咱们不要贴错，以防就是客户去结账的时候，呃。[29.79]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "你们自己负责的这块儿负责起来，下边儿员工也要提醒及时的巡查。",
+        "t0_ms": 20,
+        "t1_ms": 4980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有就是，呃。",
+        "t0_ms": 6290,
+        "t1_ms": 7620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "下边儿员工，你们一定要对把这个对待客户这块儿一定要积极主动。",
+        "t0_ms": 8240,
+        "t1_ms": 13420,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，一旦客户遇到呃不明白的商品要及时进行回答。",
+        "t0_ms": 14180,
+        "t1_ms": 19520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，比如，呃，这个标签儿那个，你们一定要注意，咱们不要贴错，以防就是客户去结账的时候，呃。",
+        "t0_ms": 19930,
+        "t1_ms": 29790,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 20,
+        "t1_ms": 4980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6290,
+        "t1_ms": 7620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8240,
+        "t1_ms": 13420,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14180,
+        "t1_ms": 19520,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19930,
+        "t1_ms": 29790,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 24.679000854492188,
+      "encode_ms": 7140.744140625,
+      "decode_ms": 11662.322265625
+    }
+  },
+  "rawDecoded": "[0.02][S01]你们自己负责的这块儿负责起来，下边儿员工也要提醒及时的巡查。[4.98][6.29][S01]还有就是，呃。[7.62][8.24][S01]下边儿员工，你们一定要对把这个对待客户这块儿一定要积极主动。[13.42][14.18][S01]呃，一旦客户遇到呃不明白的商品要及时进行回答。[19.52][19.93][S01]呃，比如，呃，这个标签儿那个，你们一定要注意，咱们不要贴错，以防就是客户去结账的时候，呃。[29.79]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

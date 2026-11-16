@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0043",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 20640000,
+    "sourceEndFrame": 21120000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "1b4ac6ecededa00cddfa7be31b8796fcd96f80cb1a3d2f94ecb83aec34e88512",
+  "seconds": 16.00608790000115,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "还有就是很多，现在就是很多这种蛋糕蛋糕店都有这种烘焙DIY的活动嘛，就是让他们带自己的孩子来尝试。 嗯，然后就是搞一些这种活动，也可以拉近父亲父母跟孩子这个关系，体验嗯乐趣，然后搞一些这种活动。 嗯。 还有就是也可以就是满额换购，比如说现在很多的蛋。",
+    "raw_text": "[0.02][S01]还有就是很多，现在就是很多这种蛋糕蛋糕店都有这种烘焙DIY的活动嘛，就是让他们带自己的孩子来尝试。[9.34][9.94][S01]嗯，然后就是搞一些这种活动，也可以拉近父亲父母跟孩子这个关系，体验嗯乐趣，然后搞一些这种活动。[21.31][21.95][S01]嗯。[22.75][24.76][S01]还有就是也可以就是满额换购，比如说现在很多的蛋。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "还有就是很多，现在就是很多这种蛋糕蛋糕店都有这种烘焙DIY的活动嘛，就是让他们带自己的孩子来尝试。",
+        "t0_ms": 20,
+        "t1_ms": 9340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，然后就是搞一些这种活动，也可以拉近父亲父母跟孩子这个关系，体验嗯乐趣，然后搞一些这种活动。",
+        "t0_ms": 9940,
+        "t1_ms": 21310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 21950,
+        "t1_ms": 22750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有就是也可以就是满额换购，比如说现在很多的蛋。",
+        "t0_ms": 24760,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 20,
+        "t1_ms": 9340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9940,
+        "t1_ms": 21310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21950,
+        "t1_ms": 22750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24760,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 22.735000610351562,
+      "encode_ms": 6692.833984375,
+      "decode_ms": 9257.1767578125
+    }
+  },
+  "rawDecoded": "[0.02][S01]还有就是很多，现在就是很多这种蛋糕蛋糕店都有这种烘焙DIY的活动嘛，就是让他们带自己的孩子来尝试。[9.34][9.94][S01]嗯，然后就是搞一些这种活动，也可以拉近父亲父母跟孩子这个关系，体验嗯乐趣，然后搞一些这种活动。[21.31][21.95][S01]嗯。[22.75][24.76][S01]还有就是也可以就是满额换购，比如说现在很多的蛋。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

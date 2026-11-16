@@ -1,0 +1,228 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0054",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 25920000,
+    "sourceEndFrame": 26400000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "fcc68123968851522587114b54c5038ac3cda477dde5fb072f82f6d283575d22",
+  "seconds": 20.19855710000411,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Well actually it was just dialogue acts and I suppose Yeah. There's summary topics to. Mm. Yeah. It's just that I think we need to set ourselves some milestones, because otherwise Yeah. Yeah. you know. Yeah, we'd get a high schedule, yeah, pretty quick.",
+    "raw_text": "[0.63][S01]Well actually it was just dialogue acts and I suppose[3.85][8.26][S01]Yeah.[8.61][10.96][S01]There's summary topics to.[13.21][13.32][S02]Mm.[13.81][18.24][S01]Yeah.[18.57][18.88][S03]It's just that I think we need to set ourselves some milestones, because otherwise[22.91][19.11][S02]Yeah.[19.35][21.99][S01]Yeah.[22.24][24.86][S03]you know.[25.29][27.29][S01]Yeah, we'd get a high schedule, yeah, pretty quick.[29.97]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Well actually it was just dialogue acts and I suppose",
+        "t0_ms": 630,
+        "t1_ms": 3850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 8260,
+        "t1_ms": 8610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "There's summary topics to.",
+        "t0_ms": 10960,
+        "t1_ms": 13210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 13320,
+        "t1_ms": 13810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 18240,
+        "t1_ms": 18570,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "It's just that I think we need to set ourselves some milestones, because otherwise",
+        "t0_ms": 18880,
+        "t1_ms": 22910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 19110,
+        "t1_ms": 19350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 21990,
+        "t1_ms": 22240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "you know.",
+        "t0_ms": 24860,
+        "t1_ms": 25290,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, we'd get a high schedule, yeah, pretty quick.",
+        "t0_ms": 27290,
+        "t1_ms": 29970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 630,
+        "t1_ms": 3850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8260,
+        "t1_ms": 8610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10960,
+        "t1_ms": 13210,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13320,
+        "t1_ms": 13810,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18240,
+        "t1_ms": 18570,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18880,
+        "t1_ms": 22910,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19110,
+        "t1_ms": 19350,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21990,
+        "t1_ms": 22240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24860,
+        "t1_ms": 25290,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27290,
+        "t1_ms": 29970,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.15999984741211,
+      "encode_ms": 7146.43505859375,
+      "decode_ms": 12994.7333984375
+    }
+  },
+  "rawDecoded": "[0.63][S01]Well actually it was just dialogue acts and I suppose[3.85][8.26][S01]Yeah.[8.61][10.96][S01]There's summary topics to.[13.21][13.32][S02]Mm.[13.81][18.24][S01]Yeah.[18.57][18.88][S03]It's just that I think we need to set ourselves some milestones, because otherwise[22.91][19.11][S02]Yeah.[19.35][21.99][S01]Yeah.[22.24][24.86][S03]you know.[25.29][27.29][S01]Yeah, we'd get a high schedule, yeah, pretty quick.[29.97]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

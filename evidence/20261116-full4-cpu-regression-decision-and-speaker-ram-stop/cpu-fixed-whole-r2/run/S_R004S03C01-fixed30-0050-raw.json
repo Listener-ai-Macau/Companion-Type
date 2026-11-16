@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0050",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 24000000,
+    "sourceEndFrame": 24480000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "7fd26d25a4d45d5a7ef3bca4d777a267399a747be774056c96e201675aebfe60",
+  "seconds": 17.138211000004958,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "促销商品促销商品一个促销堆头，呃。 那个那啥，摆嗯摆放，呃包嗯包括爆爆炸签儿，那个。 嗯，来。 低价促销，来促销一些那个，我们的产品，还有就是，我们的一个那个。 套装销售活动，比如说我们可以把那个洗衣液洗衣粉肥皂这些。",
+    "raw_text": "[1.15][S01]促销商品促销商品一个促销堆头，呃。[5.31][5.86][S01]那个那啥，摆嗯摆放，呃包嗯包括爆爆炸签儿，那个。[12.15][13.66][S01]嗯，来。[14.51][15.94][S01]低价促销，来促销一些那个，我们的产品，还有就是，我们的一个那个。[22.81][24.01][S01]套装销售活动，比如说我们可以把那个洗衣液洗衣粉肥皂这些。[30.01]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "促销商品促销商品一个促销堆头，呃。",
+        "t0_ms": 1150,
+        "t1_ms": 5310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "那个那啥，摆嗯摆放，呃包嗯包括爆爆炸签儿，那个。",
+        "t0_ms": 5860,
+        "t1_ms": 12150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，来。",
+        "t0_ms": 13660,
+        "t1_ms": 14510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "低价促销，来促销一些那个，我们的产品，还有就是，我们的一个那个。",
+        "t0_ms": 15940,
+        "t1_ms": 22810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "套装销售活动，比如说我们可以把那个洗衣液洗衣粉肥皂这些。",
+        "t0_ms": 24010,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 1150,
+        "t1_ms": 5310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5860,
+        "t1_ms": 12150,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13660,
+        "t1_ms": 14510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15940,
+        "t1_ms": 22810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24010,
+        "t1_ms": 30010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 26.45599937438965,
+      "encode_ms": 7355.82421875,
+      "decode_ms": 9720.802734375
+    }
+  },
+  "rawDecoded": "[1.15][S01]促销商品促销商品一个促销堆头，呃。[5.31][5.86][S01]那个那啥，摆嗯摆放，呃包嗯包括爆爆炸签儿，那个。[12.15][13.66][S01]嗯，来。[14.51][15.94][S01]低价促销，来促销一些那个，我们的产品，还有就是，我们的一个那个。[22.81][24.01][S01]套装销售活动，比如说我们可以把那个洗衣液洗衣粉肥皂这些。[30.01]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

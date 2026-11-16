@@ -1,0 +1,264 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0012",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 5760000,
+    "sourceEndFrame": 6240000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "caaa621a91f17c5901e7a18edc9346abee9f229511680659d76e49e1b9618bce",
+  "seconds": 25.117285100001027,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Or the speaker characterization, yeah, you we have to first define what what happens when you click on a user. We have to have a speaker characterization first before we cross the other. Yeah. Yeah. Yes. So shall we try try to do a right click menu then? Yeah, alright, well. Is that just from the main? So. Even if it's one thing happening. Is that is that from any particular window? Like if we wanna sort of get like if we're on the users versus like a topic or something, have a right click from for these various things just to. Yeah. Yes, wait, yeah, there's a second thing about the topics.",
+    "raw_text": "[0.00][S01]Or the speaker characterization, yeah, you we have to first define what what happens when you click on a user.[4.22][4.30][S02]We have to have a speaker characterization first before we cross the other.[7.34][6.96][S01]Yeah.[7.30][7.34][S03]Yeah.[7.66][7.96][S01]Yes. So shall we try try to do a right click menu then?[11.90][14.74][S04]Yeah, alright, well.[16.30][16.28][S03]Is that just from the main?[17.22][17.92][S01]So.[18.12][18.12][S04]Even if it's one thing happening.[19.36][18.42][S03]Is that is that from any particular window? Like if we wanna sort of get like if we're on the users versus like a topic or something, have a right click from for these various things just to.[27.28][25.70][S01]Yeah.[26.04][26.88][S01]Yes, wait, yeah, there's a second thing about the topics.[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Or the speaker characterization, yeah, you we have to first define what what happens when you click on a user.",
+        "t0_ms": 0,
+        "t1_ms": 4220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "We have to have a speaker characterization first before we cross the other.",
+        "t0_ms": 4300,
+        "t1_ms": 7340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 6960,
+        "t1_ms": 7300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 7340,
+        "t1_ms": 7660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yes. So shall we try try to do a right click menu then?",
+        "t0_ms": 7960,
+        "t1_ms": 11900,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, alright, well.",
+        "t0_ms": 14740,
+        "t1_ms": 16300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Is that just from the main?",
+        "t0_ms": 16280,
+        "t1_ms": 17220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "So.",
+        "t0_ms": 17920,
+        "t1_ms": 18120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Even if it's one thing happening.",
+        "t0_ms": 18120,
+        "t1_ms": 19360,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Is that is that from any particular window? Like if we wanna sort of get like if we're on the users versus like a topic or something, have a right click from for these various things just to.",
+        "t0_ms": 18420,
+        "t1_ms": 27280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 25700,
+        "t1_ms": 26040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yes, wait, yeah, there's a second thing about the topics.",
+        "t0_ms": 26880,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 4220,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4300,
+        "t1_ms": 7340,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6960,
+        "t1_ms": 7300,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7340,
+        "t1_ms": 7660,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7960,
+        "t1_ms": 11900,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14740,
+        "t1_ms": 16300,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16280,
+        "t1_ms": 17220,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17920,
+        "t1_ms": 18120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18120,
+        "t1_ms": 19360,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18420,
+        "t1_ms": 27280,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25700,
+        "t1_ms": 26040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26880,
+        "t1_ms": 29940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 15.333000183105469,
+      "encode_ms": 7142.0009765625,
+      "decode_ms": 17923.72265625
+    }
+  },
+  "rawDecoded": "[0.00][S01]Or the speaker characterization, yeah, you we have to first define what what happens when you click on a user.[4.22][4.30][S02]We have to have a speaker characterization first before we cross the other.[7.34][6.96][S01]Yeah.[7.30][7.34][S03]Yeah.[7.66][7.96][S01]Yes. So shall we try try to do a right click menu then?[11.90][14.74][S04]Yeah, alright, well.[16.30][16.28][S03]Is that just from the main?[17.22][17.92][S01]So.[18.12][18.12][S04]Even if it's one thing happening.[19.36][18.42][S03]Is that is that from any particular window? Like if we wanna sort of get like if we're on the users versus like a topic or something, have a right click from for these various things just to.[27.28][25.70][S01]Yeah.[26.04][26.88][S01]Yes, wait, yeah, there's a second thing about the topics.[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

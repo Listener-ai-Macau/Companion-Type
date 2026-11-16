@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0065",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 31200000,
+    "sourceEndFrame": 31680000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "587b9516838fc8db7537fae7e0d423d965b1da4a9c8cbebdd41ddd9f229a0758",
+  "seconds": 18.188960999999836,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "在四十到四十五天，而酸奶的这个保质期呢，它是相较于短的，二十来天吧。 所以对于酸奶的话，我们可以采用这样的就是。 买一赠一或者是买二赠一的，对于这些零售的一些酸奶，可以采取这样的一个销售吧。 然后呢，我们也可以准备一些很小的一个小杯子，在里面倒入一点点，让顾客进行免费的品尝。 如果顾客觉得嗯。",
+    "raw_text": "[0.01][S01]在四十到四十五天，而酸奶的这个保质期呢，它是相较于短的，二十来天吧。[6.31][6.68][S01]所以对于酸奶的话，我们可以采用这样的就是。[10.12][11.24][S01]买一赠一或者是买二赠一的，对于这些零售的一些酸奶，可以采取这样的一个销售吧。[18.99][20.11][S01]然后呢，我们也可以准备一些很小的一个小杯子，在里面倒入一点点，让顾客进行免费的品尝。[28.11][28.62][S01]如果顾客觉得嗯。[30.01]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "在四十到四十五天，而酸奶的这个保质期呢，它是相较于短的，二十来天吧。",
+        "t0_ms": 10,
+        "t1_ms": 6310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "所以对于酸奶的话，我们可以采用这样的就是。",
+        "t0_ms": 6680,
+        "t1_ms": 10120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "买一赠一或者是买二赠一的，对于这些零售的一些酸奶，可以采取这样的一个销售吧。",
+        "t0_ms": 11240,
+        "t1_ms": 18990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后呢，我们也可以准备一些很小的一个小杯子，在里面倒入一点点，让顾客进行免费的品尝。",
+        "t0_ms": 20110,
+        "t1_ms": 28110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "如果顾客觉得嗯。",
+        "t0_ms": 28620,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 6310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6680,
+        "t1_ms": 10120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11240,
+        "t1_ms": 18990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20110,
+        "t1_ms": 28110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28620,
+        "t1_ms": 30010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.125999450683594,
+      "encode_ms": 7336.755859375,
+      "decode_ms": 10799.7744140625
+    }
+  },
+  "rawDecoded": "[0.01][S01]在四十到四十五天，而酸奶的这个保质期呢，它是相较于短的，二十来天吧。[6.31][6.68][S01]所以对于酸奶的话，我们可以采用这样的就是。[10.12][11.24][S01]买一赠一或者是买二赠一的，对于这些零售的一些酸奶，可以采取这样的一个销售吧。[18.99][20.11][S01]然后呢，我们也可以准备一些很小的一个小杯子，在里面倒入一点点，让顾客进行免费的品尝。[28.11][28.62][S01]如果顾客觉得嗯。[30.01]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

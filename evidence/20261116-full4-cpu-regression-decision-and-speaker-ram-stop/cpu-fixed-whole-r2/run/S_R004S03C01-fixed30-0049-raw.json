@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0049",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 23520000,
+    "sourceEndFrame": 24000000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "9ebee48c6758ec19d70e1e186db6255f03f986b7ab12cac21f8fc254a31cb9dd",
+  "seconds": 19.309317699997337,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "然后还有那个洗发，呃，护发的，然后洗发水啊，我们也可以进行一个那个现场体验的活动，让顾客现场感受一下。 这个洗发水，这个看到洗洗发水的一个效果。 嗯，就是从那个增加体验方面，然后增加试用啊，体验这个方面儿，来呃，增加一个销售。 然后呢，我们可以。 然后再可以就是说那个，通过一些那个。",
+    "raw_text": "[1.01][S01]然后还有那个洗发，呃，护发的，然后洗发水啊，我们也可以进行一个那个现场体验的活动，让顾客现场感受一下。[11.23][11.23][S01]这个洗发水，这个看到洗洗发水的一个效果。[15.41][16.08][S01]嗯，就是从那个增加体验方面，然后增加试用啊，体验这个方面儿，来呃，增加一个销售。[23.61][23.61][S01]然后呢，我们可以。[25.11][26.11][S01]然后再可以就是说那个，通过一些那个。[29.89]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "然后还有那个洗发，呃，护发的，然后洗发水啊，我们也可以进行一个那个现场体验的活动，让顾客现场感受一下。",
+        "t0_ms": 1010,
+        "t1_ms": 11230,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这个洗发水，这个看到洗洗发水的一个效果。",
+        "t0_ms": 11230,
+        "t1_ms": 15410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，就是从那个增加体验方面，然后增加试用啊，体验这个方面儿，来呃，增加一个销售。",
+        "t0_ms": 16080,
+        "t1_ms": 23610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后呢，我们可以。",
+        "t0_ms": 23610,
+        "t1_ms": 25110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后再可以就是说那个，通过一些那个。",
+        "t0_ms": 26110,
+        "t1_ms": 29890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 1010,
+        "t1_ms": 11230,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11230,
+        "t1_ms": 15410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16080,
+        "t1_ms": 23610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23610,
+        "t1_ms": 25110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26110,
+        "t1_ms": 29890,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.258000373840332,
+      "encode_ms": 7789.5419921875,
+      "decode_ms": 11469.7568359375
+    }
+  },
+  "rawDecoded": "[1.01][S01]然后还有那个洗发，呃，护发的，然后洗发水啊，我们也可以进行一个那个现场体验的活动，让顾客现场感受一下。[11.23][11.23][S01]这个洗发水，这个看到洗洗发水的一个效果。[15.41][16.08][S01]嗯，就是从那个增加体验方面，然后增加试用啊，体验这个方面儿，来呃，增加一个销售。[23.61][23.61][S01]然后呢，我们可以。[25.11][26.11][S01]然后再可以就是说那个，通过一些那个。[29.89]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

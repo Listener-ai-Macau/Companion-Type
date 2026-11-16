@@ -1,0 +1,120 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0045",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 21600000,
+    "sourceEndFrame": 22080000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "902bff7a390830e1e8ac3c6750ba400f4c18e81ca4a8cb96e7198a833d05a065",
+  "seconds": 18.420193299993116,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "分卡，呃，然后对应他那个卡号记录，就是比如说他可以，嗯。 呃，持卡就是带着他那个卡来买的话，消费个位数的话可以抹零，买二版以上，呃，消费那个十位数也抹零，就是。 不打折，要是要是打折的话，你以后肯定也还是总是给他打折，嗯，就是抹个零，就是这样的。 是一个不错的促销方式，还能拉动这个客单。",
+    "raw_text": "[0.00][S01]分卡，呃，然后对应他那个卡号记录，就是比如说他可以，嗯。[6.32][6.32][S01]呃，持卡就是带着他那个卡来买的话，消费个位数的话可以抹零，买二版以上，呃，消费那个十位数也抹零，就是。[16.14][16.14][S01]不打折，要是要是打折的话，你以后肯定也还是总是给他打折，嗯，就是抹个零，就是这样的。[24.82][24.82][S01]是一个不错的促销方式，还能拉动这个客单。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "分卡，呃，然后对应他那个卡号记录，就是比如说他可以，嗯。",
+        "t0_ms": 0,
+        "t1_ms": 6320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，持卡就是带着他那个卡来买的话，消费个位数的话可以抹零，买二版以上，呃，消费那个十位数也抹零，就是。",
+        "t0_ms": 6320,
+        "t1_ms": 16140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "不打折，要是要是打折的话，你以后肯定也还是总是给他打折，嗯，就是抹个零，就是这样的。",
+        "t0_ms": 16140,
+        "t1_ms": 24820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "是一个不错的促销方式，还能拉动这个客单。",
+        "t0_ms": 24820,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 6320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6320,
+        "t1_ms": 16140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16140,
+        "t1_ms": 24820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24820,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 15.508999824523926,
+      "encode_ms": 7352.4951171875,
+      "decode_ms": 11014.65625
+    }
+  },
+  "rawDecoded": "[0.00][S01]分卡，呃，然后对应他那个卡号记录，就是比如说他可以，嗯。[6.32][6.32][S01]呃，持卡就是带着他那个卡来买的话，消费个位数的话可以抹零，买二版以上，呃，消费那个十位数也抹零，就是。[16.14][16.14][S01]不打折，要是要是打折的话，你以后肯定也还是总是给他打折，嗯，就是抹个零，就是这样的。[24.82][24.82][S01]是一个不错的促销方式，还能拉动这个客单。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

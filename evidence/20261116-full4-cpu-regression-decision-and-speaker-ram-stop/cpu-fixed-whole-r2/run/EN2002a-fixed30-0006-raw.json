@@ -1,0 +1,318 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0006",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 2880000,
+    "sourceEndFrame": 3360000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "60da2d140eea211c7de36ac5f96f43560d3955b0b050b06d7d2dbad580401907",
+  "seconds": 28.312967500001832,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "That's a good point. I dunno. Maybe else. So otherwise we just have a right click or do Yeah, yeah, but um I dunno about you, but uh usually in Windows right click doesn't do anything, does it? It opens a menu, yeah, so yeah. But It's a window. A menu, yeah, yeah, yeah, that's something that we've done, yeah. I said we might be a bit bit weird for it to just start bringing up stuff, wouldn't it? So, but that'd be yeah, if you just yeah. Mm. Yeah, to just have sort of the same sort of idiom throughout, kinda, sort of. Yeah. Yeah. Mm. Um or just, you know, or just the button. Yeah. I guess a button button makes a bit",
+    "raw_text": "[0.00][S01]That's a good point. I dunno. Maybe else.[3.54][2.98][S02]So otherwise we just have a right click or do[4.82][5.12][S01]Yeah, yeah, but um I dunno about you, but uh usually in Windows right click doesn't do anything, does it? It opens a menu, yeah, so yeah.[14.52][6.68][S02]But[7.00][10.02][S02]It's a window.[10.64][12.28][S02]A menu, yeah, yeah, yeah, that's something that we've done, yeah. I said we might be a bit bit weird for it to just start bringing up stuff, wouldn't it?[17.86][14.98][S01]So, but that'd be yeah, if you just yeah.[17.88][16.58][S03]Mm.[16.92][17.98][S03]Yeah, to just have sort of the same sort of idiom throughout, kinda, sort of.[22.72][22.08][S01]Yeah.[22.46][23.20][S02]Yeah.[23.58][23.88][S03]Mm.[24.24][24.62][S01]Um or just, you know, or just the button.[26.54][27.56][S03]Yeah.[27.80][27.76][S04]I guess a button button makes a bit[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "That's a good point. I dunno. Maybe else.",
+        "t0_ms": 0,
+        "t1_ms": 3540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "So otherwise we just have a right click or do",
+        "t0_ms": 2980,
+        "t1_ms": 4820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, yeah, but um I dunno about you, but uh usually in Windows right click doesn't do anything, does it? It opens a menu, yeah, so yeah.",
+        "t0_ms": 5120,
+        "t1_ms": 14520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "But",
+        "t0_ms": 6680,
+        "t1_ms": 7000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "It's a window.",
+        "t0_ms": 10020,
+        "t1_ms": 10640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "A menu, yeah, yeah, yeah, that's something that we've done, yeah. I said we might be a bit bit weird for it to just start bringing up stuff, wouldn't it?",
+        "t0_ms": 12280,
+        "t1_ms": 17860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "So, but that'd be yeah, if you just yeah.",
+        "t0_ms": 14980,
+        "t1_ms": 17880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 16580,
+        "t1_ms": 16920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, to just have sort of the same sort of idiom throughout, kinda, sort of.",
+        "t0_ms": 17980,
+        "t1_ms": 22720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 22080,
+        "t1_ms": 22460,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 23200,
+        "t1_ms": 23580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 23880,
+        "t1_ms": 24240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Um or just, you know, or just the button.",
+        "t0_ms": 24620,
+        "t1_ms": 26540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 27560,
+        "t1_ms": 27800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I guess a button button makes a bit",
+        "t0_ms": 27760,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 3540,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2980,
+        "t1_ms": 4820,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5120,
+        "t1_ms": 14520,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6680,
+        "t1_ms": 7000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10020,
+        "t1_ms": 10640,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12280,
+        "t1_ms": 17860,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14980,
+        "t1_ms": 17880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16580,
+        "t1_ms": 16920,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17980,
+        "t1_ms": 22720,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22080,
+        "t1_ms": 22460,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23200,
+        "t1_ms": 23580,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23880,
+        "t1_ms": 24240,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24620,
+        "t1_ms": 26540,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27560,
+        "t1_ms": 27800,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27760,
+        "t1_ms": 29940,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.878999710083008,
+      "encode_ms": 7139.39208984375,
+      "decode_ms": 21127.076171875
+    }
+  },
+  "rawDecoded": "[0.00][S01]That's a good point. I dunno. Maybe else.[3.54][2.98][S02]So otherwise we just have a right click or do[4.82][5.12][S01]Yeah, yeah, but um I dunno about you, but uh usually in Windows right click doesn't do anything, does it? It opens a menu, yeah, so yeah.[14.52][6.68][S02]But[7.00][10.02][S02]It's a window.[10.64][12.28][S02]A menu, yeah, yeah, yeah, that's something that we've done, yeah. I said we might be a bit bit weird for it to just start bringing up stuff, wouldn't it?[17.86][14.98][S01]So, but that'd be yeah, if you just yeah.[17.88][16.58][S03]Mm.[16.92][17.98][S03]Yeah, to just have sort of the same sort of idiom throughout, kinda, sort of.[22.72][22.08][S01]Yeah.[22.46][23.20][S02]Yeah.[23.58][23.88][S03]Mm.[24.24][24.62][S01]Um or just, you know, or just the button.[26.54][27.56][S03]Yeah.[27.80][27.76][S04]I guess a button button makes a bit[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

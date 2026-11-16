@@ -1,0 +1,282 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0069",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 33120000,
+    "sourceEndFrame": 33600000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "6aad0bf37abb81016a6c20b6b2d3b2edab2957c3b39e9789dfdfe78dfa98dde8",
+  "seconds": 23.449838499996986,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Mm. The same things as in the comments, if I could read it. Mm. Read that. Come on, come on, come on, right. Um. Do you really want multiple windows from a single app? From a single app, you get. But most will probably want to go with defaults. Yeah, well, that was the same. Yeah. Exactly. Yeah, I think you comment said basically the same as what you said. Yeah, exactly, just the other",
+    "raw_text": "[0.28][S01]Mm.[0.44][0.63][S02]The same things as in the comments, if I could read it.[4.87][8.16][S03]Mm.[8.34][8.20][S02]Read that.[8.72][9.21][S04]Come on, come on, come on, right. Um.[11.87][14.28][S04]Do you really want multiple windows from a single app?[17.21][18.88][S02]From a single app, you get.[20.22][19.59][S04]But most will probably want to go with defaults.[22.47][24.37][S02]Yeah, well, that was the same.[26.45][24.67][S04]Yeah.[24.89][25.74][S03]Exactly.[26.05][26.44][S03]Yeah, I think you comment said basically the same as what you said.[28.71][28.72][S04]Yeah, exactly, just the other[29.96]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Mm.",
+        "t0_ms": 280,
+        "t1_ms": 440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "The same things as in the comments, if I could read it.",
+        "t0_ms": 630,
+        "t1_ms": 4870,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 8160,
+        "t1_ms": 8340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Read that.",
+        "t0_ms": 8200,
+        "t1_ms": 8720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Come on, come on, come on, right. Um.",
+        "t0_ms": 9210,
+        "t1_ms": 11870,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Do you really want multiple windows from a single app?",
+        "t0_ms": 14280,
+        "t1_ms": 17210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "From a single app, you get.",
+        "t0_ms": 18880,
+        "t1_ms": 20220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "But most will probably want to go with defaults.",
+        "t0_ms": 19590,
+        "t1_ms": 22470,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah, well, that was the same.",
+        "t0_ms": 24370,
+        "t1_ms": 26450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 24670,
+        "t1_ms": 24890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Exactly.",
+        "t0_ms": 25740,
+        "t1_ms": 26050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, I think you comment said basically the same as what you said.",
+        "t0_ms": 26440,
+        "t1_ms": 28710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, exactly, just the other",
+        "t0_ms": 28720,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 280,
+        "t1_ms": 440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 630,
+        "t1_ms": 4870,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8160,
+        "t1_ms": 8340,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8200,
+        "t1_ms": 8720,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9210,
+        "t1_ms": 11870,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14280,
+        "t1_ms": 17210,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18880,
+        "t1_ms": 20220,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19590,
+        "t1_ms": 22470,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24370,
+        "t1_ms": 26450,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24670,
+        "t1_ms": 24890,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25740,
+        "t1_ms": 26050,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26440,
+        "t1_ms": 28710,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28720,
+        "t1_ms": 29960,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.20400047302246,
+      "encode_ms": 7163.27197265625,
+      "decode_ms": 16225.49609375
+    }
+  },
+  "rawDecoded": "[0.28][S01]Mm.[0.44][0.63][S02]The same things as in the comments, if I could read it.[4.87][8.16][S03]Mm.[8.34][8.20][S02]Read that.[8.72][9.21][S04]Come on, come on, come on, right. Um.[11.87][14.28][S04]Do you really want multiple windows from a single app?[17.21][18.88][S02]From a single app, you get.[20.22][19.59][S04]But most will probably want to go with defaults.[22.47][24.37][S02]Yeah, well, that was the same.[26.45][24.67][S04]Yeah.[24.89][25.74][S03]Exactly.[26.05][26.44][S03]Yeah, I think you comment said basically the same as what you said.[28.71][28.72][S04]Yeah, exactly, just the other[29.96]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

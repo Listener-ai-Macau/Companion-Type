@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0059",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 28320000,
+    "sourceEndFrame": 28800000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "055ba8a0fbe26503ac1d95ab0d94ca38999dc97bb2bda29610fdd6394e9e6c22",
+  "seconds": 20.00354619999416,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "信息方面肯定是安全的。 还有还有就是咱们的APP的问题，不是要搞网上呃代码吗？ 嗯，这个的话我们战略这儿嗯也也在研发，然后根据呃手机号儿的诚信，因为手机号儿的年限，运用年限，然后因为手机它一人一个手机号儿，它都有它的真实的身份。 嗯。 嗯。 对是。 所以说我们的APP要嗯。",
+    "raw_text": "[0.01][S01]信息方面肯定是安全的。[1.79][2.98][S02]还有还有就是咱们的APP的问题，不是要搞网上呃代码吗？[10.11][10.88][S03]嗯，这个的话我们战略这儿嗯也也在研发，然后根据呃手机号儿的诚信，因为手机号儿的年限，运用年限，然后因为手机它一人一个手机号儿，它都有它的真实的身份。[26.44][14.38][S02]嗯。[14.81][21.14][S02]嗯。[21.55][26.65][S02]对是。[27.41][27.08][S03]所以说我们的APP要嗯。[29.88]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "信息方面肯定是安全的。",
+        "t0_ms": 10,
+        "t1_ms": 1790,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有还有就是咱们的APP的问题，不是要搞网上呃代码吗？",
+        "t0_ms": 2980,
+        "t1_ms": 10110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，这个的话我们战略这儿嗯也也在研发，然后根据呃手机号儿的诚信，因为手机号儿的年限，运用年限，然后因为手机它一人一个手机号儿，它都有它的真实的身份。",
+        "t0_ms": 10880,
+        "t1_ms": 26440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 14380,
+        "t1_ms": 14810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 21140,
+        "t1_ms": 21550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对是。",
+        "t0_ms": 26650,
+        "t1_ms": 27410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "所以说我们的APP要嗯。",
+        "t0_ms": 27080,
+        "t1_ms": 29880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 1790,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2980,
+        "t1_ms": 10110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10880,
+        "t1_ms": 26440,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14380,
+        "t1_ms": 14810,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21140,
+        "t1_ms": 21550,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26650,
+        "t1_ms": 27410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27080,
+        "t1_ms": 29880,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.60300064086914,
+      "encode_ms": 7125.31298828125,
+      "decode_ms": 12821.5654296875
+    }
+  },
+  "rawDecoded": "[0.01][S01]信息方面肯定是安全的。[1.79][2.98][S02]还有还有就是咱们的APP的问题，不是要搞网上呃代码吗？[10.11][10.88][S03]嗯，这个的话我们战略这儿嗯也也在研发，然后根据呃手机号儿的诚信，因为手机号儿的年限，运用年限，然后因为手机它一人一个手机号儿，它都有它的真实的身份。[26.44][14.38][S02]嗯。[14.81][21.14][S02]嗯。[21.55][26.65][S02]对是。[27.41][27.08][S03]所以说我们的APP要嗯。[29.88]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

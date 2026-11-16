@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-16T10:28:30.042123+08:00",
+  "composerSha256": "67dee92709a98a2ebfe71f633c61a52736bfc4af8d62cedc574f2133705f4bfc",
+  "summaryScorerSha256": "9872b9524d5c2b6de79648e6abfa523b5252dc0126d9e301db3101549875c290",
+  "predictedBindingsSha256": "43287a3d3f92044647fcfae1aab75da0686170ad1a0060a22b463088ce53c95d",
+  "wholeScoringManifestSha256": "234ea8b756701993e17674fabb0cf12e69e22649ca9aa905f694a160b08863d2",
+  "helperSha256": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_exclusive_journal_20261114.py": "bc76d736d3f02cf8971af816f73cb0069c4b2e88f977420b1d28a15687177356",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_sequential_speakers_20261115.py": "10d04788694d97fa01c610aa9b9e6806e0b13ba66cd6439f143e4b34ce025f8e",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_joint_whole_meetings_20261115.py": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_sequential_meetings_20261115.py": "d27ad4d4253029d8f64e3a9e5ef1b3d0ef281471237ed9218160701ef6d1ea89"
+  },
+  "primaryJournal": "Unchanged full-source Nemotron exclusive attribution view; preserve raw source separately.",
+  "secondaryDiagnostic": "Native MOSS intervals after prediction-only identity linking. Keep as diagnostic, not replace original primary journal or gates.",
+  "wordsPreserved": "All raw lexical units must survive composition in exact order; unknown/residual words forced unknown. Out-of-original-bounds native times remain invalid and cannot pass time acceptance.",
+  "speakerScoring": "Primary person text scored using one original whole-source activity identity; also retain the original scorer one-whole-source text permutation for comparable historical gate reporting. No per-window gold remapping.",
+  "preparationCorrection": {
+    "reason": "Historical DER used six-decimal RTTM, while native JSON retains unrounded binary cadence. Reproduce original score from exact RTTM verified through its frozen producer rttmSha256; keep native exclusive output and all original gates unchanged. Before score execution, not a result-driven tolerance change.",
+    "previousBinding": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\composition-source-binding-before-rttm-fidelity.json",
+    "previousSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\before-rttm-fidelity-summary-source.py"
+  }
+}

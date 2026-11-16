@@ -1,0 +1,210 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0066",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 31680000,
+    "sourceEndFrame": 32160000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "ac277c7945ae9f46483184555d0b539b9975b4d2c64fad224356881a65b2c77e",
+  "seconds": 20.103826399994432,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Speaking in L. D. four, okay then, um. Like. Transmitter. Probably transmitter. Transmitter. Trum let me think about that. Um if we do end up trying to make this a telephone manufacturer, then the um then the transmitter could actually be built into the telephone. Of course we're getting the external power source, yeah, that's quite true. Mm-hmm. Um and something that we can can easily be adopted at the last minute as well, it's a",
+    "raw_text": "[0.81][S01]Speaking in L. D. four, okay then, um.[3.25][0.82][S02]Like.[1.41][3.41][S03]Transmitter.[4.01][3.98][S02]Probably transmitter.[4.85][5.01][S01]Transmitter.[5.85][6.35][S02]Trum let me think about that. Um if we do end up trying to make this a telephone manufacturer, then the um then the transmitter could actually be built into the telephone.[18.35][19.56][S01]Of course we're getting the external power source, yeah, that's quite true.[22.35][24.00][S04]Mm-hmm.[24.31][24.30][S01]Um and something that we can can easily be adopted at the last minute as well, it's a[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Speaking in L. D. four, okay then, um.",
+        "t0_ms": 810,
+        "t1_ms": 3250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Like.",
+        "t0_ms": 820,
+        "t1_ms": 1410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Transmitter.",
+        "t0_ms": 3410,
+        "t1_ms": 4010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Probably transmitter.",
+        "t0_ms": 3980,
+        "t1_ms": 4850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Transmitter.",
+        "t0_ms": 5010,
+        "t1_ms": 5850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Trum let me think about that. Um if we do end up trying to make this a telephone manufacturer, then the um then the transmitter could actually be built into the telephone.",
+        "t0_ms": 6350,
+        "t1_ms": 18350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Of course we're getting the external power source, yeah, that's quite true.",
+        "t0_ms": 19560,
+        "t1_ms": 22350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 24000,
+        "t1_ms": 24310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Um and something that we can can easily be adopted at the last minute as well, it's a",
+        "t0_ms": 24300,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 810,
+        "t1_ms": 3250,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 820,
+        "t1_ms": 1410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3410,
+        "t1_ms": 4010,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3980,
+        "t1_ms": 4850,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5010,
+        "t1_ms": 5850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6350,
+        "t1_ms": 18350,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19560,
+        "t1_ms": 22350,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24000,
+        "t1_ms": 24310,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24300,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 17.145000457763672,
+      "encode_ms": 7111.033203125,
+      "decode_ms": 12941.3134765625
+    }
+  },
+  "rawDecoded": "[0.81][S01]Speaking in L. D. four, okay then, um.[3.25][0.82][S02]Like.[1.41][3.41][S03]Transmitter.[4.01][3.98][S02]Probably transmitter.[4.85][5.01][S01]Transmitter.[5.85][6.35][S02]Trum let me think about that. Um if we do end up trying to make this a telephone manufacturer, then the um then the transmitter could actually be built into the telephone.[18.35][19.56][S01]Of course we're getting the external power source, yeah, that's quite true.[22.35][24.00][S04]Mm-hmm.[24.31][24.30][S01]Um and something that we can can easily be adopted at the last minute as well, it's a[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

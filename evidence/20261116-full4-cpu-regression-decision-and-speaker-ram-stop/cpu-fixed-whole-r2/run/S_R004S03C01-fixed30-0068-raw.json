@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0068",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 32640000,
+    "sourceEndFrame": 33120000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "1f6d3aa3d29aa64f3f262e8dbea0f057d3e025585eb1adc00ebea599452113c7",
+  "seconds": 16.584497299998475,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "要这个维持，新一点啊，咱也要一些创新，呃，把咱这个新的项目这个方案，咱进行规划一下，看看。 有没有这个，把这个销售再提一提，还有就是，呃，你们各个。 各个人啊，都是可以之间可以互相的。 呃。 合作。",
+    "raw_text": "[0.01][S01]要这个维持，新一点啊，咱也要一些创新，呃，把咱这个新的项目这个方案，咱进行规划一下，看看。[11.35][12.72][S01]有没有这个，把这个销售再提一提，还有就是，呃，你们各个。[19.31][21.73][S01]各个人啊，都是可以之间可以互相的。[25.45][26.49][S01]呃。[27.25][28.84][S01]合作。[29.55]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "要这个维持，新一点啊，咱也要一些创新，呃，把咱这个新的项目这个方案，咱进行规划一下，看看。",
+        "t0_ms": 10,
+        "t1_ms": 11350,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "有没有这个，把这个销售再提一提，还有就是，呃，你们各个。",
+        "t0_ms": 12720,
+        "t1_ms": 19310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "各个人啊，都是可以之间可以互相的。",
+        "t0_ms": 21730,
+        "t1_ms": 25450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃。",
+        "t0_ms": 26490,
+        "t1_ms": 27250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "合作。",
+        "t0_ms": 28840,
+        "t1_ms": 29550,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 11350,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12720,
+        "t1_ms": 19310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21730,
+        "t1_ms": 25450,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26490,
+        "t1_ms": 27250,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28840,
+        "t1_ms": 29550,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 26.976999282836914,
+      "encode_ms": 7026.39794921875,
+      "decode_ms": 9495.1923828125
+    }
+  },
+  "rawDecoded": "[0.01][S01]要这个维持，新一点啊，咱也要一些创新，呃，把咱这个新的项目这个方案，咱进行规划一下，看看。[11.35][12.72][S01]有没有这个，把这个销售再提一提，还有就是，呃，你们各个。[19.31][21.73][S01]各个人啊，都是可以之间可以互相的。[25.45][26.49][S01]呃。[27.25][28.84][S01]合作。[29.55]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

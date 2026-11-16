@@ -1,0 +1,444 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0066",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 31680000,
+    "sourceEndFrame": 32160000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "3bed32172c17b4bd095c195a34a974f5fe5fba779413108778e2ded25e2f4c85",
+  "seconds": 33.32605329999933,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Late. Hopefully it's not that man, so it won't matter. Actually it's not even confirmed yet. What? Oh. She doesn't even know what she's talking about yet. Maybe it doesn't happen at all. Sounds Yeah. Sounds like me. It's reading week next week, it should be, it should be reading. Wonderful. Is it really? Are you? Well, it's supposed to be. Next week, for the weekend. Next week, it's week six next week. Oh. Really? Oh. I don't think we have a reading week though. I don't know, we have one class at least when we like speech perception, we don't have any like show.",
+    "raw_text": "[0.00][S01]Late.[0.26][1.80][S02]Hopefully it's not that man, so it won't matter.[3.50][6.22][S03]Actually it's not even confirmed yet.[7.82][8.60][S04]What?[8.94][9.00][S01]Oh.[9.28][9.52][S03]She doesn't even know what she's talking about yet.[11.10][12.80][S03]Maybe it doesn't happen at all.[14.04][12.86][S01]Sounds[13.12][14.74][S04]Yeah.[15.12][15.10][S01]Sounds like me.[15.78][15.54][S04]It's reading week next week, it should be, it should be reading.[18.14][16.38][S01]Wonderful.[16.74][17.58][S03]Is it really?[18.18][18.38][S01]Are you?[18.66][19.10][S04]Well, it's supposed to be.[20.22][19.14][S01]Next week, for the weekend.[20.40][21.20][S04]Next week, it's week six next week.[23.06][21.32][S01]Oh.[21.56][22.32][S03]Really?[22.84][23.82][S01]Oh.[24.12][24.10][S03]I don't think we have a reading week though.[25.54][25.52][S04]I don't know, we have one class at least when we like speech perception, we don't have any like show.[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Late.",
+        "t0_ms": 0,
+        "t1_ms": 260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Hopefully it's not that man, so it won't matter.",
+        "t0_ms": 1800,
+        "t1_ms": 3500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Actually it's not even confirmed yet.",
+        "t0_ms": 6220,
+        "t1_ms": 7820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "What?",
+        "t0_ms": 8600,
+        "t1_ms": 8940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Oh.",
+        "t0_ms": 9000,
+        "t1_ms": 9280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "She doesn't even know what she's talking about yet.",
+        "t0_ms": 9520,
+        "t1_ms": 11100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Maybe it doesn't happen at all.",
+        "t0_ms": 12800,
+        "t1_ms": 14040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Sounds",
+        "t0_ms": 12860,
+        "t1_ms": 13120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 14740,
+        "t1_ms": 15120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Sounds like me.",
+        "t0_ms": 15100,
+        "t1_ms": 15780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "It's reading week next week, it should be, it should be reading.",
+        "t0_ms": 15540,
+        "t1_ms": 18140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Wonderful.",
+        "t0_ms": 16380,
+        "t1_ms": 16740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Is it really?",
+        "t0_ms": 17580,
+        "t1_ms": 18180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Are you?",
+        "t0_ms": 18380,
+        "t1_ms": 18660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Well, it's supposed to be.",
+        "t0_ms": 19100,
+        "t1_ms": 20220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Next week, for the weekend.",
+        "t0_ms": 19140,
+        "t1_ms": 20400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Next week, it's week six next week.",
+        "t0_ms": 21200,
+        "t1_ms": 23060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Oh.",
+        "t0_ms": 21320,
+        "t1_ms": 21560,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Really?",
+        "t0_ms": 22320,
+        "t1_ms": 22840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Oh.",
+        "t0_ms": 23820,
+        "t1_ms": 24120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I don't think we have a reading week though.",
+        "t0_ms": 24100,
+        "t1_ms": 25540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I don't know, we have one class at least when we like speech perception, we don't have any like show.",
+        "t0_ms": 25520,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 260,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1800,
+        "t1_ms": 3500,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6220,
+        "t1_ms": 7820,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8600,
+        "t1_ms": 8940,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9000,
+        "t1_ms": 9280,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9520,
+        "t1_ms": 11100,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12800,
+        "t1_ms": 14040,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12860,
+        "t1_ms": 13120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14740,
+        "t1_ms": 15120,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15100,
+        "t1_ms": 15780,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15540,
+        "t1_ms": 18140,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16380,
+        "t1_ms": 16740,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17580,
+        "t1_ms": 18180,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18380,
+        "t1_ms": 18660,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19100,
+        "t1_ms": 20220,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19140,
+        "t1_ms": 20400,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21200,
+        "t1_ms": 23060,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21320,
+        "t1_ms": 21560,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22320,
+        "t1_ms": 22840,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23820,
+        "t1_ms": 24120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24100,
+        "t1_ms": 25540,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25520,
+        "t1_ms": 30000,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 19.243000030517578,
+      "encode_ms": 7648.37890625,
+      "decode_ms": 25621.373046875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Late.[0.26][1.80][S02]Hopefully it's not that man, so it won't matter.[3.50][6.22][S03]Actually it's not even confirmed yet.[7.82][8.60][S04]What?[8.94][9.00][S01]Oh.[9.28][9.52][S03]She doesn't even know what she's talking about yet.[11.10][12.80][S03]Maybe it doesn't happen at all.[14.04][12.86][S01]Sounds[13.12][14.74][S04]Yeah.[15.12][15.10][S01]Sounds like me.[15.78][15.54][S04]It's reading week next week, it should be, it should be reading.[18.14][16.38][S01]Wonderful.[16.74][17.58][S03]Is it really?[18.18][18.38][S01]Are you?[18.66][19.10][S04]Well, it's supposed to be.[20.22][19.14][S01]Next week, for the weekend.[20.40][21.20][S04]Next week, it's week six next week.[23.06][21.32][S01]Oh.[21.56][22.32][S03]Really?[22.84][23.82][S01]Oh.[24.12][24.10][S03]I don't think we have a reading week though.[25.54][25.52][S04]I don't know, we have one class at least when we like speech perception, we don't have any like show.[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

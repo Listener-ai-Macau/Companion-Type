@@ -1,0 +1,66 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0077",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 36960000,
+    "sourceEndFrame": 37233904,
+    "frames": 273904,
+    "audioSeconds": 17.119
+  },
+  "pcmSha256": "6d1d938f1d2947be824118045a6034ffe66ec1c6b58f819bc3f11fa10855efc0",
+  "seconds": 9.246311999995669,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Morning.",
+    "raw_text": "[6.45][S01] Morning.[6.95]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Morning.",
+        "t0_ms": 6450,
+        "t1_ms": 6950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 6450,
+        "t1_ms": 6950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 27.89299964904785,
+      "encode_ms": 6813.85009765625,
+      "decode_ms": 2371.5048828125
+    }
+  },
+  "rawDecoded": "[6.45][S01] Morning.[6.95]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

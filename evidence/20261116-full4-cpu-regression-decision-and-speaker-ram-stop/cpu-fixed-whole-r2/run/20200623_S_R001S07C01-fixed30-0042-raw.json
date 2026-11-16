@@ -1,0 +1,264 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0042",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 20160000,
+    "sourceEndFrame": 20640000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "1f1081be88a50ef0186d3c466e76772068df81fa0fb3550fc6348ad1742f6886",
+  "seconds": 23.712350800000422,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "十万以下也不是不能做，也能做，但是就是说因为我们只要是一单就要做的话，我们就要考虑它的回报率。 其中。 嗯。 嗯。 五万以下的话，或者十万以下的话，那个就是回报率太低了，就说我们尽可能的就是说做的话。 回报率太低了。 嗯。 虽然它风险很低。 虽然它风险很低，但就是说我们的利润也很低。 嗯。 对。 就是说我们呃前期可能做。",
+    "raw_text": "[0.03][S01]十万以下也不是不能做，也能做，但是就是说因为我们只要是一单就要做的话，我们就要考虑它的回报率。[9.67][0.04][S02]其中。[0.74][7.04][S02]嗯。[7.48][9.68][S02]嗯。[10.14][12.52][S01]五万以下的话，或者十万以下的话，那个就是回报率太低了，就说我们尽可能的就是说做的话。[20.81][16.06][S02]回报率太低了。[17.12][17.78][S02]嗯。[18.22][20.64][S02]虽然它风险很低。[21.92][22.16][S01]虽然它风险很低，但就是说我们的利润也很低。[24.75][24.88][S02]嗯。[25.38][25.18][S03]对。[25.62][25.55][S01]就是说我们呃前期可能做。[29.79]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "十万以下也不是不能做，也能做，但是就是说因为我们只要是一单就要做的话，我们就要考虑它的回报率。",
+        "t0_ms": 30,
+        "t1_ms": 9670,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "其中。",
+        "t0_ms": 40,
+        "t1_ms": 740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 7040,
+        "t1_ms": 7480,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 9680,
+        "t1_ms": 10140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "五万以下的话，或者十万以下的话，那个就是回报率太低了，就说我们尽可能的就是说做的话。",
+        "t0_ms": 12520,
+        "t1_ms": 20810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "回报率太低了。",
+        "t0_ms": 16060,
+        "t1_ms": 17120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 17780,
+        "t1_ms": 18220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "虽然它风险很低。",
+        "t0_ms": 20640,
+        "t1_ms": 21920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "虽然它风险很低，但就是说我们的利润也很低。",
+        "t0_ms": 22160,
+        "t1_ms": 24750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 24880,
+        "t1_ms": 25380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对。",
+        "t0_ms": 25180,
+        "t1_ms": 25620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "就是说我们呃前期可能做。",
+        "t0_ms": 25550,
+        "t1_ms": 29790,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 30,
+        "t1_ms": 9670,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 40,
+        "t1_ms": 740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7040,
+        "t1_ms": 7480,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9680,
+        "t1_ms": 10140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12520,
+        "t1_ms": 20810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16060,
+        "t1_ms": 17120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17780,
+        "t1_ms": 18220,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20640,
+        "t1_ms": 21920,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22160,
+        "t1_ms": 24750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24880,
+        "t1_ms": 25380,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25180,
+        "t1_ms": 25620,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25550,
+        "t1_ms": 29790,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.097999572753906,
+      "encode_ms": 7407.46923828125,
+      "decode_ms": 16248.7578125
+    }
+  },
+  "rawDecoded": "[0.03][S01]十万以下也不是不能做，也能做，但是就是说因为我们只要是一单就要做的话，我们就要考虑它的回报率。[9.67][0.04][S02]其中。[0.74][7.04][S02]嗯。[7.48][9.68][S02]嗯。[10.14][12.52][S01]五万以下的话，或者十万以下的话，那个就是回报率太低了，就说我们尽可能的就是说做的话。[20.81][16.06][S02]回报率太低了。[17.12][17.78][S02]嗯。[18.22][20.64][S02]虽然它风险很低。[21.92][22.16][S01]虽然它风险很低，但就是说我们的利润也很低。[24.75][24.88][S02]嗯。[25.38][25.18][S03]对。[25.62][25.55][S01]就是说我们呃前期可能做。[29.79]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

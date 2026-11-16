@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0029",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 13920000,
+    "sourceEndFrame": 14400000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "775cbbd31436904593d081f0391009784de0a96a9ed435837e77dda0a1d1dcc1",
+  "seconds": 21.103912200000195,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "You think it's helpful for the I think that's kinda what he meant as well, isn't it really, seeing it seeing it sort of start to do stuff rather than just be Yeah. Oh, I see, mm. Mm-hmm, a prototype of the GUI. Yeah, well, if I guess, I mean, that was probably our intention, but we might not have written it down, so I guess, mm. Mm. Actually, is the code accessible, like the the GUI stuff that you've done, like can we just like copy like the latest stuff out of your directory or something?",
+    "raw_text": "[0.00][S01]You think it's helpful for the[1.00][0.92][S02]I think that's kinda what he meant as well, isn't it really, seeing it seeing it sort of start to do stuff rather than just be[6.10][2.76][S01]Yeah.[3.10][6.28][S01]Oh, I see, mm.[7.50][7.64][S02]Mm-hmm, a prototype of the GUI.[9.12][9.28][S01]Yeah, well, if I guess, I mean, that was probably our intention, but we might not have written it down, so I guess, mm.[18.68][20.82][S01]Mm.[21.14][21.92][S03]Actually, is the code accessible, like the the GUI stuff that you've done, like can we just like copy like the latest stuff out of your directory or something?[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "You think it's helpful for the",
+        "t0_ms": 0,
+        "t1_ms": 1000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I think that's kinda what he meant as well, isn't it really, seeing it seeing it sort of start to do stuff rather than just be",
+        "t0_ms": 920,
+        "t1_ms": 6100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 2760,
+        "t1_ms": 3100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh, I see, mm.",
+        "t0_ms": 6280,
+        "t1_ms": 7500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm, a prototype of the GUI.",
+        "t0_ms": 7640,
+        "t1_ms": 9120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, well, if I guess, I mean, that was probably our intention, but we might not have written it down, so I guess, mm.",
+        "t0_ms": 9280,
+        "t1_ms": 18680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 20820,
+        "t1_ms": 21140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Actually, is the code accessible, like the the GUI stuff that you've done, like can we just like copy like the latest stuff out of your directory or something?",
+        "t0_ms": 21920,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 1000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 920,
+        "t1_ms": 6100,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2760,
+        "t1_ms": 3100,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6280,
+        "t1_ms": 7500,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7640,
+        "t1_ms": 9120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9280,
+        "t1_ms": 18680,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20820,
+        "t1_ms": 21140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21920,
+        "t1_ms": 30000,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.630999565124512,
+      "encode_ms": 7249.7861328125,
+      "decode_ms": 13799.0673828125
+    }
+  },
+  "rawDecoded": "[0.00][S01]You think it's helpful for the[1.00][0.92][S02]I think that's kinda what he meant as well, isn't it really, seeing it seeing it sort of start to do stuff rather than just be[6.10][2.76][S01]Yeah.[3.10][6.28][S01]Oh, I see, mm.[7.50][7.64][S02]Mm-hmm, a prototype of the GUI.[9.12][9.28][S01]Yeah, well, if I guess, I mean, that was probably our intention, but we might not have written it down, so I guess, mm.[18.68][20.82][S01]Mm.[21.14][21.92][S03]Actually, is the code accessible, like the the GUI stuff that you've done, like can we just like copy like the latest stuff out of your directory or something?[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0073",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 35040000,
+    "sourceEndFrame": 35520000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "d115c3b60c8e2dde7f4c07f965b894fa9a6d1bede4b92ac37989718e61fdea44",
+  "seconds": 18.403592800001206,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "安全也要提升一下，呃，你看像一些老人，有些小孩儿，尤其这个临时去的，呃，小孩儿比较多，呃，让他们，呃，尽量的呃跟在大人后边儿。 我家还有的小孩儿就是，他那小推车儿，呃，到你们那哪个区域啦，他有的客户儿啊不用啦，直接就放那儿啦。 这样的话影响就是咱那个，呃，通道的通行，你们哪个区域负责人啊，及时把这个他们遗留那儿的小推。",
+    "raw_text": "[0.02][S01]安全也要提升一下，呃，你看像一些老人，有些小孩儿，尤其这个临时去的，呃，小孩儿比较多，呃，让他们，呃，尽量的呃跟在大人后边儿。[12.92][13.12][S01]我家还有的小孩儿就是，他那小推车儿，呃，到你们那哪个区域啦，他有的客户儿啊不用啦，直接就放那儿啦。[20.94][21.58][S01]这样的话影响就是咱那个，呃，通道的通行，你们哪个区域负责人啊，及时把这个他们遗留那儿的小推。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "安全也要提升一下，呃，你看像一些老人，有些小孩儿，尤其这个临时去的，呃，小孩儿比较多，呃，让他们，呃，尽量的呃跟在大人后边儿。",
+        "t0_ms": 20,
+        "t1_ms": 12920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "我家还有的小孩儿就是，他那小推车儿，呃，到你们那哪个区域啦，他有的客户儿啊不用啦，直接就放那儿啦。",
+        "t0_ms": 13120,
+        "t1_ms": 20940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "这样的话影响就是咱那个，呃，通道的通行，你们哪个区域负责人啊，及时把这个他们遗留那儿的小推。",
+        "t0_ms": 21580,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 20,
+        "t1_ms": 12920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13120,
+        "t1_ms": 20940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21580,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.217000007629395,
+      "encode_ms": 8167.9921875,
+      "decode_ms": 10187.59375
+    }
+  },
+  "rawDecoded": "[0.02][S01]安全也要提升一下，呃，你看像一些老人，有些小孩儿，尤其这个临时去的，呃，小孩儿比较多，呃，让他们，呃，尽量的呃跟在大人后边儿。[12.92][13.12][S01]我家还有的小孩儿就是，他那小推车儿，呃，到你们那哪个区域啦，他有的客户儿啊不用啦，直接就放那儿啦。[20.94][21.58][S01]这样的话影响就是咱那个，呃，通道的通行，你们哪个区域负责人啊，及时把这个他们遗留那儿的小推。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

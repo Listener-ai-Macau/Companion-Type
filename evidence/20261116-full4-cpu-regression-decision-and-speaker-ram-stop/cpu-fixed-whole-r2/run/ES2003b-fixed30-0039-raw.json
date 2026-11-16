@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0039",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 18720000,
+    "sourceEndFrame": 19200000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "be5b202cf711c6ca954d1aeece5c26b879068157c09af43ca57e18bb35e73d07",
+  "seconds": 21.015527499999735,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Or volume levels and right for channels. Mm. We do. Do you think that people get mixed up, like, they be looking at this screen and that screen and then, you know, trying to get everything working would be a bit confusing. Um, I think probably for the first couple of hours of using it. Yeah. Um, but yeah, muscle memory's a wonderful thing. Um, and I thi I mean I think that size of uh display is about to have in mind. Um",
+    "raw_text": "[0.00][S01]Or volume levels and right for channels.[2.04][3.22][S02]Mm.[3.44][3.38][S03]We do.[3.74][3.46][S04]Do you think that people get mixed up, like, they be looking at this screen and that screen and then, you know, trying to get everything working would be a bit confusing.[12.76][13.06][S01]Um, I think probably for the first couple of hours of using it.[17.70][17.96][S04]Yeah.[18.22][18.48][S01]Um, but yeah, muscle memory's a wonderful thing. Um, and I thi I mean I think that size of uh display is about to have in mind. Um[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Or volume levels and right for channels.",
+        "t0_ms": 0,
+        "t1_ms": 2040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 3220,
+        "t1_ms": 3440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "We do.",
+        "t0_ms": 3380,
+        "t1_ms": 3740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Do you think that people get mixed up, like, they be looking at this screen and that screen and then, you know, trying to get everything working would be a bit confusing.",
+        "t0_ms": 3460,
+        "t1_ms": 12760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Um, I think probably for the first couple of hours of using it.",
+        "t0_ms": 13060,
+        "t1_ms": 17700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 17960,
+        "t1_ms": 18220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Um, but yeah, muscle memory's a wonderful thing. Um, and I thi I mean I think that size of uh display is about to have in mind. Um",
+        "t0_ms": 18480,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3220,
+        "t1_ms": 3440,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3380,
+        "t1_ms": 3740,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3460,
+        "t1_ms": 12760,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13060,
+        "t1_ms": 17700,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17960,
+        "t1_ms": 18220,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18480,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.375,
+      "encode_ms": 7526.287109375,
+      "decode_ms": 13403.48046875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Or volume levels and right for channels.[2.04][3.22][S02]Mm.[3.44][3.38][S03]We do.[3.74][3.46][S04]Do you think that people get mixed up, like, they be looking at this screen and that screen and then, you know, trying to get everything working would be a bit confusing.[12.76][13.06][S01]Um, I think probably for the first couple of hours of using it.[17.70][17.96][S04]Yeah.[18.22][18.48][S01]Um, but yeah, muscle memory's a wonderful thing. Um, and I thi I mean I think that size of uh display is about to have in mind. Um[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

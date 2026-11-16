@@ -1,0 +1,210 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0004",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 1920000,
+    "sourceEndFrame": 2400000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "b9fd21d6da6f1fcc07c4278598428365a4aab39fb69150d9e23758c0d60216c0",
+  "seconds": 24.38353890000144,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "职工都可以在我们这这里，呃。 嗯，有一些想要创业的一些大学生，因为他们没有钱。 对。 对对对，我们在我们这里贷款，然后呃用资金，然后进行他们的二次创业，呃所以。 对，咱们这个要比银行这方面，省的手续要。 我们要比银行手续多，然后我们的利率要比他低，这样的话我们。 嗯，对。 省了他银行跑贷嘛，很麻烦。 对对对，他们，呃所以说呢，呃都不，呃很多客户。",
+    "raw_text": "[0.01][S01]职工都可以在我们这这里，呃。[3.01][2.34][S02]嗯，有一些想要创业的一些大学生，因为他们没有钱。[6.15][4.28][S01]对。[4.71][6.04][S01]对对对，我们在我们这里贷款，然后呃用资金，然后进行他们的二次创业，呃所以。[13.61][12.48][S02]对，咱们这个要比银行这方面，省的手续要。[16.95][16.96][S01]我们要比银行手续多，然后我们的利率要比他低，这样的话我们。[22.75][21.14][S02]嗯，对。[21.71][22.88][S02]省了他银行跑贷嘛，很麻烦。[25.75][25.06][S01]对对对，他们，呃所以说呢，呃都不，呃很多客户。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "职工都可以在我们这这里，呃。",
+        "t0_ms": 10,
+        "t1_ms": 3010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，有一些想要创业的一些大学生，因为他们没有钱。",
+        "t0_ms": 2340,
+        "t1_ms": 6150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对。",
+        "t0_ms": 4280,
+        "t1_ms": 4710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对对对，我们在我们这里贷款，然后呃用资金，然后进行他们的二次创业，呃所以。",
+        "t0_ms": 6040,
+        "t1_ms": 13610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对，咱们这个要比银行这方面，省的手续要。",
+        "t0_ms": 12480,
+        "t1_ms": 16950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "我们要比银行手续多，然后我们的利率要比他低，这样的话我们。",
+        "t0_ms": 16960,
+        "t1_ms": 22750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，对。",
+        "t0_ms": 21140,
+        "t1_ms": 21710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "省了他银行跑贷嘛，很麻烦。",
+        "t0_ms": 22880,
+        "t1_ms": 25750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对对对，他们，呃所以说呢，呃都不，呃很多客户。",
+        "t0_ms": 25060,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 3010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2340,
+        "t1_ms": 6150,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4280,
+        "t1_ms": 4710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6040,
+        "t1_ms": 13610,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12480,
+        "t1_ms": 16950,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16960,
+        "t1_ms": 22750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21140,
+        "t1_ms": 21710,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22880,
+        "t1_ms": 25750,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25060,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 26.82900047302246,
+      "encode_ms": 8263.7841796875,
+      "decode_ms": 16058.064453125
+    }
+  },
+  "rawDecoded": "[0.01][S01]职工都可以在我们这这里，呃。[3.01][2.34][S02]嗯，有一些想要创业的一些大学生，因为他们没有钱。[6.15][4.28][S01]对。[4.71][6.04][S01]对对对，我们在我们这里贷款，然后呃用资金，然后进行他们的二次创业，呃所以。[13.61][12.48][S02]对，咱们这个要比银行这方面，省的手续要。[16.95][16.96][S01]我们要比银行手续多，然后我们的利率要比他低，这样的话我们。[22.75][21.14][S02]嗯，对。[21.71][22.88][S02]省了他银行跑贷嘛，很麻烦。[25.75][25.06][S01]对对对，他们，呃所以说呢，呃都不，呃很多客户。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0005",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 2400000,
+    "sourceEndFrame": 2880000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "48c694055372dd5eda3ddb2ffb086227e550cff7c329e6df2a4af6d698889cd6",
+  "seconds": 22.661643799998274,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "来超市买一些生活的上的。 嗯必备品，包括日常的一些，呃。 呃蔬菜啦，呃油啦。 面啦。 呃他们的需求量跟。 比较要要少一些。 呃，明显是周六周日人员比较多，呃，都是带一些这个，呃，都是带着孩子啦。 或者一一家三口儿啦。 呃，来超市。 呃，买一些这个小孩子的用品。 呃，小孩子的一些。",
+    "raw_text": "[0.21][S01]来超市买一些生活的上的。[2.71][3.31][S01]嗯必备品，包括日常的一些，呃。[6.91][7.31][S01]呃蔬菜啦，呃油啦。[9.81][10.25][S01]面啦。[11.01][11.45][S01]呃他们的需求量跟。[13.15][13.55][S01]比较要要少一些。[14.77][15.12][S01]呃，明显是周六周日人员比较多，呃，都是带一些这个，呃，都是带着孩子啦。[21.95][22.25][S01]或者一一家三口儿啦。[23.85][24.11][S01]呃，来超市。[25.49][25.81][S01]呃，买一些这个小孩子的用品。[28.11][28.45][S01]呃，小孩子的一些。[29.99]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "来超市买一些生活的上的。",
+        "t0_ms": 210,
+        "t1_ms": 2710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯必备品，包括日常的一些，呃。",
+        "t0_ms": 3310,
+        "t1_ms": 6910,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃蔬菜啦，呃油啦。",
+        "t0_ms": 7310,
+        "t1_ms": 9810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "面啦。",
+        "t0_ms": 10250,
+        "t1_ms": 11010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃他们的需求量跟。",
+        "t0_ms": 11450,
+        "t1_ms": 13150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "比较要要少一些。",
+        "t0_ms": 13550,
+        "t1_ms": 14770,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，明显是周六周日人员比较多，呃，都是带一些这个，呃，都是带着孩子啦。",
+        "t0_ms": 15120,
+        "t1_ms": 21950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "或者一一家三口儿啦。",
+        "t0_ms": 22250,
+        "t1_ms": 23850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，来超市。",
+        "t0_ms": 24110,
+        "t1_ms": 25490,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，买一些这个小孩子的用品。",
+        "t0_ms": 25810,
+        "t1_ms": 28110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，小孩子的一些。",
+        "t0_ms": 28450,
+        "t1_ms": 29990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 210,
+        "t1_ms": 2710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3310,
+        "t1_ms": 6910,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7310,
+        "t1_ms": 9810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10250,
+        "t1_ms": 11010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11450,
+        "t1_ms": 13150,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13550,
+        "t1_ms": 14770,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15120,
+        "t1_ms": 21950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22250,
+        "t1_ms": 23850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24110,
+        "t1_ms": 25490,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25810,
+        "t1_ms": 28110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28450,
+        "t1_ms": 29990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 26.322999954223633,
+      "encode_ms": 6690.67578125,
+      "decode_ms": 15908.8291015625
+    }
+  },
+  "rawDecoded": "[0.21][S01]来超市买一些生活的上的。[2.71][3.31][S01]嗯必备品，包括日常的一些，呃。[6.91][7.31][S01]呃蔬菜啦，呃油啦。[9.81][10.25][S01]面啦。[11.01][11.45][S01]呃他们的需求量跟。[13.15][13.55][S01]比较要要少一些。[14.77][15.12][S01]呃，明显是周六周日人员比较多，呃，都是带一些这个，呃，都是带着孩子啦。[21.95][22.25][S01]或者一一家三口儿啦。[23.85][24.11][S01]呃，来超市。[25.49][25.81][S01]呃，买一些这个小孩子的用品。[28.11][28.45][S01]呃，小孩子的一些。[29.99]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

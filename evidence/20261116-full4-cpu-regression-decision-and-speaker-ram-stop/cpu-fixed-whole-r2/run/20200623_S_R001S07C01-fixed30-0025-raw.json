@@ -1,0 +1,210 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0025",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 12000000,
+    "sourceEndFrame": 12480000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "cd444c8f141facc2109d7ceed7a6cd9546e1445fb965cbd6f3d4c68504ca93d5",
+  "seconds": 21.330260700000508,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "会给会给他一个计划书，叫他选择一下。 两年不行三年，对吧，叫他自己选择。 嗯。 如果他再还不了，那就对不起了，那就只能我们上登记，然后走法律。 嗯。 嗯。 行。 呃，还有就是业务这这边儿，业务下个月咱们有什么比较大的客户吗？ 下个月呃有，下个月有好几个。",
+    "raw_text": "[0.81][S01]会给会给他一个计划书，叫他选择一下。[3.85][4.75][S01]两年不行三年，对吧，叫他自己选择。[8.01][6.12][S02]嗯。[6.54][8.88][S01]如果他再还不了，那就对不起了，那就只能我们上登记，然后走法律。[14.95][15.14][S02]嗯。[15.62][16.14][S03]嗯。[16.68][17.44][S03]行。[17.94][18.62][S03]呃，还有就是业务这这边儿，业务下个月咱们有什么比较大的客户吗？[24.68][25.41][S04]下个月呃有，下个月有好几个。[29.97]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "会给会给他一个计划书，叫他选择一下。",
+        "t0_ms": 810,
+        "t1_ms": 3850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "两年不行三年，对吧，叫他自己选择。",
+        "t0_ms": 4750,
+        "t1_ms": 8010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 6120,
+        "t1_ms": 6540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "如果他再还不了，那就对不起了，那就只能我们上登记，然后走法律。",
+        "t0_ms": 8880,
+        "t1_ms": 14950,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 15140,
+        "t1_ms": 15620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 16140,
+        "t1_ms": 16680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "行。",
+        "t0_ms": 17440,
+        "t1_ms": 17940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "呃，还有就是业务这这边儿，业务下个月咱们有什么比较大的客户吗？",
+        "t0_ms": 18620,
+        "t1_ms": 24680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "下个月呃有，下个月有好几个。",
+        "t0_ms": 25410,
+        "t1_ms": 29970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 810,
+        "t1_ms": 3850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4750,
+        "t1_ms": 8010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6120,
+        "t1_ms": 6540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8880,
+        "t1_ms": 14950,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15140,
+        "t1_ms": 15620,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16140,
+        "t1_ms": 16680,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17440,
+        "t1_ms": 17940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18620,
+        "t1_ms": 24680,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25410,
+        "t1_ms": 29970,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 24.334999084472656,
+      "encode_ms": 7371.15478515625,
+      "decode_ms": 13899.1748046875
+    }
+  },
+  "rawDecoded": "[0.81][S01]会给会给他一个计划书，叫他选择一下。[3.85][4.75][S01]两年不行三年，对吧，叫他自己选择。[8.01][6.12][S02]嗯。[6.54][8.88][S01]如果他再还不了，那就对不起了，那就只能我们上登记，然后走法律。[14.95][15.14][S02]嗯。[15.62][16.14][S03]嗯。[16.68][17.44][S03]行。[17.94][18.62][S03]呃，还有就是业务这这边儿，业务下个月咱们有什么比较大的客户吗？[24.68][25.41][S04]下个月呃有，下个月有好几个。[29.97]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

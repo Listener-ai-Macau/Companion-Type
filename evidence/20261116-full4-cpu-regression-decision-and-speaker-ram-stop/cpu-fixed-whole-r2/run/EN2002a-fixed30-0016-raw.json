@@ -1,0 +1,372 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0016",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 7680000,
+    "sourceEndFrame": 8160000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "e72769610a7e86919f388c1962b69c3c617c4710f65ef396d5df40946bf034f3",
+  "seconds": 31.48354449999897,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "What's the most common use double click? New phone. Yeah, exactly. Yeah. Yeah. Uh okay. Like I don't show the speaker characters, it's from first ones or just do. Yeah. Yeah, but then then there's a problem with a lot of windows popping up again, and they pop up without you even being quite sure what it is, you know what I mean? Mm. Yeah. But if you do double click on something, don't you expect something to happen, then yeah, maybe sort of uh. Yeah. Hmm. It's not touching it, right, it's the way you go, I'll go away, it's not coming up. Yeah, I I'll then they close it, yeah. Yeah. Yeah.",
+    "raw_text": "[0.00][S01]What's the most common use double click?[2.86][0.00][S02]New phone.[0.40][1.08][S02]Yeah, exactly.[1.68][1.64][S03]Yeah.[1.90][2.48][S02]Yeah.[2.74][3.38][S01]Uh okay.[4.00][3.68][S03]Like I don't show the speaker characters, it's from first ones or just do.[7.74][6.06][S02]Yeah.[6.38][6.32][S04]Yeah, but then then there's a problem with a lot of windows popping up again, and they pop up without you even being quite sure what it is, you know what I mean?[13.84][11.56][S02]Mm.[11.94][14.70][S02]Yeah.[15.72][16.22][S03]But if you do double click on something, don't you expect something to happen, then yeah, maybe sort of uh.[24.58][16.86][S02]Yeah.[17.14][21.72][S02]Hmm.[21.98][24.54][S01]It's not touching it, right, it's the way you go, I'll go away, it's not coming up.[27.94][26.78][S02]Yeah, I I'll then they close it, yeah.[28.86][29.54][S03]Yeah.[29.88][29.68][S02]Yeah.[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "What's the most common use double click?",
+        "t0_ms": 0,
+        "t1_ms": 2860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "New phone.",
+        "t0_ms": 0,
+        "t1_ms": 400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, exactly.",
+        "t0_ms": 1080,
+        "t1_ms": 1680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 1640,
+        "t1_ms": 1900,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 2480,
+        "t1_ms": 2740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Uh okay.",
+        "t0_ms": 3380,
+        "t1_ms": 4000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Like I don't show the speaker characters, it's from first ones or just do.",
+        "t0_ms": 3680,
+        "t1_ms": 7740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 6060,
+        "t1_ms": 6380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, but then then there's a problem with a lot of windows popping up again, and they pop up without you even being quite sure what it is, you know what I mean?",
+        "t0_ms": 6320,
+        "t1_ms": 13840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 11560,
+        "t1_ms": 11940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 14700,
+        "t1_ms": 15720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "But if you do double click on something, don't you expect something to happen, then yeah, maybe sort of uh.",
+        "t0_ms": 16220,
+        "t1_ms": 24580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 16860,
+        "t1_ms": 17140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 21720,
+        "t1_ms": 21980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "It's not touching it, right, it's the way you go, I'll go away, it's not coming up.",
+        "t0_ms": 24540,
+        "t1_ms": 27940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, I I'll then they close it, yeah.",
+        "t0_ms": 26780,
+        "t1_ms": 28860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 29540,
+        "t1_ms": 29880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 29680,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2860,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 0,
+        "t1_ms": 400,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1080,
+        "t1_ms": 1680,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1640,
+        "t1_ms": 1900,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2480,
+        "t1_ms": 2740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3380,
+        "t1_ms": 4000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3680,
+        "t1_ms": 7740,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6060,
+        "t1_ms": 6380,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6320,
+        "t1_ms": 13840,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11560,
+        "t1_ms": 11940,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14700,
+        "t1_ms": 15720,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16220,
+        "t1_ms": 24580,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16860,
+        "t1_ms": 17140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21720,
+        "t1_ms": 21980,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24540,
+        "t1_ms": 27940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26780,
+        "t1_ms": 28860,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29540,
+        "t1_ms": 29880,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29680,
+        "t1_ms": 29940,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.074000358581543,
+      "encode_ms": 7173.6982421875,
+      "decode_ms": 24259.96875
+    }
+  },
+  "rawDecoded": "[0.00][S01]What's the most common use double click?[2.86][0.00][S02]New phone.[0.40][1.08][S02]Yeah, exactly.[1.68][1.64][S03]Yeah.[1.90][2.48][S02]Yeah.[2.74][3.38][S01]Uh okay.[4.00][3.68][S03]Like I don't show the speaker characters, it's from first ones or just do.[7.74][6.06][S02]Yeah.[6.38][6.32][S04]Yeah, but then then there's a problem with a lot of windows popping up again, and they pop up without you even being quite sure what it is, you know what I mean?[13.84][11.56][S02]Mm.[11.94][14.70][S02]Yeah.[15.72][16.22][S03]But if you do double click on something, don't you expect something to happen, then yeah, maybe sort of uh.[24.58][16.86][S02]Yeah.[17.14][21.72][S02]Hmm.[21.98][24.54][S01]It's not touching it, right, it's the way you go, I'll go away, it's not coming up.[27.94][26.78][S02]Yeah, I I'll then they close it, yeah.[28.86][29.54][S03]Yeah.[29.88][29.68][S02]Yeah.[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

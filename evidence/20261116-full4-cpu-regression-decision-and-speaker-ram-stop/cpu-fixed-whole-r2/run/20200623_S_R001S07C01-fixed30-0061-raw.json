@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0061",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 29280000,
+    "sourceEndFrame": 29760000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "ff7e0b4b70bf8475671d3d6f28968f9b77dd74da92e837667fe6360135aa31e9",
+  "seconds": 17.621574299999338,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "而且我们放贷，因为程序和这个都很把关的情况下，我们的放贷是很快的，呃，最满不超过三天就可以放贷。 因为咱们这个业务流程要比这个银行快很多。 对，我们就是为了体现的就是额度小，放款快。 然后力度低，这就是我们比银行的优优秀的地方，也就是我们客户选择我们的最大的好处。 嗯。 对。",
+    "raw_text": "[0.02][S01]而且我们放贷，因为程序和这个都很把关的情况下，我们的放贷是很快的，呃，最满不超过三天就可以放贷。[9.84][9.92][S02]因为咱们这个业务流程要比这个银行快很多。[13.32][12.96][S01]对，我们就是为了体现的就是额度小，放款快。[18.32][18.84][S01]然后力度低，这就是我们比银行的优优秀的地方，也就是我们客户选择我们的最大的好处。[28.82][24.68][S02]嗯。[25.22][28.88][S02]对。[29.32]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "而且我们放贷，因为程序和这个都很把关的情况下，我们的放贷是很快的，呃，最满不超过三天就可以放贷。",
+        "t0_ms": 20,
+        "t1_ms": 9840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "因为咱们这个业务流程要比这个银行快很多。",
+        "t0_ms": 9920,
+        "t1_ms": 13320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对，我们就是为了体现的就是额度小，放款快。",
+        "t0_ms": 12960,
+        "t1_ms": 18320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后力度低，这就是我们比银行的优优秀的地方，也就是我们客户选择我们的最大的好处。",
+        "t0_ms": 18840,
+        "t1_ms": 28820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 24680,
+        "t1_ms": 25220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对。",
+        "t0_ms": 28880,
+        "t1_ms": 29320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 20,
+        "t1_ms": 9840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9920,
+        "t1_ms": 13320,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12960,
+        "t1_ms": 18320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18840,
+        "t1_ms": 28820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24680,
+        "t1_ms": 25220,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28880,
+        "t1_ms": 29320,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 16.82699966430664,
+      "encode_ms": 6827.1298828125,
+      "decode_ms": 10742.697265625
+    }
+  },
+  "rawDecoded": "[0.02][S01]而且我们放贷，因为程序和这个都很把关的情况下，我们的放贷是很快的，呃，最满不超过三天就可以放贷。[9.84][9.92][S02]因为咱们这个业务流程要比这个银行快很多。[13.32][12.96][S01]对，我们就是为了体现的就是额度小，放款快。[18.32][18.84][S01]然后力度低，这就是我们比银行的优优秀的地方，也就是我们客户选择我们的最大的好处。[28.82][24.68][S02]嗯。[25.22][28.88][S02]对。[29.32]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

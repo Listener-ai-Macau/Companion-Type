@@ -1,0 +1,1135 @@
+{
+  "at": "2026-11-16T11:58:00.596644+08:00",
+  "state": "FULL4_FIXED_CPU_COMPOSITION_SCORED_NOT_PRODUCT_QUALIFIED",
+  "meetings": [
+    {
+      "meeting": "ES2003b",
+      "language": "English",
+      "audioSeconds": 2109.813375,
+      "chunks": 71,
+      "allOriginalInputFramesCoveredExactlyOnce": true,
+      "allChunksNaturalEos": true,
+      "incompleteOutputChunks": [],
+      "invalidNativeTimeSegments": [
+        {
+          "chunk": "ES2003b-fixed30-0067",
+          "row": 7,
+          "start": 27.74,
+          "end": 30.01
+        },
+        {
+          "chunk": "ES2003b-fixed30-0070",
+          "row": 1,
+          "start": 9.62,
+          "end": 9.82
+        }
+      ],
+      "rawText": {
+        "referenceUnits": 5781,
+        "hypothesisUnits": 5691,
+        "errors": 1103,
+        "errorRate": 0.1907974398892925,
+        "counts": {
+          "replace": 531,
+          "delete": 331,
+          "insert": 241
+        }
+      },
+      "baselineRawText": {
+        "referenceUnits": 5781,
+        "hypothesisUnits": 4969,
+        "errors": 1384,
+        "errorRate": 0.23940494724096179,
+        "counts": {
+          "replace": 426,
+          "delete": 885,
+          "insert": 73
+        }
+      },
+      "rawEditsReduced": 281,
+      "personTextOneWholeMeetingPermutation": {
+        "referenceUnits": 5781,
+        "errors": 1141,
+        "errorRate": 0.19737069711122643,
+        "unknownUnitsForcedUnmatched": 50,
+        "perPerson": [
+          {
+            "referenceSpeaker": "A",
+            "anonymousSpeaker": "S02",
+            "referenceUnits": 1419,
+            "hypothesisUnits": 1335,
+            "errors": 348,
+            "errorRate": 0.2452431289640592,
+            "counts": {
+              "replace": 162,
+              "delete": 135,
+              "insert": 51
+            }
+          },
+          {
+            "referenceSpeaker": "B",
+            "anonymousSpeaker": "S01",
+            "referenceUnits": 2289,
+            "hypothesisUnits": 2215,
+            "errors": 312,
+            "errorRate": 0.1363040629095675,
+            "counts": {
+              "replace": 150,
+              "delete": 118,
+              "insert": 44
+            }
+          },
+          {
+            "referenceSpeaker": "C",
+            "anonymousSpeaker": "S00",
+            "referenceUnits": 1543,
+            "hypothesisUnits": 1599,
+            "errors": 279,
+            "errorRate": 0.18081659105638367,
+            "counts": {
+              "replace": 119,
+              "delete": 52,
+              "insert": 108
+            }
+          },
+          {
+            "referenceSpeaker": "D",
+            "anonymousSpeaker": "S03",
+            "referenceUnits": 530,
+            "hypothesisUnits": 492,
+            "errors": 152,
+            "errorRate": 0.28679245283018867,
+            "counts": {
+              "replace": 82,
+              "delete": 54,
+              "insert": 16
+            }
+          }
+        ],
+        "mappingForScoringOnly": true,
+        "oneWholeMeetingPermutation": true
+      },
+      "baselinePersonErrorRate": 0.38713025428126624,
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 1141,
+        "referenceUnits": 5781,
+        "errorRate": 0.19737069711122643,
+        "unknownUnitsForcedUnmatched": 50,
+        "perPerson": [
+          {
+            "speaker": "A",
+            "referenceUnits": 1419,
+            "hypothesisUnits": 1335,
+            "errors": 348,
+            "errorRate": 0.2452431289640592,
+            "counts": {
+              "replace": 162,
+              "delete": 135,
+              "insert": 51
+            }
+          },
+          {
+            "speaker": "B",
+            "referenceUnits": 2289,
+            "hypothesisUnits": 2215,
+            "errors": 312,
+            "errorRate": 0.1363040629095675,
+            "counts": {
+              "replace": 150,
+              "delete": 118,
+              "insert": 44
+            }
+          },
+          {
+            "speaker": "C",
+            "referenceUnits": 1543,
+            "hypothesisUnits": 1599,
+            "errors": 279,
+            "errorRate": 0.18081659105638367,
+            "counts": {
+              "replace": 119,
+              "delete": 52,
+              "insert": 108
+            }
+          },
+          {
+            "speaker": "D",
+            "referenceUnits": 530,
+            "hypothesisUnits": 492,
+            "errors": 152,
+            "errorRate": 0.28679245283018867,
+            "counts": {
+              "replace": 82,
+              "delete": 54,
+              "insert": 16
+            }
+          }
+        ],
+        "mappingScope": "One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment."
+      },
+      "originalNemotronRawDERReproduced": {
+        "referenceSpeakerSeconds": 1958.649999999878,
+        "missSeconds": 488.3916319999852,
+        "falseAlarmSeconds": 13.661632000108053,
+        "confusionSeconds": 7.55031000000346,
+        "errorSeconds": 509.60357400009667,
+        "DER": 0.260181029790993,
+        "identityForScoringOnly": {
+          "speaker_0": "C",
+          "speaker_1": "B",
+          "speaker_2": "A",
+          "speaker_3": "D"
+        }
+      },
+      "primaryRawJournalDER": {
+        "referenceSpeakerSeconds": 1958.649999999878,
+        "missSeconds": 488.3916319999852,
+        "falseAlarmSeconds": 13.661632000108053,
+        "confusionSeconds": 7.55031000000346,
+        "errorSeconds": 509.60357400009667,
+        "DER": 0.260181029790993,
+        "identityForScoringOnly": {
+          "speaker_0": "C",
+          "speaker_1": "B",
+          "speaker_2": "A",
+          "speaker_3": "D"
+        }
+      },
+      "exclusiveAttributionDERDiagnostic": {
+        "referenceSpeakerSeconds": 1958.649999999878,
+        "missSeconds": 515.7913068470916,
+        "falseAlarmSeconds": 6.931274441881853,
+        "confusionSeconds": 7.550390663078506,
+        "errorSeconds": 530.272971952052,
+        "DER": 0.2707339095561152,
+        "identityForScoringOnly": {
+          "speaker_0": "C",
+          "speaker_1": "B",
+          "speaker_2": "A",
+          "speaker_3": "D"
+        }
+      },
+      "secondaryMossNativeTimeDER": {
+        "referenceSpeakerSeconds": 1958.649999999878,
+        "missSeconds": 164.23999999999592,
+        "falseAlarmSeconds": 52.100000000120346,
+        "confusionSeconds": 26.52000000000196,
+        "errorSeconds": 242.86000000011825,
+        "DER": 0.12399356699774507,
+        "identityForScoringOnly": {
+          "S00": "C",
+          "S01": "B",
+          "S02": "A",
+          "S03": "D"
+        }
+      },
+      "activityReferenceToLexicalReferenceAliasesForScoringOnly": {},
+      "baselineDER": 0.26018102941320864,
+      "cpuAsrInferenceSeconds": 1312.8183298000222,
+      "asrRealTimeFactor": 0.6222438180343899,
+      "rawGatePass": false,
+      "fixedPersonGatePass": false,
+      "primaryDERGatePass": false,
+      "nativeTimeGatePass": false,
+      "factsGateMeasured": false,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "language": "Chinese",
+      "audioSeconds": 2327.119,
+      "chunks": 78,
+      "allOriginalInputFramesCoveredExactlyOnce": true,
+      "allChunksNaturalEos": true,
+      "incompleteOutputChunks": [],
+      "invalidNativeTimeSegments": [
+        {
+          "chunk": "S_R004S03C01-fixed30-0001",
+          "row": 4,
+          "start": 20.95,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0003",
+          "row": 3,
+          "start": 26.81,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0014",
+          "row": 2,
+          "start": 18.89,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0017",
+          "row": 3,
+          "start": 27.61,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0019",
+          "row": 3,
+          "start": 26.94,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0050",
+          "row": 4,
+          "start": 24.01,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0065",
+          "row": 4,
+          "start": 28.62,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0072",
+          "row": 4,
+          "start": 24.66,
+          "end": 30.01
+        }
+      ],
+      "rawText": {
+        "referenceUnits": 8325,
+        "hypothesisUnits": 8591,
+        "errors": 755,
+        "errorRate": 0.09069069069069069,
+        "counts": {
+          "replace": 271,
+          "delete": 109,
+          "insert": 375
+        }
+      },
+      "baselineRawText": {
+        "referenceUnits": 8325,
+        "hypothesisUnits": 8205,
+        "errors": 461,
+        "errorRate": 0.055375375375375374,
+        "counts": {
+          "replace": 225,
+          "delete": 178,
+          "insert": 58
+        }
+      },
+      "rawEditsReduced": -294,
+      "personTextOneWholeMeetingPermutation": {
+        "referenceUnits": 8325,
+        "errors": 1104,
+        "errorRate": 0.13261261261261262,
+        "unknownUnitsForcedUnmatched": 467,
+        "perPerson": [
+          {
+            "referenceSpeaker": "001-M",
+            "anonymousSpeaker": "S00",
+            "referenceUnits": 1983,
+            "hypothesisUnits": 1914,
+            "errors": 257,
+            "errorRate": 0.129601613716591,
+            "counts": {
+              "replace": 116,
+              "delete": 105,
+              "insert": 36
+            }
+          },
+          {
+            "referenceSpeaker": "002-F",
+            "anonymousSpeaker": "S01",
+            "referenceUnits": 650,
+            "hypothesisUnits": 643,
+            "errors": 27,
+            "errorRate": 0.04153846153846154,
+            "counts": {
+              "replace": 18,
+              "delete": 8,
+              "insert": 1
+            }
+          },
+          {
+            "referenceSpeaker": "003-F",
+            "anonymousSpeaker": "S04",
+            "referenceUnits": 1681,
+            "hypothesisUnits": 1678,
+            "errors": 72,
+            "errorRate": 0.04283164782867341,
+            "counts": {
+              "replace": 35,
+              "delete": 20,
+              "insert": 17
+            }
+          },
+          {
+            "referenceSpeaker": "004-F",
+            "anonymousSpeaker": "S02",
+            "referenceUnits": 2402,
+            "hypothesisUnits": 2320,
+            "errors": 141,
+            "errorRate": 0.05870108243130724,
+            "counts": {
+              "replace": 33,
+              "delete": 95,
+              "insert": 13
+            }
+          },
+          {
+            "referenceSpeaker": "005-F",
+            "anonymousSpeaker": "S03",
+            "referenceUnits": 1609,
+            "hypothesisUnits": 1569,
+            "errors": 140,
+            "errorRate": 0.0870105655686762,
+            "counts": {
+              "replace": 62,
+              "delete": 59,
+              "insert": 19
+            }
+          }
+        ],
+        "mappingForScoringOnly": true,
+        "oneWholeMeetingPermutation": true
+      },
+      "baselinePersonErrorRate": 0.058018018018018015,
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 1104,
+        "referenceUnits": 8325,
+        "errorRate": 0.13261261261261262,
+        "unknownUnitsForcedUnmatched": 467,
+        "perPerson": [
+          {
+            "speaker": "001-M",
+            "referenceUnits": 1983,
+            "hypothesisUnits": 1914,
+            "errors": 257,
+            "errorRate": 0.129601613716591,
+            "counts": {
+              "replace": 116,
+              "delete": 105,
+              "insert": 36
+            }
+          },
+          {
+            "speaker": "002-F",
+            "referenceUnits": 650,
+            "hypothesisUnits": 643,
+            "errors": 27,
+            "errorRate": 0.04153846153846154,
+            "counts": {
+              "replace": 18,
+              "delete": 8,
+              "insert": 1
+            }
+          },
+          {
+            "speaker": "003-F",
+            "referenceUnits": 1681,
+            "hypothesisUnits": 1678,
+            "errors": 72,
+            "errorRate": 0.04283164782867341,
+            "counts": {
+              "replace": 35,
+              "delete": 20,
+              "insert": 17
+            }
+          },
+          {
+            "speaker": "004-F",
+            "referenceUnits": 2402,
+            "hypothesisUnits": 2320,
+            "errors": 141,
+            "errorRate": 0.05870108243130724,
+            "counts": {
+              "replace": 33,
+              "delete": 95,
+              "insert": 13
+            }
+          },
+          {
+            "speaker": "005-F",
+            "referenceUnits": 1609,
+            "hypothesisUnits": 1569,
+            "errors": 140,
+            "errorRate": 0.0870105655686762,
+            "counts": {
+              "replace": 62,
+              "delete": 59,
+              "insert": 19
+            }
+          }
+        ],
+        "mappingScope": "One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment."
+      },
+      "originalNemotronRawDERReproduced": {
+        "referenceSpeakerSeconds": 2074.389489999999,
+        "missSeconds": 65.91499699999912,
+        "falseAlarmSeconds": 12.695487000001684,
+        "confusionSeconds": 1.3699999999999992,
+        "errorSeconds": 79.98048400000081,
+        "DER": 0.038556155623407466,
+        "identityForScoringOnly": {
+          "speaker_0": "001-M",
+          "speaker_1": "002-F",
+          "speaker_2": "004-F",
+          "speaker_3": "005-F",
+          "speaker_4": "003-F"
+        }
+      },
+      "primaryRawJournalDER": {
+        "referenceSpeakerSeconds": 2074.389489999999,
+        "missSeconds": 65.91499699999912,
+        "falseAlarmSeconds": 12.695487000001684,
+        "confusionSeconds": 1.3699999999999992,
+        "errorSeconds": 79.98048400000081,
+        "DER": 0.038556155623407466,
+        "identityForScoringOnly": {
+          "speaker_0": "001-M",
+          "speaker_1": "002-F",
+          "speaker_2": "004-F",
+          "speaker_3": "005-F",
+          "speaker_4": "003-F"
+        }
+      },
+      "exclusiveAttributionDERDiagnostic": {
+        "referenceSpeakerSeconds": 2074.389489999999,
+        "missSeconds": 65.91501852620696,
+        "falseAlarmSeconds": 9.745483415475348,
+        "confusionSeconds": 1.3699999693781137,
+        "errorSeconds": 77.03050191106043,
+        "DER": 0.03713405909661664,
+        "identityForScoringOnly": {
+          "speaker_0": "001-M",
+          "speaker_1": "002-F",
+          "speaker_2": "004-F",
+          "speaker_3": "005-F",
+          "speaker_4": "003-F"
+        }
+      },
+      "secondaryMossNativeTimeDER": {
+        "referenceSpeakerSeconds": 2074.389489999999,
+        "missSeconds": 166.0133499999998,
+        "falseAlarmSeconds": 4.653860000000989,
+        "confusionSeconds": 1.25,
+        "errorSeconds": 171.9172100000008,
+        "DER": 0.08287605140151423,
+        "identityForScoringOnly": {
+          "S00": "001-M",
+          "S01": "002-F",
+          "S02": "004-F",
+          "S03": "005-F",
+          "S04": "003-F"
+        }
+      },
+      "activityReferenceToLexicalReferenceAliasesForScoringOnly": {},
+      "baselineDER": 0.03855615562340746,
+      "cpuAsrInferenceSeconds": 1386.5060023000115,
+      "asrRealTimeFactor": 0.5958036534874286,
+      "rawGatePass": false,
+      "fixedPersonGatePass": false,
+      "primaryDERGatePass": true,
+      "nativeTimeGatePass": false,
+      "factsGateMeasured": false,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "EN2002a",
+      "language": "English",
+      "audioSeconds": 2142.709375,
+      "chunks": 72,
+      "allOriginalInputFramesCoveredExactlyOnce": true,
+      "allChunksNaturalEos": true,
+      "incompleteOutputChunks": [],
+      "invalidNativeTimeSegments": [
+        {
+          "chunk": "EN2002a-fixed30-0071",
+          "row": 5,
+          "start": 11.55,
+          "end": 12.71
+        }
+      ],
+      "rawText": {
+        "referenceUnits": 7632,
+        "hypothesisUnits": 7101,
+        "errors": 2618,
+        "errorRate": 0.34302935010482183,
+        "counts": {
+          "replace": 1205,
+          "delete": 972,
+          "insert": 441
+        }
+      },
+      "baselineRawText": {
+        "referenceUnits": 7632,
+        "hypothesisUnits": 5665,
+        "errors": 2623,
+        "errorRate": 0.3436844863731656,
+        "counts": {
+          "replace": 546,
+          "delete": 2022,
+          "insert": 55
+        }
+      },
+      "rawEditsReduced": 5,
+      "personTextOneWholeMeetingPermutation": {
+        "referenceUnits": 7632,
+        "errors": 2328,
+        "errorRate": 0.3050314465408805,
+        "unknownUnitsForcedUnmatched": 81,
+        "perPerson": [
+          {
+            "referenceSpeaker": "A",
+            "anonymousSpeaker": "S01",
+            "referenceUnits": 1883,
+            "hypothesisUnits": 1688,
+            "errors": 558,
+            "errorRate": 0.2963356346255975,
+            "counts": {
+              "replace": 265,
+              "delete": 244,
+              "insert": 49
+            }
+          },
+          {
+            "referenceSpeaker": "B",
+            "anonymousSpeaker": "S03",
+            "referenceUnits": 1362,
+            "hypothesisUnits": 1089,
+            "errors": 552,
+            "errorRate": 0.4052863436123348,
+            "counts": {
+              "replace": 205,
+              "delete": 310,
+              "insert": 37
+            }
+          },
+          {
+            "referenceSpeaker": "C",
+            "anonymousSpeaker": "S02",
+            "referenceUnits": 2790,
+            "hypothesisUnits": 2797,
+            "errors": 570,
+            "errorRate": 0.20430107526881722,
+            "counts": {
+              "replace": 263,
+              "delete": 150,
+              "insert": 157
+            }
+          },
+          {
+            "referenceSpeaker": "D",
+            "anonymousSpeaker": "S00",
+            "referenceUnits": 1597,
+            "hypothesisUnits": 1446,
+            "errors": 567,
+            "errorRate": 0.35504070131496557,
+            "counts": {
+              "replace": 296,
+              "delete": 211,
+              "insert": 60
+            }
+          }
+        ],
+        "mappingForScoringOnly": true,
+        "oneWholeMeetingPermutation": true
+      },
+      "baselinePersonErrorRate": null,
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 2328,
+        "referenceUnits": 7632,
+        "errorRate": 0.3050314465408805,
+        "unknownUnitsForcedUnmatched": 81,
+        "perPerson": [
+          {
+            "speaker": "A",
+            "referenceUnits": 1883,
+            "hypothesisUnits": 1688,
+            "errors": 558,
+            "errorRate": 0.2963356346255975,
+            "counts": {
+              "replace": 265,
+              "delete": 244,
+              "insert": 49
+            }
+          },
+          {
+            "speaker": "B",
+            "referenceUnits": 1362,
+            "hypothesisUnits": 1089,
+            "errors": 552,
+            "errorRate": 0.4052863436123348,
+            "counts": {
+              "replace": 205,
+              "delete": 310,
+              "insert": 37
+            }
+          },
+          {
+            "speaker": "C",
+            "referenceUnits": 2790,
+            "hypothesisUnits": 2797,
+            "errors": 570,
+            "errorRate": 0.20430107526881722,
+            "counts": {
+              "replace": 263,
+              "delete": 150,
+              "insert": 157
+            }
+          },
+          {
+            "speaker": "D",
+            "referenceUnits": 1597,
+            "hypothesisUnits": 1446,
+            "errors": 567,
+            "errorRate": 0.35504070131496557,
+            "counts": {
+              "replace": 296,
+              "delete": 211,
+              "insert": 60
+            }
+          }
+        ],
+        "mappingScope": "One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment."
+      },
+      "originalNemotronRawDERReproduced": {
+        "referenceSpeakerSeconds": 2530.26,
+        "missSeconds": 724.893519000002,
+        "falseAlarmSeconds": 29.963519000000858,
+        "confusionSeconds": 31.4625419999988,
+        "errorSeconds": 786.3195800000017,
+        "DER": 0.31076631650502384,
+        "identityForScoringOnly": {
+          "speaker_0": "MEE071",
+          "speaker_1": "MEE073",
+          "speaker_2": "FEO072",
+          "speaker_3": "FEO070"
+        }
+      },
+      "primaryRawJournalDER": {
+        "referenceSpeakerSeconds": 2530.26,
+        "missSeconds": 724.893519000002,
+        "falseAlarmSeconds": 29.963519000000858,
+        "confusionSeconds": 31.4625419999988,
+        "errorSeconds": 786.3195800000017,
+        "DER": 0.31076631650502384,
+        "identityForScoringOnly": {
+          "speaker_0": "MEE071",
+          "speaker_1": "MEE073",
+          "speaker_2": "FEO072",
+          "speaker_3": "FEO070"
+        }
+      },
+      "exclusiveAttributionDERDiagnostic": {
+        "referenceSpeakerSeconds": 2530.2599999999975,
+        "missSeconds": 981.5221341615173,
+        "falseAlarmSeconds": 7.282099381759562,
+        "confusionSeconds": 22.75276508524904,
+        "errorSeconds": 1011.5569986285259,
+        "DER": 0.399783816140842,
+        "identityForScoringOnly": {
+          "speaker_0": "MEE071",
+          "speaker_1": "MEE073",
+          "speaker_2": "FEO072",
+          "speaker_3": "FEO070"
+        }
+      },
+      "secondaryMossNativeTimeDER": {
+        "referenceSpeakerSeconds": 2530.2599999999975,
+        "missSeconds": 621.09,
+        "falseAlarmSeconds": 26.799999999997702,
+        "confusionSeconds": 80.2900000000016,
+        "errorSeconds": 728.1799999999993,
+        "DER": 0.28778860670444933,
+        "identityForScoringOnly": {
+          "S00": "MEE071",
+          "S01": "MEE073",
+          "S02": "FEO072",
+          "S03": "FEO070"
+        }
+      },
+      "activityReferenceToLexicalReferenceAliasesForScoringOnly": {
+        "FEO070": "B",
+        "FEO072": "C",
+        "MEE071": "D",
+        "MEE073": "A"
+      },
+      "baselineDER": 0.310766316505023,
+      "cpuAsrInferenceSeconds": 1865.9974673999604,
+      "asrRealTimeFactor": 0.8708588710963009,
+      "rawGatePass": false,
+      "fixedPersonGatePass": false,
+      "primaryDERGatePass": false,
+      "nativeTimeGatePass": false,
+      "factsGateMeasured": false,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "language": "Chinese",
+      "audioSeconds": 2049.3615,
+      "chunks": 69,
+      "allOriginalInputFramesCoveredExactlyOnce": true,
+      "allChunksNaturalEos": true,
+      "incompleteOutputChunks": [],
+      "invalidNativeTimeSegments": [
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0003",
+          "row": 7,
+          "start": 24.94,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0012",
+          "row": 6,
+          "start": 24.58,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0016",
+          "row": 3,
+          "start": 17.51,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0026",
+          "row": 7,
+          "start": 27.42,
+          "end": 30.04
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0027",
+          "row": 8,
+          "start": 29.05,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0038",
+          "row": 13,
+          "start": 26.21,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0044",
+          "row": 10,
+          "start": 27.22,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0045",
+          "row": 6,
+          "start": 26.48,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0050",
+          "row": 11,
+          "start": 28.66,
+          "end": 30.01
+        }
+      ],
+      "rawText": {
+        "referenceUnits": 7153,
+        "hypothesisUnits": 7149,
+        "errors": 1098,
+        "errorRate": 0.1535020271214875,
+        "counts": {
+          "replace": 448,
+          "delete": 327,
+          "insert": 323
+        }
+      },
+      "baselineRawText": {
+        "referenceUnits": 7153,
+        "hypothesisUnits": 6747,
+        "errors": 1037,
+        "errorRate": 0.1449741367258493,
+        "counts": {
+          "replace": 421,
+          "delete": 511,
+          "insert": 105
+        }
+      },
+      "rawEditsReduced": -61,
+      "personTextOneWholeMeetingPermutation": {
+        "referenceUnits": 7153,
+        "errors": 1809,
+        "errorRate": 0.2529008807493359,
+        "unknownUnitsForcedUnmatched": 142,
+        "perPerson": [
+          {
+            "referenceSpeaker": "001-M",
+            "anonymousSpeaker": "S03",
+            "referenceUnits": 3248,
+            "hypothesisUnits": 3365,
+            "errors": 447,
+            "errorRate": 0.1376231527093596,
+            "counts": {
+              "replace": 122,
+              "delete": 104,
+              "insert": 221
+            }
+          },
+          {
+            "referenceSpeaker": "003-M",
+            "anonymousSpeaker": "S02",
+            "referenceUnits": 521,
+            "hypothesisUnits": 271,
+            "errors": 290,
+            "errorRate": 0.5566218809980806,
+            "counts": {
+              "replace": 18,
+              "delete": 261,
+              "insert": 11
+            }
+          },
+          {
+            "referenceSpeaker": "004-M",
+            "anonymousSpeaker": "S01",
+            "referenceUnits": 1389,
+            "hypothesisUnits": 1392,
+            "errors": 451,
+            "errorRate": 0.32469402447804174,
+            "counts": {
+              "replace": 112,
+              "delete": 168,
+              "insert": 171
+            }
+          },
+          {
+            "referenceSpeaker": "006-M",
+            "anonymousSpeaker": "S00",
+            "referenceUnits": 1995,
+            "hypothesisUnits": 1979,
+            "errors": 479,
+            "errorRate": 0.24010025062656642,
+            "counts": {
+              "replace": 235,
+              "delete": 130,
+              "insert": 114
+            }
+          }
+        ],
+        "mappingForScoringOnly": true,
+        "oneWholeMeetingPermutation": true
+      },
+      "baselinePersonErrorRate": 0.27065566895009086,
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 1809,
+        "referenceUnits": 7153,
+        "errorRate": 0.2529008807493359,
+        "unknownUnitsForcedUnmatched": 142,
+        "perPerson": [
+          {
+            "speaker": "001-M",
+            "referenceUnits": 3248,
+            "hypothesisUnits": 3365,
+            "errors": 447,
+            "errorRate": 0.1376231527093596,
+            "counts": {
+              "replace": 122,
+              "delete": 104,
+              "insert": 221
+            }
+          },
+          {
+            "speaker": "003-M",
+            "referenceUnits": 521,
+            "hypothesisUnits": 271,
+            "errors": 290,
+            "errorRate": 0.5566218809980806,
+            "counts": {
+              "replace": 18,
+              "delete": 261,
+              "insert": 11
+            }
+          },
+          {
+            "speaker": "004-M",
+            "referenceUnits": 1389,
+            "hypothesisUnits": 1392,
+            "errors": 451,
+            "errorRate": 0.32469402447804174,
+            "counts": {
+              "replace": 112,
+              "delete": 168,
+              "insert": 171
+            }
+          },
+          {
+            "speaker": "006-M",
+            "referenceUnits": 1995,
+            "hypothesisUnits": 1979,
+            "errors": 479,
+            "errorRate": 0.24010025062656642,
+            "counts": {
+              "replace": 235,
+              "delete": 130,
+              "insert": 114
+            }
+          }
+        ],
+        "mappingScope": "One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment."
+      },
+      "originalNemotronRawDERReproduced": {
+        "referenceSpeakerSeconds": 1833.9097710178462,
+        "missSeconds": 81.12372958413522,
+        "falseAlarmSeconds": 83.34395856628664,
+        "confusionSeconds": 126.05066323417299,
+        "errorSeconds": 290.51835138459484,
+        "DER": 0.15841474644815975,
+        "identityForScoringOnly": {
+          "speaker_0": "006-M",
+          "speaker_1": "004-M",
+          "speaker_2": "003-M",
+          "speaker_3": "001-M"
+        }
+      },
+      "primaryRawJournalDER": {
+        "referenceSpeakerSeconds": 1833.9097710178462,
+        "missSeconds": 81.12372958413522,
+        "falseAlarmSeconds": 83.34395856628664,
+        "confusionSeconds": 126.05066323417299,
+        "errorSeconds": 290.51835138459484,
+        "DER": 0.15841474644815975,
+        "identityForScoringOnly": {
+          "speaker_0": "006-M",
+          "speaker_1": "004-M",
+          "speaker_2": "003-M",
+          "speaker_3": "001-M"
+        }
+      },
+      "exclusiveAttributionDERDiagnostic": {
+        "referenceSpeakerSeconds": 1833.9097710178462,
+        "missSeconds": 94.94984676936377,
+        "falseAlarmSeconds": 54.600035662327514,
+        "confusionSeconds": 132.44232565610113,
+        "errorSeconds": 281.9922080877924,
+        "DER": 0.15376558462376405,
+        "identityForScoringOnly": {
+          "speaker_0": "006-M",
+          "speaker_1": "004-M",
+          "speaker_2": "003-M",
+          "speaker_3": "001-M"
+        }
+      },
+      "secondaryMossNativeTimeDER": {
+        "referenceSpeakerSeconds": 1833.9097710178464,
+        "missSeconds": 185.98960097976243,
+        "falseAlarmSeconds": 103.81982996191562,
+        "confusionSeconds": 126.68134577533458,
+        "errorSeconds": 416.49077671701264,
+        "DER": 0.22710538070030253,
+        "identityForScoringOnly": {
+          "S00": "006-M",
+          "S01": "004-M",
+          "S02": "003-M",
+          "S03": "001-M"
+        }
+      },
+      "activityReferenceToLexicalReferenceAliasesForScoringOnly": {},
+      "baselineDER": 0.1584147453575932,
+      "cpuAsrInferenceSeconds": 1488.4639399000007,
+      "asrRealTimeFactor": 0.7263061884884637,
+      "rawGatePass": false,
+      "fixedPersonGatePass": false,
+      "primaryDERGatePass": false,
+      "nativeTimeGatePass": false,
+      "factsGateMeasured": false,
+      "qualityQualified": false
+    }
+  ],
+  "groups": [
+    {
+      "language": "English",
+      "completeOriginalMeetings": 2,
+      "audioSeconds": 4252.52275,
+      "referenceUnits": 13413,
+      "rawErrors": 3721,
+      "rawErrorRate": 0.2774174308506673,
+      "baselineRawErrors": 4007,
+      "baselineRawErrorRate": 0.29874002833072394,
+      "fixedSpeakerAttributedErrors": 3469,
+      "fixedSpeakerAttributedErrorRate": 0.25862968761649147,
+      "cpuAsrInferenceSeconds": 3178.8157971999826,
+      "asrRealTimeFactor": 0.7475129432758432,
+      "allChunksNaturalEos": true,
+      "everyMeetingImprovesRawText": true,
+      "everyMeetingPassesRawGate": false,
+      "qualityQualified": false
+    },
+    {
+      "language": "Chinese",
+      "completeOriginalMeetings": 2,
+      "audioSeconds": 4376.4805,
+      "referenceUnits": 15478,
+      "rawErrors": 1853,
+      "rawErrorRate": 0.11971830985915492,
+      "baselineRawErrors": 1498,
+      "baselineRawErrorRate": 0.09678253004264117,
+      "fixedSpeakerAttributedErrors": 2913,
+      "fixedSpeakerAttributedErrorRate": 0.18820261015635095,
+      "cpuAsrInferenceSeconds": 2874.969942200012,
+      "asrRealTimeFactor": 0.6569136871968269,
+      "allChunksNaturalEos": true,
+      "everyMeetingImprovesRawText": false,
+      "everyMeetingPassesRawGate": false,
+      "qualityQualified": false
+    }
+  ],
+  "summaryScorerSha256": "f237f4439187fef63805105153ae0092bfe7feaa02e55cb9da951a20109a1644",
+  "wholeScoringManifestSha256": "234ea8b756701993e17674fabb0cf12e69e22649ca9aa905f694a160b08863d2",
+  "compositionStateSha256": "32f3572756dc6375f63e9d7bc91925ab44779a3ea3225e847840945beef1669c",
+  "execution": {
+    "state": "COMPLETE_CPU_FIXED_CHUNKS_COMPOSITION_AND_SCORING_PENDING",
+    "startedAt": "2026-11-16T10:21:47.649673+08:00",
+    "privatePeakBytes": 761769984,
+    "familyWorkingSetPeakBytes": 2243706880,
+    "systemAvailableMinBytes": 1282686976,
+    "qualityQualified": false,
+    "wholeMeetingAcceptance": false,
+    "automaticRetries": 0,
+    "neuralDeadline": "2026-11-16T15:40:00+08:00",
+    "reportDeadline": "2026-11-16T16:00:00+08:00",
+    "pid": 28304,
+    "pidCreatedAt": 1794795707.6526446,
+    "workerExitCode": 0,
+    "completedInputs": 290,
+    "incompleteOutputCases": [],
+    "finishedAt": "2026-11-16T11:51:18.555741+08:00"
+  },
+  "noReferenceInputToNeuralModels": true,
+  "originalGatesChanged": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "blindFinalHoldoutOpened": false,
+  "newWeightTraining": false,
+  "productDefaultChanged": false,
+  "fullCpuSpeakerModelRuntimeMeasured": false,
+  "limitations": [
+    "All4 recordings are previously seen development/regression cases, not a blind final cohort.",
+    "Fixed30s nonoverlap chunks keep all input audio; native output may omit boundary speech and all such errors remain counted.",
+    "The authoritative raw multi-voice Nemotron journal reuses original GPU predictions; its original DER remains unchanged. CPU speaker execution remains a separate required check.",
+    "The exclusive journal is used only for text attribution. Its DER is diagnostic and cannot stand in for overlap acceptance.",
+    "MOSS native-time DER is a secondary diagnostic; it does not replace the primary activity journal or recover simultaneous voices.",
+    "Any incomplete EOS window remains visible and cannot pass complete-output gates.",
+    "Unknown words and all original numbers/fillers remain counted; no post-editing or reference corrections.",
+    "EN2002a fixed activity-to-word scoring uses the frozen reference-only participant-ID/A-D alias map. No per-window candidate-dependent relabeling.",
+    "Facts and critical facts have not been accepted."
+  ],
+  "limits": {
+    "pid": 28476,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 105533440,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

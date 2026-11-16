@@ -1,0 +1,40 @@
+{
+  "state": "INCOMPLETE_CPU_ONLY_NATIVE8_RETAINED",
+  "startedAt": "2026-11-16T11:58:01.713306+08:00",
+  "results": [
+    {
+      "meeting": "cpu-native8-control61",
+      "phase": "activity",
+      "exitCode": 0,
+      "state": "COMPLETE_CPU_SPEAKER_JOURNAL_UNQUALIFIED",
+      "seconds": 3.619774899998447,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r1\\results\\cpu-native8-control61\\completed-state.json",
+      "sha256": "fd67eeac50158e3ec442885783478402fc67d67e39ed20a73716780054a2426e"
+    },
+    {
+      "meeting": "cpu-native8-control61",
+      "phase": "cli-control",
+      "exitCode": 0,
+      "state": "PASS_NATIVE61_C_ABI_AND_OFFICIAL_CLI_SEGMENTS",
+      "seconds": 3.6361107000047923,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r1\\results\\cpu-native8-control61\\native-cli-control.json",
+      "sha256": "551935692d6b006045740398327a5f026a4e99a6364441041a651ffd79532f13"
+    }
+  ],
+  "privatePeakBytes": 1536126976,
+  "familyWorkingSetPeakBytes": 299995136,
+  "systemAvailableMinBytes": 813113344,
+  "qualityQualified": false,
+  "wholeMeetingAcceptance": false,
+  "automaticRetries": 0,
+  "executionDevice": "cpu",
+  "newWeightTraining": false,
+  "activeMeeting": "ES2003b",
+  "activePhase": "activity",
+  "pid": 26044,
+  "pidCreatedAt": 1794801488.9782057,
+  "cpu61ControlPassed": true,
+  "stopReason": "actual_windows_low_memory",
+  "error": "InterruptedError('CPU speaker outputs retained; continuous cache is not exported, no automatic replay')",
+  "finishedAt": "2026-11-16T11:59:05.361875+08:00"
+}

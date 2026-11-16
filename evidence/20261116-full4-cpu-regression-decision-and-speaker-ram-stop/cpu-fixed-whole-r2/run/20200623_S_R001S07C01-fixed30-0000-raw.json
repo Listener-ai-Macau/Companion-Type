@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0000",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 0,
+    "sourceEndFrame": 480000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "0808cb3a8f629fe75250f76db5d0ee19512a49606034b66c3646c992e622e5b8",
+  "seconds": 18.004715300005046,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "零零二，我是总经理。 零零九，我是业务部主管。 零幺五，我是。 结算部。 零幺二，我是市场战略发展。 行好的，今天把各位叫过来，开一个咱那个。",
+    "raw_text": "[11.15][S01]零零二，我是总经理。[12.81][12.94][S02]零零九，我是业务部主管。[14.88][16.58][S03]零幺五，我是。[17.82][20.06][S03]结算部。[20.82][22.21][S04]零幺二，我是市场战略发展。[24.92][25.88][S01]行好的，今天把各位叫过来，开一个咱那个。[29.88]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "零零二，我是总经理。",
+        "t0_ms": 11150,
+        "t1_ms": 12810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "零零九，我是业务部主管。",
+        "t0_ms": 12940,
+        "t1_ms": 14880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "零幺五，我是。",
+        "t0_ms": 16580,
+        "t1_ms": 17820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "结算部。",
+        "t0_ms": 20060,
+        "t1_ms": 20820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "零幺二，我是市场战略发展。",
+        "t0_ms": 22210,
+        "t1_ms": 24920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "行好的，今天把各位叫过来，开一个咱那个。",
+        "t0_ms": 25880,
+        "t1_ms": 29880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 11150,
+        "t1_ms": 12810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12940,
+        "t1_ms": 14880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16580,
+        "t1_ms": 17820,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20060,
+        "t1_ms": 20820,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22210,
+        "t1_ms": 24920,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25880,
+        "t1_ms": 29880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 21.10099983215332,
+      "encode_ms": 7492.51416015625,
+      "decode_ms": 10453.8701171875
+    }
+  },
+  "rawDecoded": "[11.15][S01]零零二，我是总经理。[12.81][12.94][S02]零零九，我是业务部主管。[14.88][16.58][S03]零幺五，我是。[17.82][20.06][S03]结算部。[20.82][22.21][S04]零幺二，我是市场战略发展。[24.92][25.88][S01]行好的，今天把各位叫过来，开一个咱那个。[29.88]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

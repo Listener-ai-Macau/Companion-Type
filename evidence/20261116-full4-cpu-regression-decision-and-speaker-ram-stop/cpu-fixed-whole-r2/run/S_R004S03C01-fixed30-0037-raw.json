@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0037",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 17760000,
+    "sourceEndFrame": 18240000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "a680db90db9e70320d4eb9030c1d05a6c6132e462700bf565035ac9676798696",
+  "seconds": 18.987613599994802,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "他就呃他就不想走，嗯，然后可以让孩子在那儿玩儿，然后我们就可以跟这些家长推推一些本店的产品啦，什么蛋糕啦。 嗯。 也会促进我们店儿里的销售。 嗯。 还有就是。 嗯，这种咱这个产品就是。 嗯。 要符合那种健康那种，而且现在就是年老的人嘛，他们比较。",
+    "raw_text": "[0.00][S01]他就呃他就不想走，嗯，然后可以让孩子在那儿玩儿，然后我们就可以跟这些家长推推一些本店的产品啦，什么蛋糕啦。[11.72][11.72][S01]嗯。[12.62][13.12][S01]也会促进我们店儿里的销售。[15.98][16.36][S01]嗯。[17.24][18.58][S01]还有就是。[19.84][20.42][S01]嗯，这种咱这个产品就是。[23.44][23.60][S02]嗯。[24.12][24.12][S01]要符合那种健康那种，而且现在就是年老的人嘛，他们比较。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "他就呃他就不想走，嗯，然后可以让孩子在那儿玩儿，然后我们就可以跟这些家长推推一些本店的产品啦，什么蛋糕啦。",
+        "t0_ms": 0,
+        "t1_ms": 11720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 11720,
+        "t1_ms": 12620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "也会促进我们店儿里的销售。",
+        "t0_ms": 13120,
+        "t1_ms": 15980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 16360,
+        "t1_ms": 17240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有就是。",
+        "t0_ms": 18580,
+        "t1_ms": 19840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，这种咱这个产品就是。",
+        "t0_ms": 20420,
+        "t1_ms": 23440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 23600,
+        "t1_ms": 24120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "要符合那种健康那种，而且现在就是年老的人嘛，他们比较。",
+        "t0_ms": 24120,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 11720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11720,
+        "t1_ms": 12620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13120,
+        "t1_ms": 15980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16360,
+        "t1_ms": 17240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18580,
+        "t1_ms": 19840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20420,
+        "t1_ms": 23440,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23600,
+        "t1_ms": 24120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24120,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.726999282836914,
+      "encode_ms": 7040.2587890625,
+      "decode_ms": 11895.41015625
+    }
+  },
+  "rawDecoded": "[0.00][S01]他就呃他就不想走，嗯，然后可以让孩子在那儿玩儿，然后我们就可以跟这些家长推推一些本店的产品啦，什么蛋糕啦。[11.72][11.72][S01]嗯。[12.62][13.12][S01]也会促进我们店儿里的销售。[15.98][16.36][S01]嗯。[17.24][18.58][S01]还有就是。[19.84][20.42][S01]嗯，这种咱这个产品就是。[23.44][23.60][S02]嗯。[24.12][24.12][S01]要符合那种健康那种，而且现在就是年老的人嘛，他们比较。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

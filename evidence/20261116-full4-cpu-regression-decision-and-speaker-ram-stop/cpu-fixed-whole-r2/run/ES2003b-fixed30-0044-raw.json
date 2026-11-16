@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0044",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 21120000,
+    "sourceEndFrame": 21600000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "13c5dc8d43c002eb02c6183c5811cbb4ddcd0905df2c4e904044c06f42c3b294",
+  "seconds": 18.657265599998937,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Up and down, it depends, I mean maybe we have the tho um joystick as a separate one for the other functions and and there's just a a small number of, as you were saying, uh buttons that have already been defined. Mm. So like we go for the nice standard um up and down for and volume control so that literally anybody can come along, pick up their remote and still know what to do. Mm-hmm. And it can completely ignore most of the functionality which would be through say the o the actual owner of the the key",
+    "raw_text": "[0.00][S01]Up and down, it depends, I mean maybe we have the tho um joystick as a separate one for the other functions and and there's just a a small number of, as you were saying, uh buttons that have already been defined.[12.00][12.08][S02]Mm.[12.30][13.06][S01]So like we go for the nice standard um up and down for and volume control so that literally anybody can come along, pick up their remote and still know what to do.[22.80][22.88][S02]Mm-hmm.[23.16][23.28][S01]And it can completely ignore most of the functionality which would be through say the o the actual owner of the the key[29.96]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Up and down, it depends, I mean maybe we have the tho um joystick as a separate one for the other functions and and there's just a a small number of, as you were saying, uh buttons that have already been defined.",
+        "t0_ms": 0,
+        "t1_ms": 12000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 12080,
+        "t1_ms": 12300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "So like we go for the nice standard um up and down for and volume control so that literally anybody can come along, pick up their remote and still know what to do.",
+        "t0_ms": 13060,
+        "t1_ms": 22800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 22880,
+        "t1_ms": 23160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "And it can completely ignore most of the functionality which would be through say the o the actual owner of the the key",
+        "t0_ms": 23280,
+        "t1_ms": 29960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 12000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12080,
+        "t1_ms": 12300,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13060,
+        "t1_ms": 22800,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22880,
+        "t1_ms": 23160,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23280,
+        "t1_ms": 29960,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.970000267028809,
+      "encode_ms": 7106.96923828125,
+      "decode_ms": 11501.046875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Up and down, it depends, I mean maybe we have the tho um joystick as a separate one for the other functions and and there's just a a small number of, as you were saying, uh buttons that have already been defined.[12.00][12.08][S02]Mm.[12.30][13.06][S01]So like we go for the nice standard um up and down for and volume control so that literally anybody can come along, pick up their remote and still know what to do.[22.80][22.88][S02]Mm-hmm.[23.16][23.28][S01]And it can completely ignore most of the functionality which would be through say the o the actual owner of the the key[29.96]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

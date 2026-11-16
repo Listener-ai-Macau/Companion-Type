@@ -1,0 +1,354 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0053",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 25440000,
+    "sourceEndFrame": 25920000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "4662c7a7df79a4bf8fdcf18dc94ffb189e391c54faa2340329dd9535ecb38e0e",
+  "seconds": 29.99164909999672,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "钱买车了。 打个比方说啊，就是小的的呃车贷，但是他不还。 嗯。 我们就催他，哎，他谁谁贷款买车他不还。 嗯。 这就等于是给他一个。 人员的压力。 就是你你你不还钱，他是个什么呀？他赖人。 为他塑造一种形象。 对。 塑造形象，他这样的话。 朋友那儿都知道呀，他谁谁他他。 欠人家钱了。 嗯。 对呀，他不还钱。 嗯。 你看他是个这样的人。",
+    "raw_text": "[0.01][S01]钱买车了。[0.99][2.06][S01]打个比方说啊，就是小的的呃车贷，但是他不还。[6.87][5.68][S02]嗯。[6.05][7.71][S01]我们就催他，哎，他谁谁贷款买车他不还。[11.09][11.25][S02]嗯。[11.71][11.98][S01]这就等于是给他一个。[13.49][14.62][S01]人员的压力。[15.81][16.34][S01]就是你你你不还钱，他是个什么呀？他赖人。[19.15][19.11][S02]为他塑造一种形象。[21.07][20.11][S01]对。[20.51][21.12][S01]塑造形象，他这样的话。[22.75][23.16][S01]朋友那儿都知道呀，他谁谁他他。[25.31][25.82][S01]欠人家钱了。[26.67][26.71][S02]嗯。[27.15][27.28][S01]对呀，他不还钱。[28.29][28.44][S02]嗯。[28.85][28.84][S01]你看他是个这样的人。[29.85]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "钱买车了。",
+        "t0_ms": 10,
+        "t1_ms": 990,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "打个比方说啊，就是小的的呃车贷，但是他不还。",
+        "t0_ms": 2060,
+        "t1_ms": 6870,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 5680,
+        "t1_ms": 6050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "我们就催他，哎，他谁谁贷款买车他不还。",
+        "t0_ms": 7710,
+        "t1_ms": 11090,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 11250,
+        "t1_ms": 11710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "这就等于是给他一个。",
+        "t0_ms": 11980,
+        "t1_ms": 13490,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "人员的压力。",
+        "t0_ms": 14620,
+        "t1_ms": 15810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就是你你你不还钱，他是个什么呀？他赖人。",
+        "t0_ms": 16340,
+        "t1_ms": 19150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "为他塑造一种形象。",
+        "t0_ms": 19110,
+        "t1_ms": 21070,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对。",
+        "t0_ms": 20110,
+        "t1_ms": 20510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "塑造形象，他这样的话。",
+        "t0_ms": 21120,
+        "t1_ms": 22750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "朋友那儿都知道呀，他谁谁他他。",
+        "t0_ms": 23160,
+        "t1_ms": 25310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "欠人家钱了。",
+        "t0_ms": 25820,
+        "t1_ms": 26670,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 26710,
+        "t1_ms": 27150,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对呀，他不还钱。",
+        "t0_ms": 27280,
+        "t1_ms": 28290,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 28440,
+        "t1_ms": 28850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "你看他是个这样的人。",
+        "t0_ms": 28840,
+        "t1_ms": 29850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 990,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2060,
+        "t1_ms": 6870,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5680,
+        "t1_ms": 6050,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7710,
+        "t1_ms": 11090,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11250,
+        "t1_ms": 11710,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11980,
+        "t1_ms": 13490,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14620,
+        "t1_ms": 15810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16340,
+        "t1_ms": 19150,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19110,
+        "t1_ms": 21070,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20110,
+        "t1_ms": 20510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21120,
+        "t1_ms": 22750,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23160,
+        "t1_ms": 25310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25820,
+        "t1_ms": 26670,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26710,
+        "t1_ms": 27150,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27280,
+        "t1_ms": 28290,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28440,
+        "t1_ms": 28850,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28840,
+        "t1_ms": 29850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 18.570999145507812,
+      "encode_ms": 7094.6318359375,
+      "decode_ms": 22840.9609375
+    }
+  },
+  "rawDecoded": "[0.01][S01]钱买车了。[0.99][2.06][S01]打个比方说啊，就是小的的呃车贷，但是他不还。[6.87][5.68][S02]嗯。[6.05][7.71][S01]我们就催他，哎，他谁谁贷款买车他不还。[11.09][11.25][S02]嗯。[11.71][11.98][S01]这就等于是给他一个。[13.49][14.62][S01]人员的压力。[15.81][16.34][S01]就是你你你不还钱，他是个什么呀？他赖人。[19.15][19.11][S02]为他塑造一种形象。[21.07][20.11][S01]对。[20.51][21.12][S01]塑造形象，他这样的话。[22.75][23.16][S01]朋友那儿都知道呀，他谁谁他他。[25.31][25.82][S01]欠人家钱了。[26.67][26.71][S02]嗯。[27.15][27.28][S01]对呀，他不还钱。[28.29][28.44][S02]嗯。[28.85][28.84][S01]你看他是个这样的人。[29.85]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

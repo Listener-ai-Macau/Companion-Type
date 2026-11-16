@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0020",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 9600000,
+    "sourceEndFrame": 10080000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "2f8a8922a2a8666bebd290274a123e2e2987e5f6558de057ad8988f92dc4e6bb",
+  "seconds": 21.441410300001735,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "And you're probably not wanting to Yeah. The footprint of the big Yeah. Um Yeah, w what do people think in general about the Windows cluttering that you've mentioned? Do you think do you think we have I think we probably need that though, to have the the full flexibility we need to have on there, but uh That's what I feel as well. I mean I'm I'm very much I I wanna have everything customisable. Um Right. Hmm. Although the thing is typically though is someone gonna have five Windows open at the same time probably.",
+    "raw_text": "[0.00][S01]And you're probably not wanting to[1.20][1.54][S02]Yeah.[1.86][2.14][S01]The footprint of the big[3.08][4.32][S01]Yeah.[4.54][6.82][S02]Um[7.30][10.02][S02]Yeah, w what do people think in general about the Windows cluttering that you've mentioned? Do you think do you think we have[16.14][15.46][S03]I think we probably need that though, to have the the full flexibility we need to have on there, but uh[20.08][19.04][S02]That's what I feel as well. I mean I'm I'm very much I I wanna have everything customisable. Um[26.06][20.36][S03]Right.[20.64][25.06][S03]Hmm.[25.28][26.36][S03]Although the thing is typically though is someone gonna have five Windows open at the same time probably.[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "And you're probably not wanting to",
+        "t0_ms": 0,
+        "t1_ms": 1200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 1540,
+        "t1_ms": 1860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "The footprint of the big",
+        "t0_ms": 2140,
+        "t1_ms": 3080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 4320,
+        "t1_ms": 4540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um",
+        "t0_ms": 6820,
+        "t1_ms": 7300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, w what do people think in general about the Windows cluttering that you've mentioned? Do you think do you think we have",
+        "t0_ms": 10020,
+        "t1_ms": 16140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "I think we probably need that though, to have the the full flexibility we need to have on there, but uh",
+        "t0_ms": 15460,
+        "t1_ms": 20080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "That's what I feel as well. I mean I'm I'm very much I I wanna have everything customisable. Um",
+        "t0_ms": 19040,
+        "t1_ms": 26060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Right.",
+        "t0_ms": 20360,
+        "t1_ms": 20640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 25060,
+        "t1_ms": 25280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Although the thing is typically though is someone gonna have five Windows open at the same time probably.",
+        "t0_ms": 26360,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 1200,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1540,
+        "t1_ms": 1860,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2140,
+        "t1_ms": 3080,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4320,
+        "t1_ms": 4540,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6820,
+        "t1_ms": 7300,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10020,
+        "t1_ms": 16140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15460,
+        "t1_ms": 20080,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19040,
+        "t1_ms": 26060,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20360,
+        "t1_ms": 20640,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25060,
+        "t1_ms": 25280,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26360,
+        "t1_ms": 30000,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.392000198364258,
+      "encode_ms": 6662.56884765625,
+      "decode_ms": 14724.375
+    }
+  },
+  "rawDecoded": "[0.00][S01]And you're probably not wanting to[1.20][1.54][S02]Yeah.[1.86][2.14][S01]The footprint of the big[3.08][4.32][S01]Yeah.[4.54][6.82][S02]Um[7.30][10.02][S02]Yeah, w what do people think in general about the Windows cluttering that you've mentioned? Do you think do you think we have[16.14][15.46][S03]I think we probably need that though, to have the the full flexibility we need to have on there, but uh[20.08][19.04][S02]That's what I feel as well. I mean I'm I'm very much I I wanna have everything customisable. Um[26.06][20.36][S03]Right.[20.64][25.06][S03]Hmm.[25.28][26.36][S03]Although the thing is typically though is someone gonna have five Windows open at the same time probably.[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

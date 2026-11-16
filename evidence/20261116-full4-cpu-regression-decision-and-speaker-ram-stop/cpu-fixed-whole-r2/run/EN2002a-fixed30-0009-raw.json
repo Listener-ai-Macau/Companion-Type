@@ -1,0 +1,282 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0009",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 4320000,
+    "sourceEndFrame": 4800000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "7783b0cb642a5af71ad1d207720e2f7000b10e4e8e3645bee63d2aeaadb766db",
+  "seconds": 24.31484310000087,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "When it comes down it says give me all your meetings. Yeah, so when you right click on it, one one option will be give me all your meetings, characterise the speaker. Yep. Or is that too much, I mean. I don't know. I guess so, it's a idea. I mean it's more like part of the browsing sort of thing more than the speaker charac characterization as Steve mentioned, I don't really know how to The user. Yeah. Yeah, that's true, yeah. Hmm. Yeah. Yeah.",
+    "raw_text": "[0.00][S01]When it comes down it says give me all your meetings.[2.52][2.68][S02]Yeah, so when you right click on it, one one option will be give me all your meetings, characterise the speaker.[9.08][10.04][S01]Yep.[10.54][14.04][S02]Or is that too much, I mean.[15.26][15.72][S03]I don't know.[16.10][16.04][S01]I guess so, it's a idea.[17.32][16.84][S03]I mean it's more like part of the browsing sort of thing more than the speaker charac characterization as Steve mentioned, I don't really know how to[29.14][18.08][S01]The user.[18.52][26.84][S02]Yeah.[27.12][27.80][S02]Yeah, that's true, yeah.[28.68][28.64][S01]Hmm.[28.86][29.08][S02]Yeah.[29.44][29.48][S01]Yeah.[29.84]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "When it comes down it says give me all your meetings.",
+        "t0_ms": 0,
+        "t1_ms": 2520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, so when you right click on it, one one option will be give me all your meetings, characterise the speaker.",
+        "t0_ms": 2680,
+        "t1_ms": 9080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yep.",
+        "t0_ms": 10040,
+        "t1_ms": 10540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Or is that too much, I mean.",
+        "t0_ms": 14040,
+        "t1_ms": 15260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "I don't know.",
+        "t0_ms": 15720,
+        "t1_ms": 16100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I guess so, it's a idea.",
+        "t0_ms": 16040,
+        "t1_ms": 17320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I mean it's more like part of the browsing sort of thing more than the speaker charac characterization as Steve mentioned, I don't really know how to",
+        "t0_ms": 16840,
+        "t1_ms": 29140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "The user.",
+        "t0_ms": 18080,
+        "t1_ms": 18520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 26840,
+        "t1_ms": 27120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, that's true, yeah.",
+        "t0_ms": 27800,
+        "t1_ms": 28680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 28640,
+        "t1_ms": 28860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 29080,
+        "t1_ms": 29440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 29480,
+        "t1_ms": 29840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 2520,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2680,
+        "t1_ms": 9080,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10040,
+        "t1_ms": 10540,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14040,
+        "t1_ms": 15260,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15720,
+        "t1_ms": 16100,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16040,
+        "t1_ms": 17320,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16840,
+        "t1_ms": 29140,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18080,
+        "t1_ms": 18520,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26840,
+        "t1_ms": 27120,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27800,
+        "t1_ms": 28680,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28640,
+        "t1_ms": 28860,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29080,
+        "t1_ms": 29440,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29480,
+        "t1_ms": 29840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.616000175476074,
+      "encode_ms": 7245.3779296875,
+      "decode_ms": 17013.33984375
+    }
+  },
+  "rawDecoded": "[0.00][S01]When it comes down it says give me all your meetings.[2.52][2.68][S02]Yeah, so when you right click on it, one one option will be give me all your meetings, characterise the speaker.[9.08][10.04][S01]Yep.[10.54][14.04][S02]Or is that too much, I mean.[15.26][15.72][S03]I don't know.[16.10][16.04][S01]I guess so, it's a idea.[17.32][16.84][S03]I mean it's more like part of the browsing sort of thing more than the speaker charac characterization as Steve mentioned, I don't really know how to[29.14][18.08][S01]The user.[18.52][26.84][S02]Yeah.[27.12][27.80][S02]Yeah, that's true, yeah.[28.68][28.64][S01]Hmm.[28.86][29.08][S02]Yeah.[29.44][29.48][S01]Yeah.[29.84]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

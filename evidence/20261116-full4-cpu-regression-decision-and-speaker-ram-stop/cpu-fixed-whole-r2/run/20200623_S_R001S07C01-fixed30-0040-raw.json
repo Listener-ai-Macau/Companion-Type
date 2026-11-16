@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0040",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 19200000,
+    "sourceEndFrame": 19680000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "f337248428d7eea06b9dbf461c79a770a782ecd87ba2990415173d63b95b13f8",
+  "seconds": 19.204190299999027,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "嗯，然后就是第二方面就是车贷嘛，呃我觉得车贷嘛，咱们可以提升一些。 嗯。 嗯，提升。 毕竟现在，对，呃三十万，呃三十万封顶的话有些低了，现在的年轻人追求的可能更加高尚一些。 嗯。 然后，呃他们所以说他们需要需要贷的金额都比较多嘛。 嗯，至于打。",
+    "raw_text": "[0.01][S01]嗯，然后就是第二方面就是车贷嘛，呃我觉得车贷嘛，咱们可以提升一些。[6.25][2.38][S02]嗯。[2.74][6.65][S02]嗯，提升。[7.81][7.72][S01]毕竟现在，对，呃三十万，呃三十万封顶的话有些低了，现在的年轻人追求的可能更加高尚一些。[18.85][18.94][S02]嗯。[19.34][21.82][S01]然后，呃他们所以说他们需要需要贷的金额都比较多嘛。[26.01][28.43][S01]嗯，至于打。[29.97]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "嗯，然后就是第二方面就是车贷嘛，呃我觉得车贷嘛，咱们可以提升一些。",
+        "t0_ms": 10,
+        "t1_ms": 6250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 2380,
+        "t1_ms": 2740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯，提升。",
+        "t0_ms": 6650,
+        "t1_ms": 7810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "毕竟现在，对，呃三十万，呃三十万封顶的话有些低了，现在的年轻人追求的可能更加高尚一些。",
+        "t0_ms": 7720,
+        "t1_ms": 18850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 18940,
+        "t1_ms": 19340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "然后，呃他们所以说他们需要需要贷的金额都比较多嘛。",
+        "t0_ms": 21820,
+        "t1_ms": 26010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，至于打。",
+        "t0_ms": 28430,
+        "t1_ms": 29970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 10,
+        "t1_ms": 6250,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2380,
+        "t1_ms": 2740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6650,
+        "t1_ms": 7810,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7720,
+        "t1_ms": 18850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18940,
+        "t1_ms": 19340,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21820,
+        "t1_ms": 26010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28430,
+        "t1_ms": 29970,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.505000114440918,
+      "encode_ms": 7246.72412109375,
+      "decode_ms": 11907.4140625
+    }
+  },
+  "rawDecoded": "[0.01][S01]嗯，然后就是第二方面就是车贷嘛，呃我觉得车贷嘛，咱们可以提升一些。[6.25][2.38][S02]嗯。[2.74][6.65][S02]嗯，提升。[7.81][7.72][S01]毕竟现在，对，呃三十万，呃三十万封顶的话有些低了，现在的年轻人追求的可能更加高尚一些。[18.85][18.94][S02]嗯。[19.34][21.82][S01]然后，呃他们所以说他们需要需要贷的金额都比较多嘛。[26.01][28.43][S01]嗯，至于打。[29.97]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

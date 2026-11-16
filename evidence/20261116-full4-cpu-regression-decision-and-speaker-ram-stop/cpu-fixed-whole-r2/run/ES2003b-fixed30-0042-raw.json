@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0042",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 20160000,
+    "sourceEndFrame": 20640000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "059be4f050cfb41dbc6543aa0abbf74907ec6c39fc3cba87f33350ba3b41536e",
+  "seconds": 18.216403500002343,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "You know, you know what I'm saying, like for whom is this intended? Every partner? I think it could probably be aimed at most people who've used the mobile. And that might be just another way of saying trying to target most people. Most people, yeah. Um if we're if we were to follow that avenue, we might be s you know um we're kind of almost relying on their experience with a mobile phone, I suppose. Mm-hmm. But that does cover a very large",
+    "raw_text": "[0.37][S01]You know, you know what I'm saying, like for whom is this intended? Every partner?[4.31][8.58][S02]I think it could probably be aimed at most people who've used the mobile. And that might be just another way of saying trying to target most people.[16.41][16.66][S01]Most people, yeah.[17.41][17.66][S02]Um if we're if we were to follow that avenue, we might be s you know um we're kind of almost relying on their experience with a mobile phone, I suppose.[27.71][27.73][S01]Mm-hmm.[28.01][28.22][S02]But that does cover a very large[29.97]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "You know, you know what I'm saying, like for whom is this intended? Every partner?",
+        "t0_ms": 370,
+        "t1_ms": 4310,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I think it could probably be aimed at most people who've used the mobile. And that might be just another way of saying trying to target most people.",
+        "t0_ms": 8580,
+        "t1_ms": 16410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Most people, yeah.",
+        "t0_ms": 16660,
+        "t1_ms": 17410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um if we're if we were to follow that avenue, we might be s you know um we're kind of almost relying on their experience with a mobile phone, I suppose.",
+        "t0_ms": 17660,
+        "t1_ms": 27710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 27730,
+        "t1_ms": 28010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "But that does cover a very large",
+        "t0_ms": 28220,
+        "t1_ms": 29970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 370,
+        "t1_ms": 4310,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8580,
+        "t1_ms": 16410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16660,
+        "t1_ms": 17410,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17660,
+        "t1_ms": 27710,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27730,
+        "t1_ms": 28010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28220,
+        "t1_ms": 29970,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.291000366210938,
+      "encode_ms": 6944.33984375,
+      "decode_ms": 11224.5087890625
+    }
+  },
+  "rawDecoded": "[0.37][S01]You know, you know what I'm saying, like for whom is this intended? Every partner?[4.31][8.58][S02]I think it could probably be aimed at most people who've used the mobile. And that might be just another way of saying trying to target most people.[16.41][16.66][S01]Most people, yeah.[17.41][17.66][S02]Um if we're if we were to follow that avenue, we might be s you know um we're kind of almost relying on their experience with a mobile phone, I suppose.[27.71][27.73][S01]Mm-hmm.[28.01][28.22][S02]But that does cover a very large[29.97]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

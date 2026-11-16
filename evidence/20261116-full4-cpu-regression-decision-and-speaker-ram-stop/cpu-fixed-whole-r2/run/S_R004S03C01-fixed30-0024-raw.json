@@ -1,0 +1,102 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0024",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 11520000,
+    "sourceEndFrame": 12000000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "7f73114e5ae13c59cd0731393d6c6a3a97dcf2472abb0724f0875e76b53e519b",
+  "seconds": 15.358293700002832,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "去，呃方便他去那个什么那个使用去，嗯然后还还有一个就是我们这个呃超市的话，我们针对于超市。 有一些促销的产品，比如说每天呢，我们超市中有一款两款或者是三款的特价菜，就是摆放到这个，嗯需要有一些那个宣传。 呃放到那个超市的门口，比如说我们菜品区里面有呃三种蔬菜是呃低于。",
+    "raw_text": "[0.00][S01]去，呃方便他去那个什么那个使用去，嗯然后还还有一个就是我们这个呃超市的话，我们针对于超市。[11.88][11.88][S01]有一些促销的产品，比如说每天呢，我们超市中有一款两款或者是三款的特价菜，就是摆放到这个，嗯需要有一些那个宣传。[22.24][22.24][S01]呃放到那个超市的门口，比如说我们菜品区里面有呃三种蔬菜是呃低于。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "去，呃方便他去那个什么那个使用去，嗯然后还还有一个就是我们这个呃超市的话，我们针对于超市。",
+        "t0_ms": 0,
+        "t1_ms": 11880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "有一些促销的产品，比如说每天呢，我们超市中有一款两款或者是三款的特价菜，就是摆放到这个，嗯需要有一些那个宣传。",
+        "t0_ms": 11880,
+        "t1_ms": 22240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃放到那个超市的门口，比如说我们菜品区里面有呃三种蔬菜是呃低于。",
+        "t0_ms": 22240,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 11880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11880,
+        "t1_ms": 22240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22240,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 17.885000228881836,
+      "encode_ms": 6942.119140625,
+      "decode_ms": 8364.7900390625
+    }
+  },
+  "rawDecoded": "[0.00][S01]去，呃方便他去那个什么那个使用去，嗯然后还还有一个就是我们这个呃超市的话，我们针对于超市。[11.88][11.88][S01]有一些促销的产品，比如说每天呢，我们超市中有一款两款或者是三款的特价菜，就是摆放到这个，嗯需要有一些那个宣传。[22.24][22.24][S01]呃放到那个超市的门口，比如说我们菜品区里面有呃三种蔬菜是呃低于。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

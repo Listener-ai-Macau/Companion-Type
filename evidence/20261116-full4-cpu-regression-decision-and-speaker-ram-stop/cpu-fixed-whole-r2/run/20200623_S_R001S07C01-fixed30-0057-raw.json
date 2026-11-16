@@ -1,0 +1,246 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0057",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 27360000,
+    "sourceEndFrame": 27840000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "9c40977595b93055d1f2e939b3af1108fa32f55fc5d4225a3ca7932bc96c9663",
+  "seconds": 22.11041390000173,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "老赖这方面。 对。 我我们有一套，我们有一套完整的战略来对付老赖。 各式各样的。 嗯。 对，咱们要有一套这个完整的战略体系，也需要咱们各部门儿的通力配合。 嗯。 当然我们前期放贷的时候也是看过他的诚信，所以说不能说呃没有漏网之鱼，确实是。 嗯。 嗯。 呃，笼子大了什么鸟儿都有，呃难免。",
+    "raw_text": "[0.45][S01]老赖这方面。[2.11][1.22][S02]对。[1.65][2.71][S02]我我们有一套，我们有一套完整的战略来对付老赖。[8.83][3.48][S01]各式各样的。[4.51][7.32][S01]嗯。[7.81][8.76][S01]对，咱们要有一套这个完整的战略体系，也需要咱们各部门儿的通力配合。[15.71][16.35][S01]嗯。[16.89][17.45][S02]当然我们前期放贷的时候也是看过他的诚信，所以说不能说呃没有漏网之鱼，确实是。[26.41][21.22][S01]嗯。[21.71][24.84][S01]嗯。[25.34][26.78][S02]呃，笼子大了什么鸟儿都有，呃难免。[29.97]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "老赖这方面。",
+        "t0_ms": 450,
+        "t1_ms": 2110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对。",
+        "t0_ms": 1220,
+        "t1_ms": 1650,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "我我们有一套，我们有一套完整的战略来对付老赖。",
+        "t0_ms": 2710,
+        "t1_ms": 8830,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "各式各样的。",
+        "t0_ms": 3480,
+        "t1_ms": 4510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 7320,
+        "t1_ms": 7810,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "对，咱们要有一套这个完整的战略体系，也需要咱们各部门儿的通力配合。",
+        "t0_ms": 8760,
+        "t1_ms": 15710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 16350,
+        "t1_ms": 16890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "当然我们前期放贷的时候也是看过他的诚信，所以说不能说呃没有漏网之鱼，确实是。",
+        "t0_ms": 17450,
+        "t1_ms": 26410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 21220,
+        "t1_ms": 21710,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 24840,
+        "t1_ms": 25340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，笼子大了什么鸟儿都有，呃难免。",
+        "t0_ms": 26780,
+        "t1_ms": 29970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 450,
+        "t1_ms": 2110,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1220,
+        "t1_ms": 1650,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2710,
+        "t1_ms": 8830,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3480,
+        "t1_ms": 4510,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7320,
+        "t1_ms": 7810,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8760,
+        "t1_ms": 15710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16350,
+        "t1_ms": 16890,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17450,
+        "t1_ms": 26410,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21220,
+        "t1_ms": 21710,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24840,
+        "t1_ms": 25340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26780,
+        "t1_ms": 29970,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 25.381999969482422,
+      "encode_ms": 6981.81884765625,
+      "decode_ms": 15065.5
+    }
+  },
+  "rawDecoded": "[0.45][S01]老赖这方面。[2.11][1.22][S02]对。[1.65][2.71][S02]我我们有一套，我们有一套完整的战略来对付老赖。[8.83][3.48][S01]各式各样的。[4.51][7.32][S01]嗯。[7.81][8.76][S01]对，咱们要有一套这个完整的战略体系，也需要咱们各部门儿的通力配合。[15.71][16.35][S01]嗯。[16.89][17.45][S02]当然我们前期放贷的时候也是看过他的诚信，所以说不能说呃没有漏网之鱼，确实是。[26.41][21.22][S01]嗯。[21.71][24.84][S01]嗯。[25.34][26.78][S02]呃，笼子大了什么鸟儿都有，呃难免。[29.97]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

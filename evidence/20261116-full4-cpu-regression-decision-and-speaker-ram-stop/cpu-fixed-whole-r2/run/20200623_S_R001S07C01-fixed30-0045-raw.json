@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0045",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 21600000,
+    "sourceEndFrame": 22080000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "568165bc1941b91db91d17fb31a9601e102944c0a4fd4f62e73da4c836f8e6d1",
+  "seconds": 18.571375399995304,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "那个就是房贷，我们现在还没有跨界房贷，但是呃可以考虑一下，因为嗯。 嗯。 房地产这块，贷款买房也是一个趋势。 未来的一个趋势。 对。 我觉得吧，呃三十万以上的，呃车贷的话，呃它的风险可能也会比较低一点。 毕竟能买得起三十万以上的车的。",
+    "raw_text": "[1.45][S01]那个就是房贷，我们现在还没有跨界房贷，但是呃可以考虑一下，因为嗯。[9.85][5.22][S02]嗯。[5.62][10.28][S01]房地产这块，贷款买房也是一个趋势。[14.24][14.34][S02]未来的一个趋势。[15.74][15.61][S01]对。[16.05][17.16][S03]我觉得吧，呃三十万以上的，呃车贷的话，呃它的风险可能也会比较低一点。[26.48][26.48][S03]毕竟能买得起三十万以上的车的。[30.01]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "那个就是房贷，我们现在还没有跨界房贷，但是呃可以考虑一下，因为嗯。",
+        "t0_ms": 1450,
+        "t1_ms": 9850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 5220,
+        "t1_ms": 5620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "房地产这块，贷款买房也是一个趋势。",
+        "t0_ms": 10280,
+        "t1_ms": 14240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "未来的一个趋势。",
+        "t0_ms": 14340,
+        "t1_ms": 15740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "对。",
+        "t0_ms": 15610,
+        "t1_ms": 16050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "我觉得吧，呃三十万以上的，呃车贷的话，呃它的风险可能也会比较低一点。",
+        "t0_ms": 17160,
+        "t1_ms": 26480,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "毕竟能买得起三十万以上的车的。",
+        "t0_ms": 26480,
+        "t1_ms": 30010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 1450,
+        "t1_ms": 9850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5220,
+        "t1_ms": 5620,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10280,
+        "t1_ms": 14240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14340,
+        "t1_ms": 15740,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15610,
+        "t1_ms": 16050,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17160,
+        "t1_ms": 26480,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26480,
+        "t1_ms": 30010,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 24.25,
+      "encode_ms": 7117.55517578125,
+      "decode_ms": 11394.681640625
+    }
+  },
+  "rawDecoded": "[1.45][S01]那个就是房贷，我们现在还没有跨界房贷，但是呃可以考虑一下，因为嗯。[9.85][5.22][S02]嗯。[5.62][10.28][S01]房地产这块，贷款买房也是一个趋势。[14.24][14.34][S02]未来的一个趋势。[15.74][15.61][S01]对。[16.05][17.16][S03]我觉得吧，呃三十万以上的，呃车贷的话，呃它的风险可能也会比较低一点。[26.48][26.48][S03]毕竟能买得起三十万以上的车的。[30.01]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

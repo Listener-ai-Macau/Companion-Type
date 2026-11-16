@@ -1,0 +1,282 @@
+{
+  "case": {
+    "id": "20200623_S_R001S07C01-fixed30-0002",
+    "meeting": "20200623_S_R001S07C01",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\ordinary-combination-study-20261114\\ordinary-mic0.wav",
+    "audioSha256": "8928600b2cc089ed3ae413cb9fed1706149075f70fd37cb11f7b87aecc05067c",
+    "sourceStartFrame": 960000,
+    "sourceEndFrame": 1440000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "0eba63ad0b1f453c7d2e1aec05d1699e577c5a1b213d2d1b6463ce727177bc3f",
+  "seconds": 23.281360099994345,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "然后还有这个嗯创业的创业贷。 创业贷。 创业贷。 可以。 开公司，呃不能说开公司了，开一个小型的门市的，我们也可以给他放贷。 嗯。 嗯。 啊。 然后嗯大型公司不超过三十万的，呃呃借贷也我们也是可以放贷的。 嗯。 嗯。 因为我们的理念是不嗯。 不超过三十万的人，然后。",
+    "raw_text": "[0.31][S01]然后还有这个嗯创业的创业贷。[5.63][4.74][S02]创业贷。[5.61][5.75][S02]创业贷。[6.49][6.18][S01]可以。[7.01][7.95][S01]开公司，呃不能说开公司了，开一个小型的门市的，我们也可以给他放贷。[14.14][12.58][S02]嗯。[13.11][14.22][S02]嗯。[14.75][14.81][S01]啊。[15.28][15.98][S01]然后嗯大型公司不超过三十万的，呃呃借贷也我们也是可以放贷的。[24.05][20.28][S02]嗯。[20.75][24.24][S02]嗯。[24.75][24.68][S01]因为我们的理念是不嗯。[26.88][27.44][S01]不超过三十万的人，然后。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "然后还有这个嗯创业的创业贷。",
+        "t0_ms": 310,
+        "t1_ms": 5630,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "创业贷。",
+        "t0_ms": 4740,
+        "t1_ms": 5610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "创业贷。",
+        "t0_ms": 5750,
+        "t1_ms": 6490,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "可以。",
+        "t0_ms": 6180,
+        "t1_ms": 7010,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "开公司，呃不能说开公司了，开一个小型的门市的，我们也可以给他放贷。",
+        "t0_ms": 7950,
+        "t1_ms": 14140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 12580,
+        "t1_ms": 13110,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 14220,
+        "t1_ms": 14750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "啊。",
+        "t0_ms": 14810,
+        "t1_ms": 15280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后嗯大型公司不超过三十万的，呃呃借贷也我们也是可以放贷的。",
+        "t0_ms": 15980,
+        "t1_ms": 24050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 20280,
+        "t1_ms": 20750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 24240,
+        "t1_ms": 24750,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "因为我们的理念是不嗯。",
+        "t0_ms": 24680,
+        "t1_ms": 26880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "不超过三十万的人，然后。",
+        "t0_ms": 27440,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 310,
+        "t1_ms": 5630,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4740,
+        "t1_ms": 5610,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 5750,
+        "t1_ms": 6490,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6180,
+        "t1_ms": 7010,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7950,
+        "t1_ms": 14140,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12580,
+        "t1_ms": 13110,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14220,
+        "t1_ms": 14750,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14810,
+        "t1_ms": 15280,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15980,
+        "t1_ms": 24050,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20280,
+        "t1_ms": 20750,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24240,
+        "t1_ms": 24750,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24680,
+        "t1_ms": 26880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27440,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 28.003000259399414,
+      "encode_ms": 6913.44189453125,
+      "decode_ms": 16306.7314453125
+    }
+  },
+  "rawDecoded": "[0.31][S01]然后还有这个嗯创业的创业贷。[5.63][4.74][S02]创业贷。[5.61][5.75][S02]创业贷。[6.49][6.18][S01]可以。[7.01][7.95][S01]开公司，呃不能说开公司了，开一个小型的门市的，我们也可以给他放贷。[14.14][12.58][S02]嗯。[13.11][14.22][S02]嗯。[14.75][14.81][S01]啊。[15.28][15.98][S01]然后嗯大型公司不超过三十万的，呃呃借贷也我们也是可以放贷的。[24.05][20.28][S02]嗯。[20.75][24.24][S02]嗯。[24.75][24.68][S01]因为我们的理念是不嗯。[26.88][27.44][S01]不超过三十万的人，然后。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,300 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0061",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 29280000,
+    "sourceEndFrame": 29760000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "017d23019bfd531f25096b4768e3620db34493c94055506b3df3faabf623ff75",
+  "seconds": 23.192660200002138,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "To have the Be good to to locate it again. Yeah. So that would require a um a transmitter maybe attached to the T. V. just so that it says find me and what basically a small microphone um on the actual unit can maybe hide it in the bath or sorry? The light bulb as well, no. Mm. Mm. So a small speaker, yeah. Speaker, yeah. Small speaker, sorry, yeah. Uh light bulb, no. The flash, no. Um. No, you'd see it anywhere, nothing like that. Think we should As",
+    "raw_text": "[0.00][S01]To have the[0.76][0.52][S02]Be good to to locate it again.[1.92][1.82][S01]Yeah.[2.20][3.48][S02]So that would require a um a transmitter maybe attached to the T. V. just so that it says find me and what basically a small microphone um on the actual unit can maybe hide it in the bath or sorry?[19.44][17.74][S03]The light bulb as well, no.[18.84][19.34][S04]Mm.[19.62][19.50][S04]Mm. So a small speaker, yeah.[20.80][20.98][S01]Speaker, yeah.[22.24][21.16][S02]Small speaker, sorry, yeah.[22.22][22.80][S03]Uh light bulb, no. The flash, no.[24.90][25.76][S02]Um.[26.32][26.62][S03]No, you'd see it anywhere, nothing like that.[28.38][28.10][S04]Think we should[28.54][28.72][S02]As[29.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "To have the",
+        "t0_ms": 0,
+        "t1_ms": 760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Be good to to locate it again.",
+        "t0_ms": 520,
+        "t1_ms": 1920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 1820,
+        "t1_ms": 2200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "So that would require a um a transmitter maybe attached to the T. V. just so that it says find me and what basically a small microphone um on the actual unit can maybe hide it in the bath or sorry?",
+        "t0_ms": 3480,
+        "t1_ms": 19440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "The light bulb as well, no.",
+        "t0_ms": 17740,
+        "t1_ms": 18840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 19340,
+        "t1_ms": 19620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Mm. So a small speaker, yeah.",
+        "t0_ms": 19500,
+        "t1_ms": 20800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Speaker, yeah.",
+        "t0_ms": 20980,
+        "t1_ms": 22240,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Small speaker, sorry, yeah.",
+        "t0_ms": 21160,
+        "t1_ms": 22220,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Uh light bulb, no. The flash, no.",
+        "t0_ms": 22800,
+        "t1_ms": 24900,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Um.",
+        "t0_ms": 25760,
+        "t1_ms": 26320,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "No, you'd see it anywhere, nothing like that.",
+        "t0_ms": 26620,
+        "t1_ms": 28380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Think we should",
+        "t0_ms": 28100,
+        "t1_ms": 28540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "As",
+        "t0_ms": 28720,
+        "t1_ms": 29000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 760,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 520,
+        "t1_ms": 1920,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1820,
+        "t1_ms": 2200,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3480,
+        "t1_ms": 19440,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17740,
+        "t1_ms": 18840,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19340,
+        "t1_ms": 19620,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19500,
+        "t1_ms": 20800,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20980,
+        "t1_ms": 22240,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21160,
+        "t1_ms": 22220,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22800,
+        "t1_ms": 24900,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25760,
+        "t1_ms": 26320,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26620,
+        "t1_ms": 28380,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28100,
+        "t1_ms": 28540,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28720,
+        "t1_ms": 29000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 27.39900016784668,
+      "encode_ms": 6488.2890625,
+      "decode_ms": 16640.6171875
+    }
+  },
+  "rawDecoded": "[0.00][S01]To have the[0.76][0.52][S02]Be good to to locate it again.[1.92][1.82][S01]Yeah.[2.20][3.48][S02]So that would require a um a transmitter maybe attached to the T. V. just so that it says find me and what basically a small microphone um on the actual unit can maybe hide it in the bath or sorry?[19.44][17.74][S03]The light bulb as well, no.[18.84][19.34][S04]Mm.[19.62][19.50][S04]Mm. So a small speaker, yeah.[20.80][20.98][S01]Speaker, yeah.[22.24][21.16][S02]Small speaker, sorry, yeah.[22.22][22.80][S03]Uh light bulb, no. The flash, no.[24.90][25.76][S02]Um.[26.32][26.62][S03]No, you'd see it anywhere, nothing like that.[28.38][28.10][S04]Think we should[28.54][28.72][S02]As[29.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0002",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 960000,
+    "sourceEndFrame": 1440000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "db1ec4e5f9812de97569d25c9e52479c3563525b2b935711cfb092a20483cde4",
+  "seconds": 18.278987900004722,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "On the menu you can select a summarisation box which pops up and an audio player. Right. Um and that's I think the search works as well, so you can pop up a search. And it loads up um just the background window, so empty, and um so when you start you have to either open open a particular observation or do a search and open it through that. If that makes sense. Um.",
+    "raw_text": "[0.00][S01]On the menu you can select a summarisation box which pops up and an audio player.[6.70][8.22][S02]Right.[8.54][8.80][S01]Um and that's I think the search works as well, so you can pop up a search. And it loads up um just the background window, so empty, and um so when you start you have to either open open a particular observation or do a search and open it through that.[24.76][26.44][S01]If that makes sense.[27.06][28.60][S01]Um.[29.10]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "On the menu you can select a summarisation box which pops up and an audio player.",
+        "t0_ms": 0,
+        "t1_ms": 6700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Right.",
+        "t0_ms": 8220,
+        "t1_ms": 8540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Um and that's I think the search works as well, so you can pop up a search. And it loads up um just the background window, so empty, and um so when you start you have to either open open a particular observation or do a search and open it through that.",
+        "t0_ms": 8800,
+        "t1_ms": 24760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "If that makes sense.",
+        "t0_ms": 26440,
+        "t1_ms": 27060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um.",
+        "t0_ms": 28600,
+        "t1_ms": 29100,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 6700,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8220,
+        "t1_ms": 8540,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8800,
+        "t1_ms": 24760,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26440,
+        "t1_ms": 27060,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 28600,
+        "t1_ms": 29100,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 15.71399974822998,
+      "encode_ms": 7608.27099609375,
+      "decode_ms": 10621.865234375
+    }
+  },
+  "rawDecoded": "[0.00][S01]On the menu you can select a summarisation box which pops up and an audio player.[6.70][8.22][S02]Right.[8.54][8.80][S01]Um and that's I think the search works as well, so you can pop up a search. And it loads up um just the background window, so empty, and um so when you start you have to either open open a particular observation or do a search and open it through that.[24.76][26.44][S01]If that makes sense.[27.06][28.60][S01]Um.[29.10]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

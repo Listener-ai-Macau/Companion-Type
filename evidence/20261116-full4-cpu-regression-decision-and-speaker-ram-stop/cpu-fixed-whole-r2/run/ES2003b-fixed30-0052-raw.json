@@ -1,0 +1,174 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0052",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 24960000,
+    "sourceEndFrame": 25440000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "57bca7b0afad101a5b1c0c93c46dc32f58275c526ad5b354cb7098c24b2e06ca",
+  "seconds": 20.141199000005145,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "It a perf if we made the for every remote we made something board we had to sell a lot of remote controls is this Mm-hmm. is this gonna be enough to to sell? Well something else that you brought up was uh the ability to lose a remote which as you said you've done in that we've probably all done. Yeah. Um I don't know if it's a gimmick or not but have any of you ever seen those odd little key rings where if you whistle it will beep and you tell you where it is?",
+    "raw_text": "[0.00][S01]It[0.12][1.18][S01]a perf if we made the for every remote we made something board we had to sell a lot of remote controls is this[7.70][2.68][S02]Mm-hmm.[3.00][9.48][S01]is this gonna be enough to to sell?[11.40][12.80][S02]Well something else that you brought up was uh the ability to lose a remote which as you said you've done in that we've probably all done.[20.46][20.48][S01]Yeah.[20.80][21.34][S02]Um I don't know if it's a gimmick or not but have any of you ever seen those odd little key rings where if you whistle it will beep and you tell you where it is?[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "It",
+        "t0_ms": 0,
+        "t1_ms": 120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "a perf if we made the for every remote we made something board we had to sell a lot of remote controls is this",
+        "t0_ms": 1180,
+        "t1_ms": 7700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 2680,
+        "t1_ms": 3000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "is this gonna be enough to to sell?",
+        "t0_ms": 9480,
+        "t1_ms": 11400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Well something else that you brought up was uh the ability to lose a remote which as you said you've done in that we've probably all done.",
+        "t0_ms": 12800,
+        "t1_ms": 20460,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 20480,
+        "t1_ms": 20800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um I don't know if it's a gimmick or not but have any of you ever seen those odd little key rings where if you whistle it will beep and you tell you where it is?",
+        "t0_ms": 21340,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1180,
+        "t1_ms": 7700,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2680,
+        "t1_ms": 3000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9480,
+        "t1_ms": 11400,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12800,
+        "t1_ms": 20460,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20480,
+        "t1_ms": 20800,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 21340,
+        "t1_ms": 30000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 15.678999900817871,
+      "encode_ms": 7704.744140625,
+      "decode_ms": 12376.107421875
+    }
+  },
+  "rawDecoded": "[0.00][S01]It[0.12][1.18][S01]a perf if we made the for every remote we made something board we had to sell a lot of remote controls is this[7.70][2.68][S02]Mm-hmm.[3.00][9.48][S01]is this gonna be enough to to sell?[11.40][12.80][S02]Well something else that you brought up was uh the ability to lose a remote which as you said you've done in that we've probably all done.[20.46][20.48][S01]Yeah.[20.80][21.34][S02]Um I don't know if it's a gimmick or not but have any of you ever seen those odd little key rings where if you whistle it will beep and you tell you where it is?[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

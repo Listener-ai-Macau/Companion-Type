@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0059",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 28320000,
+    "sourceEndFrame": 28800000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "e11542d0dd7f8c9b9d825b3bc44ece8c10280727fcaee06573ab1866d54db067",
+  "seconds": 17.627253600003314,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "特别低。 然后我们也。 中间那个也增加也也也有一些那个，比如说也增加促销啦，然后也也也。 也中间也有促销活动，也。 但他还还是销售不是太好的产品，我们就会进行一些那个末尾的淘汰制，把它就是把它淘汰掉，然后他他同时也也不就占也不占我们的那个。 呃，货架了。",
+    "raw_text": "[0.00][S01]特别低。[0.72][1.44][S01]然后我们也。[2.52][3.08][S01]中间那个也增加也也也有一些那个，比如说也增加促销啦，然后也也也。[8.88][9.22][S01]也中间也有促销活动，也。[12.02][13.08][S01]但他还还是销售不是太好的产品，我们就会进行一些那个末尾的淘汰制，把它就是把它淘汰掉，然后他他同时也也不就占也不占我们的那个。[24.82][25.98][S01]呃，货架了。[26.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "特别低。",
+        "t0_ms": 0,
+        "t1_ms": 720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后我们也。",
+        "t0_ms": 1440,
+        "t1_ms": 2520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "中间那个也增加也也也有一些那个，比如说也增加促销啦，然后也也也。",
+        "t0_ms": 3080,
+        "t1_ms": 8880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "也中间也有促销活动，也。",
+        "t0_ms": 9220,
+        "t1_ms": 12020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "但他还还是销售不是太好的产品，我们就会进行一些那个末尾的淘汰制，把它就是把它淘汰掉，然后他他同时也也不就占也不占我们的那个。",
+        "t0_ms": 13080,
+        "t1_ms": 24820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "呃，货架了。",
+        "t0_ms": 25980,
+        "t1_ms": 26940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 720,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 1440,
+        "t1_ms": 2520,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3080,
+        "t1_ms": 8880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9220,
+        "t1_ms": 12020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13080,
+        "t1_ms": 24820,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25980,
+        "t1_ms": 26940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 17.631000518798828,
+      "encode_ms": 6916.7109375,
+      "decode_ms": 10654.59375
+    }
+  },
+  "rawDecoded": "[0.00][S01]特别低。[0.72][1.44][S01]然后我们也。[2.52][3.08][S01]中间那个也增加也也也有一些那个，比如说也增加促销啦，然后也也也。[8.88][9.22][S01]也中间也有促销活动，也。[12.02][13.08][S01]但他还还是销售不是太好的产品，我们就会进行一些那个末尾的淘汰制，把它就是把它淘汰掉，然后他他同时也也不就占也不占我们的那个。[24.82][25.98][S01]呃，货架了。[26.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

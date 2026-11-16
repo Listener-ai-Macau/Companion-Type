@@ -1,0 +1,318 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0023",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 11040000,
+    "sourceEndFrame": 11520000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "efdfbc0eabbf7fca7d6bb6024aa3213709fa5dc28ff7a070b60fcd13428a2c69",
+  "seconds": 28.633640399995784,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Yeah, it could though. Hmm. I can have a look. Yeah. Yeah, or just I don't know. But yeah, that that might be an idea, yeah. Yeah, change the contents of the same window, like from transcription to summary. Yeah, yeah. Yeah. Oh yeah. Mm. Yeah, or even just have buttons on it, toggle buttons or something on the toolbar for that window. Hmm. Just something. Yeah, yeah, that could work. Well, there are different ways we can do it, it doesn't doesn't have to be a tab or whatever, just kind of yeah.",
+    "raw_text": "[0.00][S01]Yeah, it could though.[0.58][0.98][S02]Hmm. I can have a look.[2.76][4.14][S01]Yeah.[4.40][4.86][S03]Yeah, or just I don't know.[6.46][6.92][S02]But yeah, that that might be an idea, yeah.[8.70][7.24][S03]Yeah, change the contents of the same window, like from transcription to summary.[13.28][11.76][S01]Yeah, yeah.[12.20][14.34][S01]Yeah.[14.62][14.54][S03]Oh yeah.[14.94][16.28][S03]Mm.[16.56][17.76][S04]Yeah, or even just have buttons on it, toggle buttons or something on the toolbar for that window.[22.54][23.14][S02]Hmm.[23.52][24.36][S04]Just something.[24.96][25.98][S03]Yeah, yeah, that could work.[27.18][26.00][S04]Well, there are different ways we can do it, it doesn't doesn't have to be a tab or whatever, just kind of yeah.[29.90]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Yeah, it could though.",
+        "t0_ms": 0,
+        "t1_ms": 580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Hmm. I can have a look.",
+        "t0_ms": 980,
+        "t1_ms": 2760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 4140,
+        "t1_ms": 4400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, or just I don't know.",
+        "t0_ms": 4860,
+        "t1_ms": 6460,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "But yeah, that that might be an idea, yeah.",
+        "t0_ms": 6920,
+        "t1_ms": 8700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, change the contents of the same window, like from transcription to summary.",
+        "t0_ms": 7240,
+        "t1_ms": 13280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, yeah.",
+        "t0_ms": 11760,
+        "t1_ms": 12200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 14340,
+        "t1_ms": 14620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Oh yeah.",
+        "t0_ms": 14540,
+        "t1_ms": 14940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 16280,
+        "t1_ms": 16560,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, or even just have buttons on it, toggle buttons or something on the toolbar for that window.",
+        "t0_ms": 17760,
+        "t1_ms": 22540,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Hmm.",
+        "t0_ms": 23140,
+        "t1_ms": 23520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Just something.",
+        "t0_ms": 24360,
+        "t1_ms": 24960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah, yeah, that could work.",
+        "t0_ms": 25980,
+        "t1_ms": 27180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Well, there are different ways we can do it, it doesn't doesn't have to be a tab or whatever, just kind of yeah.",
+        "t0_ms": 26000,
+        "t1_ms": 29900,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 580,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 980,
+        "t1_ms": 2760,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4140,
+        "t1_ms": 4400,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4860,
+        "t1_ms": 6460,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 6920,
+        "t1_ms": 8700,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7240,
+        "t1_ms": 13280,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11760,
+        "t1_ms": 12200,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14340,
+        "t1_ms": 14620,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14540,
+        "t1_ms": 14940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16280,
+        "t1_ms": 16560,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17760,
+        "t1_ms": 22540,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23140,
+        "t1_ms": 23520,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24360,
+        "t1_ms": 24960,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25980,
+        "t1_ms": 27180,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26000,
+        "t1_ms": 29900,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 13.748000144958496,
+      "encode_ms": 6695.205078125,
+      "decode_ms": 21887.51171875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Yeah, it could though.[0.58][0.98][S02]Hmm. I can have a look.[2.76][4.14][S01]Yeah.[4.40][4.86][S03]Yeah, or just I don't know.[6.46][6.92][S02]But yeah, that that might be an idea, yeah.[8.70][7.24][S03]Yeah, change the contents of the same window, like from transcription to summary.[13.28][11.76][S01]Yeah, yeah.[12.20][14.34][S01]Yeah.[14.62][14.54][S03]Oh yeah.[14.94][16.28][S03]Mm.[16.56][17.76][S04]Yeah, or even just have buttons on it, toggle buttons or something on the toolbar for that window.[22.54][23.14][S02]Hmm.[23.52][24.36][S04]Just something.[24.96][25.98][S03]Yeah, yeah, that could work.[27.18][26.00][S04]Well, there are different ways we can do it, it doesn't doesn't have to be a tab or whatever, just kind of yeah.[29.90]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

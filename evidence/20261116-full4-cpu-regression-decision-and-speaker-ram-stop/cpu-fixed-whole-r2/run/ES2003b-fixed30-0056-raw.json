@@ -1,0 +1,192 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0056",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 26880000,
+    "sourceEndFrame": 27360000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "e55fee4d7328ef94210a763f0f1465b5e8f8a7cf021f52b071a8f1e4589a60f5",
+  "seconds": 20.214907699999458,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Remote contro uh sorry, we're going to go for remote control obviously. We go for a small joystick that would operate say changing channels, up and down, and then what another button that would say that it's now being used to manoeuvre around the L. C. D. Yeah. Interesting volume. Should volume be important in a joystick, do you think? Mm. We could use say the left and right for changing channels and the up and down for volume and Yeah. Yeah. But we have a frequency of how",
+    "raw_text": "[0.00][S01]Remote contro uh sorry, we're going to go for remote control obviously. We go for a small joystick that would operate say changing channels, up and down, and then what another button that would say that it's now being used to manoeuvre around the L. C. D.[14.34][15.40][S02]Yeah.[16.14][17.66][S03]Interesting volume. Should volume be important in a joystick, do you think?[21.72][17.72][S02]Mm.[18.04][22.00][S01]We could use say the left and right for changing channels and the up and down for volume and[28.02][22.52][S02]Yeah.[22.90][27.28][S03]Yeah.[27.52][27.60][S04]But we have a frequency of how[29.92]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Remote contro uh sorry, we're going to go for remote control obviously. We go for a small joystick that would operate say changing channels, up and down, and then what another button that would say that it's now being used to manoeuvre around the L. C. D.",
+        "t0_ms": 0,
+        "t1_ms": 14340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 15400,
+        "t1_ms": 16140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Interesting volume. Should volume be important in a joystick, do you think?",
+        "t0_ms": 17660,
+        "t1_ms": 21720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Mm.",
+        "t0_ms": 17720,
+        "t1_ms": 18040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "We could use say the left and right for changing channels and the up and down for volume and",
+        "t0_ms": 22000,
+        "t1_ms": 28020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 22520,
+        "t1_ms": 22900,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 27280,
+        "t1_ms": 27520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "But we have a frequency of how",
+        "t0_ms": 27600,
+        "t1_ms": 29920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 14340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15400,
+        "t1_ms": 16140,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17660,
+        "t1_ms": 21720,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 17720,
+        "t1_ms": 18040,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22000,
+        "t1_ms": 28020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22520,
+        "t1_ms": 22900,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27280,
+        "t1_ms": 27520,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 27600,
+        "t1_ms": 29920,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 24.773000717163086,
+      "encode_ms": 6967.5751953125,
+      "decode_ms": 13188.82421875
+    }
+  },
+  "rawDecoded": "[0.00][S01]Remote contro uh sorry, we're going to go for remote control obviously. We go for a small joystick that would operate say changing channels, up and down, and then what another button that would say that it's now being used to manoeuvre around the L. C. D.[14.34][15.40][S02]Yeah.[16.14][17.66][S03]Interesting volume. Should volume be important in a joystick, do you think?[21.72][17.72][S02]Mm.[18.04][22.00][S01]We could use say the left and right for changing channels and the up and down for volume and[28.02][22.52][S02]Yeah.[22.90][27.28][S03]Yeah.[27.52][27.60][S04]But we have a frequency of how[29.92]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

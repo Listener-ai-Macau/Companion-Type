@@ -1,0 +1,282 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0067",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 32160000,
+    "sourceEndFrame": 32640000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "2decf4365f641066c9d3326689d9e40ece7130be0bd87d3728f643b7cb99ac39",
+  "seconds": 33.919620900000155,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "But I think we're having like all the classes, so there's not much point in it. Yeah, I don't think there was an official I don't think there was an official one last semester. I think it was just a back holiday, wasn't it? Um something like that. I think one couple of classes were cancelled. Yeah, I think. Some classes didn't, some classes didn't, it was already they didn't really know what was gonna happen. Yeah, exactly. Yeah. Well, sure, big crowd. Yeah. I I think the undergraduates had uh were off totally. No. Yeah. It goes up to the professor whether they did it or not. Well, I don't feel like to, I don't care. I think yeah, I think the I L will probably have one to make up for missing classes.",
+    "raw_text": "[0.00][S01]But I think we're having like all the classes, so there's not much point in it.[4.92][2.80][S02]Yeah, I don't think there was an official I don't think there was an official one last semester. I think it was just a back holiday, wasn't it?[8.70][9.00][S03]Um something like that. I think one couple of classes were cancelled.[11.94][10.16][S02]Yeah, I think.[10.66][11.20][S04]Some classes didn't, some classes didn't, it was already they didn't really know what was gonna happen.[16.62][13.26][S03]Yeah, exactly.[14.28][13.46][S01]Yeah.[13.88][14.08][S01]Well, sure, big crowd. Yeah.[15.70][15.30][S03]I[15.44][16.18][S01]I think the undergraduates had uh were off totally.[19.84][16.64][S02]No.[16.88][18.10][S03]Yeah.[18.34][19.66][S03]It goes up to the professor whether they did it or not. Well, I don't feel like to, I don't care. I think yeah, I think the I L will probably have one to make up for missing classes.[29.94]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "But I think we're having like all the classes, so there's not much point in it.",
+        "t0_ms": 0,
+        "t1_ms": 4920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Yeah, I don't think there was an official I don't think there was an official one last semester. I think it was just a back holiday, wasn't it?",
+        "t0_ms": 2800,
+        "t1_ms": 8700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Um something like that. I think one couple of classes were cancelled.",
+        "t0_ms": 9000,
+        "t1_ms": 11940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah, I think.",
+        "t0_ms": 10160,
+        "t1_ms": 10660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Some classes didn't, some classes didn't, it was already they didn't really know what was gonna happen.",
+        "t0_ms": 11200,
+        "t1_ms": 16620,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah, exactly.",
+        "t0_ms": 13260,
+        "t1_ms": 14280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 13460,
+        "t1_ms": 13880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Well, sure, big crowd. Yeah.",
+        "t0_ms": 14080,
+        "t1_ms": 15700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I",
+        "t0_ms": 15300,
+        "t1_ms": 15440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I think the undergraduates had uh were off totally.",
+        "t0_ms": 16180,
+        "t1_ms": 19840,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "No.",
+        "t0_ms": 16640,
+        "t1_ms": 16880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 18100,
+        "t1_ms": 18340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "It goes up to the professor whether they did it or not. Well, I don't feel like to, I don't care. I think yeah, I think the I L will probably have one to make up for missing classes.",
+        "t0_ms": 19660,
+        "t1_ms": 29940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 4920,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2800,
+        "t1_ms": 8700,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9000,
+        "t1_ms": 11940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10160,
+        "t1_ms": 10660,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11200,
+        "t1_ms": 16620,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13260,
+        "t1_ms": 14280,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13460,
+        "t1_ms": 13880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14080,
+        "t1_ms": 15700,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 15300,
+        "t1_ms": 15440,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16180,
+        "t1_ms": 19840,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16640,
+        "t1_ms": 16880,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 18100,
+        "t1_ms": 18340,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19660,
+        "t1_ms": 29940,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.529000282287598,
+      "encode_ms": 9327.224609375,
+      "decode_ms": 24540.34765625
+    }
+  },
+  "rawDecoded": "[0.00][S01]But I think we're having like all the classes, so there's not much point in it.[4.92][2.80][S02]Yeah, I don't think there was an official I don't think there was an official one last semester. I think it was just a back holiday, wasn't it?[8.70][9.00][S03]Um something like that. I think one couple of classes were cancelled.[11.94][10.16][S02]Yeah, I think.[10.66][11.20][S04]Some classes didn't, some classes didn't, it was already they didn't really know what was gonna happen.[16.62][13.26][S03]Yeah, exactly.[14.28][13.46][S01]Yeah.[13.88][14.08][S01]Well, sure, big crowd. Yeah.[15.70][15.30][S03]I[15.44][16.18][S01]I think the undergraduates had uh were off totally.[19.84][16.64][S02]No.[16.88][18.10][S03]Yeah.[18.34][19.66][S03]It goes up to the professor whether they did it or not. Well, I don't feel like to, I don't care. I think yeah, I think the I L will probably have one to make up for missing classes.[29.94]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0042",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 20160000,
+    "sourceEndFrame": 20640000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "315ea2da9a51344aff93a6d833cc1865805f206010ed172855ed1aff51732710",
+  "seconds": 17.719216800003778,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "这个充会员儿卡，然后让一些顾客先充一部分钱在卡里边儿，然后直接以后就是刷这种会员儿卡。 然后就是这种我会员儿卡的话，可以做一个满三百送五十的活动，或者买满五百送一百的活动，就是类似这种充的越多就送的越多，就会吸引很多人过来办这个卡。 嗯。 还有就是这个，嗯。 嗯，还。",
+    "raw_text": "[0.00][S01]这个充会员儿卡，然后让一些顾客先充一部分钱在卡里边儿，然后直接以后就是刷这种会员儿卡。[8.88][9.22][S01]然后就是这种我会员儿卡的话，可以做一个满三百送五十的活动，或者买满五百送一百的活动，就是类似这种充的越多就送的越多，就会吸引很多人过来办这个卡。[23.78][24.24][S01]嗯。[24.86][25.78][S01]还有就是这个，嗯。[28.12][29.46][S01]嗯，还。[29.98]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "这个充会员儿卡，然后让一些顾客先充一部分钱在卡里边儿，然后直接以后就是刷这种会员儿卡。",
+        "t0_ms": 0,
+        "t1_ms": 8880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后就是这种我会员儿卡的话，可以做一个满三百送五十的活动，或者买满五百送一百的活动，就是类似这种充的越多就送的越多，就会吸引很多人过来办这个卡。",
+        "t0_ms": 9220,
+        "t1_ms": 23780,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯。",
+        "t0_ms": 24240,
+        "t1_ms": 24860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还有就是这个，嗯。",
+        "t0_ms": 25780,
+        "t1_ms": 28120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "嗯，还。",
+        "t0_ms": 29460,
+        "t1_ms": 29980,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 8880,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 9220,
+        "t1_ms": 23780,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 24240,
+        "t1_ms": 24860,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 25780,
+        "t1_ms": 28120,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29460,
+        "t1_ms": 29980,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.749000549316406,
+      "encode_ms": 6912.30712890625,
+      "decode_ms": 10754.421875
+    }
+  },
+  "rawDecoded": "[0.00][S01]这个充会员儿卡，然后让一些顾客先充一部分钱在卡里边儿，然后直接以后就是刷这种会员儿卡。[8.88][9.22][S01]然后就是这种我会员儿卡的话，可以做一个满三百送五十的活动，或者买满五百送一百的活动，就是类似这种充的越多就送的越多，就会吸引很多人过来办这个卡。[23.78][24.24][S01]嗯。[24.86][25.78][S01]还有就是这个，嗯。[28.12][29.46][S01]嗯，还。[29.98]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

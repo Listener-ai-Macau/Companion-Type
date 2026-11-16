@@ -1,0 +1,462 @@
+{
+  "case": {
+    "id": "EN2002a-fixed30-0068",
+    "meeting": "EN2002a",
+    "audio": "E:\\CodexData\\Companion\\.model-cache\\native8-cross-corpus-20261107\\AMI\\EN2002a\\EN2002a.Array1-01.wav",
+    "audioSha256": "6c0644431679e59adc70129f2ba6c2fb737fa731cf1ffe8a033cd7f0c441170e",
+    "sourceStartFrame": 32640000,
+    "sourceEndFrame": 33120000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "7946bfd1bc56337c4fe769c34904b374c039860c9cc0bb2f55ebf17583d0a7fe",
+  "seconds": 33.51395710000361,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "What? D I L we'll probably Yeah, we will probably have prices. Oh yeah, yeah. Yeah. It's been uh last week. Okay. Yeah. Yeah. Let's meet Monday. Done? Yeah. Um. I guess Hmm? that's it. Was there anything else? Do anyone know if you wanna like take care of this or should I take care of it? Okay. Oh, we trust you. Yeah. It's I don't know if there was something. Oh, I think he basically said. Um.",
+    "raw_text": "[0.57][S01]What?[0.83][0.89][S02]D I L we'll probably[2.07][2.22][S01]Yeah, we will probably[3.47][2.84][S02]have prices.[3.47][3.38][S03]Oh yeah, yeah.[4.21][4.05][S02]Yeah.[4.27][4.61][S03]It's been uh last week.[6.45][7.18][S04]Okay.[7.61][8.02][S02]Yeah.[8.23][8.48][S03]Yeah.[8.89][8.54][S04]Let's meet Monday.[9.23][10.32][S02]Done?[10.57][10.49][S01]Yeah.[10.85][11.88][S01]Um.[12.25][13.12][S03]I guess[13.67][13.68][S04]Hmm?[13.89][14.31][S03]that's it. Was there anything else? Do anyone know if you wanna like take care of this or should I take care of it?[20.41][20.77][S02]Okay.[21.05][20.97][S05]Oh, we trust you.[21.79][22.00][S02]Yeah.[22.21][22.26][S03]It's[22.51][23.73][S03]I don't know if there was something. Oh, I think he basically said.[27.29][29.58][S03]Um.[29.97]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "What?",
+        "t0_ms": 570,
+        "t1_ms": 830,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "D I L we'll probably",
+        "t0_ms": 890,
+        "t1_ms": 2070,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah, we will probably",
+        "t0_ms": 2220,
+        "t1_ms": 3470,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "have prices.",
+        "t0_ms": 2840,
+        "t1_ms": 3470,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Oh yeah, yeah.",
+        "t0_ms": 3380,
+        "t1_ms": 4210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 4050,
+        "t1_ms": 4270,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "It's been uh last week.",
+        "t0_ms": 4610,
+        "t1_ms": 6450,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 7180,
+        "t1_ms": 7610,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 8020,
+        "t1_ms": 8230,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 8480,
+        "t1_ms": 8890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Let's meet Monday.",
+        "t0_ms": 8540,
+        "t1_ms": 9230,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "Done?",
+        "t0_ms": 10320,
+        "t1_ms": 10570,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 10490,
+        "t1_ms": 10850,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "Um.",
+        "t0_ms": 11880,
+        "t1_ms": 12250,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "I guess",
+        "t0_ms": 13120,
+        "t1_ms": 13670,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Hmm?",
+        "t0_ms": 13680,
+        "t1_ms": 13890,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 4
+      },
+      {
+        "text": "that's it. Was there anything else? Do anyone know if you wanna like take care of this or should I take care of it?",
+        "t0_ms": 14310,
+        "t1_ms": 20410,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Okay.",
+        "t0_ms": 20770,
+        "t1_ms": 21050,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Oh, we trust you.",
+        "t0_ms": 20970,
+        "t1_ms": 21790,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 5
+      },
+      {
+        "text": "Yeah.",
+        "t0_ms": 22000,
+        "t1_ms": 22210,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "It's",
+        "t0_ms": 22260,
+        "t1_ms": 22510,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "I don't know if there was something. Oh, I think he basically said.",
+        "t0_ms": 23730,
+        "t1_ms": 27290,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      },
+      {
+        "text": "Um.",
+        "t0_ms": 29580,
+        "t1_ms": 29970,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 3
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 570,
+        "t1_ms": 830,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 890,
+        "t1_ms": 2070,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2220,
+        "t1_ms": 3470,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 2840,
+        "t1_ms": 3470,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 3380,
+        "t1_ms": 4210,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4050,
+        "t1_ms": 4270,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 4610,
+        "t1_ms": 6450,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7180,
+        "t1_ms": 7610,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8020,
+        "t1_ms": 8230,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8480,
+        "t1_ms": 8890,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8540,
+        "t1_ms": 9230,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10320,
+        "t1_ms": 10570,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10490,
+        "t1_ms": 10850,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 11880,
+        "t1_ms": 12250,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13120,
+        "t1_ms": 13670,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13680,
+        "t1_ms": 13890,
+        "speaker_id": 4,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 14310,
+        "t1_ms": 20410,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20770,
+        "t1_ms": 21050,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20970,
+        "t1_ms": 21790,
+        "speaker_id": 5,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22000,
+        "t1_ms": 22210,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 22260,
+        "t1_ms": 22510,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 23730,
+        "t1_ms": 27290,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 29580,
+        "t1_ms": 29970,
+        "speaker_id": 3,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 20.726999282836914,
+      "encode_ms": 8387.5478515625,
+      "decode_ms": 25064.404296875
+    }
+  },
+  "rawDecoded": "[0.57][S01]What?[0.83][0.89][S02]D I L we'll probably[2.07][2.22][S01]Yeah, we will probably[3.47][2.84][S02]have prices.[3.47][3.38][S03]Oh yeah, yeah.[4.21][4.05][S02]Yeah.[4.27][4.61][S03]It's been uh last week.[6.45][7.18][S04]Okay.[7.61][8.02][S02]Yeah.[8.23][8.48][S03]Yeah.[8.89][8.54][S04]Let's meet Monday.[9.23][10.32][S02]Done?[10.57][10.49][S01]Yeah.[10.85][11.88][S01]Um.[12.25][13.12][S03]I guess[13.67][13.68][S04]Hmm?[13.89][14.31][S03]that's it. Was there anything else? Do anyone know if you wanna like take care of this or should I take care of it?[20.41][20.77][S02]Okay.[21.05][20.97][S05]Oh, we trust you.[21.79][22.00][S02]Yeah.[22.21][22.26][S03]It's[22.51][23.73][S03]I don't know if there was something. Oh, I think he basically said.[27.29][29.58][S03]Um.[29.97]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

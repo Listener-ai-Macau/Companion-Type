@@ -1,0 +1,138 @@
+{
+  "case": {
+    "id": "S_R004S03C01-fixed30-0064",
+    "meeting": "S_R004S03C01",
+    "audio": "E:\\CodexData\\Companion\\real-meeting-asr-validation-20261031\\meeting-channel1.wav",
+    "audioSha256": "82ac9f8b25e2c085b2e0434e444727af0577e373ed5e1f587d3f28881862fe2f",
+    "sourceStartFrame": 30720000,
+    "sourceEndFrame": 31200000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "4d9a96d8d3d84951ffc4702de10882c9c8dfbc492455367ed2d0d3831d24d4b9",
+  "seconds": 17.20362689999456,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "是比较好的，小孩子呢，他是比较喜欢喝一些酸奶之类的，这个。 还是比较容易消瘦的。 然后呢，对于奶制品这一些呢，我们还可以推出一些奶份活动，像一些。 就是整箱奶的这个出售的，有的不是附带什么杯子呀碗之类的，可以做一些这样的活动。 然后奶制品呢，它的这个保质期呢，一般是。",
+    "raw_text": "[0.00][S01]是比较好的，小孩子呢，他是比较喜欢喝一些酸奶之类的，这个。[6.04][7.04][S01]还是比较容易消瘦的。[8.94][10.24][S01]然后呢，对于奶制品这一些呢，我们还可以推出一些奶份活动，像一些。[16.02][16.48][S01]就是整箱奶的这个出售的，有的不是附带什么杯子呀碗之类的，可以做一些这样的活动。[26.18][26.42][S01]然后奶制品呢，它的这个保质期呢，一般是。[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "是比较好的，小孩子呢，他是比较喜欢喝一些酸奶之类的，这个。",
+        "t0_ms": 0,
+        "t1_ms": 6040,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "还是比较容易消瘦的。",
+        "t0_ms": 7040,
+        "t1_ms": 8940,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后呢，对于奶制品这一些呢，我们还可以推出一些奶份活动，像一些。",
+        "t0_ms": 10240,
+        "t1_ms": 16020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "就是整箱奶的这个出售的，有的不是附带什么杯子呀碗之类的，可以做一些这样的活动。",
+        "t0_ms": 16480,
+        "t1_ms": 26180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "然后奶制品呢，它的这个保质期呢，一般是。",
+        "t0_ms": 26420,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 0,
+        "t1_ms": 6040,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 7040,
+        "t1_ms": 8940,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 10240,
+        "t1_ms": 16020,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 16480,
+        "t1_ms": 26180,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 26420,
+        "t1_ms": 30000,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 27.827999114990234,
+      "encode_ms": 7263.5078125,
+      "decode_ms": 9878.3701171875
+    }
+  },
+  "rawDecoded": "[0.00][S01]是比较好的，小孩子呢，他是比较喜欢喝一些酸奶之类的，这个。[6.04][7.04][S01]还是比较容易消瘦的。[8.94][10.24][S01]然后呢，对于奶制品这一些呢，我们还可以推出一些奶份活动，像一些。[16.02][16.48][S01]就是整箱奶的这个出售的，有的不是附带什么杯子呀碗之类的，可以做一些这样的活动。[26.18][26.42][S01]然后奶制品呢，它的这个保质期呢，一般是。[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,156 @@
+{
+  "case": {
+    "id": "ES2003b-fixed30-0051",
+    "meeting": "ES2003b",
+    "audio": "E:/CodexData/Companion/product-d1d2-20261114/ordinary-english-r1/ES2003b.Array1-01.wav",
+    "audioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+    "sourceStartFrame": 24480000,
+    "sourceEndFrame": 24960000,
+    "frames": 480000,
+    "audioSeconds": 30.0
+  },
+  "pcmSha256": "81828e0013b850694194f3ba4ceac411c4c6c954d5744fd0a63bbf6c23641335",
+  "seconds": 18.834745300002396,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "There is that possibility, yes. However, I don't know exactly where we'll be going with that, but might not even be if we have any of the marketing expert, that might be sales, if we're not in this meeting. S Mm-hmm. Is this the way I figure twelve point five Euros per unit. Mm-hmm. We have to sell at least at three million, something like that, not to account for the the money we waste on remotes that no one buys, you know, like if we made",
+    "raw_text": "[2.00][S01]There is that possibility, yes. However, I don't know exactly where we'll be going with that, but might not even be if we have any of the marketing expert, that might be sales, if we're not in this meeting.[13.34][8.06][S02]S[8.26][12.12][S02]Mm-hmm.[12.40][13.72][S02]Is this the way I figure twelve point five Euros per unit.[19.40][19.60][S01]Mm-hmm.[19.90][20.30][S02]We have to sell at least at three million, something like that, not to account for the the money we waste on remotes that no one buys, you know, like if we made[30.00]",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "There is that possibility, yes. However, I don't know exactly where we'll be going with that, but might not even be if we have any of the marketing expert, that might be sales, if we're not in this meeting.",
+        "t0_ms": 2000,
+        "t1_ms": 13340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "S",
+        "t0_ms": 8060,
+        "t1_ms": 8260,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 12120,
+        "t1_ms": 12400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Is this the way I figure twelve point five Euros per unit.",
+        "t0_ms": 13720,
+        "t1_ms": 19400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      },
+      {
+        "text": "Mm-hmm.",
+        "t0_ms": 19600,
+        "t1_ms": 19900,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 1
+      },
+      {
+        "text": "We have to sell at least at three million, something like that, not to account for the the money we waste on remotes that no one buys, you know, like if we made",
+        "t0_ms": 20300,
+        "t1_ms": 30000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 2
+      }
+    ],
+    "speaker_segments": [
+      {
+        "t0_ms": 2000,
+        "t1_ms": 13340,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 8060,
+        "t1_ms": 8260,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 12120,
+        "t1_ms": 12400,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 13720,
+        "t1_ms": 19400,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 19600,
+        "t1_ms": 19900,
+        "speaker_id": 1,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      },
+      {
+        "t0_ms": 20300,
+        "t1_ms": 30000,
+        "speaker_id": 2,
+        "p": {
+          "nativeNonfinite": "nan"
+        }
+      }
+    ],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 1331.1529541015625,
+      "mel_ms": 14.357000350952148,
+      "encode_ms": 6730.39990234375,
+      "decode_ms": 12053.6396484375
+    }
+  },
+  "rawDecoded": "[2.00][S01]There is that possibility, yes. However, I don't know exactly where we'll be going with that, but might not even be if we have any of the marketing expert, that might be sales, if we're not in this meeting.[13.34][8.06][S02]S[8.26][12.12][S02]Mm-hmm.[12.40][13.72][S02]Is this the way I figure twelve point five Euros per unit.[19.40][19.60][S01]Mm-hmm.[19.90][20.30][S02]We have to sell at least at three million, something like that, not to account for the the money we waste on remotes that no one buys, you know, like if we made[30.00]",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "semanticError": null,
+  "originalChunkInputComplete": true,
+  "speakerIdsScopedToThisInput": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "wholeMeetingAcceptance": false,
+  "qualityQualified": false
+}
