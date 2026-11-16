@@ -1,0 +1,97 @@
+{
+  "revision": 48,
+  "evidenceDirectory": "evidence/frcrn-frontend48",
+  "sources": [
+    "src/frontend_component_compare_20261116.py",
+    "src/score_frontend_component_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\asset-receipt.json",
+      "name": "asset-receipt.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\asset-failure.json",
+      "name": "asset-failure.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\asset-preparation.json",
+      "name": "asset-preparation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\protocol.json",
+      "name": "protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\scoring-control.json",
+      "name": "scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\audio-only.json",
+      "name": "audio-only.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_frcrn_official_assets_20261116.py",
+      "name": "preparation-source/prepare_frcrn_official_assets_20261116.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\freeze_frcrn_frontend_20261116.py",
+      "name": "preparation-source/freeze_frcrn_frontend_20261116.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\__init__.py",
+      "name": "upstream/frcrn_se/__init__.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\complex_nn.py",
+      "name": "upstream/frcrn_se/complex_nn.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\conv_stft.py",
+      "name": "upstream/frcrn_se/conv_stft.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\frcrn.py",
+      "name": "upstream/frcrn_se/frcrn.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\se_layer.py",
+      "name": "upstream/frcrn_se/se_layer.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\unet.py",
+      "name": "upstream/frcrn_se/unet.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\decoder-upstream.py",
+      "name": "upstream/decoder-upstream.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\dataloader-upstream.py",
+      "name": "upstream/dataloader-upstream.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\networks-upstream.py",
+      "name": "upstream/networks-upstream.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\LICENSE",
+      "name": "upstream/LICENSE"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\official_functions.py",
+      "name": "upstream/official_functions.py"
+    }
+  ],
+  "commitMessage": "Prepare one official monaural enhancer before frozen bilingual ASR with strict rejection gate",
+  "claims": {
+    "state": "ONE_OFFICIAL_FRCRN_FRONTEND_PREPARED_NO_ENHANCEMENT_QUALITY_RESULT",
+    "enhancementNeuralCalls": 0,
+    "trainingUpdates": 0,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "defaultWeightsChanged": false,
+    "noWaveformParameterGrid": true
+  }
+}

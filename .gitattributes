@@ -425,3 +425,9 @@ evidence/native-context47/** -text -whitespace
 src/moss_native_context180_worker_20261116.py -text -whitespace
 
 src/score_moss_context180_20261116.py -text -whitespace
+
+evidence/frcrn-frontend48/** -text -whitespace
+
+src/frontend_component_compare_20261116.py -text -whitespace
+
+src/score_frontend_component_20261116.py -text -whitespace

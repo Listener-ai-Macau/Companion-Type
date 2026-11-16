@@ -1,0 +1,143 @@
+{
+  "at": "2026-11-16T20:31:53.550898+08:00",
+  "parent": "383d01f38b266b03f6d461b1191c81be94e765e0",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\asset-receipt.json",
+      "file": "asset-receipt.json",
+      "bytes": 4844,
+      "sha256": "8ac1592c98312655d94856055b8d91ffd3247f551069aa01c3cf39969e6c462c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\asset-failure.json",
+      "file": "asset-failure.json",
+      "bytes": 4247,
+      "sha256": "dcfcd97141f76f8fab0d5bf3b1a4d9bfcba54d4ba9e30f53de951b3704a27336"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\asset-preparation.json",
+      "file": "asset-preparation.json",
+      "bytes": 516,
+      "sha256": "08173e102bc262b6f91f90e94d181d12584ed5018cf4facc26ea9722d3d0d628"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\protocol.json",
+      "file": "protocol.json",
+      "bytes": 11211,
+      "sha256": "f724a63d1e40e08c220058cc10eb608d52238565eeaa206b2617bb309427a2c7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\scoring-control.json",
+      "file": "scoring-control.json",
+      "bytes": 1988,
+      "sha256": "5183834372c4b54e811c5add0ef3021dbd607ec59737cd5693ca3e4844bc4b5d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\audio-only.json",
+      "file": "audio-only.json",
+      "bytes": 7577,
+      "sha256": "199ab027e89f45f4bf2ea04eb66971aa1638216fdc4d84fa8ffd974be31ee880"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_frcrn_official_assets_20261116.py",
+      "file": "preparation-source/prepare_frcrn_official_assets_20261116.py",
+      "bytes": 6125,
+      "sha256": "2ac124e5f3cd405769b3f10136f3400ed2a81c3a3d8688054b963d18b09a93e3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\freeze_frcrn_frontend_20261116.py",
+      "file": "preparation-source/freeze_frcrn_frontend_20261116.py",
+      "bytes": 5126,
+      "sha256": "2efb00322f82514e428bb47ab9eff05e2483f4f6bb8bfdc0d7a6c6ff59a0c858"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\__init__.py",
+      "file": "upstream/frcrn_se/__init__.py",
+      "bytes": 46,
+      "sha256": "d49ee4c5338707963a9b4ac4689fc1fa5064c560d943dafbe183e066db236dc8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\complex_nn.py",
+      "file": "upstream/frcrn_se/complex_nn.py",
+      "bytes": 17953,
+      "sha256": "3dcda8502c6d588493a59dcb0910624a088be3e1c8b82b9d4b9408e1c5f3b5cb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\conv_stft.py",
+      "file": "upstream/frcrn_se/conv_stft.py",
+      "bytes": 12734,
+      "sha256": "683ead65ab66688dfcd7a595d7235cda391a1428e7121d7ed06adca4b2494953"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\frcrn.py",
+      "file": "upstream/frcrn_se/frcrn.py",
+      "bytes": 10685,
+      "sha256": "17f83883f0a3ce2dc5498cbc58e65aedafeba37ec2da221fec01f773e67b4603"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\se_layer.py",
+      "file": "upstream/frcrn_se/se_layer.py",
+      "bytes": 3315,
+      "sha256": "265384bdcf473b4f96e8fe166ff76b52a8fd12cc809da7da38c76a18862c68c0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\unet.py",
+      "file": "upstream/frcrn_se/unet.py",
+      "bytes": 18933,
+      "sha256": "45bbfe65da07f49a529b4ca23b7e01bceb477efce7aa07c6fa8968ebccb9431e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\decoder-upstream.py",
+      "file": "upstream/decoder-upstream.py",
+      "bytes": 32718,
+      "sha256": "e19417ea6b0556af8b002a2260d9ec287ed4d776eb49e9612586f217ee13f6be"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\dataloader-upstream.py",
+      "file": "upstream/dataloader-upstream.py",
+      "bytes": 22553,
+      "sha256": "9abfaecd81719af628e323cbaa13845c9482854eebc6b0da4b51098b0b474539"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\networks-upstream.py",
+      "file": "upstream/networks-upstream.py",
+      "bytes": 29040,
+      "sha256": "3fefffb1db6dd095368f359775e480cfa181741645ef8752ea8ee4ed2358423f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\LICENSE",
+      "file": "upstream/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\official_functions.py",
+      "file": "upstream/official_functions.py",
+      "bytes": 3226,
+      "sha256": "c222d1909f519000933056049d86e0325a21c75aed0ee8c5da8f2e87b330720b"
+    },
+    {
+      "source": "work\\protect_frcrn48.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 4658,
+      "sha256": "f20af0806bef1517d214eec117e1bad226132f3d5f4488d421276b53d0dad794"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/frontend_component_compare_20261116.py": "7db3f9e76e50b647bd56728acbf4c4b2a9d0ece8a4922e49ba0abf4c4b2d29b9",
+    "src/score_frontend_component_20261116.py": "5fa73dd9ae4bb7b47a56ab67e25d39786f1ac58c37f80be66d29918fdb3c2c27"
+  },
+  "state": "ONE_OFFICIAL_FRCRN_FRONTEND_PREPARED_NO_ENHANCEMENT_QUALITY_RESULT",
+  "enhancementNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "defaultWeightsChanged": false,
+  "noWaveformParameterGrid": true
+}

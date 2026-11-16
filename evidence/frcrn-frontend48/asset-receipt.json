@@ -1,0 +1,97 @@
+{
+  "state": "ONE_OFFICIAL_FRCRN_CHECKPOINT_AND_EXACT_SOURCE_PREPARED_NO_INFERENCE",
+  "at": "2026-11-16T20:24:02+08:00",
+  "repository": "alibabasglab/FRCRN_SE_16K",
+  "revision": "3766e6a64b0d8cb58f08d913d617bf129f11ed53",
+  "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\last_best_checkpoint.pt",
+  "sha256": "b22256adbb91b68cf5a3db8f6657a4fb17066eecd5f069803e59c186c1cf3ebb",
+  "bytes": 161053751,
+  "sourceRepository": "modelscope/ClearerVoice-Studio",
+  "sourceRevision": "6b3774dc79c46ae8bed2a4fa5f706f0ac8c75c61",
+  "sourceFiles": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\__init__.py",
+      "gitBlobSha": "1bb9079182efe736951f3e8924dcdd5c0894645c",
+      "sha256": "d49ee4c5338707963a9b4ac4689fc1fa5064c560d943dafbe183e066db236dc8",
+      "bytes": 46
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\complex_nn.py",
+      "gitBlobSha": "a90d861c84208d5efb7a07ec538fc0704eb7840f",
+      "sha256": "3dcda8502c6d588493a59dcb0910624a088be3e1c8b82b9d4b9408e1c5f3b5cb",
+      "bytes": 17953
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\conv_stft.py",
+      "gitBlobSha": "841abc8cf9269dc36fc179b1bdeabca26a7e557e",
+      "sha256": "683ead65ab66688dfcd7a595d7235cda391a1428e7121d7ed06adca4b2494953",
+      "bytes": 12734
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\frcrn.py",
+      "gitBlobSha": "f258acbc68533fca4b80c3fb2d2ce729e9d221b9",
+      "sha256": "17f83883f0a3ce2dc5498cbc58e65aedafeba37ec2da221fec01f773e67b4603",
+      "bytes": 10685
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\se_layer.py",
+      "gitBlobSha": "a701e23a4312665b745311a1397efb1bb753ceed",
+      "sha256": "265384bdcf473b4f96e8fe166ff76b52a8fd12cc809da7da38c76a18862c68c0",
+      "bytes": 3315
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\unet.py",
+      "gitBlobSha": "3728a2d07fa982c42d0b4f83e28cdd3b86a674c2",
+      "sha256": "45bbfe65da07f49a529b4ca23b7e01bceb477efce7aa07c6fa8968ebccb9431e",
+      "bytes": 18933
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\decoder-upstream.py",
+      "gitBlobSha": "b94d903d655d2399bf308bf7278577597aaca19b",
+      "sha256": "e19417ea6b0556af8b002a2260d9ec287ed4d776eb49e9612586f217ee13f6be",
+      "bytes": 32718
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\dataloader-upstream.py",
+      "gitBlobSha": "7683453efb62869947e4f1388ed67581476b72ac",
+      "sha256": "9abfaecd81719af628e323cbaa13845c9482854eebc6b0da4b51098b0b474539",
+      "bytes": 22553
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\networks-upstream.py",
+      "gitBlobSha": "f0b2ab422f30aee5140d1a50cc975cec2f281cf0",
+      "sha256": "3fefffb1db6dd095368f359775e480cfa181741645ef8752ea8ee4ed2358423f",
+      "bytes": 29040
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\LICENSE",
+      "gitBlobSha": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357
+    }
+  ],
+  "sourceTransport": "GitHub connector exact Git blobs; official binary checkpoint fetched directly with Windows Schannel curl because connector does not support binaries. Prior urllib/OpenSSL TLS failure preserved; identical official metadata succeeded via Schannel. No network/proxy/DNS change.",
+  "license": "Apache-2.0 as published; upstream LICENSE preserved. Commercial release review remains separate.",
+  "purpose": "One full-strength published16kHz single-channel enhancer before unchanged ASR. No parameter/prompt/gain grid; speech recognition errors, not perceived denoising, decide retention.",
+  "weightsWillLoadWithWeightsOnlyTrue": true,
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 31328,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 16433152,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
