@@ -1,0 +1,38 @@
+{
+  "state": "PASS_OFFLINE_FROZEN_INPUT_TOKENIZER_AND_MASK_CONTRACT",
+  "at": "2026-11-16T17:29:47+08:00",
+  "examples": 944,
+  "languages": {
+    "English": 475,
+    "Chinese": 469
+  },
+  "targetTokens": 26148,
+  "maxTargetTokens": 103,
+  "orderSha256": "3530d905ab4f3c9c00932042b0e8a6b8b75bc9145cced226225ac676dd99f41b",
+  "torchImported": false,
+  "modelLoaded": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "actualGpuPreflightPassed": false,
+  "trainingStarted": false,
+  "binding": {
+    "packetSha256": "d95d528842090450ed53c010bdcaa9141f6ff63d26a44ae349e63ac405d9a102",
+    "workerSha256": "afbf977c6904a99634a5278d1fb1bf1ffcea4dad418d187aaf6f1284c31b5896"
+  },
+  "limits": {
+    "pid": 31340,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 159936512,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "state": "NIGHT_COMMANDS_INSPECTED_NO_EXECUTION",
+  "phases": [
+    [
+      "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Scripts\\python.exe",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_worker_20261116.py",
+      "--packet",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\night-acoustic-pilot-r1\\packet.json",
+      "--mode",
+      "preflight",
+      "--run",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\night-acoustic-pilot-r1\\gpu-preflight"
+    ],
+    [
+      "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Scripts\\python.exe",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_worker_20261116.py",
+      "--packet",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\night-acoustic-pilot-r1\\packet.json",
+      "--mode",
+      "train",
+      "--run",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\night-acoustic-pilot-r1\\training"
+    ],
+    [
+      "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Scripts\\python.exe",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_evaluate_20261116.py",
+      "--packet",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\night-acoustic-pilot-r1\\packet.json",
+      "--training-run",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\night-acoustic-pilot-r1\\training",
+      "--run",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\night-acoustic-pilot-r1\\evaluation"
+    ],
+    [
+      "E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_meeting_acoustic_candidate_20261116.py",
+      "--control",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\night-acoustic-pilot-r1\\scoring-control.json",
+      "--run",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\night-acoustic-pilot-r1\\evaluation",
+      "--output",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\night-acoustic-pilot-r1\\raw-score.json"
+    ]
+  ],
+  "actualGpuPreflightPassed": false,
+  "cpuOrIntegratedTrainingAllowed": false,
+  "newNeuralCalls": 0,
+  "scheduledJobCreated": false,
+  "limits": {
+    "pid": 25436,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 23973888,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "torchImported": false
+}

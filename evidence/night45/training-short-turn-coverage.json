@@ -1,0 +1,26 @@
+{
+  "state": "TRAINING_METADATA_SHORT_TURN_COVERAGE_AUDITED_NO_AUDIO_OR_MODEL_CALLS",
+  "provenance": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-nonoverlap-r2\\example-provenance.json",
+  "provenanceSha256": "351b097b3619626bca5b81674c9c470569a0081daa957f899dbc06ee28da6b44",
+  "trainJsonlSha256": "6ed9ed0972d11673a8ca4bd044d06dea066732d51422dc20de3b20816d898d04",
+  "groups": {
+    "English": {
+      "examples": 475,
+      "singleSpeakerExamples": 258,
+      "multiSpeakerExamples": 217,
+      "shortTurnsWithinTrainingClips": 312,
+      "examplesContainingShortTurns": 193,
+      "multiSpeakerExamplesContainingShortTurns": 192
+    },
+    "Chinese": {
+      "examples": 469,
+      "singleSpeakerExamples": 285,
+      "multiSpeakerExamples": 184,
+      "shortTurnsWithinTrainingClips": 229,
+      "examplesContainingShortTurns": 137,
+      "multiSpeakerExamplesContainingShortTurns": 137
+    }
+  },
+  "scope": "Consecutive same-speaker labelled events within each training clip,<=2s; these are clip-local turns, not necessarily complete source-session turns. No words deleted or resampled; existing pilot contains some short turns, so the2s sample minimum does not mean zero short-turn supervision.",
+  "newNeuralCalls": 0
+}

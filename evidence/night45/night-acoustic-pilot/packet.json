@@ -1,0 +1,192 @@
+{
+  "state": "FROZEN_SINGLE_NIGHT_ACOUSTIC_PILOT_OFFLINE_READY_GPU_EXECUTION_UNVERIFIED",
+  "at": "2026-11-16T17:28:40+08:00",
+  "ownerWorkMode": "Daytime existing-output analysis, data/code checks; night actual discrete GPU preflight then one fixed batch. No CPU/integrated-GPU training, scheduled job or implicit fallback.",
+  "target": {
+    "accuracy": 0.98,
+    "floorAccuracy": 0.95,
+    "originalTextErrorGateExclusive": 0.05
+  },
+  "modelRoot": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model",
+  "modelSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1",
+  "modelWeightBytes": 4076193080,
+  "modelWeightPayloadReadByPreparation": false,
+  "runtime": {
+    "python": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Scripts\\python.exe",
+    "torch": "2.11.0+rocm10.0.0",
+    "transformers": "5.22.1"
+  },
+  "blas": {
+    "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0"
+  },
+  "trainingWorker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_worker_20261116.py",
+  "evaluationWorker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_evaluate_20261116.py",
+  "nightEntry": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_night_20261116.py",
+  "runRoot": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\night-acoustic-pilot-r1",
+  "scoringPython": "E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe",
+  "independentScorer": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_meeting_acoustic_candidate_20261116.py",
+  "scoringControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\night-acoustic-pilot-r1\\scoring-control.json",
+  "trainJsonl": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-nonoverlap-r2\\train.jsonl",
+    "sha256": "6ed9ed0972d11673a8ca4bd044d06dea066732d51422dc20de3b20816d898d04"
+  },
+  "provenance": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-nonoverlap-r2\\example-provenance.json",
+    "sha256": "351b097b3619626bca5b81674c9c470569a0081daa957f899dbc06ee28da6b44"
+  },
+  "training": {
+    "trainablePrefixes": [
+      "model.audio_tower.",
+      "model.multi_modal_projector."
+    ],
+    "trainableParameters": 317477504,
+    "languageModelFrozen": true,
+    "epochs": 1,
+    "batchSize": 1,
+    "gradientAccumulation": 2,
+    "lossNormalization": "Token-weighted mean across each accumulated group, explicit target-only mask including EOS.",
+    "seed": 20261116,
+    "learningRate": 2e-05,
+    "gradientClip": 1.0,
+    "optimizer": "AdamW,FP32 trainable parameters/gradients/moments on GPU,betas(.9,.999),eps1e-8,weight_decay0,capturableTrue,foreachFalse,fusedFalse",
+    "autocast": "BF16; final independent inference returns acoustic weights to native BF16",
+    "checkpointEveryUpdates": 64,
+    "checkpointAfterFirstUpdate": true,
+    "checkpointPublication": "Stream bounded1MiB host blocks; immutable tensors/receipt then atomic latest pointer with receipt SHA256. Incomplete writes never replace a committed checkpoint.",
+    "preflightWeightsReusedByActualTraining": false
+  },
+  "resources": {
+    "cpuPercent": 25,
+    "computeThreads": 4,
+    "privateMemoryBytes": 2147483648,
+    "minimumAvailableBytes": 3414499000,
+    "stableRamSeconds": 60,
+    "actualWindowsLowMemoryStopsWorker": true,
+    "theoreticalModelGradientOptimizerLowerBoundBytes": 8520790016,
+    "theoreticalCheckpointPayloadBytes": 3809730048,
+    "plannedCheckpointDiskWithReserveBytes": 47275739648,
+    "actualGpuPeakOrTrainingDurationMeasured": false
+  },
+  "preflightReceipt": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\night-acoustic-pilot-r1\\gpu-preflight\\preflight.json",
+  "evaluationAudioOnly": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\night-acoustic-pilot-r1\\evaluation-audio-only.json",
+  "evaluation": {
+    "strictValidationClips": 24,
+    "ordinaryChineseWholeLeaves": 79,
+    "sourceFramesUnchanged": true,
+    "knownOrdinaryBaselineErrors": 461,
+    "speakerAttributedScoringIncluded": false,
+    "factsScoringIncluded": false,
+    "originalFinalBlindHoldoutOpened": false
+  },
+  "participantSplit": "Source recordings are disjoint. AMI known participant split previously checked; Chinese true global participant disjointness is still unverified, so no unseen-person/final-sale claim.",
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_contract_20261116.py",
+      "sha256": "4e238f87f06b7ed95a6bd6e30522e86b4129836074cabff138cd1fe5f76981c9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_worker_20261116.py",
+      "sha256": "afbf977c6904a99634a5278d1fb1bf1ffcea4dad418d187aaf6f1284c31b5896"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_night_20261116.py",
+      "sha256": "11e73bcffc8681fe8b9e624310d411f94a1041c04ce9e6a961d81bf8e75536b3"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_evaluate_20261116.py",
+      "sha256": "b62b1f7446addd039c59ebb10725732a4b62ac429523f81c44cc8484569d77d7"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_meeting_acoustic_candidate_20261116.py",
+      "sha256": "c7ec6fbd3ddc9a994a90542c39f5b2dbe5a806d79b7807a1dee2746eb022b647"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_qwen_streamed_loader_20261107.py",
+      "sha256": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_streamed_weights_20261104.py",
+      "sha256": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py",
+      "sha256": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py",
+      "sha256": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_community1_adapter_20261115.py",
+      "sha256": "a6905264e2787ac059c7500e0e87ef8b5bf7e8a57502fbad42e53eea6b4e189d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_pcm_session_20261114.py",
+      "sha256": "182006e169fd89ab4fdc5990f3b76138a49181863c4db3ccb26d23c18f0dc7b9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\night-acoustic-pilot-r1\\evaluation-audio-only.json",
+      "sha256": "10e7d58cdee664c16b634112bf2347ed74af703a0805097b438d0276b1a0a73e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\audio-only.json",
+      "sha256": "ea332eee5c7f6eac11cec180c9d5276652ed883b5d64afb01146642521bec60d"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\paired-real-alimeeting-20261109\\fixed-native-runtime-r2\\source\\native-protocol.json",
+      "sha256": "9595069d7ab83f7406d31aafe56b1556be21fca70ebd8ec03ba4999c299e80e9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native-r1\\processor-numeric-proof.json",
+      "sha256": "01dd5bff9fa387b30da277bb9c1090e5a96aef71bfdc5c1ccd813576fa191c17"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native-r1\\streamed-loader-proof-r2.json",
+      "sha256": "f783ddea818cd990395f0d03eddedcf22e503c2b8ee7130b56d2be580ba8df66"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\config.json",
+      "sha256": "117ac8e63e2af7cae3665e5a632d6eb03f5f384915519ceb6403c15ec6533f63"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\generation_config.json",
+      "sha256": "9939fc9388b79bd70757f938b87381e817173d6a6158f5af6506c0b73e775c3c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\processor_config.json",
+      "sha256": "bc0b230081b44e629dd5b9045b78495615c1831b4b9f4cffe97bd37e82a6156a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\tokenizer.json",
+      "sha256": "fe1fad59be22a41ee293363fcf95fdedbc7c93f3b49270b1d2e18bd1399a7a05"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\tokenizer_config.json",
+      "sha256": "945e980986de2ca7768f3326bfdbb4fbea3406f972b8ae0be233089f2b253c11"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\chat_template.jinja",
+      "sha256": "f50e6b694fbf4a683206e37869990d68333fe95d285730f084c838a34b0d98c2"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\modeling_qwen3_asr.py",
+      "sha256": "f6247469bc82ee40aa83909c530053d6bfbb1cfa8d34e74ff842f81f6c0bb2a4"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\processing_qwen3_asr.py",
+      "sha256": "5ff7ace057ae959fb0cd551775cbbfdad8c003eb731bf0f1f39bfc6452ce86fa"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\feature_extraction_qwen3_asr.py",
+      "sha256": "95d23cca9645546b9f6a97885eace5c02a95f5048bf3616e03f00041fd993a74"
+    }
+  ],
+  "newNeuralCalls": 0,
+  "weightUpdates": 0,
+  "trainingStarted": false,
+  "actualGpuPreflightPassed": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "preparationRepair": "First builder attempt stopped before writing a packet because the inference-only source omits role. Freeze-time role selection now uses the already frozen scoring metadata; only explicitly named audio fields enter evaluation-audio-only.json. No validation words enter model workers."
+}

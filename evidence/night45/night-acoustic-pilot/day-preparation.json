@@ -1,0 +1,78 @@
+{
+  "at": "2026-11-16T17:32:47+08:00",
+  "state": "DAYTIME_DIAGNOSIS_AND_OFFLINE_NIGHT_BATCH_READY_ACTUAL_GPU_PREFLIGHT_PENDING",
+  "ownerQuotes": [
+    "看一下咯，然后。除了哦。就是你现在没没法做别的事情了，对吧？因为没有显卡。你看，继续把没有显卡可以做的事情做一下。",
+    "让你白天集中分析问题，然后晚上再集中训练，这样子会好一点吧？因为我们有显卡的时间是只有晚上才可以。"
+  ],
+  "ownerWorkMode": {
+    "day": "Existing errors, data/label/segmentation and implementation checks; no neural training.",
+    "night": "When actual RX6800XT is connected: one fixed preflight, then one prepared training/evaluation batch.",
+    "cpuTraining": false,
+    "integratedGpuTraining": false,
+    "automaticScheduledStartCreated": false
+  },
+  "packet": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\night-acoustic-pilot-r1\\packet.json",
+  "packetSha256": "d95d528842090450ed53c010bdcaa9141f6ff63d26a44ae349e63ac405d9a102",
+  "nightEntry": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_night_20261116.py",
+  "description": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\night-acoustic-pilot-r1\\说明.txt",
+  "implemented": [
+    "Native acoustic+bridge full-coverage GPU worker; frozen language model,FP32 trainable masters/moments and BF16 autocast.",
+    "Explicit prompt/padding/EOS masks and token-weighted accumulation; balanced fixed944-example order.",
+    "Bounded checkpoint writer, immutable tensors/receipt, receipt SHA and atomic last-committed pointer; stop/corruption/concurrent-run rejection.",
+    "Actual present-PnP/HIP6800XT selection and original CPU/private-memory/low-RAM guards; no integrated/CPU training fallback.",
+    "Night controller with explicit execute mode, no timer/retries, separate phases and opt-in technical resume.",
+    "Audio-only final-epoch BF1624-clip+ordinary whole evaluation, original padding/exact-zero input contract, independent unchanged raw scoring."
+  ],
+  "verifiedOffline": {
+    "examples": 944,
+    "languages": {
+      "English": 475,
+      "Chinese": 469
+    },
+    "targetTokens": 26148,
+    "maxTargetTokens": 103,
+    "targetTruncated": false,
+    "torchImportedByAudit": false,
+    "contractChecksPassed": 11,
+    "checkpointFormatReadByIndependentSafetensors": true,
+    "missingActualPreflightRefusedBeforeTorch": true,
+    "originalEnglishStrictErrors": 141,
+    "originalEnglishStrictWords": 709,
+    "originalChineseStrictErrors": 73,
+    "originalChineseStrictCharacters": 1258,
+    "originalChineseWholeErrors": 461,
+    "originalChineseWholeCharacters": 8325,
+    "oldOrdinaryInputExactZeroLeaves": 3,
+    "oldTailInputPaddingSamples": 173
+  },
+  "theoreticalResources": {
+    "cpuPercent": 25,
+    "computeThreads": 4,
+    "privateMemoryBytes": 2147483648,
+    "minimumAvailableBytes": 3414499000,
+    "stableRamSeconds": 60,
+    "actualWindowsLowMemoryStopsWorker": true,
+    "theoreticalModelGradientOptimizerLowerBoundBytes": 8520790016,
+    "theoreticalCheckpointPayloadBytes": 3809730048,
+    "plannedCheckpointDiskWithReserveBytes": 47275739648,
+    "actualGpuPeakOrTrainingDurationMeasured": false
+  },
+  "actualGpuPreflightPassed": false,
+  "actualForwardBackwardOrOptimizerOnGpuTested": false,
+  "actualGpuPeakOrTrainingDurationMeasured": false,
+  "actualGpuCheckpointReloadTested": false,
+  "trainingStarted": false,
+  "newNeuralCalls": 0,
+  "newWeightUpdates": 0,
+  "modelQualityImprovedByThisBatch": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "rawEvaluationDoesNotReplacePersonFactsOrHoldoutAcceptance": true,
+  "preparationFailuresRetained": [
+    "Builder first assumed audio-only manifest contains role; corrected freeze-time role lookup while excluding every validation label from model inputs.",
+    "Real admission test exposed the old resource constructor10% ceiling; reused existing owner25% JobObject override without changing the shared default or2GiB limit.",
+    "Review found one173-sample native tail padding and3 exact-zero leaves; restored the same input contract before any candidate inference."
+  ],
+  "next": "Actual RX6800XT presence plus original RAM stability gate; run the frozen night entry. Numerical GPU loss/accumulation/coverage, optimizer precision, checkpoint reload and true memory/time checks must pass before the fresh fixed epoch. Then use raw cross-meeting and ordinary-regression results to decide the next person/activity/facts acceptance work; do not count today’s code as an accuracy gain."
+}

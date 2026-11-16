@@ -1,0 +1,48 @@
+{
+  "revision": 45,
+  "evidenceDirectory": "evidence/night45",
+  "commitMessage": "Prepare one GPU-only meeting acoustic pilot with verified offline contracts",
+  "sources": [
+    "src/meeting_acoustic_contract_20261116.py",
+    "src/meeting_acoustic_worker_20261116.py",
+    "src/meeting_acoustic_evaluate_20261116.py",
+    "src/meeting_acoustic_night_20261116.py",
+    "src/score_meeting_acoustic_candidate_20261116.py",
+    "src/test_meeting_acoustic_contract_20261116.py"
+  ],
+  "closedDirectories": [
+    {
+      "directory": "C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261109-paired-real-meeting/bilingual-local20261114/d1d2-execution/joint-architecture-r1/night-acoustic-pilot-r1",
+      "stateFile": "day-preparation.json",
+      "requiredState": "DAYTIME_DIAGNOSIS_AND_OFFLINE_NIGHT_BATCH_READY_ACTUAL_GPU_PREFLIGHT_PENDING",
+      "label": "night-acoustic-pilot"
+    }
+  ],
+  "files": [
+    {"source":"E:/CodexData/Companion/product-d1d2-20261114/joint-architecture-r1/night-acoustic-pilot-r1/offline-audit/offline-audit.json","name":"offline-input-audit.json"},
+    {"source":"C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261109-paired-real-meeting/bilingual-local20261114/d1d2-execution/joint-architecture-r1/meeting-domain-data-r1/stagea-error-priorities20261116.json","name":"stagea-error-priorities.json"},
+    {"source":"C:/Users/Billy/Desktop/Denzic/Companion/docs/handoffs/20261109-paired-real-meeting/bilingual-local20261114/d1d2-execution/joint-architecture-r1/meeting-domain-data-r1/training-short-turn-coverage20261116.json","name":"training-short-turn-coverage.json"},
+    {"source":"C:/Users/Billy/Documents/Codex/2026-11-14/xu-y/work/audit_stagea_error_priorities_20261116.py","name":"work-source/audit_stagea_error_priorities_20261116.py"},
+    {"source":"C:/Users/Billy/Documents/Codex/2026-11-14/xu-y/work/prepare_night_acoustic_pilot_20261116.py","name":"work-source/prepare_night_acoustic_pilot_20261116.py"},
+    {"source":"C:/Users/Billy/Documents/Codex/2026-11-14/xu-y/work/check_night_training_admission_20261116.py","name":"work-source/check_night_training_admission_20261116.py"},
+    {"source":"C:/Users/Billy/Documents/Codex/2026-11-14/xu-y/work/verify_night_offline_20261116.py","name":"work-source/verify_night_offline_20261116.py"},
+    {"source":"C:/Users/Billy/Documents/Codex/2026-11-14/xu-y/work/record_day_night_preparation_20261116.py","name":"work-source/record_day_night_preparation_20261116.py"}
+  ],
+  "claims": {
+    "state": "DAYTIME_DIAGNOSIS_AND_OFFLINE_NIGHT_BATCH_READY_ACTUAL_GPU_PREFLIGHT_PENDING",
+    "ownerTargetAccuracy": 0.98,
+    "ownerMinimumAccuracy": 0.95,
+    "offlineInputAuditPassed": true,
+    "offlineContractChecksPassed": 11,
+    "retainedNativeRawScoresReproduced": true,
+    "actualGpuTrainingOrReloadTested": false,
+    "trainingStarted": false,
+    "newNeuralCalls": 0,
+    "newWeightUpdates": 0,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "rawTrainingAudioOrJsonlIncluded": false,
+    "actualTrainingWeightsIncluded": false,
+    "productDefaultChanged": false
+  }
+}

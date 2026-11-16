@@ -399,3 +399,17 @@ src/compose_cpu_established_speaker_join_20261116.py -text -whitespace
 evidence/cpu44/** -text -whitespace
 
 src/run_cpu_batched_alignment_20261116.py -text -whitespace
+
+evidence/night45/** -text -whitespace
+
+src/meeting_acoustic_contract_20261116.py -text -whitespace
+
+src/meeting_acoustic_worker_20261116.py -text -whitespace
+
+src/meeting_acoustic_evaluate_20261116.py -text -whitespace
+
+src/meeting_acoustic_night_20261116.py -text -whitespace
+
+src/score_meeting_acoustic_candidate_20261116.py -text -whitespace
+
+src/test_meeting_acoustic_contract_20261116.py -text -whitespace

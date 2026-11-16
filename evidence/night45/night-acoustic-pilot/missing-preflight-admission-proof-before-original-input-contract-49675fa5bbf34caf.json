@@ -1,0 +1,12 @@
+{
+  "state": "PASS_REAL_TRAIN_ENTRY_REFUSES_MISSING_GPU_PREFLIGHT_BEFORE_TORCH",
+  "at": "2026-11-16T17:24:42+08:00",
+  "packetSha256": "ad9fc96fd4863f630cda5b2853d604221b82bd5bc8a86b669452f74452d3026f",
+  "expectedMissingPreflight": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\night-acoustic-pilot-r1\\gpu-preflight\\preflight.json",
+  "torchImported": false,
+  "trainingRunCreated": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "priorPreparationFailure": "The first negative-entry test exposed the shared resource constructor max10% check. The worker now reuses the existing approved25% JobObject override without changing the shared default or2GiB guard."
+}

@@ -1,0 +1,17 @@
+Companion：白天分析与离线准备／夜间单一GPU训练批次
+目标98%，底线95%；原逐人、DER、事实、防回退与最终盲测要求保留。
+当前：离线准备已验；真实GPU前反传、显存、吞吐与恢复仍未实测。没有启动训练或定时任务。
+
+白天已完成：已有错误归因；944条训练输入的音频头、token与标签检查；固定中英采样顺序；目标标签遮罩；仅独显准入；分块checkpoint/元数据校验/中断及并发保护；原分数复现。
+训练：22个公开源，944条，约2.81小时；声学编码器+桥接约3.1748亿参数，语言模型冻结；一个固定epoch、batch1、累积2。所有原词、短回应、重复、数字与EOS保留。
+对照：24条严格无重叠验证片段，以及同一普通中文整会79个原输入叶；保留原173采样点尾部补零，以及只跳过完全数字零的原策略，非零轻声不截除。
+
+夜间入口（当前不执行）：
+"E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Scripts\python.exe" "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\meeting_acoustic_night_20261116.py" --packet "C:\Users\Billy\Desktop\Denzic\Companion\docs\handoffs\20261109-paired-real-meeting\bilingual-local20261114\d1d2-execution\joint-architecture-r1\night-acoustic-pilot-r1\packet.json" --execute-night
+入口依次完成：真实6800XT预检 → 从原权重新开一批训练 → 最终epoch原生BF16固定对照 → 独立原评分。任一阶段失败停止，保留状态，不自动换模型或重试失败前缀。
+如已有停下的批次，先核对应state.json/console；确认停止原因已解决后，技术续作可使用--resume-training或--resume-evaluation。不是重新训练或更换参数。
+
+资源：约25%CPU/最多4计算线程供预处理及调度，2GiB本作业族私有内存硬限；开始/恢复需空闲3.18GiB连续60秒，Windows低内存信号停止。前反传、训练参数与Adam动量全在经核实的6800XT，无CPU/780M训练兜底。
+理论GPU模型/梯度/优化器下界约8.52GB，尚未计激活和缓存；不能据此声称16GB显存实测可用。实际峰值与每步速度必须由夜间预检给出。
+恢复文件写E盘，按固定间隔保留完整状态；GPU实际预检与训练数据均未复制成用户安装包。
+本批只准备并检验训练/原文对照入口。新文字的时间对齐、整会人物归属、逐人/事实、未见会议与商用品质仍需后续验收；默认模型不变。

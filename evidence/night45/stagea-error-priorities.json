@@ -1,0 +1,2910 @@
+{
+  "at": "2026-11-16T16:41:15+08:00",
+  "state": "FROZEN_STAGE_A_ERROR_INVENTORY_COMPLETE_NO_NEW_INFERENCE",
+  "ownerTarget": {
+    "targetErrorRate": 0.02,
+    "floorOriginalErrorRateStrictlyBelow": 0.05,
+    "chineseUnit": "character",
+    "englishUnit": "word",
+    "rawAndSpeakerAttributedTextReportedSeparately": true,
+    "originalEveryPersonDerAndFactsGatesRetained": true
+  },
+  "inputs": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\audio-only.json",
+      "sha256": "ea332eee5c7f6eac11cec180c9d5276652ed883b5d64afb01146642521bec60d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json",
+      "sha256": "1bd61c8c2b9438a520b0f16879d94d7e320f1a7ea7fec72d74ad7d1047909f83"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\raw-text-baseline.json",
+      "sha256": "cc469e7acfda616f9dcc4775c722e6d5fbca3c77e7acccc6f750130099b2b8f4"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\speaker-baseline.json",
+      "sha256": "c885213117bc0f1ba344f98f08321232d1aef5b27ca24c6d4aeb17a97acacce8"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\full-score.json",
+      "sha256": "c574113127128f26d260299a88409776350d6a9b5c4d17c582b7fcd0796dab01"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\asr-input-contract-audit-r1\\conclusion.json",
+      "sha256": "08c0b148bb066ca6badb23fa47415884afb85535c1abd33650f94aba8f11fcfa"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_sequential_meetings_20261115.py",
+      "sha256": "d27ad4d4253029d8f64e3a9e5ef1b3d0ef281471237ed9218160701ef6d1ea89"
+    }
+  ],
+  "diagnosticSourceSha256": "dd5d49d8b4705f32df24e5f36c4d64637c82f8b63180902f67ffa5a829d602cb",
+  "previouslyVerifiedOutputContract": {
+    "officialExactEnglishBlocks": {
+      "ES2003b": 71,
+      "EN2002a": 72
+    },
+    "productMergePreservedText": true,
+    "newDecoderReplayPerformed": false
+  },
+  "groups": [
+    {
+      "language": "Chinese",
+      "role": "train",
+      "cases": 8,
+      "referenceUnits": 679,
+      "errors": 133,
+      "errorRate": 0.1958762886597938,
+      "counts": {
+        "replace": 81,
+        "delete": 41,
+        "insert": 11
+      },
+      "inspectionClasses": {
+        "other_lexical": 129,
+        "hesitation_token_involved": 3,
+        "er_character_involved": 1
+      },
+      "hesitationInvolvedFractionOfEdits": 0.022556390977443608,
+      "rawDiarizationReusedUnchanged": {
+        "referenceSpeakerSeconds": 169.08454124395368,
+        "missSeconds": 18.997093872901942,
+        "falseAlarmSeconds": 3.5373026289482112,
+        "confusionSeconds": 6.647434375158326,
+        "errorSeconds": 29.18183087700848,
+        "DER": 0.17258721975597516,
+        "missFractionOfDiarizationError": 0.6509904725638446
+      },
+      "turns": 24,
+      "shortTurns": 5,
+      "shortTurnReferenceUnits": 33,
+      "shortTurnDeletedReferenceUnits": 9,
+      "fullyDeletedShortTurns": 0,
+      "edgeThreeReferenceUnits": 48,
+      "deletedEdgeThreeReferenceUnits": 5,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0
+    },
+    {
+      "language": "Chinese",
+      "role": "validation",
+      "cases": 12,
+      "referenceUnits": 1258,
+      "errors": 73,
+      "errorRate": 0.05802861685214626,
+      "counts": {
+        "replace": 36,
+        "delete": 24,
+        "insert": 13
+      },
+      "inspectionClasses": {
+        "hesitation_token_involved": 4,
+        "er_character_involved": 15,
+        "other_lexical": 54
+      },
+      "hesitationInvolvedFractionOfEdits": 0.0547945205479452,
+      "rawDiarizationReusedUnchanged": {
+        "referenceSpeakerSeconds": 271.8154751222007,
+        "missSeconds": 2.6582134471255543,
+        "falseAlarmSeconds": 2.7605508249244792,
+        "confusionSeconds": 0.9244603620286398,
+        "errorSeconds": 6.343224634078673,
+        "DER": 0.023336510297020194,
+        "missFractionOfDiarizationError": 0.41906342601276153
+      },
+      "turns": 26,
+      "shortTurns": 3,
+      "shortTurnReferenceUnits": 21,
+      "shortTurnDeletedReferenceUnits": 2,
+      "fullyDeletedShortTurns": 1,
+      "edgeThreeReferenceUnits": 72,
+      "deletedEdgeThreeReferenceUnits": 1,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0
+    },
+    {
+      "language": "English",
+      "role": "validation",
+      "cases": 12,
+      "referenceUnits": 709,
+      "errors": 141,
+      "errorRate": 0.19887165021156558,
+      "counts": {
+        "insert": 15,
+        "replace": 54,
+        "delete": 72
+      },
+      "inspectionClasses": {
+        "other_lexical": 113,
+        "hesitation_token_involved": 15,
+        "reference_isolated_letter": 4,
+        "reference_spelled_acronym": 9
+      },
+      "hesitationInvolvedFractionOfEdits": 0.10638297872340426,
+      "rawDiarizationReusedUnchanged": {
+        "referenceSpeakerSeconds": 209.12006250000172,
+        "missSeconds": 37.94999999999992,
+        "falseAlarmSeconds": 4.799999999996928,
+        "confusionSeconds": 0.9600625000002765,
+        "errorSeconds": 43.71006249999713,
+        "DER": 0.20901898161969404,
+        "missFractionOfDiarizationError": 0.8682211332917315
+      },
+      "turns": 35,
+      "shortTurns": 14,
+      "shortTurnReferenceUnits": 44,
+      "shortTurnDeletedReferenceUnits": 17,
+      "fullyDeletedShortTurns": 6,
+      "edgeThreeReferenceUnits": 72,
+      "deletedEdgeThreeReferenceUnits": 11,
+      "englishOneSecondEdgeReferenceUnits": 99,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 16
+    }
+  ],
+  "ordinaryChineseWholeMeetingReused": {
+    "meeting": "S_R004S03C01",
+    "rawText": {
+      "referenceUnits": 8325,
+      "hypothesisUnits": 8205,
+      "errors": 461,
+      "errorRate": 0.055375375375375374,
+      "counts": {
+        "replace": 225,
+        "delete": 178,
+        "insert": 58
+      }
+    },
+    "personText": {
+      "errors": 483,
+      "referenceUnits": 8325,
+      "errorRate": 0.058018018018018015,
+      "unknownUnitsForcedUnmatched": 8,
+      "perPerson": [
+        {
+          "speaker": "001-M",
+          "referenceUnits": 1983,
+          "hypothesisUnits": 1936,
+          "errors": 198,
+          "errorRate": 0.09984871406959153,
+          "counts": {
+            "replace": 109,
+            "delete": 68,
+            "insert": 21
+          }
+        },
+        {
+          "speaker": "002-F",
+          "referenceUnits": 650,
+          "hypothesisUnits": 649,
+          "errors": 7,
+          "errorRate": 0.010769230769230769,
+          "counts": {
+            "replace": 4,
+            "delete": 2,
+            "insert": 1
+          }
+        },
+        {
+          "speaker": "003-F",
+          "referenceUnits": 1681,
+          "hypothesisUnits": 1660,
+          "errors": 71,
+          "errorRate": 0.042236763831052945,
+          "counts": {
+            "replace": 26,
+            "delete": 33,
+            "insert": 12
+          }
+        },
+        {
+          "speaker": "004-F",
+          "referenceUnits": 2402,
+          "hypothesisUnits": 2370,
+          "errors": 83,
+          "errorRate": 0.03455453788509576,
+          "counts": {
+            "replace": 27,
+            "delete": 44,
+            "insert": 12
+          }
+        },
+        {
+          "speaker": "005-F",
+          "referenceUnits": 1609,
+          "hypothesisUnits": 1582,
+          "errors": 116,
+          "errorRate": 0.07209446861404599,
+          "counts": {
+            "replace": 59,
+            "delete": 42,
+            "insert": 15
+          }
+        }
+      ],
+      "mappingScope": "One raw continuous CPU Nemotron activity identity for the whole original meeting; no lexical or per-window identity fitting."
+    },
+    "rawDER": {
+      "referenceSpeakerSeconds": 2074.389489999999,
+      "missSeconds": 64.77143099999974,
+      "falseAlarmSeconds": 12.321921000001133,
+      "confusionSeconds": 1.3699999999999992,
+      "errorSeconds": 78.46335200000087,
+      "DER": 0.03782479248870515,
+      "identityForScoringOnly": {
+        "speaker_0": "001-M",
+        "speaker_1": "002-F",
+        "speaker_2": "004-F",
+        "speaker_3": "005-F",
+        "speaker_4": "003-F"
+      }
+    },
+    "newFullMeetingInference": false
+  },
+  "cases": [
+    {
+      "id": "20200707_L_R001S08C01-seq-000",
+      "meeting": "20200707_L_R001S08C01",
+      "language": "Chinese",
+      "role": "train",
+      "referenceUnits": 98,
+      "errors": 38,
+      "errorRate": 0.3877551020408163,
+      "counts": {
+        "replace": 23,
+        "delete": 11,
+        "insert": 4
+      },
+      "inspectionClasses": {
+        "other_lexical": 36,
+        "hesitation_token_involved": 1,
+        "er_character_involved": 1
+      },
+      "turns": 7,
+      "shortTurns": 3,
+      "shortTurnReferenceUnits": 25,
+      "shortTurnDeletedReferenceUnits": 3,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 2,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "001-M",
+          "referenceUnits": 46,
+          "deletedReferenceUnits": 7,
+          "substitutedReferenceUnits": 11
+        },
+        {
+          "speaker": "002-M",
+          "referenceUnits": 9,
+          "deletedReferenceUnits": 3,
+          "substitutedReferenceUnits": 3
+        },
+        {
+          "speaker": "003-M",
+          "referenceUnits": 9,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 2
+        },
+        {
+          "speaker": "004-M",
+          "referenceUnits": 7,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 2
+        },
+        {
+          "speaker": "005-F",
+          "referenceUnits": 9,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "006-F",
+          "referenceUnits": 7,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "007-M",
+          "referenceUnits": 11,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 5
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 7,
+          "tokens": [
+            "顾",
+            "问"
+          ],
+          "lastReferenceIndex": 8,
+          "hypothesisContext": [
+            "是",
+            "场",
+            "务",
+            "零",
+            "二",
+            "六",
+            "我"
+          ]
+        },
+        {
+          "firstReferenceIndex": 81,
+          "tokens": [
+            "咱",
+            "们"
+          ],
+          "lastReferenceIndex": 82,
+          "hypothesisContext": [
+            "这",
+            "样",
+            "的",
+            "这",
+            "个",
+            "技",
+            "术"
+          ]
+        },
+        {
+          "firstReferenceIndex": 96,
+          "tokens": [
+            "儿",
+            "是"
+          ],
+          "lastReferenceIndex": 97,
+          "hypothesisContext": [
+            "这",
+            "一",
+            "块"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200707_L_R001S08C01-seq-004",
+      "meeting": "20200707_L_R001S08C01",
+      "language": "Chinese",
+      "role": "train",
+      "referenceUnits": 93,
+      "errors": 40,
+      "errorRate": 0.43010752688172044,
+      "counts": {
+        "replace": 25,
+        "delete": 13,
+        "insert": 2
+      },
+      "inspectionClasses": {
+        "other_lexical": 39,
+        "hesitation_token_involved": 1
+      },
+      "turns": 3,
+      "shortTurns": 1,
+      "shortTurnReferenceUnits": 7,
+      "shortTurnDeletedReferenceUnits": 6,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "003-M",
+          "referenceUnits": 7,
+          "deletedReferenceUnits": 6,
+          "substitutedReferenceUnits": 1
+        },
+        {
+          "speaker": "004-M",
+          "referenceUnits": 86,
+          "deletedReferenceUnits": 7,
+          "substitutedReferenceUnits": 24
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 76,
+          "tokens": [
+            "程",
+            "需",
+            "要",
+            "反",
+            "转",
+            "啊"
+          ],
+          "lastReferenceIndex": 81,
+          "hypothesisContext": [
+            "反",
+            "转",
+            "嗯",
+            "这",
+            "样",
+            "才",
+            "能"
+          ]
+        },
+        {
+          "firstReferenceIndex": 19,
+          "tokens": [
+            "我",
+            "们"
+          ],
+          "lastReferenceIndex": 20,
+          "hypothesisContext": [
+            "我",
+            "觉",
+            "得",
+            "还",
+            "是",
+            "应",
+            "该"
+          ]
+        },
+        {
+          "firstReferenceIndex": 53,
+          "tokens": [
+            "写",
+            "作"
+          ],
+          "lastReferenceIndex": 54,
+          "hypothesisContext": [
+            "败",
+            "邪",
+            "恶",
+            "但",
+            "是",
+            "过",
+            "程"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200707_L_R001S08C01-seq-008",
+      "meeting": "20200707_L_R001S08C01",
+      "language": "Chinese",
+      "role": "train",
+      "referenceUnits": 96,
+      "errors": 21,
+      "errorRate": 0.21875,
+      "counts": {
+        "replace": 15,
+        "insert": 4,
+        "delete": 2
+      },
+      "inspectionClasses": {
+        "other_lexical": 21
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "002-M",
+          "referenceUnits": 60,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 9
+        },
+        {
+          "speaker": "007-M",
+          "referenceUnits": 36,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 6
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 59,
+          "tokens": [
+            "同",
+            "是"
+          ],
+          "lastReferenceIndex": 60,
+          "hypothesisContext": [
+            "留",
+            "个",
+            "字",
+            "这",
+            "样",
+            "那",
+            "就"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200707_L_R001S08C01-seq-013",
+      "meeting": "20200707_L_R001S08C01",
+      "language": "Chinese",
+      "role": "train",
+      "referenceUnits": 68,
+      "errors": 18,
+      "errorRate": 0.2647058823529412,
+      "counts": {
+        "replace": 14,
+        "delete": 4
+      },
+      "inspectionClasses": {
+        "other_lexical": 18
+      },
+      "turns": 3,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 1,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "002-M",
+          "referenceUnits": 28,
+          "deletedReferenceUnits": 3,
+          "substitutedReferenceUnits": 11
+        },
+        {
+          "speaker": "003-M",
+          "referenceUnits": 22,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 1
+        },
+        {
+          "speaker": "007-M",
+          "referenceUnits": 18,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 2
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 2,
+          "tokens": [
+            "吧"
+          ],
+          "lastReferenceIndex": 2,
+          "hypothesisContext": [
+            "节",
+            "奏",
+            "对",
+            "然",
+            "后",
+            "但"
+          ]
+        },
+        {
+          "firstReferenceIndex": 21,
+          "tokens": [
+            "一"
+          ],
+          "lastReferenceIndex": 21,
+          "hypothesisContext": [
+            "就",
+            "是",
+            "以",
+            "因",
+            "为",
+            "运",
+            "营"
+          ]
+        },
+        {
+          "firstReferenceIndex": 26,
+          "tokens": [
+            "有"
+          ],
+          "lastReferenceIndex": 26,
+          "hypothesisContext": [
+            "为",
+            "运",
+            "营",
+            "这",
+            "种",
+            "东",
+            "西"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200708_L_R002S01C01-seq-000",
+      "meeting": "20200708_L_R002S01C01",
+      "language": "Chinese",
+      "role": "train",
+      "referenceUnits": 119,
+      "errors": 7,
+      "errorRate": 0.058823529411764705,
+      "counts": {
+        "delete": 4,
+        "replace": 2,
+        "insert": 1
+      },
+      "inspectionClasses": {
+        "hesitation_token_involved": 1,
+        "other_lexical": 6
+      },
+      "turns": 3,
+      "shortTurns": 1,
+      "shortTurnReferenceUnits": 1,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "001-M",
+          "referenceUnits": 68,
+          "deletedReferenceUnits": 4,
+          "substitutedReferenceUnits": 2
+        },
+        {
+          "speaker": "002-M",
+          "referenceUnits": 51,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 16,
+          "tokens": [
+            "嗯"
+          ],
+          "lastReferenceIndex": 16,
+          "hypothesisContext": [
+            "把",
+            "这",
+            "个",
+            "问",
+            "题",
+            "抛",
+            "在"
+          ]
+        },
+        {
+          "firstReferenceIndex": 35,
+          "tokens": [
+            "都"
+          ],
+          "lastReferenceIndex": 35,
+          "hypothesisContext": [
+            "个",
+            "问",
+            "题",
+            "怎",
+            "么",
+            "看",
+            "刚"
+          ]
+        },
+        {
+          "firstReferenceIndex": 39,
+          "tokens": [
+            "的"
+          ],
+          "lastReferenceIndex": 39,
+          "hypothesisContext": [
+            "怎",
+            "么",
+            "看",
+            "刚",
+            "才",
+            "副",
+            "副"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200708_L_R002S01C01-seq-005",
+      "meeting": "20200708_L_R002S01C01",
+      "language": "Chinese",
+      "role": "train",
+      "referenceUnits": 118,
+      "errors": 3,
+      "errorRate": 0.025423728813559324,
+      "counts": {
+        "replace": 2,
+        "delete": 1
+      },
+      "inspectionClasses": {
+        "other_lexical": 3
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "002-M",
+          "referenceUnits": 77,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 2
+        },
+        {
+          "speaker": "007-F",
+          "referenceUnits": 41,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 0
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 93,
+          "tokens": [
+            "一"
+          ],
+          "lastReferenceIndex": 93,
+          "hypothesisContext": [
+            "弊",
+            "的",
+            "举",
+            "个",
+            "比",
+            "较",
+            "现"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200708_L_R002S01C01-seq-010",
+      "meeting": "20200708_L_R002S01C01",
+      "language": "Chinese",
+      "role": "train",
+      "referenceUnits": 65,
+      "errors": 4,
+      "errorRate": 0.06153846153846154,
+      "counts": {
+        "delete": 4
+      },
+      "inspectionClasses": {
+        "other_lexical": 4
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "002-M",
+          "referenceUnits": 21,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "004-M",
+          "referenceUnits": 44,
+          "deletedReferenceUnits": 4,
+          "substitutedReferenceUnits": 0
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 36,
+          "tokens": [
+            "更",
+            "好"
+          ],
+          "lastReferenceIndex": 37,
+          "hypothesisContext": [
+            "小",
+            "公",
+            "司",
+            "因",
+            "为",
+            "小",
+            "公"
+          ]
+        },
+        {
+          "firstReferenceIndex": 40,
+          "tokens": [
+            "在"
+          ],
+          "lastReferenceIndex": 40,
+          "hypothesisContext": [
+            "司",
+            "因",
+            "为",
+            "小",
+            "公",
+            "司",
+            "的"
+          ]
+        },
+        {
+          "firstReferenceIndex": 54,
+          "tokens": [
+            "施"
+          ],
+          "lastReferenceIndex": 54,
+          "hypothesisContext": [
+            "机",
+            "会",
+            "去",
+            "施",
+            "展",
+            "自",
+            "己"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200708_L_R002S01C01-seq-015",
+      "meeting": "20200708_L_R002S01C01",
+      "language": "Chinese",
+      "role": "train",
+      "referenceUnits": 22,
+      "errors": 2,
+      "errorRate": 0.09090909090909091,
+      "counts": {
+        "delete": 2
+      },
+      "inspectionClasses": {
+        "other_lexical": 2
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 2,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "001-M",
+          "referenceUnits": 14,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "003-M",
+          "referenceUnits": 8,
+          "deletedReferenceUnits": 2,
+          "substitutedReferenceUnits": 0
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 20,
+          "tokens": [
+            "这",
+            "个"
+          ],
+          "lastReferenceIndex": 21,
+          "hypothesisContext": [
+            "也",
+            "不",
+            "懂"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-000",
+      "meeting": "20200709_L_R002S01C01",
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 117,
+      "errors": 2,
+      "errorRate": 0.017094017094017096,
+      "counts": {
+        "replace": 1,
+        "delete": 1
+      },
+      "inspectionClasses": {
+        "hesitation_token_involved": 1,
+        "er_character_involved": 1
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "002-M",
+          "referenceUnits": 13,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "006-F",
+          "referenceUnits": 104,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 1
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 90,
+          "tokens": [
+            "儿"
+          ],
+          "lastReferenceIndex": 90,
+          "hypothesisContext": [
+            "部",
+            "这",
+            "边",
+            "简",
+            "单",
+            "的",
+            "总"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-003",
+      "meeting": "20200709_L_R002S01C01",
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 108,
+      "errors": 7,
+      "errorRate": 0.06481481481481481,
+      "counts": {
+        "delete": 3,
+        "insert": 2,
+        "replace": 2
+      },
+      "inspectionClasses": {
+        "er_character_involved": 2,
+        "other_lexical": 5
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "002-M",
+          "referenceUnits": 64,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "006-F",
+          "referenceUnits": 44,
+          "deletedReferenceUnits": 2,
+          "substitutedReferenceUnits": 2
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 42,
+          "tokens": [
+            "儿"
+          ],
+          "lastReferenceIndex": 42,
+          "hypothesisContext": [
+            "么",
+            "哑",
+            "铃",
+            "一",
+            "些",
+            "维",
+            "修"
+          ]
+        },
+        {
+          "firstReferenceIndex": 70,
+          "tokens": [
+            "儿"
+          ],
+          "lastReferenceIndex": 70,
+          "hypothesisContext": [
+            "们",
+            "这",
+            "边",
+            "其",
+            "实",
+            "呢",
+            "有"
+          ]
+        },
+        {
+          "firstReferenceIndex": 87,
+          "tokens": [
+            "子"
+          ],
+          "lastReferenceIndex": 87,
+          "hypothesisContext": [
+            "然",
+            "后",
+            "还",
+            "在",
+            "学",
+            "游",
+            "泳"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-006",
+      "meeting": "20200709_L_R002S01C01",
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 105,
+      "errors": 2,
+      "errorRate": 0.01904761904761905,
+      "counts": {
+        "delete": 2
+      },
+      "inspectionClasses": {
+        "er_character_involved": 1,
+        "other_lexical": 1
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "002-M",
+          "referenceUnits": 36,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "006-F",
+          "referenceUnits": 69,
+          "deletedReferenceUnits": 2,
+          "substitutedReferenceUnits": 0
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 48,
+          "tokens": [
+            "儿"
+          ],
+          "lastReferenceIndex": 48,
+          "hypothesisContext": [
+            "部",
+            "这",
+            "边",
+            "呢",
+            "上",
+            "一",
+            "个"
+          ]
+        },
+        {
+          "firstReferenceIndex": 71,
+          "tokens": [
+            "说"
+          ],
+          "lastReferenceIndex": 71,
+          "hypothesisContext": [
+            "种",
+            "比",
+            "如",
+            "车",
+            "棚",
+            "的",
+            "检"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-009",
+      "meeting": "20200709_L_R002S01C01",
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 131,
+      "errors": 6,
+      "errorRate": 0.04580152671755725,
+      "counts": {
+        "delete": 4,
+        "replace": 2
+      },
+      "inspectionClasses": {
+        "er_character_involved": 3,
+        "other_lexical": 3
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "004-F",
+          "referenceUnits": 85,
+          "deletedReferenceUnits": 2,
+          "substitutedReferenceUnits": 1
+        },
+        {
+          "speaker": "006-F",
+          "referenceUnits": 46,
+          "deletedReferenceUnits": 2,
+          "substitutedReferenceUnits": 1
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 7,
+          "tokens": [
+            "儿"
+          ],
+          "lastReferenceIndex": 7,
+          "hypothesisContext": [
+            "一",
+            "个",
+            "班",
+            "发",
+            "现",
+            "问",
+            "题"
+          ]
+        },
+        {
+          "firstReferenceIndex": 19,
+          "tokens": [
+            "儿"
+          ],
+          "lastReferenceIndex": 19,
+          "hypothesisContext": [
+            "给",
+            "当",
+            "班",
+            "的",
+            "领",
+            "导",
+            "维"
+          ]
+        },
+        {
+          "firstReferenceIndex": 100,
+          "tokens": [
+            "是"
+          ],
+          "lastReferenceIndex": 100,
+          "hypothesisContext": [
+            "时",
+            "间",
+            "会",
+            "一",
+            "直",
+            "下",
+            "雨"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-012",
+      "meeting": "20200709_L_R002S01C01",
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 137,
+      "errors": 10,
+      "errorRate": 0.072992700729927,
+      "counts": {
+        "delete": 1,
+        "replace": 5,
+        "insert": 4
+      },
+      "inspectionClasses": {
+        "er_character_involved": 2,
+        "other_lexical": 8
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "006-F",
+          "referenceUnits": 108,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 5
+        },
+        {
+          "speaker": "007-F",
+          "referenceUnits": 29,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 7,
+          "tokens": [
+            "儿"
+          ],
+          "lastReferenceIndex": 7,
+          "hypothesisContext": [
+            "台",
+            "这",
+            "边",
+            "啊",
+            "就",
+            "是",
+            "主"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200709_L_R002S01C01-seq-016",
+      "meeting": "20200709_L_R002S01C01",
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 138,
+      "errors": 8,
+      "errorRate": 0.057971014492753624,
+      "counts": {
+        "insert": 3,
+        "replace": 3,
+        "delete": 2
+      },
+      "inspectionClasses": {
+        "other_lexical": 6,
+        "er_character_involved": 2
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "004-F",
+          "referenceUnits": 105,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "006-F",
+          "referenceUnits": 33,
+          "deletedReferenceUnits": 2,
+          "substitutedReferenceUnits": 3
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 112,
+          "tokens": [
+            "儿"
+          ],
+          "lastReferenceIndex": 112,
+          "hypothesisContext": [
+            "夫",
+            "这",
+            "边",
+            "这",
+            "个",
+            "情",
+            "况"
+          ]
+        },
+        {
+          "firstReferenceIndex": 131,
+          "tokens": [
+            "儿"
+          ],
+          "lastReferenceIndex": 131,
+          "hypothesisContext": [
+            "台",
+            "这",
+            "边",
+            "下",
+            "半",
+            "年",
+            "的"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-000",
+      "meeting": "20200805_S_R001S01C01",
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 92,
+      "errors": 4,
+      "errorRate": 0.043478260869565216,
+      "counts": {
+        "replace": 4
+      },
+      "inspectionClasses": {
+        "other_lexical": 3,
+        "hesitation_token_involved": 1
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "004-F",
+          "referenceUnits": 56,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 3
+        },
+        {
+          "speaker": "006-F",
+          "referenceUnits": 36,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 1
+        }
+      ],
+      "largestDeletionRuns": []
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-002",
+      "meeting": "20200805_S_R001S01C01",
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 101,
+      "errors": 15,
+      "errorRate": 0.1485148514851485,
+      "counts": {
+        "replace": 7,
+        "delete": 7,
+        "insert": 1
+      },
+      "inspectionClasses": {
+        "other_lexical": 12,
+        "er_character_involved": 2,
+        "hesitation_token_involved": 1
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "004-F",
+          "referenceUnits": 53,
+          "deletedReferenceUnits": 4,
+          "substitutedReferenceUnits": 6
+        },
+        {
+          "speaker": "005-M",
+          "referenceUnits": 48,
+          "deletedReferenceUnits": 3,
+          "substitutedReferenceUnits": 1
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 91,
+          "tokens": [
+            "邢",
+            "台"
+          ],
+          "lastReferenceIndex": 92,
+          "hypothesisContext": [
+            "路",
+            "是",
+            "是",
+            "是",
+            "是",
+            "去",
+            "一"
+          ]
+        },
+        {
+          "firstReferenceIndex": 21,
+          "tokens": [
+            "儿"
+          ],
+          "lastReferenceIndex": 21,
+          "hypothesisContext": [
+            "个",
+            "动",
+            "保",
+            "他",
+            "们",
+            "最",
+            "后"
+          ]
+        },
+        {
+          "firstReferenceIndex": 30,
+          "tokens": [
+            "的"
+          ],
+          "lastReferenceIndex": 30,
+          "hypothesisContext": [
+            "有",
+            "选",
+            "上",
+            "就",
+            "是",
+            "最",
+            "后"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-004",
+      "meeting": "20200805_S_R001S01C01",
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 119,
+      "errors": 3,
+      "errorRate": 0.025210084033613446,
+      "counts": {
+        "insert": 1,
+        "replace": 2
+      },
+      "inspectionClasses": {
+        "other_lexical": 3
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "002-F",
+          "referenceUnits": 33,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 1
+        },
+        {
+          "speaker": "004-F",
+          "referenceUnits": 86,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 1
+        }
+      ],
+      "largestDeletionRuns": []
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-006",
+      "meeting": "20200805_S_R001S01C01",
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 77,
+      "errors": 7,
+      "errorRate": 0.09090909090909091,
+      "counts": {
+        "replace": 7
+      },
+      "inspectionClasses": {
+        "hesitation_token_involved": 1,
+        "other_lexical": 6
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "002-F",
+          "referenceUnits": 51,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 6
+        },
+        {
+          "speaker": "004-F",
+          "referenceUnits": 26,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 1
+        }
+      ],
+      "largestDeletionRuns": []
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-008",
+      "meeting": "20200805_S_R001S01C01",
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 38,
+      "errors": 4,
+      "errorRate": 0.10526315789473684,
+      "counts": {
+        "replace": 1,
+        "delete": 3
+      },
+      "inspectionClasses": {
+        "other_lexical": 3,
+        "er_character_involved": 1
+      },
+      "turns": 4,
+      "shortTurns": 3,
+      "shortTurnReferenceUnits": 21,
+      "shortTurnDeletedReferenceUnits": 2,
+      "fullyDeletedShortTurns": 1,
+      "fullyDeletedShortTurnExamples": [
+        {
+          "speaker": "005-M",
+          "start": 1381.0794525109861,
+          "end": 1381.9292253730148,
+          "tokens": [
+            "哎"
+          ]
+        }
+      ],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 1,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "001-M",
+          "referenceUnits": 17,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "004-F",
+          "referenceUnits": 11,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "005-M",
+          "referenceUnits": 10,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 1
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 11,
+          "tokens": [
+            "他"
+          ],
+          "lastReferenceIndex": 11,
+          "hypothesisContext": [
+            "吗",
+            "不",
+            "管",
+            "姓",
+            "什",
+            "么",
+            "干"
+          ]
+        },
+        {
+          "firstReferenceIndex": 29,
+          "tokens": [
+            "儿"
+          ],
+          "lastReferenceIndex": 29,
+          "hypothesisContext": [
+            "修",
+            "这",
+            "边",
+            "我",
+            "已",
+            "经",
+            "换"
+          ]
+        },
+        {
+          "firstReferenceIndex": 37,
+          "tokens": [
+            "哎"
+          ],
+          "lastReferenceIndex": 37,
+          "hypothesisContext": [
+            "人",
+            "员",
+            "了"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "20200805_S_R001S01C01-seq-011",
+      "meeting": "20200805_S_R001S01C01",
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 95,
+      "errors": 5,
+      "errorRate": 0.05263157894736842,
+      "counts": {
+        "insert": 2,
+        "replace": 2,
+        "delete": 1
+      },
+      "inspectionClasses": {
+        "other_lexical": 4,
+        "er_character_involved": 1
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 0,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "004-F",
+          "referenceUnits": 63,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 1
+        },
+        {
+          "speaker": "006-F",
+          "referenceUnits": 32,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 1
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 91,
+          "tokens": [
+            "儿"
+          ],
+          "lastReferenceIndex": 91,
+          "hypothesisContext": [
+            "计",
+            "划",
+            "表",
+            "什",
+            "么",
+            "的"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-000",
+      "meeting": "ES2003b",
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 26,
+      "errors": 7,
+      "errorRate": 0.2692307692307692,
+      "counts": {
+        "insert": 4,
+        "replace": 2,
+        "delete": 1
+      },
+      "inspectionClasses": {
+        "other_lexical": 7
+      },
+      "turns": 2,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 10,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 1,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "B",
+          "referenceUnits": 19,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "C",
+          "referenceUnits": 7,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 2
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 22,
+          "tokens": [
+            "a"
+          ],
+          "lastReferenceIndex": 22,
+          "hypothesisContext": [
+            "project",
+            "documents",
+            "link",
+            "well",
+            "actually",
+            "just"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "meeting": "ES2003b",
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 103,
+      "errors": 12,
+      "errorRate": 0.11650485436893204,
+      "counts": {
+        "insert": 1,
+        "replace": 7,
+        "delete": 4
+      },
+      "inspectionClasses": {
+        "other_lexical": 12
+      },
+      "turns": 2,
+      "shortTurns": 1,
+      "shortTurnReferenceUnits": 1,
+      "shortTurnDeletedReferenceUnits": 1,
+      "fullyDeletedShortTurns": 1,
+      "fullyDeletedShortTurnExamples": [
+        {
+          "speaker": "B",
+          "start": 438.88,
+          "end": 439.36,
+          "tokens": [
+            "okay"
+          ]
+        }
+      ],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 1,
+      "englishOneSecondEdgeReferenceUnits": 8,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 1,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "B",
+          "referenceUnits": 1,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "C",
+          "referenceUnits": 102,
+          "deletedReferenceUnits": 3,
+          "substitutedReferenceUnits": 7
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 9,
+          "tokens": [
+            "bit"
+          ],
+          "lastReferenceIndex": 9,
+          "hypothesisContext": [
+            "you",
+            "it's",
+            "been",
+            "impractical",
+            "to",
+            "have",
+            "just"
+          ]
+        },
+        {
+          "firstReferenceIndex": 55,
+          "tokens": [
+            "are"
+          ],
+          "lastReferenceIndex": 55,
+          "hypothesisContext": [
+            "look",
+            "because",
+            "there's",
+            "no",
+            "restrictions",
+            "on",
+            "physical"
+          ]
+        },
+        {
+          "firstReferenceIndex": 83,
+          "tokens": [
+            "or"
+          ],
+          "lastReferenceIndex": 83,
+          "hypothesisContext": [
+            "like",
+            "a",
+            "lollipop",
+            "something",
+            "like",
+            "that",
+            "something"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "meeting": "ES2003b",
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 31,
+      "errors": 12,
+      "errorRate": 0.3870967741935484,
+      "counts": {
+        "delete": 12
+      },
+      "inspectionClasses": {
+        "other_lexical": 11,
+        "hesitation_token_involved": 1
+      },
+      "turns": 4,
+      "shortTurns": 3,
+      "shortTurnReferenceUnits": 11,
+      "shortTurnDeletedReferenceUnits": 10,
+      "fullyDeletedShortTurns": 2,
+      "fullyDeletedShortTurnExamples": [
+        {
+          "speaker": "C",
+          "start": 865.9,
+          "end": 867.86,
+          "tokens": [
+            "yeah",
+            "and",
+            "you",
+            "just",
+            "click",
+            "file",
+            "save",
+            "as"
+          ]
+        },
+        {
+          "speaker": "D",
+          "start": 876.52,
+          "end": 877.77,
+          "tokens": [
+            "oh",
+            "right"
+          ]
+        }
+      ],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 4,
+      "englishOneSecondEdgeReferenceUnits": 8,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 6,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "B",
+          "referenceUnits": 1,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "C",
+          "referenceUnits": 8,
+          "deletedReferenceUnits": 8,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "D",
+          "referenceUnits": 22,
+          "deletedReferenceUnits": 4,
+          "substitutedReferenceUnits": 0
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 0,
+          "tokens": [
+            "yeah",
+            "and",
+            "you",
+            "just",
+            "click",
+            "file",
+            "save",
+            "as",
+            "oh",
+            "right"
+          ],
+          "lastReferenceIndex": 9,
+          "hypothesisContext": [
+            "okay",
+            "uh",
+            "i'm",
+            "responsible"
+          ]
+        },
+        {
+          "firstReferenceIndex": 12,
+          "tokens": [
+            "right"
+          ],
+          "lastReferenceIndex": 12,
+          "hypothesisContext": [
+            "okay",
+            "uh",
+            "i'm",
+            "responsible",
+            "for",
+            "working"
+          ]
+        },
+        {
+          "firstReferenceIndex": 29,
+          "tokens": [
+            "uh"
+          ],
+          "lastReferenceIndex": 29,
+          "hypothesisContext": [
+            "of",
+            "the",
+            "the",
+            "remote"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "meeting": "ES2003b",
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 75,
+      "errors": 9,
+      "errorRate": 0.12,
+      "counts": {
+        "replace": 1,
+        "delete": 8
+      },
+      "inspectionClasses": {
+        "other_lexical": 5,
+        "hesitation_token_involved": 4
+      },
+      "turns": 4,
+      "shortTurns": 1,
+      "shortTurnReferenceUnits": 1,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 11,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 1,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "A",
+          "referenceUnits": 16,
+          "deletedReferenceUnits": 3,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "B",
+          "referenceUnits": 58,
+          "deletedReferenceUnits": 5,
+          "substitutedReferenceUnits": 1
+        },
+        {
+          "speaker": "C",
+          "referenceUnits": 1,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 21,
+          "tokens": [
+            "to",
+            "say",
+            "um"
+          ],
+          "lastReferenceIndex": 23,
+          "hypothesisContext": [
+            "for",
+            "now",
+            "actually",
+            "does",
+            "that",
+            "would",
+            "that"
+          ]
+        },
+        {
+          "firstReferenceIndex": 26,
+          "tokens": [
+            "um"
+          ],
+          "lastReferenceIndex": 26,
+          "hypothesisContext": [
+            "actually",
+            "does",
+            "that",
+            "would",
+            "that",
+            "include",
+            "access"
+          ]
+        },
+        {
+          "firstReferenceIndex": 30,
+          "tokens": [
+            "um"
+          ],
+          "lastReferenceIndex": 30,
+          "hypothesisContext": [
+            "would",
+            "that",
+            "include",
+            "access",
+            "to",
+            "say",
+            "interactive"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "meeting": "ES2003b",
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 38,
+      "errors": 6,
+      "errorRate": 0.15789473684210525,
+      "counts": {
+        "replace": 2,
+        "delete": 4
+      },
+      "inspectionClasses": {
+        "other_lexical": 5,
+        "hesitation_token_involved": 1
+      },
+      "turns": 3,
+      "shortTurns": 2,
+      "shortTurnReferenceUnits": 8,
+      "shortTurnDeletedReferenceUnits": 3,
+      "fullyDeletedShortTurns": 1,
+      "fullyDeletedShortTurnExamples": [
+        {
+          "speaker": "C",
+          "start": 1877.24,
+          "end": 1877.53,
+          "tokens": [
+            "yeah"
+          ]
+        }
+      ],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 7,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 1,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "A",
+          "referenceUnits": 7,
+          "deletedReferenceUnits": 2,
+          "substitutedReferenceUnits": 1
+        },
+        {
+          "speaker": "B",
+          "referenceUnits": 30,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 1
+        },
+        {
+          "speaker": "C",
+          "referenceUnits": 1,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 0
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 5,
+          "tokens": [
+            "design",
+            "touch",
+            "yeah"
+          ],
+          "lastReferenceIndex": 7,
+          "hypothesisContext": [
+            "a",
+            "nice",
+            "redesign",
+            "so",
+            "by",
+            "the",
+            "sounds"
+          ]
+        },
+        {
+          "firstReferenceIndex": 22,
+          "tokens": [
+            "um"
+          ],
+          "lastReferenceIndex": 22,
+          "hypothesisContext": [
+            "far",
+            "your",
+            "design",
+            "the",
+            "user",
+            "interface",
+            "is"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "meeting": "ES2003b",
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 17,
+      "errors": 14,
+      "errorRate": 0.8235294117647058,
+      "counts": {
+        "replace": 7,
+        "delete": 3,
+        "insert": 4
+      },
+      "inspectionClasses": {
+        "other_lexical": 13,
+        "hesitation_token_involved": 1
+      },
+      "turns": 2,
+      "shortTurns": 1,
+      "shortTurnReferenceUnits": 3,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 8,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "B",
+          "referenceUnits": 14,
+          "deletedReferenceUnits": 3,
+          "substitutedReferenceUnits": 7
+        },
+        {
+          "speaker": "D",
+          "referenceUnits": 3,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 5,
+          "tokens": [
+            "what",
+            "in",
+            "god"
+          ],
+          "lastReferenceIndex": 7,
+          "hypothesisContext": [
+            "the",
+            "passion",
+            "into",
+            "real",
+            "action",
+            "and",
+            "such"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "meeting": "EN2001a",
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 28,
+      "errors": 5,
+      "errorRate": 0.17857142857142858,
+      "counts": {
+        "delete": 5
+      },
+      "inspectionClasses": {
+        "hesitation_token_involved": 3,
+        "other_lexical": 2
+      },
+      "turns": 2,
+      "shortTurns": 1,
+      "shortTurnReferenceUnits": 1,
+      "shortTurnDeletedReferenceUnits": 1,
+      "fullyDeletedShortTurns": 1,
+      "fullyDeletedShortTurnExamples": [
+        {
+          "speaker": "E",
+          "start": 27.02,
+          "end": 27.44,
+          "tokens": [
+            "hmm"
+          ]
+        }
+      ],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 1,
+      "englishOneSecondEdgeReferenceUnits": 4,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 1,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "A",
+          "referenceUnits": 27,
+          "deletedReferenceUnits": 4,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "E",
+          "referenceUnits": 1,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 0
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 10,
+          "tokens": [
+            "he",
+            "was"
+          ],
+          "lastReferenceIndex": 11,
+          "hypothesisContext": [
+            "stuff",
+            "and",
+            "yeah",
+            "saying",
+            "that",
+            "we",
+            "should"
+          ]
+        },
+        {
+          "firstReferenceIndex": 0,
+          "tokens": [
+            "hmm"
+          ],
+          "lastReferenceIndex": 0,
+          "hypothesisContext": [
+            "like",
+            "duplication",
+            "of",
+            "effort"
+          ]
+        },
+        {
+          "firstReferenceIndex": 8,
+          "tokens": [
+            "um"
+          ],
+          "lastReferenceIndex": 8,
+          "hypothesisContext": [
+            "and",
+            "stuff",
+            "and",
+            "yeah",
+            "saying",
+            "that",
+            "we"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "meeting": "EN2001a",
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 107,
+      "errors": 10,
+      "errorRate": 0.09345794392523364,
+      "counts": {
+        "delete": 6,
+        "replace": 4
+      },
+      "inspectionClasses": {
+        "other_lexical": 8,
+        "hesitation_token_involved": 2
+      },
+      "turns": 3,
+      "shortTurns": 1,
+      "shortTurnReferenceUnits": 1,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 1,
+      "englishOneSecondEdgeReferenceUnits": 12,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 1,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "A",
+          "referenceUnits": 1,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 1
+        },
+        {
+          "speaker": "E",
+          "referenceUnits": 106,
+          "deletedReferenceUnits": 6,
+          "substitutedReferenceUnits": 3
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 15,
+          "tokens": [
+            "vir"
+          ],
+          "lastReferenceIndex": 15,
+          "hypothesisContext": [
+            "just",
+            "like",
+            "make",
+            "like",
+            "one",
+            "or",
+            "two"
+          ]
+        },
+        {
+          "firstReferenceIndex": 31,
+          "tokens": [
+            "uh"
+          ],
+          "lastReferenceIndex": 31,
+          "hypothesisContext": [
+            "a",
+            "whole",
+            "document",
+            "a",
+            "whole",
+            "series",
+            "level"
+          ]
+        },
+        {
+          "firstReferenceIndex": 36,
+          "tokens": [
+            "and"
+          ],
+          "lastReferenceIndex": 36,
+          "hypothesisContext": [
+            "whole",
+            "series",
+            "level",
+            "that",
+            "was",
+            "a",
+            "double"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "meeting": "EN2001a",
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 66,
+      "errors": 13,
+      "errorRate": 0.19696969696969696,
+      "counts": {
+        "insert": 1,
+        "delete": 8,
+        "replace": 4
+      },
+      "inspectionClasses": {
+        "other_lexical": 9,
+        "hesitation_token_involved": 1,
+        "reference_isolated_letter": 3
+      },
+      "turns": 4,
+      "shortTurns": 2,
+      "shortTurnReferenceUnits": 6,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 6,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "A",
+          "referenceUnits": 18,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "D",
+          "referenceUnits": 3,
+          "deletedReferenceUnits": 0,
+          "substitutedReferenceUnits": 0
+        },
+        {
+          "speaker": "E",
+          "referenceUnits": 45,
+          "deletedReferenceUnits": 7,
+          "substitutedReferenceUnits": 4
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 7,
+          "tokens": [
+            "uh",
+            "b"
+          ],
+          "lastReferenceIndex": 8,
+          "hypothesisContext": [
+            "i",
+            "know",
+            "we",
+            "i",
+            "guess",
+            "we",
+            "can"
+          ]
+        },
+        {
+          "firstReferenceIndex": 3,
+          "tokens": [
+            "yeah"
+          ],
+          "lastReferenceIndex": 3,
+          "hypothesisContext": [
+            "be",
+            "difficult",
+            "yeah",
+            "i",
+            "know",
+            "we",
+            "i"
+          ]
+        },
+        {
+          "firstReferenceIndex": 19,
+          "tokens": [
+            "it's"
+          ],
+          "lastReferenceIndex": 19,
+          "hypothesisContext": [
+            "several",
+            "people",
+            "together",
+            "probably",
+            "just",
+            "they",
+            "have"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "meeting": "EN2001a",
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 87,
+      "errors": 23,
+      "errorRate": 0.26436781609195403,
+      "counts": {
+        "delete": 11,
+        "replace": 12
+      },
+      "inspectionClasses": {
+        "other_lexical": 14,
+        "reference_spelled_acronym": 9
+      },
+      "turns": 3,
+      "shortTurns": 0,
+      "shortTurnReferenceUnits": 0,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 2,
+      "englishOneSecondEdgeReferenceUnits": 11,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 2,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "D",
+          "referenceUnits": 28,
+          "deletedReferenceUnits": 3,
+          "substitutedReferenceUnits": 4
+        },
+        {
+          "speaker": "E",
+          "referenceUnits": 59,
+          "deletedReferenceUnits": 8,
+          "substitutedReferenceUnits": 8
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 70,
+          "tokens": [
+            "p",
+            "it",
+            "from"
+          ],
+          "lastReferenceIndex": 72,
+          "hypothesisContext": [
+            "in",
+            "scp",
+            "in",
+            "the",
+            "same",
+            "session",
+            "yeah"
+          ]
+        },
+        {
+          "firstReferenceIndex": 0,
+          "tokens": [
+            "i",
+            "do"
+          ],
+          "lastReferenceIndex": 1,
+          "hypothesisContext": [
+            "like",
+            "i",
+            "mean",
+            "there's"
+          ]
+        },
+        {
+          "firstReferenceIndex": 40,
+          "tokens": [
+            "s",
+            "h"
+          ],
+          "lastReferenceIndex": 41,
+          "hypothesisContext": [
+            "you",
+            "can",
+            "ssh",
+            "into",
+            "directly",
+            "off",
+            "ssh"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "meeting": "EN2001a",
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 94,
+      "errors": 10,
+      "errorRate": 0.10638297872340426,
+      "counts": {
+        "replace": 7,
+        "delete": 3
+      },
+      "inspectionClasses": {
+        "other_lexical": 9,
+        "hesitation_token_involved": 1
+      },
+      "turns": 3,
+      "shortTurns": 1,
+      "shortTurnReferenceUnits": 10,
+      "shortTurnDeletedReferenceUnits": 0,
+      "fullyDeletedShortTurns": 0,
+      "fullyDeletedShortTurnExamples": [],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 0,
+      "englishOneSecondEdgeReferenceUnits": 10,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 0,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "D",
+          "referenceUnits": 62,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 3
+        },
+        {
+          "speaker": "E",
+          "referenceUnits": 32,
+          "deletedReferenceUnits": 2,
+          "substitutedReferenceUnits": 4
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 57,
+          "tokens": [
+            "here"
+          ],
+          "lastReferenceIndex": 57,
+          "hypothesisContext": [
+            "here",
+            "here",
+            "here",
+            "that",
+            "might",
+            "be",
+            "a"
+          ]
+        },
+        {
+          "firstReferenceIndex": 74,
+          "tokens": [
+            "also"
+          ],
+          "lastReferenceIndex": 74,
+          "hypothesisContext": [
+            "levels",
+            "yeah",
+            "i'm",
+            "not",
+            "sure",
+            "how",
+            "we"
+          ]
+        },
+        {
+          "firstReferenceIndex": 86,
+          "tokens": [
+            "have"
+          ],
+          "lastReferenceIndex": 86,
+          "hypothesisContext": [
+            "bottom",
+            "up",
+            "i've",
+            "always",
+            "thought",
+            "it",
+            "like"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "meeting": "EN2001a",
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 37,
+      "errors": 20,
+      "errorRate": 0.5405405405405406,
+      "counts": {
+        "delete": 7,
+        "replace": 8,
+        "insert": 5
+      },
+      "inspectionClasses": {
+        "other_lexical": 18,
+        "reference_isolated_letter": 1,
+        "hesitation_token_involved": 1
+      },
+      "turns": 3,
+      "shortTurns": 1,
+      "shortTurnReferenceUnits": 2,
+      "shortTurnDeletedReferenceUnits": 2,
+      "fullyDeletedShortTurns": 1,
+      "fullyDeletedShortTurnExamples": [
+        {
+          "speaker": "E",
+          "start": 5114.53,
+          "end": 5115.36,
+          "tokens": [
+            "i'm",
+            "f"
+          ]
+        }
+      ],
+      "edgeThreeReferenceUnits": 6,
+      "deletedEdgeThreeReferenceUnits": 2,
+      "englishOneSecondEdgeReferenceUnits": 4,
+      "deletedEnglishOneSecondEdgeReferenceUnits": 2,
+      "referenceSpeakerDeletionInspection": [
+        {
+          "speaker": "D",
+          "referenceUnits": 16,
+          "deletedReferenceUnits": 1,
+          "substitutedReferenceUnits": 2
+        },
+        {
+          "speaker": "E",
+          "referenceUnits": 21,
+          "deletedReferenceUnits": 6,
+          "substitutedReferenceUnits": 6
+        }
+      ],
+      "largestDeletionRuns": [
+        {
+          "firstReferenceIndex": 0,
+          "tokens": [
+            "i'm",
+            "f"
+          ],
+          "lastReferenceIndex": 1,
+          "hypothesisContext": [
+            "once",
+            "we",
+            "start",
+            "doing"
+          ]
+        },
+        {
+          "firstReferenceIndex": 23,
+          "tokens": [
+            "half",
+            "way"
+          ],
+          "lastReferenceIndex": 24,
+          "hypothesisContext": [
+            "just",
+            "stuff",
+            "going",
+            "through",
+            "the",
+            "wrong",
+            "time"
+          ]
+        },
+        {
+          "firstReferenceIndex": 9,
+          "tokens": [
+            "all"
+          ],
+          "lastReferenceIndex": 9,
+          "hypothesisContext": [
+            "it",
+            "it",
+            "will",
+            "become",
+            "more",
+            "and",
+            "more"
+          ]
+        }
+      ]
+    }
+  ],
+  "method": {
+    "shortTurn": "Consecutive reference events from one speaker in the selected clip, duration from first start to last end<=2 seconds; no inferred word times.",
+    "fullyDeletedTurn": "Every lexical reference unit of this turn is deleted in the unchanged raw-text Levenshtein alignment; diagnostic association, not verified acoustic cause.",
+    "lexicalEdge": "First/last3 reference units per clip, fixed before aggregation; not an acoustic boundary test.",
+    "englishTimeEdge": "Reference word annotations within first/last1 second of the selected clip; deletions only. No Chinese word-time interpolation.",
+    "inspectionClasses": "Mutually exclusive token-shape tags; no class is removed, corrected, or treated as harmless in acceptance.",
+    "diarization": "Sum already scored raw multi-voice zero-collar errors, not exclusive attribution view and not newly rescored predictions."
+  },
+  "diagnosticRepair": "First attempt stopped before writing output: the assertion incorrectly required empty AMI vocalsound/disfmarker events to be word events. Empty lexical events are now skipped when building lexical turns; all nonempty events still require actual word annotations. Frozen reference tokens and all S/D/I counts are asserted unchanged.",
+  "limitations": [
+    "Preselected exposed32 short clips; train diagnostics and validation stay separate. No blind or complete-meeting generalization.",
+    "Alignment placement can be ambiguous for repeated words; edit categories and edge associations do not establish causes.",
+    "No audio listening or new neural inference; no claim that reference spellings are acoustically adjudicated.",
+    "Existing whole Chinese score is reused; this inventory does not improve any recognition score."
+  ],
+  "newNeuralCalls": 0,
+  "newWeightUpdates": 0,
+  "originalScoringOrOutputsChanged": false,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 28156,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 1073741824,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 24883200,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
