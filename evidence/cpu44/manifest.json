@@ -1,0 +1,309 @@
+{
+  "at": "2026-11-16T15:36:31.852526+08:00",
+  "parent": "266733ca4e025a605c46d76697153a80b5ae1188",
+  "entries": [
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\oversized-rejection.json",
+      "file": "general-controls/b1f15af63f6ccf3a-oversized-rejection.json",
+      "bytes": 798,
+      "sha256": "54eca76b6f4b879bb64ed97e1607aa30138cf59fd50590c5feb9dde584522a8f"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\result.json",
+      "file": "general-controls/bb80f19ad1712683-result.json",
+      "bytes": 1025,
+      "sha256": "3d492b05bea83ee2f03a1130f7d0fd0ec063d2578b5ecf747b12315f5d89621b"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\oversized\\binding.json",
+      "file": "general-controls/318165c711c39afd-binding.json",
+      "bytes": 28571,
+      "sha256": "648bcc0f1590f52490715709557b0d3f9d31e123f3b593692a67c01e527b084b"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\replay\\binding.json",
+      "file": "general-controls/1a6616f63c1986e9-binding.json",
+      "bytes": 140712,
+      "sha256": "f6936154bf2d729652072ab67fb9ab134733dccdedec795fce9e0f3ad7d61614"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\replay\\orchestration-binding.json",
+      "file": "general-controls/77ca7a3772a83abd-orchestration-binding.json",
+      "bytes": 740,
+      "sha256": "5d5e11584220f19bc0f560b86835ff3e9d5a5f4a9dd2ab993b17fc98bf07d6fd"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\silent-leaf\\binding.json",
+      "file": "general-controls/987f0b7889d4dced-binding.json",
+      "bytes": 4387,
+      "sha256": "4ba61e6d782f7245c7c5c44a10c0f9d10db5735b16e1dbd7c1a1a0a380b9ad9c"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\silent-leaf\\orchestration-binding.json",
+      "file": "general-controls/477a51d851219975-orchestration-binding.json",
+      "bytes": 740,
+      "sha256": "5d5e11584220f19bc0f560b86835ff3e9d5a5f4a9dd2ab993b17fc98bf07d6fd"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-replay-r1\\worker-state.json",
+      "file": "general-replay/3d150d9c680c8c4a-worker-state.json",
+      "bytes": 25658,
+      "sha256": "d92d7422c38025c7c1bcb2f944eb4b4a059c461e7477c48678efdcb4bbe3e8fa"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\job.json",
+      "file": "general-silent-process/99dbc009c76d6148-job.json",
+      "bytes": 808,
+      "sha256": "79c68ff1691b4a40346f6532865b1751c6303d0e7ff633c061db47db63d9cd44"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\worker-state.json",
+      "file": "general-silent-process/a90e6190b5bda072-worker-state.json",
+      "bytes": 1205,
+      "sha256": "3e1b5039f163b6f517e11ef4d02f812aac71a26b5f7ce8d480abfcd317776390"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\batch-control-0\\binding.json",
+      "file": "general-silent-process/7007f16722917236-binding.json",
+      "bytes": 4387,
+      "sha256": "4ba61e6d782f7245c7c5c44a10c0f9d10db5735b16e1dbd7c1a1a0a380b9ad9c"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\batch-run-0\\000033-root-alignment.json",
+      "file": "general-silent-process/1177268fdc959d09-000033-root-alignment.json",
+      "bytes": 1361,
+      "sha256": "b499c2b5616e890cabb5791a2c2e78cd9c3ae04f9853d65bc29c8c0eb4be0639"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\batch-run-0\\run.json",
+      "file": "general-silent-process/29d216dd51754324-run.json",
+      "bytes": 510,
+      "sha256": "3aabaa904d1753242bf6512411f09fdd12c03c86470bf8dc9ae392b5b0839f0e"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\batch-run-0\\worker-state.json",
+      "file": "general-silent-process/7be526f0c9bb05ab-worker-state.json",
+      "bytes": 1713,
+      "sha256": "d6707b1be96472eed9d1fe3238f74d27b4e0852229e06a9f5669049d33fe5a15"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\batch-run-0\\worker.log",
+      "file": "general-silent-process/3435b1991d0bd11f-worker.log",
+      "bytes": 1416,
+      "sha256": "ffd463ae87c4a4163dec73e134632b9453531066d31c2e3eeae9ff3845165c1d"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\logs\\alignment_batch_0-1794814354450206100.log",
+      "file": "general-silent-process/bd6ccff7b6ceb06f-alignment_batch_0-1794814354450206100.log",
+      "bytes": 483,
+      "sha256": "5d43d4ff88dc9de222f2ddf8b54e9a25601ce89172519a3d9c792e1fb1e31ace"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\文件清单.json",
+      "file": "validated-report-r2/1abe9a91d4ad318b-文件清单.json",
+      "bytes": 4199,
+      "sha256": "f2829229722121c4778d5c1d0709fe23adc3f52c4e7057382644a0170840967d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\普通中文会议-保留原识别全文.txt",
+      "file": "validated-report-r2/cda396b7ccdff50f-普通中文会议-保留原识别全文.txt",
+      "bytes": 27402,
+      "sha256": "04ada0349b55aa38ec46930312a90eef222aad0fb8c75a868fb78b72d0b9fbaa"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\普通中文会议-匿名发言日志.txt",
+      "file": "validated-report-r2/7c09cb148be02f7e-普通中文会议-匿名发言日志.txt",
+      "bytes": 33990,
+      "sha256": "d3575fa7f68df4f8c921fb51c62368840106a3512e4fbf6b503bbe2852284a77"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\结果.json",
+      "file": "validated-report-r2/6f773be523469b5b-结果.json",
+      "bytes": 52746,
+      "sha256": "86013c80ea5718c6cf8b3fb1501254fc77c206fe2123a25c8f9bac3c664287cd"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\说明.txt",
+      "file": "validated-report-r2/de69ce8afc8d8f00-说明.txt",
+      "bytes": 9163,
+      "sha256": "005179013298c22f91382c2cdc83b8b67867280afd703061e3cbcc3a70972ea5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\CPU时间轴-与历史GPU输出比较.json",
+      "file": "validated-report-r2/d44ac37e8f4ac310-CPU时间轴-与历史GPU输出比较.json",
+      "bytes": 47019,
+      "sha256": "4fedf51b5524614e3c364b194d0fa9cf298c7b472140731c7a8f36baf01fb5f4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\CPU时间轴-共享Rust文档契约.json",
+      "file": "validated-report-r2/862dff0e7dfaa290-CPU时间轴-共享Rust文档契约.json",
+      "bytes": 556,
+      "sha256": "50a346916218a3facdc01843ffba896707a78ab989300e5378e098dd41103d7b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\CPU模型-空闲释放与恢复.json",
+      "file": "validated-report-r2/af3606357ac204dc-CPU模型-空闲释放与恢复.json",
+      "bytes": 1173,
+      "sha256": "04db6fae200d4114a7ed97e60e9e7a32a59070f4631d8dd607175d5143204368"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\MOSS-四场整会CPU评分.json",
+      "file": "validated-report-r2/47c3825d0d08ac03-MOSS-四场整会CPU评分.json",
+      "bytes": 35116,
+      "sha256": "2e508c7baaf5bcb88c33b92c5bfe7e5cbc9fed12efe53e614e2d584d76835046"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\QwenCPU-两场中文整会评分.json",
+      "file": "validated-report-r2/7e82733049f0d90d-QwenCPU-两场中文整会评分.json",
+      "bytes": 6444,
+      "sha256": "050daa7d13ee24b608b8d7f0aeac97dd3c419d33b32025ce768af3ee809df1f5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\Windows-并发JSON读取保护.json",
+      "file": "validated-report-r2/a42c88c31d95949c-Windows-并发JSON读取保护.json",
+      "bytes": 344,
+      "sha256": "6cc8931b5afaa9842ef84fd516a6a6f60db723320175bb19a02da21e90408b1d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\保留原识别文字-CPU时间轴与说话人评分.json",
+      "file": "validated-report-r2/7b984f815bf79fe7-保留原识别文字-CPU时间轴与说话人评分.json",
+      "bytes": 7165,
+      "sha256": "c574113127128f26d260299a88409776350d6a9b5c4d17c582b7fcd0796dab01"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\源码保护-r43.json",
+      "file": "validated-report-r2/d57e146367d534e3-源码保护-r43.json",
+      "bytes": 317,
+      "sha256": "9a238ee788d6d2295b19b5728c9cb8d768710eb8510169994af54e774c7a979f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\训练准备-原生声学参数覆盖.json",
+      "file": "validated-report-r2/7cb7a554e8a81993-训练准备-原生声学参数覆盖.json",
+      "bytes": 2491,
+      "sha256": "a977e5188177ccddc21251315efcb3537b0a7a0f155aad46abfc6285fb5f9827"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\训练准备-官方入口静态核对.json",
+      "file": "validated-report-r2/5e5540121a1d3618-训练准备-官方入口静态核对.json",
+      "bytes": 2924,
+      "sha256": "e2b78650603e2df4abe2ddae8966267c7f6477f592f5b0ca856792287c51b43e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\训练数据-完整性与样本统计.json",
+      "file": "validated-report-r2/012073d62dcb9857-训练数据-完整性与样本统计.json",
+      "bytes": 2261,
+      "sha256": "e1fe0e4a74749bf8c0b37925bb9c279fe999eee75cdd7c09037137b4ef38faf8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\模型原始输出\\MOSSCPU-20200623_S_R001S07C01-含原协议标记.txt",
+      "file": "validated-report-r2/778bf89df6724d16-MOSSCPU-20200623_S_R001S07C01-含原协议标记.txt",
+      "bytes": 40110,
+      "sha256": "823ddf47b522683ff6eb6f9438f5c30e1ce2dbd39b335f1bc0c6cc0cb461a06f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\模型原始输出\\MOSSCPU-EN2002a-含原协议标记.txt",
+      "file": "validated-report-r2/cbf48fba2520a027-MOSSCPU-EN2002a-含原协议标记.txt",
+      "bytes": 56336,
+      "sha256": "0fe11ddcaa836802bd830acde13b9d50aac83ade99d3713f71412ebb21a7c28c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\模型原始输出\\MOSSCPU-ES2003b-含原协议标记.txt",
+      "file": "validated-report-r2/629c777f3f56038b-MOSSCPU-ES2003b-含原协议标记.txt",
+      "bytes": 37516,
+      "sha256": "14314ee38b67ae2cd44cd924b39363dcad6fa4f1c9503ea41cc5c076b8d55a3b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\模型原始输出\\MOSSCPU-S_R004S03C01-含原协议标记.txt",
+      "file": "validated-report-r2/9472f207c2f69996-MOSSCPU-S_R004S03C01-含原协议标记.txt",
+      "bytes": 36965,
+      "sha256": "79a1f87354fda2205b2f072a4eb667346a2fe565c2e0ad76f8ee3510a3102d50"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\模型原始输出\\QwenCPU-20200623_S_R001S07C01-原始识别.txt",
+      "file": "validated-report-r2/c12bad5d8a2bdfc8-QwenCPU-20200623_S_R001S07C01-原始识别.txt",
+      "bytes": 23429,
+      "sha256": "e9d5ff45617422849cb02cf64a5c058ac65e747df0976367dc68f5a7b24a06a3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\模型原始输出\\QwenCPU-S_R004S03C01-原始识别.txt",
+      "file": "validated-report-r2/320874240b83f293-QwenCPU-S_R004S03C01-原始识别.txt",
+      "bytes": 27698,
+      "sha256": "a56b449cdc158ab369c84614748e73e99d0714ddd82a512ba1f56a16e339ccff"
+    },
+    {
+      "source": "work\\check_general_cpu_alignment_coordinator_20261116.py",
+      "file": "work-source/d0c1937623287447-check_general_cpu_alignment_coordinator_20261116.py",
+      "bytes": 4143,
+      "sha256": "9ae5918d54147d500e82dce5317effa6346406e7ad41801555e7ae4b7a885e2e"
+    },
+    {
+      "source": "work\\build_afternoon_cpu_delivery_20261116.py",
+      "file": "work-source/fe2abf6da8d409be-build_afternoon_cpu_delivery_20261116.py",
+      "bytes": 17287,
+      "sha256": "6c42d244323817306d51e3c717546f9933d4bf11e2cfe9885b132530e281fb83"
+    },
+    {
+      "source": "work\\build_afternoon_cpu_delivery_r2_20261116.py",
+      "file": "work-source/0ff9fede93a96ce8-build_afternoon_cpu_delivery_r2_20261116.py",
+      "bytes": 1267,
+      "sha256": "2076d7ca95b80751b7578c928b78cd1212293b904aaa11766de958a361b17377"
+    },
+    {
+      "source": "work\\build_afternoon_cpu_delivery_frozen_r2_20261116.py",
+      "file": "work-source/a0f4cade78ef86b8-build_afternoon_cpu_delivery_frozen_r2_20261116.py",
+      "bytes": 17425,
+      "sha256": "aa552afb0f24e8cc4826b5fca978c926927346334f3eb6dd80c5cd4d9688ef9f"
+    },
+    {
+      "source": "work\\build_afternoon_cpu_delivery_r3_20261116.py",
+      "file": "work-source/39a308f53670b4e2-build_afternoon_cpu_delivery_r3_20261116.py",
+      "bytes": 3782,
+      "sha256": "48954c40c700e198c6cac85277c44fe7ad86284ef753993242c1280d421c37b6"
+    },
+    {
+      "source": "work\\afternoon-report-r1-preparation-failure.json",
+      "file": "work-source/8b08ddbde098342f-afternoon-report-r1-preparation-failure.json",
+      "bytes": 390,
+      "sha256": "1722f8e4ddfa556e51bc9d50943d79602e6548d5fb405fa5f966bfa543b6bd49"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\afternoon-delivery-r2.json",
+      "file": "delivery-receipt-r2/6480df018ab1885e-afternoon-delivery-r2.json",
+      "bytes": 635,
+      "sha256": "9349cf8b01b19194499dca6c20d4819721e55cf64147c2a733f19c607a253011"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\protection-r43.json",
+      "file": "previous-source-protection/f2bca79750f5213a-protection-r43.json",
+      "bytes": 317,
+      "sha256": "9a238ee788d6d2295b19b5728c9cb8d768710eb8510169994af54e774c7a979f"
+    },
+    {
+      "source": "work\\cpu-checkpoint44.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 13680,
+      "sha256": "71fafb1c732ad904e3b358decc9ef797b03703f0578398c3b73f4416bc37875e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/run_cpu_forced_alignment_20261116.py": "58b82717794e1f084ac76da0e4608a286d5fe2271760ff6875ac8c0bef1ba19d",
+    "src/run_cpu_batched_alignment_20261116.py": "4e09338c9ab8b3a8ac62fec238f046d33603bca2144a2b4f508c7557c15af0b5"
+  },
+  "state": "GENERAL_BOUNDED_CPU_ALIGNMENT_AND_DELIVERY_INTEGRITY_VERIFIED_MODEL_QUALITY_STILL_OPEN",
+  "maximumLeavesPerWorker": 16,
+  "generalReplayAndProcessBoundaryChecksNewNeuralCalls": 0,
+  "earlierActualNonemptyRecoveryBatchesWere16And2": true,
+  "noMeetingSpecificIdsOrRecoveryPositionsInCoordinator": true,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "productDefaultChanged": false,
+  "rawTrainingDataAndModelBinariesExcluded": true,
+  "validatedReportTranscriptUtf8BytesPreserveOriginalLfExactly": true
+}

@@ -1,0 +1,52 @@
+{
+  "state": "PINNED_UPSTREAM_TRAINING_ENTRY_STATIC_AUDIT_ONLY_NO_IMPORT_OR_TRAINING",
+  "at": "2026-11-16T14:21:44.994526+08:00",
+  "upstreamCommit": "9567667698f195fa807b1581de5c03184e63d2b0",
+  "url": "https://raw.githubusercontent.com/QwenLM/Qwen3-ASR/9567667698f195fa807b1581de5c03184e63d2b0/finetuning/qwen3_asr_sft.py",
+  "sha256": "6f3e5cc530d9da9ff405144fc94a5c4790018eaf956dbc623634818160418976",
+  "license": "Apache-2.0, original header retained",
+  "sourceFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\training-source-audit\\qwen3_asr_sft.py",
+  "observedPrefixMaskAbsoluteFromColumnZero": true,
+  "observedPatchedForwardAcceptsKwargs": true,
+  "communityIssue": "https://github.com/QwenLM/Qwen3-ASR/issues/216",
+  "communityReportedLossAndPaddingBugsLocallyReproduced": false,
+  "doNotAttributePriorAdapterFailureToThisIssue": true,
+  "priorCustomAcousticWorker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\public_acoustic_context_worker_20261115.py",
+  "priorCustomWorkerUsesSingleExampleExplicitPrefixMask": true,
+  "priorCustomWorkerDividesManualAccumulationByActualGroupSize": true,
+  "futureTrainingPreflight": [
+    "Verify target-only labels on actual unequal-length left/right-padded processor batches.",
+    "Verify one-batch versus accumulated-gradient equivalence under the selected token/example loss normalization.",
+    "Verify real acoustic encoder and bridge parameter coverage; preserve the earlier rejected adapters.",
+    "Verify complete checkpoint save/reload logits and CPU deployment conversion on unchanged controls before full acceptance."
+  ],
+  "architectureEvidence": {
+    "url": "https://arxiv.org/abs/2607.08208v2",
+    "scope": "A modular diarization+Qwen adaptation study on two-speaker conversations, not proof for our multi-person single-mic product. It motivates supervised domain adaptation; no result transfers automatically."
+  },
+  "trainingLaunchReady": false,
+  "remaining": [
+    "Actual usable training device/runtime is unavailable after owner disconnected the6800XT.",
+    "Chinese real cross-meeting participant isolation remains unverified.",
+    "Current exports cover2.81h selected nonoverlap speech, not all13.1h of source audio or a proven sufficient training scale."
+  ],
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 15908,
+    "cpuRate": 100,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 1.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 15659008,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

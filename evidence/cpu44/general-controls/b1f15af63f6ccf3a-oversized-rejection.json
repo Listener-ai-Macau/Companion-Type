@@ -1,0 +1,6 @@
+{
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\run_cpu_forced_alignment_20261116.py\", line 55, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\run_cpu_forced_alignment_20261116.py\", line 15, in main\n    assert 0<len(B['cases'])<=16,'Use the bounded stateless coordinator for a longer recording; never retain one classifier process across more than16 leaves'\n           ^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Use the bounded stateless coordinator for a longer recording; never retain one classifier process across more than16 leaves\n",
+  "modelStarted": false
+}

@@ -1,0 +1,31 @@
+{
+  "state": "COMPLETE_NATIVE_CPU_ALIGNMENT_CHARACTERS_PRESERVED_NOT_TIME_QUALIFIED",
+  "startedAt": "2026-11-16T15:31:34.392439+08:00",
+  "completed": [
+    {
+      "id": "000033-root",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\batch-run-0\\000033-root-alignment.json",
+      "sha256": "b499c2b5616e890cabb5791a2c2e78cd9c3ae04f9853d65bc29c8c0eb4be0639",
+      "seconds": 0.0
+    }
+  ],
+  "maximumLeavesPerWorker": 16,
+  "reusedLeaves": 0,
+  "newWorkerProcesses": 1,
+  "newNeuralCalls": 0,
+  "statefulSpeakerModelHandled": false,
+  "qualityQualified": false,
+  "activeStage": "alignment_batch_0",
+  "attempts": [
+    {
+      "stage": "alignment_batch_0",
+      "exitCode": 0,
+      "seconds": 12.511427299999923,
+      "privatePeakBytes": 519004160,
+      "log": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\logs\\alignment_batch_0-1794814354450206100.log",
+      "taskNeuralDeadline": "2026-11-16T15:40:00+08:00",
+      "originalRamStartGateBytes": 3414499000
+    }
+  ],
+  "finishedAt": "2026-11-16T15:32:46.965060+08:00"
+}

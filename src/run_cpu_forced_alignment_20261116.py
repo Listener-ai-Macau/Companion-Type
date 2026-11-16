@@ -12,6 +12,7 @@ def sha(p):
 def main():
  p=argparse.ArgumentParser();p.add_argument('--control',type=Path,required=True);p.add_argument('--run',type=Path,required=True);a=p.parse_args()
  B=read(a.control/'binding.json');worker=Path(__file__).with_name('cpu_forced_alignment_worker_20261116.py')
+ assert 0<len(B['cases'])<=16,'Use the bounded stateless coordinator for a longer recording; never retain one classifier process across more than16 leaves'
  assert sha(worker)==B['workerSha256'] and sha(__file__)==B['runnerSha256']
  pressure=SystemRamPressure();child=owned=None
  with exclusive_file(Path('E:/CodexData/Companion/.model-cache/local-qwen-decoder.lock')),PowerLease():

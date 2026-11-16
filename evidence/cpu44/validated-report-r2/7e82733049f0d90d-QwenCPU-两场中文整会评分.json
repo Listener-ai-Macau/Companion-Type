@@ -1,0 +1,159 @@
+{
+  "state": "COMPLETE_RAW_CHINESE_CPU_COMPONENT_CHARACTERIZATION_UNIVERSAL_REJECTION_UNCHANGED",
+  "at": "2026-11-16T14:29:09.437788+08:00",
+  "meetings": [
+    {
+      "meeting": "S_R004S03C01",
+      "audioSeconds": 2327.119,
+      "rawText": {
+        "referenceUnits": 8325,
+        "hypothesisUnits": 8213,
+        "errors": 488,
+        "errorRate": 0.05861861861861862,
+        "counts": {
+          "replace": 236,
+          "delete": 182,
+          "insert": 70
+        }
+      },
+      "nativeBaselineRawText": {
+        "referenceUnits": 8325,
+        "hypothesisUnits": 8205,
+        "errors": 461,
+        "errorRate": 0.055375375375375374,
+        "counts": {
+          "replace": 225,
+          "delete": 178,
+          "insert": 58
+        }
+      },
+      "originalProductRawGatePass": false,
+      "noMoreRawErrorsThanOriginalNativeBaseline": false,
+      "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\composed\\S_R004S03C01-raw.json",
+      "rawSha256": "ed2e8fd274c625e61493341023951ae125cd8c922586e5496668629f35e50d49",
+      "cpuInferenceSeconds": 905.0159563999914,
+      "asrRealTimeFactor": 0.38889973241591486,
+      "speakerAttributionAndFactsUnmeasured": true,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "audioSeconds": 2049.3615,
+      "rawText": {
+        "referenceUnits": 7153,
+        "hypothesisUnits": 6708,
+        "errors": 1104,
+        "errorRate": 0.15434083601286175,
+        "counts": {
+          "replace": 439,
+          "delete": 555,
+          "insert": 110
+        }
+      },
+      "nativeBaselineRawText": {
+        "referenceUnits": 7153,
+        "hypothesisUnits": 6747,
+        "errors": 1037,
+        "errorRate": 0.1449741367258493,
+        "counts": {
+          "replace": 421,
+          "delete": 511,
+          "insert": 105
+        }
+      },
+      "originalProductRawGatePass": false,
+      "noMoreRawErrorsThanOriginalNativeBaseline": false,
+      "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\composed\\20200623_S_R001S07C01-raw.json",
+      "rawSha256": "ac699881eda3d35f846d93ee93f93908209c8cde87f3a6147825fa75265bdaa7",
+      "cpuInferenceSeconds": 907.1694551000037,
+      "asrRealTimeFactor": 0.4426595576719889,
+      "speakerAttributionAndFactsUnmeasured": true,
+      "qualityQualified": false
+    }
+  ],
+  "originalUniversalDecisionStillRejected": true,
+  "scopeDecision": {
+    "state": "CHARACTERIZE_CHINESE_COMPONENT_ONLY_UNIVERSAL_PORT_REJECTION_UNCHANGED",
+    "at": "2026-11-16T13:32:57.262522+08:00",
+    "originalDecision": "REJECT_QWEN_CPU_PORT_DEPLOYMENT_REGRESSION_NO_QUANTIZATION_GRID",
+    "originalScore": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-port-r1\\score.json",
+    "originalScoreSha256": "aca561fdaeee0bf45b14865476732ba5f992eba05ce3119db55f2a6eafe062ef",
+    "reason": "The universal CPU port failed English and remains rejected. Both independent Chinese clip sources matched or improved the protected native baseline(35->35,38->37). The user wants Chinese/English handled by suitable components and asks how users without GPU run. Characterize only the existing preferred Chinese component on both complete original recordings; this does not overturn the original bilingual keep rule, permit default promotion, or claim a trained/qualified model.",
+    "scopeChangeBeforeWholeOutputs": true,
+    "universalGateStillFailed": true,
+    "quantContextOrPromptGrid": false,
+    "modelPresetUnchanged": "Qwen1.7B Q8_0/f16KV/nCtx2048",
+    "languagePolicy": "Whole input uses auto, matching the existing complete-recording native baseline. The prior clip regression used per-case known languages, matching its separate frozen clip baseline.",
+    "originalProductGatesUnchanged": true,
+    "chineseWholeCharacterization": [
+      "S_R004S03C01",
+      "20200623_S_R001S07C01"
+    ],
+    "originalRawBaselines": {
+      "S_R004S03C01": {
+        "errors": 461,
+        "units": 8325
+      },
+      "20200623_S_R001S07C01": {
+        "errors": 1037,
+        "units": 7153
+      }
+    },
+    "qualityQualified": false,
+    "saleQualified": false,
+    "productDefaultChanged": false,
+    "wholeSpeakerWordAlignmentNotEvaluated": true,
+    "finalHoldoutOpened": false
+  },
+  "all147NaturalEos": true,
+  "newWeightTraining": false,
+  "scorerSha256": "84adf5a3d733a98f44a4bb10cb05a54894d580db872eff7ede66f20c032802fe",
+  "execution": {
+    "state": "COMPLETE_QWEN_CPU_PORT_CLIPS_SCORING_PENDING",
+    "startedAt": "2026-11-16T13:58:55.461471+08:00",
+    "privatePeakBytes": 1008672768,
+    "familyWorkingSetPeakBytes": 1891098624,
+    "systemAvailableMinBytes": 2891034624,
+    "qualityQualified": false,
+    "automaticRetries": 0,
+    "neuralDeadline": "2026-11-16T15:40:00+08:00",
+    "pid": 22128,
+    "pidCreatedAt": 1794808735.463699,
+    "workerExitCode": 0,
+    "completedInputs": 147,
+    "finishedAt": "2026-11-16T14:29:03.197588+08:00"
+  },
+  "workingSetControl": {
+    "minimumBytes": 204800,
+    "maximumBytes": 1879048192,
+    "flags": 6,
+    "maximumEnforced": true,
+    "scope": "Current owned worker process only; no global/other-process/registry changes."
+  },
+  "qualityQualified": false,
+  "saleQualified": false,
+  "productDefaultChanged": false,
+  "blindFinalHoldoutOpened": false,
+  "limitations": [
+    "Two already seen development/regression recordings, not blind final acceptance.",
+    "This reports Chinese raw ASR component deployment only; English rejection, speaker word assignment, timestamps and facts remain open.",
+    "No word post-editing, reference correction, VAD drop or oracle input cuts.",
+    "Physical working-set ceiling is distinct from the unchanged2GiB private/job limit."
+  ],
+  "limits": {
+    "pid": 14852,
+    "cpuRate": 100,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 1.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 95600640,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

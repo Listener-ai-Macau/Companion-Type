@@ -1,0 +1,209 @@
+{
+  "revision": 44,
+  "evidenceDirectory": "evidence/cpu44",
+  "commitMessage": "Generalize bounded CPU alignment and exact cache replay; preserve validated afternoon handoff builders",
+  "sources": [
+    "src/run_cpu_forced_alignment_20261116.py",
+    "src/run_cpu_batched_alignment_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\oversized-rejection.json",
+      "name": "general-controls/b1f15af63f6ccf3a-oversized-rejection.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\result.json",
+      "name": "general-controls/bb80f19ad1712683-result.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\oversized\\binding.json",
+      "name": "general-controls/318165c711c39afd-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\replay\\binding.json",
+      "name": "general-controls/1a6616f63c1986e9-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\replay\\orchestration-binding.json",
+      "name": "general-controls/77ca7a3772a83abd-orchestration-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\silent-leaf\\binding.json",
+      "name": "general-controls/987f0b7889d4dced-binding.json"
+    },
+    {
+      "source": "\\\\?\\C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-general-batching-r1\\silent-leaf\\orchestration-binding.json",
+      "name": "general-controls/477a51d851219975-orchestration-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-replay-r1\\worker-state.json",
+      "name": "general-replay/3d150d9c680c8c4a-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\job.json",
+      "name": "general-silent-process/99dbc009c76d6148-job.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\worker-state.json",
+      "name": "general-silent-process/a90e6190b5bda072-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\batch-control-0\\binding.json",
+      "name": "general-silent-process/7007f16722917236-binding.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\batch-run-0\\000033-root-alignment.json",
+      "name": "general-silent-process/1177268fdc959d09-000033-root-alignment.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\batch-run-0\\run.json",
+      "name": "general-silent-process/29d216dd51754324-run.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\batch-run-0\\worker-state.json",
+      "name": "general-silent-process/7be526f0c9bb05ab-worker-state.json"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\batch-run-0\\worker.log",
+      "name": "general-silent-process/3435b1991d0bd11f-worker.log"
+    },
+    {
+      "source": "\\\\?\\E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-general-alignment-silent-leaf-r1\\logs\\alignment_batch_0-1794814354450206100.log",
+      "name": "general-silent-process/bd6ccff7b6ceb06f-alignment_batch_0-1794814354450206100.log"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\文件清单.json",
+      "name": "validated-report-r2/1abe9a91d4ad318b-文件清单.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\普通中文会议-保留原识别全文.txt",
+      "name": "validated-report-r2/cda396b7ccdff50f-普通中文会议-保留原识别全文.txt"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\普通中文会议-匿名发言日志.txt",
+      "name": "validated-report-r2/7c09cb148be02f7e-普通中文会议-匿名发言日志.txt"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\结果.json",
+      "name": "validated-report-r2/6f773be523469b5b-结果.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\说明.txt",
+      "name": "validated-report-r2/de69ce8afc8d8f00-说明.txt"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\CPU时间轴-与历史GPU输出比较.json",
+      "name": "validated-report-r2/d44ac37e8f4ac310-CPU时间轴-与历史GPU输出比较.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\CPU时间轴-共享Rust文档契约.json",
+      "name": "validated-report-r2/862dff0e7dfaa290-CPU时间轴-共享Rust文档契约.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\CPU模型-空闲释放与恢复.json",
+      "name": "validated-report-r2/af3606357ac204dc-CPU模型-空闲释放与恢复.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\MOSS-四场整会CPU评分.json",
+      "name": "validated-report-r2/47c3825d0d08ac03-MOSS-四场整会CPU评分.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\QwenCPU-两场中文整会评分.json",
+      "name": "validated-report-r2/7e82733049f0d90d-QwenCPU-两场中文整会评分.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\Windows-并发JSON读取保护.json",
+      "name": "validated-report-r2/a42c88c31d95949c-Windows-并发JSON读取保护.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\保留原识别文字-CPU时间轴与说话人评分.json",
+      "name": "validated-report-r2/7b984f815bf79fe7-保留原识别文字-CPU时间轴与说话人评分.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\源码保护-r43.json",
+      "name": "validated-report-r2/d57e146367d534e3-源码保护-r43.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\训练准备-原生声学参数覆盖.json",
+      "name": "validated-report-r2/7cb7a554e8a81993-训练准备-原生声学参数覆盖.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\训练准备-官方入口静态核对.json",
+      "name": "validated-report-r2/5e5540121a1d3618-训练准备-官方入口静态核对.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\原始证据\\训练数据-完整性与样本统计.json",
+      "name": "validated-report-r2/012073d62dcb9857-训练数据-完整性与样本统计.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\模型原始输出\\MOSSCPU-20200623_S_R001S07C01-含原协议标记.txt",
+      "name": "validated-report-r2/778bf89df6724d16-MOSSCPU-20200623_S_R001S07C01-含原协议标记.txt"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\模型原始输出\\MOSSCPU-EN2002a-含原协议标记.txt",
+      "name": "validated-report-r2/cbf48fba2520a027-MOSSCPU-EN2002a-含原协议标记.txt"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\模型原始输出\\MOSSCPU-ES2003b-含原协议标记.txt",
+      "name": "validated-report-r2/629c777f3f56038b-MOSSCPU-ES2003b-含原协议标记.txt"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\模型原始输出\\MOSSCPU-S_R004S03C01-含原协议标记.txt",
+      "name": "validated-report-r2/9472f207c2f69996-MOSSCPU-S_R004S03C01-含原协议标记.txt"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\模型原始输出\\QwenCPU-20200623_S_R001S07C01-原始识别.txt",
+      "name": "validated-report-r2/c12bad5d8a2bdfc8-QwenCPU-20200623_S_R001S07C01-原始识别.txt"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\outputs\\Companion-CPU与复杂会议阶段交付-20261116-1600-r2\\模型原始输出\\QwenCPU-S_R004S03C01-原始识别.txt",
+      "name": "validated-report-r2/320874240b83f293-QwenCPU-S_R004S03C01-原始识别.txt"
+    },
+    {
+      "source": "work\\check_general_cpu_alignment_coordinator_20261116.py",
+      "name": "work-source/d0c1937623287447-check_general_cpu_alignment_coordinator_20261116.py"
+    },
+    {
+      "source": "work\\build_afternoon_cpu_delivery_20261116.py",
+      "name": "work-source/fe2abf6da8d409be-build_afternoon_cpu_delivery_20261116.py"
+    },
+    {
+      "source": "work\\build_afternoon_cpu_delivery_r2_20261116.py",
+      "name": "work-source/0ff9fede93a96ce8-build_afternoon_cpu_delivery_r2_20261116.py"
+    },
+    {
+      "source": "work\\build_afternoon_cpu_delivery_frozen_r2_20261116.py",
+      "name": "work-source/a0f4cade78ef86b8-build_afternoon_cpu_delivery_frozen_r2_20261116.py"
+    },
+    {
+      "source": "work\\build_afternoon_cpu_delivery_r3_20261116.py",
+      "name": "work-source/39a308f53670b4e2-build_afternoon_cpu_delivery_r3_20261116.py"
+    },
+    {
+      "source": "work\\afternoon-report-r1-preparation-failure.json",
+      "name": "work-source/8b08ddbde098342f-afternoon-report-r1-preparation-failure.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\afternoon-delivery-r2.json",
+      "name": "delivery-receipt-r2/6480df018ab1885e-afternoon-delivery-r2.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\protection-r43.json",
+      "name": "previous-source-protection/f2bca79750f5213a-protection-r43.json"
+    }
+  ],
+  "claims": {
+    "state": "GENERAL_BOUNDED_CPU_ALIGNMENT_AND_DELIVERY_INTEGRITY_VERIFIED_MODEL_QUALITY_STILL_OPEN",
+    "maximumLeavesPerWorker": 16,
+    "generalReplayAndProcessBoundaryChecksNewNeuralCalls": 0,
+    "earlierActualNonemptyRecoveryBatchesWere16And2": true,
+    "noMeetingSpecificIdsOrRecoveryPositionsInCoordinator": true,
+    "newWeightTraining": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "productDefaultChanged": false,
+    "rawTrainingDataAndModelBinariesExcluded": true,
+    "validatedReportTranscriptUtf8BytesPreserveOriginalLfExactly": true
+  }
+}

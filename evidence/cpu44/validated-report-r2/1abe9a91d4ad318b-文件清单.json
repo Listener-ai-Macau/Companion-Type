@@ -1,0 +1,111 @@
+{
+  "generatedAt": "2026-11-16T15:26:12.985174+08:00",
+  "files": [
+    {
+      "file": "原始证据/CPU时间轴-与历史GPU输出比较.json",
+      "bytes": 47019,
+      "sha256": "4fedf51b5524614e3c364b194d0fa9cf298c7b472140731c7a8f36baf01fb5f4"
+    },
+    {
+      "file": "原始证据/CPU时间轴-共享Rust文档契约.json",
+      "bytes": 556,
+      "sha256": "50a346916218a3facdc01843ffba896707a78ab989300e5378e098dd41103d7b"
+    },
+    {
+      "file": "原始证据/CPU模型-空闲释放与恢复.json",
+      "bytes": 1173,
+      "sha256": "04db6fae200d4114a7ed97e60e9e7a32a59070f4631d8dd607175d5143204368"
+    },
+    {
+      "file": "原始证据/MOSS-四场整会CPU评分.json",
+      "bytes": 35116,
+      "sha256": "2e508c7baaf5bcb88c33b92c5bfe7e5cbc9fed12efe53e614e2d584d76835046"
+    },
+    {
+      "file": "原始证据/QwenCPU-两场中文整会评分.json",
+      "bytes": 6444,
+      "sha256": "050daa7d13ee24b608b8d7f0aeac97dd3c419d33b32025ce768af3ee809df1f5"
+    },
+    {
+      "file": "原始证据/Windows-并发JSON读取保护.json",
+      "bytes": 344,
+      "sha256": "6cc8931b5afaa9842ef84fd516a6a6f60db723320175bb19a02da21e90408b1d"
+    },
+    {
+      "file": "原始证据/保留原识别文字-CPU时间轴与说话人评分.json",
+      "bytes": 7165,
+      "sha256": "c574113127128f26d260299a88409776350d6a9b5c4d17c582b7fcd0796dab01"
+    },
+    {
+      "file": "原始证据/源码保护-r43.json",
+      "bytes": 317,
+      "sha256": "9a238ee788d6d2295b19b5728c9cb8d768710eb8510169994af54e774c7a979f"
+    },
+    {
+      "file": "原始证据/训练准备-原生声学参数覆盖.json",
+      "bytes": 2491,
+      "sha256": "a977e5188177ccddc21251315efcb3537b0a7a0f155aad46abfc6285fb5f9827"
+    },
+    {
+      "file": "原始证据/训练准备-官方入口静态核对.json",
+      "bytes": 2924,
+      "sha256": "e2b78650603e2df4abe2ddae8966267c7f6477f592f5b0ca856792287c51b43e"
+    },
+    {
+      "file": "原始证据/训练数据-完整性与样本统计.json",
+      "bytes": 2261,
+      "sha256": "e1fe0e4a74749bf8c0b37925bb9c279fe999eee75cdd7c09037137b4ef38faf8"
+    },
+    {
+      "file": "普通中文会议-保留原识别全文.txt",
+      "bytes": 27402,
+      "sha256": "04ada0349b55aa38ec46930312a90eef222aad0fb8c75a868fb78b72d0b9fbaa"
+    },
+    {
+      "file": "普通中文会议-匿名发言日志.txt",
+      "bytes": 33990,
+      "sha256": "d3575fa7f68df4f8c921fb51c62368840106a3512e4fbf6b503bbe2852284a77"
+    },
+    {
+      "file": "模型原始输出/MOSSCPU-20200623_S_R001S07C01-含原协议标记.txt",
+      "bytes": 40110,
+      "sha256": "823ddf47b522683ff6eb6f9438f5c30e1ce2dbd39b335f1bc0c6cc0cb461a06f"
+    },
+    {
+      "file": "模型原始输出/MOSSCPU-EN2002a-含原协议标记.txt",
+      "bytes": 56336,
+      "sha256": "0fe11ddcaa836802bd830acde13b9d50aac83ade99d3713f71412ebb21a7c28c"
+    },
+    {
+      "file": "模型原始输出/MOSSCPU-ES2003b-含原协议标记.txt",
+      "bytes": 37516,
+      "sha256": "14314ee38b67ae2cd44cd924b39363dcad6fa4f1c9503ea41cc5c076b8d55a3b"
+    },
+    {
+      "file": "模型原始输出/MOSSCPU-S_R004S03C01-含原协议标记.txt",
+      "bytes": 36965,
+      "sha256": "79a1f87354fda2205b2f072a4eb667346a2fe565c2e0ad76f8ee3510a3102d50"
+    },
+    {
+      "file": "模型原始输出/QwenCPU-20200623_S_R001S07C01-原始识别.txt",
+      "bytes": 23429,
+      "sha256": "e9d5ff45617422849cb02cf64a5c058ac65e747df0976367dc68f5a7b24a06a3"
+    },
+    {
+      "file": "模型原始输出/QwenCPU-S_R004S03C01-原始识别.txt",
+      "bytes": 27698,
+      "sha256": "a56b449cdc158ab369c84614748e73e99d0714ddd82a512ba1f56a16e339ccff"
+    },
+    {
+      "file": "结果.json",
+      "bytes": 52746,
+      "sha256": "86013c80ea5718c6cf8b3fb1501254fc77c206fe2123a25c8f9bac3c664287cd"
+    },
+    {
+      "file": "说明.txt",
+      "bytes": 9163,
+      "sha256": "005179013298c22f91382c2cdc83b8b67867280afd703061e3cbcc3a70972ea5"
+    }
+  ],
+  "scope": "Only generated report/results and source-version receipts; no raw training data, model weights or runtime binaries."
+}

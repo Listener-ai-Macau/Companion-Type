@@ -1,0 +1,17 @@
+{
+  "state": "PASS_GENERAL_BOUNDED_CPU_ALIGNMENT_REPLAY_PROCESS_LAUNCH_AND_OVERSIZE_REJECTION_ZERO_NEW_NEURAL_CALLS",
+  "at": "2026-11-16T15:32:46.990948+08:00",
+  "sourceSha256": "4e09338c9ab8b3a8ac62fec238f046d33603bca2144a2b4f508c7557c15af0b5",
+  "maximumLeavesPerWorker": 16,
+  "all79AcceptedLeafFilesReusedBySha": true,
+  "replaySpawnedZeroWorkers": true,
+  "oversizedLowLevelCallRejectedBeforeAnyWorker": true,
+  "actualOneSilentLeafProcessAndOriginalResourceGuardsPassed": true,
+  "newModelNeuralCalls": 0,
+  "earlierActualNonempty16And2BatchProof": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r2\\process-lifetime-policy.json",
+  "noMeetingIdsOrRecoveryOffsetsHardcodedInCoordinator": true,
+  "statefulSpeakerModelNotBatchedOrReset": true,
+  "sourceModelWorkerAndNeuralMathUnchanged": true,
+  "defaultPackageChanged": false,
+  "qualityQualified": false
+}

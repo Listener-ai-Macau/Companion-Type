@@ -1,0 +1,376 @@
+{
+  "at": "2026-11-16T14:11:15.858807+08:00",
+  "workerPython": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+  "workerSha256": "a68837b3121e7467ca6db0f188866ac54572a41e33e2f278fb9c18f5e83cddff",
+  "runnerSha256": "58b82717794e1f084ac76da0e4608a286d5fe2271760ff6875ac8c0bef1ba19d",
+  "cpuTorchSite": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-r2\\torch-cpu-site",
+  "modelRoot": "E:/CodexData/Companion/.model-cache/qwen-native-aligner-20261107/model",
+  "modelSha256": "00568245ceca5af1991d28562a75fe1ddc9bfeb041c27fda66947ea05c47fb86",
+  "helpers": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_cpu_aligner_loader_20261116.py": "3091bca3d7b6613bcfa39d0e90d0520caccbf4f8f065f7ffd8b08bd20e3c2848",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_windows_working_set_20261116.py": "014c2099f042ce4544fb61daa5fee7cf4785b7caafd97c1b89f781ba8480b9d3",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_alignment_text_20261107.py": "006aed03ba02ae339dd75ca75771614aa53fc407f5229774b70cf8692bec59bd",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\processing_qwen3_asr.py": "5ff7ace057ae959fb0cd551775cbbfdad8c003eb731bf0f1f39bfc6452ce86fa",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\modeling_qwen3_asr.py": "f6247469bc82ee40aa83909c530053d6bfbb1cfa8d34e74ff842f81f6c0bb2a4"
+  },
+  "cases": [
+    {
+      "id": "000000-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000000-root.wav",
+      "wavSha256": "013d3d92073757222e7532838823d83a144ae415646326229991f59dfffc19f2",
+      "pcmSha256": "6881e3862c6e7189f5a9f45d28710f3fee4c4380f9afe27d44de1f139d67615f",
+      "frames": 516292,
+      "sourceStartFrame": 0,
+      "sourceEndFrame": 516292,
+      "text": "零零一超市主管，零零六A，零零七B，零零八C，零零九D。把各个区的这个咱那个负责人啊叫过来，来简单呃做一个交流。呃，咱超市啊近期的销售啊，嗯，比往期的要好。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000000-root.json",
+      "rawAsrSha256": "938d9762565edebc26ef13966925bad829969ad8d63e74f63b8a0833b1ec580c",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000001-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000001-root.wav",
+      "wavSha256": "bf0e0ab8cfb93d9724ef0aaa9736f6bf958e231e74e4c722d92cd2311f6a2c7f",
+      "pcmSha256": "c6af7ddaa9c989e3dc3a0acf21fcc919e01d34f8f4fa5966f2a9fc9aca54c983",
+      "frames": 521451,
+      "sourceStartFrame": 516292,
+      "sourceEndFrame": 1037743,
+      "text": "啊，明显的客流量也客流量也多了，啊，咱那个销售这个呃营业额也上去了，啊，这都是大家伙在座的努力的出现的状况，估计工作各位在下也出了在下边也出了不少的呃力气，呃也做了很多的这个呃营销的一些方案，呃，希望大家以后啊要继续保持咱这种工作状态，呃，下面呢就是看看各位还有没有呃工作上的一些。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000001-root.json",
+      "rawAsrSha256": "bbcb6ebb40f4f58e6b7f88a04e5ec8448d0ce0776d31d0ca692491ce59847811",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000002-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000002-root.wav",
+      "wavSha256": "2110af18c68f7dbdf4c7c5cafa44aa492fce6143810cad18a03e946671d5f25d",
+      "pcmSha256": "19b20882373d1603cd742f55600bcd8ffd11f0e40b341b988c2fc2cd31bc0ee3",
+      "frames": 440788,
+      "sourceStartFrame": 1037743,
+      "sourceEndFrame": 1478531,
+      "text": "要求或者需求，呃，给我这个主管提一下，我这边尽量呃满足各位的呃需求，呃，在我的能力之上，我能满足的满足，能力是呃我的能力也有限，要是呃有特大的需求或者要求，我会上报呃进行上级上级领导进行评估一下，再呃做决定。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000002-root.json",
+      "rawAsrSha256": "8de82bef779e4a6f2e2c163f95020e80310886b3f1309351549be6ec56c9c45d",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000003-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000003-root.wav",
+      "wavSha256": "5be0c846f94c8a82bba3dd7e2ad2dbc64e213c1329803fddd3bf7cd219fcfdb3",
+      "pcmSha256": "1e83a54eb9f5fc9afd8faf7806bd9809bea6dd6eadf438b821c15dc33642487f",
+      "frames": 427820,
+      "sourceStartFrame": 1478531,
+      "sourceEndFrame": 1906351,
+      "text": "首先呢，呃，上个月季度啊，呃，各个区域的销售情况啊，嗯嗯都不错，尤其是那个咱那个呃日化区这边儿，呃，销售的比例上调了一个档次，呃这也跟好多这个天气有原因，呃呃那个呃也跟。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000003-root.json",
+      "rawAsrSha256": "303b1fafe87faff6aa47bfcb4184e63dfa7f9a4e1cd8e2d27d92aec1632228b0",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000004-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000004-root.wav",
+      "wavSha256": "42019eae620d324e0854f0eaf71fa7e8ebd6134b7fe6b4e403ccaf9cbe788e5d",
+      "pcmSha256": "187f78699289c2a73f5fc69a046c6f04a4a50efc349d86ac0298cb79ab152255",
+      "frames": 422985,
+      "sourceStartFrame": 1906351,
+      "sourceEndFrame": 2329336,
+      "text": "客流源一个原因，估计就是疫情已经结束了嘛，或者不太严重了。那个超市客流源人员也非常非常多，尤其是呃周六周日这几天，呃人流源都是爆满，也不算爆满吧，就是人流源源源不断来呃进行呃超市采购。呃周一至五呢，人流量还是稍微少一些。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000004-root.json",
+      "rawAsrSha256": "92534973d91031a1936739fee9a7100c2875df92fe257945660976e8bb988124",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000005-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000005-root.wav",
+      "wavSha256": "3a237b53244221f4651035c868448976810c997933ac3cebf7f0cca7d3d20f1f",
+      "pcmSha256": "146fe45c5b4715f52f91319933aee6640a12bc0cd91cf4cf57d202cde1d220df",
+      "frames": 484298,
+      "sourceStartFrame": 2329336,
+      "sourceEndFrame": 2813634,
+      "text": "啊，周六周主要是呃一些老年人，呃来超市买一些生活上的嗯必备品，包括日常的一些呃呃蔬菜啦，呃油啦，面啦，啊他们的需求量跟要讲要少一些，呃明显是周六周的人员比较多，呃都是带一些这个呃都是带着孩子啦，或者一一家三口啦，啊来超市。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000005-root.json",
+      "rawAsrSha256": "27684798975f970ee27292f91150846aa38d90ce8a1cf95f5e39b46ca113c646",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000006-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000006-root.wav",
+      "wavSha256": "69fef979a846f5b03946307111c290fe56e9c8c700c809631fd5a4475a6470a3",
+      "pcmSha256": "a6161f2347d1e71529b8b0bbe42557bb713f678741944aeedcfff76ebd5541b3",
+      "frames": 452686,
+      "sourceStartFrame": 2813634,
+      "sourceEndFrame": 3266320,
+      "text": "买一些这个小孩子的用品，呃，小孩子的一些零嘴儿，呃，这个有上升的趋势，所以大家看看有没有对呃，咱下季度的这个销售呃有没有一些好的就是整改，在原有的基础上，嗯，咱做一些新的调整，啊，把一些咱这个。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000006-root.json",
+      "rawAsrSha256": "1afcc87064a5009df6c6c7298501d73f42d0f3a97baf91e4d3119900512ad4b9",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000007-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000007-root.wav",
+      "wavSha256": "cb314f1911513187c7d96174f397ce839b1cf315595498e6b14350352721236e",
+      "pcmSha256": "8524ed2353fe9a5495b057830197a9d5657291e968c35f4b18b3f0c721e663f5",
+      "frames": 457728,
+      "sourceStartFrame": 3266320,
+      "sourceEndFrame": 3724048,
+      "text": "呃，比较卖的销量比较高的这个销售产品是否再进行一下呃优惠活动，呃，或者咱们呃不好卖的产品呢是否要进行下架，呃，这得需要各位来进行一个评判。我这边只是看到你们日常的一些工作状态、一些报表情况，这个包括我这边一些出库、呃入库这些。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000007-root.json",
+      "rawAsrSha256": "6a78847f956a1ea688c0d10ad95a49857fcdb70248ec2359553ce09f1495d1d0",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000008-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000008-root.wav",
+      "wavSha256": "e66e349b8bcfbe3c610f973c0688dcd7dc84c0e7e9736487873affc634f806a8",
+      "pcmSha256": "ef780d636635964fc7074f95378fd532141558f1ca43ce0a604f754eebaf3b1d",
+      "frames": 538478,
+      "sourceStartFrame": 3724048,
+      "sourceEndFrame": 4262526,
+      "text": "呃，东西哪些多哪些少，我能看得见。但是，呃，顾客们对哪些消费比较感兴趣，这块儿我这边还不太清楚，还是大家比我要清楚，因为大家都在呃超市内部呃呃工作的。我这边主管只是偶尔巡查一次，呃，巡查巡查看看工作呃大家工作的情况。我对客户这块儿不太了解，呃，客户对你的产品比较感兴趣，希望大家呃把自己的。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000008-root.json",
+      "rawAsrSha256": "a06937f1946ec1b7f621c6a024c8bfa3f50f7bfd3766f3ce117a53f6f518aaa6",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000009-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000009-root.wav",
+      "wavSha256": "4004698d073b2c30cef1ff1e196cbe6b7659572e502ad7565507e5056bda9816",
+      "pcmSha256": "f5a58991d598ad00dfe1969583a064850606a719cbcf6e2cf28bad86c34749f1",
+      "frames": 496843,
+      "sourceStartFrame": 4262526,
+      "sourceEndFrame": 4759369,
+      "text": "问题，呃，说说一说，呃，包括后期一些工作情况也说一说，看看哪位先说说，我这边呃大力支持一下大家各位的想法。嗯，那我先说一下我那个，这是嗯果蔬区，嗯，其实呃大家现在天冷了，嗯，去街上一般都是去像些岁数大的人都好去那个菜市场去买菜去。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000009-root.json",
+      "rawAsrSha256": "8611a62172b6fa5ef7d8670388eddd40658812242dec65fbd774a88b1419bd09",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000010-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000010-root.wav",
+      "wavSha256": "202b166a00c511dcfe7ff9d65a206228c91344462b27b8c75abf28cc6b7a8e58",
+      "pcmSha256": "f9d2f489e809a81b96f4da4901c7655d9b8e16fa720665ba02f267d82108f091",
+      "frames": 488065,
+      "sourceStartFrame": 4759369,
+      "sourceEndFrame": 5247434,
+      "text": "嗯，但是天冷了以后呢，嗯，说实话我们那个超市的这个，嗯，买菜的这这一块呢，啊，人流量还是比较大的，因为超市里面相对外面的环境的话，它比较暖和一点，嗯，所以说呢，啊，比前段时间呢，嗯，销售的要好一些，嗯，再一个呢，就是超市里面还比较安全一点，像疫情的话，嗯，大家进超市都有戴口罩，而且我们的防护措施呢做的也比较的好。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000010-root.json",
+      "rawAsrSha256": "86320d89ef6916211f349cd22a32f33d3b0bf0d3e7d9ed01fa889ddd45bce85e",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000011-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000011-root.wav",
+      "wavSha256": "b46f9a5a0c3b4ce7e3a4442ec66e828603675dbece51a4b1ecc612bf2f1f5827",
+      "pcmSha256": "1667a4b785cb8a356b885a4bf99152c367483e14f3d38ba7ace5590374428bff",
+      "frames": 404104,
+      "sourceStartFrame": 5247434,
+      "sourceEndFrame": 5651538,
+      "text": "嗯，所以说呢，这一段时间的销售还可以，呃，但是呢，嗯，我对大家的要求呢也非常的高，嗯，其实每天呢都有去细心的去检查，去看看大家有没有做到位，嗯，首先呢就是说，比如说我们这个呃菜的话，我们的陈列是有标准的，那你嗯摆放的品种呀、大小啊。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000011-root.json",
+      "rawAsrSha256": "d921ff5c6b30b8c957b878bf277c16301e8bd2e91a1b541adf5979bfce0677e8",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000012-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000012-root.wav",
+      "wavSha256": "971121c982c300c923a9c08412689a07b98346295e72482601f2cd1e68a971cc",
+      "pcmSha256": "a36db1d60fb02949004c49475cadee0bf8a0da1a5c1fa4e3f48de0740dffb32b",
+      "frames": 494876,
+      "sourceStartFrame": 5651538,
+      "sourceEndFrame": 6146414,
+      "text": "嗯，包括它应该在上呀，在下呀，都是有要求的。嗯，所有的商品呢，都是经过呃加工清洁以后，然后再去陈列的。那不能，我们不能就是说那个那个那个菜呀，带着泥呀，它那么多的泥，你就给它放上去，这是不允许的。包括你现在看到我们超市里面，我们的菜经过就是说，它不会带着泥疙瘩上上上货架子的，都是要去一部分，然后再去嗯，再去陈列的。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000012-root.json",
+      "rawAsrSha256": "911df97344fc3fe7e594c134af1e7c45d26d7466cb321ff6f6eb8670e53e28c6",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000013-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000013-root.wav",
+      "wavSha256": "500031267291042ac1cc4b78dac6f7fe027462803d6520c3761024e96e44ee7b",
+      "pcmSha256": "390f8fcb5b36d76a6f1919d91a65cf114d48dcac1bbb2ba57afb711e8407a8e1",
+      "frames": 435245,
+      "sourceStartFrame": 6146414,
+      "sourceEndFrame": 6581659,
+      "text": "嗯，然后那个，比如说我们上的菜里面有腐烂的那个菜叶子，我们也是要去掉的。然后同一分类的商品呢，应该摆放到一起，然后有层次的，包括颜色上呢，我们也是需要搭配的，这样看起来呢，这个商品比较的丰满，而且呢，看着呢比较的养眼。呃，最起码你买不买，走到这儿以后，你感觉这，哎呀，这个菜怎么这么新鲜呀？",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000013-root.json",
+      "rawAsrSha256": "145f5914db659b04b06232a1599cdf26ee5f38e92a792e7d90142cd175051481",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000014-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000014-root.wav",
+      "wavSha256": "fb73d07d3fadb918f53f836a5e6b3d0c9631015af7d9af3033926867c96951d0",
+      "pcmSha256": "cd3521b8b0176e2f6ccfec96980b187d3ee97469cbf8221470778589fd253685",
+      "frames": 550309,
+      "sourceStartFrame": 6581659,
+      "sourceEndFrame": 7131968,
+      "text": "是不是让人看上去就是，诶，眼睛看上去就是，哎呀，这菜很新鲜呀，比外面的菜要新鲜很多。而且现在天也冷了，也也马上就要零下了，你去外面买菜，好多那个菜它都滴滴答答的，都有冻的那个冰凌茬儿，在我们超市是绝对不允许有这种情情况出现的。而且超市的商品呢，嗯，堆放呢，这个层次上也有要求，不能超过四层，层数太多的话，就是说给人眼睛观上去有一种，呃，不太好的这种感觉。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000014-root.json",
+      "rawAsrSha256": "a0c932c4aa284a5c5584e89d1ffcab4156475517a02dc1b1c7aaf7ede0963fa0",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000015-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000015-root.wav",
+      "wavSha256": "1e005f78a8da21790e3107da6c4764d07bad8fc2e4b48c086f6e4a84d6f51cdc",
+      "pcmSha256": "41a0872940a587200d2e8e5d7513b79f714326ff3c5e7aa94152087c8b5bad07",
+      "frames": 509028,
+      "sourceStartFrame": 7131968,
+      "sourceEndFrame": 7640996,
+      "text": "而且这个上下呀，包括这个呃排放的顺序呀，也都是呃有要求的，嗯，然后我们像一些那个冷鲜的这个产品呀，我们都有冷柜，呃我们是需要放到冷柜里去冷藏的，像这普通的菜呀、土豆啥的，你可以不用冷藏，但是有一些东西是需要冷藏的，我们就是需要放到冷藏柜里面去陈列去，嗯，然后叶儿菜类的，叶儿菜类的是就是每天要求这个员工啊都需要去喷水。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000015-root.json",
+      "rawAsrSha256": "98d6157b275bdd80510822c5d37cb722f6a053a301121d83f664d1f16721d27b",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    },
+    {
+      "id": "000016-root",
+      "meeting": "S_R004S03C01",
+      "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-input-r1\\000016-root.wav",
+      "wavSha256": "a17bc4509fa8a36f44cf1a70a4b51d858167d84b24107023625492d4ee24e71c",
+      "pcmSha256": "b4680bb206ec4352c26f8b0bc4233dfbfd45739911f4a46e7bd33a41438bce0e",
+      "frames": 513028,
+      "sourceStartFrame": 7640996,
+      "sourceEndFrame": 8154024,
+      "text": "呃，在这个保持它这个呃新鲜，保持它的新鲜度吧，算是。嗯，然后那个严禁沾水的菜，有些那个菜它不能沾水，那就要放到那个离这个菜叶叶菜的这个产品呢，要要远一点儿，放在这个喷雾口远一点的那个时间。而且我们菜的这个销售期限呢，也是有时间限制的，是一天。嗯，比如说今天我们这个菜没有卖出去。",
+      "language": "Chinese",
+      "rawAsrFile": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-author-boundaries-r6\\full\\transcripts\\S_R004S03C01\\nodes\\000016-root.json",
+      "rawAsrSha256": "a45d61a330ab4c13ca60bfff64282ff97a0ab81be0bd2ec44d4d618af3a484a1",
+      "rawAsrTextPath": [
+        "raw",
+        "text"
+      ],
+      "asrInferenceOrigin": "Protected native GPU Qwen result retained unchanged; this run only ports alignment and uses prior CPU voice journal."
+    }
+  ],
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "cpuPercent": 25,
+  "computeThreads": 4,
+  "privateBytes": 2147483648,
+  "workingSetCeilingBytes": 1879048192,
+  "scope": "Existing preferred native single-mic no-overlap full development recording; one changed-input first-leaf pilot then unchanged full classifier port. No failed Q8 ASR expansion or new recognition.",
+  "keepRule": [
+    "Synthetic CPU standard and mapped logits/argmax exactly equal.",
+    "Original recognized ASR characters preserved exactly.",
+    "No frame truncation, no GPU kernels, original resource guards retained."
+  ],
+  "qualityQualified": false,
+  "timestampTruthMeasured": false,
+  "newWeightTraining": false,
+  "blindFinalHoldoutOpened": false,
+  "noFullExpansionOfRejectedQwenCpuAsr": true,
+  "reuseTinyControl": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-forced-alignment-control-r2\\tiny-control.json",
+    "sha256": "ed9a5444cec54420f3dea7d6225141e86636d9a947d6ec6dff09dfc8ffcd6fa3"
+  },
+  "sourceAsrInferenceBackend": "Protected native GPU ASR reused; only timestamp classifier and independent speaker journal are CPU.",
+  "reuseCompleted": [
+    {
+      "id": "000000-root",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-alignment-pilot-r1\\000000-root-alignment.json",
+      "sha256": "fde9906550c39bfeea9633c68bc75323b2c819d98c4a272f71c61a87a9b67c85",
+      "seconds": 3.2323669999968843
+    }
+  ],
+  "reuseBinding": {
+    "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-alignment-r1\\pilot\\binding.json",
+    "sha256": "54050ea03f65dba0875fb6b62bc2cf1a5d9c34348b6aa503692143cc498ab8d5"
+  }
+}

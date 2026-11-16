@@ -395,3 +395,7 @@ src/compose_cpu_qwen_alignment_20261116.py -text -whitespace
 src/score_cpu_qwen_alignment_20261116.py -text -whitespace
 
 src/compose_cpu_established_speaker_join_20261116.py -text -whitespace
+
+evidence/cpu44/** -text -whitespace
+
+src/run_cpu_batched_alignment_20261116.py -text -whitespace

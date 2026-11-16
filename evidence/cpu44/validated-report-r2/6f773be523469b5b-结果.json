@@ -1,0 +1,1554 @@
+{
+  "state": "AFTERNOON_CPU_ENGINEERING_RESULTS_DELIVERABLE_MODEL_QUALITY_NOT_QUALIFIED",
+  "generatedAt": "2026-11-16T15:26:12.985174+08:00",
+  "requestedWorkUntil": "2026-11-16T16:00:00+08:00",
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "latestOwnedNeuralProcessFinishedAt": "2026-11-16T15:09:38.475379+08:00",
+  "sourceProtection": {
+    "modelCommit": "266733ca4e025a605c46d76697153a80b5ae1188",
+    "parentCommit": "f7c667cdb4c7cc79f1fc3c6631325926a8e983be",
+    "remoteVerified": true,
+    "state": "CPU_COMPONENTS_AND_IDLE_MEMORY_VERIFIED_BILINGUAL_MODEL_QUALITY_REJECTED_NO_DEFAULT_PROMOTION",
+    "exactByteFiles": 451,
+    "evidenceFiles": 443
+  },
+  "cpuBudget": {
+    "maximumPercent": 25,
+    "maximumComputeThreads": 4,
+    "privateFamilyGuardBytes": 2147483648,
+    "actualWindowsLowRamStopRetained": true,
+    "startRecoveryAvailableGiB": 3.18
+  },
+  "uniqueFullDevelopmentRecordings": 4,
+  "uniqueFullDevelopmentAudioSeconds": 8629.00325,
+  "blindFinalHoldoutOpened": false,
+  "metricUnits": {
+    "English": "word error rate; unchanged original scorer",
+    "Chinese": "character error rate; unchanged original scorer",
+    "DER": "full original continuous-time zero-collar, includes overlap, from raw multi-voice journal"
+  },
+  "mossCpuWholeResults": [
+    {
+      "meeting": "ES2003b",
+      "language": "English",
+      "audioSeconds": 2109.813375,
+      "chunks": 71,
+      "allOriginalInputFramesCoveredExactlyOnce": true,
+      "allChunksNaturalEos": true,
+      "incompleteOutputChunks": [],
+      "invalidNativeTimeSegments": [
+        {
+          "chunk": "ES2003b-fixed30-0067",
+          "row": 7,
+          "start": 27.74,
+          "end": 30.01
+        },
+        {
+          "chunk": "ES2003b-fixed30-0070",
+          "row": 1,
+          "start": 9.62,
+          "end": 9.82
+        }
+      ],
+      "rawText": {
+        "referenceUnits": 5781,
+        "hypothesisUnits": 5691,
+        "errors": 1103,
+        "errorRate": 0.1907974398892925,
+        "counts": {
+          "replace": 531,
+          "delete": 331,
+          "insert": 241
+        }
+      },
+      "baselineRawText": {
+        "referenceUnits": 5781,
+        "hypothesisUnits": 4969,
+        "errors": 1384,
+        "errorRate": 0.23940494724096179,
+        "counts": {
+          "replace": 426,
+          "delete": 885,
+          "insert": 73
+        }
+      },
+      "rawEditsReduced": 281,
+      "personTextOneWholeMeetingPermutation": {
+        "referenceUnits": 5781,
+        "errors": 1135,
+        "errorRate": 0.1963328143919737,
+        "unknownUnitsForcedUnmatched": 46,
+        "perPerson": [
+          {
+            "referenceSpeaker": "A",
+            "anonymousSpeaker": "S02",
+            "referenceUnits": 1419,
+            "hypothesisUnits": 1335,
+            "errors": 348,
+            "errorRate": 0.2452431289640592,
+            "counts": {
+              "replace": 162,
+              "delete": 135,
+              "insert": 51
+            }
+          },
+          {
+            "referenceSpeaker": "B",
+            "anonymousSpeaker": "S01",
+            "referenceUnits": 2289,
+            "hypothesisUnits": 2215,
+            "errors": 312,
+            "errorRate": 0.1363040629095675,
+            "counts": {
+              "replace": 150,
+              "delete": 118,
+              "insert": 44
+            }
+          },
+          {
+            "referenceSpeaker": "C",
+            "anonymousSpeaker": "S00",
+            "referenceUnits": 1543,
+            "hypothesisUnits": 1601,
+            "errors": 277,
+            "errorRate": 0.1795204147764096,
+            "counts": {
+              "replace": 119,
+              "delete": 50,
+              "insert": 108
+            }
+          },
+          {
+            "referenceSpeaker": "D",
+            "anonymousSpeaker": "S03",
+            "referenceUnits": 530,
+            "hypothesisUnits": 494,
+            "errors": 152,
+            "errorRate": 0.28679245283018867,
+            "counts": {
+              "replace": 84,
+              "delete": 52,
+              "insert": 16
+            }
+          }
+        ],
+        "mappingForScoringOnly": true,
+        "oneWholeMeetingPermutation": true
+      },
+      "baselinePersonErrorRate": 0.38713025428126624,
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 1135,
+        "referenceUnits": 5781,
+        "errorRate": 0.1963328143919737,
+        "unknownUnitsForcedUnmatched": 46,
+        "perPerson": [
+          {
+            "speaker": "A",
+            "referenceUnits": 1419,
+            "hypothesisUnits": 1335,
+            "errors": 348,
+            "errorRate": 0.2452431289640592,
+            "counts": {
+              "replace": 162,
+              "delete": 135,
+              "insert": 51
+            }
+          },
+          {
+            "speaker": "B",
+            "referenceUnits": 2289,
+            "hypothesisUnits": 2215,
+            "errors": 312,
+            "errorRate": 0.1363040629095675,
+            "counts": {
+              "replace": 150,
+              "delete": 118,
+              "insert": 44
+            }
+          },
+          {
+            "speaker": "C",
+            "referenceUnits": 1543,
+            "hypothesisUnits": 1601,
+            "errors": 277,
+            "errorRate": 0.1795204147764096,
+            "counts": {
+              "replace": 119,
+              "delete": 50,
+              "insert": 108
+            }
+          },
+          {
+            "speaker": "D",
+            "referenceUnits": 530,
+            "hypothesisUnits": 494,
+            "errors": 152,
+            "errorRate": 0.28679245283018867,
+            "counts": {
+              "replace": 84,
+              "delete": 52,
+              "insert": 16
+            }
+          }
+        ],
+        "mappingScope": "One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment."
+      },
+      "originalNemotronRawDERReproduced": {
+        "referenceSpeakerSeconds": 1958.649999999878,
+        "missSeconds": 488.3916319999852,
+        "falseAlarmSeconds": 13.661632000108053,
+        "confusionSeconds": 7.55031000000346,
+        "errorSeconds": 509.60357400009667,
+        "DER": 0.260181029790993,
+        "identityForScoringOnly": {
+          "speaker_0": "C",
+          "speaker_1": "B",
+          "speaker_2": "A",
+          "speaker_3": "D"
+        }
+      },
+      "primaryRawJournalDER": {
+        "referenceSpeakerSeconds": 1958.649999999878,
+        "missSeconds": 488.90148599998383,
+        "falseAlarmSeconds": 13.631486000107138,
+        "confusionSeconds": 7.360293000003761,
+        "errorSeconds": 509.89326500009474,
+        "DER": 0.26032893319384603,
+        "identityForScoringOnly": {
+          "speaker_0": "C",
+          "speaker_1": "B",
+          "speaker_2": "A",
+          "speaker_3": "D"
+        }
+      },
+      "exclusiveAttributionDERDiagnostic": {
+        "referenceSpeakerSeconds": 1958.649999999878,
+        "missSeconds": 516.4712034059128,
+        "falseAlarmSeconds": 6.931171015902151,
+        "confusionSeconds": 7.4603320644112365,
+        "errorSeconds": 530.8627064862261,
+        "DER": 0.2710350019075686,
+        "identityForScoringOnly": {
+          "speaker_0": "C",
+          "speaker_1": "B",
+          "speaker_2": "A",
+          "speaker_3": "D"
+        }
+      },
+      "secondaryMossNativeTimeDER": {
+        "referenceSpeakerSeconds": 1958.649999999878,
+        "missSeconds": 163.81999999999596,
+        "falseAlarmSeconds": 52.39000000012031,
+        "confusionSeconds": 26.94000000000192,
+        "errorSeconds": 243.1500000001182,
+        "DER": 0.1241416281623227,
+        "identityForScoringOnly": {
+          "S00": "C",
+          "S01": "B",
+          "S02": "A",
+          "S03": "D"
+        }
+      },
+      "activityReferenceToLexicalReferenceAliasesForScoringOnly": {},
+      "baselineDER": 0.26018102941320864,
+      "cpuAsrInferenceSeconds": 1312.8183298000222,
+      "asrRealTimeFactor": 0.6222438180343899,
+      "rawGatePass": false,
+      "fixedPersonGatePass": false,
+      "primaryDERGatePass": false,
+      "nativeTimeGatePass": false,
+      "factsGateMeasured": false,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "S_R004S03C01",
+      "language": "Chinese",
+      "audioSeconds": 2327.119,
+      "chunks": 78,
+      "allOriginalInputFramesCoveredExactlyOnce": true,
+      "allChunksNaturalEos": true,
+      "incompleteOutputChunks": [],
+      "invalidNativeTimeSegments": [
+        {
+          "chunk": "S_R004S03C01-fixed30-0001",
+          "row": 4,
+          "start": 20.95,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0003",
+          "row": 3,
+          "start": 26.81,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0014",
+          "row": 2,
+          "start": 18.89,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0017",
+          "row": 3,
+          "start": 27.61,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0019",
+          "row": 3,
+          "start": 26.94,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0050",
+          "row": 4,
+          "start": 24.01,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0065",
+          "row": 4,
+          "start": 28.62,
+          "end": 30.01
+        },
+        {
+          "chunk": "S_R004S03C01-fixed30-0072",
+          "row": 4,
+          "start": 24.66,
+          "end": 30.01
+        }
+      ],
+      "rawText": {
+        "referenceUnits": 8325,
+        "hypothesisUnits": 8591,
+        "errors": 755,
+        "errorRate": 0.09069069069069069,
+        "counts": {
+          "replace": 271,
+          "delete": 109,
+          "insert": 375
+        }
+      },
+      "baselineRawText": {
+        "referenceUnits": 8325,
+        "hypothesisUnits": 8205,
+        "errors": 461,
+        "errorRate": 0.055375375375375374,
+        "counts": {
+          "replace": 225,
+          "delete": 178,
+          "insert": 58
+        }
+      },
+      "rawEditsReduced": -294,
+      "personTextOneWholeMeetingPermutation": {
+        "referenceUnits": 8325,
+        "errors": 1104,
+        "errorRate": 0.13261261261261262,
+        "unknownUnitsForcedUnmatched": 467,
+        "perPerson": [
+          {
+            "referenceSpeaker": "001-M",
+            "anonymousSpeaker": "S00",
+            "referenceUnits": 1983,
+            "hypothesisUnits": 1914,
+            "errors": 257,
+            "errorRate": 0.129601613716591,
+            "counts": {
+              "replace": 116,
+              "delete": 105,
+              "insert": 36
+            }
+          },
+          {
+            "referenceSpeaker": "002-F",
+            "anonymousSpeaker": "S01",
+            "referenceUnits": 650,
+            "hypothesisUnits": 643,
+            "errors": 27,
+            "errorRate": 0.04153846153846154,
+            "counts": {
+              "replace": 18,
+              "delete": 8,
+              "insert": 1
+            }
+          },
+          {
+            "referenceSpeaker": "003-F",
+            "anonymousSpeaker": "S04",
+            "referenceUnits": 1681,
+            "hypothesisUnits": 1678,
+            "errors": 72,
+            "errorRate": 0.04283164782867341,
+            "counts": {
+              "replace": 35,
+              "delete": 20,
+              "insert": 17
+            }
+          },
+          {
+            "referenceSpeaker": "004-F",
+            "anonymousSpeaker": "S02",
+            "referenceUnits": 2402,
+            "hypothesisUnits": 2320,
+            "errors": 141,
+            "errorRate": 0.05870108243130724,
+            "counts": {
+              "replace": 33,
+              "delete": 95,
+              "insert": 13
+            }
+          },
+          {
+            "referenceSpeaker": "005-F",
+            "anonymousSpeaker": "S03",
+            "referenceUnits": 1609,
+            "hypothesisUnits": 1569,
+            "errors": 140,
+            "errorRate": 0.0870105655686762,
+            "counts": {
+              "replace": 62,
+              "delete": 59,
+              "insert": 19
+            }
+          }
+        ],
+        "mappingForScoringOnly": true,
+        "oneWholeMeetingPermutation": true
+      },
+      "baselinePersonErrorRate": 0.058018018018018015,
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 1104,
+        "referenceUnits": 8325,
+        "errorRate": 0.13261261261261262,
+        "unknownUnitsForcedUnmatched": 467,
+        "perPerson": [
+          {
+            "speaker": "001-M",
+            "referenceUnits": 1983,
+            "hypothesisUnits": 1914,
+            "errors": 257,
+            "errorRate": 0.129601613716591,
+            "counts": {
+              "replace": 116,
+              "delete": 105,
+              "insert": 36
+            }
+          },
+          {
+            "speaker": "002-F",
+            "referenceUnits": 650,
+            "hypothesisUnits": 643,
+            "errors": 27,
+            "errorRate": 0.04153846153846154,
+            "counts": {
+              "replace": 18,
+              "delete": 8,
+              "insert": 1
+            }
+          },
+          {
+            "speaker": "003-F",
+            "referenceUnits": 1681,
+            "hypothesisUnits": 1678,
+            "errors": 72,
+            "errorRate": 0.04283164782867341,
+            "counts": {
+              "replace": 35,
+              "delete": 20,
+              "insert": 17
+            }
+          },
+          {
+            "speaker": "004-F",
+            "referenceUnits": 2402,
+            "hypothesisUnits": 2320,
+            "errors": 141,
+            "errorRate": 0.05870108243130724,
+            "counts": {
+              "replace": 33,
+              "delete": 95,
+              "insert": 13
+            }
+          },
+          {
+            "speaker": "005-F",
+            "referenceUnits": 1609,
+            "hypothesisUnits": 1569,
+            "errors": 140,
+            "errorRate": 0.0870105655686762,
+            "counts": {
+              "replace": 62,
+              "delete": 59,
+              "insert": 19
+            }
+          }
+        ],
+        "mappingScope": "One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment."
+      },
+      "originalNemotronRawDERReproduced": {
+        "referenceSpeakerSeconds": 2074.389489999999,
+        "missSeconds": 65.91499699999912,
+        "falseAlarmSeconds": 12.695487000001684,
+        "confusionSeconds": 1.3699999999999992,
+        "errorSeconds": 79.98048400000081,
+        "DER": 0.038556155623407466,
+        "identityForScoringOnly": {
+          "speaker_0": "001-M",
+          "speaker_1": "002-F",
+          "speaker_2": "004-F",
+          "speaker_3": "005-F",
+          "speaker_4": "003-F"
+        }
+      },
+      "primaryRawJournalDER": {
+        "referenceSpeakerSeconds": 2074.389489999999,
+        "missSeconds": 64.77143099999974,
+        "falseAlarmSeconds": 12.321921000001133,
+        "confusionSeconds": 1.3699999999999992,
+        "errorSeconds": 78.46335200000087,
+        "DER": 0.03782479248870515,
+        "identityForScoringOnly": {
+          "speaker_0": "001-M",
+          "speaker_1": "002-F",
+          "speaker_2": "004-F",
+          "speaker_3": "005-F",
+          "speaker_4": "003-F"
+        }
+      },
+      "exclusiveAttributionDERDiagnostic": {
+        "referenceSpeakerSeconds": 2074.389489999999,
+        "missSeconds": 64.7714529670575,
+        "falseAlarmSeconds": 9.491917836432833,
+        "confusionSeconds": 1.3699999693781137,
+        "errorSeconds": 75.63337077286845,
+        "DER": 0.036460544722904706,
+        "identityForScoringOnly": {
+          "speaker_0": "001-M",
+          "speaker_1": "002-F",
+          "speaker_2": "004-F",
+          "speaker_3": "005-F",
+          "speaker_4": "003-F"
+        }
+      },
+      "secondaryMossNativeTimeDER": {
+        "referenceSpeakerSeconds": 2074.389489999999,
+        "missSeconds": 166.0133499999998,
+        "falseAlarmSeconds": 4.653860000000989,
+        "confusionSeconds": 1.25,
+        "errorSeconds": 171.9172100000008,
+        "DER": 0.08287605140151423,
+        "identityForScoringOnly": {
+          "S00": "001-M",
+          "S01": "002-F",
+          "S02": "004-F",
+          "S03": "005-F",
+          "S04": "003-F"
+        }
+      },
+      "activityReferenceToLexicalReferenceAliasesForScoringOnly": {},
+      "baselineDER": 0.03855615562340746,
+      "cpuAsrInferenceSeconds": 1386.5060023000115,
+      "asrRealTimeFactor": 0.5958036534874286,
+      "rawGatePass": false,
+      "fixedPersonGatePass": false,
+      "primaryDERGatePass": true,
+      "nativeTimeGatePass": false,
+      "factsGateMeasured": false,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "EN2002a",
+      "language": "English",
+      "audioSeconds": 2142.709375,
+      "chunks": 72,
+      "allOriginalInputFramesCoveredExactlyOnce": true,
+      "allChunksNaturalEos": true,
+      "incompleteOutputChunks": [],
+      "invalidNativeTimeSegments": [
+        {
+          "chunk": "EN2002a-fixed30-0071",
+          "row": 5,
+          "start": 11.55,
+          "end": 12.71
+        }
+      ],
+      "rawText": {
+        "referenceUnits": 7632,
+        "hypothesisUnits": 7101,
+        "errors": 2618,
+        "errorRate": 0.34302935010482183,
+        "counts": {
+          "replace": 1205,
+          "delete": 972,
+          "insert": 441
+        }
+      },
+      "baselineRawText": {
+        "referenceUnits": 7632,
+        "hypothesisUnits": 5665,
+        "errors": 2623,
+        "errorRate": 0.3436844863731656,
+        "counts": {
+          "replace": 546,
+          "delete": 2022,
+          "insert": 55
+        }
+      },
+      "rawEditsReduced": 5,
+      "personTextOneWholeMeetingPermutation": {
+        "referenceUnits": 7632,
+        "errors": 2328,
+        "errorRate": 0.3050314465408805,
+        "unknownUnitsForcedUnmatched": 81,
+        "perPerson": [
+          {
+            "referenceSpeaker": "A",
+            "anonymousSpeaker": "S01",
+            "referenceUnits": 1883,
+            "hypothesisUnits": 1693,
+            "errors": 557,
+            "errorRate": 0.29580456718003184,
+            "counts": {
+              "replace": 269,
+              "delete": 239,
+              "insert": 49
+            }
+          },
+          {
+            "referenceSpeaker": "B",
+            "anonymousSpeaker": "S03",
+            "referenceUnits": 1362,
+            "hypothesisUnits": 1089,
+            "errors": 552,
+            "errorRate": 0.4052863436123348,
+            "counts": {
+              "replace": 205,
+              "delete": 310,
+              "insert": 37
+            }
+          },
+          {
+            "referenceSpeaker": "C",
+            "anonymousSpeaker": "S02",
+            "referenceUnits": 2790,
+            "hypothesisUnits": 2797,
+            "errors": 570,
+            "errorRate": 0.20430107526881722,
+            "counts": {
+              "replace": 263,
+              "delete": 150,
+              "insert": 157
+            }
+          },
+          {
+            "referenceSpeaker": "D",
+            "anonymousSpeaker": "S00",
+            "referenceUnits": 1597,
+            "hypothesisUnits": 1441,
+            "errors": 568,
+            "errorRate": 0.35566687539135877,
+            "counts": {
+              "replace": 292,
+              "delete": 216,
+              "insert": 60
+            }
+          }
+        ],
+        "mappingForScoringOnly": true,
+        "oneWholeMeetingPermutation": true
+      },
+      "baselinePersonErrorRate": null,
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 2328,
+        "referenceUnits": 7632,
+        "errorRate": 0.3050314465408805,
+        "unknownUnitsForcedUnmatched": 81,
+        "perPerson": [
+          {
+            "speaker": "A",
+            "referenceUnits": 1883,
+            "hypothesisUnits": 1693,
+            "errors": 557,
+            "errorRate": 0.29580456718003184,
+            "counts": {
+              "replace": 269,
+              "delete": 239,
+              "insert": 49
+            }
+          },
+          {
+            "speaker": "B",
+            "referenceUnits": 1362,
+            "hypothesisUnits": 1089,
+            "errors": 552,
+            "errorRate": 0.4052863436123348,
+            "counts": {
+              "replace": 205,
+              "delete": 310,
+              "insert": 37
+            }
+          },
+          {
+            "speaker": "C",
+            "referenceUnits": 2790,
+            "hypothesisUnits": 2797,
+            "errors": 570,
+            "errorRate": 0.20430107526881722,
+            "counts": {
+              "replace": 263,
+              "delete": 150,
+              "insert": 157
+            }
+          },
+          {
+            "speaker": "D",
+            "referenceUnits": 1597,
+            "hypothesisUnits": 1441,
+            "errors": 568,
+            "errorRate": 0.35566687539135877,
+            "counts": {
+              "replace": 292,
+              "delete": 216,
+              "insert": 60
+            }
+          }
+        ],
+        "mappingScope": "One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment."
+      },
+      "originalNemotronRawDERReproduced": {
+        "referenceSpeakerSeconds": 2530.26,
+        "missSeconds": 724.893519000002,
+        "falseAlarmSeconds": 29.963519000000858,
+        "confusionSeconds": 31.4625419999988,
+        "errorSeconds": 786.3195800000017,
+        "DER": 0.31076631650502384,
+        "identityForScoringOnly": {
+          "speaker_0": "MEE071",
+          "speaker_1": "MEE073",
+          "speaker_2": "FEO072",
+          "speaker_3": "FEO070"
+        }
+      },
+      "primaryRawJournalDER": {
+        "referenceSpeakerSeconds": 2530.26,
+        "missSeconds": 726.4333930000045,
+        "falseAlarmSeconds": 31.233392999999158,
+        "confusionSeconds": 31.7224119999979,
+        "errorSeconds": 789.3891980000016,
+        "DER": 0.31197947957917427,
+        "identityForScoringOnly": {
+          "speaker_0": "MEE071",
+          "speaker_1": "MEE073",
+          "speaker_2": "FEO072",
+          "speaker_3": "FEO070"
+        }
+      },
+      "exclusiveAttributionDERDiagnostic": {
+        "referenceSpeakerSeconds": 2530.2599999999975,
+        "missSeconds": 982.8720006058364,
+        "falseAlarmSeconds": 7.391965853794827,
+        "confusionSeconds": 22.98276350274607,
+        "errorSeconds": 1013.2467299623772,
+        "DER": 0.4004516255097809,
+        "identityForScoringOnly": {
+          "speaker_0": "MEE071",
+          "speaker_1": "MEE073",
+          "speaker_2": "FEO072",
+          "speaker_3": "FEO070"
+        }
+      },
+      "secondaryMossNativeTimeDER": {
+        "referenceSpeakerSeconds": 2530.2599999999975,
+        "missSeconds": 621.09,
+        "falseAlarmSeconds": 26.799999999997702,
+        "confusionSeconds": 80.38000000000174,
+        "errorSeconds": 728.2699999999994,
+        "DER": 0.28782417617161876,
+        "identityForScoringOnly": {
+          "S00": "MEE071",
+          "S01": "MEE073",
+          "S02": "FEO072",
+          "S03": "FEO070"
+        }
+      },
+      "activityReferenceToLexicalReferenceAliasesForScoringOnly": {
+        "FEO070": "B",
+        "FEO072": "C",
+        "MEE071": "D",
+        "MEE073": "A"
+      },
+      "baselineDER": 0.310766316505023,
+      "cpuAsrInferenceSeconds": 1865.9974673999604,
+      "asrRealTimeFactor": 0.8708588710963009,
+      "rawGatePass": false,
+      "fixedPersonGatePass": false,
+      "primaryDERGatePass": false,
+      "nativeTimeGatePass": false,
+      "factsGateMeasured": false,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "language": "Chinese",
+      "audioSeconds": 2049.3615,
+      "chunks": 69,
+      "allOriginalInputFramesCoveredExactlyOnce": true,
+      "allChunksNaturalEos": true,
+      "incompleteOutputChunks": [],
+      "invalidNativeTimeSegments": [
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0003",
+          "row": 7,
+          "start": 24.94,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0012",
+          "row": 6,
+          "start": 24.58,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0016",
+          "row": 3,
+          "start": 17.51,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0026",
+          "row": 7,
+          "start": 27.42,
+          "end": 30.04
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0027",
+          "row": 8,
+          "start": 29.05,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0038",
+          "row": 13,
+          "start": 26.21,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0044",
+          "row": 10,
+          "start": 27.22,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0045",
+          "row": 6,
+          "start": 26.48,
+          "end": 30.01
+        },
+        {
+          "chunk": "20200623_S_R001S07C01-fixed30-0050",
+          "row": 11,
+          "start": 28.66,
+          "end": 30.01
+        }
+      ],
+      "rawText": {
+        "referenceUnits": 7153,
+        "hypothesisUnits": 7149,
+        "errors": 1098,
+        "errorRate": 0.1535020271214875,
+        "counts": {
+          "replace": 448,
+          "delete": 327,
+          "insert": 323
+        }
+      },
+      "baselineRawText": {
+        "referenceUnits": 7153,
+        "hypothesisUnits": 6747,
+        "errors": 1037,
+        "errorRate": 0.1449741367258493,
+        "counts": {
+          "replace": 421,
+          "delete": 511,
+          "insert": 105
+        }
+      },
+      "rawEditsReduced": -61,
+      "personTextOneWholeMeetingPermutation": {
+        "referenceUnits": 7153,
+        "errors": 1811,
+        "errorRate": 0.25318048371312735,
+        "unknownUnitsForcedUnmatched": 145,
+        "perPerson": [
+          {
+            "referenceSpeaker": "001-M",
+            "anonymousSpeaker": "S03",
+            "referenceUnits": 3248,
+            "hypothesisUnits": 3365,
+            "errors": 447,
+            "errorRate": 0.1376231527093596,
+            "counts": {
+              "replace": 122,
+              "delete": 104,
+              "insert": 221
+            }
+          },
+          {
+            "referenceSpeaker": "003-M",
+            "anonymousSpeaker": "S02",
+            "referenceUnits": 521,
+            "hypothesisUnits": 271,
+            "errors": 290,
+            "errorRate": 0.5566218809980806,
+            "counts": {
+              "replace": 18,
+              "delete": 261,
+              "insert": 11
+            }
+          },
+          {
+            "referenceSpeaker": "004-M",
+            "anonymousSpeaker": "S01",
+            "referenceUnits": 1389,
+            "hypothesisUnits": 1392,
+            "errors": 451,
+            "errorRate": 0.32469402447804174,
+            "counts": {
+              "replace": 112,
+              "delete": 168,
+              "insert": 171
+            }
+          },
+          {
+            "referenceSpeaker": "006-M",
+            "anonymousSpeaker": "S00",
+            "referenceUnits": 1995,
+            "hypothesisUnits": 1976,
+            "errors": 478,
+            "errorRate": 0.23959899749373434,
+            "counts": {
+              "replace": 235,
+              "delete": 131,
+              "insert": 112
+            }
+          }
+        ],
+        "mappingForScoringOnly": true,
+        "oneWholeMeetingPermutation": true
+      },
+      "baselinePersonErrorRate": 0.27065566895009086,
+      "personTextFixedOriginalActivityIdentity": {
+        "errors": 1811,
+        "referenceUnits": 7153,
+        "errorRate": 0.25318048371312735,
+        "unknownUnitsForcedUnmatched": 145,
+        "perPerson": [
+          {
+            "speaker": "001-M",
+            "referenceUnits": 3248,
+            "hypothesisUnits": 3365,
+            "errors": 447,
+            "errorRate": 0.1376231527093596,
+            "counts": {
+              "replace": 122,
+              "delete": 104,
+              "insert": 221
+            }
+          },
+          {
+            "speaker": "003-M",
+            "referenceUnits": 521,
+            "hypothesisUnits": 271,
+            "errors": 290,
+            "errorRate": 0.5566218809980806,
+            "counts": {
+              "replace": 18,
+              "delete": 261,
+              "insert": 11
+            }
+          },
+          {
+            "speaker": "004-M",
+            "referenceUnits": 1389,
+            "hypothesisUnits": 1392,
+            "errors": 451,
+            "errorRate": 0.32469402447804174,
+            "counts": {
+              "replace": 112,
+              "delete": 168,
+              "insert": 171
+            }
+          },
+          {
+            "speaker": "006-M",
+            "referenceUnits": 1995,
+            "hypothesisUnits": 1976,
+            "errors": 478,
+            "errorRate": 0.23959899749373434,
+            "counts": {
+              "replace": 235,
+              "delete": 131,
+              "insert": 112
+            }
+          }
+        ],
+        "mappingScope": "One original whole-source Nemotron activity mapping, unchanged across every fixed window. No per-window gold assignment."
+      },
+      "originalNemotronRawDERReproduced": {
+        "referenceSpeakerSeconds": 1833.9097710178462,
+        "missSeconds": 81.12372958413522,
+        "falseAlarmSeconds": 83.34395856628664,
+        "confusionSeconds": 126.05066323417299,
+        "errorSeconds": 290.51835138459484,
+        "DER": 0.15841474644815975,
+        "identityForScoringOnly": {
+          "speaker_0": "006-M",
+          "speaker_1": "004-M",
+          "speaker_2": "003-M",
+          "speaker_3": "001-M"
+        }
+      },
+      "primaryRawJournalDER": {
+        "referenceSpeakerSeconds": 1833.9097710178462,
+        "missSeconds": 81.80949631830343,
+        "falseAlarmSeconds": 83.70972530045628,
+        "confusionSeconds": 125.88243291168774,
+        "errorSeconds": 291.40165453044744,
+        "DER": 0.15889639672333244,
+        "identityForScoringOnly": {
+          "speaker_0": "006-M",
+          "speaker_1": "004-M",
+          "speaker_2": "003-M",
+          "speaker_3": "001-M"
+        }
+      },
+      "exclusiveAttributionDERDiagnostic": {
+        "referenceSpeakerSeconds": 1833.9097710178462,
+        "missSeconds": 95.59163567385264,
+        "falseAlarmSeconds": 54.67182457955687,
+        "confusionSeconds": 131.99793855008713,
+        "errorSeconds": 282.2613988034966,
+        "DER": 0.1539123697709716,
+        "identityForScoringOnly": {
+          "speaker_0": "006-M",
+          "speaker_1": "004-M",
+          "speaker_2": "003-M",
+          "speaker_3": "001-M"
+        }
+      },
+      "secondaryMossNativeTimeDER": {
+        "referenceSpeakerSeconds": 1833.9097710178464,
+        "missSeconds": 186.3362409797624,
+        "falseAlarmSeconds": 103.2664699619155,
+        "confusionSeconds": 126.68134577533458,
+        "errorSeconds": 416.2840567170125,
+        "DER": 0.2269926597784409,
+        "identityForScoringOnly": {
+          "S00": "006-M",
+          "S01": "004-M",
+          "S02": "003-M",
+          "S03": "001-M"
+        }
+      },
+      "activityReferenceToLexicalReferenceAliasesForScoringOnly": {},
+      "baselineDER": 0.1584147453575932,
+      "cpuAsrInferenceSeconds": 1488.4639399000007,
+      "asrRealTimeFactor": 0.7263061884884637,
+      "rawGatePass": false,
+      "fixedPersonGatePass": false,
+      "primaryDERGatePass": false,
+      "nativeTimeGatePass": false,
+      "factsGateMeasured": false,
+      "qualityQualified": false
+    }
+  ],
+  "qwenCpuChineseWholeResults": [
+    {
+      "meeting": "S_R004S03C01",
+      "audioSeconds": 2327.119,
+      "rawText": {
+        "referenceUnits": 8325,
+        "hypothesisUnits": 8213,
+        "errors": 488,
+        "errorRate": 0.05861861861861862,
+        "counts": {
+          "replace": 236,
+          "delete": 182,
+          "insert": 70
+        }
+      },
+      "nativeBaselineRawText": {
+        "referenceUnits": 8325,
+        "hypothesisUnits": 8205,
+        "errors": 461,
+        "errorRate": 0.055375375375375374,
+        "counts": {
+          "replace": 225,
+          "delete": 178,
+          "insert": 58
+        }
+      },
+      "originalProductRawGatePass": false,
+      "noMoreRawErrorsThanOriginalNativeBaseline": false,
+      "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\composed\\S_R004S03C01-raw.json",
+      "rawSha256": "ed2e8fd274c625e61493341023951ae125cd8c922586e5496668629f35e50d49",
+      "cpuInferenceSeconds": 905.0159563999914,
+      "asrRealTimeFactor": 0.38889973241591486,
+      "speakerAttributionAndFactsUnmeasured": true,
+      "qualityQualified": false
+    },
+    {
+      "meeting": "20200623_S_R001S07C01",
+      "audioSeconds": 2049.3615,
+      "rawText": {
+        "referenceUnits": 7153,
+        "hypothesisUnits": 6708,
+        "errors": 1104,
+        "errorRate": 0.15434083601286175,
+        "counts": {
+          "replace": 439,
+          "delete": 555,
+          "insert": 110
+        }
+      },
+      "nativeBaselineRawText": {
+        "referenceUnits": 7153,
+        "hypothesisUnits": 6747,
+        "errors": 1037,
+        "errorRate": 0.1449741367258493,
+        "counts": {
+          "replace": 421,
+          "delete": 511,
+          "insert": 105
+        }
+      },
+      "originalProductRawGatePass": false,
+      "noMoreRawErrorsThanOriginalNativeBaseline": false,
+      "rawFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\qwen-cpu-chinese-whole-run-r2\\composed\\20200623_S_R001S07C01-raw.json",
+      "rawSha256": "ac699881eda3d35f846d93ee93f93908209c8cde87f3a6147825fa75265bdaa7",
+      "cpuInferenceSeconds": 907.1694551000037,
+      "asrRealTimeFactor": 0.4426595576719889,
+      "speakerAttributionAndFactsUnmeasured": true,
+      "qualityQualified": false
+    }
+  ],
+  "retainedNativeAsrCpuAlignmentAndVoices": {
+    "state": "COMPLETE_CPU_ALIGNMENT_VOICES_ON_RETAINED_NATIVE_ASR_FULL_MEETING_SCORED_NOT_PRODUCT_QUALIFIED",
+    "at": "2026-11-16T15:05:44.565945+08:00",
+    "meetings": [
+      {
+        "meeting": "S_R004S03C01",
+        "rawText": {
+          "referenceUnits": 8325,
+          "hypothesisUnits": 8205,
+          "errors": 461,
+          "errorRate": 0.055375375375375374,
+          "counts": {
+            "replace": 225,
+            "delete": 178,
+            "insert": 58
+          }
+        },
+        "personTextFixedOriginalActivityIdentity": {
+          "errors": 483,
+          "referenceUnits": 8325,
+          "errorRate": 0.058018018018018015,
+          "unknownUnitsForcedUnmatched": 8,
+          "perPerson": [
+            {
+              "speaker": "001-M",
+              "referenceUnits": 1983,
+              "hypothesisUnits": 1936,
+              "errors": 198,
+              "errorRate": 0.09984871406959153,
+              "counts": {
+                "replace": 109,
+                "delete": 68,
+                "insert": 21
+              }
+            },
+            {
+              "speaker": "002-F",
+              "referenceUnits": 650,
+              "hypothesisUnits": 649,
+              "errors": 7,
+              "errorRate": 0.010769230769230769,
+              "counts": {
+                "replace": 4,
+                "delete": 2,
+                "insert": 1
+              }
+            },
+            {
+              "speaker": "003-F",
+              "referenceUnits": 1681,
+              "hypothesisUnits": 1660,
+              "errors": 71,
+              "errorRate": 0.042236763831052945,
+              "counts": {
+                "replace": 26,
+                "delete": 33,
+                "insert": 12
+              }
+            },
+            {
+              "speaker": "004-F",
+              "referenceUnits": 2402,
+              "hypothesisUnits": 2370,
+              "errors": 83,
+              "errorRate": 0.03455453788509576,
+              "counts": {
+                "replace": 27,
+                "delete": 44,
+                "insert": 12
+              }
+            },
+            {
+              "speaker": "005-F",
+              "referenceUnits": 1609,
+              "hypothesisUnits": 1582,
+              "errors": 116,
+              "errorRate": 0.07209446861404599,
+              "counts": {
+                "replace": 59,
+                "delete": 42,
+                "insert": 15
+              }
+            }
+          ],
+          "mappingScope": "One raw continuous CPU Nemotron activity identity for the whole original meeting; no lexical or per-window identity fitting."
+        },
+        "personTextOneWholeMeetingPermutationDiagnostic": {
+          "referenceUnits": 8325,
+          "errors": 483,
+          "errorRate": 0.058018018018018015,
+          "unknownUnitsForcedUnmatched": 8,
+          "perPerson": [
+            {
+              "referenceSpeaker": "001-M",
+              "anonymousSpeaker": "0",
+              "referenceUnits": 1983,
+              "hypothesisUnits": 1936,
+              "errors": 198,
+              "errorRate": 0.09984871406959153,
+              "counts": {
+                "replace": 109,
+                "delete": 68,
+                "insert": 21
+              }
+            },
+            {
+              "referenceSpeaker": "002-F",
+              "anonymousSpeaker": "1",
+              "referenceUnits": 650,
+              "hypothesisUnits": 649,
+              "errors": 7,
+              "errorRate": 0.010769230769230769,
+              "counts": {
+                "replace": 4,
+                "delete": 2,
+                "insert": 1
+              }
+            },
+            {
+              "referenceSpeaker": "003-F",
+              "anonymousSpeaker": "4",
+              "referenceUnits": 1681,
+              "hypothesisUnits": 1660,
+              "errors": 71,
+              "errorRate": 0.042236763831052945,
+              "counts": {
+                "replace": 26,
+                "delete": 33,
+                "insert": 12
+              }
+            },
+            {
+              "referenceSpeaker": "004-F",
+              "anonymousSpeaker": "2",
+              "referenceUnits": 2402,
+              "hypothesisUnits": 2370,
+              "errors": 83,
+              "errorRate": 0.03455453788509576,
+              "counts": {
+                "replace": 27,
+                "delete": 44,
+                "insert": 12
+              }
+            },
+            {
+              "referenceSpeaker": "005-F",
+              "anonymousSpeaker": "3",
+              "referenceUnits": 1609,
+              "hypothesisUnits": 1582,
+              "errors": 116,
+              "errorRate": 0.07209446861404599,
+              "counts": {
+                "replace": 59,
+                "delete": 42,
+                "insert": 15
+              }
+            }
+          ],
+          "mappingForScoringOnly": true,
+          "oneWholeMeetingPermutation": true
+        },
+        "originalReferenceRawContinuousSpeakerDER": {
+          "referenceSpeakerSeconds": 2074.389489999999,
+          "missSeconds": 64.77143099999974,
+          "falseAlarmSeconds": 12.321921000001133,
+          "confusionSeconds": 1.3699999999999992,
+          "errorSeconds": 78.46335200000087,
+          "DER": 0.03782479248870515,
+          "identityForScoringOnly": {
+            "speaker_0": "001-M",
+            "speaker_1": "002-F",
+            "speaker_2": "004-F",
+            "speaker_3": "005-F",
+            "speaker_4": "003-F"
+          }
+        },
+        "rawTextGatePass": false,
+        "personTextGatePass": false,
+        "derGatePass": true,
+        "originalBaselineRawText": {
+          "referenceUnits": 8325,
+          "hypothesisUnits": 8205,
+          "errors": 461,
+          "errorRate": 0.055375375375375374,
+          "counts": {
+            "replace": 225,
+            "delete": 178,
+            "insert": 58
+          }
+        },
+        "originalBaselinePersonErrorRate": 0.058018018018018015,
+        "originalBaselineDER": 0.03855615562340746,
+        "invalidTimeUnits": 302,
+        "unknownSpeakerUnits": 8,
+        "document": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\composed\\S_R004S03C01-model-output.json",
+        "documentSha256": "cdf0ad8ff9f0e179e7ae587819c159befcfcfc043a11d60900e24954d8250ea0",
+        "qualityQualified": false
+      }
+    ],
+    "sourceAsrInferenceBackend": "Protected native GPU ASR reused; only timestamp classifier and independent speaker journal are CPU.",
+    "wholeAsrAlignmentSpeakerCpuRerun": false,
+    "rawAsrErrorsUnchangedThroughComposition": true,
+    "allUnknownWordsForcedUnmatched": true,
+    "originalGatesAndScorerHelpersUnchanged": true,
+    "englishUniversalCpuPortRejectionRetained": true,
+    "actualInstalledNativeAppTested": false,
+    "newWeightTraining": false,
+    "trueWordTimeAccuracyMeasured": false,
+    "finalBlindHoldoutOpened": false,
+    "factsMeasured": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "limits": {
+      "pid": 24208,
+      "cpuRate": 100,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 1.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 536870912,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 101998592,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "cpuIdleMemoryResult": {
+    "state": "PASS_ACTUAL_CPU_IDLE_MODEL_UNLOAD_RELOAD_SOURCE_AND_CACHE_RECOVERY_TEXT_NO_REGRESSION_NOT_QUALITY_QUALIFIED",
+    "at": "2026-11-16T15:09:38.474875+08:00",
+    "sourceFrames": 1204000,
+    "idleRelease": {
+      "at": "2026-11-16T15:09:09.668873+08:00",
+      "beforeWorkingSetBytes": 1921904640,
+      "afterWorkingSetBytes": 43425792,
+      "beforePrivateBytes": 92426240,
+      "afterPrivateBytes": 32260096,
+      "confirmedFrames": 960000
+    },
+    "idleWorkerRssBytes": 43425792,
+    "idleWorkerPrivateBytes": 32264192,
+    "modelWeightMappingAbsentDuringPause": true,
+    "resumedWorkerModelLoads": 2,
+    "priorAcceptedFirst30sNotRedecoded": true,
+    "priorAndNewAcceptedCachesPreservedExactly": true,
+    "allOriginalPcmPreserved": true,
+    "finalTextEqualsPreviousProtectedCpuAppRun": true,
+    "finalizationReusedAllAsrResults": true,
+    "finalizationAfterCachedAsrSeconds": 6.765999999995984,
+    "completedCacheReloadSeconds": 0.25,
+    "actualCpuSpeakerJournalApplied": true,
+    "nativeUiTested": false,
+    "cardHardwareTested": false,
+    "newModelTraining": false,
+    "sourceUploaded": false,
+    "qualityQualified": false,
+    "productDefaultChanged": false
+  },
+  "publicTrainingData": {
+    "state": "PASS_PUBLIC_TRAINING_EXPORT_PCM_LABEL_AND_SOURCE_INTEGRITY_NOT_A_MODEL_RESULT",
+    "at": "2026-11-16T14:12:39.650726+08:00",
+    "exports": [
+      {
+        "directory": "stageA",
+        "examples": 190,
+        "meetings": 22,
+        "languageExamples": {
+          "English": 86,
+          "Chinese": 104
+        },
+        "languageAudioSeconds": {
+          "English": 1546.4105625,
+          "Chinese": 1929.2836249999998
+        },
+        "trainJsonlSha256": "df4766fc31002e8b69df219913648f29f53735f5b7b76392318afa3e3b9341e4",
+        "exactOriginalPcmFrameSlicesVerified": true,
+        "everySelectedLabelCharacterPreserved": true,
+        "noWithinSourceDuplicateFrames": true,
+        "sourceExclusionsVerified": true,
+        "referenceEventCount": 3978
+      },
+      {
+        "directory": "acoustic-nonoverlap-r2",
+        "examples": 944,
+        "meetings": 22,
+        "languageExamples": {
+          "English": 475,
+          "Chinese": 469
+        },
+        "languageAudioSeconds": {
+          "English": 5093.779625000001,
+          "Chinese": 5032.299875000003
+        },
+        "trainJsonlSha256": "6ed9ed0972d11673a8ca4bd044d06dea066732d51422dc20de3b20816d898d04",
+        "exactOriginalPcmFrameSlicesVerified": true,
+        "everySelectedLabelCharacterPreserved": true,
+        "noWithinSourceDuplicateFrames": true,
+        "sourceExclusionsVerified": true,
+        "referenceEventCount": 13081
+      }
+    ],
+    "strictStageAEventsAlsoInBroadAcoustic": 3978,
+    "strictStageAEventsMissingInBroadAcoustic": 0,
+    "distinctCoverageByExportRetained": true,
+    "chineseGlobalParticipantDisjointnessVerified": false,
+    "modelTrainingReady": false,
+    "trainingStarted": false,
+    "newNeuralCalls": 0,
+    "parameterUpdates": 0,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "limits": {
+      "pid": 11276,
+      "cpuRate": 100,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 1.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 268435456,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 21889024,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "newWeightTrainingThisBatch": false,
+  "priorOptionalSmallAdaptersWereTrainedAndRejected": true,
+  "installedDefaultChangedByThisTask": false,
+  "nativeUiAndActualCardOrPhoneTestedThisBatch": false,
+  "customerReleasePackageIncluded": false,
+  "internalFixtureExpiresAt": "2026-11-16T15:40:00+08:00",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "remaining": [
+    "Both English full meetings and harder Chinese remain substantially above the original5% raw/per-person error requirement.",
+    "Ordinary Chinese retained native raw5.54%, fixed-person5.80%; some individual speakers exceed those averages.",
+    "No true word-time accuracy, both overlapping voices, factual minutes, blind final cohort or installed card/phone acceptance.",
+    "A new broader meeting-domain acoustic adaptation has not been trained; CPU2GiB cannot fit its ordinary full acoustic+bridge training memory lower bound.",
+    "Chinese true cross-meeting participant separation remains unverified."
+  ],
+  "provenance": [
+    {
+      "file": "原始证据/MOSS-四场整会CPU评分.json",
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\all-cpu-full4-composition-r1\\full-score.json",
+      "sha256": "2e508c7baaf5bcb88c33b92c5bfe7e5cbc9fed12efe53e614e2d584d76835046"
+    },
+    {
+      "file": "原始证据/QwenCPU-两场中文整会评分.json",
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\qwen-cpu-chinese-characterization-r2\\whole-score.json",
+      "sha256": "050daa7d13ee24b608b8d7f0aeac97dd3c419d33b32025ce768af3ee809df1f5"
+    },
+    {
+      "file": "原始证据/保留原识别文字-CPU时间轴与说话人评分.json",
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\full-score.json",
+      "sha256": "c574113127128f26d260299a88409776350d6a9b5c4d17c582b7fcd0796dab01"
+    },
+    {
+      "file": "原始证据/CPU时间轴-共享Rust文档契约.json",
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\product-contract.json",
+      "sha256": "50a346916218a3facdc01843ffba896707a78ab989300e5378e098dd41103d7b"
+    },
+    {
+      "file": "原始证据/CPU模型-空闲释放与恢复.json",
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-idle-app-r3\\resume-r1\\result.json",
+      "sha256": "04db6fae200d4114a7ed97e60e9e7a32a59070f4631d8dd607175d5143204368"
+    },
+    {
+      "file": "原始证据/训练数据-完整性与样本统计.json",
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\export-integrity.json",
+      "sha256": "e1fe0e4a74749bf8c0b37925bb9c279fe999eee75cdd7c09037137b4ef38faf8"
+    },
+    {
+      "file": "原始证据/训练准备-原生声学参数覆盖.json",
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-parameter-coverage.json",
+      "sha256": "a977e5188177ccddc21251315efcb3537b0a7a0f155aad46abfc6285fb5f9827"
+    },
+    {
+      "file": "原始证据/训练准备-官方入口静态核对.json",
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\training-source-audit.json",
+      "sha256": "e2b78650603e2df4abe2ddae8966267c7f6477f592f5b0ca856792287c51b43e"
+    },
+    {
+      "file": "原始证据/Windows-并发JSON读取保护.json",
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\windows-reader-retry-r2\\result.json",
+      "sha256": "6cc8931b5afaa9842ef84fd516a6a6f60db723320175bb19a02da21e90408b1d"
+    },
+    {
+      "file": "原始证据/CPU时间轴-与历史GPU输出比较.json",
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-retained-baseline-join-r4\\cpu-gpu-output-diagnostic.json",
+      "sha256": "4fedf51b5524614e3c364b194d0fa9cf298c7b472140731c7a8f36baf01fb5f4"
+    },
+    {
+      "file": "原始证据/源码保护-r43.json",
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\protection-r43.json",
+      "sha256": "9a238ee788d6d2295b19b5728c9cb8d768710eb8510169994af54e774c7a979f"
+    }
+  ],
+  "limits": {
+    "pid": 32288,
+    "cpuRate": 100,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 1.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 11390976,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

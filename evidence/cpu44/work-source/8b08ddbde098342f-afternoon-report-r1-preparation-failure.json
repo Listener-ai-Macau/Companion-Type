@@ -1,0 +1,6 @@
+{
+  "state": "FIRST_REPORT_DRAFT_NOT_DELIVERED_RAW_TEXT_BYTE_CHECK_CAUGHT_WINDOWS_LF_TO_CRLF_TRANSLATION",
+  "sourceSha256": "6c42d244323817306d51e3c717546f9933d4bf11e2cfe9885b132530e281fb83",
+  "fix": "Write generated raw UTF8 transcript bytes directly; retain failed draft folder/zip and build a separate r2 report. No model recomputation or score change.",
+  "newNeuralCalls": 0
+}
