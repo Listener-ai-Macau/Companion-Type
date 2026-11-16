@@ -1,0 +1,164 @@
+{
+  "at": "2026-11-16T08:49:53.596409+08:00",
+  "parent": "4387ed5fae028e74afd9a1f00a379dc4f876f91a",
+  "entries": [
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\ES2003b-decode-state.json",
+      "file": "closed-r6-ES2003b-decode-state.json",
+      "bytes": 1679,
+      "sha256": "5ca39a36dbaf8b2a3c29399b6705524d87f7eef7e1e58f0afee4c9bd2b2e0a0e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\ES2003b-decode-weights.json",
+      "file": "closed-r6-ES2003b-decode-weights.json",
+      "bytes": 1411,
+      "sha256": "1adebdbb41f552f01432c549b3b8d233dbe4726edbf175b0ad78eae94c07be74"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\ES2003b-decode-worker.log",
+      "file": "closed-r6-ES2003b-decode-worker.log",
+      "bytes": 13635,
+      "sha256": "ab087254d14d2b47f1121bf9bbb313402fa15eb27fd18a21c961bc0bca4d6348"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\ES2003b-gpu-allocator-events.jsonl",
+      "file": "closed-r6-ES2003b-gpu-allocator-events.jsonl",
+      "bytes": 6585,
+      "sha256": "2515156a0f640c66c349e0a446abfcab1deee98570df71c190190a1e779db86b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\ES2003b-partial-ids.json",
+      "file": "closed-r6-ES2003b-partial-ids.json",
+      "bytes": 59066,
+      "sha256": "4bcf9f65b08c56ffea30f3ff1f87f4ec23983c840b657367290b403279693660"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\inventory-0.log",
+      "file": "closed-r6-inventory-0.log",
+      "bytes": 578,
+      "sha256": "314e1799ed9708c1515a343ea401c4d213153e042a6c611789ce5f1ab2a90455"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\observation-only.jsonl",
+      "file": "closed-r6-observation-only.jsonl",
+      "bytes": 6004,
+      "sha256": "1dce029246309c5b1a72c074b7fea966d14170429bc5d0ae7598ff08cd6496f5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\owned-gpu-memory-samples.jsonl",
+      "file": "closed-r6-owned-gpu-memory-samples.jsonl",
+      "bytes": 1919,
+      "sha256": "6ee4136850f390a085711752398d2f5cf8e72480d299fc3b8a0a86153782a399"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\run.json",
+      "file": "closed-r6-run.json",
+      "bytes": 2208,
+      "sha256": "f25156ddf841a8625f294579c568c581d87143d4288bed5ef65c58f65b46ba0a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\runtime-control61-decode-state.json",
+      "file": "closed-r6-runtime-control61-decode-state.json",
+      "bytes": 1865,
+      "sha256": "af039e4452568298fa3131f52dc288de273f3c0e5bbe097c1b5f7204c4c20b7a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\runtime-control61-decode-weights.json",
+      "file": "closed-r6-runtime-control61-decode-weights.json",
+      "bytes": 1410,
+      "sha256": "72c4f36c7ef7f14e562e611979135a7f1a3f43cdb468790c24437b67ee60b554"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\runtime-control61-decode-worker.log",
+      "file": "closed-r6-runtime-control61-decode-worker.log",
+      "bytes": 1870,
+      "sha256": "30472106a5c6d1939cfaee8be4dbf766460870e9f8aead211ca07c5237382a51"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\runtime-control61-generated-ids.json",
+      "file": "closed-r6-runtime-control61-generated-ids.json",
+      "bytes": 353,
+      "sha256": "fe2b8e3d567f3a2c54c75343a3bf4c735984947eb35500b947a9a8fbb96194e8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\runtime-control61-gpu-allocator-events.jsonl",
+      "file": "closed-r6-runtime-control61-gpu-allocator-events.jsonl",
+      "bytes": 2742,
+      "sha256": "4b9eb1d6d428cb207dad6a545d7e21a3dc44f768119bdb94906708d646f750f0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\runtime-control61-partial-ids.json",
+      "file": "closed-r6-runtime-control61-partial-ids.json",
+      "bytes": 236,
+      "sha256": "88429556b958cd8c7b8838e25d66fcb992a1619ee3fcd93abab27e7d89d9391b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r6\\runtime-control61-raw.json",
+      "file": "closed-r6-runtime-control61-raw.json",
+      "bytes": 4409,
+      "sha256": "d6a97bacc81b687df5757e5d4023f3851274c9049c97a94f8f356461034d98b1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\staged-r6\\device-disconnection.json",
+      "file": "windows-device-disconnection.json",
+      "bytes": 1671,
+      "sha256": "e283e6f79d6da62f4f22a904739975910937d94dc0e40aae038a744af29a08e2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-vulkan-commit-probe-r1\\result.json",
+      "file": "vulkan-probe-no6800-no-allocation.json",
+      "bytes": 335,
+      "sha256": "5f0231834626c4a69909a8eb3a01ca8461d643d03168fe5488a16dae962c2a87"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-mapped-r1\\staged-binding.json",
+      "file": "cpu-mapped-frozen-binding.json",
+      "bytes": 12291,
+      "sha256": "de2907ca28f813888fef2621fd51578a5a2ce588db52789fa5cb51306ca3bbc8"
+    },
+    {
+      "source": "work\\prepare_cpu_mapped_sources_20261116.py",
+      "file": "prepare_cpu_mapped_sources_20261116.py",
+      "bytes": 3838,
+      "sha256": "775b1711222315956446be2cc9c7fb10491666050bc3168acd8a0cc85dbdba21"
+    },
+    {
+      "source": "work\\prepare_cpu_mapped_binding_20261116.py",
+      "file": "prepare_cpu_mapped_binding_20261116.py",
+      "bytes": 4807,
+      "sha256": "de86bd3bf07b998ebfcbf839847be83d8fd4509894207622a49aed5e6d7e7c8a"
+    },
+    {
+      "source": "work\\protect_cpu_mapped_source_20261116.py",
+      "file": "protect_cpu_mapped_source_20261116.py",
+      "bytes": 5067,
+      "sha256": "eeda4e1117427d0385d1574313f33b7e1fa6da263eac5e9f40b7aa7f681b77e4"
+    },
+    {
+      "source": "work\\bilingual_progress.json",
+      "file": "bilingual_progress.json",
+      "bytes": 224509,
+      "sha256": "ac47921d170736707b2dd89ebb5d083c7ff5444ee823ffd505164e642febc1b9"
+    }
+  ],
+  "sources": {
+    "src/moss_native_greedy_20261115.py": "8ccdeb78acbcaf4faad99e0d4aef0371c1cef79b2bb5ccffff09dd666a300b6e",
+    "src/moss_cpu_mapped_runtime_20261116.py": "ec59e298ce9215694706dc604c9a6f5d80cf02cae05e1e16d01797ac1f6e9d92",
+    "src/moss_cpu_mapped_meeting_worker_20261116.py": "61e5f41b3999c4731dfedc9f83b47daa90b2031fcfc643ae495eca152b26bc05",
+    "src/run_moss_cpu_mapped_meetings_20261116.py": "14f2d1ab492e353172e3505d6e4aed23a85efc87a69015c6fb993be89a2ea5c4"
+  },
+  "state": "GPU_UNPLUG_CONFIRMED_CPU_MAPPED_NATIVE_SOURCE_CHECKPOINT",
+  "ownerGpuReply": "已经拔下或断电",
+  "retainedGeneratedTokens": 6501,
+  "fullPromptTokens": 27924,
+  "weightsChanged": false,
+  "quantizationUsed": false,
+  "newWeightTraining": false,
+  "wholeMeetingResults": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "activeCpuRunOutputsExcluded": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r1",
+  "readOnlyWeightsMapping": "ACCESS_READ; tensor storage pointers checked after materialization",
+  "sharedWritableKvMapping": "ACCESS_WRITE on real files; private memory and real working RAM monitored separately",
+  "earlierSystemBugcheckCauseStillUnknown": true
+}

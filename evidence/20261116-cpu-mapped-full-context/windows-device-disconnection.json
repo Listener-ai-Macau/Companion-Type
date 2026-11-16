@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-16T08:19:48.872126+08:00",
+  "state": "DAY_6800XT_DISCONNECTED_IN_WINDOWS_AND_VULKAN_NOT_A_PROVEN_MODEL_KERNEL_CAUSE",
+  "records": {
+    "connected": "Microsoft PnP Utility\n\nInstance ID:                PCI\\VEN_1002&DEV_15BF&SUBSYS_01241002&REV_C2\\4&17857bc2&0&0041\nDevice Description:         AMD Radeon 780M Graphics\nClass Name:                 Display\nClass GUID:                 {4d36e968-e325-11ce-bfc1-08002be10318}\nManufacturer Name:          Advanced Micro Devices, Inc.\nStatus:                     Started\nDriver Name:                oem0.inf\n\n",
+    "disconnected": "Microsoft PnP Utility\n\nInstance ID:                PCI\\VEN_1002&DEV_73BF&SUBSYS_67011EAE&REV_C1\\8&1bd3869f&0&000000000021\nDevice Description:         AMD Radeon RX 6800 XT\nClass Name:                 Display\nClass GUID:                 {4d36e968-e325-11ce-bfc1-08002be10318}\nManufacturer Name:          Advanced Micro Devices, Inc.\nStatus:                     Disconnected\nDriver Name:                oem1.inf\n\nInstance ID:                PCI\\VEN_1002&DEV_73BF&SUBSYS_67011EAE&REV_C1\\8&1281751d&0&000000080021\nDevice Description:         AMD Radeon RX 6800 XT\nClass Name:                 Display\nClass GUID:                 {4d36e968-e325-11ce-bfc1-08002be10318}\nManufacturer Name:          Advanced Micro Devices, Inc.\nStatus:                     Disconnected\nDriver Name:                oem1.inf\n\n"
+  },
+  "neuralPidsActive": false,
+  "lastRetainedGeneratedTokens": 6501,
+  "newSystemReboot": false,
+  "questionPending": "Whether the external GPU was physically unplugged or lost power; no automatic driver/device/OS reset."
+}

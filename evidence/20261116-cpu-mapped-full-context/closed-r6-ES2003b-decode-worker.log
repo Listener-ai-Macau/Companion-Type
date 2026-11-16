@@ -1,0 +1,97 @@
+W1116 07:59:21.268000 22184 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+Unhandled exception caught in c10/util/AbortHandler.h
+00007FFF74DAABDC00007FFF74D9A390 torch_python.dll!initModule [<unknown file> @ <unknown line number>]
+00007FF85517218700007FF855172170 ucrtbase.dll!terminate [<unknown file> @ <unknown line number>]
+00007FF842EB2A9400007FF842EB2A50 VCRUNTIME140.dll!_FrameUnwindFilter [<unknown file> @ <unknown line number>]
+00007FF842EC1CEC00007FF842EC1730 VCRUNTIME140.dll!memset [<unknown file> @ <unknown line number>]
+00007FF842EBF70F00007FF842EBF670 VCRUNTIME140.dll!_C_specific_handler [<unknown file> @ <unknown line number>]
+00007FF857C0479F00007FF857C04700 ntdll.dll!_chkstk [<unknown file> @ <unknown line number>]
+00007FF857AE5E9700007FF857AE5900 ntdll.dll!RtlLocateExtendedFeature [<unknown file> @ <unknown line number>]
+00007FF857B2D01100007FF857B2CDF0 ntdll.dll!RtlRaiseException [<unknown file> @ <unknown line number>]
+00007FF8552D1ADA00007FF8552D1A50 KERNELBASE.dll!RaiseException [<unknown file> @ <unknown line number>]
+00007FF842EB6BA700007FF842EB6B10 VCRUNTIME140.dll!CxxThrowException [<unknown file> @ <unknown line number>]
+00007FFFCA2145E200007FFFCA214480 c10_hip.dll!c10::cuda::c10_cuda_check_implementation [<unknown file> @ <unknown line number>]
+00007FFFCA214F0C00007FFFCA214EB0 c10_hip.dll!c10::cuda::SetDevice [<unknown file> @ <unknown line number>]
+00007FFFCA1FD69300007FFFCA1D89F0 c10_hip.dll!c10::FreeCudaMemoryCallbacksRegistry [<unknown file> @ <unknown line number>]
+00007FFF5386331400007FFF53863200 torch_hip.dll!at::cuda::_local_scalar_dense [<unknown file> @ <unknown line number>]
+00007FF842EB1060 <unknown symbol address> VCRUNTIME140.dll!<unknown symbol> [<unknown file> @ <unknown line number>]
+00007FF842EB53EA00007FF842EB2B90 VCRUNTIME140.dll!is_exception_typeof [<unknown file> @ <unknown line number>]
+00007FF842EBFB5000007FF842EBF670 VCRUNTIME140.dll!_C_specific_handler [<unknown file> @ <unknown line number>]
+00007FF842EB45F000007FF842EB2B90 VCRUNTIME140.dll!is_exception_typeof [<unknown file> @ <unknown line number>]
+00007FF842EC048100007FF842EC0410 VCRUNTIME140.dll!_CxxFrameHandler3 [<unknown file> @ <unknown line number>]
+00007FF857C0481F00007FF857C04700 ntdll.dll!_chkstk [<unknown file> @ <unknown line number>]
+00007FF857AE210300007FF857AE1E80 ntdll.dll!RtlUnwindEx [<unknown file> @ <unknown line number>]
+00007FF842EC001600007FF842EBF670 VCRUNTIME140.dll!_C_specific_handler [<unknown file> @ <unknown line number>]
+00007FF842EB324500007FF842EB2B90 VCRUNTIME140.dll!is_exception_typeof [<unknown file> @ <unknown line number>]
+00007FF842EB366600007FF842EB2B90 VCRUNTIME140.dll!is_exception_typeof [<unknown file> @ <unknown line number>]
+00007FF842EB46EC00007FF842EB2B90 VCRUNTIME140.dll!is_exception_typeof [<unknown file> @ <unknown line number>]
+00007FF842EC048100007FF842EC0410 VCRUNTIME140.dll!_CxxFrameHandler3 [<unknown file> @ <unknown line number>]
+00007FF857C0479F00007FF857C04700 ntdll.dll!_chkstk [<unknown file> @ <unknown line number>]
+00007FF857AE5E9700007FF857AE5900 ntdll.dll!RtlLocateExtendedFeature [<unknown file> @ <unknown line number>]
+00007FF857B2D01100007FF857B2CDF0 ntdll.dll!RtlRaiseException [<unknown file> @ <unknown line number>]
+00007FF8552D1ADA00007FF8552D1A50 KERNELBASE.dll!RaiseException [<unknown file> @ <unknown line number>]
+00007FF842EB6BA700007FF842EB6B10 VCRUNTIME140.dll!CxxThrowException [<unknown file> @ <unknown line number>]
+00007FFFCA2145E200007FFFCA214480 c10_hip.dll!c10::cuda::c10_cuda_check_implementation [<unknown file> @ <unknown line number>]
+00007FFFCA1D21F900007FFFCA1D2190 c10_hip.dll!c10::cuda::memcpy_and_sync [<unknown file> @ <unknown line number>]
+00007FFF5224500800007FFF52243DE0 torch_hip.dll!at::native::_local_scalar_dense_cuda [<unknown file> @ <unknown line number>]
+00007FFF5386329E00007FFF53863200 torch_hip.dll!at::cuda::_local_scalar_dense [<unknown file> @ <unknown line number>]
+00007FFF539EAD3000007FFF53952E70 torch_hip.dll!at::cuda::_fused_adagrad_ [<unknown file> @ <unknown line number>]
+00007FFF7772D97200007FFF7772D8A0 torch_cpu.dll!at::_ops::_local_scalar_dense::call [<unknown file> @ <unknown line number>]
+00007FFF76A680C200007FFF76A67FA0 torch_cpu.dll!at::native::item [<unknown file> @ <unknown line number>]
+00007FFF773FCE4200007FFF773FCD70 torch_cpu.dll!at::_ops::item::call [<unknown file> @ <unknown line number>]
+00007FFF7880F89200007FFF7880F870 torch_cpu.dll!at::Tensor::item<__int64> [<unknown file> @ <unknown line number>]
+00007FFF749DBE4100007FFF749C37B0 torch_python.dll!THPPointer<_object>::THPPointer<_object> [<unknown file> @ <unknown line number>]
+00007FFF748D844900007FFF748D6A00 torch_python.dll!torch::PythonArgs::pyobject [<unknown file> @ <unknown line number>]
+00007FF832ABC2E400007FF832ABBA80 python311.dll!PyObject_Bytes [<unknown file> @ <unknown line number>]
+00007FF832B0341200007FF832B02F24 python311.dll!PyLong_New [<unknown file> @ <unknown line number>]
+00007FF832B9C71400007FF832B9C670 python311.dll!PyTime_FromNanosecondsObject [<unknown file> @ <unknown line number>]
+00007FF832B0371000007FF832B036C4 python311.dll!PyNumber_Long [<unknown file> @ <unknown line number>]
+00007FF832A783BA00007FF832A78060 python311.dll!PyObject_MakeTpCall [<unknown file> @ <unknown line number>]
+00007FF832A7BDDF00007FF832A7BB50 python311.dll!PyObject_Vectorcall [<unknown file> @ <unknown line number>]
+00007FF832A7D42300007FF832A7CC20 python311.dll!PyEval_EvalFrameDefault [<unknown file> @ <unknown line number>]
+00007FF832AC5AA500007FF832AC3DC4 python311.dll!PyIter_Send [<unknown file> @ <unknown line number>]
+00007FF832B24CF300007FF832B248EC python311.dll!PyObject_CallObject [<unknown file> @ <unknown line number>]
+00007FF832A81F7F00007FF832A7CC20 python311.dll!PyEval_EvalFrameDefault [<unknown file> @ <unknown line number>]
+00007FF832A7AE6400007FF832A7ACC0 python311.dll!PyFunction_Vectorcall [<unknown file> @ <unknown line number>]
+00007FF832AC5C2500007FF832AC3DC4 python311.dll!PyIter_Send [<unknown file> @ <unknown line number>]
+00007FF832B24C6A00007FF832B248EC python311.dll!PyObject_CallObject [<unknown file> @ <unknown line number>]
+00007FF832A81F7F00007FF832A7CC20 python311.dll!PyEval_EvalFrameDefault [<unknown file> @ <unknown line number>]
+00007FF832A7AE6400007FF832A7ACC0 python311.dll!PyFunction_Vectorcall [<unknown file> @ <unknown line number>]
+00007FF832AC5C2500007FF832AC3DC4 python311.dll!PyIter_Send [<unknown file> @ <unknown line number>]
+00007FF832B24C6A00007FF832B248EC python311.dll!PyObject_CallObject [<unknown file> @ <unknown line number>]
+00007FF832A81F7F00007FF832A7CC20 python311.dll!PyEval_EvalFrameDefault [<unknown file> @ <unknown line number>]
+00007FF832A7AE6400007FF832A7ACC0 python311.dll!PyFunction_Vectorcall [<unknown file> @ <unknown line number>]
+00007FF832A57E0E00007FF832A57D4C python311.dll!PyObject_FastCallDictTstate [<unknown file> @ <unknown line number>]
+00007FF832A5625B00007FF832A561DC python311.dll!PyObject_Call_Prepend [<unknown file> @ <unknown line number>]
+00007FF832A5618800007FF832A55C5C python311.dll!Py_parse_inf_or_nan [<unknown file> @ <unknown line number>]
+
+Fatal Python error: Aborted
+
+Current thread 0x00005704 (most recent call first):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_causal_prefill_20261115.py", line 19 in update
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\cache_utils.py", line 1535 in update
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\models\qwen3\modeling_qwen3.py", line 252 in forward
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\models\qwen3\modeling_qwen3.py", line 299 in forward
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\modeling_layers.py", line 111 in __call__
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\models\qwen3\modeling_qwen3.py", line 405 in forward
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\utils\output_capturing.py", line 287 in wrapper
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\utils\generic.py", line 1081 in wrapper
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\models\moss_transcribe_diarize\modeling_moss_transcribe_diarize.py", line 502 in forward
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\utils\generic.py", line 943 in wrapper
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\models\moss_transcribe_diarize\modeling_moss_transcribe_diarize.py", line 579 in forward
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\transformers\utils\generic.py", line 943 in wrapper
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1790 in _call_impl
+  File "E:\CodexData\Companion\pretrained-route-selection-20261104\night-6800xt-20261104\amd-runtime\Lib\site-packages\torch\nn\modules\module.py", line 1779 in _wrapped_call_impl
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_native_greedy_20261115.py", line 62 in greedy
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_staged_meeting_worker_20261115.py", line 117 in main
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_staged_meeting_worker_20261115.py", line 157 in <module>
+
+Extension modules: numpy._core._multiarray_umath, numpy.linalg._umath_linalg, torch._C, torch._C._dynamo.autograd_compiler, torch._C._dynamo.eval_frame, torch._C._dynamo.guards, torch._C._dynamo.utils, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special, regex._regex, markupsafe._speedups, yaml._yaml, _cffi_backend, psutil._psutil_windows, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._pcg64, numpy.random._generator, numpy.random._mt19937, numpy.random._philox, numpy.random._sfc64, numpy.random.mtrand, _cyutility, scipy._cyutility, scipy._lib._ccallback_c, scipy.linalg._fblas, scipy.linalg._flapack, scipy.linalg.cython_lapack, charset_normalizer.md, charset_normalizer.cd, scipy.linalg._cythonized_array_utils, scipy.linalg._solve_toeplitz, scipy.linalg._batched_linalg, scipy.linalg._decomp_lu_cython, scipy.linalg._matfuncs_schur_sqrtm, scipy.linalg._matfuncs_expm, scipy.linalg._linalg_pythran, scipy.linalg.cython_blas, scipy.linalg._decomp_update, scipy.sparse._sparsetools, _csparsetools, scipy.sparse._csparsetools, scipy.sparse.linalg._dsolve._superlu, scipy.sparse.linalg._eigen.arpack._arpacklib, scipy.sparse.linalg._propack, scipy.optimize._group_columns, scipy._lib.messagestream, scipy.optimize._trlib._trlib, scipy.optimize._lbfgsb, _moduleTNC, scipy.optimize._moduleTNC, scipy.optimize._slsqplib, scipy.optimize._minpack, scipy.optimize._lsq.givens_elimination, scipy.optimize._zeros, scipy._lib._uarray._uarray, scipy.special._ufuncs_cxx, scipy.special._ellip_harm_2, scipy.special._special_ufuncs, scipy.special._gufuncs, scipy.special._ufuncs, scipy.special._specfun, scipy.special._comb, scipy.linalg._decomp_interpolative, scipy.optimize._bglu_dense, scipy.optimize._lsap, scipy.spatial._ckdtree, scipy.spatial._qhull, scipy.spatial._voronoi, scipy.spatial._hausdorff, scipy.spatial._distance_wrap, scipy.spatial.transform._rotation_cy, scipy.spatial.transform._rigid_transform_cy, scipy.optimize._direct (total: 79)

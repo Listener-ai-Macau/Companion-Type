@@ -285,3 +285,11 @@ evidence/20261116-overnight-system-interruption-r1/** -text -whitespace
 evidence/20261116-day-whole-resume/** -text -whitespace
 
 evidence/20261116-day-unused-gpu-cache-release/** -text -whitespace
+
+evidence/20261116-cpu-mapped-full-context/** -text -whitespace
+
+src/moss_cpu_mapped_runtime_20261116.py -text -whitespace
+
+src/moss_cpu_mapped_meeting_worker_20261116.py -text -whitespace
+
+src/run_moss_cpu_mapped_meetings_20261116.py -text -whitespace

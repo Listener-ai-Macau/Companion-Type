@@ -11,8 +11,10 @@ def install_prefix_replay_attention(*,torch):
  def scheduled(*args,**kwargs):return bounded_sdpa(keyed,*args,**kwargs,query_block=128)
  F.scaled_dot_product_attention=scheduled
 def greedy(model,cache,logits,*,torch,max_tokens,expected_prefix,resume_prefix,checkpoint,progress,
-           step_pause_seconds=0.,synchronize_each_forward=False,release_unused_interval=0,on_memory_release=None):
+           step_pause_seconds=0.,synchronize_each_forward=False,release_unused_interval=0,on_memory_release=None,
+           on_prefix_replay=None):
  import time
+ device=logits.device;is_gpu=device.type=='cuda'
  assert 0.<=step_pause_seconds<=.25
  assert isinstance(release_unused_interval,int) and release_unused_interval>=0
  forward_count=0;release_count=0
@@ -27,8 +29,8 @@ def greedy(model,cache,logits,*,torch,max_tokens,expected_prefix,resume_prefix,c
  def settle():
   nonlocal forward_count
   forward_count+=1
-  if synchronize_each_forward:torch.cuda.synchronize()
-  if release_unused_interval and forward_count%release_unused_interval==0:
+  if synchronize_each_forward and is_gpu:torch.cuda.synchronize()
+  if release_unused_interval and is_gpu and forward_count%release_unused_interval==0:
    release_allocator('periodic-unused-allocation-release')
   if step_pause_seconds:time.sleep(step_pause_seconds)
   checkpoint()
@@ -48,21 +50,23 @@ def greedy(model,cache,logits,*,torch,max_tokens,expected_prefix,resume_prefix,c
   assert generated[:len(expected_prefix)]==list(expected_prefix)[:len(generated)]
   assert not any(t in eos for t in generated)
   for start in range(0,len(generated),128):
-   checkpoint();block=torch.tensor([generated[start:start+128]],device='cuda:0',dtype=torch.long)
+   checkpoint();block=torch.tensor([generated[start:start+128]],device=device,dtype=torch.long)
    result=model(input_ids=block,past_key_values=cache,use_cache=True,logits_to_keep=1)
    settle()
    assert result.past_key_values is cache;logits=result.logits
+   if on_prefix_replay:on_prefix_replay(min(start+128,len(generated)),len(generated))
   assert int(cache.get_seq_length())==initial+len(generated)
-  if release_unused_interval:release_allocator('retained-prefix-replay-complete')
+  if release_unused_interval and is_gpu:release_allocator('retained-prefix-replay-complete')
  while len(generated)<max_tokens:
   checkpoint();token=int(logits[0,-1].float().argmax().item())
   if len(generated)<len(expected_prefix):assert token==expected_prefix[len(generated)],('Native greedy prefix diverged',len(generated)+1)
   generated.append(token);progress(generated)
   if token in eos or len(generated)==max_tokens:break
-  result=model(input_ids=torch.tensor([[token]],device='cuda:0'),past_key_values=cache,use_cache=True,logits_to_keep=1)
+  result=model(input_ids=torch.tensor([[token]],device=device),past_key_values=cache,use_cache=True,logits_to_keep=1)
   settle()
   assert result.past_key_values is cache;logits=result.logits
  return generated,{'savedFirstLogitsUsedOrVerified':True,'originalGeneratedPrefixTokensReplayed':len(resume_prefix),
   'noReferenceTeacherForcing':True,'allOriginalGeneratedPrefixIdsPreserved':True,'cpuEosDecision':True,
   'stepPauseSeconds':step_pause_seconds,'synchronizeEachForward':synchronize_each_forward,
-  'unusedAllocatorReleaseInterval':release_unused_interval,'unusedAllocatorReleaseCount':release_count}
+  'unusedAllocatorReleaseInterval':release_unused_interval,'unusedAllocatorReleaseCount':release_count,
+  'device':str(device)}

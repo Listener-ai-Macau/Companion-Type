@@ -1,0 +1,59 @@
+{
+  "state": "INCOMPLETE_NATIVE_STAGED_FAILURE_OR_DEADLINE_RETAINED",
+  "startedAt": "2026-11-16T07:58:32.667401+08:00",
+  "phases": [
+    {
+      "meeting": "runtime-control61",
+      "phase": "prefill",
+      "state": "REUSED_COMPLETE_PREFILL_UNCHANGED",
+      "source": {
+        "state": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\runtime-control61-prefill-state.json",
+        "stateSha256": "9ecc5dd43cd11cdc42297b64d82c325745512bfec58d92968138ee3128faa5bb",
+        "cache": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61"
+      },
+      "newNeuralCalls": 0
+    },
+    {
+      "meeting": "runtime-control61",
+      "phase": "decode",
+      "exitCode": 0,
+      "state": "PASS_BIT_EXACT_STAGED_NATIVE16_TOKEN_CONTROL",
+      "seconds": 35.61000000000058,
+      "privatePeakBytes": 1167568896
+    },
+    {
+      "meeting": "ES2003b",
+      "phase": "prefill",
+      "state": "REUSED_COMPLETE_PREFILL_UNCHANGED",
+      "source": {
+        "state": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\ES2003b-prefill-state.json",
+        "stateSha256": "418fe8263a27b7e070cb39116c79678987ba3b3e888c7bc7e24c10c135a28c39",
+        "cache": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r2\\cache\\ES2003b"
+      },
+      "newNeuralCalls": 0
+    },
+    {
+      "meeting": "ES2003b",
+      "phase": "decode",
+      "exitCode": 3,
+      "state": "DECODING_COMPLETE_CONTEXT_CPU_EOS",
+      "seconds": 770.344000000001,
+      "privatePeakBytes": 1211797504
+    }
+  ],
+  "completed": [
+    "runtime-control61"
+  ],
+  "privatePeakBytes": 1211797504,
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "automaticRetries": 0,
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "reportDeadline": "2026-11-16T16:00:00+08:00",
+  "pid": 20492,
+  "pidCreatedAt": 1794787154.5610292,
+  "activeMeeting": "ES2003b",
+  "error": "AssertionError('Preserve failure and inspect source before changed continuation')",
+  "finishedAt": "2026-11-16T08:12:04.908488+08:00",
+  "seconds": 812.25
+}
