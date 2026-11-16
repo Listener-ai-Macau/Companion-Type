@@ -1,0 +1,53 @@
+{
+  "state": "FAILED_FIXED_FRONTEND_ENHANCE_RETAINED_NO_RETRY",
+  "at": "2026-11-16T21:15:12+08:00",
+  "pid": 6488,
+  "binding": {
+    "protocolSha256": "f724a63d1e40e08c220058cc10eb608d52238565eeaa206b2617bb309427a2c7",
+    "workerSha256": "7db3f9e76e50b647bd56728acbf4c4b2a9d0ece8a4922e49ba0abf4c4b2d29b9",
+    "enhancerSha256": "b22256adbb91b68cf5a3db8f6657a4fb17066eecd5f069803e59c186c1cf3ebb",
+    "asrSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1"
+  },
+  "phase": "enhance",
+  "completed": [],
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "referencesRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "observedAt": "2026-11-16T21:16:30+08:00",
+  "limits": {
+    "pid": 6488,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 962072576,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "presentDevices": [
+    {
+      "FriendlyName": "AMD Radeon RX 6800 XT",
+      "Status": "OK"
+    },
+    {
+      "FriendlyName": "AMD Radeon 780M Graphics",
+      "Status": "OK"
+    }
+  ],
+  "device": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  },
+  "error": "RuntimeError('Official STFT timebase/roundtrip differs')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\frontend_component_compare_20261116.py\", line 119, in main\n    require(restored.shape==tensor.shape and torch.allclose(restored,tensor,atol=1e-4,rtol=1e-4),\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_contract_20261116.py\", line 36, in require\n    raise RuntimeError(message)\nRuntimeError: Official STFT timebase/roundtrip differs\n",
+  "finishedAt": "2026-11-16T21:16:30+08:00"
+}

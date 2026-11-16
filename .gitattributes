@@ -437,3 +437,7 @@ evidence/english-transducer49/** -text -whitespace
 src/english_transducer_worker_20261116.py -text -whitespace
 
 src/score_english_transducer_20261116.py -text -whitespace
+
+evidence/20261116-gpu-restart-and-bounded-native-conv-diagnostic/** -text -whitespace
+
+src/gpu_compat_frcrn_20261116.py -text -whitespace

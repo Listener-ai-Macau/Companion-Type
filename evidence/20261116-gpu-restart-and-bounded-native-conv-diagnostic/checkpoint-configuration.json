@@ -1,0 +1,77 @@
+{
+  "revision": 50,
+  "evidenceDirectory": "evidence/20261116-gpu-restart-and-bounded-native-conv-diagnostic",
+  "sources": [
+    "src/frontend_component_compare_20261116.py",
+    "src/gpu_compat_frcrn_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\restart-summary.json",
+      "name": "gpu-compatibility-r1/restart-summary.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\primary-sources.json",
+      "name": "gpu-compatibility-r1/primary-sources.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\worker-before-noncentered-dsp-control-fix.py",
+      "name": "frcrn-front-end-r1/worker-before-noncentered-dsp-control-fix.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\protocol-r2.json",
+      "name": "frcrn-front-end-r1/protocol-r2.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\scoring-control-r2.json",
+      "name": "frcrn-front-end-r1/scoring-control-r2.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\native-context180-r1\\score-S_R004S03C01.json",
+      "name": "native-context180-r1/score-S_R004S03C01.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\score.json",
+      "name": "english-transducer-r1/score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r2\\enhance\\state.json",
+      "name": "interrupted-frcrn-r2/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r2\\enhance\\dsp-control.json",
+      "name": "interrupted-frcrn-r2/dsp-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r2\\enhance\\dsp-roundtrip-inspection.json",
+      "name": "interrupted-frcrn-r2/dsp-roundtrip-inspection.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r2\\enhance\\weight-proof.json",
+      "name": "interrupted-frcrn-r2/weight-proof.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\frcrn-front-end-r1\\run-r1\\enhance\\state.json",
+      "name": "failed-frcrn-control-r1/state.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\inspect_restart_20261116.py",
+      "name": "preparation/inspect_restart_20261116.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_gpu_restart_20261116.py",
+      "name": "preparation/record_gpu_restart_20261116.py"
+    }
+  ],
+  "commitMessage": "Preserve correlated GPU restart and freeze bounded native-convolution diagnostic",
+  "claims": {
+    "state": "RESTART_EVIDENCE_PRESERVED_NATIVE_CONV_DIAGNOSTIC_NOT_EXECUTED",
+    "trainingUpdates": 0,
+    "ownedGpuWorkloadLeadingSuspect": true,
+    "vramExhaustionProven": false,
+    "causeProven": false,
+    "diagnosticQualityQualified": false,
+    "saleQualified": false
+  }
+}

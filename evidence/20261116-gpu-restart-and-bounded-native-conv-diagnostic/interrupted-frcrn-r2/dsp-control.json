@@ -1,0 +1,9 @@
+{
+  "state": "PASS_OFFICIAL_STFT_SPEECH_ROUNDTRIP_AND_EXACT_ZERO_ENHANCER",
+  "speechMaximumAbsRoundtripError": 7.059425115585327e-07,
+  "referenceOperator": "Independent NumPy non-centered Hann overlap coefficients with published1e-8 inverse denominator; unsupported endpoints included as zero support.",
+  "frames": 32000,
+  "timeShiftApplied": false,
+  "sampleRate": 16000,
+  "newEnhancerForwards": 1
+}

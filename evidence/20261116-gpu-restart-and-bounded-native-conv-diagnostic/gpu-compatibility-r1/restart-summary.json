@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-16T21:51:46+08:00",
+  "state": "OWN_GPU_WORKLOAD_LEADING_SUSPECT_COMPATIBILITY_ISOLATION_BEFORE_BOUNDED_REENTRY",
+  "ownerQuotes": [
+    "你刚刚看我电脑死机重启了, 是不是因为你训练模型过载导致的原因",
+    "突然黑屏／直接重启",
+    "是你的显存问题吧, 是因为我现在用显卡坞, 已经最近每晚都这样, 以前不会, 所以高度怀疑你这边的问题, 白天上班的时候都不会",
+    "就是你在跑显卡训练的时候看看有啥导致它出现bug啥的, 以前我跑3dmaerk啥的都不会这样, 感觉是一些奇怪的兼容性问题, 然后你看看还是要把显卡用起来的"
+  ],
+  "rawLocalEvidence": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-213635\\incident.json",
+  "shutdown": "2026-11-16T21:36:35+08:00",
+  "boot": "2026-11-16T21:37:12.215637+08:00",
+  "lastWorker": "FRCRN pretrained enhancement, RX6800XT index1/gfx1030, first27.2500625second public clip",
+  "lastWorkerSample": "2026-11-16T21:36:15+08:00",
+  "completedRealEnhancementClips": 0,
+  "trainingUpdates": 0,
+  "smallZeroForwardCompleted": true,
+  "lastObservedPrivateGiB": 1.0760269165039062,
+  "lastObservedPrivateMemoryNotCrashVramSample": true,
+  "historicVramPowerTemperaturePcieUnavailable": true,
+  "windowsEvidence": "KernelPower41/BugcheckCode0 +EventLog6008, no matched current dump; no2004/4101/WHEA in inspected preboot interval. Old1ccWER is actuallyNov12, not this crash.",
+  "history": "Windows also retains Nov15 evening and Nov16 00:14 unexpected restarts;00:14 recorded0x101. These are separate symptoms, not proof of the same cause.",
+  "causeConclusion": "Owner repeated-night reports +20second correlation make ownedGPUworkload the leading trigger. VRAM exhaustion vsMIOpen/driver/dock/power/thermal not yet distinguished;3DMark stability is useful but does not validate the ML operator path.",
+  "decision": "LatestOwner asks GPU remain in use. Retain interruptedFRCRN without retrying27second/defaultMIOpen path. Inspect runtime/ops and perform one bounded, instrumented GPU compatibility check under existing CPU/RAM protection before model work resumes. No driver/TDR/BIOS/clock/power change, no CPUtraining, no whole-batch stress reproduction.",
+  "productQualified": false,
+  "saleQualified": false
+}

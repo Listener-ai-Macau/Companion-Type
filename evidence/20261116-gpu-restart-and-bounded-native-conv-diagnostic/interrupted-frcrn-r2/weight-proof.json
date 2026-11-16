@@ -1,0 +1,13 @@
+{
+  "state": "PASS_ALL_OFFICIAL_FRCRN_TENSORS_RELOADED_EXACT",
+  "tensorCount": 1692,
+  "checkpointSha256": "b22256adbb91b68cf5a3db8f6657a4fb17066eecd5f069803e59c186c1cf3ebb",
+  "partialMissingOrUnexpectedKeys": false,
+  "parameters": 13963604,
+  "trainingUpdates": 0,
+  "device": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  }
+}

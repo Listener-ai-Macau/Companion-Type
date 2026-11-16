@@ -1,0 +1,17 @@
+{
+  "state": "INSPECTED_PUBLISHED_NONCENTERED_STFT_OPERATOR",
+  "inputShape": [
+    1,
+    32000
+  ],
+  "outputShape": [
+    1,
+    32000
+  ],
+  "maximumAbsDifferenceFromIndependentDefinedOperator": 7.059425115585327e-07,
+  "zeroWindowSupportSamples": 1,
+  "maximumAbsDifferenceFromUnwindowedIdentity": 0.0014418307657129504,
+  "firstInputSample": -0.0014418307657129504,
+  "unchangedAbsoluteTolerance": 0.0001,
+  "audioInputShiftPaddingOrGainChangeApplied": false
+}

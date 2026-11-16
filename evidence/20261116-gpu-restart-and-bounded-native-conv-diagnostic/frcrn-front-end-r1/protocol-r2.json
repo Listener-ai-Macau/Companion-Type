@@ -1,0 +1,228 @@
+{
+  "state": "FROZEN_ONE_OFFICIAL_FRCRN_FRONTEND_BEFORE_UNCHANGED_QWEN",
+  "at": "2026-11-16T21:34:47.378874+08:00",
+  "audioOnly": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\audio-only.json",
+  "upstreamRoot": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream",
+  "enhancer": {
+    "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\last_best_checkpoint.pt",
+    "sha256": "b22256adbb91b68cf5a3db8f6657a4fb17066eecd5f069803e59c186c1cf3ebb",
+    "revision": "3766e6a64b0d8cb58f08d913d617bf129f11ed53",
+    "bytes": 161053751
+  },
+  "asr": {
+    "modelRoot": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model",
+    "modelSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1"
+  },
+  "asrControl": {
+    "id": "native-unchanged-asr-control",
+    "language": "English",
+    "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+    "audioSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+    "frames": 192800
+  },
+  "asrControlIds": [
+    9952,
+    2182,
+    432,
+    389,
+    279,
+    18010,
+    13,
+    2009,
+    358,
+    1490,
+    374,
+    18010,
+    13,
+    2308,
+    11,
+    389,
+    279,
+    17505,
+    498,
+    3278,
+    1477,
+    13,
+    1446,
+    1265,
+    1477,
+    429,
+    1052,
+    594,
+    264,
+    2390,
+    9293,
+    2656,
+    13,
+    8325,
+    11,
+    3520,
+    11,
+    1101,
+    13,
+    151645
+  ],
+  "runtime": {
+    "python": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Scripts\\python.exe",
+    "torch": "2.11.0+rocm10.0.0",
+    "transformers": "5.22.1"
+  },
+  "blas": {
+    "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0"
+  },
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\frontend_component_compare_20261116.py",
+      "sha256": "6b7101326fa18b0611bc8e6860507a8e2e226e57d42dd758aecafa92119b9426"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\audio-only.json",
+      "sha256": "199ab027e89f45f4bf2ea04eb66971aa1638216fdc4d84fa8ffd974be31ee880"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\asset-receipt.json",
+      "sha256": "8ac1592c98312655d94856055b8d91ffd3247f551069aa01c3cf39969e6c462c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\official_functions.py",
+      "sha256": "c222d1909f519000933056049d86e0325a21c75aed0ee8c5da8f2e87b330720b"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\__init__.py",
+      "sha256": "d49ee4c5338707963a9b4ac4689fc1fa5064c560d943dafbe183e066db236dc8"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\complex_nn.py",
+      "sha256": "3dcda8502c6d588493a59dcb0910624a088be3e1c8b82b9d4b9408e1c5f3b5cb"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\conv_stft.py",
+      "sha256": "683ead65ab66688dfcd7a595d7235cda391a1428e7121d7ed06adca4b2494953"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\frcrn.py",
+      "sha256": "17f83883f0a3ce2dc5498cbc58e65aedafeba37ec2da221fec01f773e67b4603"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\se_layer.py",
+      "sha256": "265384bdcf473b4f96e8fe166ff76b52a8fd12cc809da7da38c76a18862c68c0"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\frcrn_se\\unet.py",
+      "sha256": "45bbfe65da07f49a529b4ca23b7e01bceb477efce7aa07c6fa8968ebccb9431e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\decoder-upstream.py",
+      "sha256": "e19417ea6b0556af8b002a2260d9ec287ed4d776eb49e9612586f217ee13f6be"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\dataloader-upstream.py",
+      "sha256": "9abfaecd81719af628e323cbaa13845c9482854eebc6b0da4b51098b0b474539"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\networks-upstream.py",
+      "sha256": "3fefffb1db6dd095368f359775e480cfa181741645ef8752ea8ee4ed2358423f"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\frcrn-se16k-official20261116\\upstream\\LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_contract_20261116.py",
+      "sha256": "4e238f87f06b7ed95a6bd6e30522e86b4129836074cabff138cd1fe5f76981c9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_worker_20261116.py",
+      "sha256": "afbf977c6904a99634a5278d1fb1bf1ffcea4dad418d187aaf6f1284c31b5896"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_qwen_streamed_loader_20261107.py",
+      "sha256": "0638b316ba5fea181d5dc53318b7b13d297ad324ec34fbb5b3950dda030de49e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_streamed_weights_20261104.py",
+      "sha256": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py",
+      "sha256": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py",
+      "sha256": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_community1_adapter_20261115.py",
+      "sha256": "a6905264e2787ac059c7500e0e87ef8b5bf7e8a57502fbad42e53eea6b4e189d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_pcm_session_20261114.py",
+      "sha256": "182006e169fd89ab4fdc5990f3b76138a49181863c4db3ccb26d23c18f0dc7b9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native-r1\\processor-numeric-proof.json",
+      "sha256": "01dd5bff9fa387b30da277bb9c1090e5a96aef71bfdc5c1ccd813576fa191c17"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261107-model-generation-recovery\\practical-qwen-native-r1\\streamed-loader-proof-r2.json",
+      "sha256": "f783ddea818cd990395f0d03eddedcf22e503c2b8ee7130b56d2be580ba8df66"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\config.json",
+      "sha256": "117ac8e63e2af7cae3665e5a632d6eb03f5f384915519ceb6403c15ec6533f63"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\generation_config.json",
+      "sha256": "9939fc9388b79bd70757f938b87381e817173d6a6158f5af6506c0b73e775c3c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\processor_config.json",
+      "sha256": "bc0b230081b44e629dd5b9045b78495615c1831b4b9f4cffe97bd37e82a6156a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\tokenizer.json",
+      "sha256": "fe1fad59be22a41ee293363fcf95fdedbc7c93f3b49270b1d2e18bd1399a7a05"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\tokenizer_config.json",
+      "sha256": "945e980986de2ca7768f3326bfdbb4fbea3406f972b8ae0be233089f2b253c11"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\qwen-native17-asr-20261107\\model\\chat_template.jinja",
+      "sha256": "f50e6b694fbf4a683206e37869990d68333fe95d285730f084c838a34b0d98c2"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\modeling_qwen3_asr.py",
+      "sha256": "f6247469bc82ee40aa83909c530053d6bfbb1cfa8d34e74ff842f81f6c0bb2a4"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\processing_qwen3_asr.py",
+      "sha256": "5ff7ace057ae959fb0cd551775cbbfdad8c003eb731bf0f1f39bfc6452ce86fa"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\qwen3_asr\\feature_extraction_qwen3_asr.py",
+      "sha256": "95d23cca9645546b9f6a97885eace5c02a95f5048bf3616e03f00041fd993a74"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_windows_power_request_20261115.py",
+      "sha256": "768ec264ea4b068765b3ab07ef2f275295e81b6cf746bdb21bfb694a1fbdccbc"
+    }
+  ],
+  "minimumAvailableBytes": 3414499000,
+  "neuralLock": "E:/CodexData/Companion/.model-cache/local-qwen-decoder.lock",
+  "stopAt": "2026-11-17T07:25:00+08:00",
+  "trainingUpdates": 0,
+  "frontendSetting": "Exact author FRCRN16k full-strength mask, official normalization and decode padding; original gain restored. Preserve original sample count with official final-tail cropping, no time shift/resample/VAD. Float32 output avoids clipping/extra quantization.",
+  "gpuPhaseOrder": "Complete current native-context180 source run first, then enhance, then unchanged ASR in separate exclusive GPU workers.",
+  "retentionGate": {
+    "englishRelativeErrorReductionAtLeast": 0.2,
+    "englishEachMeetingNoRegression": true,
+    "chineseAggregateAndEachMeetingNoRegression": true,
+    "all24CasesAndNativeAsrControlComplete": true
+  },
+  "scope": "Same24 exposed nonoverlap Chinese/English validation clips. This is not a blind whole-meeting acceptance test. No alpha/gamma/gain/model/temperature grid.",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "implementationRepair": "Initial STFT control incorrectly assumed unwindowed identity at every non-centered Hann endpoint. Preserve failure. Compare against independent published window/coefficient operator with the original tolerance; no change to enhancement audio, weights, configuration or cohort."
+}

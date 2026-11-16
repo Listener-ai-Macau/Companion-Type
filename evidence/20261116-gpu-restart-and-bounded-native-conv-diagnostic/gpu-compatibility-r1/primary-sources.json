@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-16 13:53:56 UTC",
+  "issue": {
+    "url": "https://github.com/ROCm/TheRock/issues/9225",
+    "title": "MIOpen convolution exhaustive search causes infinite loop / hang on RX 6800 (gfx1030) with ROCm 7.2.1",
+    "createdAt": "2026-06-06T21:16:28Z",
+    "updatedAt": "2026-10-16T09:42:56Z",
+    "body": "### Problem Description\n\n### Environment Description\n* **GPU**: AMD Radeon RX 6800 (gfx1030)\n* **OS**: Ubuntu 22.04 LTS  <!-- 如果是24.04请修改 -->\n* **ROCm Version**: 7.2.1\n* **PyTorch Version**: 2.9.1+rocm7.2  \n* **Software Framework**: ComfyUI (with BiRefNet / Rembg nodes)\n \n* ### Steps to Reproduce\n1. Install ROCm 7.2.1 on Ubuntu.\n2. Run ComfyUI with a workflow containing `BiRefNet` or `VAE Decode` nodes.\n3. Start the queue. The process hits the convolution layer and hangs indefinitely.\n\n### Expected Behavior\nMIOpen should respect environment variables like `MIOPEN_FIND_MODE=2` to skip exhaustive tuning and use the fallback solver instantly.\n\n### Actual Behavior\nMIOpen completely ignores environment variables and forces an exhaustive search over 400+ runs, eventually leading to a complete freeze, GPU lockup, or ComfyUI process termination.\n\n### Error Logs / Screenshots\n<!-- 在这里直接把您上一张发给我的“带有 Runs left: 431, Please, be patient...”的终端截图拖拽或者粘贴进来 -->\n\n\n### Operating System\n\nUbuntu 24.04.4 LTS Linux 6.14.0-1007-oem\n\n### CPU\n\nAMD Ryzen 5600\n\n### GPU\n\nRadeon 6800\n\n### ROCm Version\n\nrocm 7.2.1\n\n### ROCm Component\n\n_No response_\n\n### Steps to Reproduce\n\n_No response_\n\n### (Optional for Linux users) Output of /opt/rocm/bin/rocminfo --support\n\n_No response_\n\n### Additional Information\n\n_No response_",
+    "relevance": "gfx1030 convolution hang report, LinuxROCm7.2.1; not proof for our WindowsROCm10.0 incident."
+  },
+  "pytorchConvolution": {
+    "url": "https://github.com/pytorch/pytorch/blob/v2.11.0/aten/src/ATen/native/Convolution.cpp",
+    "exactSelectorExcerpt": "  bool use_miopen(const at::Tensor& input, const at::Tensor& weight, bool bias_defined) const  {\n    // MIOpen supports 64-bit indexing via miopenSetTensorDescriptorV2 API\n    // Reference: https://github.com/ROCm/MIOpen/pull/2838\n    return ((input.scalar_type() == at::kFloat) || (input.scalar_type() == at::kHalf) || (input.scalar_type() == at::kBFloat16))\n           && cudnn_enabled\n           && input.is_cuda()\n           && detail::getCUDAHooks().compiledWithMIOpen()\n           && input.dim() <= MIOPEN_DIM_MAX\n           && !(groups > 1 && is_dilated()) // MIOpen currently does not support dilation with groups of size > 1\n           ;\n  }\n",
+    "decision": "Source use_miopen requires cudnn_enabled; disable only inside diagnostic process. No global driver/TDR change."
+  },
+  "miopen": {
+    "url": "https://rocmdocs.amd.com/projects/MIOpen/en/latest/how-to/find-and-immediate.html",
+    "exactFindApiExcerpt": "// NOTE:\n  // The miopenFindConvolution*() call is expensive in terms of run time and required workspace.\n  // Therefore, we highly recommend reserving the required algorithm and workspace so that you can\n  // reuse them later (within the lifetime of the same MIOpen handle object).\n  // With this approach, there should be no need to invoke miopenFind*() more than once per\n  // application lifetime.\n\n  ",
+    "decision": "Do not rely on FAST2 environment alone to resolve a potentialhang; alternative backend bypass in bounded probe."
+  },
+  "therock": {
+    "url": "https://github.com/ROCm/TheRock/blob/main/SUPPORTED_GPUS.md",
+    "observation": "Currentdevelopment matrix includes Windowsgfx1030 build/sanity/release columns, but warns development status differs from released compatibility. It does not qualify this driver's version or eGPUdock."
+  }
+}

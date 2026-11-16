@@ -1,0 +1,51 @@
+{
+  "state": "ENHANCING_FIXED_ORIGINAL_PCM",
+  "at": "2026-11-16T21:34:47+08:00",
+  "pid": 17700,
+  "binding": {
+    "protocolSha256": "268ef363c74c17214d1069a83aa5aec4b61c85375277d597b67dcb8256b3a57e",
+    "workerSha256": "6b7101326fa18b0611bc8e6860507a8e2e226e57d42dd758aecafa92119b9426",
+    "enhancerSha256": "b22256adbb91b68cf5a3db8f6657a4fb17066eecd5f069803e59c186c1cf3ebb",
+    "asrSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1"
+  },
+  "phase": "enhance",
+  "completed": [],
+  "newNeuralCalls": 1,
+  "trainingUpdates": 0,
+  "referencesRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "observedAt": "2026-11-16T21:36:15+08:00",
+  "limits": {
+    "pid": 17700,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1155375104,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "presentDevices": [
+    {
+      "FriendlyName": "AMD Radeon RX 6800 XT",
+      "Status": "OK"
+    },
+    {
+      "FriendlyName": "AMD Radeon 780M Graphics",
+      "Status": "OK"
+    }
+  ],
+  "device": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  },
+  "currentId": "20200709_L_R002S01C01-seq-000"
+}

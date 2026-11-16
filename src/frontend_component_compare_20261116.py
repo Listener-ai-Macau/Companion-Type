@@ -116,13 +116,34 @@ def main():
                 tensor=torch.from_numpy(norm.astype(np.float32)[None,:]).to(device)
                 with torch.inference_mode():
                     restored=model.istft(model.stft(tensor)).squeeze(1)
-                    require(restored.shape==tensor.shape and torch.allclose(restored,tensor,atol=1e-4,rtol=1e-4),
-                            'Official STFT timebase/roundtrip differs')
+                    # The published convolutions are non-centered and unpadded.
+                    # Their Hann window has zero support at sample0; the inverse
+                    # divides by overlap coefficients plus1e-8. An exact identity
+                    # expectation at every endpoint is therefore incorrect.
+                    # Independently compute that defined operator in NumPy,
+                    # retaining the same tolerance and original sample indices.
+                    window=model.istft.window.detach().cpu().numpy().reshape(-1)
+                    coefficients=np.zeros(32000,dtype=np.float32)
+                    for start in range(0,32000-640+1,320):coefficients[start:start+640]+=window**2
+                    expected=norm.astype(np.float32)[None,:]*coefficients[None,:]/(coefficients[None,:]+1e-8)
+                    actual=restored.detach().cpu().numpy()
+                    same_shape=actual.shape==expected.shape
+                    maximum=float(np.max(np.abs(actual-expected))) if same_shape else None
+                    atomic_json(out/'dsp-roundtrip-inspection.json',{'state':'INSPECTED_PUBLISHED_NONCENTERED_STFT_OPERATOR',
+                        'inputShape':list(tensor.shape),'outputShape':list(actual.shape),
+                        'maximumAbsDifferenceFromIndependentDefinedOperator':maximum,
+                        'zeroWindowSupportSamples':int(np.count_nonzero(coefficients==0)),
+                        'maximumAbsDifferenceFromUnwindowedIdentity':float(np.max(np.abs(actual-norm[None,:]))) if same_shape else None,
+                        'firstInputSample':float(norm[0]),'unchangedAbsoluteTolerance':1e-4,
+                        'audioInputShiftPaddingOrGainChangeApplied':False})
+                    require(same_shape and np.allclose(actual,expected,atol=1e-4,rtol=1e-4),
+                            'Official STFT differs from independent non-centered window operator')
                     zero=model.inference(torch.zeros_like(tensor))
                     require(zero.shape==(32000,) and torch.count_nonzero(zero)==0,'Official enhancer silence/control length failed')
                 state['newNeuralCalls']+=1
                 atomic_json(out/'dsp-control.json',{'state':'PASS_OFFICIAL_STFT_SPEECH_ROUNDTRIP_AND_EXACT_ZERO_ENHANCER',
-                    'speechMaximumAbsRoundtripError':float((restored-tensor).abs().max()),
+                    'speechMaximumAbsRoundtripError':maximum,
+                    'referenceOperator':'Independent NumPy non-centered Hann overlap coefficients with published1e-8 inverse denominator; unsupported endpoints included as zero support.',
                     'frames':32000,'timeShiftApplied':False,'sampleRate':16000,'newEnhancerForwards':1})
                 del tensor,restored,zero
                 for case in cases:
