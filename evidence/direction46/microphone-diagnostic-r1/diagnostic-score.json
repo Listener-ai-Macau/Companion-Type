@@ -1,0 +1,159 @@
+{
+  "state": "PRETRAINED_MICROPHONE_DIAGNOSTIC_SCORED_NOT_PRODUCT_ACCEPTANCE",
+  "at": "2026-11-16T19:52:37+08:00",
+  "rows": [
+    {
+      "id": "ES2003b-seq-000",
+      "meeting": "ES2003b",
+      "referenceUnits": 26,
+      "distantErrors": 7,
+      "headsetMixErrors": 6,
+      "distantWer": 0.2692307692307692,
+      "headsetMixWer": 0.23076923076923078
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "meeting": "ES2003b",
+      "referenceUnits": 103,
+      "distantErrors": 12,
+      "headsetMixErrors": 3,
+      "distantWer": 0.11650485436893204,
+      "headsetMixWer": 0.02912621359223301
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "meeting": "ES2003b",
+      "referenceUnits": 31,
+      "distantErrors": 12,
+      "headsetMixErrors": 5,
+      "distantWer": 0.3870967741935484,
+      "headsetMixWer": 0.16129032258064516
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "meeting": "ES2003b",
+      "referenceUnits": 75,
+      "distantErrors": 9,
+      "headsetMixErrors": 6,
+      "distantWer": 0.12,
+      "headsetMixWer": 0.08
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "meeting": "ES2003b",
+      "referenceUnits": 38,
+      "distantErrors": 6,
+      "headsetMixErrors": 4,
+      "distantWer": 0.15789473684210525,
+      "headsetMixWer": 0.10526315789473684
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "meeting": "ES2003b",
+      "referenceUnits": 17,
+      "distantErrors": 14,
+      "headsetMixErrors": 5,
+      "distantWer": 0.8235294117647058,
+      "headsetMixWer": 0.29411764705882354
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "meeting": "EN2001a",
+      "referenceUnits": 28,
+      "distantErrors": 5,
+      "headsetMixErrors": 5,
+      "distantWer": 0.17857142857142858,
+      "headsetMixWer": 0.17857142857142858
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "meeting": "EN2001a",
+      "referenceUnits": 107,
+      "distantErrors": 10,
+      "headsetMixErrors": 7,
+      "distantWer": 0.09345794392523364,
+      "headsetMixWer": 0.06542056074766354
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "meeting": "EN2001a",
+      "referenceUnits": 66,
+      "distantErrors": 13,
+      "headsetMixErrors": 9,
+      "distantWer": 0.19696969696969696,
+      "headsetMixWer": 0.13636363636363635
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "meeting": "EN2001a",
+      "referenceUnits": 87,
+      "distantErrors": 23,
+      "headsetMixErrors": 20,
+      "distantWer": 0.26436781609195403,
+      "headsetMixWer": 0.22988505747126436
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "meeting": "EN2001a",
+      "referenceUnits": 94,
+      "distantErrors": 10,
+      "headsetMixErrors": 3,
+      "distantWer": 0.10638297872340426,
+      "headsetMixWer": 0.031914893617021274
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "meeting": "EN2001a",
+      "referenceUnits": 37,
+      "distantErrors": 20,
+      "headsetMixErrors": 10,
+      "distantWer": 0.5405405405405406,
+      "headsetMixWer": 0.2702702702702703
+    }
+  ],
+  "sources": [
+    {
+      "meeting": "ES2003b",
+      "referenceWords": 290,
+      "distantErrors": 60,
+      "headsetMixErrors": 29
+    },
+    {
+      "meeting": "EN2001a",
+      "referenceWords": 419,
+      "distantErrors": 81,
+      "headsetMixErrors": 54
+    }
+  ],
+  "referenceWords": 709,
+  "distantErrors": 141,
+  "headsetMixErrors": 83,
+  "distantWer": 0.19887165021156558,
+  "headsetMixWer": 0.11706629055007052,
+  "bothSourcesImproveInEasierRecording": true,
+  "diagnosticAcousticConditionContributionMaterial": true,
+  "diagnostic25PercentRelativeThresholdIsNotAProductGate": true,
+  "headsetMixStillAboveFivePercent": true,
+  "scope": "12 exposed English clips; headset-mix changes recording condition. It is not the product input or a claim that hardware is faulty. Multiple factors can remain.",
+  "trainingUpdates": 0,
+  "newInferenceByScorer": 0,
+  "referenceOrWordsChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 28428,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 14729216,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

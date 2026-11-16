@@ -1,0 +1,117 @@
+{
+  "state": "COMPLETE_PRETRAINED_MICROPHONE_DIAGNOSTIC_PENDING_INDEPENDENT_SCORING",
+  "at": "2026-11-16T19:47:20+08:00",
+  "pid": 29560,
+  "binding": {
+    "protocolSha256": "a01e2a12b1e2c29c828410cabc6731fcc1231bfa8ee4ec6924e5ccd6f0f3904a",
+    "workerSha256": "6c0f5b9396f5008346f6d9d57988470b2a8cae7b3ffb590e6dc82ad99679ff6b",
+    "modelSha256": "2db53c7d81bd9b8cbc6a074e89be2c968a0d373fb4ee68bb1b1e14f7042dfee1"
+  },
+  "newNeuralCalls": 13,
+  "trainingUpdates": 0,
+  "completed": [
+    {
+      "id": "native-distant-control",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\native-distant-control.json",
+      "sha256": "a9e0d9cb2a21fa5160d2918d83aac16ac7cb1cb3cf5ec68e479a91c6e363d40c"
+    },
+    {
+      "id": "ES2003b-seq-000-headset-mix",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\ES2003b-seq-000-headset-mix.json",
+      "sha256": "b5b538428f49130d0b450a7f8d44f454ebe171f02674907a5ee27a244c7233bd"
+    },
+    {
+      "id": "ES2003b-seq-005-headset-mix",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\ES2003b-seq-005-headset-mix.json",
+      "sha256": "9de71fcca0c67cb787e978089ae63d40c2527096f268912e8fd920e36da8ace3"
+    },
+    {
+      "id": "ES2003b-seq-010-headset-mix",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\ES2003b-seq-010-headset-mix.json",
+      "sha256": "0164c88dcbe786eec5c157c82655cf321bcc11a7aaa4bb97c88d572aafe8261f"
+    },
+    {
+      "id": "ES2003b-seq-016-headset-mix",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\ES2003b-seq-016-headset-mix.json",
+      "sha256": "3fa3774a124b37e1ea5387d9d94d39cc9db9fec6df9f37b4d66a6e2aa53a3efc"
+    },
+    {
+      "id": "ES2003b-seq-021-headset-mix",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\ES2003b-seq-021-headset-mix.json",
+      "sha256": "a93423a987d7b526de352d7bb45403bbbee11cfa2110fb061fdea328650eae97"
+    },
+    {
+      "id": "ES2003b-seq-027-headset-mix",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\ES2003b-seq-027-headset-mix.json",
+      "sha256": "05caeef6a69a84f83017a415224694751a2ccdef8ca5a44ba1f7d9ecaa5851b5"
+    },
+    {
+      "id": "EN2001a-a2-000-headset-mix",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\EN2001a-a2-000-headset-mix.json",
+      "sha256": "3c59fefb871ed0ea05f704145e23e1733b5c6408c4933559023edf919868b2c7"
+    },
+    {
+      "id": "EN2001a-a2-023-headset-mix",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\EN2001a-a2-023-headset-mix.json",
+      "sha256": "3b1aa87c59ff57118698d00a4aebbadc4c8575fc0d9b980fce31664f63e46a9c"
+    },
+    {
+      "id": "EN2001a-a2-046-headset-mix",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\EN2001a-a2-046-headset-mix.json",
+      "sha256": "73edfaf2d64d4cdf910ed310221f77864968e96afbc52ad6efc0981d25466c2f"
+    },
+    {
+      "id": "EN2001a-a2-069-headset-mix",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\EN2001a-a2-069-headset-mix.json",
+      "sha256": "6a185c0f93cb7cbd18e3541ff20fe6ee133c0de688fe287aeb6d98392a1c7905"
+    },
+    {
+      "id": "EN2001a-a2-092-headset-mix",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\EN2001a-a2-092-headset-mix.json",
+      "sha256": "60fe1e99b71fd7190594be52ed47994d44d7dced27fdb572bc12b14be29deece"
+    },
+    {
+      "id": "EN2001a-a2-116-headset-mix",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\results\\EN2001a-a2-116-headset-mix.json",
+      "sha256": "c10f3787d35659a8f3966021c4f02fb333c76c3a02a596d4f997096f4fe43bab"
+    }
+  ],
+  "nativeControlExact": true,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "scope": "Headset mix is a diagnostic condition, not product single-mic acceptance.",
+  "observedAt": "2026-11-16T19:52:23+08:00",
+  "limits": {
+    "pid": 29560,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1360781312,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "presentDevices": [
+    {
+      "FriendlyName": "AMD Radeon RX 6800 XT",
+      "Status": "OK"
+    },
+    {
+      "FriendlyName": "AMD Radeon 780M Graphics",
+      "Status": "OK"
+    }
+  ],
+  "modelLoaded": true,
+  "device": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  },
+  "finishedAt": "2026-11-16T19:52:23+08:00"
+}

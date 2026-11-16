@@ -1,0 +1,45 @@
+{
+  "state": "PRETRAINED_MICROPHONE_DIAGNOSTIC_COMPLETE_DIRECTION_SELECTED",
+  "at": "2026-11-16T19:52:37+08:00",
+  "route": "RECORDING_CONDITION_AND_FAR_FIELD_ROBUSTNESS_FIRST",
+  "decision": "先定位远场及实际录音卡输入链路、声学鲁棒性：这次同模型在两来源近讲条件一致显著改善，说明录音条件有实质贡献；尚不能归因到某一硬件故障、单一噪声或增益。",
+  "next": "先定位远场及实际录音卡输入链路、声学鲁棒性：这次同模型在两来源近讲条件一致显著改善，说明录音条件有实质贡献；尚不能归因到某一硬件故障、单一噪声或增益。 仍先做多人轮流不重叠的中英文。文字和说话人活动/连续身份分别验收；原生MOSS长上下文路径只可作为已准备候选的有限对照，不重跑失败的固定30秒/Whisper-turbo/Q8网格。r45训练仅保留为有条件备选，95%底线/98%目标及逐人/事实/最终盲测要求保持。",
+  "actualGpuRun": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run",
+  "score": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1\\diagnostic-score.json",
+  "actualNewGpuDecodes": 13,
+  "trainingUpdates": 0,
+  "nativeControlExact": true,
+  "actualDevice": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  },
+  "peakPrivateCommitBytes": 1360781312,
+  "words": 709,
+  "distantErrors": 141,
+  "headsetMixErrors": 83,
+  "distantWer": 0.19887165021156558,
+  "headsetMixWer": 0.11706629055007052,
+  "sources": [
+    {
+      "meeting": "ES2003b",
+      "referenceWords": 290,
+      "distantErrors": 60,
+      "headsetMixErrors": 29
+    },
+    {
+      "meeting": "EN2001a",
+      "referenceWords": 419,
+      "distantErrors": 81,
+      "headsetMixErrors": 54
+    }
+  ],
+  "headsetInputIsDiagnosticNotProduct": true,
+  "unchangedOriginalSingleMicrophoneBaseline": true,
+  "interpretationLimit": "Two exposed meetings,12 fixed short clips. The mix combines different microphones and may have different speaker coverage, background, gains, reverberation and acoustic arrival times. It is not clean ground truth or a pure SNR intervention. No universal causal attribution or statistical generalization.",
+  "broadTrainingAutomaticAdmission": false,
+  "targetAccuracy": 0.98,
+  "minimumAccuracy": 0.95,
+  "qualityQualified": false,
+  "saleQualified": false
+}

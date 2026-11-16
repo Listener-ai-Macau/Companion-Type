@@ -1,0 +1,329 @@
+{
+  "error": "TimeoutError('The read operation timed out')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_microphone_diagnostic_20261116.py\", line 143, in <module>\n    data,receipt=request_range(header['url'],first,last)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_microphone_diagnostic_20261116.py\", line 53, in request_range\n    body,receipt=request_range(url,position,min(last,position+262144-1))\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_microphone_diagnostic_20261116.py\", line 66, in request_range\n    with urllib.request.urlopen(request,timeout=45) as response:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\request.py\", line 216, in urlopen\n    return opener.open(url, data, timeout)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\request.py\", line 519, in open\n    response = self._open(req, data)\n               ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\request.py\", line 536, in _open\n    result = self._call_chain(self.handle_open, protocol, protocol +\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\request.py\", line 496, in _call_chain\n    result = func(*args)\n             ^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\request.py\", line 1391, in https_open\n    return self.do_open(http.client.HTTPSConnection, req,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\request.py\", line 1352, in do_open\n    r = h.getresponse()\n        ^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\http\\client.py\", line 1395, in getresponse\n    response.begin()\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\http\\client.py\", line 325, in begin\n    version, status, reason = self._read_status()\n                              ^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\http\\client.py\", line 286, in _read_status\n    line = str(self.fp.readline(_MAXLINE + 1), \"iso-8859-1\")\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\socket.py\", line 706, in readinto\n    return self._sock.recv_into(b)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\ssl.py\", line 1314, in recv_into\n    return self.read(nbytes, buffer)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\ssl.py\", line 1166, in read\n    return self._sslobj.read(len, buffer)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTimeoutError: The read operation timed out\n",
+  "completedPairs": [
+    {
+      "id": "ES2003b-seq-000",
+      "meeting": "ES2003b",
+      "language": "English",
+      "frames": 192800,
+      "sourceStartFrame": 68320,
+      "sourceEndFrame": 261120,
+      "distant": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+        "audioSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+        "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92"
+      },
+      "headsetMix": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\audio\\ES2003b-seq-000-headset-mix.wav",
+        "audioSha256": "d6559916eca050656ab2aac818370d66bde5cd80f432200a4abdf75a8230b956",
+        "pcmSha256": "762fb8930c88be3c14442af66856770f7204e03adac77d81feeb999842da974d"
+      },
+      "remoteRange": {
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/HeadsetAudio/ES2003b.Mix-Headset.wav",
+        "contentRange": "bytes 136684-522283/67514072",
+        "sourceBytes": 67514072,
+        "etag": "\"4062ed8-3f24a8e4c51c0\"",
+        "lastModified": "Mon, 14 Mar 2005 19:02:39 GMT"
+      },
+      "timebaseInspection": {
+        "bestEnvelopeCorrelation": 0.33432757209718755,
+        "bestEnvelopeLagMs": 20,
+        "shiftApplied": false,
+        "diagnosticOnly": true
+      },
+      "referenceUsedToSelectSpeakersOrMaskWaveforms": false,
+      "gainDenoiseOrResamplingApplied": false
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "meeting": "ES2003b",
+      "language": "English",
+      "frames": 476000,
+      "sourceStartFrame": 6553760,
+      "sourceEndFrame": 7029760,
+      "distant": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-005.wav",
+        "audioSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+        "pcmSha256": "ec8c4c16829d1d95404cb3fd3fcd8ee32cc310edaaf7b8901d562a90696b04e7"
+      },
+      "headsetMix": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\audio\\ES2003b-seq-005-headset-mix.wav",
+        "audioSha256": "8b96d84ed1d6a4a51f8e84b8a92bbec32285f88735037183bb8efac0c6adf1da",
+        "pcmSha256": "4a0f1f61254f51ef0e36ae313397f2a3f90b17d9047f5215bb390597261e237c"
+      },
+      "remoteRange": {
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/HeadsetAudio/ES2003b.Mix-Headset.wav",
+        "contentRange": "bytes 13107564-14059563/67514072",
+        "sourceBytes": 67514072,
+        "etag": "\"4062ed8-3f24a8e4c51c0\"",
+        "lastModified": "Mon, 14 Mar 2005 19:02:39 GMT"
+      },
+      "timebaseInspection": {
+        "bestEnvelopeCorrelation": 0.686019819457494,
+        "bestEnvelopeLagMs": 40,
+        "shiftApplied": false,
+        "diagnosticOnly": true
+      },
+      "referenceUsedToSelectSpeakersOrMaskWaveforms": false,
+      "gainDenoiseOrResamplingApplied": false
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "meeting": "ES2003b",
+      "language": "English",
+      "frames": 475520,
+      "sourceStartFrame": 13854400,
+      "sourceEndFrame": 14329920,
+      "distant": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-010.wav",
+        "audioSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+        "pcmSha256": "e087cf4e22224bfc9c3ad810c56bd3595ad7343c30b6d53fc5c1ce00d445b32f"
+      },
+      "headsetMix": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\audio\\ES2003b-seq-010-headset-mix.wav",
+        "audioSha256": "efb043b2da36f7a9a4f28fff2a7abe4b79114064aeda3209502b023054114f29",
+        "pcmSha256": "1041f6a18b01bf109a39f49ad77eae8f364fe75639f5d4b521bfdbd265af9672"
+      },
+      "remoteRange": {
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/HeadsetAudio/ES2003b.Mix-Headset.wav",
+        "contentRange": "bytes 27708844-28659883/67514072",
+        "sourceBytes": 67514072,
+        "etag": "\"4062ed8-3f24a8e4c51c0\"",
+        "lastModified": "Mon, 14 Mar 2005 19:02:39 GMT"
+      },
+      "timebaseInspection": {
+        "bestEnvelopeCorrelation": 0.5492873586632592,
+        "bestEnvelopeLagMs": 40,
+        "shiftApplied": false,
+        "diagnosticOnly": true
+      },
+      "referenceUsedToSelectSpeakersOrMaskWaveforms": false,
+      "gainDenoiseOrResamplingApplied": false
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "meeting": "ES2003b",
+      "language": "English",
+      "frames": 473280,
+      "sourceStartFrame": 23521760,
+      "sourceEndFrame": 23995040,
+      "distant": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-016.wav",
+        "audioSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+        "pcmSha256": "7e8c174955670b930e9b657a8fdcbea730374845ac6668f4a916ddc867ee7f6e"
+      },
+      "headsetMix": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\audio\\ES2003b-seq-016-headset-mix.wav",
+        "audioSha256": "bebc2dd589505dcde09f292ded86fd6e50a1c331391647d0dc588243a1065ed9",
+        "pcmSha256": "3c399e3295369b7eb7f62581b77714f0da9c3dda5beab02fccdbb046ad54f733"
+      },
+      "remoteRange": {
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/HeadsetAudio/ES2003b.Mix-Headset.wav",
+        "contentRange": "bytes 47043564-47990123/67514072",
+        "sourceBytes": 67514072,
+        "etag": "\"4062ed8-3f24a8e4c51c0\"",
+        "lastModified": "Mon, 14 Mar 2005 19:02:39 GMT"
+      },
+      "timebaseInspection": {
+        "bestEnvelopeCorrelation": 0.6121784776644494,
+        "bestEnvelopeLagMs": 20,
+        "shiftApplied": false,
+        "diagnosticOnly": true
+      },
+      "referenceUsedToSelectSpeakersOrMaskWaveforms": false,
+      "gainDenoiseOrResamplingApplied": false
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "meeting": "ES2003b",
+      "language": "English",
+      "frames": 203840,
+      "sourceStartFrame": 30005600,
+      "sourceEndFrame": 30209440,
+      "distant": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-021.wav",
+        "audioSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+        "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f"
+      },
+      "headsetMix": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\audio\\ES2003b-seq-021-headset-mix.wav",
+        "audioSha256": "ada96278673f532efe1f3a75f552db7430c81956ec0dc7d23203cfa44ca7bddc",
+        "pcmSha256": "6bdca374aa6422d49fc1d7e68071513c44d67746ccacc6a1116266a20f76930f"
+      },
+      "remoteRange": {
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/HeadsetAudio/ES2003b.Mix-Headset.wav",
+        "contentRange": "bytes 60011244-60418923/67514072",
+        "sourceBytes": 67514072,
+        "etag": "\"4062ed8-3f24a8e4c51c0\"",
+        "lastModified": "Mon, 14 Mar 2005 19:02:39 GMT"
+      },
+      "timebaseInspection": {
+        "bestEnvelopeCorrelation": 0.49357505857131556,
+        "bestEnvelopeLagMs": 20,
+        "shiftApplied": false,
+        "diagnosticOnly": true
+      },
+      "referenceUsedToSelectSpeakersOrMaskWaveforms": false,
+      "gainDenoiseOrResamplingApplied": false
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "meeting": "ES2003b",
+      "language": "English",
+      "frames": 162401,
+      "sourceStartFrame": 32770080,
+      "sourceEndFrame": 32932481,
+      "distant": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-027.wav",
+        "audioSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+        "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239"
+      },
+      "headsetMix": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\audio\\ES2003b-seq-027-headset-mix.wav",
+        "audioSha256": "1709a1ddc8bd231feade44b2d3eb578563a0e733e85724f3741685147b63f909",
+        "pcmSha256": "3c7f74fa35dd36f21141843ca6885c616590865d297a917dae35a7e8812143e0"
+      },
+      "remoteRange": {
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/HeadsetAudio/ES2003b.Mix-Headset.wav",
+        "contentRange": "bytes 65540204-65865005/67514072",
+        "sourceBytes": 67514072,
+        "etag": "\"4062ed8-3f24a8e4c51c0\"",
+        "lastModified": "Mon, 14 Mar 2005 19:02:39 GMT"
+      },
+      "timebaseInspection": {
+        "bestEnvelopeCorrelation": 0.42425060127374903,
+        "bestEnvelopeLagMs": 40,
+        "shiftApplied": false,
+        "diagnosticOnly": true
+      },
+      "referenceUsedToSelectSpeakersOrMaskWaveforms": false,
+      "gainDenoiseOrResamplingApplied": false
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "meeting": "EN2001a",
+      "language": "English",
+      "frames": 187360,
+      "sourceStartFrame": 432320,
+      "sourceEndFrame": 619680,
+      "distant": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-000.wav",
+        "audioSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+        "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f"
+      },
+      "headsetMix": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\audio\\EN2001a-a2-000-headset-mix.wav",
+        "audioSha256": "5bbb72fd7ab4c1b4d3c20f35ea1c01415074de76bcf3ac3546d490efe98ee96b",
+        "pcmSha256": "106754ce17f05b648c6cc6149e36e61c9d546f52098050b30f2e0ed689eafe6e"
+      },
+      "remoteRange": {
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/HeadsetAudio/EN2001a.Mix-Headset.wav",
+        "contentRange": "bytes 864684-1239403/168007726",
+        "sourceBytes": 168007726,
+        "etag": "\"a03982e-40ca89aeb6600\"",
+        "lastModified": "Mon, 13 Feb 2006 08:10:00 GMT"
+      },
+      "timebaseInspection": {
+        "bestEnvelopeCorrelation": 0.7561004424733532,
+        "bestEnvelopeLagMs": 0,
+        "shiftApplied": false,
+        "diagnosticOnly": true
+      },
+      "referenceUsedToSelectSpeakersOrMaskWaveforms": false,
+      "gainDenoiseOrResamplingApplied": false
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "meeting": "EN2001a",
+      "language": "English",
+      "frames": 475520,
+      "sourceStartFrame": 20852000,
+      "sourceEndFrame": 21327520,
+      "distant": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-023.wav",
+        "audioSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+        "pcmSha256": "490510a15ef6f46ebac736fb41e975068df6e61349ac7f589c257fe724ae9d33"
+      },
+      "headsetMix": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\audio\\EN2001a-a2-023-headset-mix.wav",
+        "audioSha256": "4bf90800fb84d3b9b2def5f08e1a188eabbd5be00c934646b45cfc05f56b3323",
+        "pcmSha256": "3ed610bd3963ff21d1927ef4904418eaf21406aa6da584a9a457aad77b5d3301"
+      },
+      "remoteRange": {
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/HeadsetAudio/EN2001a.Mix-Headset.wav",
+        "contentRange": "bytes 41704044-42655083/168007726",
+        "sourceBytes": 168007726,
+        "etag": "\"a03982e-40ca89aeb6600\"",
+        "lastModified": "Mon, 13 Feb 2006 08:10:00 GMT"
+      },
+      "timebaseInspection": {
+        "bestEnvelopeCorrelation": 0.7526927202826784,
+        "bestEnvelopeLagMs": 40,
+        "shiftApplied": false,
+        "diagnosticOnly": true
+      },
+      "referenceUsedToSelectSpeakersOrMaskWaveforms": false,
+      "gainDenoiseOrResamplingApplied": false
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "meeting": "EN2001a",
+      "language": "English",
+      "frames": 362720,
+      "sourceStartFrame": 38917440,
+      "sourceEndFrame": 39280160,
+      "distant": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-046.wav",
+        "audioSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+        "pcmSha256": "7c06b4b1859d19da0fe23e80c043ebb406245e57d456d2776536102c041cc8a4"
+      },
+      "headsetMix": {
+        "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\audio\\EN2001a-a2-046-headset-mix.wav",
+        "audioSha256": "fbc67972ac328618d5bcaa0a855612504b98373774a24574eed8d58e48c77c1c",
+        "pcmSha256": "9993db46a291291e3e0566c2c131143d0e35f3eae2b8a5223ba6b31c59ff6ef6"
+      },
+      "remoteRange": {
+        "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/HeadsetAudio/EN2001a.Mix-Headset.wav",
+        "contentRange": "bytes 77834924-78560363/168007726",
+        "sourceBytes": 168007726,
+        "etag": "\"a03982e-40ca89aeb6600\"",
+        "lastModified": "Mon, 13 Feb 2006 08:10:00 GMT"
+      },
+      "timebaseInspection": {
+        "bestEnvelopeCorrelation": 0.7058050852582509,
+        "bestEnvelopeLagMs": 20,
+        "shiftApplied": false,
+        "diagnosticOnly": true
+      },
+      "referenceUsedToSelectSpeakersOrMaskWaveforms": false,
+      "gainDenoiseOrResamplingApplied": false
+    }
+  ],
+  "sources": {
+    "EN2001a": {
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/HeadsetAudio/EN2001a.Mix-Headset.wav",
+      "contentRange": "bytes 0-4095/168007726",
+      "sourceBytes": 168007726,
+      "etag": "\"a03982e-40ca89aeb6600\"",
+      "lastModified": "Mon, 13 Feb 2006 08:10:00 GMT",
+      "dataOffset": 44,
+      "frames": 84003841,
+      "headerSha256": "3a9aed68f2ca2a50fc4aca1c30e90cf7a07d6cf85549fb3d484a5ed05e954326"
+    },
+    "ES2003b": {
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/HeadsetAudio/ES2003b.Mix-Headset.wav",
+      "contentRange": "bytes 0-4095/67514072",
+      "sourceBytes": 67514072,
+      "etag": "\"4062ed8-3f24a8e4c51c0\"",
+      "lastModified": "Mon, 14 Mar 2005 19:02:39 GMT",
+      "dataOffset": 44,
+      "frames": 33757014,
+      "headerSha256": "9017173726ba09ae05a7161067adbddc7175b37e23232a4f545bcbd7b3c61c38"
+    }
+  },
+  "downloadedBytes": 262144,
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "qualityQualified": false
+}

@@ -1,0 +1,13 @@
+Companion：方向优先，已完成固定预训练模型实卡诊断
+2026-11-16T19:52:37+08:00
+当前主线：成熟预训练专用组件组合 + 输入/推理/产品链路修复。自己训练是有依据后的备选，接入GPU不自动开训。
+实际完成：RX6800XT/gfx1030，1条原远场控制token完全一致 +12条官方头戴混音推理，13次新解码，参数更新0。
+同709词：原单麦远场 141错，WER 19.8872%；官方头戴混音 83错，WER 11.7066%。
+ES2003b：290词；远场 60错(20.6897%)；头戴混音 29错(10.0000%)。
+EN2001a：419词；远场 81错(19.3317%)；头戴混音 54错(12.8878%)。
+判断：先定位远场及实际录音卡输入链路、声学鲁棒性：这次同模型在两来源近讲条件一致显著改善，说明录音条件有实质贡献；尚不能归因到某一硬件故障、单一噪声或增益。
+Two exposed meetings,12 fixed short clips. The mix combines different microphones and may have different speaker coverage, background, gains, reverberation and acoustic arrival times. It is not clean ground truth or a pure SNR intervention. No universal causal attribution or statistical generalization.
+时轴来源：原始帧区间、原PCM，未加增益/降噪/重采样/移动时轴；最初包络相关预检失败有存档，独立波形相关峰均在原100ms范围内并核对官方共享采样时钟。
+产品目标：98%，底线95%；中文CER和英文WER分开，单麦、逐人、事实、盲测条件保持。近讲成绩不替代产品分数。
+下一步：先定位远场及实际录音卡输入链路、声学鲁棒性：这次同模型在两来源近讲条件一致显著改善，说明录音条件有实质贡献；尚不能归因到某一硬件故障、单一噪声或增益。 仍先做多人轮流不重叠的中英文。文字和说话人活动/连续身份分别验收；原生MOSS长上下文路径只可作为已准备候选的有限对照，不重跑失败的固定30秒/Whisper-turbo/Q8网格。r45训练仅保留为有条件备选，95%底线/98%目标及逐人/事实/最终盲测要求保持。
+原r45训练方案保留为有条件备选。当前产品仍未通过质量/可售验收。

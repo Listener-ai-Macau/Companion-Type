@@ -1,0 +1,75 @@
+{
+  "revision": 46,
+  "evidenceDirectory": "evidence/direction46",
+  "sources": [
+    "src/native_microphone_diagnostic_20261116.py",
+    "src/score_microphone_diagnostic_20261116.py"
+  ],
+  "closedDirectories": [
+    {
+      "directory": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1",
+      "stateFile": "direction-decision.json",
+      "requiredState": "PRETRAINED_MICROPHONE_DIAGNOSTIC_COMPLETE_DIRECTION_SELECTED",
+      "label": "microphone-diagnostic-r1"
+    }
+  ],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-acoustic-omission-summary20261116.json",
+      "name": "english-acoustic-omission-summary20261116.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\direction-first-review20261116.json",
+      "name": "direction-first-review20261116.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\completed.json",
+      "name": "gpu-execution/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\state.json",
+      "name": "gpu-execution/state.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_microphone_diagnostic_20261116.py",
+      "name": "preparation-source/prepare_microphone_diagnostic_20261116.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\freeze_microphone_diagnostic_20261116.py",
+      "name": "preparation-source/freeze_microphone_diagnostic_20261116.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\review_microphone_timebase_20261116.py",
+      "name": "preparation-source/review_microphone_timebase_20261116.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\audit_english_acoustic_omissions_20261116.py",
+      "name": "preparation-source/audit_english_acoustic_omissions_20261116.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\write_direction_review_20261116.py",
+      "name": "preparation-source/write_direction_review_20261116.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\decompose_microphone_errors_20261116.py",
+      "name": "preparation-source/decompose_microphone_errors_20261116.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\close_microphone_diagnostic_20261116.py",
+      "name": "preparation-source/close_microphone_diagnostic_20261116.py"
+    }
+  ],
+  "commitMessage": "Complete pretrained microphone diagnostic and select direction before training",
+  "claims": {
+    "state": "PRETRAINED_DIAGNOSTIC_COMPLETE_DIRECTION_SELECTED",
+    "newGpuDecodes": 13,
+    "trainingUpdates": 0,
+    "distantErrors": 141,
+    "headsetMixErrors": 83,
+    "referenceWords": 709,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "headsetDiagnosticNotSingleMicAcceptance": true,
+    "trainingAutomaticAdmission": false
+  }
+}

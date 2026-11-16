@@ -1,0 +1,158 @@
+{
+  "state": "DIRECTION_FIRST_REVIEW_CLOSED_GPU_INFERENCE_RESULT_SEPARATE",
+  "at": "2026-11-16T19:49:52+08:00",
+  "ownerDecision": "Mature pretrained specialist components and reliable product integration are the mainline. Training remains conditional gap-filling after the bottleneck is demonstrated, not an automatic overnight activity.",
+  "scopeOrder": [
+    "A:multiple speakers taking turns without overlap, separately Chinese and English",
+    "B:overlap and speaker-conditioned recognition/separation only after A is acceptable",
+    "C:noise/far-field robustness by recording condition, followed by product recovery and deployment"
+  ],
+  "quality": {
+    "targetAccuracy": 0.98,
+    "minimumAccuracy": 0.95,
+    "originalSingleMicrophonePerSpeakerFactAndHoldoutGatesUnchanged": true,
+    "CERandWERAreSeparateEditRatesNotOneUniversalAccuracy": true,
+    "headsetMixMayQualifyProduct": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  },
+  "existingEvidence": [
+    {
+      "case": "Frozen12 English nonoverlap validation clips",
+      "errors": 141,
+      "words": 709,
+      "wer": 0.19887165021156558,
+      "deletions": 72,
+      "implication": "A separator or diarizer alone cannot repair plain words already absent from raw ASR."
+    },
+    {
+      "case": "Ordinary Chinese39minute source",
+      "errors": 461,
+      "characters": 8325,
+      "cer": 0.055375375375375374,
+      "implication": "Even this easier whole-meeting condition misses the5% floor, with two individual speakers worse. It does not establish universal Chinese performance."
+    },
+    {
+      "case": "Same exposed English words, unchanged PCM energy association",
+      "lowEnergyQuartileWords": 178,
+      "lowEnergyQuartileDeletions": 29,
+      "otherWords": 531,
+      "otherDeletions": 43,
+      "implication": "Deletion frequency is about twice as high in the lowest energy quartile, but43/72 deletions remain elsewhere. Energy is not target-speaker SNR; do not infer causality or apply blind gain/denoise."
+    },
+    {
+      "case": "Original speaker activity review",
+      "rawMultiVoiceDer": 0.209019,
+      "missedActivityFractionOfErrorSeconds": 0.8682203884228131,
+      "implication": "Speaker activity recall and continuous identity remain a separate important failure mode; do not count an exclusive-view metric as the original multi-voice DER."
+    }
+  ],
+  "avoidRepeating": [
+    "Tiny language/acoustic adapters already failed to deliver cross-source improvements; changing rank or another threshold is not evidence of a better direction.",
+    "Fixed30second MOSS improved one English source but regressed Chinese; it is not adopted as a universal replacement.",
+    "Whisper large-v3-turboQ8 on the same English set scored195/709 versus nativeQwen141/709; no broad expansion of that rejected candidate.",
+    "A third-partyQ8 CPU port was not equivalent to the native model and did not pass quality gates. No new quantization/model grid.",
+    "The existing317M-parameter acoustic-training preparation has no verified real-GPU fit, throughput or quality gain. Code readiness is not a justification to train."
+  ],
+  "specialistResponsibilities": [
+    {
+      "part": "Audio acquisition and input",
+      "job": "Preserve waveform timing, channel/codec integrity, quiet short turns, incremental/offline continuity."
+    },
+    {
+      "part": "Pretrained bilingual ASR",
+      "job": "Produce faithful raw words; measure ChineseCER and EnglishWER separately before assigning speakers."
+    },
+    {
+      "part": "Speaker activity and identity",
+      "job": "Recall all speech and keep speaker identity continuous across the full meeting; evaluate original zero-collar protocol."
+    },
+    {
+      "part": "Alignment",
+      "job": "Attach words to real audio times; do not use forced alignment to invent missing words."
+    },
+    {
+      "part": "Overlap-specific recognition",
+      "job": "Use diarization-conditioned target-speaker recognition or carefully admitted separation only for proved overlap needs."
+    },
+    {
+      "part": "Product finalization",
+      "job": "Provisional incremental results and revisable offline final results; preserve raw transcript, uncertainty, recoverability and evidence links."
+    }
+  ],
+  "fixedNextExperiment": {
+    "pairing": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1\\pairing.json",
+    "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1\\inference-protocol.json",
+    "maximumNewDecodes": 13,
+    "trainingUpdates": 0,
+    "originalControlMustMatchGeneratedIdsExactly": true,
+    "sameExposedEnglishMeetings": 2,
+    "sameIntervals": 12,
+    "referenceWords": 709,
+    "interpretationBranches": [
+      "Both sources materially better in headset mix: investigate acoustic recording condition, actual card input and far-field robustness first; do not infer defective hardware.",
+      "Headset mix also poor: prioritize faithful recognizer/task/inference conditions and one justified mature component contrast before deciding on acoustic adaptation.",
+      "Raw words acceptable but speaker-attributed words fail: prioritize activity recall, global identity and alignment.",
+      "Effects inconsistent across sources: retain uncertainty and inspect source-specific acoustics; no universal improvement claim."
+    ],
+    "diagnosticRelative25PercentHeuristicIsNotAProductGate": true,
+    "nextGpuUseOwnerConfirmed": true,
+    "inferenceOutputsAndScoresInSeparateImmutableRun": true
+  },
+  "sources": [
+    {
+      "url": "https://github.com/m-bain/whisperX",
+      "supported": "Recognition, word alignment and diarization are distinct components. The project also acknowledges overlap and diarization limitations.",
+      "decision": "Borrow tested modular responsibilities; its CUDA stack is not established as a drop-in AMD solution and its model choice is not assumed to pass our data."
+    },
+    {
+      "url": "https://huggingface.co/pyannote/speaker-diarization-community-1",
+      "supported": "Mono16kHz diarization, offline local usage, improved assignment/counting. Official benchmarks still show nonzero far-field meeting error.",
+      "decision": "An optional mature diarization comparator. Account/contact-sharing acceptance is pending; do not access credentials or bypass the gate. Not a current dependency."
+    },
+    {
+      "url": "https://github.com/BUTSpeechFIT/TS-ASR-Whisper",
+      "supported": "DiCoW conditions recognition on diarization activity; SE-DiCoW uses automatic self-enrollment for overlapping regions.",
+      "decision": "A later evidence-backed overlap direction, not proof of Chinese gains or justification to replace current A-stage raw-word work."
+    },
+    {
+      "url": "https://groups.inf.ed.ac.uk/ami/corpus/meetingrooms.shtml",
+      "supported": "Common word-clock acquisition synchronizes audio channels.",
+      "decision": "Corroborates same-meeting recorded-view timing; independent unchanged-waveform review remains attached."
+    }
+  ],
+  "executionBoundaries": {
+    "cpuOrIntegratedGpuTraining": false,
+    "broadTrainingAutomaticAdmission": false,
+    "userLabellingRequired": false,
+    "privateFinalHoldoutOpened": false,
+    "shippedWeightsChanged": false,
+    "newProductQualityClaim": false
+  },
+  "evidence": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-acoustic-omission-review20261116.json",
+      "sha256": "f61f80b45c93234532f45195080543f03693d439dd0d4aae8a6a07731eb63f6a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1\\pairing.json",
+      "sha256": "dd1d031191da30dc61172ee739ad7d26a9b501dad2b26e3963584ebc0c9bf383"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1\\timebase-review.json",
+      "sha256": "68806cff6ffc972932bc4d1e2a1cfba8ce4fd963b3776cd79b910eccac5f9d4c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1\\initial-timebase-prefight-failure.json",
+      "sha256": "bb327ac4369542572fde650a785a820e39b79d1f77f6248c53c99898fde43b66"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1\\inference-protocol.json",
+      "sha256": "a01e2a12b1e2c29c828410cabc6731fcc1231bfa8ee4ec6924e5ccd6f0f3904a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1\\scoring-control.json",
+      "sha256": "6bc03def729da5a800abe480263548a02f071c2c4c59822715ae6965c7b2fdd3"
+    }
+  ]
+}

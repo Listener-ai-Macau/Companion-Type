@@ -1,0 +1,13 @@
+{
+  "state": "PASS_FIXED_MICROPHONE_DIAGNOSTIC_INPUT_INSPECTION_NO_NEURAL_RUNTIME",
+  "protocolSha256": "a01e2a12b1e2c29c828410cabc6731fcc1231bfa8ee4ec6924e5ccd6f0f3904a",
+  "inputs": 13,
+  "expectedNewGpuDecodes": 13,
+  "torchImported": false,
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "command": "native_microphone_diagnostic_20261116.py --protocol inference-protocol.json --inspect",
+  "observedLimitedCpuPercent": 5,
+  "observedJobPrivateLimitBytes": 2147483648,
+  "observedJobPeakPrivateCommitBytes": 11292672
+}

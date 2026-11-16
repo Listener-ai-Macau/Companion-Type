@@ -1,0 +1,21 @@
+{
+  "error": "TimeoutError('The read operation timed out')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_microphone_diagnostic_20261116.py\", line 104, in <module>\n    data,receipt=request_range(header['url'],first,last)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_microphone_diagnostic_20261116.py\", line 43, in request_range\n    with urllib.request.urlopen(request,timeout=45) as response:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\request.py\", line 216, in urlopen\n    return opener.open(url, data, timeout)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\request.py\", line 519, in open\n    response = self._open(req, data)\n               ^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\request.py\", line 536, in _open\n    result = self._call_chain(self.handle_open, protocol, protocol +\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\request.py\", line 496, in _call_chain\n    result = func(*args)\n             ^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\request.py\", line 1391, in https_open\n    return self.do_open(http.client.HTTPSConnection, req,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\urllib\\request.py\", line 1352, in do_open\n    r = h.getresponse()\n        ^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\http\\client.py\", line 1395, in getresponse\n    response.begin()\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\http\\client.py\", line 325, in begin\n    version, status, reason = self._read_status()\n                              ^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\http\\client.py\", line 286, in _read_status\n    line = str(self.fp.readline(_MAXLINE + 1), \"iso-8859-1\")\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\socket.py\", line 706, in readinto\n    return self._sock.recv_into(b)\n           ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\ssl.py\", line 1314, in recv_into\n    return self.read(nbytes, buffer)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\ssl.py\", line 1166, in read\n    return self._sslobj.read(len, buffer)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTimeoutError: The read operation timed out\n",
+  "completedPairs": [],
+  "sources": {
+    "ES2003b": {
+      "url": "https://groups.inf.ed.ac.uk/ami/AMICorpusMirror/amicorpus/ES2003b/audio/ES2003b.Mix-Headset.wav",
+      "contentRange": "bytes 0-4095/67514072",
+      "sourceBytes": 67514072,
+      "etag": "\"4062ed8-3f24a8e4c51c0\"",
+      "lastModified": "Mon, 14 Mar 2005 19:02:39 GMT",
+      "dataOffset": 44,
+      "frames": 33757014,
+      "headerSha256": "9017173726ba09ae05a7161067adbddc7175b37e23232a4f545bcbd7b3c61c38"
+    }
+  },
+  "downloadedBytes": 4096,
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "qualityQualified": false
+}

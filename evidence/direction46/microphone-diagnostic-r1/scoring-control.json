@@ -1,0 +1,38 @@
+{
+  "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1\\inference-protocol.json",
+  "worker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\native_microphone_diagnostic_20261116.py",
+  "references": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json",
+  "baseline": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\raw-text-baseline.json",
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1\\inference-protocol.json",
+      "sha256": "a01e2a12b1e2c29c828410cabc6731fcc1231bfa8ee4ec6924e5ccd6f0f3904a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_microphone_diagnostic_20261116.py",
+      "sha256": "51779b06ac36c331da1bb2901be0c5ddb03d6a595ae52ec5f9eecae8090cd496"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\native_microphone_diagnostic_20261116.py",
+      "sha256": "6c0f5b9396f5008346f6d9d57988470b2a8cae7b3ffb590e6dc82ad99679ff6b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1\\inference-audio-only.json",
+      "sha256": "4ec3f04f9e208bcec3415dc99747a5f081bb977950c8b6942596b3319cc3a0d5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json",
+      "sha256": "1bd61c8c2b9438a520b0f16879d94d7e320f1a7ea7fec72d74ad7d1047909f83"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\raw-text-baseline.json",
+      "sha256": "cc469e7acfda616f9dcc4775c722e6d5fbca3c77e7acccc6f750130099b2b8f4"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_sequential_meetings_20261115.py",
+      "sha256": "d27ad4d4253029d8f64e3a9e5ef1b3d0ef281471237ed9218160701ef6d1ea89"
+    }
+  ],
+  "noChangeToOriginalReferencesOrScoring": true,
+  "productQualificationAllowed": false
+}

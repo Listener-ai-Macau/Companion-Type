@@ -1,0 +1,161 @@
+{
+  "state": "INDEPENDENT_MICROPHONE_TIMEBASE_INSPECTION_PASS",
+  "at": "2026-11-16T19:22:13+08:00",
+  "criteria": {
+    "searchLagSamples": 8000,
+    "maximumAbsolutePeakLagSamples": 1600,
+    "allPairsMustPass": true,
+    "amplitudeThresholdUsed": false,
+    "waveformOrReferenceShiftAllowed": false
+  },
+  "rows": [
+    {
+      "id": "ES2003b-seq-000",
+      "waveformPeakLagSamples": 14,
+      "waveformPeakLagMs": 0.875,
+      "signedNormalizedPeak": -0.2524838498563672,
+      "envelopePeakLagMs": 20,
+      "withinOriginal100MsTimingBound": true,
+      "audioOrReferenceShiftApplied": false
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "waveformPeakLagSamples": 124,
+      "waveformPeakLagMs": 7.75,
+      "signedNormalizedPeak": 0.37323469227542866,
+      "envelopePeakLagMs": 40,
+      "withinOriginal100MsTimingBound": true,
+      "audioOrReferenceShiftApplied": false
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "waveformPeakLagSamples": 941,
+      "waveformPeakLagMs": 58.8125,
+      "signedNormalizedPeak": -0.2047632734459633,
+      "envelopePeakLagMs": 40,
+      "withinOriginal100MsTimingBound": true,
+      "audioOrReferenceShiftApplied": false
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "waveformPeakLagSamples": 28,
+      "waveformPeakLagMs": 1.75,
+      "signedNormalizedPeak": -0.3836825431266655,
+      "envelopePeakLagMs": 20,
+      "withinOriginal100MsTimingBound": true,
+      "audioOrReferenceShiftApplied": false
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "waveformPeakLagSamples": 26,
+      "waveformPeakLagMs": 1.625,
+      "signedNormalizedPeak": -0.39161558781379735,
+      "envelopePeakLagMs": 20,
+      "withinOriginal100MsTimingBound": true,
+      "audioOrReferenceShiftApplied": false
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "waveformPeakLagSamples": 25,
+      "waveformPeakLagMs": 1.5625,
+      "signedNormalizedPeak": -0.2548150517507949,
+      "envelopePeakLagMs": 40,
+      "withinOriginal100MsTimingBound": true,
+      "audioOrReferenceShiftApplied": false
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "waveformPeakLagSamples": 6,
+      "waveformPeakLagMs": 0.375,
+      "signedNormalizedPeak": -0.4791444970651834,
+      "envelopePeakLagMs": 0,
+      "withinOriginal100MsTimingBound": true,
+      "audioOrReferenceShiftApplied": false
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "waveformPeakLagSamples": 282,
+      "waveformPeakLagMs": 17.625,
+      "signedNormalizedPeak": 0.3931209590515895,
+      "envelopePeakLagMs": 40,
+      "withinOriginal100MsTimingBound": true,
+      "audioOrReferenceShiftApplied": false
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "waveformPeakLagSamples": 221,
+      "waveformPeakLagMs": 13.8125,
+      "signedNormalizedPeak": 0.20224029832900822,
+      "envelopePeakLagMs": 20,
+      "withinOriginal100MsTimingBound": true,
+      "audioOrReferenceShiftApplied": false
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "waveformPeakLagSamples": 284,
+      "waveformPeakLagMs": 17.75,
+      "signedNormalizedPeak": 0.23821966924676558,
+      "envelopePeakLagMs": 40,
+      "withinOriginal100MsTimingBound": true,
+      "audioOrReferenceShiftApplied": false
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "waveformPeakLagSamples": 180,
+      "waveformPeakLagMs": 11.25,
+      "signedNormalizedPeak": -0.5009681940078725,
+      "envelopePeakLagMs": 20,
+      "withinOriginal100MsTimingBound": true,
+      "audioOrReferenceShiftApplied": false
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "waveformPeakLagSamples": 271,
+      "waveformPeakLagMs": 16.9375,
+      "signedNormalizedPeak": 0.06783558851846477,
+      "envelopePeakLagMs": 20,
+      "withinOriginal100MsTimingBound": true,
+      "audioOrReferenceShiftApplied": false
+    }
+  ],
+  "allPairsPass": true,
+  "originalEnvelopeAmplitudeGuard": {
+    "minimumRequired": 0.5,
+    "observedMinimum": 0.33432757209718755,
+    "passed": false,
+    "failurePreserved": true,
+    "assessment": "The initial preparation guard conflated cross-microphone amplitude agreement with sample-clock agreement. It failed before any inference. Do not lower it or select/drop/shift clips to pass. Inspect full unchanged-PCM correlation lags independently and official acquisition documentation."
+  },
+  "officialDocumentation": [
+    {
+      "url": "https://groups.inf.ed.ac.uk/ami/corpus/meetingrooms.shtml",
+      "supports": "Synchronization section: all audio ADCs share a 48kHz word clock; channels sampled at precisely the same instant."
+    },
+    {
+      "url": "https://groups.inf.ed.ac.uk/ami/corpus/dataproblems.shtml",
+      "supports": "ES2003b has no listed audio discontinuity; EN2001a dropout was zero-padded on the common timeline. This is not a claim that the corpus is error-free."
+    }
+  ],
+  "interpretation": "No waveform alignment has been applied. Passing only checks for gross view/timebase mismatch within the original100ms bound. It does not prove sample-perfect acoustic arrival alignment or equal intelligibility.",
+  "pairingSha256": "dd1d031191da30dc61172ee739ad7d26a9b501dad2b26e3963584ebc0c9bf383",
+  "sourceSha256": "47d505dafa6899db014d122fcc605033fb590cd089f231401dd096102d533532",
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 30596,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 61599744,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

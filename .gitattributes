@@ -413,3 +413,9 @@ src/meeting_acoustic_night_20261116.py -text -whitespace
 src/score_meeting_acoustic_candidate_20261116.py -text -whitespace
 
 src/test_meeting_acoustic_contract_20261116.py -text -whitespace
+
+evidence/direction46/** -text -whitespace
+
+src/native_microphone_diagnostic_20261116.py -text -whitespace
+
+src/score_microphone_diagnostic_20261116.py -text -whitespace

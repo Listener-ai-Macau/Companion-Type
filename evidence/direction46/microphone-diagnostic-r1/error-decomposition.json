@@ -1,0 +1,239 @@
+{
+  "state": "COMPLETE_SAME_WORD_MICROPHONE_ERROR_DECOMPOSITION_NO_NEW_INFERENCE",
+  "at": "2026-11-16T19:53:52+08:00",
+  "farEdits": {
+    "insert": 15,
+    "replace": 54,
+    "delete": 72
+  },
+  "headsetEdits": {
+    "insert": 5,
+    "replace": 30,
+    "delete": 48
+  },
+  "referenceWordTransitions": [
+    {
+      "far": "delete",
+      "headset": "delete",
+      "words": 42
+    },
+    {
+      "far": "delete",
+      "headset": "equal",
+      "words": 27
+    },
+    {
+      "far": "delete",
+      "headset": "replace",
+      "words": 3
+    },
+    {
+      "far": "equal",
+      "headset": "delete",
+      "words": 4
+    },
+    {
+      "far": "equal",
+      "headset": "equal",
+      "words": 575
+    },
+    {
+      "far": "equal",
+      "headset": "replace",
+      "words": 4
+    },
+    {
+      "far": "replace",
+      "headset": "delete",
+      "words": 2
+    },
+    {
+      "far": "replace",
+      "headset": "equal",
+      "words": 29
+    },
+    {
+      "far": "replace",
+      "headset": "replace",
+      "words": 23
+    }
+  ],
+  "byOriginalFarFieldWordEnergy": {
+    "otherWords": {
+      "words": 531,
+      "farDeletions": 43,
+      "headsetDeletions": 31,
+      "farDeletedNowExact": 15
+    },
+    "lowestEnergyQuartile": {
+      "words": 178,
+      "farDeletions": 29,
+      "headsetDeletions": 17,
+      "farDeletedNowExact": 12
+    }
+  },
+  "rows": [
+    {
+      "id": "ES2003b-seq-000",
+      "farEdits": {
+        "insert": 4,
+        "replace": 2,
+        "delete": 1
+      },
+      "headsetEdits": {
+        "insert": 4,
+        "replace": 1,
+        "delete": 1
+      }
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "farEdits": {
+        "insert": 1,
+        "replace": 7,
+        "delete": 4
+      },
+      "headsetEdits": {
+        "insert": 1,
+        "replace": 1,
+        "delete": 1
+      }
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "farEdits": {
+        "delete": 12
+      },
+      "headsetEdits": {
+        "delete": 4,
+        "replace": 1
+      }
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "farEdits": {
+        "replace": 1,
+        "delete": 8
+      },
+      "headsetEdits": {
+        "replace": 1,
+        "delete": 5
+      }
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "farEdits": {
+        "replace": 2,
+        "delete": 4
+      },
+      "headsetEdits": {
+        "replace": 1,
+        "delete": 3
+      }
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "farEdits": {
+        "replace": 7,
+        "delete": 3,
+        "insert": 4
+      },
+      "headsetEdits": {
+        "replace": 4,
+        "delete": 1
+      }
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "farEdits": {
+        "delete": 5
+      },
+      "headsetEdits": {
+        "delete": 5
+      }
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "farEdits": {
+        "delete": 6,
+        "replace": 4
+      },
+      "headsetEdits": {
+        "delete": 6,
+        "replace": 1
+      }
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "farEdits": {
+        "insert": 1,
+        "delete": 8,
+        "replace": 4
+      },
+      "headsetEdits": {
+        "delete": 7,
+        "replace": 2
+      }
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "farEdits": {
+        "delete": 11,
+        "replace": 12
+      },
+      "headsetEdits": {
+        "delete": 9,
+        "replace": 11
+      }
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "farEdits": {
+        "replace": 7,
+        "delete": 3
+      },
+      "headsetEdits": {
+        "replace": 2,
+        "delete": 1
+      }
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "farEdits": {
+        "delete": 7,
+        "replace": 8,
+        "insert": 5
+      },
+      "headsetEdits": {
+        "delete": 5,
+        "replace": 5
+      }
+    }
+  ],
+  "limitations": [
+    "Reference-index edit allocations are not phonetic alignment and can vary for repeated words.",
+    "Headset mix changes recording condition and microphone coverage; no pure-SNR or hardware defect attribution.",
+    "No reference word is removed or post-edited; original product scores remain unchanged."
+  ],
+  "scoreSha256": "64855af36db0f7803c7742dd521b4fe3b97e59cecebc75c09fc52d206005e227",
+  "sourceSha256": "82be5bea29a66c0163bf2d9ea8eab8bed2411236f0b8e6232103acefc0c78c29",
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 15804,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 14778368,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

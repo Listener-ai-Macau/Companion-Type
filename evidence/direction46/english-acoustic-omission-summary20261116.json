@@ -1,0 +1,207 @@
+{
+  "state": "COMPLETE_FROZEN_ENGLISH_ACOUSTIC_ASSOCIATION_AUDIT_NO_INFERENCE",
+  "at": "2026-11-16T18:03:24+08:00",
+  "referenceWords": 709,
+  "baselineErrors": 141,
+  "baselineDeletions": 72,
+  "wordEnergyCoverage": 709,
+  "unreliableEnergyIntervals": 0,
+  "lowerQuartileThresholdRelativeRms": 0.7505874369022093,
+  "lowerEnergyQuartile": {
+    "referenceUnits": 178,
+    "deleted": 29,
+    "substituted": 17,
+    "deletionRate": 0.16292134831460675,
+    "medianRelativeRms": 0.6212678987153164
+  },
+  "remainingEnergyWords": {
+    "referenceUnits": 531,
+    "deleted": 43,
+    "substituted": 37,
+    "deletionRate": 0.08097928436911488,
+    "medianRelativeRms": 1.1335925063323296
+  },
+  "byEdit": {
+    "equal": {
+      "referenceUnits": 583,
+      "deleted": 0,
+      "substituted": 0,
+      "deletionRate": 0.0,
+      "medianRelativeRms": 1.0193600424478482
+    },
+    "replace": {
+      "referenceUnits": 54,
+      "deleted": 0,
+      "substituted": 54,
+      "deletionRate": 0.0,
+      "medianRelativeRms": 0.9370831081859605
+    },
+    "delete": {
+      "referenceUnits": 72,
+      "deleted": 72,
+      "substituted": 0,
+      "deletionRate": 1.0,
+      "medianRelativeRms": 0.8025141831960334
+    }
+  },
+  "clips": [
+    {
+      "id": "ES2003b-seq-000",
+      "sourceWavSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+      "frames": 192800,
+      "nearFullScaleSamples": 0,
+      "absolutePeak": 0.02679443359375,
+      "wordMedianRms": 0.0032636327564401343,
+      "deletions": 1,
+      "invalidOrVeryShortWordIntervals": 0
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "sourceWavSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+      "frames": 476000,
+      "nearFullScaleSamples": 0,
+      "absolutePeak": 0.036956787109375,
+      "wordMedianRms": 0.003722556768531666,
+      "deletions": 4,
+      "invalidOrVeryShortWordIntervals": 0
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "sourceWavSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+      "frames": 475520,
+      "nearFullScaleSamples": 0,
+      "absolutePeak": 0.050567626953125,
+      "wordMedianRms": 0.00296113379917903,
+      "deletions": 12,
+      "invalidOrVeryShortWordIntervals": 0
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "sourceWavSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+      "frames": 473280,
+      "nearFullScaleSamples": 0,
+      "absolutePeak": 0.0191650390625,
+      "wordMedianRms": 0.002751429813758865,
+      "deletions": 8,
+      "invalidOrVeryShortWordIntervals": 0
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "sourceWavSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+      "frames": 203840,
+      "nearFullScaleSamples": 0,
+      "absolutePeak": 0.02789306640625,
+      "wordMedianRms": 0.0028399187105724037,
+      "deletions": 4,
+      "invalidOrVeryShortWordIntervals": 0
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "sourceWavSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+      "frames": 162401,
+      "nearFullScaleSamples": 0,
+      "absolutePeak": 0.033721923828125,
+      "wordMedianRms": 0.002642208131734583,
+      "deletions": 3,
+      "invalidOrVeryShortWordIntervals": 0
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "sourceWavSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+      "frames": 187360,
+      "nearFullScaleSamples": 0,
+      "absolutePeak": 0.04119873046875,
+      "wordMedianRms": 0.003730550319793232,
+      "deletions": 5,
+      "invalidOrVeryShortWordIntervals": 0
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "sourceWavSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+      "frames": 475520,
+      "nearFullScaleSamples": 0,
+      "absolutePeak": 0.0404052734375,
+      "wordMedianRms": 0.004226719097905973,
+      "deletions": 6,
+      "invalidOrVeryShortWordIntervals": 0
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "sourceWavSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+      "frames": 362720,
+      "nearFullScaleSamples": 0,
+      "absolutePeak": 0.0186767578125,
+      "wordMedianRms": 0.002096023990367975,
+      "deletions": 8,
+      "invalidOrVeryShortWordIntervals": 0
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "sourceWavSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+      "frames": 476000,
+      "nearFullScaleSamples": 0,
+      "absolutePeak": 0.024688720703125,
+      "wordMedianRms": 0.0024795436744322703,
+      "deletions": 11,
+      "invalidOrVeryShortWordIntervals": 0
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "sourceWavSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+      "frames": 473600,
+      "nearFullScaleSamples": 0,
+      "absolutePeak": 0.026214599609375,
+      "wordMedianRms": 0.002615738713565896,
+      "deletions": 3,
+      "invalidOrVeryShortWordIntervals": 0
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "sourceWavSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+      "frames": 289920,
+      "nearFullScaleSamples": 0,
+      "absolutePeak": 0.14337158203125,
+      "wordMedianRms": 0.003899403835124652,
+      "deletions": 7,
+      "invalidOrVeryShortWordIntervals": 0
+    }
+  ],
+  "inputs": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json",
+      "sha256": "1bd61c8c2b9438a520b0f16879d94d7e320f1a7ea7fec72d74ad7d1047909f83"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\raw-text-baseline.json",
+      "sha256": "cc469e7acfda616f9dcc4775c722e6d5fbca3c77e7acccc6f750130099b2b8f4"
+    }
+  ],
+  "sourceSha256": "c2799111b47eb654992af15461314490ed2f98d19012c4c7dfdc00dceee54da4",
+  "method": "Original AMI word times clipped to unchanged16kHz PCM. DC-removed RMS,normalized by per-clip median nonzero word RMS. Fixed lower quartile chosen from all word energies without error labels; intervals<5ms excluded from energy associations only, never from WER.",
+  "limitsOfInference": [
+    "Room/background energy is not target-speaker SNR or intelligibility.",
+    "Levenshtein allocation can be ambiguous for repeated words.",
+    "Association on12 exposed English clips cannot establish causality or generalization.",
+    "No waveform gain/denoise/VAD/word/reference/score changed."
+  ],
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 2220,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 38047744,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
