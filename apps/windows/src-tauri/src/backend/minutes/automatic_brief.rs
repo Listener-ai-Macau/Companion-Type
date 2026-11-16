@@ -4,10 +4,13 @@ use std::{collections::{HashMap,HashSet},time::{Duration,Instant}};
 use serde::{Deserialize,Serialize};
 use serde_json::{json,Value};
 use crate::companion_v1::{CompanionV1ActionItem,CompanionV1HostSession,CompanionV1MeetingMinutes,MinutesTemplate};
+#[path="automatic_brief_factual_audit.rs"]
+mod factual_audit;
 
 const DRAFT:&str=include_str!("automatic_brief_draft.txt");
 const REVIEW:&str=include_str!("automatic_brief_review.txt");
-const WALL_BUDGET:Duration=Duration::from_secs(150);
+// The separate source-only factual audit is one additional bounded request.
+const WALL_BUDGET:Duration=Duration::from_secs(240);
 // This complete-source route was exercised above the legacy 48KiB chapter
 // budget. Bound it separately; oversized inputs retain the resumable route.
 const MAX_REQUEST_BYTES:usize=96*1024;
@@ -178,7 +181,10 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             }
         };
         if reviewed.review.blocking_issues.iter().any(|s|!s.trim().is_empty()){return Err("纪要仍有未解决的内容核对问题，已有结果和原文保留。".into());}
-        let doc=reviewed.document;traced_document=Some(doc.clone());let mut minutes=base.clone();
+        let doc=reviewed.document;traced_document=Some(doc.clone());
+        let doc=factual_audit::review_and_repair(endpoint,model,key,client,&doc,&units,start,&mut trace)?;
+        traced_document=Some(doc.clone());
+        let mut minutes=base.clone();
         minutes.source="llm_deepseek".into();minutes.quality="final".into();minutes.processing=None;minutes.llm_note=None;
         minutes.summary=doc.topics.iter().flat_map(|t|t.points.iter().map(|p|p.text.clone())).collect();
         minutes.decisions=doc.decisions.iter().map(|p|p.text.clone()).collect();
