@@ -179,7 +179,18 @@ fn append(raw:&str,doc:&Document,allowed:&HashSet<String>,units:&[Unit])->Result
         if text.starts_with('他')||text.starts_with('她'){return Err("新增纪要需使用可确认的人物归属，已有结果保留。".into());}
         value.pointer_mut(&pointer).and_then(Value::as_array_mut).ok_or_else(fail)?.push(Value::Object(item.clone()));
     }
-    let repaired:Document=serde_json::from_value(value).map_err(|_|fail())?;super::validate(&repaired,units)?;
+    let repaired:Document=serde_json::from_value(value).map_err(|_|fail())?;
+    let mut capacity=Vec::new();
+    for(i,t)in repaired.topics.iter().enumerate(){
+        if t.points.len()>3||t.details.len()>3{capacity.push(format!("topics[{i}]最多3条points和3条details，不能向已满数组追加"));}
+        if t.points.iter().any(|p|p.text.chars().count()>90)||t.details.iter().any(|p|p.text.chars().count()>120){capacity.push(format!("topics[{i}]的points每条最多90字、details每条最多120字"));}
+    }
+    if repaired.topics.iter().flat_map(|t|&t.points).map(|p|p.text.chars().count()).sum::<usize>()>1000{capacity.push("全部points总共最多1000字，可把非核心解释放入有空位的details".into());}
+    if repaired.decisions.len()>20||repaired.action_items.len()>20||repaired.questions.len()>20
+        ||repaired.decisions.iter().chain(&repaired.questions).any(|p|p.text.chars().count()>180)
+        ||repaired.action_items.iter().any(|p|p.text.chars().count()>180){capacity.push("决定/任务/未决每数组最多20条、每条180字".into());}
+    if !capacity.is_empty(){return Err(format!("追加显示容量：{}",capacity.join("；")));}
+    super::validate(&repaired,units)?;
     // Mutation is append-only, including original kind/refs/owner/due metadata.
     let before=serde_json::to_value(doc).map_err(|_|fail())?;let after=serde_json::to_value(&repaired).map_err(|_|fail())?;
     if before["purpose"]!=after["purpose"]||before["topics"].as_array().unwrap().len()!=after["topics"].as_array().unwrap().len(){return Err(fail());}
@@ -200,7 +211,7 @@ impl Certificate {
 
 pub(super) fn complete(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Document,String>{
     let questions=extract(endpoint,model,key,client,units,start,trace)?.into_iter().filter(|q|q.importance=="essential").collect::<Vec<_>>();
-    let mut current=doc.clone();let mut certificates:HashMap<String,Certificate>=HashMap::new();let mut attempted=HashSet::new();
+    let mut current=doc.clone();let mut certificates:HashMap<String,Certificate>=HashMap::new();let mut attempted=HashSet::new();let mut recovered_capacity=false;
     for round in 0..=2 {
         let current_summary=summary_units(&current);
         let pending=questions.iter().filter(|q|!certificates.get(&q.id).is_some_and(|c|c.valid(&current_summary))).cloned().collect::<Vec<_>>();
@@ -219,9 +230,22 @@ pub(super) fn complete(endpoint:&str,model:&str,key:&str,client:&reqwest::blocki
         if issues.is_empty(){return Ok(current);}
         if round==2||allowed.iter().any(|q|attempted.contains(q)){return Err(fail());}
         let capacity=current.topics.iter().enumerate().map(|(i,t)|json!({"topic":i,"title":t.title,"points":3usize.saturating_sub(t.points.len()),"details":3usize.saturating_sub(t.details.len())})).collect::<Vec<_>>();
-        let payload=json!({"sourceUnits":units,"previousDocument":current,"coverageProblems":issues,"appendCapacity":capacity});
-        let raw=super::request(endpoint,model,key,client,APPEND,payload,false,start,trace,&format!("coverage-append-{round}"))?;
-        let before=current.clone();let added=append(&raw,&current,&allowed,units)?;
+        let used=current.topics.iter().flat_map(|t|&t.points).map(|p|p.text.chars().count()).sum::<usize>();
+        let mut payload=json!({"sourceUnits":units,"previousDocument":current,"coverageProblems":issues,"appendCapacity":capacity,"mainCharactersAvailable":1000usize.saturating_sub(used),"entryCharacterLimits":{"points":90,"details":120,"decisions":180,"actionItems":180,"questions":180}});
+        let raw=super::request(endpoint,model,key,client,APPEND,payload.clone(),false,start,trace,&format!("coverage-append-{round}"))?;
+        let before=current.clone();
+        let added=match append(&raw,&current,&allowed,units){
+            Ok(doc)=>doc,
+            Err(reason) if !recovered_capacity&&reason.starts_with("追加显示容量：")=>{
+                // A rejected oversized patch has not changed the document.
+                // Recover its machine layout once; all facts still need audit.
+                recovered_capacity=true;payload["previousResult"]=json!(raw);payload["formatProblems"]=json!([reason]);
+                payload["instruction"]=json!("只修复追加条目的条数/字数容量合同。已有纪要逐字保留，不追加到容量为0的数组；可合并相关遗漏、用仍有空位的相关主题details。按mainCharactersAvailable分配points，优先保留实用核心，不以补背景凑数。不得截断条件/否定/自愿，不得编事实；仍只返回changes。");
+                let fixed=super::request(endpoint,model,key,client,APPEND,payload,false,start,trace,&format!("coverage-append-{round}-capacity-recovery"))?;
+                append(&fixed,&current,&allowed,units)?
+            },
+            Err(reason)=>return Err(reason),
+        };
         // Only changed/new claims need new verdicts; they still see the entire
         // immutable source. Unchanged prior positive evidence is not rerolled.
         current=super::factual_audit::review_and_repair_since(endpoint,model,key,client,&added,units,Some(&before),start,trace)?;

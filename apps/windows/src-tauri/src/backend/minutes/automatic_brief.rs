@@ -51,7 +51,8 @@ pub(super) fn eligible(session:&CompanionV1HostSession,template:Option<&MinutesT
     std::env::var("COMPANION_TYPE_AUTOMATIC_BRIEF").as_deref()!=Ok("0")
         && model.to_ascii_lowercase().starts_with("deepseek-")
         && session.meeting_notes.is_empty() && template.map_or(true,|t|t.id=="meeting")
-        && (session.duration_ms>120_000||session.transcript_text.chars().count()>500)
+        && (session.duration_ms>120_000||session.transcript_text.chars().count()>500
+            ||coverage::enabled()&&!session.transcript_text.trim().is_empty())
         && session.transcript_text.len()+DRAFT.len()+REVIEW.len()+32_768<MAX_REQUEST_BYTES
 }
 fn source_units(text:&str)->Vec<Unit> {
