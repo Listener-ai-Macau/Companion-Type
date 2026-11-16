@@ -19,7 +19,7 @@ body .ct-shell.ct-windows.ct-notebook .ct-library-card.selected{background:var(-
 body .ct-shell.ct-windows.ct-notebook .ct-library-card.selected .ct-library-card-main strong{color:var(--notebook-ink)}
 body .ct-shell.ct-windows.ct-notebook .ct-library-card-main strong{font-size:13px;font-weight:600;line-height:1.8}
 body .ct-shell.ct-windows.ct-notebook .ct-library-text-preview{color:var(--notebook-muted);font-size:11px;line-height:1.9}
-body .ct-shell.ct-windows.ct-notebook .ct-meeting-workspace{width:auto;min-height:calc(100dvh - 92px);margin:16px 18px;border:1px solid var(--notebook-line);border-radius:16px;background:var(--notebook-paper);box-shadow:0 3px 16px var(--notebook-shadow);overflow:visible}
+body .ct-shell.ct-windows.ct-notebook .ct-meeting-workspace{width:auto;min-height:calc(100dvh - 92px);margin:0;border:0;border-radius:0;background:var(--notebook-paper);box-shadow:none;overflow:visible}
 body .ct-shell.ct-windows.ct-notebook .ct-meeting-hero{padding:30px 32px 22px;gap:16px}
 body .ct-shell.ct-windows.ct-notebook .ct-title-editor input{font-size:26px;font-weight:600;line-height:1.5;letter-spacing:-.7px}
 body .ct-shell.ct-windows.ct-notebook .ct-meeting-hero>div:first-child>p{font-size:11px;margin-top:7px;color:var(--notebook-muted)}
@@ -32,7 +32,7 @@ body .ct-shell.ct-windows.ct-notebook .ct-meeting-navigation button[aria-current
 body .ct-shell.ct-windows.ct-notebook .ct-result-reading-toolbar{padding-top:12px;min-height:32px}
 body .ct-shell.ct-windows.ct-notebook .ct-recording-result{margin-top:0}
 body .ct-windows.ct-notebook .meeting-reading-frame,.mobile-app .meeting-reading-frame{--reader-body:14px}
-body .ct-windows.ct-notebook .meeting-reading-frame .meeting-reading-start,.mobile-app .meeting-reading-frame .meeting-reading-start{border:0;border-bottom:1px solid var(--notebook-line);padding:0;margin:0 0 24px}
+body .ct-windows.ct-notebook .meeting-reading-frame .meeting-reading-start,.mobile-app .meeting-reading-frame .meeting-reading-start{border:0;border-bottom:0;padding:0;margin:0 0 24px}
 body .ct-windows.ct-notebook .meeting-reading-frame .meeting-view-menu>summary,.mobile-app .meeting-reading-frame .meeting-view-menu>summary{font-size:14px;font-weight:600;gap:8px}
 body .ct-windows.ct-notebook .meeting-reading-frame .meeting-view-menu>summary>svg:first-child,.mobile-app .meeting-reading-frame .meeting-view-menu>summary>svg:first-child{color:var(--notebook-accent)}
 body .ct-windows.ct-notebook .meeting-reading-frame .meeting-reader .meeting-overview-topics>li,.mobile-app .meeting-reading-frame .meeting-reader .meeting-overview-topics>li{gap:13px;padding-bottom:24px;grid-template-columns:24px minmax(0,1fr)}
@@ -54,6 +54,6 @@ body .ct-windows.ct-notebook .meeting-reading-frame .meeting-overview-read>svg:f
 .mobile-app .detail-tabs{display:inline-flex;gap:3px;padding:3px;border:1px solid var(--notebook-line);border-radius:9px;background:var(--notebook-soft);flex:0 1 auto}
 .mobile-app .detail-tabs button{padding:6px 12px;min-height:36px;border:0;border-radius:6px;color:var(--notebook-muted);font-size:12px}
 .mobile-app .detail-tabs button[aria-selected=true]{background:var(--notebook-paper);color:var(--notebook-ink);border:0;box-shadow:0 1px 3px var(--notebook-shadow)}
-@media(max-width:900px){body .ct-shell.ct-windows.ct-notebook .ct-meeting-workspace{margin:12px 10px;border-radius:12px}body .ct-shell.ct-windows.ct-notebook .ct-app-navigation{border-bottom-color:var(--notebook-line);padding-top:0}body .ct-shell.ct-windows.ct-notebook .ct-meeting-hero{padding:24px 22px 20px}body .ct-shell.ct-windows.ct-notebook .ct-title-editor input{font-size:23px}body .ct-shell.ct-windows.ct-notebook .ct-meeting-navigation{margin-inline:22px;max-width:calc(100% - 44px)}}
+@media(max-width:900px){body .ct-shell.ct-windows.ct-notebook .ct-meeting-workspace{margin:0;border-radius:0}body .ct-shell.ct-windows.ct-notebook .ct-app-navigation{border-bottom-color:var(--notebook-line);padding-top:0}body .ct-shell.ct-windows.ct-notebook .ct-meeting-hero{padding:24px 22px 20px}body .ct-shell.ct-windows.ct-notebook .ct-title-editor input{font-size:23px}body .ct-shell.ct-windows.ct-notebook .ct-meeting-navigation{margin-inline:22px;max-width:calc(100% - 44px)}}
 @media(max-width:480px){.mobile-app .detail-tabs button{padding-inline:10px}body .ct-windows.ct-notebook .meeting-reading-frame .meeting-reader .meeting-overview-topics>li,.mobile-app .meeting-reading-frame .meeting-reader .meeting-overview-topics>li{gap:11px;padding-bottom:22px}}
 @media(prefers-reduced-motion:no-preference){body .ct-shell.ct-windows.ct-notebook :is(.ct-action,.ct-icon-button,.ct-library-card),.meeting-view-menu>nav>button{transition:background-color .14s,border-color .14s,box-shadow .14s}}
