@@ -323,3 +323,11 @@ src/score_cpu_fixed_whole_summary_20261116.py -text -whitespace
 src/cpu25_nemotron_wrapper_20261116.py -text -whitespace
 
 src/run_cpu25_nemotron_20261116.py -text -whitespace
+
+evidence/20261116-cpu-only-durable-pcm-candidate-preparation/** -text -whitespace
+
+src/companion_moss_raw_output_20261116.py -text -whitespace
+
+src/companion_local_moss_cpu_worker_20261116.py -text -whitespace
+
+src/run_local_moss_cpu_decoder_20261116.py -text -whitespace

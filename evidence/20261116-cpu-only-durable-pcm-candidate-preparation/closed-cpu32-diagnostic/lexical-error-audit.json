@@ -1,0 +1,3769 @@
+{
+  "state": "CPU32_LEXICAL_ERROR_DECOMPOSITION_NO_SCORE_CHANGE",
+  "sourceScore": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\score.json",
+  "sourceScoreSha256": "48a266fb161a1c2424901761f35c5bc0719eeb789671f18bdfb0e365c84409c3",
+  "groups": [
+    {
+      "language": "English",
+      "role": "validation",
+      "referenceUnits": 709,
+      "errors": 124,
+      "operationCounts": {
+        "insert": 34,
+        "replace": 68,
+        "delete": 22
+      },
+      "deletedTokens": [
+        [
+          "a",
+          3
+        ],
+        [
+          "right",
+          2
+        ],
+        [
+          "it",
+          2
+        ],
+        [
+          "f",
+          2
+        ],
+        [
+          "or",
+          1
+        ],
+        [
+          "you",
+          1
+        ],
+        [
+          "with",
+          1
+        ],
+        [
+          "was",
+          1
+        ],
+        [
+          "i",
+          1
+        ],
+        [
+          "yeah",
+          1
+        ],
+        [
+          "b",
+          1
+        ],
+        [
+          "is",
+          1
+        ],
+        [
+          "can",
+          1
+        ],
+        [
+          "treat",
+          1
+        ],
+        [
+          "i'm",
+          1
+        ],
+        [
+          "all",
+          1
+        ],
+        [
+          "way",
+          1
+        ]
+      ],
+      "insertedTokens": [
+        [
+          "i",
+          2
+        ],
+        [
+          "see",
+          2
+        ],
+        [
+          "desk",
+          1
+        ],
+        [
+          "all",
+          1
+        ],
+        [
+          "our",
+          1
+        ],
+        [
+          "well",
+          1
+        ],
+        [
+          "detail",
+          1
+        ],
+        [
+          "but",
+          1
+        ],
+        [
+          "we're",
+          1
+        ],
+        [
+          "clocking",
+          1
+        ],
+        [
+          "we",
+          1
+        ],
+        [
+          "put",
+          1
+        ],
+        [
+          "so",
+          1
+        ],
+        [
+          "that's",
+          1
+        ],
+        [
+          "that",
+          1
+        ],
+        [
+          "not",
+          1
+        ],
+        [
+          "the",
+          1
+        ],
+        [
+          "name",
+          1
+        ],
+        [
+          "slogan",
+          1
+        ],
+        [
+          "they",
+          1
+        ],
+        [
+          "than",
+          1
+        ],
+        [
+          "you're",
+          1
+        ],
+        [
+          "what's",
+          1
+        ],
+        [
+          "freaked",
+          1
+        ],
+        [
+          "me",
+          1
+        ],
+        [
+          "out",
+          1
+        ],
+        [
+          "it's",
+          1
+        ],
+        [
+          "a",
+          1
+        ],
+        [
+          "step",
+          1
+        ],
+        [
+          "forward",
+          1
+        ],
+        [
+          "yes",
+          1
+        ],
+        [
+          "time",
+          1
+        ]
+      ],
+      "substitutions": [
+        {
+          "reference": "they'd",
+          "hypothesis": "they",
+          "count": 2
+        },
+        {
+          "reference": "deskt",
+          "hypothesis": "is",
+          "count": 1
+        },
+        {
+          "reference": "and",
+          "hypothesis": "than",
+          "count": 1
+        },
+        {
+          "reference": "remote's",
+          "hypothesis": "remote",
+          "count": 1
+        },
+        {
+          "reference": "only",
+          "hypothesis": "something",
+          "count": 1
+        },
+        {
+          "reference": "trained",
+          "hypothesis": "twenty",
+          "count": 1
+        },
+        {
+          "reference": "for",
+          "hypothesis": "per",
+          "count": 1
+        },
+        {
+          "reference": "you",
+          "hypothesis": "year",
+          "count": 1
+        },
+        {
+          "reference": "click",
+          "hypothesis": "go",
+          "count": 1
+        },
+        {
+          "reference": "file",
+          "hypothesis": "fast",
+          "count": 1
+        },
+        {
+          "reference": "save",
+          "hypothesis": "eight",
+          "count": 1
+        },
+        {
+          "reference": "as",
+          "hypothesis": "times",
+          "count": 1
+        },
+        {
+          "reference": "oh",
+          "hypothesis": "alright",
+          "count": 1
+        },
+        {
+          "reference": "inside",
+          "hypothesis": "insight",
+          "count": 1
+        },
+        {
+          "reference": "of",
+          "hypothesis": "with",
+          "count": 1
+        },
+        {
+          "reference": "fraid",
+          "hypothesis": "great",
+          "count": 1
+        },
+        {
+          "reference": "say",
+          "hypothesis": "it",
+          "count": 1
+        },
+        {
+          "reference": "i",
+          "hypothesis": "i'm",
+          "count": 1
+        },
+        {
+          "reference": "would",
+          "hypothesis": "to",
+          "count": 1
+        },
+        {
+          "reference": "that",
+          "hypothesis": "the",
+          "count": 1
+        },
+        {
+          "reference": "design",
+          "hypothesis": "yeah",
+          "count": 1
+        },
+        {
+          "reference": "touch",
+          "hypothesis": "okay",
+          "count": 1
+        },
+        {
+          "reference": "what",
+          "hypothesis": "the",
+          "count": 1
+        },
+        {
+          "reference": "in",
+          "hypothesis": "fashion",
+          "count": 1
+        },
+        {
+          "reference": "god",
+          "hypothesis": "into",
+          "count": 1
+        },
+        {
+          "reference": "hmm",
+          "hypothesis": "but",
+          "count": 1
+        },
+        {
+          "reference": "um",
+          "hypothesis": "mm",
+          "count": 1
+        },
+        {
+          "reference": "he",
+          "hypothesis": "you're",
+          "count": 1
+        },
+        {
+          "reference": "vir",
+          "hypothesis": "ver",
+          "count": 1
+        },
+        {
+          "reference": "that",
+          "hypothesis": "left",
+          "count": 1
+        },
+        {
+          "reference": "an",
+          "hypothesis": "in",
+          "count": 1
+        },
+        {
+          "reference": "we",
+          "hypothesis": "you",
+          "count": 1
+        },
+        {
+          "reference": "display",
+          "hypothesis": "displayed",
+          "count": 1
+        },
+        {
+          "reference": "but",
+          "hypothesis": "we",
+          "count": 1
+        },
+        {
+          "reference": "those",
+          "hypothesis": "have",
+          "count": 1
+        },
+        {
+          "reference": "they're",
+          "hypothesis": "they",
+          "count": 1
+        },
+        {
+          "reference": "one",
+          "hypothesis": "one's",
+          "count": 1
+        },
+        {
+          "reference": "do",
+          "hypothesis": "don't",
+          "count": 1
+        },
+        {
+          "reference": "not",
+          "hypothesis": "no",
+          "count": 1
+        },
+        {
+          "reference": "and",
+          "hypothesis": "but",
+          "count": 1
+        },
+        {
+          "reference": "have",
+          "hypothesis": "uh",
+          "count": 1
+        },
+        {
+          "reference": "off",
+          "hypothesis": "of",
+          "count": 1
+        },
+        {
+          "reference": "you",
+          "hypothesis": "in",
+          "count": 1
+        },
+        {
+          "reference": "can't",
+          "hypothesis": "don't",
+          "count": 1
+        },
+        {
+          "reference": "you",
+          "hypothesis": "i",
+          "count": 1
+        },
+        {
+          "reference": "wou",
+          "hypothesis": "w",
+          "count": 1
+        },
+        {
+          "reference": "that",
+          "hypothesis": "that'd",
+          "count": 1
+        },
+        {
+          "reference": "we",
+          "hypothesis": "be",
+          "count": 1
+        },
+        {
+          "reference": "can",
+          "hypothesis": "completed",
+          "count": 1
+        },
+        {
+          "reference": "say",
+          "hypothesis": "so",
+          "count": 1
+        },
+        {
+          "reference": "bottom",
+          "hypothesis": "what",
+          "count": 1
+        },
+        {
+          "reference": "up",
+          "hypothesis": "to",
+          "count": 1
+        },
+        {
+          "reference": "i",
+          "hypothesis": "map",
+          "count": 1
+        },
+        {
+          "reference": "have",
+          "hypothesis": "like",
+          "count": 1
+        },
+        {
+          "reference": "always",
+          "hypothesis": "or",
+          "count": 1
+        },
+        {
+          "reference": "thought",
+          "hypothesis": "sort",
+          "count": 1
+        },
+        {
+          "reference": "it's",
+          "hypothesis": "of",
+          "count": 1
+        },
+        {
+          "reference": "oh",
+          "hypothesis": "ah",
+          "count": 1
+        },
+        {
+          "reference": "or",
+          "hypothesis": "and",
+          "count": 1
+        },
+        {
+          "reference": "less",
+          "hypothesis": "more",
+          "count": 1
+        },
+        {
+          "reference": "anyway",
+          "hypothesis": "making",
+          "count": 1
+        },
+        {
+          "reference": "half",
+          "hypothesis": "halfway",
+          "count": 1
+        },
+        {
+          "reference": "table",
+          "hypothesis": "but",
+          "count": 1
+        },
+        {
+          "reference": "freaks",
+          "hypothesis": "is",
+          "count": 1
+        },
+        {
+          "reference": "me",
+          "hypothesis": "it",
+          "count": 1
+        },
+        {
+          "reference": "out",
+          "hypothesis": "wait",
+          "count": 1
+        },
+        {
+          "reference": "um",
+          "hypothesis": "two",
+          "count": 1
+        }
+      ],
+      "extraErrorsUnderSpeakerAttribution": 9,
+      "baselineExtraErrorsUnderSpeakerAttribution": 103,
+      "operations": [
+        {
+          "id": "ES2003b-seq-000",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "desk",
+          "referenceIndex": 5,
+          "hypothesisIndex": 5
+        },
+        {
+          "id": "ES2003b-seq-000",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "all",
+          "referenceIndex": 5,
+          "hypothesisIndex": 6
+        },
+        {
+          "id": "ES2003b-seq-000",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "i",
+          "referenceIndex": 5,
+          "hypothesisIndex": 7
+        },
+        {
+          "id": "ES2003b-seq-000",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "see",
+          "referenceIndex": 5,
+          "hypothesisIndex": 8
+        },
+        {
+          "id": "ES2003b-seq-000",
+          "operation": "replace",
+          "referenceToken": "deskt",
+          "hypothesisToken": "is",
+          "referenceIndex": 5,
+          "hypothesisIndex": 9
+        },
+        {
+          "id": "ES2003b-seq-000",
+          "operation": "delete",
+          "referenceToken": "a",
+          "hypothesisToken": null,
+          "referenceIndex": 22,
+          "hypothesisIndex": 26
+        },
+        {
+          "id": "ES2003b-seq-005",
+          "operation": "replace",
+          "referenceToken": "and",
+          "hypothesisToken": "than",
+          "referenceIndex": 0,
+          "hypothesisIndex": 0
+        },
+        {
+          "id": "ES2003b-seq-005",
+          "operation": "replace",
+          "referenceToken": "remote's",
+          "hypothesisToken": "remote",
+          "referenceIndex": 2,
+          "hypothesisIndex": 2
+        },
+        {
+          "id": "ES2003b-seq-005",
+          "operation": "replace",
+          "referenceToken": "only",
+          "hypothesisToken": "something",
+          "referenceIndex": 3,
+          "hypothesisIndex": 3
+        },
+        {
+          "id": "ES2003b-seq-005",
+          "operation": "replace",
+          "referenceToken": "trained",
+          "hypothesisToken": "twenty",
+          "referenceIndex": 4,
+          "hypothesisIndex": 4
+        },
+        {
+          "id": "ES2003b-seq-005",
+          "operation": "replace",
+          "referenceToken": "for",
+          "hypothesisToken": "per",
+          "referenceIndex": 5,
+          "hypothesisIndex": 5
+        },
+        {
+          "id": "ES2003b-seq-005",
+          "operation": "replace",
+          "referenceToken": "you",
+          "hypothesisToken": "year",
+          "referenceIndex": 6,
+          "hypothesisIndex": 6
+        },
+        {
+          "id": "ES2003b-seq-005",
+          "operation": "delete",
+          "referenceToken": "or",
+          "hypothesisToken": null,
+          "referenceIndex": 83,
+          "hypothesisIndex": 83
+        },
+        {
+          "id": "ES2003b-seq-010",
+          "operation": "delete",
+          "referenceToken": "you",
+          "hypothesisToken": null,
+          "referenceIndex": 2,
+          "hypothesisIndex": 2
+        },
+        {
+          "id": "ES2003b-seq-010",
+          "operation": "replace",
+          "referenceToken": "click",
+          "hypothesisToken": "go",
+          "referenceIndex": 4,
+          "hypothesisIndex": 3
+        },
+        {
+          "id": "ES2003b-seq-010",
+          "operation": "replace",
+          "referenceToken": "file",
+          "hypothesisToken": "fast",
+          "referenceIndex": 5,
+          "hypothesisIndex": 4
+        },
+        {
+          "id": "ES2003b-seq-010",
+          "operation": "replace",
+          "referenceToken": "save",
+          "hypothesisToken": "eight",
+          "referenceIndex": 6,
+          "hypothesisIndex": 5
+        },
+        {
+          "id": "ES2003b-seq-010",
+          "operation": "replace",
+          "referenceToken": "as",
+          "hypothesisToken": "times",
+          "referenceIndex": 7,
+          "hypothesisIndex": 6
+        },
+        {
+          "id": "ES2003b-seq-010",
+          "operation": "replace",
+          "referenceToken": "oh",
+          "hypothesisToken": "alright",
+          "referenceIndex": 8,
+          "hypothesisIndex": 7
+        },
+        {
+          "id": "ES2003b-seq-010",
+          "operation": "delete",
+          "referenceToken": "right",
+          "hypothesisToken": null,
+          "referenceIndex": 9,
+          "hypothesisIndex": 8
+        },
+        {
+          "id": "ES2003b-seq-010",
+          "operation": "delete",
+          "referenceToken": "right",
+          "hypothesisToken": null,
+          "referenceIndex": 12,
+          "hypothesisIndex": 10
+        },
+        {
+          "id": "ES2003b-seq-010",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "our",
+          "referenceIndex": 16,
+          "hypothesisIndex": 13
+        },
+        {
+          "id": "ES2003b-seq-010",
+          "operation": "replace",
+          "referenceToken": "inside",
+          "hypothesisToken": "insight",
+          "referenceIndex": 23,
+          "hypothesisIndex": 21
+        },
+        {
+          "id": "ES2003b-seq-010",
+          "operation": "replace",
+          "referenceToken": "of",
+          "hypothesisToken": "with",
+          "referenceIndex": 26,
+          "hypothesisIndex": 24
+        },
+        {
+          "id": "ES2003b-seq-016",
+          "operation": "replace",
+          "referenceToken": "fraid",
+          "hypothesisToken": "great",
+          "referenceIndex": 20,
+          "hypothesisIndex": 20
+        },
+        {
+          "id": "ES2003b-seq-016",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "see",
+          "referenceIndex": 22,
+          "hypothesisIndex": 22
+        },
+        {
+          "id": "ES2003b-seq-016",
+          "operation": "replace",
+          "referenceToken": "say",
+          "hypothesisToken": "it",
+          "referenceIndex": 22,
+          "hypothesisIndex": 23
+        },
+        {
+          "id": "ES2003b-seq-016",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "well",
+          "referenceIndex": 24,
+          "hypothesisIndex": 25
+        },
+        {
+          "id": "ES2003b-seq-016",
+          "operation": "replace",
+          "referenceToken": "i",
+          "hypothesisToken": "i'm",
+          "referenceIndex": 41,
+          "hypothesisIndex": 43
+        },
+        {
+          "id": "ES2003b-seq-016",
+          "operation": "replace",
+          "referenceToken": "would",
+          "hypothesisToken": "to",
+          "referenceIndex": 42,
+          "hypothesisIndex": 44
+        },
+        {
+          "id": "ES2003b-seq-016",
+          "operation": "replace",
+          "referenceToken": "that",
+          "hypothesisToken": "the",
+          "referenceIndex": 67,
+          "hypothesisIndex": 69
+        },
+        {
+          "id": "ES2003b-seq-016",
+          "operation": "delete",
+          "referenceToken": "it",
+          "hypothesisToken": null,
+          "referenceIndex": 68,
+          "hypothesisIndex": 70
+        },
+        {
+          "id": "ES2003b-seq-021",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "detail",
+          "referenceIndex": 5,
+          "hypothesisIndex": 5
+        },
+        {
+          "id": "ES2003b-seq-021",
+          "operation": "replace",
+          "referenceToken": "design",
+          "hypothesisToken": "yeah",
+          "referenceIndex": 5,
+          "hypothesisIndex": 6
+        },
+        {
+          "id": "ES2003b-seq-021",
+          "operation": "replace",
+          "referenceToken": "touch",
+          "hypothesisToken": "okay",
+          "referenceIndex": 6,
+          "hypothesisIndex": 7
+        },
+        {
+          "id": "ES2003b-seq-021",
+          "operation": "delete",
+          "referenceToken": "with",
+          "hypothesisToken": null,
+          "referenceIndex": 14,
+          "hypothesisIndex": 15
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "but",
+          "referenceIndex": 5,
+          "hypothesisIndex": 5
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "we're",
+          "referenceIndex": 5,
+          "hypothesisIndex": 6
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "clocking",
+          "referenceIndex": 5,
+          "hypothesisIndex": 7
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "we",
+          "referenceIndex": 5,
+          "hypothesisIndex": 8
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "put",
+          "referenceIndex": 5,
+          "hypothesisIndex": 9
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "replace",
+          "referenceToken": "what",
+          "hypothesisToken": "the",
+          "referenceIndex": 5,
+          "hypothesisIndex": 10
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "replace",
+          "referenceToken": "in",
+          "hypothesisToken": "fashion",
+          "referenceIndex": 6,
+          "hypothesisIndex": 11
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "replace",
+          "referenceToken": "god",
+          "hypothesisToken": "into",
+          "referenceIndex": 7,
+          "hypothesisIndex": 12
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "so",
+          "referenceIndex": 14,
+          "hypothesisIndex": 19
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "that's",
+          "referenceIndex": 14,
+          "hypothesisIndex": 20
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "that",
+          "referenceIndex": 17,
+          "hypothesisIndex": 24
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "not",
+          "referenceIndex": 17,
+          "hypothesisIndex": 25
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "the",
+          "referenceIndex": 17,
+          "hypothesisIndex": 26
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "name",
+          "referenceIndex": 17,
+          "hypothesisIndex": 27
+        },
+        {
+          "id": "ES2003b-seq-027",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "slogan",
+          "referenceIndex": 17,
+          "hypothesisIndex": 28
+        },
+        {
+          "id": "EN2001a-a2-000",
+          "operation": "replace",
+          "referenceToken": "hmm",
+          "hypothesisToken": "but",
+          "referenceIndex": 0,
+          "hypothesisIndex": 0
+        },
+        {
+          "id": "EN2001a-a2-000",
+          "operation": "replace",
+          "referenceToken": "um",
+          "hypothesisToken": "mm",
+          "referenceIndex": 8,
+          "hypothesisIndex": 8
+        },
+        {
+          "id": "EN2001a-a2-000",
+          "operation": "replace",
+          "referenceToken": "he",
+          "hypothesisToken": "you're",
+          "referenceIndex": 10,
+          "hypothesisIndex": 10
+        },
+        {
+          "id": "EN2001a-a2-000",
+          "operation": "delete",
+          "referenceToken": "was",
+          "hypothesisToken": null,
+          "referenceIndex": 11,
+          "hypothesisIndex": 11
+        },
+        {
+          "id": "EN2001a-a2-023",
+          "operation": "replace",
+          "referenceToken": "vir",
+          "hypothesisToken": "ver",
+          "referenceIndex": 15,
+          "hypothesisIndex": 15
+        },
+        {
+          "id": "EN2001a-a2-023",
+          "operation": "delete",
+          "referenceToken": "a",
+          "hypothesisToken": null,
+          "referenceIndex": 28,
+          "hypothesisIndex": 28
+        },
+        {
+          "id": "EN2001a-a2-023",
+          "operation": "delete",
+          "referenceToken": "a",
+          "hypothesisToken": null,
+          "referenceIndex": 32,
+          "hypothesisIndex": 31
+        },
+        {
+          "id": "EN2001a-a2-023",
+          "operation": "replace",
+          "referenceToken": "that",
+          "hypothesisToken": "left",
+          "referenceIndex": 47,
+          "hypothesisIndex": 45
+        },
+        {
+          "id": "EN2001a-a2-023",
+          "operation": "replace",
+          "referenceToken": "an",
+          "hypothesisToken": "in",
+          "referenceIndex": 69,
+          "hypothesisIndex": 67
+        },
+        {
+          "id": "EN2001a-a2-023",
+          "operation": "replace",
+          "referenceToken": "we",
+          "hypothesisToken": "you",
+          "referenceIndex": 72,
+          "hypothesisIndex": 70
+        },
+        {
+          "id": "EN2001a-a2-023",
+          "operation": "replace",
+          "referenceToken": "display",
+          "hypothesisToken": "displayed",
+          "referenceIndex": 103,
+          "hypothesisIndex": 101
+        },
+        {
+          "id": "EN2001a-a2-023",
+          "operation": "delete",
+          "referenceToken": "i",
+          "hypothesisToken": null,
+          "referenceIndex": 106,
+          "hypothesisIndex": 104
+        },
+        {
+          "id": "EN2001a-a2-046",
+          "operation": "delete",
+          "referenceToken": "yeah",
+          "hypothesisToken": null,
+          "referenceIndex": 3,
+          "hypothesisIndex": 3
+        },
+        {
+          "id": "EN2001a-a2-046",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "i",
+          "referenceIndex": 6,
+          "hypothesisIndex": 5
+        },
+        {
+          "id": "EN2001a-a2-046",
+          "operation": "replace",
+          "referenceToken": "but",
+          "hypothesisToken": "we",
+          "referenceIndex": 6,
+          "hypothesisIndex": 6
+        },
+        {
+          "id": "EN2001a-a2-046",
+          "operation": "delete",
+          "referenceToken": "b",
+          "hypothesisToken": null,
+          "referenceIndex": 8,
+          "hypothesisIndex": 8
+        },
+        {
+          "id": "EN2001a-a2-046",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "they",
+          "referenceIndex": 22,
+          "hypothesisIndex": 21
+        },
+        {
+          "id": "EN2001a-a2-046",
+          "operation": "replace",
+          "referenceToken": "those",
+          "hypothesisToken": "have",
+          "referenceIndex": 22,
+          "hypothesisIndex": 22
+        },
+        {
+          "id": "EN2001a-a2-046",
+          "operation": "replace",
+          "referenceToken": "they're",
+          "hypothesisToken": "they",
+          "referenceIndex": 38,
+          "hypothesisIndex": 38
+        },
+        {
+          "id": "EN2001a-a2-046",
+          "operation": "delete",
+          "referenceToken": "f",
+          "hypothesisToken": null,
+          "referenceIndex": 40,
+          "hypothesisIndex": 40
+        },
+        {
+          "id": "EN2001a-a2-046",
+          "operation": "replace",
+          "referenceToken": "one",
+          "hypothesisToken": "one's",
+          "referenceIndex": 45,
+          "hypothesisIndex": 44
+        },
+        {
+          "id": "EN2001a-a2-046",
+          "operation": "delete",
+          "referenceToken": "is",
+          "hypothesisToken": null,
+          "referenceIndex": 46,
+          "hypothesisIndex": 45
+        },
+        {
+          "id": "EN2001a-a2-069",
+          "operation": "replace",
+          "referenceToken": "do",
+          "hypothesisToken": "don't",
+          "referenceIndex": 1,
+          "hypothesisIndex": 1
+        },
+        {
+          "id": "EN2001a-a2-069",
+          "operation": "replace",
+          "referenceToken": "not",
+          "hypothesisToken": "no",
+          "referenceIndex": 6,
+          "hypothesisIndex": 6
+        },
+        {
+          "id": "EN2001a-a2-069",
+          "operation": "replace",
+          "referenceToken": "and",
+          "hypothesisToken": "but",
+          "referenceIndex": 16,
+          "hypothesisIndex": 16
+        },
+        {
+          "id": "EN2001a-a2-069",
+          "operation": "replace",
+          "referenceToken": "have",
+          "hypothesisToken": "uh",
+          "referenceIndex": 22,
+          "hypothesisIndex": 22
+        },
+        {
+          "id": "EN2001a-a2-069",
+          "operation": "replace",
+          "referenceToken": "off",
+          "hypothesisToken": "of",
+          "referenceIndex": 34,
+          "hypothesisIndex": 34
+        },
+        {
+          "id": "EN2001a-a2-069",
+          "operation": "replace",
+          "referenceToken": "you",
+          "hypothesisToken": "in",
+          "referenceIndex": 37,
+          "hypothesisIndex": 37
+        },
+        {
+          "id": "EN2001a-a2-069",
+          "operation": "delete",
+          "referenceToken": "can",
+          "hypothesisToken": null,
+          "referenceIndex": 38,
+          "hypothesisIndex": 38
+        },
+        {
+          "id": "EN2001a-a2-069",
+          "operation": "replace",
+          "referenceToken": "can't",
+          "hypothesisToken": "don't",
+          "referenceIndex": 57,
+          "hypothesisIndex": 56
+        },
+        {
+          "id": "EN2001a-a2-069",
+          "operation": "replace",
+          "referenceToken": "you",
+          "hypothesisToken": "i",
+          "referenceIndex": 59,
+          "hypothesisIndex": 58
+        },
+        {
+          "id": "EN2001a-a2-069",
+          "operation": "replace",
+          "referenceToken": "wou",
+          "hypothesisToken": "w",
+          "referenceIndex": 78,
+          "hypothesisIndex": 77
+        },
+        {
+          "id": "EN2001a-a2-069",
+          "operation": "replace",
+          "referenceToken": "they'd",
+          "hypothesisToken": "they",
+          "referenceIndex": 79,
+          "hypothesisIndex": 78
+        },
+        {
+          "id": "EN2001a-a2-069",
+          "operation": "replace",
+          "referenceToken": "they'd",
+          "hypothesisToken": "they",
+          "referenceIndex": 80,
+          "hypothesisIndex": 79
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "replace",
+          "referenceToken": "that",
+          "hypothesisToken": "that'd",
+          "referenceIndex": 0,
+          "hypothesisIndex": 0
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "replace",
+          "referenceToken": "we",
+          "hypothesisToken": "be",
+          "referenceIndex": 1,
+          "hypothesisIndex": 1
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "replace",
+          "referenceToken": "can",
+          "hypothesisToken": "completed",
+          "referenceIndex": 2,
+          "hypothesisIndex": 2
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "delete",
+          "referenceToken": "treat",
+          "hypothesisToken": null,
+          "referenceIndex": 3,
+          "hypothesisIndex": 3
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "delete",
+          "referenceToken": "it",
+          "hypothesisToken": null,
+          "referenceIndex": 4,
+          "hypothesisIndex": 3
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "replace",
+          "referenceToken": "say",
+          "hypothesisToken": "so",
+          "referenceIndex": 29,
+          "hypothesisIndex": 27
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "replace",
+          "referenceToken": "bottom",
+          "hypothesisToken": "what",
+          "referenceIndex": 83,
+          "hypothesisIndex": 81
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "replace",
+          "referenceToken": "up",
+          "hypothesisToken": "to",
+          "referenceIndex": 84,
+          "hypothesisIndex": 82
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "replace",
+          "referenceToken": "i",
+          "hypothesisToken": "map",
+          "referenceIndex": 85,
+          "hypothesisIndex": 83
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "replace",
+          "referenceToken": "have",
+          "hypothesisToken": "like",
+          "referenceIndex": 86,
+          "hypothesisIndex": 84
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "replace",
+          "referenceToken": "always",
+          "hypothesisToken": "or",
+          "referenceIndex": 87,
+          "hypothesisIndex": 85
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "replace",
+          "referenceToken": "thought",
+          "hypothesisToken": "sort",
+          "referenceIndex": 88,
+          "hypothesisIndex": 86
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "replace",
+          "referenceToken": "it's",
+          "hypothesisToken": "of",
+          "referenceIndex": 89,
+          "hypothesisIndex": 87
+        },
+        {
+          "id": "EN2001a-a2-092",
+          "operation": "replace",
+          "referenceToken": "oh",
+          "hypothesisToken": "ah",
+          "referenceIndex": 93,
+          "hypothesisIndex": 91
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "delete",
+          "referenceToken": "i'm",
+          "hypothesisToken": null,
+          "referenceIndex": 0,
+          "hypothesisIndex": 0
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "delete",
+          "referenceToken": "f",
+          "hypothesisToken": null,
+          "referenceIndex": 1,
+          "hypothesisIndex": 0
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "delete",
+          "referenceToken": "all",
+          "hypothesisToken": null,
+          "referenceIndex": 9,
+          "hypothesisIndex": 7
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "replace",
+          "referenceToken": "or",
+          "hypothesisToken": "and",
+          "referenceIndex": 12,
+          "hypothesisIndex": 9
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "replace",
+          "referenceToken": "less",
+          "hypothesisToken": "more",
+          "referenceIndex": 13,
+          "hypothesisIndex": 10
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "than",
+          "referenceIndex": 17,
+          "hypothesisIndex": 14
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "you're",
+          "referenceIndex": 17,
+          "hypothesisIndex": 15
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "replace",
+          "referenceToken": "anyway",
+          "hypothesisToken": "making",
+          "referenceIndex": 17,
+          "hypothesisIndex": 16
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "replace",
+          "referenceToken": "half",
+          "hypothesisToken": "halfway",
+          "referenceIndex": 23,
+          "hypothesisIndex": 22
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "delete",
+          "referenceToken": "way",
+          "hypothesisToken": null,
+          "referenceIndex": 24,
+          "hypothesisIndex": 23
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "replace",
+          "referenceToken": "table",
+          "hypothesisToken": "but",
+          "referenceIndex": 29,
+          "hypothesisIndex": 27
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "what's",
+          "referenceIndex": 31,
+          "hypothesisIndex": 29
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "freaked",
+          "referenceIndex": 32,
+          "hypothesisIndex": 31
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "me",
+          "referenceIndex": 32,
+          "hypothesisIndex": 32
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "out",
+          "referenceIndex": 32,
+          "hypothesisIndex": 33
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "it's",
+          "referenceIndex": 32,
+          "hypothesisIndex": 34
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "a",
+          "referenceIndex": 32,
+          "hypothesisIndex": 35
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "step",
+          "referenceIndex": 32,
+          "hypothesisIndex": 36
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "forward",
+          "referenceIndex": 32,
+          "hypothesisIndex": 37
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "yes",
+          "referenceIndex": 32,
+          "hypothesisIndex": 38
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "time",
+          "referenceIndex": 33,
+          "hypothesisIndex": 40
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "replace",
+          "referenceToken": "freaks",
+          "hypothesisToken": "is",
+          "referenceIndex": 33,
+          "hypothesisIndex": 41
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "replace",
+          "referenceToken": "me",
+          "hypothesisToken": "it",
+          "referenceIndex": 34,
+          "hypothesisIndex": 42
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "replace",
+          "referenceToken": "out",
+          "hypothesisToken": "wait",
+          "referenceIndex": 35,
+          "hypothesisIndex": 43
+        },
+        {
+          "id": "EN2001a-a2-116",
+          "operation": "replace",
+          "referenceToken": "um",
+          "hypothesisToken": "two",
+          "referenceIndex": 36,
+          "hypothesisIndex": 44
+        }
+      ]
+    },
+    {
+      "language": "Chinese",
+      "role": "validation",
+      "referenceUnits": 1258,
+      "errors": 63,
+      "operationCounts": {
+        "replace": 42,
+        "insert": 12,
+        "delete": 9
+      },
+      "deletedTokens": [
+        [
+          "儿",
+          3
+        ],
+        [
+          "子",
+          1
+        ],
+        [
+          "是",
+          1
+        ],
+        [
+          "啊",
+          1
+        ],
+        [
+          "人",
+          1
+        ],
+        [
+          "邢",
+          1
+        ],
+        [
+          "台",
+          1
+        ]
+      ],
+      "insertedTokens": [
+        [
+          "的",
+          5
+        ],
+        [
+          "是",
+          3
+        ],
+        [
+          "这",
+          1
+        ],
+        [
+          "呀",
+          1
+        ],
+        [
+          "儿",
+          1
+        ],
+        [
+          "什",
+          1
+        ]
+      ],
+      "substitutions": [
+        {
+          "reference": "嗯",
+          "hypothesis": "呃",
+          "count": 4
+        },
+        {
+          "reference": "游",
+          "hypothesis": "犹",
+          "count": 2
+        },
+        {
+          "reference": "呃",
+          "hypothesis": "嗯",
+          "count": 1
+        },
+        {
+          "reference": "哑",
+          "hypothesis": "亚",
+          "count": 1
+        },
+        {
+          "reference": "铃",
+          "hypothesis": "玲",
+          "count": 1
+        },
+        {
+          "reference": "孩",
+          "hypothesis": "还",
+          "count": 1
+        },
+        {
+          "reference": "啊",
+          "hypothesis": "嘛",
+          "count": 1
+        },
+        {
+          "reference": "得",
+          "hypothesis": "的",
+          "count": 1
+        },
+        {
+          "reference": "不",
+          "hypothesis": "会",
+          "count": 1
+        },
+        {
+          "reference": "在",
+          "hypothesis": "儿",
+          "count": 1
+        },
+        {
+          "reference": "移",
+          "hypothesis": "疑",
+          "count": 1
+        },
+        {
+          "reference": "在",
+          "hypothesis": "再",
+          "count": 1
+        },
+        {
+          "reference": "在",
+          "hypothesis": "该",
+          "count": 1
+        },
+        {
+          "reference": "后",
+          "hypothesis": "郭",
+          "count": 1
+        },
+        {
+          "reference": "勤",
+          "hypothesis": "姐",
+          "count": 1
+        },
+        {
+          "reference": "部",
+          "hypothesis": "我",
+          "count": 1
+        },
+        {
+          "reference": "它",
+          "hypothesis": "他",
+          "count": 1
+        },
+        {
+          "reference": "是",
+          "hypothesis": "这",
+          "count": 1
+        },
+        {
+          "reference": "像",
+          "hypothesis": "现",
+          "count": 1
+        },
+        {
+          "reference": "岗",
+          "hypothesis": "咱",
+          "count": 1
+        },
+        {
+          "reference": "的",
+          "hypothesis": "们",
+          "count": 1
+        },
+        {
+          "reference": "你",
+          "hypothesis": "嗯",
+          "count": 1
+        },
+        {
+          "reference": "以",
+          "hypothesis": "是",
+          "count": 1
+        },
+        {
+          "reference": "的",
+          "hypothesis": "么",
+          "count": 1
+        },
+        {
+          "reference": "再",
+          "hypothesis": "在",
+          "count": 1
+        },
+        {
+          "reference": "跟",
+          "hypothesis": "调",
+          "count": 1
+        },
+        {
+          "reference": "他",
+          "hypothesis": "查",
+          "count": 1
+        },
+        {
+          "reference": "们",
+          "hypothesis": "问",
+          "count": 1
+        },
+        {
+          "reference": "交",
+          "hypothesis": "卷",
+          "count": 1
+        },
+        {
+          "reference": "流",
+          "hypothesis": "的",
+          "count": 1
+        },
+        {
+          "reference": "了",
+          "hypothesis": "来",
+          "count": 1
+        },
+        {
+          "reference": "是",
+          "hypothesis": "行",
+          "count": 1
+        },
+        {
+          "reference": "么",
+          "hypothesis": "吗",
+          "count": 1
+        },
+        {
+          "reference": "哎",
+          "hypothesis": "唉",
+          "count": 1
+        },
+        {
+          "reference": "又",
+          "hypothesis": "有",
+          "count": 1
+        },
+        {
+          "reference": "又",
+          "hypothesis": "要",
+          "count": 1
+        },
+        {
+          "reference": "要",
+          "hypothesis": "有",
+          "count": 1
+        },
+        {
+          "reference": "着",
+          "hypothesis": "得",
+          "count": 1
+        }
+      ],
+      "extraErrorsUnderSpeakerAttribution": 1,
+      "baselineExtraErrorsUnderSpeakerAttribution": 2,
+      "operations": [
+        {
+          "id": "20200709_L_R002S01C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "呃",
+          "hypothesisToken": "嗯",
+          "referenceIndex": 36,
+          "hypothesisIndex": 36
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-003",
+          "operation": "replace",
+          "referenceToken": "哑",
+          "hypothesisToken": "亚",
+          "referenceIndex": 40,
+          "hypothesisIndex": 40
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-003",
+          "operation": "replace",
+          "referenceToken": "铃",
+          "hypothesisToken": "玲",
+          "referenceIndex": 41,
+          "hypothesisIndex": 41
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-003",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "的",
+          "referenceIndex": 54,
+          "hypothesisIndex": 54
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-003",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "的",
+          "referenceIndex": 64,
+          "hypothesisIndex": 65
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-003",
+          "operation": "replace",
+          "referenceToken": "孩",
+          "hypothesisToken": "还",
+          "referenceIndex": 86,
+          "hypothesisIndex": 88
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-003",
+          "operation": "delete",
+          "referenceToken": "子",
+          "hypothesisToken": null,
+          "referenceIndex": 87,
+          "hypothesisIndex": 89
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-003",
+          "operation": "replace",
+          "referenceToken": "啊",
+          "hypothesisToken": "嘛",
+          "referenceIndex": 92,
+          "hypothesisIndex": 93
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-009",
+          "operation": "replace",
+          "referenceToken": "得",
+          "hypothesisToken": "的",
+          "referenceIndex": 81,
+          "hypothesisIndex": 81
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-009",
+          "operation": "replace",
+          "referenceToken": "不",
+          "hypothesisToken": "会",
+          "referenceIndex": 99,
+          "hypothesisIndex": 99
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-009",
+          "operation": "delete",
+          "referenceToken": "是",
+          "hypothesisToken": null,
+          "referenceIndex": 100,
+          "hypothesisIndex": 100
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-012",
+          "operation": "delete",
+          "referenceToken": "啊",
+          "hypothesisToken": null,
+          "referenceIndex": 8,
+          "hypothesisIndex": 8
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-012",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "是",
+          "referenceIndex": 32,
+          "hypothesisIndex": 31
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-012",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "是",
+          "referenceIndex": 37,
+          "hypothesisIndex": 37
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-012",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "是",
+          "referenceIndex": 51,
+          "hypothesisIndex": 52
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-012",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "这",
+          "referenceIndex": 54,
+          "hypothesisIndex": 56
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-012",
+          "operation": "replace",
+          "referenceToken": "在",
+          "hypothesisToken": "儿",
+          "referenceIndex": 54,
+          "hypothesisIndex": 57
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-012",
+          "operation": "replace",
+          "referenceToken": "游",
+          "hypothesisToken": "犹",
+          "referenceIndex": 76,
+          "hypothesisIndex": 79
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-012",
+          "operation": "replace",
+          "referenceToken": "游",
+          "hypothesisToken": "犹",
+          "referenceIndex": 77,
+          "hypothesisIndex": 80
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-012",
+          "operation": "replace",
+          "referenceToken": "移",
+          "hypothesisToken": "疑",
+          "referenceIndex": 78,
+          "hypothesisIndex": 81
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-016",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "的",
+          "referenceIndex": 23,
+          "hypothesisIndex": 23
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-016",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "呀",
+          "referenceIndex": 29,
+          "hypothesisIndex": 30
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-016",
+          "operation": "replace",
+          "referenceToken": "在",
+          "hypothesisToken": "再",
+          "referenceIndex": 47,
+          "hypothesisIndex": 49
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-016",
+          "operation": "replace",
+          "referenceToken": "在",
+          "hypothesisToken": "该",
+          "referenceIndex": 70,
+          "hypothesisIndex": 72
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-016",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "的",
+          "referenceIndex": 105,
+          "hypothesisIndex": 107
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-016",
+          "operation": "replace",
+          "referenceToken": "后",
+          "hypothesisToken": "郭",
+          "referenceIndex": 107,
+          "hypothesisIndex": 110
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-016",
+          "operation": "replace",
+          "referenceToken": "勤",
+          "hypothesisToken": "姐",
+          "referenceIndex": 108,
+          "hypothesisIndex": 111
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-016",
+          "operation": "replace",
+          "referenceToken": "部",
+          "hypothesisToken": "我",
+          "referenceIndex": 109,
+          "hypothesisIndex": 112
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-016",
+          "operation": "delete",
+          "referenceToken": "儿",
+          "hypothesisToken": null,
+          "referenceIndex": 112,
+          "hypothesisIndex": 115
+        },
+        {
+          "id": "20200709_L_R002S01C01-seq-016",
+          "operation": "delete",
+          "referenceToken": "儿",
+          "hypothesisToken": null,
+          "referenceIndex": 131,
+          "hypothesisIndex": 133
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "嗯",
+          "hypothesisToken": "呃",
+          "referenceIndex": 41,
+          "hypothesisIndex": 41
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "嗯",
+          "hypothesisToken": "呃",
+          "referenceIndex": 44,
+          "hypothesisIndex": 44
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "嗯",
+          "hypothesisToken": "呃",
+          "referenceIndex": 49,
+          "hypothesisIndex": 49
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "它",
+          "hypothesisToken": "他",
+          "referenceIndex": 76,
+          "hypothesisIndex": 76
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-002",
+          "operation": "replace",
+          "referenceToken": "是",
+          "hypothesisToken": "这",
+          "referenceIndex": 17,
+          "hypothesisIndex": 17
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-002",
+          "operation": "delete",
+          "referenceToken": "儿",
+          "hypothesisToken": null,
+          "referenceIndex": 21,
+          "hypothesisIndex": 21
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-002",
+          "operation": "delete",
+          "referenceToken": "人",
+          "hypothesisToken": null,
+          "referenceIndex": 42,
+          "hypothesisIndex": 41
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-002",
+          "operation": "replace",
+          "referenceToken": "像",
+          "hypothesisToken": "现",
+          "referenceIndex": 48,
+          "hypothesisIndex": 46
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-002",
+          "operation": "replace",
+          "referenceToken": "岗",
+          "hypothesisToken": "咱",
+          "referenceIndex": 54,
+          "hypothesisIndex": 52
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-002",
+          "operation": "replace",
+          "referenceToken": "的",
+          "hypothesisToken": "们",
+          "referenceIndex": 55,
+          "hypothesisIndex": 53
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-002",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "的",
+          "referenceIndex": 74,
+          "hypothesisIndex": 72
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-002",
+          "operation": "replace",
+          "referenceToken": "你",
+          "hypothesisToken": "嗯",
+          "referenceIndex": 78,
+          "hypothesisIndex": 77
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-002",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "儿",
+          "referenceIndex": 82,
+          "hypothesisIndex": 81
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-002",
+          "operation": "replace",
+          "referenceToken": "以",
+          "hypothesisToken": "是",
+          "referenceIndex": 90,
+          "hypothesisIndex": 90
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-002",
+          "operation": "delete",
+          "referenceToken": "邢",
+          "hypothesisToken": null,
+          "referenceIndex": 91,
+          "hypothesisIndex": 91
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-002",
+          "operation": "delete",
+          "referenceToken": "台",
+          "hypothesisToken": null,
+          "referenceIndex": 92,
+          "hypothesisIndex": 91
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-004",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "什",
+          "referenceIndex": 46,
+          "hypothesisIndex": 46
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "的",
+          "hypothesisToken": "么",
+          "referenceIndex": 46,
+          "hypothesisIndex": 47
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-006",
+          "operation": "replace",
+          "referenceToken": "嗯",
+          "hypothesisToken": "呃",
+          "referenceIndex": 1,
+          "hypothesisIndex": 1
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-006",
+          "operation": "replace",
+          "referenceToken": "再",
+          "hypothesisToken": "在",
+          "referenceIndex": 33,
+          "hypothesisIndex": 33
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-006",
+          "operation": "replace",
+          "referenceToken": "跟",
+          "hypothesisToken": "调",
+          "referenceIndex": 66,
+          "hypothesisIndex": 66
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-006",
+          "operation": "replace",
+          "referenceToken": "他",
+          "hypothesisToken": "查",
+          "referenceIndex": 67,
+          "hypothesisIndex": 67
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-006",
+          "operation": "replace",
+          "referenceToken": "们",
+          "hypothesisToken": "问",
+          "referenceIndex": 68,
+          "hypothesisIndex": 68
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-006",
+          "operation": "replace",
+          "referenceToken": "交",
+          "hypothesisToken": "卷",
+          "referenceIndex": 69,
+          "hypothesisIndex": 69
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-006",
+          "operation": "replace",
+          "referenceToken": "流",
+          "hypothesisToken": "的",
+          "referenceIndex": 70,
+          "hypothesisIndex": 70
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "了",
+          "hypothesisToken": "来",
+          "referenceIndex": 1,
+          "hypothesisIndex": 1
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "是",
+          "hypothesisToken": "行",
+          "referenceIndex": 7,
+          "hypothesisIndex": 7
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "么",
+          "hypothesisToken": "吗",
+          "referenceIndex": 8,
+          "hypothesisIndex": 8
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "哎",
+          "hypothesisToken": "唉",
+          "referenceIndex": 37,
+          "hypothesisIndex": 37
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-011",
+          "operation": "replace",
+          "referenceToken": "又",
+          "hypothesisToken": "有",
+          "referenceIndex": 14,
+          "hypothesisIndex": 14
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-011",
+          "operation": "replace",
+          "referenceToken": "又",
+          "hypothesisToken": "要",
+          "referenceIndex": 15,
+          "hypothesisIndex": 15
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-011",
+          "operation": "replace",
+          "referenceToken": "要",
+          "hypothesisToken": "有",
+          "referenceIndex": 16,
+          "hypothesisIndex": 16
+        },
+        {
+          "id": "20200805_S_R001S01C01-seq-011",
+          "operation": "replace",
+          "referenceToken": "着",
+          "hypothesisToken": "得",
+          "referenceIndex": 69,
+          "hypothesisIndex": 69
+        }
+      ]
+    },
+    {
+      "language": "Chinese",
+      "role": "train",
+      "referenceUnits": 679,
+      "errors": 117,
+      "operationCounts": {
+        "replace": 79,
+        "delete": 28,
+        "insert": 10
+      },
+      "deletedTokens": [
+        [
+          "我",
+          3
+        ],
+        [
+          "的",
+          3
+        ],
+        [
+          "这",
+          3
+        ],
+        [
+          "是",
+          3
+        ],
+        [
+          "们",
+          2
+        ],
+        [
+          "一",
+          2
+        ],
+        [
+          "问",
+          1
+        ],
+        [
+          "咱",
+          1
+        ],
+        [
+          "嘛",
+          1
+        ],
+        [
+          "写",
+          1
+        ],
+        [
+          "作",
+          1
+        ],
+        [
+          "彩",
+          1
+        ],
+        [
+          "蛋",
+          1
+        ],
+        [
+          "吧",
+          1
+        ],
+        [
+          "话",
+          1
+        ],
+        [
+          "你",
+          1
+        ],
+        [
+          "施",
+          1
+        ],
+        [
+          "个",
+          1
+        ]
+      ],
+      "insertedTokens": [
+        [
+          "理",
+          2
+        ],
+        [
+          "你",
+          2
+        ],
+        [
+          "们",
+          1
+        ],
+        [
+          "的",
+          1
+        ],
+        [
+          "嗯",
+          1
+        ],
+        [
+          "卖",
+          1
+        ],
+        [
+          "家",
+          1
+        ],
+        [
+          "就",
+          1
+        ]
+      ],
+      "substitutions": [
+        {
+          "reference": "嗯",
+          "hypothesis": "呃",
+          "count": 2
+        },
+        {
+          "reference": "它",
+          "hypothesis": "他",
+          "count": 2
+        },
+        {
+          "reference": "法",
+          "hypothesis": "郝",
+          "count": 1
+        },
+        {
+          "reference": "律",
+          "hypothesis": "志",
+          "count": 1
+        },
+        {
+          "reference": "顾",
+          "hypothesis": "贵",
+          "count": 1
+        },
+        {
+          "reference": "动",
+          "hypothesis": "周",
+          "count": 1
+        },
+        {
+          "reference": "画",
+          "hypothesis": "华",
+          "count": 1
+        },
+        {
+          "reference": "制",
+          "hypothesis": "志",
+          "count": 1
+        },
+        {
+          "reference": "作",
+          "hypothesis": "乐",
+          "count": 1
+        },
+        {
+          "reference": "二",
+          "hypothesis": "幺",
+          "count": 1
+        },
+        {
+          "reference": "制",
+          "hypothesis": "部",
+          "count": 1
+        },
+        {
+          "reference": "本",
+          "hypothesis": "这",
+          "count": 1
+        },
+        {
+          "reference": "次",
+          "hypothesis": "个",
+          "count": 1
+        },
+        {
+          "reference": "会",
+          "hypothesis": "飞",
+          "count": 1
+        },
+        {
+          "reference": "议",
+          "hypothesis": "翼",
+          "count": 1
+        },
+        {
+          "reference": "是",
+          "hypothesis": "飞",
+          "count": 1
+        },
+        {
+          "reference": "这",
+          "hypothesis": "亮",
+          "count": 1
+        },
+        {
+          "reference": "样",
+          "hypothesis": "展",
+          "count": 1
+        },
+        {
+          "reference": "的",
+          "hypothesis": "那",
+          "count": 1
+        },
+        {
+          "reference": "监",
+          "hypothesis": "京",
+          "count": 1
+        },
+        {
+          "reference": "督",
+          "hypothesis": "都",
+          "count": 1
+        },
+        {
+          "reference": "马",
+          "hypothesis": "网",
+          "count": 1
+        },
+        {
+          "reference": "可",
+          "hypothesis": "肯",
+          "count": 1
+        },
+        {
+          "reference": "能",
+          "hypothesis": "定",
+          "count": 1
+        },
+        {
+          "reference": "也",
+          "hypothesis": "有",
+          "count": 1
+        },
+        {
+          "reference": "一",
+          "hypothesis": "舆",
+          "count": 1
+        },
+        {
+          "reference": "个",
+          "hypothesis": "论",
+          "count": 1
+        },
+        {
+          "reference": "干",
+          "hypothesis": "打",
+          "count": 1
+        },
+        {
+          "reference": "涉",
+          "hypothesis": "设",
+          "count": 1
+        },
+        {
+          "reference": "及",
+          "hypothesis": "计",
+          "count": 1
+        },
+        {
+          "reference": "公",
+          "hypothesis": "故",
+          "count": 1
+        },
+        {
+          "reference": "式",
+          "hypothesis": "事",
+          "count": 1
+        },
+        {
+          "reference": "不",
+          "hypothesis": "都",
+          "count": 1
+        },
+        {
+          "reference": "教",
+          "hypothesis": "正",
+          "count": 1
+        },
+        {
+          "reference": "育",
+          "hypothesis": "义",
+          "count": 1
+        },
+        {
+          "reference": "学",
+          "hypothesis": "最",
+          "count": 1
+        },
+        {
+          "reference": "的",
+          "hypothesis": "后",
+          "count": 1
+        },
+        {
+          "reference": "方",
+          "hypothesis": "要",
+          "count": 1
+        },
+        {
+          "reference": "面",
+          "hypothesis": "打",
+          "count": 1
+        },
+        {
+          "reference": "我",
+          "hypothesis": "败",
+          "count": 1
+        },
+        {
+          "reference": "们",
+          "hypothesis": "邪",
+          "count": 1
+        },
+        {
+          "reference": "在",
+          "hypothesis": "恶",
+          "count": 1
+        },
+        {
+          "reference": "呢",
+          "hypothesis": "话",
+          "count": 1
+        },
+        {
+          "reference": "需",
+          "hypothesis": "就",
+          "count": 1
+        },
+        {
+          "reference": "啊",
+          "hypothesis": "嗯",
+          "count": 1
+        },
+        {
+          "reference": "才",
+          "hypothesis": "更",
+          "count": 1
+        },
+        {
+          "reference": "啊",
+          "hypothesis": "哦",
+          "count": 1
+        },
+        {
+          "reference": "会",
+          "hypothesis": "可",
+          "count": 1
+        },
+        {
+          "reference": "原",
+          "hypothesis": "联",
+          "count": 1
+        },
+        {
+          "reference": "型",
+          "hypothesis": "系",
+          "count": 1
+        },
+        {
+          "reference": "人",
+          "hypothesis": "然",
+          "count": 1
+        },
+        {
+          "reference": "物",
+          "hypothesis": "后",
+          "count": 1
+        },
+        {
+          "reference": "原",
+          "hypothesis": "微",
+          "count": 1
+        },
+        {
+          "reference": "型",
+          "hypothesis": "信",
+          "count": 1
+        },
+        {
+          "reference": "做",
+          "hypothesis": "作",
+          "count": 1
+        },
+        {
+          "reference": "一",
+          "hypothesis": "为",
+          "count": 1
+        },
+        {
+          "reference": "些",
+          "hypothesis": "下",
+          "count": 1
+        },
+        {
+          "reference": "小",
+          "hypothesis": "载",
+          "count": 1
+        },
+        {
+          "reference": "所",
+          "hypothesis": "那",
+          "count": 1
+        },
+        {
+          "reference": "以",
+          "hypothesis": "就",
+          "count": 1
+        },
+        {
+          "reference": "才",
+          "hypothesis": "采",
+          "count": 1
+        },
+        {
+          "reference": "能",
+          "hypothesis": "点",
+          "count": 1
+        },
+        {
+          "reference": "获",
+          "hypothesis": "儿",
+          "count": 1
+        },
+        {
+          "reference": "得",
+          "hypothesis": "货",
+          "count": 1
+        },
+        {
+          "reference": "阐",
+          "hypothesis": "日",
+          "count": 1
+        },
+        {
+          "reference": "述",
+          "hypothesis": "常",
+          "count": 1
+        },
+        {
+          "reference": "第",
+          "hypothesis": "以",
+          "count": 1
+        },
+        {
+          "reference": "没",
+          "hypothesis": "不",
+          "count": 1
+        },
+        {
+          "reference": "有",
+          "hypothesis": "是",
+          "count": 1
+        },
+        {
+          "reference": "个",
+          "hypothesis": "种",
+          "count": 1
+        },
+        {
+          "reference": "的",
+          "hypothesis": "嘛",
+          "count": 1
+        },
+        {
+          "reference": "方",
+          "hypothesis": "爆",
+          "count": 1
+        },
+        {
+          "reference": "法",
+          "hypothesis": "发",
+          "count": 1
+        },
+        {
+          "reference": "放",
+          "hypothesis": "碰",
+          "count": 1
+        },
+        {
+          "reference": "到",
+          "hypothesis": "了",
+          "count": 1
+        },
+        {
+          "reference": "咱",
+          "hypothesis": "你",
+          "count": 1
+        },
+        {
+          "reference": "在",
+          "hypothesis": "这",
+          "count": 1
+        }
+      ],
+      "extraErrorsUnderSpeakerAttribution": 115,
+      "baselineExtraErrorsUnderSpeakerAttribution": 102,
+      "operations": [
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "法",
+          "hypothesisToken": "郝",
+          "referenceIndex": 5,
+          "hypothesisIndex": 5
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "律",
+          "hypothesisToken": "志",
+          "referenceIndex": 6,
+          "hypothesisIndex": 6
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "顾",
+          "hypothesisToken": "贵",
+          "referenceIndex": 7,
+          "hypothesisIndex": 7
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "delete",
+          "referenceToken": "问",
+          "hypothesisToken": null,
+          "referenceIndex": 8,
+          "hypothesisIndex": 8
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "动",
+          "hypothesisToken": "周",
+          "referenceIndex": 14,
+          "hypothesisIndex": 13
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "画",
+          "hypothesisToken": "华",
+          "referenceIndex": 15,
+          "hypothesisIndex": 14
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "制",
+          "hypothesisToken": "志",
+          "referenceIndex": 16,
+          "hypothesisIndex": 15
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "作",
+          "hypothesisToken": "乐",
+          "referenceIndex": 17,
+          "hypothesisIndex": 16
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "二",
+          "hypothesisToken": "幺",
+          "referenceIndex": 26,
+          "hypothesisIndex": 25
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "们",
+          "referenceIndex": 38,
+          "hypothesisIndex": 37
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "理",
+          "referenceIndex": 50,
+          "hypothesisIndex": 50
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "理",
+          "referenceIndex": 51,
+          "hypothesisIndex": 52
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "制",
+          "hypothesisToken": "部",
+          "referenceIndex": 51,
+          "hypothesisIndex": 53
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "嗯",
+          "hypothesisToken": "呃",
+          "referenceIndex": 56,
+          "hypothesisIndex": 58
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "delete",
+          "referenceToken": "我",
+          "hypothesisToken": null,
+          "referenceIndex": 57,
+          "hypothesisIndex": 59
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "本",
+          "hypothesisToken": "这",
+          "referenceIndex": 68,
+          "hypothesisIndex": 69
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "次",
+          "hypothesisToken": "个",
+          "referenceIndex": 69,
+          "hypothesisIndex": 70
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "delete",
+          "referenceToken": "的",
+          "hypothesisToken": null,
+          "referenceIndex": 70,
+          "hypothesisIndex": 71
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "会",
+          "hypothesisToken": "飞",
+          "referenceIndex": 75,
+          "hypothesisIndex": 75
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "议",
+          "hypothesisToken": "翼",
+          "referenceIndex": 76,
+          "hypothesisIndex": 76
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "是",
+          "hypothesisToken": "飞",
+          "referenceIndex": 77,
+          "hypothesisIndex": 77
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "这",
+          "hypothesisToken": "亮",
+          "referenceIndex": 78,
+          "hypothesisIndex": 78
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "样",
+          "hypothesisToken": "展",
+          "referenceIndex": 79,
+          "hypothesisIndex": 79
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "的",
+          "hypothesisToken": "那",
+          "referenceIndex": 80,
+          "hypothesisIndex": 80
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "delete",
+          "referenceToken": "咱",
+          "hypothesisToken": null,
+          "referenceIndex": 81,
+          "hypothesisIndex": 81
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "delete",
+          "referenceToken": "们",
+          "hypothesisToken": null,
+          "referenceIndex": 82,
+          "hypothesisIndex": 81
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "delete",
+          "referenceToken": "这",
+          "hypothesisToken": null,
+          "referenceIndex": 83,
+          "hypothesisIndex": 81
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "监",
+          "hypothesisToken": "京",
+          "referenceIndex": 85,
+          "hypothesisIndex": 82
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "督",
+          "hypothesisToken": "都",
+          "referenceIndex": 86,
+          "hypothesisIndex": 83
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "delete",
+          "referenceToken": "一",
+          "hypothesisToken": null,
+          "referenceIndex": 88,
+          "hypothesisIndex": 85
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "delete",
+          "referenceToken": "这",
+          "hypothesisToken": null,
+          "referenceIndex": 89,
+          "hypothesisIndex": 85
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-000",
+          "operation": "delete",
+          "referenceToken": "是",
+          "hypothesisToken": null,
+          "referenceIndex": 97,
+          "hypothesisIndex": 92
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "马",
+          "hypothesisToken": "网",
+          "referenceIndex": 3,
+          "hypothesisIndex": 3
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "可",
+          "hypothesisToken": "肯",
+          "referenceIndex": 5,
+          "hypothesisIndex": 5
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "能",
+          "hypothesisToken": "定",
+          "referenceIndex": 6,
+          "hypothesisIndex": 6
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "也",
+          "hypothesisToken": "有",
+          "referenceIndex": 7,
+          "hypothesisIndex": 7
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "一",
+          "hypothesisToken": "舆",
+          "referenceIndex": 10,
+          "hypothesisIndex": 10
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "个",
+          "hypothesisToken": "论",
+          "referenceIndex": 11,
+          "hypothesisIndex": 11
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "干",
+          "hypothesisToken": "打",
+          "referenceIndex": 12,
+          "hypothesisIndex": 12
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "delete",
+          "referenceToken": "嘛",
+          "hypothesisToken": null,
+          "referenceIndex": 13,
+          "hypothesisIndex": 13
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "delete",
+          "referenceToken": "的",
+          "hypothesisToken": null,
+          "referenceIndex": 14,
+          "hypothesisIndex": 13
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "delete",
+          "referenceToken": "我",
+          "hypothesisToken": null,
+          "referenceIndex": 16,
+          "hypothesisIndex": 14
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "涉",
+          "hypothesisToken": "设",
+          "referenceIndex": 25,
+          "hypothesisIndex": 22
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "及",
+          "hypothesisToken": "计",
+          "referenceIndex": 26,
+          "hypothesisIndex": 23
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "公",
+          "hypothesisToken": "故",
+          "referenceIndex": 32,
+          "hypothesisIndex": 29
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "式",
+          "hypothesisToken": "事",
+          "referenceIndex": 33,
+          "hypothesisIndex": 30
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "delete",
+          "referenceToken": "是",
+          "hypothesisToken": null,
+          "referenceIndex": 36,
+          "hypothesisIndex": 33
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "不",
+          "hypothesisToken": "都",
+          "referenceIndex": 42,
+          "hypothesisIndex": 38
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "教",
+          "hypothesisToken": "正",
+          "referenceIndex": 44,
+          "hypothesisIndex": 40
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "育",
+          "hypothesisToken": "义",
+          "referenceIndex": 45,
+          "hypothesisIndex": 41
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "学",
+          "hypothesisToken": "最",
+          "referenceIndex": 46,
+          "hypothesisIndex": 42
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "的",
+          "hypothesisToken": "后",
+          "referenceIndex": 47,
+          "hypothesisIndex": 43
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "方",
+          "hypothesisToken": "要",
+          "referenceIndex": 48,
+          "hypothesisIndex": 44
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "面",
+          "hypothesisToken": "打",
+          "referenceIndex": 49,
+          "hypothesisIndex": 45
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "我",
+          "hypothesisToken": "败",
+          "referenceIndex": 50,
+          "hypothesisIndex": 46
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "们",
+          "hypothesisToken": "邪",
+          "referenceIndex": 51,
+          "hypothesisIndex": 47
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "在",
+          "hypothesisToken": "恶",
+          "referenceIndex": 52,
+          "hypothesisIndex": 48
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "delete",
+          "referenceToken": "写",
+          "hypothesisToken": null,
+          "referenceIndex": 53,
+          "hypothesisIndex": 49
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "delete",
+          "referenceToken": "作",
+          "hypothesisToken": null,
+          "referenceIndex": 54,
+          "hypothesisIndex": 49
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "的",
+          "referenceIndex": 59,
+          "hypothesisIndex": 53
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "呢",
+          "hypothesisToken": "话",
+          "referenceIndex": 59,
+          "hypothesisIndex": 54
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "需",
+          "hypothesisToken": "就",
+          "referenceIndex": 77,
+          "hypothesisIndex": 72
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "啊",
+          "hypothesisToken": "嗯",
+          "referenceIndex": 81,
+          "hypothesisIndex": 76
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "才",
+          "hypothesisToken": "更",
+          "referenceIndex": 88,
+          "hypothesisIndex": 83
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-004",
+          "operation": "replace",
+          "referenceToken": "啊",
+          "hypothesisToken": "哦",
+          "referenceIndex": 92,
+          "hypothesisIndex": 87
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "你",
+          "referenceIndex": 0,
+          "hypothesisIndex": 0
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "delete",
+          "referenceToken": "我",
+          "hypothesisToken": null,
+          "referenceIndex": 20,
+          "hypothesisIndex": 21
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "delete",
+          "referenceToken": "们",
+          "hypothesisToken": null,
+          "referenceIndex": 21,
+          "hypothesisIndex": 21
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "会",
+          "hypothesisToken": "可",
+          "referenceIndex": 24,
+          "hypothesisIndex": 23
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "原",
+          "hypothesisToken": "联",
+          "referenceIndex": 29,
+          "hypothesisIndex": 28
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "型",
+          "hypothesisToken": "系",
+          "referenceIndex": 30,
+          "hypothesisIndex": 29
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "人",
+          "hypothesisToken": "然",
+          "referenceIndex": 31,
+          "hypothesisIndex": 30
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "物",
+          "hypothesisToken": "后",
+          "referenceIndex": 32,
+          "hypothesisIndex": 31
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "原",
+          "hypothesisToken": "微",
+          "referenceIndex": 33,
+          "hypothesisIndex": 32
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "型",
+          "hypothesisToken": "信",
+          "referenceIndex": 34,
+          "hypothesisIndex": 33
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "做",
+          "hypothesisToken": "作",
+          "referenceIndex": 35,
+          "hypothesisIndex": 34
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "一",
+          "hypothesisToken": "为",
+          "referenceIndex": 36,
+          "hypothesisIndex": 35
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "些",
+          "hypothesisToken": "下",
+          "referenceIndex": 37,
+          "hypothesisIndex": 36
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "小",
+          "hypothesisToken": "载",
+          "referenceIndex": 38,
+          "hypothesisIndex": 37
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "delete",
+          "referenceToken": "彩",
+          "hypothesisToken": null,
+          "referenceIndex": 39,
+          "hypothesisIndex": 38
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "delete",
+          "referenceToken": "蛋",
+          "hypothesisToken": null,
+          "referenceIndex": 40,
+          "hypothesisIndex": 38
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "delete",
+          "referenceToken": "是",
+          "hypothesisToken": null,
+          "referenceIndex": 60,
+          "hypothesisIndex": 57
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "嗯",
+          "referenceIndex": 63,
+          "hypothesisIndex": 59
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "所",
+          "hypothesisToken": "那",
+          "referenceIndex": 63,
+          "hypothesisIndex": 60
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "以",
+          "hypothesisToken": "就",
+          "referenceIndex": 64,
+          "hypothesisIndex": 61
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "卖",
+          "referenceIndex": 68,
+          "hypothesisIndex": 65
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "家",
+          "referenceIndex": 68,
+          "hypothesisIndex": 66
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "就",
+          "referenceIndex": 70,
+          "hypothesisIndex": 69
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "才",
+          "hypothesisToken": "采",
+          "referenceIndex": 70,
+          "hypothesisIndex": 70
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "能",
+          "hypothesisToken": "点",
+          "referenceIndex": 71,
+          "hypothesisIndex": 71
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "获",
+          "hypothesisToken": "儿",
+          "referenceIndex": 72,
+          "hypothesisIndex": 72
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-008",
+          "operation": "replace",
+          "referenceToken": "得",
+          "hypothesisToken": "货",
+          "referenceIndex": 73,
+          "hypothesisIndex": 73
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "replace",
+          "referenceToken": "阐",
+          "hypothesisToken": "日",
+          "referenceIndex": 0,
+          "hypothesisIndex": 0
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "replace",
+          "referenceToken": "述",
+          "hypothesisToken": "常",
+          "referenceIndex": 1,
+          "hypothesisIndex": 1
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "delete",
+          "referenceToken": "吧",
+          "hypothesisToken": null,
+          "referenceIndex": 2,
+          "hypothesisIndex": 2
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "replace",
+          "referenceToken": "第",
+          "hypothesisToken": "以",
+          "referenceIndex": 20,
+          "hypothesisIndex": 19
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "delete",
+          "referenceToken": "一",
+          "hypothesisToken": null,
+          "referenceIndex": 21,
+          "hypothesisIndex": 20
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "replace",
+          "referenceToken": "没",
+          "hypothesisToken": "不",
+          "referenceIndex": 25,
+          "hypothesisIndex": 23
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "replace",
+          "referenceToken": "有",
+          "hypothesisToken": "是",
+          "referenceIndex": 26,
+          "hypothesisIndex": 24
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "replace",
+          "referenceToken": "个",
+          "hypothesisToken": "种",
+          "referenceIndex": 28,
+          "hypothesisIndex": 26
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "replace",
+          "referenceToken": "的",
+          "hypothesisToken": "嘛",
+          "referenceIndex": 31,
+          "hypothesisIndex": 29
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "delete",
+          "referenceToken": "话",
+          "hypothesisToken": null,
+          "referenceIndex": 32,
+          "hypothesisIndex": 30
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "replace",
+          "referenceToken": "方",
+          "hypothesisToken": "爆",
+          "referenceIndex": 37,
+          "hypothesisIndex": 34
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "replace",
+          "referenceToken": "法",
+          "hypothesisToken": "发",
+          "referenceIndex": 38,
+          "hypothesisIndex": 35
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "replace",
+          "referenceToken": "放",
+          "hypothesisToken": "碰",
+          "referenceIndex": 66,
+          "hypothesisIndex": 63
+        },
+        {
+          "id": "20200707_L_R001S08C01-seq-013",
+          "operation": "replace",
+          "referenceToken": "到",
+          "hypothesisToken": "了",
+          "referenceIndex": 67,
+          "hypothesisIndex": 64
+        },
+        {
+          "id": "20200708_L_R002S01C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "嗯",
+          "hypothesisToken": "呃",
+          "referenceIndex": 16,
+          "hypothesisIndex": 16
+        },
+        {
+          "id": "20200708_L_R002S01C01-seq-000",
+          "operation": "replace",
+          "referenceToken": "咱",
+          "hypothesisToken": "你",
+          "referenceIndex": 21,
+          "hypothesisIndex": 21
+        },
+        {
+          "id": "20200708_L_R002S01C01-seq-000",
+          "operation": "delete",
+          "referenceToken": "的",
+          "hypothesisToken": null,
+          "referenceIndex": 39,
+          "hypothesisIndex": 39
+        },
+        {
+          "id": "20200708_L_R002S01C01-seq-000",
+          "operation": "delete",
+          "referenceToken": "你",
+          "hypothesisToken": null,
+          "referenceIndex": 50,
+          "hypothesisIndex": 49
+        },
+        {
+          "id": "20200708_L_R002S01C01-seq-000",
+          "operation": "insert",
+          "referenceToken": null,
+          "hypothesisToken": "你",
+          "referenceIndex": 56,
+          "hypothesisIndex": 54
+        },
+        {
+          "id": "20200708_L_R002S01C01-seq-005",
+          "operation": "replace",
+          "referenceToken": "它",
+          "hypothesisToken": "他",
+          "referenceIndex": 21,
+          "hypothesisIndex": 21
+        },
+        {
+          "id": "20200708_L_R002S01C01-seq-005",
+          "operation": "replace",
+          "referenceToken": "它",
+          "hypothesisToken": "他",
+          "referenceIndex": 35,
+          "hypothesisIndex": 35
+        },
+        {
+          "id": "20200708_L_R002S01C01-seq-010",
+          "operation": "replace",
+          "referenceToken": "在",
+          "hypothesisToken": "这",
+          "referenceIndex": 40,
+          "hypothesisIndex": 40
+        },
+        {
+          "id": "20200708_L_R002S01C01-seq-010",
+          "operation": "delete",
+          "referenceToken": "施",
+          "hypothesisToken": null,
+          "referenceIndex": 54,
+          "hypothesisIndex": 54
+        },
+        {
+          "id": "20200708_L_R002S01C01-seq-015",
+          "operation": "delete",
+          "referenceToken": "这",
+          "hypothesisToken": null,
+          "referenceIndex": 20,
+          "hypothesisIndex": 20
+        },
+        {
+          "id": "20200708_L_R002S01C01-seq-015",
+          "operation": "delete",
+          "referenceToken": "个",
+          "hypothesisToken": null,
+          "referenceIndex": 21,
+          "hypothesisIndex": 20
+        }
+      ]
+    }
+  ],
+  "hypothesesChanged": false,
+  "referencesChanged": false,
+  "fillersOrNumbersRemoved": false,
+  "newNeuralCalls": 0,
+  "interpretation": "Validation raw errors remain dominant, especially English; changing identity attribution alone cannot satisfy the text gate. This edit alignment does not establish whether a disputed reference is acoustically correct. Do not retune thresholds or delete error classes based on this diagnostic."
+}

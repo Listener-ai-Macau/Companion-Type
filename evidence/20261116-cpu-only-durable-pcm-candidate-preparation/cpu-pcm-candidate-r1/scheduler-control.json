@@ -1,0 +1,25 @@
+{
+  "state": "PASS_REAL_PCM_EMPTY_DRAFT_ADVANCE_FINAL_PRIORITY_AND_OFFLINE_IDENTICAL_FINAL_INTERVALS",
+  "sourceSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+  "frames": 1204000,
+  "finalIntervals": [
+    {
+      "startFrame": 0,
+      "endFrame": 480000,
+      "pcmSha256": "35b7576e94da66661d218bfb8af5217f5f4cf86bd25a51abaea613a0081f9998"
+    },
+    {
+      "startFrame": 480000,
+      "endFrame": 960000,
+      "pcmSha256": "430cd7b84479ebf5e821cf8768c777caac86ee7368645f0e6c7c719dea3817c4"
+    },
+    {
+      "startFrame": 960000,
+      "endFrame": 1204000,
+      "pcmSha256": "46a1b564da5323ef109d20a99a011e6f1b0ab593c30d45db439964779746b76c"
+    }
+  ],
+  "neuralCalls": 0,
+  "technicalEmptyRejectedResultOnly": true,
+  "qualityQualified": false
+}
