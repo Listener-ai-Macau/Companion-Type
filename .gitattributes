@@ -453,3 +453,13 @@ src/companion_gpu_execution_20261116.py -text -whitespace
 src/run_owned_gpu_model_20261116.py -text -whitespace
 
 src/score_guarded_frontend_20261116.py -text -whitespace
+
+evidence/20261116-speaker-presence-composition-and-language-adaptation-scope/** -text -whitespace
+
+src/compose_context180_activity_20261116.py -text -whitespace
+
+src/compose_presence_identity_20261116.py -text -whitespace
+
+src/score_context_activity_20261116.py -text -whitespace
+
+src/moss_guarded_context180_worker_20261116.py -text -whitespace

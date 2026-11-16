@@ -1,0 +1,54 @@
+{
+  "state": "FROZEN_ONE_ENGLISH_SPEECH_PRESENCE_CONTINUOUS_IDENTITY_COMPOSITION",
+  "at": "2026-11-16T21:34:47.394237+08:00",
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\compose_presence_identity_20261116.py",
+      "sha256": "7beff94253af9f4484dd7c3bab6cee89cd8014bc1663e4e64d57694540ec8436"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_exclusive_journal_20261114.py",
+      "sha256": "bc76d736d3f02cf8971af816f73cb0069c4b2e88f977420b1d28a15687177356"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_sequential_speakers_20261115.py",
+      "sha256": "10d04788694d97fa01c610aa9b9e6806e0b13ba66cd6439f143e4b34ce025f8e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_joint_whole_meetings_20261115.py",
+      "sha256": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\full-audio-only.json",
+      "sha256": "13a02cd0f2a59e3359bb46250b74aeba41aa9138c05e7f7909afc441f17e6938"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\predicted-speaker-bindings.json",
+      "sha256": "43287a3d3f92044647fcfae1aab75da0686170ad1a0060a22b463088ce53c95d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\native-context180-r1\\protocol.json",
+      "sha256": "947213776a96625b29164f17bc6c9381b0087f9ca0a5d0f034b9c48380769547"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_native_context180_worker_20261116.py",
+      "sha256": "bf6a713134c9dcaecd9e9550a430b74172df7c422bf94aed0e803a3e1c53315a"
+    }
+  ],
+  "audioOnly": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\full-audio-only.json",
+  "predictedBindings": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\predicted-speaker-bindings.json",
+  "nativeProtocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\native-context180-r1\\protocol.json",
+  "nativeWorker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_native_context180_worker_20261116.py",
+  "scope": "English-only activity supplement candidate; MOSS local speaker groups associated only to retained predicted global journal. One fixed union, no threshold/collar/padding grid. Chinese default journal retained.",
+  "advanceGate": "At least20% DER reduction on original zero-collar overlapping full English source with no invalid times/unmatched IDs, then require a second English source.",
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "qualityQualified": false,
+  "admittedEnglishSources": [
+    "ES2003b",
+    "EN2002a"
+  ],
+  "decisionBasis": "Direct union of MOSS local/global speaker groups reduced DER but added false alarms and11 unmatched segments. Exclude adoption of that association. This fixed different factorization uses MOSS presence only, original continuous native8 identities, and fills only original-empty regions. Do not threshold-tune or iterate if this factorization fails.",
+  "implementationRepair": "Serialize at the retained RTTM six-decimal resolution before merging. Exact floating intersections that round to zero cannot form positive-duration RTTM records; assert each<0.5microsecond and total<1e-8second. No activity policy/threshold change.",
+  "timeSerialization": "Same RTTM six decimals; each endpoint nearest-microsecond rounding, per-cell maximum1us and summed endpoint bound. No activity, identity, time shift or reference-gate change."
+}

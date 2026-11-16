@@ -1,0 +1,98 @@
+{
+  "revision": 53,
+  "evidenceDirectory": "evidence/20261116-speaker-presence-composition-and-language-adaptation-scope",
+  "sources": [
+    "src/compose_context180_activity_20261116.py",
+    "src/compose_presence_identity_20261116.py",
+    "src/score_context_activity_20261116.py",
+    "src/moss_guarded_context180_worker_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\raw-score-r3.json",
+      "name": "frcrn-front-end-r1/raw-score-r3.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\guarded-native-context180-r1\\protocol.json",
+      "name": "guarded-native-context180-r1/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\guarded-native-context180-r1\\scoring-control.json",
+      "name": "guarded-native-context180-r1/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\english-data-plan.json",
+      "name": "language-specific-adaptation-r1/english-data-plan.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\protocol.json",
+      "name": "context-activity-r1/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\scoring-control.json",
+      "name": "context-activity-r1/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\score-ES2003b.json",
+      "name": "context-activity-r1/score-ES2003b.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\presence-identity-r2\\protocol.json",
+      "name": "context-activity-r1/presence-identity-r2/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\presence-identity-r2\\scoring-control.json",
+      "name": "context-activity-r1/presence-identity-r2/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\presence-identity-r2\\worker-before-time-serialization-fix.py",
+      "name": "context-activity-r1/presence-identity-r2/worker-before-time-serialization-fix.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\presence-identity-r2\\worker-before-total-rounding-bound-fix.py",
+      "name": "context-activity-r1/presence-identity-r2/worker-before-total-rounding-bound-fix.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\presence-identity-r2\\io-fix-r1\\protocol.json",
+      "name": "context-activity-r1/presence-identity-r2/io-fix-r1/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\presence-identity-r2\\io-fix-r1\\scoring-control.json",
+      "name": "context-activity-r1/presence-identity-r2/io-fix-r1/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\presence-identity-r2\\io-fix-r2\\protocol.json",
+      "name": "context-activity-r1/presence-identity-r2/io-fix-r2/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\presence-identity-r2\\io-fix-r2\\scoring-control.json",
+      "name": "context-activity-r1/presence-identity-r2/io-fix-r2/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\presence-identity-r2\\io-fix-r2\\score-ES2003b.json",
+      "name": "context-activity-r1/presence-identity-r2/io-fix-r2/score-ES2003b.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\presence-identity-r2\\io-fix-r2\\ES2003b\\prediction.json",
+      "name": "closed-prediction-metadata/ES2003b.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_language_adaptation_20261116.py",
+      "name": "preparation/prepare_language_adaptation_20261116.py"
+    }
+  ],
+  "commitMessage": "Retain whole-source speaker composition gain and freeze language-specific adaptation scope",
+  "claims": {
+    "state": "FIRST_ENGLISH_DER26_TO11_54_OTHER_SOURCES_AND_TRAINING_PENDING",
+    "trainingUpdates": 0,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "perLanguageFloorErrorStrictlyBelow": 0.05,
+    "perLanguageTargetErrorAtMost": 0.02,
+    "englishAdaptationExamples": 475,
+    "englishAdaptationParameters": 118886022,
+    "modelTrainingStarted": false,
+    "publicWaveformsAndTrainingTranscriptsExcludedFromGit": true
+  }
+}
