@@ -119,4 +119,8 @@ body .ct-windows.ct-notebook .meeting-topic-source,body .ct-windows.ct-notebook 
 .meeting-topic-controls{gap:0;padding:2px 0;border:0;border-radius:0;background:transparent;box-shadow:none}
 body .ct-windows.ct-notebook .meeting-topic-controls>.meeting-topic-source,body .ct-windows.ct-notebook .meeting-topic-controls>.meeting-topic-toggle,.mobile-app .meeting-topic-controls>.meeting-topic-source,.mobile-app .meeting-topic-controls>.meeting-topic-toggle{position:relative;border:0;border-radius:5px;background:transparent;padding:3px 7px}
 .meeting-topic-controls>button+button:before{content:none}
+body .ct-windows.ct-notebook .meeting-topic-controls>button,.mobile-app .meeting-topic-controls>button{transition:background-color 140ms ease,color 140ms ease}
+@media(hover:hover){body .ct-windows.ct-notebook .meeting-topic-controls>button:hover,.mobile-app .meeting-topic-controls>button:hover{background:var(--notebook-paper);color:var(--notebook-ink)}}
+body .ct-windows.ct-notebook .meeting-topic-controls>button:active,.mobile-app .meeting-topic-controls>button:active{background:var(--notebook-selection);color:var(--notebook-accent)}
+@media(prefers-reduced-motion:reduce){body .ct-windows.ct-notebook .meeting-topic-controls>button,.mobile-app .meeting-topic-controls>button{transition:none}}
 .meeting-topic-controls>:is(.meeting-topic-source,.meeting-topic-toggle):hover{background:var(--notebook-soft);color:var(--notebook-ink)}
