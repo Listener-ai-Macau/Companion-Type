@@ -1,0 +1,37 @@
+{
+  "state": "FAILED_AVAILABLE_780M_NO_MODEL_NO_RETRY",
+  "at": "2026-11-16T09:16:20.654341+08:00",
+  "neuralModelLoaded": false,
+  "qualityQualified": false,
+  "systemConfigurationChanged": false,
+  "limits": {
+    "pid": 19460,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 429264896,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "blas": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "selected": {
+    "name": "AMD Radeon 780M Graphics",
+    "architecture": "gfx1103",
+    "totalMemory": 9875259392,
+    "logicalOrdinal": 0
+  },
+  "error": "AcceleratorError(\"CUDA error: device kernel image is invalid\\nSearch for `hipErrorInvalidImage' in https://rocm.docs.amd.com/projects/HIP/en/latest/index.html for more information.\\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\\nFor debugging consider passing AMD_SERIALIZE_KERNEL=3\\nDevice-side assertion tracking was not enabled by user.\")",
+  "finishedAt": "2026-11-16T09:16:23.116904+08:00"
+}

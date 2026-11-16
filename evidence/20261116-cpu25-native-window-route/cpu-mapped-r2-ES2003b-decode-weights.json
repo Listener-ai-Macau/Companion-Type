@@ -1,0 +1,21 @@
+{
+  "state": "EXACT_PINNED_BF16_NATIVE_CPU_WEIGHTS_READONLY_FILE_MAPPED",
+  "file": "E:\\CodexData\\Companion\\asr-accuracy-latency-20261103\\multispeaker-ai\\joint-moss-architecture-20261104\\model\\model-00000-of-00001.safetensors",
+  "fileSha256": "9a0ceb4ab7330357db3ff583dba8d83625d5b733b00e1d55d6970e11b07026c4",
+  "nativePublishedCheckpointSha256": "2caea232f4ac46367ed97373542b92e4dc1fa11e4e30dfd5f6d874abb618d127",
+  "tensorCount": 683,
+  "tensorBytes": 1817026560,
+  "weightsChanged": false,
+  "quantizationUsed": false,
+  "mapping": "mmap.ACCESS_READ; no copy-on-write and no whole private CPU state_dict copy",
+  "allNativeKeysLoadedExceptTiedHead": [
+    "lm_head.weight"
+  ],
+  "deterministicBuffersPreserved": [
+    "model.language_model.rotary_emb.inv_freq",
+    "model.language_model.rotary_emb.original_inv_freq"
+  ],
+  "device": "cpu",
+  "gpuUsed": false,
+  "seconds": 2.096029100001033
+}

@@ -1,0 +1,31 @@
+{
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\speaker-baseline.json",
+  "sourceSha256": "c885213117bc0f1ba344f98f08321232d1aef5b27ca24c6d4aeb17a97acacce8",
+  "probabilitiesOnly": {
+    "20200707_L_R001S08C01": {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\speaker-train-r1\\20200707_L_R001S08C01\\probabilities.npy",
+      "sha256": "ed9c17547dff3b5b6fdea75403b0b0cfc399c5d700676133f6edde9f268d8c50"
+    },
+    "20200708_L_R002S01C01": {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\speaker-train-r1\\20200708_L_R002S01C01\\probabilities.npy",
+      "sha256": "ab1c92e0aa69abe1913f5c60db3e79bb52981eaeed2c9882275e3294004b5841"
+    },
+    "20200709_L_R002S01C01": {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\baseline-r1\\results\\20200709_L_R002S01C01\\probabilities.npy",
+      "sha256": "e2325fc328043522441f57e7179d97bf2cd93f0d391ebb4eecf656d552779df1"
+    },
+    "20200805_S_R001S01C01": {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\public-speaker-adaptation-r1\\baseline-r1\\results\\20200805_S_R001S01C01\\probabilities.npy",
+      "sha256": "9a96f10ad5bb5b4637e57b4a7b4b5da4635ffedd2c9efc7dc3a1f357fb8b4553"
+    },
+    "ES2003b": {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\speaker-r1\\ES2003b\\probabilities.npy",
+      "sha256": "0c1adaa728b2c242c51f8853c1d7948ce90b72f246a21a9629f21d1e6ce25ad5"
+    },
+    "EN2001a": {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\speaker-r1\\EN2001a\\probabilities.npy",
+      "sha256": "e7223b6e4b8ad0214c22ca68ccd38f0d3049b9ddc004ea65e20159a07726f5e2"
+    }
+  },
+  "noGoldLabelMappingInThisFile": true
+}

@@ -1,0 +1,15 @@
+{
+  "state": "INCOMPLETE_CPU_WINDOW_COHORT_RETAINED",
+  "startedAt": "2026-11-16T09:45:12.510847+08:00",
+  "privatePeakBytes": 754888704,
+  "qualityQualified": false,
+  "wholeMeetingAcceptance": false,
+  "automaticRetries": 0,
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "reportDeadline": "2026-11-16T16:00:00+08:00",
+  "pid": 24572,
+  "pidCreatedAt": 1794793512.6418636,
+  "workerExitCode": 1,
+  "error": "AssertionError()",
+  "finishedAt": "2026-11-16T09:45:27.992756+08:00"
+}

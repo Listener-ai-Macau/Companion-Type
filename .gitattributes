@@ -295,3 +295,15 @@ src/moss_cpu_mapped_meeting_worker_20261116.py -text -whitespace
 src/run_moss_cpu_mapped_meetings_20261116.py -text -whitespace
 
 evidence/20261116-cpu-mapped-native-control-and-blas/** -text -whitespace
+
+evidence/20261116-cpu25-native-window-route/** -text -whitespace
+
+src/moss_cpu_grouped_attention_20261116.py -text -whitespace
+
+src/cpu_window_joint_worker_20261116.py -text -whitespace
+
+src/run_cpu_window_joint_20261116.py -text -whitespace
+
+src/compose_cpu_window_speakers_20261116.py -text -whitespace
+
+src/score_cpu_window_composition_20261116.py -text -whitespace

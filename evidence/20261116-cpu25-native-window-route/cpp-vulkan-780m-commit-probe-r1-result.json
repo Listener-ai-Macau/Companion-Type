@@ -1,0 +1,51 @@
+{
+  "at": "2026-11-16T09:18:36.497828+08:00",
+  "state": "EXACT_PINNED_VULKAN_ALLOCATION_ONLY_NO_MODEL_OR_KERNEL",
+  "device": "AMD Radeon 780M Graphics",
+  "runtimeSha256": "6094102cf57b404b050707ceb258b12ce647b92e801b5d46077214e5b030c8aa",
+  "rows": [
+    {
+      "requestedBytes": 67108864,
+      "allocated": true,
+      "privateBefore": 58671104,
+      "privateAfter": 125911040,
+      "privateDelta": 67239936,
+      "privateAfterFree": 125911040
+    },
+    {
+      "requestedBytes": 268435456,
+      "allocated": true,
+      "privateBefore": 125911040,
+      "privateAfter": 394870784,
+      "privateDelta": 268959744,
+      "privateAfterFree": 58671104
+    },
+    {
+      "requestedBytes": 536870912,
+      "allocated": true,
+      "privateBefore": 58671104,
+      "privateAfter": 596590592,
+      "privateDelta": 537919488,
+      "privateAfterFree": 58671104
+    }
+  ],
+  "limits": {
+    "pid": 7636,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 596590592,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "neuralInference": false,
+  "guardRaised": false,
+  "otherAppsChanged": false
+}

@@ -1,0 +1,311 @@
+{
+  "at": "2026-11-16T09:57:04.014193+08:00",
+  "parent": "8489b7fd410575fcf2b25b6b7e8bff65323c1bf6",
+  "entries": [
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\ES2003b-decode-state.json",
+      "file": "cpu-mapped-r2-ES2003b-decode-state.json",
+      "bytes": 1284,
+      "sha256": "62b76ec0bda1fa2f32464adfd7eb4c6100b1d09392fdb45eae500ac4c0ffc6a9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\ES2003b-decode-weights.json",
+      "file": "cpu-mapped-r2-ES2003b-decode-weights.json",
+      "bytes": 908,
+      "sha256": "9aa419f21a3224b3c503057e98d30c981d3ac8b2efcb5b51d11cd0bc4f926990"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\ES2003b-decode-worker.log",
+      "file": "cpu-mapped-r2-ES2003b-decode-worker.log",
+      "bytes": 1387,
+      "sha256": "84ebca27c609c902aa3d5891fdcf7ebaf2bcf0e3f7161e5baeaaa40cc0ce5875"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\observation-only.jsonl",
+      "file": "cpu-mapped-r2-observation-only.jsonl",
+      "bytes": 6234,
+      "sha256": "2d08d40fd268d778d454c15eb00fd78ba6a0994898712159c9a1ccb2b5d21e28"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\run.json",
+      "file": "cpu-mapped-r2-run.json",
+      "bytes": 2013,
+      "sha256": "4be19ce31eac0c6042e44410ce1337ca4df1346c30820346e551a9a3ba254b4f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\runtime-control61-decode-state.json",
+      "file": "cpu-mapped-r2-runtime-control61-decode-state.json",
+      "bytes": 1569,
+      "sha256": "6d2d41779d7e01165c576e5a0027143488b68c81f670b6ee62fd3d99030df00c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\runtime-control61-decode-weights.json",
+      "file": "cpu-mapped-r2-runtime-control61-decode-weights.json",
+      "bytes": 908,
+      "sha256": "c20b782129fe9da0a84193571baac3e9bee1be27a46e7ec449283035a72ca9a1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\runtime-control61-decode-worker.log",
+      "file": "cpu-mapped-r2-runtime-control61-decode-worker.log",
+      "bytes": 2828,
+      "sha256": "4c974788f12af4da767e1c20b5ef95dd7e7032d8812fd5567f3800f1b948b3cd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\runtime-control61-generated-ids.json",
+      "file": "cpu-mapped-r2-runtime-control61-generated-ids.json",
+      "bytes": 352,
+      "sha256": "b42e1613f7fd4134b051320d56fc79d5c6f6dd0665d9d458478fda9c48813fe5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\runtime-control61-raw.json",
+      "file": "cpu-mapped-r2-runtime-control61-raw.json",
+      "bytes": 4513,
+      "sha256": "0eef908a0f7b1d50133a3b2681e493404402f119c9bd2701e6dc2eca49d5019f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r2\\stop.request",
+      "file": "cpu-mapped-r2-stop.request",
+      "bytes": 66,
+      "sha256": "2e7283a2fb1a89d530209c68a124ab0aac23d72888df319f8ebe26e2a59bfd8c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r3\\run.json",
+      "file": "cpu-mapped-r3-run.json",
+      "bytes": 1185,
+      "sha256": "db83ae009300e763447a6a097d9d1601bf6fea8e40bc8d43d6d9c83d47cfe9aa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r3\\runtime-control61-decode-worker.log",
+      "file": "cpu-mapped-r3-runtime-control61-decode-worker.log",
+      "bytes": 791,
+      "sha256": "7c95647559d5af99e44904ec24aedd2aad5afd93037a353eef64dad23e593919"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r4\\ES2003b-decode-state.json",
+      "file": "cpu-mapped-r4-ES2003b-decode-state.json",
+      "bytes": 1330,
+      "sha256": "8cf8e7ac6a6a125d6903046f2ac77cf4bd882895e81172972b58978bb3c64e87"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r4\\ES2003b-decode-weights.json",
+      "file": "cpu-mapped-r4-ES2003b-decode-weights.json",
+      "bytes": 909,
+      "sha256": "b752bdacfb8b3afebbf311cb02d07db62d76196c28fb184854c407810ec26268"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r4\\ES2003b-decode-worker.log",
+      "file": "cpu-mapped-r4-ES2003b-decode-worker.log",
+      "bytes": 1388,
+      "sha256": "546d27b3b4fcee2642781709f7c82b2f201b9d327134b5f5ea8cfc9430b41b5d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r4\\run.json",
+      "file": "cpu-mapped-r4-run.json",
+      "bytes": 2001,
+      "sha256": "c005cd56fb3013f12b7fec9b197db40e606bf3408001f49ea76b374a00d79da1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r4\\runtime-control61-decode-state.json",
+      "file": "cpu-mapped-r4-runtime-control61-decode-state.json",
+      "bytes": 1612,
+      "sha256": "6c37177d45c5b4a643e6823bf501a55163e5875fe7ebf82e39475cf8b72f529f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r4\\runtime-control61-decode-weights.json",
+      "file": "cpu-mapped-r4-runtime-control61-decode-weights.json",
+      "bytes": 908,
+      "sha256": "fb753b83b8b2335e7c28b62775b072a63b436d56db5040739f452fcb4157b035"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r4\\runtime-control61-decode-worker.log",
+      "file": "cpu-mapped-r4-runtime-control61-decode-worker.log",
+      "bytes": 2866,
+      "sha256": "efe94f0b1eabc3b930c0d07f5e8c043ca91e867cf1b624ddeb9a03cc2e9d8c45"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r4\\runtime-control61-generated-ids.json",
+      "file": "cpu-mapped-r4-runtime-control61-generated-ids.json",
+      "bytes": 352,
+      "sha256": "9360486afb3c81cc019202d646c8c46544a26411c6f177e7db48ee0c3f432b8a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r4\\runtime-control61-raw.json",
+      "file": "cpu-mapped-r4-runtime-control61-raw.json",
+      "bytes": 4514,
+      "sha256": "893ba054e52df9bc8fa6adb37df125b93cbb4bafbf89d94be663317d4782ae2e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-mapped-r4\\stop.request",
+      "file": "cpu-mapped-r4-stop.request",
+      "bytes": 66,
+      "sha256": "2e7283a2fb1a89d530209c68a124ab0aac23d72888df319f8ebe26e2a59bfd8c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r1\\inference-state.json",
+      "file": "stagea-cpu-composition-r1-inference-state.json",
+      "bytes": 1258,
+      "sha256": "1ad1b986696ec71822c09ce104068f333a53074024e891c087bba64844f75f07"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r1\\native.log",
+      "file": "stagea-cpu-composition-r1-native.log",
+      "bytes": 195,
+      "sha256": "e8917322bf4685a9a0673082c9c0ca5ea83b2eb7f6f5903731ac0b1f739d7c37"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r1\\run.json",
+      "file": "stagea-cpu-composition-r1-run.json",
+      "bytes": 501,
+      "sha256": "ee7f34a0a21db858defe8ad8429ab38a59af14a40dd5f9d9645bf011e382c8ae"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r1\\worker.log",
+      "file": "stagea-cpu-composition-r1-worker.log",
+      "bytes": 1093,
+      "sha256": "372d4745ece9f5334c03d1f2526d62a5b5341ebe38c6d4898f1ddeeb805d839f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-grouped-attention-probe-r2\\result.json",
+      "file": "cpu-grouped-attention-probe-r2-result.json",
+      "bytes": 1532,
+      "sha256": "1f54d7a64e102fb55ee81601592ad6f094ab2be0607c7e7fbdbb96c675dbdbf6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\available-780m-probe-r1\\result.json",
+      "file": "available-780m-probe-r1-result.json",
+      "bytes": 1705,
+      "sha256": "4fd579ba44511b525fe04753d3514cf25fb4cfacde8beeb920d2e434b2c53239"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpp-vulkan-780m-commit-probe-r1\\result.json",
+      "file": "cpp-vulkan-780m-commit-probe-r1-result.json",
+      "bytes": 1537,
+      "sha256": "464b08e0e810724446b35c326271fee05a1a04f68ee8ec3c963ffc3ea196845c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-mapped-r3\\staged-binding.json",
+      "file": "cpu-mapped-r3-binding.json",
+      "bytes": 13280,
+      "sha256": "27f0ba37cc8d4bf88a0f3cc656c444771ca1c556ba814552cf1e83fe22048a0a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-mapped-r4\\staged-binding.json",
+      "file": "cpu-mapped-r4-binding.json",
+      "bytes": 13596,
+      "sha256": "0c9e6a1649b85d08e8c4a6b506245a01d625fd164a50dbb16c566902a130d6ca"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r1\\binding.json",
+      "file": "stagea-cpu-composition-r1-binding.json",
+      "bytes": 19275,
+      "sha256": "4cffb9dfa69747ea0c82b0f3fc1bd5987964084738724c611f4bc99db57ada2f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r1\\predicted-speaker-bindings.json",
+      "file": "stagea-cpu-composition-r1-predicted-speaker-bindings.json",
+      "bytes": 1985,
+      "sha256": "9ce0bd15d0cbfd6d01e36eb84b051906592794327e396832a72142d9b8e00ad2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r1\\scoring-binding.json",
+      "file": "stagea-cpu-composition-r1-scoring-binding.json",
+      "bytes": 972,
+      "sha256": "a3a11085d9297b25a10208d8d18d6478ecc5bff2f1e33d4df44f9ca0a29b9be4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\binding.json",
+      "file": "stagea-cpu-composition-r2-binding.json",
+      "bytes": 19862,
+      "sha256": "fbc2373f7688d973ea37b03b18ad6c6eaca20b0789b144242f387e46f196bfd4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\composition-input.json",
+      "file": "stagea-cpu-composition-r2-composition-input.json",
+      "bytes": 12146,
+      "sha256": "7480ff28ee9dbca78cb7b93d065c72b9578b710303b79170bdd98fd5fc8058c4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\predicted-speaker-bindings.json",
+      "file": "stagea-cpu-composition-r2-predicted-speaker-bindings.json",
+      "bytes": 1985,
+      "sha256": "9ce0bd15d0cbfd6d01e36eb84b051906592794327e396832a72142d9b8e00ad2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\scoring-binding.json",
+      "file": "stagea-cpu-composition-r2-scoring-binding.json",
+      "bytes": 972,
+      "sha256": "a3a11085d9297b25a10208d8d18d6478ecc5bff2f1e33d4df44f9ca0a29b9be4"
+    },
+    {
+      "source": "work\\prepare_cpu_window_composition_20261116.py",
+      "file": "prepare_cpu_window_composition_20261116.py",
+      "bytes": 5625,
+      "sha256": "39a0910fb1ce53202977d601646d4d2edea05ec1a1726d334d18782727500d9f"
+    },
+    {
+      "source": "work\\prepare_cpu_window_api_fix_20261116.py",
+      "file": "prepare_cpu_window_api_fix_20261116.py",
+      "bytes": 2037,
+      "sha256": "365793a191b707f6751a7dfac63a9bcc85dda428cad4fc634f118ff431f08921"
+    },
+    {
+      "source": "work\\freeze_cpu_window_composition_20261116.py",
+      "file": "freeze_cpu_window_composition_20261116.py",
+      "bytes": 1839,
+      "sha256": "8f3224f699342ba3ec2f6769e0f78891348d1d9098d91f7dae83eb59b358bcf3"
+    },
+    {
+      "source": "work\\observe_cpu_window_20261116.py",
+      "file": "observe_cpu_window_20261116.py",
+      "bytes": 1597,
+      "sha256": "391d2341353c42a1d11ce7b847d480c8858acf706834c8068eb6cf6904f05baf"
+    },
+    {
+      "source": "work\\probe_cpu_grouped_attention_20261116.py",
+      "file": "probe_cpu_grouped_attention_20261116.py",
+      "bytes": 3034,
+      "sha256": "d7c370e63ff8c594ea98e6584c564355bc26c9ed770367807b3aadeea6de1e75"
+    },
+    {
+      "source": "work\\probe_available_780m_20261116.py",
+      "file": "probe_available_780m_20261116.py",
+      "bytes": 2917,
+      "sha256": "77e707283e4a951978428c30f261565d2cc4aa6e17b1301013fda2f5f490fd5b"
+    },
+    {
+      "source": "work\\probe_cpp_vulkan_780m_commit_20261116.py",
+      "file": "probe_cpp_vulkan_780m_commit_20261116.py",
+      "bytes": 3076,
+      "sha256": "ee505a4c22d359d8b61a31122c3b2de8b31213c8a9309ba64c8114284321ce90"
+    },
+    {
+      "source": "work\\protect_cpu_window_route_20261116.py",
+      "file": "protect_cpu_window_route_20261116.py",
+      "bytes": 6067,
+      "sha256": "85066a1ea9fd19053396c77e3728cbe8314da5743dcc444db6fc8e40d8a9d45f"
+    }
+  ],
+  "sources": {
+    "src/moss_cpu_mapped_meeting_worker_20261116.py": "4f2802d7b796525d4070d28a810e640226125f6c8c5bcb23ad9965bd2e047f50",
+    "src/moss_cpu_grouped_attention_20261116.py": "72b7028c18e4c67e7fd286315742ecf06bfdc80cc590df44d2061a9a41021299",
+    "src/cpu_window_joint_worker_20261116.py": "290e5664bb3cf2762571bdbed581736b020abb40d40a95f348b64d490352f7ee",
+    "src/run_cpu_window_joint_20261116.py": "ca268ef858589e11b51b84a9f1e66dad00b8ccad65f58200794670ec9dca2ad3",
+    "src/compose_cpu_window_speakers_20261116.py": "535f7c6e2e75f1f86fec9a58c5e045080419b66a3b274cb63d44a3ea26c2171a",
+    "src/score_cpu_window_composition_20261116.py": "e5c17c3a0a628114c14a23078ee7319f685cb512af9390c934ca9617f5f192c7"
+  },
+  "state": "CPU25_NATIVE_WINDOW_COMPOSITION_SOURCE_FROZEN_ACTIVE_RUN_EXCLUDED",
+  "ownerCpuPermission": "允许约 25% CPU，继续后台实测",
+  "cpuPercent": 25,
+  "maximumComputeThreads": 4,
+  "privateLimitBytes": 2147483648,
+  "actualWindowsLowMemoryStop": true,
+  "originalWholeMeeting6501IdsRetained": true,
+  "wholeMeetingResults": 0,
+  "weightsChanged": false,
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "groupedAttentionNotAdopted": true,
+  "cpuWholeMappingNotSelectedForDefault": true,
+  "activeOutputsExcluded": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2"
+}

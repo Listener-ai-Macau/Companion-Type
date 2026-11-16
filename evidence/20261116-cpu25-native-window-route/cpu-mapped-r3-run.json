@@ -1,0 +1,30 @@
+{
+  "state": "INCOMPLETE_NATIVE_STAGED_FAILURE_OR_DEADLINE_RETAINED",
+  "startedAt": "2026-11-16T09:31:29.142331+08:00",
+  "phases": [
+    {
+      "meeting": "runtime-control61",
+      "phase": "prefill",
+      "state": "REUSED_COMPLETE_PREFILL_UNCHANGED",
+      "source": {
+        "state": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\runtime-control61-prefill-state.json",
+        "stateSha256": "9ecc5dd43cd11cdc42297b64d82c325745512bfec58d92968138ee3128faa5bb",
+        "cache": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\staged-r1\\cache\\runtime-control61"
+      },
+      "newNeuralCalls": 0
+    }
+  ],
+  "completed": [],
+  "privatePeakBytes": 1331200,
+  "qualityQualified": false,
+  "newWeightTraining": false,
+  "automaticRetries": 0,
+  "neuralDeadline": "2026-11-16T15:40:00+08:00",
+  "reportDeadline": "2026-11-16T16:00:00+08:00",
+  "activeMeeting": "runtime-control61",
+  "pid": 24404,
+  "pidCreatedAt": 1794792689.1467476,
+  "error": "FileNotFoundError(2, 'No such file or directory')",
+  "finishedAt": "2026-11-16T09:31:29.662445+08:00",
+  "seconds": 0.5159999999959837
+}

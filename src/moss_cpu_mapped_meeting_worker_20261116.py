@@ -13,8 +13,21 @@ def main():
  p=argparse.ArgumentParser();p.add_argument('--phase',choices=['prefill','decode'],required=True)
  p.add_argument('--meeting',required=True)
  for key in ['control','run']:p.add_argument('--'+key,type=Path,required=True)
- a=p.parse_args();limits=WorkerLimits(cpu_percent=5,memory_bytes=2*1024**3)
- B=read(a.control/'staged-binding.json');assert sha(__file__)==B['workerSha256']
+ a=p.parse_args();B=read(a.control/'staged-binding.json');assert sha(__file__)==B['workerSha256']
+ cpu_percent=B.get('cpuPercent',5);cpu_threads=B.get('cpuThreads',1)
+ assert (cpu_percent,cpu_threads) in [(5,1),(25,4)]
+ if cpu_percent>5:assert B['ownerCpuBudgetPermission']['quote']=='允许约 25% CPU，继续后台实测'
+ # The shared responsive helper keeps its unchanged <=10% default policy.
+ # Apply Owner's explicit25% exception only to this already limited job.
+ limits=WorkerLimits(cpu_percent=min(cpu_percent,5),memory_bytes=2*1024**3)
+ if cpu_percent==25:
+  import ctypes
+  from moss_windows_resource_limits_20261104 import CpuRate
+  rate=CpuRate(0x1|0x4,2500)
+  limits._check(limits.kernel.SetInformationJobObject(limits.job,15,ctypes.byref(rate),ctypes.sizeof(rate)))
+  applied=limits.query()
+  assert applied['cpuRate']==2500 and applied['jobPrivateCommitLimitBytes']==2*1024**3 and applied['inLimitedJob']
+ os.environ.update(OMP_NUM_THREADS=str(cpu_threads),MKL_NUM_THREADS=str(cpu_threads))
  for file,digest in B['helpers'].items():assert sha(file)==digest,file
  C=Path(B['modelControl']);case=next(r for r in B['cases'] if r['meeting']==a.meeting)
  deadline=datetime.fromisoformat(B['neuralDeadline']);began=time.perf_counter();last=[0.]
@@ -29,10 +42,11 @@ def main():
  save()
  try:
   import torch
-  torch.set_num_threads(1);torch.set_num_interop_threads(1)
+  torch.set_num_threads(cpu_threads);torch.set_num_interop_threads(1)
   state['executionDevice']='cpu';state['cpuCapability']=torch.backends.cpu.get_cpu_capability()
   from companion_community1_adapter_20261115 import pin_rocm_blas
-  state['blas']=pin_rocm_blas(Path(B['blas']),B['blasSha256']);save()
+  state['blas']=pin_rocm_blas(Path(B['blas']),B['blasSha256'])
+  state['computeThreads']=cpu_threads;state['blasThreads']=1;save()
   from transformers import AutoProcessor,StoppingCriteria,StoppingCriteriaList
   from moss_cpu_mapped_runtime_20261116 import load_cpu_mapped_native,cpu_file_cache,restore_cpu_prefill,retire_cpu_audio
   from moss_native_full_execution_20261115 import prepare_wave,install_native_bounded

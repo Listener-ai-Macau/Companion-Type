@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_cpu_mapped_meeting_worker_20261116.py", line 164, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_cpu_mapped_meeting_worker_20261116.py", line 20, in main
+    limits=WorkerLimits(cpu_percent=cpu_percent,memory_bytes=2*1024**3)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\moss_windows_resource_limits_20261104.py", line 67, in __init__
+    raise ValueError('Responsive mode permits at most 10% of machine CPU')
+ValueError: Responsive mode permits at most 10% of machine CPU
