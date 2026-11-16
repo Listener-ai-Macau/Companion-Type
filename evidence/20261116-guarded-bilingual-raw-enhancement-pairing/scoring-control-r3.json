@@ -1,0 +1,27 @@
+{
+  "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\protocol-r3.json",
+  "references": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json",
+  "baseline": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\raw-text-baseline.json",
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\protocol-r3.json",
+      "sha256": "e9945e1e4351f0e429d1371babb2efeabe62ff8881d2a37da9c4d2d187cf3c62"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_guarded_frontend_20261116.py",
+      "sha256": "ecbde4453f64492077a4081b1ce5103329d6b516c1f500ff9c65c5c4a13fe432"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json",
+      "sha256": "1bd61c8c2b9438a520b0f16879d94d7e320f1a7ea7fec72d74ad7d1047909f83"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\raw-text-baseline.json",
+      "sha256": "cc469e7acfda616f9dcc4775c722e6d5fbca3c77e7acccc6f750130099b2b8f4"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_sequential_meetings_20261115.py",
+      "sha256": "d27ad4d4253029d8f64e3a9e5ef1b3d0ef281471237ed9218160701ef6d1ea89"
+    }
+  ]
+}

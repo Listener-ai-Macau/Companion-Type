@@ -443,3 +443,13 @@ evidence/20261116-gpu-restart-and-bounded-native-conv-diagnostic/** -text -white
 src/gpu_compat_frcrn_20261116.py -text -whitespace
 
 evidence/20261116-bounded-native-gpu-convolution-results/** -text -whitespace
+
+evidence/20261116-guarded-bilingual-raw-enhancement-pairing/** -text -whitespace
+
+src/guarded_frontend_compare_20261116.py -text -whitespace
+
+src/companion_gpu_execution_20261116.py -text -whitespace
+
+src/run_owned_gpu_model_20261116.py -text -whitespace
+
+src/score_guarded_frontend_20261116.py -text -whitespace

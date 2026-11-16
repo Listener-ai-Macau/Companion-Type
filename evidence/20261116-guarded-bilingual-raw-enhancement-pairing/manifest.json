@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-16T22:17:08.026833+08:00",
+  "parent": "569a5de5d7024d91f1a8d067f3cd83c4fd61cb2d",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\protocol-r3.json",
+      "file": "protocol-r3.json",
+      "bytes": 14498,
+      "sha256": "e9945e1e4351f0e429d1371babb2efeabe62ff8881d2a37da9c4d2d187cf3c62"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\scoring-control-r3.json",
+      "file": "scoring-control-r3.json",
+      "bytes": 1992,
+      "sha256": "3853c132c388fc95f0b37d11541e7ac9c466fa5d21409ca8c56f7d6778665220"
+    },
+    {
+      "source": "work\\checkpoint_guarded_frontend_r52.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 1284,
+      "sha256": "8aa0d502f9be2ec8bece9d5e61bcd2783f38733e0dde76cb81c37df6f161b470"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/guarded_frontend_compare_20261116.py": "9f0b5c1bfe3bcfc4dfe5d48abdbe22af6518d3d823f033d64cee256856ce5169",
+    "src/companion_gpu_execution_20261116.py": "9d4674334f37266ef52d8c9bb1c3573452da8b7df230973babf7b2c969a86346",
+    "src/run_owned_gpu_model_20261116.py": "e2e1f814f2e138f4419d6b53cadf770520ec701f4b1e0086438fa38027070a90",
+    "src/score_guarded_frontend_20261116.py": "ecbde4453f64492077a4081b1ce5103329d6b516c1f500ff9c65c5c4a13fe432"
+  },
+  "state": "GUARDED_NATIVE_GPU_RAW24_RUNNING_PAIRED_FRONTEND_QUALITY_PENDING",
+  "trainingUpdates": 0,
+  "runtimeChangesSeparatelyPaired": true,
+  "oldFailedDefaultRecipeRetained": true,
+  "qualityQualified": false,
+  "saleQualified": false
+}

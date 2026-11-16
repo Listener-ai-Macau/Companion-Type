@@ -1,0 +1,30 @@
+{
+  "revision": 52,
+  "evidenceDirectory": "evidence/20261116-guarded-bilingual-raw-enhancement-pairing",
+  "sources": [
+    "src/guarded_frontend_compare_20261116.py",
+    "src/companion_gpu_execution_20261116.py",
+    "src/run_owned_gpu_model_20261116.py",
+    "src/score_guarded_frontend_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\protocol-r3.json",
+      "name": "protocol-r3.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\frcrn-front-end-r1\\scoring-control-r3.json",
+      "name": "scoring-control-r3.json"
+    }
+  ],
+  "commitMessage": "Freeze guarded GPU bilingual raw controls and paired enhancement comparison",
+  "claims": {
+    "state": "GUARDED_NATIVE_GPU_RAW24_RUNNING_PAIRED_FRONTEND_QUALITY_PENDING",
+    "trainingUpdates": 0,
+    "runtimeChangesSeparatelyPaired": true,
+    "oldFailedDefaultRecipeRetained": true,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}
