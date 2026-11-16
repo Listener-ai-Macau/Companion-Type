@@ -57,11 +57,13 @@ def main():
    with (a.run/'native.log').open('a',encoding='utf-8') as f:f.write(str(level)+' '+message)
   cpp.set_log_callback(native_log)
   session.state()
+  inference_binding={'schema':'companion.local-moss-cpu.v1','modelSha256':B['model']['sha256'],'nativeCommit':cpp.native_commit(),
+   'runtimeContractSha256':B['runtimeContractSha256'],'workerSha256':B['workerSha256'],'languagePolicy':'Original bilingual model, language=None, no reference or count hints.',
+   'generation':'Unmodified native greedy/EOS, f16 KV, no repetition guard or word postediting.'}
+  for file in (session.root/'results').glob('*.json'):
+   assert read_json(file)['inferenceBinding']==inference_binding,'Preserve the old session; cached model/runtime/language policy differs'
   with cpp.Model(B['model']['file'],backend='cpu',no_mmap=False) as model:
    assert model.device.kind=='cpu';state.update(backend=model.backend,device=model.device.description);save()
-   inference_binding={'schema':'companion.local-moss-cpu.v1','modelSha256':B['model']['sha256'],'nativeCommit':cpp.native_commit(),
-    'runtimeContractSha256':B['runtimeContractSha256'],'workerSha256':B['workerSha256'],'languagePolicy':'Original bilingual model, language=None, no reference or count hints.',
-    'generation':'Unmodified native greedy/EOS, f16 KV, no repetition guard or word postediting.'}
    while True:
     if stopping():raise InterruptedError('Owned stop/deadline; confirmed PCM and immutable results retained')
     jobs=scheduled_jobs(session)

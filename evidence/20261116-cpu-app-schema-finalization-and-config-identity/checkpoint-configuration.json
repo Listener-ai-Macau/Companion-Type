@@ -1,0 +1,113 @@
+{
+  "revision": 38,
+  "evidenceDirectory": "evidence/20261116-cpu-app-schema-finalization-and-config-identity",
+  "commitMessage": "Prepare CPU app stream and finalization entry with exact words and compatible cache identity",
+  "sources": [
+    "src/companion_local_moss_cpu_worker_20261116.py",
+    "src/companion_moss_speaker_document_20261116.py",
+    "src/companion_local_moss_cpu_stream_20261116.py",
+    "src/companion_local_moss_cpu_pipeline_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\binding-before-cache-identity-check.json",
+      "name": "cpu-pcm-candidate-r1/binding-before-cache-identity-check.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\binding-before-empty-draft-scheduling.json",
+      "name": "cpu-pcm-candidate-r1/binding-before-empty-draft-scheduling.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\binding-before-intake-contention.json",
+      "name": "cpu-pcm-candidate-r1/binding-before-intake-contention.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\binding-before-minimal-parser.json",
+      "name": "cpu-pcm-candidate-r1/binding-before-minimal-parser.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\binding-before-portable-runtime-identity.json",
+      "name": "cpu-pcm-candidate-r1/binding-before-portable-runtime-identity.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\binding.json",
+      "name": "cpu-pcm-candidate-r1/binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\dualroute-protocol.json",
+      "name": "cpu-pcm-candidate-r1/dualroute-protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\parser-control.json",
+      "name": "cpu-pcm-candidate-r1/parser-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-contract-before-portable-identity.json",
+      "name": "cpu-pcm-candidate-r1/runtime-contract-before-portable-identity.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\runtime-contract.json",
+      "name": "cpu-pcm-candidate-r1/runtime-contract.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\scheduler-control.json",
+      "name": "cpu-pcm-candidate-r1/scheduler-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\worker-before-cache-identity-check.py",
+      "name": "cpu-pcm-candidate-r1/worker-before-cache-identity-check.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\worker-before-empty-draft-scheduling.py",
+      "name": "cpu-pcm-candidate-r1/worker-before-empty-draft-scheduling.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\worker-before-intake-contention.py",
+      "name": "cpu-pcm-candidate-r1/worker-before-intake-contention.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-pcm-candidate-r1\\worker-before-minimal-parser.py",
+      "name": "cpu-pcm-candidate-r1/worker-before-minimal-parser.py"
+    },
+    {
+      "source": "work\\freeze_cpu_pcm_cache_identity_20261116.py",
+      "name": "preparation/freeze_cpu_pcm_cache_identity_20261116.py"
+    },
+    {
+      "source": "work\\make_cpu_runtime_identity_portable_20261116.py",
+      "name": "preparation/make_cpu_runtime_identity_portable_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_model_package_20261116.py",
+      "name": "preparation/prepare_cpu_model_package_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_extended_validation_20261116.py",
+      "name": "preparation/prepare_cpu_extended_validation_20261116.py"
+    },
+    {
+      "source": "work\\prepare_cpu_checkpoint38_20261116.py",
+      "name": "preparation/prepare_cpu_checkpoint38_20261116.py"
+    }
+  ],
+  "claims": {
+    "state": "CPU_APP_SCHEMA_STREAM_FINALIZATION_AND_PACKAGE_SOURCE_PREPARED_EXECUTION_PENDING",
+    "cpuPercent": 25,
+    "nativeThreads": 4,
+    "familyPrivateBytes": 2147483648,
+    "actualWindowsLowMemoryStop": true,
+    "cpuCandidateActualNeuralIntegrationExecuted": false,
+    "fullBundleIdentityInFinalCacheKey": true,
+    "existingMismatchedCacheRejectedBeforeModelInit": true,
+    "wordsPreservedByFinalizationInvariant": true,
+    "originalNativeArtifactWriteAuditPropagated": true,
+    "optionalGpuPluginExcludedCpuBytesUnchanged": true,
+    "activeFull4AsrAndSourceConversionOutputsExcluded": true,
+    "newWeightTraining": false,
+    "productDefaultChanged": false,
+    "installedPackageChanged": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}
