@@ -18,7 +18,8 @@ struct Excluded {source:usize,reason:String}
 struct Outline {purpose:String,topics:Vec<Topic>,#[serde(default)]excluded:Vec<Excluded>}
 
 fn eligible(session:&CompanionV1HostSession,minutes:&CompanionV1MeetingMinutes,template:Option<&MinutesTemplate>)->bool {
-    session.meeting_notes.is_empty() && template.map_or(true,|t|t.id=="meeting")
+    !minutes.markdown.contains("## 主题脉络")
+        && session.meeting_notes.is_empty() && template.map_or(true,|t|t.id=="meeting")
         && minutes.source=="llm_deepseek" && minutes.quality=="final" && minutes.summary.len()>=2
         && minutes.processing.as_ref().map_or(true,|p|p.complete)
         && (session.duration_ms>120_000 || session.transcript_text.chars().count()>500)
