@@ -125,9 +125,9 @@ fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSe
             let original=if path=="purpose"||path.ends_with(".title"){target.as_str()}else{target.get("text").and_then(Value::as_str)}.ok_or_else(fail)?;
             let mut shortened=original.to_string();
             for part in parts {let fragment=part.as_str().ok_or_else(fail)?;if fragment.is_empty()||shortened.matches(fragment).count()!=1{return Err(fail());}shortened=shortened.replacen(fragment,"",1);}
-            // Exact deletion of all optional detail is the same authorized
-            // removal as remove:true, not an invalid empty displayed entry.
-            if shortened.trim().is_empty()&&path.contains(".details["){removals.push(pointer);continue;}
+            // Deleting all text from an allowed entry has the same meaning as
+            // remove:true. Required purpose/title still cannot be removed.
+            if shortened.trim().is_empty()&&path!="purpose"&&!path.ends_with(".title"){removals.push(pointer);continue;}
             if path=="purpose"||path.ends_with(".title"){*target=json!(shortened);}else{target.as_object_mut().ok_or_else(fail)?.insert("text".into(),json!(shortened));}
             continue;
         }
@@ -177,7 +177,7 @@ fn unverified_claims(doc:&Document,verified:Option<&Document>)->Vec<Value> {
 pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
     let source=sentences(units);
     let wire=units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>();
-    let mut current=doc.clone();let mut attempted=HashSet::new();let mut recovered_format=false;
+    let mut current=doc.clone();let mut attempted:HashMap<String,String>=HashMap::new();let mut recovered_format=false;
     let mut verified_claims=verified.map(claims).unwrap_or_default().into_iter().map(|c|(c["path"].as_str().unwrap().to_string(),c)).collect::<HashMap<_,_>>();
     for round in 0..=2 {
         let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
@@ -210,16 +210,21 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
         let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|json!({"path":c.path,"status":c.status,"reason":c.reason,"evidence":c.evidence})).collect::<Vec<_>>();
         if issues.is_empty(){return Ok(current);}
         let allowed=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|c.path.clone()).collect::<HashSet<_>>();
-        // A second repair is allowed only for newly detected paths. Repeated
-        // unresolved feedback stops immediately; never reroll until accepted.
-        if round==2||allowed.iter().any(|p|attempted.contains(p)) {
+        // Repeated feedback stops. In the gated coverage candidate, a rewrite
+        // that introduced an unclear ASR term gets one deletion-only repair;
+        // it cannot receive another paraphrase or reset the two-repair bound.
+        let repeated=audit.claim_audit.iter().filter(|c|c.status!="supported").any(|c|{
+            attempted.get(&c.path).is_some_and(|old|!(super::coverage::enabled()&&old!="unclear"&&c.status=="unclear"))
+        });
+        if round==2||repeated {
             validate(&raw,&expected,&source)?;
             return Err("纪要复审仍有未解决表述，已有结果保留。".into());
         }
         let unclear=audit.claim_audit.iter().filter(|c|c.status=="unclear").map(|c|c.path.clone()).collect::<HashSet<_>>();
         let stage=if round==0{"source-factual-repair"}else{"source-factual-repair-2"};
         let raw=super::request(endpoint,model,key,client,REPAIR,json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,"deletionOnlyPaths":unclear}),false,start,trace,stage)?;
-        current=apply_changes(&raw,&current,&allowed,&unclear,units)?;attempted.extend(allowed);
+        current=apply_changes(&raw,&current,&allowed,&unclear,units)?;
+        for issue in audit.claim_audit.iter().filter(|c|c.status!="supported"){attempted.insert(issue.path.clone(),issue.status.clone());}
     }
     Err("纪要复审未完成，已有结果保留。".into())
 }
@@ -299,6 +304,15 @@ mod tests {
         let units=vec![Unit{id:"u000".into(),text:"预算还没批。那个例子听不清。".into()}];let allowed=HashSet::from(["topics[0].details[0]".to_string()]);
         let patch=json!({"changes":[{"path":"topics[0].details[0]","delete":["含糊例子待核对。"]}]}).to_string();
         let fixed=apply_changes(&patch,&doc,&allowed,&allowed,&units).unwrap();assert!(fixed.topics[0].details.is_empty());assert_eq!(fixed.topics[0].points[0].text,doc.topics[0].points[0].text);
+    }
+    #[test]
+    fn automatic_brief_exact_whole_entry_deletion_matches_explicit_removal(){
+        let doc:Document=serde_json::from_value(json!({"purpose":"采购条件","topics":[{"title":"预算","points":[{"kind":"status","text":"预算未批。","sources":["u000"]},{"kind":"opinion","text":"含糊例子待核对。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap();
+        let units=vec![Unit{id:"u000".into(),text:"预算还没批。那个例子听不清。".into()}];let allowed=HashSet::from(["topics[0].points[1]".to_string()]);
+        let exact=json!({"changes":[{"path":"topics[0].points[1]","delete":["含糊例子待核对。"]}]}).to_string();
+        let remove=json!({"changes":[{"path":"topics[0].points[1]","remove":true}]}).to_string();
+        let a=apply_changes(&exact,&doc,&allowed,&allowed,&units).unwrap();let b=apply_changes(&remove,&doc,&allowed,&allowed,&units).unwrap();
+        assert_eq!(serde_json::to_value(&a).unwrap(),serde_json::to_value(&b).unwrap());assert_eq!(a.topics[0].points[0].text,doc.topics[0].points[0].text);
     }
     #[test]
     fn automatic_brief_fact_repair_changes_only_audited_fields(){
