@@ -1,0 +1,77 @@
+{
+  "state": "ONE_OFFICIAL_ENGLISH_TRANSDUCER_ASSETS_READY_NO_INFERENCE",
+  "at": "2026-11-16T20:41:20+08:00",
+  "repository": "nvidia/parakeet-tdt-0.6b-v3",
+  "revision": "541d1f99c6b0c3cd0b11a95167540bb8edefd82b",
+  "completed": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\model.safetensors",
+      "sha256": "3a2026366188c8c68598edbbff92f8d11590a08e0ae2e6775544e7b07d6a5e11",
+      "bytes": 2508311120
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\config.json",
+      "sha256": "e747b85e1bdfd300c8b8ac63bac8dd5221f8fe9bc275b48d06c735fcd6971b6e",
+      "bytes": 1153
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\generation_config.json",
+      "sha256": "b141de6ec6d7f982ece13f98f604e3fe1807ea9c0e839185d0ab7064604209d0",
+      "bytes": 289
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\processor_config.json",
+      "sha256": "8346a93a3b987fa1dec57a78f045cd0817d21786589a5a096b41a57a446fd1d7",
+      "bytes": 392
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\tokenizer.json",
+      "sha256": "bd321b096832a3f270bd3b2a88823957920f1a5c5ada71114a26ea729d0cbe91",
+      "bytes": 1159960
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\tokenizer_config.json",
+      "sha256": "0b2fe0037599ee335f0b972fa682bf0ece74e4ccfec755cb7daa3405d3d3e874",
+      "bytes": 290
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\README.md",
+      "sha256": "7a4306a43f395e3a716e77f1d81c03db18a0a355d7b566bb1d6307213ba0302b",
+      "bytes": 42888
+    }
+  ],
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "selectionEvidence": "Official NVIDIA model card reports AMI11.31WER and a token-duration transducer architecture; the older CTC0.6b reports16.30. Select only this one transducer, no model family grid. These scores use different benchmark conditions and do not predict our distant-mic result.",
+  "primarySources": [
+    "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+    "https://huggingface.co/docs/transformers/main/model_doc/parakeet"
+  ],
+  "scope": "English-only conditional role in a bilingual specialist composition; no Chinese capability or automatic language routing claim. Run only after interpreting current native-context and frontend comparisons.",
+  "finishedAt": "2026-11-16T20:42:14+08:00",
+  "nativeModelRoot": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116",
+  "tensorDtypes": {
+    "I64": 24,
+    "F32": 699
+  },
+  "nativeDtypeConversionAllowed": false,
+  "license": "CC-BY-4.0 as published; model card preserved, product license review separate.",
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 9328,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 15224832,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

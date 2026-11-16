@@ -1,0 +1,55 @@
+{
+  "revision": 49,
+  "evidenceDirectory": "evidence/english-transducer49",
+  "sources": [
+    "src/english_transducer_worker_20261116.py",
+    "src/score_english_transducer_20261116.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\asset-receipt.json",
+      "name": "english-transducer-r1/asset-receipt.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\asset-preparation.json",
+      "name": "english-transducer-r1/asset-preparation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\protocol.json",
+      "name": "english-transducer-r1/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\scoring-control.json",
+      "name": "english-transducer-r1/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\audio-only.json",
+      "name": "english-transducer-r1/audio-only.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_english_transducer_20261116.py",
+      "name": "preparation-source/prepare_english_transducer_20261116.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\freeze_english_transducer_20261116.py",
+      "name": "preparation-source/freeze_english_transducer_20261116.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\native-context180-r1\\score-ES2003b.json",
+      "name": "native-context180-score-ES2003b.json"
+    }
+  ],
+  "commitMessage": "Prepare one exact F32 English transducer role and preserve completed native-context English result",
+  "claims": {
+    "state": "ENGLISH_TDT_ROLE_PREPARED_NATIVE_CONTEXT_ENGLISH_WHOLE_GAIN_MEASURED_CHINESE_IN_PROGRESS",
+    "englishTdtNeuralCalls": 0,
+    "trainingUpdates": 0,
+    "nativeContextEnglishErrors": 1051,
+    "nativeContextEnglishReferenceWords": 5781,
+    "baselineEnglishErrors": 1384,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "automaticBilingualRoutingValidated": false
+  }
+}

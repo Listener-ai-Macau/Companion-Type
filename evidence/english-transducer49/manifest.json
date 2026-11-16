@@ -1,0 +1,79 @@
+{
+  "at": "2026-11-16T21:00:42.044228+08:00",
+  "parent": "e5803d4828e89e700622f63c152354607aa5c2a3",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\asset-receipt.json",
+      "file": "english-transducer-r1/asset-receipt.json",
+      "bytes": 3477,
+      "sha256": "995fdc1aadeae7cd113757d9a59920fa056a2aa1f72ffa419df80a5e7dbbfee6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\asset-preparation.json",
+      "file": "english-transducer-r1/asset-preparation.json",
+      "bytes": 2563,
+      "sha256": "907a463d59da136e5ea3891f57adf28c9ee9da6845c4bb0ae50bf42cb0f55fc4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\protocol.json",
+      "file": "english-transducer-r1/protocol.json",
+      "bytes": 8062,
+      "sha256": "8d6c1c1363569803a0fef9b1a38c4d9450a3452c8adab8cf71139876b26bf7f5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\scoring-control.json",
+      "file": "english-transducer-r1/scoring-control.json",
+      "bytes": 3099,
+      "sha256": "5859399b0f0deb7a0e5a2db91c0016ec083e0927f539e46860bfcb3b50dca600"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\audio-only.json",
+      "file": "english-transducer-r1/audio-only.json",
+      "bytes": 3281,
+      "sha256": "0a5cad62790ae6fd5a558a2b239e5380d9121450b1564a5908be7a28062400c9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_english_transducer_20261116.py",
+      "file": "preparation-source/prepare_english_transducer_20261116.py",
+      "bytes": 6248,
+      "sha256": "3a7bb9ab910b6a637e48458c2386f3f5f8c25f38bc64c888a49e57a0b0b2e0c2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\freeze_english_transducer_20261116.py",
+      "file": "preparation-source/freeze_english_transducer_20261116.py",
+      "bytes": 4668,
+      "sha256": "74515e628859ed6e35a4366ccb26d2483485fa297d6dd2b2aff68ff5470e1d21"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\native-context180-r1\\score-ES2003b.json",
+      "file": "native-context180-score-ES2003b.json",
+      "bytes": 4382,
+      "sha256": "8c54a0f0201ba92f104c7884baa19df4fea11a6560d8b86491a4eaea2baf26d7"
+    },
+    {
+      "source": "work\\protect_transducer49.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 2946,
+      "sha256": "e3951742828bd3f4b1a6a2bb4abeb0717f12d30a7b49bb864f6ae32eb88eeac2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/english_transducer_worker_20261116.py": "2e071a979d3c5b67053ec84188e7e23c5cd7b54c68c40a98c323afe138bd0a15",
+    "src/score_english_transducer_20261116.py": "6d4d40117cd8030adde50bc1a9dcf79ae7a0da249b3bfba9c5168d938df82c46"
+  },
+  "state": "ENGLISH_TDT_ROLE_PREPARED_NATIVE_CONTEXT_ENGLISH_WHOLE_GAIN_MEASURED_CHINESE_IN_PROGRESS",
+  "englishTdtNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "nativeContextEnglishErrors": 1051,
+  "nativeContextEnglishReferenceWords": 5781,
+  "baselineEnglishErrors": 1384,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "automaticBilingualRoutingValidated": false
+}

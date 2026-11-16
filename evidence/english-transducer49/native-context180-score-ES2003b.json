@@ -1,0 +1,153 @@
+{
+  "state": "COMPLETE_NATIVE_CONTEXT180_ORIGINAL_RAW_TEXT_SCORED_NOT_PRODUCT_QUALIFIED",
+  "at": "2026-11-16T20:45:36+08:00",
+  "meeting": "ES2003b",
+  "language": "English",
+  "protocolSha256": "947213776a96625b29164f17bc6c9381b0087f9ca0a5d0f034b9c48380769547",
+  "completedSourceSha256": "e15a9e7d3f0552412ae3a5f4ffeb65d2dfe1f12fc79b374ce75fc566553dbd50",
+  "scorerSha256": "2b137ddbf8facc9eaa24c7cb78563485a94b6611ade302951250fc1a5a2622e1",
+  "rawText": {
+    "referenceUnits": 5781,
+    "hypothesisUnits": 5721,
+    "errors": 1051,
+    "errorRate": 0.18180245632243555,
+    "counts": {
+      "replace": 507,
+      "delete": 302,
+      "insert": 242
+    }
+  },
+  "baselineRawText": {
+    "referenceUnits": 5781,
+    "hypothesisUnits": 4969,
+    "errors": 1384,
+    "errorRate": 0.23940494724096179,
+    "counts": {
+      "replace": 426,
+      "delete": 885,
+      "insert": 73
+    }
+  },
+  "rawEditsReduced": 333,
+  "relativeRawErrorReduction": 0.24060693641618497,
+  "rawFivePercentGate": false,
+  "rawTwoPercentTarget": false,
+  "allOriginalFramesCoveredExactlyOnce": true,
+  "audioSeconds": 2109.813375,
+  "inferenceSeconds": 1802.545242299966,
+  "realTimeFactor": 0.8543624112250999,
+  "blocks": [
+    {
+      "id": "ES2003b-context180-0000",
+      "frames": 2880000,
+      "segments": 32,
+      "generatedTokens": 1004,
+      "seconds": 137.12266279998585
+    },
+    {
+      "id": "ES2003b-context180-0001",
+      "frames": 2880000,
+      "segments": 13,
+      "generatedTokens": 858,
+      "seconds": 122.6170112999971
+    },
+    {
+      "id": "ES2003b-context180-0002",
+      "frames": 2880000,
+      "segments": 22,
+      "generatedTokens": 1093,
+      "seconds": 157.93826239999908
+    },
+    {
+      "id": "ES2003b-context180-0003",
+      "frames": 2880000,
+      "segments": 15,
+      "generatedTokens": 771,
+      "seconds": 110.32163169998967
+    },
+    {
+      "id": "ES2003b-context180-0004",
+      "frames": 2880000,
+      "segments": 23,
+      "generatedTokens": 818,
+      "seconds": 109.34851769999659
+    },
+    {
+      "id": "ES2003b-context180-0005",
+      "frames": 2880000,
+      "segments": 24,
+      "generatedTokens": 913,
+      "seconds": 128.8752475999936
+    },
+    {
+      "id": "ES2003b-context180-0006",
+      "frames": 2880000,
+      "segments": 21,
+      "generatedTokens": 953,
+      "seconds": 136.85465730000578
+    },
+    {
+      "id": "ES2003b-context180-0007",
+      "frames": 2880000,
+      "segments": 29,
+      "generatedTokens": 1103,
+      "seconds": 159.10416299999633
+    },
+    {
+      "id": "ES2003b-context180-0008",
+      "frames": 2880000,
+      "segments": 42,
+      "generatedTokens": 1377,
+      "seconds": 196.8971886000072
+    },
+    {
+      "id": "ES2003b-context180-0009",
+      "frames": 2880000,
+      "segments": 38,
+      "generatedTokens": 1288,
+      "seconds": 190.62513729999773
+    },
+    {
+      "id": "ES2003b-context180-0010",
+      "frames": 2880000,
+      "segments": 47,
+      "generatedTokens": 1455,
+      "seconds": 203.68502869999793
+    },
+    {
+      "id": "ES2003b-context180-0011",
+      "frames": 2077014,
+      "segments": 39,
+      "generatedTokens": 1106,
+      "seconds": 149.15573389999918
+    }
+  ],
+  "invalidLocalTimeSegments": [],
+  "allLexicalResidualsCounted": true,
+  "residualUnparsed": [],
+  "allLocalSpeakerIdsCountedForRawText": true,
+  "continuousWholeMeetingSpeakerIdentityMeasured": false,
+  "globalSpeakerActivityOrDERChangedByThisRawASR": false,
+  "originalReferenceAndGatesChanged": false,
+  "trainingUpdates": 0,
+  "newInferenceByScorer": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "scope": "Previously seen original far-field single-channel development source, no reference-selected cropping. Each fixed180s block resets native speaker IDs, so this raw-text result cannot qualify diarization or per-person transcript quality.",
+  "limits": {
+    "pid": 25860,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 61673472,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

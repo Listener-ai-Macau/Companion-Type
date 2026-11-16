@@ -1,0 +1,44 @@
+{
+  "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\protocol.json",
+  "references": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json",
+  "qwenBaseline": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\raw-text-baseline.json",
+  "mossBaseline": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\score.json",
+  "admissionGate": {
+    "maximumEnglishErrors": 99,
+    "referenceWords": 709,
+    "minimumRelativeErrorReductionVsPriorMoss124": 0.2,
+    "eachMeetingAtMostPriorMossErrors": true,
+    "actionIfPass": "Complete-source validation, not default promotion",
+    "actionIfFail": "Retain and retire without a temperature/beam/model/dtype grid"
+  },
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\protocol.json",
+      "sha256": "8d6c1c1363569803a0fef9b1a38c4d9450a3452c8adab8cf71139876b26bf7f5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\english_transducer_worker_20261116.py",
+      "sha256": "2e071a979d3c5b67053ec84188e7e23c5cd7b54c68c40a98c323afe138bd0a15"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_english_transducer_20261116.py",
+      "sha256": "6d4d40117cd8030adde50bc1a9dcf79ae7a0da249b3bfba9c5168d938df82c46"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json",
+      "sha256": "1bd61c8c2b9438a520b0f16879d94d7e320f1a7ea7fec72d74ad7d1047909f83"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\raw-text-baseline.json",
+      "sha256": "cc469e7acfda616f9dcc4775c722e6d5fbca3c77e7acccc6f750130099b2b8f4"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\score.json",
+      "sha256": "48a266fb161a1c2424901761f35c5bc0719eeb789671f18bdfb0e365c84409c3"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_sequential_meetings_20261115.py",
+      "sha256": "d27ad4d4253029d8f64e3a9e5ef1b3d0ef281471237ed9218160701ef6d1ea89"
+    }
+  ]
+}

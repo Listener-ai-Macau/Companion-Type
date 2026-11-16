@@ -431,3 +431,9 @@ evidence/frcrn-frontend48/** -text -whitespace
 src/frontend_component_compare_20261116.py -text -whitespace
 
 src/score_frontend_component_20261116.py -text -whitespace
+
+evidence/english-transducer49/** -text -whitespace
+
+src/english_transducer_worker_20261116.py -text -whitespace
+
+src/score_english_transducer_20261116.py -text -whitespace
