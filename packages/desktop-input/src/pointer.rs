@@ -188,6 +188,14 @@ impl Pointer {
     fn reset_motion(&mut self){self.smoother.reset();self.relative.reset();self.tap_motion.clear_rates();if let Some(c)=self.coarse.as_mut(){c.clear_motion();}self.filter_x=OneEuro::default();self.filter_y=OneEuro::default();self.target=None;self.history.clear();}
     fn drag_delay(&self)->f64{if self.settings.relative_direct{0.18}else{0.35}}
     fn press_point(&self,at:f64)->Point {self.history.iter().rev().find(|(t,_)|*t<=at).or(self.history.front()).map(|(_,p)|*p).unwrap_or(self.shown)}
+    fn stabilize_laser_click(&mut self,point:Point) {
+        if self.settings.mapping!=Mapping::Laser{return;}
+        // Keep the upstream historical landing point, but discard the old
+        // interpolation/1-Euro tail. A later real aim sample remains live.
+        self.shown=point;self.target=Some(point);
+        self.filter_x=OneEuro{value:Some(point.x),velocity:0.};
+        self.filter_y=OneEuro{value:Some(point.y),velocity:0.};
+    }
     pub fn pause(&mut self,paused:bool) {self.release();self.reset_motion();self.contacts.cancel();self.metrics.paused=paused;}
     pub fn calibrate(&mut self) {self.release();self.reset_motion();self.contacts.cancel();self.coarse=None;self.desktop_device_ready=None;self.fusion=fusion::Fusion::default();self.metrics.calibrated=false;self.metrics.calibration_samples=0;self.calibration_start=None;self.bias_sum=[0.;3];self.accel_sum=[0.;3];self.heading=0.;self.heading_zero=None;self.elevation_zero=None;self.laser_offset=Point::default();self.last_projected=None;}
     /// A newly verified link may start a new device sequence/time domain.
@@ -278,7 +286,7 @@ impl Pointer {
             if let Some((at,point))=self.pressed.take(){
                 if self.metrics.dragging{self.queued.push(Button::Up);}
                 else if measured_at-at>=self.drag_delay(){self.queued.push(Button::Down(point));self.queued.push(Button::Up);}
-                else {self.queued.push(Button::Click(point));}
+                else {self.stabilize_laser_click(point);self.queued.push(Button::Click(point));}
             }
             self.metrics.dragging=false;self.wait_release=false;
             if self.settings.relative_direct{self.smoother.reset();self.relative.reset();}
@@ -294,7 +302,7 @@ impl Pointer {
             }
             else{
                 if let Some(c)=self.coarse.as_mut(){c.contact(event.sensor_ms);}
-                self.shown=point;self.queued.push(Button::Click(point));
+                self.shown=point;self.stabilize_laser_click(point);self.queued.push(Button::Click(point));
                 // The tap has already supplied its historical click position.
                 // Do not replay the impact's last angular target afterwards.
                 if self.settings.relative_direct{self.smoother.reset();self.relative.reset();}

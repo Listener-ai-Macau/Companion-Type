@@ -412,6 +412,28 @@ fn explicit_screen_center_releases_drag_and_aligns_the_next_pose_to_the_primary_
     assert!(p.frame(0.66,b).position.unwrap().x>1280.);
 }
 #[test]
+fn laser_click_cancels_the_shell_impacts_pending_follow_target() {
+    let mut p=aim_pointer();let point=p.shown;
+    for n in 3..23 {let at=n as f64*0.01;p.sample(aim_sample(n,n*10,0.),at,bounds());p.frame(at,bounds());}
+    p.sample(aim_sample(23,230,-10.),0.23,bounds());p.frame(0.23,bounds());
+    assert!(p.shown.x>point.x);
+    p.control(Control{sequence:1,sensor_ms:230,events:CLICK}).unwrap();
+    let clicked=p.frame(0.235,bounds());assert_eq!(clicked.buttons,vec![Button::Click(point)]);
+    assert!(clicked.position.is_none(),"shell click replayed the impact target: {:?}",clicked.position);
+    assert!(p.frame(0.24,bounds()).position.is_none());assert_eq!(p.shown,point);
+}
+#[test]
+fn laser_click_cancels_the_short_keys_pending_follow_target() {
+    let mut p=aim_pointer();let point=p.shown;
+    for n in 3..23 {let at=n as f64*0.01;p.sample(aim_sample(n,n*10,0.),at,bounds());p.frame(at,bounds());}
+    p.control(Control{sequence:1,sensor_ms:220,events:DOWN}).unwrap();
+    p.sample(aim_sample(23,230,-10.),0.23,bounds());p.frame(0.23,bounds());
+    p.control(Control{sequence:2,sensor_ms:240,events:UP}).unwrap();
+    let clicked=p.frame(0.245,bounds());assert_eq!(clicked.buttons,vec![Button::Click(point)]);
+    assert!(clicked.position.is_none(),"short click replayed the pressed target: {:?}",clicked.position);
+    assert!(p.frame(0.25,bounds()).position.is_none());assert_eq!(p.shown,point);
+}
+#[test]
 fn cim4_matches_independent_c_fixture_and_preserves_angles_rates_gravity() {
     let hex="43494d31040303ff07000000f0ffffffd204000000206d37d7f66b03b831ec81";
     let bytes=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect::<Vec<_>>();
