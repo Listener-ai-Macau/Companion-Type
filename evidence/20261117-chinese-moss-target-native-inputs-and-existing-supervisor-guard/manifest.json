@@ -1,0 +1,419 @@
+{
+  "at": "2026-11-17T14:08:41.194785+08:00",
+  "parent": "407b6ff7627bd5567bcd86785ff0b2922f8d8b1c",
+  "entries": [
+    {
+      "source": "work\\verify_chinese_moss_native_inputs_20261117.py",
+      "file": "tools/verify_chinese_moss_native_inputs_20261117.py",
+      "bytes": 6165,
+      "sha256": "8753be3925e6f9045022cc5e62ceee3ee0af3cf11e9a6e04da01a3dbd23c9df2"
+    },
+    {
+      "source": "work\\record_chinese_moss_input_contract_20261117.py",
+      "file": "tools/record_chinese_moss_input_contract_20261117.py",
+      "bytes": 9705,
+      "sha256": "3e6281a8ea57bfcec4a8f9f7363082389091da99eb50796cb1328c1678b2a514"
+    },
+    {
+      "source": "work\\verify_tdt_supervisor_lifecycle_20261117.py",
+      "file": "tools/verify_tdt_supervisor_lifecycle_20261117.py",
+      "bytes": 6044,
+      "sha256": "183b611e1206548e2b200e6f35193b7930fb9874cd3e634185cc59c4ff323293"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-native-input-contract-20261117.json",
+      "file": "chinese/contract-summary.json",
+      "bytes": 3902,
+      "sha256": "e1161ebf3c4c292ef0488ff855e1718a2d88a7afc002df64a31e9652696e2139"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\export-r1\\completed.json",
+      "file": "chinese/export-r1/completed.json",
+      "bytes": 4448,
+      "sha256": "5075c651749ad8eb660ebcb8f85e7d88d09cc2733219a10143c00ac4b1861b58"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\native-input-r1\\completed.json",
+      "file": "chinese/native-input-r1/completed.json",
+      "bytes": 5327,
+      "sha256": "aec712a8077d32ae04cd2a4c3536f1d4fd6aa2c0d40ed57afcfda645d40c0c33"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\upstream\\finetune.py",
+      "file": "chinese/upstream/finetune.py",
+      "bytes": 5947,
+      "sha256": "ffb8fdc617d0010a7a64dd0a774cec642b58966dbef051fa37875d2f983f1fc7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\upstream\\FINETUNING.md",
+      "file": "chinese/upstream/FINETUNING.md",
+      "bytes": 1683,
+      "sha256": "81faaf68246334143ede4d5c22337c7ddc754f85e74f2f08f61dc5620a8f599a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\upstream\\inference_utils.py",
+      "file": "chinese/upstream/inference_utils.py",
+      "bytes": 8784,
+      "sha256": "1d97700b83ed95438be2e3a59529b3726d7bf7f7cdd488ad2097180bad15b86b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\upstream\\LICENSE",
+      "file": "chinese/upstream/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\nonneural-worker.py",
+      "file": "supervisor/supervisor-lifecycle-before-r1/nonneural-worker.py",
+      "bytes": 952,
+      "sha256": "bae1d4d7457cfb44bb687d86202789a20bae6036dad02e9d6e65b8168720e995"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\supervisor-at-test.py",
+      "file": "supervisor/supervisor-lifecycle-before-r1/supervisor-at-test.py",
+      "bytes": 5499,
+      "sha256": "3c416c6f43ebfb159af8f6e98d479164249136585d2e99a0301eacbec7e9e8f6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\supervisor-fixture-wrapper.py",
+      "file": "supervisor/supervisor-lifecycle-before-r1/supervisor-fixture-wrapper.py",
+      "bytes": 801,
+      "sha256": "c38c6a6530c254763737f7cd6ac274507bfccfa3536b242180b20ccaf43e22a7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\identity\\protocol.json",
+      "file": "supervisor/supervisor-lifecycle-before-r1/identity/protocol.json",
+      "bytes": 548,
+      "sha256": "da39fcf96fce143b43c75c99b4a8cc81337272f4ca01eb12d607251346354b44"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\identity\\supervisor-output.log",
+      "file": "supervisor/supervisor-lifecycle-before-r1/identity/supervisor-output.log",
+      "bytes": 663,
+      "sha256": "4c190fbc9cb5feffcb2c3aa4a722f31c0b2081d6ed15c8ca5267c9dc6ba1b1d1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\identity\\run\\fixture-child-identity.json",
+      "file": "supervisor/supervisor-lifecycle-before-r1/identity/run/fixture-child-identity.json",
+      "bytes": 661,
+      "sha256": "a364bef83d0b821ae5f82a33ba8f59f81054909f34b5a833e289641450ee9a58"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\identity\\run\\baseline\\state.json",
+      "file": "supervisor/supervisor-lifecycle-before-r1/identity/run/baseline/state.json",
+      "bytes": 250,
+      "sha256": "cadd3109c34757125512eaab2ce82752e9101ed7775c7c3bd095ffd288ff481a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\identity\\run\\supervisor-baseline\\started.json",
+      "file": "supervisor/supervisor-lifecycle-before-r1/identity/run/supervisor-baseline/started.json",
+      "bytes": 1042,
+      "sha256": "8b98256854e1c2d55d157ccb282342c528e50961f636a253b3b326d45bfdae99"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\identity\\run\\supervisor-baseline\\stdout.log",
+      "file": "supervisor/supervisor-lifecycle-before-r1/identity/run/supervisor-baseline/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\nonneural-worker.py",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r2/nonneural-worker.py",
+      "bytes": 952,
+      "sha256": "bae1d4d7457cfb44bb687d86202789a20bae6036dad02e9d6e65b8168720e995"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\supervisor-at-test.py",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r2/supervisor-at-test.py",
+      "bytes": 5499,
+      "sha256": "3c416c6f43ebfb159af8f6e98d479164249136585d2e99a0301eacbec7e9e8f6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\supervisor-fixture-wrapper.py",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r2/supervisor-fixture-wrapper.py",
+      "bytes": 801,
+      "sha256": "c38c6a6530c254763737f7cd6ac274507bfccfa3536b242180b20ccaf43e22a7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\identity\\protocol.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r2/identity/protocol.json",
+      "bytes": 556,
+      "sha256": "c18e584ffe9407101dc5ce5694ab9256841c393748253c326fe54ec588ffadd5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\identity\\supervisor-output.log",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r2/identity/supervisor-output.log",
+      "bytes": 671,
+      "sha256": "822ec792819a338ae3edd49593836be0ae6c195883f665a9a13465d5aad61276"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\identity\\run\\fixture-child-identity.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r2/identity/run/fixture-child-identity.json",
+      "bytes": 685,
+      "sha256": "0fef612658417f252fadf1d393abef704db4be5c2ce934c69ac1fa7fd29ed39b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\identity\\run\\baseline\\state.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r2/identity/run/baseline/state.json",
+      "bytes": 250,
+      "sha256": "49982dabcabcf8474c357e60a0a09299def1e61372172d689a95ed8daedcf5f4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\identity\\run\\supervisor-baseline\\started.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r2/identity/run/supervisor-baseline/started.json",
+      "bytes": 1066,
+      "sha256": "24e7f27f231b88e8c47bbecc6fe303316f07e9202a4914b62ee9e61ecdcc6f3f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\identity\\run\\supervisor-baseline\\stdout.log",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r2/identity/run/supervisor-baseline/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\write\\protocol.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r2/write/protocol.json",
+      "bytes": 553,
+      "sha256": "0c7e4b8f97a9caa2df8adf6a9e6780a5f52361e8ceec9e2d7e03993bfcbe0a6d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\write\\supervisor-output.log",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r2/write/supervisor-output.log",
+      "bytes": 892,
+      "sha256": "f93fd698cdde7a22545005eda1ada1bf203799e837416a86f66d188fabd32ea6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\write\\run\\supervisor-baseline\\stdout.log",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r2/write/run/supervisor-baseline/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\nonneural-worker.py",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/nonneural-worker.py",
+      "bytes": 952,
+      "sha256": "bae1d4d7457cfb44bb687d86202789a20bae6036dad02e9d6e65b8168720e995"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\result.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/result.json",
+      "bytes": 2123,
+      "sha256": "9194f78cc087fdb1fe0511783a50097033381b516f1cc23e407bd1f63ca6837a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\supervisor-at-test.py",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/supervisor-at-test.py",
+      "bytes": 5499,
+      "sha256": "3c416c6f43ebfb159af8f6e98d479164249136585d2e99a0301eacbec7e9e8f6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\supervisor-fixture-wrapper.py",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/supervisor-fixture-wrapper.py",
+      "bytes": 1139,
+      "sha256": "fc5c2070d589efc63bcb3b5fe94f4c04116534976e642026630f99f02c56963f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\verify_tdt_supervisor_lifecycle_20261117.py",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/verify_tdt_supervisor_lifecycle_20261117.py",
+      "bytes": 6044,
+      "sha256": "183b611e1206548e2b200e6f35193b7930fb9874cd3e634185cc59c4ff323293"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\protocol.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/protocol.json",
+      "bytes": 556,
+      "sha256": "e7e337c033b7c4e31c9aba0ca4002cd18fae206420b15ffec034aa5186143ba0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\supervisor-output.log",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/supervisor-output.log",
+      "bytes": 671,
+      "sha256": "7fae8b1d716d0888cbffab49dd821310afba7c3d4d988ba93d0ca0384ba4a804"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\run\\fixture-child-identity.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/run/fixture-child-identity.json",
+      "bytes": 685,
+      "sha256": "c48b0130aa2f2761f121f68e8c07b4599875b8dc9efbdae4acf44962da6b2ea2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\run\\fixture-spawn-identity.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/run/fixture-spawn-identity.json",
+      "bytes": 685,
+      "sha256": "c48b0130aa2f2761f121f68e8c07b4599875b8dc9efbdae4acf44962da6b2ea2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\run\\baseline\\state.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/run/baseline/state.json",
+      "bytes": 250,
+      "sha256": "fbaa874bf3c17583c8424d373977487a5318989644ad7cab0a7fc10bbd9f25de"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\run\\supervisor-baseline\\started.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/run/supervisor-baseline/started.json",
+      "bytes": 1066,
+      "sha256": "78ca26594ac959a9e1fff6a263ab97c323958c8514efd29eb5e61d62fb424e39"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\run\\supervisor-baseline\\stdout.log",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/run/supervisor-baseline/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\protocol.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/protocol.json",
+      "bytes": 554,
+      "sha256": "b2e79abb6928228649674b2634161a1ed75d354f8871eca6f2805bbe5cbf4750"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\supervisor-output.log",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/supervisor-output.log",
+      "bytes": 1483,
+      "sha256": "360f4110687135edcccf50fdc3c16041da89a7ead109b81b3c9ef8147920aecf"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\fixture-child-identity.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/fixture-child-identity.json",
+      "bytes": 680,
+      "sha256": "e6a604dd52ae55cfba5d31ed110bce3a38c12e2c864d4fbfdd6d1128d2f5814d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\fixture-spawn-identity.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/fixture-spawn-identity.json",
+      "bytes": 680,
+      "sha256": "e6a604dd52ae55cfba5d31ed110bce3a38c12e2c864d4fbfdd6d1128d2f5814d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\baseline\\completed.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/baseline/completed.json",
+      "bytes": 249,
+      "sha256": "fbb8bf5e6d8e79fbf13643ebcf897c58f4380972b031324a899fb3360fe7ca13"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\baseline\\state.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/baseline/state.json",
+      "bytes": 249,
+      "sha256": "fbb8bf5e6d8e79fbf13643ebcf897c58f4380972b031324a899fb3360fe7ca13"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\supervisor-baseline\\completed.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/supervisor-baseline/completed.json",
+      "bytes": 1610,
+      "sha256": "33797b3b942214f451f435f2902115a3b484a65a7e2a8ed027b27d8d946bdbc7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\supervisor-baseline\\started.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/supervisor-baseline/started.json",
+      "bytes": 1061,
+      "sha256": "3e3b5f66ca2977c784c947b895d6a8a8bb6d2dfe44e3da7812af0c62aea7c29a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\supervisor-baseline\\stdout.log",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/supervisor-baseline/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\protocol.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/protocol.json",
+      "bytes": 555,
+      "sha256": "e47f42fa3e050b58883df6e6baf300ae1b0ad44683b016d7a640e2bce0d2e030"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\supervisor-output.log",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/supervisor-output.log",
+      "bytes": 1559,
+      "sha256": "b3af2b2eb3545cb7bd9fec3462ec801e5a7af071fa6b1ca354311fa9c9a43a66"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\run\\fixture-child-identity.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/run/fixture-child-identity.json",
+      "bytes": 682,
+      "sha256": "b40e304a36ebb589e236740397733e843d4f524f7ca3566bc9e516340427dac5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\run\\fixture-spawn-identity.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/run/fixture-spawn-identity.json",
+      "bytes": 682,
+      "sha256": "b40e304a36ebb589e236740397733e843d4f524f7ca3566bc9e516340427dac5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\run\\baseline\\state.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/run/baseline/state.json",
+      "bytes": 250,
+      "sha256": "3e74a68a2ea88371903603dca5395905dff6288919a4fe07a9c0c83cb59f8200"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\run\\supervisor-baseline\\completed.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/run/supervisor-baseline/completed.json",
+      "bytes": 1686,
+      "sha256": "cf07b8a4fbbc63536ae4f375e7430c3d9799a1595dab13b6c3b095520ab146ec"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\run\\supervisor-baseline\\started.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/run/supervisor-baseline/started.json",
+      "bytes": 1063,
+      "sha256": "310ef6d31760167034d563c7268cbda7cddfef0d66c95826b0f6c267451c6dbc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\run\\supervisor-baseline\\stdout.log",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/run/supervisor-baseline/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\write\\protocol.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/write/protocol.json",
+      "bytes": 553,
+      "sha256": "aa98ab66f7c5f7bb372ef4d090cb00e6133bb60a5fc036470c6127a28c9f706f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\write\\supervisor-output.log",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/write/supervisor-output.log",
+      "bytes": 892,
+      "sha256": "4f2617c83c858ddd7ab0e7a70034399320dc6dca682c1bd1c55659b9bc93c3cc"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\write\\run\\fixture-spawn-identity.json",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/write/run/fixture-spawn-identity.json",
+      "bytes": 678,
+      "sha256": "115440313a26d842ffda18498adfa0617c0fe9425ff7fa06bf46cd983f329611"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\write\\run\\supervisor-baseline\\stdout.log",
+      "file": "supervisor/supervisor-lifecycle-existing-guard-r3/write/run/supervisor-baseline/stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "work\\checkpoint_chinese_native_inputs_r68.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 20095,
+      "sha256": "4d30e5aea74357856909ca777115cce37baebf9eece24022db1ec92db8244ff4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/prepare_chinese_moss_inputs_20261117.py": "5376a97cd4f098ea737999050e2f04ecebbed0ea491bf5df2288741f9821f487",
+    "src/moss_target_only_batch_20261117.py": "d78db4e2cadbe23aab59290b8d06d2eb73e8713dfb98dd303c843f7190aa0ae5"
+  },
+  "state": "CHINESE_MOSS_5027_TARGETS_AND_ACTUAL_NATIVE_FRONTEND_LABELS_VERIFIED_NO_TRAINING",
+  "examples": 5027,
+  "actualNativeSignalClips": 4,
+  "paddingConventions": 2,
+  "trainingAdmitted": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "cpuOrIntegratedGpuTraining": false,
+  "rawTrainingTextAudioWeightsOrCredentialsIncluded": false,
+  "newQualityResultMeasured": false,
+  "originalEvaluationOrResourceGatesChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

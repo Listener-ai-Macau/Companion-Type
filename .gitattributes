@@ -529,3 +529,9 @@ src/webrtc_presence_worker_20261117.py -text -whitespace
 evidence/20261117-published-frontend-cpu-blas-discipline-and-chinese-train-intake/** -text -whitespace
 
 evidence/20261117-primary-chinese-six-hour-singlemic-inputs/** -text -whitespace
+
+evidence/20261117-chinese-moss-target-native-inputs-and-existing-supervisor-guard/** -text -whitespace
+
+src/prepare_chinese_moss_inputs_20261117.py -text -whitespace
+
+src/moss_target_only_batch_20261117.py -text -whitespace

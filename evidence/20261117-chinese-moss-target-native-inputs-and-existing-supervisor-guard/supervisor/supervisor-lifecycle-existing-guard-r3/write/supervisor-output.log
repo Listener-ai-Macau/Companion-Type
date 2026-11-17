@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\language-specific-adaptation-r1\supervisor-lifecycle-existing-guard-r3\supervisor-fixture-wrapper.py", line 26, in <module>
+    m.main()
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\run_owned_tdt_adaptation_20261117.py", line 40, in main
+    atomic_json(owner/'started.json',{'pid':proc.pid,'createdAt':created,
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\language-specific-adaptation-r1\supervisor-lifecycle-existing-guard-r3\supervisor-fixture-wrapper.py", line 22, in fail_start
+    if Path(path).name=='started.json':raise OSError('NONNEURAL_FIXTURE_START_RECORD_FAILURE')
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: NONNEURAL_FIXTURE_START_RECORD_FAILURE

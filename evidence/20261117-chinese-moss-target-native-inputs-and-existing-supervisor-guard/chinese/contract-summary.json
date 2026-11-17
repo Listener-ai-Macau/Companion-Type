@@ -1,0 +1,72 @@
+{
+  "at": "2026-11-17T14:08:40+08:00",
+  "state": "CHINESE_MOSS_5027_TARGETS_AND_ACTUAL_NATIVE_FRONTEND_LABELS_VERIFIED_NO_TRAINING",
+  "officialTrainingGuide": "https://github.com/OpenMOSS/MOSS-Transcribe-Diarize/blob/main/FINETUNING.md",
+  "officialTrainingSource": "https://github.com/OpenMOSS/MOSS-Transcribe-Diarize/blob/main/finetune.py",
+  "sourceTrainingExamples": 5027,
+  "sourceAudioHours": 6.00075,
+  "sourceRawCharacters": 121579,
+  "conversationManifest": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\export-r1\\chinese-moss-conversations.jsonl",
+  "conversationManifestSha256": "6fb65cf1fe9855c05181723c3baad78462ba375e352369ec2fd9d50d1c8dc7e3",
+  "conversationManifestBytes": 11264835,
+  "supervisedTargetTokensIncludingEos": 159825,
+  "allOriginalRawTextAndExactFrameDurationsPreserved": true,
+  "allOfficialDatasetRowsParsed": true,
+  "allTokenizerRoundtripsAndTextPrefixBoundariesExact": true,
+  "nativeFrontendReceipt": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\native-input-r1\\completed.json",
+  "nativeFrontendReceiptSha256": "aec712a8077d32ae04cd2a4c3536f1d4fd6aa2c0d40ed57afcfda645d40c0c33",
+  "actualNativeFrontends": {
+    "selectedOriginalTrainingClips": 4,
+    "paddingConventions": [
+      "left",
+      "right"
+    ],
+    "originalSampleRange": [
+      32000,
+      267840
+    ],
+    "answerTokenRangeIncludingEos": [
+      18,
+      83
+    ],
+    "maximumLeftOrRightPaddingTokens": 234,
+    "expandedAudioPromptActuallyMeasured": true,
+    "allPromptAudioPlaceholderAndPaddingLabelsMasked": true,
+    "allTargetTokensAndExactlyOneEosSupervised": true,
+    "sameInputFeatureSha256BothPaddingSides": true
+  },
+  "promptCompatibility": {
+    "portableManifest": "Official three-message user/text, user/audio, assistant/text JSONL accepted by upstream dataset parser.",
+    "nativeBatch": "Uses current native audio-only inference prompt, then unchanged target+EOS. The portable user prompt is not inserted into the native request.",
+    "nativeAndPortablePromptInputsAreNotClaimedIdentical": true,
+    "nativeTargetMask": "Actual expanded prefix plus raw target IDs is checked exactly; padding offset is obtained from attention mask, not assumed to start at column zero."
+  },
+  "speakerScope": "S01 is anonymous and local to each isolated original utterance; source global ID remains provenance only. Not continuous speaker-identity or overlap training.",
+  "resources": {
+    "cpuPercent": 5,
+    "metadataPrivatePeakBytes": 160915456,
+    "signalPrivatePeakBytes": 900685824,
+    "metadataSeconds": 41.875,
+    "signalSeconds": 41.68699999999808,
+    "privateCommitCapBytes": 2147483648,
+    "modelInstances": 0,
+    "optimizerInstances": 0,
+    "newNeuralCalls": 0,
+    "parameterUpdates": 0,
+    "gpuInitialized": false,
+    "cpuOrIntegratedGpuTraining": false
+  },
+  "remaining": [
+    "Actual nativeGPU training forward/backward/loss/gradient/memory/checkpoint proof and fixed training recipe.",
+    "Original AISHELL cross-corpus person isolation is unproven; no original evaluation or final gate is changed.",
+    "Independent Chinese/English whole meetings, per-person text, facts and original final qualification."
+  ],
+  "trainingAdmitted": false,
+  "newWerCerOrDerMeasured": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "originalReferencesAudioAndResourceOrQualityGatesChanged": false,
+  "productDefaultChanged": false,
+  "exportReceipt": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\export-r1\\completed.json",
+  "exportReceiptSha256": "5075c651749ad8eb660ebcb8f85e7d88d09cc2733219a10143c00ac4b1861b58"
+}

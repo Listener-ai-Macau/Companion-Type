@@ -1,0 +1,96 @@
+{
+  "state": "PASS_5027_CHINESE_MOSS_OFFICIAL_CONVERSATION_TARGET_AND_TOKEN_CONTRACT_NOT_TRAINING_ADMISSION",
+  "at": "2026-11-17T14:00:25.399406+08:00",
+  "examples": 5027,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "modelTrainingAdmitted": false,
+  "qualityQualified": false,
+  "observedAt": "2026-11-17T14:01:07.265769+08:00",
+  "limits": {
+    "pid": 19204,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 160915456,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "frames": 345643200,
+  "sourceTextCharacters": 121579,
+  "manifest": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\export-r1\\chinese-moss-conversations.jsonl",
+  "manifestSha256": "6fb65cf1fe9855c05181723c3baad78462ba375e352369ec2fd9d50d1c8dc7e3",
+  "manifestBytes": 11264835,
+  "originalManifest": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\range-training-cohort-r2\\acquisition-r1\\chinese-train-original-nonoverlap.jsonl",
+  "originalManifestSha256": "c6cc4051ac13b21abd483f2d551a125cf224950408624f484f29720cb8f621f1",
+  "sourceIntegrityReceiptSha256": "1586431569dede2668193f862a1ccc5cf2875b8607ae0b06ffc537996414a66d",
+  "upstreamSources": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\upstream\\finetune.py",
+      "gitBlobSha1": "fe94110d41ab8851d2afd24089236b1f493cbaad",
+      "sha256": "ffb8fdc617d0010a7a64dd0a774cec642b58966dbef051fa37875d2f983f1fc7"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\upstream\\FINETUNING.md",
+      "gitBlobSha1": "187c1bd926f202ddde5b99fc55e277841d707a54",
+      "sha256": "81faaf68246334143ede4d5c22337c7ddc754f85e74f2f08f61dc5620a8f599a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\upstream\\inference_utils.py",
+      "gitBlobSha1": "f59091c6521b0b5606b35e9f789213056ce155ec",
+      "sha256": "1d97700b83ed95438be2e3a59529b3726d7bf7f7cdd488ad2097180bad15b86b"
+    }
+  ],
+  "nativeModelTokenizerSha256": "eb21895752d2380b32ae2e2c40905c7aa6c8e55c5e6ba33cd065bf77d4d53f74",
+  "nativeChatTemplateSha256": "66589dde1f4295eb2d9eb683873dc75f69aae611a42886f7fdfb168590067924",
+  "sourceSha256": "5376a97cd4f098ea737999050e2f04ecebbed0ea491bf5df2288741f9821f487",
+  "supervisedTargetTokensIncludingEos": 159825,
+  "minimumTarget": {
+    "id": "R1021_M1935-original-00281",
+    "frames": 32000,
+    "targetTokensIncludingEos": 18,
+    "prefixTokensBeforeActualAudioExpansion": 154
+  },
+  "maximumTarget": {
+    "id": "R0015_M0141-original-00170",
+    "frames": 233120,
+    "targetTokensIncludingEos": 83,
+    "prefixTokensBeforeActualAudioExpansion": 154
+  },
+  "paddingMaskCases": [
+    {
+      "paddingSide": "left",
+      "examples": 4,
+      "allPromptAudioPlaceholderAndPaddingMasked": true,
+      "allAnswerTokensAndExactlyOneEosSupervised": true
+    },
+    {
+      "paddingSide": "right",
+      "examples": 4,
+      "allPromptAudioPlaceholderAndPaddingMasked": true,
+      "allAnswerTokensAndExactlyOneEosSupervised": true
+    }
+  ],
+  "all5027OfficialDatasetParserAccepted": true,
+  "all5027RawTextsAndExactFrameDurationsPreserved": true,
+  "all5027TargetTokenizationRoundtripsExact": true,
+  "unexpandedPromptAndTargetTokenBoundariesExact": true,
+  "sourcePcmRewrittenOrDownloaded": false,
+  "anonymousPerClipSpeakerOnly": true,
+  "continuousSpeakerIdentityTraining": false,
+  "actualAudioFeatureExpansionAndForwardProof": false,
+  "actualGpuGradientOrModelTraining": false,
+  "actualProcessorTrainingLabelsProven": false,
+  "originalAishellCrossCorpusPersonIsolationProven": false,
+  "evaluationAudioOrTextgridRead": false,
+  "originalQualityAndResourceGatesChanged": false,
+  "torchImported": false,
+  "elapsedSeconds": 41.875
+}

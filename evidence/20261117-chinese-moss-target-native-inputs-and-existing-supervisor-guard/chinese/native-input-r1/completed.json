@@ -1,0 +1,153 @@
+{
+  "at": "2026-11-17T14:05:06.751648+08:00",
+  "state": "PASS_REAL_CHINESE_MOSS_NATIVE_SIGNAL_AUDIO_EXPANSION_AND_TARGET_ONLY_LEFT_RIGHT_LABELS_NO_MODEL",
+  "sourceSha256": "8753be3925e6f9045022cc5e62ceee3ee0af3cf11e9a6e04da01a3dbd23c9df2",
+  "batchHelperSha256": "d78db4e2cadbe23aab59290b8d06d2eb73e8713dfb98dd303c843f7190aa0ae5",
+  "modelInstances": 0,
+  "neuralCalls": 0,
+  "optimizerInstances": 0,
+  "parameterUpdates": 0,
+  "trainingEnabled": false,
+  "qualityQualified": false,
+  "completed": [
+    {
+      "paddingSide": "left",
+      "cases": [
+        {
+          "id": "R1021_M1935-original-00281",
+          "inputTokens": 129,
+          "expandedPromptTokens": 111,
+          "supervisedTargetTokensIncludingEos": 18,
+          "maskedPaddingTokens": 234,
+          "audioPadTokens": 25,
+          "originalSamplesSupplied": 32000
+        },
+        {
+          "id": "R0015_M0141-original-00170",
+          "inputTokens": 355,
+          "expandedPromptTokens": 272,
+          "supervisedTargetTokensIncludingEos": 83,
+          "maskedPaddingTokens": 8,
+          "audioPadTokens": 183,
+          "originalSamplesSupplied": 233120
+        },
+        {
+          "id": "R0015_M0144-original-00573",
+          "inputTokens": 363,
+          "expandedPromptTokens": 301,
+          "supervisedTargetTokensIncludingEos": 62,
+          "maskedPaddingTokens": 0,
+          "audioPadTokens": 210,
+          "originalSamplesSupplied": 267840
+        },
+        {
+          "id": "R0003_M0046-original-00700",
+          "inputTokens": 163,
+          "expandedPromptTokens": 135,
+          "supervisedTargetTokensIncludingEos": 28,
+          "maskedPaddingTokens": 200,
+          "audioPadTokens": 49,
+          "originalSamplesSupplied": 61920
+        }
+      ],
+      "inputFeatureShape": [
+        4,
+        80,
+        3000
+      ],
+      "inputFeatureSha256": "305602f554a6d7ecc6815dc7b5a6d698f7480f15c75444d9c0c84e925257b98b",
+      "allOriginalTargetTokensAndEosSupervisedOnly": true,
+      "allPromptExpandedAudioAndPaddingMasked": true
+    },
+    {
+      "paddingSide": "right",
+      "cases": [
+        {
+          "id": "R1021_M1935-original-00281",
+          "inputTokens": 129,
+          "expandedPromptTokens": 111,
+          "supervisedTargetTokensIncludingEos": 18,
+          "maskedPaddingTokens": 234,
+          "audioPadTokens": 25,
+          "originalSamplesSupplied": 32000
+        },
+        {
+          "id": "R0015_M0141-original-00170",
+          "inputTokens": 355,
+          "expandedPromptTokens": 272,
+          "supervisedTargetTokensIncludingEos": 83,
+          "maskedPaddingTokens": 8,
+          "audioPadTokens": 183,
+          "originalSamplesSupplied": 233120
+        },
+        {
+          "id": "R0015_M0144-original-00573",
+          "inputTokens": 363,
+          "expandedPromptTokens": 301,
+          "supervisedTargetTokensIncludingEos": 62,
+          "maskedPaddingTokens": 0,
+          "audioPadTokens": 210,
+          "originalSamplesSupplied": 267840
+        },
+        {
+          "id": "R0003_M0046-original-00700",
+          "inputTokens": 163,
+          "expandedPromptTokens": 135,
+          "supervisedTargetTokensIncludingEos": 28,
+          "maskedPaddingTokens": 200,
+          "audioPadTokens": 49,
+          "originalSamplesSupplied": 61920
+        }
+      ],
+      "inputFeatureShape": [
+        4,
+        80,
+        3000
+      ],
+      "inputFeatureSha256": "305602f554a6d7ecc6815dc7b5a6d698f7480f15c75444d9c0c84e925257b98b",
+      "allOriginalTargetTokensAndEosSupervisedOnly": true,
+      "allPromptExpandedAudioAndPaddingMasked": true
+    }
+  ],
+  "observedAt": "2026-11-17T14:05:48.434746+08:00",
+  "limits": {
+    "pid": 22500,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 900685824,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "selectedIds": [
+    "R1021_M1935-original-00281",
+    "R0015_M0141-original-00170",
+    "R0015_M0144-original-00573",
+    "R0003_M0046-original-00700"
+  ],
+  "selection": "Shortest answer, longest answer, longest audio, first fixed source; training data only.",
+  "blasThreadPin": {
+    "library": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Lib/site-packages/_rocm_sdk_core/bin/rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "sourceManifestSha256": "6fb65cf1fe9855c05181723c3baad78462ba375e352369ec2fd9d50d1c8dc7e3",
+  "processorSourceSha256": "1534e35adbd8af7a02d963655b7273b2b6657096ee921bec044533593dc92e70",
+  "actualAudioFeatureExpansionProvenOnSelectedInputs": true,
+  "actualModelForwardBackwardProven": false,
+  "trainingAdmitted": false,
+  "gpuInitialized": false,
+  "cpuOrIntegratedGpuTraining": false,
+  "originalAishellCrossCorpusPersonIsolationProven": false,
+  "torchVersion": "2.11.0+rocm10.0.0",
+  "transformersVersion": "5.22.1",
+  "elapsedSeconds": 41.68699999999808
+}

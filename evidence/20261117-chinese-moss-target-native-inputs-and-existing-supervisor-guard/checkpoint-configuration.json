@@ -1,0 +1,283 @@
+{
+  "revision": 68,
+  "evidenceDirectory": "evidence/20261117-chinese-moss-target-native-inputs-and-existing-supervisor-guard",
+  "sources": [
+    "src/prepare_chinese_moss_inputs_20261117.py",
+    "src/moss_target_only_batch_20261117.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "work\\verify_chinese_moss_native_inputs_20261117.py",
+      "name": "tools/verify_chinese_moss_native_inputs_20261117.py"
+    },
+    {
+      "source": "work\\record_chinese_moss_input_contract_20261117.py",
+      "name": "tools/record_chinese_moss_input_contract_20261117.py"
+    },
+    {
+      "source": "work\\verify_tdt_supervisor_lifecycle_20261117.py",
+      "name": "tools/verify_tdt_supervisor_lifecycle_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-native-input-contract-20261117.json",
+      "name": "chinese/contract-summary.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\export-r1\\completed.json",
+      "name": "chinese/export-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\native-input-r1\\completed.json",
+      "name": "chinese/native-input-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\upstream\\finetune.py",
+      "name": "chinese/upstream/finetune.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\upstream\\FINETUNING.md",
+      "name": "chinese/upstream/FINETUNING.md"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\upstream\\inference_utils.py",
+      "name": "chinese/upstream/inference_utils.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\chinese-moss-contract-r1\\upstream\\LICENSE",
+      "name": "chinese/upstream/LICENSE"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\nonneural-worker.py",
+      "name": "supervisor/supervisor-lifecycle-before-r1/nonneural-worker.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\supervisor-at-test.py",
+      "name": "supervisor/supervisor-lifecycle-before-r1/supervisor-at-test.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\supervisor-fixture-wrapper.py",
+      "name": "supervisor/supervisor-lifecycle-before-r1/supervisor-fixture-wrapper.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\identity\\protocol.json",
+      "name": "supervisor/supervisor-lifecycle-before-r1/identity/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\identity\\supervisor-output.log",
+      "name": "supervisor/supervisor-lifecycle-before-r1/identity/supervisor-output.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\identity\\run\\fixture-child-identity.json",
+      "name": "supervisor/supervisor-lifecycle-before-r1/identity/run/fixture-child-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\identity\\run\\baseline\\state.json",
+      "name": "supervisor/supervisor-lifecycle-before-r1/identity/run/baseline/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\identity\\run\\supervisor-baseline\\started.json",
+      "name": "supervisor/supervisor-lifecycle-before-r1/identity/run/supervisor-baseline/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-before-r1\\identity\\run\\supervisor-baseline\\stdout.log",
+      "name": "supervisor/supervisor-lifecycle-before-r1/identity/run/supervisor-baseline/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\nonneural-worker.py",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r2/nonneural-worker.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\supervisor-at-test.py",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r2/supervisor-at-test.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\supervisor-fixture-wrapper.py",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r2/supervisor-fixture-wrapper.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\identity\\protocol.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r2/identity/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\identity\\supervisor-output.log",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r2/identity/supervisor-output.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\identity\\run\\fixture-child-identity.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r2/identity/run/fixture-child-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\identity\\run\\baseline\\state.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r2/identity/run/baseline/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\identity\\run\\supervisor-baseline\\started.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r2/identity/run/supervisor-baseline/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\identity\\run\\supervisor-baseline\\stdout.log",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r2/identity/run/supervisor-baseline/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\write\\protocol.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r2/write/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\write\\supervisor-output.log",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r2/write/supervisor-output.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r2\\write\\run\\supervisor-baseline\\stdout.log",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r2/write/run/supervisor-baseline/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\nonneural-worker.py",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/nonneural-worker.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\result.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\supervisor-at-test.py",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/supervisor-at-test.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\supervisor-fixture-wrapper.py",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/supervisor-fixture-wrapper.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\verify_tdt_supervisor_lifecycle_20261117.py",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/verify_tdt_supervisor_lifecycle_20261117.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\protocol.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\supervisor-output.log",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/supervisor-output.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\run\\fixture-child-identity.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/run/fixture-child-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\run\\fixture-spawn-identity.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/run/fixture-spawn-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\run\\baseline\\state.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/run/baseline/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\run\\supervisor-baseline\\started.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/run/supervisor-baseline/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\run\\supervisor-baseline\\stdout.log",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/identity/run/supervisor-baseline/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\protocol.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\supervisor-output.log",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/supervisor-output.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\fixture-child-identity.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/fixture-child-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\fixture-spawn-identity.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/fixture-spawn-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\baseline\\completed.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/baseline/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\baseline\\state.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/baseline/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\supervisor-baseline\\completed.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/supervisor-baseline/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\supervisor-baseline\\started.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/supervisor-baseline/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\normal\\run\\supervisor-baseline\\stdout.log",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/normal/run/supervisor-baseline/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\protocol.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\supervisor-output.log",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/supervisor-output.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\run\\fixture-child-identity.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/run/fixture-child-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\run\\fixture-spawn-identity.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/run/fixture-spawn-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\run\\baseline\\state.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/run/baseline/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\run\\supervisor-baseline\\completed.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/run/supervisor-baseline/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\run\\supervisor-baseline\\started.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/run/supervisor-baseline/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\thermal\\run\\supervisor-baseline\\stdout.log",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/thermal/run/supervisor-baseline/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\write\\protocol.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/write/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\write\\supervisor-output.log",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/write/supervisor-output.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\write\\run\\fixture-spawn-identity.json",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/write/run/fixture-spawn-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\write\\run\\supervisor-baseline\\stdout.log",
+      "name": "supervisor/supervisor-lifecycle-existing-guard-r3/write/run/supervisor-baseline/stdout.log"
+    }
+  ],
+  "commitMessage": "Prepare source-bound Chinese MOSS targets and verify actual native signal and masked labels",
+  "claims": {
+    "state": "CHINESE_MOSS_5027_TARGETS_AND_ACTUAL_NATIVE_FRONTEND_LABELS_VERIFIED_NO_TRAINING",
+    "examples": 5027,
+    "actualNativeSignalClips": 4,
+    "paddingConventions": 2,
+    "trainingAdmitted": false,
+    "newNeuralCalls": 0,
+    "parameterUpdates": 0,
+    "cpuOrIntegratedGpuTraining": false,
+    "rawTrainingTextAudioWeightsOrCredentialsIncluded": false,
+    "newQualityResultMeasured": false,
+    "originalEvaluationOrResourceGatesChanged": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

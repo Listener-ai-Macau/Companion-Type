@@ -1,0 +1,66 @@
+{
+  "state": "PASS_REAL_NONNEURAL_SUPERVISOR_EXCEPTION_THERMAL_AND_NORMAL_LIFECYCLES",
+  "at": "2026-11-17T13:48:15.013883+08:00",
+  "supervisorSha256": "3c416c6f43ebfb159af8f6e98d479164249136585d2e99a0301eacbec7e9e8f6",
+  "cases": [
+    {
+      "scenario": "identity",
+      "supervisorExitCode": 1,
+      "childPid": 25032,
+      "childCreatedAt": 1794894492.5326025,
+      "aliveAfterSupervisorExit": false,
+      "testHarnessStoppedOnlyItsVerifiedOrphan": false,
+      "supervisorCleanupReceipt": null
+    },
+    {
+      "scenario": "write",
+      "supervisorExitCode": 1,
+      "childPid": 23360,
+      "childCreatedAt": 1794894493.174997,
+      "aliveAfterSupervisorExit": false,
+      "testHarnessStoppedOnlyItsVerifiedOrphan": false,
+      "supervisorCleanupReceipt": null
+    },
+    {
+      "scenario": "thermal",
+      "supervisorExitCode": 1,
+      "childPid": 25732,
+      "childCreatedAt": 1794894493.307496,
+      "aliveAfterSupervisorExit": false,
+      "testHarnessStoppedOnlyItsVerifiedOrphan": false,
+      "supervisorCleanupReceipt": null
+    },
+    {
+      "scenario": "normal",
+      "supervisorExitCode": 0,
+      "childPid": 9324,
+      "childCreatedAt": 1794894493.9733744,
+      "aliveAfterSupervisorExit": false,
+      "testHarnessStoppedOnlyItsVerifiedOrphan": false,
+      "supervisorCleanupReceipt": null
+    }
+  ],
+  "hardwareTemperatureGuardMockedForLifecycleOnly": true,
+  "noRealGpuProtocolAdmitted": true,
+  "neuralCalls": 0,
+  "parameterUpdates": 0,
+  "torchImported": false,
+  "cpuOrIntegratedGpuTraining": false,
+  "actualGpuCleanupCompatibilityProven": false,
+  "limits": {
+    "pid": 24648,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 38899712,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

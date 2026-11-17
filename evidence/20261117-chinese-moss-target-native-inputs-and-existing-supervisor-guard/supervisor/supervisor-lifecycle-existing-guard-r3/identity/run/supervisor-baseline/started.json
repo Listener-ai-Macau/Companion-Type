@@ -1,0 +1,22 @@
+{
+  "pid": 25032,
+  "createdAt": 1794894492.5326025,
+  "at": "2026-11-17T13:48:12.538121+08:00",
+  "command": [
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\nonneural-worker.py",
+    "--protocol",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\protocol.json",
+    "--phase",
+    "baseline",
+    "--run",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\supervisor-lifecycle-existing-guard-r3\\identity\\run"
+  ],
+  "protocolSha256": "e7e337c033b7c4e31c9aba0ca4002cd18fae206420b15ffec034aa5186143ba0",
+  "workerSha256": "bae1d4d7457cfb44bb687d86202789a20bae6036dad02e9d6e65b8168720e995",
+  "noAutomaticRetry": true,
+  "initialCpuTemperature": {
+    "fixture": true,
+    "actualTemperatureRead": false
+  }
+}

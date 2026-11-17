@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "E:\CodexData\Companion\product-d1d2-20261114\joint-architecture-r1\language-specific-adaptation-r1\supervisor-lifecycle-before-r1\supervisor-fixture-wrapper.py", line 19, in <module>
+    m.main()
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\run_owned_tdt_adaptation_20261117.py", line 48, in main
+    require(current['pid']==proc.pid and current['phase']==a.phase,'Worker identity mismatch')
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\meeting_acoustic_contract_20261116.py", line 36, in require
+    raise RuntimeError(message)
+RuntimeError: Worker identity mismatch
