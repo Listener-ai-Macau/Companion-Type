@@ -7,6 +7,7 @@
 material=true仅当差异会让人误解主要结论、取舍、机制、范围，或执行错行动。仅背景/措辞/可推知的同义表达差异material=false。
 问题问预算上限及采购状态时，旁带报价数字不构成额外必答项；问题问哪些事项未决时，尚未解决/本次未定可以同义概括。
 sourceEvidence也可能含含糊口语；不得猜词，不得把含糊原话当确定结论强迫纪要写入。纪要中别处信息不要假设存在。
+uncertainSourceSpans若非空，是另一次原文审查定位的含混短语，且程序已确认短语确实属于本题原话。它只说明这些字词无法当作确定信息，不免除整题：仍检查同段里清楚的核心机制、角色、条件和否定是否保留；仅因缺少该含混称谓/举例而有的差异material=false，并在difference说明无法确认。不能为了覆盖率要求把它重新写进纪要，也不能把与它无关的清楚漏项放过。
 covered必须给实际承载答案的summaryIds；partial可给已有部分；missing应空。仅有主题名字却无机制时判missing或partial。
 逐题返回严格JSON，不增不漏：{"checks":[{"id":"q00","result":"covered","material":false,"difference":"","summaryIds":["s000"]}]}
 result只能covered/partial/missing/contradicted；difference最多100字，covered时空。summaryIds必须来自该题summaryEvidence。

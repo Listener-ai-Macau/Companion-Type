@@ -147,13 +147,21 @@ fn decode_comparison(raw:&str,questions:&[Question],retrieved:&[Retrieval])->Res
     Ok(data.checks)
 }
 
+fn uncertain_source_spans(trace:&[Value],evidence:&[Evidence])->Vec<Value>{
+    let mut spans=Vec::new();
+    for span in trace.iter().filter_map(|call|call.get("sourceUncertainties").and_then(Value::as_array)).flatten(){
+        let Some(text)=span["text"].as_str().filter(|s|!s.trim().is_empty())else{continue;};
+        if evidence.iter().any(|e|span["source"].as_str()==Some(e.source.as_str())&&e.quote.contains(text))&&!spans.contains(span){spans.push(span.clone());}
+    }
+    spans
+}
 fn evaluate(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,questions:&[Question],start:Instant,trace:&mut Vec<Value>,round:usize)->Result<(Vec<Check>,Vec<SummaryUnit>),String>{
     let summary=summary_units(doc);let asked=questions.iter().map(|q|json!({"id":q.id,"question":q.question})).collect::<Vec<_>>();
     // Neither transcript nor source answers reach this request.
     let raw=super::request(endpoint,model,key,client,RETRIEVE,json!({"summaryUnits":summary,"questions":asked}),false,start,trace,&format!("coverage-retrieve-{round}"))?;
     let retrieved=decode_retrieval(&raw,questions,&summary)?;let known=summary.iter().map(|s|(s.id.as_str(),s)).collect::<HashMap<_,_>>();
     let indexed=retrieved.iter().map(|r|(r.id.as_str(),r)).collect::<HashMap<_,_>>();
-    let pairs=questions.iter().map(|q|json!({"id":q.id,"question":q.question,"importance":q.importance,"sourceEvidence":q.evidence,"summaryEvidence":indexed[q.id.as_str()].summary_ids.iter().map(|id|known[id.as_str()]).collect::<Vec<_>>()})).collect::<Vec<_>>();
+    let pairs=questions.iter().map(|q|json!({"id":q.id,"question":q.question,"importance":q.importance,"sourceEvidence":q.evidence,"uncertainSourceSpans":uncertain_source_spans(trace,&q.evidence),"summaryEvidence":indexed[q.id.as_str()].summary_ids.iter().map(|id|known[id.as_str()]).collect::<Vec<_>>()})).collect::<Vec<_>>();
     let raw=super::request(endpoint,model,key,client,COMPARE,json!({"pairs":pairs}),true,start,trace,&format!("coverage-compare-{round}"))?;
     Ok((decode_comparison(&raw,questions,&retrieved)?,summary))
 }
@@ -245,7 +253,7 @@ pub(super) fn complete(endpoint:&str,model:&str,key:&str,client:&reqwest::blocki
                 certificates.insert(check.id.clone(),Certificate{witnesses:check.summary_ids.iter().map(|id|{let s=known[id.as_str()];(s.path.clone(),signature(s))}).collect()});
             }else{
                 let q=indexed[check.id.as_str()];allowed.insert(q.id.clone());
-                issues.push(json!({"id":q.id,"question":q.question,"difference":check.difference,"sourceEvidence":q.evidence}));
+                issues.push(json!({"id":q.id,"question":q.question,"difference":check.difference,"sourceEvidence":q.evidence,"uncertainSourceSpans":uncertain_source_spans(trace,&q.evidence)}));
             }
         }
         if issues.is_empty(){return Ok(current);}
@@ -279,6 +287,17 @@ mod tests {
     use super::*;
     fn units()->Vec<Unit>{vec![Unit{id:"u000".into(),text:"预算尚未审批。\n不得先采购。".into()},Unit{id:"u001".into(),text:"王梅承诺周五提交报告。".into()}]}
     fn doc()->Document{serde_json::from_value(json!({"purpose":"确认采购前提","topics":[{"title":"采购","points":[{"kind":"status","text":"预算尚未审批。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap()}
+    #[test]
+    fn automatic_brief_coverage_uncertainty_is_an_exact_span_not_a_question_waiver(){
+        let evidence=vec![Evidence{source:"u000".into(),quote:"某个含混称谓。预算尚未审批，不能采购。".into()}];
+        let span=json!({"source":"u000","sentenceId":"e0000","text":"某个含混称谓"});
+        let trace=vec![json!({"sourceUncertainties":[span.clone(),span.clone(),{"source":"u001","text":"预算尚未审批"},{"source":"u000","text":"无此原话"}]})];
+        assert_eq!(uncertain_source_spans(&trace,&evidence),vec![span]);
+        let q=Question{id:"q00".into(),question:"采购前提？".into(),importance:"essential".into(),evidence};
+        let retrieval=vec![Retrieval{id:"q00".into(),summary_ids:vec![]}];
+        let missing=json!({"checks":[{"id":"q00","result":"missing","material":true,"difference":"仍须保留未审批不能采购的清楚条件","summaryIds":[]}]});
+        let decoded=decode_comparison(&missing.to_string(),&[q],&retrieval).unwrap();assert!(decoded[0].material);
+    }
     #[test]
     fn automatic_brief_coverage_evidence_uses_only_existing_original_sentence_ids(){
         let u=units();let source=super::super::factual_audit::evidence_sentences(&u);let window=u.iter().collect::<Vec<_>>();let primary=HashSet::from(["u000"]);
