@@ -120,7 +120,7 @@ fn validate(raw:&str,expected:&[Value],source:&[Sentence])->Result<(),String> {
 }
 fn check_cancellation(token:Option<&super::super::super::meeting_processing_job::Cancellation>)->Result<(),String>{
     if token.is_some_and(|t|t.requested()){return Err(super::super::super::meeting_processing_job::MINUTES_CANCELLED.into());}
-    super::super::super::meeting_processing_job::check_current()
+    super::check_current()
 }
 fn bind_supported_sources(doc:&Document,audit:&Audit,source:&[Sentence],units:&[Unit])->Result<Document,String>{
     let fail=||"纪要原话关联未完成，已有结果保留。".to_string();
@@ -153,7 +153,7 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     // document. Bound concurrency to three; every claim needs a verdict.
     if expected.is_empty(){return Ok(Audit{claim_audit:Vec::new(),format_kind:None});}
     let batches=if super::coverage::enabled(){expected.len().div_ceil(4).clamp(1,3)}else{1};let size=expected.len().div_ceil(batches);
-    let token=super::super::super::meeting_processing_job::current();check_cancellation(token.as_ref())?;
+    let token=super::current_cancellation();check_cancellation(token.as_ref())?;
     let results=std::thread::scope(|scope|{
         let workers=expected.chunks(size).enumerate().map(|(i,claims)|{
             let token=token.clone();let stage=if batches==1{stage.to_string()}else{format!("{stage}-batch-{i}")};
@@ -350,7 +350,7 @@ mod tests {
         use super::super::super::super::meeting_processing_job as job;
         let result=job::run("factual-parallel-test","factual-parallel-job",job::Kind::Minutes,||{
             let token=job::current().unwrap();let(ready_tx,ready_rx)=std::sync::mpsc::channel();let(release_tx,release_rx)=std::sync::mpsc::channel();
-            let worker=std::thread::spawn(move||{assert!(check_cancellation(Some(&token)).is_ok());ready_tx.send(()).unwrap();release_rx.recv().unwrap();check_cancellation(Some(&token))});
+            let worker=std::thread::spawn(move||super::super::with_parent_job(Some(token),||{assert!(super::super::current_cancellation().is_some());super::super::check_current()?;ready_tx.send(()).unwrap();release_rx.recv().unwrap();super::super::check_current()}));
             ready_rx.recv().unwrap();assert!(job::cancel("factual-parallel-test","factual-parallel-job").unwrap());release_tx.send(()).unwrap();
             assert_eq!(worker.join().unwrap().unwrap_err(),job::MINUTES_CANCELLED);Ok(())
         });

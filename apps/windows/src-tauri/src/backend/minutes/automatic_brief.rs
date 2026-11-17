@@ -17,6 +17,20 @@ const WALL_BUDGET:Duration=Duration::from_secs(240);
 // budget. Bound it separately; oversized inputs retain the resumable route.
 const MAX_REQUEST_BYTES:usize=96*1024;
 
+thread_local! {static PARENT_JOB:std::cell::RefCell<Option<super::super::meeting_processing_job::Cancellation>>=const{std::cell::RefCell::new(None)};}
+fn current_cancellation()->Option<super::super::meeting_processing_job::Cancellation>{
+    PARENT_JOB.with(|slot|slot.borrow().clone()).or_else(super::super::meeting_processing_job::current)
+}
+fn check_current()->Result<(),String>{
+    if current_cancellation().is_some_and(|token|token.requested()){return Err(super::super::meeting_processing_job::MINUTES_CANCELLED.into());}
+    super::super::meeting_processing_job::check_current()
+}
+fn with_parent_job<T>(token:Option<super::super::meeting_processing_job::Cancellation>,work:impl FnOnce()->Result<T,String>)->Result<T,String>{
+    struct Restore(Option<super::super::meeting_processing_job::Cancellation>);
+    impl Drop for Restore{fn drop(&mut self){PARENT_JOB.with(|slot|{slot.replace(self.0.take());});}}
+    let _restore=Restore(PARENT_JOB.with(|slot|slot.replace(token)));check_current()?;let result=work();check_current()?;result
+}
+
 #[derive(Debug,Clone,Deserialize,Serialize)]
 #[serde(deny_unknown_fields)]
 struct Entry {text:String,sources:Vec<String>}
@@ -173,18 +187,39 @@ fn source_first_input(input:&Value)->String {
 fn request(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,prompt:&str,input:Value,review:bool,start:Instant,trace:&mut Vec<Value>,stage:&str)->Result<String,String> {
     if prompt.len()+input.to_string().len()>MAX_REQUEST_BYTES{return Err("本场完整输入超出自动纪要上下文预算，原文保留。".into());}
     let remaining=WALL_BUDGET.saturating_sub(start.elapsed());if remaining<Duration::from_secs(5){return Err("自动纪要本次处理已到期限，已有结果保留。".into());}
-    super::super::meeting_processing_job::check_current()?;
+    check_current()?;
     let url=super::http_policy::endpoint(endpoint).map_err(super::safe_minutes_http_error)?;
     let mut body=json!({"model":model,"response_format":{"type":"json_object"},"max_tokens":if review{24576}else{8192},"messages":[{"role":"system","content":prompt},{"role":"user","content":source_first_input(&input)}]});
     if model.to_ascii_lowercase().starts_with("deepseek-"){body["thinking"]=json!({"type":if review{"enabled"}else{"disabled"}});if review{body["reasoning_effort"]=json!(if stage.starts_with("source-factual-")&&!stage.contains("repair")&&coverage::enabled(){"high"}else{"low"});}}
     let stage_start=Instant::now();
     let response=client.post(url).bearer_auth(key).timeout(remaining.min(Duration::from_secs(120))).json(&body).send().map_err(|e|super::safe_minutes_http_error(super::http_policy::Failure::from_reqwest(e)))?;
     let payload=super::http_policy::response_json(response,super::http_policy::MAX_RESPONSE_BYTES).map_err(super::safe_minutes_http_error)?;
-    super::super::meeting_processing_job::check_current()?;
+    check_current()?;
     let finish=payload.pointer("/choices/0/finish_reason").and_then(Value::as_str).unwrap_or("missing");
     let raw=payload.pointer("/choices/0/message/content").and_then(Value::as_str).ok_or("自动纪要没有返回内容，原文保留。")?;
     trace.push(json!({"stage":stage,"seconds":stage_start.elapsed().as_secs_f64(),"requestedModel":model,"servedModel":payload.get("model"),"finishReason":finish,"usage":payload.get("usage"),"response":raw}));
     if finish!="stop"{return Err("自动纪要返回不完整，未发布为完成结果。".into());}Ok(raw.to_string())
+}
+fn parallel_reviews(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant)->(Result<Document,String>,Result<coverage::Prepared,String>,Result<coverage::Omissions,String>,Vec<Value>){
+    let token=current_cancellation();
+    let(factual,coverage,omissions)=std::thread::scope(|scope|{
+        let factual_token=token.clone();let coverage_token=token.clone();let omissions_token=token;
+        let factual=scope.spawn(move||{let mut calls=Vec::new();let result=with_parent_job(factual_token,||factual_audit::review_and_repair(endpoint,model,key,client,doc,units,start,&mut calls));(result,calls)});
+        let coverage=scope.spawn(move||{let mut calls=Vec::new();let result=with_parent_job(coverage_token,||coverage::prepare(endpoint,model,key,client,doc,units,start,&mut calls));(result,calls)});
+        let omissions=scope.spawn(move||{let mut calls=Vec::new();let result=with_parent_job(omissions_token,||coverage::audit_omissions(endpoint,model,key,client,doc,units,start,&mut calls));(result,calls)});
+        let mut stopped=false;
+        while !factual.is_finished()||!coverage.is_finished()||!omissions.is_finished(){
+            // Mobile callbacks stay on this original thread; both subflows
+            // inherit only its shared cancellation token and original deadline.
+            if !stopped&&check_current().is_err(){stopped=true;}
+            std::thread::sleep(Duration::from_millis(100));
+        }
+        let factual=factual.join().unwrap_or_else(|_|(Err("纪要事实审查未正常完成，已有结果保留。".into()),Vec::new()));
+        let coverage=coverage.join().unwrap_or_else(|_|(Err("纪要覆盖核对未正常完成，已有结果保留。".into()),Vec::new()));
+        let omissions=omissions.join().unwrap_or_else(|_|(Err("纪要原文漏项审查未正常完成，已有结果保留。".into()),Vec::new()));
+        (factual,coverage,omissions)
+    });
+    let(factual,mut calls)=factual;let(coverage,other)=coverage;calls.extend(other);let(omissions,other)=omissions;calls.extend(other);(factual,coverage,omissions,calls)
 }
 pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,client:&reqwest::blocking::Client)->Result<CompanionV1MeetingMinutes,String> {
     let start=Instant::now();let units=source_units(&session.transcript_text);let anchors=constraints(&units);let mut trace=Vec::new();let mut traced_document=None;
@@ -230,8 +265,12 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             doc
         };
         traced_document=Some(doc.clone());
-        let doc=factual_audit::review_and_repair(endpoint,model,key,client,&doc,&units,start,&mut trace)?;
-        let doc=if coverage::enabled(){coverage::complete(endpoint,model,key,client,&doc,&units,start,&mut trace)?}else{doc};
+        let doc=if coverage::enabled(){
+            let(audited,prepared,omissions,calls)=parallel_reviews(endpoint,model,key,client,&doc,&units,start);trace.extend(calls);check_current()?;
+            let doc=audited?;traced_document=Some(doc.clone());
+            let prepared=coverage::combine_omissions(prepared?,omissions?)?;
+            coverage::complete_prepared(endpoint,model,key,client,&doc,&units,prepared,start,&mut trace)?
+        }else{factual_audit::review_and_repair(endpoint,model,key,client,&doc,&units,start,&mut trace)?};
         traced_document=Some(doc.clone());
         let mut minutes=base.clone();
         minutes.source="llm_deepseek".into();minutes.quality="final".into();minutes.processing=None;minutes.llm_note=None;
