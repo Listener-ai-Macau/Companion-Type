@@ -124,7 +124,7 @@ pub(in crate::backend::minutes) fn render(doc:&Document,units:&[Unit],speaker:Op
 }
 pub(in crate::backend::minutes) fn source_first_input(input:&Value)->String {
     let Some(object)=input.as_object()else{return input.to_string();};
-    let priority=["sourceUnits","sourceConstraints","readingBudget","previousDocument","document","draft","checkClaims","summaryUnits","questions","pairs","auditProblems","deletionOnlyPaths"];
+    let priority=["sourceUnits","sourceSentences","sourceConstraints","readingBudget","previousDocument","document","draft","checkClaims","summaryUnits","questions","pairs","auditProblems","deletionOnlyPaths"];
     let mut fields=Vec::new();
     for key in priority {if let Some(value)=object.get(key){fields.push(format!("{}:{}",json!(key),value));}}
     for(key,value)in object {if !priority.contains(&key.as_str()){fields.push(format!("{}:{}",json!(key),value));}}

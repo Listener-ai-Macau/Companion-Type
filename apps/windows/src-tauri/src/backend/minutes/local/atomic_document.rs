@@ -21,13 +21,14 @@ evidence列直接支持整条意思的原句id，最多8个；跨句支持要列
 只输出JSON：{\"facts\":[{\"evidence\":[\"e0000\"],\"role\":\"status\",\"owner\":null,\"due\":null,\"text\":\"一条完整认识\"}]}。由程序分配事实id，后续只按id分组，不会重写这些内容。"
 }
 pub(super) fn fact_input(source:&str)->Result<Value,String>{
-    canonical_brief::local_document::input(source)?;
+    let legacy=canonical_brief::local_document::input(source)?;
     let sentences=factual_audit::evidence_sentences(&source_units(source));
     let reconstructed=sentences.iter().map(|s|s["text"].as_str().unwrap_or("")).collect::<String>();
     if reconstructed!=source{return Err(fail());}
     // Parent-unit IDs are controller metadata; the writer needs only stable
     // sentence IDs and complete text. Avoid repeating both ID layers in context.
-    Ok(json!({"sourceSentences":sentences.iter().map(|s|json!({"id":s["id"],"text":s["text"]})).collect::<Vec<_>>()}))
+    Ok(json!({"sourceSentences":sentences.iter().map(|s|json!({"id":s["id"],"text":s["text"]})).collect::<Vec<_>>(),
+        "sourceConstraints":legacy["sourceConstraints"]}))
 }
 pub(super) fn fact_schema(source:&str)->Value{
     let sentences=factual_audit::evidence_sentences(&source_units(source));
@@ -155,6 +156,7 @@ mod tests{
     fn source_sentences_are_complete_and_grammar_does_not_force_prose_cutoffs(){
         let(s,_,_,_)=fixture();let input=fact_input(&s.transcript_text).unwrap();
         assert_eq!(input["sourceSentences"].as_array().unwrap().iter().map(|s|s["text"].as_str().unwrap()).collect::<String>(),s.transcript_text);
+        assert_eq!(input["sourceConstraints"],canonical_brief::local_document::input(&s.transcript_text).unwrap()["sourceConstraints"],"Keep the pre-existing literal scope/cost/negation attention input; not a reference answer or coverage certificate");
         let schema=fact_schema(&s.transcript_text);assert!(schema["properties"]["facts"]["items"]["properties"]["text"].get("maxLength").is_none());
         let(_,_,mut f,_)=fixture();f["facts"][0]["text"]=json!("长".repeat(91));assert!(parse_bank(&f.to_string(),&s.transcript_text).is_err());
     }
