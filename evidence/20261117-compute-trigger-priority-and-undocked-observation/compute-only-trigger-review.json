@@ -1,0 +1,196 @@
+{
+  "at": "2026-11-17T09:57:47+08:00",
+  "state": "GPU_COMPUTE_DOCK_COMBINATION_LEADING_TRIGGER_CPU_HEAT_NOT_ESTABLISHED_AS_CAUSE",
+  "ownerQuotes": [
+    "主要是接上显卡坞会热, 现在拔掉了",
+    "这个死机问题只有接上显卡坞发生, 但是以前打游戏的时候也没有死机, 就是做模型训练的时候死机",
+    "笔记本cpu热又不重启, 不相关吧"
+  ],
+  "connectionType": "USB4/Thunderbolt, previously confirmed by Owner",
+  "undockedSystemSnapshot": {
+    "at": "2026-11-17T09:57:45.6555161+08:00",
+    "displays": [
+      {
+        "FriendlyName": "AMD Radeon 780M Graphics",
+        "Status": "OK"
+      }
+    ],
+    "videoDrivers": [
+      {
+        "Name": "AMD Radeon 780M Graphics",
+        "DriverVersion": "32.0.31021.5001"
+      }
+    ],
+    "battery": [
+      {
+        "PowerOnline": true,
+        "Charging": false,
+        "Discharging": true
+      }
+    ]
+  },
+  "observation": {
+    "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4",
+    "started": {
+      "state": "READ_ONLY_LAPTOP_THERMAL_MONITOR_RUNNING",
+      "at": "2026-11-17T09:45:50.349847+08:00",
+      "pid": 22180,
+      "createdAt": 1794879950.234806,
+      "durationSeconds": 900,
+      "sampleIntervalSeconds": 5,
+      "readOnly": true,
+      "driverInstalledByThisLogger": false,
+      "cpuSensorDriverPreviouslyExplicitlyAuthorized": true,
+      "externalGpuQueried": false,
+      "torchImported": false,
+      "gpuTasksStarted": 0,
+      "cpuTrainingStarted": false,
+      "limits": {
+        "pid": 22180,
+        "cpuRate": 500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 5.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 268435456,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 13242368,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      }
+    },
+    "completed": {
+      "state": "READ_ONLY_ACPI_THERMAL_MONITOR_FINISHED",
+      "at": "2026-11-17T09:57:36.645264+08:00",
+      "exitCode": 1,
+      "samples": 137,
+      "minimumCelsius": 50.05,
+      "maximumCelsius": 50.05,
+      "cpuMinimumCelsius": 79,
+      "cpuMaximumCelsius": 95.75,
+      "externalGpuQueried": false,
+      "physicalSensorLocationVerified": false,
+      "overheatCauseProven": false,
+      "readOnly": true,
+      "ownedStopRequested": true,
+      "newNeuralCalls": 0,
+      "parameterUpdates": 0,
+      "limits": {
+        "pid": 22180,
+        "cpuRate": 500,
+        "cpuControlFlags": 5,
+        "cpuPercentMaximum": 5.0,
+        "inLimitedJob": true,
+        "jobPrivateCommitLimitBytes": 268435456,
+        "jobMemoryLimitEnabled": true,
+        "jobPeakPrivateCommitBytes": 108810240,
+        "cpuPriorityClass": 64,
+        "memoryPagePriority": 1,
+        "memoryPagePriorityIsReclaimHintNotRamCap": true,
+        "gpuPriorityClass": 0,
+        "gpuUtilizationHardCapped": false,
+        "scope": "This worker and its descendants only; no global or other-app changes."
+      }
+    },
+    "samples": 137,
+    "firstAt": "2026-11-17T09:45:50.9591630+08:00",
+    "lastAt": "2026-11-17T09:57:36.6115926+08:00",
+    "cpuMinCelsius": 79,
+    "cpuMaxCelsius": 95.75,
+    "samplesAtLeast95C": 3,
+    "noRebootDuringObservation": true,
+    "samplesSha256": "f8a50c788e7c3a0f4bcfeb013fd20ce3d37e6b89d9a1ccdf24fd3700937c10c6",
+    "externalGpuTemperaturePolled": false,
+    "controlledIdleOrMatchedGameComparison": false,
+    "historicalPowerStateDuringGpuIncidentKnown": false,
+    "noModelWorkLaunchedByThisObservation": true
+  },
+  "installedPackageMetadataWithoutImportingTorch": [
+    {
+      "name": "amd-torch-device-gfx1030",
+      "version": "2.11.0+rocm10.0.0"
+    },
+    {
+      "name": "rocm",
+      "version": "10.0.0"
+    },
+    {
+      "name": "rocm-bootstrap",
+      "version": "0.3.0"
+    },
+    {
+      "name": "rocm-sdk-core",
+      "version": "10.0.0"
+    },
+    {
+      "name": "rocm-sdk-device-gfx1030",
+      "version": "10.0.0"
+    },
+    {
+      "name": "rocm-sdk-libraries",
+      "version": "10.0.0"
+    },
+    {
+      "name": "torch",
+      "version": "2.11.0+rocm10.0.0"
+    },
+    {
+      "name": "transformers",
+      "version": "5.22.1"
+    }
+  ],
+  "torchVersionSource": {
+    "path": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\torch\\version.py",
+    "sha256": "bc5604fdbeefa737f494325c9261e1a8f009df41cdd2c413f28c3b7107f0b6d4",
+    "text": "from typing import Optional\n\n__all__ = ['__version__', 'debug', 'cuda', 'git_version', 'hip', 'rocm', 'xpu']\n__version__ = '2.11.0+rocm10.0.0'\ndebug = False\ncuda: Optional[str] = None\ngit_version = 'c9ab269368d46a826d64705192fef55594c8b698'\nhip: Optional[str] = '7.15.26333'\nrocm: Optional[str] = '10.0.0'\nxpu: Optional[str] = None\n"
+  },
+  "driverStoreVersions": {
+    "rx6800xt": "32.0.21043.19003",
+    "radeon780m": "32.0.31021.5001"
+  },
+  "officialFindings": [
+    {
+      "url": "https://github.com/ROCm/TheRock/blob/main/docs/development/windows_support.md",
+      "finding": "Native Windows support is relatively new and not yet mature."
+    },
+    {
+      "url": "https://github.com/ROCm/TheRock/blob/main/SUPPORTED_GPUS.md",
+      "finding": "The development roadmap currently marks Windows gfx1030 build/sanity/release-ready. The page warns the development project is not production stable; this is not qualification of this installed driver and USB4 dock."
+    },
+    {
+      "url": "https://www.amd.com/en/resources/support-articles/release-notes/rn-rad-win-26-6-4.html",
+      "finding": "Adrenalin26.6.4 lists BOTH installed driver-store versions. Different numbers alone do not prove an accidentally mixed or broken driver installation."
+    },
+    {
+      "url": "https://rocm.docs.amd.com/en/latest/compatibility/compatibility-matrix.html",
+      "finding": "The current10.1.0 matrix lists a coordinated driver/runtime stack; its Radeon table does not name RX6800XT. PRO W6000/gfx1030 must not be treated as qualification of this consumer card, current10.0 build and external dock."
+    }
+  ],
+  "incidentFacts": {
+    "retainedIncident": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\second-restart-20261117.json",
+    "twoRecentOwnedFailuresWereGpuInference": true,
+    "trainingUpdatesInThoseRuns": 0,
+    "secondIncidentLastReservedGiB": 3.755859375,
+    "secondIncidentLastDriverFreeGiB": 11.98052978515625,
+    "samplesAreNotGuaranteedCrashInstant": true,
+    "matchedNewBugcheckOrDump": false,
+    "vramExhaustionProven": false,
+    "MIOpenBypassAlreadyFailedToEstablishStability": true
+  },
+  "decision": "Return diagnosis priority to GPU compute runtime/driver plus USB4 dock. High CPU temperature alone does not explain the selective reboots. Neither all thermal effects nor dock power/link faults are ruled out.",
+  "nextIsolation": [
+    "Keep the original compute environment and failed bytes. Do not repeat the same overnight batch or a driver/settings sweep.",
+    "Once the GPU is connected, inventory the exact present device/driver/runtime first. Prepare one bounded owned-process compute reproduction from the failed workload, with durable operator entry/exit and resources; no quality or training claim from this diagnostic.",
+    "Compare one discriminating backend/runtime condition only after a concrete compatible alternative is verified for RX6800XT. A different framework result can narrow the path, but cannot alone prove a driver or dock hardware defect.",
+    "Keep the95C model-task cutoff as protection, not as a laptop shutdown threshold or root-cause diagnosis. Continue data/code work without CPU/iGPU training while the GPU is absent."
+  ],
+  "newNeuralCalls": 0,
+  "newGpuCalls": 0,
+  "parameterUpdates": 0,
+  "driverTdrPowerBiosNetworkChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

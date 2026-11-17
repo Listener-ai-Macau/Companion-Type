@@ -1,0 +1,78 @@
+{
+  "at": "2026-11-17T09:58:22.683448+08:00",
+  "parent": "5542eaab80e86b49ae5354c0ead3e7bfb367dc29",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\compute-only-trigger-review-20261117.json",
+      "file": "compute-only-trigger-review.json",
+      "bytes": 8455,
+      "sha256": "b34dd23534ec1436461bbd060d7b8ab64d779d504e6c6f4fc9c228ffd25f0b09"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_compute_trigger_20261117.py",
+      "file": "record-compute-trigger.py",
+      "bytes": 10387,
+      "sha256": "284641f7508f929800a730ad43b5d3b399fba58b106051a60373ca4ed4b7245e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4\\started.json",
+      "file": "undocked-observation/started.json",
+      "bytes": 961,
+      "sha256": "134e3191fb998b9741ade828604ef2fa989ccef2263f98bb1a175e2b03005b30"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4\\completed.json",
+      "file": "undocked-observation/completed.json",
+      "bytes": 976,
+      "sha256": "281d47f75e4270f3bf33d6e5cb8a916ea4c5ede42d9788c95b9c0a4719a9fc89"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4\\samples.jsonl",
+      "file": "undocked-observation/samples.jsonl",
+      "bytes": 123365,
+      "sha256": "f8a50c788e7c3a0f4bcfeb013fd20ce3d37e6b89d9a1ccdf24fd3700937c10c6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4\\stop.request",
+      "file": "undocked-observation/stop.request",
+      "bytes": 91,
+      "sha256": "6d7195598e0679c24a561d10f770bd99170406cc9962c2cc94673ded9b122806"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4\\monitor_thermal_20261117.py",
+      "file": "undocked-observation/monitor_thermal_20261117.py",
+      "bytes": 5305,
+      "sha256": "a28ab46a34bc31127ca3c8fb7de63d0d866005456639d62d2df8d2603c4f37c1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4\\read_laptop_thermal_stream_20261117.ps1",
+      "file": "undocked-observation/read_laptop_thermal_stream_20261117.ps1",
+      "bytes": 2717,
+      "sha256": "0e0a177ffecddda95818c5c50f1fd58acc272fb516da1e397ba9e6fd8745c964"
+    },
+    {
+      "source": "work\\checkpoint_compute_trigger_r61.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 2634,
+      "sha256": "3df770e9576f9a6a1b476b6eb8923f59575715588f417f92c99787fe1bd2fa76"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {},
+  "state": "GPU_UNDOCKED_COMPUTE_RUNTIME_DOCK_TRIGGER_REVIEWED_ROOT_CAUSE_OPEN",
+  "parameterUpdates": 0,
+  "newGpuCalls": 0,
+  "newNeuralCalls": 0,
+  "cpuOverheatEstablishedAsCause": false,
+  "driverMismatchEstablished": false,
+  "monitorTerminal": true,
+  "ownedMonitorStoppedAfterSufficientObservation": true,
+  "driverTdrBiosPowerChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

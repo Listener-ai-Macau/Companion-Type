@@ -1,0 +1,54 @@
+{
+  "revision": 61,
+  "evidenceDirectory": "evidence/20261117-compute-trigger-priority-and-undocked-observation",
+  "sources": [],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\compute-only-trigger-review-20261117.json",
+      "name": "compute-only-trigger-review.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_compute_trigger_20261117.py",
+      "name": "record-compute-trigger.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4\\started.json",
+      "name": "undocked-observation/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4\\completed.json",
+      "name": "undocked-observation/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4\\samples.jsonl",
+      "name": "undocked-observation/samples.jsonl"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4\\stop.request",
+      "name": "undocked-observation/stop.request"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4\\monitor_thermal_20261117.py",
+      "name": "undocked-observation/monitor_thermal_20261117.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-undocked-r4\\read_laptop_thermal_stream_20261117.ps1",
+      "name": "undocked-observation/read_laptop_thermal_stream_20261117.ps1"
+    }
+  ],
+  "commitMessage": "Record compute-only dock trigger and avoid unsupported CPU heat diagnosis",
+  "claims": {
+    "state": "GPU_UNDOCKED_COMPUTE_RUNTIME_DOCK_TRIGGER_REVIEWED_ROOT_CAUSE_OPEN",
+    "parameterUpdates": 0,
+    "newGpuCalls": 0,
+    "newNeuralCalls": 0,
+    "cpuOverheatEstablishedAsCause": false,
+    "driverMismatchEstablished": false,
+    "monitorTerminal": true,
+    "ownedMonitorStoppedAfterSufficientObservation": true,
+    "driverTdrBiosPowerChanged": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

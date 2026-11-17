@@ -505,3 +505,5 @@ src/silero_presence_worker_20261117.py -text -whitespace
 src/compose_vad_presence_20261117.py -text -whitespace
 
 evidence/20261117-complete-thermal-hour-and-triggering-reading-fix/** -text -whitespace
+
+evidence/20261117-compute-trigger-priority-and-undocked-observation/** -text -whitespace
