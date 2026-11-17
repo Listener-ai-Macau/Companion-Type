@@ -1,0 +1,99 @@
+{
+  "at": "2026-11-17T09:04:53.972572+08:00",
+  "parent": "ebd1cf8174af48c4b8437141469df237a7cd9b65",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\protocol.json",
+      "file": "quantized30-presence-r1/protocol.json",
+      "bytes": 4637,
+      "sha256": "3576270eae7fd8fe66bb39cb1c8c6effac55365d953f50bb2b94686693ad32c9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\scoring-control.json",
+      "file": "quantized30-presence-r1/scoring-control.json",
+      "bytes": 1563,
+      "sha256": "97589ca66dfb93d855e2313ffd5bcaeb082f20afe7abd71c680e4c25bb71fa0b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\preparation.json",
+      "file": "quantized30-presence-r1/preparation.json",
+      "bytes": 1036,
+      "sha256": "f23d4b6f20408c9e37750c5bb06bbcd11f01b1f94cc37e69b29c2db942297035"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\score-ES2003b.json",
+      "file": "quantized30-presence-r1/score-ES2003b.json",
+      "bytes": 2817,
+      "sha256": "2ff5482e5d7156de21f1c8aa7a784d29f42f910181ba712350d619855db0d634"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\score-EN2002a.json",
+      "file": "quantized30-presence-r1/score-EN2002a.json",
+      "bytes": 2869,
+      "sha256": "fa2d04ae447173b6c57c54abc7ea74af207420b5945cf9bd4ac6a9835a2c4ccb"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\overlap-error-diagnosis.json",
+      "file": "quantized30-presence-r1/overlap-error-diagnosis.json",
+      "bytes": 10782,
+      "sha256": "78276a013a22ec5647a2f729505bbde81b6256bd398dbc7c65a40ae777a9f4a4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\decision.json",
+      "file": "quantized30-presence-r1/decision.json",
+      "bytes": 4087,
+      "sha256": "3890c070ddf9b105291c47155aae73ba9afbf577d1268a586ca8257dca495322"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\native180-control\\result.json",
+      "file": "native180-control/result.json",
+      "bytes": 1214,
+      "sha256": "4659fa6b3a2de37e8b36d3751f741ff29076fb295f6787e28a54889081e67ef2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_quantized_presence_replay_20261117.py",
+      "file": "local-tools/prepare_quantized_presence_replay_20261117.py",
+      "bytes": 5412,
+      "sha256": "ae1351699ad81578618723de7b0e90dd414f4208035e0eed72145cc3ad041377"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_presence_policy_native_control_20261117.py",
+      "file": "local-tools/verify_presence_policy_native_control_20261117.py",
+      "bytes": 3335,
+      "sha256": "f273f7fbd76fdb2fe96cae8ec5172149f79f21632604b6e128bed1a56d11e38f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\analyze_presence_overlap_errors_20261117.py",
+      "file": "local-tools/analyze_presence_overlap_errors_20261117.py",
+      "bytes": 5668,
+      "sha256": "e943031af130faf0015808e2a88ebcfec1f4f171698d65eb27bb6757ca1e688b"
+    },
+    {
+      "source": "work\\checkpoint_cached_presence_r58.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 3952,
+      "sha256": "bfd639c5d20d8b7ff9cc24cb413aa01351d9608bd1e01914f3db1a3ce95b72ef"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/fixed_presence_identity_core_20261117.py": "67c1d5caa09de26c55781db4b471463f165ab0322346a26e4bfde0ae2c037a85",
+    "src/compose_quantized_presence_20261117.py": "0c9b348dbf48659b713da6f105f54fcf6adcc73d3e699d5fe512ff36c97b676c"
+  },
+  "state": "CACHED_Q8_PRESENCE_HELPS_BOTH_FULL_ENGLISH_SOURCES_BUT_REJECTED_FOR_ACCEPTANCE",
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "fullOriginalSources": 2,
+  "retainedNative180RttmControlExact": true,
+  "q8AsrRejectionReversed": false,
+  "native180SecondSourceCompleted": false,
+  "originalDerGatePassed": false,
+  "rawAsrTextImproved": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

@@ -1,0 +1,69 @@
+{
+  "revision": 58,
+  "evidenceDirectory": "evidence/20261117-cached-two-source-presence-identity-validation",
+  "sources": [
+    "src/fixed_presence_identity_core_20261117.py",
+    "src/compose_quantized_presence_20261117.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\protocol.json",
+      "name": "quantized30-presence-r1/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\scoring-control.json",
+      "name": "quantized30-presence-r1/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\preparation.json",
+      "name": "quantized30-presence-r1/preparation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\score-ES2003b.json",
+      "name": "quantized30-presence-r1/score-ES2003b.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\score-EN2002a.json",
+      "name": "quantized30-presence-r1/score-EN2002a.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\overlap-error-diagnosis.json",
+      "name": "quantized30-presence-r1/overlap-error-diagnosis.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\decision.json",
+      "name": "quantized30-presence-r1/decision.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\native180-control\\result.json",
+      "name": "native180-control/result.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_quantized_presence_replay_20261117.py",
+      "name": "local-tools/prepare_quantized_presence_replay_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_presence_policy_native_control_20261117.py",
+      "name": "local-tools/verify_presence_policy_native_control_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\analyze_presence_overlap_errors_20261117.py",
+      "name": "local-tools/analyze_presence_overlap_errors_20261117.py"
+    }
+  ],
+  "commitMessage": "Validate fixed presence and identity composition on two cached complete meetings",
+  "claims": {
+    "state": "CACHED_Q8_PRESENCE_HELPS_BOTH_FULL_ENGLISH_SOURCES_BUT_REJECTED_FOR_ACCEPTANCE",
+    "newNeuralCalls": 0,
+    "parameterUpdates": 0,
+    "fullOriginalSources": 2,
+    "retainedNative180RttmControlExact": true,
+    "q8AsrRejectionReversed": false,
+    "native180SecondSourceCompleted": false,
+    "originalDerGatePassed": false,
+    "rawAsrTextImproved": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

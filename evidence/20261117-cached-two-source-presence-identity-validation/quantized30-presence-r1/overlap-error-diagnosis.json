@@ -1,0 +1,291 @@
+{
+  "state": "DIAGNOSTIC_REFERENCE_OVERLAP_PARTITION_SUMS_TO_UNCHANGED_FULL_DER",
+  "at": "2026-11-17T09:01:34.944346+08:00",
+  "meetings": [
+    {
+      "meeting": "ES2003b",
+      "audioSeconds": 2109.813375,
+      "comparisons": {
+        "originalNative8": {
+          "fullOriginalScore": {
+            "referenceSpeakerSeconds": 1958.649999999878,
+            "missSeconds": 488.3916319999852,
+            "falseAlarmSeconds": 13.661632000108053,
+            "confusionSeconds": 7.55031000000346,
+            "errorSeconds": 509.60357400009667,
+            "DER": 0.260181029790993,
+            "identityForScoringOnly": {
+              "speaker_0": "C",
+              "speaker_1": "B",
+              "speaker_2": "A",
+              "speaker_3": "D"
+            }
+          },
+          "diagnosticBuckets": {
+            "referenceSilence": {
+              "timelineSeconds": 242.81337500011242,
+              "referenceSpeakerSeconds": 0.0,
+              "missSeconds": 0.0,
+              "falseAlarmSeconds": 7.0412680001040515,
+              "confusionSeconds": 0.0,
+              "errorSeconds": 7.0412680001040515,
+              "DER": null
+            },
+            "oneReferenceSpeaker": {
+              "timelineSeconds": 1778.4799999998975,
+              "referenceSpeakerSeconds": 1778.4799999998975,
+              "missSeconds": 409.8708639999907,
+              "falseAlarmSeconds": 6.610364000003784,
+              "confusionSeconds": 4.850382000004142,
+              "errorSeconds": 421.33160999999865,
+              "DER": 0.2369054529710893
+            },
+            "overlappingReferenceSpeakers": {
+              "timelineSeconds": 88.51999999999015,
+              "referenceSpeakerSeconds": 180.1699999999804,
+              "missSeconds": 78.52076799999446,
+              "falseAlarmSeconds": 0.010000000000218279,
+              "confusionSeconds": 2.6999279999993178,
+              "errorSeconds": 81.230695999994,
+              "DER": 0.45085583615475844
+            }
+          }
+        },
+        "q8PresencePlusNative8": {
+          "fullOriginalScore": {
+            "referenceSpeakerSeconds": 1958.649999999878,
+            "missSeconds": 149.20158800000164,
+            "falseAlarmSeconds": 55.23077100012142,
+            "confusionSeconds": 33.78025999999892,
+            "errorSeconds": 238.21261900012198,
+            "DER": 0.12162081995258817,
+            "identityForScoringOnly": {
+              "speaker_0": "C",
+              "speaker_1": "B",
+              "speaker_2": "A",
+              "speaker_3": "D"
+            }
+          },
+          "diagnosticBuckets": {
+            "referenceSilence": {
+              "timelineSeconds": 242.81337500011242,
+              "referenceSpeakerSeconds": 0.0,
+              "missSeconds": 0.0,
+              "falseAlarmSeconds": 48.61040700011358,
+              "confusionSeconds": 0.0,
+              "errorSeconds": 48.61040700011358,
+              "DER": null
+            },
+            "oneReferenceSpeaker": {
+              "timelineSeconds": 1778.4799999998975,
+              "referenceSpeakerSeconds": 1778.4799999998975,
+              "missSeconds": 79.03103500000643,
+              "falseAlarmSeconds": 6.610364000007621,
+              "confusionSeconds": 29.830351999999326,
+              "errorSeconds": 115.47175100001337,
+              "DER": 0.06492721368810446
+            },
+            "overlappingReferenceSpeakers": {
+              "timelineSeconds": 88.51999999999015,
+              "referenceSpeakerSeconds": 180.1699999999804,
+              "missSeconds": 70.17055299999521,
+              "falseAlarmSeconds": 0.010000000000218279,
+              "confusionSeconds": 3.9499079999995956,
+              "errorSeconds": 74.13046099999502,
+              "DER": 0.41144730532276785
+            }
+          }
+        },
+        "native180PresencePlusNative8": {
+          "fullOriginalScore": {
+            "referenceSpeakerSeconds": 1958.649999999878,
+            "missSeconds": 145.5214890000022,
+            "falseAlarmSeconds": 44.82080200012284,
+            "confusionSeconds": 35.73020199999911,
+            "errorSeconds": 226.07249300012415,
+            "DER": 0.11542260893990158,
+            "identityForScoringOnly": {
+              "speaker_0": "C",
+              "speaker_1": "B",
+              "speaker_2": "A",
+              "speaker_3": "D"
+            }
+          },
+          "diagnosticBuckets": {
+            "referenceSilence": {
+              "timelineSeconds": 242.81337500011242,
+              "referenceSpeakerSeconds": 0.0,
+              "missSeconds": 0.0,
+              "falseAlarmSeconds": 38.200438000115426,
+              "confusionSeconds": 0.0,
+              "errorSeconds": 38.200438000115426,
+              "DER": null
+            },
+            "oneReferenceSpeaker": {
+              "timelineSeconds": 1778.4799999998975,
+              "referenceSpeakerSeconds": 1778.4799999998975,
+              "missSeconds": 78.00099500000682,
+              "falseAlarmSeconds": 6.610364000007195,
+              "confusionSeconds": 31.780293999999632,
+              "errorSeconds": 116.39165300001365,
+              "DER": 0.06544445425308149
+            },
+            "overlappingReferenceSpeakers": {
+              "timelineSeconds": 88.51999999999015,
+              "referenceSpeakerSeconds": 180.1699999999804,
+              "missSeconds": 67.52049399999535,
+              "falseAlarmSeconds": 0.010000000000218279,
+              "confusionSeconds": 3.949907999999482,
+              "errorSeconds": 71.48040199999505,
+              "DER": 0.3967386468335618
+            }
+          }
+        }
+      },
+      "q8InvalidTimeSegments": [
+        {
+          "block": "ES2003b-fixed30-0067",
+          "index": 7,
+          "start": 27.74,
+          "end": 30.01
+        },
+        {
+          "block": "ES2003b-fixed30-0070",
+          "index": 1,
+          "start": 9.62,
+          "end": 9.82
+        }
+      ]
+    },
+    {
+      "meeting": "EN2002a",
+      "audioSeconds": 2142.709375,
+      "comparisons": {
+        "originalNative8": {
+          "fullOriginalScore": {
+            "referenceSpeakerSeconds": 2530.26,
+            "missSeconds": 724.893519000002,
+            "falseAlarmSeconds": 29.963519000000858,
+            "confusionSeconds": 31.4625419999988,
+            "errorSeconds": 786.3195800000017,
+            "DER": 0.31076631650502384,
+            "identityForScoringOnly": {
+              "speaker_0": "MEE071",
+              "speaker_1": "MEE073",
+              "speaker_2": "FEO072",
+              "speaker_3": "FEO070"
+            }
+          },
+          "diagnosticBuckets": {
+            "referenceSilence": {
+              "timelineSeconds": 247.80937500000044,
+              "referenceSpeakerSeconds": 0.0,
+              "missSeconds": 0.0,
+              "falseAlarmSeconds": 7.342068000000684,
+              "confusionSeconds": 0.0,
+              "errorSeconds": 7.342068000000684,
+              "DER": null
+            },
+            "oneReferenceSpeaker": {
+              "timelineSeconds": 1375.319999999999,
+              "referenceSpeakerSeconds": 1375.319999999999,
+              "missSeconds": 282.46091800000215,
+              "falseAlarmSeconds": 15.161559000000128,
+              "confusionSeconds": 10.351554999997521,
+              "errorSeconds": 307.9740319999998,
+              "DER": 0.22392899979641104
+            },
+            "overlappingReferenceSpeakers": {
+              "timelineSeconds": 519.5800000000004,
+              "referenceSpeakerSeconds": 1154.9400000000014,
+              "missSeconds": 442.43260099999986,
+              "falseAlarmSeconds": 7.459892000000046,
+              "confusionSeconds": 21.110987000001277,
+              "errorSeconds": 471.00348000000116,
+              "DER": 0.40781640604706787
+            }
+          }
+        },
+        "q8PresencePlusNative8": {
+          "fullOriginalScore": {
+            "referenceSpeakerSeconds": 2530.2599999999984,
+            "missSeconds": 519.0940550000009,
+            "falseAlarmSeconds": 42.1216590000011,
+            "confusionSeconds": 50.58178000000066,
+            "errorSeconds": 611.7974940000026,
+            "DER": 0.24179234307936853,
+            "identityForScoringOnly": {
+              "speaker_0": "MEE071",
+              "speaker_1": "MEE073",
+              "speaker_2": "FEO072",
+              "speaker_3": "FEO070"
+            }
+          },
+          "diagnosticBuckets": {
+            "referenceSilence": {
+              "timelineSeconds": 247.80937500000044,
+              "referenceSpeakerSeconds": 0.0,
+              "missSeconds": 0.0,
+              "falseAlarmSeconds": 19.500207999999205,
+              "confusionSeconds": 0.0,
+              "errorSeconds": 19.500207999999205,
+              "DER": null
+            },
+            "oneReferenceSpeaker": {
+              "timelineSeconds": 1375.319999999999,
+              "referenceSpeakerSeconds": 1375.319999999999,
+              "missSeconds": 104.2417380000002,
+              "falseAlarmSeconds": 15.161559000002079,
+              "confusionSeconds": 27.370867999998964,
+              "errorSeconds": 146.77416500000123,
+              "DER": 0.10672001061571222
+            },
+            "overlappingReferenceSpeakers": {
+              "timelineSeconds": 519.5800000000004,
+              "referenceSpeakerSeconds": 1154.9400000000014,
+              "missSeconds": 414.85231700000077,
+              "falseAlarmSeconds": 7.459891999999819,
+              "confusionSeconds": 23.2109120000017,
+              "errorSeconds": 445.5231210000023,
+              "DER": 0.385754343082759
+            }
+          }
+        }
+      },
+      "q8InvalidTimeSegments": [
+        {
+          "block": "EN2002a-fixed30-0071",
+          "index": 5,
+          "start": 11.55,
+          "end": 12.71
+        }
+      ]
+    }
+  ],
+  "oneOriginalMappingAcrossAllBuckets": true,
+  "referenceUsedForDiagnosticScoringOnly": true,
+  "modelInputsOrPredictionsChanged": false,
+  "originalFullSourceAcceptanceChanged": false,
+  "subsetAccuracyClaimed": false,
+  "scorerSourceSha256": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9",
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 1488,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 59912192,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

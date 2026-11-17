@@ -1,0 +1,77 @@
+{
+  "state": "CACHED_Q8_PRESENCE_HELPS_BOTH_FULL_ENGLISH_SOURCES_BUT_REJECTED_FOR_ACCEPTANCE",
+  "at": "2026-11-17T09:04:52+08:00",
+  "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1",
+  "native180PolicyRttmExactControl": {
+    "state": "PASS_EXACT_ORIGINAL_NATIVE180_SUPPLEMENT_AND_COMBINED_RTTM_CONTROL",
+    "at": "2026-11-17T08:57:58.268753+08:00",
+    "meeting": "ES2003b",
+    "sourceCompletedSha256": "e15a9e7d3f0552412ae3a5f4ffeb65d2dfe1f12fc79b374ce75fc566553dbd50",
+    "originalPredictionSha256": "a12137e72360990e3b9fdf5b873374e1a289c75da75f8a76ed581112d5f78946",
+    "factoredPolicySha256": "67c1d5caa09de26c55781db4b471463f165ab0322346a26e4bfde0ae2c037a85",
+    "combinedSha256": "d2d0329512e1d5d49297865a84da859aed45e89326839cb50858426fe9509ad8",
+    "supplementSha256": "c425d93fce812ec43006584af6ee2f7013bc99fb5b2d918da76b52df9ef3faf4",
+    "newNeuralCalls": 0,
+    "trainingUpdates": 0,
+    "referencesRead": false,
+    "limits": {
+      "pid": 8252,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 536870912,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 78630912,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  },
+  "meetings": [
+    {
+      "meeting": "ES2003b",
+      "originalDER": 0.260181029790993,
+      "combinedDER": 0.12162081995258817,
+      "relativeDerReduction": 0.5325530840957627,
+      "originalMissSeconds": 488.3916319999852,
+      "combinedMissSeconds": 149.20158800000164,
+      "structuralGate": false,
+      "originalTenPercentDerGate": false
+    },
+    {
+      "meeting": "EN2002a",
+      "originalDER": 0.31076631650502384,
+      "combinedDER": 0.24179234307936853,
+      "relativeDerReduction": 0.22194803542854452,
+      "originalMissSeconds": 724.893519000002,
+      "combinedMissSeconds": 519.0940550000009,
+      "structuralGate": false,
+      "originalTenPercentDerGate": false
+    }
+  ],
+  "diagnosticPartition": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\quantized30-presence-r1\\overlap-error-diagnosis.json",
+  "remainingErrorFractions": {
+    "ES2003b": {
+      "referenceSilence": 0.20406310632976454,
+      "oneReferenceSpeaker": 0.4847423763052378,
+      "overlappingReferenceSpeakers": 0.31119451736499765
+    },
+    "EN2002a": {
+      "referenceSilence": 0.03187363170205977,
+      "oneReferenceSpeaker": 0.2399064501562025,
+      "overlappingReferenceSpeakers": 0.7282199181417378
+    }
+  },
+  "decision": "Keep the evidence for separate presence/identity components. Reject deployment of this Q8-presence replay: original10percent full-DER gate fails on both sources and three out-of-window time segments remain. Do not clamp times or sweep thresholds. Old Q8 ASR rejection stays. This is not completion of the interrupted native180 second-source experiment.",
+  "stageOrder": "The second source still has10.672percent DER within one-reference-speaker regions, including104.24s misses, so ordinary turn-taking is not declared finished. Overlap accounts for most of the remaining full-source error; reserve a dedicated later overlap stage rather than claim a presence-only supplement recovers simultaneous voices.",
+  "languageScope": "English only; Chinese journal/default untouched. No raw ASR words changed or text-accuracy gain claimed.",
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "originalReferencesOrGatesChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

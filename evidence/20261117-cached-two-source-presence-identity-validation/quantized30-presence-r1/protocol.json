@@ -1,0 +1,64 @@
+{
+  "state": "FROZEN_CACHED_Q8_PRESENCE_ONLY_SAME_FIXED_IDENTITY_POLICY",
+  "at": "2026-11-17T08:57:09.464455+08:00",
+  "audioOnly": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\full-audio-only.json",
+  "predictedBindings": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\predicted-speaker-bindings.json",
+  "cachedInferenceRun": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r2",
+  "cachedInferenceBinding": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\binding.json",
+  "originalInferenceModelSha256": "155eb3ed6390300c7891edc56cce0c9fb5103a8dcc09a708a2fb7502d99b8a30",
+  "admittedEnglishSources": [
+    "ES2003b",
+    "EN2002a"
+  ],
+  "retainedNative180Protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\presence-identity-r2\\io-fix-r2\\protocol.json",
+  "retainedNative180Run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native-context180-r1\\run-initial",
+  "retainedNative180Prediction": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\presence-identity-r2\\io-fix-r2\\ES2003b\\prediction.json",
+  "algorithmBodyAstIdentical": true,
+  "purpose": "Second-source fixed-policy validation without more model inference. This uses the old complete Q8/fixed30 presence component; it does not validate the incomplete native180 second source or reverse rejection of Q8 ASR.",
+  "gate": "At least20percent DER reduction on each complete English source with no invalid times/unknown identity; retain original10percent DER and all word/fact/full-product gates separately.",
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "qualityQualified": false,
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\compose_quantized_presence_20261117.py",
+      "sha256": "0c9b348dbf48659b713da6f105f54fcf6adcc73d3e699d5fe512ff36c97b676c"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\fixed_presence_identity_core_20261117.py",
+      "sha256": "67c1d5caa09de26c55781db4b471463f165ab0322346a26e4bfde0ae2c037a85"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\compose_presence_identity_20261116.py",
+      "sha256": "7beff94253af9f4484dd7c3bab6cee89cd8014bc1663e4e64d57694540ec8436"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_joint_whole_meetings_20261115.py",
+      "sha256": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_contract_20261116.py",
+      "sha256": "4e238f87f06b7ed95a6bd6e30522e86b4129836074cabff138cd1fe5f76981c9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\durable_model_state_20261117.py",
+      "sha256": "5fea82f461da06e76afd3321c860c48a570147a4d9cce6c7cca37a595bb54e3b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\full-audio-only.json",
+      "sha256": "13a02cd0f2a59e3359bb46250b74aeba41aa9138c05e7f7909afc441f17e6938"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\predicted-speaker-bindings.json",
+      "sha256": "43287a3d3f92044647fcfae1aab75da0686170ad1a0060a22b463088ce53c95d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\binding.json",
+      "sha256": "eed3e76552290fcb5ec7f2d45f8f57998701ef2f1a26227cdac336d7ae90deb2"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-fixed-whole-r2\\inference-state.json",
+      "sha256": "77c96c1110040b27f9bd6826129050fc4654ec04fa7245f8d54d97a143dd5dd8"
+    }
+  ]
+}

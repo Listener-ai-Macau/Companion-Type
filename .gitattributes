@@ -491,3 +491,9 @@ evidence/20261117-fixed-english-adaptation-score-and-thermal-admission/** -text 
 src/model_thermal_guard_20261117.py -text -whitespace
 
 src/score_tdt_adaptation_20261117.py -text -whitespace
+
+evidence/20261117-cached-two-source-presence-identity-validation/** -text -whitespace
+
+src/fixed_presence_identity_core_20261117.py -text -whitespace
+
+src/compose_quantized_presence_20261117.py -text -whitespace

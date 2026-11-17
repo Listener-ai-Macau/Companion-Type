@@ -1,0 +1,26 @@
+{
+  "state": "POLICY_AST_IDENTICAL_CACHED_TWO_FULL_SOURCES_READY_NATIVE180_CONTROL_PENDING",
+  "at": "2026-11-17T08:57:09.473906+08:00",
+  "originalPolicySourceSha256": "7beff94253af9f4484dd7c3bab6cee89cd8014bc1663e4e64d57694540ec8436",
+  "factoredPolicySourceSha256": "67c1d5caa09de26c55781db4b471463f165ab0322346a26e4bfde0ae2c037a85",
+  "protocolSha256": "3576270eae7fd8fe66bb39cb1c8c6effac55365d953f50bb2b94686693ad32c9",
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "referenceReadByPreparation": false,
+  "limits": {
+    "pid": 9404,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 12668928,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
