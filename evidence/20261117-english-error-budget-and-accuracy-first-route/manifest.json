@@ -1,0 +1,94 @@
+{
+  "at": "2026-11-17T17:26:33.930731+08:00",
+  "parent": "39d5de272bc67f208e6239ae111c5ece61e28bc6",
+  "entries": [
+    {
+      "source": "work\\audit_english_route_20261117.py",
+      "file": "tools/audit_english_route_20261117.py",
+      "bytes": 13087,
+      "sha256": "43872ed1af7dcf0c0730f6dfc4c8836e1695b2096746ea8fdff7cccda4061487"
+    },
+    {
+      "source": "work\\inspect_english_accuracy_reference_20261117.py",
+      "file": "tools/inspect_english_accuracy_reference_20261117.py",
+      "bytes": 3789,
+      "sha256": "d4298e0afceac16fb2ed536ea18341929a8382fad074799e2ef7499d3e4fb4c3"
+    },
+    {
+      "source": "work\\record_english_route_audit_20261117.py",
+      "file": "tools/record_english_route_audit_20261117.py",
+      "bytes": 7676,
+      "sha256": "51e199b6992f6a4ac4381521b2227ca6d0669a2da11e7c29f58f1c75de836397"
+    },
+    {
+      "source": "work\\english_accuracy_reference_api_20261117.json",
+      "file": "tools/english_accuracy_reference_api_20261117.json",
+      "bytes": 618,
+      "sha256": "b45fe70e74915bbd12cd1504fb6ff31149a62692de6b86c733f68be0397ea793"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-route-audit-20261117.json",
+      "file": "english-route-audit.json",
+      "bytes": 17090,
+      "sha256": "ce957dfb64a191e6d1f131541ed878dbe1d96f1467c8f5850dd9f010957f69ce"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\config.json",
+      "file": "reference-metadata/config.json",
+      "bytes": 2276,
+      "sha256": "cd1d45c8f93ea1b1c92efd5dbdeb134406cb28c8510a7c71d9b78a854d299691"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\metadata-receipt.json",
+      "file": "reference-metadata/metadata-receipt.json",
+      "bytes": 4384,
+      "sha256": "abc251dc3ca1e822e6b4fb52abb9c505c49a8034011f5751bf468ee38fa181ca"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\model.safetensors.index.json",
+      "file": "reference-metadata/model.safetensors.index.json",
+      "bytes": 84396,
+      "sha256": "dec67acdc06e74d87650a54a4b5fbb07bfcdb4ed9fd1b95edef8651f5d64599b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessor_config.json",
+      "file": "reference-metadata/preprocessor_config.json",
+      "bytes": 336,
+      "sha256": "382a6f26300937721969b01909c96c2e519620b6781f7b45cb8b2e348a932d87"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\processor_config.json",
+      "file": "reference-metadata/processor_config.json",
+      "bytes": 80,
+      "sha256": "13edc723022827cc3620ba2e2b4bcf52287b365d77e60a31227f0a4b7dea5f9c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\README.md",
+      "file": "reference-metadata/README.md",
+      "bytes": 20185,
+      "sha256": "33eaacb2b553a130c58b1131886617e10818a283d8921cfc3b0bcabeb483cb23"
+    },
+    {
+      "source": "work\\checkpoint_english_route_r72.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 3082,
+      "sha256": "52aadfcb63eca4075b0183d4c399ad372425780c7c9e0cce1c2c61af04e55e65"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {},
+  "state": "ENGLISH_ROUTE_REASSESSED_ACCURACY_REFERENCE_PINNED_NOT_EXECUTED",
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "oracleSelectionIsDeployable": false,
+  "newReferenceQualityProven": false,
+  "originalScoresAndGatesPreserved": true,
+  "rawAudioInputFeaturesModelWeightsOrCredentialsIncluded": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

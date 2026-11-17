@@ -1,0 +1,22 @@
+{
+  "id": "ibm-granite/granite-speech-4.1-2b",
+  "sha": "823ca793aa49925d4eb2e758709b7f2c98513e8e",
+  "lastModified": "2026-10-26T15:54:51.000Z",
+  "license": "apache-2.0",
+  "files": [
+    "README.md",
+    "added_tokens.json",
+    "config.json",
+    "model-00001-of-00003.safetensors",
+    "model-00002-of-00003.safetensors",
+    "model-00003-of-00003.safetensors",
+    "model.safetensors.index.json",
+    "out_llm.safetensors",
+    "preprocessor_config.json",
+    "processor_config.json",
+    "special_tokens_map.json",
+    "tokenizer.json",
+    "tokenizer_config.json",
+    "vocab.json"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "revision": 72,
+  "evidenceDirectory": "evidence/20261117-english-error-budget-and-accuracy-first-route",
+  "sources": [],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "work\\audit_english_route_20261117.py",
+      "name": "tools/audit_english_route_20261117.py"
+    },
+    {
+      "source": "work\\inspect_english_accuracy_reference_20261117.py",
+      "name": "tools/inspect_english_accuracy_reference_20261117.py"
+    },
+    {
+      "source": "work\\record_english_route_audit_20261117.py",
+      "name": "tools/record_english_route_audit_20261117.py"
+    },
+    {
+      "source": "work\\english_accuracy_reference_api_20261117.json",
+      "name": "tools/english_accuracy_reference_api_20261117.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-route-audit-20261117.json",
+      "name": "english-route-audit.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\config.json",
+      "name": "reference-metadata/config.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\metadata-receipt.json",
+      "name": "reference-metadata/metadata-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\model.safetensors.index.json",
+      "name": "reference-metadata/model.safetensors.index.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessor_config.json",
+      "name": "reference-metadata/preprocessor_config.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\processor_config.json",
+      "name": "reference-metadata/processor_config.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\README.md",
+      "name": "reference-metadata/README.md"
+    }
+  ],
+  "commitMessage": "Audit fixed English error budget and oracle routing; pin one accuracy-first offline reference",
+  "claims": {
+    "state": "ENGLISH_ROUTE_REASSESSED_ACCURACY_REFERENCE_PINNED_NOT_EXECUTED",
+    "newNeuralCalls": 0,
+    "newTrainingUpdates": 0,
+    "oracleSelectionIsDeployable": false,
+    "newReferenceQualityProven": false,
+    "originalScoresAndGatesPreserved": true,
+    "rawAudioInputFeaturesModelWeightsOrCredentialsIncluded": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}
