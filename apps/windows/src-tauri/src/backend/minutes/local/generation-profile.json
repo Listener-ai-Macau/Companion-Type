@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "model": "Qwen3.5-4B Q4_K_M",
+  "mode": "non-thinking",
+  "samplingSource": "https://huggingface.co/Qwen/Qwen3.5-4B#best-practices",
+  "samplingSourceCheckedAt": "2026-11-18",
+  "frameworkMapping": "The pinned llama.cpp server uses repeat_penalty for Qwen's repetition_penalty.",
+  "requestParameters": {
+    "temperature": 0.7,
+    "top_p": 0.8,
+    "top_k": 20,
+    "min_p": 0.0,
+    "presence_penalty": 1.5,
+    "repeat_penalty": 1.0,
+    "seed": 42
+  },
+  "contentQualified": false,
+  "note": "Upstream's general non-thinking configuration, with a fixed seed for a reproducible candidate. It does not prove meeting accuracy; no seed or parameter search per meeting."
+}

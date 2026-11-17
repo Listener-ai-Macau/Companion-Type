@@ -20,6 +20,8 @@ pub struct CheckResult {
 
 #[derive(Debug, PartialEq, Eq)]
 enum Failure { Missing, Disabled, Configuration, Auth, RateLimit, Network, Timeout, Response, Service }
+#[derive(Debug)]
+enum ProbeKind { Cloud, LocalAsr, LocalMinutes }
 
 fn env(key: &str) -> Option<String> { std::env::var(key).ok().map(|v| v.trim().to_string()).filter(|v| !v.is_empty()) }
 fn required(value: Option<String>) -> Result<String, Failure> { value.ok_or(Failure::Missing) }
@@ -104,18 +106,26 @@ fn http_probe(service: Service, address: &str, key: &str, model: &str) -> Result
     if valid { Ok(()) } else { Err(Failure::Response) }
 }
 
-fn probe(service: Service) -> Result<(), Failure> {
-    let settings = super::product_settings::try_load_settings().map_err(|_| Failure::Configuration)?;
+fn probe(service: Service) -> Result<ProbeKind, Failure> {
+    let (settings,minutes_provider)=match service{
+        Service::Minutes=>super::product_settings::load_minutes_settings().map_err(|_|Failure::Configuration)?,
+        Service::Asr=>(super::product_settings::try_load_settings().map_err(|_|Failure::Configuration)?,None),
+    };
     let public = settings.to_effective_public("");
     match service {
         Service::Minutes => {
+            if minutes_provider
+                ==Some(super::product_settings::MinutesProvider::Local){
+                #[cfg(windows)] {return super::minutes::local::check_assets().map(|_|ProbeKind::LocalMinutes).map_err(|_|Failure::Missing);}
+                #[cfg(not(windows))] {return Err(Failure::Configuration);}
+            }
             if !public.deepseek_minutes_enabled { return Err(Failure::Disabled); }
             if !public.deepseek_api_key_set { return Err(Failure::Missing); }
             let key = required(env("DEEPSEEK_API_KEY").or_else(|| (!settings.deepseek_api_key.trim().is_empty()).then_some(settings.deepseek_api_key)))?;
-            http_probe(service, &format!("{}/chat/completions", public.deepseek_base_url.trim_end_matches('/')), &key, &public.deepseek_model)
+            http_probe(service, &format!("{}/chat/completions", public.deepseek_base_url.trim_end_matches('/')), &key, &public.deepseek_model).map(|_|ProbeKind::Cloud)
         }
         Service::Asr => match public.asr_provider.as_str() {
-            "local-paraformer" => super::transcription::check_local_asr().map_err(|_| Failure::Missing),
+            "local-paraformer" => super::transcription::check_local_asr().map(|_|ProbeKind::LocalAsr).map_err(|_| Failure::Missing),
             "volcengine" => {
                 if !public.volc_app_key_set || !public.volc_access_key_set { return Err(Failure::Missing); }
                 let app_id = required(env("COMPANION_TYPE_VOLC_APP_KEY").or_else(|| (!settings.volc_app_key.trim().is_empty()).then_some(settings.volc_app_key)))?;
@@ -129,13 +139,13 @@ fn probe(service: Service) -> Result<(), Failure> {
                     else if error.contains("header") { Failure::Configuration }
                     else if error.contains("connect") || error.contains("tls") || error.contains("dns") { Failure::Network }
                     else { Failure::Service }
-                })
+                }).map(|_|ProbeKind::Cloud)
             }
             "openai" | "openai-compatible" => {
                 if !public.openai_asr_api_key_set { return Err(Failure::Missing); }
                 let key = required(env("COMPANION_TYPE_ASR_API_KEY").or_else(|| env("OPENAI_API_KEY"))
                     .or_else(|| (!settings.openai_asr_api_key.trim().is_empty()).then_some(settings.openai_asr_api_key)))?;
-                http_probe(service, &public.openai_asr_endpoint, &key, &public.openai_asr_model)
+                http_probe(service, &public.openai_asr_endpoint, &key, &public.openai_asr_model).map(|_|ProbeKind::Cloud)
             }
             _ => Err(Failure::Configuration),
         }
@@ -145,8 +155,9 @@ fn probe(service: Service) -> Result<(), Failure> {
 pub fn check(service: Service) -> CheckResult {
     let start = Instant::now();
     let (status, message) = match probe(service) {
-        Ok(()) if matches!(service, Service::Asr) && super::transcription::local_provider_selected() => ("available", "本地转写模型已校验并加载；未上传录音，识别质量仍需实际使用验证。"),
-        Ok(()) => ("available", "本次测试请求成功。只验证服务调用，不代表录音、识别或纪要准确率已通过。"),
+        Ok(ProbeKind::LocalMinutes)=>("available","本地纪要组件已校验；未发送会议或测试文字，整理效果仍以实际使用为准。"),
+        Ok(ProbeKind::LocalAsr) => ("available", "本地转写模型已校验并加载；未上传录音，识别质量仍需实际使用验证。"),
+        Ok(ProbeKind::Cloud) => ("available", "本次测试请求成功。只验证服务调用，不代表录音、识别或纪要准确率已通过。"),
         Err(Failure::Missing) => ("notConfigured", "缺少服务凭据或模型，请先保存配置。"),
         Err(Failure::Disabled) => ("disabled", "智能纪要已关闭，没有发送测试请求。"),
         Err(Failure::Configuration) => ("invalidConfiguration", "服务地址、模型、资源或请求配置不匹配，请核对后重试。"),

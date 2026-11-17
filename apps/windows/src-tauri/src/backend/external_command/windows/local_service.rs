@@ -69,18 +69,20 @@ impl Pressure {
     }
 }
 
-pub(crate) fn with_local_service<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,work:impl FnOnce()->Result<T,String>+Send)->Result<T,String>{
+pub(crate) fn with_local_service<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,work:impl FnOnce(&AtomicBool)->Result<T,String>+Send)->Result<T,String>{
     controlled(program,args,cancel,WALL,work)
 }
 
-fn controlled<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,wall:Duration,work:impl FnOnce()->Result<T,String>+Send)->Result<T,String>{
+fn controlled<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,wall:Duration,work:impl FnOnce(&AtomicBool)->Result<T,String>+Send)->Result<T,String>{
     if cancel.is_some_and(|v|v.load(Ordering::SeqCst)){return Err("本地纪要已取消，已有内容保留。".into());}
     let pressure=Pressure::new()?;
     if pressure.low()?{return Err("可用内存不足，本地纪要暂未启动，已有内容保留。".into());}
     let service=Service::start(program,args).map_err(|_|failure())?;let started=Instant::now();
+    let aborted=AtomicBool::new(false);
     thread::scope(|scope|{
         let(tx,rx)=mpsc::sync_channel(1);
-        let worker=scope.spawn(move||{let _=tx.send(work());});
+        let stopped=&aborted;
+        let worker=scope.spawn(move||{let _=tx.send(work(stopped));});
         let result=loop{
             match rx.recv_timeout(Duration::from_millis(100)){
                 Ok(value)=>break value,
@@ -98,7 +100,7 @@ fn controlled<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,wal
         };
         // Close the loopback transport before joining its worker. This also
         // releases mmap/KV allocations and every owned descendant on errors.
-        let cleaned=service.stop();
+        aborted.store(true,Ordering::Release);let cleaned=service.stop();
         let joined=worker.join();
         cleaned.map_err(|_|failure())?;
         if joined.is_err(){return Err(failure());}
@@ -115,15 +117,15 @@ mod tests {
     fn local_minutes_service_releases_the_actual_owned_family_after_work(){
         let(program,args)=command();let service=Service::start(&program,&args).unwrap();
         assert!(service.running());service.stop().unwrap();assert!(!service.running());
-        let result=controlled(&program,&args,None,Duration::from_secs(2),||Ok(42));assert_eq!(result,Ok(42));
+        let result=controlled(&program,&args,None,Duration::from_secs(2),|_|Ok(42));assert_eq!(result,Ok(42));
     }
     #[test]
     fn local_minutes_service_preserves_work_error_and_stops_on_cancel_or_deadline(){
         let(program,args)=command();
-        assert_eq!(controlled::<()>(&program,&args,None,Duration::from_secs(2),||Err("controlled source failure".into())),Err("controlled source failure".into()));
+        assert_eq!(controlled::<()>(&program,&args,None,Duration::from_secs(2),|_|Err("controlled source failure".into())),Err("controlled source failure".into()));
         let cancel=AtomicBool::new(true);
-        assert!(controlled(&program,&args,Some(&cancel),Duration::from_secs(1),||Ok(())).unwrap_err().contains("取消"));
-        let error=controlled(&program,&args,None,Duration::from_millis(50),||{thread::sleep(Duration::from_millis(200));Ok(())}).unwrap_err();
+        assert!(controlled(&program,&args,Some(&cancel),Duration::from_secs(1),|_|Ok(())).unwrap_err().contains("取消"));
+        let error=controlled(&program,&args,None,Duration::from_millis(50),|_|{thread::sleep(Duration::from_millis(200));Ok(())}).unwrap_err();
         assert!(error.contains("期限"));
     }
     #[test]
@@ -144,9 +146,17 @@ mod tests {
     #[test]
     fn local_minutes_service_honors_cancellation_after_start(){
         let(program,args)=command();let cancel=AtomicBool::new(false);
-        let error=controlled(&program,&args,Some(&cancel),Duration::from_secs(2),||{
+        let error=controlled(&program,&args,Some(&cancel),Duration::from_secs(2),|_|{
             cancel.store(true,Ordering::SeqCst);thread::sleep(Duration::from_millis(220));Ok(())
         }).unwrap_err();
         assert!(error.contains("取消"));
+    }
+    #[test]
+    fn local_minutes_service_notifies_startup_waiter_when_its_deadline_stops_engine(){
+        let(program,args)=command();let started=Instant::now();
+        let error=controlled(&program,&args,None,Duration::from_millis(30),|stop|{
+            while !stop.load(Ordering::Acquire){thread::sleep(Duration::from_millis(10));}Ok(())
+        }).unwrap_err();
+        assert!(error.contains("期限"));assert!(started.elapsed()<Duration::from_secs(2));
     }
 }

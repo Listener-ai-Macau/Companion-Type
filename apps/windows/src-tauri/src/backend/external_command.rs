@@ -135,5 +135,5 @@ mod windows;
 #[cfg(windows)]
 pub(super) fn with_local_service<T:Send>(
     program:&str,args:&[String],cancel:Option<&AtomicBool>,
-    work:impl FnOnce()->Result<T,String>+Send,
+    work:impl FnOnce(&AtomicBool)->Result<T,String>+Send,
 )->Result<T,String>{windows::with_local_service(program,args,cancel,work)}

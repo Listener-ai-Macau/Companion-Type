@@ -26,6 +26,11 @@ assert.match(libraryPreview(row,'随身包').text,/注明时间：2026-10-28 晚
 assert.doesNotMatch(libraryPreview(row,'随身包').text,/due:/);
 assert.match(libraryPreview(row,'due:').text,/due:/,'literal stored syntax remains searchable');
 assert.equal(libraryPreview(row,'出差准备').target,'result','an authored list heading resumes the saved result');
+const localResult=structuredClone(row);
+localResult.minutesByMode!.offlineStore={...localResult.minutesByMode!.offlineStore!,source:'llm_local_qwen',status:'minutesReady',quality:'final',markdown:'## 会议主线\n\n- 预算未批，测试通过后再决定上线。\n\n## 主题脉络\n\n### 上线条件\n\n- 现状：预算未批。\n'};
+assert.deepEqual(libraryPreview(localResult,''),{text:'预算未批，测试通过后再决定上线。',label:'纪要',target:'result'},'the saved local result resumes its useful summary instead of reverting to raw speech');
+localResult.minutesByMode!.offlineStore.quality='draft';
+assert.notEqual(libraryPreview(localResult,'').label,'纪要','an unqualified local candidate is not shown as the final meeting result');
 
 const ambiguous=seedCalendarTime('2026-10-28 晚上');
 assert.equal(ambiguous.date,'2026-10-28');assert.equal(ambiguous.time,'');

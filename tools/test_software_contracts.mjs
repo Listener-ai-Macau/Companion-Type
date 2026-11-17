@@ -9,11 +9,14 @@ import {fileURLToPath,pathToFileURL} from 'node:url';
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const group=process.argv[2]??'core';
 const groups={core:['packages/core/src/companionV1.test.ts','packages/core/src/recordingProcessing.test.ts'],
-  customer:['tools/test_customer_reading.tsx','tools/test_calendar_export_review.tsx','tools/test_checklist_phone.tsx','tools/test_audio_import.tsx']};
-if(!Object.hasOwn(groups,group))throw Error('Choose core or customer');
+  reading:['tools/test_customer_reading.tsx'],
+  customer:['tools/test_customer_reading.tsx','tools/test_calendar_export_review.tsx','tools/test_checklist_phone.tsx','tools/test_audio_import.tsx'],
+  settings:['tools/test_companion_credentials.tsx','tools/test_windows_settings_navigation.tsx']};
+if(!Object.hasOwn(groups,group))throw Error('Choose core, reading, customer or settings');
+const needsEnvironment=group!=='core';
 const environment=path.join(root,'tools/component_test_environment.mjs');
 const inputs=[...groups[group].map(name=>path.join(root,name)),path.join(root,'apps/windows/tsconfig.json'),
-  ...(group==='customer'?[environment]:[])];
+  ...(needsEnvironment?[environment]:[])];
 const missing=[];
 for(const file of inputs)try{await access(file);}catch{missing.push(path.relative(root,file));}
 if(missing.length)throw Error('Test prerequisites missing; no suite started: '+missing.join(', '));
@@ -27,7 +30,7 @@ for(const name of groups[group]){
   const file=path.join(out,path.basename(name)+'.mjs');
   await build({entryPoints:[path.join(root,name)],outfile:file,bundle:true,platform:'node',format:'esm',
     packages:'external',jsx:'automatic',tsconfig:path.join(root,'apps/windows/tsconfig.json'),loader:{'.css':'empty'}});
-  const result=spawnSync(process.execPath,[...(group==='customer'?['--import',pathToFileURL(environment).href]:[]),file],{cwd:root,encoding:'utf8',timeout:90000,windowsHide:true});
+  const result=spawnSync(process.execPath,[...(needsEnvironment?['--import',pathToFileURL(environment).href]:[]),file],{cwd:root,encoding:'utf8',timeout:90000,windowsHide:true});
   results.push({name,exitCode:result.status,error:result.error?.message,stdout:result.stdout,stderr:result.stderr});
   process.stdout.write(result.stdout??'');process.stderr.write(result.stderr??'');
 }

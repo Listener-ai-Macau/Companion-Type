@@ -52,6 +52,9 @@ export const previewCompanionMeetingGap = (sessionId:string,jobId:string,range:{
 
 export type CompanionProductSettingsPublic = {
   autoLocalCardTranscription?: boolean;
+  minutesProvider?: 'cloud' | 'local';
+  localMinutesAvailable?: boolean;
+  localMinutesSupported?: boolean;
   defaultMeetingMode: string;
   asrProvider: string;
   localAsrAvailable?: boolean;
@@ -73,6 +76,7 @@ export type CompanionProductSettingsPublic = {
 
 export type CompanionProductSettingsPatch = {
   autoLocalCardTranscription?: boolean;
+  minutesProvider?: 'cloud' | 'local';
   defaultMeetingMode: string;
   asrProvider: string;
   volcAppKey: string;
@@ -93,6 +97,9 @@ const FIXTURE_SETTINGS_KEY = 'companion-type.product-settings.v1';
 function defaultSettingsPublic(): CompanionProductSettingsPublic {
   return {
     autoLocalCardTranscription: true,
+    minutesProvider: 'cloud',
+    localMinutesAvailable: false,
+    localMinutesSupported: false,
     defaultMeetingMode: 'offlineStore',
     asrProvider: 'local-paraformer',
     volcAppKeySet: false,
@@ -192,6 +199,10 @@ export async function prepareCompanionAudioComponents():Promise<void> {
 export async function prepareCompanionLocalAsr():Promise<void> {
   if (!isTauriRuntime()) throw new Error('请在 Windows Companion Type 中准备本地转写模型。');
   return invoke('prepare_companion_local_asr');
+}
+export async function prepareCompanionLocalMinutes():Promise<void>{
+  if(!isTauriRuntime())throw new Error('请在Windows软件中准备本地纪要模型。');
+  return invoke('prepare_companion_local_minutes');
 }
 
 export async function exportCompanionAudio(sessionId: string, format?:'original'|'mp3'): Promise<{path: string; bytes: number} | null> {
@@ -393,6 +404,7 @@ export async function saveProductSettings(
   const next: CompanionProductSettingsPublic = {
     ...prev,
     autoLocalCardTranscription: patch.autoLocalCardTranscription ?? prev.autoLocalCardTranscription ?? true,
+    minutesProvider: patch.minutesProvider ?? prev.minutesProvider ?? 'cloud',
     defaultMeetingMode: patch.defaultMeetingMode || prev.defaultMeetingMode,
     asrProvider: patch.asrProvider || prev.asrProvider,
     volcAppKeySet: Boolean(patch.volcAppKey) || prev.volcAppKeySet,

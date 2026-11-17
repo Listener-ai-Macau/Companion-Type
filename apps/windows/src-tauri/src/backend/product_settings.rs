@@ -27,6 +27,41 @@ const PRODUCT_CREDENTIAL_TARGET: &str = "Companion.Type.product-settings.secrets
 
 fn default_auto_local_card_transcription() -> bool { true }
 
+#[derive(Clone,Copy,Debug,Deserialize,Serialize,PartialEq,Eq)]
+#[serde(rename_all="lowercase")]
+pub enum MinutesProvider { Cloud, Local }
+
+/// Capture the selected route before generation. A broken settings store must
+/// not turn an unknown local choice into an implicit paid request.
+pub(crate) fn configured_minutes_provider()->Result<Option<MinutesProvider>,String>{
+    load_minutes_settings().map(|(_,provider)|provider)
+}
+
+pub(crate) fn load_minutes_settings()->Result<(CompanionProductSettings,Option<MinutesProvider>),String>{
+    with_store(|store|{
+        let loaded=store.load()?;let provider=loaded.settings.selected_minutes_provider()?;
+        // A backup can predate a switch from cloud to local. Recovering it is
+        // useful for editing, but must not revive an older paid/upload route.
+        if loaded.recovered&&provider!=Some(MinutesProvider::Local){
+            return Err("服务设置正在使用备份，请确认整理方式并保存后再使用云端；已有内容保留。".into());
+        }
+        Ok((loaded.settings,provider))
+    })
+}
+
+impl CompanionProductSettings{
+pub(crate) fn selected_minutes_provider(&self)->Result<Option<MinutesProvider>,String>{
+    match std::env::var("COMPANION_TYPE_MINUTES_PROVIDER"){
+        Ok(value)=>match value.trim().to_ascii_lowercase().as_str(){
+            "cloud"=>Ok(Some(MinutesProvider::Cloud)),"local"=>Ok(Some(MinutesProvider::Local)),
+            _=>Err("会议整理方式设置无效，已有内容保留。".into()),
+        },
+        Err(std::env::VarError::NotPresent)=>Ok(self.minutes_provider),
+        Err(_)=>Err("会议整理方式设置不可用，已有内容保留。".into()),
+    }
+}
+}
+
 pub(crate) fn auto_local_card_transcription_enabled() -> bool {
     try_load_settings().map(|settings| settings.auto_local_card_transcription).unwrap_or(false)
 }
@@ -82,6 +117,10 @@ fn clear_persisted_secrets(settings: &mut CompanionProductSettings) {
 pub struct CompanionProductSettings {
     #[serde(default = "default_auto_local_card_transcription")]
     pub auto_local_card_transcription: bool,
+    /// None preserves the historical explicit-command behavior for old clients.
+    /// Old clients omit this field when saving and retain the chosen route.
+    #[serde(default)]
+    pub minutes_provider: Option<MinutesProvider>,
     /// offlineStore | onlineLive
     pub default_meeting_mode: String,
     /// local-paraformer | volcengine | openai-compatible | auto
@@ -108,6 +147,7 @@ impl Default for CompanionProductSettings {
     fn default() -> Self {
         Self {
             auto_local_card_transcription: true,
+            minutes_provider: None,
             default_meeting_mode: "offlineStore".to_string(),
             asr_provider: "local-paraformer".to_string(),
             volc_app_key: String::new(),
@@ -131,6 +171,9 @@ impl Default for CompanionProductSettings {
 #[serde(rename_all = "camelCase")]
 pub struct CompanionProductSettingsPublic {
     pub auto_local_card_transcription: bool,
+    pub minutes_provider: MinutesProvider,
+    pub local_minutes_available: bool,
+    pub local_minutes_supported: bool,
     pub default_meeting_mode: String,
     pub asr_provider: String,
     /// A lightweight presence hint; the model and runtime are verified when used.
@@ -172,6 +215,13 @@ impl CompanionProductSettings {
                 _ => provider.to_ascii_lowercase(),
             };
         }
+        if let Some(provider)=value("COMPANION_TYPE_MINUTES_PROVIDER"){
+            match provider.trim().to_ascii_lowercase().as_str(){
+                "local"=>public.minutes_provider=MinutesProvider::Local,
+                "cloud"=>public.minutes_provider=MinutesProvider::Cloud,
+                _=>{}, // Invalid routes are rejected by generation, never used.
+            }
+        }
         public.volc_app_key_set |= !self.credential_blocks.volc_app_key && value("COMPANION_TYPE_VOLC_APP_KEY").is_some();
         public.volc_access_key_set |= !self.credential_blocks.volc_access_key && value("COMPANION_TYPE_VOLC_ACCESS_KEY").is_some();
         public.openai_asr_api_key_set |= !self.credential_blocks.openai_asr_api_key && (value("COMPANION_TYPE_ASR_API_KEY").is_some()
@@ -199,6 +249,15 @@ impl CompanionProductSettings {
     pub fn to_public(&self, path: &str) -> CompanionProductSettingsPublic {
         CompanionProductSettingsPublic {
             auto_local_card_transcription: self.auto_local_card_transcription,
+            minutes_provider:self.minutes_provider.unwrap_or(MinutesProvider::Cloud),
+            local_minutes_available:{
+                #[cfg(windows)] {super::minutes::local::assets_present()}
+                #[cfg(not(windows))] {false}
+            },
+            local_minutes_supported:{
+                #[cfg(windows)] {super::minutes::local::supported()}
+                #[cfg(not(windows))] {false}
+            },
             default_meeting_mode: self.default_meeting_mode.clone(),
             asr_provider: self.asr_provider.clone(),
             local_asr_available: super::transcription::local_asr_assets_present(),
@@ -281,6 +340,7 @@ pub fn save_settings(settings: &CompanionProductSettings) -> Result<PathBuf, Str
 /// Merge non-empty fields from `patch` into current on-disk settings.
 fn merge_settings(mut current: CompanionProductSettings, patch: CompanionProductSettings) -> CompanionProductSettings {
     current.auto_local_card_transcription = patch.auto_local_card_transcription;
+    if let Some(provider)=patch.minutes_provider{current.minutes_provider=Some(provider);}
     if !patch.default_meeting_mode.trim().is_empty() {
         current.default_meeting_mode = patch.default_meeting_mode.trim().to_string();
     }
@@ -330,6 +390,7 @@ pub fn merge_patch_and_save(patch: CompanionProductSettingsPatch) -> Result<Comp
 }
 
 pub fn apply_to_process_env(settings: &CompanionProductSettings) {
+    set_env("COMPANION_TYPE_MINUTES_PROVIDER",settings.minutes_provider.map(|p|match p{MinutesProvider::Cloud=>"cloud",MinutesProvider::Local=>"local"}));
     for (blocked, names) in [
         (settings.credential_blocks.volc_app_key, &["COMPANION_TYPE_VOLC_APP_KEY"][..]),
         (settings.credential_blocks.volc_access_key, &["COMPANION_TYPE_VOLC_ACCESS_KEY"][..]),
@@ -660,6 +721,64 @@ mod tests {
     use std::time::{SystemTime, UNIX_EPOCH};
 
     #[test]
+    fn minutes_provider_survives_reopen_and_older_client_save_without_clearing_cloud_credentials(){
+        let mut current=CompanionProductSettings::default();
+        current.minutes_provider=Some(MinutesProvider::Local);current.deepseek_api_key="isolated-cloud-key".into();
+        let mut older=serde_json::to_value(CompanionProductSettings::default()).unwrap();
+        older.as_object_mut().unwrap().remove("minutesProvider");
+        let patch:CompanionProductSettings=serde_json::from_value(older).unwrap();
+        let merged=merge_settings(current,patch);
+        let reopened:CompanionProductSettings=serde_json::from_slice(&serde_json::to_vec(&merged).unwrap()).unwrap();
+        assert_eq!(reopened.minutes_provider,Some(MinutesProvider::Local));assert_eq!(reopened.deepseek_api_key,"isolated-cloud-key");
+        assert!(!serde_json::to_string(&reopened.to_public("isolated")).unwrap().contains("isolated-cloud-key"));
+        let mut invalid=serde_json::to_value(CompanionProductSettings::default()).unwrap();invalid["minutesProvider"]=serde_json::json!("silent-auto");
+        assert!(serde_json::from_value::<CompanionProductSettings>(invalid).is_err());
+    }
+
+    #[test]
+    fn minutes_provider_local_failures_and_local_checks_never_call_configured_cloud(){
+        use std::{io::{Read,Write},net::TcpListener,time::{Duration,Instant}};
+        with_temp_settings_path(||{
+            let listener=TcpListener::bind("127.0.0.1:0").unwrap();listener.set_nonblocking(true).unwrap();
+            let address=format!("http://{}/v1",listener.local_addr().unwrap());
+            let worker=std::thread::spawn(move||{
+                let deadline=Instant::now()+Duration::from_secs(2);let mut count=0;
+                while Instant::now()<deadline{
+                    match listener.accept(){
+                        Ok((mut stream,_))=>{count+=1;let _=stream.set_read_timeout(Some(Duration::from_millis(100)));
+                            let mut bytes=[0u8;4096];let _=stream.read(&mut bytes);
+                            let body="{}";let response=format!("HTTP/1.1 402 Payment Required\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",body.len(),body);let _=stream.write_all(response.as_bytes());},
+                        Err(e)if e.kind()==std::io::ErrorKind::WouldBlock=>std::thread::sleep(Duration::from_millis(5)),
+                        Err(_)=>break,
+                    }
+                }count
+            });
+            let mut settings=CompanionProductSettings::default();settings.minutes_provider=Some(MinutesProvider::Local);
+            settings.deepseek_api_key="isolated-unused-key".into();settings.deepseek_base_url=address;save_settings(&settings).unwrap();apply_to_process_env(&settings);
+            let private_root=settings_path().parent().unwrap().to_path_buf();
+            std::env::set_var("COMPANION_TYPE_LOCAL_MINUTES_MODEL_PATH",private_root.join("missing.gguf"));
+            std::env::set_var("COMPANION_TYPE_LOCAL_COMPUTE_LOCK_PATH",private_root.join("inference.lock"));
+            std::env::set_var("COMPANION_TYPE_MINUTES_COMMAND","missing-external-command-must-not-run");
+            let session=super::super::minutes::tests::session_with_text("讨论测试安排，预算尚未批准，暂不采购。");
+            let generated=super::super::minutes::CompanionMinutesManager::new().generate(&session,"isolated");
+            assert_eq!(generated.quality,"draft");assert!(generated.llm_note.as_deref().is_some_and(|s|s.contains("本地")));
+            let checked=super::super::service_check::check(super::super::service_check::Service::Minutes);
+            assert_ne!(checked.status,"available");
+            // A recoverable primary retains the saved local route. A genuinely
+            // unreadable primary AND backup must not fail open to paid calls.
+            fs::write(settings_path(),b"{broken").unwrap();
+            assert_eq!(configured_minutes_provider().unwrap(),Some(MinutesProvider::Local));
+            // Simulate restart: the inherited current-route hint is absent.
+            std::env::remove_var("COMPANION_TYPE_MINUTES_PROVIDER");
+            assert!(configured_minutes_provider().is_err(),"older backup must not revive cloud selection");
+            fs::write(private_root.join("settings.json.bak"),b"{broken").unwrap();
+            std::env::set_var("COMPANION_TYPE_MINUTES_PROVIDER","cloud");
+            let failed=super::super::minutes::CompanionMinutesManager::new().generate(&session,"isolated2");assert!(failed.llm_note.is_some());
+            assert_eq!(worker.join().unwrap(),0);
+        });
+    }
+
+    #[test]
     fn new_settings_use_local_transcription_but_explicit_cloud_is_preserved() {
         let settings=CompanionProductSettings::default();
         assert_eq!(settings.asr_provider,"local-paraformer");
@@ -737,8 +856,15 @@ mod tests {
             "COMPANION_TYPE_VOLC_ACCESS_KEY",
             "COMPANION_TYPE_BLE_COMPRESS",
             "DEEPSEEK_API_KEY",
+            "DEEPSEEK_BASE_URL",
+            "DEEPSEEK_MODEL",
+            "COMPANION_TYPE_DEEPSEEK_MINUTES_ENABLED",
             "COMPANION_TYPE_MINUTES_COMMAND",
             "COMPANION_TYPE_MINUTES_ARGS",
+            "COMPANION_TYPE_MINUTES_PROVIDER",
+            "COMPANION_TYPE_LOCAL_MINUTES_MODEL_PATH",
+            "COMPANION_TYPE_LOCAL_MINUTES_RUNTIME_DIR",
+            "COMPANION_TYPE_LOCAL_COMPUTE_LOCK_PATH",
         ] {
             std::env::remove_var(key);
         }

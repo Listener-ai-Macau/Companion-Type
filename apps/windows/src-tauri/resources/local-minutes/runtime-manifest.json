@@ -1,0 +1,47 @@
+{
+  "sourceArchiveSha256": "bf4108fc76e933ea4969b61b1e281a2d232dd3e43361d1fdca5e2e029d62f729",
+  "source": "https://pypi.org/project/llama-cpp-python/0.3.37/",
+  "cpuOnly": true,
+  "files": [
+    {
+      "name": "ggml-base.dll",
+      "bytes": 700928,
+      "sha256": "fc9fe15b81101eb9e53c9d10a04cd4b90b95eb88916e0c6394e6556b80fd37c6"
+    },
+    {
+      "name": "ggml-cpu.dll",
+      "bytes": 1096192,
+      "sha256": "1f906078920a438cae725432fedd5cfe6b299022fd1d3f38950e65e404af1545"
+    },
+    {
+      "name": "ggml.dll",
+      "bytes": 58368,
+      "sha256": "39e2269b4a4148657707a2371f6b7b5255c109866978328a14b7269e103d454c"
+    },
+    {
+      "name": "llama-common.dll",
+      "bytes": 8862720,
+      "sha256": "ba165fb8b07cee71bad0513114fe35a2970a433808cb0173d84fc25e8ebccd29"
+    },
+    {
+      "name": "llama-server-impl.dll",
+      "bytes": 7411200,
+      "sha256": "b50f888a0f4f90708a7b629d1e62eec4ad8e3ce17d66004a978219b20d0c2220"
+    },
+    {
+      "name": "llama-server.exe",
+      "bytes": 11264,
+      "sha256": "e866430b71054f4e21e3b294a60f198ae9313c08839000febb765fd5dc4d7e47"
+    },
+    {
+      "name": "llama.dll",
+      "bytes": 3174912,
+      "sha256": "cda982fc44167fa9e5ff605bc0e865e8289f69b07a9b509d2f7f370b4abc25f9"
+    },
+    {
+      "name": "mtmd.dll",
+      "bytes": 2921984,
+      "sha256": "015b6562b902d869bb660053c609d4cc997e2db127620de7042e460f01957eeb"
+    }
+  ]
+}
