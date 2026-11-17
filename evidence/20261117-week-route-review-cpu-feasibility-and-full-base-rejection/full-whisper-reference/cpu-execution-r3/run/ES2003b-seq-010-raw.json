@@ -1,0 +1,75 @@
+{
+  "case": {
+    "id": "ES2003b-seq-010",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-010.wav",
+    "wavSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+    "pcmSha256": "e087cf4e22224bfc9c3ad810c56bd3595ad7343c30b6d53fc5c1ce00d445b32f",
+    "frames": 475520,
+    "audioSeconds": 29.72,
+    "language": "English"
+  },
+  "seconds": 18.001505400003225,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "e633ab1d74b0e98f4f57daedaee34291297dbbf01389bda3d890766600c1c584",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "and just go faster than that. I'm responsible for our working design. This is basically the inside going on with the remote control.",
+    "raw_text": "<|0.00|> and just go faster than that.<|2.00|><|20.00|> I'm responsible for our working design.<|23.80|><|23.80|> This is basically the inside going on with the remote control.<|29.72|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "and just go faster than that.",
+        "t0_ms": 0,
+        "t1_ms": 2000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "I'm responsible for our working design.",
+        "t0_ms": 20000,
+        "t1_ms": 23800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "This is basically the inside going on with the remote control.",
+        "t0_ms": 23800,
+        "t1_ms": 29720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 309.6369934082031,
+      "mel_ms": 14.831000328063965,
+      "encode_ms": 13992.962890625,
+      "decode_ms": 3976.875
+    }
+  },
+  "rawDecoded": "<|0.00|> and just go faster than that.<|2.00|><|20.00|> I'm responsible for our working design.<|23.80|><|23.80|> This is basically the inside going on with the remote control.<|29.72|>",
+  "hypothesis": "and just go faster than that. I'm responsible for our working design. This is basically the inside going on with the remote control.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false
+}

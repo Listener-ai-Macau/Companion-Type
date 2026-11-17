@@ -1,0 +1,129 @@
+{
+  "state": "COMPLETE_FULL_BASE_12_CLIPS_PENDING_INDEPENDENT_SCORE",
+  "pid": 25688,
+  "createdAt": 1794905100.2542703,
+  "startedAt": "2026-11-17T16:45:00.343022+08:00",
+  "protocolSha256": "d3da771319c696dcc2ccf3b692425ea0679b4daa8b016f0fbc74f28b1baa2f0a",
+  "completed": [
+    {
+      "id": "ES2003b-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-000-raw.json",
+      "sha256": "97fc504686a5d173ea758104462385db7ebaf546f30a312ae750bc64a50c8f94",
+      "seconds": 25.905384999998205
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-005-raw.json",
+      "sha256": "5933fbf089aab3dc0ead3056879fdc695ef5194100a5db6a1f9f309f62151520",
+      "seconds": 23.220620299995062
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-010-raw.json",
+      "sha256": "2a27a2ebd4672e17cea6d6a4d155d7d290fece109f9cb4794b55b240196f7fd3",
+      "seconds": 18.001505400003225
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-016-raw.json",
+      "sha256": "641385a2e27e3b88347e15ad9c03387aa7358f60a694afd217d75de643427470",
+      "seconds": 19.663472300002468
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-021-raw.json",
+      "sha256": "917ee2ec14a4f26d520140b9804e56215bd889d4480c28429908f09c3f75f9ed",
+      "seconds": 18.705979999998817
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-027-raw.json",
+      "sha256": "819a7218723fd851f8a4d821adf5efa9735a9a92af1b6072fff67f2ff6e42268",
+      "seconds": 18.790057000005618
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-000-raw.json",
+      "sha256": "01cfac78010c741b962447414708f9f555d97aa8c21e51d6e736b5a16df1c50f",
+      "seconds": 17.6580713000003
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-023-raw.json",
+      "sha256": "b0259f35eb4acbf8170d396657762bb5bc751b21d0442e8f55cbbac5148e00ce",
+      "seconds": 23.979040600002918
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-046-raw.json",
+      "sha256": "b156933885d10ea699d82963053e5bca85232e552c14a4b569145496066ef272",
+      "seconds": 18.57821719999629
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-069-raw.json",
+      "sha256": "5d55d04425783ba7dcad84444207b74fa969ab1c6d5ba6b6af773426eb534934",
+      "seconds": 37.48644280000008
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-092-raw.json",
+      "sha256": "a6b272a48588db7caf8a0ac72a43e3737245879acefb07376118cd1c704d8042",
+      "seconds": 24.575717300001998
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-116-raw.json",
+      "sha256": "edb655b8ef64eecfc18df0204f2a706adccbc1fb3ea859c99bb2a34b77028a15",
+      "seconds": 18.315719499994884
+    }
+  ],
+  "newTrainingUpdates": 0,
+  "referenceRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "observedAt": "2026-11-17T16:50:29.048816+08:00",
+  "limits": {
+    "pid": 25688,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 824827904,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "device": {
+    "name": "CPU",
+    "description": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+    "kind": "cpu",
+    "device_type": "cpu",
+    "device_id": null,
+    "memory_total": 24902488064,
+    "memory_free": 7919861760,
+    "index": 0,
+    "_handle": 140726971600928
+  },
+  "nativeCommit": "275cd50",
+  "modelArch": "whisper",
+  "actualDevice": {
+    "name": "CPU",
+    "description": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+    "kind": "cpu",
+    "device_type": "cpu",
+    "device_id": null,
+    "memory_total": 24902488064,
+    "memory_free": 7879987200,
+    "index": null,
+    "_handle": 140726971600928
+  },
+  "activeCase": "EN2001a-a2-116",
+  "finishedAt": "2026-11-17T16:50:29.048816+08:00",
+  "wholeWorkerSeconds": 328.70300000000134
+}

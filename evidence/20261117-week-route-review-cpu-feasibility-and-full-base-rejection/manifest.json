@@ -1,0 +1,296 @@
+{
+  "at": "2026-11-17T17:00:05.771910+08:00",
+  "parent": "dfaf029c8f772d7f9d287d71400141a8a06f0271",
+  "entries": [
+    {
+      "source": "work\\run_tdt_cpu_loss_proof_20261117.py",
+      "file": "tools/run_tdt_cpu_loss_proof_20261117.py",
+      "bytes": 2789,
+      "sha256": "077618a07b192087f2d80cbf61fae9acc05da5c06da05bb7e1ebf3da57cad948"
+    },
+    {
+      "source": "work\\run_tdt_real_cpu_backward_20261117.py",
+      "file": "tools/run_tdt_real_cpu_backward_20261117.py",
+      "bytes": 8842,
+      "sha256": "bcac84bf254d382572ab7e674ee665b90dd15ddab96130241022abf2a598ef2b"
+    },
+    {
+      "source": "work\\prepare_full_whisper_reference_20261117.py",
+      "file": "tools/prepare_full_whisper_reference_20261117.py",
+      "bytes": 4314,
+      "sha256": "ad60c35138350bf9ab7408e6342db1fbdb9fbfad9c26e702cd448675b478195b"
+    },
+    {
+      "source": "work\\run_full_whisper_reference_20261117.py",
+      "file": "tools/run_full_whisper_reference_20261117.py",
+      "bytes": 6643,
+      "sha256": "a4a588d9db6d1e00a6989c5076cf26651bded5236a8cd9ea52394f8fbbdb9d6d"
+    },
+    {
+      "source": "work\\score_full_whisper_reference_20261117.py",
+      "file": "tools/score_full_whisper_reference_20261117.py",
+      "bytes": 4285,
+      "sha256": "8f3a9b8a6a4a0af1213890ab16f8850e54240b0e622bffd99dc945d96f2f0947"
+    },
+    {
+      "source": "work\\record_week_direction_review_20261117.py",
+      "file": "tools/record_week_direction_review_20261117.py",
+      "bytes": 21203,
+      "sha256": "dad33f9f1c5a9266b1b0d5ea8faaf3f2b4f8ed0b1dd2722bcf5b821da7dd83e3"
+    },
+    {
+      "source": "work\\prepare_week_checkpoint_20261117.py",
+      "file": "tools/prepare_week_checkpoint_20261117.py",
+      "bytes": 4721,
+      "sha256": "74a30e183b4267c9df388382b6f3a0c882943bf3bb49aa75e6a76aeca49eacd4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\week-direction-review-20261117.json",
+      "file": "week-direction-review.json",
+      "bytes": 164209,
+      "sha256": "d9490889323c99e69a344e1ff1056c20464477a7c69c44a342fcd8a96c1f3883"
+    },
+    {
+      "source": "outputs\\Companion-一周模型复盘与路线收敛-20261117.txt",
+      "file": "owner-week-review.txt",
+      "bytes": 6803,
+      "sha256": "9332b53beddcb12df49d8b0f86730b3e062e751a996e4daf9042fcf47a23bb36"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\cpu-loss-reference-r1\\result.json",
+      "file": "cpu-feasibility/cpu-loss-reference-r1/result.json",
+      "bytes": 1805,
+      "sha256": "1d0fba7a251143bde64d8c444bd56a4f95f0c5822fb871bc6f1a8400d59f8049"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\cpu-loss-reference-r1\\state.json",
+      "file": "cpu-feasibility/cpu-loss-reference-r1/state.json",
+      "bytes": 331,
+      "sha256": "6b7a9e776840cad21880910465afc1375e0b5e136dfafbae7224cb90a16ec316"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\real-cpu-backward-r1\\result.json",
+      "file": "cpu-feasibility/real-cpu-backward-r1/result.json",
+      "bytes": 7117,
+      "sha256": "3aa72148bab657f7c4d6ea7f7cf0da0ebfee3722c4fb9138b9c2cd788080599f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\real-cpu-backward-r1\\source-before-readonly-map-fix.py",
+      "file": "cpu-feasibility/real-cpu-backward-r1/source-before-readonly-map-fix.py",
+      "bytes": 7967,
+      "sha256": "2e7767aaaf03947ac2713d270c0f7fdb6efe5965629ffb35309552a1ac023970"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\real-cpu-backward-r1\\state.json",
+      "file": "cpu-feasibility/real-cpu-backward-r1/state.json",
+      "bytes": 7117,
+      "sha256": "3aa72148bab657f7c4d6ea7f7cf0da0ebfee3722c4fb9138b9c2cd788080599f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\real-cpu-backward-r2\\observed-terminal.json",
+      "file": "cpu-feasibility/real-cpu-backward-r2/observed-terminal.json",
+      "bytes": 786,
+      "sha256": "48a46d2944d5926689951c824c6c9d855f7be7ccff50b93dc3418fe557c5ce17"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\real-cpu-backward-r2\\state.json",
+      "file": "cpu-feasibility/real-cpu-backward-r2/state.json",
+      "bytes": 1804,
+      "sha256": "15e910bcc1258b5f13150f87ef93fdbe99720f12cc3b9584f4f97ddbe101bf69"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\download-completed.json",
+      "file": "full-whisper-reference/download-completed.json",
+      "bytes": 662,
+      "sha256": "5c1b675ebd4aebdde5de36b36db843f523376faca61e8fc80a721d9a36809218"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\download-progress.json",
+      "file": "full-whisper-reference/download-progress.json",
+      "bytes": 89,
+      "sha256": "e717678297fdbc28af5f1b81ba4c77d104c339e4e70fb099fe611fbe1136049e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\protocol.json",
+      "file": "full-whisper-reference/protocol.json",
+      "bytes": 11318,
+      "sha256": "ccf422c38d25af4125a61bc5a5470c3580b4b61ed7486f8b46593799aec86a75"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\source.json",
+      "file": "full-whisper-reference/source.json",
+      "bytes": 727,
+      "sha256": "22e79474324f973bc211f7ede1ff916e510f75451116377f0b7aaa2103e2170d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\worker-vulkan-r1.py",
+      "file": "full-whisper-reference/worker-vulkan-r1.py",
+      "bytes": 6369,
+      "sha256": "5b787d4d936fb71e1cd5e1145fc89f75529bde766f771336d8b0afb41708e708"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r2\\protocol.json",
+      "file": "full-whisper-reference/cpu-execution-r2/protocol.json",
+      "bytes": 11907,
+      "sha256": "1c63cd67420743533f710816dcf069d63608d9c51540864ff5f06eae2a028529"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r2\\run\\completed.json",
+      "file": "full-whisper-reference/cpu-execution-r2/run/completed.json",
+      "bytes": 2174,
+      "sha256": "b46329dac92cf54c7a62dc4d2a1e4daebb2644ba0746789476e702294a957c35"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r2\\run\\state.json",
+      "file": "full-whisper-reference/cpu-execution-r2/run/state.json",
+      "bytes": 2174,
+      "sha256": "b46329dac92cf54c7a62dc4d2a1e4daebb2644ba0746789476e702294a957c35"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\protocol.json",
+      "file": "full-whisper-reference/cpu-execution-r3/protocol.json",
+      "bytes": 12433,
+      "sha256": "d3da771319c696dcc2ccf3b692425ea0679b4daa8b016f0fbc74f28b1baa2f0a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\score.json",
+      "file": "full-whisper-reference/cpu-execution-r3/score.json",
+      "bytes": 119427,
+      "sha256": "801b137d236e432c4aa0841593f5901e6bf3ffc6fd4042c515c843cf91e6403b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\completed.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/completed.json",
+      "bytes": 5598,
+      "sha256": "992a731d3d74355af202cfa4d777447b5dfb8d1aaba3effb67fa9f76898cf5b7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-000-raw.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/EN2001a-a2-000-raw.json",
+      "bytes": 2459,
+      "sha256": "01cfac78010c741b962447414708f9f555d97aa8c21e51d6e736b5a16df1c50f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-023-raw.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/EN2001a-a2-023-raw.json",
+      "bytes": 6628,
+      "sha256": "b0259f35eb4acbf8170d396657762bb5bc751b21d0442e8f55cbbac5148e00ce"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-046-raw.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/EN2001a-a2-046-raw.json",
+      "bytes": 2716,
+      "sha256": "b156933885d10ea699d82963053e5bca85232e552c14a4b569145496066ef272"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-069-raw.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/EN2001a-a2-069-raw.json",
+      "bytes": 5366,
+      "sha256": "5d55d04425783ba7dcad84444207b74fa969ab1c6d5ba6b6af773426eb534934"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-092-raw.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/EN2001a-a2-092-raw.json",
+      "bytes": 5965,
+      "sha256": "a6b272a48588db7caf8a0ac72a43e3737245879acefb07376118cd1c704d8042"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-116-raw.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/EN2001a-a2-116-raw.json",
+      "bytes": 1876,
+      "sha256": "edb655b8ef64eecfc18df0204f2a706adccbc1fb3ea859c99bb2a34b77028a15"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-000-raw.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/ES2003b-seq-000-raw.json",
+      "bytes": 3030,
+      "sha256": "97fc504686a5d173ea758104462385db7ebaf546f30a312ae750bc64a50c8f94"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-005-raw.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/ES2003b-seq-005-raw.json",
+      "bytes": 6786,
+      "sha256": "5933fbf089aab3dc0ead3056879fdc695ef5194100a5db6a1f9f309f62151520"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-010-raw.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/ES2003b-seq-010-raw.json",
+      "bytes": 2702,
+      "sha256": "2a27a2ebd4672e17cea6d6a4d155d7d290fece109f9cb4794b55b240196f7fd3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-016-raw.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/ES2003b-seq-016-raw.json",
+      "bytes": 3641,
+      "sha256": "641385a2e27e3b88347e15ad9c03387aa7358f60a694afd217d75de643427470"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-021-raw.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/ES2003b-seq-021-raw.json",
+      "bytes": 2559,
+      "sha256": "917ee2ec14a4f26d520140b9804e56215bd889d4480c28429908f09c3f75f9ed"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-027-raw.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/ES2003b-seq-027-raw.json",
+      "bytes": 3375,
+      "sha256": "819a7218723fd851f8a4d821adf5efa9735a9a92af1b6072fff67f2ff6e42268"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\native.log",
+      "file": "full-whisper-reference/cpu-execution-r3/run/native.log",
+      "bytes": 3747,
+      "sha256": "6e82a051030d2c61706d1b44eca54cf18c1e29bfc3b6565640c82f6dac1301d5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\state.json",
+      "file": "full-whisper-reference/cpu-execution-r3/run/state.json",
+      "bytes": 5598,
+      "sha256": "992a731d3d74355af202cfa4d777447b5dfb8d1aaba3effb67fa9f76898cf5b7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\run\\completed.json",
+      "file": "full-whisper-reference/run/completed.json",
+      "bytes": 2752,
+      "sha256": "233a86ac11e97327b13ca7836f31f38402a3acecb7975ad47aaf3e4144a80903"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\run\\native.log",
+      "file": "full-whisper-reference/run/native.log",
+      "bytes": 192,
+      "sha256": "dc59dfe6366412cf88426d73f3835ddb11425a749355cf6e8bb51715e6f40bc9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\run\\state.json",
+      "file": "full-whisper-reference/run/state.json",
+      "bytes": 2752,
+      "sha256": "233a86ac11e97327b13ca7836f31f38402a3acecb7975ad47aaf3e4144a80903"
+    },
+    {
+      "source": "work\\checkpoint_week_review_r71.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 10779,
+      "sha256": "fdcead3f37e0cae3f0194b18372c07ec49d2fea49482a39a0cecb23cc8390cc5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {},
+  "state": "WEEK_DIRECTION_REVIEW_AND_FULL_BASE_COMPARISON_COMPLETE_NO_QUALITY_GAIN",
+  "fullWhisperEnglishErrors": 227,
+  "originalEnglishReferenceWords": 709,
+  "fullWhisperCandidateRejected": true,
+  "cpuTinyLossGradientProofPassed": true,
+  "realCpuForwardPassedBackwardNotCompleted": true,
+  "trainedWeightUpdatesThisBatch": 0,
+  "cpuIgpuTrainingPermissionNowAllowed": true,
+  "oldMetricsAndFailuresRetained": true,
+  "allOwnedModelJobsTerminal": true,
+  "rawAudioInputFeaturesModelWeightsOrCredentialsIncluded": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

@@ -1,0 +1,200 @@
+{
+  "revision": 71,
+  "evidenceDirectory": "evidence/20261117-week-route-review-cpu-feasibility-and-full-base-rejection",
+  "sources": [],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "work\\run_tdt_cpu_loss_proof_20261117.py",
+      "name": "tools/run_tdt_cpu_loss_proof_20261117.py"
+    },
+    {
+      "source": "work\\run_tdt_real_cpu_backward_20261117.py",
+      "name": "tools/run_tdt_real_cpu_backward_20261117.py"
+    },
+    {
+      "source": "work\\prepare_full_whisper_reference_20261117.py",
+      "name": "tools/prepare_full_whisper_reference_20261117.py"
+    },
+    {
+      "source": "work\\run_full_whisper_reference_20261117.py",
+      "name": "tools/run_full_whisper_reference_20261117.py"
+    },
+    {
+      "source": "work\\score_full_whisper_reference_20261117.py",
+      "name": "tools/score_full_whisper_reference_20261117.py"
+    },
+    {
+      "source": "work\\record_week_direction_review_20261117.py",
+      "name": "tools/record_week_direction_review_20261117.py"
+    },
+    {
+      "source": "work\\prepare_week_checkpoint_20261117.py",
+      "name": "tools/prepare_week_checkpoint_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\week-direction-review-20261117.json",
+      "name": "week-direction-review.json"
+    },
+    {
+      "source": "outputs\\Companion-一周模型复盘与路线收敛-20261117.txt",
+      "name": "owner-week-review.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\cpu-loss-reference-r1\\result.json",
+      "name": "cpu-feasibility/cpu-loss-reference-r1/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\cpu-loss-reference-r1\\state.json",
+      "name": "cpu-feasibility/cpu-loss-reference-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\real-cpu-backward-r1\\result.json",
+      "name": "cpu-feasibility/real-cpu-backward-r1/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\real-cpu-backward-r1\\source-before-readonly-map-fix.py",
+      "name": "cpu-feasibility/real-cpu-backward-r1/source-before-readonly-map-fix.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\real-cpu-backward-r1\\state.json",
+      "name": "cpu-feasibility/real-cpu-backward-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\real-cpu-backward-r2\\observed-terminal.json",
+      "name": "cpu-feasibility/real-cpu-backward-r2/observed-terminal.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\real-cpu-backward-r2\\state.json",
+      "name": "cpu-feasibility/real-cpu-backward-r2/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\download-completed.json",
+      "name": "full-whisper-reference/download-completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\download-progress.json",
+      "name": "full-whisper-reference/download-progress.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\protocol.json",
+      "name": "full-whisper-reference/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\source.json",
+      "name": "full-whisper-reference/source.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\worker-vulkan-r1.py",
+      "name": "full-whisper-reference/worker-vulkan-r1.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r2\\protocol.json",
+      "name": "full-whisper-reference/cpu-execution-r2/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r2\\run\\completed.json",
+      "name": "full-whisper-reference/cpu-execution-r2/run/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r2\\run\\state.json",
+      "name": "full-whisper-reference/cpu-execution-r2/run/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\protocol.json",
+      "name": "full-whisper-reference/cpu-execution-r3/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\score.json",
+      "name": "full-whisper-reference/cpu-execution-r3/score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\completed.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-000-raw.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/EN2001a-a2-000-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-023-raw.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/EN2001a-a2-023-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-046-raw.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/EN2001a-a2-046-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-069-raw.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/EN2001a-a2-069-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-092-raw.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/EN2001a-a2-092-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\EN2001a-a2-116-raw.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/EN2001a-a2-116-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-000-raw.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/ES2003b-seq-000-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-005-raw.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/ES2003b-seq-005-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-010-raw.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/ES2003b-seq-010-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-016-raw.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/ES2003b-seq-016-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-021-raw.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/ES2003b-seq-021-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\ES2003b-seq-027-raw.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/ES2003b-seq-027-raw.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\native.log",
+      "name": "full-whisper-reference/cpu-execution-r3/run/native.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\cpu-execution-r3\\run\\state.json",
+      "name": "full-whisper-reference/cpu-execution-r3/run/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\run\\completed.json",
+      "name": "full-whisper-reference/run/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\run\\native.log",
+      "name": "full-whisper-reference/run/native.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-full-base-r1\\run\\state.json",
+      "name": "full-whisper-reference/run/state.json"
+    }
+  ],
+  "commitMessage": "Review week-level convergence, verify CPU feasibility and reject fullWhisper reference on fixed original cohort",
+  "claims": {
+    "state": "WEEK_DIRECTION_REVIEW_AND_FULL_BASE_COMPARISON_COMPLETE_NO_QUALITY_GAIN",
+    "fullWhisperEnglishErrors": 227,
+    "originalEnglishReferenceWords": 709,
+    "fullWhisperCandidateRejected": true,
+    "cpuTinyLossGradientProofPassed": true,
+    "realCpuForwardPassedBackwardNotCompleted": true,
+    "trainedWeightUpdatesThisBatch": 0,
+    "cpuIgpuTrainingPermissionNowAllowed": true,
+    "oldMetricsAndFailuresRetained": true,
+    "allOwnedModelJobsTerminal": true,
+    "rawAudioInputFeaturesModelWeightsOrCredentialsIncluded": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

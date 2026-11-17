@@ -1,0 +1,105 @@
+{
+  "case": {
+    "id": "ES2003b-seq-027",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-027.wav",
+    "wavSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+    "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+    "frames": 162401,
+    "audioSeconds": 10.1500625,
+    "language": "English"
+  },
+  "seconds": 18.790057000005618,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "e633ab1d74b0e98f4f57daedaee34291297dbbf01389bda3d890766600c1c584",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "I'm pointing at my laptop. We put the fetch in too. Real reaction and such. So, um... That's the slogan. Is that not the name?",
+    "raw_text": "<|0.00|> I'm pointing at my laptop.<|1.50|><|2.04|> We put the fetch in too.<|3.70|><|4.98|> Real reaction and such.<|7.40|><|7.82|> So, um...<|8.38|><|8.38|> That's the slogan.<|8.92|><|9.10|> Is that not the name?<|9.70|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "I'm pointing at my laptop.",
+        "t0_ms": 0,
+        "t1_ms": 1500,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "We put the fetch in too.",
+        "t0_ms": 2040,
+        "t1_ms": 3700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Real reaction and such.",
+        "t0_ms": 4980,
+        "t1_ms": 7400,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "So, um...",
+        "t0_ms": 7820,
+        "t1_ms": 8380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "That's the slogan.",
+        "t0_ms": 8380,
+        "t1_ms": 8920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Is that not the name?",
+        "t0_ms": 9100,
+        "t1_ms": 9700,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 309.6369934082031,
+      "mel_ms": 17.53499984741211,
+      "encode_ms": 14132.9072265625,
+      "decode_ms": 4622.67919921875
+    }
+  },
+  "rawDecoded": "<|0.00|> I'm pointing at my laptop.<|1.50|><|2.04|> We put the fetch in too.<|3.70|><|4.98|> Real reaction and such.<|7.40|><|7.82|> So, um...<|8.38|><|8.38|> That's the slogan.<|8.92|><|9.10|> Is that not the name?<|9.70|>",
+  "hypothesis": "I'm pointing at my laptop. We put the fetch in too. Real reaction and such. So, um... That's the slogan. Is that not the name?",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false
+}

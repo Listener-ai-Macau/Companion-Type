@@ -1,0 +1,165 @@
+{
+  "case": {
+    "id": "EN2001a-a2-023",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-023.wav",
+    "wavSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+    "pcmSha256": "490510a15ef6f46ebac736fb41e975068df6e61349ac7f589c257fe724ae9d33",
+    "frames": 475520,
+    "audioSeconds": 29.72,
+    "language": "English"
+  },
+  "seconds": 23.979040600002918,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "e633ab1d74b0e98f4f57daedaee34291297dbbf01389bda3d890766600c1c584",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "And that way we could probably use the same algorithm and just make one or two ifs that say, okay, if you are on whole document, a whole series level, that was a double click, then don't just go into that segment but load a new file or something like it. But in general use the same algorithm. That would be not going to fit. You can't actually load the whole thing in. Because also, even if we, maybe this whole, maybe I'm worrying too much about the whole series in one thing displayed",
+    "raw_text": "<|0.00|> And that way we could probably use the same algorithm<|2.80|><|2.80|> and just make one or two ifs that say,<|5.34|><|5.34|> okay, if you are on whole document,<|8.08|><|8.08|> a whole series level, that was a double click,<|10.20|><|10.20|> then don't just go into that segment<|13.38|><|13.38|> but load a new file or something like it.<|15.16|><|15.16|> But in general use the same algorithm.<|16.52|><|16.52|> That would be not going to fit.<|17.36|><|17.36|> You can't actually load the whole thing in.<|19.46|><|21.58|> Because also, even if we,<|23.64|><|24.72|> maybe this whole, maybe I'm worrying too much<|26.68|><|26.68|> about the whole series in one thing displayed<|29.72|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "And that way we could probably use the same algorithm",
+        "t0_ms": 0,
+        "t1_ms": 2800,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "and just make one or two ifs that say,",
+        "t0_ms": 2800,
+        "t1_ms": 5340,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "okay, if you are on whole document,",
+        "t0_ms": 5340,
+        "t1_ms": 8080,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "a whole series level, that was a double click,",
+        "t0_ms": 8080,
+        "t1_ms": 10200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "then don't just go into that segment",
+        "t0_ms": 10200,
+        "t1_ms": 13380,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "but load a new file or something like it.",
+        "t0_ms": 13380,
+        "t1_ms": 15160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "But in general use the same algorithm.",
+        "t0_ms": 15160,
+        "t1_ms": 16520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "That would be not going to fit.",
+        "t0_ms": 16520,
+        "t1_ms": 17360,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "You can't actually load the whole thing in.",
+        "t0_ms": 17360,
+        "t1_ms": 19460,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Because also, even if we,",
+        "t0_ms": 21580,
+        "t1_ms": 23640,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "maybe this whole, maybe I'm worrying too much",
+        "t0_ms": 24720,
+        "t1_ms": 26680,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "about the whole series in one thing displayed",
+        "t0_ms": 26680,
+        "t1_ms": 29720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 309.6369934082031,
+      "mel_ms": 16.865999221801758,
+      "encode_ms": 14728.9248046875,
+      "decode_ms": 9214.4931640625
+    }
+  },
+  "rawDecoded": "<|0.00|> And that way we could probably use the same algorithm<|2.80|><|2.80|> and just make one or two ifs that say,<|5.34|><|5.34|> okay, if you are on whole document,<|8.08|><|8.08|> a whole series level, that was a double click,<|10.20|><|10.20|> then don't just go into that segment<|13.38|><|13.38|> but load a new file or something like it.<|15.16|><|15.16|> But in general use the same algorithm.<|16.52|><|16.52|> That would be not going to fit.<|17.36|><|17.36|> You can't actually load the whole thing in.<|19.46|><|21.58|> Because also, even if we,<|23.64|><|24.72|> maybe this whole, maybe I'm worrying too much<|26.68|><|26.68|> about the whole series in one thing displayed<|29.72|>",
+  "hypothesis": "And that way we could probably use the same algorithm and just make one or two ifs that say, okay, if you are on whole document, a whole series level, that was a double click, then don't just go into that segment but load a new file or something like it. But in general use the same algorithm. That would be not going to fit. You can't actually load the whole thing in. Because also, even if we, maybe this whole, maybe I'm worrying too much about the whole series in one thing displayed",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false
+}

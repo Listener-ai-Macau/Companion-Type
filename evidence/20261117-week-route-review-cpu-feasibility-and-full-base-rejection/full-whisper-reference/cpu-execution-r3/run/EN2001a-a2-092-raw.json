@@ -1,0 +1,145 @@
+{
+  "case": {
+    "id": "EN2001a-a2-092",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-092.wav",
+    "wavSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+    "pcmSha256": "14091b430e04787c3694b572f922d0a4da22a3ce4f10cc7978dde91fa4797bb7",
+    "frames": 473600,
+    "audioSeconds": 29.6,
+    "language": "English"
+  },
+  "seconds": 24.575717300001998,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "e633ab1d74b0e98f4f57daedaee34291297dbbf01389bda3d890766600c1c584",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "that we can treat with this algorithm more. But I mean, it could be as many nodes as you want. Like this one could be deeper maybe. So then you start with all your utterances here. And when you go up to get topic segments, you go to here, here, here, here, here, here, here. That might be a bit confusing though, because you have things on different levels. Yeah, I'm also not sure how we can go from opt-in map. I always thought it was more that, ah,",
+    "raw_text": "<|0.00|> that we can treat with this algorithm more.<|1.88|><|1.88|> But I mean, it could be as many nodes as you want.<|4.56|><|4.56|> Like this one could be deeper maybe.<|8.76|><|8.76|> So then you start with all your utterances here.<|11.56|><|11.56|> And when you go up to get topic segments,<|13.52|><|13.52|> you go to here, here, here, here, here, here, here.<|18.44|><|18.44|> That might be a bit confusing though,<|20.02|><|20.02|> because you have things on different levels.<|23.36|><|23.36|> Yeah, I'm also not sure how we can go from opt-in map.<|27.16|><|27.16|> I always thought it was more that, ah,<|29.60|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "that we can treat with this algorithm more.",
+        "t0_ms": 0,
+        "t1_ms": 1880,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "But I mean, it could be as many nodes as you want.",
+        "t0_ms": 1880,
+        "t1_ms": 4560,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Like this one could be deeper maybe.",
+        "t0_ms": 4560,
+        "t1_ms": 8760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "So then you start with all your utterances here.",
+        "t0_ms": 8760,
+        "t1_ms": 11560,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "And when you go up to get topic segments,",
+        "t0_ms": 11560,
+        "t1_ms": 13520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "you go to here, here, here, here, here, here, here.",
+        "t0_ms": 13520,
+        "t1_ms": 18440,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "That might be a bit confusing though,",
+        "t0_ms": 18440,
+        "t1_ms": 20020,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "because you have things on different levels.",
+        "t0_ms": 20020,
+        "t1_ms": 23360,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Yeah, I'm also not sure how we can go from opt-in map.",
+        "t0_ms": 23360,
+        "t1_ms": 27160,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "I always thought it was more that, ah,",
+        "t0_ms": 27160,
+        "t1_ms": 29600,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 309.6369934082031,
+      "mel_ms": 16.70199966430664,
+      "encode_ms": 15236.560546875,
+      "decode_ms": 9305.2529296875
+    }
+  },
+  "rawDecoded": "<|0.00|> that we can treat with this algorithm more.<|1.88|><|1.88|> But I mean, it could be as many nodes as you want.<|4.56|><|4.56|> Like this one could be deeper maybe.<|8.76|><|8.76|> So then you start with all your utterances here.<|11.56|><|11.56|> And when you go up to get topic segments,<|13.52|><|13.52|> you go to here, here, here, here, here, here, here.<|18.44|><|18.44|> That might be a bit confusing though,<|20.02|><|20.02|> because you have things on different levels.<|23.36|><|23.36|> Yeah, I'm also not sure how we can go from opt-in map.<|27.16|><|27.16|> I always thought it was more that, ah,<|29.60|>",
+  "hypothesis": "that we can treat with this algorithm more. But I mean, it could be as many nodes as you want. Like this one could be deeper maybe. So then you start with all your utterances here. And when you go up to get topic segments, you go to here, here, here, here, here, here, here. That might be a bit confusing though, because you have things on different levels. Yeah, I'm also not sure how we can go from opt-in map. I always thought it was more that, ah,",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false
+}

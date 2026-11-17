@@ -1,0 +1,65 @@
+{
+  "case": {
+    "id": "ES2003b-seq-021",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-021.wav",
+    "wavSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+    "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f",
+    "frames": 203840,
+    "audioSeconds": 12.74,
+    "language": "English"
+  },
+  "seconds": 18.705979999998817,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "e633ab1d74b0e98f4f57daedaee34291297dbbf01389bda3d890766600c1c584",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "So by the sense of it, what we're suggesting so far, your design, the user interface is still quite open. You could go for quite an interesting design.",
+    "raw_text": "<|0.00|> So by the sense of it, what we're suggesting so far, your design, the user interface is<|7.00|><|7.74|> still quite open. You could go for quite an interesting design.<|12.74|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "So by the sense of it, what we're suggesting so far, your design, the user interface is",
+        "t0_ms": 0,
+        "t1_ms": 7000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "still quite open. You could go for quite an interesting design.",
+        "t0_ms": 7740,
+        "t1_ms": 12740,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 309.6369934082031,
+      "mel_ms": 16.510000228881836,
+      "encode_ms": 14170.423828125,
+      "decode_ms": 4502.70703125
+    }
+  },
+  "rawDecoded": "<|0.00|> So by the sense of it, what we're suggesting so far, your design, the user interface is<|7.00|><|7.74|> still quite open. You could go for quite an interesting design.<|12.74|>",
+  "hypothesis": "So by the sense of it, what we're suggesting so far, your design, the user interface is still quite open. You could go for quite an interesting design.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false
+}

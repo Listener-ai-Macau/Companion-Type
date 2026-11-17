@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-17T17:00:05.183584+08:00",
+  "state": "OBSERVED_TERMINAL_DURING_CPU_BACKWARD_NO_FINAL_RESULT",
+  "unifiedExecSession": 97133,
+  "observedExitCode": 1,
+  "expectedOriginalPid": 24532,
+  "expectedCreatedAt": 1794904250.7542365,
+  "sameOriginalProcessLive": false,
+  "lastStateSha256": "15e910bcc1258b5f13150f87ef93fdbe99720f12cc3b9584f4f97ddbe101bf69",
+  "lastPersistedState": "BACKWARD_ONE_ORIGINAL_TRAINING_EXAMPLE_CPU",
+  "backwardCompletionProven": false,
+  "optimizerUpdates": 0,
+  "reason": "No final Python result; near2GiB lastcommit is a clue, not a proven exit cause.",
+  "originalPublishedWeightsSha256AfterBothCpuAttempts": "3a2026366188c8c68598edbbff92f8d11590a08e0ae2e6775544e7b07d6a5e11",
+  "originalPublishedWeightFileUnchanged": true
+}

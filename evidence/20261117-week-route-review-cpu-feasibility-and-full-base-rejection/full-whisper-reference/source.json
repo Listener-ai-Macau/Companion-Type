@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-17T16:40:17.271142+08:00",
+  "repository": "handy-computer/whisper-large-v3-gguf",
+  "revision": "274ad1d1cf680b7ee53cc70f78461394cd3a344b",
+  "file": "whisper-large-v3-F16.gguf",
+  "expectedBytes": 3107236640,
+  "expectedSha256": "e633ab1d74b0e98f4f57daedaee34291297dbbf01389bda3d890766600c1c584",
+  "gated": false,
+  "upstream": "openai/whisper-large-v3",
+  "publisherUpstreamRevision": "06f233f",
+  "selectionReason": "Old195/709 failure isTurboQ8, not full large-v3. Compare a single full architecture before undertaking local ASR adaptation. No model/precision/beam grid.",
+  "source": "https://huggingface.co/handy-computer/whisper-large-v3-gguf",
+  "rawAudioUploaded": false,
+  "newTraining": false
+}

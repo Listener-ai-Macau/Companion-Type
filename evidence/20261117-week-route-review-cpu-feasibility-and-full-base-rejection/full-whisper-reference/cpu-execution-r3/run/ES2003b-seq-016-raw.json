@@ -1,0 +1,85 @@
+{
+  "case": {
+    "id": "ES2003b-seq-016",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-016.wav",
+    "wavSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+    "pcmSha256": "7e8c174955670b930e9b657a8fdcbea730374845ac6668f4a916ddc867ee7f6e",
+    "frames": 473280,
+    "audioSeconds": 29.58,
+    "language": "English"
+  },
+  "seconds": 19.663472300002468,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "e633ab1d74b0e98f4f57daedaee34291297dbbf01389bda3d890766600c1c584",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "So I can understand your point and I would agree with you but this is our design spec for now. Great to see. Would that include access to say interactive functions on digital or cable? I would say so yes because then we have to be able to control the remote boxes and that",
+    "raw_text": "<|0.00|> So I can understand your point and I would agree with you but this is our design spec<|5.82|><|5.82|> for now. Great to see.<|9.18|><|9.18|> Would that include access to say interactive functions on digital or cable?<|18.18|><|18.18|> I would say so yes because then we have to be able to control the remote boxes and that<|29.58|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "So I can understand your point and I would agree with you but this is our design spec",
+        "t0_ms": 0,
+        "t1_ms": 5820,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "for now. Great to see.",
+        "t0_ms": 5820,
+        "t1_ms": 9180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Would that include access to say interactive functions on digital or cable?",
+        "t0_ms": 9180,
+        "t1_ms": 18180,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "I would say so yes because then we have to be able to control the remote boxes and that",
+        "t0_ms": 18180,
+        "t1_ms": 29580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 309.6369934082031,
+      "mel_ms": 16.165000915527344,
+      "encode_ms": 14109.646484375,
+      "decode_ms": 5522.80322265625
+    }
+  },
+  "rawDecoded": "<|0.00|> So I can understand your point and I would agree with you but this is our design spec<|5.82|><|5.82|> for now. Great to see.<|9.18|><|9.18|> Would that include access to say interactive functions on digital or cable?<|18.18|><|18.18|> I would say so yes because then we have to be able to control the remote boxes and that<|29.58|>",
+  "hypothesis": "So I can understand your point and I would agree with you but this is our design spec for now. Great to see. Would that include access to say interactive functions on digital or cable? I would say so yes because then we have to be able to control the remote boxes and that",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false
+}

@@ -1,0 +1,55 @@
+{
+  "case": {
+    "id": "EN2001a-a2-116",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-116.wav",
+    "wavSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+    "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f",
+    "frames": 289920,
+    "audioSeconds": 18.12,
+    "language": "English"
+  },
+  "seconds": 18.315719499994884,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "e633ab1d74b0e98f4f57daedaee34291297dbbf01389bda3d890766600c1c584",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Once we start doing it, it will become more and more obvious.",
+    "raw_text": "<|0.00|> Once we start doing it, it will become more and more obvious.<|18.12|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Once we start doing it, it will become more and more obvious.",
+        "t0_ms": 0,
+        "t1_ms": 18120,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 309.6369934082031,
+      "mel_ms": 16.65399932861328,
+      "encode_ms": 15231.271484375,
+      "decode_ms": 3052.006103515625
+    }
+  },
+  "rawDecoded": "<|0.00|> Once we start doing it, it will become more and more obvious.<|18.12|>",
+  "hypothesis": "Once we start doing it, it will become more and more obvious.",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false
+}

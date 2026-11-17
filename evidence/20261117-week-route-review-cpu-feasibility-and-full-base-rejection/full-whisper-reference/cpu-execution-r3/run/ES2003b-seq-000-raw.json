@@ -1,0 +1,85 @@
+{
+  "case": {
+    "id": "ES2003b-seq-000",
+    "condition": "sequential-original-room",
+    "meeting": "ES2003b",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+    "wavSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+    "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92",
+    "frames": 192800,
+    "audioSeconds": 12.05,
+    "language": "English"
+  },
+  "seconds": 25.905384999998205,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "e633ab1d74b0e98f4f57daedaee34291297dbbf01389bda3d890766600c1c584",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "Just put it on your des- All I see is desktop. No on the desktop you'll find- you should find it, there's a project documents link. **awkward silence**",
+    "raw_text": "<|0.00|> Just put it on your des- All I see is desktop.<|2.86|><|2.86|> No on the desktop you'll find- you should find it, there's a<|5.20|><|5.22|> project documents link.<|8.14|><|8.38|> **awkward silence**<|12.30|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "Just put it on your des- All I see is desktop.",
+        "t0_ms": 0,
+        "t1_ms": 2860,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "No on the desktop you'll find- you should find it, there's a",
+        "t0_ms": 2860,
+        "t1_ms": 5200,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "project documents link.",
+        "t0_ms": 5220,
+        "t1_ms": 8140,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "**awkward silence**",
+        "t0_ms": 8380,
+        "t1_ms": 12300,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 309.6369934082031,
+      "mel_ms": 13.406000137329102,
+      "encode_ms": 14549.5888671875,
+      "decode_ms": 11312.763671875
+    }
+  },
+  "rawDecoded": "<|0.00|> Just put it on your des- All I see is desktop.<|2.86|><|2.86|> No on the desktop you'll find- you should find it, there's a<|5.20|><|5.22|> project documents link.<|8.14|><|8.38|> **awkward silence**<|12.30|>",
+  "hypothesis": "Just put it on your des- All I see is desktop. No on the desktop you'll find- you should find it, there's a project documents link. **awkward silence**",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false
+}

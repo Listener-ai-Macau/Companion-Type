@@ -1,0 +1,135 @@
+{
+  "case": {
+    "id": "EN2001a-a2-069",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-069.wav",
+    "wavSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+    "pcmSha256": "01439b3125f9e794a9ffae891fd0cccc470ae701397a2b889487dc87d166bb39",
+    "frames": 476000,
+    "audioSeconds": 29.75,
+    "language": "English"
+  },
+  "seconds": 37.48644280000008,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "e633ab1d74b0e98f4f57daedaee34291297dbbf01389bda3d890766600c1c584",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "there's no guarantee that everything stays there, but overnight is the state. The thing the temps usually have... I, but that would have to be the temp directory of the machine SSH into directly off as a . Yeah, but can't do it from that session down matter, it can compress it from a remote session and assimilate from the same session. Yeah, they probably hate you for doing it",
+    "raw_text": "<|0.98|> there's no guarantee that everything stays there,<|2.52|><|2.52|> but overnight is the state.<|4.06|><|4.06|> The thing the temps usually have...<|6.66|><|10.64|> I, but that would have to be the temp directory<|13.28|><|13.28|> of the machine SSH into directly off as a .<|16.92|><|16.92|> Yeah, but can't do it from that session down matter,<|19.58|><|19.58|> it can compress it from a remote session<|22.06|><|22.06|> and assimilate from the same session.<|23.96|><|26.94|> Yeah, they probably hate you for doing it<|29.76|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "there's no guarantee that everything stays there,",
+        "t0_ms": 980,
+        "t1_ms": 2520,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "but overnight is the state.",
+        "t0_ms": 2520,
+        "t1_ms": 4060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "The thing the temps usually have...",
+        "t0_ms": 4060,
+        "t1_ms": 6660,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "I, but that would have to be the temp directory",
+        "t0_ms": 10640,
+        "t1_ms": 13280,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "of the machine SSH into directly off as a .",
+        "t0_ms": 13280,
+        "t1_ms": 16920,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Yeah, but can't do it from that session down matter,",
+        "t0_ms": 16920,
+        "t1_ms": 19580,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "it can compress it from a remote session",
+        "t0_ms": 19580,
+        "t1_ms": 22060,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "and assimilate from the same session.",
+        "t0_ms": 22060,
+        "t1_ms": 23960,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "Yeah, they probably hate you for doing it",
+        "t0_ms": 26940,
+        "t1_ms": 29760,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 309.6369934082031,
+      "mel_ms": 16.08799934387207,
+      "encode_ms": 14647.5224609375,
+      "decode_ms": 22805.6875
+    }
+  },
+  "rawDecoded": "<|0.98|> there's no guarantee that everything stays there,<|2.52|><|2.52|> but overnight is the state.<|4.06|><|4.06|> The thing the temps usually have...<|6.66|><|10.64|> I, but that would have to be the temp directory<|13.28|><|13.28|> of the machine SSH into directly off as a .<|16.92|><|16.92|> Yeah, but can't do it from that session down matter,<|19.58|><|19.58|> it can compress it from a remote session<|22.06|><|22.06|> and assimilate from the same session.<|23.96|><|26.94|> Yeah, they probably hate you for doing it<|29.76|>",
+  "hypothesis": "there's no guarantee that everything stays there, but overnight is the state. The thing the temps usually have... I, but that would have to be the temp directory of the machine SSH into directly off as a . Yeah, but can't do it from that session down matter, it can compress it from a remote session and assimilate from the same session. Yeah, they probably hate you for doing it",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false
+}

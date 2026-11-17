@@ -1,0 +1,65 @@
+{
+  "case": {
+    "id": "EN2001a-a2-000",
+    "condition": "sequential-original-room",
+    "meeting": "EN2001a",
+    "wav": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-000.wav",
+    "wavSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+    "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f",
+    "frames": 187360,
+    "audioSeconds": 11.71,
+    "language": "English"
+  },
+  "seconds": 17.6580713000003,
+  "backend": "CPU",
+  "device": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+  "modelSha256": "e633ab1d74b0e98f4f57daedaee34291297dbbf01389bda3d890766600c1c584",
+  "nativeVersion": "0.4.2",
+  "nativeCommit": "275cd50",
+  "result": {
+    "text": "a big duplication of effort and stuff and yeah, saying that we should maybe think about having a prototype for week 6, which is the",
+    "raw_text": "<|0.00|> a big duplication of effort and stuff and<|3.00|><|3.00|> yeah, saying that we should maybe think about having a prototype for week 6, which is the<|11.72|>",
+    "language": "",
+    "timestamp_kind": "segment",
+    "segments": [
+      {
+        "text": "a big duplication of effort and stuff and",
+        "t0_ms": 0,
+        "t1_ms": 3000,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      },
+      {
+        "text": "yeah, saying that we should maybe think about having a prototype for week 6, which is the",
+        "t0_ms": 3000,
+        "t1_ms": 11720,
+        "first_word": 0,
+        "n_words": 0,
+        "first_token": 0,
+        "n_tokens": 0,
+        "speaker_id": 0
+      }
+    ],
+    "speaker_segments": [],
+    "words": [],
+    "tokens": [],
+    "timings": {
+      "load_ms": 309.6369934082031,
+      "mel_ms": 16.60099983215332,
+      "encode_ms": 14019.5751953125,
+      "decode_ms": 3606.468994140625
+    }
+  },
+  "rawDecoded": "<|0.00|> a big duplication of effort and stuff and<|3.00|><|3.00|> yeah, saying that we should maybe think about having a prototype for week 6, which is the<|11.72|>",
+  "hypothesis": "a big duplication of effort and stuff and yeah, saying that we should maybe think about having a prototype for week 6, which is the",
+  "naturalEos": true,
+  "wasTruncated": false,
+  "originalClipComplete": true,
+  "referenceRead": false,
+  "wordsRewritten": false,
+  "newWeightTraining": false,
+  "qualityQualified": false
+}
