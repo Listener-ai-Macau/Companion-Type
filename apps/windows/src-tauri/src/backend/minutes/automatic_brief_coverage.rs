@@ -297,6 +297,9 @@ fn append(raw:&str,doc:&Document,allowed:&HashSet<String>,units:&[Unit])->Result
 #[derive(Debug)]
 struct Certificate {witnesses:Vec<(String,Value)>}
 fn signature(unit:&SummaryUnit)->Value{json!({"text":unit.text,"kind":unit.kind})}
+fn new_partial_witness(check:&Check,known:&HashMap<&str,&SummaryUnit>,previous:&[Value])->bool{
+    check.result=="partial"&&check.summary_ids.iter().filter_map(|id|known.get(id.as_str())).any(|unit|!previous.contains(&signature(unit)))
+}
 impl Certificate {
     fn valid(&self,summary:&[SummaryUnit])->bool{self.witnesses.iter().all(|(path,value)|summary.iter().any(|s|&s.path==path&&signature(s)==*value))}
 }
@@ -333,7 +336,7 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
     // must be compared again after the independent factual correction.
     let complete_seed=has_complete_seed(&questions,&checks);
     let mut initial=(complete_seed&&semantic_signature(&summary)==semantic_signature(&summary_units(doc))).then_some((checks,summary));
-    let mut current=doc.clone();let mut attempted=HashSet::new();let mut recovered_capacity=false;
+    let mut current=doc.clone();let mut attempted:HashMap<String,Vec<Value>>=HashMap::new();let mut recovered_capacity=false;
     for round in 0..=2 {
         let current_summary=summary_units(&current);
         let pending=questions.iter().filter(|q|q.importance=="essential"&&!certificates.get(&q.id).is_some_and(|c|c.valid(&current_summary))).cloned().collect::<Vec<_>>();
@@ -375,11 +378,12 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
         let(checks,summary)=compared?;let omissions=omissions?;
         if needs_omissions{omission_signature=Some(current_signature);}
         let known=summary.iter().map(|s|(s.id.as_str(),s)).collect::<HashMap<_,_>>();
-        let indexed=pending.iter().map(|q|(q.id.as_str(),q)).collect::<HashMap<_,_>>();let mut issues=Vec::new();let mut allowed=HashSet::new();
+        let indexed=pending.iter().map(|q|(q.id.as_str(),q)).collect::<HashMap<_,_>>();let mut issues=Vec::new();let mut allowed=HashSet::new();let mut partial_progress=HashSet::new();
         for check in checks {
             if !check.material {
                 certificates.insert(check.id.clone(),Certificate{witnesses:check.summary_ids.iter().map(|id|{let s=known[id.as_str()];(s.path.clone(),signature(s))}).collect()});
             }else{
+                if attempted.get(&check.id).is_some_and(|previous|new_partial_witness(&check,&known,previous)){partial_progress.insert(check.id.clone());}
                 let q=indexed[check.id.as_str()];allowed.insert(q.id.clone());
                 issues.push(json!({"id":q.id,"question":q.question,"difference":check.difference,"sourceEvidence":q.evidence,"uncertainSourceSpans":uncertain_source_spans(trace,&q.evidence)}));
             }
@@ -398,7 +402,12 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
             }
         }
         if issues.is_empty(){return Ok(current);}
-        if round==2||allowed.iter().any(|q|attempted.contains(q)){return Err(fail());}
+        // An append can answer one part of a source relation while factual
+        // correction removes an unsafe qualifier. Use the existing second
+        // opportunity only if the current partial answer cites an actually
+        // new, factually verified witness. Reworded criticism or another old
+        // witness is not progress; the two-append bound never resets.
+        if round==2||allowed.iter().any(|q|attempted.contains_key(q)&&!partial_progress.contains(q)){return Err(fail());}
         let used=current.topics.iter().flat_map(|t|&t.points).map(|p|p.text.chars().count()).sum::<usize>();
         let mut payload=json!({"sourceUnits":units,"previousDocument":current,"coverageProblems":issues,"availableAppendSlots":append_slots(&current),"mainCharactersAvailable":1000usize.saturating_sub(used)});
         let raw=super::request(endpoint,model,key,client,APPEND,payload.clone(),true,start,trace,&format!("coverage-append-{round}"))?;
@@ -418,7 +427,8 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
         // Only changed/new claims need new verdicts; they still see the entire
         // immutable source. Unchanged prior positive evidence is not rerolled.
         current=super::factual_audit::review_and_repair_since(endpoint,model,key,client,&added,units,Some(&before),start,trace)?;
-        attempted.extend(allowed);
+        let before_signatures=current_summary.iter().map(signature).collect::<Vec<_>>();
+        for id in allowed{attempted.insert(id,before_signatures.clone());}
     }
     Err(fail())
 }
@@ -426,6 +436,17 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn automatic_brief_second_append_requires_a_new_partial_answer_witness(){
+        let old=summary_units(&doc());let previous=old.iter().map(signature).collect::<Vec<_>>();
+        let mut changed=doc();changed.topics[0].details.push(super::super::Entry{text:"审批未通过，不能先采购。".into(),sources:vec!["u000".into()]});
+        let now=summary_units(&changed);let known=now.iter().map(|unit|(unit.id.as_str(),unit)).collect::<HashMap<_,_>>();
+        let mut check=Check{id:"q00".into(),result:"partial".into(),material:true,difference:"还缺预算数额".into(),summary_ids:vec![now.last().unwrap().id.clone()]};
+        assert!(new_partial_witness(&check,&known,&previous));
+        check.summary_ids=vec![old.last().unwrap().id.clone()];assert!(!new_partial_witness(&check,&known,&previous));
+        check.summary_ids=vec![now.last().unwrap().id.clone()];check.result="missing".into();assert!(!new_partial_witness(&check,&known,&previous));
+        check.result="partial".into();check.summary_ids=vec!["s999".into()];assert!(!new_partial_witness(&check,&known,&previous));
+    }
     #[test]
     fn automatic_brief_internal_audit_question_length_does_not_change_display_or_evidence_limits(){
         let source=super::super::factual_audit::evidence_sentences(&units());
