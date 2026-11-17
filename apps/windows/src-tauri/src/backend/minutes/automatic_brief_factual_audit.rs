@@ -318,6 +318,14 @@ fn changed_failure_axis(previous:&(String,bool),status:&str,unclear:bool)->bool{
     // ambiguity/scope and newly unsupported claims still stop immediately.
     (!previous.1&&unclear)||(previous.1&&!unclear&&status=="overstated")
 }
+fn newly_exposed_ambiguity(previous:Option<&str>,next:Option<&str>,claim:&Value)->bool{
+    // A path may contain several independently unclear expressions. Progress
+    // is the exact earlier offending span disappearing, not a different path
+    // or a reviewer changing its reason. The original two-repair cap applies.
+    let(Some(old),Some(new))=(previous,next)else{return false;};
+    !old.is_empty()&&!new.is_empty()&&old!=new
+        &&["text","owner","due"].into_iter().filter_map(|field|claim.get(field).and_then(Value::as_str)).all(|text|!text.contains(old))
+}
 fn preserves_unclear_history(doc:&Document,history:&HashMap<String,Vec<String>>)->Result<(),String>{
     let value=serde_json::to_value(doc).map_err(|_|"纪要含混表达历史核对未完成，已有结果保留。")?;
     for(path,phrases)in history{
@@ -339,7 +347,7 @@ fn unverified_claims(doc:&Document,verified:Option<&Document>)->Vec<Value> {
 pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
     let source=sentences(units);
     let wire=json!(units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>());
-    let mut current=doc.clone();let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let recovered_format=AtomicBool::new(false);
+    let mut current=doc.clone();let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let mut attempted_phrases:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
     let mut unclear_history:HashMap<String,Vec<String>>=HashMap::new();
     let mut verified_claims=verified.map(claims).unwrap_or_default().into_iter().map(|c|(c["path"].as_str().unwrap().to_string(),c)).collect::<HashMap<_,_>>();
     for round in 0..=2 {
@@ -365,10 +373,12 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
         let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|json!({"path":c.path,"status":c.status,"clarity":c.clarity,"unclearText":c.unclear_text,"reason":c.reason,"evidence":c.evidence})).collect::<Vec<_>>();
         if issues.is_empty(){return Ok(current);}
         let allowed=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|c.path.clone()).collect::<HashSet<_>>();
-        // Repeated feedback stops. Only a changed failure axis in the gated
-        // candidate can use the remaining second repair; the bound never resets.
+        // Repeated feedback stops. A changed failure axis, or a different
+        // unclear span after the earlier span was actually removed, can use
+        // the remaining second repair. Neither the cap nor history resets.
         let repeated=audit.claim_audit.iter().filter(|c|c.status!="supported").any(|c|{
-            attempted.get(&c.path).is_some_and(|old|!(super::coverage::enabled()&&changed_failure_axis(old,&c.status,c.status=="unclear"||c.clarity.as_deref()==Some("unclear"))))
+            let distinct_ambiguity=c.clarity.as_deref()==Some("unclear")&&audited_claims.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str())).is_some_and(|claim|newly_exposed_ambiguity(attempted_phrases.get(&c.path).map(String::as_str),c.unclear_text.as_deref(),claim));
+            attempted.get(&c.path).is_some_and(|old|!(super::coverage::enabled()&&(changed_failure_axis(old,&c.status,c.status=="unclear"||c.clarity.as_deref()==Some("unclear"))||distinct_ambiguity)))
         });
         if round==2||repeated {
             return Err(format!("纪要复审仍有{}处未解决表述，已有结果保留。",issues.len()));
@@ -388,7 +398,10 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
         let raw=super::request(endpoint,model,key,client,REPAIR,json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,"deletionOnlyPaths":deletion_only,"conservativeRewritePaths":conservative,"knownUnclearPhrases":unclear_history,"repairContracts":repair_contracts}),super::coverage::enabled(),start,trace,stage)?;
         let next=apply_changes_with_policy(&raw,&current,&allowed,&unclear,&conservative,units)?;
         preserves_unclear_history(&next,&unclear_history)?;current=next;
-        for issue in audit.claim_audit.iter().filter(|c|c.status!="supported"){attempted.insert(issue.path.clone(),(issue.status.clone(),issue.status=="unclear"||issue.clarity.as_deref()==Some("unclear")));}
+        for issue in audit.claim_audit.iter().filter(|c|c.status!="supported"){
+            attempted.insert(issue.path.clone(),(issue.status.clone(),issue.status=="unclear"||issue.clarity.as_deref()==Some("unclear")));
+            if let Some(phrase)=&issue.unclear_text{attempted_phrases.insert(issue.path.clone(),phrase.clone());}
+        }
     }
     Err("纪要复审未完成，已有结果保留。".into())
 }
@@ -396,6 +409,16 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn automatic_brief_second_ambiguity_requires_actual_removal_of_the_first(){
+        let claim=json!({"text":"保留明确做法，另一个含混词。","owner":null,"due":null});
+        assert!(newly_exposed_ambiguity(Some("原含混词"),Some("另一个含混词"),&claim));
+        assert!(!newly_exposed_ambiguity(Some("另一个含混词"),Some("另一个含混词"),&claim));
+        assert!(!newly_exposed_ambiguity(Some("明确做法"),Some("另一个含混词"),&claim));
+        assert!(!newly_exposed_ambiguity(None,Some("另一个含混词"),&claim));
+        let owner=json!({"text":"另一个含混词。","owner":"原含混词"});
+        assert!(!newly_exposed_ambiguity(Some("原含混词"),Some("另一个含混词"),&owner));
+    }
     #[test]
     fn automatic_brief_second_repair_requires_a_distinct_failure_axis(){
         assert!(changed_failure_axis(&("overstated".into(),false),"unclear",true));

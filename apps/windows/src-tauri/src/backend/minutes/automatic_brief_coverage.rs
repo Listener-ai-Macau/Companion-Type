@@ -70,11 +70,14 @@ fn decode_omissions(raw:&str,source:&[Value])->Result<Omissions,String>{
     Ok(Omissions(out))
 }
 pub(super) fn audit_omissions(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Omissions,String>{
+    audit_omissions_at(endpoint,model,key,client,doc,units,start,trace,"coverage-source-to-document")
+}
+fn audit_omissions_at(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>,stage:&str)->Result<Omissions,String>{
     let source=super::factual_audit::evidence_sentences(units);
     let wire=units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s["source"].as_str()==Some(u.id.as_str())).map(|s|json!({"id":s["id"],"text":s["text"]})).collect::<Vec<_>>()})).collect::<Vec<_>>();
     // This independent source-to-document check sees the actual document,
     // never the writer's question bank or any expected omission labels.
-    let raw=super::request(endpoint,model,key,client,OMISSIONS,json!({"sourceUnits":wire,"document":doc}),true,start,trace,"coverage-source-to-document")?;
+    let raw=super::request(endpoint,model,key,client,OMISSIONS,json!({"sourceUnits":wire,"document":doc}),true,start,trace,stage)?;
     decode_omissions(&raw,&source)
 }
 
@@ -295,20 +298,23 @@ impl Certificate {
     fn valid(&self,summary:&[SummaryUnit])->bool{self.witnesses.iter().all(|(path,value)|summary.iter().any(|s|&s.path==path&&signature(s)==*value))}
 }
 
-pub(super) struct Prepared {questions:Vec<Question>,checks:Vec<Check>,summary:Vec<SummaryUnit>,recovered_references:bool}
+pub(super) struct Prepared {questions:Vec<Question>,checks:Vec<Check>,summary:Vec<SummaryUnit>,recovered_references:bool,omission_signature:Option<Value>}
 pub(super) fn combine_omissions(mut prepared:Prepared,omissions:Omissions)->Result<Prepared,String>{
     for mut q in omissions.0{
         if prepared.questions.iter().any(|old|old.question==q.question&&old.evidence==q.evidence){continue;}
         if prepared.questions.len()>=40{return Err(fail());}
         q.id=format!("q{:02}",prepared.questions.len());prepared.questions.push(q);
     }
+    // Both initial reviewers received this same immutable document. A later
+    // factual correction or append invalidates this whole-source certificate.
+    prepared.omission_signature=Some(semantic_signature(&prepared.summary));
     Ok(prepared)
 }
 pub(super) fn prepare(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Prepared,String>{
     let questions=extract(endpoint,model,key,client,units,start,trace)?;
     let essential=questions.iter().filter(|q|q.importance=="essential").cloned().collect::<Vec<_>>();
     let mut recovered_references=false;
-    let(checks,summary)=evaluate(endpoint,model,key,client,doc,&essential,start,trace,"precheck",&mut recovered_references)?;Ok(Prepared{questions,checks,summary,recovered_references})
+    let(checks,summary)=evaluate(endpoint,model,key,client,doc,&essential,start,trace,"precheck",&mut recovered_references)?;Ok(Prepared{questions,checks,summary,recovered_references,omission_signature:None})
 }
 fn semantic_signature(summary:&[SummaryUnit])->Value{json!(summary.iter().map(|s|json!({"path":s.path,"claim":signature(s)})).collect::<Vec<_>>())}
 fn seed_certificates(checks:&[Check],summary:&[SummaryUnit])->HashMap<String,Certificate>{
@@ -317,7 +323,7 @@ fn seed_certificates(checks:&[Check],summary:&[SummaryUnit])->HashMap<String,Cer
 }
 fn has_complete_seed(questions:&[Question],checks:&[Check])->bool{questions.iter().filter(|q|q.importance=="essential").all(|q|checks.iter().any(|c|c.id==q.id))}
 pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],prepared:Prepared,start:Instant,trace:&mut Vec<Value>)->Result<Document,String>{
-    let Prepared{questions,checks,summary,mut recovered_references}=prepared;
+    let Prepared{mut questions,checks,summary,mut recovered_references,mut omission_signature}=prepared;
     let mut certificates=seed_certificates(&checks,&summary);
     // Reuse whole prior comparison only when every semantic claim is identical.
     // Otherwise retain just exact positive witnesses; changed paths and gaps
@@ -328,8 +334,39 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
     for round in 0..=2 {
         let current_summary=summary_units(&current);
         let pending=questions.iter().filter(|q|q.importance=="essential"&&!certificates.get(&q.id).is_some_and(|c|c.valid(&current_summary))).cloned().collect::<Vec<_>>();
-        if pending.is_empty(){return Ok(current);}
-        let(checks,summary)=if round==0&&initial.is_some(){initial.take().unwrap()}else{evaluate(endpoint,model,key,client,&current,&pending,start,trace,&round.to_string(),&mut recovered_references)?};
+        let current_signature=semantic_signature(&current_summary);
+        let needs_omissions=omission_signature.as_ref()!=Some(&current_signature);
+        if pending.is_empty()&&!needs_omissions{return Ok(current);}
+        // Check the actual revised body against the complete source while
+        // checking the outstanding questions. Neither branch receives the
+        // other's answers, and both inherit this job's cancellation/deadline.
+        let ready=if round==0{initial.take()}else{None};
+        let token=super::current_cancellation();
+        let(compared,omissions)=std::thread::scope(|scope|{
+            let compare_token=token.clone();let omissions_token=token;
+            let current=&current;let pending=&pending;
+            let comparison=scope.spawn(move||{
+                let mut calls=Vec::new();let mut recovered=recovered_references;
+                let result=if let Some(seed)=ready{Ok(seed)}else if pending.is_empty(){Ok((Vec::new(),summary_units(current)))}else{
+                    super::with_parent_job(compare_token,||evaluate(endpoint,model,key,client,current,pending,start,&mut calls,&round.to_string(),&mut recovered))
+                };(result,calls,recovered)
+            });
+            let omissions=scope.spawn(move||{
+                let mut calls=Vec::new();let result=if needs_omissions{
+                    super::with_parent_job(omissions_token,||audit_omissions_at(endpoint,model,key,client,current,units,start,&mut calls,&format!("coverage-source-to-document-final-{round}")))
+                }else{Ok(Omissions(Vec::new()))};(result,calls)
+            });
+            let mut stopped=false;
+            while !comparison.is_finished()||!omissions.is_finished(){
+                if !stopped&&super::check_current().is_err(){stopped=true;}
+                std::thread::sleep(std::time::Duration::from_millis(100));
+            }
+            (comparison.join().unwrap_or_else(|_|(Err(fail()),Vec::new(),recovered_references)),omissions.join().unwrap_or_else(|_|(Err(fail()),Vec::new())))
+        });
+        let(compared,calls,recovered)=compared;trace.extend(calls);recovered_references=recovered;
+        let(omissions,calls)=omissions;trace.extend(calls);super::check_current()?;
+        let(checks,summary)=compared?;let omissions=omissions?;
+        if needs_omissions{omission_signature=Some(current_signature);}
         let known=summary.iter().map(|s|(s.id.as_str(),s)).collect::<HashMap<_,_>>();
         let indexed=pending.iter().map(|q|(q.id.as_str(),q)).collect::<HashMap<_,_>>();let mut issues=Vec::new();let mut allowed=HashSet::new();
         for check in checks {
@@ -338,6 +375,19 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
             }else{
                 let q=indexed[check.id.as_str()];allowed.insert(q.id.clone());
                 issues.push(json!({"id":q.id,"question":q.question,"difference":check.difference,"sourceEvidence":q.evidence,"uncertainSourceSpans":uncertain_source_spans(trace,&q.evidence)}));
+            }
+        }
+        // The full-source reviewer can find a relationship that never entered
+        // the question bank. Retain it as an additional grounded question;
+        // existing questions and their evidence are never deleted or regraded.
+        for mut q in omissions.0{
+            let id=if let Some(old)=questions.iter().find(|old|old.question==q.question&&old.evidence==q.evidence){old.id.clone()}else{
+                if questions.len()>=40{return Err(fail());}
+                q.id=format!("q{:02}",questions.len());let id=q.id.clone();questions.push(q);id
+            };
+            if allowed.insert(id.clone()){
+                let q=questions.iter().find(|q|q.id==id).unwrap();
+                issues.push(json!({"id":q.id,"question":q.question,"difference":"完整原文对当前正文的复核发现此具体关系尚未保留","sourceEvidence":q.evidence,"uncertainSourceSpans":uncertain_source_spans(trace,&q.evidence)}));
             }
         }
         if issues.is_empty(){return Ok(current);}
@@ -405,10 +455,13 @@ mod tests {
         let raw=json!({"omissions":[{"question":"采购限制是什么？","difference":"缺不得采购条件","importance":"essential","evidence":["e0001"]}]});
         let omissions=decode_omissions(&raw.to_string(),&source).unwrap();assert_eq!(omissions.0[0].evidence[0].quote,source[1]["text"].as_str().unwrap());
         let old=Question{id:"q00".into(),question:"原背景题？".into(),importance:"supporting".into(),evidence:vec![Evidence{source:"u000".into(),quote:"预算尚未审批。".into()}]};
-        let before=serde_json::to_value(&old).unwrap();let prepared=Prepared{questions:vec![old.clone()],checks:vec![],summary:summary_units(&doc()),recovered_references:false};
+        let before=serde_json::to_value(&old).unwrap();let prepared=Prepared{questions:vec![old.clone()],checks:vec![],summary:summary_units(&doc()),recovered_references:false,omission_signature:None};
         let combined=combine_omissions(prepared,omissions).unwrap();assert_eq!(serde_json::to_value(&combined.questions[0]).unwrap(),before);assert_eq!(combined.questions[1].id,"q01");assert!(!has_complete_seed(&combined.questions,&combined.checks));
+        assert_eq!(combined.omission_signature,Some(semantic_signature(&summary_units(&doc()))));
+        let mut changed=doc();changed.topics[0].points[0].text="预算已经批准。".into();
+        assert_ne!(combined.omission_signature,Some(semantic_signature(&summary_units(&changed))));
         for bad in [json!({"omissions":[],"passed":true}),json!({"omissions":[{"question":"采购？","difference":"缺条件","importance":"essential","evidence":["e9999"]}]}),json!({"omissions":[{"question":"采购？","difference":"缺条件","importance":"supporting","evidence":["e0001"]}]})]{assert!(decode_omissions(&bad.to_string(),&source).is_err());}
-        let full=Prepared{questions:(0..40).map(|i|{let mut q=old.clone();q.id=format!("q{i:02}");q}).collect(),checks:vec![],summary:vec![],recovered_references:false};
+        let full=Prepared{questions:(0..40).map(|i|{let mut q=old.clone();q.id=format!("q{i:02}");q}).collect(),checks:vec![],summary:vec![],recovered_references:false,omission_signature:None};
         assert!(combine_omissions(full,decode_omissions(&raw.to_string(),&source).unwrap()).is_err());
     }
     #[test]
