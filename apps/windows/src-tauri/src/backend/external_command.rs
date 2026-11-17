@@ -129,3 +129,11 @@ pub(super) fn closed_output_matches(path:&std::path::Path,prefix:&[u8],suffix:&[
 
 #[cfg(windows)]
 mod windows;
+
+/// The local minutes engine is owned by one invocation. It never survives its
+/// caller, cancellation, memory pressure, or the bounded processing deadline.
+#[cfg(windows)]
+pub(super) fn with_local_service<T:Send>(
+    program:&str,args:&[String],cancel:Option<&AtomicBool>,
+    work:impl FnOnce()->Result<T,String>+Send,
+)->Result<T,String>{windows::with_local_service(program,args,cancel,work)}

@@ -23,6 +23,9 @@ use std::{
     time::Instant,
 };
 
+mod local_service;
+pub(super) use local_service::with_local_service;
+
 struct Handle(HANDLE);
 impl Drop for Handle {
     fn drop(&mut self) {
