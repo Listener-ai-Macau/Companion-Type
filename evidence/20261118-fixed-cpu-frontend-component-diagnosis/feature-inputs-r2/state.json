@@ -1,0 +1,456 @@
+{
+  "state": "COMPLETE_CPU_FRONTEND_INPUTS_NO_MODEL_INFERENCE",
+  "pid": 21020,
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+      "audioSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+      "frames": 192800,
+      "energyFractionBelowCurrentFloor": 0.20241182572614108,
+      "logGuardOnlyMeanAbsDifference": 0.15668201446533203,
+      "channelsWithZeroClippedVariance": 2,
+      "features": [
+        {
+          "mode": "installed_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\installed_frontend--ES2003b-seq-000.npy",
+          "sha256": "4ee72d4c722a10b1a9ed18689f7b72d97f1ccbd377c1b029e2b0095bd0b2c3ef",
+          "shape": [
+            1205,
+            128
+          ],
+          "length": 1205
+        },
+        {
+          "mode": "published_hf_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\published_hf_frontend--ES2003b-seq-000.npy",
+          "sha256": "11f6eca23c71e7ae6870caaa2095fd705d5b3a1df01bdcafd04bf0d9be06ad28",
+          "shape": [
+            1206,
+            128
+          ],
+          "length": 1205
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-005.wav",
+      "audioSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+      "frames": 476000,
+      "energyFractionBelowCurrentFloor": 0.21478991596638655,
+      "logGuardOnlyMeanAbsDifference": 0.14692169427871704,
+      "channelsWithZeroClippedVariance": 0,
+      "features": [
+        {
+          "mode": "installed_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\installed_frontend--ES2003b-seq-005.npy",
+          "sha256": "7ee0155460f4f67b8827ba1f2b72e6353bbbe3f09a1f5752d8706e35846f8966",
+          "shape": [
+            2975,
+            128
+          ],
+          "length": 2975
+        },
+        {
+          "mode": "published_hf_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\published_hf_frontend--ES2003b-seq-005.npy",
+          "sha256": "7548359bde7d9375478c907f99bbb1c4aa670a5cbdf6c8d1c7fe0d166e0b3a11",
+          "shape": [
+            2976,
+            128
+          ],
+          "length": 2975
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-010.wav",
+      "audioSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+      "frames": 475520,
+      "energyFractionBelowCurrentFloor": 0.31023405955585465,
+      "logGuardOnlyMeanAbsDifference": 0.1829374134540558,
+      "channelsWithZeroClippedVariance": 0,
+      "features": [
+        {
+          "mode": "installed_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\installed_frontend--ES2003b-seq-010.npy",
+          "sha256": "8b5842a73d9c4982993465b33b0239e9e9d79930261a726c829851f0d7da9d07",
+          "shape": [
+            2972,
+            128
+          ],
+          "length": 2972
+        },
+        {
+          "mode": "published_hf_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\published_hf_frontend--ES2003b-seq-010.npy",
+          "sha256": "ba6f990dbf796a8d91f92860324a3633aac9bb71b43425fc58f8888407e9d68b",
+          "shape": [
+            2973,
+            128
+          ],
+          "length": 2972
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-016.wav",
+      "audioSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+      "frames": 473280,
+      "energyFractionBelowCurrentFloor": 0.3100807133198107,
+      "logGuardOnlyMeanAbsDifference": 0.17832648754119873,
+      "channelsWithZeroClippedVariance": 0,
+      "features": [
+        {
+          "mode": "installed_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\installed_frontend--ES2003b-seq-016.npy",
+          "sha256": "4b246ad001d48f5ff58742cdd558db347831316053fe6b6af801df2acc1b560a",
+          "shape": [
+            2958,
+            128
+          ],
+          "length": 2958
+        },
+        {
+          "mode": "published_hf_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\published_hf_frontend--ES2003b-seq-016.npy",
+          "sha256": "874ea2b8c961b18876d98a2bb451f40ae9409ed7d2bf947f370888ae38f2c110",
+          "shape": [
+            2959,
+            128
+          ],
+          "length": 2958
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-021.wav",
+      "audioSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+      "frames": 203840,
+      "energyFractionBelowCurrentFloor": 0.2936800922291994,
+      "logGuardOnlyMeanAbsDifference": 0.1777423471212387,
+      "channelsWithZeroClippedVariance": 1,
+      "features": [
+        {
+          "mode": "installed_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\installed_frontend--ES2003b-seq-021.npy",
+          "sha256": "d9bbb820728e13e534553f7a01c14ecda8e6fe158a8ece39fa5d2f5511c99712",
+          "shape": [
+            1274,
+            128
+          ],
+          "length": 1274
+        },
+        {
+          "mode": "published_hf_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\published_hf_frontend--ES2003b-seq-021.npy",
+          "sha256": "35f9d55a2dd42e27f070be5f28a3f5bf43d27716c80482f89e2135c8a063e2e6",
+          "shape": [
+            1275,
+            128
+          ],
+          "length": 1274
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-027.wav",
+      "audioSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+      "frames": 162401,
+      "energyFractionBelowCurrentFloor": 0.2856604064039409,
+      "logGuardOnlyMeanAbsDifference": 0.17056487500667572,
+      "channelsWithZeroClippedVariance": 2,
+      "features": [
+        {
+          "mode": "installed_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\installed_frontend--ES2003b-seq-027.npy",
+          "sha256": "05bf38c578ec8eba8abd5ea46a6ce5ef39c673b7b6b1c486415c63c0b8ffca4d",
+          "shape": [
+            1015,
+            128
+          ],
+          "length": 1015
+        },
+        {
+          "mode": "published_hf_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\published_hf_frontend--ES2003b-seq-027.npy",
+          "sha256": "afb052ff10d5a36b5ab2ed6a174e2aaf9fb1a8c4a69b7ad8414b04e4a2682625",
+          "shape": [
+            1016,
+            128
+          ],
+          "length": 1015
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-000.wav",
+      "audioSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+      "frames": 187360,
+      "energyFractionBelowCurrentFloor": 0.21717549103330486,
+      "logGuardOnlyMeanAbsDifference": 0.1500316560268402,
+      "channelsWithZeroClippedVariance": 1,
+      "features": [
+        {
+          "mode": "installed_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\installed_frontend--EN2001a-a2-000.npy",
+          "sha256": "3f0ed9441cb85ab337f0cc95418e36e5d47fecc302244be379aa51c21d7fbf95",
+          "shape": [
+            1171,
+            128
+          ],
+          "length": 1171
+        },
+        {
+          "mode": "published_hf_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\published_hf_frontend--EN2001a-a2-000.npy",
+          "sha256": "09833788d52d20701cd9ec2395d9dbe5aae179739d7aea2d3bd6222a516e350a",
+          "shape": [
+            1172,
+            128
+          ],
+          "length": 1171
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-023.wav",
+      "audioSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+      "frames": 475520,
+      "energyFractionBelowCurrentFloor": 0.22843413526244952,
+      "logGuardOnlyMeanAbsDifference": 0.13806842267513275,
+      "channelsWithZeroClippedVariance": 0,
+      "features": [
+        {
+          "mode": "installed_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\installed_frontend--EN2001a-a2-023.npy",
+          "sha256": "a78d983ccd2c61183c07745d3b043f0c90c0b362dca009a903164c92095ebccc",
+          "shape": [
+            2972,
+            128
+          ],
+          "length": 2972
+        },
+        {
+          "mode": "published_hf_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\published_hf_frontend--EN2001a-a2-023.npy",
+          "sha256": "ac49afb8ac633efb37e6bf401679c14baa2439e73397d827326612b8cad8cace",
+          "shape": [
+            2973,
+            128
+          ],
+          "length": 2972
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-046.wav",
+      "audioSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+      "frames": 362720,
+      "energyFractionBelowCurrentFloor": 0.41986587450374946,
+      "logGuardOnlyMeanAbsDifference": 0.20515383780002594,
+      "channelsWithZeroClippedVariance": 2,
+      "features": [
+        {
+          "mode": "installed_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\installed_frontend--EN2001a-a2-046.npy",
+          "sha256": "c62af6f2446033061b3751d976a94cadac6cced95c384a4e0bf231582e8af27a",
+          "shape": [
+            2267,
+            128
+          ],
+          "length": 2267
+        },
+        {
+          "mode": "published_hf_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\published_hf_frontend--EN2001a-a2-046.npy",
+          "sha256": "5573d7d444443b98b57e55e34b602c0465fe8496944aa323b0c7382da1666b54",
+          "shape": [
+            2268,
+            128
+          ],
+          "length": 2267
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-069.wav",
+      "audioSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+      "frames": 476000,
+      "energyFractionBelowCurrentFloor": 0.3320063025210084,
+      "logGuardOnlyMeanAbsDifference": 0.18224787712097168,
+      "channelsWithZeroClippedVariance": 0,
+      "features": [
+        {
+          "mode": "installed_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\installed_frontend--EN2001a-a2-069.npy",
+          "sha256": "e5722769e259876c816bbc27cb16040cffb4b0818e0b0a3ff2195b88ef236655",
+          "shape": [
+            2975,
+            128
+          ],
+          "length": 2975
+        },
+        {
+          "mode": "published_hf_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\published_hf_frontend--EN2001a-a2-069.npy",
+          "sha256": "a058548cb87c302d95bfbf1e244e36978de6071e801cf6d70ba20c4755fcdf3a",
+          "shape": [
+            2976,
+            128
+          ],
+          "length": 2975
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-092.wav",
+      "audioSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+      "frames": 473600,
+      "energyFractionBelowCurrentFloor": 0.32384660050675673,
+      "logGuardOnlyMeanAbsDifference": 0.17857758700847626,
+      "channelsWithZeroClippedVariance": 0,
+      "features": [
+        {
+          "mode": "installed_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\installed_frontend--EN2001a-a2-092.npy",
+          "sha256": "289e8ba6afe8bf8a57379ad115aef24559470e0080b45436386624de5ca7a093",
+          "shape": [
+            2960,
+            128
+          ],
+          "length": 2960
+        },
+        {
+          "mode": "published_hf_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\published_hf_frontend--EN2001a-a2-092.npy",
+          "sha256": "55519060477734dfa689ad2ef7b63ed9fcdeae7beb8994ad3016e394d01f53a4",
+          "shape": [
+            2961,
+            128
+          ],
+          "length": 2960
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-116.wav",
+      "audioSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+      "frames": 289920,
+      "energyFractionBelowCurrentFloor": 0.08282026076158941,
+      "logGuardOnlyMeanAbsDifference": 0.08253660053014755,
+      "channelsWithZeroClippedVariance": 1,
+      "features": [
+        {
+          "mode": "installed_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\installed_frontend--EN2001a-a2-116.npy",
+          "sha256": "e656d1e3c855ab8f11647087629e7e82297624034b6ff3e4941f93e2ab7b3a35",
+          "shape": [
+            1812,
+            128
+          ],
+          "length": 1812
+        },
+        {
+          "mode": "published_hf_frontend",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\published_hf_frontend--EN2001a-a2-116.npy",
+          "sha256": "1a3706f1209fec12e82f6426b0a51190ecc4dac650e4de9a1fb08360f8e22c22",
+          "shape": [
+            1813,
+            128
+          ],
+          "length": 1812
+        }
+      ]
+    }
+  ],
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "referenceRead": false,
+  "at": "2026-11-18T07:46:28+08:00",
+  "limits": {
+    "pid": 21020,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 720310272,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "blasThreadPin": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "fbankOptions": {
+    "frame_opts": {
+      "samp_freq": 16000.0,
+      "frame_shift_ms": 10.0,
+      "frame_length_ms": 25.0,
+      "dither": 0.0,
+      "preemph_coeff": 0.9700000286102295,
+      "remove_dc_offset": false,
+      "window_type": "povey",
+      "round_to_power_of_two": true,
+      "blackman_coeff": 0.41999998688697815,
+      "snip_edges": false
+    },
+    "mel_opts": {
+      "num_bins": 128,
+      "low_freq": 0.0,
+      "high_freq": -400.0,
+      "vtln_low": 100.0,
+      "vtln_high": -500.0,
+      "debug_mel": false,
+      "htk_mode": false,
+      "is_librosa": true,
+      "norm": "slaney",
+      "use_slaney_mel_scale": true,
+      "floor_to_int_bin": false
+    },
+    "use_energy": false,
+    "energy_floor": 0.0,
+    "raw_energy": true,
+    "htk_compat": false,
+    "use_log_fbank": false,
+    "use_power": true
+  },
+  "hfConfig": {
+    "feature_size": 128,
+    "sampling_rate": 16000,
+    "padding_value": 0.0,
+    "padding_side": "right",
+    "return_attention_mask": true,
+    "feature_extractor_type": "ParakeetFeatureExtractor",
+    "hop_length": 160,
+    "n_fft": 512,
+    "win_length": 400,
+    "preemphasis": 0.97
+  },
+  "pinnedFrontendSource": {
+    "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\parakeet\\feature_extraction_parakeet.py",
+    "sha256": "5ec8a9664456edfc0b56c64083bdcdd74dd78364504d35207ab917d1c3b9f575"
+  },
+  "activeCase": "EN2001a-a2-116",
+  "torchGpuInitialized": false,
+  "seconds": 18.046000000000276
+}

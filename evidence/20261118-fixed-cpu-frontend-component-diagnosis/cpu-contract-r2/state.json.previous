@@ -1,0 +1,228 @@
+{
+  "state": "DECODING_FIXED_FRONTEND_CONTRACT",
+  "at": "2026-11-18T07:52:03+08:00",
+  "pid": 5036,
+  "createdAt": 1794959522.95929,
+  "completed": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--ES2003b-seq-000.json",
+      "sha256": "015d714360f3276fd02ba114db6035aee97e1c3696ddf22c4ed27e9201cf91b5"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--ES2003b-seq-005.json",
+      "sha256": "7696c3f701017450ea687a5c3cf351c3daaeb5b582398539d775560b0499ae01"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--ES2003b-seq-010.json",
+      "sha256": "a5a8c067ffb941ca0f1ff931fbfdf759eeb3a6f41bfbb59a4f4cd4c7e67a13a6"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--ES2003b-seq-016.json",
+      "sha256": "fd4c53b7fd654df61859f4800e784f76ff5e37161d45d39f01d7073ef82f984c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--ES2003b-seq-021.json",
+      "sha256": "8fb770a262e7c0cb2daa879e9c38db406f1d7c1c3e673adb7361bd443404b9a3"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--ES2003b-seq-027.json",
+      "sha256": "0bad8d7cf6557725e1ca692b3b77c781a7813e82efd0c721ff2065b0f8b35817"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--EN2001a-a2-000.json",
+      "sha256": "706c698c9efb4b068f54710ab057ce4acd812de12534e891017ea86bae9d1732"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--EN2001a-a2-023.json",
+      "sha256": "b50d59963e5401585fb9a916e9265cfef62180d60656b7f2a357585104823d91"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--EN2001a-a2-046.json",
+      "sha256": "ea39855e4be83ca6b8b3c400999b629b9cd42d80d5e9588aebf40ee27762e0ee"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--EN2001a-a2-069.json",
+      "sha256": "c6677e1d975e3828348416ac2810d216cfbd5677f7ad151b2ff6cb35d84a2347"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--EN2001a-a2-092.json",
+      "sha256": "b404e9215e9a801f55828c2b5a8bc92e5c1c81b99a7b1e9e4584c48c99ba41a3"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--EN2001a-a2-116.json",
+      "sha256": "187a1144959ce85d71c010263decf8226a57b201321f2699e7969a7790e8d0b3"
+    }
+  ],
+  "newNeuralCalls": 2139,
+  "newTrainingUpdates": 0,
+  "referenceRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "observedAt": "2026-11-18T07:54:43+08:00",
+  "limits": {
+    "pid": 5036,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1046159360,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "modelIo": [
+    {
+      "inputs": [
+        {
+          "name": "audio_signal",
+          "type": "tensor(float)",
+          "shape": [
+            "audio_signal_dynamic_axes_1",
+            128,
+            "audio_signal_dynamic_axes_2"
+          ]
+        },
+        {
+          "name": "length",
+          "type": "tensor(int64)",
+          "shape": [
+            "length_dynamic_axes_1"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "outputs",
+          "type": "tensor(float)",
+          "shape": [
+            "Transposeoutputs_dim_0",
+            1024,
+            "Transposeoutputs_dim_2"
+          ]
+        },
+        {
+          "name": "encoded_lengths",
+          "type": "tensor(int64)",
+          "shape": [
+            "length_dynamic_axes_1"
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "targets",
+          "type": "tensor(int32)",
+          "shape": [
+            "targets_dynamic_axes_1",
+            "targets_dynamic_axes_2"
+          ]
+        },
+        {
+          "name": "target_length",
+          "type": "tensor(int32)",
+          "shape": [
+            "target_length_dynamic_axes_1"
+          ]
+        },
+        {
+          "name": "states.1",
+          "type": "tensor(float)",
+          "shape": [
+            2,
+            "states.1_dim_1",
+            640
+          ]
+        },
+        {
+          "name": "onnx::Slice_3",
+          "type": "tensor(float)",
+          "shape": [
+            2,
+            1,
+            640
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "outputs",
+          "type": "tensor(float)",
+          "shape": [
+            "targets_dynamic_axes_1",
+            640,
+            "targets_dynamic_axes_2"
+          ]
+        },
+        {
+          "name": "prednet_lengths",
+          "type": "tensor(int32)",
+          "shape": [
+            "target_length_dynamic_axes_1"
+          ]
+        },
+        {
+          "name": "states",
+          "type": "tensor(float)",
+          "shape": [
+            2,
+            "states_dynamic_axes_1",
+            640
+          ]
+        },
+        {
+          "name": "162",
+          "type": "tensor(float)",
+          "shape": [
+            2,
+            "Concat162_dim_1",
+            640
+          ]
+        }
+      ]
+    },
+    {
+      "inputs": [
+        {
+          "name": "encoder_outputs",
+          "type": "tensor(float)",
+          "shape": [
+            "encoder_outputs_dynamic_axes_1",
+            1024,
+            "encoder_outputs_dynamic_axes_2"
+          ]
+        },
+        {
+          "name": "decoder_outputs",
+          "type": "tensor(float)",
+          "shape": [
+            "decoder_outputs_dynamic_axes_1",
+            640,
+            "decoder_outputs_dynamic_axes_2"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "outputs",
+          "type": "tensor(float)",
+          "shape": [
+            "Addoutputs_dim_0",
+            "Addoutputs_dim_1",
+            "Addoutputs_dim_2",
+            8198
+          ]
+        }
+      ]
+    }
+  ],
+  "mode": "installed_frontend",
+  "activeCase": "EN2001a-a2-116",
+  "baselineExactOutputMatches": 0
+}

@@ -1,0 +1,143 @@
+{
+  "at": "2026-11-18T07:49:50+08:00",
+  "state": "VERIFIED_NUMERICAL_FRONTEND_DIFFERENCE_CAUSAL_DECODING_COMPARISON_PENDING",
+  "legacyFrontendReconstructedFromPinnedSource": true,
+  "legacyFrontendBitEquivalentToLiveRuntimeProven": false,
+  "independentInMemorySourceFeaturesMeasured": true,
+  "legacyLibrary": "kaldi-native-fbank v1.22.3, declared by sherpa-onnx v1.13.4",
+  "originalResearchFrontend": "Pinned NVIDIA Parakeet v3 processor, Transformers 5.22.1",
+  "provedDifferences": [
+    "Mel log floor uses log(max(E, float32_epsilon)) versus log(E + 2^-24).",
+    "Frame/window geometry and variance estimation also differ between the two paths."
+  ],
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "priorWholeCaseOutputEmpty": false,
+      "validFeatureFrames": 1205,
+      "energyFractionBelowCurrentFloor": 0.20241182572614108,
+      "logGuardOnlyMeanAbsDifference": 0.15668201446533203,
+      "sameIndexFeatureMeanAbsDifference": 1.2916202545166016,
+      "reconstructedOldFeatureAbsMaximum": 61302.6640625,
+      "referenceFeatureAbsMaximum": 34.253204345703125
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "priorWholeCaseOutputEmpty": true,
+      "validFeatureFrames": 2975,
+      "energyFractionBelowCurrentFloor": 0.21478991596638655,
+      "logGuardOnlyMeanAbsDifference": 0.14692169427871704,
+      "sameIndexFeatureMeanAbsDifference": 0.46956866979599,
+      "reconstructedOldFeatureAbsMaximum": 15.839595794677734,
+      "referenceFeatureAbsMaximum": 20.780519485473633
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "priorWholeCaseOutputEmpty": true,
+      "validFeatureFrames": 2972,
+      "energyFractionBelowCurrentFloor": 0.31023405955585465,
+      "logGuardOnlyMeanAbsDifference": 0.1829374134540558,
+      "sameIndexFeatureMeanAbsDifference": 0.46766361594200134,
+      "reconstructedOldFeatureAbsMaximum": 15.403814315795898,
+      "referenceFeatureAbsMaximum": 15.706820487976074
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "priorWholeCaseOutputEmpty": true,
+      "validFeatureFrames": 2958,
+      "energyFractionBelowCurrentFloor": 0.3100807133198107,
+      "logGuardOnlyMeanAbsDifference": 0.17832648754119873,
+      "sameIndexFeatureMeanAbsDifference": 0.45437881350517273,
+      "reconstructedOldFeatureAbsMaximum": 13.805024147033691,
+      "referenceFeatureAbsMaximum": 48.97475051879883
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "priorWholeCaseOutputEmpty": false,
+      "validFeatureFrames": 1274,
+      "energyFractionBelowCurrentFloor": 0.2936800922291994,
+      "logGuardOnlyMeanAbsDifference": 0.1777423471212387,
+      "sameIndexFeatureMeanAbsDifference": 0.6452335715293884,
+      "reconstructedOldFeatureAbsMaximum": 28.011520385742188,
+      "referenceFeatureAbsMaximum": 21.066543579101562
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "priorWholeCaseOutputEmpty": false,
+      "validFeatureFrames": 1015,
+      "energyFractionBelowCurrentFloor": 0.2856604064039409,
+      "logGuardOnlyMeanAbsDifference": 0.17056487500667572,
+      "sameIndexFeatureMeanAbsDifference": 3.49013090133667,
+      "reconstructedOldFeatureAbsMaximum": 106451.796875,
+      "referenceFeatureAbsMaximum": 16.738494873046875
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "priorWholeCaseOutputEmpty": false,
+      "validFeatureFrames": 1171,
+      "energyFractionBelowCurrentFloor": 0.21717549103330486,
+      "logGuardOnlyMeanAbsDifference": 0.1500316560268402,
+      "sameIndexFeatureMeanAbsDifference": 0.534752607345581,
+      "reconstructedOldFeatureAbsMaximum": 27.22397232055664,
+      "referenceFeatureAbsMaximum": 24.130266189575195
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "priorWholeCaseOutputEmpty": false,
+      "validFeatureFrames": 2972,
+      "energyFractionBelowCurrentFloor": 0.22843413526244952,
+      "logGuardOnlyMeanAbsDifference": 0.13806842267513275,
+      "sameIndexFeatureMeanAbsDifference": 0.3866959512233734,
+      "reconstructedOldFeatureAbsMaximum": 25.68269920349121,
+      "referenceFeatureAbsMaximum": 44.75952911376953
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "priorWholeCaseOutputEmpty": false,
+      "validFeatureFrames": 2267,
+      "energyFractionBelowCurrentFloor": 0.41986587450374946,
+      "logGuardOnlyMeanAbsDifference": 0.20515383780002594,
+      "sameIndexFeatureMeanAbsDifference": 6.77761697769165,
+      "reconstructedOldFeatureAbsMaximum": 195299.15625,
+      "referenceFeatureAbsMaximum": 39.81673049926758
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "priorWholeCaseOutputEmpty": true,
+      "validFeatureFrames": 2975,
+      "energyFractionBelowCurrentFloor": 0.3320063025210084,
+      "logGuardOnlyMeanAbsDifference": 0.18224787712097168,
+      "sameIndexFeatureMeanAbsDifference": 0.44198450446128845,
+      "reconstructedOldFeatureAbsMaximum": 14.10513973236084,
+      "referenceFeatureAbsMaximum": 44.099849700927734
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "priorWholeCaseOutputEmpty": true,
+      "validFeatureFrames": 2960,
+      "energyFractionBelowCurrentFloor": 0.32384660050675673,
+      "logGuardOnlyMeanAbsDifference": 0.17857758700847626,
+      "sameIndexFeatureMeanAbsDifference": 0.4216991662979126,
+      "reconstructedOldFeatureAbsMaximum": 20.558103561401367,
+      "referenceFeatureAbsMaximum": 44.39580154418945
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "priorWholeCaseOutputEmpty": false,
+      "validFeatureFrames": 1812,
+      "energyFractionBelowCurrentFloor": 0.08282026076158941,
+      "logGuardOnlyMeanAbsDifference": 0.08253660053014755,
+      "sameIndexFeatureMeanAbsDifference": 7.002187252044678,
+      "reconstructedOldFeatureAbsMaximum": 136280.640625,
+      "referenceFeatureAbsMaximum": 22.59342384338379
+    }
+  ],
+  "belowFloorRange": [
+    0.08282026076158941,
+    0.41986587450374946
+  ],
+  "priorEmptyWholeCaseOutputs": 5,
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "qualityQualified": false
+}

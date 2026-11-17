@@ -1,0 +1,95 @@
+{
+  "at": "2026-11-18T07:38:43+08:00",
+  "state": "PINNED_ISOLATED_NATIVE_FRONTEND_CONTRACT_READY",
+  "dependencyVersion": "1.22.3",
+  "wheelFile": "E:\\CodexData\\Companion\\.model-cache\\frontend-contract-knf1223-20261118\\kaldi_native_fbank-1.22.3-cp311-cp311-win_amd64.whl",
+  "wheelSha256": "bd225d0624d45b533c1780094b3c59666276a6e9f20222943441212cdf301c9e",
+  "isolatedModuleRoot": "E:\\CodexData\\Companion\\.model-cache\\frontend-contract-knf1223-20261118",
+  "fbankOptions": [
+    "as_dict",
+    "energy_floor",
+    "frame_opts",
+    "from_dict",
+    "htk_compat",
+    "mel_opts",
+    "raw_energy",
+    "use_energy",
+    "use_log_fbank",
+    "use_power"
+  ],
+  "melOptions": [
+    "as_dict",
+    "debug_mel",
+    "floor_to_int_bin",
+    "from_dict",
+    "high_freq",
+    "htk_mode",
+    "is_librosa",
+    "low_freq",
+    "norm",
+    "num_bins",
+    "use_slaney_mel_scale",
+    "vtln_high",
+    "vtln_low"
+  ],
+  "frameOptions": [
+    "as_dict",
+    "blackman_coeff",
+    "dither",
+    "frame_length_ms",
+    "frame_shift_ms",
+    "from_dict",
+    "preemph_coeff",
+    "remove_dc_offset",
+    "round_to_power_of_two",
+    "samp_freq",
+    "snip_edges",
+    "window_type"
+  ],
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/k2-fsa/sherpa-onnx/v1.13.4/cmake/kaldi-native-fbank.cmake",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\kaldi-native-fbank.cmake",
+      "sha256": "619f0046f568e85790f4180899e666053f246f5c0fc36c951421441f3e992e38"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/k2-fsa/sherpa-onnx/v1.13.4/sherpa-onnx/csrc/offline-recognizer-transducer-nemo-impl.h",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\offline-recognizer-transducer-nemo-impl.h",
+      "sha256": "561b99f9ad872be403c0839ee05eee59d87808fd5623d2e0ef0e6e61e31d0109"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/k2-fsa/sherpa-onnx/v1.13.4/sherpa-onnx/csrc/offline-transducer-greedy-search-nemo-decoder.cc",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\offline-transducer-greedy-search-nemo-decoder.cc",
+      "sha256": "3fc6c45f3eef8641393dc7247d3bac4d103c18a54d69086e033db343660aed72"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/k2-fsa/sherpa-onnx/v1.13.4/sherpa-onnx/csrc/math.cc",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\math.cc",
+      "sha256": "40ecd5ae7d5a4530134fc143cbbd1c55bfa153854c177df9481b1454d61f8c60"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/csukuangfj/kaldi-native-fbank/v1.22.3/kaldi-native-fbank/csrc/feature-fbank.cc",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-fbank.cc",
+      "sha256": "6c9edabf3b2479f31392aec9490688f59262e6f86c85cc648cfa8987387814c1"
+    }
+  ],
+  "globalPythonPackagesChanged": false,
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "limits": {
+    "pid": 1104,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 27549696,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

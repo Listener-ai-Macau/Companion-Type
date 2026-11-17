@@ -1,0 +1,101 @@
+{
+  "at": "2026-11-18T07:51:39+08:00",
+  "state": "LIGHTWEIGHT_CPU_REFERENCE_FEATURE_PARITY_MEASURED",
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "validFrames": 1205,
+      "maxAbsFeatureError": 0.00018778443336486816,
+      "meanAbsFeatureError": 6.8126678343105596e-06
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "validFrames": 2975,
+      "maxAbsFeatureError": 0.0014443397521972656,
+      "meanAbsFeatureError": 2.6886005798587576e-05
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "validFrames": 2972,
+      "maxAbsFeatureError": 0.0016605854034423828,
+      "meanAbsFeatureError": 3.103479684796184e-05
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "validFrames": 2958,
+      "maxAbsFeatureError": 0.0005574226379394531,
+      "meanAbsFeatureError": 1.3347151252673939e-05
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "validFrames": 1274,
+      "maxAbsFeatureError": 0.0006493330001831055,
+      "meanAbsFeatureError": 1.2150427210144699e-05
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "validFrames": 1015,
+      "maxAbsFeatureError": 0.0003031492233276367,
+      "meanAbsFeatureError": 8.315204468090087e-06
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "validFrames": 1171,
+      "maxAbsFeatureError": 0.0007164478302001953,
+      "meanAbsFeatureError": 1.0003961506299675e-05
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "validFrames": 2972,
+      "maxAbsFeatureError": 0.00012814998626708984,
+      "meanAbsFeatureError": 6.594228580070194e-06
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "validFrames": 2267,
+      "maxAbsFeatureError": 0.000473901629447937,
+      "meanAbsFeatureError": 1.3256102647574153e-05
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "validFrames": 2975,
+      "maxAbsFeatureError": 0.00096893310546875,
+      "meanAbsFeatureError": 2.554397542553488e-05
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "validFrames": 2960,
+      "maxAbsFeatureError": 0.0006607770919799805,
+      "meanAbsFeatureError": 1.940048605320044e-05
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "validFrames": 1812,
+      "maxAbsFeatureError": 0.0006119012832641602,
+      "meanAbsFeatureError": 8.339035048265941e-06
+    }
+  ],
+  "numpyVersion": "2.4.6",
+  "modelWeightsLoaded": false,
+  "torchImported": false,
+  "inferenceCalls": 0,
+  "trainingUpdates": 0,
+  "limits": {
+    "pid": 21332,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 101543936,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "maxAbsFeatureError": 0.0016605854034423828,
+  "meanOfMeanAbsFeatureErrors": 1.5140336889392833e-05
+}

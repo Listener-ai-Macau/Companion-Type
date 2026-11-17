@@ -1,0 +1,269 @@
+{
+  "revision": 79,
+  "evidenceDirectory": "evidence/20261118-fixed-cpu-frontend-component-diagnosis",
+  "sources": [],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\numerical-frontend-audit.json",
+      "name": "numerical-frontend-audit.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\portable-frontend-parity-r1.json",
+      "name": "portable-frontend-parity-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\preparation.json",
+      "name": "preparation.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\protocol-r1.json",
+      "name": "protocol-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\protocol-r2.json",
+      "name": "protocol-r2.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\protocol-r3.json",
+      "name": "protocol-r3.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\local-portal-source-receipt.json",
+      "name": "local-portal-source-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r1\\state.json",
+      "name": "feature-inputs-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\completed.json",
+      "name": "feature-inputs-r2/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\state.json",
+      "name": "feature-inputs-r2/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\feature-inputs-r2\\state.json.previous",
+      "name": "feature-inputs-r2/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r1\\completed.json",
+      "name": "cpu-contract-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r1\\state.json",
+      "name": "cpu-contract-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r1\\worker-executed.py",
+      "name": "cpu-contract-r1/worker-executed.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2-admission-failed\\completed.json",
+      "name": "cpu-contract-r2-admission-failed/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2-admission-failed\\state.json",
+      "name": "cpu-contract-r2-admission-failed/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2-admission-failed\\state.json.previous",
+      "name": "cpu-contract-r2-admission-failed/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\completed.json",
+      "name": "cpu-contract-r2/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--EN2001a-a2-000.json",
+      "name": "cpu-contract-r2/installed_frontend--EN2001a-a2-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--EN2001a-a2-023.json",
+      "name": "cpu-contract-r2/installed_frontend--EN2001a-a2-023.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--EN2001a-a2-046.json",
+      "name": "cpu-contract-r2/installed_frontend--EN2001a-a2-046.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--EN2001a-a2-069.json",
+      "name": "cpu-contract-r2/installed_frontend--EN2001a-a2-069.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--EN2001a-a2-092.json",
+      "name": "cpu-contract-r2/installed_frontend--EN2001a-a2-092.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--EN2001a-a2-116.json",
+      "name": "cpu-contract-r2/installed_frontend--EN2001a-a2-116.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--ES2003b-seq-000.json",
+      "name": "cpu-contract-r2/installed_frontend--ES2003b-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--ES2003b-seq-005.json",
+      "name": "cpu-contract-r2/installed_frontend--ES2003b-seq-005.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--ES2003b-seq-010.json",
+      "name": "cpu-contract-r2/installed_frontend--ES2003b-seq-010.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--ES2003b-seq-016.json",
+      "name": "cpu-contract-r2/installed_frontend--ES2003b-seq-016.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--ES2003b-seq-021.json",
+      "name": "cpu-contract-r2/installed_frontend--ES2003b-seq-021.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\installed_frontend--ES2003b-seq-027.json",
+      "name": "cpu-contract-r2/installed_frontend--ES2003b-seq-027.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\score.json",
+      "name": "cpu-contract-r2/score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\state.json",
+      "name": "cpu-contract-r2/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r2\\state.json.previous",
+      "name": "cpu-contract-r2/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\completed.json",
+      "name": "cpu-contract-r3/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\published_hf_frontend--EN2001a-a2-000.json",
+      "name": "cpu-contract-r3/published_hf_frontend--EN2001a-a2-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\published_hf_frontend--EN2001a-a2-023.json",
+      "name": "cpu-contract-r3/published_hf_frontend--EN2001a-a2-023.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\published_hf_frontend--EN2001a-a2-046.json",
+      "name": "cpu-contract-r3/published_hf_frontend--EN2001a-a2-046.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\published_hf_frontend--EN2001a-a2-069.json",
+      "name": "cpu-contract-r3/published_hf_frontend--EN2001a-a2-069.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\published_hf_frontend--EN2001a-a2-092.json",
+      "name": "cpu-contract-r3/published_hf_frontend--EN2001a-a2-092.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\published_hf_frontend--EN2001a-a2-116.json",
+      "name": "cpu-contract-r3/published_hf_frontend--EN2001a-a2-116.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\published_hf_frontend--ES2003b-seq-000.json",
+      "name": "cpu-contract-r3/published_hf_frontend--ES2003b-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\published_hf_frontend--ES2003b-seq-005.json",
+      "name": "cpu-contract-r3/published_hf_frontend--ES2003b-seq-005.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\published_hf_frontend--ES2003b-seq-010.json",
+      "name": "cpu-contract-r3/published_hf_frontend--ES2003b-seq-010.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\published_hf_frontend--ES2003b-seq-016.json",
+      "name": "cpu-contract-r3/published_hf_frontend--ES2003b-seq-016.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\published_hf_frontend--ES2003b-seq-021.json",
+      "name": "cpu-contract-r3/published_hf_frontend--ES2003b-seq-021.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\published_hf_frontend--ES2003b-seq-027.json",
+      "name": "cpu-contract-r3/published_hf_frontend--ES2003b-seq-027.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\score.json",
+      "name": "cpu-contract-r3/score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\state.json",
+      "name": "cpu-contract-r3/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\cpu-contract-r3\\state.json.previous",
+      "name": "cpu-contract-r3/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessing-contract-20261118\\portal-qa-final\\result.json",
+      "name": "portal-qa.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_frontend_contract_20261118.py",
+      "name": "tools/prepare_frontend_contract_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_frontend_features_20261118.py",
+      "name": "tools/prepare_frontend_features_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\probe_frontend_contract_20261118.py",
+      "name": "tools/probe_frontend_contract_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\score_frontend_contract_20261118.py",
+      "name": "tools/score_frontend_contract_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\audit_frontend_contract_20261118.py",
+      "name": "tools/audit_frontend_contract_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\reference_parakeet_cpu_frontend_20261118.py",
+      "name": "tools/reference_parakeet_cpu_frontend_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_reference_frontend_cpu_parity_20261118.py",
+      "name": "tools/verify_reference_frontend_cpu_parity_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_frontend_diagnosis_20261118.py",
+      "name": "tools/record_frontend_diagnosis_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\checkpoint_frontend_diagnosis_20261118.py",
+      "name": "tools/checkpoint_frontend_diagnosis_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\check_model_portal_20261117.py",
+      "name": "tools/check_model_portal_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\bilingual_progress.json",
+      "name": "original-workpoint-snapshot.json"
+    }
+  ],
+  "commitMessage": "Preserve fixed-weight CPU frontend comparison and rejected deployment configuration",
+  "claims": {
+    "state": "FRONTEND_EFFECT_CONFIRMED_FIXED_INT8_CPU_DEPLOYMENT_REJECTED",
+    "oldReconstructedErrors": 339,
+    "referenceFrontendErrors": 248,
+    "words": 709,
+    "oldEmptyOutputs": 6,
+    "newEmptyOutputs": 0,
+    "actualSherpaOutputsReproduced": false,
+    "sameDirectExecutorWeightsAndRuntime": true,
+    "productDefaultChanged": false,
+    "trainingUpdates": 0,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "noAudioWeightsFeatureArraysWheelsOrCredentials": true,
+    "localPortalCommit": "8cbd8118836ee0e96acdec419fceddc0a728c128"
+  }
+}

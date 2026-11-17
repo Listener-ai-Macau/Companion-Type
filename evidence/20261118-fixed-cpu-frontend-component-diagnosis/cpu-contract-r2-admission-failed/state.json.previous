@@ -1,0 +1,29 @@
+{
+  "state": "WAITING_FOR_SHARED_MODEL_LEASE",
+  "at": "2026-11-18T07:47:39+08:00",
+  "pid": 20964,
+  "createdAt": 1794959259.5137317,
+  "completed": [],
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "referenceRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "observedAt": "2026-11-18T07:47:39+08:00",
+  "limits": {
+    "pid": 20964,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 13246464,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
