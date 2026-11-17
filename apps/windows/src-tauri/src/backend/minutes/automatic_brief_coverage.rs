@@ -155,15 +155,19 @@ fn summary_units(doc:&Document)->Vec<SummaryUnit>{
     out
 }
 
-fn decode_retrieval(raw:&str,questions:&[Question],summary:&[SummaryUnit])->Result<Vec<Retrieval>,String>{
-    let data:Retrieved=parse(raw)?;if data.answers.len()!=questions.len(){return Err(fail());}
+fn retrieval_parts(raw:&str,questions:&[Question],summary:&[SummaryUnit])->Result<(Vec<Retrieval>,Vec<Question>),String>{
+    let data:Retrieved=parse(raw)?;if data.answers.len()>questions.len(){return Err(fail());}
     let expected=questions.iter().map(|q|q.id.as_str()).collect::<HashSet<_>>();let known=summary.iter().map(|s|s.id.as_str()).collect::<HashSet<_>>();let mut seen=HashSet::new();
-    for answer in &data.answers {
-        if !expected.contains(answer.id.as_str())||!seen.insert(answer.id.as_str())||answer.summary_ids.len()>8
-            ||answer.summary_ids.iter().collect::<HashSet<_>>().len()!=answer.summary_ids.len()
-            ||answer.summary_ids.iter().any(|id|!known.contains(id.as_str())){return Err(fail());}
+    let mut valid=Vec::new();let mut invalid=HashSet::new();
+    for answer in data.answers {
+        if !expected.contains(answer.id.as_str())||!seen.insert(answer.id.clone()){return Err(fail());}
+        if answer.summary_ids.len()>8||answer.summary_ids.iter().collect::<HashSet<_>>().len()!=answer.summary_ids.len()
+            ||answer.summary_ids.iter().any(|id|!known.contains(id.as_str())){invalid.insert(answer.id);}else{valid.push(answer);}
     }
-    Ok(data.answers)
+    let missing=questions.iter().filter(|q|!seen.contains(&q.id)||invalid.contains(&q.id)).cloned().collect();Ok((valid,missing))
+}
+fn decode_retrieval(raw:&str,questions:&[Question],summary:&[SummaryUnit])->Result<Vec<Retrieval>,String>{
+    let(valid,missing)=retrieval_parts(raw,questions,summary)?;if missing.is_empty(){Ok(valid)}else{Err(fail())}
 }
 
 fn decode_comparison(raw:&str,questions:&[Question],retrieved:&[Retrieval])->Result<Vec<Check>,String>{
@@ -187,11 +191,24 @@ fn uncertain_source_spans(trace:&[Value],evidence:&[Evidence])->Vec<Value>{
     }
     spans
 }
-fn evaluate(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,questions:&[Question],start:Instant,trace:&mut Vec<Value>,stage:&str)->Result<(Vec<Check>,Vec<SummaryUnit>),String>{
+fn evaluate(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,questions:&[Question],start:Instant,trace:&mut Vec<Value>,stage:&str,recovered_references:&mut bool)->Result<(Vec<Check>,Vec<SummaryUnit>),String>{
     let summary=summary_units(doc);let asked=questions.iter().map(|q|json!({"id":q.id,"question":q.question})).collect::<Vec<_>>();
     // Neither transcript nor source answers reach this request.
     let raw=super::request(endpoint,model,key,client,RETRIEVE,json!({"summaryUnits":summary,"questions":asked}),false,start,trace,&format!("coverage-retrieve-{stage}"))?;
-    let retrieved=decode_retrieval(&raw,questions,&summary)?;let known=summary.iter().map(|s|(s.id.as_str(),s)).collect::<HashMap<_,_>>();
+    let retrieved=match decode_retrieval(&raw,questions,&summary){
+        Ok(data)=>data,
+        Err(reason)=>{
+            let(mut valid,missing)=retrieval_parts(&raw,questions,&summary)?;
+            if *recovered_references||missing.is_empty(){return Err(reason);}
+            *recovered_references=true;
+            // Retrieval is a reference lookup, not a semantic judgment. Keep
+            // valid rows immutable and re-query only absent/invalid references
+            // once. Unknown IDs never become evidence or a completed answer.
+            let asked=missing.iter().map(|q|json!({"id":q.id,"question":q.question})).collect::<Vec<_>>();
+            let fixed=super::request(endpoint,model,key,client,RETRIEVE,json!({"summaryUnits":summary,"questions":asked}),false,start,trace,&format!("coverage-retrieve-{stage}-reference-recovery"))?;
+            valid.extend(decode_retrieval(&fixed,&missing,&summary)?);valid
+        }
+    };let known=summary.iter().map(|s|(s.id.as_str(),s)).collect::<HashMap<_,_>>();
     let indexed=retrieved.iter().map(|r|(r.id.as_str(),r)).collect::<HashMap<_,_>>();
     let pairs=questions.iter().map(|q|json!({"id":q.id,"question":q.question,"importance":q.importance,"sourceEvidence":q.evidence,"uncertainSourceSpans":uncertain_source_spans(trace,&q.evidence),"summaryEvidence":indexed[q.id.as_str()].summary_ids.iter().map(|id|known[id.as_str()]).collect::<Vec<_>>()})).collect::<Vec<_>>();
     let raw=super::request(endpoint,model,key,client,COMPARE,json!({"pairs":pairs}),true,start,trace,&format!("coverage-compare-{stage}"))?;
@@ -270,7 +287,7 @@ impl Certificate {
     fn valid(&self,summary:&[SummaryUnit])->bool{self.witnesses.iter().all(|(path,value)|summary.iter().any(|s|&s.path==path&&signature(s)==*value))}
 }
 
-pub(super) struct Prepared {questions:Vec<Question>,checks:Vec<Check>,summary:Vec<SummaryUnit>}
+pub(super) struct Prepared {questions:Vec<Question>,checks:Vec<Check>,summary:Vec<SummaryUnit>,recovered_references:bool}
 pub(super) fn combine_omissions(mut prepared:Prepared,omissions:Omissions)->Result<Prepared,String>{
     for mut q in omissions.0{
         if prepared.questions.iter().any(|old|old.question==q.question&&old.evidence==q.evidence){continue;}
@@ -282,7 +299,8 @@ pub(super) fn combine_omissions(mut prepared:Prepared,omissions:Omissions)->Resu
 pub(super) fn prepare(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Prepared,String>{
     let questions=extract(endpoint,model,key,client,units,start,trace)?;
     let essential=questions.iter().filter(|q|q.importance=="essential").cloned().collect::<Vec<_>>();
-    let(checks,summary)=evaluate(endpoint,model,key,client,doc,&essential,start,trace,"precheck")?;Ok(Prepared{questions,checks,summary})
+    let mut recovered_references=false;
+    let(checks,summary)=evaluate(endpoint,model,key,client,doc,&essential,start,trace,"precheck",&mut recovered_references)?;Ok(Prepared{questions,checks,summary,recovered_references})
 }
 fn semantic_signature(summary:&[SummaryUnit])->Value{json!(summary.iter().map(|s|json!({"path":s.path,"claim":signature(s)})).collect::<Vec<_>>())}
 fn seed_certificates(checks:&[Check],summary:&[SummaryUnit])->HashMap<String,Certificate>{
@@ -291,7 +309,7 @@ fn seed_certificates(checks:&[Check],summary:&[SummaryUnit])->HashMap<String,Cer
 }
 fn has_complete_seed(questions:&[Question],checks:&[Check])->bool{questions.iter().filter(|q|q.importance=="essential").all(|q|checks.iter().any(|c|c.id==q.id))}
 pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],prepared:Prepared,start:Instant,trace:&mut Vec<Value>)->Result<Document,String>{
-    let Prepared{questions,checks,summary}=prepared;
+    let Prepared{questions,checks,summary,mut recovered_references}=prepared;
     let mut certificates=seed_certificates(&checks,&summary);
     // Reuse whole prior comparison only when every semantic claim is identical.
     // Otherwise retain just exact positive witnesses; changed paths and gaps
@@ -303,7 +321,7 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
         let current_summary=summary_units(&current);
         let pending=questions.iter().filter(|q|q.importance=="essential"&&!certificates.get(&q.id).is_some_and(|c|c.valid(&current_summary))).cloned().collect::<Vec<_>>();
         if pending.is_empty(){return Ok(current);}
-        let(checks,summary)=if round==0&&initial.is_some(){initial.take().unwrap()}else{evaluate(endpoint,model,key,client,&current,&pending,start,trace,&round.to_string())?};
+        let(checks,summary)=if round==0&&initial.is_some(){initial.take().unwrap()}else{evaluate(endpoint,model,key,client,&current,&pending,start,trace,&round.to_string(),&mut recovered_references)?};
         let known=summary.iter().map(|s|(s.id.as_str(),s)).collect::<HashMap<_,_>>();
         let indexed=pending.iter().map(|q|(q.id.as_str(),q)).collect::<HashMap<_,_>>();let mut issues=Vec::new();let mut allowed=HashSet::new();
         for check in checks {
@@ -346,6 +364,14 @@ mod tests {
     fn units()->Vec<Unit>{vec![Unit{id:"u000".into(),text:"预算尚未审批。\n不得先采购。".into()},Unit{id:"u001".into(),text:"王梅承诺周五提交报告。".into()}]}
     fn doc()->Document{serde_json::from_value(json!({"purpose":"确认采购前提","topics":[{"title":"采购","points":[{"kind":"status","text":"预算尚未审批。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap()}
     #[test]
+    fn automatic_brief_reference_recovery_never_accepts_the_invalid_id_or_requeries_valid_rows(){
+        let summary=summary_units(&doc());let mut q=Question{id:"q00".into(),question:"预算状态？".into(),importance:"essential".into(),evidence:vec![]};let first=q.clone();q.id="q01".into();q.question="采购条件？".into();let questions=vec![first,q];
+        let raw=json!({"answers":[{"id":"q00","summaryIds":["s002"]},{"id":"q01","summaryIds":["s999"]}]});
+        let(valid,missing)=retrieval_parts(&raw.to_string(),&questions,&summary).unwrap();assert_eq!(valid.len(),1);assert_eq!(valid[0].id,"q00");assert_eq!(missing.len(),1);assert_eq!(missing[0].id,"q01");assert!(decode_retrieval(&raw.to_string(),&questions,&summary).is_err());
+        let missing_raw=json!({"answers":[{"id":"q00","summaryIds":["s002"]}]});assert_eq!(retrieval_parts(&missing_raw.to_string(),&questions,&summary).unwrap().1[0].id,"q01");
+        for bad in [json!({"answers":[{"id":"q99","summaryIds":["s002"]}]}),json!({"answers":[],"passed":true})]{assert!(retrieval_parts(&bad.to_string(),&questions,&summary).is_err());}
+    }
+    #[test]
     fn automatic_brief_precheck_reuses_only_unchanged_positive_semantics(){
         let original=doc();let summary=summary_units(&original);let point=summary.iter().find(|s|s.path=="topics[0].points[0]").unwrap();
         let checks=vec![Check{id:"q00".into(),result:"covered".into(),material:false,difference:String::new(),summary_ids:vec![point.id.clone()]},Check{id:"q01".into(),result:"missing".into(),material:true,difference:"缺采购条件".into(),summary_ids:vec![]}];
@@ -360,10 +386,10 @@ mod tests {
         let raw=json!({"omissions":[{"question":"采购限制是什么？","difference":"缺不得采购条件","importance":"essential","evidence":["e0001"]}]});
         let omissions=decode_omissions(&raw.to_string(),&source).unwrap();assert_eq!(omissions.0[0].evidence[0].quote,source[1]["text"].as_str().unwrap());
         let old=Question{id:"q00".into(),question:"原背景题？".into(),importance:"supporting".into(),evidence:vec![Evidence{source:"u000".into(),quote:"预算尚未审批。".into()}]};
-        let before=serde_json::to_value(&old).unwrap();let prepared=Prepared{questions:vec![old.clone()],checks:vec![],summary:summary_units(&doc())};
+        let before=serde_json::to_value(&old).unwrap();let prepared=Prepared{questions:vec![old.clone()],checks:vec![],summary:summary_units(&doc()),recovered_references:false};
         let combined=combine_omissions(prepared,omissions).unwrap();assert_eq!(serde_json::to_value(&combined.questions[0]).unwrap(),before);assert_eq!(combined.questions[1].id,"q01");assert!(!has_complete_seed(&combined.questions,&combined.checks));
         for bad in [json!({"omissions":[],"passed":true}),json!({"omissions":[{"question":"采购？","difference":"缺条件","importance":"essential","evidence":["e9999"]}]}),json!({"omissions":[{"question":"采购？","difference":"缺条件","importance":"supporting","evidence":["e0001"]}]})]{assert!(decode_omissions(&bad.to_string(),&source).is_err());}
-        let mut full=Prepared{questions:(0..40).map(|i|{let mut q=old.clone();q.id=format!("q{i:02}");q}).collect(),checks:vec![],summary:vec![]};
+        let full=Prepared{questions:(0..40).map(|i|{let mut q=old.clone();q.id=format!("q{i:02}");q}).collect(),checks:vec![],summary:vec![],recovered_references:false};
         assert!(combine_omissions(full,decode_omissions(&raw.to_string(),&source).unwrap()).is_err());
     }
     #[test]

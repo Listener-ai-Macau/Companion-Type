@@ -287,6 +287,23 @@ fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unc
 pub(super) fn review_and_repair(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
     review_and_repair_since(endpoint,model,key,client,doc,units,None,start,trace)
 }
+fn changed_failure_axis(previous:&(String,bool),status:&str,unclear:bool)->bool{
+    // One existing repair opportunity may address a newly exposed ambiguity,
+    // or a distinct scope error after ambiguity was actually removed. Repeated
+    // ambiguity/scope and newly unsupported claims still stop immediately.
+    (!previous.1&&unclear)||(previous.1&&!unclear&&status=="overstated")
+}
+fn preserves_unclear_history(doc:&Document,history:&HashMap<String,Vec<String>>)->Result<(),String>{
+    let value=serde_json::to_value(doc).map_err(|_|"纪要含混表达历史核对未完成，已有结果保留。")?;
+    for(path,phrases)in history{
+        let pointer=format!("/{}",path.replace('[',"/").replace(']',"").replace('.',"/"));
+        if let Some(target)=value.pointer(&pointer){
+            let texts=if let Some(text)=target.as_str(){vec![text]}else{["text","owner","due"].into_iter().filter_map(|field|target.get(field).and_then(Value::as_str)).collect()};
+            if phrases.iter().any(|phrase|texts.iter().any(|text|text.contains(phrase))){return Err("纪要修正重新引入了已否决的含混表达，已有结果保留。".into());}
+        }
+    }
+    Ok(())
+}
 fn unverified_claims(doc:&Document,verified:Option<&Document>)->Vec<Value> {
     let previous=verified.map(claims).unwrap_or_default().into_iter().map(|claim|(claim["path"].as_str().unwrap().to_string(),claim)).collect::<HashMap<_,_>>();
     claims(doc).into_iter().filter(|claim|previous.get(claim["path"].as_str().unwrap())!=Some(claim)).collect()
@@ -297,7 +314,8 @@ fn unverified_claims(doc:&Document,verified:Option<&Document>)->Vec<Value> {
 pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
     let source=sentences(units);
     let wire=json!(units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>());
-    let mut current=doc.clone();let mut attempted:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
+    let mut current=doc.clone();let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let recovered_format=AtomicBool::new(false);
+    let mut unclear_history:HashMap<String,Vec<String>>=HashMap::new();
     let mut verified_claims=verified.map(claims).unwrap_or_default().into_iter().map(|c|(c["path"].as_str().unwrap().to_string(),c)).collect::<HashMap<_,_>>();
     for round in 0..=2 {
         let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
@@ -317,16 +335,18 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
         let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|json!({"path":c.path,"status":c.status,"clarity":c.clarity,"unclearText":c.unclear_text,"reason":c.reason,"evidence":c.evidence})).collect::<Vec<_>>();
         if issues.is_empty(){return Ok(current);}
         let allowed=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|c.path.clone()).collect::<HashSet<_>>();
-        // Repeated feedback stops. In the gated coverage candidate, a rewrite
-        // that introduced an unclear ASR term gets one conservative repair;
-        // it cannot receive another paraphrase or reset the two-repair bound.
+        // Repeated feedback stops. Only a changed failure axis in the gated
+        // candidate can use the remaining second repair; the bound never resets.
         let repeated=audit.claim_audit.iter().filter(|c|c.status!="supported").any(|c|{
-            attempted.get(&c.path).is_some_and(|old|!(super::coverage::enabled()&&old!="unclear"&&c.status=="unclear"))
+            attempted.get(&c.path).is_some_and(|old|!(super::coverage::enabled()&&changed_failure_axis(old,&c.status,c.status=="unclear"||c.clarity.as_deref()==Some("unclear"))))
         });
         if round==2||repeated {
             return Err(format!("纪要复审仍有{}处未解决表述，已有结果保留。",issues.len()));
         }
         let unclear=audit.claim_audit.iter().filter(|c|c.status=="unclear"||c.clarity.as_deref()==Some("unclear")).map(|c|c.path.clone()).collect::<HashSet<_>>();
+        if super::coverage::enabled(){for issue in audit.claim_audit.iter().filter(|c|c.clarity.as_deref()==Some("unclear")){
+            if let Some(phrase)=&issue.unclear_text{let terms=unclear_history.entry(issue.path.clone()).or_default();if !terms.contains(phrase){terms.push(phrase.clone());}}
+        }}
         let conservative=if super::coverage::enabled(){audit.claim_audit.iter().filter(|c|c.clarity.as_deref()==Some("unclear")).filter_map(|c|{
             let phrase=c.unclear_text.as_ref()?;
             audited_claims.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str()))?
@@ -335,9 +355,10 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
         let deletion_only=unclear.iter().filter(|path|!conservative.contains_key(*path)).cloned().collect::<HashSet<_>>();
         let repair_contracts=allowed.iter().map(|path|json!({"path":path,"maxCharacters":if path=="purpose"{80}else if path.ends_with(".title"){26}else if path.contains(".points["){90}else if path.contains(".details["){120}else{180},"textOnlyConservative":conservative.contains_key(path)})).collect::<Vec<_>>();
         let stage=if round==0{"source-factual-repair"}else{"source-factual-repair-2"};
-        let raw=super::request(endpoint,model,key,client,REPAIR,json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,"deletionOnlyPaths":deletion_only,"conservativeRewritePaths":conservative,"repairContracts":repair_contracts}),super::coverage::enabled(),start,trace,stage)?;
-        current=apply_changes_with_policy(&raw,&current,&allowed,&unclear,&conservative,units)?;
-        for issue in audit.claim_audit.iter().filter(|c|c.status!="supported"){attempted.insert(issue.path.clone(),issue.status.clone());}
+        let raw=super::request(endpoint,model,key,client,REPAIR,json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,"deletionOnlyPaths":deletion_only,"conservativeRewritePaths":conservative,"knownUnclearPhrases":unclear_history,"repairContracts":repair_contracts}),super::coverage::enabled(),start,trace,stage)?;
+        let next=apply_changes_with_policy(&raw,&current,&allowed,&unclear,&conservative,units)?;
+        preserves_unclear_history(&next,&unclear_history)?;current=next;
+        for issue in audit.claim_audit.iter().filter(|c|c.status!="supported"){attempted.insert(issue.path.clone(),(issue.status.clone(),issue.status=="unclear"||issue.clarity.as_deref()==Some("unclear")));}
     }
     Err("纪要复审未完成，已有结果保留。".into())
 }
@@ -345,6 +366,21 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn automatic_brief_second_repair_requires_a_distinct_failure_axis(){
+        assert!(changed_failure_axis(&("overstated".into(),false),"unclear",true));
+        assert!(changed_failure_axis(&("unclear".into(),true),"overstated",false));
+        assert!(changed_failure_axis(&("overstated".into(),true),"overstated",false));
+        assert!(!changed_failure_axis(&("unclear".into(),true),"unclear",true));
+        assert!(!changed_failure_axis(&("overstated".into(),false),"overstated",false));
+        assert!(!changed_failure_axis(&("unclear".into(),true),"unsupported",false));
+    }
+    #[test]
+    fn automatic_brief_scope_repair_cannot_revive_previously_rejected_unclear_terms(){
+        let mut doc:Document=serde_json::from_value(json!({"purpose":"讨论组织方案","topics":[{"title":"组织协作","points":[{"kind":"recommendation","text":"由产业联盟整合资源，具体机构名称待核对。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap();
+        let history=HashMap::from([("topics[0].points[0]".to_string(),vec!["牵头单位".to_string()])]);
+        assert!(preserves_unclear_history(&doc,&history).is_ok());doc.topics[0].points[0].text="由牵头单位整合资源。".into();assert!(preserves_unclear_history(&doc,&history).is_err());
+    }
     #[test]
     fn automatic_brief_parallel_audit_keeps_parent_job_cancellation(){
         use super::super::super::super::meeting_processing_job as job;
