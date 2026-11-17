@@ -142,6 +142,9 @@ import {
 
 export type CompanionProductSettingsPublic = {
   autoLocalCardTranscription?: boolean;
+  minutesProvider?: 'cloud' | 'local';
+  localMinutesAvailable?: boolean;
+  localMinutesSupported?: boolean;
   defaultMeetingMode: string;
   asrProvider: string;
   localAsrAvailable?: boolean;
@@ -180,6 +183,7 @@ function trashTimeLabel(value: string) {
 
 export type CompanionProductSettingsPatch = {
   autoLocalCardTranscription?: boolean;
+  minutesProvider?: 'cloud' | 'local';
   defaultMeetingMode: string;
   asrProvider: string;
   volcAppKey: string;
@@ -296,6 +300,7 @@ export interface CompanionDashboardProps {
   onExportDiagnostics?: (includeDevice: boolean) => Promise<{path:string;bytes:number;warning?:string|null}|null>;
   onPrepareAudioComponents?: () => Promise<void>;
   onPrepareLocalAsr?: () => Promise<void>;
+  onPrepareLocalMinutes?: () => Promise<void>;
   onCheckService?: (service: 'asr' | 'minutes') => Promise<{ service: 'asr' | 'minutes'; status: string; message: string; elapsedMs: number; checkedAtUnixMs: number }>;
   /** Returns a short-lived, session-bound desktop asset URL. Raw paths are never placed in the browser. */
   onPrepareAudio?: (sessionId: string) => Promise<{ sessionId: string; url: string; sourceIdentity?: string; pauseTimeline?: CompanionPauseTimeline | null; parts?:RecordingPart[]; meetingTracks?: MeetingPlaybackTracks }>;
@@ -379,7 +384,7 @@ function basicMinutesFields(markdown: string, noteContext?: CompanionMinutesNote
   }));
   if (!headings.length) return null;
   const prefix = markdown.slice(offset, headings[0].index);
-  if (!(manual && prefix==='' && headings.some(heading=>heading.key==='Action Items')) && !/^# [^\r\n]+\r?\n\r?\nGenerated: [^\r\n]+\r?\nDuration: [^\r\n]+\r?\nSource: [^\r\n]+\r?\nMinutes engine: (?:rules_l0 \(draft\)|llm_deepseek \(final\))\r?\n\r?\n$/.test(prefix)) return null;
+  if (!(manual && prefix==='' && headings.some(heading=>heading.key==='Action Items')) && !/^# [^\r\n]+\r?\n\r?\nGenerated: [^\r\n]+\r?\nDuration: [^\r\n]+\r?\nSource: [^\r\n]+\r?\nMinutes engine: (?:rules_l0 \(draft\)|(?:llm_deepseek|llm_local_qwen) \(final\))\r?\n\r?\n$/.test(prefix)) return null;
   return headings.map((match, index) => {
     const start = match.contentStart;
     const end = headings[index + 1]?.index ?? markdown.length;
@@ -472,6 +477,7 @@ export function CompanionDashboard({
   onCancelMeetingQuestion,
   onPrepareAudioComponents,
   onPrepareLocalAsr,
+  onPrepareLocalMinutes,
   onCheckService,
   onPrepareAudio,
   onExportAudio, onShareAudio,
@@ -675,6 +681,8 @@ export function CompanionDashboard({
   const [formDeepseekBase, setFormDeepseekBase] = useState('https://api.deepseek.com/v1');
   const [formDeepseekModel, setFormDeepseekModel] = useState('deepseek-v4-flash');
   const [formDeepseekEnabled, setFormDeepseekEnabled] = useState(true);
+  const [formMinutesProvider,setFormMinutesProvider]=useState<'cloud'|'local'>('cloud');
+  const [localMinutesPreparing,setLocalMinutesPreparing]=useState(false);
   const [formBleCompress, setFormBleCompress] = useState(false);
   const [formDefaultMode, setFormDefaultMode] = useState<CompanionV1MeetingMode>('offlineStore');
 
@@ -688,6 +696,7 @@ export function CompanionDashboard({
     setFormDeepseekBase(productSettings.deepseekBaseUrl);
     setFormDeepseekModel(productSettings.deepseekModel);
     setFormDeepseekEnabled(productSettings.deepseekMinutesEnabled);
+    setFormMinutesProvider(productSettings.minutesProvider??'cloud');
     setFormBleCompress(productSettings.bleCompress);
     const mode = productSettings.defaultMeetingMode === 'onlineLive' ? 'onlineLive' : 'offlineStore';
     setFormDefaultMode(mode);
@@ -695,7 +704,7 @@ export function CompanionDashboard({
   }, [productSettings?.asrProvider, productSettings?.autoLocalCardTranscription, productSettings?.volcResourceId,
     productSettings?.openaiAsrEndpoint, productSettings?.openaiAsrModel,
     productSettings?.deepseekBaseUrl, productSettings?.deepseekModel,
-    productSettings?.deepseekMinutesEnabled, productSettings?.bleCompress,
+    productSettings?.deepseekMinutesEnabled, productSettings?.minutesProvider, productSettings?.bleCompress,
     productSettings?.defaultMeetingMode, Boolean(productSettings?.storageSaveBlocked)]);
 
   const [transcriptReviewUnsaved, setTranscriptReviewUnsaved] = useState(false);
@@ -1105,7 +1114,7 @@ export function CompanionDashboard({
   };
   const serviceConfigKey = JSON.stringify([formAsrProvider, formVolcApp, formVolcAccess, formVolcResource,
     formOpenAiEndpoint, formOpenAiKey, formOpenAiModel, formDeepseekKey, formDeepseekBase, formDeepseekModel, formDeepseekEnabled,
-    clearCredentials,
+    clearCredentials,formMinutesProvider,
     productSettings?.volcAppKeySet, productSettings?.volcAccessKeySet, productSettings?.openaiAsrApiKeySet, productSettings?.deepseekApiKeySet]);
   const currentServiceConfig = useRef(serviceConfigKey);
   currentServiceConfig.current = serviceConfigKey;
@@ -1115,6 +1124,7 @@ export function CompanionDashboard({
     || formOpenAiEndpoint !== productSettings.openaiAsrEndpoint || formOpenAiModel !== productSettings.openaiAsrModel
     || formDeepseekBase !== productSettings.deepseekBaseUrl || formDeepseekModel !== productSettings.deepseekModel
     || formDeepseekEnabled !== productSettings.deepseekMinutesEnabled
+    || formMinutesProvider !== (productSettings.minutesProvider??'cloud')
     || formAutoLocalCard !== (productSettings.autoLocalCardTranscription ?? true);
   const checkService = async (service: 'asr' | 'minutes') => {
     if (!onCheckService || controlsBusy || settingsBusy || oobeBlockedByRecording || productSettings?.storageSaveBlocked || serviceConfigDirty || serviceActive.current) return;
@@ -1145,7 +1155,7 @@ export function CompanionDashboard({
       ? [!formVolcResource.trim() ? '火山 Resource ID' : '', clearCredentials.includes('volcAppKey') || !(formVolcApp.trim() || productSettings?.volcAppKeySet) ? '火山 App Key' : '', clearCredentials.includes('volcAccessKey') || !(formVolcAccess.trim() || productSettings?.volcAccessKeySet) ? '火山 Access Key' : '']
       : formAsrProvider === 'local-paraformer' ? [!productSettings?.localAsrAvailable ? '本地转写模型' : '']
       : [!formOpenAiEndpoint.trim() ? '兼容服务 Endpoint' : '', !formOpenAiModel.trim() ? '兼容服务模型' : '', clearCredentials.includes('openaiAsrApiKey') || !(formOpenAiKey.trim() || productSettings?.openaiAsrApiKeySet) ? '兼容服务 Key' : '']),
-    ...(formDeepseekEnabled
+    ...(formMinutesProvider==='local'?[!productSettings?.localMinutesAvailable?'本地纪要模型':'']:formDeepseekEnabled
       ? [!formDeepseekBase.trim() ? 'DeepSeek Base URL' : '', !formDeepseekModel.trim() ? 'DeepSeek 模型' : '', clearCredentials.includes('deepseekApiKey') || !(formDeepseekKey.trim() || productSettings?.deepseekApiKeySet) ? 'DeepSeek Key' : ''] : []),
   ].filter(Boolean);
   const credentialField = (kind: NonNullable<CompanionProductSettingsPatch['clearCredentials']>[number], label: string,
@@ -1359,7 +1369,7 @@ export function CompanionDashboard({
                 transcript={companionReviewedTranscript(selectedSession)} durationMs={selectedSession.durationMs}
                 recordingTitle={meetingTitle(selectedSession)} recordingTime={recordingTimeLabel(selectedSession.startedAt)}
                 compactAllowed={!selectedMinutesStale && !transcriptReviewUnsaved && !minutesProcessing}
-                longEvidenceAllowed={minutesProcessing?.strategy === 'chunkedSourceBacked' && ['llm_deepseek','userEdited'].includes((selectedMinutesVariant ?? legacyMinutes)?.source ?? '')}
+                longEvidenceAllowed={minutesProcessing?.strategy === 'chunkedSourceBacked' && ['llm_deepseek','llm_local_qwen','userEdited'].includes((selectedMinutesVariant ?? legacyMinutes)?.source ?? '')}
                 sourceFallbackLabel={manualMinutes?(selectedSession.meetingNotes?.length?'查看原话与补充':'查看原话'):undefined}
                 savedMarkdown={minutesMarkdown} noteContext={minutesDisplayContext}
                 onToggleAction={onSaveMeeting?(lineIndex,completed)=>void markAction(lineIndex,completed):undefined}
@@ -3327,15 +3337,35 @@ export function CompanionDashboard({
                 {credentialField('openaiAsrApiKey', '兼容服务 Key', formOpenAiKey, setFormOpenAiKey, productSettings?.openaiAsrApiKeySet)}
                 <label className="ct-field"><span>兼容服务模型</span><input value={formOpenAiModel} onChange={(e) => setFormOpenAiModel(e.target.value)} spellCheck={false} /></label>
               </>}
-              <details className="ct-ai-service-fields"><summary>AI文字服务 · {formDeepseekEnabled&&productSettings?.deepseekApiKeySet?'已配置':formDeepseekKey?'待保存':'尚未配置'}</summary>
-                <p className="ct-step-meta">纪要、AI 助手与材料整理共用此服务。密钥由系统凭据管理器保存，服务连接参数集中在这里。</p>
+              {surface==='windows'&&onPrepareLocalMinutes?<>
+                <label className="ct-field"><span>会议纪要整理方式</span>
+                  <select aria-label="会议纪要整理方式" value={formMinutesProvider} onChange={e=>setFormMinutesProvider(e.target.value as 'cloud'|'local')}>
+                    <option value="cloud">云端整理</option>
+                    <option value="local" disabled={!productSettings?.localMinutesSupported}>电脑本地整理{!productSettings?.localMinutesSupported?'（尚未就绪）':''}</option>
+                  </select>
+                  <span className="ct-step-meta">{formMinutesProvider==='local'?'纪要在电脑上生成；AI助手仍使用下方云端服务。':'使用已配置的云端服务生成纪要，可能产生费用。'}</span>
+                </label>
+                {formMinutesProvider==='local'?<div className="ct-field">
+                  <span>{productSettings?.localMinutesAvailable?'本地纪要模型已准备':'需要准备本地纪要模型'}</span>
+                  {!productSettings?.localMinutesAvailable?<button type="button" className="ct-text-button"
+                    disabled={controlsBusy||settingsBusy||oobeBlockedByRecording||productSettings?.storageSaveBlocked||!productSettings?.localMinutesSupported}
+                    onClick={()=>{if(settingsActive.current||!onPrepareLocalMinutes)return;settingsActive.current=true;setSettingsBusy(true);setLocalMinutesPreparing(true);setSettingsMsg(null);
+                      void onPrepareLocalMinutes().then(()=>setSettingsMsg('本地纪要模型已准备。')).catch(err=>setSettingsMsg(operationErrorText(err,'settings')))
+                        .finally(()=>{settingsActive.current=false;setSettingsBusy(false);setLocalMinutesPreparing(false);});}}>
+                    {localMinutesPreparing?'正在准备本地模型…':'准备本地纪要模型'}
+                  </button>:null}
+                  <p className="ct-step-meta">首次准备下载约2.74GB，之后复用同一份模型。会议文字在本机处理，本地整理失败会保留已有内容。<a href="https://huggingface.co/Qwen/Qwen3.5-4B" target="_blank" rel="noreferrer">模型来源与许可</a></p>
+                </div>:null}
+              </>:null}
+              <details className="ct-ai-service-fields"><summary>云端AI服务 · {formDeepseekEnabled&&productSettings?.deepseekApiKeySet?'已配置':formDeepseekKey?'待保存':'尚未配置'}</summary>
+                <p className="ct-step-meta">AI助手、材料整理与云端纪要共用此服务。密钥由系统凭据管理器保存。</p>
                 {credentialField('deepseekApiKey', '服务密钥', formDeepseekKey, value=>{setFormDeepseekKey(value);if(value.trim())setFormDeepseekEnabled(true);}, productSettings?.deepseekApiKeySet)}
                 <label className="ct-field"><span>DeepSeek Base URL</span><input value={formDeepseekBase} onChange={(e) => setFormDeepseekBase(e.target.value)} spellCheck={false} /></label>
                 <label className="ct-field"><span>DeepSeek 模型</span><input value={formDeepseekModel} onChange={(e) => setFormDeepseekModel(e.target.value)} spellCheck={false} /></label>
                 <div className="ct-button-row"><button type="button" className="ct-text-button" onClick={()=>setFormDeepseekEnabled(true)} disabled={controlsBusy||settingsBusy||formDeepseekEnabled}>使用已配置的AI服务</button><button type="button" className="ct-text-button" onClick={()=>setFormDeepseekEnabled(false)} disabled={controlsBusy||settingsBusy||!formDeepseekEnabled}>暂不使用AI服务</button></div>
               </details>
             </div>
-            <p className="ct-step-meta" role="status">{formDeepseekEnabled?(productSettings?.deepseekApiKeySet?'AI文字服务已配置；实际连接状态见下方服务检查。':'保存服务密钥后，可回到会议生成纪要或提问。'):'当前暂不使用AI文字服务；原音、转写和已有材料仍可使用。'}</p>
+            <p className="ct-step-meta" role="status">{formMinutesProvider==='local'?(productSettings?.localMinutesAvailable?'本地纪要模型已准备，可回到会议整理。':'准备本地纪要模型后，可在电脑上整理会议。'):formDeepseekEnabled?(productSettings?.deepseekApiKeySet?'AI文字服务已配置；实际连接状态见下方服务检查。':'保存服务密钥后，可回到会议生成纪要或提问。'):'当前暂不使用云端AI服务；原音、转写和已有材料仍可使用。'}</p>
             <label className="ct-field-check">
               <input type="checkbox" checked={formBleCompress} onChange={(e) => setFormBleCompress(e.target.checked)} />
               旧设备的节省流量模式（可能降低音质）
@@ -3356,6 +3386,7 @@ export function CompanionDashboard({
                   setSettingsBusy(true);
                   void Promise.resolve().then(() => onSaveProductSettings?.({
                     defaultMeetingMode: formDefaultMode,
+                    ...(surface==='windows'?{minutesProvider:formMinutesProvider}:{}),
                     ...(surface==='windows'?{autoLocalCardTranscription:formAutoLocalCard}:{}),
                     asrProvider: formAsrProvider,
                     volcAppKey: clearCredentials.includes('volcAppKey') ? '' : formVolcApp,
@@ -3382,7 +3413,7 @@ export function CompanionDashboard({
                   }).finally(() => { settingsActive.current = false; setSettingsBusy(false); });
                 }}
               >
-                {settingsBusy ? '正在保存…' : '保存设置'}
+                {settingsBusy&&!localMinutesPreparing ? '正在保存…' : '保存设置'}
               </button>
             </div>
             {clearCredentials.length ? <p className="ct-step-warn" role="status">保存后将清空所选密钥，并停止对应服务。保存前可撤销清空；重新填写密钥后可恢复使用。</p>
@@ -3390,10 +3421,10 @@ export function CompanionDashboard({
             {settingsMsg ? <p className="ct-step-meta">{settingsMsg}</p> : null}
             <div className="ct-button-row">
               {(['asr', 'minutes'] as const).map(service => <button key={service} type="button" className="ct-action"
-                disabled={controlsBusy || settingsBusy || serviceBusy !== null || oobeBlockedByRecording || productSettings?.storageSaveBlocked || serviceConfigDirty || !onCheckService || (service === 'minutes' && !formDeepseekEnabled)}
-                onClick={() => void checkService(service)}>{serviceBusy === service ? '正在测试…' : service === 'asr' ? '测试转写服务' : '测试纪要服务'}</button>)}
+                disabled={controlsBusy || settingsBusy || serviceBusy !== null || oobeBlockedByRecording || productSettings?.storageSaveBlocked || serviceConfigDirty || !onCheckService || (service === 'minutes' && formMinutesProvider==='cloud'&&!formDeepseekEnabled)}
+                onClick={() => void checkService(service)}>{serviceBusy === service ? '正在测试…' : service === 'asr' ? '测试转写服务' : formMinutesProvider==='local'?'检查本地纪要':'测试云端纪要'}</button>)}
             </div>
-            <p className="ct-step-meta">本地转写测试只加载本机模型；云端测试会发送一秒静音或固定测试文字，可能计费。测试不读取会议或麦克风，也不能代表识别或纪要准确率。{serviceConfigDirty ? '设置有修改，请先保存再测试。' : ''}</p>
+            <p className="ct-step-meta">本地检查只校验本机组件；云端测试会发送一秒静音或固定测试文字，可能计费。检查不读取会议或麦克风，也不能代表整理准确率。{serviceConfigDirty ? '设置有修改，请先保存再测试。' : ''}</p>
             {(['asr', 'minutes'] as const).map(service => serviceResults[service] ? <p key={service} className="ct-step-meta" role="status">{service === 'asr' ? '转写' : '纪要'}：{serviceResults[service]}</p> : null)}
           </section>
 

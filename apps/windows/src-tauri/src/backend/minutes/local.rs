@@ -1,0 +1,102 @@
+//! Native local minutes: fixed SDK/model, one source-only fact bank then
+//! ID-only organization. No Python, paid fallback, judge rewrite or daemon.
+mod assets;
+mod transport;
+mod probe;
+mod evidence_document;
+mod atomic_document;
+pub(crate) use probe::candidate as verify_candidate;
+use std::{net::TcpListener,sync::{Arc,Mutex},time::Instant};
+use serde_json::{json,Value};
+use crate::companion_v1::{CompanionV1HostSession,CompanionV1MeetingMinutes};
+
+// Enabled only after the frozen implementation passes the actual whole-meeting
+// content and installed-app gates. Diagnostics do not promote their own output.
+pub(crate) const CONTENT_QUALIFIED:bool=false;
+pub(crate) fn assets_present()->bool{assets::present()}
+pub(crate) fn supported()->bool{CONTENT_QUALIFIED&&assets::cpu_supported()}
+pub(crate) fn prepare()->Result<(),String>{assets::prepare()}
+pub(crate) fn check_assets()->Result<(),String>{
+    if !supported(){return Err("本地会议整理尚未准备好。".into());}
+    assets::runtime()?;assets::verified(&assets::model_path()?,assets::MODEL_BYTES,assets::MODEL_SHA)
+}
+
+fn arguments(model:&std::path::Path,port:u16,key:&str,alias:&str)->Result<Vec<String>,String>{
+    let model=model.to_str().ok_or("无法读取本地模型路径。")?;
+    let profile=transport::profile()?;
+    let template=json!({"enable_thinking":profile["enableThinking"]}).to_string();
+    Ok(["-m",model,"--host","127.0.0.1","--port",&port.to_string(),"--api-key",key,"--alias",alias,
+        "-c","16384","-np","1","-ngl","0","-t","4","-tb","4","-b","128","-ub","64",
+        "--fit","off","--load-mode","mmap","--no-repack","--cache-ram","256","-lv","0",
+        "--no-warmup","--no-context-shift","--no-webui","--chat-template-kwargs",&template]
+        .into_iter().map(str::to_owned).collect())
+}
+
+pub(crate) fn generate(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<CompanionV1MeetingMinutes,String>{
+    if !CONTENT_QUALIFIED{return Err("本地会议整理尚未准备好，已有文字和纪要保留。".into());}
+    let(minutes,_)=attempt(session,base);let mut minutes=minutes?;minutes.quality="final".into();Ok(minutes)
+}
+
+pub(crate) fn attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->(Result<CompanionV1MeetingMinutes,String>,Value){
+    recorded_attempt(session,base,new_trace())
+}
+fn new_trace()->transport::Trace{
+    Arc::new(Mutex::new(json!({"provider":"local","model":"Qwen3.5-4B-Q4_K_M","runtimeSha256":assets::SERVER_SHA,
+        "modelSha256":assets::MODEL_SHA,"stage":"preflight","newCloudCalls":0,"trainingUpdates":0,"semanticAccuracyCertificate":false,"contentQualified":false})))
+}
+fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,trace:transport::Trace)->(Result<CompanionV1MeetingMinutes,String>,Value){
+    let start=Instant::now();
+    let mut release_confirmed=false;
+    let outcome=(||{
+        if !session.meeting_notes.is_empty(){return Err("当前本地整理不能合并补充说明，已有内容保留。".into());}
+        if !assets::cpu_supported(){return Err("这台电脑暂不支持当前本地纪要引擎，可选择云端整理。".into());}
+        let input=atomic_document::fact_input(&session.transcript_text)?;let prompt=atomic_document::fact_prompt();let schema=atomic_document::fact_schema(&session.transcript_text);
+        let _lease=assets::compute_lease()?;
+        let model=assets::model_path()?;assets::verified(&model,assets::MODEL_BYTES,assets::MODEL_SHA)?;
+        let runtime=assets::runtime()?;
+        let socket=TcpListener::bind(("127.0.0.1",0)).map_err(|_|"无法创建本地纪要连接。")?;
+        let port=socket.local_addr().map_err(|_|"无法创建本地纪要连接。")?.port();drop(socket);
+        let key=uuid::Uuid::new_v4().simple().to_string();let alias=format!("companion-local-{}",uuid::Uuid::new_v4().simple());
+        let args=arguments(&model,port,&key,&alias)?;let program=runtime.to_str().ok_or("本地纪要引擎路径无效。")?;
+        if let Ok(mut trace)=trace.lock(){trace["stage"]=json!("loading-engine");}
+        let cancellation=super::super::meeting_processing_job::current();
+        let parsed=super::super::external_command::with_local_service(program,&args,cancellation.as_ref().map(|c|c.flag()),|stop|{
+            let raw=transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace)?;
+            record_call(&trace,"atomic-source-facts");
+            let bank=atomic_document::parse_bank(&raw,&session.transcript_text)?;
+            if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}
+            let layout=transport::generate(port,&key,&alias,atomic_document::layout_prompt(),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace)?;
+            record_call(&trace,"id-only-organization");
+            atomic_document::assemble(&layout,&bank,session,base)
+        })?;
+        release_confirmed=true;
+        if let Ok(mut trace)=trace.lock(){trace["documentReceipt"]=parsed.receipt;trace["stage"]=json!("candidate-parsed");}
+        Ok(parsed.minutes)
+    })();
+    let mut receipt=trace.lock().map(|t|t.clone()).unwrap_or_else(|_|json!({"traceUnavailable":true}));
+    receipt["seconds"]=json!(start.elapsed().as_secs_f64());receipt["error"]=json!(outcome.as_ref().err());
+    receipt["serviceReleaseConfirmed"]=json!(release_confirmed);
+    receipt["ownedJobKillOnCloseEnabled"]=json!(true);
+    (outcome,receipt)
+}
+
+fn record_call(trace:&transport::Trace,stage:&str){
+    if let Ok(mut trace)=trace.lock(){
+        let mut call=json!({"stage":stage});
+        for key in ["request","inputTokens","output","reasoningCharacters","usage","finishReason","generationSeconds"]{call[key]=trace[key].clone();}
+        if !trace["calls"].is_array(){trace["calls"]=json!([]);}
+        trace["calls"].as_array_mut().unwrap().push(call);
+    }
+}
+
+#[cfg(test)]
+mod tests{
+    use super::*;
+    #[test]
+    fn local_minutes_arguments_keep_the_proven_cpu_memory_profile_and_loopback(){
+        let args=arguments(std::path::Path::new("C:/fixture/model.gguf"),12345,"test-key","test-model").unwrap();
+        assert!(args.windows(2).any(|p|p==["--load-mode","mmap"]));assert!(args.contains(&"--no-repack".into()));
+        assert!(args.windows(2).any(|p|p==["-ngl","0"]));assert!(args.windows(2).any(|p|p==["--host","127.0.0.1"]));
+        assert!(args.windows(2).any(|p|p==["--cache-ram","256"]));
+    }
+}

@@ -57,7 +57,8 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
   const asrConfigured = settings?.asrProvider === 'local-paraformer' ? Boolean(settings.localAsrAvailable) : settings?.asrProvider === 'volcengine'
     ? Boolean(settings.volcAppKeySet && settings.volcAccessKeySet && settings.volcResourceId.trim())
     : Boolean(settings?.openaiAsrApiKeySet && settings.openaiAsrEndpoint.trim() && settings.openaiAsrModel.trim());
-  const minutesConfigured = Boolean(settings?.deepseekMinutesEnabled && settings.deepseekApiKeySet
+  const localMinutes=settings?.minutesProvider==='local';
+  const minutesConfigured = localMinutes?Boolean(settings?.localMinutesSupported&&settings?.localMinutesAvailable):Boolean(settings?.deepseekMinutesEnabled && settings.deepseekApiKeySet
     && settings.deepseekBaseUrl.trim() && settings.deepseekModel.trim());
   const blocked = busy || recording;
   const connection=deviceConnectionStatus(snapshot,busyAction);
@@ -117,7 +118,8 @@ export function CompanionRecordingReadiness({ snapshot, settings, recording, bus
             : asrConfigured ? settings?.asrProvider === 'local-paraformer' ? '本地转写模型已准备，实际识别效果以使用结果为准。' : '转写配置已保存；是否可调用仍以实际服务结果为准。'
               : '转写配置尚不完整，需要时再到服务设置补齐。'}</dd></div>
           <div><dt>智能纪要</dt><dd>{!settings ? '服务设置尚未读取。' : settings.storageSaveBlocked ? '服务设置暂不可用。'
-            : minutesConfigured ? '纪要配置已保存；是否可调用仍以实际服务结果为准。'
+            : minutesConfigured ? localMinutes?'本地纪要模型已准备。':'纪要配置已保存；是否可调用仍以实际服务结果为准。'
+              : localMinutes?'本地纪要尚未准备；仍可查看文字或手写清单。'
               : settings.deepseekMinutesEnabled ? '纪要配置尚不完整；仍可查看文字或手写清单。'
                 : '智能纪要未启用；仍可查看文字或手写清单。'}</dd></div>
         </dl>

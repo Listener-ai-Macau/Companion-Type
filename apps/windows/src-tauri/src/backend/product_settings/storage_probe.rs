@@ -242,7 +242,7 @@ fn clear_checks(output: &Path, vault: &ProbeVault) -> Result<Vec<&'static str>, 
     let names = ["COMPANION_TYPE_PRODUCT_SETTINGS_PATH", "COMPANION_TYPE_ASR_PROVIDER", "COMPANION_TYPE_ASR_API_KEY",
         "OPENAI_API_KEY", "COMPANION_TYPE_VOLC_APP_KEY", "COMPANION_TYPE_VOLC_ACCESS_KEY", "COMPANION_TYPE_VOLC_RESOURCE_ID",
         "COMPANION_TYPE_ASR_ENDPOINT", "COMPANION_TYPE_ASR_MODEL", "DEEPSEEK_API_KEY", "DEEPSEEK_BASE_URL", "DEEPSEEK_MODEL",
-        "COMPANION_TYPE_DEEPSEEK_MINUTES_ENABLED", "COMPANION_TYPE_BLE_COMPRESS", "COMPANION_TYPE_DEFAULT_MEETING_MODE"];
+        "COMPANION_TYPE_DEEPSEEK_MINUTES_ENABLED", "COMPANION_TYPE_BLE_COMPRESS", "COMPANION_TYPE_DEFAULT_MEETING_MODE", "COMPANION_TYPE_MINUTES_PROVIDER"];
     struct Environment(Vec<(&'static str, Option<std::ffi::OsString>)>);
     impl Drop for Environment { fn drop(&mut self) { for (key, value) in &self.0 {
         match value { Some(value) => std::env::set_var(key, value), None => std::env::remove_var(key) }

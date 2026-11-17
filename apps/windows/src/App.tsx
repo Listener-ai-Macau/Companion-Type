@@ -42,6 +42,7 @@ import {
   previewCompanionDiagnostics,
   prepareCompanionAudioComponents,
   prepareCompanionLocalAsr,
+  prepareCompanionLocalMinutes,
   checkCompanionService,
   prepareCompanionAudio,
   saveCompanionMeetingEdit,
@@ -360,6 +361,7 @@ export function App() {
       onPreviewDiagnostics={isTauriRuntime() ? () => exclusive('refresh',previewCompanionDiagnostics) : undefined}
       onPrepareAudioComponents={isTauriRuntime() ? () => exclusive('refresh', prepareCompanionAudioComponents) : undefined}
       onPrepareLocalAsr={isTauriRuntime() ? () => exclusive('refresh', async () => { await prepareCompanionLocalAsr(); setProductSettings(await getProductSettings()); }) : undefined}
+      onPrepareLocalMinutes={isTauriRuntime()?()=>exclusive('refresh',async()=>{await prepareCompanionLocalMinutes();setProductSettings(await getProductSettings());}):undefined}
       onCheckService={isTauriRuntime() ? (service) => exclusive('refresh', () => checkCompanionService(service)) : undefined}
       onCancelImportAudio={isTauriRuntime() ? cancelCompanionAudioImport : undefined}
       onImportAudio={isTauriRuntime() ? async () => { const epoch=snapshotEpoch.current; const next=await importCompanionAudio(); if(next) { if(!operationActive.current && snapshotEpoch.current===epoch) { snapshotEpoch.current+=1; setSnapshot(next); } else void cachedReader.current?.request(); } return next; } : undefined}

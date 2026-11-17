@@ -15,6 +15,7 @@ struct Job { session: String, id: String, kind: Kind, cancelled: AtomicBool }
 pub(crate) struct Cancellation(Arc<Job>);
 impl Cancellation {
     pub(crate) fn requested(&self) -> bool { self.0.cancelled.load(Ordering::Acquire) }
+    pub(crate) fn flag(&self) -> &AtomicBool { &self.0.cancelled }
 }
 static ACTIVE: LazyLock<Mutex<Option<Weak<Job>>>> = LazyLock::new(|| Mutex::new(None));
 thread_local! { static CURRENT: RefCell<Option<Arc<Job>>> = const { RefCell::new(None) }; }

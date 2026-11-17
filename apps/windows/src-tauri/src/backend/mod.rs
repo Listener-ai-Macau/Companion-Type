@@ -157,6 +157,14 @@ pub mod recording_ring;
 pub(crate) mod transcription;
 pub(crate) mod meeting_processing_job;
 pub(crate) use transcription::prepare_local_asr;
+pub(crate) fn prepare_local_minutes()->Result<(),String>{
+    #[cfg(windows)] {minutes::local::prepare()}
+    #[cfg(not(windows))] {Err("此平台暂不支持本地纪要。".into())}
+}
+pub(crate) fn verify_local_minutes_candidate(input:&std::path::Path,output:&std::path::Path)->Result<serde_json::Value,String>{
+    #[cfg(windows)] {minutes::local::verify_candidate(input,output)}
+    #[cfg(not(windows))] {let _=(input,output);Err("此平台不支持此本地纪要验证。".into())}
+}
 #[cfg(test)]
 mod meeting_processing_tests;
 pub(crate) mod pet_chat;
@@ -418,6 +426,17 @@ where F: FnMut(&CompanionV1HostSession) -> crate::companion_v1::CompanionV1Meeti
         let previous = if mode == "onlineLive" { session.minutes_by_mode.online_live.clone() }
             else { session.minutes_by_mode.offline_store.clone() }
             .or_else(|| (mode == session.meeting_mode).then(|| session.minutes.as_ref().map(|m| minutes_variant(m, 0))).flatten());
+        if generated.llm_note.is_some(){
+            if let Some(mut retained)=previous.as_ref().filter(|p|!p.markdown.trim().is_empty()).cloned(){
+                // A failed new attempt is not a replacement or a saved version.
+                // Keep the active readable product/export and retry only this
+                // mode; the session's recovery state stores the actual error.
+                retained.status="retryPending".into();
+                if mode=="onlineLive"{session.minutes_by_mode.online_live=Some(retained);}
+                else{session.minutes_by_mode.offline_store=Some(retained);}
+                continue;
+            }
+        }
         if let Some(previous) = previous {
             if !previous.markdown.trim().is_empty() && previous.markdown != variant.markdown {
                 session.minutes_by_mode.history.push(crate::companion_v1::CompanionV1MinutesHistory {
@@ -6514,10 +6533,13 @@ mod tests {
         });
         let saved = serde_json::to_vec(&session).unwrap();
         let reopened: CompanionV1HostSession = serde_json::from_slice(&saved).unwrap();
-        assert_eq!(reopened.minutes_by_mode.history.len(), 2);
+        assert_eq!(reopened.minutes_by_mode.history.len(), 1);
         assert_eq!(reopened.minutes_by_mode.history[0].variant.markdown, "用户修改过的纪要和待办");
-        assert_eq!(reopened.minutes_by_mode.history[1].variant.markdown, "第一次重新整理");
-        assert_eq!(reopened.minutes_by_mode.offline_store.unwrap().markdown, "服务失败时的草稿");
+        assert_eq!(reopened.minutes.as_ref().unwrap().markdown,"第一次重新整理");
+        assert_eq!(reopened.export_markdown,"第一次重新整理");
+        let retained=reopened.minutes_by_mode.offline_store.unwrap();
+        assert_eq!(retained.markdown,"第一次重新整理");
+        assert_eq!(retained.status,"retryPending");
     }
 
     #[test]

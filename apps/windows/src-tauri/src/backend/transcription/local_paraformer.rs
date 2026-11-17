@@ -43,6 +43,10 @@ const ASSETS: [(&str, &str); 5] = [
 ];
 static PREPARING: Mutex<()> = Mutex::new(());
 
+pub(super) fn fetch_pinned_asset(client:&reqwest::blocking::Client,url:&str,size:u64,hash:&str,partial:&Path)->Result<(),String>{
+    model_download::fetch(client,url,size,hash,partial)
+}
+
 fn root() -> Result<PathBuf, String> {
     if let Some(path) = std::env::var_os("COMPANION_TYPE_LOCAL_ASR_DIR") {
         return Ok(path.into());

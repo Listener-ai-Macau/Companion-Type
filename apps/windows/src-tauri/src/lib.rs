@@ -58,6 +58,12 @@ pub fn run() {
                   Other command-line operations require an explicit supported command.");
         process::exit(0);
     }
+    if args.iter().any(|arg|arg=="--local-minutes-candidate"){
+        if args.len()!=4||args[1]!="--local-minutes-candidate"{eprintln!("local_minutes_candidate_error=需要指定原文配置和新输出目录。");exit_after_device_cleanup(1);}
+        let result=backend::verify_local_minutes_candidate(Path::new(&args[2]),Path::new(&args[3]));
+        match &result{Ok(report)=>println!("local_minutes_candidate_json={report}"),Err(error)=>eprintln!("local_minutes_candidate_error={error}")}
+        exit_after_device_cleanup(if result.is_ok(){0}else{1});
+    }
     if args.iter().any(|arg|arg=="--recording-sync-status") {
         if args.len()!=2 {eprintln!("recording_sync_status_error=此只读入口不能与其它操作组合。");exit_after_device_cleanup(1);}
         match backend::recording_sync::status() {
@@ -392,6 +398,7 @@ pub fn run() {
             commands::preview_companion_diagnostics,
             commands::prepare_companion_audio_components,
             commands::prepare_companion_local_asr,
+            commands::prepare_companion_local_minutes,
             commands::get_companion_backend_capabilities,
             commands::get_companion_ble_bridge_status,
             commands::get_companion_board_online_live_status,

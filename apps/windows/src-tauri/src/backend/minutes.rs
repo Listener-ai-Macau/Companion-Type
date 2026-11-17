@@ -12,6 +12,10 @@ mod context_plan;
 mod question_sources;
 mod template;
 mod short_evidence;
+mod canonical_brief;
+mod automatic_brief;
+#[cfg(windows)]
+pub(crate) mod local;
 
 use crate::companion_v1::{
     CompanionV1ActionItem, CompanionV1HostSession, CompanionV1MeetingMinutes,
@@ -88,8 +92,20 @@ impl CompanionMinutesManager {
             l0.action_items.clear();
             l0.markdown = render_minutes_markdown(session,&l0);
         }
+        let selected=match super::product_settings::configured_minutes_provider(){
+            Ok(value)=>value,Err(reason)=>{l0.llm_note=Some(reason);return l0;},
+        };
+        if selected==Some(super::product_settings::MinutesProvider::Local){
+            #[cfg(windows)]
+            let result=if template.is_some_and(|t|t.id!="meeting"){
+                Err("当前本地整理支持会议纪要，请切换整理模板后重试；已有内容保留。".into())
+            }else{local::generate(session,&l0)};
+            #[cfg(not(windows))]
+            let result:Result<CompanionV1MeetingMinutes,String>=Err("此平台尚未支持本地会议整理，已有内容保留。".into());
+            return match result{Ok(minutes)=>minutes,Err(reason)=>{l0.llm_note=Some(reason);l0}};
+        }
         // 1. Explicit external command override (advanced users / CI scripts).
-        if let Some(result) = (template.is_none() && session.meeting_notes.is_empty()).then(||external_minutes_command(session, &l0)).flatten() {
+        if let Some(result) = (selected.is_none() && template.is_none() && session.meeting_notes.is_empty()).then(||external_minutes_command(session, &l0)).flatten() {
             return finalize_minutes(result, l0, session);
         }
         // 2. Native DeepSeek when an API key is configured (default product
@@ -102,6 +118,9 @@ impl CompanionMinutesManager {
                 },
                 Err(reason)=>{l0.llm_note=Some(reason);l0},
             };
+        }
+        if selected==Some(super::product_settings::MinutesProvider::Cloud){
+            l0.llm_note=Some("云端会议整理尚未配置或已关闭，已有文字保留。".into());
         }
         // A rule extract is not an AI-generated template result.
         if template.is_some() {l0.llm_note=Some("使用整理模板需要先配置并启用 AI 纪要服务；原文和已有结果保留。".into());}
@@ -1350,11 +1369,11 @@ fn split_args(value: &str) -> Vec<String> {
 }
 
 #[cfg(test)]
-mod tests {
+pub(crate) mod tests {
     use super::*;
     use crate::companion_v1::CompanionV1SessionRetention;
 
-    fn session_with_text(text: &str) -> CompanionV1HostSession {
+    pub(crate) fn session_with_text(text: &str) -> CompanionV1HostSession {
         CompanionV1HostSession { document_context: Default::default(), meeting_tracks: None, device_recording_end_reason: None, processing_policy: Default::default(), recorder_control: None, recorder_control_uncertain: false, device_recording_key: None,
             transcript_review: None,
             bookmark_revision: 0, bookmarks: vec![], organization: Default::default(), device_bookmark_imports: vec![],

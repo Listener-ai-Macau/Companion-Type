@@ -52,8 +52,8 @@ export function libraryPreview(session:CompanionV1HostSession,rawQuery:string):P
   if(!query){
     const saved=session.minutesByMode?.[session.meetingMode]??session.minutes;
     if(saved?.quality==='final'&&(!('status'in saved)||saved.status==='minutesReady')&&saved.processing?.complete!==false
-      &&['llm_deepseek','userEdited'].includes(String(saved.source))&&!/```|~~~/.test(saved.markdown)){
-      const section=/^## 会议概览\r?\n([\s\S]*?)(?=^##? |^> 长会议已|$(?![\s\S]))/m.exec(saved.markdown);
+      &&['llm_deepseek','llm_local_qwen','userEdited'].includes(String(saved.source))&&!/```|~~~/.test(saved.markdown)){
+      const section=/^## (?:会议概览|会议主线)\r?\n([\s\S]*?)(?=^##? |^> 长会议已|$(?![\s\S]))/m.exec(saved.markdown);
       const point=section?.[1].split(/\r?\n/).find(line=>/^[-*] \S/.test(line));
       if(point)return {text:excerpt(point.replace(/^[-*] /,'')),label:'纪要',target:'result'};
     }

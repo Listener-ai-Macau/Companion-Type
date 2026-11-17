@@ -31,6 +31,11 @@ pub(crate) fn check_local_asr() -> Result<(),String> {
     #[cfg(not(windows))] { Err("此平台暂不支持本地转写。".into()) }
 }
 
+#[cfg(windows)]
+pub(super) fn fetch_pinned_model_asset(client:&reqwest::blocking::Client,url:&str,size:u64,hash:&str,partial:&Path)->Result<(),String>{
+    local_paraformer::fetch_pinned_asset(client,url,size,hash,partial)
+}
+
 use super::diarization::{self, EmbeddingSegment};
 use super::volcengine::{Utterance, VolcengineCredentials, VolcengineSaucAsr};
 use crate::companion_v1::CompanionV1UtteranceSegment;
