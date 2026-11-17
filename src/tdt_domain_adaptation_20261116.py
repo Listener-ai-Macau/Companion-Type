@@ -29,7 +29,7 @@ from english_transducer_worker_20261116 import make_empty
 from tdt_selected_loss_20261116 import gpu_loss_contract,blocked_joint_loss
 from tdt_adaptation_checkpoint_20261116 import CheckpointStore,frozen_digest,digest_tensors
 from tdt_adaptation_contract_20261117 import valid_resume_position,checkpoint_identity,require_final_checkpoint
-from model_thermal_guard_20261117 import ThermalGuard,inspect_thermal_policy
+from model_thermal_guard_20261117 import ThermalGuard,inspect_thermal_policy,CpuThermalLimit
 
 now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
 
@@ -76,7 +76,9 @@ def main():
         require(datetime.now().astimezone()<datetime.fromisoformat(P['stopAt']),'Original overnight cutoff')
         require(not pressure.low() and available_ram()>=P['minimumAvailableBytes'],'Original system RAM protection')
         require(not(run/'stop.request').exists(),'Owned stop requested; no automatic restart')
-        state['cpuThermalObservation']=thermal.check()
+        try:state['cpuThermalObservation']=thermal.check()
+        except CpuThermalLimit as error:
+            state['cpuThermalObservation']=error.observation;raise
     def train_rows():
         require(sha(plan['trainingManifest'])==plan['trainingManifestSha256'],'Training manifest changed')
         rows=[json.loads(s) for s in Path(plan['trainingManifest']).read_text(encoding='utf-8').splitlines() if s]

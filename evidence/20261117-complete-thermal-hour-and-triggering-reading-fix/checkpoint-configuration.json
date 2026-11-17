@@ -1,0 +1,80 @@
+{
+  "revision": 60,
+  "evidenceDirectory": "evidence/20261117-complete-thermal-hour-and-triggering-reading-fix",
+  "sources": [
+    "src/model_thermal_guard_20261117.py",
+    "src/tdt_domain_adaptation_20261116.py",
+    "src/run_owned_tdt_adaptation_20261117.py",
+    "src/silero_presence_worker_20261117.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r2\\protocol.json",
+      "name": "prepared-r2/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r2\\scoring-control.json",
+      "name": "prepared-r2/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r2\\intake.json",
+      "name": "prepared-r2/intake.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r2\\validation-audio-only.json",
+      "name": "prepared-r2/validation-audio-only.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\trigger-temperature-proof-r1\\result.json",
+      "name": "trigger-temperature-proof/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\completed.json",
+      "name": "completed-laptop-monitor/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\analysis.json",
+      "name": "completed-laptop-monitor/analysis.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\laptop-temperature-hour.png",
+      "name": "completed-laptop-monitor/laptop-temperature-hour.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\render-import-failure.json",
+      "name": "completed-laptop-monitor/render-import-failure.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\render-source-before-thread-limit.py",
+      "name": "completed-laptop-monitor/render-source-before-thread-limit.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_tdt_adaptation_20261117.py",
+      "name": "local-tools/prepare_tdt_adaptation_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_triggering_temperature_20261117.py",
+      "name": "local-tools/verify_triggering_temperature_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\render_laptop_thermal_result_20261117.py",
+      "name": "local-tools/render_laptop_thermal_result_20261117.py"
+    }
+  ],
+  "commitMessage": "Finish laptop temperature observation and retain actual triggering readings",
+  "claims": {
+    "state": "ONE_HOUR_THERMAL_COMPLETE_NEURAL_WORK_STOPPED_RECIPE_STILL_UNEXECUTED",
+    "newNeuralCallsByThisFix": 0,
+    "priorStoppedVadWindows": 58330,
+    "parameterUpdates": 0,
+    "newGpuCalls": 0,
+    "monitorTerminal": true,
+    "temperatureThresholdsChanged": false,
+    "neuralTaskRetried": false,
+    "overheatRestartCauseProven": false,
+    "actualEnglishAdaptationTrained": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

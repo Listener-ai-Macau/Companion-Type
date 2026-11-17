@@ -1,0 +1,44 @@
+{
+  "state": "PASS_TEMPERATURE_LIMIT_EXCEPTION_CARRIES_TRIGGERING_READING",
+  "at": "2026-11-17T09:25:31.457572+08:00",
+  "cases": [
+    {
+      "starting": false,
+      "triggeringValue": 95,
+      "error": "CPU temperature reached task stop threshold95C"
+    },
+    {
+      "starting": false,
+      "triggeringValue": 95.5,
+      "error": "CPU temperature reached task stop threshold95C"
+    },
+    {
+      "starting": true,
+      "triggeringValue": 85.01,
+      "error": "CPU temperature above task startup threshold85C"
+    }
+  ],
+  "sourceSha256": "08bbcffcb0a018982bc2d6b4804deb306dc427c2be033525faf7417eff18561d",
+  "originalFailedVadStateModified": false,
+  "taskThresholdsChanged": false,
+  "hardwareTemperatureChanged": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "torchImported": false,
+  "limits": {
+    "pid": 16308,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 134217728,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 14213120,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

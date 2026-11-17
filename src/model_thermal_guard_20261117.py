@@ -10,6 +10,10 @@ import psutil
 from meeting_acoustic_contract_20261116 import read,require,sha
 from durable_model_state_20261117 import read_snapshot
 
+class CpuThermalLimit(RuntimeError):
+    def __init__(self,message,observation):
+        super().__init__(message);self.observation=observation
+
 def inspect_thermal_policy(policy):
     require(policy['sensorIdentifier']=='/amdcpu/0/temperature/2','Use the identified laptop CPU sensor')
     require(policy['maximumStartCelsius']==85 and policy['stopCelsius']==95,
@@ -29,11 +33,13 @@ def evaluate_temperature(snapshot,policy,*,now=None,starting=False):
     value=values[0]['Celsius']
     require(type(value) in (int,float) and math.isfinite(value) and 0<value<130,
         'Invalid identified CPU temperature')
-    require(value<policy['stopCelsius'],'CPU temperature reached task stop threshold95C')
-    if starting:require(value<=policy['maximumStartCelsius'],'CPU temperature above task startup threshold85C')
-    return {'sampleAt':latest['At'],'celsius':value,'sampleAgeSeconds':age,
+    observed={'sampleAt':latest['At'],'celsius':value,'sampleAgeSeconds':age,
         'sensorIdentifier':values[0]['Identifier'],'taskStartThresholdCelsius':85,'taskStopThresholdCelsius':95,
         'hardwareOverheatCauseProven':False,'physicalMainboardTemperatureMeasured':False}
+    if value>=policy['stopCelsius']:raise CpuThermalLimit('CPU temperature reached task stop threshold95C',observed)
+    if starting and value>policy['maximumStartCelsius']:
+        raise CpuThermalLimit('CPU temperature above task startup threshold85C',observed)
+    return observed
 
 class ThermalGuard:
     def __init__(self,policy):

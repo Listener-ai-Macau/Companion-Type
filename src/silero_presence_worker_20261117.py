@@ -8,7 +8,7 @@ from moss_windows_resource_limits_20261104 import WorkerLimits,SystemRamPressure
 from meeting_acoustic_worker_20261116 import available_ram,exclusive_run
 from companion_local_pcm_session_20261114 import exclusive_file
 from durable_model_state_20261117 import atomic_json
-from model_thermal_guard_20261117 import ThermalGuard
+from model_thermal_guard_20261117 import ThermalGuard,CpuThermalLimit
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--protocol',type=Path,required=True)
@@ -31,7 +31,9 @@ def main():
         require(datetime.now().astimezone()<datetime.fromisoformat(P['stopAt']),'CPU detector cutoff')
         require(not(run/'stop.request').exists(),'Owned detector stop requested')
         require(not pressure.low() and available_ram()>=P['minimumAvailableBytes'],'Original RAM protection')
-        state['cpuTemperature']=thermal.check()
+        try:state['cpuTemperature']=thermal.check()
+        except CpuThermalLimit as error:
+            state['cpuTemperature']=error.observation;raise
     try:
         with exclusive_run(run),exclusive_file(Path(P['neuralLock'])):
             save();began=time.monotonic()

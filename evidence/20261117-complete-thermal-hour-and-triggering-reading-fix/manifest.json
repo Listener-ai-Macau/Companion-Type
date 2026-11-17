@@ -1,0 +1,114 @@
+{
+  "at": "2026-11-17T09:34:17.064501+08:00",
+  "parent": "5302e95594b488ef35a25f974f84333ce889de60",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r2\\protocol.json",
+      "file": "prepared-r2/protocol.json",
+      "bytes": 15160,
+      "sha256": "465661ca60539d0087b09d850f8be4f28bbaa53e581c60cb39cd885c8d3e8f44"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r2\\scoring-control.json",
+      "file": "prepared-r2/scoring-control.json",
+      "bytes": 4444,
+      "sha256": "7e37f1c1ab5acc9b68e48c24ed28a2d2efb0d775879be3516dc3a97aaee212ab"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r2\\intake.json",
+      "file": "prepared-r2/intake.json",
+      "bytes": 1765,
+      "sha256": "5bbd74705ec3085aed2be7b0ab7b1635b6d40329132b701c34db92e4c77ceb1d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r2\\validation-audio-only.json",
+      "file": "prepared-r2/validation-audio-only.json",
+      "bytes": 3281,
+      "sha256": "0a5cad62790ae6fd5a558a2b239e5380d9121450b1564a5908be7a28062400c9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\trigger-temperature-proof-r1\\result.json",
+      "file": "trigger-temperature-proof/result.json",
+      "bytes": 1336,
+      "sha256": "e0d48788cd1c231752871f3b60baaf7dcfdf3ebbef945210e1dae62d09d222e7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\completed.json",
+      "file": "completed-laptop-monitor/completed.json",
+      "bytes": 985,
+      "sha256": "9df53165723017729cdbded59656026612be092e982cf7b48d30a7ddbb821341"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\analysis.json",
+      "file": "completed-laptop-monitor/analysis.json",
+      "bytes": 2134,
+      "sha256": "bcea3e2e71044d238a228e8092142953cc46e0f9ad38e3a4f5bc3574c8689cfa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\laptop-temperature-hour.png",
+      "file": "completed-laptop-monitor/laptop-temperature-hour.png",
+      "bytes": 247690,
+      "sha256": "e15965238c71ec90935d453fecbf93edb0725a7dde5ae6ce96667c8680987a4a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\render-import-failure.json",
+      "file": "completed-laptop-monitor/render-import-failure.json",
+      "bytes": 126,
+      "sha256": "1c4010b4debb2f41ad54431da9571cc8a32a9ddaf30bea2f3c5c855fecf9e814"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\render-source-before-thread-limit.py",
+      "file": "completed-laptop-monitor/render-source-before-thread-limit.py",
+      "bytes": 4574,
+      "sha256": "011c6f3df2082abb45494abf3a41b09bbb5653f30470ff39d8218b92a2d0a6a7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_tdt_adaptation_20261117.py",
+      "file": "local-tools/prepare_tdt_adaptation_20261117.py",
+      "bytes": 7792,
+      "sha256": "358e021f35111ba0cafe7051bb74dfe87cb91badcd194daf47a99ffb7014c3a3"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_triggering_temperature_20261117.py",
+      "file": "local-tools/verify_triggering_temperature_20261117.py",
+      "bytes": 2383,
+      "sha256": "ae981f303f7e0600908530a7bcc57cbfb45cc0721edf3ceb1d007fd43e7485c6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\render_laptop_thermal_result_20261117.py",
+      "file": "local-tools/render_laptop_thermal_result_20261117.py",
+      "bytes": 4658,
+      "sha256": "61f8b2dfd67f8295faa09942e2035f340a392688d356d94d756861c34f1af796"
+    },
+    {
+      "source": "work\\checkpoint_thermal_finish_r60.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 4247,
+      "sha256": "c0c3aef0b8620fad56c960c81d301b356b05ffedd175b5db1e74ffa37bdd8c1b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/model_thermal_guard_20261117.py": "08bbcffcb0a018982bc2d6b4804deb306dc427c2be033525faf7417eff18561d",
+    "src/tdt_domain_adaptation_20261116.py": "cb7eee82c16e8eba005d8ca48d95df08608799a6c6a29c2fee5a2d076122d746",
+    "src/run_owned_tdt_adaptation_20261117.py": "3c416c6f43ebfb159af8f6e98d479164249136585d2e99a0301eacbec7e9e8f6",
+    "src/silero_presence_worker_20261117.py": "1eb03bf3c454a97c3f3f661001990d0c1db874975e73e633e68a895e5ae19318"
+  },
+  "state": "ONE_HOUR_THERMAL_COMPLETE_NEURAL_WORK_STOPPED_RECIPE_STILL_UNEXECUTED",
+  "newNeuralCallsByThisFix": 0,
+  "priorStoppedVadWindows": 58330,
+  "parameterUpdates": 0,
+  "newGpuCalls": 0,
+  "monitorTerminal": true,
+  "temperatureThresholdsChanged": false,
+  "neuralTaskRetried": false,
+  "overheatRestartCauseProven": false,
+  "actualEnglishAdaptationTrained": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

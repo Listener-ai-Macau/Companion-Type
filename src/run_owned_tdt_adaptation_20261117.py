@@ -33,7 +33,7 @@ def main():
     owner=run/('supervisor-'+a.phase);owner.mkdir(exist_ok=False)
     command=[P['runtime']['python'],str(a.worker.resolve()),'--protocol',str(a.protocol.resolve()),
         '--phase',a.phase,'--run',str(run)]
-    last=None;selection=None;reason=None;read_error=None
+    last=None;selection=None;reason=None;read_error=None;thermal_stop=None
     with (owner/'stdout.log').open('w',encoding='utf-8') as log:
         proc=subprocess.Popen(command,stdout=log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW)
         owned=psutil.Process(proc.pid);created=owned.create_time();began=time.monotonic()
@@ -54,7 +54,8 @@ def main():
             elif time.monotonic()-began>180:reason='No valid startup state within180s'
             if datetime.now().astimezone()>=datetime.fromisoformat(P['stopAt']):reason='Frozen execution cutoff'
             try:thermal.check()
-            except (OSError,KeyError,RuntimeError,ValueError) as error:reason='Owned thermal guard: '+repr(error)
+            except (OSError,KeyError,RuntimeError,ValueError) as error:
+                reason='Owned thermal guard: '+repr(error);thermal_stop=getattr(error,'observation',None)
             if reason:
                 require(abs(owned.create_time()-created)<.01 and owned.cmdline()==command,'Owned PID identity changed')
                 for child in reversed(owned.children(recursive=True)):
@@ -76,6 +77,7 @@ def main():
     result={'state':'OWNED_TDT_PHASE_COMPLETE' if complete else 'OWNED_TDT_PHASE_FAILED_NO_RETRY',
         'at':datetime.now().astimezone().isoformat(),'exitCode':code,'watchdogReason':reason,
         'pid':proc.pid,'createdAt':created,'phase':a.phase,'stateSelection':selection,'stateReadError':read_error,
+        'triggeringCpuTemperature':thermal_stop,
         **observed_updates(last),'countsAreLastPersistedObservationNotUnloggedCrashInstant':True,
         'limits':limits.query(),'cannotGuaranteeGpuDriverRecovery':True,'noAutomaticRetry':True}
     atomic_json(owner/'completed.json',result);print(json.dumps(result));sys.exit(0 if complete else 1)
