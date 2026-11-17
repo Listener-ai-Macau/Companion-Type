@@ -66,6 +66,16 @@ fn emphasize_source_scope(claims:&mut[Value],source:&[Sentence]) {
 fn decode(raw:&str,expected:&[Value],source:&[Sentence])->Result<Audit,String> {
     decode_contract(raw,expected,source,super::coverage::enabled())
 }
+pub(super) fn canonical_sentence_reference(id:&str,known:&HashSet<&str>)->Option<String>{
+    if known.contains(id){return Some(id.into());}
+    // Provider output sometimes drops padding from a generated e0004 label.
+    // Resolve only that representation to an actually supplied sentence; never
+    // invent a source, choose a nearby ID, or interpret a positional reference.
+    let digits=id.strip_prefix('e')?;
+    if digits.is_empty()||digits.len()>=4||!digits.bytes().all(|c|c.is_ascii_digit()){return None;}
+    let number=digits.parse::<u16>().ok()?;let canonical=format!("e{number:04}");
+    known.contains(canonical.as_str()).then_some(canonical)
+}
 fn decode_contract(raw:&str,expected:&[Value],source:&[Sentence],require_clarity:bool)->Result<Audit,String> {
     let mut audit:Audit=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|"纪要内容审核没有返回完整结果，已有结果保留。".to_string())?;
     // Some providers echo the requested JSON format descriptor. It has no
@@ -77,6 +87,7 @@ fn decode_contract(raw:&str,expected:&[Value],source:&[Sentence],require_clarity
     let mut seen=HashSet::new();let mut issues=0;
     for claim in &mut audit.claim_audit {
         let Some(original)=paths.get(claim.path.as_str())else{return Err("纪要审核引用了不存在的陈述，已有结果保留。".into());};
+        if require_clarity{for id in &mut claim.evidence{if let Some(canonical)=canonical_sentence_reference(id,&evidence){*id=canonical;}}}
         if !seen.insert(&claim.path)||claim.reason.trim().is_empty()||claim.reason.chars().count()>300
             ||!matches!(claim.status.as_str(),"supported"|"overstated"|"unsupported"|"unclear")
             ||claim.evidence.len()>8||claim.evidence.iter().collect::<HashSet<_>>().len()!=claim.evidence.len()
@@ -451,6 +462,15 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn automatic_brief_evidence_padding_aliases_resolve_only_real_unique_ids(){
+        let source=vec![Sentence{id:"e0001".into(),source:"u000".into(),text:"预算未审批。".into()}];let expected=vec![json!({"path":"purpose","text":"预算未审批"})];
+        let good=json!({"claimAudit":[{"path":"purpose","status":"supported","clarity":"clear","unclearText":null,"reason":"原话说明预算未审批","evidence":["e1"]}]});
+        assert_eq!(decode_contract(&good.to_string(),&expected,&source,true).unwrap().claim_audit[0].evidence,vec!["e0001"]);
+        assert!(decode_contract(&good.to_string(),&expected,&source,false).is_err());
+        for id in ["e99","u1","e01x","e00001"]{let mut bad=good.clone();bad["claimAudit"][0]["evidence"]=json!([id]);assert!(decode_contract(&bad.to_string(),&expected,&source,true).is_err());}
+        let mut duplicate=good;duplicate["claimAudit"][0]["evidence"]=json!(["e1","e0001"]);assert!(decode_contract(&duplicate.to_string(),&expected,&source,true).is_err());
+    }
     #[test]
     fn automatic_brief_length_recovery_preserves_valid_patches_and_metadata(){
         let raw=json!({"changes":[{"path":"topics[0].points[0]","text":"长".repeat(91),"kind":"opinion"},{"path":"actionItems[0]","text":"保留条件后提交报告。","owner":"王梅","due":"周五"}]}).to_string();

@@ -57,6 +57,7 @@ pub(super) struct Omissions(Vec<Question>);
 fn decode_omissions(raw:&str,source:&[Value])->Result<Omissions,String>{
     let data:OmissionAudit=parse(raw)?;if data.omissions.len()>4{return Err(fail());}
     let known=source.iter().map(|s|(s["id"].as_str().unwrap(),s)).collect::<HashMap<_,_>>();let mut out=Vec::new();
+    let supplied=known.keys().copied().collect::<HashSet<_>>();
     for item in data.omissions{
         // This question is internal audit data, never the rendered minutes.
         // Keep the writer's 50-character target, but tolerate bounded wording
@@ -65,6 +66,7 @@ fn decode_omissions(raw:&str,source:&[Value])->Result<Omissions,String>{
             ||!super::line(&item.difference,100)||item.evidence.is_empty()||item.evidence.len()>8{return Err(fail());}
         let mut evidence=Vec::new();
         for id in item.evidence{
+            let id=super::factual_audit::canonical_sentence_reference(&id,&supplied).ok_or_else(fail)?;
             let s=known.get(id.as_str()).ok_or_else(fail)?;let quote=s["text"].as_str().ok_or_else(fail)?;if quote.trim().is_empty(){return Err(fail());}
             let exact=Evidence{source:s["source"].as_str().unwrap().into(),quote:quote.into()};if !evidence.contains(&exact){evidence.push(exact);}
         }
@@ -91,8 +93,9 @@ fn grounded_evidence(ids:Vec<String>,all:&[Value],allowed:&HashSet<&str>)->Resul
     // form one span without dropping any roles, branches or conditions.
     if ids.is_empty()||ids.len()>32{return Err(fail());}
     let known=all.iter().enumerate().filter(|(_,s)|allowed.contains(s["source"].as_str().unwrap())).map(|(i,s)|(s["id"].as_str().unwrap(),(i,s))).collect::<HashMap<_,_>>();
+    let supplied=known.keys().copied().collect::<HashSet<_>>();
     let mut selected=Vec::new();
-    for id in ids{let &(i,s)=known.get(id.as_str()).ok_or_else(fail)?;if s["text"].as_str().is_none_or(|text|text.trim().is_empty()){return Err(fail());}if !selected.iter().any(|(old,_)|*old==i){selected.push((i,s));}}
+    for id in ids{let id=super::factual_audit::canonical_sentence_reference(&id,&supplied).ok_or_else(fail)?;let &(i,s)=known.get(id.as_str()).ok_or_else(fail)?;if s["text"].as_str().is_none_or(|text|text.trim().is_empty()){return Err(fail());}if !selected.iter().any(|(old,_)|*old==i){selected.push((i,s));}}
     selected.sort_by_key(|(i,_)|*i);let mut out:Vec<Evidence>=Vec::new();let mut previous=None;
     for(i,s)in selected{
         let source=s["source"].as_str().unwrap();let quote=s["text"].as_str().unwrap();
