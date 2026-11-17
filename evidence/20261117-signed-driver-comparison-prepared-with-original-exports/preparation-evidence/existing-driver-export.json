@@ -1,0 +1,1320 @@
+{
+  "exports": [
+    {
+      "publishedInf": "oem0.inf",
+      "exitCode": 0,
+      "files": [
+        {
+          "file": "u0202082.cat",
+          "bytes": 3577121,
+          "sha256": "f3077cf13dde0673d39d03f56a99af583ba18cccdc617fcc2e042121bd4f737c"
+        },
+        {
+          "file": "u0202082.inf",
+          "bytes": 1080364,
+          "sha256": "25f6724f57ba8cc9cf9c54ee6e6ef0daf257f38ed0303b3f7227a40e69e9f6a1"
+        },
+        {
+          "file": "B026218/amdadlx32.dll",
+          "bytes": 4801040,
+          "sha256": "8d864a6b802f5d2b0cf83d7ff8f0752e6865023ef79176d70086358b209f9274"
+        },
+        {
+          "file": "B026218/amdadlx64.dll",
+          "bytes": 5224976,
+          "sha256": "ee66701829a7ece251c2f184114d0c1ec6f0a7afc58e78bc5a2b1e0d7544707c"
+        },
+        {
+          "file": "B026218/AMDADLXServ.exe",
+          "bytes": 438288,
+          "sha256": "2ef9faf8162370b175d673b3b59449f5ebfde832c5d937c85a8cd89855b89983"
+        },
+        {
+          "file": "B026218/AMDADLXServPS.dll",
+          "bytes": 236560,
+          "sha256": "7671b64a461ae01fb7a210527ea5115e93fbebc5209b1007457890007cf97b11"
+        },
+        {
+          "file": "B026218/AMDADLXServPS32.dll",
+          "bytes": 120336,
+          "sha256": "3e68bcf749042c8f1bf9e45f0e707011e6cd2b786b511a8f524135b819eec7fa"
+        },
+        {
+          "file": "B026218/AMDav1Enc32.dll",
+          "bytes": 2285584,
+          "sha256": "c1e23158b36d31f2ec28b3e2d743efe8dd9fba1f3db7008b181edc1391c32790"
+        },
+        {
+          "file": "B026218/AMDav1Enc64.dll",
+          "bytes": 2370576,
+          "sha256": "a5b29d920acd0c835ffeb4e5da166a98af1c475a368c87133fd8f55de0d0cfb1"
+        },
+        {
+          "file": "B026218/amdave32.dll",
+          "bytes": 146832,
+          "sha256": "45bb6f1bdc26d71f4ae2e17786f995d5664d4fd6388f373e98d25241e04ac6d3"
+        },
+        {
+          "file": "B026218/amdave64.dll",
+          "bytes": 167160,
+          "sha256": "408e88d9cf8e208023f0336170b72c31f5f0ba46caecf053bf37b8be61b2c2bf"
+        },
+        {
+          "file": "B026218/amdcc.dll",
+          "bytes": 4449824,
+          "sha256": "d9f38f90354c01d80f82a2e55dab33e7a11eacc2fde3dea082da85fbd81f8ad6"
+        },
+        {
+          "file": "B026218/amdefctb.dat",
+          "bytes": 515238,
+          "sha256": "bdb7d795e7bc809b2d752c8d71320d0a50321fae9491eeddf6720cd98fed5b5a"
+        },
+        {
+          "file": "B026218/amdenc32.dll",
+          "bytes": 1255440,
+          "sha256": "24080ecee6dfc0d50fffec8ac1c254f16da26ac0125f6abe9afe2a8efaf0da40"
+        },
+        {
+          "file": "B026218/amdenc64.dll",
+          "bytes": 1424432,
+          "sha256": "83af94d26a98a6390706a883fd97cb2ccda5880a696ba1cbb6e26e91ac1fbbd4"
+        },
+        {
+          "file": "B026218/amdept.dat",
+          "bytes": 42028,
+          "sha256": "886694ca1ddd0bdfcfd6d2a6ec8e0c77b9db29c41222204ef54531e7085fdc80"
+        },
+        {
+          "file": "B026218/amdgcf.dat",
+          "bytes": 681,
+          "sha256": "6552b360432ee95b3c85add28cb2551bbfb2497c6569d13378f750ef06527724"
+        },
+        {
+          "file": "B026218/amdgfxinfo32.dll",
+          "bytes": 457232,
+          "sha256": "ebd621df229bf3027f57ea6238f46db1d81299d9376b0ac0cd321f1dbc88b750"
+        },
+        {
+          "file": "B026218/amdgfxinfo64.dll",
+          "bytes": 597520,
+          "sha256": "fe1da2b824e72fd5fdadb8cf13cf0bc311725ec48c9059696804c9dce4ec9aba"
+        },
+        {
+          "file": "B026218/AMDh264Enc32.dll",
+          "bytes": 2289184,
+          "sha256": "0768c319ecc8277217b848603609f94077373c32a2e7b3da5c66fe30f6bcbcbc"
+        },
+        {
+          "file": "B026218/AMDh264Enc64.dll",
+          "bytes": 2365888,
+          "sha256": "820b4e215a23852f6a238f5bca0be02dbd742465f7f7af7d6fa7222719dcdccb"
+        },
+        {
+          "file": "B026218/AMDh265Enc32.dll",
+          "bytes": 2271488,
+          "sha256": "63e51f7ed0acca7c60e082f87bbdccb6db3c5968b2c48b89b03a6df91fb7f7e5"
+        },
+        {
+          "file": "B026218/AMDh265Enc64.dll",
+          "bytes": 2352288,
+          "sha256": "9cd46ad813961283dfa200367495510490ab5be1329bd52e33dde3ee94773fd5"
+        },
+        {
+          "file": "B026218/amdhdl32.dll",
+          "bytes": 125472,
+          "sha256": "c04eff095353e621ae5b8a5b68225ea127905176a299775f7f94e48a96795707"
+        },
+        {
+          "file": "B026218/amdhdl64.dll",
+          "bytes": 146392,
+          "sha256": "42343671f82e58c982a56307764fb8d7f5504f385127b86f5f3172ca7ed1eabb"
+        },
+        {
+          "file": "B026218/amdicdxx.dat",
+          "bytes": 1716978,
+          "sha256": "5da952c500304745cfe5b63e005bdb9233381bd24451358eac953a7b7cbdca12"
+        },
+        {
+          "file": "B026218/amdihk32.dll",
+          "bytes": 216592,
+          "sha256": "3af15897702812e85837ed919c75ccdb584c77780afadb997f81433aca39fa58"
+        },
+        {
+          "file": "B026218/amdihk64.dll",
+          "bytes": 269232,
+          "sha256": "1a81c78c78f5a333f48c7ed234dbbfa6f06273ba6059e769be7aa261c3dd5ae9"
+        },
+        {
+          "file": "B026218/AMDInstallManager.msi",
+          "bytes": 66519040,
+          "sha256": "0bc42a0b88841e9e629832437dd0ade61c26802b85b9102fcae5970ce9f2b4e6"
+        },
+        {
+          "file": "B026218/AMDKernelEvents.mc",
+          "bytes": 21730,
+          "sha256": "d93eadceaa84af4265b61dfd6a37f3da5294433f5b418f17bd6c136cd5abe841"
+        },
+        {
+          "file": "B026218/amdkmdag.sys",
+          "bytes": 84134928,
+          "sha256": "3253532b1d397a18e221e6ab0ce7113724c4a45de7797c7112e06a0d5f0ad10f"
+        },
+        {
+          "file": "B026218/amdlvr32.dll",
+          "bytes": 998416,
+          "sha256": "b8515f9d95af6552d551799f235d9dbdf6c02158bd4d15ae3641586022295562"
+        },
+        {
+          "file": "B026218/amdlvr64.dll",
+          "bytes": 1184784,
+          "sha256": "763b6fcf7c8cfe757382bbcf3233848e3df5bb7b995229690f19bac8335940f1"
+        },
+        {
+          "file": "B026218/amdmiracast.dll",
+          "bytes": 180248,
+          "sha256": "192cc0aa1b58259e64b850d14973d10d9e007bfa7b9e483118dd8195daa85ed6"
+        },
+        {
+          "file": "B026218/amdmmpal32.dll",
+          "bytes": 2100752,
+          "sha256": "114ab9e235b7a7cd6de0d6b71366c4ec4f3086ded4eae0555a4697364d8d9bae"
+        },
+        {
+          "file": "B026218/amdmmpal64.dll",
+          "bytes": 2379792,
+          "sha256": "700ca316e7dfef08ea8611817d8833e2729eab342d9eb6e6917fc4d0d2771cd8"
+        },
+        {
+          "file": "B026218/amdpcom32.dll",
+          "bytes": 132864,
+          "sha256": "2471ed035dcf0c663ea6fa201ee850317c4876611cd852382c070770cbcbaf7a"
+        },
+        {
+          "file": "B026218/amdpcom64.dll",
+          "bytes": 156848,
+          "sha256": "2db5de8250e35d118ea69c275a8af5216a52e931855a7f8c6a38a7a57fe3a845"
+        },
+        {
+          "file": "B026218/amdsacli32.dll",
+          "bytes": 552976,
+          "sha256": "ff245e3771490aa4b09df7ec1393c421476331d0327cc732635a70c565690cb4"
+        },
+        {
+          "file": "B026218/amdsacli64.dll",
+          "bytes": 620520,
+          "sha256": "767073335ccc2b284a055a523250aaf415b979e36c6b491c8fb73291ce470cf7"
+        },
+        {
+          "file": "B026218/amdsasrv64.dll",
+          "bytes": 1334288,
+          "sha256": "96243fb5cf96b5f05627cb2080e193ba20043a9763d17d27c8635192b2d32251"
+        },
+        {
+          "file": "B026218/amduve32.dll",
+          "bytes": 170880,
+          "sha256": "d164b26b160536280f753b9a3cac75236f857f9d05b7f64497148e06d84cb6df"
+        },
+        {
+          "file": "B026218/amduve64.dll",
+          "bytes": 199480,
+          "sha256": "6ca9a34923e39c78cd4a96a1e1ba0a668cdaee78b8f01b9592f3aa7e51987153"
+        },
+        {
+          "file": "B026218/amdxc32.dll",
+          "bytes": 69712024,
+          "sha256": "1d63a11d6b5e9b0370531fab41c041e9edd0b0807e0216fa5f6a42e61565aea4"
+        },
+        {
+          "file": "B026218/amdxc64.dll",
+          "bytes": 78202176,
+          "sha256": "cc32ab53e1abe5f6a48e41a02eeb7e349fbdf63caf97c9b7826442375e423d55"
+        },
+        {
+          "file": "B026218/amdxc64.so",
+          "bytes": 122155464,
+          "sha256": "f2392dc968b7c33f65004d1f16f86269bab50dc3cc469c362d4aee4cde4b4f1b"
+        },
+        {
+          "file": "B026218/amdxcffx64.dll",
+          "bytes": 66830768,
+          "sha256": "96ff9dc2984ffe832de1599b374d554eb86122436a808ef0020e615ebc1ebba9"
+        },
+        {
+          "file": "B026218/amdxcstub32.dll",
+          "bytes": 121824,
+          "sha256": "fa67940ecfb022e813c7792a553c67d0995357e95fcabb49166267a4c28d126a"
+        },
+        {
+          "file": "B026218/amdxcstub64.dll",
+          "bytes": 141640,
+          "sha256": "fc1d0a699c3d85feb31afbde89fb5ddf3136b318ff303b5d9c92b9fb015bd9a2"
+        },
+        {
+          "file": "B026218/amdxn32.dll",
+          "bytes": 34454544,
+          "sha256": "830f102c9e31b0a919f527f39a612a516a47f3a893bb472adff55efb2c37ca56"
+        },
+        {
+          "file": "B026218/amdxn64.dll",
+          "bytes": 40476688,
+          "sha256": "803032c5b8cdf2e2786335a7e967d4339f41ad088dd97c0701d40a009090a2a4"
+        },
+        {
+          "file": "B026218/amdxx32.dll",
+          "bytes": 41892600,
+          "sha256": "e03717a312061d5a8bf305194f8f10996fe39f6f272de20d3955642191e46330"
+        },
+        {
+          "file": "B026218/amdxx64.dll",
+          "bytes": 47384568,
+          "sha256": "bfe54098d1af6c842fe232227c3b723f21a72ea10564d3f8d5c1608e04463bf9"
+        },
+        {
+          "file": "B026218/amd_fidelityfx_dx12.dll",
+          "bytes": 6667280,
+          "sha256": "ddc77e882287022862d5e30954d3eb82948a86f48cef5c0940694d44aaf83d40"
+        },
+        {
+          "file": "B026218/amd_opencl32.dll",
+          "bytes": 214032,
+          "sha256": "f642721a786ff6654885fdb526fad483c23c6b1f60e490b7baa2a21157dbf501"
+        },
+        {
+          "file": "B026218/amd_opencl64.dll",
+          "bytes": 244752,
+          "sha256": "ba0ae4616a3af6ffbb1d2c5772e2c755761211ad1704243cbe305c36f3ec6ba3"
+        },
+        {
+          "file": "B026218/amf-mft-mjpeg-decoder32.dll",
+          "bytes": 1402048,
+          "sha256": "8ff62c92a611e3bf34a2ccab6435d8428e33a4bed3bcd3145623af34db0556b1"
+        },
+        {
+          "file": "B026218/amf-mft-mjpeg-decoder64.dll",
+          "bytes": 1724592,
+          "sha256": "ad9092525459de3a0513e3b1bee034a78ca199d0dac2f3e75d6babd858f49782"
+        },
+        {
+          "file": "B026218/amf-pa-ml32.dll",
+          "bytes": 344592,
+          "sha256": "ad71d6e7d5190381cb63cc120878e10c9248a0977f9188cb038fad08af91b0fb"
+        },
+        {
+          "file": "B026218/amf-pa-ml64.dll",
+          "bytes": 377872,
+          "sha256": "991b65be6e2534a53ab7fecc5ff2b26212f96998bf259382b175198e2b51ce40"
+        },
+        {
+          "file": "B026218/amfrt32.dll",
+          "bytes": 129552,
+          "sha256": "c47359f26127ef4685ce57665eadac163a391a4302bf21eb339d5e442dc70dda"
+        },
+        {
+          "file": "B026218/amfrt64.dll",
+          "bytes": 160784,
+          "sha256": "f9145439bff783253200e123d1313e3d1a01769f4bc4e378fd0464c18af36f90"
+        },
+        {
+          "file": "B026218/amfrtdrv32.dll",
+          "bytes": 19405328,
+          "sha256": "5dea8df02f886c0cff65e6a284cd502868be35fe6f4ed884dab06d6f75e7f03c"
+        },
+        {
+          "file": "B026218/amfrtdrv64.dll",
+          "bytes": 20524048,
+          "sha256": "eb93663a6d5e3d607c2f172a1740befe11cc633447f20fc957671ee7393f697c"
+        },
+        {
+          "file": "B026218/atiadlxx.dll",
+          "bytes": 2508304,
+          "sha256": "4de435d474c2ce775829725ffb8b5b37076132544aaffd1ac9f3b1f98359dde1"
+        },
+        {
+          "file": "B026218/atiadlxy.dll",
+          "bytes": 2062352,
+          "sha256": "0b942586fa777a80f4018378ad7d1fc3989765863f36c88855c7d7e69b351b09"
+        },
+        {
+          "file": "B026218/atiapfxx.blb",
+          "bytes": 552992,
+          "sha256": "c7868479dacee9a26cd7ba86510cff483e0f80a771efa2ff7f5c93ccbea30628"
+        },
+        {
+          "file": "B026218/atidemgy.dll",
+          "bytes": 473616,
+          "sha256": "a0db728cb6f78e8c6cd0870255fad9672d3ae409b57184813ac2aeef95dfa482"
+        },
+        {
+          "file": "B026218/atidx9loader32.dll",
+          "bytes": 119824,
+          "sha256": "661b98a4c6442899400afb0a4b708e74ab6b5e180185f91ede097c3c58211cf6"
+        },
+        {
+          "file": "B026218/atidx9loader64.dll",
+          "bytes": 138768,
+          "sha256": "d9aa3e4ef1143f91695649a459c0f909d9a83a3c634a306085dc624795fabb66"
+        },
+        {
+          "file": "B026218/atidxxstub32.dll",
+          "bytes": 106176,
+          "sha256": "32e982c75b574a1e0f6f5a3f734eec8a17eac6d47528dad0be340baba6875291"
+        },
+        {
+          "file": "B026218/atidxxstub64.dll",
+          "bytes": 128408,
+          "sha256": "b6fa2bb2809af09904694c350741f099abad502e6789438c18ee6c92f24951da"
+        },
+        {
+          "file": "B026218/atieah32.exe",
+          "bytes": 429584,
+          "sha256": "0527188a8c21282c4ccb46cfe532e11a4c9735f049c96df69b2651b6ea46b6e3"
+        },
+        {
+          "file": "B026218/atieah64.exe",
+          "bytes": 565256,
+          "sha256": "a07a7a1946b8d2b2c96d9245417be948c8046f958a6f035573c42d8aae9d2995"
+        },
+        {
+          "file": "B026218/atieclxx.exe",
+          "bytes": 1067536,
+          "sha256": "2e6fecc22676c92af0352d8c39733d8c4f6d70dc0207458a79c4b44e2f984608"
+        },
+        {
+          "file": "B026218/atiesrxx.exe",
+          "bytes": 682512,
+          "sha256": "e5e4bece501e02560bc6869dabf3ab671c4a8c1fdf6584ea2992d74a83eb4b9c"
+        },
+        {
+          "file": "B026218/atig6pxx.dll",
+          "bytes": 187920,
+          "sha256": "d3f03bc3d69eb075954feec3f216318b8dd5bd4e37cef18fd4b4c2a7ed29fd7b"
+        },
+        {
+          "file": "B026218/atiglpxx.dll",
+          "bytes": 160784,
+          "sha256": "6a0ed0924814fe22d274e9616a333a75caa00943356eb0234ce16e41423a331a"
+        },
+        {
+          "file": "B026218/atiicdxx.dat",
+          "bytes": 737410,
+          "sha256": "da435045306db0c8c0ca29a6ca2121534c1cad7ea916be500cd72fe672a1d95f"
+        },
+        {
+          "file": "B026218/atimpc32.dll",
+          "bytes": 132864,
+          "sha256": "af470696d75977646960cef5341bda56ba4b6023a2b609d7c787da3b67e73fba"
+        },
+        {
+          "file": "B026218/atimpc64.dll",
+          "bytes": 156848,
+          "sha256": "ebd609e0bd7f762602c5421ec6a4fcbe92d989ea0a63bdd31fc8d2d295880eee"
+        },
+        {
+          "file": "B026218/atimuixx.dll",
+          "bytes": 200720,
+          "sha256": "c8d5409ba47fdea70a20c629f2ee3ca3605171da78e302bd03a993f2e8848d64"
+        },
+        {
+          "file": "B026218/atisamu32.dll",
+          "bytes": 152080,
+          "sha256": "3539625d5a7c9b45af41f372b61cfcdedb59c17d1da20531caf407705427f3cb"
+        },
+        {
+          "file": "B026218/atisamu64.dll",
+          "bytes": 187920,
+          "sha256": "650ff1c8d9836056b1561b00a58372e1af091d1717261131e42ebfc2a7bd68ab"
+        },
+        {
+          "file": "B026218/ativvaxy_cik.dat",
+          "bytes": 234676,
+          "sha256": "4e5986c9a62243d556523d6e3e72cb414eb275a104853b2436fa20e0d55994bd"
+        },
+        {
+          "file": "B026218/ativvaxy_cik_nd.dat",
+          "bytes": 234416,
+          "sha256": "15b132c7947b2fd93dadc9e48278332d455a03957e7e948938f6eb7bc54f572d"
+        },
+        {
+          "file": "B026218/ativvaxy_cz_nd.dat",
+          "bytes": 272928,
+          "sha256": "d043e8fe127bf5e25c43cdf945834f3d37261ab47c65d05605a09e83d5c89fc4"
+        },
+        {
+          "file": "B026218/ativvaxy_el_nd.dat",
+          "bytes": 376224,
+          "sha256": "cd11d2abc62d90bddd580ceec25bafc20962fb381923ade87e74cd9e66873d0c"
+        },
+        {
+          "file": "B026218/ativvaxy_FJ.dat",
+          "bytes": 268244,
+          "sha256": "5d29280832a9af0fe48de5ee0c177b2de885b8fb9431fd53d8bb5348c26fcb7b"
+        },
+        {
+          "file": "B026218/ativvaxy_FJ_nd.dat",
+          "bytes": 267984,
+          "sha256": "94744405991474810f96b7401e1a13062bb6b2d217f87d161cc285fd53d94496"
+        },
+        {
+          "file": "B026218/ativvaxy_gl_nd.dat",
+          "bytes": 381984,
+          "sha256": "c91bdbe922e1404120d4217664ead5f038b2e3a620d7a2d7fae2dd7ecda86990"
+        },
+        {
+          "file": "B026218/ativvaxy_nv.dat",
+          "bytes": 404288,
+          "sha256": "b12ad7392bfa0439fa1759403f29022740f2aa8de67bfa2d4285c05aa994aa8c"
+        },
+        {
+          "file": "B026218/ativvaxy_rv.dat",
+          "bytes": 366304,
+          "sha256": "2cf886fe3a8530d09eab3d535feb62cbd795e33b84e00f22b26905446816c9b1"
+        },
+        {
+          "file": "B026218/ativvaxy_stn_nd.dat",
+          "bytes": 278432,
+          "sha256": "8c09dd21260d7ffc959220d59379ca2a4f17559fe94d92b63cbf9e8a639d0a4c"
+        },
+        {
+          "file": "B026218/ativvaxy_vcn3.dat",
+          "bytes": 579856,
+          "sha256": "a507dba341207cf7c444006a846efd69ac6e34945ca925257b693b71ee4e5c47"
+        },
+        {
+          "file": "B026218/ativvaxy_vcn3_1.dat",
+          "bytes": 572112,
+          "sha256": "643c2a57629ec80f68aae64763947913ec4b57afbf12854869e0efb2088e36f1"
+        },
+        {
+          "file": "B026218/ativvaxy_vcn4.dat",
+          "bytes": 395408,
+          "sha256": "0b7abe3d6ec2f60699564e354e825a8b3be1533c83b27d0e8d0b3132b1bfdf79"
+        },
+        {
+          "file": "B026218/ativvaxy_vcn4_0_a.dat",
+          "bytes": 395408,
+          "sha256": "0c9982277801271e2cf1a3f09940dc252ece5c12ebbb5ddd8d17933ffdaa058c"
+        },
+        {
+          "file": "B026218/ativvaxy_vcn4_0_a_1.dat",
+          "bytes": 395408,
+          "sha256": "1170239117c7312659a8757ea8a51a7162011eec85879f7c5180cdbd230017e7"
+        },
+        {
+          "file": "B026218/ativvaxy_vcn5.dat",
+          "bytes": 437776,
+          "sha256": "e6572b372db1aeaaa09d39cdabe4fbe690cdeebf8cccb052a4a0fc2d12e47b49"
+        },
+        {
+          "file": "B026218/ativvaxy_vcn5_3.dat",
+          "bytes": 439888,
+          "sha256": "c7a7c540d5a362a6ae3cd58c80346ba22d66b8332622dea8a4f02c48ae785d52"
+        },
+        {
+          "file": "B026218/ativvaxy_vg.dat",
+          "bytes": 572112,
+          "sha256": "d3107ee99f32408d0e5017a7b4597dc15305d0ccde816fc9349902352acbc7be"
+        },
+        {
+          "file": "B026218/ativvaxy_vg20.dat",
+          "bytes": 379200,
+          "sha256": "b06a2f8e6110ef13b13d36c293fa7a793d1aa736cdd4258a89e45a25d111971a"
+        },
+        {
+          "file": "B026218/ativvaxy_vg20_nd.dat",
+          "bytes": 384800,
+          "sha256": "b86d15bce79a5cbd31b384cb86d56573bb1a0e002797e1487fb539323bdf6529"
+        },
+        {
+          "file": "B026218/ativvaxy_vi.dat",
+          "bytes": 325188,
+          "sha256": "870622dcf18e92654e070d01666022d12938e24e537a15cb076e62d5bc335f96"
+        },
+        {
+          "file": "B026218/ativvaxy_vi_nd.dat",
+          "bytes": 324928,
+          "sha256": "fb927acc1c213597b63735bc776abf08354884daa2e11a5c19d9ec5ba9423c53"
+        },
+        {
+          "file": "B026218/ativvsva.dat",
+          "bytes": 157144,
+          "sha256": "e698410e1b8e5b2875aa8b4d01fe6e4f0bf354f40d92925c4e3503d7fd1ec208"
+        },
+        {
+          "file": "B026218/ativvsvl.dat",
+          "bytes": 204952,
+          "sha256": "f35a4644d926183d38815207e338e7919cbdd2b1bdb8164074e47b74ea1cf150"
+        },
+        {
+          "file": "B026218/detoured32.dll",
+          "bytes": 14208,
+          "sha256": "ccbe6fea8bad9be1cbd55a8fb0aed38ad8d72fdc805857593e41a04d1c93334b"
+        },
+        {
+          "file": "B026218/detoured64.dll",
+          "bytes": 14208,
+          "sha256": "9c96374ef97599f80aaa01d78d6900078b43ed08ba0a39b9f416ec0c27de6e91"
+        },
+        {
+          "file": "B026218/EEURestart.exe",
+          "bytes": 531984,
+          "sha256": "e89281a6cef8f594bb5140dcca27cea4745a8697b681df877e535d789a28237d"
+        },
+        {
+          "file": "B026218/featuresync.dll",
+          "bytes": 1138192,
+          "sha256": "32889d3f587b4992498c70a23e5dc0a6fb90fd87eba8af488a6ca72dd412f1a0"
+        },
+        {
+          "file": "B026218/GameManager32.dll",
+          "bytes": 488976,
+          "sha256": "8e4c7565450a4207542788c29c87abad57214dc45e7fbd51b68d1c21ea7ec43f"
+        },
+        {
+          "file": "B026218/GameManager64.dll",
+          "bytes": 641040,
+          "sha256": "bcb9a240505ce58c183e12c62e62c58d797299aa29dc478085eb06d380a45629"
+        },
+        {
+          "file": "B026218/H9_EASU_sx1_10_sy1_10.bin",
+          "bytes": 373296,
+          "sha256": "8696b1c3952a7ba6fa58497b4c5a38b3bb2ee7c53369aef3d580bd86fd623f23"
+        },
+        {
+          "file": "B026218/H9_EASU_sx1_20_sy1_20.bin",
+          "bytes": 373296,
+          "sha256": "c1e25b983f0ed64621d448263b5a6b1638d97f3cfc9c21c736ca301f6bafbd49"
+        },
+        {
+          "file": "B026218/H9_EASU_sx1_30_sy1_30.bin",
+          "bytes": 373296,
+          "sha256": "174f422d1888b0f12ce16f509cf31cf751c557624eb4a2e45c2e99ea00f0ff82"
+        },
+        {
+          "file": "B026218/H9_EASU_sx1_40_sy1_40.bin",
+          "bytes": 373296,
+          "sha256": "65d3532608fd7ef591f5748927318aa291f8a16d9addfedf617bc2ff8fbbe082"
+        },
+        {
+          "file": "B026218/H9_EASU_sx1_50_sy1_50.bin",
+          "bytes": 373296,
+          "sha256": "3e6ddc01fd90203b4e5770126727c9b9626f44a6b0b5bc5f35f7497066aab629"
+        },
+        {
+          "file": "B026218/H9_EASU_sx1_60_sy1_60.bin",
+          "bytes": 373296,
+          "sha256": "05141d10a1c55f4ea49090c5b1c9a4f7d54ae9a5db8a4db6f60d2789a9036825"
+        },
+        {
+          "file": "B026218/H9_EASU_sx1_70_sy1_70.bin",
+          "bytes": 373296,
+          "sha256": "4fe9e51115b4db5cd024db40c5850302a1f5f32a92fd99719c601a49ce7e4756"
+        },
+        {
+          "file": "B026218/H9_EASU_sx1_80_sy1_80.bin",
+          "bytes": 373296,
+          "sha256": "c865948eb7c35e16f360419cf2621b6c6cda98a24d6795a90855900794a574d4"
+        },
+        {
+          "file": "B026218/H9_EASU_sx1_90_sy1_90.bin",
+          "bytes": 373296,
+          "sha256": "8ec6b810bcdc4fe0d376dfbd392ad02f2ddebe3d4d3fe89bff8068b0bea84aef"
+        },
+        {
+          "file": "B026218/H9_EASU_sx2_00_sy2_00.bin",
+          "bytes": 373296,
+          "sha256": "084942a2723ecdc8e4cf713a8ced91e8a19aa4e3f3bf6171db4f5db7cf7974da"
+        },
+        {
+          "file": "B026218/libamdenc64.so",
+          "bytes": 1662960,
+          "sha256": "375adc2e4b1183c6d98c4620c7db4e05e6e38fabdf10d057799c1698a8bedda6"
+        },
+        {
+          "file": "B026218/regamdcomp.exe",
+          "bytes": 301584,
+          "sha256": "a8961e2bbce9dc771b2c77cc08eebadcf680807374188c3860997e75d7cf7c23"
+        }
+      ],
+      "totalBytes": 782127114
+    },
+    {
+      "publishedInf": "oem1.inf",
+      "exitCode": 0,
+      "files": [
+        {
+          "file": "u0202073.cat",
+          "bytes": 3249492,
+          "sha256": "654edb08a9386b11fa231192f7167c0875950771d3dfa527c7e250f0e8156ce0"
+        },
+        {
+          "file": "u0202073.inf",
+          "bytes": 685843,
+          "sha256": "25745d6cf6956618d75b4c73fc799e4582f2e7c323b138b20a54bb0f50f3acb4"
+        },
+        {
+          "file": "B026184/amd-vulkan32.json",
+          "bytes": 703,
+          "sha256": "30241a2bded36010d0f1ed8f46a6cd2cd5f11f20c9be2a0c4f8121c43b541c5c"
+        },
+        {
+          "file": "B026184/amd-vulkan64.json",
+          "bytes": 703,
+          "sha256": "679c7810205b86a301931addca47ccf77c687f11897120a78a561e72bc2bf15e"
+        },
+        {
+          "file": "B026184/amdadlx32.dll",
+          "bytes": 5009424,
+          "sha256": "78dca0c5116baf6aadffe9e6ac68a6537b5386fd6ca1fe84aea9a36742285f8d"
+        },
+        {
+          "file": "B026184/amdadlx64.dll",
+          "bytes": 5222416,
+          "sha256": "1f1b4c84f026d6d98bd5116427f1417a9071a87e76d54a978f776a6fdfad98e1"
+        },
+        {
+          "file": "B026184/AMDADLXServ.exe",
+          "bytes": 183824,
+          "sha256": "add10938ec498f4eadca9fe608c47807a07799deb62d964ce28cb277215303f7"
+        },
+        {
+          "file": "B026184/AMDADLXServPS.dll",
+          "bytes": 114184,
+          "sha256": "445cad74a4d91b8256e9db72cda5f62e4fd32115f3d5591e8c5095e1414a3bfc"
+        },
+        {
+          "file": "B026184/AMDADLXServPS32.dll",
+          "bytes": 70672,
+          "sha256": "18e41f9d1090bd02aeb45b714ae10ee85e9006c9ba6561f6cc541a009c055dbd"
+        },
+        {
+          "file": "B026184/amdave32.dll",
+          "bytes": 144704,
+          "sha256": "100f1e8027bc2027e170017f202a3ff5aa57645e6dba17468b7f1848d49eed48"
+        },
+        {
+          "file": "B026184/amdave64.dll",
+          "bytes": 169344,
+          "sha256": "b853b1d86413ad552857e76cdfa1b80d912ca9d903c20b9c457524fd904c8083"
+        },
+        {
+          "file": "B026184/amdefctb.dat",
+          "bytes": 515238,
+          "sha256": "bdb7d795e7bc809b2d752c8d71320d0a50321fae9491eeddf6720cd98fed5b5a"
+        },
+        {
+          "file": "B026184/amdenc32.dll",
+          "bytes": 1244168,
+          "sha256": "731c7c520df21aa491003e20f84c648e431c9f6ce13d18d2e345643b7c9d7646"
+        },
+        {
+          "file": "B026184/amdenc64.dll",
+          "bytes": 1462520,
+          "sha256": "7b0d6687c055f3192676e6a1eb0f6ba0de9ac3e7ad5d8c0014a1567549538230"
+        },
+        {
+          "file": "B026184/amdept.dat",
+          "bytes": 36575,
+          "sha256": "5589c5c98d40cd51aaab0483861a46af38deb15c8d3587fd34f6995bec2cfd79"
+        },
+        {
+          "file": "B026184/amdgcf.dat",
+          "bytes": 522,
+          "sha256": "e79e42b804ff277bd26556e2cbc803eb192cd1dccab2d27ee11d26d37869b89a"
+        },
+        {
+          "file": "B026184/amdgfxinfo32.dll",
+          "bytes": 450064,
+          "sha256": "d9a4b46316f64165c7d1b45d36649ebd20d95dad4c6d1ae7902368cf5a1edeca"
+        },
+        {
+          "file": "B026184/amdgfxinfo64.dll",
+          "bytes": 592400,
+          "sha256": "4d43a77759e74b1a8e5fae3da9d91bfa3ac8ae6e4e7e65b805c531021062c4da"
+        },
+        {
+          "file": "B026184/AMDh264Enc32.dll",
+          "bytes": 2050584,
+          "sha256": "7e59b60b2665382f431fbc3a0bc763058bc858aa9d1e66baf5d33d6cb974546c"
+        },
+        {
+          "file": "B026184/AMDh264Enc64.dll",
+          "bytes": 2167352,
+          "sha256": "27c42d77c303acb70e991acc05f354f7ab4d5f15c8ca2b468f15178c3e0a94b7"
+        },
+        {
+          "file": "B026184/AMDh265Enc32.dll",
+          "bytes": 2024616,
+          "sha256": "d73858d434bf741893ed02d297a090605e7160c02d13a8f79f8a78c3583766fa"
+        },
+        {
+          "file": "B026184/AMDh265Enc64.dll",
+          "bytes": 2143448,
+          "sha256": "91f38ee6582a4c4f8d3365166ee5d71f82687526b34d4a552d226463f09bd17d"
+        },
+        {
+          "file": "B026184/amdhdl32.dll",
+          "bytes": 122328,
+          "sha256": "4e4aba9f38fcc7bdf01728d0b118675fa004961ab0b8f2a6ef6ca37047b0bc36"
+        },
+        {
+          "file": "B026184/amdhdl64.dll",
+          "bytes": 147408,
+          "sha256": "54a5be21f3dd613e1931889d5298f45a4eb5d99fb6c81d422bc3633fd3a47456"
+        },
+        {
+          "file": "B026184/AMDhwDecoder_32.dll",
+          "bytes": 251920,
+          "sha256": "3fed259ac62d1f3f63a1150f4a9e303237f32c33701896fc56b99438d0f01aec"
+        },
+        {
+          "file": "B026184/AMDhwDecoder_64.dll",
+          "bytes": 306192,
+          "sha256": "a5a5501f16a4a9dadad6995a48d2ac7f82ebe990ce269398cee074c155fcb261"
+        },
+        {
+          "file": "B026184/amdicdxx.dat",
+          "bytes": 1657118,
+          "sha256": "b6b935e33b8b2eba75d2212520f41fa504c90d48b44e510bd8f28ca584eeac78"
+        },
+        {
+          "file": "B026184/amdihk32.dll",
+          "bytes": 199184,
+          "sha256": "87405f02646a2a0dd3d1202b6591a88dff99bf74bd2363aaac86b608c7414b1f"
+        },
+        {
+          "file": "B026184/amdihk64.dll",
+          "bytes": 256808,
+          "sha256": "6584c46faacc0226a7f3bb1a7087fbb4502032ea688d13cf1a3d63950d1f76fa"
+        },
+        {
+          "file": "B026184/AMDInstallManager.msi",
+          "bytes": 27820032,
+          "sha256": "85a476cbbddbb83a072fc3e68fbd218fb2e120c2eae1e02e1c7a6f1369d2de5b"
+        },
+        {
+          "file": "B026184/AMDKernelEvents.mc",
+          "bytes": 21730,
+          "sha256": "d93eadceaa84af4265b61dfd6a37f3da5294433f5b418f17bd6c136cd5abe841"
+        },
+        {
+          "file": "B026184/amdkmdag.sys",
+          "bytes": 102516240,
+          "sha256": "76768f63048a56b978ec03e2997ef94aba39f5faad4423cdbe9a9e3c31a09672"
+        },
+        {
+          "file": "B026184/amdlvr32.dll",
+          "bytes": 998416,
+          "sha256": "905d4121e81d340bb8cf7f754da93d09a2761adae6319524121bb1402d45a8d7"
+        },
+        {
+          "file": "B026184/amdlvr64.dll",
+          "bytes": 1184272,
+          "sha256": "ce46572bf5bd56618211ccaaa5a5f63d997f92f9319a7e432894447d56b3e71f"
+        },
+        {
+          "file": "B026184/amdmiracast.dll",
+          "bytes": 541248,
+          "sha256": "dd94a3e92c3c287fc5b365e3c652a6dabbf8f7dd540b6805d6f9666815164c90"
+        },
+        {
+          "file": "B026184/amdn1b32.dll",
+          "bytes": 17082472,
+          "sha256": "2fb8bf8c39377214e2c8436b86ed66848696c244ec334b47c7b6cbc4627483fc"
+        },
+        {
+          "file": "B026184/amdn1b64.dll",
+          "bytes": 20250368,
+          "sha256": "4dc1eff1d3ea2a49a99f9a3c20d81e4b1a9d941064526ac23e5906d9e9f7a859"
+        },
+        {
+          "file": "B026184/amdpcom32.dll",
+          "bytes": 131248,
+          "sha256": "73f7d6297ae74fd6dfec9bf81e9267a5570199079492bb366e6a202da003943e"
+        },
+        {
+          "file": "B026184/amdpcom64.dll",
+          "bytes": 158960,
+          "sha256": "388033b14f173ec051496314e880e71c201cc58f46084a09b90cc7d8ac21a592"
+        },
+        {
+          "file": "B026184/amdsacli32.dll",
+          "bytes": 543248,
+          "sha256": "bbfb6bb510c215dddbc6130cb921030473d8ec97df793318daad35da2257d379"
+        },
+        {
+          "file": "B026184/amdsacli64.dll",
+          "bytes": 606472,
+          "sha256": "ec8f1c02f24decaa2bddf098af3af572b06e1e7d55738fd0c1b9bdf36d83bd05"
+        },
+        {
+          "file": "B026184/amdsasrv64.dll",
+          "bytes": 1329168,
+          "sha256": "69a607466504dd61397ec6d9c8660b78a01df06174532301d14e9f92d576a001"
+        },
+        {
+          "file": "B026184/amduve32.dll",
+          "bytes": 168184,
+          "sha256": "a1bfeb3cf7895210450772892d7289986a8a93b0996adb561156bc0e6a28876b"
+        },
+        {
+          "file": "B026184/amduve64.dll",
+          "bytes": 201664,
+          "sha256": "1151123fd9f8146367acbb8f5a2c89c95738b1f48148366d6bda1dd99b0b80e8"
+        },
+        {
+          "file": "B026184/amdvlk32.dll",
+          "bytes": 88535056,
+          "sha256": "da8e9aafdbdd20a07950f71971eaf02feafe4e3c0d0b40598ab0a0128901845d"
+        },
+        {
+          "file": "B026184/amdvlk64.dll",
+          "bytes": 102722056,
+          "sha256": "2bf4f2fae4f697c28ed3df28db8869aac2da189cc22b2679e31228694745dab9"
+        },
+        {
+          "file": "B026184/amdvlk_nexus.cab",
+          "bytes": 71502098,
+          "sha256": "fc2afa0625904b948d54a3c11df53df8ab8baa79162a04dd53e890bbc2dbb47b"
+        },
+        {
+          "file": "B026184/amdxc32.dll",
+          "bytes": 73948760,
+          "sha256": "39658acf63ecd30c0d22ccaba3655db0b03c9270a6af108edaa36c6e2c3fde0c"
+        },
+        {
+          "file": "B026184/amdxc64.dll",
+          "bytes": 82421352,
+          "sha256": "66ed6370551b84ef078238c8ff42dd5f7bfa123fbae08f4c0063c7ff8589125e"
+        },
+        {
+          "file": "B026184/amdxc64.so",
+          "bytes": 125655976,
+          "sha256": "98e455c36bb01c434df3376edf913dd0d5abb67c8a9a076c148866d0296a80b0"
+        },
+        {
+          "file": "B026184/amdxcffx64.dll",
+          "bytes": 14509352,
+          "sha256": "66de6569dbbe7e1e25850c286cc866371f99e7ff57b34b3c0d98f5e3e167db37"
+        },
+        {
+          "file": "B026184/amdxcstub32.dll",
+          "bytes": 118744,
+          "sha256": "a68ab0f6d8f667aa7da8395cc411dfb660071b85ee3580d47870121b0c5b4382"
+        },
+        {
+          "file": "B026184/amdxcstub64.dll",
+          "bytes": 142736,
+          "sha256": "9cc1977326282c38f4d153b49128db1786e90fc379672ea8de05f8b438362de6"
+        },
+        {
+          "file": "B026184/amdxn32.dll",
+          "bytes": 36131344,
+          "sha256": "b9e63b088b7c61f0f7ff780e7206f89571b59e6f5a8384470adf980e0fd0843a"
+        },
+        {
+          "file": "B026184/amdxn64.dll",
+          "bytes": 40729608,
+          "sha256": "07cf8baed3105795f1257fc9a4a431266b4c0e96de3e44fe99f99fb9b4f68d4c"
+        },
+        {
+          "file": "B026184/amdxx32.dll",
+          "bytes": 44805080,
+          "sha256": "e0b42ee86d4c00606069317acce35e601aa6b204234a9f17bbc5e3ec5dafc2f3"
+        },
+        {
+          "file": "B026184/amdxx64.dll",
+          "bytes": 50424200,
+          "sha256": "43d9ada5de2df85b2bf940b9c889455ce13ad65568ac4f73ad587765ee15bb10"
+        },
+        {
+          "file": "B026184/amd_opencl32.dll",
+          "bytes": 212496,
+          "sha256": "35c7dd32c23e78cfc3a06e74d2e0ac2018177cc9d4af83d27f031133ed8b8574"
+        },
+        {
+          "file": "B026184/amd_opencl64.dll",
+          "bytes": 247304,
+          "sha256": "f315841596e0fd29d4d87dee149fb38fa46449108d0f91e291f7db0d8140fd23"
+        },
+        {
+          "file": "B026184/amf-mft-mjpeg-decoder32.dll",
+          "bytes": 1402048,
+          "sha256": "e751b84fc77f2d9332d35ad8a6d4aa181a58d7ee26dd5905a550632ede4a5ba6"
+        },
+        {
+          "file": "B026184/amf-mft-mjpeg-decoder64.dll",
+          "bytes": 1724592,
+          "sha256": "13e3f0ff182d68bbb217f2b1125f6705bc26939514696fb1440d7727ed9268ba"
+        },
+        {
+          "file": "B026184/amf-pa-ml32.dll",
+          "bytes": 332304,
+          "sha256": "23acc8487b1205b45405bc8ae7eb15589f72a2de98ca74515aed53c814355b52"
+        },
+        {
+          "file": "B026184/amf-pa-ml64.dll",
+          "bytes": 370192,
+          "sha256": "aeb0cab4bd68366d2782e6c6ae3966b9112cb12baf28a5a9aca03d878964a1c5"
+        },
+        {
+          "file": "B026184/amfrt32.dll",
+          "bytes": 122384,
+          "sha256": "4e2f6b4b5c314d006f2c913978d7f563eb2e0ef5d21170720bc28c394e2e31c1"
+        },
+        {
+          "file": "B026184/amfrt64.dll",
+          "bytes": 147464,
+          "sha256": "1bab598db25bdd54d60a608ad6490f233c1ea4de952b7d75df2b5d08660bcf95"
+        },
+        {
+          "file": "B026184/amfrtdrv32.dll",
+          "bytes": 30793744,
+          "sha256": "65daed134cacb70a8d602404caecfac567f5031284a55c51a78199fcaf1c28dc"
+        },
+        {
+          "file": "B026184/amfrtdrv64.dll",
+          "bytes": 31930896,
+          "sha256": "c4fff83861b539eb565ab1808f3182639fa956eeec406b2f0007d8aa232f4873"
+        },
+        {
+          "file": "B026184/atiadlxx.dll",
+          "bytes": 2194960,
+          "sha256": "1dc8641e25547416a3d0205a670e87d559eab3e0995bf63cd92f0a4eaacb2f1e"
+        },
+        {
+          "file": "B026184/atiadlxy.dll",
+          "bytes": 1832464,
+          "sha256": "7a45c163aa2f4703e79e93d82b5ac787e4c1b4a93c5964b369fb9913ef8922cf"
+        },
+        {
+          "file": "B026184/atiapfxx.blb",
+          "bytes": 548672,
+          "sha256": "dc9672e2edc841bb1e4c7bdd49156df6230f5850640ce945fdc97f03f5b824d2"
+        },
+        {
+          "file": "B026184/atidemgy.dll",
+          "bytes": 473616,
+          "sha256": "e07a183fbb339aa6351ee958079b4be7e1f74d03473b491d52444f39454432e9"
+        },
+        {
+          "file": "B026184/atidx9loader32.dll",
+          "bytes": 118288,
+          "sha256": "ebae3a75feca15fd0d559f6deb2fecedf9d750d4311c842c25c245dabea1f11a"
+        },
+        {
+          "file": "B026184/atidx9loader64.dll",
+          "bytes": 141840,
+          "sha256": "da47fea8caaea5bb73aebb841126494ac347280b29468213074e194e0b3c7e77"
+        },
+        {
+          "file": "B026184/atidxxstub32.dll",
+          "bytes": 102520,
+          "sha256": "a97b68ca3baf8c3716962906b7b7f965c47cc6fd11779337e24cea80eaad7dd5"
+        },
+        {
+          "file": "B026184/atidxxstub64.dll",
+          "bytes": 129432,
+          "sha256": "e25e6aae47f7d8b825dec09254dd8ddecb3d4d56e873a9a261e17803b223bf08"
+        },
+        {
+          "file": "B026184/atieah32.exe",
+          "bytes": 422416,
+          "sha256": "b4026fa700aad7101ba7d379f63ace0a6db1e03d7d86460a42e9956f42f32005"
+        },
+        {
+          "file": "B026184/atieah64.exe",
+          "bytes": 559632,
+          "sha256": "101d19eb7a4081b97b0ef6e34b7ec21b34c20e7d116add091db7578f38e87c0b"
+        },
+        {
+          "file": "B026184/atieclxx.exe",
+          "bytes": 1069576,
+          "sha256": "16fa42dbdeb7dc20f8602395f6b557e545c2e3ac5cc6e9ab5e62672d1aea47b0"
+        },
+        {
+          "file": "B026184/atiesrxx.exe",
+          "bytes": 672784,
+          "sha256": "09a1fea775ce4477783f37f96e09f215c4313235379d1b6f8077079b2e0f7df8"
+        },
+        {
+          "file": "B026184/atig6pxx.dll",
+          "bytes": 201232,
+          "sha256": "0bef0adf97c33ef2cc4ea6bda1ec7cc74ec631238c11d2987908bded96b2863b"
+        },
+        {
+          "file": "B026184/atiglpxx.dll",
+          "bytes": 166920,
+          "sha256": "b99dfbe559525d6f49cd9d69c3b9d56fbe9a1e0b719bf78914740fba8e670f8e"
+        },
+        {
+          "file": "B026184/atiicdxx.dat",
+          "bytes": 737410,
+          "sha256": "da435045306db0c8c0ca29a6ca2121534c1cad7ea916be500cd72fe672a1d95f"
+        },
+        {
+          "file": "B026184/atimpc32.dll",
+          "bytes": 131248,
+          "sha256": "4ea6740b56a46c76c3f3d17845a3c9e461e16e04905f130669c5c4dfe76eadb0"
+        },
+        {
+          "file": "B026184/atimpc64.dll",
+          "bytes": 158960,
+          "sha256": "1527d35530949802d6a25061965d9e107be1eea34787a5917ac8ef55d34b26fd"
+        },
+        {
+          "file": "B026184/atimuixx.dll",
+          "bytes": 200720,
+          "sha256": "1e73d2086a956ba0e037082ec0cb631122def176ae8c9269445cf1d48b4b8ab8"
+        },
+        {
+          "file": "B026184/atio6axx.dll",
+          "bytes": 64289808,
+          "sha256": "b6251a1448f85f0449fcb7ff1a53b6db3f5d4ed9541d97bc7306995a5645e92c"
+        },
+        {
+          "file": "B026184/atioglxx.dll",
+          "bytes": 54843920,
+          "sha256": "373a98c073e33e4d59e7a93aeea6346a42abe3f2bb1df7b1f399a9f8917aa884"
+        },
+        {
+          "file": "B026184/atisamu32.dll",
+          "bytes": 150536,
+          "sha256": "12e73c3a6c1ee1ef470b862167460184bb8c7df951128d0482a83f1dc2206dc2"
+        },
+        {
+          "file": "B026184/atisamu64.dll",
+          "bytes": 190992,
+          "sha256": "c34fca62c766ce40ce6c259aa7b3f40a11aab327ece43ca8803b0af101b041fb"
+        },
+        {
+          "file": "B026184/ativvaxy_cik.dat",
+          "bytes": 234676,
+          "sha256": "4e5986c9a62243d556523d6e3e72cb414eb275a104853b2436fa20e0d55994bd"
+        },
+        {
+          "file": "B026184/ativvaxy_cik_nd.dat",
+          "bytes": 234416,
+          "sha256": "15b132c7947b2fd93dadc9e48278332d455a03957e7e948938f6eb7bc54f572d"
+        },
+        {
+          "file": "B026184/ativvaxy_cz_nd.dat",
+          "bytes": 272928,
+          "sha256": "d043e8fe127bf5e25c43cdf945834f3d37261ab47c65d05605a09e83d5c89fc4"
+        },
+        {
+          "file": "B026184/ativvaxy_el_nd.dat",
+          "bytes": 376224,
+          "sha256": "cd11d2abc62d90bddd580ceec25bafc20962fb381923ade87e74cd9e66873d0c"
+        },
+        {
+          "file": "B026184/ativvaxy_FJ.dat",
+          "bytes": 268244,
+          "sha256": "5d29280832a9af0fe48de5ee0c177b2de885b8fb9431fd53d8bb5348c26fcb7b"
+        },
+        {
+          "file": "B026184/ativvaxy_FJ_nd.dat",
+          "bytes": 267984,
+          "sha256": "94744405991474810f96b7401e1a13062bb6b2d217f87d161cc285fd53d94496"
+        },
+        {
+          "file": "B026184/ativvaxy_gl_nd.dat",
+          "bytes": 380192,
+          "sha256": "139cc96cd8ea01d323534f5b713fdc1da929e8cabee87c20bb00463b9d7b37bb"
+        },
+        {
+          "file": "B026184/ativvaxy_nv.dat",
+          "bytes": 404928,
+          "sha256": "3f54f01a26dd236fa13788c8b203e7ea241b68de661fdbdc93ebfff3f99683ed"
+        },
+        {
+          "file": "B026184/ativvaxy_rv.dat",
+          "bytes": 366304,
+          "sha256": "2cf886fe3a8530d09eab3d535feb62cbd795e33b84e00f22b26905446816c9b1"
+        },
+        {
+          "file": "B026184/ativvaxy_stn_nd.dat",
+          "bytes": 278432,
+          "sha256": "8c09dd21260d7ffc959220d59379ca2a4f17559fe94d92b63cbf9e8a639d0a4c"
+        },
+        {
+          "file": "B026184/ativvaxy_vcn3.dat",
+          "bytes": 580976,
+          "sha256": "37868afa47c20b4a66ae50f3119974ceb68427ba896077fe797565463299b34a"
+        },
+        {
+          "file": "B026184/ativvaxy_vcn3_1.dat",
+          "bytes": 573264,
+          "sha256": "45f1a7146cf3379f28621a9448ca830d8458d93ff3333b9421f1590f4ba08476"
+        },
+        {
+          "file": "B026184/ativvaxy_vcn4.dat",
+          "bytes": 395408,
+          "sha256": "d6de7cf10291ac85f217cb5e090e8e2bd91b76086ba9a3bfbc647d0abc9fc375"
+        },
+        {
+          "file": "B026184/ativvaxy_vcn4_0_a.dat",
+          "bytes": 395408,
+          "sha256": "3e7a52d2cc487978579a64866ba69f438e6a528d2d5f107c4001d93ce012bebf"
+        },
+        {
+          "file": "B026184/ativvaxy_vcn4_0_a_1.dat",
+          "bytes": 395408,
+          "sha256": "ece0d77c4a220c878d3f081a122843e6eb89d9bdb358be2dcebeee3e328456c2"
+        },
+        {
+          "file": "B026184/ativvaxy_vcn5.dat",
+          "bytes": 441296,
+          "sha256": "62ed602badb5464229ef792b8bec0bd6bcf2b66ea74f334f659fc11cd76c54ac"
+        },
+        {
+          "file": "B026184/ativvaxy_vg.dat",
+          "bytes": 573264,
+          "sha256": "921c016e775f1e5a98dffe04e56da762c6d31314f1a6a198fa7bcd2762427dd6"
+        },
+        {
+          "file": "B026184/ativvaxy_vg20.dat",
+          "bytes": 379200,
+          "sha256": "b06a2f8e6110ef13b13d36c293fa7a793d1aa736cdd4258a89e45a25d111971a"
+        },
+        {
+          "file": "B026184/ativvaxy_vg20_nd.dat",
+          "bytes": 382880,
+          "sha256": "5798549c223ba3d8cf68b6f8e79ce17ef91b19b7be75b93c8528f1549b6fe3ed"
+        },
+        {
+          "file": "B026184/ativvaxy_vi.dat",
+          "bytes": 325188,
+          "sha256": "870622dcf18e92654e070d01666022d12938e24e537a15cb076e62d5bc335f96"
+        },
+        {
+          "file": "B026184/ativvaxy_vi_nd.dat",
+          "bytes": 324928,
+          "sha256": "fb927acc1c213597b63735bc776abf08354884daa2e11a5c19d9ec5ba9423c53"
+        },
+        {
+          "file": "B026184/ativvsva.dat",
+          "bytes": 157144,
+          "sha256": "e698410e1b8e5b2875aa8b4d01fe6e4f0bf354f40d92925c4e3503d7fd1ec208"
+        },
+        {
+          "file": "B026184/ativvsvl.dat",
+          "bytes": 204952,
+          "sha256": "f35a4644d926183d38815207e338e7919cbdd2b1bdb8164074e47b74ea1cf150"
+        },
+        {
+          "file": "B026184/detoured32.dll",
+          "bytes": 14208,
+          "sha256": "08bb0d52a10d7ccf2b4fc4a7674cec81a3bbdc279834d0fbe6195db2ef599dec"
+        },
+        {
+          "file": "B026184/detoured64.dll",
+          "bytes": 14208,
+          "sha256": "905d890a582308f25409ef4c89ce99402d8426eff35b66cba4d81264e0aa22bf"
+        },
+        {
+          "file": "B026184/EEURestart.exe",
+          "bytes": 526344,
+          "sha256": "eab0d5798c017f2694ced3713c2f9cce4007f8934e206dd1c4cc53e3a11eae30"
+        },
+        {
+          "file": "B026184/featuresync.dll",
+          "bytes": 1022984,
+          "sha256": "285fc0bd98c4bd82570edefbcdf969aa3a639ed905e9470287bd98034e7a753d"
+        },
+        {
+          "file": "B026184/GameManager32.dll",
+          "bytes": 479240,
+          "sha256": "917542c4a9d1ec75df199e8b7a1796c35e428a2d38f7b797d766a73e51d82a22"
+        },
+        {
+          "file": "B026184/GameManager64.dll",
+          "bytes": 631312,
+          "sha256": "d38741b872ff30aced79e200738494bdbc2f0f4fa805d18120c963de42c9ea00"
+        },
+        {
+          "file": "B026184/H9_EASU_sx1_10_sy1_10.bin",
+          "bytes": 373296,
+          "sha256": "8696b1c3952a7ba6fa58497b4c5a38b3bb2ee7c53369aef3d580bd86fd623f23"
+        },
+        {
+          "file": "B026184/H9_EASU_sx1_20_sy1_20.bin",
+          "bytes": 373296,
+          "sha256": "c1e25b983f0ed64621d448263b5a6b1638d97f3cfc9c21c736ca301f6bafbd49"
+        },
+        {
+          "file": "B026184/H9_EASU_sx1_30_sy1_30.bin",
+          "bytes": 373296,
+          "sha256": "174f422d1888b0f12ce16f509cf31cf751c557624eb4a2e45c2e99ea00f0ff82"
+        },
+        {
+          "file": "B026184/H9_EASU_sx1_40_sy1_40.bin",
+          "bytes": 373296,
+          "sha256": "65d3532608fd7ef591f5748927318aa291f8a16d9addfedf617bc2ff8fbbe082"
+        },
+        {
+          "file": "B026184/H9_EASU_sx1_50_sy1_50.bin",
+          "bytes": 373296,
+          "sha256": "3e6ddc01fd90203b4e5770126727c9b9626f44a6b0b5bc5f35f7497066aab629"
+        },
+        {
+          "file": "B026184/H9_EASU_sx1_60_sy1_60.bin",
+          "bytes": 373296,
+          "sha256": "05141d10a1c55f4ea49090c5b1c9a4f7d54ae9a5db8a4db6f60d2789a9036825"
+        },
+        {
+          "file": "B026184/H9_EASU_sx1_70_sy1_70.bin",
+          "bytes": 373296,
+          "sha256": "4fe9e51115b4db5cd024db40c5850302a1f5f32a92fd99719c601a49ce7e4756"
+        },
+        {
+          "file": "B026184/H9_EASU_sx1_80_sy1_80.bin",
+          "bytes": 373296,
+          "sha256": "c865948eb7c35e16f360419cf2621b6c6cda98a24d6795a90855900794a574d4"
+        },
+        {
+          "file": "B026184/H9_EASU_sx1_90_sy1_90.bin",
+          "bytes": 373296,
+          "sha256": "8ec6b810bcdc4fe0d376dfbd392ad02f2ddebe3d4d3fe89bff8068b0bea84aef"
+        },
+        {
+          "file": "B026184/H9_EASU_sx2_00_sy2_00.bin",
+          "bytes": 373296,
+          "sha256": "084942a2723ecdc8e4cf713a8ced91e8a19aa4e3f3bf6171db4f5db7cf7974da"
+        },
+        {
+          "file": "B026184/libamdenc64.so",
+          "bytes": 1653616,
+          "sha256": "fad8954b3986ea074cd941caffad9af4654b4fdcdc1fd1991fc0b099cf92f576"
+        },
+        {
+          "file": "B026184/regamdcomp.exe",
+          "bytes": 301584,
+          "sha256": "ece92e05b5afe0021364f5e74be424225195187b45b14b3fbfeb5f31b253b5d2"
+        },
+        {
+          "file": "B026184/vulkan32.dll",
+          "bytes": 1385072,
+          "sha256": "1a4875e59d883cecb32120bcfd2a6ec5bd4ed9d4378054626df4a265b428f3ef"
+        },
+        {
+          "file": "B026184/vulkan64.dll",
+          "bytes": 1571440,
+          "sha256": "e4e65332a13932a45d44457270d010dbf637651e825cf4328f3f1d0034ac0d6b"
+        },
+        {
+          "file": "B026184/vulkaninfo32.exe",
+          "bytes": 1918992,
+          "sha256": "a6177465b3db6de59649986b1ba7f65679c84f8b03be5f8a1d44ba76df09a5df"
+        },
+        {
+          "file": "B026184/vulkaninfo64.exe",
+          "bytes": 2413576,
+          "sha256": "73edfc1e40f53a83c618f1a205106ecf0aee993f6873352c6b05553671938e8a"
+        }
+      ],
+      "totalBytes": 1156180388
+    }
+  ],
+  "driverInstallationOrRemovalPerformed": false,
+  "restorationActuallyTested": false
+}

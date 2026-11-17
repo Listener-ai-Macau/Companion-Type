@@ -1,0 +1,84 @@
+{
+  "revision": 63,
+  "evidenceDirectory": "evidence/20261117-signed-driver-comparison-prepared-with-original-exports",
+  "sources": [],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\driver-comparison-prepared-20261117.json",
+      "name": "driver-comparison-prepared.json"
+    },
+    {
+      "source": "work\\prepare_graphics_driver_comparison_20261117.py",
+      "name": "tools/prepare_graphics_driver_comparison_20261117.py"
+    },
+    {
+      "source": "work\\inspect_existing_graphics_package_20261117.py",
+      "name": "tools/inspect_existing_graphics_package_20261117.py"
+    },
+    {
+      "source": "work\\record_prepared_graphics_comparison_20261117.py",
+      "name": "tools/record_prepared_graphics_comparison_20261117.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\completed.json",
+      "name": "preparation-evidence/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\existing-driver-export.json",
+      "name": "preparation-evidence/existing-driver-export.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\existing-driver-catalog-signatures.json",
+      "name": "preparation-evidence/existing-driver-catalog-signatures.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\devices-before.json",
+      "name": "preparation-evidence/devices-before.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\candidate-display-inf.json",
+      "name": "preparation-evidence/candidate-display-inf.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\download-headers.txt",
+      "name": "preparation-evidence/download-headers.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\inspection-r2\\completed.json",
+      "name": "preparation-evidence/inspection-r2/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\inspection-r2\\actual-device-identifiers.json",
+      "name": "preparation-evidence/inspection-r2/actual-device-identifiers.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\inspection-r2\\display-branch-inspection.json",
+      "name": "preparation-evidence/inspection-r2/display-branch-inspection.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\recorder-before-pid-identity-fix.py",
+      "name": "preparation-evidence/recorder-before-pid-identity-fix.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\recorder-pid-check-failure.json",
+      "name": "preparation-evidence/recorder-pid-check-failure.json"
+    }
+  ],
+  "commitMessage": "Prepare exact signed GPU driver comparison and retain existing driver exports",
+  "claims": {
+    "state": "SIGNED_DRIVER_COMPARISON_FILES_PREPARED_NOT_INSTALLED_GPU_STABILITY_OPEN",
+    "newNeuralCalls": 0,
+    "newGpuCalls": 0,
+    "parameterUpdates": 0,
+    "driverInstalledOrRemoved": false,
+    "originalGraphicsDriversChanged": false,
+    "candidateBothActualDeviceIdsMatched": true,
+    "existingDriverFilesExported": true,
+    "rollbackRestorationTested": false,
+    "preparationSourceFailureRetainedAndResolved": true,
+    "allOwnedPreparationJobsTerminal": true,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

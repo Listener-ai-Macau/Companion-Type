@@ -1,0 +1,43 @@
+{
+  "state": "FAILED_DRIVER_COMPARISON_PREPARATION_NO_INSTALL_NO_AUTOMATIC_RETRY",
+  "at": "2026-11-17T10:21:06.455566+08:00",
+  "pid": 24328,
+  "createdAt": 1794882066.3498113,
+  "installerExecuted": false,
+  "driverRegisteredOrChanged": false,
+  "newNeuralCalls": 0,
+  "newGpuCalls": 0,
+  "parameterUpdates": 0,
+  "source": "https://www.amd.com/en/resources/support-articles/release-notes/RN-RAD-WIN-26-8-1.html",
+  "downloadUrl": "https://drivers.amd.com/drivers/whql-amd-software-adrenalin-edition-26.8.1-win11-c.exe",
+  "expectedDownloadBytes": 1669192200,
+  "limits": {
+    "pid": 24328,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 555069440,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "observedAt": "2026-11-17T10:25:57.161789+08:00",
+  "operation": "READING_DISPLAY_INF_FILES_WITHOUT_RUNNING_INSTALLER",
+  "bytesDownloaded": 1669192200,
+  "downloadPid": 4820,
+  "packageSha256": "00c416cd03697ba203ebd794980331c3777eaade979b8afb533e33e74ae02c50",
+  "authenticode": {
+    "status": "Valid",
+    "subject": "CN=Advanced Micro Devices, O=Advanced Micro Devices, S=California, C=US",
+    "thumbprint": "33D35682079E201671B738B7209B4586103BC271",
+    "timestampSubject": "CN=DigiCert SHA256 RSA4096 Timestamp Responder 2025 1, O=\"DigiCert, Inc.\", C=US"
+  },
+  "error": "AssertionError('Candidate must match both externalRX6800XT and internal780M devices.')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_graphics_driver_comparison_20261117.py\", line 154, in main\n    assert has_rx and has_apu, 'Candidate must match both externalRX6800XT and internal780M devices.'\n           ^^^^^^^^^^^^^^^^^^\nAssertionError: Candidate must match both externalRX6800XT and internal780M devices.\n"
+}

@@ -1,0 +1,122 @@
+{
+  "at": "2026-11-17T10:34:46.240360+08:00",
+  "parent": "78c35093941e27aab63c2880d7720b22a52072c9",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\driver-comparison-prepared-20261117.json",
+      "file": "driver-comparison-prepared.json",
+      "bytes": 8770,
+      "sha256": "f87f9af4ed51e0c9cac7e32a0a505311260a3c0134db8ca529f7ac3c9813dcb6"
+    },
+    {
+      "source": "work\\prepare_graphics_driver_comparison_20261117.py",
+      "file": "tools/prepare_graphics_driver_comparison_20261117.py",
+      "bytes": 10624,
+      "sha256": "e119e08bf0a532440946c869022b2d811569129b092d1b434d0e6c184bd0b439"
+    },
+    {
+      "source": "work\\inspect_existing_graphics_package_20261117.py",
+      "file": "tools/inspect_existing_graphics_package_20261117.py",
+      "bytes": 7524,
+      "sha256": "e97d6761f736feb3eef5fa33a5ce7a48e884cd02daa186938951c0c3440548c2"
+    },
+    {
+      "source": "work\\record_prepared_graphics_comparison_20261117.py",
+      "file": "tools/record_prepared_graphics_comparison_20261117.py",
+      "bytes": 9937,
+      "sha256": "50e9a99e8c3d4d9cde65d9dcfc0cc9c5c5b7853deccf9aec252b26c2b8809211"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\completed.json",
+      "file": "preparation-evidence/completed.json",
+      "bytes": 2175,
+      "sha256": "2e4edc82ccc24534585bbd6b9a9f9857d654b8f7238fb277e35a1d78d75d2e3b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\existing-driver-export.json",
+      "file": "preparation-evidence/existing-driver-export.json",
+      "bytes": 47303,
+      "sha256": "2d6033d1307657870ec1f43eb26f884576e7dae281a317f1cc5bd4d29c3fbb3f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\existing-driver-catalog-signatures.json",
+      "file": "preparation-evidence/existing-driver-catalog-signatures.json",
+      "bytes": 946,
+      "sha256": "e91731b9f4039cd04f904bd4eedddb9736231c8d567761c8041f7a6ddd4b80ed"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\devices-before.json",
+      "file": "preparation-evidence/devices-before.json",
+      "bytes": 1192,
+      "sha256": "8db64eaa42f414f3eae90b52dfee1e32966aac6a5d58768305cfd7bc2af317c6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\candidate-display-inf.json",
+      "file": "preparation-evidence/candidate-display-inf.json",
+      "bytes": 84277,
+      "sha256": "0bd887b65067f9df98a4f134f6fbc71e0d0d68eb1a65110a577e3091b85ce6d0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\download-headers.txt",
+      "file": "preparation-evidence/download-headers.txt",
+      "bytes": 386,
+      "sha256": "0f384a78a0bd686d5b4ac480955747c7772c60b197890302519ecd71e8607178"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\inspection-r2\\completed.json",
+      "file": "preparation-evidence/inspection-r2/completed.json",
+      "bytes": 2074,
+      "sha256": "b1f821900733f2e0cf2911a4d21690990e908fbbf03518c3f2af935ff5f77667"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\inspection-r2\\actual-device-identifiers.json",
+      "file": "preparation-evidence/inspection-r2/actual-device-identifiers.json",
+      "bytes": 2153,
+      "sha256": "dd11b28a0599d92b13e4286393063163fb290f15047fddad8b8f71ae22085f0f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\inspection-r2\\display-branch-inspection.json",
+      "file": "preparation-evidence/inspection-r2/display-branch-inspection.json",
+      "bytes": 2596,
+      "sha256": "0769bf67d5ce27dae3a2465f95f78fb0d76583f60b3f35c7d768c430f930638b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\recorder-before-pid-identity-fix.py",
+      "file": "preparation-evidence/recorder-before-pid-identity-fix.py",
+      "bytes": 8995,
+      "sha256": "58cde3b963b49f022075363962a46feb7eda84f4aac9c3616f086654279679b5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\recorder-pid-check-failure.json",
+      "file": "preparation-evidence/recorder-pid-check-failure.json",
+      "bytes": 286,
+      "sha256": "906f1d8344515aac6bd949361513f237af4ba7fdfd3ab9be2e2e5b7d52f3c4d1"
+    },
+    {
+      "source": "work\\checkpoint_graphics_comparison_r63.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 4683,
+      "sha256": "b2e852f0ead73d5a237cb8f3d442d76e0bdf10f3d9af08c832e2655b85ed87d8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {},
+  "state": "SIGNED_DRIVER_COMPARISON_FILES_PREPARED_NOT_INSTALLED_GPU_STABILITY_OPEN",
+  "newNeuralCalls": 0,
+  "newGpuCalls": 0,
+  "parameterUpdates": 0,
+  "driverInstalledOrRemoved": false,
+  "originalGraphicsDriversChanged": false,
+  "candidateBothActualDeviceIdsMatched": true,
+  "existingDriverFilesExported": true,
+  "rollbackRestorationTested": false,
+  "preparationSourceFailureRetainedAndResolved": true,
+  "allOwnedPreparationJobsTerminal": true,
+  "qualityQualified": false,
+  "saleQualified": false
+}

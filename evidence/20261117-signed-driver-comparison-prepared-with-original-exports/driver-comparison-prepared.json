@@ -1,0 +1,179 @@
+{
+  "at": "2026-11-17T10:32:58+08:00",
+  "state": "SIGNED_OFFICIAL_DRIVER_COMPARISON_AND_EXISTING_DRIVER_EXPORTS_PREPARED_NOT_INSTALLED",
+  "root": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1",
+  "modelSourceCommitBeforeThisPreparation": "78c35093941e27aab63c2880d7720b22a52072c9",
+  "candidate": {
+    "release": "Adrenalin26.8.1",
+    "url": "https://drivers.amd.com/drivers/whql-amd-software-adrenalin-edition-26.8.1-win11-c.exe",
+    "publisherPage": "https://www.amd.com/en/resources/support-articles/release-notes/RN-RAD-WIN-26-8-1.html",
+    "bytes": 1669192200,
+    "sha256": "00c416cd03697ba203ebd794980331c3777eaade979b8afb533e33e74ae02c50",
+    "authenticode": {
+      "status": "Valid",
+      "subject": "CN=Advanced Micro Devices, O=Advanced Micro Devices, S=California, C=US",
+      "thumbprint": "33D35682079E201671B738B7209B4586103BC271",
+      "timestampSubject": "CN=DigiCert SHA256 RSA4096 Timestamp Responder 2025 1, O=\"DigiCert, Inc.\", C=US"
+    },
+    "installerExecuted": false,
+    "deviceMatchingIsNotGpuComputeStabilityQualification": true
+  },
+  "deviceSpecificBranches": [
+    {
+      "archiveMember": "Packages\\Drivers\\Display\\WT6A_INF\\u0203304.inf",
+      "driverVerLines": [
+        "DriverVer=08/17/2026, 32.0.31041.1004"
+      ],
+      "exactHardwareOrCompatibleIdMatches": {
+        "6800": [],
+        "780M": [
+          "PCI\\VEN_1002&DEV_15BF&REV_C2"
+        ]
+      },
+      "infSha256": "f47b47014525c5d9a29dc6ecac5a91c4e7b8ef6699ceb1d886bccb0f208b25fa",
+      "catalogs": [
+        {
+          "sha256": "23d62651554aa6af3a9194457ac84b9881649e7c4e34bd7a0cbd51512a484a48",
+          "signature": {
+            "status": "Valid",
+            "subject": "CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+            "thumbprint": "32B4E7CE92A59C722B8BDF7AE3E66520CFB9DE21"
+          }
+        }
+      ]
+    },
+    {
+      "archiveMember": "Packages\\Drivers\\Display2\\WT6A_INF\\u0203303.inf",
+      "driverVerLines": [
+        "DriverVer=08/17/2026, 32.0.21045.5002"
+      ],
+      "exactHardwareOrCompatibleIdMatches": {
+        "6800": [
+          "PCI\\VEN_1002&DEV_73BF&REV_C1"
+        ],
+        "780M": []
+      },
+      "infSha256": "95a04397eab0960ca8b866fbc45957dd55b0ef5f6f6b7655e289ef0c0bf34454",
+      "catalogs": [
+        {
+          "sha256": "0f871025dfa9698002db1fb61c59da71f9c75e48c26b0de9a9c65deab2ee199c",
+          "signature": {
+            "status": "Valid",
+            "subject": "CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+            "thumbprint": "32B4E7CE92A59C722B8BDF7AE3E66520CFB9DE21"
+          }
+        }
+      ]
+    }
+  ],
+  "rollbackFiles": {
+    "packages": [
+      {
+        "publishedInf": "oem0.inf",
+        "files": 126,
+        "bytes": 782127114,
+        "exportExitCode": 0
+      },
+      {
+        "publishedInf": "oem1.inf",
+        "files": 134,
+        "bytes": 1156180388,
+        "exportExitCode": 0
+      }
+    ],
+    "totalBytes": 1938307502,
+    "windowsInfExactByteMatches": [
+      {
+        "publishedInf": "oem0.inf",
+        "exportedInfSha256": "25f6724f57ba8cc9cf9c54ee6e6ef0daf257f38ed0303b3f7227a40e69e9f6a1",
+        "originalWindowsInfSha256": "25f6724f57ba8cc9cf9c54ee6e6ef0daf257f38ed0303b3f7227a40e69e9f6a1",
+        "exactBytesEqual": true
+      },
+      {
+        "publishedInf": "oem1.inf",
+        "exportedInfSha256": "25745d6cf6956618d75b4c73fc799e4582f2e7c323b138b20a54bb0f50f3acb4",
+        "originalWindowsInfSha256": "25745d6cf6956618d75b4c73fc799e4582f2e7c323b138b20a54bb0f50f3acb4",
+        "exactBytesEqual": true
+      }
+    ],
+    "catalogSignatures": [
+      {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\existing-driver-export\\oem0\\u0202082.cat",
+        "status": "Valid",
+        "subject": "CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+        "thumbprint": "32B4E7CE92A59C722B8BDF7AE3E66520CFB9DE21"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\existing-driver-export\\oem1\\u0202073.cat",
+        "status": "Valid",
+        "subject": "CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+        "thumbprint": "32B4E7CE92A59C722B8BDF7AE3E66520CFB9DE21"
+      }
+    ],
+    "restorationActuallyTested": false,
+    "fullApplicationOrSystemSnapshot": false
+  },
+  "originalPreparationFailure": {
+    "receipt": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\completed.json",
+    "error": "AssertionError('Candidate must match both externalRX6800XT and internal780M devices.')",
+    "cause": "The first inspector considered Display but omitted the separateDisplay2 driver branch.",
+    "resolvedByOfflineInspection": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\inspection-r2\\completed.json",
+    "originalFailureAndSourcePreserved": true,
+    "originalPackageDownloadedAgain": false
+  },
+  "closedOwnedJobs": [
+    {
+      "pid": 24328,
+      "session": 54541,
+      "originalProcessNotLiveVerified": true,
+      "processIdentityCheck": {
+        "pid": 24328,
+        "expectedCreatedAt": 1794882066.3498113,
+        "pidCurrentlyExists": true,
+        "currentCreatedAt": 1794882426.8377297,
+        "sameOriginalProcessStillLive": false
+      },
+      "terminal": "Preparation failed only at incomplete device-match inspection; no driver install."
+    },
+    {
+      "pid": 2996,
+      "session": 82082,
+      "originalProcessNotLiveVerified": true,
+      "processIdentityCheck": {
+        "pid": 2996,
+        "expectedCreatedAt": 1794882499.688815,
+        "pidCurrentlyExists": false,
+        "sameOriginalProcessStillLive": false
+      },
+      "terminal": "Offline full-branch inspection passed."
+    }
+  ],
+  "ownedPreparationCommandsStillLive": [],
+  "evidenceSha256": {
+    "completed.json": "2e4edc82ccc24534585bbd6b9a9f9857d654b8f7238fb277e35a1d78d75d2e3b",
+    "existing-driver-export.json": "2d6033d1307657870ec1f43eb26f884576e7dae281a317f1cc5bd4d29c3fbb3f",
+    "existing-driver-catalog-signatures.json": "e91731b9f4039cd04f904bd4eedddb9736231c8d567761c8041f7a6ddd4b80ed",
+    "devices-before.json": "8db64eaa42f414f3eae90b52dfee1e32966aac6a5d58768305cfd7bc2af317c6",
+    "candidate-display-inf.json": "0bd887b65067f9df98a4f134f6fbc71e0d0d68eb1a65110a577e3091b85ce6d0",
+    "download-headers.txt": "0f384a78a0bd686d5b4ac480955747c7772c60b197890302519ecd71e8607178",
+    "inspection-r2/completed.json": "b1f821900733f2e0cf2911a4d21690990e908fbbf03518c3f2af935ff5f77667",
+    "inspection-r2/actual-device-identifiers.json": "dd11b28a0599d92b13e4286393063163fb290f15047fddad8b8f71ae22085f0f",
+    "inspection-r2/display-branch-inspection.json": "0769bf67d5ce27dae3a2465f95f78fb0d76583f60b3f35c7d768c430f930638b"
+  },
+  "sourceSha256": {
+    "prepare_graphics_driver_comparison_20261117.py": "e119e08bf0a532440946c869022b2d811569129b092d1b434d0e6c184bd0b439",
+    "inspect_existing_graphics_package_20261117.py": "e97d6761f736feb3eef5fa33a5ce7a48e884cd02daa186938951c0c3440548c2",
+    "record_prepared_graphics_comparison_20261117.py": "50e9a99e8c3d4d9cde65d9dcfc0cc9c5c5b7853deccf9aec252b26c2b8809211"
+  },
+  "graphicsDriverInstallationAuthorized": false,
+  "gpuWasDisconnectedDuringPreparation": true,
+  "originalGraphicsDriversChanged": false,
+  "tdrBiosPowerNetworkChanged": false,
+  "newNeuralCalls": 0,
+  "newGpuCalls": 0,
+  "parameterUpdates": 0,
+  "restartRootCauseIdentified": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "next": "Candidate and old-driver exports are ready for review. WhenRX6800XT is connected, verify exact current device/driver identity and choose the single driver comparison only after Owner authorizes that concrete graphics-driver action; do not automatically install, reboot, extend the old execution window or launch the old failing long batch. Keep the existingTorch/ROCm/model/audio fixed. Afterwards actual compute stability and original English adaptation preflight are still required."
+}

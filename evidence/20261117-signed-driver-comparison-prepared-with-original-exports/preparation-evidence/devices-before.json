@@ -1,0 +1,31 @@
+{
+  "devices": [
+    {
+      "name": "AMD Radeon RX 6800 XT",
+      "status": "Unknown",
+      "instanceId": "PCI\\VEN_1002&DEV_73BF&SUBSYS_67011EAE&REV_C1\\8&1BD3869F&0&000000000021",
+      "DEVPKEY_Device_DriverInfPath": "oem1.inf",
+      "DEVPKEY_Device_DriverVersion": "32.0.21043.19003",
+      "DEVPKEY_Device_DriverProvider": "Advanced Micro Devices, Inc.",
+      "DEVPKEY_Device_IsPresent": false
+    },
+    {
+      "name": "AMD Radeon 780M Graphics",
+      "status": "OK",
+      "instanceId": "PCI\\VEN_1002&DEV_15BF&SUBSYS_01241002&REV_C2\\4&17857BC2&0&0041",
+      "DEVPKEY_Device_DriverInfPath": "oem0.inf",
+      "DEVPKEY_Device_DriverVersion": "32.0.31021.5001",
+      "DEVPKEY_Device_DriverProvider": "Advanced Micro Devices, Inc.",
+      "DEVPKEY_Device_IsPresent": true
+    },
+    {
+      "name": "AMD Radeon RX 6800 XT",
+      "status": "Unknown",
+      "instanceId": "PCI\\VEN_1002&DEV_73BF&SUBSYS_67011EAE&REV_C1\\8&1281751D&0&000000080021",
+      "DEVPKEY_Device_DriverInfPath": "oem1.inf",
+      "DEVPKEY_Device_DriverVersion": "32.0.21043.19003",
+      "DEVPKEY_Device_DriverProvider": "Advanced Micro Devices, Inc.",
+      "DEVPKEY_Device_IsPresent": false
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "devices": [
+    {
+      "name": "AMD Radeon RX 6800 XT",
+      "instanceId": "PCI\\VEN_1002&DEV_73BF&SUBSYS_67011EAE&REV_C1\\8&1BD3869F&0&000000000021",
+      "DEVPKEY_Device_HardwareIds": [
+        "PCI\\VEN_1002&DEV_73BF&SUBSYS_67011EAE&REV_C1",
+        "PCI\\VEN_1002&DEV_73BF&SUBSYS_67011EAE",
+        "PCI\\VEN_1002&DEV_73BF&CC_030000",
+        "PCI\\VEN_1002&DEV_73BF&CC_0300"
+      ],
+      "DEVPKEY_Device_CompatibleIds": [
+        "PCI\\VEN_1002&DEV_73BF&REV_C1",
+        "PCI\\VEN_1002&DEV_73BF",
+        "PCI\\VEN_1002&CC_030000",
+        "PCI\\VEN_1002&CC_0300",
+        "PCI\\VEN_1002",
+        "PCI\\CC_030000&DT_1",
+        "PCI\\CC_030000",
+        "PCI\\CC_0300&DT_1",
+        "PCI\\CC_0300"
+      ]
+    },
+    {
+      "name": "AMD Radeon 780M Graphics",
+      "instanceId": "PCI\\VEN_1002&DEV_15BF&SUBSYS_01241002&REV_C2\\4&17857BC2&0&0041",
+      "DEVPKEY_Device_HardwareIds": [
+        "PCI\\VEN_1002&DEV_15BF&SUBSYS_01241002&REV_C2",
+        "PCI\\VEN_1002&DEV_15BF&SUBSYS_01241002",
+        "PCI\\VEN_1002&DEV_15BF&CC_030000",
+        "PCI\\VEN_1002&DEV_15BF&CC_0300"
+      ],
+      "DEVPKEY_Device_CompatibleIds": [
+        "PCI\\VEN_1002&DEV_15BF&REV_C2",
+        "PCI\\VEN_1002&DEV_15BF",
+        "PCI\\VEN_1002&CC_030000",
+        "PCI\\VEN_1002&CC_0300",
+        "PCI\\VEN_1002",
+        "PCI\\CC_030000&DT_1",
+        "PCI\\CC_030000",
+        "PCI\\CC_0300&DT_1",
+        "PCI\\CC_0300"
+      ]
+    },
+    {
+      "name": "AMD Radeon RX 6800 XT",
+      "instanceId": "PCI\\VEN_1002&DEV_73BF&SUBSYS_67011EAE&REV_C1\\8&1281751D&0&000000080021",
+      "DEVPKEY_Device_HardwareIds": [
+        "PCI\\VEN_1002&DEV_73BF&SUBSYS_67011EAE&REV_C1",
+        "PCI\\VEN_1002&DEV_73BF&SUBSYS_67011EAE",
+        "PCI\\VEN_1002&DEV_73BF&CC_030000",
+        "PCI\\VEN_1002&DEV_73BF&CC_0300"
+      ],
+      "DEVPKEY_Device_CompatibleIds": [
+        "PCI\\VEN_1002&DEV_73BF&REV_C1",
+        "PCI\\VEN_1002&DEV_73BF",
+        "PCI\\VEN_1002&CC_030000",
+        "PCI\\VEN_1002&CC_0300",
+        "PCI\\VEN_1002",
+        "PCI\\CC_030000&DT_1",
+        "PCI\\CC_030000",
+        "PCI\\CC_0300&DT_1",
+        "PCI\\CC_0300"
+      ]
+    }
+  ]
+}

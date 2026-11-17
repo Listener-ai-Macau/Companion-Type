@@ -1,0 +1,56 @@
+{
+  "files": [
+    {
+      "archiveMember": "Packages\\Drivers\\Display\\WT6A_INF\\u0203304.inf",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\inspection-r2\\Display-u0203304.inf",
+      "sha256": "f47b47014525c5d9a29dc6ecac5a91c4e7b8ef6699ceb1d886bccb0f208b25fa",
+      "driverVerLines": [
+        "DriverVer=08/17/2026, 32.0.31041.1004"
+      ],
+      "exactHardwareOrCompatibleIdMatches": {
+        "6800": [],
+        "780M": [
+          "PCI\\VEN_1002&DEV_15BF&REV_C2"
+        ]
+      },
+      "catalogs": [
+        {
+          "archiveMember": "Packages\\Drivers\\Display\\WT6A_INF\\u0203304.cat",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\inspection-r2\\Display-u0203304.cat",
+          "sha256": "23d62651554aa6af3a9194457ac84b9881649e7c4e34bd7a0cbd51512a484a48",
+          "signature": {
+            "status": "Valid",
+            "subject": "CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+            "thumbprint": "32B4E7CE92A59C722B8BDF7AE3E66520CFB9DE21"
+          }
+        }
+      ]
+    },
+    {
+      "archiveMember": "Packages\\Drivers\\Display2\\WT6A_INF\\u0203303.inf",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\inspection-r2\\Display2-u0203303.inf",
+      "sha256": "95a04397eab0960ca8b866fbc45957dd55b0ef5f6f6b7655e289ef0c0bf34454",
+      "driverVerLines": [
+        "DriverVer=08/17/2026, 32.0.21045.5002"
+      ],
+      "exactHardwareOrCompatibleIdMatches": {
+        "6800": [
+          "PCI\\VEN_1002&DEV_73BF&REV_C1"
+        ],
+        "780M": []
+      },
+      "catalogs": [
+        {
+          "archiveMember": "Packages\\Drivers\\Display2\\WT6A_INF\\u0203303.cat",
+          "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\graphics-driver-comparison-prepared-r1\\inspection-r2\\Display2-u0203303.cat",
+          "sha256": "0f871025dfa9698002db1fb61c59da71f9c75e48c26b0de9a9c65deab2ee199c",
+          "signature": {
+            "status": "Valid",
+            "subject": "CN=Microsoft Windows Hardware Compatibility Publisher, O=Microsoft Corporation, L=Redmond, S=Washington, C=US",
+            "thumbprint": "32B4E7CE92A59C722B8BDF7AE3E66520CFB9DE21"
+          }
+        }
+      ]
+    }
+  ]
+}
