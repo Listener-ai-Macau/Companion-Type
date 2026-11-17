@@ -1,0 +1,111 @@
+{
+  "at": "2026-11-17T13:26:10+08:00",
+  "state": "SIX_HOUR_PRIMARY_CHINESE_NONOVERLAP_ASR_INPUTS_DELIVERED_MODEL_TRAINING_NOT_STARTED",
+  "taskScope": "Verified nonoverlap Chinese ASR acoustic-adaptation inputs. Not continuous diarization/overlap training or a new quality result.",
+  "source": {
+    "officialDataset": "modelscope/AliMeeting (also OpenSLR119)",
+    "officialPublishedTrainMeetings": 209,
+    "officialPublishedTrainPeople": 452,
+    "all209OriginalTextgridsFetched": true,
+    "all209OriginalWaveHeadersChecked": true,
+    "allConvertedRecordingFrameCountsIndependentlyReproduced": true,
+    "originalAnnotationsBeyondRealAudioEnd": 246,
+    "wholeSourcesExcluded": [
+      "R0004_M0017",
+      "R0004_M0028",
+      "R0015_M0125",
+      "R0015_M0129",
+      "R0015_M0135",
+      "R0020_M0185",
+      "R0020_M0190",
+      "R1021_M1947",
+      "R2108_M2692"
+    ],
+    "conversionIntervalsClippedWhileKeepingFullText": 5,
+    "originalSourcesOrLabelsRewritten": false,
+    "cleanSourceMeetings": 200,
+    "paperCountCorrection": "Paper212/456 differs from the actual official released file index209/452. Conversion inventory matches the official index; earlier incomplete-mirror inference is corrected, not hidden.",
+    "shortTierSchemaCorrection": "Some official tiers use gender_SPKID without meeting prefix. Both published forms were parsed with interval-count and near-file speaker verification; no label renamed in the originals."
+  },
+  "inputs": {
+    "examples": 5027,
+    "audioSeconds": 21602.7,
+    "audioHours": 6.00075,
+    "meetings": 194,
+    "venues": 12,
+    "globalTrainingPeople": 374,
+    "rawTextCharacters": 121579,
+    "sampleRate": 16000,
+    "channels": 1,
+    "bits": 16,
+    "sourceChannelIndex": 0,
+    "manifest": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\range-training-cohort-r2\\acquisition-r1\\chinese-train-original-nonoverlap.jsonl",
+    "manifestSha256": "c6cc4051ac13b21abd483f2d551a125cf224950408624f484f29720cb8f621f1",
+    "paddingSeconds": 0,
+    "speedPerturbation": false,
+    "gainResamplingDenoisingOrChannelAverage": false,
+    "wholeOriginalUtteranceTextAndBoundariesPreserved": true,
+    "trainingAudioActualBytes": 691507588
+  },
+  "integrity": {
+    "receipt": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\range-training-cohort-r2\\integrity-r1\\completed.json",
+    "sha256": "1586431569dede2668193f862a1ccc5cf2875b8607ae0b06ffc537996414a66d",
+    "all5027RawTextFrameIntervalsAndWaveHeadersChecked": true,
+    "all5027PcmChecksumsChecked": true,
+    "everyOutputByteCheckedAgainstSelectedSourceChannelAtCapture": true,
+    "freshIndependentVenueSourceControls": 12,
+    "trueOtherSpeakerOverlaps": 0,
+    "duplicateSourceFrames": 0,
+    "training374VersusAliEvaluation25Intersection": [],
+    "aliEvaluationSpeakerProof": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\primary-train-eval-person-split.json",
+    "evaluationAudioOrTextgridRead": false,
+    "testIndexOrPayloadRead": false,
+    "originalAishellCrossCorpusPersonIsolationProven": false,
+    "originalAishellFinalHoldoutOpened": false
+  },
+  "resources": {
+    "workerCpuCapPercent": 5,
+    "ioThreads": 4,
+    "privateCommitCapBytes": 268435456,
+    "acquisitionPeakPrivateBytes": 89894912,
+    "independentIntegrityPeakPrivateBytes": 165060608,
+    "acquisitionSeconds": 423.2189999999973,
+    "integritySeconds": 70.42199999999866,
+    "rawRangeBytesFetched": 5512517120,
+    "reusedFirstMonoExamples": 13,
+    "actualOwnedDataBytes": 6194986157,
+    "maximumOwnedDataBytes": 12884901888,
+    "conservativeCombinedEnvelopeBytesIncludingPreviousFullSourceTransfers": 12737939567,
+    "minimumDiskReserveBytes": 53687091200,
+    "credentialValuesPrintedOrPersisted": false
+  },
+  "firstWaveRecovery": {
+    "originalFailure": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-mic-source-r1\\terminal-fsync-failure.json",
+    "independentWholeSourceAndMonoProof": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-mic-source-r1\\post-source-check-r2\\completed.json",
+    "rootFix": "Windows fsync requires a write-capable handle here; r+b plus precommit checksum snapshot. No conversion repeated; independent source read verified existing output before commit."
+  },
+  "model": {
+    "newNeuralCalls": 0,
+    "parameterUpdates": 0,
+    "cpuOrIntegratedGpuTraining": false,
+    "newAsrWerCerMeasured": false,
+    "newSpeakerDerMeasured": false,
+    "modelTrainingAdmitted": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "productDefaultChanged": false,
+    "original95Floor98TargetAndWholePersonFactFinalGatesChanged": false
+  },
+  "timeValueDecision": {
+    "ownerQuote": "务必确认方向是正确的, 另外看看尽量每一笔时间之处都是值得的才行",
+    "closeDataAcquisitionHere": true,
+    "noMoreCorpusExpansionWithoutNewFailureEvidence": true,
+    "priority": "Actual model evidence: fixed English adaptation preflight/one epoch/paired validation under the original resource constraints. Chinese dataset is now locally usable source input; no automatic second model/parameter grid.",
+    "retentionGate": "Keep a component only for the predeclared independent improvement and no-regression evidence; do not count input hours or reports as model accuracy.",
+    "remaining": [
+      "Actual nativeGPU loss/gradient/largestshape/checkpoint and fixed1828example457update English epoch.",
+      "Chinese model-specific training contract and approved runtime; oldAISHELL cross-corpus person qualification remains unresolved.",
+      "Speaker activity/person text/facts and original reserved final qualification remain open."
+    ]
+  }
+}

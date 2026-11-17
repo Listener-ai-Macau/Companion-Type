@@ -1,0 +1,139 @@
+{
+  "at": "2026-11-17T13:15:06.163603+08:00",
+  "state": "PASS_5027_ORIGINAL_CHINESE_ASR_INPUTS_SOURCE_TEXT_PCM_TIMING_AND_PERSON_INTEGRITY",
+  "sourceSha256": "7b1de15d99ab3105bb186839611a1d1f1389e65f07f0cb742b8209177f477407",
+  "verifiedExamples": 5027,
+  "verifiedFrames": 345643200,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "evaluationTextOrAudioRead": false,
+  "qualityQualified": false,
+  "observedAt": "2026-11-17T13:16:16.584198+08:00",
+  "limits": {
+    "pid": 5984,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 165060608,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "manifest": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\range-training-cohort-r2\\acquisition-r1\\chinese-train-original-nonoverlap.jsonl",
+  "manifestSha256": "c6cc4051ac13b21abd483f2d551a125cf224950408624f484f29720cb8f621f1",
+  "protocolSha256": "07bb031685d85f2eddea3a4e9ab3a805803589e53655f86ef37f70b4c1dca375",
+  "audioSeconds": 21602.7,
+  "meetings": 194,
+  "venues": 12,
+  "trainingSpeakerIds": 374,
+  "officialEvaluationSpeakerIds": 25,
+  "participantIntersection": [],
+  "sourceTextCharacters": 121579,
+  "all5027OriginalLabelsAndFrameIntervalsExact": true,
+  "all5027WaveHeadersAndPCMHashesChecked": true,
+  "all5027CaptureReceiptsBindPrimaryOriginalByteRanges": true,
+  "everyCaptureOutputByteCheckedAgainstRawChannel": true,
+  "independentFreshSourceChannelControls": [
+    {
+      "venue": "R0003",
+      "id": "R0003_M0046-original-00573",
+      "sourceRawRangeSha256": "9c83e670a1acb43d7594127ce5dbb45c11df62940fc31637864146954da19673",
+      "pcmSha256": "909daf55381a4c3e118157e57b0aba91d2010d8964eb5e0ca81077899354c22b",
+      "allControlBytesMatchFirstSourceChannel": true
+    },
+    {
+      "venue": "R0004",
+      "id": "R0004_M0022-original-00092",
+      "sourceRawRangeSha256": "9335a97a8a6f9604fadb292a195d09c7d163c45a55ed4341737c449606056707",
+      "pcmSha256": "2807d4dd830c4887d2a6fe7b131ba264e1f0d8b968add2a6e6e77480fc37364e",
+      "allControlBytesMatchFirstSourceChannel": true
+    },
+    {
+      "venue": "R0005",
+      "id": "R0005_M0035-original-00242",
+      "sourceRawRangeSha256": "777128118fa4ef1900c1747e75dfcd92969edee4ccb4488db69adef90094d1bd",
+      "pcmSha256": "8285b835274a93df20dfc25f34aeb1fefc42784b45bfea7cacb6b3a4ac338065",
+      "allControlBytesMatchFirstSourceChannel": true
+    },
+    {
+      "venue": "R0008",
+      "id": "R0008_M0060-original-00122",
+      "sourceRawRangeSha256": "c030d75f5579ea3b042c4cbdae875bf8f34d6b2aeb72e22a4baa421d78b154ef",
+      "pcmSha256": "e692eabe225711a4994ca9870f5733daab16071871340ee69e8720fb609ccee6",
+      "allControlBytesMatchFirstSourceChannel": true
+    },
+    {
+      "venue": "R0014",
+      "id": "R0014_M0086-original-00441",
+      "sourceRawRangeSha256": "a034187d53461ddf17b5768c1193211909cd1d3f79bb376d03421f854caa9528",
+      "pcmSha256": "523f2dab9c02a5553d1652a5bfb810c686200d1612d2e4637c3c522c97fa7059",
+      "allControlBytesMatchFirstSourceChannel": true
+    },
+    {
+      "venue": "R0015",
+      "id": "R0015_M0144-original-00549",
+      "sourceRawRangeSha256": "acf0e029ce4fed04e111086172a7153052d9d6d797935bd93b53017fa96b4e10",
+      "pcmSha256": "a3120ad02dcbd182aa9f551b8497aa29d03071051cce24fbf37ba18d99b653c9",
+      "allControlBytesMatchFirstSourceChannel": true
+    },
+    {
+      "venue": "R0020",
+      "id": "R0020_M0168-original-00151",
+      "sourceRawRangeSha256": "2661e5b52eadd0adb8753c8abd55e7b0c2abe933acb8f0abe14f9d8783707dd6",
+      "pcmSha256": "a59ad9c07ddcecee39eff6b3cdfc1c62a786c616f0918f6b9ace64e133d170c2",
+      "allControlBytesMatchFirstSourceChannel": true
+    },
+    {
+      "venue": "R1019",
+      "id": "R1019_M4013-original-00734",
+      "sourceRawRangeSha256": "ee92eaaba11ea5e98d5f2ab912fb8bd66acbb8b01e23b6d5f32679e4b8f4e468",
+      "pcmSha256": "6a8cb8672ebfe7d78cf5c9489087dcebefeaa4e90e689c5f38eb94913f49a1b1",
+      "allControlBytesMatchFirstSourceChannel": true
+    },
+    {
+      "venue": "R1021",
+      "id": "R1021_M1940-original-00148",
+      "sourceRawRangeSha256": "c0abe2bac31cd9f1ab54ec689edca41d0a748a920f30cb0e4644c4843f477e26",
+      "pcmSha256": "c6999d41de1aa65b9a3c8895b6e49bce3f38b68eb127baa4e4e202ea6fda2908",
+      "allControlBytesMatchFirstSourceChannel": true
+    },
+    {
+      "venue": "R2001",
+      "id": "R2001_M2205-original-00086",
+      "sourceRawRangeSha256": "7c0e9760d0ee2db81db31abb3dec7bb14ec81cba5c7c71569094294c807a3d29",
+      "pcmSha256": "ac7f7519746fd04f7dfa4676d4f3b21b924ce0a405d553d0e5a3b1ef5e20f689",
+      "allControlBytesMatchFirstSourceChannel": true
+    },
+    {
+      "venue": "R2105",
+      "id": "R2105_M3175-original-00463",
+      "sourceRawRangeSha256": "218ee6061380eaca0df76eb6755307b7ef95349e0276cfde9c566e7cc447fe62",
+      "pcmSha256": "474588be93318dde264a4237f42d7120d1d0447a179399fdb097395dd19b6c4b",
+      "allControlBytesMatchFirstSourceChannel": true
+    },
+    {
+      "venue": "R2108",
+      "id": "R2108_M3225-original-00168",
+      "sourceRawRangeSha256": "6a5ec63d1ca67fed3ac33e01838df68220a93c1b7cd7b288009026f455158fc9",
+      "pcmSha256": "bec6c1883ba76c39750a323ae679ef4c50e9aed1b438a09ab754c3545d978c89",
+      "allControlBytesMatchFirstSourceChannel": true
+    }
+  ],
+  "trueCrossSpeakerOverlapIntervals": 0,
+  "duplicateOrOverlappingTrainingSourceFrames": 0,
+  "paddingOrTextNormalizationOrTimeClippingUsed": false,
+  "excludedWholeOutOfBoundsSources": 9,
+  "maximumFrames": 267840,
+  "originalAishellCrossCorpusPersonIsolationProven": false,
+  "taskScope": "Nonoverlap Chinese ASR acoustic-adaptation input only; not a continuous diarization/overlap training set or a quality score.",
+  "modelTrainingAdmitted": false,
+  "modelInstances": 0,
+  "gpuInitialized": false,
+  "elapsedSeconds": 70.42199999999866
+}

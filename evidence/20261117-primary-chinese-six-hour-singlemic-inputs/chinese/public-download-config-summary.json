@@ -1,0 +1,20 @@
+{
+  "Code": 200,
+  "fieldNames": [
+    "AccessId",
+    "AccessSecret",
+    "BackupDir",
+    "Bucket",
+    "Dir",
+    "Expiration",
+    "Host",
+    "Region",
+    "SecurityToken"
+  ],
+  "publicVisibilityPreviouslyVerified": true,
+  "credentialValuesPrintedOrSaved": false,
+  "Bucket": "dataset-hub",
+  "Dir": "public-unzip-dataset/modelscope/AliMeeting/master/",
+  "Region": "oss-cn-hangzhou",
+  "Expiration": "2026-11-18T00:25:11+08:00"
+}

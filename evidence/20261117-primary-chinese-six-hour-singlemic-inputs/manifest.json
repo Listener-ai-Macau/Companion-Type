@@ -1,0 +1,392 @@
+{
+  "at": "2026-11-17T13:39:38.468847+08:00",
+  "parent": "cf35729d749bbec8d0f4260df7bc3d671f455ace",
+  "entries": [
+    {
+      "source": "work\\fetch_official_alimeeting_textgrid_20261117.py",
+      "file": "tools/fetch_official_alimeeting_textgrid_20261117.py",
+      "bytes": 4522,
+      "sha256": "8541e3d19b2ec24a6fd5e0658521c74d33795c587e405e993221c7b0fe5a114c"
+    },
+    {
+      "source": "work\\fetch_official_alimeeting_textgrid_legacy_20261117.py",
+      "file": "tools/fetch_official_alimeeting_textgrid_legacy_20261117.py",
+      "bytes": 4780,
+      "sha256": "46bf6b30b9b2a520279d101fb7043def53d606b7af66250041a702c8013e1786"
+    },
+    {
+      "source": "work\\fetch_official_alimeeting_textgrid_verified_20261117.py",
+      "file": "tools/fetch_official_alimeeting_textgrid_verified_20261117.py",
+      "bytes": 4851,
+      "sha256": "6efbb11664b3525cd6ab2876b57f9bf66a965814c724463054673da2d766f6fb"
+    },
+    {
+      "source": "work\\alimeeting_public_oss_20261117.py",
+      "file": "tools/alimeeting_public_oss_20261117.py",
+      "bytes": 6247,
+      "sha256": "774442547dad60c1d6faef9c2fede85a8a695089ae5d6063dca1eff0f39dffd8"
+    },
+    {
+      "source": "work\\fetch_all_official_alimeeting_annotations_20261117.py",
+      "file": "tools/fetch_all_official_alimeeting_annotations_20261117.py",
+      "bytes": 3845,
+      "sha256": "a461f6cf4ae7d159ea4c646e93c34ebd5ef8ec4bd85fbf788c90fa2236bfe0f0"
+    },
+    {
+      "source": "work\\compare_original_alimeeting_training_20261117.py",
+      "file": "tools/compare_original_alimeeting_training_20261117.py",
+      "bytes": 4140,
+      "sha256": "67e30e936210b79b4b278ee61899d4b07d01b18f8789133b5033f279abbd7d42"
+    },
+    {
+      "source": "work\\compare_all_original_alimeeting_train_20261117.py",
+      "file": "tools/compare_all_original_alimeeting_train_20261117.py",
+      "bytes": 6766,
+      "sha256": "9ea613b752383852b35eabea249b66ee838536ab51c44e370300def78a106b73"
+    },
+    {
+      "source": "work\\acquire_alimeeting_first_mic_20261117.py",
+      "file": "tools/acquire_alimeeting_first_mic_20261117.py",
+      "bytes": 7036,
+      "sha256": "6641892fcf6883f5767cee0e77d6fb55754bef481a9dff69ff01c049789e2a7a"
+    },
+    {
+      "source": "work\\verify_and_commit_alimeeting_first_mic_20261117.py",
+      "file": "tools/verify_and_commit_alimeeting_first_mic_20261117.py",
+      "bytes": 5240,
+      "sha256": "813fe4e86a7402e7012caee6e1c51d1b94434d27cad84be766891b027fe606bb"
+    },
+    {
+      "source": "work\\classify_alimeeting_annotation_differences_20261117.py",
+      "file": "tools/classify_alimeeting_annotation_differences_20261117.py",
+      "bytes": 4508,
+      "sha256": "ba6461205d9eff5b0059af7d2df5dcc2776c0a3c209018616f5652ada21bd9c0"
+    },
+    {
+      "source": "work\\verify_alimeeting_primary_wave_headers_20261117.py",
+      "file": "tools/verify_alimeeting_primary_wave_headers_20261117.py",
+      "bytes": 6611,
+      "sha256": "2b5416710a7f49d20f7287939e83898316ac4df80fbd746b6fb6dc81403eb46f"
+    },
+    {
+      "source": "work\\prepare_alimeeting_clean_source_cohort_20261117.py",
+      "file": "tools/prepare_alimeeting_clean_source_cohort_20261117.py",
+      "bytes": 8271,
+      "sha256": "b05ecc499d349d87799c283cd8eacfd7efa8a6dc81edc07a9e4ea74ad1e5b647"
+    },
+    {
+      "source": "work\\prepare_alimeeting_range_cohort_20261117.py",
+      "file": "tools/prepare_alimeeting_range_cohort_20261117.py",
+      "bytes": 4547,
+      "sha256": "4edaae06622420248ccbaef4d376547ab6e764d73cf53e8c73b013ae3cc64d09"
+    },
+    {
+      "source": "work\\acquire_alimeeting_range_cohort_20261117.py",
+      "file": "tools/acquire_alimeeting_range_cohort_20261117.py",
+      "bytes": 8878,
+      "sha256": "7f554dcab4bdc9a43a00204b76cb7b7da1625a33d333e3f771d3932ad64e0d37"
+    },
+    {
+      "source": "work\\verify_alimeeting_range_input_integrity_20261117.py",
+      "file": "tools/verify_alimeeting_range_input_integrity_20261117.py",
+      "bytes": 9993,
+      "sha256": "7b1de15d99ab3105bb186839611a1d1f1389e65f07f0cb742b8209177f477407"
+    },
+    {
+      "source": "work\\record_alimeeting_six_hour_delivery_20261117.py",
+      "file": "tools/record_alimeeting_six_hour_delivery_20261117.py",
+      "bytes": 9782,
+      "sha256": "d256fb02d56a65d9b647c950f156f72855e27bbbbe51fcfa727b441ad60f362a"
+    },
+    {
+      "source": "work\\prepare_fixed_thread_cpu_vad_20261117.py",
+      "file": "tools/prepare_fixed_thread_cpu_vad_20261117.py",
+      "bytes": 3805,
+      "sha256": "eec0f757841e1c25e89d3194c02805e1a5a6181fca72380603d964918fbfbe31"
+    },
+    {
+      "source": "work\\close_primary_chinese_batch_20261117.py",
+      "file": "tools/close_primary_chinese_batch_20261117.py",
+      "bytes": 8315,
+      "sha256": "68cf0a6283096e0ca57fc0f832efb98ff888d8ec72c77dc292c92f4a7b7905d3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\official-dataset-info.json",
+      "file": "chinese/official-dataset-info.json",
+      "bytes": 6516,
+      "sha256": "c2c2a10b75496551c4bd5ce749ea369e9a234fce767b286bd674642bbbbba6ce"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\official-repo-tree.json",
+      "file": "chinese/official-repo-tree.json",
+      "bytes": 3389,
+      "sha256": "df615ef6ec0d92348c74fc9c55ce9a179c8aa47ce172e7a401e993ef8d5ce174"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\AliMeeting.json",
+      "file": "chinese/AliMeeting.json",
+      "bytes": 559,
+      "sha256": "c92e82126e8f142001f10199f517beebae4f191a7d76ee9088a024d533b11edb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\Train_Ali_far.csv",
+      "file": "chinese/Train_Ali_far.csv",
+      "bytes": 19667,
+      "sha256": "c03b65362f703f14aa1adae94cb025f558dc3ce80119a5877ab9d0e317f5a38c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\Train_Ali_near.csv",
+      "file": "chinese/Train_Ali_near.csv",
+      "bytes": 75151,
+      "sha256": "036970825df50b681a24464d1923d4c70a13c98500cf333e0439a16075725579"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\Eval_Ali-file-index-only.csv",
+      "file": "chinese/Eval_Ali-file-index-only.csv",
+      "bytes": 4051,
+      "sha256": "6e39a59a4fbe27039e10507aad33cc83efabd9e2bccc32d0b13d6344250ddb0a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\public-download-config-summary.json",
+      "file": "chinese/public-download-config-summary.json",
+      "bytes": 458,
+      "sha256": "8adcbb2bc2fc54357aecc340b367961b0bbac2eee0905160758eccf6073a5587"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\primary-train-eval-person-split.json",
+      "file": "chinese/primary-train-eval-person-split.json",
+      "bytes": 7110,
+      "sha256": "1ac47f3462912ebe9fc3851fd6c7b011d3fba694e7136c86ace3d03f05dcf094"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-original-textgrid-fetch.json",
+      "file": "chinese/first-original-textgrid-fetch.json",
+      "bytes": 1191,
+      "sha256": "2cde31e44b5aa449d2d3a8c1224f142462a503867ed16080df12b8ac86fb7260"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-original-textgrid-fetch-legacy-root-r2.json",
+      "file": "chinese/first-original-textgrid-fetch-legacy-root-r2.json",
+      "bytes": 1166,
+      "sha256": "f75075dd0f0380405f1de4eb58b902b0748ce0ddb8b3d37e096914788fd17635"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-original-textgrid-fetch-r3.json",
+      "file": "chinese/first-original-textgrid-fetch-r3.json",
+      "bytes": 1597,
+      "sha256": "9a7086aef263d8e29b641ebc1e79db76ef775bf6172fbb573132a64a10dbedd1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-original-vs-converted.json",
+      "file": "chinese/first-original-vs-converted.json",
+      "bytes": 1659,
+      "sha256": "e4aeb740e3870051ccec92778b810f623259a85c9981f71cb9260d9f145e7871"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\fetch-source-at-initial-prefix-failure.py",
+      "file": "chinese/fetch-source-at-initial-prefix-failure.py",
+      "bytes": 4522,
+      "sha256": "8541e3d19b2ec24a6fd5e0658521c74d33795c587e405e993221c7b0fe5a114c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\fetch-source-before-case-insensitive-etag.py",
+      "file": "chinese/fetch-source-before-case-insensitive-etag.py",
+      "bytes": 4780,
+      "sha256": "46bf6b30b9b2a520279d101fb7043def53d606b7af66250041a702c8013e1786"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-official-wave-object.json",
+      "file": "chinese/first-official-wave-object.json",
+      "bytes": 996,
+      "sha256": "9a587d9cec4569c16f945951858551bc3eb34ae27fc76031ef74b862555da4f9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-wave-header-source-pair.json",
+      "file": "chinese/first-wave-header-source-pair.json",
+      "bytes": 1364,
+      "sha256": "3e13527bd67d7aec0855664f3849e1c901e0f84c956b4d4e7f242481586e2d9f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\annotation-download-r1\\completed.json",
+      "file": "chinese/annotation-download-r1/completed.json",
+      "bytes": 114243,
+      "sha256": "3d575330f806c556aa5ea07f39d84b4775017e78278be8802567d71c244ba696"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\original-pairing-r1\\state.json",
+      "file": "chinese/original-pairing-r1/state.json",
+      "bytes": 73828,
+      "sha256": "bfa713f79a5a628f3ce3b9f84ff1a5c9abc7b78582e250ccb2da026e66ea8844"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\original-pairing-r1\\worker-at-short-tier-schema-stop.py",
+      "file": "chinese/original-pairing-r1/worker-at-short-tier-schema-stop.py",
+      "bytes": 6488,
+      "sha256": "b39a903eaa88ad9cf664404979fbe7d68b02ecdf45b6fd53e87332e783abb3be"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\original-pairing-r2\\completed.json",
+      "file": "chinese/original-pairing-r2/completed.json",
+      "bytes": 139086,
+      "sha256": "28ca7bfb51a6fb7ae67b565ad798e4e7938ff079ac3061fd8a74c61862a46c6f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\annotation-difference-classification.json",
+      "file": "chinese/annotation-difference-classification.json",
+      "bytes": 118114,
+      "sha256": "30a917ce05c2356ee440fe7cd82b821869627b71209f27b8a291574767de76d7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\primary-wave-headers-r1\\completed.json",
+      "file": "chinese/primary-wave-headers-r1/completed.json",
+      "bytes": 173460,
+      "sha256": "440be60a143df8b871cf7467518288bf910ed26c53ce2c9410864296c3f75422"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\primary-wave-headers-r1\\converted-recording-catalog.json",
+      "file": "chinese/primary-wave-headers-r1/converted-recording-catalog.json",
+      "bytes": 28009,
+      "sha256": "d850b4c48d3605db3cd83066e7a2d9100a76c7a67dae8a1cc3948c6aaa1b378d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\clean-source-cohort-r1\\protocol.json",
+      "file": "chinese/clean-source-cohort-r1/protocol.json",
+      "bytes": 220524,
+      "sha256": "a4428257b53260bbf857ea2d35bef23c6a131426d507e5094cecca2004ae3f50"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\oss-helper-before-persistent-range.py",
+      "file": "chinese/oss-helper-before-persistent-range.py",
+      "bytes": 3721,
+      "sha256": "e6bd48626e45ce36c8b42086e81e94d2728cde4e18b7cfc27ee5485c4b478ed7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-mic-source-r1\\state.json",
+      "file": "chinese/first-mic-source-r1/state.json",
+      "bytes": 2533,
+      "sha256": "1544baed53e0276934ffcc58ef0df3d0237eb82e06aa1d7dad2012128689a6bf"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-mic-source-r1\\terminal-fsync-failure.json",
+      "file": "chinese/first-mic-source-r1/terminal-fsync-failure.json",
+      "bytes": 562,
+      "sha256": "dc781b45158229a22540028aef425197c90ba49411a2dbb8ba827496df788436"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-mic-source-r1\\converter-before-fsync-mode-fix.py",
+      "file": "chinese/first-mic-source-r1/converter-before-fsync-mode-fix.py",
+      "bytes": 6680,
+      "sha256": "655923e175fd3bd0c3e631737f66d846e0790663d42ec74276116ada40ec27f8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-mic-source-r1\\post-source-check-r2\\completed.json",
+      "file": "chinese/first-mic-source-r1/post-source-check-r2/completed.json",
+      "bytes": 2051,
+      "sha256": "2638aa2df99f9b14d906d51c1cb8cdcd62621073d67d70bb0b400d98590e1df7"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\range-training-cohort-r2\\protocol.json",
+      "file": "chinese/range-training-cohort-r2/protocol.json",
+      "bytes": 211206,
+      "sha256": "07bb031685d85f2eddea3a4e9ab3a805803589e53655f86ef37f70b4c1dca375"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\range-training-cohort-r2\\acquisition-r1\\completed.json",
+      "file": "chinese/range-training-cohort-r2/acquisition-r1/completed.json",
+      "bytes": 1702,
+      "sha256": "3e9a1787952fbb5e9a26946eca25d6784345020af80537f12fcacfa337edf5cd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\range-training-cohort-r2\\integrity-r1\\completed.json",
+      "file": "chinese/range-training-cohort-r2/integrity-r1/completed.json",
+      "bytes": 6197,
+      "sha256": "1586431569dede2668193f862a1ccc5cf2875b8607ae0b06ffc537996414a66d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-primary-six-hour-delivery-20261117.json",
+      "file": "chinese/delivery.json",
+      "bytes": 6140,
+      "sha256": "1b117536b7fba90c62438bf3bc3d6cc0851a7a957d83362ba537ab91982ecd63"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-fixed-thread-day-r3\\protocol.json",
+      "file": "cpu-vad-skipped/protocol.json",
+      "bytes": 10400,
+      "sha256": "1998f91e642896efe81c04b776cd3e3ec4731acbb4055b3fd0dd3e5d25644911"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-fixed-thread-day-r3\\scoring-control.json",
+      "file": "cpu-vad-skipped/scoring-control.json",
+      "bytes": 1569,
+      "sha256": "cba814921c6b76dc8f70e090b7188193ff06121be48cfc50b2b6057fd8a10eb0"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-fixed-thread-day-r3\\preparation.json",
+      "file": "cpu-vad-skipped/preparation.json",
+      "bytes": 2212,
+      "sha256": "3edf54d75e7f4aa62821d07a30dd12f6f250f9601ee788a04aad7182d44a4041"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-fixed-thread-day-r3\\admission-decision.json",
+      "file": "cpu-vad-skipped/admission-decision.json",
+      "bytes": 1139,
+      "sha256": "2f726e6a4e2d0d7303717cc02be0431b07e967a73231de94abf0d946fcb838bb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\daytime-vad-thread-fixed-thermal-r7\\started.json",
+      "file": "thermal/daytime-vad-thread-fixed-thermal-r7/started.json",
+      "bytes": 962,
+      "sha256": "5d561a2be730f7e1aa48b0c700c211f031d6c0a2fd05b7a187fb3fdb17a219bf"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\daytime-vad-thread-fixed-thermal-r7\\completed.json",
+      "file": "thermal/daytime-vad-thread-fixed-thermal-r7/completed.json",
+      "bytes": 981,
+      "sha256": "70f2348b77ef7a3f483b81729467c9c5777d8aa1b9e9ec7fef8ed7b5ba2fb72e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\daytime-vad-thread-fixed-thermal-r8\\started.json",
+      "file": "thermal/daytime-vad-thread-fixed-thermal-r8/started.json",
+      "bytes": 959,
+      "sha256": "ece237cda09c551ba10be0349aace4a31e9ccbc94dbca34eeddebc87eac89547"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\daytime-vad-thread-fixed-thermal-r8\\completed.json",
+      "file": "thermal/daytime-vad-thread-fixed-thermal-r8/completed.json",
+      "bytes": 979,
+      "sha256": "21a0bfcc01e91eb0d79ff76cf188b15d212d3c64f66169036f231593428f0862"
+    },
+    {
+      "source": "work\\checkpoint_primary_chinese_r67.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 15021,
+      "sha256": "43d34c894c6764751c05232128d232e10b5741090889dc38a82fcdc5bee1dc96"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {},
+  "state": "PRIMARY_CHINESE_SIX_HOUR_INPUTS_VERIFIED_NO_MODEL_TRAINING_NEW_VAD_SKIPPED",
+  "examples": 5027,
+  "frames": 345643200,
+  "audioHours": 6.00075,
+  "trainingPeople": 374,
+  "meetings": 194,
+  "venues": 12,
+  "aliTrainingVersusEvaluationPersonIntersection": [],
+  "allOriginalTextFrameIntervalsAndPcmVerified": true,
+  "dataAcquisitionClosed": true,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "cpuOrIntegratedGpuTraining": false,
+  "rawTrainingTextsAudioWeightsOrCredentialsIncludedInCommit": false,
+  "originalAishellCrossCorpusPersonIsolationProven": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "productDefaultChanged": false,
+  "originalEvaluationAndResourceGatesChanged": false
+}

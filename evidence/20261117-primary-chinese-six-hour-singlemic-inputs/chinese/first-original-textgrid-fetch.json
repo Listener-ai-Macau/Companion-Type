@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-17T12:27:58.609393+08:00",
+  "state": "FAILED_OFFICIAL_TRAIN_TEXTGRID_FETCH_RETAINED_NO_RETRY",
+  "sourceSha256": "8541e3d19b2ec24a6fd5e0658521c74d33795c587e405e993221c7b0fe5a114c",
+  "file": "Train_Ali_far/textgrid_dir/R0003_M0046.TextGrid",
+  "maximumBytes": 1048576,
+  "attempts": [
+    {
+      "objectKey": "public-unzip-dataset/modelscope/AliMeeting/master/Train_Ali_far/textgrid_dir/R0003_M0046.TextGrid",
+      "method": "HEAD",
+      "status": 404,
+      "ossErrorCode": "unparsed"
+    },
+    {
+      "objectKey": "public-zip/modelscope/AliMeeting/master/Train_Ali_far/textgrid_dir/R0003_M0046.TextGrid",
+      "method": "HEAD",
+      "status": 404,
+      "ossErrorCode": "unparsed"
+    }
+  ],
+  "evalOrTestPayloadRead": false,
+  "credentialsPersistedOrPrinted": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "trainingAdmitted": false,
+  "publicLocation": {
+    "Bucket": "dataset-hub",
+    "Region": "oss-cn-hangzhou",
+    "Dir": "public-unzip-dataset/modelscope/AliMeeting/master/",
+    "BackupDir": "public-zip/modelscope/AliMeeting/master/"
+  },
+  "error": "FileNotFoundError('Published train object absent from both provider-declared prefixes')"
+}

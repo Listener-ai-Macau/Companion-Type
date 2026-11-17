@@ -1,0 +1,12 @@
+{
+  "state": "FULL_SOURCE_TRANSFER_AND_CONVERSION_FINISHED_FSYNC_READONLY_HANDLE_FAILED",
+  "execExitCode": 1,
+  "exception": "OSError [Errno9] Bad file descriptor",
+  "line": 74,
+  "firstSourceWorkerSha256": "655923e175fd3bd0c3e631737f66d846e0790663d42ec74276116ada40ec27f8",
+  "downloadedSourceBytes": 523745616,
+  "writtenMonoFrames": 32734096,
+  "rawSourceSha256WasNotCommitted": true,
+  "noNewNeuralCalls": 0,
+  "next": "Independent full-source byte verification against existing mono file, then fsync usingr+b and promote; no re-conversion."
+}

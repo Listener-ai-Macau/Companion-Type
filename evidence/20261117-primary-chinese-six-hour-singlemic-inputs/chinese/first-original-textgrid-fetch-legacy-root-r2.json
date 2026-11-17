@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-17T12:29:01.578556+08:00",
+  "state": "FAILED_OFFICIAL_TRAIN_TEXTGRID_FETCH_RETAINED_NO_RETRY",
+  "sourceSha256": "46bf6b30b9b2a520279d101fb7043def53d606b7af66250041a702c8013e1786",
+  "file": "Train_Ali_far/textgrid_dir/R0003_M0046.TextGrid",
+  "maximumBytes": 1048576,
+  "attempts": [
+    {
+      "objectKey": "public-unzipped/modelscope_AliMeeting_Train_Ali_far/Train_Ali_far/textgrid_dir/R0003_M0046.TextGrid",
+      "method": "HEAD",
+      "status": 200,
+      "bytes": 106298,
+      "etag": "\"65297079244BA2D5760590A799DCA171\""
+    }
+  ],
+  "evalOrTestPayloadRead": false,
+  "credentialsPersistedOrPrinted": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "trainingAdmitted": false,
+  "publicLocation": {
+    "Bucket": "dataset-hub",
+    "Region": "oss-cn-hangzhou",
+    "Dir": "public-unzip-dataset/modelscope/AliMeeting/master/",
+    "BackupDir": "public-zip/modelscope/AliMeeting/master/"
+  },
+  "legacyRootEvidence": "https://github.com/modelscope/modelscope_hub/blob/5810c09aa0c8b5f8348a5c53bdc831099228d9ad/src/modelscope_hub/compat/hub_api.py#L1368",
+  "error": "AssertionError('OSS annotation content checksum differs')"
+}

@@ -1,0 +1,44 @@
+{
+  "at": "2026-11-17T13:33:30.402482+08:00",
+  "state": "FIXED_THREAD_CPU_VAD_PREPARED_ORIGINAL_LOAD_GATE_CHECKED",
+  "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-fixed-thread-day-r3\\protocol.json",
+  "protocolSha256": "1998f91e642896efe81c04b776cd3e3ec4731acbb4055b3fd0dd3e5d25644911",
+  "scoringControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-fixed-thread-day-r3\\scoring-control.json",
+  "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-fixed-thread-day-r3\\run-default",
+  "readyForOriginal60SecondWorkerAdmission": false,
+  "currentCpuObservation": {
+    "sampleAt": "2026-11-17T13:33:30.3377834+08:00",
+    "celsius": 93.625,
+    "sampleAgeSeconds": 0.092962,
+    "sensorIdentifier": "/amdcpu/0/temperature/2",
+    "taskStartThresholdCelsius": 85,
+    "taskStopThresholdCelsius": 95,
+    "hardwareOverheatCauseProven": false,
+    "physicalMainboardTemperatureMeasured": false
+  },
+  "cpuBlas": {
+    "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0"
+  },
+  "fixedDetectorWeightsThresholdsAndAssociationUnchanged": true,
+  "timeboxMinutes": 10,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 27460,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 12517376,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

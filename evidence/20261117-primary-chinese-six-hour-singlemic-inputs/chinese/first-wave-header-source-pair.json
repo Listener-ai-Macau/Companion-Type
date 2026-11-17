@@ -1,0 +1,33 @@
+{
+  "state": "PASS_SAME_WAVE_HEADER_FROM_OFFICIAL_OPENSLR_ARCHIVE_AND_PUBLISHED_MODELSCOPE_OBJECT",
+  "headerBytes": 80,
+  "headerSha256": "68030326617acbdbf00e72ff2e2d38ee4cf812de488204a7dc07a221b95b56e4",
+  "noNewAudioFramesRead": true,
+  "sameHeaderIsNotFullAudioEquivalenceProof": true,
+  "sourceObject": {
+    "file": "Train_Ali_far/audio_dir/R0003_M0046_MS002.wav",
+    "bytes": 523745616,
+    "etag": "FB79CE7E8157AE76BA5F1519264A2FF4",
+    "lastModified": "Fri, 09 Dec 2022 06:42:03 GMT",
+    "objectKey": "public-unzipped/modelscope_AliMeeting_Train_Ali_far/Train_Ali_far/audio_dir/R0003_M0046_MS002.wav",
+    "prefixBytes": 80,
+    "prefixSha256": "68030326617acbdbf00e72ff2e2d38ee4cf812de488204a7dc07a221b95b56e4",
+    "contentRange": "bytes 0-79/523745616",
+    "limits": {
+      "pid": 25724,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 268435456,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 16453632,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    }
+  }
+}

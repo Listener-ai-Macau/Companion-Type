@@ -1,0 +1,266 @@
+{
+  "revision": 67,
+  "evidenceDirectory": "evidence/20261117-primary-chinese-six-hour-singlemic-inputs",
+  "sources": [],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "work\\fetch_official_alimeeting_textgrid_20261117.py",
+      "name": "tools/fetch_official_alimeeting_textgrid_20261117.py"
+    },
+    {
+      "source": "work\\fetch_official_alimeeting_textgrid_legacy_20261117.py",
+      "name": "tools/fetch_official_alimeeting_textgrid_legacy_20261117.py"
+    },
+    {
+      "source": "work\\fetch_official_alimeeting_textgrid_verified_20261117.py",
+      "name": "tools/fetch_official_alimeeting_textgrid_verified_20261117.py"
+    },
+    {
+      "source": "work\\alimeeting_public_oss_20261117.py",
+      "name": "tools/alimeeting_public_oss_20261117.py"
+    },
+    {
+      "source": "work\\fetch_all_official_alimeeting_annotations_20261117.py",
+      "name": "tools/fetch_all_official_alimeeting_annotations_20261117.py"
+    },
+    {
+      "source": "work\\compare_original_alimeeting_training_20261117.py",
+      "name": "tools/compare_original_alimeeting_training_20261117.py"
+    },
+    {
+      "source": "work\\compare_all_original_alimeeting_train_20261117.py",
+      "name": "tools/compare_all_original_alimeeting_train_20261117.py"
+    },
+    {
+      "source": "work\\acquire_alimeeting_first_mic_20261117.py",
+      "name": "tools/acquire_alimeeting_first_mic_20261117.py"
+    },
+    {
+      "source": "work\\verify_and_commit_alimeeting_first_mic_20261117.py",
+      "name": "tools/verify_and_commit_alimeeting_first_mic_20261117.py"
+    },
+    {
+      "source": "work\\classify_alimeeting_annotation_differences_20261117.py",
+      "name": "tools/classify_alimeeting_annotation_differences_20261117.py"
+    },
+    {
+      "source": "work\\verify_alimeeting_primary_wave_headers_20261117.py",
+      "name": "tools/verify_alimeeting_primary_wave_headers_20261117.py"
+    },
+    {
+      "source": "work\\prepare_alimeeting_clean_source_cohort_20261117.py",
+      "name": "tools/prepare_alimeeting_clean_source_cohort_20261117.py"
+    },
+    {
+      "source": "work\\prepare_alimeeting_range_cohort_20261117.py",
+      "name": "tools/prepare_alimeeting_range_cohort_20261117.py"
+    },
+    {
+      "source": "work\\acquire_alimeeting_range_cohort_20261117.py",
+      "name": "tools/acquire_alimeeting_range_cohort_20261117.py"
+    },
+    {
+      "source": "work\\verify_alimeeting_range_input_integrity_20261117.py",
+      "name": "tools/verify_alimeeting_range_input_integrity_20261117.py"
+    },
+    {
+      "source": "work\\record_alimeeting_six_hour_delivery_20261117.py",
+      "name": "tools/record_alimeeting_six_hour_delivery_20261117.py"
+    },
+    {
+      "source": "work\\prepare_fixed_thread_cpu_vad_20261117.py",
+      "name": "tools/prepare_fixed_thread_cpu_vad_20261117.py"
+    },
+    {
+      "source": "work\\close_primary_chinese_batch_20261117.py",
+      "name": "tools/close_primary_chinese_batch_20261117.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\official-dataset-info.json",
+      "name": "chinese/official-dataset-info.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\official-repo-tree.json",
+      "name": "chinese/official-repo-tree.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\AliMeeting.json",
+      "name": "chinese/AliMeeting.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\Train_Ali_far.csv",
+      "name": "chinese/Train_Ali_far.csv"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\Train_Ali_near.csv",
+      "name": "chinese/Train_Ali_near.csv"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\Eval_Ali-file-index-only.csv",
+      "name": "chinese/Eval_Ali-file-index-only.csv"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\public-download-config-summary.json",
+      "name": "chinese/public-download-config-summary.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\primary-train-eval-person-split.json",
+      "name": "chinese/primary-train-eval-person-split.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-original-textgrid-fetch.json",
+      "name": "chinese/first-original-textgrid-fetch.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-original-textgrid-fetch-legacy-root-r2.json",
+      "name": "chinese/first-original-textgrid-fetch-legacy-root-r2.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-original-textgrid-fetch-r3.json",
+      "name": "chinese/first-original-textgrid-fetch-r3.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-original-vs-converted.json",
+      "name": "chinese/first-original-vs-converted.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\fetch-source-at-initial-prefix-failure.py",
+      "name": "chinese/fetch-source-at-initial-prefix-failure.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\fetch-source-before-case-insensitive-etag.py",
+      "name": "chinese/fetch-source-before-case-insensitive-etag.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-official-wave-object.json",
+      "name": "chinese/first-official-wave-object.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-wave-header-source-pair.json",
+      "name": "chinese/first-wave-header-source-pair.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\annotation-download-r1\\completed.json",
+      "name": "chinese/annotation-download-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\original-pairing-r1\\state.json",
+      "name": "chinese/original-pairing-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\original-pairing-r1\\worker-at-short-tier-schema-stop.py",
+      "name": "chinese/original-pairing-r1/worker-at-short-tier-schema-stop.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\original-pairing-r2\\completed.json",
+      "name": "chinese/original-pairing-r2/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\annotation-difference-classification.json",
+      "name": "chinese/annotation-difference-classification.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\primary-wave-headers-r1\\completed.json",
+      "name": "chinese/primary-wave-headers-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\primary-wave-headers-r1\\converted-recording-catalog.json",
+      "name": "chinese/primary-wave-headers-r1/converted-recording-catalog.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\clean-source-cohort-r1\\protocol.json",
+      "name": "chinese/clean-source-cohort-r1/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\oss-helper-before-persistent-range.py",
+      "name": "chinese/oss-helper-before-persistent-range.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-mic-source-r1\\state.json",
+      "name": "chinese/first-mic-source-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-mic-source-r1\\terminal-fsync-failure.json",
+      "name": "chinese/first-mic-source-r1/terminal-fsync-failure.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-mic-source-r1\\converter-before-fsync-mode-fix.py",
+      "name": "chinese/first-mic-source-r1/converter-before-fsync-mode-fix.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\first-mic-source-r1\\post-source-check-r2\\completed.json",
+      "name": "chinese/first-mic-source-r1/post-source-check-r2/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\range-training-cohort-r2\\protocol.json",
+      "name": "chinese/range-training-cohort-r2/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\range-training-cohort-r2\\acquisition-r1\\completed.json",
+      "name": "chinese/range-training-cohort-r2/acquisition-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-official-intake-r2\\range-training-cohort-r2\\integrity-r1\\completed.json",
+      "name": "chinese/range-training-cohort-r2/integrity-r1/completed.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-primary-six-hour-delivery-20261117.json",
+      "name": "chinese/delivery.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-fixed-thread-day-r3\\protocol.json",
+      "name": "cpu-vad-skipped/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-fixed-thread-day-r3\\scoring-control.json",
+      "name": "cpu-vad-skipped/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-fixed-thread-day-r3\\preparation.json",
+      "name": "cpu-vad-skipped/preparation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-fixed-thread-day-r3\\admission-decision.json",
+      "name": "cpu-vad-skipped/admission-decision.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\daytime-vad-thread-fixed-thermal-r7\\started.json",
+      "name": "thermal/daytime-vad-thread-fixed-thermal-r7/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\daytime-vad-thread-fixed-thermal-r7\\completed.json",
+      "name": "thermal/daytime-vad-thread-fixed-thermal-r7/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\daytime-vad-thread-fixed-thermal-r8\\started.json",
+      "name": "thermal/daytime-vad-thread-fixed-thermal-r8/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\daytime-vad-thread-fixed-thermal-r8\\completed.json",
+      "name": "thermal/daytime-vad-thread-fixed-thermal-r8/completed.json"
+    }
+  ],
+  "commitMessage": "Deliver source-verified six-hour Chinese nonoverlap ASR inputs and close skipped VAD admission",
+  "claims": {
+    "state": "PRIMARY_CHINESE_SIX_HOUR_INPUTS_VERIFIED_NO_MODEL_TRAINING_NEW_VAD_SKIPPED",
+    "examples": 5027,
+    "frames": 345643200,
+    "audioHours": 6.00075,
+    "trainingPeople": 374,
+    "meetings": 194,
+    "venues": 12,
+    "aliTrainingVersusEvaluationPersonIntersection": [],
+    "allOriginalTextFrameIntervalsAndPcmVerified": true,
+    "dataAcquisitionClosed": true,
+    "newNeuralCalls": 0,
+    "parameterUpdates": 0,
+    "cpuOrIntegratedGpuTraining": false,
+    "rawTrainingTextsAudioWeightsOrCredentialsIncludedInCommit": false,
+    "originalAishellCrossCorpusPersonIsolationProven": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "productDefaultChanged": false,
+    "originalEvaluationAndResourceGatesChanged": false
+  }
+}
