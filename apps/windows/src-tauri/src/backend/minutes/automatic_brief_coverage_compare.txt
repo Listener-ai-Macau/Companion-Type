@@ -11,3 +11,4 @@ uncertainSourceSpans若非空，是另一次原文审查定位的含混短语，
 covered必须给实际承载答案的summaryIds；partial可给已有部分；missing应空。仅有主题名字却无机制时判missing或partial。
 逐题返回严格JSON，不增不漏：{"checks":[{"id":"q00","result":"covered","material":false,"difference":"","summaryIds":["s000"]}]}
 result只能covered/partial/missing/contradicted；difference最多100字，covered时空。summaryIds必须来自该题summaryEvidence。
+sourceAmbiguities若存在，只标记同一原话中尚不能确认的特定解释，并附程序绑定的原文证据。它不是正确答案，也不能豁免整题；仍须检查同段清楚的角色、做法、条件和替代选项。不能靠常识把已不清楚的名称、方向或触发条件强迫纪要补成确定事实。若有其它独立清楚原文消除该不足，以那处为据；否则不可确认部分不算纪要的实质遗漏，可靠上位表达不需要猜回原词。

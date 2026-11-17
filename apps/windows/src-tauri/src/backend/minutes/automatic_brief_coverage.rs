@@ -87,7 +87,8 @@ fn audit_omissions_at(endpoint:&str,model:&str,key:&str,client:&reqwest::blockin
     let wire=units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s["source"].as_str()==Some(u.id.as_str())).map(|s|json!({"id":s["id"],"text":s["text"]})).collect::<Vec<_>>()})).collect::<Vec<_>>();
     // This independent source-to-document check sees the actual document,
     // never the writer's question bank or any expected omission labels.
-    let raw=super::request(endpoint,model,key,client,OMISSIONS,json!({"sourceUnits":wire,"document":doc}),true,start,trace,stage)?;
+    let ambiguities=source_interpretation_uncertainties(trace,units);
+    let raw=super::request(endpoint,model,key,client,OMISSIONS,json!({"sourceUnits":wire,"document":doc,"sourceAmbiguities":ambiguities}),true,start,trace,stage)?;
     decode_omissions(&raw,&source)
 }
 
@@ -213,6 +214,33 @@ fn uncertain_source_spans(trace:&[Value],evidence:&[Evidence])->Vec<Value>{
     }
     spans
 }
+fn interpretation_records(trace:&[Value])->Vec<Value>{
+    let mut records=Vec::new();
+    for value in trace.iter().filter_map(|call|call.get("sourceInterpretationUncertainties").and_then(Value::as_array)).flatten(){
+        let Some(phrase)=value["interpretation"].as_str().filter(|s|super::line(s,180))else{continue;};
+        let Some(reason)=value["reason"].as_str().filter(|s|!s.trim().is_empty()&&s.chars().count()<=600)else{continue;};
+        let Some(evidence)=value["sourceEvidence"].as_array().filter(|rows|!rows.is_empty()&&rows.len()<=8)else{continue;};
+        if evidence.iter().any(|row|row["source"].as_str().is_none()||row["sentenceId"].as_str().is_none()||row["quote"].as_str().is_none_or(str::is_empty)){continue;}
+        let record=json!({"interpretation":phrase,"reason":reason,"sourceEvidence":evidence});
+        if !records.contains(&record){records.push(record);}
+    }
+    records
+}
+fn source_interpretation_uncertainties(trace:&[Value],units:&[Unit])->Vec<Value>{
+    let sentences=super::factual_audit::evidence_sentences(units);
+    interpretation_records(trace).into_iter().filter(|record|record["sourceEvidence"].as_array().unwrap().iter().all(|row|{
+        sentences.iter().any(|sentence|sentence["id"]==row["sentenceId"]&&sentence["source"]==row["source"]&&sentence["text"]==row["quote"])
+    })).collect()
+}
+fn question_interpretation_uncertainties(trace:&[Value],evidence:&[Evidence])->Vec<Value>{
+    interpretation_records(trace).into_iter().filter_map(|mut record|{
+        let matched=record["sourceEvidence"].as_array().unwrap().iter().filter(|row|{
+            let source=row["source"].as_str().unwrap();let quote=row["quote"].as_str().unwrap();
+            evidence.iter().any(|e|e.source==source&&(e.quote.contains(quote)||quote.contains(&e.quote)))
+        }).cloned().collect::<Vec<_>>();
+        if matched.is_empty(){None}else{record["sourceEvidence"]=json!(matched);Some(record)}
+    }).collect()
+}
 fn evaluate(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,questions:&[Question],start:Instant,trace:&mut Vec<Value>,stage:&str,recovered_references:&mut bool)->Result<(Vec<Check>,Vec<SummaryUnit>),String>{
     let summary=summary_units(doc);let asked=questions.iter().map(|q|json!({"id":q.id,"question":q.question})).collect::<Vec<_>>();
     // Neither transcript nor source answers reach this request.
@@ -232,7 +260,7 @@ fn evaluate(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,
         }
     };let known=summary.iter().map(|s|(s.id.as_str(),s)).collect::<HashMap<_,_>>();
     let indexed=retrieved.iter().map(|r|(r.id.as_str(),r)).collect::<HashMap<_,_>>();
-    let pairs=questions.iter().map(|q|json!({"id":q.id,"question":q.question,"importance":q.importance,"sourceEvidence":q.evidence,"uncertainSourceSpans":uncertain_source_spans(trace,&q.evidence),"summaryEvidence":indexed[q.id.as_str()].summary_ids.iter().map(|id|known[id.as_str()]).collect::<Vec<_>>()})).collect::<Vec<_>>();
+    let pairs=questions.iter().map(|q|json!({"id":q.id,"question":q.question,"importance":q.importance,"sourceEvidence":q.evidence,"uncertainSourceSpans":uncertain_source_spans(trace,&q.evidence),"sourceAmbiguities":question_interpretation_uncertainties(trace,&q.evidence),"summaryEvidence":indexed[q.id.as_str()].summary_ids.iter().map(|id|known[id.as_str()]).collect::<Vec<_>>()})).collect::<Vec<_>>();
     let raw=super::request(endpoint,model,key,client,COMPARE,json!({"pairs":pairs}),true,start,trace,&format!("coverage-compare-{stage}"))?;
     Ok((decode_comparison(&raw,questions,&retrieved)?,summary))
 }
@@ -386,7 +414,10 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
         // Only validated source uncertainty metadata is context for question
         // comparison. Preserve it across the worker boundary without exposing
         // another reviewer's answers or recording the old calls a second time.
-        let uncertainty_context=trace.iter().filter_map(|call|call.get("sourceUncertainties").map(|spans|json!({"sourceUncertainties":spans}))).collect::<Vec<_>>();
+        let ambiguities=source_interpretation_uncertainties(trace,units);
+        let mut uncertainty_context=trace.iter().filter_map(|call|call.get("sourceUncertainties").map(|spans|json!({"sourceUncertainties":spans}))).collect::<Vec<_>>();
+        if !ambiguities.is_empty(){uncertainty_context.push(json!({"sourceInterpretationUncertainties":ambiguities}));}
+        let omission_context=uncertainty_context.clone();
         let(compared,omissions)=std::thread::scope(|scope|{
             let compare_token=token.clone();let omissions_token=token;
             let current=&current;let pending=&pending;
@@ -397,9 +428,9 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
                 };(result,calls.split_off(context_len),recovered)
             });
             let omissions=scope.spawn(move||{
-                let mut calls=Vec::new();let result=if needs_omissions{
+                let mut calls=omission_context;let context_len=calls.len();let result=if needs_omissions{
                     super::with_parent_job(omissions_token,||audit_omissions_at(endpoint,model,key,client,current,units,start,&mut calls,&format!("coverage-source-to-document-final-{round}")))
-                }else{Ok(Omissions(Vec::new()))};(result,calls)
+                }else{Ok(Omissions(Vec::new()))};(result,calls.split_off(context_len))
             });
             let mut stopped=false;
             while !comparison.is_finished()||!omissions.is_finished(){
@@ -443,7 +474,7 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
         // witness is not progress; the two-append bound never resets.
         if round==2||allowed.iter().any(|q|attempted.contains_key(q)&&!partial_progress.contains(q)&&!factually_changed.contains(q)){return Err(fail());}
         let used=current.topics.iter().flat_map(|t|&t.points).map(|p|p.text.chars().count()).sum::<usize>();
-        let mut payload=json!({"sourceUnits":units,"previousDocument":current,"coverageProblems":issues,"availableAppendSlots":append_slots(&current),"mainCharactersAvailable":1000usize.saturating_sub(used)});
+        let mut payload=json!({"sourceUnits":units,"previousDocument":current,"coverageProblems":issues,"sourceAmbiguities":source_interpretation_uncertainties(trace,units),"availableAppendSlots":append_slots(&current),"mainCharactersAvailable":1000usize.saturating_sub(used)});
         let raw=super::request(endpoint,model,key,client,APPEND,payload.clone(),true,start,trace,&format!("coverage-append-{round}"))?;
         let before=current.clone();
         let(added,accepted_patch)=match append(&raw,&current,&allowed,units){
@@ -622,5 +653,17 @@ mod tests {
         audited.topics[0].details.remove(0);
         assert_eq!(corrected_append_questions(&raw,&added,&audited),HashSet::from(["q00".into()]));
         assert!(corrected_append_questions(&raw,&added,&added).is_empty());
+    }
+    #[test]
+    fn automatic_brief_source_ambiguity_binds_exact_sentence_and_does_not_leak_to_other_questions(){
+        let u=units();let source=super::super::factual_audit::evidence_sentences(&u);
+        let record=json!({"interpretation":"一个未经确认的条件","reason":"只定位此解释，不豁免同段清楚的采购限制","sourceEvidence":[{"source":source[0]["source"],"sentenceId":source[0]["id"],"quote":source[0]["text"]}]});
+        let mut tampered=record.clone();tampered["sourceEvidence"][0]["quote"]=json!("不存在的原话");
+        let trace=vec![json!({"sourceInterpretationUncertainties":[record.clone(),record.clone(),tampered]})];
+        let validated=source_interpretation_uncertainties(&trace,&u);assert_eq!(validated,vec![record.clone()]);
+        let carried=vec![json!({"sourceInterpretationUncertainties":validated})];
+        assert_eq!(question_interpretation_uncertainties(&carried,&[Evidence{source:"u000".into(),quote:u[0].text.clone()}]),vec![record]);
+        assert!(question_interpretation_uncertainties(&carried,&[Evidence{source:"u001".into(),quote:u[1].text.clone()}]).is_empty());
+        assert!(question_interpretation_uncertainties(&carried,&[Evidence{source:"u000".into(),quote:"不得先采购。".into()}]).is_empty());
     }
 }

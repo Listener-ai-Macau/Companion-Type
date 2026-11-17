@@ -230,7 +230,15 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
         if let Some(original)=expected.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str())){if let Some(refs)=original["sources"].as_array(){ids.extend(refs.iter().filter_map(Value::as_str).map(str::to_string));}}
         json!({"path":c.path,"phrase":c.unclear_text,"sourceIds":ids})
     }).collect::<Vec<_>>();
-    if let Some(call)=trace.last_mut(){if !uncertain.is_empty(){call["sourceUncertainties"]=json!(uncertain);}if !history.is_empty(){call["unclearClaimHistory"]=json!(history);}}
+    // An uncertain interpretation can differ from the raw ASR wording (for
+    // example a guessed condition). Carry its exact source sentences as well,
+    // so a coverage reviewer cannot demand that same guess as a missing fact.
+    let interpretations=claims.iter().filter(|c|c.clarity.as_deref()==Some("unclear")).map(|c|{
+        let evidence=c.evidence.iter().filter_map(|id|source.iter().find(|s|&s.id==id))
+            .map(|s|json!({"source":s.source,"sentenceId":s.id,"quote":s.text})).collect::<Vec<_>>();
+        json!({"interpretation":c.unclear_text,"reason":c.reason,"sourceEvidence":evidence})
+    }).collect::<Vec<_>>();
+    if let Some(call)=trace.last_mut(){if !uncertain.is_empty(){call["sourceUncertainties"]=json!(uncertain);}if !history.is_empty(){call["unclearClaimHistory"]=json!(history);}if !interpretations.is_empty(){call["sourceInterpretationUncertainties"]=json!(interpretations);}}
     Ok(Audit{claim_audit:claims,format_kind:None})
 }
 fn apply_historical_veto(audit:&mut Audit,expected:&[Value],history:&[Value],source:&[Sentence])->Vec<String>{

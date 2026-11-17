@@ -13,3 +13,4 @@ coverageProblems中的uncertainSourceSpans是已被另一原文审查定位的�
 仅返回JSON（slot示例必须替换为本次实际空位id）：{"changes":[{"questionIds":["q00"],"slot":"t0p1","append":{"kind":"opinion","text":"完整短观点","sources":["u000"]}}]}。
 追加details/decisions/questions不含kind。追加actionItems含text、owner、due、sources，owner/due只用对应原文字面值，没有明确则null。kind只能opinion/recommendation/forecast/status/decision。
 不能实际补足时不要编造，changes可空，软件会保留原文与旧纪要。
+sourceAmbiguities若存在，是同原文中尚未确认的特定解释及真实原文定位，不是参考答案。不要为迎合coverageProblems猜回这些名称、方向或触发条件；先回原话，保留清楚的角色/机制/范围/替代选项，必要而无法确认的条件可标待确认。只有其它独立清楚原话能确认时才可据其写出具体解释。不能以不确定为由删除同段清楚的重要内容。
