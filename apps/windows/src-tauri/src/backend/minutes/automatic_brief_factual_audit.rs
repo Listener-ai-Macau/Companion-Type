@@ -137,6 +137,17 @@ fn bind_supported_sources(doc:&Document,audit:&Audit,source:&[Sentence],units:&[
     }
     let bound:Document=serde_json::from_value(value).map_err(|_|fail())?;super::validate(&bound,units)?;Ok(bound)
 }
+fn incomplete_audit(raw:&str,expected:&[Value],source:&[Sentence])->Option<(Audit,Vec<Value>)>{
+    let parsed:Audit=serde_json::from_str(super::super::strip_code_fences(raw).trim()).ok()?;
+    if parsed.claim_audit.len()>=expected.len(){return None;}
+    let paths=parsed.claim_audit.iter().map(|c|c.path.as_str()).collect::<HashSet<_>>();
+    let present=expected.iter().filter(|c|paths.contains(c["path"].as_str().unwrap())).cloned().collect::<Vec<_>>();
+    // Validate every supplied verdict with the original strict contract. Extra,
+    // duplicate, altered or unknown rows cannot enter missing-only recovery.
+    let audit=decode(raw,&present,source).ok()?;
+    let missing=expected.iter().filter(|c|!paths.contains(c["path"].as_str().unwrap())).cloned().collect::<Vec<_>>();
+    Some((audit,missing))
+}
 fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,wire:&Value,expected:&[Value],source:&[Sentence],stage:&str,start:Instant,trace:&mut Vec<Value>,recovered_format:&AtomicBool)->Result<Audit,String>{
     // Each independent batch still sees the complete immutable source and
     // document. Bound concurrency to three; every claim needs a verdict.
@@ -153,8 +164,18 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
                     let payload=json!({"sourceUnits":wire,"document":doc,"checkClaims":claims});
                     let raw=super::request(endpoint,model,key,client,PROMPT,payload.clone(),true,start,&mut calls,&stage)?;
                     check_cancellation(token.as_ref())?;
+                    let incomplete=super::coverage::enabled().then(||incomplete_audit(&raw,claims,source)).flatten();
                     match decode(&raw,claims,source){
                         Ok(audit)=>Ok(audit),
+                        Err(_) if incomplete.is_some()&&recovered_format.compare_exchange(false,true,Ordering::AcqRel,Ordering::Acquire).is_ok()=>{
+                            let(mut audit,missing)=incomplete.unwrap();
+                            let payload=json!({"sourceUnits":wire,"document":doc,"checkClaims":missing});
+                            let fixed=super::request(endpoint,model,key,client,PROMPT,payload,true,start,&mut calls,&format!("{stage}-missing-recovery"))?;
+                            check_cancellation(token.as_ref())?;
+                            // Previously returned positive and negative verdicts
+                            // are immutable; only absent paths are requested.
+                            audit.claim_audit.extend(decode(&fixed,&missing,source)?.claim_audit);Ok(audit)
+                        },
                         Err(_) if serde_json::from_str::<Value>(super::super::strip_code_fences(&raw).trim()).is_err()
                             &&recovered_format.compare_exchange(false,true,Ordering::AcqRel,Ordering::Acquire).is_ok()=>{
                             let negative=readable_negative_paths(&raw);let mut payload=payload;
@@ -386,6 +407,14 @@ mod tests {
         assert!(!preserves_negative_paths(&accepted,&negative));
         let rejected=decode(&bad.to_string(),&expected(),&sentences(&source())).unwrap();
         assert!(preserves_negative_paths(&rejected,&negative));
+    }
+    #[test]
+    fn automatic_brief_missing_audit_recovery_keeps_existing_verdicts(){
+        let source=sentences(&source());let expected=expected();let mut partial=audit();partial["claimAudit"].as_array_mut().unwrap().pop();
+        partial["claimAudit"][0]["status"]=json!("overstated");
+        let(accepted,missing)=incomplete_audit(&partial.to_string(),&expected,&source).unwrap();
+        assert_eq!(accepted.claim_audit[0].status,"overstated");assert_eq!(missing,vec![expected[1].clone()]);
+        for bad in [json!({"claimAudit":[{"path":"unknown","status":"supported","reason":"假路径","evidence":["e0000"]}]}),json!({"claimAudit":[],"passed":true})]{assert!(incomplete_audit(&bad.to_string(),&expected,&source).is_none());}
     }
     #[test]
     fn automatic_brief_fact_sentence_projection_keeps_all_source_bytes(){
