@@ -1,6 +1,6 @@
 //! Explicit headless candidate evidence. It reads only the named, hash-bound
 //! source, never the user's meeting library, device, microphone or service key.
-use std::{fs::{self,OpenOptions},io::Write,path::{Path,PathBuf},sync::atomic::{AtomicBool,Ordering},time::Duration};
+use std::{fs::{self,OpenOptions},io::Write,path::{Path,PathBuf},sync::atomic::{AtomicBool,Ordering},time::{Duration,Instant,SystemTime,UNIX_EPOCH}};
 use serde::Deserialize;
 use serde_json::{json,Value};
 use sha2::{Digest,Sha256};
@@ -24,7 +24,10 @@ fn save_new(path:&Path,value:&Value)->Result<(),String>{
     file.write_all(&serde_json::to_vec_pretty(value).map_err(|_|"无法编码工程证据。")?).and_then(|_|file.sync_all()).map_err(|_|"无法保存工程证据。".into())
 }
 fn state(root:&Path,value:&Value)->Result<(),String>{
-    let temp=root.join("state.tmp");let target=root.join("state.json");
+    replace_state(root,"state",value)
+}
+fn replace_state(root:&Path,name:&str,value:&Value)->Result<(),String>{
+    let temp=root.join(format!("{name}.tmp"));let target=root.join(format!("{name}.json"));
     let mut file=OpenOptions::new().write(true).create(true).truncate(true).open(&temp).map_err(|_|"无法保存工程进度。")?;
     file.write_all(&serde_json::to_vec_pretty(value).map_err(|_|"无法编码工程进度。")?).and_then(|_|file.sync_all()).map_err(|_|"无法保存工程进度。")?;
     drop(file);super::super::super::export::replace_file(&temp.canonicalize().map_err(|_|"无法定位工程进度。")?,&target)
@@ -53,12 +56,28 @@ pub(crate) fn candidate(input:&Path,output:&Path)->Result<Value,String>{
     let mut receipt=None;
     let result=std::thread::scope(|scope|{
         let monitor=scope.spawn(||{
+            let mut last_checkpoint=None;
             while !finished.load(Ordering::Acquire){
                 if root.join("stop.request").exists(){let _=super::super::super::meeting_processing_job::cancel(&session.id,&job_id);}
                 let mut live=header.clone();
+                let observed=SystemTime::now().duration_since(UNIX_EPOCH).map(|d|d.as_millis()).unwrap_or(0);
+                live["observedAtUnixMs"]=json!(observed);
+                let mut checkpoint=None;
                 if let Ok(trace)=trace.lock(){
                     live["stage"]=trace["stage"].clone();live["generationSeconds"]=trace["generationSeconds"].clone();
                     live["outputCharacters"]=json!(trace["output"].as_str().map(|s|s.chars().count()).unwrap_or(0));
+                    live["reasoningCharacters"]=trace["reasoningCharacters"].clone();
+                    if last_checkpoint.is_none_or(|last:Instant|last.elapsed()>=Duration::from_secs(10)){
+                        checkpoint=Some(trace.clone());last_checkpoint=Some(Instant::now());
+                    }
+                }
+                // One bounded, overwritten checkpoint for this explicitly named
+                // engineering source. Preserve partial answers/call receipts on
+                // interruption; internal thoughts and authorization keys never
+                // enter the trace. This is never a publishable or saved meeting.
+                if let Some(trace)=checkpoint{
+                    let _=replace_state(&root,"generation-checkpoint",&json!({"state":"INCOMPLETE_ENGINEERING_CHECKPOINT_NOT_PUBLICATION",
+                        "observedAtUnixMs":observed,"contentQualified":false,"normalApplicationSaveVerified":false,"trace":trace}));
                 }
                 let _=state(&root,&live);std::thread::sleep(Duration::from_millis(500));
             }

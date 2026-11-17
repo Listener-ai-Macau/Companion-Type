@@ -6,42 +6,198 @@
     {
       "name": "ggml-base.dll",
       "bytes": 700928,
-      "sha256": "fc9fe15b81101eb9e53c9d10a04cd4b90b95eb88916e0c6394e6556b80fd37c6"
+      "sha256": "fc9fe15b81101eb9e53c9d10a04cd4b90b95eb88916e0c6394e6556b80fd37c6",
+      "origin": "sdk",
+      "sourceRelativePath": "ggml-base.dll"
     },
     {
       "name": "ggml-cpu.dll",
       "bytes": 1096192,
-      "sha256": "1f906078920a438cae725432fedd5cfe6b299022fd1d3f38950e65e404af1545"
+      "sha256": "1f906078920a438cae725432fedd5cfe6b299022fd1d3f38950e65e404af1545",
+      "origin": "sdk",
+      "sourceRelativePath": "ggml-cpu.dll"
     },
     {
       "name": "ggml.dll",
       "bytes": 58368,
-      "sha256": "39e2269b4a4148657707a2371f6b7b5255c109866978328a14b7269e103d454c"
+      "sha256": "39e2269b4a4148657707a2371f6b7b5255c109866978328a14b7269e103d454c",
+      "origin": "sdk",
+      "sourceRelativePath": "ggml.dll"
     },
     {
       "name": "llama-common.dll",
       "bytes": 8862720,
-      "sha256": "ba165fb8b07cee71bad0513114fe35a2970a433808cb0173d84fc25e8ebccd29"
+      "sha256": "ba165fb8b07cee71bad0513114fe35a2970a433808cb0173d84fc25e8ebccd29",
+      "origin": "sdk",
+      "sourceRelativePath": "llama-common.dll"
     },
     {
       "name": "llama-server-impl.dll",
       "bytes": 7411200,
-      "sha256": "b50f888a0f4f90708a7b629d1e62eec4ad8e3ce17d66004a978219b20d0c2220"
+      "sha256": "b50f888a0f4f90708a7b629d1e62eec4ad8e3ce17d66004a978219b20d0c2220",
+      "origin": "sdk",
+      "sourceRelativePath": "llama-server-impl.dll"
     },
     {
       "name": "llama-server.exe",
       "bytes": 11264,
-      "sha256": "e866430b71054f4e21e3b294a60f198ae9313c08839000febb765fd5dc4d7e47"
+      "sha256": "e866430b71054f4e21e3b294a60f198ae9313c08839000febb765fd5dc4d7e47",
+      "origin": "sdk",
+      "sourceRelativePath": "llama-server.exe"
     },
     {
       "name": "llama.dll",
       "bytes": 3174912,
-      "sha256": "cda982fc44167fa9e5ff605bc0e865e8289f69b07a9b509d2f7f370b4abc25f9"
+      "sha256": "cda982fc44167fa9e5ff605bc0e865e8289f69b07a9b509d2f7f370b4abc25f9",
+      "origin": "sdk",
+      "sourceRelativePath": "llama.dll"
     },
     {
       "name": "mtmd.dll",
       "bytes": 2921984,
-      "sha256": "015b6562b902d869bb660053c609d4cc997e2db127620de7042e460f01957eeb"
+      "sha256": "015b6562b902d869bb660053c609d4cc997e2db127620de7042e460f01957eeb",
+      "origin": "sdk",
+      "sourceRelativePath": "mtmd.dll"
+    },
+    {
+      "name": "msvcp140.dll",
+      "bytes": 557728,
+      "sha256": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9",
+      "origin": "msvc",
+      "sourceRelativePath": "Microsoft.VC143.CRT/msvcp140.dll"
+    },
+    {
+      "name": "vcruntime140.dll",
+      "bytes": 124544,
+      "sha256": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+      "origin": "msvc",
+      "sourceRelativePath": "Microsoft.VC143.CRT/vcruntime140.dll"
+    },
+    {
+      "name": "vcruntime140_1.dll",
+      "bytes": 49792,
+      "sha256": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+      "origin": "msvc",
+      "sourceRelativePath": "Microsoft.VC143.CRT/vcruntime140_1.dll"
+    },
+    {
+      "name": "vcomp140.dll",
+      "bytes": 193152,
+      "sha256": "55aba23cdcd6484fbb06f4155b8ca75adfce7a881f10afd0c49457165e677164",
+      "origin": "msvc",
+      "sourceRelativePath": "Microsoft.VC143.OpenMP/vcomp140.dll"
     }
-  ]
+  ],
+  "licenses": [
+    {
+      "path": "licenses/LICENSE",
+      "bytes": 1078,
+      "sha256": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d",
+      "origin": "sdk",
+      "sourceRelativePath": "LICENSE"
+    },
+    {
+      "path": "licenses/cmake/license.cmake",
+      "bytes": 1445,
+      "sha256": "083515dff8a9b8696e348c7c616934e53941a7db30e1b3f092576632e9a2d1d4",
+      "origin": "sdk",
+      "sourceRelativePath": "cmake/license.cmake"
+    },
+    {
+      "path": "licenses/gguf-py/LICENSE",
+      "bytes": 1072,
+      "sha256": "ef78c7e6659e34c798194f0d344e807c722de70cbca1359ef54772661e11ca38",
+      "origin": "sdk",
+      "sourceRelativePath": "gguf-py/LICENSE"
+    },
+    {
+      "path": "licenses/licenses/LICENSE-jsonhpp",
+      "bytes": 1075,
+      "sha256": "c0d068392ea65358b798b8c165103560f06e9e3b38c4ab4e2d8810a7b931af86",
+      "origin": "sdk",
+      "sourceRelativePath": "licenses/LICENSE-jsonhpp"
+    },
+    {
+      "path": "licenses/tools/ui/src/lib/vendors/big-integer/LICENSE",
+      "bytes": 1234,
+      "sha256": "e9b0e94f628e00b5ed98046cfa041696ff89eebbbdd54108ee350625bc6d0363",
+      "origin": "sdk",
+      "sourceRelativePath": "tools/ui/src/lib/vendors/big-integer/LICENSE"
+    },
+    {
+      "path": "licenses/tools/ui/src/lib/vendors/nerdamer-prime/LICENSE",
+      "bytes": 1073,
+      "sha256": "c9f52548869a0a2e63a7100055c54cebf36b9327c8fc2da7cf9ca8dddc2f1cca",
+      "origin": "sdk",
+      "sourceRelativePath": "tools/ui/src/lib/vendors/nerdamer-prime/LICENSE"
+    },
+    {
+      "path": "licenses/vendor/cpp-httplib/LICENSE",
+      "bytes": 1075,
+      "sha256": "4b45cbe16d7b71b89ae6127e26e0d90a029198ca5e958ad8e3d0b8bbed364d8b",
+      "origin": "sdk",
+      "sourceRelativePath": "vendor/cpp-httplib/LICENSE"
+    },
+    {
+      "path": "licenses/vendor/hash/rotate-bits/LICENSE.md",
+      "bytes": 1088,
+      "sha256": "ca0b44aec101afb6b46f4c39b23369fa06a64fb9c0add37c2689d702156fee55",
+      "origin": "sdk",
+      "sourceRelativePath": "vendor/hash/rotate-bits/LICENSE.md"
+    },
+    {
+      "path": "licenses/vendor/hash/sha256/LICENSE",
+      "bytes": 41,
+      "sha256": "b81d0022ca6367918c67b57e9647d3513ee58809fd4b0ef0b3492f1356bced25",
+      "origin": "sdk",
+      "sourceRelativePath": "vendor/hash/sha256/LICENSE"
+    },
+    {
+      "path": "licenses/vendor/hash/xxhash/LICENSE",
+      "bytes": 1389,
+      "sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
+      "origin": "sdk",
+      "sourceRelativePath": "vendor/hash/xxhash/LICENSE"
+    },
+    {
+      "path": "licenses/microsoft/license-en.rtf",
+      "bytes": 9235,
+      "sha256": "8099dc3cf9502c335da829e5c755948a12e3e6de490eb492a99deb673d883d8b",
+      "origin": "bundled",
+      "sourceRelativePath": "licenses/microsoft/license-en.rtf",
+      "originalPayloadPath": "license.rtf",
+      "originalPayloadSha1": "1EFE2FB2D014A731B752672745F9FFECDD716412"
+    },
+    {
+      "path": "licenses/microsoft/license-zh-CN.rtf",
+      "bytes": 18214,
+      "sha256": "a808b4933ce3b3e0893504dbef43ebf90b8b567f94bd6481b6315ed9141e1b11",
+      "origin": "bundled",
+      "sourceRelativePath": "licenses/microsoft/license-zh-CN.rtf",
+      "originalPayloadPath": "2052\\license.rtf",
+      "originalPayloadSha1": "08F4F1F9F7DFA593BE3977515635967CE7A99E7A"
+    },
+    {
+      "path": "licenses/qwen/LICENSE",
+      "bytes": 11343,
+      "sha256": "50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32",
+      "origin": "bundled",
+      "sourceRelativePath": "licenses/qwen/LICENSE"
+    }
+  ],
+  "additionalSources": {
+    "microsoftRedist": {
+      "source": "https://learn.microsoft.com/en-us/visualstudio/releases/2022/redistribution",
+      "licenseTerms": "https://visualstudio.microsoft.com/license-terms/vs2022-cruntime/",
+      "runtimeDistribution": "Visual Studio2022 x64 REDIST14.44.35112",
+      "licensePayloadSource": "Original VC_redist.x64.exe14.44.35211.0 Burn manifest English/zh-CN license payloads, copied unmodified; no installer executed",
+      "licenseSourceExecutableSha256": "cc0ff0eb1dc3f5188ae6300faef32bf5beeba4bdd6e8e445a9184072096b713b"
+    },
+    "qwenModel": {
+      "source": "https://huggingface.co/Qwen/Qwen3.5-4B",
+      "license": "Apache-2.0",
+      "quantizationSource": "https://modelscope.cn/models/unsloth/Qwen3.5-4B-GGUF/files?Revision=167b4afc359863325cb4164418c715421b4e9118",
+      "modelWeightsBundled": false
+    }
+  }
 }

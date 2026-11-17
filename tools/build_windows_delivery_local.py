@@ -97,6 +97,14 @@ def main():
   assert result.returncode==0,name+' failed; preserved '+str(out/(name+'.log'))
   print('Finished '+name,flush=True)
  try:
+  # Fresh checkouts do not contain ignored SDK binaries. Reject missing, stale
+  # or altered dependencies/licenses before reserving a target or compiling.
+  # Staging remains an explicit developer step, never a build-time download.
+  run('local-minutes-runtime-preflight',[sys.executable,'-B',ROOT/'tools/prepare_local_minutes_runtime.py','--verify'])
+  record['localMinutesRuntime']=json.loads((out/'local-minutes-runtime-preflight.log').read_text(encoding='utf-8'))
+  runtime_manifest=json.loads((ROOT/'apps/windows/src-tauri/src/backend/minutes/local/local-runtime-manifest.json').read_bytes())
+  record['localMinutesRuntime']['expectedPayloadFiles']=[{'path':'local-minutes/'+row['name'],'bytes':row['bytes'],'sha256':row['sha256']}for row in runtime_manifest['files']]+[{'path':'local-minutes/'+row['path'],'bytes':row['bytes'],'sha256':row['sha256']}for row in runtime_manifest['licenses']]
+  save()
   limits=NativeBuildLimits();record.update(cpuHardCapPercent=10,jobPrivateCommitLimitBytes=6*1024**3,resourceLimits=limits.query())
   with exclusive_build(cache/'.shared-windows-build.lock'):
    # First normal release in this fixed target may need up to8GiB for crates;
@@ -163,6 +171,11 @@ def main():
      record['postBundleSourceFormatting'].append({'path':row['path'],'onlyLineEndings':True})
    binary=(pair/'companion-type.exe').read_bytes();assert binary.count(b'__TAURI_BUNDLE_TYPE_VAR_UNK')==1
    resources=ROOT/'apps/windows/src-tauri/resources'
+   # Ignored runtime DLLs are absent from git sourceFiles. Bind them separately
+   # through the whole build and retain the expected MSI payload for inspection.
+   for row in record['localMinutesRuntime']['expectedPayloadFiles']:
+    payload=resources/row['path'];assert payload.stat().st_size==row['bytes']and sha(payload)==row['sha256'],row['path']
+   record['localMinutesRuntime']['unchangedThroughBundle']=True
    record.update(state='LOCAL_WINDOWS_CANDIDATE_BUILT_PAYLOAD_INSPECTION_PENDING',msi=str(installer),msiSha256=sha(installer),expectedEmbeddedExeSha256=hashlib.sha256(binary.replace(b'__TAURI_BUNDLE_TYPE_VAR_UNK',b'__TAURI_BUNDLE_TYPE_VAR_MSI')).hexdigest(),expectedDllSha256=sha(pair/'companion_type_lib.dll'),licenseFiles=[{'path':p.relative_to(resources).as_posix(),'sha256':sha(p)} for p in (resources/'licenses').rglob('*') if p.is_file()]+[{'path':'opus-license.txt','sha256':sha(resources/'opus-license.txt')}],normalReleaseOptimization=True,nativeAndWebUnchangedAfterBundle=True,sharedTarget=str(target),intermediateTargetCopies=0,automaticDeletion=False,finishedAt=datetime.now().astimezone().isoformat(timespec='seconds'));save()
    record['resourceLimits']=limits.query();save()
    print(json.dumps({k:record[k] for k in ['state','sourceCommit','version','msi','msiSha256']},ensure_ascii=False))
