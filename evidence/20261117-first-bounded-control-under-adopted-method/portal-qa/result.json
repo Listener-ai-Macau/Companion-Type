@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-17T22:55:51+08:00",
+  "state": "PASS_STANDALONE_MODEL_PAGE_DESKTOP_MOBILE_AND_SEARCH",
+  "results": [
+    {
+      "viewport": "desktop",
+      "width": 1440,
+      "globalHorizontalOverflowPx": 0,
+      "modelPageVisible": true,
+      "overviewSummaryVisible": true,
+      "offlineHtml": true
+    },
+    {
+      "viewport": "mobile",
+      "width": 390,
+      "globalHorizontalOverflowPx": 0,
+      "modelPageVisible": true,
+      "overviewSummaryVisible": true,
+      "offlineHtml": true
+    }
+  ],
+  "javascriptErrors": [],
+  "externalNetworkAllowed": false,
+  "ordinaryUserBrowserProfileUsed": false,
+  "productModelQualityQualified": false,
+  "browser": "Isolated headless Edge via Playwright"
+}

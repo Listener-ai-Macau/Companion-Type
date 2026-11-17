@@ -1,0 +1,284 @@
+{
+  "revision": 78,
+  "evidenceDirectory": "evidence/20261117-first-bounded-control-under-adopted-method",
+  "sources": [],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\week-direction-review-20261117.json",
+      "name": "week-review-and-lessons.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\bilingual_progress.json",
+      "name": "workpoint-snapshot.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\same-input-comparability-audit-r1.json",
+      "name": "same-input-comparability-audit-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-comparison-source-checkpoint.json",
+      "name": "portal-method-comparison-source-checkpoint.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\method-web-comparison-canonical-receipt.json",
+      "name": "method-web-comparison-canonical-receipt.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\audit_model_comparability_20261117.py",
+      "name": "tools/audit_model_comparability_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\adopt_model_method_web_20261117.py",
+      "name": "tools/adopt_model_method_web_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\check_model_portal_20261117.py",
+      "name": "tools/check_model_portal_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\checkpoint_model_method_web_20261117.py",
+      "name": "tools/checkpoint_model_method_web_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\probe_selected_cpu_segmentation_20261117.py",
+      "name": "tools/probe_selected_cpu_segmentation_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\inspect_selected_cpu_contract_20261117.py",
+      "name": "tools/inspect_selected_cpu_contract_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\check_selected_cpu_publisher_sample_20261117.py",
+      "name": "tools/check_selected_cpu_publisher_sample_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_first_method_control_20261117.py",
+      "name": "tools/record_first_method_control_20261117.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-protocol-r1.json",
+      "name": "selected-cpu-segmentation-protocol-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-export-contract-metadata-r1.json",
+      "name": "selected-cpu-export-contract-metadata-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\completed.json",
+      "name": "first-control/selected-cpu-segmentation-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--EN2001a-a2-000.json",
+      "name": "first-control/selected-cpu-segmentation-r1/quiet16_incremental--EN2001a-a2-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--EN2001a-a2-023.json",
+      "name": "first-control/selected-cpu-segmentation-r1/quiet16_incremental--EN2001a-a2-023.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--EN2001a-a2-046.json",
+      "name": "first-control/selected-cpu-segmentation-r1/quiet16_incremental--EN2001a-a2-046.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--EN2001a-a2-069.json",
+      "name": "first-control/selected-cpu-segmentation-r1/quiet16_incremental--EN2001a-a2-069.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--EN2001a-a2-092.json",
+      "name": "first-control/selected-cpu-segmentation-r1/quiet16_incremental--EN2001a-a2-092.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--EN2001a-a2-116.json",
+      "name": "first-control/selected-cpu-segmentation-r1/quiet16_incremental--EN2001a-a2-116.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--ES2003b-seq-000.json",
+      "name": "first-control/selected-cpu-segmentation-r1/quiet16_incremental--ES2003b-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--ES2003b-seq-005.json",
+      "name": "first-control/selected-cpu-segmentation-r1/quiet16_incremental--ES2003b-seq-005.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--ES2003b-seq-010.json",
+      "name": "first-control/selected-cpu-segmentation-r1/quiet16_incremental--ES2003b-seq-010.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--ES2003b-seq-016.json",
+      "name": "first-control/selected-cpu-segmentation-r1/quiet16_incremental--ES2003b-seq-016.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--ES2003b-seq-021.json",
+      "name": "first-control/selected-cpu-segmentation-r1/quiet16_incremental--ES2003b-seq-021.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--ES2003b-seq-027.json",
+      "name": "first-control/selected-cpu-segmentation-r1/quiet16_incremental--ES2003b-seq-027.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\score.json",
+      "name": "first-control/selected-cpu-segmentation-r1/score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\score.stdout.log",
+      "name": "first-control/selected-cpu-segmentation-r1/score.stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\state.json",
+      "name": "first-control/selected-cpu-segmentation-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\state.json.previous",
+      "name": "first-control/selected-cpu-segmentation-r1/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--EN2001a-a2-000.json",
+      "name": "first-control/selected-cpu-segmentation-r1/whole_case--EN2001a-a2-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--EN2001a-a2-023.json",
+      "name": "first-control/selected-cpu-segmentation-r1/whole_case--EN2001a-a2-023.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--EN2001a-a2-046.json",
+      "name": "first-control/selected-cpu-segmentation-r1/whole_case--EN2001a-a2-046.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--EN2001a-a2-069.json",
+      "name": "first-control/selected-cpu-segmentation-r1/whole_case--EN2001a-a2-069.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--EN2001a-a2-092.json",
+      "name": "first-control/selected-cpu-segmentation-r1/whole_case--EN2001a-a2-092.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--EN2001a-a2-116.json",
+      "name": "first-control/selected-cpu-segmentation-r1/whole_case--EN2001a-a2-116.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--ES2003b-seq-000.json",
+      "name": "first-control/selected-cpu-segmentation-r1/whole_case--ES2003b-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--ES2003b-seq-005.json",
+      "name": "first-control/selected-cpu-segmentation-r1/whole_case--ES2003b-seq-005.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--ES2003b-seq-010.json",
+      "name": "first-control/selected-cpu-segmentation-r1/whole_case--ES2003b-seq-010.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--ES2003b-seq-016.json",
+      "name": "first-control/selected-cpu-segmentation-r1/whole_case--ES2003b-seq-016.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--ES2003b-seq-021.json",
+      "name": "first-control/selected-cpu-segmentation-r1/whole_case--ES2003b-seq-021.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--ES2003b-seq-027.json",
+      "name": "first-control/selected-cpu-segmentation-r1/whole_case--ES2003b-seq-027.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-publisher-control-r1\\completed.json",
+      "name": "first-control/selected-cpu-publisher-control-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-publisher-control-r1\\state.json",
+      "name": "first-control/selected-cpu-publisher-control-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-publisher-control-r1\\state.json.previous",
+      "name": "first-control/selected-cpu-publisher-control-r1/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\desktop-cpu-probe.png",
+      "name": "portal-qa/desktop-cpu-probe.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\desktop-final-training.png",
+      "name": "portal-qa/desktop-final-training.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\desktop-first-control.png",
+      "name": "portal-qa/desktop-first-control.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\desktop-models.png",
+      "name": "portal-qa/desktop-models.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\desktop-overview.png",
+      "name": "portal-qa/desktop-overview.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\desktop-training-lesson.png",
+      "name": "portal-qa/desktop-training-lesson.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\desktop-visible-text.txt",
+      "name": "portal-qa/desktop-visible-text.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\desktop-working-method.png",
+      "name": "portal-qa/desktop-working-method.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\mobile-cpu-probe.png",
+      "name": "portal-qa/mobile-cpu-probe.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\mobile-final-training.png",
+      "name": "portal-qa/mobile-final-training.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\mobile-first-control.png",
+      "name": "portal-qa/mobile-first-control.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\mobile-models.png",
+      "name": "portal-qa/mobile-models.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\mobile-training-lesson.png",
+      "name": "portal-qa/mobile-training-lesson.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\mobile-visible-text.txt",
+      "name": "portal-qa/mobile-visible-text.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\mobile-working-method.png",
+      "name": "portal-qa/mobile-working-method.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r2\\result.json",
+      "name": "portal-qa/result.json"
+    }
+  ],
+  "commitMessage": "Record first bounded same-CPU segmentation control and publisher positive control",
+  "claims": {
+    "state": "ADOPTED_METHOD_FIRST_BOUNDED_CONTROL_CLOSED_CPU_PROFILE_UNQUALIFIED",
+    "newNeuralCalls": 32,
+    "newTrainingUpdates": 0,
+    "originalTwelveEnglishInputHashesAndFramesVerified": true,
+    "englishCasesWithChangedCpuSegmentation": 7,
+    "modelQualityImprovementClaimed": false,
+    "productDefaultChanged": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "lessonCount": 8,
+    "portalLocalSourceCommit": "5e5cf2f0bea31adae7cc202435b7a06c92905d22",
+    "portalHostingOrSourcePush": false,
+    "rawAudioModelWeightsOrCredentialsIncluded": false,
+    "oldFailuresAndHistoricalStatementsRetained": true,
+    "sameModelAndRuntimeOnlySegmentationChanged": true,
+    "wholeCaseErrors": 528,
+    "incrementalErrors": 533,
+    "referenceWords": 709,
+    "publisherPositiveControlPassed": true,
+    "cpuExportProfileQualified": false,
+    "rootCauseFullyIsolated": false
+  }
+}

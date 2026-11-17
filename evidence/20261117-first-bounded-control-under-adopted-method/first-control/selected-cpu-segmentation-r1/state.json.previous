@@ -1,0 +1,129 @@
+{
+  "state": "RUNNING_FIXED_SAME_CPU_MODEL_TWO_SEGMENTATION_MODES",
+  "at": "2026-11-17T22:41:51+08:00",
+  "pid": 6520,
+  "createdAt": 1794926511.5847723,
+  "completed": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--ES2003b-seq-000.json",
+      "sha256": "7020ed029f55834aed9a4c73a9dd184ea2d3447eb386cc12649ba1379ff9eee3"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--ES2003b-seq-005.json",
+      "sha256": "e7e23e4175be65b98c9da37b2d88466f4e181af0f2702951dcdf42e8c5549cbd"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--ES2003b-seq-010.json",
+      "sha256": "4323e8e59cdf683b12a46e3f0d54c39959f61d85c354c43d94637566577ecacd"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--ES2003b-seq-016.json",
+      "sha256": "779dd4438e17e99a49f5553426d46ff268f6f2331f4558ef85416e2e8cf7c2ba"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--ES2003b-seq-021.json",
+      "sha256": "ef56fe5fccd38347cbf7de83ce1272a9e1f3881b4fdec00603d97762b704f588"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--ES2003b-seq-027.json",
+      "sha256": "d328ca59cffb3e972519fe3f34f8c8a9c6860f81244f177e5a85652135de2534"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--EN2001a-a2-000.json",
+      "sha256": "b9d3a490d20e46263ac9d5114dd490a8eee75ec36ecd4eb9697b36edd678ca3f"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--EN2001a-a2-023.json",
+      "sha256": "f91ce618107ce4e5de23fe0f556598474be5883733ff2f544f8850f435f1d04e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--EN2001a-a2-046.json",
+      "sha256": "0aa10ae06ee72eab2ef145a74c3e1697bb9b5347da8c22036eec1066bcd73690"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--EN2001a-a2-069.json",
+      "sha256": "333882ed032e426e101a022e2ece1f05f57c07fa739a66f2b8e818ab9d154211"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--EN2001a-a2-092.json",
+      "sha256": "15bf299d20068a119a6afb6779727579ac39511c2b4ff74ac0f2002287427d32"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\whole_case--EN2001a-a2-116.json",
+      "sha256": "fc3d7d3c25ac637bebdfcd86e5b524ddb8e83cba78e7fa225e931370d66d8f46"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--ES2003b-seq-000.json",
+      "sha256": "b65f0087c75cda5f8a9192c2a76f8a4a1c74d42e620eb2918a86545e312890c4"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--ES2003b-seq-005.json",
+      "sha256": "ea1ee145563ec14f11420655fbf4f6f749bee05429324492ff22d3f62f754a87"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--ES2003b-seq-010.json",
+      "sha256": "8aa693a517cccf8e1cee3366f59320b696c52ae16041c9627c9e4d6c772125eb"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--ES2003b-seq-016.json",
+      "sha256": "56aa04a48fcd6d9da9976d18c29db4d428e52e90f6f0bd019e6d6f6bdc8a8584"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--ES2003b-seq-021.json",
+      "sha256": "86065accf234c81e226485fe6973ac40971e32df6915f5063ce998ccb82f3857"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--ES2003b-seq-027.json",
+      "sha256": "2a23e7fa5a6674313926ba52839ea9975f43f36c2f6ab3c9d601405c30616cff"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--EN2001a-a2-000.json",
+      "sha256": "bcee463e1d6baef9c190c4f953ac089c68239450c7344f9ef1277fbd8e99b4fc"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--EN2001a-a2-023.json",
+      "sha256": "4780873be62df96ee377c8457013657e3b41cc726e124f1ddfb79c2960756eaf"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--EN2001a-a2-046.json",
+      "sha256": "3f73c465533c3954ce952b7cffb2c076613f250bf265cfaeab8107b36ac31e1f"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--EN2001a-a2-069.json",
+      "sha256": "31ecbcf4086120018210b003df3c3a7ad5411cfcca188880702531b3e7e76640"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--EN2001a-a2-092.json",
+      "sha256": "f5769af702d488761408c3390a0aecf55dabdf90ef8e55ab54f96d07f8720e13"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\selected-cpu-segmentation-r1\\quiet16_incremental--EN2001a-a2-116.json",
+      "sha256": "b39f684840a05aa39907571d29a56c1c2d46f441a8ddef606626f6c607c6fa08"
+    }
+  ],
+  "newNeuralCalls": 31,
+  "newTrainingUpdates": 0,
+  "referenceRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "observedAt": "2026-11-17T22:42:56+08:00",
+  "limits": {
+    "pid": 6520,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1870405632,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "modelLoadSeconds": 2.195916500000749,
+  "mode": "quiet16_incremental",
+  "activeCase": "EN2001a-a2-116"
+}

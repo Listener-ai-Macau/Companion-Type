@@ -1,0 +1,36 @@
+{
+  "at": "2026-11-17T22:46:54+08:00",
+  "state": "READ_ONLY_MODEL_EXPORT_CONTRACT_METADATA",
+  "models": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\parakeet-v3-int8-cpu-official20261117\\decoder.int8.onnx",
+      "metadata": {
+        "onnx.infer": "onnxruntime.quant"
+      }
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\parakeet-v3-int8-cpu-official20261117\\encoder.int8.onnx",
+      "metadata": {
+        "vocab_size": "8192",
+        "normalize_type": "per_feature",
+        "pred_rnn_layers": "2",
+        "pred_hidden": "640",
+        "subsampling_factor": "8",
+        "model_type": "EncDecRNNTBPEModel",
+        "version": "2",
+        "model_author": "NeMo",
+        "url": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+        "comment": "Only the transducer branch is exported",
+        "feat_dim": "128"
+      }
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\parakeet-v3-int8-cpu-official20261117\\joiner.int8.onnx",
+      "metadata": {
+        "onnx.infer": "onnxruntime.quant"
+      }
+    }
+  ],
+  "newInference": 0,
+  "newTrainingUpdates": 0
+}

@@ -1,0 +1,160 @@
+{
+  "state": "FROZEN_SINGLE_CPU_EXPORT_SEGMENTATION_COMPARISON",
+  "at": "2026-11-17T22:41:51+08:00",
+  "workerSha256": "2f4ccbe86d88f5e97b34f8914f13bcef78b8b181762d79d60f924432a344147c",
+  "runtime": "sherpa-onnx1.13.4",
+  "runtimeFiles": [
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\lib\\onnxruntime.dll",
+      "sha256": "daa77083a45bf525da0dde9e87f85d8eb146f58f9c9aa7124ca84545e1c0f148"
+    },
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\lib\\sherpa-onnx-c-api.dll",
+      "sha256": "614878147c05121aeb1514ec4fb3e48b89751591532eca9208235b9ab868306a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\lib\\sherpa-onnx-cxx-api.dll",
+      "sha256": "0da42dfb964b5625c0f2cdd31cd831c0da4712a254e27edfe6eec4184f8c0cf7"
+    },
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\sherpa_onnx\\lib\\_sherpa_onnx.cp311-win_amd64.pyd",
+      "sha256": "0a2c0f6d9b6871fc1eedcfd0b16cf4b446a937cb8913f037ba7f6665ab1fb699"
+    }
+  ],
+  "modelFiles": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\parakeet-v3-int8-cpu-official20261117\\encoder.int8.onnx",
+      "bytes": 652282294,
+      "sha256": "1afbe69c1ffdabee94755f42e4daf1d93549131a3da11356bda84fcef0f2c479",
+      "sourceUrl": "https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/resolve/ed5d745623472f97cfc2e6c2916ee248798fc5a8/encoder.int8.onnx"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\parakeet-v3-int8-cpu-official20261117\\decoder.int8.onnx",
+      "bytes": 11845274,
+      "sha256": "0222a86147299d4dee90edf95b6d13827edb42ad8b7c9cf0b2582f030937c0b5",
+      "sourceUrl": "https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/resolve/ed5d745623472f97cfc2e6c2916ee248798fc5a8/decoder.int8.onnx"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\parakeet-v3-int8-cpu-official20261117\\joiner.int8.onnx",
+      "bytes": 6355277,
+      "sha256": "cbd02f3696e9944970111fb439d9c3fd365a80374565f13f2b9c7007d253fc98",
+      "sourceUrl": "https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/resolve/ed5d745623472f97cfc2e6c2916ee248798fc5a8/joiner.int8.onnx"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\parakeet-v3-int8-cpu-official20261117\\tokens.txt",
+      "bytes": 93939,
+      "sha256": "d58544679ea4bc6ac563d1f545eb7d474bd6cfa467f0a6e2c1dc1c7d37e3c35d",
+      "sourceUrl": "https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/resolve/ed5d745623472f97cfc2e6c2916ee248798fc5a8/tokens.txt"
+    }
+  ],
+  "modelRevision": "ed5d745623472f97cfc2e6c2916ee248798fc5a8",
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+      "audioSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+      "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92",
+      "frames": 192800
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-005.wav",
+      "audioSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+      "pcmSha256": "ec8c4c16829d1d95404cb3fd3fcd8ee32cc310edaaf7b8901d562a90696b04e7",
+      "frames": 476000
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-010.wav",
+      "audioSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+      "pcmSha256": "e087cf4e22224bfc9c3ad810c56bd3595ad7343c30b6d53fc5c1ce00d445b32f",
+      "frames": 475520
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-016.wav",
+      "audioSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+      "pcmSha256": "7e8c174955670b930e9b657a8fdcbea730374845ac6668f4a916ddc867ee7f6e",
+      "frames": 473280
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-021.wav",
+      "audioSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+      "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f",
+      "frames": 203840
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-027.wav",
+      "audioSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+      "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+      "frames": 162401
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-000.wav",
+      "audioSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+      "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f",
+      "frames": 187360
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-023.wav",
+      "audioSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+      "pcmSha256": "490510a15ef6f46ebac736fb41e975068df6e61349ac7f589c257fe724ae9d33",
+      "frames": 475520
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-046.wav",
+      "audioSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+      "pcmSha256": "7c06b4b1859d19da0fe23e80c043ebb406245e57d456d2776536102c041cc8a4",
+      "frames": 362720
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-069.wav",
+      "audioSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+      "pcmSha256": "01439b3125f9e794a9ffae891fd0cccc470ae701397a2b889487dc87d166bb39",
+      "frames": 476000
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-092.wav",
+      "audioSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+      "pcmSha256": "14091b430e04787c3694b572f922d0a4da22a3ce4f10cc7978dde91fa4797bb7",
+      "frames": 473600
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-116.wav",
+      "audioSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+      "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f",
+      "frames": 289920
+    }
+  ],
+  "modes": [
+    "whole_case",
+    "quiet16_incremental"
+  ],
+  "provider": "cpu",
+  "threads": 2,
+  "modelType": "nemo_transducer",
+  "decodingMethod": "greedy_search",
+  "maximumSeconds": 600,
+  "privateLimitBytes": 2147483648,
+  "minimumAvailableBytes": 3414499000,
+  "neuralLock": "E:/CodexData/Companion/.model-cache/local-qwen-decoder.lock",
+  "originalReferences": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json",
+  "decisionRules": [
+    "Same-weight whole-versus-cut error difference describes segmentation effect for this exported model only.",
+    "Different-family/precision/runtime comparisons are deployment-profile comparisons, not pureCPU or quantization causality.",
+    "Retain and stop both predefined modes after the fixed12 outputs. No threshold/model/precision/window variants.",
+    "Original5/2percent and independent complete-meeting/person/client gates remain; no automatic deployment."
+  ],
+  "newTrainingUpdates": 0,
+  "installedClientBinaryTest": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

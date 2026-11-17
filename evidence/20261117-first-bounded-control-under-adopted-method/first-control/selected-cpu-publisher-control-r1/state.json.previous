@@ -1,0 +1,24 @@
+{
+  "state": "PREPARING_PUBLISHER_POSITIVE_CONTROL",
+  "pid": 26060,
+  "newTrainingUpdates": 0,
+  "newNeuralCalls": 0,
+  "qualityQualified": false,
+  "at": "2026-11-17T22:50:29+08:00",
+  "limits": {
+    "pid": 26060,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 25747456,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}
