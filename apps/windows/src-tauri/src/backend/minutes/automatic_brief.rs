@@ -176,7 +176,7 @@ fn request(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,p
     super::super::meeting_processing_job::check_current()?;
     let url=super::http_policy::endpoint(endpoint).map_err(super::safe_minutes_http_error)?;
     let mut body=json!({"model":model,"response_format":{"type":"json_object"},"max_tokens":if review{24576}else{8192},"messages":[{"role":"system","content":prompt},{"role":"user","content":source_first_input(&input)}]});
-    if model.to_ascii_lowercase().starts_with("deepseek-"){body["thinking"]=json!({"type":if review{"enabled"}else{"disabled"}});if review{body["reasoning_effort"]=json!(if stage.starts_with("source-factual-")&&coverage::enabled(){"high"}else{"low"});}}
+    if model.to_ascii_lowercase().starts_with("deepseek-"){body["thinking"]=json!({"type":if review{"enabled"}else{"disabled"}});if review{body["reasoning_effort"]=json!(if stage.starts_with("source-factual-")&&!stage.contains("repair")&&coverage::enabled(){"high"}else{"low"});}}
     let stage_start=Instant::now();
     let response=client.post(url).bearer_auth(key).timeout(remaining.min(Duration::from_secs(120))).json(&body).send().map_err(|e|super::safe_minutes_http_error(super::http_policy::Failure::from_reqwest(e)))?;
     let payload=super::http_policy::response_json(response,super::http_policy::MAX_RESPONSE_BYTES).map_err(super::safe_minutes_http_error)?;
@@ -190,7 +190,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
     let start=Instant::now();let units=source_units(&session.transcript_text);let anchors=constraints(&units);let mut trace=Vec::new();let mut traced_document=None;
     let outcome=(|| {
         let reading_budget=json!({"mainCharacterBudget":if units.iter().map(|u|u.text.chars().count()).sum::<usize>()>8000{900}else{600},"pointsPerTopicMaximum":3});
-        let draft=request(endpoint,model,key,client,DRAFT,json!({"sourceUnits":units,"readingBudget":reading_budget}),false,start,&mut trace,"draft")?;
+        let draft=request(endpoint,model,key,client,DRAFT,json!({"sourceUnits":units,"readingBudget":reading_budget}),coverage::enabled(),start,&mut trace,"draft")?;
         let doc=if coverage::enabled() {
             // The factual and coverage roles are independent semantic checks.
             // A redundant model rewrite before them added latency and new claims.

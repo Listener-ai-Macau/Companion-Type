@@ -171,6 +171,13 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
                 (result,calls)
             })
         }).collect::<Vec<_>>();
+        // Keep the parent callback alive on mobile; JNI callbacks stay on the
+        // originating thread while children receive only the atomic token.
+        let mut stopped=false;
+        while workers.iter().any(|worker|!worker.is_finished()) {
+            if !stopped&&check_cancellation(token.as_ref()).is_err(){stopped=true;}
+            std::thread::sleep(std::time::Duration::from_millis(100));
+        }
         // Join every worker even when one failed; no detached service calls.
         workers.into_iter().map(|worker|worker.join().unwrap_or_else(|_|(Err("纪要审核作业未正常完成，已有结果保留。".into()),Vec::new()))).collect::<Vec<_>>()
     });
@@ -298,15 +305,16 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
         if round==2||repeated {
             return Err(format!("纪要复审仍有{}处未解决表述，已有结果保留。",issues.len()));
         }
-        let unclear=audit.claim_audit.iter().filter(|c|c.status=="unclear").map(|c|c.path.clone()).collect::<HashSet<_>>();
-        let conservative=if super::coverage::enabled(){audit.claim_audit.iter().filter(|c|c.status=="unclear"&&c.clarity.as_deref()==Some("unclear")).filter_map(|c|{
+        let unclear=audit.claim_audit.iter().filter(|c|c.status=="unclear"||c.clarity.as_deref()==Some("unclear")).map(|c|c.path.clone()).collect::<HashSet<_>>();
+        let conservative=if super::coverage::enabled(){audit.claim_audit.iter().filter(|c|c.clarity.as_deref()==Some("unclear")).filter_map(|c|{
             let phrase=c.unclear_text.as_ref()?;
             audited_claims.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str()))?
                 .get("text")?.as_str()?.contains(phrase).then(||(c.path.clone(),vec![phrase.clone()]))
         }).collect::<HashMap<_,_>>()}else{HashMap::new()};
         let deletion_only=unclear.iter().filter(|path|!conservative.contains_key(*path)).cloned().collect::<HashSet<_>>();
+        let repair_contracts=allowed.iter().map(|path|json!({"path":path,"maxCharacters":if path=="purpose"{80}else if path.ends_with(".title"){26}else if path.contains(".points["){90}else if path.contains(".details["){120}else{180},"textOnlyConservative":conservative.contains_key(path)})).collect::<Vec<_>>();
         let stage=if round==0{"source-factual-repair"}else{"source-factual-repair-2"};
-        let raw=super::request(endpoint,model,key,client,REPAIR,json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,"deletionOnlyPaths":deletion_only,"conservativeRewritePaths":conservative}),false,start,trace,stage)?;
+        let raw=super::request(endpoint,model,key,client,REPAIR,json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,"deletionOnlyPaths":deletion_only,"conservativeRewritePaths":conservative,"repairContracts":repair_contracts}),super::coverage::enabled(),start,trace,stage)?;
         current=apply_changes_with_policy(&raw,&current,&allowed,&unclear,&conservative,units)?;
         for issue in audit.claim_audit.iter().filter(|c|c.status!="supported"){attempted.insert(issue.path.clone(),issue.status.clone());}
     }
