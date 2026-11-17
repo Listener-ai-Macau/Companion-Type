@@ -48,6 +48,44 @@ pub(super) fn wire(value:&Value)->String{
     write(value,false)
 }
 
+fn literal_span(original:&str,reported:&str)->Option<(usize,usize)>{
+    if reported.trim().is_empty(){return None;}
+    if let Some(start)=original.find(reported){return Some((start,start+reported.len()));}
+    // Display wrapping is not a changed claim. Preserve every non-whitespace
+    // character and order, then recover the actual source bytes for the anchor.
+    // No punctuation, numbers, case, ellipsis or other characters are repaired.
+    let positions=original.char_indices().filter(|(_,c)|!c.is_whitespace()).collect::<Vec<_>>();
+    let compact=positions.iter().map(|(_,c)|*c).collect::<String>();
+    let needle=reported.chars().filter(|c|!c.is_whitespace()).collect::<String>();
+    if needle.is_empty(){return None;}
+    let start=compact.find(&needle)?;
+    let first=compact[..start].chars().count();let count=needle.chars().count();
+    let last=positions.get(first+count-1)?;
+    Some((positions.get(first)?.0,last.0+last.1.len_utf8()))
+}
+
+fn exact_origins(markdown:&str,document:&Value,anchors:&[Value])->Result<String,String>{
+    let (body,_)=markdown.rsplit_once("## 主题原话\n\n").ok_or("纪要原话区不完整，已有内容保留。")?;
+    let mut rendered=format!("{body}## 主题原话\n\n");
+    let mut section=|title:&str,prefix:String|{
+        let mut seen=std::collections::HashSet::new();let mut quotes=Vec::new();
+        for anchor in anchors{
+            if !anchor["path"].as_str().is_some_and(|p|p.starts_with(&prefix)){continue;}
+            let quote=anchor["quote"].as_str().unwrap();
+            if seen.insert(quote){quotes.push(quote);}
+        }
+        if !quotes.is_empty(){
+            rendered.push_str(&format!("### {title} · 原话\n\n"));
+            for quote in quotes{rendered.push_str(&format!("- {}\n\n",quote.replace(['\r','\n']," ")));}
+        }
+    };
+    for(i,topic)in document["topics"].as_array().ok_or("纪要主题区不完整。")?.iter().enumerate(){
+        section(topic["title"].as_str().ok_or("纪要主题不完整。")?,format!("topics[{i}]."));
+    }
+    for(key,title)in[("decisions","共同决定"),("actionItems","会后行动"),("questions","待确认问题")]{section(title,format!("{key}["));}
+    Ok(rendered)
+}
+
 pub(super) fn parse(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
     let mut doc:Value=serde_json::from_str(crate::backend::minutes::strip_code_fences(raw).trim()).map_err(|_|"本地纪要返回结构不完整，原文和已有纪要保留。")?;
     let units=source_units(&session.transcript_text);
@@ -63,9 +101,10 @@ pub(super) fn parse(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1Me
             let id=row.get("source").and_then(Value::as_str).ok_or("本地纪要原话来源不完整。")?;
             let quote=row.get("quote").and_then(Value::as_str).filter(|q|!q.trim().is_empty()&&q.chars().count()<=500).ok_or("本地纪要原话依据不完整。")?;
             let original=known.get(id).ok_or("本地纪要引用了不存在的原话。")?;
-            let offset=original.find(quote).ok_or("本地纪要引用与原话不一致，已有内容保留。")?;
+            let(start,end)=literal_span(original,quote).ok_or("本地纪要引用与原话不一致，已有内容保留。")?;
+            let exact=&original[start..end];
             if !sources.iter().any(|s|s==id){sources.push(id.to_owned());}
-            anchors.push(json!({"path":path,"source":id,"quote":quote,"startByte":offset,"endByte":offset+quote.len()}));
+            anchors.push(json!({"path":path,"source":id,"quote":exact,"startByte":start,"endByte":end,"reportedWhitespaceNormalized":exact!=quote}));
         }
         object.insert("sources".into(),json!(sources));Ok(())
     };
@@ -87,6 +126,7 @@ pub(super) fn parse(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1Me
         }
     }
     let mut parsed=canonical_brief::local_document::parse(&doc.to_string(),session,base)?;
+    parsed.minutes.markdown=exact_origins(&parsed.minutes.markdown,&doc,&anchors)?;
     parsed.receipt["evidenceAnchors"]=json!(anchors);
     parsed.receipt["literalEvidenceBound"]=json!(true);
     Ok(parsed)
@@ -116,6 +156,30 @@ mod tests{
         let(s,b,d)=fixture();
         for evidence in [json!([]),json!([{"source":"u000","quote":"预算已经批准。"}]),json!([{"source":"u999","quote":"预算10000元未批准"}])]{
             let mut d=d.clone();d["topics"][0]["points"][0]["evidence"]=evidence;assert!(parse(&d.to_string(),&s,&b).is_err());
+        }
+    }
+    #[test]
+    fn source_anchors_recover_only_whitespace_and_keep_actual_original_bytes(){
+        let original="说明。预算\n 10000 元未批准，\r\n测试未通过不能上线。结束。";
+        let quote="预算10000元未批准，测试未通过不能上线。";
+        let(a,z)=literal_span(original,quote).unwrap();
+        assert_eq!(&original[a..z],"预算\n 10000 元未批准，\r\n测试未通过不能上线。");
+        for changed in ["预算10000元已批准，测试未通过不能上线。","预算10000元未批准...测试未通过不能上线。","预算1000元未批准，测试未通过不能上线。","预算10000元未批准测试未通过不能上线。"]{
+            assert!(literal_span(original,changed).is_none());
+        }
+    }
+    #[test]
+    fn local_reading_uses_precise_quotes_including_task_evidence_not_entire_chunks(){
+        let(mut s,_,d)=fixture();s.transcript_text.push_str("另有无关背景标记，不属于上述结论。");
+        let b=crate::backend::minutes::rules_l0_minutes(&s,"now");
+        let parsed=parse(&d.to_string(),&s,&b).unwrap();
+        assert!(parsed.minutes.markdown.contains("预算10000元未批准"));
+        assert!(parsed.minutes.markdown.contains("### 会后行动 · 原话"));
+        assert!(!parsed.minutes.markdown.contains("无关背景标记"));
+        assert!(s.transcript_text.contains("无关背景标记"));
+        for anchor in parsed.receipt["evidenceAnchors"].as_array().unwrap(){
+            let a=anchor["startByte"].as_u64().unwrap()as usize;let z=anchor["endByte"].as_u64().unwrap()as usize;
+            assert_eq!(&s.transcript_text[a..z],anchor["quote"].as_str().unwrap());
         }
     }
     #[test]
