@@ -20,7 +20,7 @@ def verified_reuse(receipt,target,version,local_crates=False,input_adapter=False
  """Estimate an app-only rebuild after verifying a completed matching native build.
 
  The cold-build estimate remains8GiB. A matching warm build reserves2GiB;
- the common80GiB cache and30GiB free-space limits still apply without deletion.
+ the configured cache budget and30GiB free-space limit still apply.
  """
  previous=json.loads(receipt.read_bytes())
  assert previous['state']=='LOCAL_WINDOWS_CANDIDATE_BUILT_PAYLOAD_INSPECTION_PENDING'
@@ -37,7 +37,7 @@ def verified_reuse(receipt,target,version,local_crates=False,input_adapter=False
  current_native={name for name in current if native(name)}
  added=current_native-set(inputs);removed=set(inputs)-current_native
  # Local app/core Rust edits reuse the already-built external dependency graph.
- # This is an estimate for two warm crates, not an override of the80GiB budget.
+ # This is an estimate for two warm crates, not an override of the configured cache budget.
  # No changed build scripts, manifests, features, toolchain or external C/FFI.
  # The explicit input-adapter scope may additionally rebuild this one local
  # C shim inside desktop-input; all upstream headers/sources remain hashed.
@@ -100,7 +100,7 @@ def main():
   limits=NativeBuildLimits();record.update(cpuHardCapPercent=10,jobPrivateCommitLimitBytes=6*1024**3,resourceLimits=limits.query())
   with exclusive_build(cache/'.shared-windows-build.lock'):
    # First normal release in this fixed target may need up to8GiB for crates;
-   # this estimate does not increase the common80GiB budget or delete anything.
+   # this estimate does not increase the configured cache budget.
    reserve=8
    staged=None
    if args.bundle_native_receipt:

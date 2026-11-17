@@ -17,7 +17,7 @@ def main():
     p.add_argument('--release',action='store_true')
     p.add_argument('--filter',help='Affected test filter, only with test')
     p.add_argument('--output',type=Path,help='Optional existing batch directory for one log')
-    p.add_argument('--reserve-gib',type=float,default=3,help='Explicit incremental-job space estimate, 1 to 3GiB; cache budget stays80GiB')
+    p.add_argument('--reserve-gib',type=float,default=3,help='Explicit incremental-job space estimate, 1 to 3GiB; use the shared configured cache budget')
     p.add_argument('--native-output',type=Path,help='Freeze the two CLI binaries under the shared build lock; new absolute output directory only')
     a=p.parse_args()
     if os.name!='nt':p.error('Windows native build entry')
