@@ -1,0 +1,51 @@
+{
+  "revision": 73,
+  "evidenceDirectory": "evidence/20261117-open-source-route-survey-and-language-gap",
+  "sources": [],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\open-source-route-research-20261117.json",
+      "name": "open-source-route-research.json"
+    },
+    {
+      "source": "work/record_open_source_research_20261117.py",
+      "name": "tools/record_open_source_research_20261117.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\FunASR-deployment-matrix.md",
+      "name": "sources/FunASR-deployment-matrix.md"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\FunASR-README.md",
+      "name": "sources/FunASR-README.md"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\OpenASR-MOSS-submit_jobs.sh",
+      "name": "sources/OpenASR-MOSS-submit_jobs.sh"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\OpenASR-Parakeet-submit_jobs.sh",
+      "name": "sources/OpenASR-Parakeet-submit_jobs.sh"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\WhisperX-LICENSE.txt",
+      "name": "sources/WhisperX-LICENSE.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\WhisperX-README.md",
+      "name": "sources/WhisperX-README.md"
+    }
+  ],
+  "commitMessage": "Survey official meeting-ASR routes and reconcile bilingual evidence without new model trials",
+  "claims": {
+    "state": "OPEN_SOURCE_ROUTE_RESEARCH_COMPLETE_ONE_ENGLISH_REFERENCE_RETAINED",
+    "newNeuralCalls": 0,
+    "newTrainingUpdates": 0,
+    "newModelCandidatesAdded": 0,
+    "originalReferencesAndMetricsUnchanged": true,
+    "rawAudioInputFeaturesModelWeightsOrCredentialsIncluded": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

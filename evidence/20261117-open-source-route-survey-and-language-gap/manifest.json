@@ -1,0 +1,75 @@
+{
+  "at": "2026-11-17T17:39:37.372672+08:00",
+  "parent": "a2d32035aca3f93f73b398f105ffc00473406e67",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\open-source-route-research-20261117.json",
+      "file": "open-source-route-research.json",
+      "bytes": 14241,
+      "sha256": "0783f5be8819118cc2557009e33a1be958295a90ded39ede44965396623b59e5"
+    },
+    {
+      "source": "work\\record_open_source_research_20261117.py",
+      "file": "tools/record_open_source_research_20261117.py",
+      "bytes": 16949,
+      "sha256": "58dffc380f5c0c3ff187ab11e6db5be36d29dbc331131f66e655b6bab3c1a919"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\FunASR-deployment-matrix.md",
+      "file": "sources/FunASR-deployment-matrix.md",
+      "bytes": 12512,
+      "sha256": "56ffb8c3f8c535ad0c2cf7578b574752c52e46f79e3acb14c6443bafccec0c97"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\FunASR-README.md",
+      "file": "sources/FunASR-README.md",
+      "bytes": 28741,
+      "sha256": "cdafd9e31d09ed3fda0a5e37175293e64f4b4ade7fe091b2f700b147458e9bfa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\OpenASR-MOSS-submit_jobs.sh",
+      "file": "sources/OpenASR-MOSS-submit_jobs.sh",
+      "bytes": 5100,
+      "sha256": "5a5781b0d17f74fd6020057e92de0597adaeced6901e54c976b475b42742a4e4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\OpenASR-Parakeet-submit_jobs.sh",
+      "file": "sources/OpenASR-Parakeet-submit_jobs.sh",
+      "bytes": 6209,
+      "sha256": "a16575e003fbe63ec27cd437b75d538973f750901e3bfbdf68c8c40fbe1b603c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\WhisperX-LICENSE.txt",
+      "file": "sources/WhisperX-LICENSE.txt",
+      "bytes": 1298,
+      "sha256": "be75aef2c17febff756453e3e3485853106cf80acb7073c35549eda430df26c6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\WhisperX-README.md",
+      "file": "sources/WhisperX-README.md",
+      "bytes": 16508,
+      "sha256": "62a7bdf1711a73f7a6433add6ba3c01ecef3e2351494281875f33572be6c7287"
+    },
+    {
+      "source": "work\\checkpoint_open_source_research_r73.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 2704,
+      "sha256": "3cff6f22e2bbff2ed24f634c62c831417ce08f015eef7fbc90d9ff509dafa256"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {},
+  "state": "OPEN_SOURCE_ROUTE_RESEARCH_COMPLETE_ONE_ENGLISH_REFERENCE_RETAINED",
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "newModelCandidatesAdded": 0,
+  "originalReferencesAndMetricsUnchanged": true,
+  "rawAudioInputFeaturesModelWeightsOrCredentialsIncluded": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

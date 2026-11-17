@@ -1,0 +1,217 @@
+{
+  "at": "2026-11-17T17:39:18+08:00",
+  "state": "REQUESTED_OPEN_SOURCE_SURVEY_COMPLETE_NO_NEW_MODEL_EXPERIMENT",
+  "ownerQuote": "对啊，那你看一下有没有什么开源的东西可以做这个事情的，然后的话。然后你先调研一下方案吧，我感觉为什么中文跟英文会差这么远？",
+  "researchScope": "Official repositories, model cards and research papers for single-channel local incremental/offline meeting ASR; prioritize ordinary nonoverlap, distinguish speaker timing from audio separation.",
+  "languageGap": {
+    "measurementUnit": {
+      "originalQwenChineseCER": {
+        "errors": 73,
+        "units": 1258,
+        "rate": 0.05802861685214626
+      },
+      "originalQwenEnglishWER": {
+        "errors": 141,
+        "units": 709,
+        "rate": 0.19887165021156558
+      },
+      "existingDiagnosticEnglishCharacterRate": {
+        "errors": 328,
+        "units": 2794,
+        "rate": 0.11739441660701504
+      },
+      "existingDiagnosticChineseCharacterRate": {
+        "errors": 73,
+        "units": 1258,
+        "rate": 0.05802861685214626
+      },
+      "interpretation": "Part of the apparent gap is CER/WER; a real descriptive gap remains in this old Qwen cohort under the same character convention. Not a new Parakeet score, not a controlled cross-language causal experiment, and not a changed acceptance metric.",
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-gap-diagnosis.json",
+      "sourceSha256": "43b8d783f71d46c8687722b200d0492e15ee74951dbbbbb236a103c591951196"
+    },
+    "recordingAndCohort": {
+      "chineseNotGenerallyQualified": true,
+      "harderChineseExistingQwenBaseline": {
+        "meeting": "20200623_S_R001S07C01",
+        "errors": 1037,
+        "referenceCharacters": 7153,
+        "CER": 0.1449741367258493
+      },
+      "sameModelPublishedEnglishExample": {
+        "repository": "Qwen/Qwen3-ASR-1.7B",
+        "LibriSpeechCleanWER": 1.63,
+        "GigaSpeechWER": 8.45,
+        "CommonVoiceEnglishWER": 7.39
+      },
+      "samePublishedGraniteNARModelConditions": {
+        "AMI_IHM_WER": 7.91,
+        "AMI_SDM_WER": 19.59
+      },
+      "interpretation": "Recording setup, colloquial speech, speakers and reference conventions are confounded with language in our recordings. Published figures illustrate condition sensitivity; they do not reproduce our test or quantify the causal share of each condition."
+    },
+    "acousticAssociationAlreadyMeasured": {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-acoustic-omission-summary20261116.json",
+      "sourceSha256": "ff8e2fe047714b91ad2bff3187b536ba14bb198c0cd9a7e9aa3081d9ae5ae654",
+      "olderQwenLowerEnergyQuartileDeletionRate": 0.16292134831460675,
+      "olderQwenOtherWordsDeletionRate": 0.08097928436911488,
+      "interpretation": "RMS association supports investigating weak/remote speech. Room/background RMS is not target-speaker SNR or intelligibility; no causal attribution and no new gain/VAD/denoise experiment."
+    },
+    "trainingBias": "A language/domain imbalance is a hypothesis; there is no controlled evidence here to assign the observed gap to Chinese model origin or to require separately trained networks for every language.",
+    "implementation": "The previous fixed Parakeet audit verified published F32 roundtrip, PCM, frontend lengths and encoder exhaustion. Full-model independent backend equivalence is not thereby proven. Treat native reference quality separately from fast deployment backends.",
+    "benchmarkProtocol": "Current official Open-ASR submission scripts for MOSS and Parakeet select ami_cleaned. Historical model-card AMI figures, current cleaned leaderboard figures and our original raw far-field multi-turn recordings cannot be interchanged. The exact historical benchmark snapshot behind each old figure is not established by current scripts."
+  },
+  "openSourceOptions": [
+    {
+      "name": "Qwen3-ASR and MOSS-Transcribe-Diarize",
+      "kind": "Pretrained recognition / joint transcription models",
+      "sources": [
+        "https://huggingface.co/Qwen/Qwen3-ASR-1.7B",
+        "https://huggingface.co/OpenMOSS-Team/MOSS-Transcribe-Diarize"
+      ],
+      "licenseIdentifiers": [
+        "Apache-2.0"
+      ],
+      "capability": "Qwen multilingual ASR; MOSS joint long-form transcription with recording-local anonymous speakers/timestamps.",
+      "decision": "Retain existing same-source evidence and Chinese baselines. Already tried here, so not a new discovery or permission to repeat their unchanged configurations. Multilingual support alone does not qualify natural code-switching."
+    },
+    {
+      "name": "IBM Granite Speech4.1 2B AR",
+      "kind": "One pending accuracy-first English final reference",
+      "sources": [
+        "https://huggingface.co/ibm-granite/granite-speech-4.1-2b",
+        "https://huggingface.co/ibm-granite/granite-speech-4.1-2b-nar"
+      ],
+      "licenseIdentifiers": [
+        "Apache-2.0"
+      ],
+      "capability": "Acoustically conditioned transcription, keyword biasing; official Transformers and llama.cpp examples.",
+      "decision": "Keep the one pinned AR candidate from the prior audit. The cited7.91/19.59 figures belong to its NAR sibling, not this AR candidate. Do not count those as our accuracy or our performance on AMD. No extra base roster, quantization, or custom engine port."
+    },
+    {
+      "name": "FunASR",
+      "kind": "Deployment and component toolkit",
+      "sources": [
+        "https://github.com/modelscope/FunASR",
+        "https://github.com/modelscope/FunASR/blob/main/docs/deployment_matrix.md"
+      ],
+      "licenseIdentifiers": [
+        "Toolkit MIT; pretrained checkpoints separately licensed"
+      ],
+      "capability": "File and streaming ASR, VAD, punctuation, speaker pipelines, CPU and ONNX/C++ deployment paths depending on the selected model.",
+      "decision": "Useful engineering reference. Switching toolkit is not evidence of lower WER, and offline/streaming checkpoints are not interchangeable. Preserve current authorized incremental/offline chain."
+    },
+    {
+      "name": "WhisperX",
+      "kind": "Transcription / alignment / speaker pipeline",
+      "sources": [
+        "https://github.com/m-bain/whisperX",
+        "https://github.com/m-bain/whisperX/blob/main/LICENSE"
+      ],
+      "licenseIdentifiers": [
+        "Toolkit BSD-2-Clause; components separately licensed"
+      ],
+      "capability": "faster-whisper transcription, word alignment and diarization. Documented CPU path; documented GPU acceleration uses CUDA.",
+      "decision": "Reference for integration, not a promised accuracy replacement. Upstream documents overlap and diarization limitations. Our rejected fullWhisper native profile is not a controlled WhisperX benchmark; do not generalize either way or assume AMD is CUDA-compatible."
+    },
+    {
+      "name": "Nemotron3 Diarization / pyannote Community1",
+      "kind": "Who-spoke-when components",
+      "sources": [
+        "https://huggingface.co/nvidia/Nemotron-3-Diarization",
+        "https://huggingface.co/pyannote/speaker-diarization-community-1"
+      ],
+      "licenseIdentifiers": [
+        "Nemotron3 OpenMDW-1.1",
+        "Community1 CC-BY-4.0 plus download access conditions"
+      ],
+      "capability": "Nemotron3 online/offline up to8speakers; Community1 mono16kHz offline diarization. These output speaker timing/anonymous identities, not separated audio tracks or intrinsically corrected words.",
+      "decision": "Retain the already-tested Nemotron component; no new diarizer grid. Community1 offline integration was already explored in this project and is a reference, not a fresh candidate. Do not accept upstream download account conditions for the owner."
+    }
+  ],
+  "researchOnly": [
+    {
+      "name": "DM-ASR",
+      "source": "https://arxiv.org/html/2604.22467v3",
+      "idea": "Use speaker-time conditions plus mixed acoustic context for structured multi-speaker decoding.",
+      "reportedExample": {
+        "decoderSizeB": 1.7,
+        "AMI_SDM_cpWER": 21.26,
+        "metric": "speaker-attributed cpWER including complex conversational speech, not ordinary raw WER"
+      },
+      "limits": "Inspected paper does not establish a complete permissively licensed local ready-to-run release. Paper training recipe uses8A6000 48GB GPUs and hundreds/thousands of hours, not evidence that our4hour recipe will reach5%.",
+      "decision": "Later overlap/structured-ASR architectural reference only; no implementation or training branch."
+    }
+  ],
+  "recommendedExecution": {
+    "architecture": "Original single-mic PCM feeds existing provisional incremental text, one accuracy-first offline final ASR, and existing speaker timeline. Align final words to anonymous speaker timing. File import uses the final path. Diarization does not first delete/crop audio merely to suppress unknown speakers.",
+    "languagePolicy": "Score Chinese CER, English WER and natural mixed-language separately; native reference metrics stay fixed. Choose a language-specific model only after same-source gains. Separate networks or training-from-scratch per language are not prerequisites.",
+    "next": "Complete only the already-pinned English accuracy reference feasibility/admission, then unchanged709word quality comparison and original complete-meeting/person/facts/final checks. No new training until this requested route research is reconciled; no additional model launches in this research batch.",
+    "intermediateGate": {
+      "maxErrors": 70,
+      "referenceWords": 709,
+      "eachMeetingNoRegression": true,
+      "saleQualified": false
+    },
+    "unchangedFinalTarget": {
+      "perLanguageFloorErrorRate": 0.05,
+      "perLanguageTargetErrorRate": 0.02,
+      "wholeMeetingPersonFactsRequired": true
+    },
+    "furtherTraining": "If a single base is substantially stronger, one meeting-domain adaptation with disjoint meetings/participants; then distillation/quantization after quality. Finish ordinary nonoverlap before overlap/separation.",
+    "certainty": "Off-the-shelf open components can implement the workflow. No reviewed source proves that this complete local product meets a universal5%far-field meeting word-error floor."
+  },
+  "sourceSnapshots": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\FunASR-deployment-matrix.md",
+      "sha256": "56ffb8c3f8c535ad0c2cf7578b574752c52e46f79e3acb14c6443bafccec0c97"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\FunASR-README.md",
+      "sha256": "cdafd9e31d09ed3fda0a5e37175293e64f4b4ade7fe091b2f700b147458e9bfa"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\OpenASR-MOSS-submit_jobs.sh",
+      "sha256": "5a5781b0d17f74fd6020057e92de0597adaeced6901e54c976b475b42742a4e4"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\OpenASR-Parakeet-submit_jobs.sh",
+      "sha256": "a16575e003fbe63ec27cd437b75d538973f750901e3bfbdf68c8c40fbe1b603c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\WhisperX-LICENSE.txt",
+      "sha256": "be75aef2c17febff756453e3e3485853106cf80acb7073c35549eda430df26c6"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\research-sources\\WhisperX-README.md",
+      "sha256": "62a7bdf1711a73f7a6433add6ba3c01ecef3e2351494281875f33572be6c7287"
+    }
+  ],
+  "originalEvidence": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-gap-diagnosis.json",
+      "sha256": "43b8d783f71d46c8687722b200d0492e15ee74951dbbbbb236a103c591951196"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\raw-text-baseline.json",
+      "sha256": "cc469e7acfda616f9dcc4775c722e6d5fbca3c77e7acccc6f750130099b2b8f4"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-acoustic-omission-summary20261116.json",
+      "sha256": "ff8e2fe047714b91ad2bff3187b536ba14bb198c0cd9a7e9aa3081d9ae5ae654"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\full-score.json",
+      "sha256": "a5172f7ea06cc1cdae4baa456977162534797c97bfa6c679baf2efea93cac63a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-route-audit-20261117.json",
+      "sha256": "ce957dfb64a191e6d1f131541ed878dbe1d96f1467c8f5850dd9f010957f69ce"
+    }
+  ],
+  "newInferenceOrScoring": false,
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}
