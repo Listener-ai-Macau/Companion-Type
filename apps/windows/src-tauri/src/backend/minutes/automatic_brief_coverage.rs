@@ -80,21 +80,29 @@ pub(super) fn audit_omissions(endpoint:&str,model:&str,key:&str,client:&reqwest:
 
 // Model returns only existing sentence IDs. The program retrieves original
 // text; the model never has to transcribe or normalize an evidence quotation.
+fn grounded_evidence(ids:Vec<String>,all:&[Value],allowed:&HashSet<&str>)->Result<Vec<Evidence>,String>{
+    // The budget is eight exact source spans. Adjacent short ASR sentences can
+    // form one span without dropping any roles, branches or conditions.
+    if ids.is_empty()||ids.len()>32{return Err(fail());}
+    let known=all.iter().enumerate().filter(|(_,s)|allowed.contains(s["source"].as_str().unwrap())).map(|(i,s)|(s["id"].as_str().unwrap(),(i,s))).collect::<HashMap<_,_>>();
+    let mut selected=Vec::new();
+    for id in ids{let &(i,s)=known.get(id.as_str()).ok_or_else(fail)?;if s["text"].as_str().is_none_or(|text|text.trim().is_empty()){return Err(fail());}if !selected.iter().any(|(old,_)|*old==i){selected.push((i,s));}}
+    selected.sort_by_key(|(i,_)|*i);let mut out:Vec<Evidence>=Vec::new();let mut previous=None;
+    for(i,s)in selected{
+        let source=s["source"].as_str().unwrap();let quote=s["text"].as_str().unwrap();
+        if previous==Some(i.saturating_sub(1))&&out.last().is_some_and(|e|e.source==source){out.last_mut().unwrap().quote.push_str(quote);}
+        else{out.push(Evidence{source:source.into(),quote:quote.into()});}previous=Some(i);
+    }
+    if out.len()>8{return Err(fail());}Ok(out)
+}
 fn decode_questions(raw:&str,all:&[Value],window:&[&Unit],primary:&HashSet<&str>)->Result<Vec<Question>,String>{
     let parsed:Questions=parse(raw)?;if parsed.questions.len()>4{return Err(fail());}
     let local=window.iter().map(|u|u.id.as_str()).collect::<HashSet<_>>();
-    let known=all.iter().filter(|s|local.contains(s["source"].as_str().unwrap())).map(|s|(s["id"].as_str().unwrap(),s)).collect::<HashMap<_,_>>();
     let mut out=Vec::new();
     for q in parsed.questions {
         if !super::line(&q.question,50)||q.question.chars().filter(|c|matches!(c,'?'|'？')).count()>1
-            ||!matches!(q.importance.as_str(),"essential"|"supporting")||q.evidence.is_empty()||q.evidence.len()>8{return Err(fail());}
-        let mut evidence=Vec::new();
-        for id in q.evidence {
-            let sentence=known.get(id.as_str()).ok_or_else(fail)?;
-            let quote=sentence["text"].as_str().ok_or_else(fail)?;if quote.trim().is_empty(){return Err(fail());}
-            let exact=Evidence{source:sentence["source"].as_str().unwrap().to_string(),quote:quote.to_string()};
-            if !evidence.contains(&exact){evidence.push(exact);}
-        }
+            ||!matches!(q.importance.as_str(),"essential"|"supporting"){return Err(fail());}
+        let evidence=grounded_evidence(q.evidence,all,&local)?;
         // Context-only questions belong to another window. They do not make
         // this complete primary window fail or consume its format recovery.
         if !evidence.iter().any(|e|primary.contains(e.source.as_str())){continue;}
@@ -121,7 +129,7 @@ fn extract(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,u
             Ok(q)=>q,
             Err(_) if !recovered=>{
                 recovered=true;input["previousResult"]=json!(raw);
-                input["formatProblems"]=json!("仅修复JSON/机器合同：每窗0至4题，每题50字内、至多一个问号，只问primarySourceIds有实质内容的一个核心问题；evidence只能是本窗口存在的句子e编号字符串，至少一处涉及primary，不能抄句子、编编号或拼接。不要添加新主题或自称通过。");
+                input["formatProblems"]=json!("仅修复JSON/机器合同：每窗0至4题，每题50字内、至多一个问号，只问primarySourceIds有实质内容的一个核心问题；evidence只能是本窗口现有e编号，最多32个，程序将同单位实际相邻句子原样合为连续证据，最终最多8段，至少一处涉及primary；不能为数量删去分类分支/条件，不抄句子、编编号或跨未引用句子拼接。不要添加新主题或自称通过。");
                 let raw=super::request(endpoint,model,key,client,SOURCE,input,false,start,trace,&format!("{stage}-format-recovery"))?;
                 decode_questions(&raw,&source,&window,&primary)?
             },
@@ -370,6 +378,17 @@ mod tests {
         let(valid,missing)=retrieval_parts(&raw.to_string(),&questions,&summary).unwrap();assert_eq!(valid.len(),1);assert_eq!(valid[0].id,"q00");assert_eq!(missing.len(),1);assert_eq!(missing[0].id,"q01");assert!(decode_retrieval(&raw.to_string(),&questions,&summary).is_err());
         let missing_raw=json!({"answers":[{"id":"q00","summaryIds":["s002"]}]});assert_eq!(retrieval_parts(&missing_raw.to_string(),&questions,&summary).unwrap().1[0].id,"q01");
         for bad in [json!({"answers":[{"id":"q99","summaryIds":["s002"]}]}),json!({"answers":[],"passed":true})]{assert!(retrieval_parts(&bad.to_string(),&questions,&summary).is_err());}
+    }
+    #[test]
+    fn automatic_brief_source_evidence_coalesces_only_selected_adjacent_exact_sentences(){
+        let text=(0..18).map(|i|format!("分类分支{i}的条件。\n")).collect::<String>();
+        let u=vec![Unit{id:"u000".into(),text:text.clone()}];let all=super::super::factual_audit::evidence_sentences(&u);let allowed=HashSet::from(["u000"]);
+        let ids=all.iter().take(13).map(|s|s["id"].as_str().unwrap().to_string()).collect::<Vec<_>>();let evidence=grounded_evidence(ids.clone(),&all,&allowed).unwrap();
+        assert_eq!(evidence.len(),1);assert_eq!(evidence[0].quote,all.iter().take(13).map(|s|s["text"].as_str().unwrap()).collect::<String>());assert!(text.contains(&evidence[0].quote));
+        let mut gap=ids;gap.remove(6);let split=grounded_evidence(gap,&all,&allowed).unwrap();assert_eq!(split.len(),2);assert!(!split.iter().any(|e|e.quote.contains("分类分支6的条件")));
+        let disjoint=all.iter().step_by(2).map(|s|s["id"].as_str().unwrap().to_string()).collect();assert!(grounded_evidence(disjoint,&all,&allowed).is_err());
+        assert!(grounded_evidence(vec!["e9999".into()],&all,&allowed).is_err());
+        let other=vec![Unit{id:"u000".into(),text:"第一。第二。".into()},Unit{id:"u001".into(),text:"第三。第四。".into()}];let all=super::super::factual_audit::evidence_sentences(&other);let ids=all.iter().map(|s|s["id"].as_str().unwrap().to_string()).collect();assert_eq!(grounded_evidence(ids,&all,&HashSet::from(["u000","u001"])).unwrap().len(),2);
     }
     #[test]
     fn automatic_brief_precheck_reuses_only_unchanged_positive_semantics(){
