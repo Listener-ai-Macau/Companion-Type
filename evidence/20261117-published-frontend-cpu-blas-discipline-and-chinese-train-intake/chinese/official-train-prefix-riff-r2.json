@@ -1,0 +1,72 @@
+{
+  "at": "2026-11-17T12:13:08.759785+08:00",
+  "state": "PASS_CACHED_OFFICIAL_TRAIN_RIFF_HEADER_NOT_FULL_AUDIO_OR_TEXTGRID_PROOF",
+  "prefixSha256": "ae9505aee1148cb7a1f119ed84a9a069fddefb71d070ca40cba02cbc851a6c75",
+  "newNetworkRequests": 0,
+  "officialPrefixBytes": 1048576,
+  "originalArchiveDeclaredBytes": 78639309701,
+  "entries": [
+    {
+      "name": "Train_Ali_far",
+      "memberBytes": 0,
+      "tarHeaderChecksumVerified": true,
+      "completeMemberAvailable": true
+    },
+    {
+      "name": "Train_Ali_far/audio_dir",
+      "memberBytes": 0,
+      "tarHeaderChecksumVerified": true,
+      "completeMemberAvailable": true
+    },
+    {
+      "name": "Train_Ali_far/audio_dir/R0003_M0046_MS002.wav",
+      "memberBytes": 523745616,
+      "tarHeaderChecksumVerified": true,
+      "completeMemberAvailable": false,
+      "audioPrefixPayloadBytes": 1217174,
+      "waveHeader": {
+        "formatCode": 65534,
+        "channels": 8,
+        "sampleRate": 16000,
+        "byteRate": 256000,
+        "blockAlign": 16,
+        "bitsPerSample": 16,
+        "validBitsPerSample": 16,
+        "channelMask": 1599,
+        "subformat": "PCM",
+        "subformatGuidHex": "0100000000001000800000aa00389b71",
+        "declaredPcmBytes": 523745536,
+        "frames": 32734096,
+        "audioSeconds": 2045.881
+      }
+    }
+  ],
+  "conversionMetadataMatch": [
+    {
+      "recordingId": "R0003_M0046",
+      "sourceBasename": "R0003_M0046_MS002.wav",
+      "frames": 32734096,
+      "channels": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "headerFramesMatchExactly": true
+    }
+  ],
+  "python311WaveModuleFailureReason": "Format65534 WAVE_FORMAT_EXTENSIBLE; verifiedPCM subformatGUID/16bits/8channels/16k fromRIFF header.",
+  "firstAttemptFailureRetained": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\official-train-prefix-inspection.json",
+  "trainingAudioPrefixOpened": true,
+  "fullAudioOrOriginalTextgridVerified": false,
+  "trainingAdmitted": false,
+  "requiresSingleChannelExtractionFromRawPcm": true,
+  "mixingOrAveragingChannelsApproved": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false
+}

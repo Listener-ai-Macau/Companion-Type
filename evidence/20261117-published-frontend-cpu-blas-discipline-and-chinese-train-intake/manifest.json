@@ -1,0 +1,246 @@
+{
+  "at": "2026-11-17T12:19:41.909426+08:00",
+  "parent": "2865d926010b24d66fc3959e2295e0bd51702c9b",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_published_tdt_frontend_20261117.py",
+      "file": "tools/verify_published_tdt_frontend_20261117.py",
+      "bytes": 6850,
+      "sha256": "5b71c660dd3f5e413678a478e79d07dcadd0226f1e3c4f4671cf1dcbc1e01864"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\trace_published_tdt_frontend_20261117.py",
+      "file": "tools/trace_published_tdt_frontend_20261117.py",
+      "bytes": 3883,
+      "sha256": "55ae81896424313df58b15fbd933638f90ca1e0edd30fb4362689efb99f22179"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\audit_alimeeting_train_manifest_20261117.py",
+      "file": "tools/audit_alimeeting_train_manifest_20261117.py",
+      "bytes": 5201,
+      "sha256": "9dee1c63305e21c3e87ca6c89fc068ba92baa13197e622dac3b99c9e2792452d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\profile_alimeeting_nonoverlap_20261117.py",
+      "file": "tools/profile_alimeeting_nonoverlap_20261117.py",
+      "bytes": 4972,
+      "sha256": "fc17bb8f8d8f6fce7694c35ffcf348e479e71f0d0644b840fb5b398c8a44252a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\inspect_official_alimeeting_train_prefix_20261117.py",
+      "file": "tools/inspect_official_alimeeting_train_prefix_20261117.py",
+      "bytes": 2980,
+      "sha256": "d85ebb0ce0b2391765f26ef5da816b5199b39fc030ea35f0b08e616e4f652ce9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\inspect_cached_alimeeting_riff_20261117.py",
+      "file": "tools/inspect_cached_alimeeting_riff_20261117.py",
+      "bytes": 4387,
+      "sha256": "ae0b53ce6ace7c70b01ae7735127a63d8049f30be036877bec077bbf1209357d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_frontend_and_chinese_intake_20261117.py",
+      "file": "tools/record_frontend_and_chinese_intake_20261117.py",
+      "bytes": 9310,
+      "sha256": "18662425236d50c2d98f8b94af7c27637ec95b2f8a40dfb22a7b50f06a1af3b5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-proof-20261117.json",
+      "file": "frontend/proof.json",
+      "bytes": 1793,
+      "sha256": "c8373c354a2dec8b68adc31c62c525585e77d30362e17d6d045557da21fce0b8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\cpu-vad-explicit-blas-pin-20261117.json",
+      "file": "cpu-vad-thread-fix.json",
+      "bytes": 1759,
+      "sha256": "aa0ffd9ec0545ec4142f9ad791948d809fce2a0edebc51cce50d71ac9d1a9812"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-worker-before-explicit-blas-pin-20261117.py",
+      "file": "prior-cpu-vad-worker.py",
+      "bytes": 7629,
+      "sha256": "1eb03bf3c454a97c3f3f661001990d0c1db874975e73e633e68a895e5ae19318"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-train-intake-20261117.json",
+      "file": "chinese/intake.json",
+      "bytes": 4893,
+      "sha256": "1e62a87d47efd6adbb3fbaddecd5c7fdfd1d40c70f9b2d439087cd275d3aad1d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\frontend-failure-localization-correction.json",
+      "file": "frontend/localization-correction.json",
+      "bytes": 861,
+      "sha256": "efe45d18d5c51049e6beabdbffdb11061a894208d8ef70118192cb367e99201e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r1\\state.json",
+      "file": "frontend/published-frontend-r1/state.json",
+      "bytes": 1586,
+      "sha256": "77f4623ccaa53997b0b436af69c91ac98608a4bb7b518b01f51450c16dc1e50f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r1\\worker-at-failed-import.py",
+      "file": "frontend/published-frontend-r1/worker-at-failed-import.py",
+      "bytes": 6434,
+      "sha256": "b7fc437da54ecd838fbc91c7015adb7f81d3cf93b105096738c54bb9d6053516"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r1\\terminal-import-failure.json",
+      "file": "frontend/published-frontend-r1/terminal-import-failure.json",
+      "bytes": 565,
+      "sha256": "138a3fecb45ef53e72b6ecd6eeff1f99fc030c35171bcb123f568054fe0df9d2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r2\\state.json",
+      "file": "frontend/published-frontend-r2/state.json",
+      "bytes": 1587,
+      "sha256": "f8268a3a2c652cb523e7ff3d9beebada0b9a1ed828027ea0a1a7c417815057b0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r2\\worker-at-failed-math.py",
+      "file": "frontend/published-frontend-r2/worker-at-failed-math.py",
+      "bytes": 6800,
+      "sha256": "42a3aafc780374aeae531db2cbc9fda23a8c3e4fd51359004a6fe2f72a10c92b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r2\\terminal-math-failure.json",
+      "file": "frontend/published-frontend-r2/terminal-math-failure.json",
+      "bytes": 286,
+      "sha256": "1365ebf8230d474256dcc24c95ad1276c323d3135389e95f6c694965c326e20e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-trace-r3\\state.json",
+      "file": "frontend/published-frontend-trace-r3/state.json",
+      "bytes": 5614,
+      "sha256": "8afca72149fdb293a45f9746c2ee6a221ea93a4b799f772e81ddac8b9f249bb3"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-trace-r3\\worker-at-failed-operation.py",
+      "file": "frontend/published-frontend-trace-r3/worker-at-failed-operation.py",
+      "bytes": 3883,
+      "sha256": "55ae81896424313df58b15fbd933638f90ca1e0edd30fb4362689efb99f22179"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-trace-r3\\terminal-operation-failure.json",
+      "file": "frontend/published-frontend-trace-r3/terminal-operation-failure.json",
+      "bytes": 429,
+      "sha256": "2d7074ba4037f19d1bed9731960bcd99ce06fbea568ae6d4c8525c0526aed01c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r4\\completed.json",
+      "file": "frontend/published-frontend-r4/completed.json",
+      "bytes": 7025,
+      "sha256": "785e01e6a4da4b93166f7e5c7739d22de79f3db3d213b727acf0518ad2ffc75c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\hf-dataset-index.json",
+      "file": "chinese/hf-dataset-index.json",
+      "bytes": 4681,
+      "sha256": "11e694e6a3e72fe140733e1353569ea200735e93396e660ffb9ba2ca8686e456"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\official-repo-tree.json",
+      "file": "chinese/official-repo-tree.json",
+      "bytes": 42304,
+      "sha256": "a952eafe78ce68fa64c2ac2d95ae91662dcf3b786e7068a8d402c8591cdd5bd8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\intake-requests.json",
+      "file": "chinese/intake-requests.json",
+      "bytes": 411,
+      "sha256": "44aecb27616bc29ff89325c25790e0c43ddbd3530c22496457dacbaddf57902a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\huseinzol05--AliMeeting-mirror-tree.json",
+      "file": "chinese/huseinzol05--AliMeeting-mirror-tree.json",
+      "bytes": 507,
+      "sha256": "560c0a2df2cd31d99eb56eec37bd44180911d9a92585e681b515f72b5d386de2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\yuekai--alimeeting_aishell4_training_whisper_fbank_lhotse-tree.json",
+      "file": "chinese/yuekai--alimeeting_aishell4_training_whisper_fbank_lhotse-tree.json",
+      "bytes": 16352,
+      "sha256": "b54fddbeb1192041ee383d572282d53baf7ca57557fb3334302f74aa96048b21"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\train-manifest-provider.json",
+      "file": "chinese/train-manifest-provider.json",
+      "bytes": 3224,
+      "sha256": "cc481d76c85e3cfd6d4a10c7ab4f9030f7db343e199afe324a0d67c638c444ee"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\train-manifest-selection.json",
+      "file": "chinese/train-manifest-selection.json",
+      "bytes": 637,
+      "sha256": "0032235359020f9412e50259465a5e7a3ad2419bed4c19bcaf859f5cb93ea5d1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\train-metadata-audit.json",
+      "file": "chinese/train-metadata-audit.json",
+      "bytes": 2640,
+      "sha256": "ace47cd9d6cc81ca84dff5f46eb835daa481a926ce44e3a50922c86c87104dc6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\primary-source-context.json",
+      "file": "chinese/primary-source-context.json",
+      "bytes": 1765,
+      "sha256": "40896da6b116c356132974c02a45df84d99467be0ee017b56401ff4369f7d0d0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\nonoverlap-metadata-profile.json",
+      "file": "chinese/nonoverlap-metadata-profile.json",
+      "bytes": 60565,
+      "sha256": "249a7b1688b4c15b76e3dac67237660134d50a404310b8eaecf970e50bb1ec50"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\official-alimeeting-speaker-parser.py",
+      "file": "chinese/official-alimeeting-speaker-parser.py",
+      "bytes": 7056,
+      "sha256": "13b661679b161fc60155ccdd7869c275bc12cac3a3ef940c0a2ece2d41cd8053"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\official-train-prefix-inspection.json",
+      "file": "chinese/official-train-prefix-inspection.json",
+      "bytes": 844,
+      "sha256": "437fc8b4396711e84ec8624500349722fe4ab0da9874618561fdffd86501da72"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\official-train-prefix-riff-r2.json",
+      "file": "chinese/official-train-prefix-riff-r2.json",
+      "bytes": 2345,
+      "sha256": "c43d5614d0bcdd1c3f41cf726d727a0f1b45d26d53454bd0858366bd9d370a83"
+    },
+    {
+      "source": "work\\checkpoint_frontend_chinese_r66.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 9797,
+      "sha256": "cee5783253e60f34435b412e587474970d755636011ef39c8c13c461b71dc594"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/silero_presence_worker_20261117.py": "566746a67ab6fb000ea8f63ccf5743f237bb9786a3df31da5e4b885da389b0d3"
+  },
+  "state": "PUBLISHED_FRONTEND_VERIFIED_CPU_VAD_BLAS_FIXED_ALIMEETING_INTAKE_NOT_ADMITTED",
+  "publishedSignalFrontendRealTrainingCases": 10,
+  "actualGpuBackwardOrTrainingPerformed": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "cpuOrIntegratedGpuTraining": false,
+  "cpuVadSourceExplicitBlasBindingAdded": true,
+  "newCpuVadInferenceRevalidated": false,
+  "chineseCandidateMetadataHoursAreNotAcquiredAudioHours": true,
+  "chineseTrainingAdmitted": false,
+  "originalResourceAndThermalGuardsChanged": false,
+  "originalEvaluationGatesChanged": false,
+  "productDefaultChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

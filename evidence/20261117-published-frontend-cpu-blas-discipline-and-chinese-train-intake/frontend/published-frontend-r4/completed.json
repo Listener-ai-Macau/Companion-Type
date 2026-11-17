@@ -1,0 +1,226 @@
+{
+  "at": "2026-11-17T11:59:44.419060+08:00",
+  "state": "PASS_REAL_PUBLISHED_SIGNAL_FRONTEND_TRAIN_INPUTS_NO_MODEL_OR_TRAINING",
+  "protocolSha256": "005c192a84e288e339c919f34934f2681072562fa5aa3da28262c9c3ffc8c89d",
+  "sourceSha256": "5b71c660dd3f5e413678a478e79d07dcadd0226f1e3c4f4671cf1dcbc1e01864",
+  "completed": [
+    {
+      "id": "ES2002b-word-nonoverlap-r3-0044",
+      "sourceFrames": 478640,
+      "featureShape": [
+        1,
+        2992,
+        128
+      ],
+      "validFeatureFrames": 2991,
+      "maskedPaddingFrames": 1,
+      "encoderFramesExpected": 374,
+      "targetSubwords": 161,
+      "jointTokenCells": 60588,
+      "allFinite": true,
+      "featureFloat32Sha256": "f9b36832087102c8174b98b364e798df120cf8c91d7c49c11aaacab59b3f7668",
+      "signalProcessingSeconds": 0.10570569999981672
+    },
+    {
+      "id": "ES2005b-word-nonoverlap-r3-0029",
+      "sourceFrames": 479680,
+      "featureShape": [
+        1,
+        2999,
+        128
+      ],
+      "validFeatureFrames": 2998,
+      "maskedPaddingFrames": 1,
+      "encoderFramesExpected": 375,
+      "targetSubwords": 109,
+      "jointTokenCells": 41250,
+      "allFinite": true,
+      "featureFloat32Sha256": "48ec88e7378781c1860c5494de0b7ca1e5ef8c0e37fb999d40d77b90ae65bbac",
+      "signalProcessingSeconds": 0.0929482999999891
+    },
+    {
+      "id": "TS3005b-sequential-0008",
+      "sourceFrames": 221441,
+      "featureShape": [
+        1,
+        1385,
+        128
+      ],
+      "validFeatureFrames": 1384,
+      "maskedPaddingFrames": 1,
+      "encoderFramesExpected": 173,
+      "targetSubwords": 64,
+      "jointTokenCells": 11245,
+      "allFinite": true,
+      "featureFloat32Sha256": "71a7049efb5107faca7949b8d3a7face621e6526005ce4de38174ee60e539b68",
+      "signalProcessingSeconds": 0.04082370000105584
+    },
+    {
+      "id": "TS3008b-sequential-0012",
+      "sourceFrames": 32240,
+      "featureShape": [
+        1,
+        202,
+        128
+      ],
+      "validFeatureFrames": 201,
+      "maskedPaddingFrames": 1,
+      "encoderFramesExpected": 26,
+      "targetSubwords": 16,
+      "jointTokenCells": 442,
+      "allFinite": true,
+      "featureFloat32Sha256": "0a211690f1fabbf1a481eefe20248fb9d9ec674c313b8bc79e4372ce8f1ad6cc",
+      "signalProcessingSeconds": 0.006703499995637685
+    },
+    {
+      "id": "TS3010b-sequential-0038",
+      "sourceFrames": 221760,
+      "featureShape": [
+        1,
+        1387,
+        128
+      ],
+      "validFeatureFrames": 1386,
+      "maskedPaddingFrames": 1,
+      "encoderFramesExpected": 174,
+      "targetSubwords": 47,
+      "jointTokenCells": 8352,
+      "allFinite": true,
+      "featureFloat32Sha256": "9bb4c9d4e3bf10bb439dabd876d6cfa662691211c2497bc216bdf332a00b5d8f",
+      "signalProcessingSeconds": 0.04139410000061616
+    },
+    {
+      "id": "TS3005b-sequential-0012",
+      "sourceFrames": 67040,
+      "featureShape": [
+        1,
+        420,
+        128
+      ],
+      "validFeatureFrames": 419,
+      "maskedPaddingFrames": 1,
+      "encoderFramesExpected": 53,
+      "targetSubwords": 12,
+      "jointTokenCells": 689,
+      "allFinite": true,
+      "featureFloat32Sha256": "a143ac2e3643529d6bf0d7400d0bd591492b062811386e5129d57e1ad6c352d7",
+      "signalProcessingSeconds": 0.013118099996063393
+    },
+    {
+      "id": "TS3010b-sequential-0024",
+      "sourceFrames": 202881,
+      "featureShape": [
+        1,
+        1269,
+        128
+      ],
+      "validFeatureFrames": 1268,
+      "maskedPaddingFrames": 1,
+      "encoderFramesExpected": 159,
+      "targetSubwords": 59,
+      "jointTokenCells": 9540,
+      "allFinite": true,
+      "featureFloat32Sha256": "c04754ab317c6c2dba5aee4d438cbee27c8a637f55dfe818267da5f0c6808ecb",
+      "signalProcessingSeconds": 0.03693110000313027
+    },
+    {
+      "id": "ES2006b-sequential-0016",
+      "sourceFrames": 114720,
+      "featureShape": [
+        1,
+        718,
+        128
+      ],
+      "validFeatureFrames": 717,
+      "maskedPaddingFrames": 1,
+      "encoderFramesExpected": 90,
+      "targetSubwords": 26,
+      "jointTokenCells": 2430,
+      "allFinite": true,
+      "featureFloat32Sha256": "b156225a0b76c1ed2167f3e117e3cd519e0e910ef543b9668ed820bb2f59fff2",
+      "signalProcessingSeconds": 0.021323300003132317
+    },
+    {
+      "id": "ES2005b-sequential-0013",
+      "sourceFrames": 150720,
+      "featureShape": [
+        1,
+        943,
+        128
+      ],
+      "validFeatureFrames": 942,
+      "maskedPaddingFrames": 1,
+      "encoderFramesExpected": 118,
+      "targetSubwords": 43,
+      "jointTokenCells": 5192,
+      "allFinite": true,
+      "featureFloat32Sha256": "9d08fb3c2207c6c757887f3db8a2cebfa50cc3c245416e184e78ae4c07278df6",
+      "signalProcessingSeconds": 0.029432100003759842
+    },
+    {
+      "id": "IS1000b-sequential-0044",
+      "sourceFrames": 98400,
+      "featureShape": [
+        1,
+        616,
+        128
+      ],
+      "validFeatureFrames": 615,
+      "maskedPaddingFrames": 1,
+      "encoderFramesExpected": 77,
+      "targetSubwords": 18,
+      "jointTokenCells": 1463,
+      "allFinite": true,
+      "featureFloat32Sha256": "c8d0be4070f5dd7e9eff59e2f9386b3f9c217fdb067ac2c649bd7af9d59d3c41",
+      "signalProcessingSeconds": 0.019282699999166653
+    }
+  ],
+  "modelInstances": 0,
+  "neuralCalls": 0,
+  "optimizerInstances": 0,
+  "parameterUpdates": 0,
+  "referenceLabelsRead": false,
+  "trainingManifestReadOnly": true,
+  "qualityQualified": false,
+  "observedAt": "2026-11-17T11:59:51.226124+08:00",
+  "limits": {
+    "pid": 13052,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 711929856,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "selection": "Frozen largestjoint/longest, then first original training clip for each valid-feature-length residue modulo8; no quality outputs or validation labels used.",
+  "selectedIds": [
+    "ES2002b-word-nonoverlap-r3-0044",
+    "ES2005b-word-nonoverlap-r3-0029",
+    "TS3005b-sequential-0008",
+    "TS3008b-sequential-0012",
+    "TS3010b-sequential-0038",
+    "TS3005b-sequential-0012",
+    "TS3010b-sequential-0024",
+    "ES2006b-sequential-0016",
+    "ES2005b-sequential-0013",
+    "IS1000b-sequential-0044"
+  ],
+  "blasThreadPin": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "actualLargestNeuralForwardBackwardProven": false,
+  "gpuInitialized": false,
+  "torchVersion": "2.11.0+rocm10.0.0",
+  "transformersVersion": "5.22.1",
+  "elapsedSeconds": 6.796999999998661
+}

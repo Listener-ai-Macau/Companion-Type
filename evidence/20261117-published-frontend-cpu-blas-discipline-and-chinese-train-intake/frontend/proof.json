@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-17T12:05:27.739880+08:00",
+  "state": "PUBLISHED_PROCESSOR_INPUT_FEATURES_VERIFIED_EXISTING_GPU_WORKER_ALREADY_PINS_CPU_BLAS",
+  "receipt": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r4\\completed.json",
+  "receiptSha256": "785e01e6a4da4b93166f7e5c7739d22de79f3db3d213b727acf0518ad2ffc75c",
+  "realTrainingCases": 10,
+  "includesLargestJointAndLongestAndAllEightLengthResidues": true,
+  "largestJointActualFeatureShape": [
+    1,
+    2992,
+    128
+  ],
+  "largestJointExpectedEncoderFrames": 374,
+  "largestJointTokenCells": 60588,
+  "allFeaturesFiniteAndMaskedPaddingZero": true,
+  "signalProcessingUsesPublishedAutoProcessor": true,
+  "blasThreadPin": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "peakPrivateCommitBytes": 711929856,
+  "fixedPrivateCommitLimitBytes": 2147483648,
+  "cpuPercent": 5,
+  "gpuWorkerSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_domain_adaptation_20261116.py",
+  "gpuWorkerAlreadyPinsBlasAtLine": 122,
+  "processorLoadAtLine": 145,
+  "errorWasNewAuditScriptOmissionNotNewGpuTrainingBug": true,
+  "initialFailuresPreserved": [
+    "published-frontend-r1",
+    "published-frontend-r2",
+    "published-frontend-trace-r3"
+  ],
+  "modelInstances": 0,
+  "neuralCalls": 0,
+  "parameterUpdates": 0,
+  "gpuInitialized": false,
+  "actualGpuBackwardMaximumShapeCheckpointProven": false,
+  "newAsrScore": false,
+  "qualityQualified": false
+}

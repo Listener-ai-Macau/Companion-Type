@@ -1,0 +1,122 @@
+{
+  "at": "2026-11-17T12:18:51+08:00",
+  "state": "ALIMEETING_TRAIN_RAW_METADATA_PROFILED_OFFICIAL_FIRST_HEADER_MATCHED_NOT_TRAINING_READY",
+  "metadataSource": {
+    "repo": "yuekai/alimeeting_aishell4_training_whisper_fbank_lhotse",
+    "commit": "ae2e3427660045ff558a9935b3e1176ef1b20963",
+    "selected": {
+      "type": "file",
+      "oid": "6e0a38eaaf460b86e58ee9af1e6a510a21217eb6",
+      "size": 39545263,
+      "lfs": {
+        "oid": "dfb00b08f2219cf8f36e23fc7548338e7c1176dcc2ec5937e4d27f4dcc554bfe",
+        "size": 39545263,
+        "pointerSize": 133
+      },
+      "xetHash": "0f3ed0ee17a86c7543818031df944a214417b54b3cb5cbec7331c9e3641ffbaf",
+      "path": "alimeeting-far_cuts_train.jsonl.gz"
+    },
+    "trainOnly": true,
+    "useFixedOrRemovedTextFiles": false,
+    "readAISHELLFiles": false
+  },
+  "manifestSha256": "dfb00b08f2219cf8f36e23fc7548338e7c1176dcc2ec5937e4d27f4dcc554bfe",
+  "manifestBytes": 39545263,
+  "thirdPartyConvertedTrainSessions": 209,
+  "publisherReportsTrainSessions": 212,
+  "thirdPartyNormalizedSpeakerIds": 452,
+  "publisherReportsTrainPeople": 456,
+  "rawUnaugmentedUtterances": 186364,
+  "speedAugmentedCutsExcluded": 372728,
+  "candidateNonoverlapWholeUtterances2To30Seconds": 19388,
+  "candidateNonoverlapMetadataSeconds": 73062.23000000003,
+  "candidateHoursAreNotAcquiredOrVerifiedAudioHours": true,
+  "candidateSpeakerIds": 393,
+  "cachedFeaturesRejectedForThisTask": {
+    "channels": 8,
+    "featureDimensions": 80,
+    "reason": "Companion is single-mic; these cached80mel/multichannel/speedperturbed features are not raw source PCM or the current model frontend."
+  },
+  "officialPrefix": {
+    "bytes": 1048576,
+    "url": "https://speech-lab-share-data.oss-cn-shanghai.aliyuncs.com/AliMeeting/openlr/Train_Ali_far.tar.gz",
+    "sha256": "ae9505aee1148cb7a1f119ed84a9a069fddefb71d070ca40cba02cbc851a6c75",
+    "header": {
+      "formatCode": 65534,
+      "channels": 8,
+      "sampleRate": 16000,
+      "byteRate": 256000,
+      "blockAlign": 16,
+      "bitsPerSample": 16,
+      "validBitsPerSample": 16,
+      "channelMask": 1599,
+      "subformat": "PCM",
+      "subformatGuidHex": "0100000000001000800000aa00389b71",
+      "declaredPcmBytes": 523745536,
+      "frames": 32734096,
+      "audioSeconds": 2045.881
+    },
+    "conversionMetadataMatch": [
+      {
+        "recordingId": "R0003_M0046",
+        "sourceBasename": "R0003_M0046_MS002.wav",
+        "frames": 32734096,
+        "channels": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "headerFramesMatchExactly": true
+      }
+    ],
+    "format": "WAVE_FORMAT_EXTENSIBLE PCM16,8channels,16k. Original Python3.11 wave failure preserved; RIFF/GUID inspection reused cached bytes, no retry/download enlargement."
+  },
+  "newAudioExposure": "Only bounded original public Train prefix; containspartial PCM. No evaluation/test or reserved AISHELL payload read.",
+  "primarySources": [
+    {
+      "url": "https://www.openslr.org/119/",
+      "facts": [
+        "Publisher listsCCBYSA4.0",
+        "118.75totalhours,104.75train/4eval/10test",
+        "Train far8channelarchive73.24G; not downloaded."
+      ]
+    },
+    {
+      "url": "https://arxiv.org/html/2110.07393",
+      "facts": [
+        "Section2 reports212trainmeetings/456trainparticipants,8evalmeetings/25evalparticipants.",
+        "Authors explicitly state train/eval speakers do not overlap.",
+        "Corpus has synchronized far-field8channel arrays and near-field headsets; TextGrid contains speaker identity/timing/text."
+      ],
+      "scopeLimit": "No claim of cross-corpus identity isolation from AISHELL."
+    },
+    {
+      "url": "https://github.com/yufan-aslp/AliMeeting",
+      "facts": [
+        "Publisher baseline recipes distinguish ASR and speaker diarization."
+      ]
+    },
+    {
+      "url": "https://huggingface.co/datasets/yuekai/alimeeting_aishell4_training_whisper_fbank_lhotse",
+      "facts": [
+        "Thirdparty feature/training manifests, independent original audio/TextGrid verification remains required."
+      ]
+    }
+  ],
+  "trainingReady": false,
+  "remaining": [
+    "Independent original TextGrid/transcript checks; a matching WAV header is not a full source-content proof.",
+    "Exact first-mic PCM extraction within original12GiB new-data and50GiB free-space limits; no full73.24GiB archive download.",
+    "Participant isolation for the actual selected training/validation contract. AliMeeting authors assert their own Train/Eval separation; originalAISHELL cross-corpus identity remains unproven."
+  ],
+  "originalChineseTrainingGateChanged": false,
+  "originalMetricsOrHoldoutChanged": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false
+}

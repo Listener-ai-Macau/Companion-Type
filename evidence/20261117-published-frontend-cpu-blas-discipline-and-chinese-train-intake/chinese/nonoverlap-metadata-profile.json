@@ -1,0 +1,1933 @@
+{
+  "at": "2026-11-17T12:10:18.482651+08:00",
+  "state": "TRAIN_METADATA_NONOVERLAP_INVENTORY_ONLY_NOT_TRAINING_ADMISSION",
+  "sourceSha256": "fc17bb8f8d8f6fce7694c35ffcf348e479e71f0d0644b840fb5b398c8a44252a",
+  "manifestSha256": "dfb00b08f2219cf8f36e23fc7548338e7c1176dcc2ec5937e4d27f4dcc554bfe",
+  "unaugmentedUtterances": 186364,
+  "speedTransformedCutsExcluded": 372728,
+  "originalRecordingSessions": 209,
+  "originalRecordingSeconds": 400888.7121250001,
+  "normalizedNumericSpeakerIds": 452,
+  "publisherReportedTrainSessions": 212,
+  "publisherReportedTrainPeople": 456,
+  "manifestIsNotACompleteOfficialTrainSplit": true,
+  "candidateWholeUtterances2To30SecondsWithoutAnyDifferentSpeakerOverlap": 19388,
+  "candidateSecondsWithoutSpeedPerturbation": 73062.23000000003,
+  "candidateSpeakerIds": 393,
+  "originalOverlapUnionSeconds": 106949.91999999995,
+  "selectionUsesCandidateModelOutputs": false,
+  "selectionChangesTextOrSplitsInsideUtterance": false,
+  "selectionAddsPaddingOrChangesThresholds": false,
+  "sourceChannels": 8,
+  "cachedFeatureDimensions": 80,
+  "cachedFeaturesApprovedForSingleMicModel": false,
+  "singleMicSourcePcmAcquired": false,
+  "sourceTextgridIndependentlyMatched": false,
+  "originalAishellCrossCorpusSpeakerIsolationProven": false,
+  "chineseTrainingAdmitted": false,
+  "metadataNotUsableAudioHours": true,
+  "noTrainingOrEvaluationAudioOpened": true,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "perSession": [
+    {
+      "meeting": "R0014_M0093",
+      "rawUtterances": 1347,
+      "length2To30SecondUtterances": 477,
+      "wholeUtteranceNonoverlapCandidates": 3,
+      "candidateSeconds": 26.42,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1011.1500000000003
+    },
+    {
+      "meeting": "R0015_M0152",
+      "rawUtterances": 1286,
+      "length2To30SecondUtterances": 564,
+      "wholeUtteranceNonoverlapCandidates": 1,
+      "candidateSeconds": 2.1,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1471.3499999999988
+    },
+    {
+      "meeting": "R0008_M0053",
+      "rawUtterances": 915,
+      "length2To30SecondUtterances": 405,
+      "wholeUtteranceNonoverlapCandidates": 15,
+      "candidateSeconds": 81.46,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 584.1800000000002
+    },
+    {
+      "meeting": "R1021_M1961",
+      "rawUtterances": 677,
+      "length2To30SecondUtterances": 384,
+      "wholeUtteranceNonoverlapCandidates": 261,
+      "candidateSeconds": 978.1000000000003,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 122.44000000000007
+    },
+    {
+      "meeting": "R0020_M0175",
+      "rawUtterances": 997,
+      "length2To30SecondUtterances": 428,
+      "wholeUtteranceNonoverlapCandidates": 3,
+      "candidateSeconds": 34.55,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1054.2299999999993
+    },
+    {
+      "meeting": "R0014_M0092",
+      "rawUtterances": 1141,
+      "length2To30SecondUtterances": 417,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 29.759999999999998,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 884.6900000000002
+    },
+    {
+      "meeting": "R0020_M0179",
+      "rawUtterances": 504,
+      "length2To30SecondUtterances": 218,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 12.0,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 375.2800000000001
+    },
+    {
+      "meeting": "R1019_M1997",
+      "rawUtterances": 771,
+      "length2To30SecondUtterances": 365,
+      "wholeUtteranceNonoverlapCandidates": 314,
+      "candidateSeconds": 1006.13,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 41.76
+    },
+    {
+      "meeting": "R0008_M0060",
+      "rawUtterances": 967,
+      "length2To30SecondUtterances": 512,
+      "wholeUtteranceNonoverlapCandidates": 10,
+      "candidateSeconds": 36.22,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 934.7400000000002
+    },
+    {
+      "meeting": "R0014_M0106",
+      "rawUtterances": 861,
+      "length2To30SecondUtterances": 392,
+      "wholeUtteranceNonoverlapCandidates": 6,
+      "candidateSeconds": 28.099999999999998,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 735.0299999999996
+    },
+    {
+      "meeting": "R1019_M1971",
+      "rawUtterances": 952,
+      "length2To30SecondUtterances": 585,
+      "wholeUtteranceNonoverlapCandidates": 171,
+      "candidateSeconds": 687.8599999999999,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 825.5500000000008
+    },
+    {
+      "meeting": "R0008_M0070",
+      "rawUtterances": 1114,
+      "length2To30SecondUtterances": 524,
+      "wholeUtteranceNonoverlapCandidates": 13,
+      "candidateSeconds": 47.629999999999995,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 916.9899999999998
+    },
+    {
+      "meeting": "R0015_M0145",
+      "rawUtterances": 835,
+      "length2To30SecondUtterances": 487,
+      "wholeUtteranceNonoverlapCandidates": 7,
+      "candidateSeconds": 33.63,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 795.6700000000006
+    },
+    {
+      "meeting": "R1021_M1933",
+      "rawUtterances": 802,
+      "length2To30SecondUtterances": 406,
+      "wholeUtteranceNonoverlapCandidates": 180,
+      "candidateSeconds": 631.7900000000003,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 254.6099999999999
+    },
+    {
+      "meeting": "R0015_M0119",
+      "rawUtterances": 1050,
+      "length2To30SecondUtterances": 446,
+      "wholeUtteranceNonoverlapCandidates": 8,
+      "candidateSeconds": 26.29,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 699.8599999999994
+    },
+    {
+      "meeting": "R1019_M4039",
+      "rawUtterances": 926,
+      "length2To30SecondUtterances": 352,
+      "wholeUtteranceNonoverlapCandidates": 250,
+      "candidateSeconds": 859.2300000000001,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 98.11999999999996
+    },
+    {
+      "meeting": "R0014_M0108",
+      "rawUtterances": 1146,
+      "length2To30SecondUtterances": 410,
+      "wholeUtteranceNonoverlapCandidates": 10,
+      "candidateSeconds": 54.56999999999999,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 648.9400000000004
+    },
+    {
+      "meeting": "R0008_M0057",
+      "rawUtterances": 863,
+      "length2To30SecondUtterances": 432,
+      "wholeUtteranceNonoverlapCandidates": 12,
+      "candidateSeconds": 57.349999999999994,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 735.7899999999996
+    },
+    {
+      "meeting": "R1019_M4035",
+      "rawUtterances": 1060,
+      "length2To30SecondUtterances": 475,
+      "wholeUtteranceNonoverlapCandidates": 130,
+      "candidateSeconds": 433.53999999999985,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 371.8599999999996
+    },
+    {
+      "meeting": "R0014_M0098",
+      "rawUtterances": 1426,
+      "length2To30SecondUtterances": 548,
+      "wholeUtteranceNonoverlapCandidates": 3,
+      "candidateSeconds": 21.029999999999998,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1042.319999999999
+    },
+    {
+      "meeting": "R1021_M1986",
+      "rawUtterances": 666,
+      "length2To30SecondUtterances": 339,
+      "wholeUtteranceNonoverlapCandidates": 230,
+      "candidateSeconds": 841.5599999999994,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 73.69000000000001
+    },
+    {
+      "meeting": "R0015_M0140",
+      "rawUtterances": 865,
+      "length2To30SecondUtterances": 399,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 16.06,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 852.7299999999998
+    },
+    {
+      "meeting": "R0008_M0051",
+      "rawUtterances": 804,
+      "length2To30SecondUtterances": 378,
+      "wholeUtteranceNonoverlapCandidates": 22,
+      "candidateSeconds": 230.63000000000005,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 576.3600000000002
+    },
+    {
+      "meeting": "R1019_M1987",
+      "rawUtterances": 614,
+      "length2To30SecondUtterances": 332,
+      "wholeUtteranceNonoverlapCandidates": 258,
+      "candidateSeconds": 888.0899999999999,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 54.94
+    },
+    {
+      "meeting": "R0015_M0138",
+      "rawUtterances": 1054,
+      "length2To30SecondUtterances": 431,
+      "wholeUtteranceNonoverlapCandidates": 13,
+      "candidateSeconds": 45.129999999999995,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 716.5599999999997
+    },
+    {
+      "meeting": "R1019_M4051",
+      "rawUtterances": 916,
+      "length2To30SecondUtterances": 368,
+      "wholeUtteranceNonoverlapCandidates": 126,
+      "candidateSeconds": 417.16999999999996,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 325.6600000000001
+    },
+    {
+      "meeting": "R2001_M2205",
+      "rawUtterances": 950,
+      "length2To30SecondUtterances": 463,
+      "wholeUtteranceNonoverlapCandidates": 20,
+      "candidateSeconds": 91.11000000000003,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 671.8900000000009
+    },
+    {
+      "meeting": "R0020_M0185",
+      "rawUtterances": 882,
+      "length2To30SecondUtterances": 370,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 20.380000000000003,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 832.7700000000004
+    },
+    {
+      "meeting": "R1019_M4005",
+      "rawUtterances": 559,
+      "length2To30SecondUtterances": 385,
+      "wholeUtteranceNonoverlapCandidates": 280,
+      "candidateSeconds": 1331.9800000000005,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 85.98
+    },
+    {
+      "meeting": "R0005_M0040",
+      "rawUtterances": 882,
+      "length2To30SecondUtterances": 423,
+      "wholeUtteranceNonoverlapCandidates": 9,
+      "candidateSeconds": 55.73,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 748.8799999999995
+    },
+    {
+      "meeting": "R0015_M0120",
+      "rawUtterances": 1079,
+      "length2To30SecondUtterances": 477,
+      "wholeUtteranceNonoverlapCandidates": 12,
+      "candidateSeconds": 30.240000000000002,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 714.65
+    },
+    {
+      "meeting": "R0015_M0162",
+      "rawUtterances": 946,
+      "length2To30SecondUtterances": 413,
+      "wholeUtteranceNonoverlapCandidates": 10,
+      "candidateSeconds": 84.55000000000001,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 701.8599999999997
+    },
+    {
+      "meeting": "R0020_M0192",
+      "rawUtterances": 1034,
+      "length2To30SecondUtterances": 387,
+      "wholeUtteranceNonoverlapCandidates": 11,
+      "candidateSeconds": 58.3,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 563.8499999999999
+    },
+    {
+      "meeting": "R1019_M4075",
+      "rawUtterances": 741,
+      "length2To30SecondUtterances": 370,
+      "wholeUtteranceNonoverlapCandidates": 300,
+      "candidateSeconds": 1032.0499999999997,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 53.600000000000016
+    },
+    {
+      "meeting": "R0004_M0027",
+      "rawUtterances": 939,
+      "length2To30SecondUtterances": 378,
+      "wholeUtteranceNonoverlapCandidates": 22,
+      "candidateSeconds": 108.02,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 500.64
+    },
+    {
+      "meeting": "R1019_M1945",
+      "rawUtterances": 769,
+      "length2To30SecondUtterances": 314,
+      "wholeUtteranceNonoverlapCandidates": 216,
+      "candidateSeconds": 730.83,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 115.5
+    },
+    {
+      "meeting": "R0020_M0183",
+      "rawUtterances": 1091,
+      "length2To30SecondUtterances": 411,
+      "wholeUtteranceNonoverlapCandidates": 5,
+      "candidateSeconds": 24.4,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 738.9499999999994
+    },
+    {
+      "meeting": "R0015_M0134",
+      "rawUtterances": 1013,
+      "length2To30SecondUtterances": 419,
+      "wholeUtteranceNonoverlapCandidates": 9,
+      "candidateSeconds": 56.669999999999995,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 661.3399999999993
+    },
+    {
+      "meeting": "R0008_M0063",
+      "rawUtterances": 955,
+      "length2To30SecondUtterances": 490,
+      "wholeUtteranceNonoverlapCandidates": 1,
+      "candidateSeconds": 11.4,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 984.9500000000003
+    },
+    {
+      "meeting": "R0008_M0050",
+      "rawUtterances": 730,
+      "length2To30SecondUtterances": 392,
+      "wholeUtteranceNonoverlapCandidates": 24,
+      "candidateSeconds": 214.38,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 596.8100000000003
+    },
+    {
+      "meeting": "R2108_M3244",
+      "rawUtterances": 531,
+      "length2To30SecondUtterances": 259,
+      "wholeUtteranceNonoverlapCandidates": 65,
+      "candidateSeconds": 341.01000000000005,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 196.17999999999992
+    },
+    {
+      "meeting": "R1019_M4071",
+      "rawUtterances": 998,
+      "length2To30SecondUtterances": 393,
+      "wholeUtteranceNonoverlapCandidates": 196,
+      "candidateSeconds": 610.06,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 231.20000000000024
+    },
+    {
+      "meeting": "R1019_M1965",
+      "rawUtterances": 582,
+      "length2To30SecondUtterances": 363,
+      "wholeUtteranceNonoverlapCandidates": 228,
+      "candidateSeconds": 973.2799999999999,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 111.85999999999999
+    },
+    {
+      "meeting": "R1019_M1963",
+      "rawUtterances": 576,
+      "length2To30SecondUtterances": 290,
+      "wholeUtteranceNonoverlapCandidates": 198,
+      "candidateSeconds": 681.53,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 50.17
+    },
+    {
+      "meeting": "R0020_M0171",
+      "rawUtterances": 1271,
+      "length2To30SecondUtterances": 479,
+      "wholeUtteranceNonoverlapCandidates": 1,
+      "candidateSeconds": 14.0,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1118.1899999999998
+    },
+    {
+      "meeting": "R0015_M0126",
+      "rawUtterances": 1106,
+      "length2To30SecondUtterances": 494,
+      "wholeUtteranceNonoverlapCandidates": 0,
+      "candidateSeconds": 0,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 862.1899999999996
+    },
+    {
+      "meeting": "R0014_M0105",
+      "rawUtterances": 828,
+      "length2To30SecondUtterances": 361,
+      "wholeUtteranceNonoverlapCandidates": 9,
+      "candidateSeconds": 61.61,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 635.9899999999999
+    },
+    {
+      "meeting": "R1019_M1950",
+      "rawUtterances": 560,
+      "length2To30SecondUtterances": 394,
+      "wholeUtteranceNonoverlapCandidates": 262,
+      "candidateSeconds": 1007.5999999999995,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 109.94000000000004
+    },
+    {
+      "meeting": "R2105_M3175",
+      "rawUtterances": 785,
+      "length2To30SecondUtterances": 344,
+      "wholeUtteranceNonoverlapCandidates": 35,
+      "candidateSeconds": 139.19,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 435.9500000000004
+    },
+    {
+      "meeting": "R0014_M0100",
+      "rawUtterances": 1290,
+      "length2To30SecondUtterances": 501,
+      "wholeUtteranceNonoverlapCandidates": 19,
+      "candidateSeconds": 82.41000000000001,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 894.2000000000004
+    },
+    {
+      "meeting": "R0014_M0078",
+      "rawUtterances": 1026,
+      "length2To30SecondUtterances": 396,
+      "wholeUtteranceNonoverlapCandidates": 7,
+      "candidateSeconds": 21.7,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 690.7099999999999
+    },
+    {
+      "meeting": "R0014_M0091",
+      "rawUtterances": 1186,
+      "length2To30SecondUtterances": 433,
+      "wholeUtteranceNonoverlapCandidates": 8,
+      "candidateSeconds": 37.86000000000001,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 765.2500000000003
+    },
+    {
+      "meeting": "R0008_M0069",
+      "rawUtterances": 1049,
+      "length2To30SecondUtterances": 567,
+      "wholeUtteranceNonoverlapCandidates": 3,
+      "candidateSeconds": 11.03,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1156.0899999999992
+    },
+    {
+      "meeting": "R1019_M4015",
+      "rawUtterances": 773,
+      "length2To30SecondUtterances": 422,
+      "wholeUtteranceNonoverlapCandidates": 272,
+      "candidateSeconds": 965.8899999999995,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 156.77999999999997
+    },
+    {
+      "meeting": "R1019_M1948",
+      "rawUtterances": 1028,
+      "length2To30SecondUtterances": 436,
+      "wholeUtteranceNonoverlapCandidates": 278,
+      "candidateSeconds": 948.8399999999999,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 133.03999999999994
+    },
+    {
+      "meeting": "R0008_M0052",
+      "rawUtterances": 840,
+      "length2To30SecondUtterances": 384,
+      "wholeUtteranceNonoverlapCandidates": 25,
+      "candidateSeconds": 155.11999999999998,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 565.5099999999999
+    },
+    {
+      "meeting": "R0020_M0166",
+      "rawUtterances": 959,
+      "length2To30SecondUtterances": 456,
+      "wholeUtteranceNonoverlapCandidates": 6,
+      "candidateSeconds": 34.18,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 829.07
+    },
+    {
+      "meeting": "R0015_M0118",
+      "rawUtterances": 978,
+      "length2To30SecondUtterances": 435,
+      "wholeUtteranceNonoverlapCandidates": 10,
+      "candidateSeconds": 45.56,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 731.1700000000012
+    },
+    {
+      "meeting": "R1019_M4056",
+      "rawUtterances": 1233,
+      "length2To30SecondUtterances": 604,
+      "wholeUtteranceNonoverlapCandidates": 35,
+      "candidateSeconds": 94.28,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1175.5899999999992
+    },
+    {
+      "meeting": "R1021_M1938",
+      "rawUtterances": 842,
+      "length2To30SecondUtterances": 355,
+      "wholeUtteranceNonoverlapCandidates": 203,
+      "candidateSeconds": 671.0299999999999,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 136.68000000000004
+    },
+    {
+      "meeting": "R1019_M4011",
+      "rawUtterances": 763,
+      "length2To30SecondUtterances": 370,
+      "wholeUtteranceNonoverlapCandidates": 242,
+      "candidateSeconds": 845.5299999999997,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 107.20000000000002
+    },
+    {
+      "meeting": "R0014_M0097",
+      "rawUtterances": 1150,
+      "length2To30SecondUtterances": 438,
+      "wholeUtteranceNonoverlapCandidates": 3,
+      "candidateSeconds": 27.310000000000002,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 872.2300000000004
+    },
+    {
+      "meeting": "R1019_M1967",
+      "rawUtterances": 662,
+      "length2To30SecondUtterances": 271,
+      "wholeUtteranceNonoverlapCandidates": 237,
+      "candidateSeconds": 798.2900000000002,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 33.41
+    },
+    {
+      "meeting": "R1021_M4083",
+      "rawUtterances": 564,
+      "length2To30SecondUtterances": 376,
+      "wholeUtteranceNonoverlapCandidates": 301,
+      "candidateSeconds": 1206.9600000000014,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 40.33
+    },
+    {
+      "meeting": "R1019_M4026",
+      "rawUtterances": 926,
+      "length2To30SecondUtterances": 465,
+      "wholeUtteranceNonoverlapCandidates": 283,
+      "candidateSeconds": 997.6000000000003,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 185.76999999999992
+    },
+    {
+      "meeting": "R1019_M1949",
+      "rawUtterances": 947,
+      "length2To30SecondUtterances": 334,
+      "wholeUtteranceNonoverlapCandidates": 177,
+      "candidateSeconds": 562.54,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 168.58999999999983
+    },
+    {
+      "meeting": "R1019_M1975",
+      "rawUtterances": 625,
+      "length2To30SecondUtterances": 393,
+      "wholeUtteranceNonoverlapCandidates": 273,
+      "candidateSeconds": 1059.0299999999993,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 101.61999999999996
+    },
+    {
+      "meeting": "R1019_M1972",
+      "rawUtterances": 754,
+      "length2To30SecondUtterances": 335,
+      "wholeUtteranceNonoverlapCandidates": 227,
+      "candidateSeconds": 740.9000000000001,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 106.64999999999996
+    },
+    {
+      "meeting": "R1019_M4055",
+      "rawUtterances": 791,
+      "length2To30SecondUtterances": 447,
+      "wholeUtteranceNonoverlapCandidates": 195,
+      "candidateSeconds": 735.4900000000002,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 263.5700000000001
+    },
+    {
+      "meeting": "R0008_M0071",
+      "rawUtterances": 724,
+      "length2To30SecondUtterances": 315,
+      "wholeUtteranceNonoverlapCandidates": 41,
+      "candidateSeconds": 261.89,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 355.2100000000001
+    },
+    {
+      "meeting": "R1019_M1995",
+      "rawUtterances": 737,
+      "length2To30SecondUtterances": 355,
+      "wholeUtteranceNonoverlapCandidates": 294,
+      "candidateSeconds": 998.9799999999993,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 45.06
+    },
+    {
+      "meeting": "R0008_M0055",
+      "rawUtterances": 794,
+      "length2To30SecondUtterances": 364,
+      "wholeUtteranceNonoverlapCandidates": 19,
+      "candidateSeconds": 114.3,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 564.41
+    },
+    {
+      "meeting": "R2108_M3199",
+      "rawUtterances": 724,
+      "length2To30SecondUtterances": 278,
+      "wholeUtteranceNonoverlapCandidates": 11,
+      "candidateSeconds": 61.99,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 407.6099999999998
+    },
+    {
+      "meeting": "R0020_M0170",
+      "rawUtterances": 810,
+      "length2To30SecondUtterances": 338,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 29.189999999999998,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 628.7799999999999
+    },
+    {
+      "meeting": "R0015_M0123",
+      "rawUtterances": 1053,
+      "length2To30SecondUtterances": 544,
+      "wholeUtteranceNonoverlapCandidates": 3,
+      "candidateSeconds": 11.78,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1016.0499999999994
+    },
+    {
+      "meeting": "R1021_M4078",
+      "rawUtterances": 644,
+      "length2To30SecondUtterances": 346,
+      "wholeUtteranceNonoverlapCandidates": 268,
+      "candidateSeconds": 981.1999999999996,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 61.63000000000002
+    },
+    {
+      "meeting": "R2108_M3225",
+      "rawUtterances": 542,
+      "length2To30SecondUtterances": 250,
+      "wholeUtteranceNonoverlapCandidates": 70,
+      "candidateSeconds": 433.16999999999996,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 209.05999999999977
+    },
+    {
+      "meeting": "R1019_M1929",
+      "rawUtterances": 717,
+      "length2To30SecondUtterances": 338,
+      "wholeUtteranceNonoverlapCandidates": 205,
+      "candidateSeconds": 765.6200000000002,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 130.28000000000003
+    },
+    {
+      "meeting": "R0004_M0022",
+      "rawUtterances": 1130,
+      "length2To30SecondUtterances": 401,
+      "wholeUtteranceNonoverlapCandidates": 17,
+      "candidateSeconds": 92.38000000000001,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 639.3899999999998
+    },
+    {
+      "meeting": "R1019_M4052",
+      "rawUtterances": 790,
+      "length2To30SecondUtterances": 435,
+      "wholeUtteranceNonoverlapCandidates": 123,
+      "candidateSeconds": 522.3600000000001,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 554.7899999999997
+    },
+    {
+      "meeting": "R0015_M0135",
+      "rawUtterances": 556,
+      "length2To30SecondUtterances": 203,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 21.89,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 342.1
+    },
+    {
+      "meeting": "R1021_M4080",
+      "rawUtterances": 776,
+      "length2To30SecondUtterances": 414,
+      "wholeUtteranceNonoverlapCandidates": 240,
+      "candidateSeconds": 863.4499999999994,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 126.97000000000001
+    },
+    {
+      "meeting": "R1019_M1998",
+      "rawUtterances": 750,
+      "length2To30SecondUtterances": 443,
+      "wholeUtteranceNonoverlapCandidates": 352,
+      "candidateSeconds": 1272.1100000000008,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 55.10999999999998
+    },
+    {
+      "meeting": "R1021_M4012",
+      "rawUtterances": 745,
+      "length2To30SecondUtterances": 424,
+      "wholeUtteranceNonoverlapCandidates": 210,
+      "candidateSeconds": 811.9700000000003,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 212.45000000000005
+    },
+    {
+      "meeting": "R0015_M0122",
+      "rawUtterances": 1138,
+      "length2To30SecondUtterances": 440,
+      "wholeUtteranceNonoverlapCandidates": 0,
+      "candidateSeconds": 0,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 863.6499999999995
+    },
+    {
+      "meeting": "R1021_M4082",
+      "rawUtterances": 568,
+      "length2To30SecondUtterances": 366,
+      "wholeUtteranceNonoverlapCandidates": 247,
+      "candidateSeconds": 1015.8700000000003,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 88.02999999999999
+    },
+    {
+      "meeting": "R0015_M0121",
+      "rawUtterances": 1179,
+      "length2To30SecondUtterances": 469,
+      "wholeUtteranceNonoverlapCandidates": 0,
+      "candidateSeconds": 0,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1034.8399999999992
+    },
+    {
+      "meeting": "R0008_M0074",
+      "rawUtterances": 1162,
+      "length2To30SecondUtterances": 452,
+      "wholeUtteranceNonoverlapCandidates": 16,
+      "candidateSeconds": 50.63999999999999,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 629.3799999999997
+    },
+    {
+      "meeting": "R1019_M4013",
+      "rawUtterances": 930,
+      "length2To30SecondUtterances": 509,
+      "wholeUtteranceNonoverlapCandidates": 182,
+      "candidateSeconds": 709.2700000000002,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 231.4599999999999
+    },
+    {
+      "meeting": "R0014_M0101",
+      "rawUtterances": 1028,
+      "length2To30SecondUtterances": 440,
+      "wholeUtteranceNonoverlapCandidates": 10,
+      "candidateSeconds": 52.54999999999999,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 742.1999999999989
+    },
+    {
+      "meeting": "R1019_M1954",
+      "rawUtterances": 580,
+      "length2To30SecondUtterances": 343,
+      "wholeUtteranceNonoverlapCandidates": 251,
+      "candidateSeconds": 956.2499999999997,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 74.21999999999998
+    },
+    {
+      "meeting": "R0015_M0141",
+      "rawUtterances": 906,
+      "length2To30SecondUtterances": 418,
+      "wholeUtteranceNonoverlapCandidates": 3,
+      "candidateSeconds": 35.08,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 835.0599999999998
+    },
+    {
+      "meeting": "R1019_M1977",
+      "rawUtterances": 782,
+      "length2To30SecondUtterances": 340,
+      "wholeUtteranceNonoverlapCandidates": 261,
+      "candidateSeconds": 847.52,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 71.53000000000002
+    },
+    {
+      "meeting": "R1019_M1979",
+      "rawUtterances": 807,
+      "length2To30SecondUtterances": 399,
+      "wholeUtteranceNonoverlapCandidates": 316,
+      "candidateSeconds": 1024.7099999999998,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 58.56000000000001
+    },
+    {
+      "meeting": "R0014_M0077",
+      "rawUtterances": 913,
+      "length2To30SecondUtterances": 346,
+      "wholeUtteranceNonoverlapCandidates": 10,
+      "candidateSeconds": 70.49000000000001,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 506.8699999999998
+    },
+    {
+      "meeting": "R0014_M0089",
+      "rawUtterances": 1168,
+      "length2To30SecondUtterances": 487,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 28.56,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1018.2599999999995
+    },
+    {
+      "meeting": "R1019_M1956",
+      "rawUtterances": 674,
+      "length2To30SecondUtterances": 372,
+      "wholeUtteranceNonoverlapCandidates": 281,
+      "candidateSeconds": 965.3499999999995,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 57.449999999999996
+    },
+    {
+      "meeting": "R0020_M0176",
+      "rawUtterances": 502,
+      "length2To30SecondUtterances": 211,
+      "wholeUtteranceNonoverlapCandidates": 5,
+      "candidateSeconds": 37.47,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 479.53999999999996
+    },
+    {
+      "meeting": "R0020_M0190",
+      "rawUtterances": 1260,
+      "length2To30SecondUtterances": 493,
+      "wholeUtteranceNonoverlapCandidates": 3,
+      "candidateSeconds": 17.25,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1048.3499999999997
+    },
+    {
+      "meeting": "R1019_M4057",
+      "rawUtterances": 812,
+      "length2To30SecondUtterances": 428,
+      "wholeUtteranceNonoverlapCandidates": 279,
+      "candidateSeconds": 1014.4699999999996,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 133.33
+    },
+    {
+      "meeting": "R0015_M0117",
+      "rawUtterances": 999,
+      "length2To30SecondUtterances": 390,
+      "wholeUtteranceNonoverlapCandidates": 10,
+      "candidateSeconds": 52.089999999999996,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 661.3199999999995
+    },
+    {
+      "meeting": "R0015_M0163",
+      "rawUtterances": 881,
+      "length2To30SecondUtterances": 379,
+      "wholeUtteranceNonoverlapCandidates": 10,
+      "candidateSeconds": 72.33,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 587.2400000000002
+    },
+    {
+      "meeting": "R1021_M4073",
+      "rawUtterances": 638,
+      "length2To30SecondUtterances": 353,
+      "wholeUtteranceNonoverlapCandidates": 316,
+      "candidateSeconds": 1147.8000000000004,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 24.160000000000007
+    },
+    {
+      "meeting": "R0003_M0047",
+      "rawUtterances": 1094,
+      "length2To30SecondUtterances": 493,
+      "wholeUtteranceNonoverlapCandidates": 5,
+      "candidateSeconds": 18.529999999999998,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 973.0999999999999
+    },
+    {
+      "meeting": "R1021_M1935",
+      "rawUtterances": 623,
+      "length2To30SecondUtterances": 338,
+      "wholeUtteranceNonoverlapCandidates": 248,
+      "candidateSeconds": 880.2700000000003,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 62.17
+    },
+    {
+      "meeting": "R0015_M0129",
+      "rawUtterances": 885,
+      "length2To30SecondUtterances": 443,
+      "wholeUtteranceNonoverlapCandidates": 6,
+      "candidateSeconds": 37.79,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 814.1900000000006
+    },
+    {
+      "meeting": "R0014_M0099",
+      "rawUtterances": 1050,
+      "length2To30SecondUtterances": 415,
+      "wholeUtteranceNonoverlapCandidates": 14,
+      "candidateSeconds": 94.01,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 706.5
+    },
+    {
+      "meeting": "R2108_M2692",
+      "rawUtterances": 630,
+      "length2To30SecondUtterances": 324,
+      "wholeUtteranceNonoverlapCandidates": 56,
+      "candidateSeconds": 280.72,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 295.05000000000007
+    },
+    {
+      "meeting": "R1019_M1981",
+      "rawUtterances": 817,
+      "length2To30SecondUtterances": 384,
+      "wholeUtteranceNonoverlapCandidates": 253,
+      "candidateSeconds": 850.8699999999998,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 104.64000000000006
+    },
+    {
+      "meeting": "R1019_M4031",
+      "rawUtterances": 1020,
+      "length2To30SecondUtterances": 527,
+      "wholeUtteranceNonoverlapCandidates": 126,
+      "candidateSeconds": 519.8300000000002,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 817.9300000000003
+    },
+    {
+      "meeting": "R1019_M1946",
+      "rawUtterances": 662,
+      "length2To30SecondUtterances": 321,
+      "wholeUtteranceNonoverlapCandidates": 160,
+      "candidateSeconds": 573.22,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 142.53000000000006
+    },
+    {
+      "meeting": "R2001_M2206",
+      "rawUtterances": 1000,
+      "length2To30SecondUtterances": 522,
+      "wholeUtteranceNonoverlapCandidates": 13,
+      "candidateSeconds": 64.36,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 836.6799999999987
+    },
+    {
+      "meeting": "R0008_M0076",
+      "rawUtterances": 1004,
+      "length2To30SecondUtterances": 420,
+      "wholeUtteranceNonoverlapCandidates": 2,
+      "candidateSeconds": 7.65,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 731.8799999999994
+    },
+    {
+      "meeting": "R0020_M0167",
+      "rawUtterances": 969,
+      "length2To30SecondUtterances": 435,
+      "wholeUtteranceNonoverlapCandidates": 6,
+      "candidateSeconds": 25.719999999999995,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 869.3400000000008
+    },
+    {
+      "meeting": "R0004_M0012",
+      "rawUtterances": 1072,
+      "length2To30SecondUtterances": 347,
+      "wholeUtteranceNonoverlapCandidates": 31,
+      "candidateSeconds": 101.33999999999999,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 516.2499999999995
+    },
+    {
+      "meeting": "R0014_M0086",
+      "rawUtterances": 1090,
+      "length2To30SecondUtterances": 390,
+      "wholeUtteranceNonoverlapCandidates": 9,
+      "candidateSeconds": 52.28,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 809.8499999999997
+    },
+    {
+      "meeting": "R0015_M0143",
+      "rawUtterances": 1283,
+      "length2To30SecondUtterances": 405,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 16.64,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 807.8399999999998
+    },
+    {
+      "meeting": "R0015_M0125",
+      "rawUtterances": 1173,
+      "length2To30SecondUtterances": 470,
+      "wholeUtteranceNonoverlapCandidates": 2,
+      "candidateSeconds": 4.08,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 820.9999999999999
+    },
+    {
+      "meeting": "R0015_M0142",
+      "rawUtterances": 1079,
+      "length2To30SecondUtterances": 421,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 37.410000000000004,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 821.7700000000002
+    },
+    {
+      "meeting": "R1019_M4021",
+      "rawUtterances": 821,
+      "length2To30SecondUtterances": 408,
+      "wholeUtteranceNonoverlapCandidates": 330,
+      "candidateSeconds": 1177.9099999999996,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 76.18
+    },
+    {
+      "meeting": "R0004_M0017",
+      "rawUtterances": 778,
+      "length2To30SecondUtterances": 247,
+      "wholeUtteranceNonoverlapCandidates": 22,
+      "candidateSeconds": 181.46000000000004,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 369.39000000000004
+    },
+    {
+      "meeting": "R0015_M0147",
+      "rawUtterances": 1019,
+      "length2To30SecondUtterances": 431,
+      "wholeUtteranceNonoverlapCandidates": 14,
+      "candidateSeconds": 72.69,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 653.3400000000006
+    },
+    {
+      "meeting": "R2105_M3318",
+      "rawUtterances": 460,
+      "length2To30SecondUtterances": 217,
+      "wholeUtteranceNonoverlapCandidates": 44,
+      "candidateSeconds": 382.81,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 218.15999999999985
+    },
+    {
+      "meeting": "R2108_M3223",
+      "rawUtterances": 439,
+      "length2To30SecondUtterances": 212,
+      "wholeUtteranceNonoverlapCandidates": 45,
+      "candidateSeconds": 376.21000000000004,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 186.62999999999988
+    },
+    {
+      "meeting": "R0008_M0054",
+      "rawUtterances": 716,
+      "length2To30SecondUtterances": 373,
+      "wholeUtteranceNonoverlapCandidates": 27,
+      "candidateSeconds": 155.42000000000004,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 541.0600000000002
+    },
+    {
+      "meeting": "R1019_M4030",
+      "rawUtterances": 1037,
+      "length2To30SecondUtterances": 377,
+      "wholeUtteranceNonoverlapCandidates": 190,
+      "candidateSeconds": 615.0999999999996,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 198.1600000000002
+    },
+    {
+      "meeting": "R0014_M0083",
+      "rawUtterances": 849,
+      "length2To30SecondUtterances": 418,
+      "wholeUtteranceNonoverlapCandidates": 36,
+      "candidateSeconds": 184.12,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 569.5400000000002
+    },
+    {
+      "meeting": "R2108_M3210",
+      "rawUtterances": 834,
+      "length2To30SecondUtterances": 323,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 20.7,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 589.9600000000002
+    },
+    {
+      "meeting": "R1021_M1944",
+      "rawUtterances": 728,
+      "length2To30SecondUtterances": 322,
+      "wholeUtteranceNonoverlapCandidates": 191,
+      "candidateSeconds": 638.89,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 135.74999999999997
+    },
+    {
+      "meeting": "R0014_M0080",
+      "rawUtterances": 986,
+      "length2To30SecondUtterances": 358,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 21.2,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 618.5599999999997
+    },
+    {
+      "meeting": "R1019_M1989",
+      "rawUtterances": 928,
+      "length2To30SecondUtterances": 435,
+      "wholeUtteranceNonoverlapCandidates": 313,
+      "candidateSeconds": 1089.5399999999997,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 105.25000000000001
+    },
+    {
+      "meeting": "R1021_M4025",
+      "rawUtterances": 859,
+      "length2To30SecondUtterances": 328,
+      "wholeUtteranceNonoverlapCandidates": 211,
+      "candidateSeconds": 649.1500000000004,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 89.31000000000003
+    },
+    {
+      "meeting": "R1019_M4033",
+      "rawUtterances": 780,
+      "length2To30SecondUtterances": 394,
+      "wholeUtteranceNonoverlapCandidates": 312,
+      "candidateSeconds": 1091.2600000000002,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 188.81000000000003
+    },
+    {
+      "meeting": "R0014_M0084",
+      "rawUtterances": 973,
+      "length2To30SecondUtterances": 421,
+      "wholeUtteranceNonoverlapCandidates": 23,
+      "candidateSeconds": 167.26999999999998,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 661.69
+    },
+    {
+      "meeting": "R0008_M0075",
+      "rawUtterances": 1153,
+      "length2To30SecondUtterances": 494,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 20.93,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 966.4100000000002
+    },
+    {
+      "meeting": "R0014_M0110",
+      "rawUtterances": 1147,
+      "length2To30SecondUtterances": 453,
+      "wholeUtteranceNonoverlapCandidates": 3,
+      "candidateSeconds": 9.120000000000001,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 905.3199999999994
+    },
+    {
+      "meeting": "R0003_M0046",
+      "rawUtterances": 905,
+      "length2To30SecondUtterances": 418,
+      "wholeUtteranceNonoverlapCandidates": 13,
+      "candidateSeconds": 69.42999999999999,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 713.2500000000001
+    },
+    {
+      "meeting": "R1019_M4020",
+      "rawUtterances": 804,
+      "length2To30SecondUtterances": 437,
+      "wholeUtteranceNonoverlapCandidates": 312,
+      "candidateSeconds": 1057.8700000000008,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 113.95000000000002
+    },
+    {
+      "meeting": "R0020_M0168",
+      "rawUtterances": 1016,
+      "length2To30SecondUtterances": 401,
+      "wholeUtteranceNonoverlapCandidates": 22,
+      "candidateSeconds": 100.26000000000002,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 615.0499999999994
+    },
+    {
+      "meeting": "R0020_M0184",
+      "rawUtterances": 904,
+      "length2To30SecondUtterances": 326,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 24.08,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 604.4
+    },
+    {
+      "meeting": "R1019_M1928",
+      "rawUtterances": 719,
+      "length2To30SecondUtterances": 354,
+      "wholeUtteranceNonoverlapCandidates": 178,
+      "candidateSeconds": 611.3600000000001,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 171.84
+    },
+    {
+      "meeting": "R1019_M1993",
+      "rawUtterances": 881,
+      "length2To30SecondUtterances": 395,
+      "wholeUtteranceNonoverlapCandidates": 253,
+      "candidateSeconds": 793.0099999999992,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 131.94000000000003
+    },
+    {
+      "meeting": "R0015_M0115",
+      "rawUtterances": 1130,
+      "length2To30SecondUtterances": 504,
+      "wholeUtteranceNonoverlapCandidates": 2,
+      "candidateSeconds": 12.450000000000001,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 924.2800000000013
+    },
+    {
+      "meeting": "R0015_M0144",
+      "rawUtterances": 700,
+      "length2To30SecondUtterances": 423,
+      "wholeUtteranceNonoverlapCandidates": 17,
+      "candidateSeconds": 91.16,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 617.2400000000004
+    },
+    {
+      "meeting": "R1021_M4062",
+      "rawUtterances": 910,
+      "length2To30SecondUtterances": 304,
+      "wholeUtteranceNonoverlapCandidates": 200,
+      "candidateSeconds": 605.8600000000001,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 90.51000000000002
+    },
+    {
+      "meeting": "R1019_M4059",
+      "rawUtterances": 678,
+      "length2To30SecondUtterances": 339,
+      "wholeUtteranceNonoverlapCandidates": 319,
+      "candidateSeconds": 1108.6100000000006,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 14.400000000000002
+    },
+    {
+      "meeting": "R0015_M0151",
+      "rawUtterances": 1036,
+      "length2To30SecondUtterances": 468,
+      "wholeUtteranceNonoverlapCandidates": 9,
+      "candidateSeconds": 39.24,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 817.2799999999996
+    },
+    {
+      "meeting": "R0020_M0178",
+      "rawUtterances": 886,
+      "length2To30SecondUtterances": 403,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 26.76,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 746.7999999999992
+    },
+    {
+      "meeting": "R1019_M4063",
+      "rawUtterances": 740,
+      "length2To30SecondUtterances": 405,
+      "wholeUtteranceNonoverlapCandidates": 183,
+      "candidateSeconds": 750.6799999999995,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 177.68
+    },
+    {
+      "meeting": "R0014_M0102",
+      "rawUtterances": 887,
+      "length2To30SecondUtterances": 375,
+      "wholeUtteranceNonoverlapCandidates": 1,
+      "candidateSeconds": 4.82,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 720.5299999999996
+    },
+    {
+      "meeting": "R0014_M0107",
+      "rawUtterances": 1134,
+      "length2To30SecondUtterances": 400,
+      "wholeUtteranceNonoverlapCandidates": 17,
+      "candidateSeconds": 86.73999999999998,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 566.6799999999998
+    },
+    {
+      "meeting": "R1021_M1959",
+      "rawUtterances": 1001,
+      "length2To30SecondUtterances": 500,
+      "wholeUtteranceNonoverlapCandidates": 105,
+      "candidateSeconds": 361.62,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 507.5199999999998
+    },
+    {
+      "meeting": "R0014_M0079",
+      "rawUtterances": 889,
+      "length2To30SecondUtterances": 335,
+      "wholeUtteranceNonoverlapCandidates": 2,
+      "candidateSeconds": 4.73,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 567.0999999999993
+    },
+    {
+      "meeting": "R0014_M0085",
+      "rawUtterances": 1009,
+      "length2To30SecondUtterances": 361,
+      "wholeUtteranceNonoverlapCandidates": 12,
+      "candidateSeconds": 94.67000000000002,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 774.0400000000009
+    },
+    {
+      "meeting": "R0015_M0116",
+      "rawUtterances": 1206,
+      "length2To30SecondUtterances": 517,
+      "wholeUtteranceNonoverlapCandidates": 1,
+      "candidateSeconds": 2.96,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 948.5599999999991
+    },
+    {
+      "meeting": "R0020_M0169",
+      "rawUtterances": 860,
+      "length2To30SecondUtterances": 368,
+      "wholeUtteranceNonoverlapCandidates": 8,
+      "candidateSeconds": 55.370000000000005,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 678.92
+    },
+    {
+      "meeting": "R1019_M4041",
+      "rawUtterances": 744,
+      "length2To30SecondUtterances": 366,
+      "wholeUtteranceNonoverlapCandidates": 241,
+      "candidateSeconds": 876.2099999999995,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 130.30000000000007
+    },
+    {
+      "meeting": "R1019_M4070",
+      "rawUtterances": 769,
+      "length2To30SecondUtterances": 453,
+      "wholeUtteranceNonoverlapCandidates": 329,
+      "candidateSeconds": 1079.9400000000003,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 94.84
+    },
+    {
+      "meeting": "R0014_M0112",
+      "rawUtterances": 957,
+      "length2To30SecondUtterances": 474,
+      "wholeUtteranceNonoverlapCandidates": 19,
+      "candidateSeconds": 85.27,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 697.4400000000004
+    },
+    {
+      "meeting": "R1019_M4017",
+      "rawUtterances": 1036,
+      "length2To30SecondUtterances": 434,
+      "wholeUtteranceNonoverlapCandidates": 384,
+      "candidateSeconds": 1248.2100000000005,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 44.699999999999996
+    },
+    {
+      "meeting": "R0015_M0148",
+      "rawUtterances": 925,
+      "length2To30SecondUtterances": 457,
+      "wholeUtteranceNonoverlapCandidates": 3,
+      "candidateSeconds": 18.23,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 991.0999999999989
+    },
+    {
+      "meeting": "R1021_M4032",
+      "rawUtterances": 840,
+      "length2To30SecondUtterances": 398,
+      "wholeUtteranceNonoverlapCandidates": 155,
+      "candidateSeconds": 610.6599999999999,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 263.4600000000001
+    },
+    {
+      "meeting": "R0015_M0149",
+      "rawUtterances": 1052,
+      "length2To30SecondUtterances": 468,
+      "wholeUtteranceNonoverlapCandidates": 0,
+      "candidateSeconds": 0,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 912.4900000000001
+    },
+    {
+      "meeting": "R0015_M0133",
+      "rawUtterances": 514,
+      "length2To30SecondUtterances": 211,
+      "wholeUtteranceNonoverlapCandidates": 3,
+      "candidateSeconds": 23.67,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 362.45000000000016
+    },
+    {
+      "meeting": "R0014_M0087",
+      "rawUtterances": 1078,
+      "length2To30SecondUtterances": 528,
+      "wholeUtteranceNonoverlapCandidates": 5,
+      "candidateSeconds": 28.43,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1000.5100000000002
+    },
+    {
+      "meeting": "R1019_M4028",
+      "rawUtterances": 933,
+      "length2To30SecondUtterances": 442,
+      "wholeUtteranceNonoverlapCandidates": 305,
+      "candidateSeconds": 946.9899999999999,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 157.29999999999998
+    },
+    {
+      "meeting": "R0020_M0191",
+      "rawUtterances": 1125,
+      "length2To30SecondUtterances": 425,
+      "wholeUtteranceNonoverlapCandidates": 0,
+      "candidateSeconds": 0,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 905.0699999999998
+    },
+    {
+      "meeting": "R0020_M0193",
+      "rawUtterances": 937,
+      "length2To30SecondUtterances": 347,
+      "wholeUtteranceNonoverlapCandidates": 7,
+      "candidateSeconds": 30.78,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 591.0600000000005
+    },
+    {
+      "meeting": "R0014_M0111",
+      "rawUtterances": 1049,
+      "length2To30SecondUtterances": 477,
+      "wholeUtteranceNonoverlapCandidates": 9,
+      "candidateSeconds": 35.37,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 771.7399999999999
+    },
+    {
+      "meeting": "R0015_M0124",
+      "rawUtterances": 989,
+      "length2To30SecondUtterances": 441,
+      "wholeUtteranceNonoverlapCandidates": 4,
+      "candidateSeconds": 15.79,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 823.1500000000004
+    },
+    {
+      "meeting": "R2108_M3200",
+      "rawUtterances": 725,
+      "length2To30SecondUtterances": 280,
+      "wholeUtteranceNonoverlapCandidates": 10,
+      "candidateSeconds": 92.13999999999999,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 475.39999999999986
+    },
+    {
+      "meeting": "R0014_M0094",
+      "rawUtterances": 1377,
+      "length2To30SecondUtterances": 406,
+      "wholeUtteranceNonoverlapCandidates": 1,
+      "candidateSeconds": 3.75,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 874.9499999999999
+    },
+    {
+      "meeting": "R0004_M0025",
+      "rawUtterances": 627,
+      "length2To30SecondUtterances": 263,
+      "wholeUtteranceNonoverlapCandidates": 79,
+      "candidateSeconds": 474.40000000000003,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 231.48999999999995
+    },
+    {
+      "meeting": "R0004_M0018",
+      "rawUtterances": 396,
+      "length2To30SecondUtterances": 190,
+      "wholeUtteranceNonoverlapCandidates": 64,
+      "candidateSeconds": 519.4800000000002,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 111.15000000000003
+    },
+    {
+      "meeting": "R0015_M0130",
+      "rawUtterances": 745,
+      "length2To30SecondUtterances": 365,
+      "wholeUtteranceNonoverlapCandidates": 9,
+      "candidateSeconds": 56.309999999999995,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 647.9100000000001
+    },
+    {
+      "meeting": "R1019_M1953",
+      "rawUtterances": 835,
+      "length2To30SecondUtterances": 288,
+      "wholeUtteranceNonoverlapCandidates": 140,
+      "candidateSeconds": 427.06000000000006,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 148.22000000000008
+    },
+    {
+      "meeting": "R1019_M4007",
+      "rawUtterances": 821,
+      "length2To30SecondUtterances": 447,
+      "wholeUtteranceNonoverlapCandidates": 249,
+      "candidateSeconds": 860.8100000000005,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 180.1
+    },
+    {
+      "meeting": "R0015_M0158",
+      "rawUtterances": 982,
+      "length2To30SecondUtterances": 394,
+      "wholeUtteranceNonoverlapCandidates": 5,
+      "candidateSeconds": 27.33,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 793.2400000000013
+    },
+    {
+      "meeting": "R0008_M0073",
+      "rawUtterances": 807,
+      "length2To30SecondUtterances": 381,
+      "wholeUtteranceNonoverlapCandidates": 31,
+      "candidateSeconds": 159.82,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 439.5099999999998
+    },
+    {
+      "meeting": "R2108_M3206",
+      "rawUtterances": 248,
+      "length2To30SecondUtterances": 184,
+      "wholeUtteranceNonoverlapCandidates": 119,
+      "candidateSeconds": 1105.51,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 43.33
+    },
+    {
+      "meeting": "R1019_M4004",
+      "rawUtterances": 871,
+      "length2To30SecondUtterances": 270,
+      "wholeUtteranceNonoverlapCandidates": 201,
+      "candidateSeconds": 569.7399999999999,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 65.96999999999997
+    },
+    {
+      "meeting": "R1021_M1940",
+      "rawUtterances": 896,
+      "length2To30SecondUtterances": 366,
+      "wholeUtteranceNonoverlapCandidates": 156,
+      "candidateSeconds": 501.6999999999998,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 193.38
+    },
+    {
+      "meeting": "R0015_M0150",
+      "rawUtterances": 906,
+      "length2To30SecondUtterances": 425,
+      "wholeUtteranceNonoverlapCandidates": 6,
+      "candidateSeconds": 41.13,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 674.0299999999997
+    },
+    {
+      "meeting": "R0008_M0072",
+      "rawUtterances": 792,
+      "length2To30SecondUtterances": 359,
+      "wholeUtteranceNonoverlapCandidates": 34,
+      "candidateSeconds": 184.32000000000005,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 414.9000000000003
+    },
+    {
+      "meeting": "R0008_M0064",
+      "rawUtterances": 998,
+      "length2To30SecondUtterances": 430,
+      "wholeUtteranceNonoverlapCandidates": 2,
+      "candidateSeconds": 17.83,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 831.9000000000002
+    },
+    {
+      "meeting": "R0015_M0146",
+      "rawUtterances": 956,
+      "length2To30SecondUtterances": 398,
+      "wholeUtteranceNonoverlapCandidates": 23,
+      "candidateSeconds": 104.72999999999999,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 576.4699999999999
+    },
+    {
+      "meeting": "R1019_M1969",
+      "rawUtterances": 649,
+      "length2To30SecondUtterances": 385,
+      "wholeUtteranceNonoverlapCandidates": 313,
+      "candidateSeconds": 1111.099999999999,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 53.11
+    },
+    {
+      "meeting": "R2108_M3243",
+      "rawUtterances": 531,
+      "length2To30SecondUtterances": 250,
+      "wholeUtteranceNonoverlapCandidates": 95,
+      "candidateSeconds": 482.63000000000005,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 145.45000000000007
+    },
+    {
+      "meeting": "R0014_M0109",
+      "rawUtterances": 1152,
+      "length2To30SecondUtterances": 476,
+      "wholeUtteranceNonoverlapCandidates": 6,
+      "candidateSeconds": 29.889999999999997,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 894.2099999999998
+    },
+    {
+      "meeting": "R1019_M4043",
+      "rawUtterances": 930,
+      "length2To30SecondUtterances": 471,
+      "wholeUtteranceNonoverlapCandidates": 152,
+      "candidateSeconds": 520.1999999999999,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 380.9999999999997
+    },
+    {
+      "meeting": "R1021_M1942",
+      "rawUtterances": 1003,
+      "length2To30SecondUtterances": 408,
+      "wholeUtteranceNonoverlapCandidates": 202,
+      "candidateSeconds": 581.7900000000002,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 294.9700000000001
+    },
+    {
+      "meeting": "R0004_M0028",
+      "rawUtterances": 655,
+      "length2To30SecondUtterances": 318,
+      "wholeUtteranceNonoverlapCandidates": 84,
+      "candidateSeconds": 427.86,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 205.76999999999978
+    },
+    {
+      "meeting": "R0005_M0035",
+      "rawUtterances": 880,
+      "length2To30SecondUtterances": 338,
+      "wholeUtteranceNonoverlapCandidates": 48,
+      "candidateSeconds": 222.83000000000007,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 364.8500000000001
+    },
+    {
+      "meeting": "R2105_M3164",
+      "rawUtterances": 529,
+      "length2To30SecondUtterances": 268,
+      "wholeUtteranceNonoverlapCandidates": 37,
+      "candidateSeconds": 289.81,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 352.9399999999998
+    },
+    {
+      "meeting": "R1021_M1932",
+      "rawUtterances": 963,
+      "length2To30SecondUtterances": 344,
+      "wholeUtteranceNonoverlapCandidates": 114,
+      "candidateSeconds": 387.3400000000001,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 300.9400000000001
+    },
+    {
+      "meeting": "R0014_M0090",
+      "rawUtterances": 1217,
+      "length2To30SecondUtterances": 510,
+      "wholeUtteranceNonoverlapCandidates": 0,
+      "candidateSeconds": 0,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1176.7900000000009
+    },
+    {
+      "meeting": "R2108_M3230",
+      "rawUtterances": 794,
+      "length2To30SecondUtterances": 283,
+      "wholeUtteranceNonoverlapCandidates": 19,
+      "candidateSeconds": 103.51,
+      "originalSpeakerIds": 3,
+      "overlapUnionSeconds": 389.1099999999998
+    },
+    {
+      "meeting": "R1019_M1960",
+      "rawUtterances": 609,
+      "length2To30SecondUtterances": 393,
+      "wholeUtteranceNonoverlapCandidates": 298,
+      "candidateSeconds": 1058.8600000000001,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 59.79000000000001
+    },
+    {
+      "meeting": "R0015_M0161",
+      "rawUtterances": 964,
+      "length2To30SecondUtterances": 377,
+      "wholeUtteranceNonoverlapCandidates": 6,
+      "candidateSeconds": 31.84,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 622.9500000000003
+    },
+    {
+      "meeting": "R0020_M0186",
+      "rawUtterances": 1074,
+      "length2To30SecondUtterances": 426,
+      "wholeUtteranceNonoverlapCandidates": 1,
+      "candidateSeconds": 12.96,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1027.0599999999993
+    },
+    {
+      "meeting": "R0005_M0041",
+      "rawUtterances": 778,
+      "length2To30SecondUtterances": 406,
+      "wholeUtteranceNonoverlapCandidates": 18,
+      "candidateSeconds": 116.75999999999999,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 683.0599999999991
+    },
+    {
+      "meeting": "R0015_M0139",
+      "rawUtterances": 1095,
+      "length2To30SecondUtterances": 444,
+      "wholeUtteranceNonoverlapCandidates": 5,
+      "candidateSeconds": 14.309999999999999,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 776.1099999999996
+    },
+    {
+      "meeting": "R0008_M0056",
+      "rawUtterances": 787,
+      "length2To30SecondUtterances": 361,
+      "wholeUtteranceNonoverlapCandidates": 9,
+      "candidateSeconds": 45.629999999999995,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 605.4
+    },
+    {
+      "meeting": "R0015_M0159",
+      "rawUtterances": 825,
+      "length2To30SecondUtterances": 429,
+      "wholeUtteranceNonoverlapCandidates": 7,
+      "candidateSeconds": 24.07,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 785.2199999999995
+    },
+    {
+      "meeting": "R0020_M0172",
+      "rawUtterances": 1372,
+      "length2To30SecondUtterances": 534,
+      "wholeUtteranceNonoverlapCandidates": 3,
+      "candidateSeconds": 17.23,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1216.0500000000006
+    },
+    {
+      "meeting": "R0015_M0160",
+      "rawUtterances": 918,
+      "length2To30SecondUtterances": 379,
+      "wholeUtteranceNonoverlapCandidates": 5,
+      "candidateSeconds": 30.950000000000003,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 611.4499999999994
+    },
+    {
+      "meeting": "R0008_M0058",
+      "rawUtterances": 1029,
+      "length2To30SecondUtterances": 461,
+      "wholeUtteranceNonoverlapCandidates": 16,
+      "candidateSeconds": 59.79999999999999,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 675.9199999999998
+    },
+    {
+      "meeting": "R1021_M1947",
+      "rawUtterances": 896,
+      "length2To30SecondUtterances": 308,
+      "wholeUtteranceNonoverlapCandidates": 138,
+      "candidateSeconds": 438.70999999999987,
+      "originalSpeakerIds": 2,
+      "overlapUnionSeconds": 220.84
+    },
+    {
+      "meeting": "R0015_M0153",
+      "rawUtterances": 1360,
+      "length2To30SecondUtterances": 564,
+      "wholeUtteranceNonoverlapCandidates": 1,
+      "candidateSeconds": 2.11,
+      "originalSpeakerIds": 4,
+      "overlapUnionSeconds": 1417.5099999999975
+    }
+  ],
+  "elapsedSeconds": 15.625,
+  "limits": {
+    "pid": 11020,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 117239808,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

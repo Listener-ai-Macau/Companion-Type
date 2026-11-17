@@ -1,0 +1,109 @@
+{
+  "at": "2026-11-17T11:58:45.520122+08:00",
+  "state": "ENTERING_SIGNAL_OPERATION",
+  "sourceSha256": "55ae81896424313df58b15fbd933638f90ca1e0edd30fb4362689efb99f22179",
+  "selectedTrainId": "ES2002b-word-nonoverlap-r3-0044",
+  "frames": 478640,
+  "neuralCalls": 0,
+  "parameterUpdates": 0,
+  "modelInstances": 0,
+  "operations": 43,
+  "observedAt": "2026-11-17T11:58:52.890379+08:00",
+  "limits": {
+    "pid": 25348,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 540553216,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "privateBytes": 534560768,
+  "availableBytes": 8103538688,
+  "torchConfig": "PyTorch built with:\n  - C++ Version: 201703\n  - clang 23.0.0\n  - MSVC 194435228\n  - Intel(R) MKL-DNN v3.10.2 (Git Hash f1d471933dc852f956fd05389f9313c7148783d5)\n  - OpenMP 202011\n  - LAPACK is enabled (usually provided by MKL)\n  - CPU capability usage: AVX512\n  - HIP Runtime 7.15.26333\n  - MIOpen 3.6.0\n  - Build settings: BLAS_INFO=open, BUILD_TYPE=Release, COMMIT_SHA=c9ab269368d46a826d64705192fef55594c8b698, CXX_COMPILER=C:/home/runner/_work/_tool/Python/3.11.9/x64/Lib/site-packages/_rocm_sdk_devel/lib/llvm/bin/clang-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /EHsc /Zc:__cplusplus /bigobj /FS /utf-8 -DUSE_PTHREADPOOL -DNDEBUG -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=open, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, TORCH_VERSION=2.11.0, USE_CUDA=OFF, USE_CUDNN=OFF, USE_CUSPARSELT=OFF, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_GLOO=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=ON, USE_ROCM_KERNEL_ASSERT=OFF, USE_XCCL=OFF, USE_XPU=OFF, \n",
+  "blasThreads": [
+    {
+      "user_api": "openmp",
+      "internal_api": "openmp",
+      "num_threads": 1,
+      "prefix": "libomp",
+      "filepath": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\torch\\lib\\libomp140.x86_64.dll",
+      "version": null
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-63c857e738469261263c764a36be9436.dll",
+      "version": "0.3.31.188.0",
+      "threading_layer": "pthreads",
+      "architecture": "SkylakeX"
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "num_threads": 1,
+      "prefix": "libscipy_openblas",
+      "filepath": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\scipy.libs\\libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+      "version": "0.3.30",
+      "threading_layer": "pthreads",
+      "architecture": "SkylakeX"
+    }
+  ],
+  "processThreadCount": 4,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "relevantModules": [
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\torch\\lib\\torch_cpu.dll",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\scipy.libs\\libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\numpy.libs\\libscipy_openblas64_-63c857e738469261263c764a36be9436.dll",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\scipy\\linalg\\cython_blas.cp311-win_amd64.pyd",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\scipy\\linalg\\_fblas.cp311-win_amd64.pyd",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_libraries\\bin\\libhipblaslt.dll",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_libraries\\bin\\rocblas.dll",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\torch\\lib\\libomp140.x86_64.dll",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_libraries\\bin\\hipblas.dll"
+  ],
+  "currentOperation": "aten.bmm.default",
+  "inputShapes": [
+    {
+      "shape": [
+        1,
+        128,
+        257
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu"
+    },
+    {
+      "shape": [
+        1,
+        257,
+        2992
+      ],
+      "dtype": "torch.float32",
+      "device": "cpu"
+    }
+  ],
+  "outputShapes": {
+    "shape": [
+      1,
+      257,
+      2992
+    ],
+    "dtype": "torch.float32",
+    "device": "cpu"
+  }
+}

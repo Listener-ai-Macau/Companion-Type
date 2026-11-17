@@ -1,0 +1,19 @@
+{
+  "repo": "yuekai/alimeeting_aishell4_training_whisper_fbank_lhotse",
+  "commit": "ae2e3427660045ff558a9935b3e1176ef1b20963",
+  "selected": {
+    "type": "file",
+    "oid": "6e0a38eaaf460b86e58ee9af1e6a510a21217eb6",
+    "size": 39545263,
+    "lfs": {
+      "oid": "dfb00b08f2219cf8f36e23fc7548338e7c1176dcc2ec5937e4d27f4dcc554bfe",
+      "size": 39545263,
+      "pointerSize": 133
+    },
+    "xetHash": "0f3ed0ee17a86c7543818031df944a214417b54b3cb5cbec7331c9e3641ffbaf",
+    "path": "alimeeting-far_cuts_train.jsonl.gz"
+  },
+  "trainOnly": true,
+  "useFixedOrRemovedTextFiles": false,
+  "readAISHELLFiles": false
+}

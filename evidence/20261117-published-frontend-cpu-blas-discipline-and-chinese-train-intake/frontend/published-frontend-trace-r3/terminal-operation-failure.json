@@ -1,0 +1,9 @@
+{
+  "state": "TERMINAL_CPU_BMM_ROCM_OPENBLAS_ALLOCATION_FAILURE",
+  "observedExecExitCode": 1,
+  "nativeOperation": "aten.bmm.default",
+  "modelInstances": 0,
+  "parameterUpdates": 0,
+  "primaryEvidence": "state.json",
+  "next": "Existing GPU worker already calls pin_rocm_blas; this new signal-only audit omitted it. Reuse exact existing pinnedDLL/one-thread helper, retain2GiB cap and original published processor."
+}

@@ -1,0 +1,44 @@
+{
+  "state": "PRIMARY_SOURCE_CONTEXT_FOR_CANDIDATE_TRAIN_INTAKE_ONLY",
+  "sources": [
+    {
+      "url": "https://www.openslr.org/119/",
+      "facts": [
+        "Publisher listsCCBYSA4.0",
+        "118.75totalhours,104.75train/4eval/10test",
+        "Train far8channelarchive73.24G; not downloaded."
+      ]
+    },
+    {
+      "url": "https://arxiv.org/html/2110.07393",
+      "facts": [
+        "Section2 reports212trainmeetings/456trainparticipants,8evalmeetings/25evalparticipants.",
+        "Authors explicitly state train/eval speakers do not overlap.",
+        "Corpus has synchronized far-field8channel arrays and near-field headsets; TextGrid contains speaker identity/timing/text."
+      ],
+      "scopeLimit": "No claim of cross-corpus identity isolation from AISHELL."
+    },
+    {
+      "url": "https://github.com/yufan-aslp/AliMeeting",
+      "facts": [
+        "Publisher baseline recipes distinguish ASR and speaker diarization."
+      ]
+    },
+    {
+      "url": "https://huggingface.co/datasets/yuekai/alimeeting_aishell4_training_whisper_fbank_lhotse",
+      "facts": [
+        "Thirdparty feature/training manifests, independent original audio/TextGrid verification remains required."
+      ]
+    }
+  ],
+  "filesNotDownloaded": [
+    "official73.24Gfararchive",
+    "allAliEval/Testpayloads",
+    "allAISHELLmanifestsorfeatures"
+  ],
+  "importantInterpretations": [
+    "Numeric speakerIDs are normalized identifiers in this convertedmanifest; absence ofSPKprefix does not mean missingIDs.",
+    "Three speed variants and eight-channel80mel features must not be treated as new independent single-mic waveform data.",
+    "Metadata counts/hours are not acquired/verified audio or model quality."
+  ]
+}

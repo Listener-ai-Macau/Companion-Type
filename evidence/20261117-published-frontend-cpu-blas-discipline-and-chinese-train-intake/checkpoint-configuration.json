@@ -1,0 +1,168 @@
+{
+  "revision": 66,
+  "evidenceDirectory": "evidence/20261117-published-frontend-cpu-blas-discipline-and-chinese-train-intake",
+  "sources": [
+    "src/silero_presence_worker_20261117.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_published_tdt_frontend_20261117.py",
+      "name": "tools/verify_published_tdt_frontend_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\trace_published_tdt_frontend_20261117.py",
+      "name": "tools/trace_published_tdt_frontend_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\audit_alimeeting_train_manifest_20261117.py",
+      "name": "tools/audit_alimeeting_train_manifest_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\profile_alimeeting_nonoverlap_20261117.py",
+      "name": "tools/profile_alimeeting_nonoverlap_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\inspect_official_alimeeting_train_prefix_20261117.py",
+      "name": "tools/inspect_official_alimeeting_train_prefix_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\inspect_cached_alimeeting_riff_20261117.py",
+      "name": "tools/inspect_cached_alimeeting_riff_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_frontend_and_chinese_intake_20261117.py",
+      "name": "tools/record_frontend_and_chinese_intake_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-proof-20261117.json",
+      "name": "frontend/proof.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\cpu-vad-explicit-blas-pin-20261117.json",
+      "name": "cpu-vad-thread-fix.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-worker-before-explicit-blas-pin-20261117.py",
+      "name": "prior-cpu-vad-worker.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-train-intake-20261117.json",
+      "name": "chinese/intake.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\frontend-failure-localization-correction.json",
+      "name": "frontend/localization-correction.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r1\\state.json",
+      "name": "frontend/published-frontend-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r1\\worker-at-failed-import.py",
+      "name": "frontend/published-frontend-r1/worker-at-failed-import.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r1\\terminal-import-failure.json",
+      "name": "frontend/published-frontend-r1/terminal-import-failure.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r2\\state.json",
+      "name": "frontend/published-frontend-r2/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r2\\worker-at-failed-math.py",
+      "name": "frontend/published-frontend-r2/worker-at-failed-math.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r2\\terminal-math-failure.json",
+      "name": "frontend/published-frontend-r2/terminal-math-failure.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-trace-r3\\state.json",
+      "name": "frontend/published-frontend-trace-r3/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-trace-r3\\worker-at-failed-operation.py",
+      "name": "frontend/published-frontend-trace-r3/worker-at-failed-operation.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-trace-r3\\terminal-operation-failure.json",
+      "name": "frontend/published-frontend-trace-r3/terminal-operation-failure.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r4\\completed.json",
+      "name": "frontend/published-frontend-r4/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\hf-dataset-index.json",
+      "name": "chinese/hf-dataset-index.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\official-repo-tree.json",
+      "name": "chinese/official-repo-tree.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\intake-requests.json",
+      "name": "chinese/intake-requests.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\huseinzol05--AliMeeting-mirror-tree.json",
+      "name": "chinese/huseinzol05--AliMeeting-mirror-tree.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\yuekai--alimeeting_aishell4_training_whisper_fbank_lhotse-tree.json",
+      "name": "chinese/yuekai--alimeeting_aishell4_training_whisper_fbank_lhotse-tree.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\train-manifest-provider.json",
+      "name": "chinese/train-manifest-provider.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\train-manifest-selection.json",
+      "name": "chinese/train-manifest-selection.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\train-metadata-audit.json",
+      "name": "chinese/train-metadata-audit.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\primary-source-context.json",
+      "name": "chinese/primary-source-context.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\nonoverlap-metadata-profile.json",
+      "name": "chinese/nonoverlap-metadata-profile.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\official-alimeeting-speaker-parser.py",
+      "name": "chinese/official-alimeeting-speaker-parser.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\official-train-prefix-inspection.json",
+      "name": "chinese/official-train-prefix-inspection.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\alimeeting-intake-audit-r1\\official-train-prefix-riff-r2.json",
+      "name": "chinese/official-train-prefix-riff-r2.json"
+    }
+  ],
+  "commitMessage": "Bind CPU VAD ROCm BLAS threads and verify published frontend plus Chinese training intake",
+  "claims": {
+    "state": "PUBLISHED_FRONTEND_VERIFIED_CPU_VAD_BLAS_FIXED_ALIMEETING_INTAKE_NOT_ADMITTED",
+    "publishedSignalFrontendRealTrainingCases": 10,
+    "actualGpuBackwardOrTrainingPerformed": false,
+    "newNeuralCalls": 0,
+    "parameterUpdates": 0,
+    "cpuOrIntegratedGpuTraining": false,
+    "cpuVadSourceExplicitBlasBindingAdded": true,
+    "newCpuVadInferenceRevalidated": false,
+    "chineseCandidateMetadataHoursAreNotAcquiredAudioHours": true,
+    "chineseTrainingAdmitted": false,
+    "originalResourceAndThermalGuardsChanged": false,
+    "originalEvaluationGatesChanged": false,
+    "productDefaultChanged": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

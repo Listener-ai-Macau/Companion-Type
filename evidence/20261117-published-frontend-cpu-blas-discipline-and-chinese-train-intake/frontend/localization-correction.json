@@ -1,0 +1,7 @@
+{
+  "at": "2026-11-17T12:18:51+08:00",
+  "state": "EARLY_FRONTEND_FAILURE_LOCALIZATION_CORRECTION",
+  "initialReceipt": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\published-frontend-r1\\terminal-import-failure.json",
+  "correction": "Initial failure had only an initial-state snapshot and OpenBLAS stderr. Its import-failure label did not establish the exact failing stage. The separate operation trace later located CPUbmm on the same frontend profile; do not retroactively claim the initial run had a captured operator.",
+  "confirmedCauseForTracedRun": "New audit omitted existing explicitROCmBLAS binding; environment/Torch thread limits left thatDLL at16. ExistingGPUtrainingworker already binds it. Reusing existing helper16→1 passed all10actual input checks under unchanged2GiB."
+}

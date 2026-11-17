@@ -15,6 +15,11 @@ def main():
     parser.add_argument('--run',type=Path,required=True);a=parser.parse_args()
     limits=WorkerLimits(cpu_percent=5,memory_bytes=2*1024**3);P=read(a.protocol)
     for item in P['files']:require(sha(item['file'])==item['sha256'],'Frozen detector dependency changed')
+    blas=P.get('cpuBlas');helper=Path(__file__).with_name('companion_community1_adapter_20261115.py')
+    require(isinstance(blas,dict) and set(blas)>={'file','sha256'},'Frozen CPU BLAS binding missing')
+    require(any(item['file']==blas['file'] and item['sha256']==blas['sha256'] for item in P['files'])
+        and any(Path(item['file']).resolve()==helper.resolve() for item in P['files']),
+        'CPU BLAS and explicit thread helper must be frozen inference dependencies')
     require(P['cpuInferenceOnly'] and P['threads']==1 and P['cpuPercent']==5,'Fixed low-CPU inference profile')
     cases=[r for r in read(P['audioOnly']) if r['meeting'] in P['meetings']]
     require([r['meeting'] for r in cases]==P['meetings'],'Original full-source order changed')
@@ -40,6 +45,11 @@ def main():
             while time.monotonic()-began<60:stop();time.sleep(1)
             thermal.check(starting=True);save(state='LOADING_OFFICIAL_CPU_SILERO_JIT')
             import torch
+            # Windows ROCm's separate CPU BLAS ignores the environment/thread
+            # caps above. Reuse the existing exact-DLL one-thread binding;
+            # otherwise the declared single-thread inference profile is false.
+            from companion_community1_adapter_20261115 import pin_rocm_blas
+            state['cpuBlasThreadPin']=pin_rocm_blas(blas['file'],blas['sha256'])
             import numpy as np
             require(torch.__version__==P['torch'],'Frozen CPU inference runtime changed')
             torch.set_num_threads(1);torch.set_num_interop_threads(1);torch.set_grad_enabled(False)

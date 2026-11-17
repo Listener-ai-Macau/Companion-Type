@@ -1,0 +1,82 @@
+{
+  "at": "2026-11-17T12:04:21.139131+08:00",
+  "state": "COMPLETE_PUBLIC_TRAIN_METADATA_SCHEMA_AUDIT_NOT_ADMITTED_FOR_TRAINING",
+  "url": "https://huggingface.co/datasets/yuekai/alimeeting_aishell4_training_whisper_fbank_lhotse/resolve/ae2e3427660045ff558a9935b3e1176ef1b20963/alimeeting-far_cuts_train.jsonl.gz",
+  "sourceProviderIsCorpusPublisher": false,
+  "sourceSha256": "9dee1c63305e21c3e87ca6c89fc068ba92baa13197e622dac3b99c9e2792452d",
+  "audioDownloaded": false,
+  "evalOrTestLabelsDownloaded": false,
+  "aishellManifestDownloaded": false,
+  "neuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "downloadedBytes": 39545263,
+  "limits": {
+    "pid": 6948,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 17059840,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "manifestSha256": "dfb00b08f2219cf8f36e23fc7548338e7c1176dcc2ec5937e4d27f4dcc554bfe",
+  "cuts": 559092,
+  "supervisions": 559092,
+  "supervisionsWithText": 559092,
+  "speakerIds": 452,
+  "speakerExamples": [
+    "0025",
+    "0026",
+    "0027",
+    "0028",
+    "0033"
+  ],
+  "nonSpkIdentifierCount": 452,
+  "missingSpeakerIds": 0,
+  "sourceSessions": 209,
+  "sourceRecordingVariants": 627,
+  "recordingVariantSeconds": 1210764.898625,
+  "cutSecondsIncludingTransforms": 1528434.959562466,
+  "channelCounts": {
+    "[0, 1, 2, 3, 4, 5, 6, 7]": 559092
+  },
+  "recordingTransformCounts": {
+    "[]": 186364,
+    "[{\"kwargs\": {\"factor\": 0.9}, \"name\": \"Speed\"}]": 186364,
+    "[{\"kwargs\": {\"factor\": 1.1}, \"name\": \"Speed\"}]": 186364
+  },
+  "cutFieldNames": [
+    "channel",
+    "duration",
+    "features",
+    "id",
+    "recording",
+    "start",
+    "supervisions",
+    "type"
+  ],
+  "supervisionFieldNames": [
+    "channel",
+    "duration",
+    "gender",
+    "id",
+    "language",
+    "recording_id",
+    "speaker",
+    "start",
+    "text"
+  ],
+  "officialCorpusAudioOrLabelsIndependentlyMatched": false,
+  "globalSpeakerMappingAgainstOriginalAishellValidationProven": false,
+  "publishedTrainEvalDisjointness": "AliMeeting authors explicitly state no speaker overlap between their Train and Eval; does not assert cross-corpus AISHELL identity isolation.",
+  "originalChineseTrainingGateChanged": false,
+  "metadataIsNotAudioOrAccuracyProof": true
+}

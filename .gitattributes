@@ -525,3 +525,5 @@ src/run_native8_780m_inference_20261117.py -text -whitespace
 src/compare_native8_780m_control_20261117.py -text -whitespace
 
 src/webrtc_presence_worker_20261117.py -text -whitespace
+
+evidence/20261117-published-frontend-cpu-blas-discipline-and-chinese-train-intake/** -text -whitespace

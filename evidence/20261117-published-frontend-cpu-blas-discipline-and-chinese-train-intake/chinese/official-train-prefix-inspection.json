@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-17T12:12:06.863538+08:00",
+  "state": "OFFICIAL_TRAIN_PREFIX_CHECK_FAILED_RETAINED_NO_RETRY",
+  "url": "https://speech-lab-share-data.oss-cn-shanghai.aliyuncs.com/AliMeeting/openlr/Train_Ali_far.tar.gz",
+  "maximumResponseBodyBytes": 1048576,
+  "evaluationOrTestUrlRequested": false,
+  "fullArchiveDownloaded": false,
+  "trainingAdmitted": false,
+  "neuralCalls": 0,
+  "parameterUpdates": 0,
+  "httpStatus": 206,
+  "contentRange": "bytes 0-1048575/78639309701",
+  "etag": "\"B5C1C3F463D4D0393241F7A11C3E303F-7500\"",
+  "lastModified": "Mon, 14 Feb 2022 07:48:44 GMT",
+  "receivedBytes": 1048576,
+  "prefixSha256": "ae9505aee1148cb7a1f119ed84a9a069fddefb71d070ca40cba02cbc851a6c75",
+  "maximumDecompressedPrefixBytes": 4194304,
+  "decompressedBytes": 1218790,
+  "error": "Error('unknown format: 65534')"
+}

@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-17T12:15:40.280152+08:00",
+  "state": "CPU_VAD_THREAD_DISCIPLINE_SOURCE_FIXED_NOT_RERUN",
+  "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\silero_presence_worker_20261117.py",
+  "sourceSha256": "566746a67ab6fb000ea8f63ccf5743f237bb9786a3df31da5e4b885da389b0d3",
+  "pinBeforeJitLoad": true,
+  "requiredCpuBlas": {
+    "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0"
+  },
+  "requiredHelper": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_community1_adapter_20261115.py",
+  "futureProtocolChangesRequired": [
+    "New frozen worker hash",
+    "cpuBlas binding and exactDLL/helper in files",
+    "Fresh actual execution window and original temperature/RAM admission"
+  ],
+  "oldProtocolsRemainClosedAndExpired": true,
+  "oldWorkerPreserved": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-worker-before-explicit-blas-pin-20261117.py",
+  "publishedDetectorWeightsOrDefaultParametersChanged": false,
+  "originalResourceAndThermalGuardsChanged": false,
+  "actualCpuVADInferenceRevalidated": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "evidence": "Published frontend same runtime/DLL default16→explicit1, actual10input checks passed under2GiB. ExistingGPUworker already had this binding; new CPUVADworker omitted it.",
+  "missingBindingRejectedBeforeLoggerOrModel": true
+}
