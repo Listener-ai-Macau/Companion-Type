@@ -8,6 +8,11 @@ use serde_json::{json,Value};
 // Input + output is still measured against the same fixed16384-token context;
 // no clipping or larger KV allocation is permitted to make a request fit.
 pub(super) const MAX_NEW_TOKENS:usize=6144;
+// Keep at least2048 answer tokens inside the unchanged total-output/context cap.
+// The1024-token pilot exhausted its reasoning budget on every completed stage;
+// counting its answer with the official tokenizer proved a forced stop rather
+// than a naturally completed deliberation. This is one controlled capacity fix.
+const MAX_REASONING_TOKENS:u64=(MAX_NEW_TOKENS-2048)as u64;
 const MAX_RESPONSE:u64=4*1024*1024;
 const MAX_OUTPUT:usize=256*1024;
 pub(super) type Trace=Arc<Mutex<Value>>;
@@ -16,7 +21,7 @@ pub(super) fn profile()->Result<Value,String>{
     let value:Value=serde_json::from_str(include_str!("generation-profile.json")).map_err(|_|error())?;
     let enabled=value["enableThinking"].as_bool().ok_or_else(error)?;
     let budget=value["reasoningBudgetTokens"].as_u64().ok_or_else(error)?;
-    if (enabled&&!(1..=1024).contains(&budget))||(!enabled&&budget!=0){return Err(error());}
+    if (enabled&&!(1..=MAX_REASONING_TOKENS).contains(&budget))||(!enabled&&budget!=0){return Err(error());}
     Ok(value)
 }
 fn check(stop:&AtomicBool)->Result<(),String>{if stop.load(Ordering::Acquire){Err("本地纪要已停止，已有内容保留。".into())}else{Ok(())}}
