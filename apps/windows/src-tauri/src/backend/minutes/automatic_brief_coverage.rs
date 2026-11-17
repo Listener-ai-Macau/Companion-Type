@@ -11,6 +11,8 @@ const COMPARE:&str=include_str!("automatic_brief_coverage_compare.txt");
 const APPEND:&str=include_str!("automatic_brief_coverage_append.txt");
 const OMISSIONS:&str=include_str!("automatic_brief_coverage_omissions.txt");
 const FAILURE:&str="纪要的重要内容核对尚未完成，原文和已有纪要保留。";
+const MAX_SOURCE_QUESTIONS:usize=40;
+const MAX_DIRECT_QUESTIONS:usize=16;
 
 pub(super) fn enabled()->bool {
     // Enable only in the isolated candidate until content qualification finishes.
@@ -20,6 +22,10 @@ fn fail()->String{FAILURE.into()}
 fn parse<T:serde::de::DeserializeOwned>(raw:&str)->Result<T,String>{
     serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|fail())
 }
+// Harmless response-format metadata is accepted only with its exact value.
+// Deserialize the typed root directly so duplicate keys still fail.
+#[derive(Default,Deserialize)]
+enum JsonObjectMarker {#[default] #[serde(skip)] Absent,#[serde(rename="json_object")] Present}
 #[derive(Debug,Clone,Deserialize,Serialize,PartialEq,Eq)]
 #[serde(deny_unknown_fields)]
 struct Evidence {source:String,quote:String}
@@ -28,7 +34,7 @@ struct Evidence {source:String,quote:String}
 struct Question {id:String,question:String,importance:String,evidence:Vec<Evidence>}
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
-struct Questions {questions:Vec<RawQuestion>}
+struct Questions {#[serde(default,rename="type")]_response_type:JsonObjectMarker,questions:Vec<RawQuestion>}
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct RawQuestion {id:String,question:String,importance:String,evidence:Vec<String>}
@@ -39,19 +45,19 @@ struct SummaryUnit {id:String,path:String,text:String,#[serde(skip_serializing_i
 struct Retrieval {id:String,summary_ids:Vec<String>}
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
-struct Retrieved {answers:Vec<Retrieval>}
+struct Retrieved {#[serde(default,rename="type")]_response_type:JsonObjectMarker,answers:Vec<Retrieval>}
 #[derive(Debug,Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
 struct Check {id:String,result:String,material:bool,difference:String,summary_ids:Vec<String>}
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
-struct Compared {checks:Vec<Check>}
+struct Compared {#[serde(default,rename="type")]_response_type:JsonObjectMarker,checks:Vec<Check>}
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct Omission {question:String,difference:String,importance:String,evidence:Vec<String>}
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
-struct OmissionAudit {omissions:Vec<Omission>}
+struct OmissionAudit {#[serde(default,rename="type")]_response_type:JsonObjectMarker,omissions:Vec<Omission>}
 pub(super) struct Omissions(Vec<Question>);
 
 fn decode_omissions(raw:&str,source:&[Value])->Result<Omissions,String>{
@@ -148,7 +154,7 @@ fn extract(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,u
             if out.iter().any(|old|old.question==q.question&&old.evidence==q.evidence){continue;}
             q.id=format!("q{:02}",out.len());out.push(q);
         }
-        if out.len()>40{return Err(fail());}
+        if out.len()>MAX_SOURCE_QUESTIONS{return Err(fail());}
     }
     if out.is_empty()||!out.iter().any(|q|q.importance=="essential"){return Err(fail());}
     if let Some(last)=trace.last_mut(){last["groundedCoverageQuestions"]=json!(&out);}
@@ -240,7 +246,7 @@ fn append_slots(doc:&Document)->Vec<AppendSlot>{
     let main_free=1000usize.saturating_sub(used);let mut slots=Vec::new();
     for(i,t)in doc.topics.iter().enumerate(){
         if main_free>0{for j in t.points.len()..3{slots.push(AppendSlot{id:format!("t{i}p{j}"),path:format!("topics[{i}].points"),label:format!("{} · 主要观点",t.title),max_characters:90.min(main_free)});}}
-        for j in t.details.len()..3{slots.push(AppendSlot{id:format!("t{i}d{j}"),path:format!("topics[{i}].details"),label:format!("{} · 补充",t.title),max_characters:120});}
+        for j in t.details.len()..super::topic_details_limit(){slots.push(AppendSlot{id:format!("t{i}d{j}"),path:format!("topics[{i}].details"),label:format!("{} · 补充",t.title),max_characters:120});}
     }
     for(name,n,label)in[("decisions",doc.decisions.len(),"明确共同决定"),("actionItems",doc.action_items.len(),"明确会后任务"),("questions",doc.questions.len(),"明确未决问题")]{
         for j in n..(n+8).min(20){slots.push(AppendSlot{id:format!("{name}{j}"),path:name.into(),label:label.into(),max_characters:180});}
@@ -258,7 +264,7 @@ fn append(raw:&str,doc:&Document,allowed:&HashSet<String>,units:&[Unit])->Result
         let row=row.as_object().ok_or_else(fail)?;
         if row.len()!=3||row.keys().any(|k|!matches!(k.as_str(),"slot"|"questionIds"|"append")){return Err(fail());}
         let ids=row.get("questionIds").and_then(Value::as_array).ok_or_else(fail)?;
-        if ids.is_empty()||ids.len()>40||ids.iter().any(|id|id.as_str().map_or(true,|s|!allowed.contains(s))){return Err(fail());}
+        if ids.is_empty()||ids.len()>MAX_SOURCE_QUESTIONS+MAX_DIRECT_QUESTIONS||ids.iter().any(|id|id.as_str().map_or(true,|s|!allowed.contains(s))){return Err(fail());}
         let id=row.get("slot").and_then(Value::as_str).ok_or_else(fail)?;
         let slot=known.get(id).ok_or_else(||"追加显示容量：只能选择availableAppendSlots中实际存在的空位".to_string())?;
         if !used_slots.insert(id){return Err("追加显示容量：每个空位编号只能使用一次".into());}
@@ -277,7 +283,8 @@ fn append(raw:&str,doc:&Document,allowed:&HashSet<String>,units:&[Unit])->Result
     let repaired:Document=serde_json::from_value(value).map_err(|_|fail())?;
     let mut capacity=Vec::new();
     for(i,t)in repaired.topics.iter().enumerate(){
-        if t.points.len()>3||t.details.len()>3{capacity.push(format!("topics[{i}]最多3条points和3条details，不能向已满数组追加"));}
+        let details_limit=super::topic_details_limit();
+        if t.points.len()>3||t.details.len()>details_limit{capacity.push(format!("topics[{i}]最多3条points和{details_limit}条details，不能向已满数组追加"));}
         if t.points.iter().any(|p|p.text.chars().count()>90)||t.details.iter().any(|p|p.text.chars().count()>120){capacity.push(format!("topics[{i}]的points每条最多90字、details每条最多120字"));}
     }
     if repaired.topics.iter().flat_map(|t|&t.points).map(|p|p.text.chars().count()).sum::<usize>()>1000{capacity.push("全部points总共最多1000字，可把非核心解释放入有空位的details".into());}
@@ -303,6 +310,26 @@ fn signature(unit:&SummaryUnit)->Value{json!({"text":unit.text,"kind":unit.kind}
 fn new_partial_witness(check:&Check,known:&HashMap<&str,&SummaryUnit>,previous:&[Value])->bool{
     check.result=="partial"&&check.summary_ids.iter().filter_map(|id|known.get(id.as_str())).any(|unit|!previous.contains(&signature(unit)))
 }
+fn corrected_append_questions(raw:&str,added:&Document,audited:&Document)->HashSet<String>{
+    fn body(value:&Value)->Value{json!({"text":value["text"],"kind":value["kind"],"owner":value["owner"],"due":value["due"]})}
+    fn bodies(doc:&Document)->Vec<Value>{
+        let value=serde_json::to_value(doc).unwrap();let mut out=Vec::new();
+        for topic in value["topics"].as_array().unwrap(){for name in ["points","details"]{out.extend(topic[name].as_array().unwrap().iter().map(body));}}
+        for name in ["decisions","actionItems","questions"]{out.extend(value[name].as_array().unwrap().iter().map(body));}out
+    }
+    let before=bodies(added);let after=bodies(audited);let mut changed=HashSet::new();
+    // raw already passed append's slot/ID/shape validation. Only questions
+    // bound to a genuinely changed appended claim get the remaining attempt.
+    if let Ok(value)=serde_json::from_str::<Value>(super::super::strip_code_fences(raw).trim()){
+        for row in value["changes"].as_array().into_iter().flatten(){
+            let claim=body(&row["append"]);
+            if before.contains(&claim)&&!after.contains(&claim){
+                for id in row["questionIds"].as_array().into_iter().flatten().filter_map(Value::as_str){changed.insert(id.to_string());}
+            }
+        }
+    }
+    changed
+}
 impl Certificate {
     fn valid(&self,summary:&[SummaryUnit])->bool{self.witnesses.iter().all(|(path,value)|summary.iter().any(|s|&s.path==path&&signature(s)==*value))}
 }
@@ -311,13 +338,18 @@ pub(super) struct Prepared {questions:Vec<Question>,checks:Vec<Check>,summary:Ve
 pub(super) fn combine_omissions(mut prepared:Prepared,omissions:Omissions)->Result<Prepared,String>{
     for mut q in omissions.0{
         if prepared.questions.iter().any(|old|old.question==q.question&&old.evidence==q.evidence){continue;}
-        if prepared.questions.len()>=40{return Err(fail());}
-        q.id=format!("q{:02}",prepared.questions.len());prepared.questions.push(q);
+        q.id=next_direct_id(&prepared.questions)?;prepared.questions.push(q);
     }
     // Both initial reviewers received this same immutable document. A later
     // factual correction or append invalidates this whole-source certificate.
     prepared.omission_signature=Some(semantic_signature(&prepared.summary));
     Ok(prepared)
+}
+fn next_direct_id(questions:&[Question])->Result<String,String>{
+    let count=questions.iter().filter(|q|q.id.starts_with('d')).count();
+    if count>=MAX_DIRECT_QUESTIONS||questions.len()>=MAX_SOURCE_QUESTIONS+MAX_DIRECT_QUESTIONS{return Err(fail());}
+    let id=format!("d{count:02}");
+    if questions.iter().any(|q|q.id==id){return Err(fail());}Ok(id)
 }
 pub(super) fn prepare(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Prepared,String>{
     let questions=extract(endpoint,model,key,client,units,start,trace)?;
@@ -340,6 +372,7 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
     let complete_seed=has_complete_seed(&questions,&checks);
     let mut initial=(complete_seed&&semantic_signature(&summary)==semantic_signature(&summary_units(doc))).then_some((checks,summary));
     let mut current=doc.clone();let mut attempted:HashMap<String,Vec<Value>>=HashMap::new();let mut recovered_capacity=false;
+    let mut factually_changed=HashSet::new();
     for round in 0..=2 {
         let current_summary=summary_units(&current);
         let pending=questions.iter().filter(|q|q.importance=="essential"&&!certificates.get(&q.id).is_some_and(|c|c.valid(&current_summary))).cloned().collect::<Vec<_>>();
@@ -396,8 +429,7 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
         // existing questions and their evidence are never deleted or regraded.
         for mut q in omissions.0{
             let id=if let Some(old)=questions.iter().find(|old|old.question==q.question&&old.evidence==q.evidence){old.id.clone()}else{
-                if questions.len()>=40{return Err(fail());}
-                q.id=format!("q{:02}",questions.len());let id=q.id.clone();questions.push(q);id
+                q.id=next_direct_id(&questions)?;let id=q.id.clone();questions.push(q);id
             };
             if allowed.insert(id.clone()){
                 let q=questions.iter().find(|q|q.id==id).unwrap();
@@ -410,26 +442,30 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
         // opportunity only if the current partial answer cites an actually
         // new, factually verified witness. Reworded criticism or another old
         // witness is not progress; the two-append bound never resets.
-        if round==2||allowed.iter().any(|q|attempted.contains_key(q)&&!partial_progress.contains(q)){return Err(fail());}
+        if round==2||allowed.iter().any(|q|attempted.contains_key(q)&&!partial_progress.contains(q)&&!factually_changed.contains(q)){return Err(fail());}
         let used=current.topics.iter().flat_map(|t|&t.points).map(|p|p.text.chars().count()).sum::<usize>();
         let mut payload=json!({"sourceUnits":units,"previousDocument":current,"coverageProblems":issues,"availableAppendSlots":append_slots(&current),"mainCharactersAvailable":1000usize.saturating_sub(used)});
         let raw=super::request(endpoint,model,key,client,APPEND,payload.clone(),true,start,trace,&format!("coverage-append-{round}"))?;
         let before=current.clone();
-        let added=match append(&raw,&current,&allowed,units){
-            Ok(doc)=>doc,
+        let(added,accepted_patch)=match append(&raw,&current,&allowed,units){
+            Ok(doc)=>(doc,raw),
             Err(reason) if !recovered_capacity&&reason.starts_with("追加显示容量：")=>{
                 // A rejected oversized patch has not changed the document.
                 // Recover its machine layout once; all facts still need audit.
                 recovered_capacity=true;payload["previousResult"]=json!(raw);payload["formatProblems"]=json!([reason]);
                 payload["instruction"]=json!("只修复追加条目的空位/字数容量合同。每项slot必须从availableAppendSlots选一个实际编号，不能自行写path，同一slot不可重复。已有纪要逐字保留；可合并相关遗漏、选择仍有空位的相关主题补充。按mainCharactersAvailable分配主要观点，优先实用核心，不为背景扩写。不得截断条件/否定/自愿，不得编事实；仍只返回changes。");
                 let fixed=super::request(endpoint,model,key,client,APPEND,payload,true,start,trace,&format!("coverage-append-{round}-capacity-recovery"))?;
-                append(&fixed,&current,&allowed,units)?
+                (append(&fixed,&current,&allowed,units)?,fixed)
             },
             Err(reason)=>return Err(reason),
         };
         // Only changed/new claims need new verdicts; they still see the entire
         // immutable source. Unchanged prior positive evidence is not rerolled.
         current=super::factual_audit::review_and_repair_since(endpoint,model,key,client,&added,units,Some(&before),start,trace)?;
+        // The fixed remaining append opportunity is meaningful when factual
+        // feedback actually changed/removes the previous attempted answer.
+        // Citation-only rebinding and repeated unchanged errors do not qualify.
+        factually_changed=corrected_append_questions(&accepted_patch,&added,&current);
         let before_signatures=current_summary.iter().map(signature).collect::<Vec<_>>();
         for id in allowed{attempted.insert(id,before_signatures.clone());}
     }
@@ -498,13 +534,18 @@ mod tests {
         let omissions=decode_omissions(&raw.to_string(),&source).unwrap();assert_eq!(omissions.0[0].evidence[0].quote,source[1]["text"].as_str().unwrap());
         let old=Question{id:"q00".into(),question:"原背景题？".into(),importance:"supporting".into(),evidence:vec![Evidence{source:"u000".into(),quote:"预算尚未审批。".into()}]};
         let before=serde_json::to_value(&old).unwrap();let prepared=Prepared{questions:vec![old.clone()],checks:vec![],summary:summary_units(&doc()),recovered_references:false,omission_signature:None};
-        let combined=combine_omissions(prepared,omissions).unwrap();assert_eq!(serde_json::to_value(&combined.questions[0]).unwrap(),before);assert_eq!(combined.questions[1].id,"q01");assert!(!has_complete_seed(&combined.questions,&combined.checks));
+        let combined=combine_omissions(prepared,omissions).unwrap();assert_eq!(serde_json::to_value(&combined.questions[0]).unwrap(),before);assert_eq!(combined.questions[1].id,"d00");assert!(!has_complete_seed(&combined.questions,&combined.checks));
         assert_eq!(combined.omission_signature,Some(semantic_signature(&summary_units(&doc()))));
         let mut changed=doc();changed.topics[0].points[0].text="预算已经批准。".into();
         assert_ne!(combined.omission_signature,Some(semantic_signature(&summary_units(&changed))));
         for bad in [json!({"omissions":[],"passed":true}),json!({"omissions":[{"question":"采购？","difference":"缺条件","importance":"essential","evidence":["e9999"]}]}),json!({"omissions":[{"question":"采购？","difference":"缺条件","importance":"supporting","evidence":["e0001"]}]})]{assert!(decode_omissions(&bad.to_string(),&source).is_err());}
         let full=Prepared{questions:(0..40).map(|i|{let mut q=old.clone();q.id=format!("q{i:02}");q}).collect(),checks:vec![],summary:vec![],recovered_references:false,omission_signature:None};
-        assert!(combine_omissions(full,decode_omissions(&raw.to_string(),&source).unwrap()).is_err());
+        let mut full=combine_omissions(full,decode_omissions(&raw.to_string(),&source).unwrap()).unwrap();
+        assert_eq!(full.questions.len(),41);assert_eq!(full.questions.last().unwrap().id,"d00");
+        for index in 1..MAX_DIRECT_QUESTIONS{let mut question=old.clone();question.id=format!("d{index:02}");question.question=format!("独立遗漏{index}？");full.questions.push(question);}
+        assert!(next_direct_id(&full.questions).is_err());
+        let extra=Omissions(vec![Question{id:String::new(),question:"额外遗漏？".into(),importance:"essential".into(),evidence:vec![Evidence{source:"u000".into(),quote:"预算尚未审批。".into()}]}]);
+        assert!(combine_omissions(full,extra).is_err());
     }
     #[test]
     fn automatic_brief_coverage_uncertainty_is_an_exact_span_not_a_question_waiver(){
@@ -553,5 +594,34 @@ mod tests {
         let q=Question{id:"q00".into(),question:"预算状态？".into(),importance:"essential".into(),evidence:vec![]};
         let r=vec![Retrieval{id:"q00".into(),summary_ids:vec![s.id.clone()]}];
         let fake=json!({"checks":[{"id":"q00","result":"covered","material":false,"difference":"","summaryIds":["s999"]}]}).to_string();assert!(decode_comparison(&fake,&[q],&r).is_err());
+    }
+    #[test]
+    fn automatic_brief_coverage_accepts_exact_format_marker_without_losing_strict_keys(){
+        let valid=r#"{"type":"json_object","checks":[]}"#;
+        assert!(parse::<Compared>(valid).is_ok());
+        assert!(parse::<Compared>(r#"{"checks":[]}"#).is_ok());
+        for bad in [r#"{"type":null,"checks":[]}"#,r#"{"type":"object","checks":[]}"#,
+            r#"{"type":"json_object","checks":[],"passed":true}"#,
+            r#"{"type":"json_object","checks":[],"checks":[]}"#,
+            r#"{"type":"json_object","type":"json_object","checks":[]}"#] {
+            assert!(parse::<Compared>(bad).is_err(),"{bad}");
+        }
+        assert!(parse::<Questions>(r#"{"type":"json_object","questions":[]}"#).is_ok());
+        assert!(parse::<Retrieved>(r#"{"type":"json_object","answers":[]}"#).is_ok());
+        assert!(parse::<OmissionAudit>(r#"{"type":"json_object","omissions":[]}"#).is_ok());
+    }
+    #[test]
+    fn automatic_brief_remaining_append_requires_feedback_on_that_questions_actual_claim(){
+        let old=doc();let allowed=HashSet::from(["q00".into(),"q01".into()]);
+        let raw=json!({"changes":[
+            {"questionIds":["q00"],"slot":"t0d0","append":{"text":"教师整合县乡镇资源。","sources":["u000"]}},
+            {"questionIds":["q01"],"slot":"t0d1","append":{"text":"不得先采购。","sources":["u000"]}}
+        ]}).to_string();
+        let added=append(&raw,&old,&allowed,&units()).unwrap();let mut audited=added.clone();
+        audited.topics[0].details[0].sources=vec!["u001".into()];
+        assert!(corrected_append_questions(&raw,&added,&audited).is_empty());
+        audited.topics[0].details.remove(0);
+        assert_eq!(corrected_append_questions(&raw,&added,&audited),HashSet::from(["q00".into()]));
+        assert!(corrected_append_questions(&raw,&added,&added).is_empty());
     }
 }

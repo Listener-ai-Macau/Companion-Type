@@ -109,14 +109,18 @@ fn refs(ids:&[String],known:&HashMap<&str,&str>)->bool {
     !ids.is_empty()&&ids.len()<=8&&ids.iter().all(|id|known.contains_key(id.as_str()))&&ids.iter().collect::<HashSet<_>>().len()==ids.len()
 }
 fn normalized(text:&str)->String {text.chars().filter(|c|!c.is_whitespace()).collect()}
+fn topic_details_limit()->usize {if coverage::enabled(){8}else{3}}
 fn validate(doc:&Document,units:&[Unit])->Result<(),String> {
+    validate_with_details_limit(doc,units,topic_details_limit())
+}
+fn validate_with_details_limit(doc:&Document,units:&[Unit],details_limit:usize)->Result<(),String> {
     let known=units.iter().map(|u|(u.id.as_str(),u.text.as_str())).collect::<HashMap<_,_>>();
     let mut issues=Vec::new();let mut titles=HashSet::new();let mut texts=HashSet::new();let mut chars=0;
     if !line(&doc.purpose,80){issues.push("purpose须为80字内完整单行".to_string());}
     if doc.topics.is_empty()||doc.topics.len()>8 {issues.push("topics须为1至8个实际内容组".into());}
     for (i,t) in doc.topics.iter().enumerate() {
         if !line(&t.title,26)||!titles.insert(&t.title){issues.push(format!("topics[{i}].title须为26字内不重复单行"));}
-        if t.points.is_empty()||t.points.len()>3||t.details.len()>3 {issues.push(format!("topics[{i}]主回答1至3条、补充0至3条"));}
+        if t.points.is_empty()||t.points.len()>3||t.details.len()>details_limit {issues.push(format!("topics[{i}]主回答1至3条、补充0至{details_limit}条"));}
         for (j,p) in t.points.iter().enumerate() {
             if !line(&p.text,90)||!refs(&p.sources,&known)||!texts.insert(&p.text){issues.push(format!("topics[{i}].points[{j}]须为90字内不重复单行并引用实际原id"));}
             chars+=p.text.chars().count();
@@ -340,6 +344,17 @@ mod tests {
         let mut fourth=point;fourth["text"]=json!("未通过不能上线。");
         v["document"]["topics"][0]["points"].as_array_mut().unwrap().push(fourth);
         assert!(parse_review(&v.to_string(),&units()).is_err());
+    }
+    #[test]
+    fn automatic_brief_candidate_keeps_eight_collapsed_details_without_expanding_main(){
+        let mut doc=parse_review(&valid().to_string(),&units()).unwrap().document;
+        doc.topics[0].details=(0..8).map(|i|Entry{text:format!("可回查的补充{i}。"),sources:vec!["u000".into()]}).collect();
+        assert!(validate_with_details_limit(&doc,&units(),8).is_ok());
+        assert!(validate_with_details_limit(&doc,&units(),3).is_err());
+        doc.topics[0].details.push(Entry{text:"第九项。".into(),sources:vec!["u000".into()]});
+        assert!(validate_with_details_limit(&doc,&units(),8).is_err());
+        doc.topics[0].details.pop();doc.topics[0].points[0].text="长".repeat(91);
+        assert!(validate_with_details_limit(&doc,&units(),8).is_err());
     }
     #[test]
     fn automatic_brief_keeps_literal_constraints_without_interpreting_them(){
