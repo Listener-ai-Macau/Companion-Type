@@ -197,6 +197,14 @@ impl Pointer {
         self.arrival=None;self.frame_at=None;self.clock_offset=None;self.sensor_clock=0.;
     }
     pub fn recenter(&mut self,position:Point) {self.release();self.reset_motion();self.shown=position;self.last_emitted=position;self.heading=0.;self.heading_zero=None;self.elevation_zero=None;self.laser_offset=Point::default();self.last_projected=None;}
+    /// Explicit screen alignment, distinct from resuming at the current cursor.
+    /// Caller emits this one frame only after the user's center action.
+    pub fn center_screen(&mut self,bounds:Bounds)->Frame {
+        let [left,top,width,height]=bounds.primary.unwrap_or([bounds.left,bounds.top,bounds.width,bounds.height]);
+        let center=Point{x:left+width*0.5,y:top+height*0.5};self.recenter(center);
+        self.queued.retain(|button|matches!(button,Button::Up));
+        Frame{position:Some(center),buttons:std::mem::take(&mut self.queued)}
+    }
     /// An ordinary mouse moved the real cursor since our last OS output.
     /// Re-anchor to that position, canceling the old follow residual. The next
     /// unchanged card pose must stay here; subsequent card motion adds to it.

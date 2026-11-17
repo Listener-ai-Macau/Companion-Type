@@ -7,7 +7,7 @@ import {fileURLToPath, pathToFileURL} from 'node:url';
 // Component and stubbed app tests only. This does not operate a device,
 // launch a browser/native window, capture speech, or call a remote service.
 const root=path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const names=['test_ota_reconfirmation','test_customer_followthrough','test_action_review_tools','test_card_to_text','test_companion_setup_render','test_companion_dashboard_state','test_companion_journey',
+const names=['test_desktop_pointer_modes','test_ota_reconfirmation','test_customer_followthrough','test_action_review_tools','test_card_to_text','test_companion_setup_render','test_companion_dashboard_state','test_companion_journey',
   'test_companion_diagnostics','test_companion_service_actions','test_companion_credentials',
   'test_companion_recovery_center','test_companion_desktop_update','test_recording_readiness',
   'test_companion_app_state','test_transcript_bulk_replace','test_companion_pet_navigation','test_companion_result_order','test_windows_device_actions','test_windows_settings_navigation',
@@ -25,7 +25,10 @@ for(const name of requested.length?requested:names){
     await build({entryPoints:[path.join(root,'tools',name+'.tsx')],outfile:file,bundle:true,
       platform:'node',format:'esm',jsx:'automatic',packages:'external',
       tsconfig:path.join(root,'apps/windows/tsconfig.json'),loader:{'.css':'empty'},
-      plugins:['test_companion_app_state','test_companion_sync_pause'].includes(name)?[{name:'test-client',setup(build){
+      plugins:name==='test_desktop_pointer_modes'?[{name:'pointer-native-stub',setup(build){
+        build.onResolve({filter:/^@tauri-apps\/api\/core$/},()=>({path:'pointer-native-stub',namespace:'pointer-test'}));
+        build.onLoad({filter:/.*/,namespace:'pointer-test'},()=>({contents:'export async function invoke(command,args){globalThis.__pointerCalls?.push({command,args});return globalThis.__pointerStatus}',loader:'js'}));
+      }}]:['test_companion_app_state','test_companion_sync_pause'].includes(name)?[{name:'test-client',setup(build){
         build.onResolve({filter:/companionClient$/},()=>({path:path.join(root,'tools/app_client_test_stub.ts')}));
       }}]:[]});
     const result=spawnSync(process.execPath,['--import',pathToFileURL(path.join(root,'tools/component_test_environment.mjs')).href,file],

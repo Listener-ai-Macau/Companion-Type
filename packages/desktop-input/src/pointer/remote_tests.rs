@@ -75,6 +75,19 @@ fn ready()->Pointer{
     let settings=Settings{relative_horizontal:RelativeHorizontal::Turn,tap_click:false,..Settings::relative_remote()};
     let mut p=Pointer::new(settings,Point{x:960.,y:540.});p.sample(sample(1,[0.;3]),0.01,bounds());p.frame(0.01,bounds());p
 }
+#[test]fn turn_remote_uses_yaw_pitch_and_leaves_side_roll_and_rest_still(){
+    let origin=Point{x:960.,y:540.};let mut p=Pointer::new(Settings{relative_horizontal:RelativeHorizontal::Turn,key_role:KeyRole::Regrip,..Settings::relative_remote()},origin);
+    p.sample(sample(1,[0.;3]),0.01,bounds());p.frame(0.01,bounds());
+    for n in 2..42{let t=n as f64/100.;p.sample(sample(n,[0.,20.,0.]),t,bounds());p.frame(t,bounds());}
+    assert_eq!(p.shown,origin,"side roll must not steer a Type-C-front turn pointer");
+    for n in 42..62{let t=n as f64/100.;p.sample(sample(n,[0.,0.,6.]),t,bounds());p.frame(t,bounds());}
+    assert!(p.shown.x<origin.x-10.);assert_eq!(p.shown.y,origin.y);
+    for n in 62..82{let t=n as f64/100.;p.sample(sample(n,[-6.,0.,0.]),t,bounds());p.frame(t,bounds());}
+    assert!(p.shown.y<origin.y-10.);
+    let mouse=Point{x:1500.,y:800.};p.external_position(mouse);
+    for n in 82..182{let t=n as f64/100.;p.sample(sample(n,[0.;3]),t,bounds());p.frame(t,bounds());}
+    assert_eq!(p.shown,mouse,"stopped turn pointer must retain ordinary mouse position");
+}
 #[test]fn small_turns_and_subpixel_motion_survive_the_complete_frame_path(){
     for rate in [0.2,1.,2.]{
         let mut p=ready();let mut outputs=0;

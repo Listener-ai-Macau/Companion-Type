@@ -396,6 +396,22 @@ fn laser_start_and_recenter_keep_the_existing_cursor_for_the_first_click() {
     assert!(p.frame(0.51,bounds()).position.unwrap().x>recentered.x);
 }
 #[test]
+fn explicit_screen_center_releases_drag_and_aligns_the_next_pose_to_the_primary_screen() {
+    let mut p=aim_pointer();
+    p.control(Control{sequence:1,sensor_ms:10,events:DOWN}).unwrap();
+    for n in 3..44 {let at=n as f64*0.01;p.sample(aim_sample(n,n*10,0.),at,bounds());p.frame(at,bounds());}
+    assert!(p.metrics.dragging);
+    p.control(Control{sequence:2,sensor_ms:430,events:CLICK}).unwrap();
+    let b=Bounds{left:-1920.,top:-200.,width:4480.,height:1640.,primary:Some([0.,0.,2560.,1440.])};
+    let centered=p.center_screen(b);
+    assert_eq!(centered.position,Some(Point{x:1280.,y:720.}));
+    assert_eq!(centered.buttons,vec![Button::Up]);assert!(!p.metrics.dragging);
+    for n in 44..65 {let at=n as f64*0.01;p.sample(aim_sample(n,n*10,15.),at,b);assert!(p.frame(at,b).position.is_none());}
+    assert_eq!(p.shown,Point{x:1280.,y:720.});
+    p.sample(aim_sample(65,650,13.),0.65,b);
+    assert!(p.frame(0.66,b).position.unwrap().x>1280.);
+}
+#[test]
 fn cim4_matches_independent_c_fixture_and_preserves_angles_rates_gravity() {
     let hex="43494d31040303ff07000000f0ffffffd204000000206d37d7f66b03b831ec81";
     let bytes=(0..hex.len()).step_by(2).map(|i|u8::from_str_radix(&hex[i..i+2],16).unwrap()).collect::<Vec<_>>();

@@ -2,14 +2,14 @@
 use companion_desktop_input::pointer::{native::Cursor,Metrics,Pointer,Settings};
 use crate::coordinator::CompanionCoordinator;
 use serde::Serialize;
-use std::sync::{Arc,Mutex,LazyLock,atomic::{AtomicBool,Ordering}};
+use std::sync::{Arc,Mutex,LazyLock,atomic::{AtomicBool,AtomicU8,Ordering}};
 use std::time::{Instant,Duration};
 
 #[derive(Clone,Default,Serialize)]
 #[serde(rename_all="camelCase")]
 pub struct Status {pub enabled:bool,pub ready:bool,pub controls_cursor:bool,pub message:String,pub metrics:Metrics,pub settings:Settings,pub device_id:Option<String>,pub contacts:companion_desktop_input::pointer::contact::Status}
 static STATUS:LazyLock<Mutex<Status>>=LazyLock::new(||Mutex::new(Status::default()));
-struct Session {stop:Arc<AtomicBool>,pointer:Arc<Mutex<Pointer>>,recenter:Arc<AtomicBool>,user_paused:Arc<AtomicBool>}
+struct Session {stop:Arc<AtomicBool>,pointer:Arc<Mutex<Pointer>>,recenter:Arc<AtomicU8>,user_paused:Arc<AtomicBool>}
 static SESSION:LazyLock<Mutex<Option<Session>>>=LazyLock::new(||Mutex::new(None));
 fn change(f:impl FnOnce(&mut Status)){f(&mut STATUS.lock().unwrap_or_else(|e|e.into_inner()));}
 pub fn status()->Status{STATUS.lock().unwrap_or_else(|e|e.into_inner()).clone()}
@@ -30,7 +30,7 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
     // explicit UI start and a completed stationary calibration.
     let cursor=Cursor::open()?;let position=cursor.position()?;drop(cursor);
     let pointer=Arc::new(Mutex::new(Pointer::new(settings.clone(),position)));
-    let stop=Arc::new(AtomicBool::new(false));let recenter=Arc::new(AtomicBool::new(false));
+    let stop=Arc::new(AtomicBool::new(false));let recenter=Arc::new(AtomicU8::new(0));
     let user_paused=Arc::new(AtomicBool::new(false));
     *session=Some(Session{stop:stop.clone(),pointer:pointer.clone(),recenter:recenter.clone(),user_paused:user_paused.clone()});
     change(|s|{*s=Status{enabled:true,ready:false,controls_cursor,message:"正在连接动作通道…".into(),metrics:Metrics::default(),settings,device_id:Some(device.clone()),contacts:Default::default()};});
@@ -47,12 +47,13 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
                 // Do them before taking the core lock so the BLE receiver can
                 // still deliver samples and button edges during that wait.
                 let external=if controls_cursor{cursor.external_position()?}else{None};
-                let center=if recenter.swap(false,Ordering::AcqRel){Some(cursor.position()?)}else{None};
+                let center_request=recenter.swap(0,Ordering::AcqRel);
+                let center=if center_request==1{Some(cursor.position()?)}else{None};
                 let bounds=cursor.bounds();
                 let (frame,metrics,contacts,period)={let mut p=frame_pointer.lock().unwrap_or_else(|e|e.into_inner());
                     if let Some(position)=external{p.external_position(position);}
                     if let Some(position)=center{p.recenter(position);}
-                    let frame=p.frame(origin.elapsed().as_secs_f64(),bounds);
+                    let frame=if center_request==2{p.center_screen(bounds)}else{p.frame(origin.elapsed().as_secs_f64(),bounds)};
                     (frame,p.metrics.clone(),p.contact_status(),if p.settings.mapping==companion_desktop_input::pointer::Mapping::Laser{4_166_667}else{8_333_333})};
                 if controls_cursor {if let Err(e)=cursor.apply(frame){frame_stop.store(true,Ordering::Release);return Err(e);}}
                 if update.elapsed()>=Duration::from_millis(200){
@@ -66,6 +67,8 @@ pub fn start(coordinator:Arc<CompanionCoordinator>,mut settings:Settings,control
                         else if controls_cursor&&s.settings.contact_regions&&contacts.calibrated{"Type-C朝前：敲左前是左键，敲右前是右键；连续敲左前两次是双击。按住实体键换握姿，Esc退出。"}
                         else if s.settings.contact_regions&&!contacts.calibrated{"动作已连接；请先校准左前和右前敲击，校准完成后才能用外壳点击。"}
                         else if controls_cursor&&s.settings.desktop_motion{"在桌面前后左右推动移动；抬起回位时暂停。轻敲左击，可校准左右前角。Esc退出。"}
+                        else if controls_cursor&&s.settings.relative_direct&&s.settings.relative_horizontal==companion_desktop_input::pointer::RelativeHorizontal::Turn&&s.settings.key_role==companion_desktop_input::pointer::KeyRole::Regrip{"左右转向、抬高或压低前端来移动光标；轻敲外壳点击，按住实体键可稳住点选或换握姿。Esc退出。"}
+                        else if controls_cursor&&s.settings.relative_direct&&s.settings.relative_horizontal==companion_desktop_input::pointer::RelativeHorizontal::Turn{"左右转向、抬高或压低前端来移动光标；轻敲或短按实体键点击，按住拖拽。Esc退出。"}
                         else if controls_cursor&&s.settings.relative_direct&&s.settings.key_role==companion_desktop_input::pointer::KeyRole::Regrip{"倾斜移动，轻敲外壳点击；按住实体键可稳住点选或换握姿，松开继续。Esc退出。"}
                         else if controls_cursor&&s.settings.relative_direct{"倾斜移动，轻敲或短按实体键点击，按住拖拽。暂停可换握姿，Esc退出。"}
                         else if controls_cursor{"左右转动移动光标；敲击机身或短按点击，按住拖拽。Esc退出。"}
@@ -123,7 +126,8 @@ pub fn control(action:&str)->Result<Status,String>{
         "pause"=>{s.user_paused.store(true,Ordering::Release);s.pointer.lock().unwrap_or_else(|e|e.into_inner()).pause(true);},
         "resume"=>{s.user_paused.store(false,Ordering::Release);s.pointer.lock().unwrap_or_else(|e|e.into_inner()).pause(false);},
         "calibrate"=>s.pointer.lock().unwrap_or_else(|e|e.into_inner()).calibrate(),
-        "recenter"=>{s.recenter.store(true,Ordering::Release);},
+        "recenter"=>{s.recenter.store(1,Ordering::Release);},
+        "center-screen"=>{s.recenter.store(2,Ordering::Release);},
         "contact-left"=>{s.pointer.lock().unwrap_or_else(|e|e.into_inner()).learn_contact(companion_desktop_input::pointer::contact::Side::Left).map_err(str::to_string)?;},
         "contact-right"=>{s.pointer.lock().unwrap_or_else(|e|e.into_inner()).learn_contact(companion_desktop_input::pointer::contact::Side::Right).map_err(str::to_string)?;},
         "contact-save"=>{
