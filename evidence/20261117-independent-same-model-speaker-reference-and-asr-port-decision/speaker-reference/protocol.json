@@ -1,0 +1,103 @@
+{
+  "at": "2026-11-17T15:51:02.042312+08:00",
+  "repo": "nvidia/Nemotron-3-Diarization",
+  "revision": "f667ed73aee57d40cc39428eb768b4fd87a0a29e",
+  "modelRoot": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\hf-reference-f667ed7",
+  "files": {
+    "config.json": {
+      "bytes": 1458,
+      "sha256": "dd795ec07ffa09acf18d231aa3fa8642aa5c521760953754e02559a7413b6873"
+    },
+    "processor_config.json": {
+      "bytes": 623,
+      "sha256": "91726746788a024a2f0f2f699a6c3667f0d74e6a0e9288fc44fe3018e23af68e"
+    },
+    "model.safetensors": {
+      "bytes": 396954592,
+      "sha256": "c074d86335b3b794f8fa5edc25594558f128bdb3914d27806a3a5a2e44963cb6"
+    },
+    "README.md": {
+      "bytes": 43239,
+      "sha256": "5fe88ca4020d2ee134f806a0a02c52c19855b73047bc2e6f25b9171e1abeebfd"
+    }
+  },
+  "cases": [
+    {
+      "id": "Chinese-control61",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\Chinese-control61.wav",
+      "audioSha256": "c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd",
+      "pcmSha256": "2dd554b83382acd39d397e97412d5b2601307776ee565e28e6d03241fd377abe",
+      "frames": 976000,
+      "sourceAudioSha256": "c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd",
+      "sourceOffsetSamples": 0,
+      "nativeProbabilities": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\probabilities\\cpu-native8-control61\\probabilities.npy",
+      "nativeManifest": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\probabilities\\cpu-native8-control61\\probabilities.json",
+      "nativeManifestSha256": "00ffd7f57ce1c6e013bb62ef1e504ea8d34845390284df1d815e86ed8237c96a",
+      "comparePrefixFrames": 5440
+    },
+    {
+      "id": "ES2003b-control61",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\ES2003b-control61.wav",
+      "audioSha256": "6a8600671b772c6626bf0d0570d67a88fbcfeca2f65a936e1546b5efb6e8976c",
+      "pcmSha256": "75ad4a4020a10320abdc0a23acc4eefd40a8d7b2612b94e2743305b5ac5a3ea4",
+      "frames": 976000,
+      "sourceAudioSha256": "18c1f04fe4b5fee20a9c8dd3563bec29d9843cd16365e23307559ba966a223a7",
+      "sourceOffsetSamples": 0,
+      "nativeProbabilities": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\probabilities\\ES2003b\\probabilities.npy",
+      "nativeManifest": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\probabilities\\ES2003b\\probabilities.json",
+      "nativeManifestSha256": "db2fc2dbbdcba4559d14444d9038965b372c31dff7f97fcf76cbca9f2053d0c0",
+      "comparePrefixFrames": 5440
+    }
+  ],
+  "runtimePython": "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+  "dependencies": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\nemotron_reference_control_20261117.py": "0e481c2f87101480f23e4f171eed47a1b4fb292937261ba8ee49489756cddb81",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_community1_adapter_20261115.py": "a6905264e2787ac059c7500e0e87ef8b5bf7e8a57502fbad42e53eea6b4e189d",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\durable_model_state_20261117.py": "5fea82f461da06e76afd3321c860c48a570147a4d9cce6c7cca37a595bb54e3b",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\nemotron3_diarization\\configuration_nemotron3_diarization.py": "f5ed28232c4074f841676b29a47bc57faa3595c3095dd70cc56f75cd0c62ee6f",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\nemotron3_diarization\\modeling_nemotron3_diarization.py": "2d993ffad364c8ee07bfb669e0b2502d5a37b2e74e67f99c1723f836de767638",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\nemotron3_diarization\\modular_nemotron3_diarization.py": "8dfb61c38fba7ddd66a828656d1fca67f20d8a46099c626419f0d53cf76e6e34",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\nemotron3_diarization\\processing_nemotron3_diarization.py": "37d700fd8a041c80cc8a792fbbdc67764e291cfe111928c10e5d266ab5ebad7c",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\nemotron3_diarization\\__init__.py": "eebad70d695beafecd92981e3531f3099a0ad6482263199efabb4dae0dd447b4",
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\nemotron_asr_streaming\\feature_extraction_nemotron_asr_streaming.py": "7775d55708bf812a38d59b9b3d90c95b0a9e2ad2e2174b35da46cb4a6189bf25"
+  },
+  "cpuBlas": {
+    "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0"
+  },
+  "cpuBudgetOwnerQuote": "允许约 25% CPU，继续后台实测",
+  "cpuPercentMaximum": 25,
+  "torchThreads": 4,
+  "blasThreads": 1,
+  "privateCommitBytes": 2147483648,
+  "minimumAvailableBytes": 3414499000,
+  "ramStableSeconds": 60,
+  "stopAt": "2026-11-17T16:11:02.044313+08:00",
+  "modelDtype": "float32",
+  "attentionImplementation": "eager",
+  "device": "cpu",
+  "training": false,
+  "referenceLabelsRead": false,
+  "scope": "Same retained speaker model, independently published Transformers implementation. Not another model, no optimization/weight updates or threshold grid.",
+  "geometry": {
+    "chunk_length": 340,
+    "chunk_right_context": 40,
+    "chunk_left_context": 0,
+    "fifo_length": 40,
+    "speaker_cache_update_period": 300,
+    "speaker_cache_length": 264
+  },
+  "comparison": "First5440 frames only: two complete27.2s chunks with sufficient original future context in both full native and61s reference. Ending/tail frames are excluded rather than aligned by labels.",
+  "diagnosticBranchRule": {
+    "activityThreshold": 0.5,
+    "materialActivityDisagreementFraction": 0.01,
+    "materialMeanAbsolutePosteriorDifference": 0.01,
+    "action": "A material discrepancy triggers frontend/weights/implementation diagnosis before any diarizer training. A near match retains the original model-quality diagnosis. This is no accuracy acceptance gate."
+  },
+  "cpuTemperatureMode": "owner-authorized-observe-only",
+  "hardwareOsThermalControlsChanged": false,
+  "nativeBaselineChanged": false,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false
+}

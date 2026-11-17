@@ -1,0 +1,118 @@
+{
+  "revision": 70,
+  "evidenceDirectory": "evidence/20261117-independent-same-model-speaker-reference-and-asr-port-decision",
+  "sources": [
+    "src/nemotron_reference_control_20261117.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "work\\record_native_vulkan_audit_20261117.py",
+      "name": "tools/record_native_vulkan_audit_20261117.py"
+    },
+    {
+      "source": "work\\native_vulkan_primary_refs_20261117.json",
+      "name": "tools/native_vulkan_primary_refs_20261117.json"
+    },
+    {
+      "source": "work\\inspect_pinned_native_asr_sources_20261117.py",
+      "name": "tools/inspect_pinned_native_asr_sources_20261117.py"
+    },
+    {
+      "source": "work\\prepare_nemotron_reference_control_20261117.py",
+      "name": "tools/prepare_nemotron_reference_control_20261117.py"
+    },
+    {
+      "source": "work\\verify_nemotron_reference_weights_20261117.py",
+      "name": "tools/verify_nemotron_reference_weights_20261117.py"
+    },
+    {
+      "source": "work\\record_nemotron_reference_result_20261117.py",
+      "name": "tools/record_nemotron_reference_result_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\native8-independent-reference-control-20261117.json",
+      "name": "independent-speaker-reference-result.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\native-vulkan-source-audit-20261117.json",
+      "name": "english-native-asr-source-audit.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\native-vulkan-port-r1\\nemo-v030-tree.json",
+      "name": "english-source-metadata/nemo-v030-tree.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\native-vulkan-port-r1\\parakeet-pinned-tree.json",
+      "name": "english-source-metadata/parakeet-pinned-tree.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\download-progress.json",
+      "name": "speaker-reference/download-progress.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\official-weight-value-comparison-r2.json",
+      "name": "speaker-reference/official-weight-value-comparison-r2.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\official-weight-value-comparison.json",
+      "name": "speaker-reference/official-weight-value-comparison.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\pinned-tree.json",
+      "name": "speaker-reference/pinned-tree.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\protocol.json",
+      "name": "speaker-reference/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\weight-verifier-r1.py",
+      "name": "speaker-reference/weight-verifier-r1.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\reference\\completed.json",
+      "name": "speaker-reference/reference/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\reference\\state.json",
+      "name": "speaker-reference/reference/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\reference\\Chinese-control61\\probabilities.npy",
+      "name": "speaker-reference/reference/Chinese-control61/probabilities.npy"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\reference\\Chinese-control61\\result.json",
+      "name": "speaker-reference/reference/Chinese-control61/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\reference\\ES2003b-control61\\probabilities.npy",
+      "name": "speaker-reference/reference/ES2003b-control61/probabilities.npy"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\reference\\ES2003b-control61\\result.json",
+      "name": "speaker-reference/reference/ES2003b-control61/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\hf-reference-f667ed7\\config.json",
+      "name": "published-model-metadata/config.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\hf-reference-f667ed7\\processor_config.json",
+      "name": "published-model-metadata/processor_config.json"
+    }
+  ],
+  "commitMessage": "Verify same-model diarizer reference and close costly nativeASR port branch before quality admission",
+  "claims": {
+    "state": "INDEPENDENT_SAME_MODEL_DIARIZER_REFERENCE_CONTROL_CLOSE_NO_NEW_QUALITY_GAIN",
+    "actualReferenceEncoderLayerCalls": 186,
+    "parameterUpdates": 0,
+    "samePublishedCheckpointSourceValueCheck": true,
+    "qualityImproved": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "noCpuOrIntegratedGpuTraining": true,
+    "rawAudioModelWeightsOrCredentialsIncluded": false
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "at": "2026-11-17T16:01:25.660003+08:00",
+  "parent": "1749f22d271d34eed7c7c438959b13d6a508fe2a",
+  "entries": [
+    {
+      "source": "work\\record_native_vulkan_audit_20261117.py",
+      "file": "tools/record_native_vulkan_audit_20261117.py",
+      "bytes": 8882,
+      "sha256": "c0aa56c07eed1c96e1844eb36bf693ec4d2744cc5d0ddab04ed8470c8b7a3de0"
+    },
+    {
+      "source": "work\\native_vulkan_primary_refs_20261117.json",
+      "file": "tools/native_vulkan_primary_refs_20261117.json",
+      "bytes": 864,
+      "sha256": "d735f27a046332abb00dc79357758755cdbecce93a88db60a571fae941c130f2"
+    },
+    {
+      "source": "work\\inspect_pinned_native_asr_sources_20261117.py",
+      "file": "tools/inspect_pinned_native_asr_sources_20261117.py",
+      "bytes": 1599,
+      "sha256": "93c149b6a7bb9b8ff29af600a33c2d54f13346bcc443bdcb22ab3697b6675ca9"
+    },
+    {
+      "source": "work\\prepare_nemotron_reference_control_20261117.py",
+      "file": "tools/prepare_nemotron_reference_control_20261117.py",
+      "bytes": 6064,
+      "sha256": "8ff35df991797e7de27df296cb7f2a1e4370a281044e263755eee061ba45c0f0"
+    },
+    {
+      "source": "work\\verify_nemotron_reference_weights_20261117.py",
+      "file": "tools/verify_nemotron_reference_weights_20261117.py",
+      "bytes": 5246,
+      "sha256": "7a89041b9e6a27ddeda5d328d22326a3dfdbd051733e1fd987a49beee973afd1"
+    },
+    {
+      "source": "work\\record_nemotron_reference_result_20261117.py",
+      "file": "tools/record_nemotron_reference_result_20261117.py",
+      "bytes": 10374,
+      "sha256": "ab06433404d2206929c22dd99547421b88ea9c1c709efd748bc4c82653f8bb14"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\native8-independent-reference-control-20261117.json",
+      "file": "independent-speaker-reference-result.json",
+      "bytes": 8271,
+      "sha256": "7a6ed9bd998b4f6c4e1c05071b89ac39481ae7db8480bf3dc23fd1db2c30f6a1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\native-vulkan-source-audit-20261117.json",
+      "file": "english-native-asr-source-audit.json",
+      "bytes": 5520,
+      "sha256": "725e4ad0feff2f69a24c2887791cc091b63aa0357df2a950059456e874b23e40"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\native-vulkan-port-r1\\nemo-v030-tree.json",
+      "file": "english-source-metadata/nemo-v030-tree.json",
+      "bytes": 156652,
+      "sha256": "690475600386e0d99ced6e59d28b91ec8b4fe2b6a67576373c180ccce1a4b903"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\native-vulkan-port-r1\\parakeet-pinned-tree.json",
+      "file": "english-source-metadata/parakeet-pinned-tree.json",
+      "bytes": 1850,
+      "sha256": "498afae953b63b8442dd382a7b8ed26f5e38c9761728c25055803869670da50a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\download-progress.json",
+      "file": "speaker-reference/download-progress.json",
+      "bytes": 1091,
+      "sha256": "e80e227e51e3a5b44da4ccf336c09fc4d9bae8d1594f01bc09a34d9bf181e7db"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\official-weight-value-comparison-r2.json",
+      "file": "speaker-reference/official-weight-value-comparison-r2.json",
+      "bytes": 83587,
+      "sha256": "f1bf6306b6fb0c4ba65c73dfa512944660897896b5a8a5c07e06c29964a5bb4c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\official-weight-value-comparison.json",
+      "file": "speaker-reference/official-weight-value-comparison.json",
+      "bytes": 78922,
+      "sha256": "12519c57641078fe568833c323bfd8e1e1992f2088109763f9f7918e1e0bd909"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\pinned-tree.json",
+      "file": "speaker-reference/pinned-tree.json",
+      "bytes": 2878,
+      "sha256": "ecf6e4451e26d6a90cab09c745fef2902719674265dcf4eaa88f5696cc40ba7f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\protocol.json",
+      "file": "speaker-reference/protocol.json",
+      "bytes": 7163,
+      "sha256": "b893c848980fc1992c4803ac4e9846dff5ede5e83839509ba8d9ac7d1427664f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\weight-verifier-r1.py",
+      "file": "speaker-reference/weight-verifier-r1.py",
+      "bytes": 4273,
+      "sha256": "28a59cf7cbb8dc3941d4bada63321dcbb4770e1bb02bdc704ecdfaa4fcb01013"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\reference\\completed.json",
+      "file": "speaker-reference/reference/completed.json",
+      "bytes": 5391,
+      "sha256": "7a0982b8a2a14111a16f6c44105e9cca9090cd0dd5f9ad29b7bc334dc4f8bf48"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\reference\\state.json",
+      "file": "speaker-reference/reference/state.json",
+      "bytes": 5391,
+      "sha256": "7a0982b8a2a14111a16f6c44105e9cca9090cd0dd5f9ad29b7bc334dc4f8bf48"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\reference\\Chinese-control61\\probabilities.npy",
+      "file": "speaker-reference/reference/Chinese-control61/probabilities.npy",
+      "bytes": 195360,
+      "sha256": "c6ddd12f11de38ef2a1781dfc9a0469286dd906680d9ee14d451f4b0b4805fc1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\reference\\Chinese-control61\\result.json",
+      "file": "speaker-reference/reference/Chinese-control61/result.json",
+      "bytes": 1386,
+      "sha256": "577e9819edd8e4ad7a9a2529b7ff6354917fd2bad0646dc80507972875055286"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\reference\\ES2003b-control61\\probabilities.npy",
+      "file": "speaker-reference/reference/ES2003b-control61/probabilities.npy",
+      "bytes": 195360,
+      "sha256": "6c0206570a52859b02722c63dda1d61a2bb57ebb8eddb483239fce78130b95ac"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\reference\\ES2003b-control61\\result.json",
+      "file": "speaker-reference/reference/ES2003b-control61/result.json",
+      "bytes": 1403,
+      "sha256": "8262a23935992cf95cb84f702916ff662385ad8871832091fc5ad89811d2bf94"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\hf-reference-f667ed7\\config.json",
+      "file": "published-model-metadata/config.json",
+      "bytes": 1458,
+      "sha256": "dd795ec07ffa09acf18d231aa3fa8642aa5c521760953754e02559a7413b6873"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\hf-reference-f667ed7\\processor_config.json",
+      "file": "published-model-metadata/processor_config.json",
+      "bytes": 623,
+      "sha256": "91726746788a024a2f0f2f699a6c3667f0d74e6a0e9288fc44fe3018e23af68e"
+    },
+    {
+      "source": "work\\checkpoint_reference_fidelity_r70.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 6106,
+      "sha256": "0c03ac4bd89fe42320de74cf7c0077ded92c67c4cf46dc25fc68f8b81a89c3f1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/nemotron_reference_control_20261117.py": "0e481c2f87101480f23e4f171eed47a1b4fb292937261ba8ee49489756cddb81"
+  },
+  "state": "INDEPENDENT_SAME_MODEL_DIARIZER_REFERENCE_CONTROL_CLOSE_NO_NEW_QUALITY_GAIN",
+  "actualReferenceEncoderLayerCalls": 186,
+  "parameterUpdates": 0,
+  "samePublishedCheckpointSourceValueCheck": true,
+  "qualityImproved": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "noCpuOrIntegratedGpuTraining": true,
+  "rawAudioModelWeightsOrCredentialsIncluded": false
+}

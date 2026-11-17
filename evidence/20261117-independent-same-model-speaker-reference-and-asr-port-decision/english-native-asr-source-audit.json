@@ -1,0 +1,91 @@
+{
+  "at": "2026-11-17T15:42:27+08:00",
+  "state": "PINNED_NATIVE_ENGLISH_FP32_PORT_REQUIRES_ENGINE_CHANGES_DEFERRED_BEFORE_QUALITY_ADMISSION",
+  "model": {
+    "repository": "nvidia/parakeet-tdt-0.6b-v3",
+    "revision": "541d1f99c6b0c3cd0b11a95167540bb8edefd82b",
+    "localWeightBytes": 2508311120,
+    "headerTensorDtypes": {
+      "I64": 24,
+      "F32": 699
+    },
+    "localHeaderSha256": "e9d2137c1a000a4a3a42c4c255a576d3525be124768a8d190cc791c983df1c4b",
+    "selectedFrozenProfile": "Original published FP32; no dtype conversion admitted by the original asset contract.",
+    "existingFixedTwelveEnglishErrors": 123,
+    "existingFixedTwelveEnglishReferenceWords": 709,
+    "existingDirectQualityAdmissionPassed": false,
+    "roleRetained": "One supervised adaptation base; not promoted to a qualified product model."
+  },
+  "nativeRuntime": {
+    "repository": "NVIDIA/NeMo-Speech.cpp",
+    "ref": "v0.3.0",
+    "treeSha": "20999cc921d2b14aa58708f61756a8b2e787ba20",
+    "llamaSubmoduleRevision": "bd4f514db14d87fded667787a7a963bfbaa98e89",
+    "cachedConverterSha256": "cb4c8150e5e98868fb9a42f002dbaab277797afab29cf618a1bf642378e6f1da",
+    "primaryReferences": [
+      {
+        "key": "nemo_v030_src/runtime/ggml/nn.cpp",
+        "url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/v0.3.0/src/runtime/ggml/nn.cpp",
+        "gitBlobSha": "c407b1412df1e84025ec05a9225bfdd114c28863"
+      },
+      {
+        "key": "nemo_v030_src/runtime/ggml/session.cpp",
+        "url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/v0.3.0/src/runtime/ggml/session.cpp",
+        "gitBlobSha": "deac3003efd5720d818f9eb51c30ef79b538d414"
+      },
+      {
+        "key": "nemo_ggml_core",
+        "url": "https://github.com/ggml-org/llama.cpp/blob/bd4f514db14d87fded667787a7a963bfbaa98e89/ggml/src/ggml.c",
+        "gitBlobSha": "a286083b9320acbe9654b34c1cec68930a8d39ee"
+      },
+      {
+        "key": "nemo_v030_src/runtime/ggml/loader.cpp",
+        "url": "https://github.com/NVIDIA/NeMo-Speech.cpp/blob/v0.3.0/src/runtime/ggml/loader.cpp",
+        "gitBlobSha": "c77236acdd421475ac862ed0e3da029b2925314a"
+      }
+    ],
+    "findings": [
+      "Cached official converter forces convolution and embedding tensors to F16 even when general weight_type is f32.",
+      "Native Conv1D declarations use F16 for depthwise and non-pointwise kernels; Session::load_weight converts F32 disk tensors to F16 memory tensors for these declarations.",
+      "The pinned GGML depthwise1D/2D convolution graphs request F16 im2col for F32 kernels; a custom all-F32 export alone would not preserve the original execution profile.",
+      "A native FP32 port would require converter mapping, runtime tensor declarations and convolution graph/backend verification, plus tokenizer/frontend equivalence. Stock runtime support for model family is not evidence of this exact profile."
+    ],
+    "decision": "Defer a substantial native-engine FP32 port until the selected English model has accuracy-bearing adaptation evidence. Do not silently substitute Q8/FP16, launch a precision grid or treat file export as accuracy improvement.",
+    "buildStarted": false,
+    "convertedWeightsWritten": false,
+    "asrNeuralCalls": 0,
+    "cpuOrIntegratedGpuTraining": false
+  },
+  "rebootReview": {
+    "existingIncident": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\incident.json",
+    "existingIncidentSha256": "663183539e1f2ce5d084a96ada3cca6fb48616fa8362816ef1c44f10e336f6e0",
+    "lastIncidentWasInferenceNotTraining": true,
+    "observedReservedPeakGiB": 3.755859375,
+    "lastObservedDriverFreeGiB": 11.98052978515625,
+    "lastObservedSystemAvailableGiB": 9.951416015625,
+    "samplesAreNotCrashInstant": true,
+    "rootCauseIdentified": false,
+    "priority": "Compute runtime/driver/USB4 externalGPU path. Games or graphics benchmarks passing do not qualify the separate compute workload.",
+    "cpuThermalCauseExcluded": false,
+    "cpuTemperatureTaskPolicy": "observe-only; no 85/95 software admission or abort threshold",
+    "systemThermalDriverTdrPowerBiosSettingsChanged": false,
+    "repeatUnchangedFailingOvernightBatch": false,
+    "nextExternalGpuComparison": "Use one frozen short input and model, durable stage/operator/device/memory journal, and one changed execution condition. The already prepared graphics-driver comparison is separate and not yet installation-authorized."
+  },
+  "metadataEvidence": {
+    "nemo-v030-tree.json": {
+      "bytes": 156652,
+      "sha256": "690475600386e0d99ced6e59d28b91ec8b4fe2b6a67576373c180ccce1a4b903"
+    },
+    "parakeet-pinned-tree.json": {
+      "bytes": 1850,
+      "sha256": "498afae953b63b8442dd382a7b8ed26f5e38c9761728c25055803869670da50a"
+    }
+  },
+  "qualityQualified": false,
+  "saleQualified": false,
+  "newWeightTraining": false,
+  "finalHoldoutOpened": false,
+  "productDefaultChanged": false,
+  "next": "Return to the accuracy-bearing non-overlap bilingual path: one frozen English specialist adaptation and independent paired/whole-source validation; reject it if the predeclared improvement and no-regression gates fail. DedicatedGPU training is separate from daytime780M inference. Keep proven780M speaker inference available for justified component work, but do not substitute app integration, native-engine porting, genericVAD or parameter grids for word/speaker accuracy. CPU temperature remains observation-only."
+}

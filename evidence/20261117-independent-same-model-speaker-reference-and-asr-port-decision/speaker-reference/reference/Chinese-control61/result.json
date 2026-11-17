@@ -1,0 +1,38 @@
+{
+  "id": "Chinese-control61",
+  "sourceFrames": 976000,
+  "outputFrames": 6101,
+  "comparedFrames": 5440,
+  "inferenceSeconds": 160.4679582999961,
+  "encoderLayerCalls": 93,
+  "comparison": {
+    "values": 43520,
+    "maxAbsolutePosteriorDifference": 0.01700538396835327,
+    "meanAbsolutePosteriorDifference": 0.0001006672900984995,
+    "activityDisagreements": 13,
+    "activityDisagreementFraction": 0.00029871323529411767
+  },
+  "completeChunkComparisons": [
+    {
+      "values": 21760,
+      "maxAbsolutePosteriorDifference": 0.01700538396835327,
+      "meanAbsolutePosteriorDifference": 0.0001740140578476712,
+      "activityDisagreements": 13,
+      "activityDisagreementFraction": 0.0005974264705882353
+    },
+    {
+      "values": 21760,
+      "maxAbsolutePosteriorDifference": 0.011478424072265625,
+      "meanAbsolutePosteriorDifference": 2.732054235821124e-05,
+      "activityDisagreements": 0,
+      "activityDisagreementFraction": 0.0
+    }
+  ],
+  "materialImplementationDiscrepancy": false,
+  "comparisonPerformedWithoutSpeakerPermutation": true,
+  "frontendWeightPrecisionImplementationNotYetIsolated": false,
+  "referenceFeaturesSha256": "8625ab77c02a0665e230102005491d7bcbed03b87c41bef0bc42717b0746a8a8",
+  "referenceProbabilitiesSha256": "c6ddd12f11de38ef2a1781dfc9a0469286dd906680d9ee14d451f4b0b4805fc1",
+  "qualityScoreMeasured": false,
+  "parameterUpdates": 0
+}

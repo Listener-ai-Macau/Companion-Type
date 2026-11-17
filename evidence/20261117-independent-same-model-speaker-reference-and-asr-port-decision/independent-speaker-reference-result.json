@@ -1,0 +1,150 @@
+{
+  "at": "2026-11-17T16:00:54+08:00",
+  "state": "INDEPENDENT_SAME_MODEL_DIARIZER_REFERENCE_CONTROL_CLOSE_NO_NEW_QUALITY_GAIN",
+  "reference": {
+    "repo": "nvidia/Nemotron-3-Diarization",
+    "revision": "f667ed73aee57d40cc39428eb768b4fd87a0a29e",
+    "weightsSha256": "c074d86335b3b794f8fa5edc25594558f128bdb3914d27806a3a5a2e44963cb6",
+    "implementation": "Nemotron3DiarizationForAudioFrameClassification",
+    "dtype": "float32",
+    "device": "cpu",
+    "parameters": 99226504,
+    "originalNemoTensorValueCheck": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\official-weight-value-comparison-r2.json",
+    "activeHfTensors": 417,
+    "exactSourceValueMatchFraction": 1.0,
+    "tensorCheckScope": "Exact per-tensor shape/value multiset, each original tensor/split used once; official contiguousQKV row split. Renaming and dropped training-only heads follow the cited public conversion source. Not a byte-identical serialization claim."
+  },
+  "native": {
+    "implementation": "Pinned NeMo-Speech.cpp v0.3.0, existing780M Vulkan FP16 outputs",
+    "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\protocol.json",
+    "originalOutputUnchanged": true
+  },
+  "cases": [
+    {
+      "id": "Chinese-control61",
+      "sourceFrames": 976000,
+      "outputFrames": 6101,
+      "comparedFrames": 5440,
+      "inferenceSeconds": 160.4679582999961,
+      "encoderLayerCalls": 93,
+      "comparison": {
+        "values": 43520,
+        "maxAbsolutePosteriorDifference": 0.01700538396835327,
+        "meanAbsolutePosteriorDifference": 0.0001006672900984995,
+        "activityDisagreements": 13,
+        "activityDisagreementFraction": 0.00029871323529411767
+      },
+      "completeChunkComparisons": [
+        {
+          "values": 21760,
+          "maxAbsolutePosteriorDifference": 0.01700538396835327,
+          "meanAbsolutePosteriorDifference": 0.0001740140578476712,
+          "activityDisagreements": 13,
+          "activityDisagreementFraction": 0.0005974264705882353
+        },
+        {
+          "values": 21760,
+          "maxAbsolutePosteriorDifference": 0.011478424072265625,
+          "meanAbsolutePosteriorDifference": 2.732054235821124e-05,
+          "activityDisagreements": 0,
+          "activityDisagreementFraction": 0.0
+        }
+      ],
+      "materialImplementationDiscrepancy": false,
+      "comparisonPerformedWithoutSpeakerPermutation": true,
+      "frontendWeightPrecisionImplementationNotYetIsolated": false,
+      "referenceFeaturesSha256": "8625ab77c02a0665e230102005491d7bcbed03b87c41bef0bc42717b0746a8a8",
+      "referenceProbabilitiesSha256": "c6ddd12f11de38ef2a1781dfc9a0469286dd906680d9ee14d451f4b0b4805fc1",
+      "qualityScoreMeasured": false,
+      "parameterUpdates": 0
+    },
+    {
+      "id": "ES2003b-control61",
+      "sourceFrames": 976000,
+      "outputFrames": 6101,
+      "comparedFrames": 5440,
+      "inferenceSeconds": 144.9803993999958,
+      "encoderLayerCalls": 93,
+      "comparison": {
+        "values": 43520,
+        "maxAbsolutePosteriorDifference": 0.06662645936012268,
+        "meanAbsolutePosteriorDifference": 0.0002772650623228401,
+        "activityDisagreements": 8,
+        "activityDisagreementFraction": 0.0001838235294117647
+      },
+      "completeChunkComparisons": [
+        {
+          "values": 21760,
+          "maxAbsolutePosteriorDifference": 0.06230098009109497,
+          "meanAbsolutePosteriorDifference": 0.00024699734058231115,
+          "activityDisagreements": 2,
+          "activityDisagreementFraction": 9.191176470588235e-05
+        },
+        {
+          "values": 21760,
+          "maxAbsolutePosteriorDifference": 0.06662645936012268,
+          "meanAbsolutePosteriorDifference": 0.00030753278406336904,
+          "activityDisagreements": 6,
+          "activityDisagreementFraction": 0.00027573529411764705
+        }
+      ],
+      "materialImplementationDiscrepancy": false,
+      "comparisonPerformedWithoutSpeakerPermutation": true,
+      "frontendWeightPrecisionImplementationNotYetIsolated": false,
+      "referenceFeaturesSha256": "454ae1d3f1a1b41588287b056c50ce32e767f2a2537543b972f2be6e7043ab35",
+      "referenceProbabilitiesSha256": "6c0206570a52859b02722c63dda1d61a2bb57ebb8eddb483239fce78130b95ac",
+      "qualityScoreMeasured": false,
+      "parameterUpdates": 0
+    }
+  ],
+  "resources": {
+    "encoderLayerCalls": 186,
+    "parameterUpdates": 0,
+    "gpuInitialized": false,
+    "privatePeakBytes": 1161756672,
+    "cpuPercentMaximum": 25,
+    "torchThreads": 4,
+    "blasThreads": 1,
+    "wholeWorkerSeconds": 379.23482279999735,
+    "cpuTemperatureMode": "owner-authorized-observe-only",
+    "originalWorkerPid": 9008,
+    "originalWorkerCreatedAt": 1794901876.9495533,
+    "ownedWorkerTerminal": true
+  },
+  "decision": "No material activity/mean-posterior discrepancy by the fixed diagnostic rule on these two original61s controls. Retain the current780M speaker component; stop this implementation-diagnosis branch rather than rewrite the engine or train the diarizer to compensate for an unproved adapter fault.",
+  "limitations": [
+    "Only54.4s of each61s input was compared, preserving two full27.2s chunks with identical available future context; tail frames excluded prospectively.",
+    "ReferenceF32 and nativeFP16 are not bitwise equal. English maximum individual posterior difference0.06662646 is retained, despite the small mean and activity disagreement.",
+    "The prior CPU/780M same-precision maximum-difference tolerance is not silently reused for this different-precision independent-implementation diagnostic.",
+    "No new word-error, person-text, facts, full-meeting/final quality or independent-room acceptance was measured.",
+    "This control does not establish long-duration numerical equivalence, nativeTorch/HIP external6800XT stability, or CPU/iGPU training permission."
+  ],
+  "existingReferenceProtocolAuditNotNewWork": [
+    {
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-r1\\comparison.json",
+      "sha256": "e343cbdcbf50023dfc5b58de4f433a6fec4fc15ca0e740b4f3acbb8df7b180e7",
+      "meeting": "ES2003b",
+      "originalDer": 0.26018102941320864,
+      "alternateReferenceDiagnosticDer": 0.06687032223716617,
+      "historicalConclusion": "ANNOTATION_PROTOCOL_EXPLAINS_MUCH_OF_ENGLISH_ACTIVITY_SCORE_DIFFERENCE",
+      "qualificationChanged": false
+    },
+    {
+      "receipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\reference-annotation-audit-en2002a-r1\\comparison.json",
+      "sha256": "3cb024cb305e40abd676424dd4f32f3111db189d21913d7ca6759869ab1bd477",
+      "meeting": "EN2002a",
+      "originalDer": 0.310766316505023,
+      "alternateReferenceDiagnosticDer": 0.1597189127114486,
+      "historicalConclusion": "ANNOTATION_PROTOCOL_EXPLAINS_MUCH_OF_ENGLISH_ACTIVITY_SCORE_DIFFERENCE",
+      "qualificationChanged": false
+    }
+  ],
+  "referenceProtocolDecision": "Existing Nov15 audit already explains much of the raw English missed-activity difference. Do not call reference-only time proven acoustic silence, train to annotation disagreement, or reopen that audit as new progress. Original references and acceptance gates remain unchanged.",
+  "next": "The decisive quality step remains the single frozen1828-example457-update English specialist adaptation and unchanged independent paired/whole-source validation, after actual dedicatedGPU execution admission. No CPU/iGPU training.780M inference is available for evidence-justified component use; no full-task dependency on discreteGPU and no further unchanged control rerun.",
+  "rawWord95Floor98TargetChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "productDefaultChanged": false,
+  "finalHoldoutOpened": false,
+  "systemDriverTdrPowerOrThermalControlsChanged": false
+}

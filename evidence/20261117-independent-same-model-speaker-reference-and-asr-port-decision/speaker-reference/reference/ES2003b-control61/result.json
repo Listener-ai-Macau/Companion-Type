@@ -1,0 +1,38 @@
+{
+  "id": "ES2003b-control61",
+  "sourceFrames": 976000,
+  "outputFrames": 6101,
+  "comparedFrames": 5440,
+  "inferenceSeconds": 144.9803993999958,
+  "encoderLayerCalls": 93,
+  "comparison": {
+    "values": 43520,
+    "maxAbsolutePosteriorDifference": 0.06662645936012268,
+    "meanAbsolutePosteriorDifference": 0.0002772650623228401,
+    "activityDisagreements": 8,
+    "activityDisagreementFraction": 0.0001838235294117647
+  },
+  "completeChunkComparisons": [
+    {
+      "values": 21760,
+      "maxAbsolutePosteriorDifference": 0.06230098009109497,
+      "meanAbsolutePosteriorDifference": 0.00024699734058231115,
+      "activityDisagreements": 2,
+      "activityDisagreementFraction": 9.191176470588235e-05
+    },
+    {
+      "values": 21760,
+      "maxAbsolutePosteriorDifference": 0.06662645936012268,
+      "meanAbsolutePosteriorDifference": 0.00030753278406336904,
+      "activityDisagreements": 6,
+      "activityDisagreementFraction": 0.00027573529411764705
+    }
+  ],
+  "materialImplementationDiscrepancy": false,
+  "comparisonPerformedWithoutSpeakerPermutation": true,
+  "frontendWeightPrecisionImplementationNotYetIsolated": false,
+  "referenceFeaturesSha256": "454ae1d3f1a1b41588287b056c50ce32e767f2a2537543b972f2be6e7043ab35",
+  "referenceProbabilitiesSha256": "6c0206570a52859b02722c63dda1d61a2bb57ebb8eddb483239fce78130b95ac",
+  "qualityScoreMeasured": false,
+  "parameterUpdates": 0
+}

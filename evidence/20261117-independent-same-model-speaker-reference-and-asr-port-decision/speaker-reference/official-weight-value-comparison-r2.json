@@ -1,0 +1,3590 @@
+{
+  "at": "2026-11-17T15:58:55.814441+08:00",
+  "state": "OFFICIAL_SERIALIZATION_TENSOR_VALUES_COMPARED_NO_NEURAL_CALLS",
+  "originalArchive": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\Nemotron-3-Diarization.nemo",
+  "hfRoot": "E:\\CodexData\\Companion\\.model-cache\\nemotron-speaker-20261107\\hf-reference-f667ed7",
+  "hfFileSha256": "c074d86335b3b794f8fa5edc25594558f128bdb3914d27806a3a5a2e44963cb6",
+  "hfDtypes": {
+    "torch.float32": 417
+  },
+  "hfTensors": 417,
+  "hfElements": 99226504,
+  "matchedExactFloat32TensorValues": 417,
+  "matchedElements": 99226504,
+  "matchedElementFraction": 1.0,
+  "allHfTensorValuesMatchNemo": true,
+  "comparison": "Per-tensor exact shape andSHA256 of original values widened toFP32. The31 original fusedQKV tensors are split along rows into the official contiguous[query|key|value] layout. Each source tensor/split is used at most once. No numeric tolerance, transposition or truncation.",
+  "qkvSplitSource": {
+    "repository": "huggingface/transformers",
+    "path": "src/transformers/models/nemotron3_diarization/convert_nemotron3_diarization_to_hf.py",
+    "gitBlobSha": "080c8a19772cb1d23fa7fb2cf50f2f3a3f4c0112"
+  },
+  "originalUnsplitComparisonRetained": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\native8-reference-fidelity-r1\\official-weight-value-comparison.json",
+  "matched": [
+    {
+      "hf": "classifier.dense.bias",
+      "shape": [
+        192
+      ],
+      "elements": 192,
+      "nemo": "sortformer_modules.first_hidden_to_hidden.bias"
+    },
+    {
+      "hf": "classifier.dense.weight",
+      "shape": [
+        192,
+        192
+      ],
+      "elements": 36864,
+      "nemo": "sortformer_modules.first_hidden_to_hidden.weight"
+    },
+    {
+      "hf": "classifier.out_proj.bias",
+      "shape": [
+        8
+      ],
+      "elements": 8,
+      "nemo": "sortformer_modules.single_hidden_to_spks.bias"
+    },
+    {
+      "hf": "classifier.out_proj.weight",
+      "shape": [
+        8,
+        192
+      ],
+      "elements": 1536,
+      "nemo": "sortformer_modules.single_hidden_to_spks.weight"
+    },
+    {
+      "hf": "model.audio_tower.embedder.projection.weight",
+      "shape": [
+        512,
+        1024
+      ],
+      "elements": 524288,
+      "nemo": "encoder.pre_encode.proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.input_layer_norm.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.embed_norm.bias"
+    },
+    {
+      "hf": "model.audio_tower.input_layer_norm.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.embed_norm.weight"
+    },
+    {
+      "hf": "model.audio_tower.layer_norm.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.final_norm.bias"
+    },
+    {
+      "hf": "model.audio_tower.layer_norm.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.final_norm.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.0.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.0.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.0.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.0.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.0.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.0.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.0.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.0.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.0.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.0.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.0.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.0.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.0.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.0.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.1.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.1.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.1.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.1.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.1.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.1.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.1.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.1.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.1.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.1.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.1.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.1.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.1.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.1.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.10.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.10.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.10.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.10.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.10.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.10.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.10.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.10.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.10.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.10.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.10.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.10.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.10.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.10.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.11.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.11.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.11.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.11.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.11.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.11.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.11.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.11.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.11.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.11.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.11.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.11.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.11.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.11.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.12.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.12.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.12.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.12.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.12.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.12.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.12.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.12.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.12.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.12.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.12.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.12.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.12.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.12.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.13.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.13.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.13.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.13.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.13.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.13.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.13.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.13.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.13.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.13.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.13.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.13.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.13.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.13.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.14.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.14.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.14.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.14.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.14.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.14.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.14.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.14.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.14.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.14.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.14.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.14.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.14.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.14.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.15.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.15.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.15.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.15.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.15.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.15.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.15.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.15.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.15.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.15.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.15.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.15.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.15.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.15.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.16.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.16.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.16.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.16.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.16.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.16.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.16.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.16.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.16.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.16.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.16.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.16.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.16.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.16.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.17.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.17.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.17.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.17.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.17.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.17.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.17.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.17.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.17.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.17.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.17.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.17.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.17.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.17.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.18.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.18.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.18.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.18.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.18.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.18.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.18.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.18.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.18.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.18.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.18.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.18.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.18.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.18.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.19.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.19.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.19.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.19.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.19.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.19.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.19.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.19.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.19.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.19.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.19.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.19.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.19.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.19.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.2.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.2.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.2.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.2.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.2.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.2.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.2.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.2.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.2.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.2.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.2.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.2.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.2.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.2.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.20.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.20.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.20.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.20.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.20.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.20.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.20.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.20.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.20.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.20.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.20.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.20.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.20.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.20.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.21.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.21.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.21.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.21.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.21.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.21.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.21.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.21.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.21.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.21.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.21.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.21.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.21.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.21.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.22.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.22.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.22.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.22.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.22.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.22.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.22.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.22.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.22.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.22.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.22.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.22.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.22.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.22.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.23.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.23.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.23.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.23.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.23.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.23.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.23.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.23.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.23.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.23.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.23.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.23.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.23.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.23.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.24.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.24.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.24.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.24.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.24.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.24.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.24.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.24.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.24.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.24.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.24.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.24.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.24.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.24.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.25.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.25.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.25.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.25.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.25.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.25.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.25.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.25.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.25.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.25.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.25.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.25.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.25.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.25.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.26.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.26.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.26.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.26.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.26.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.26.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.26.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.26.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.26.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.26.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.26.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.26.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.26.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.26.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.27.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.27.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.27.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.27.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.27.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.27.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.27.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.27.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.27.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.27.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.27.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.27.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.27.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.27.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.28.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.28.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.28.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.28.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.28.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.28.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.28.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.28.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.28.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.28.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.28.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.28.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.28.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.28.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.29.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.29.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.29.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.29.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.29.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.29.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.29.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.29.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.29.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.29.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.29.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.29.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.29.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.29.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.3.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.3.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.3.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.3.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.3.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.3.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.3.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.3.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.3.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.3.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.3.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.3.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.3.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.3.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.30.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.30.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.30.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.30.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.30.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.30.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.30.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.30.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.30.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.30.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.30.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.30.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.30.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.30.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.4.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.4.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.4.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.4.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.4.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.4.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.4.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.4.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.4.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.4.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.4.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.4.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.4.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.4.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.5.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.5.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.5.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.5.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.5.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.5.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.5.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.5.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.5.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.5.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.5.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.5.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.5.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.5.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.6.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.6.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.6.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.6.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.6.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.6.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.6.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.6.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.6.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.6.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.6.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.6.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.6.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.6.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.7.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.7.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.7.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.7.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.7.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.7.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.7.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.7.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.7.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.7.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.7.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.7.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.7.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.7.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.8.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.8.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.8.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.8.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.8.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.8.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.8.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.8.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.8.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.8.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.8.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.8.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.8.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.8.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.layer_norm1.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.9.norm1.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.layer_norm1.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.9.norm1.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.layer_norm2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.9.norm2.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.layer_norm2.weight",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.9.norm2.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.mlp.fc1.bias",
+      "shape": [
+        2048
+      ],
+      "elements": 2048,
+      "nemo": "encoder.layers.9.ffn.net.0.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.mlp.fc1.weight",
+      "shape": [
+        2048,
+        512
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.9.ffn.net.0.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.mlp.fc2.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.9.ffn.net.3.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.mlp.fc2.weight",
+      "shape": [
+        512,
+        2048
+      ],
+      "elements": 1048576,
+      "nemo": "encoder.layers.9.ffn.net.3.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.self_attn.k_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.9.attn.w_qkv.weight::key"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.self_attn.o_proj.bias",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "encoder.layers.9.attn.out_proj.bias"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.self_attn.o_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.9.attn.out_proj.weight"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.self_attn.q_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.9.attn.w_qkv.weight::query"
+    },
+    {
+      "hf": "model.audio_tower.layers.9.self_attn.v_proj.weight",
+      "shape": [
+        512,
+        512
+      ],
+      "elements": 262144,
+      "nemo": "encoder.layers.9.attn.w_qkv.weight::value"
+    },
+    {
+      "hf": "model.proj.bias",
+      "shape": [
+        192
+      ],
+      "elements": 192,
+      "nemo": "sortformer_modules.encoder_proj.bias"
+    },
+    {
+      "hf": "model.proj.weight",
+      "shape": [
+        192,
+        512
+      ],
+      "elements": 98304,
+      "nemo": "sortformer_modules.encoder_proj.weight"
+    },
+    {
+      "hf": "model.upsampler.conv.bias",
+      "shape": [
+        1536
+      ],
+      "elements": 1536,
+      "nemo": "sortformer_modules.subpixel_upsample.bias"
+    },
+    {
+      "hf": "model.upsampler.conv.weight",
+      "shape": [
+        1536,
+        192,
+        3
+      ],
+      "elements": 884736,
+      "nemo": "sortformer_modules.subpixel_upsample.weight"
+    },
+    {
+      "hf": "silence_embeds",
+      "shape": [
+        512
+      ],
+      "elements": 512,
+      "nemo": "sortformer_modules.learnable_sil_emb"
+    }
+  ],
+  "unmatchedHf": [],
+  "remainingNemoNames": [
+    "preprocessor.featurizer.window",
+    "preprocessor.featurizer.fb",
+    "sortformer_modules.hidden_to_spks.weight",
+    "sortformer_modules.hidden_to_spks.bias",
+    "sortformer_modules.activity_head.0.weight",
+    "sortformer_modules.activity_head.0.bias",
+    "sortformer_modules.activity_head.1.weight",
+    "sortformer_modules.activity_head.1.bias"
+  ],
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "gpuInitialized": false,
+  "limits": {
+    "pid": 4996,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1434345472,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "cpuBlasThreadPin": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "seconds": 2.4060000000026776
+}

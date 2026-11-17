@@ -1,0 +1,136 @@
+{
+  "state": "COMPLETE_INDEPENDENT_DIARIZER_REFERENCE_FIDELITY_CONTROL",
+  "startedAt": "2026-11-17T15:51:17.013294+08:00",
+  "pid": 9008,
+  "protocolSha256": "b893c848980fc1992c4803ac4e9846dff5ede5e83839509ba8d9ac7d1427664f",
+  "workerSha256": "0e481c2f87101480f23e4f171eed47a1b4fb292937261ba8ee49489756cddb81",
+  "newEncoderLayerCalls": 186,
+  "parameterUpdates": 0,
+  "referenceLabelsRead": false,
+  "cases": [
+    {
+      "id": "Chinese-control61",
+      "sourceFrames": 976000,
+      "outputFrames": 6101,
+      "comparedFrames": 5440,
+      "inferenceSeconds": 160.4679582999961,
+      "encoderLayerCalls": 93,
+      "comparison": {
+        "values": 43520,
+        "maxAbsolutePosteriorDifference": 0.01700538396835327,
+        "meanAbsolutePosteriorDifference": 0.0001006672900984995,
+        "activityDisagreements": 13,
+        "activityDisagreementFraction": 0.00029871323529411767
+      },
+      "completeChunkComparisons": [
+        {
+          "values": 21760,
+          "maxAbsolutePosteriorDifference": 0.01700538396835327,
+          "meanAbsolutePosteriorDifference": 0.0001740140578476712,
+          "activityDisagreements": 13,
+          "activityDisagreementFraction": 0.0005974264705882353
+        },
+        {
+          "values": 21760,
+          "maxAbsolutePosteriorDifference": 0.011478424072265625,
+          "meanAbsolutePosteriorDifference": 2.732054235821124e-05,
+          "activityDisagreements": 0,
+          "activityDisagreementFraction": 0.0
+        }
+      ],
+      "materialImplementationDiscrepancy": false,
+      "comparisonPerformedWithoutSpeakerPermutation": true,
+      "frontendWeightPrecisionImplementationNotYetIsolated": false,
+      "referenceFeaturesSha256": "8625ab77c02a0665e230102005491d7bcbed03b87c41bef0bc42717b0746a8a8",
+      "referenceProbabilitiesSha256": "c6ddd12f11de38ef2a1781dfc9a0469286dd906680d9ee14d451f4b0b4805fc1",
+      "qualityScoreMeasured": false,
+      "parameterUpdates": 0
+    },
+    {
+      "id": "ES2003b-control61",
+      "sourceFrames": 976000,
+      "outputFrames": 6101,
+      "comparedFrames": 5440,
+      "inferenceSeconds": 144.9803993999958,
+      "encoderLayerCalls": 93,
+      "comparison": {
+        "values": 43520,
+        "maxAbsolutePosteriorDifference": 0.06662645936012268,
+        "meanAbsolutePosteriorDifference": 0.0002772650623228401,
+        "activityDisagreements": 8,
+        "activityDisagreementFraction": 0.0001838235294117647
+      },
+      "completeChunkComparisons": [
+        {
+          "values": 21760,
+          "maxAbsolutePosteriorDifference": 0.06230098009109497,
+          "meanAbsolutePosteriorDifference": 0.00024699734058231115,
+          "activityDisagreements": 2,
+          "activityDisagreementFraction": 9.191176470588235e-05
+        },
+        {
+          "values": 21760,
+          "maxAbsolutePosteriorDifference": 0.06662645936012268,
+          "meanAbsolutePosteriorDifference": 0.00030753278406336904,
+          "activityDisagreements": 6,
+          "activityDisagreementFraction": 0.00027573529411764705
+        }
+      ],
+      "materialImplementationDiscrepancy": false,
+      "comparisonPerformedWithoutSpeakerPermutation": true,
+      "frontendWeightPrecisionImplementationNotYetIsolated": false,
+      "referenceFeaturesSha256": "454ae1d3f1a1b41588287b056c50ce32e767f2a2537543b972f2be6e7043ab35",
+      "referenceProbabilitiesSha256": "6c0206570a52859b02722c63dda1d61a2bb57ebb8eddb483239fce78130b95ac",
+      "qualityScoreMeasured": false,
+      "parameterUpdates": 0
+    }
+  ],
+  "gpuInitialized": false,
+  "cpuTemperatureMode": "owner-authorized-observe-only",
+  "qualityQualified": false,
+  "observedAt": "2026-11-17T15:57:36.247593+08:00",
+  "limits": {
+    "pid": 9008,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1161756672,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "cpuBlasThreadPin": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "appliedGeometry": {
+    "chunk_length": 340,
+    "chunk_right_context": 40,
+    "chunk_left_context": 0,
+    "fifo_length": 40,
+    "speaker_cache_update_period": 300,
+    "speaker_cache_length": 264
+  },
+  "modelClass": "Nemotron3DiarizationForAudioFrameClassification",
+  "processorClass": "Nemotron3DiarizationProcessor",
+  "parameters": 99226504,
+  "modelDtypes": [
+    "torch.float32"
+  ],
+  "torchVersion": "2.11.0+rocm10.0.0",
+  "currentCase": "ES2003b-control61",
+  "modelParameterDigestBefore": "33c5e06203369479a98e8d2460b013c1e764703e9f092d7b9f95a066119d5388",
+  "modelParameterDigestAfter": "33c5e06203369479a98e8d2460b013c1e764703e9f092d7b9f95a066119d5388",
+  "diagnosisRequiredBeforeDiarizerTraining": false,
+  "originalNativeBaselineChanged": false,
+  "finishedAt": "2026-11-17T15:57:36.247593+08:00",
+  "wholeWorkerSeconds": 379.23482279999735
+}
