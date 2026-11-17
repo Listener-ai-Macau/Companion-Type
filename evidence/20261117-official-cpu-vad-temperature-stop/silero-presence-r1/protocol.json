@@ -1,0 +1,141 @@
+{
+  "state": "FROZEN_ONE_DEFAULT_CPU_SILERO_PRESENCE_PLUS_RETAINED_IDENTITY",
+  "at": "2026-11-17T09:15:23.639157+08:00",
+  "cpuInferenceOnly": true,
+  "cpuPercent": 5,
+  "threads": 1,
+  "privateMemoryBytes": 2147483648,
+  "minimumAvailableBytes": 3414499000,
+  "stopAt": "2026-11-17T09:24:00+08:00",
+  "thermal": {
+    "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3",
+    "sensorIdentifier": "/amdcpu/0/temperature/2",
+    "maximumStartCelsius": 85,
+    "stopCelsius": 95,
+    "maximumSampleAgeSeconds": 15,
+    "cacheSeconds": 1,
+    "scope": "owned model worker only; no system power/fan/clock changes",
+    "loggerSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\monitor_thermal_20261117.py",
+        "sha256": "a28ab46a34bc31127ca3c8fb7de63d0d866005456639d62d2df8d2603c4f37c1"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\read_laptop_thermal_stream_20261117.ps1",
+        "sha256": "0e0a177ffecddda95818c5c50f1fd58acc272fb516da1e397ba9e6fd8745c964"
+      }
+    ],
+    "identifiedCpuTjmaxCelsius": 100,
+    "taskThresholdsAreNotHardwareLimitsOrRootCauseProof": true
+  },
+  "neuralLock": "E:/CodexData/Companion/.model-cache/local-qwen-decoder.lock",
+  "python": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Scripts\\python.exe",
+  "torch": "2.11.0+rocm10.0.0",
+  "weights": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\silero_vad.jit",
+  "upstreamUtils": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\utils_vad.py",
+  "upstreamRepository": "https://github.com/snakers4/silero-vad",
+  "upstreamCommit": "066409f3d9db45a30d21dfcbf9147826ffdd7052",
+  "audioOnly": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\full-audio-only.json",
+  "predictedBindings": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\predicted-speaker-bindings.json",
+  "meetings": [
+    "ES2003b",
+    "EN2002a"
+  ],
+  "upstreamDefaults": {
+    "threshold": "0.5",
+    "sampling_rate": "16000",
+    "min_speech_duration_ms": "250",
+    "max_speech_duration_s": "float('inf')",
+    "min_silence_duration_ms": "100",
+    "speech_pad_ms": "30",
+    "return_seconds": "False",
+    "time_resolution": "1",
+    "visualize_probs": "False",
+    "progress_tracking_callback": "None",
+    "neg_threshold": "None",
+    "window_size_samples": "512",
+    "min_silence_at_max_speech": "98",
+    "use_max_poss_sil_at_max_speech": "True"
+  },
+  "defaultParametersUnchanged": true,
+  "temperaturePolicy": "RAM stable60s and CPU<=85C immediately before load; CPU5percent single-thread detector, stop at95C or stale sensor. No GPU or CPU/iGPU training.",
+  "decisionBasis": "Cached Q8 presence lowers full DER on both English sources but leaves104.24s missing in single-speaker portions of EN2002a. A dedicated speech detector is the appropriate distinct component to test, with fixed original identity fusion and original full-source gates.",
+  "admissionGate": "Each complete original English source must reduce DER by>=20percent, have valid times/no unknown identity. Original full10percent DER and all raw-word/fact gates remain. Reject if not passed; no threshold/padding/model grid.",
+  "newWeightTraining": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\silero_presence_worker_20261117.py",
+      "sha256": "6db47993fed29428508cf156947d9a2bbb40d716f79ab7d6f84d890aa481b538"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\compose_vad_presence_20261117.py",
+      "sha256": "0fbac755e2aad1e88ef49080480e27400b2bcdd21c71af3dfb1cd8dea1b72c54"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\fixed_presence_identity_core_20261117.py",
+      "sha256": "67c1d5caa09de26c55781db4b471463f165ab0322346a26e4bfde0ae2c037a85"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\compose_presence_identity_20261116.py",
+      "sha256": "7beff94253af9f4484dd7c3bab6cee89cd8014bc1663e4e64d57694540ec8436"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_joint_whole_meetings_20261115.py",
+      "sha256": "027a66d1e5a8097285b8bcaa7ca11aff7e5a52e87b72f87ee383b17fc97c4ed9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_contract_20261116.py",
+      "sha256": "4e238f87f06b7ed95a6bd6e30522e86b4129836074cabff138cd1fe5f76981c9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_worker_20261116.py",
+      "sha256": "afbf977c6904a99634a5278d1fb1bf1ffcea4dad418d187aaf6f1284c31b5896"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_pcm_session_20261114.py",
+      "sha256": "182006e169fd89ab4fdc5990f3b76138a49181863c4db3ccb26d23c18f0dc7b9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py",
+      "sha256": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\durable_model_state_20261117.py",
+      "sha256": "5fea82f461da06e76afd3321c860c48a570147a4d9cce6c7cca37a595bb54e3b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\model_thermal_guard_20261117.py",
+      "sha256": "a7f58c34878323a73bfd19af5f1096619c0dc1e81e8fca720306884cf3fc8bf9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\full-audio-only.json",
+      "sha256": "13a02cd0f2a59e3359bb46250b74aeba41aa9138c05e7f7909afc441f17e6938"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\predicted-speaker-bindings.json",
+      "sha256": "43287a3d3f92044647fcfae1aab75da0686170ad1a0060a22b463088ce53c95d"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\asset-receipt.json",
+      "sha256": "0ea2d89e0dd09c883f9a680762e1ef7990f65c50ed1ff9f69428ab8f0ce246f9"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\utils_vad.py",
+      "sha256": "7e0f9b3334ee4feb79abcf2251be12458329077bce28c8540878ed9d35e5aa6b"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\silero_vad.jit",
+      "sha256": "e1122837f4154c511485fe0b9c64455f7b929c96fbb8d79fbdb336383ebd3720"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\LICENSE",
+      "sha256": "2e63e9a38b6e8fc0c7bc37ce174caca1862870856c6daf5697cfb785e925520b"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\README.md",
+      "sha256": "cd0ee56c91b8042e62a714c0c94bc8b74dbea127a483e390f8033bb8ec8cec78"
+    }
+  ]
+}

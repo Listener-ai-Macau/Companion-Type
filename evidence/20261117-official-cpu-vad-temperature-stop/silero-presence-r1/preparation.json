@@ -1,0 +1,74 @@
+{
+  "state": "OFFICIAL_DEFAULT_VAD_READY_CPU_INFERENCE_NOT_TRAINING",
+  "at": "2026-11-17T09:15:23.652220+08:00",
+  "protocolSha256": "f51cbea5858ed8d42d33a2d123f4d942c5724a2fca9b987a4b8cffcac8296311",
+  "officialAssets": {
+    "at": "2026-11-17T09:10:51.470309+08:00",
+    "repository": "https://github.com/snakers4/silero-vad",
+    "commit": "066409f3d9db45a30d21dfcbf9147826ffdd7052",
+    "files": [
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\utils_vad.py",
+        "url": "https://raw.githubusercontent.com/snakers4/silero-vad/066409f3d9db45a30d21dfcbf9147826ffdd7052/src/silero_vad/utils_vad.py",
+        "sha256": "7e0f9b3334ee4feb79abcf2251be12458329077bce28c8540878ed9d35e5aa6b",
+        "bytes": 31474
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\silero_vad.jit",
+        "url": "https://raw.githubusercontent.com/snakers4/silero-vad/066409f3d9db45a30d21dfcbf9147826ffdd7052/src/silero_vad/data/silero_vad.jit",
+        "sha256": "e1122837f4154c511485fe0b9c64455f7b929c96fbb8d79fbdb336383ebd3720",
+        "bytes": 2272526
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\LICENSE",
+        "url": "https://raw.githubusercontent.com/snakers4/silero-vad/066409f3d9db45a30d21dfcbf9147826ffdd7052/LICENSE",
+        "sha256": "2e63e9a38b6e8fc0c7bc37ce174caca1862870856c6daf5697cfb785e925520b",
+        "bytes": 1075
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\README.md",
+        "url": "https://raw.githubusercontent.com/snakers4/silero-vad/066409f3d9db45a30d21dfcbf9147826ffdd7052/README.md",
+        "sha256": "cd0ee56c91b8042e62a714c0c94bc8b74dbea127a483e390f8033bb8ec8cec78",
+        "bytes": 9725
+      }
+    ],
+    "inferencePerformed": false,
+    "trainingUpdates": 0
+  },
+  "defaults": {
+    "threshold": "0.5",
+    "sampling_rate": "16000",
+    "min_speech_duration_ms": "250",
+    "max_speech_duration_s": "float('inf')",
+    "min_silence_duration_ms": "100",
+    "speech_pad_ms": "30",
+    "return_seconds": "False",
+    "time_resolution": "1",
+    "visualize_probs": "False",
+    "progress_tracking_callback": "None",
+    "neg_threshold": "None",
+    "window_size_samples": "512",
+    "min_silence_at_max_speech": "98",
+    "use_max_poss_sil_at_max_speech": "True"
+  },
+  "torchImported": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "limits": {
+    "pid": 20820,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 12591104,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "state": "FAILED_CPU_VAD_RETAINED_NO_AUTOMATIC_RETRY",
+  "at": "2026-11-17T09:15:24.078789+08:00",
+  "pid": 19876,
+  "binding": {
+    "protocolSha256": "f51cbea5858ed8d42d33a2d123f4d942c5724a2fca9b987a4b8cffcac8296311",
+    "workerSha256": "6db47993fed29428508cf156947d9a2bbb40d716f79ab7d6f84d890aa481b538",
+    "weightsSha256": "e1122837f4154c511485fe0b9c64455f7b929c96fbb8d79fbdb336383ebd3720"
+  },
+  "completed": [],
+  "newNeuralCalls": 58330,
+  "parameterUpdates": 0,
+  "cpuInferenceOnly": true,
+  "referenceRead": false,
+  "gpuInitialized": false,
+  "qualityQualified": false,
+  "observedAt": "2026-11-17T09:17:41.679636+08:00",
+  "limits": {
+    "pid": 19876,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 854519808,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "cpuTemperature": {
+    "sampleAt": "2026-11-17T09:17:35.5151642+08:00",
+    "celsius": 92,
+    "sampleAgeSeconds": 5.155809,
+    "sensorIdentifier": "/amdcpu/0/temperature/2",
+    "taskStartThresholdCelsius": 85,
+    "taskStopThresholdCelsius": 95,
+    "hardwareOverheatCauseProven": false,
+    "physicalMainboardTemperatureMeasured": false,
+    "snapshotSelection": {
+      "selectedFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\latest.json",
+      "sha256": "ee002bbcf1bb13c64faf7676387898583f804eb235c5984da082d5672f474b3f",
+      "usedPrevious": false,
+      "primaryFailures": [],
+      "originalCorruptBytesPreserved": true
+    }
+  },
+  "currentId": "ES2003b",
+  "currentProgressPercent": 87.49968228824979,
+  "currentCompletedWindows": 57690,
+  "error": "RuntimeError('CPU temperature reached task stop threshold95C')"
+}

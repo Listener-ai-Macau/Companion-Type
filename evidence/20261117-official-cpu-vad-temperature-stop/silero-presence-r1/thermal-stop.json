@@ -1,0 +1,1812 @@
+{
+  "state": "CPU_VAD_STOPPED_AT_95C_NO_QUALITY_RESULT_NO_RETRY",
+  "at": "2026-11-17T09:22:11+08:00",
+  "workerState": {
+    "state": "FAILED_CPU_VAD_RETAINED_NO_AUTOMATIC_RETRY",
+    "at": "2026-11-17T09:15:24.078789+08:00",
+    "pid": 19876,
+    "binding": {
+      "protocolSha256": "f51cbea5858ed8d42d33a2d123f4d942c5724a2fca9b987a4b8cffcac8296311",
+      "workerSha256": "6db47993fed29428508cf156947d9a2bbb40d716f79ab7d6f84d890aa481b538",
+      "weightsSha256": "e1122837f4154c511485fe0b9c64455f7b929c96fbb8d79fbdb336383ebd3720"
+    },
+    "completed": [],
+    "newNeuralCalls": 58330,
+    "parameterUpdates": 0,
+    "cpuInferenceOnly": true,
+    "referenceRead": false,
+    "gpuInitialized": false,
+    "qualityQualified": false,
+    "observedAt": "2026-11-17T09:17:41.679636+08:00",
+    "limits": {
+      "pid": 19876,
+      "cpuRate": 500,
+      "cpuControlFlags": 5,
+      "cpuPercentMaximum": 5.0,
+      "inLimitedJob": true,
+      "jobPrivateCommitLimitBytes": 2147483648,
+      "jobMemoryLimitEnabled": true,
+      "jobPeakPrivateCommitBytes": 854519808,
+      "cpuPriorityClass": 64,
+      "memoryPagePriority": 1,
+      "memoryPagePriorityIsReclaimHintNotRamCap": true,
+      "gpuPriorityClass": 0,
+      "gpuUtilizationHardCapped": false,
+      "scope": "This worker and its descendants only; no global or other-app changes."
+    },
+    "cpuTemperature": {
+      "sampleAt": "2026-11-17T09:17:35.5151642+08:00",
+      "celsius": 92,
+      "sampleAgeSeconds": 5.155809,
+      "sensorIdentifier": "/amdcpu/0/temperature/2",
+      "taskStartThresholdCelsius": 85,
+      "taskStopThresholdCelsius": 95,
+      "hardwareOverheatCauseProven": false,
+      "physicalMainboardTemperatureMeasured": false,
+      "snapshotSelection": {
+        "selectedFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\latest.json",
+        "sha256": "ee002bbcf1bb13c64faf7676387898583f804eb235c5984da082d5672f474b3f",
+        "usedPrevious": false,
+        "primaryFailures": [],
+        "originalCorruptBytesPreserved": true
+      }
+    },
+    "currentId": "ES2003b",
+    "currentProgressPercent": 87.49968228824979,
+    "currentCompletedWindows": 57690,
+    "error": "RuntimeError('CPU temperature reached task stop threshold95C')"
+  },
+  "session": 81608,
+  "processMissingVerified": true,
+  "wholeSourcesCompleted": 0,
+  "silenceControl": {
+    "frames": 32000,
+    "segments": [],
+    "modelCalls": 63,
+    "seconds": 0.25148839999746997
+  },
+  "newNeuralCalls": 58330,
+  "callUnit": "One512-sample CPU VAD forward window; includes63 zero-control windows",
+  "parameterUpdates": 0,
+  "newGpuWork": false,
+  "cpuModelTraining": false,
+  "temperatureSamplesBeforeDetectorStarted": [
+    {
+      "At": "2026-11-17T08:37:06.9242679+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.5
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3282,
+          "Celsius": 55.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 29.7,
+      "availableRamBytes": 7299198976,
+      "topCpuProcesses": [
+        {
+          "pid": 2168,
+          "name": "rustc.exe",
+          "cpuPercentOfWholeMachine": 9.95
+        },
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.67
+        },
+        {
+          "pid": 20092,
+          "name": "rustc.exe",
+          "cpuPercentOfWholeMachine": 4.86
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T08:37:12.0795533+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3282,
+          "Celsius": 55.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 28.3,
+      "availableRamBytes": 7317749760,
+      "topCpuProcesses": [
+        {
+          "pid": 2168,
+          "name": "rustc.exe",
+          "cpuPercentOfWholeMachine": 10.23
+        },
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.16
+        },
+        {
+          "pid": 20092,
+          "name": "rustc.exe",
+          "cpuPercentOfWholeMachine": 5.27
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T08:37:17.1485053+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.75
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3282,
+          "Celsius": 55.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 32.8,
+      "availableRamBytes": 7333679104,
+      "topCpuProcesses": [
+        {
+          "pid": 2168,
+          "name": "rustc.exe",
+          "cpuPercentOfWholeMachine": 9.99
+        },
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.1
+        },
+        {
+          "pid": 20092,
+          "name": "rustc.exe",
+          "cpuPercentOfWholeMachine": 5.15
+        },
+        {
+          "pid": 5864,
+          "name": "listener-type.exe",
+          "cpuPercentOfWholeMachine": 3.28
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.0
+        },
+        {
+          "pid": 18992,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.0
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T08:37:22.3107427+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.125
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3282,
+          "Celsius": 55.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 32.2,
+      "availableRamBytes": 7230111744,
+      "topCpuProcesses": [
+        {
+          "pid": 2168,
+          "name": "rustc.exe",
+          "cpuPercentOfWholeMachine": 9.95
+        },
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.5
+        },
+        {
+          "pid": 20092,
+          "name": "rustc.exe",
+          "cpuPercentOfWholeMachine": 4.78
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.6
+        },
+        {
+          "pid": 5864,
+          "name": "listener-type.exe",
+          "cpuPercentOfWholeMachine": 1.17
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T08:37:38.3284821+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.125
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3282,
+          "Celsius": 55.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 27.5,
+      "availableRamBytes": 9394454528,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.48
+        },
+        {
+          "pid": 20092,
+          "name": "rustc.exe",
+          "cpuPercentOfWholeMachine": 4.98
+        },
+        {
+          "pid": 4,
+          "name": "System",
+          "cpuPercentOfWholeMachine": 1.73
+        },
+        {
+          "pid": 4768,
+          "name": "MsMpEng.exe",
+          "cpuPercentOfWholeMachine": 1.42
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.2
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T08:37:44.5464398+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.5
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3282,
+          "Celsius": 55.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 23.8,
+      "availableRamBytes": 9843421184,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.16
+        },
+        {
+          "pid": 20092,
+          "name": "rustc.exe",
+          "cpuPercentOfWholeMachine": 5.26
+        },
+        {
+          "pid": 4768,
+          "name": "MsMpEng.exe",
+          "cpuPercentOfWholeMachine": 1.08
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T08:37:49.6758948+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.125
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3282,
+          "Celsius": 55.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 19.4,
+      "availableRamBytes": 9882910720,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.67
+        },
+        {
+          "pid": 20092,
+          "name": "rustc.exe",
+          "cpuPercentOfWholeMachine": 4.78
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:07:25.0854758+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.5
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 19.8,
+      "availableRamBytes": 9895845888,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 6.99
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.23
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 2.15
+        },
+        {
+          "pid": 5864,
+          "name": "listener-type.exe",
+          "cpuPercentOfWholeMachine": 1.59
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:08:17.8852735+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.25
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 28.3,
+      "availableRamBytes": 9915850752,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.31
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.25
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 4.97
+        },
+        {
+          "pid": 5864,
+          "name": "listener-type.exe",
+          "cpuPercentOfWholeMachine": 2.11
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:08:34.8334767+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.625
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 17.9,
+      "availableRamBytes": 9941553152,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 6.99
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.25
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:08:40.0005848+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.875
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 24.5,
+      "availableRamBytes": 9934241792,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.84
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.21
+        },
+        {
+          "pid": 12760,
+          "name": "ChatGPT.exe",
+          "cpuPercentOfWholeMachine": 1.96
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.34
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:09:16.7802586+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.125
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 20.7,
+      "availableRamBytes": 9929420800,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 6.88
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.21
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 3.44
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:09:27.8594272+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.25
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 22.0,
+      "availableRamBytes": 10231279616,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.05
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.23
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 2.18
+        },
+        {
+          "pid": 3816,
+          "name": "svchost.exe",
+          "cpuPercentOfWholeMachine": 1.01
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:09:43.3907948+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.375
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 22.0,
+      "availableRamBytes": 10132484096,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 6.87
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.25
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 2.51
+        },
+        {
+          "pid": 5864,
+          "name": "listener-type.exe",
+          "cpuPercentOfWholeMachine": 1.92
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:09:54.6099712+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.375
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 20.6,
+      "availableRamBytes": 10181566464,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.37
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.23
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 2.92
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:10:05.3936152+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.5
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 21.6,
+      "availableRamBytes": 10181853184,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.63
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.25
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 3.02
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:10:10.8926353+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.125
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 22.4,
+      "availableRamBytes": 10167701504,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.19
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.21
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 3.3
+        },
+        {
+          "pid": 9424,
+          "name": "WmiPrvSE.exe",
+          "cpuPercentOfWholeMachine": 1.01
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:10:53.5369715+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.625
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 23.1,
+      "availableRamBytes": 10143576064,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 6.98
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.23
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 3.72
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:11:04.0272767+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.25
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 21.1,
+      "availableRamBytes": 10165821440,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.52
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.25
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 2.19
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:11:09.4364282+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.125
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 21.5,
+      "availableRamBytes": 10173722624,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.01
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.21
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.57
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:11:14.8672475+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.5
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 24.2,
+      "availableRamBytes": 10124091392,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.74
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.27
+        },
+        {
+          "pid": 5864,
+          "name": "listener-type.exe",
+          "cpuPercentOfWholeMachine": 1.96
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.46
+        },
+        {
+          "pid": 9424,
+          "name": "WmiPrvSE.exe",
+          "cpuPercentOfWholeMachine": 1.13
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:11:31.9389083+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.375
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 22.3,
+      "availableRamBytes": 10186694656,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.25
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.2
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 3.47
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:11:42.6281477+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 23.7,
+      "availableRamBytes": 10166427648,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 6.93
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.23
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 3.69
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:11:48.1163863+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.5
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 20.6,
+      "availableRamBytes": 10175934464,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.57
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.25
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 2.55
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:11:53.1970074+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.25
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 18.9,
+      "availableRamBytes": 10176221184,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 6.83
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.25
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.4
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:11:58.5431856+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.625
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 19.0,
+      "availableRamBytes": 10176434176,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.59
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.23
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.21
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:12:03.6884374+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 96.125
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 26.4,
+      "availableRamBytes": 10127564800,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 6.95
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.21
+        },
+        {
+          "pid": 5864,
+          "name": "listener-type.exe",
+          "cpuPercentOfWholeMachine": 3.94
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 2.14
+        },
+        {
+          "pid": 9424,
+          "name": "WmiPrvSE.exe",
+          "cpuPercentOfWholeMachine": 1.14
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:12:08.8557740+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 96
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 20.8,
+      "availableRamBytes": 10173128704,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.04
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.23
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 2.65
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:12:14.2791563+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.125
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 23.7,
+      "availableRamBytes": 10166341632,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.28
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.2
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 3.14
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:12:31.0278531+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.625
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 20.8,
+      "availableRamBytes": 10190606336,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.58
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.23
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.92
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:12:36.4623301+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.375
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 18.9,
+      "availableRamBytes": 10179698688,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.04
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.27
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.62
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:12:41.5582086+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.5
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 21.8,
+      "availableRamBytes": 10186870784,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.68
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.23
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.84
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:12:46.7705209+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.625
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 24.2,
+      "availableRamBytes": 10070630400,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 6.92
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.25
+        },
+        {
+          "pid": 5864,
+          "name": "listener-type.exe",
+          "cpuPercentOfWholeMachine": 2.23
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.65
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:12:52.6125909+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.875
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 23.4,
+      "availableRamBytes": 10141278208,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 6.97
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.23
+        },
+        {
+          "pid": 5864,
+          "name": "listener-type.exe",
+          "cpuPercentOfWholeMachine": 1.87
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.7
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:12:58.1300658+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.5
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 21.3,
+      "availableRamBytes": 10150084608,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.69
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.18
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 1.66
+        }
+      ]
+    }
+  ],
+  "temperatureSamplesAtOwnedStop": [
+    {
+      "At": "2026-11-17T09:17:40.7700661+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 28.2,
+      "availableRamBytes": 9077526528,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 8.65
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.21
+        },
+        {
+          "pid": 19876,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 5.08
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 3.35
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:17:45.8235157+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.375
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 24.3,
+      "availableRamBytes": 9680003072,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.08
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.25
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 3.58
+        }
+      ]
+    },
+    {
+      "At": "2026-11-17T09:17:51.7953445+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 95.5
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3232,
+          "Celsius": 50.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 21.8,
+      "availableRamBytes": 9747984384,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 7.05
+        },
+        {
+          "pid": 21412,
+          "name": "python.exe",
+          "cpuPercentOfWholeMachine": 6.23
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 3.85
+        }
+      ]
+    }
+  ],
+  "lastSafeWorkerTemperatureIsNotTriggerTemperature": true,
+  "triggerEvidenceFromIndependentLogger": true,
+  "systemRebootedAtThisStop": false,
+  "bootTimeLocal": "2026-11-16T23:16:08.215736+08:00",
+  "operatorMachineOtherLoadsPresent": true,
+  "otherAppsStoppedOrChanged": false,
+  "qualityFailedOrPassed": null,
+  "accuracyUnknownBecauseInferenceInterrupted": true,
+  "next": "No unchanged retry. Continue only low-impact CPU analysis/code and current monitor. Need a changed cooling/load condition before neural compute resumes. Fix future error snapshots to carry the triggering95C reading rather than only the last-safe92C observation.",
+  "qualityQualified": false,
+  "saleQualified": false
+}

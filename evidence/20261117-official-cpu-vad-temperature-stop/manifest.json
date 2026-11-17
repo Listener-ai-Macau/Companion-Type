@@ -1,0 +1,94 @@
+{
+  "at": "2026-11-17T09:22:12.569071+08:00",
+  "parent": "30d92ea708af9ee4825f214689340f879754aa75",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-presence-r1\\protocol.json",
+      "file": "silero-presence-r1/protocol.json",
+      "bytes": 7762,
+      "sha256": "f51cbea5858ed8d42d33a2d123f4d942c5724a2fca9b987a4b8cffcac8296311"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-presence-r1\\scoring-control.json",
+      "file": "silero-presence-r1/scoring-control.json",
+      "bytes": 1553,
+      "sha256": "214ee6edb0b0fb0295f70dd41cc0df98047806b9115dbf450466862460fece9c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-presence-r1\\preparation.json",
+      "file": "silero-presence-r1/preparation.json",
+      "bytes": 3037,
+      "sha256": "bc0028ac904fcda6d3bba626e4cd173be63de4f0bb1c0909095be8fbad823c41"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-presence-r1\\thermal-stop.json",
+      "file": "silero-presence-r1/thermal-stop.json",
+      "bytes": 51948,
+      "sha256": "c7c343371965922d8764b5db454c07b48d2d4dbe8e2ed284a176d9c1114b56e5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-presence-r1\\run-default\\state.json",
+      "file": "stopped-cpu-vad/state.json",
+      "bytes": 2078,
+      "sha256": "942a2e087f5110941e55af542022705764a890891c2531a20817708be534eefb"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-presence-r1\\run-default\\silence-control.json",
+      "file": "stopped-cpu-vad/silence-control.json",
+      "bytes": 94,
+      "sha256": "62450daf502055a8af84cb84140f213b306edc1aaa7558c00d7d82eb712a3c93"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\asset-receipt.json",
+      "file": "official-upstream/asset-receipt.json",
+      "bytes": 1653,
+      "sha256": "0ea2d89e0dd09c883f9a680762e1ef7990f65c50ed1ff9f69428ab8f0ce246f9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\utils_vad.py",
+      "file": "official-upstream/utils_vad.py",
+      "bytes": 31474,
+      "sha256": "7e0f9b3334ee4feb79abcf2251be12458329077bce28c8540878ed9d35e5aa6b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\LICENSE",
+      "file": "official-upstream/LICENSE",
+      "bytes": 1075,
+      "sha256": "2e63e9a38b6e8fc0c7bc37ce174caca1862870856c6daf5697cfb785e925520b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_silero_presence_20261117.py",
+      "file": "local-tools/prepare_silero_presence_20261117.py",
+      "bytes": 5111,
+      "sha256": "22dfd1a90585deddfbfb4dd81846a2d9146dea0a70c02646941997455570a6b8"
+    },
+    {
+      "source": "work\\checkpoint_silero_stop_r59.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 3172,
+      "sha256": "6ab3d684c8e815aefb4cf0a588ee37d4b183f5b73c1913a2770c73982a351967"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/silero_presence_worker_20261117.py": "6db47993fed29428508cf156947d9a2bbb40d716f79ab7d6f84d890aa481b538",
+    "src/compose_vad_presence_20261117.py": "0fbac755e2aad1e88ef49080480e27400b2bcdd21c71af3dfb1cd8dea1b72c54"
+  },
+  "state": "CPU_VAD_STOPPED_AT_95C_NO_QUALITY_RESULT_NO_RETRY",
+  "newGpuCalls": 0,
+  "parameterUpdates": 0,
+  "newNeuralVadWindows": 58330,
+  "cpuInferencePercent": 5,
+  "cpuInferenceThreads": 1,
+  "modelTrainingStarted": false,
+  "wholeSourcesCompleted": 0,
+  "defaultThresholdOrPaddingChanged": false,
+  "overheatRestartCauseProven": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

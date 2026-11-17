@@ -1,0 +1,66 @@
+{
+  "revision": 59,
+  "evidenceDirectory": "evidence/20261117-official-cpu-vad-temperature-stop",
+  "sources": [
+    "src/silero_presence_worker_20261117.py",
+    "src/compose_vad_presence_20261117.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-presence-r1\\protocol.json",
+      "name": "silero-presence-r1/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-presence-r1\\scoring-control.json",
+      "name": "silero-presence-r1/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-presence-r1\\preparation.json",
+      "name": "silero-presence-r1/preparation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-presence-r1\\thermal-stop.json",
+      "name": "silero-presence-r1/thermal-stop.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-presence-r1\\run-default\\state.json",
+      "name": "stopped-cpu-vad/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-presence-r1\\run-default\\silence-control.json",
+      "name": "stopped-cpu-vad/silence-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\asset-receipt.json",
+      "name": "official-upstream/asset-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\utils_vad.py",
+      "name": "official-upstream/utils_vad.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\silero-vad-official20261117\\LICENSE",
+      "name": "official-upstream/LICENSE"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_silero_presence_20261117.py",
+      "name": "local-tools/prepare_silero_presence_20261117.py"
+    }
+  ],
+  "commitMessage": "Preserve CPU VAD inference stopped by identified laptop temperature guard",
+  "claims": {
+    "state": "CPU_VAD_STOPPED_AT_95C_NO_QUALITY_RESULT_NO_RETRY",
+    "newGpuCalls": 0,
+    "parameterUpdates": 0,
+    "newNeuralVadWindows": 58330,
+    "cpuInferencePercent": 5,
+    "cpuInferenceThreads": 1,
+    "modelTrainingStarted": false,
+    "wholeSourcesCompleted": 0,
+    "defaultThresholdOrPaddingChanged": false,
+    "overheatRestartCauseProven": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}
