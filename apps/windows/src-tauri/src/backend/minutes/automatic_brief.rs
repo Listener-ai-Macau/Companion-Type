@@ -13,6 +13,10 @@ const DRAFT:&str=include_str!("automatic_brief_draft.txt");
 const REVIEW:&str=include_str!("automatic_brief_review.txt");
 // Full-source auditing and targeted corrections share this total wall budget.
 const WALL_BUDGET:Duration=Duration::from_secs(240);
+// Revised-body source audits add necessary sequential work after factual
+// corrections. Candidate processing remains bounded and cancellable; the
+// installed/default path and the 120-second individual HTTP limit stay intact.
+fn wall_budget()->Duration{if coverage::enabled(){Duration::from_secs(600)}else{WALL_BUDGET}}
 // This complete-source route was exercised above the legacy 48KiB chapter
 // budget. Bound it separately; oversized inputs retain the resumable route.
 const MAX_REQUEST_BYTES:usize=96*1024;
@@ -186,7 +190,7 @@ fn source_first_input(input:&Value)->String {
 }
 fn request(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,prompt:&str,input:Value,review:bool,start:Instant,trace:&mut Vec<Value>,stage:&str)->Result<String,String> {
     if prompt.len()+input.to_string().len()>MAX_REQUEST_BYTES{return Err("本场完整输入超出自动纪要上下文预算，原文保留。".into());}
-    let remaining=WALL_BUDGET.saturating_sub(start.elapsed());if remaining<Duration::from_secs(5){return Err("自动纪要本次处理已到期限，已有结果保留。".into());}
+    let remaining=wall_budget().saturating_sub(start.elapsed());if remaining<Duration::from_secs(5){return Err("自动纪要本次处理已到期限，已有结果保留。".into());}
     check_current()?;
     let url=super::http_policy::endpoint(endpoint).map_err(super::safe_minutes_http_error)?;
     let mut body=json!({"model":model,"response_format":{"type":"json_object"},"max_tokens":if review{24576}else{8192},"messages":[{"role":"system","content":prompt},{"role":"user","content":source_first_input(&input)}]});

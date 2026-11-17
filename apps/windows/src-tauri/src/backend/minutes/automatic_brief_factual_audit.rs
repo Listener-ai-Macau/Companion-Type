@@ -326,6 +326,33 @@ fn newly_exposed_ambiguity(previous:Option<&str>,next:Option<&str>,claim:&Value)
     !old.is_empty()&&!new.is_empty()&&old!=new
         &&["text","owner","due"].into_iter().filter_map(|field|claim.get(field).and_then(Value::as_str)).all(|text|!text.contains(old))
 }
+fn repair_text_limit(path:&str)->usize{
+    if path=="purpose"{80}else if path.ends_with(".title"){26}else if path.contains(".points["){90}else if path.contains(".details["){120}else{180}
+}
+fn oversized_repair_texts(raw:&str)->HashSet<String>{
+    let Ok(value)=serde_json::from_str::<Value>(super::super::strip_code_fences(raw).trim())else{return HashSet::new();};
+    value.get("changes").and_then(Value::as_array).into_iter().flatten().filter_map(|row|{
+        let path=row.get("path")?.as_str()?;let text=row.get("text")?.as_str()?;
+        (text.chars().count()>repair_text_limit(path)).then(||path.to_string())
+    }).collect()
+}
+fn merge_shorter_repair_texts(original:&str,shortened:&str,paths:&HashSet<String>)->Result<String,String>{
+    let fail=||"纪要字数恢复没有遵守原修正范围，已有结果保留。".to_string();
+    let mut original:Value=serde_json::from_str(super::super::strip_code_fences(original).trim()).map_err(|_|fail())?;
+    let shortened:Value=serde_json::from_str(super::super::strip_code_fences(shortened).trim()).map_err(|_|fail())?;
+    let root=shortened.as_object().filter(|root|root.len()==1).ok_or_else(fail)?;
+    let rows=root.get("changes").and_then(Value::as_array).filter(|rows|rows.len()==paths.len()).ok_or_else(fail)?;
+    let edits=original.get_mut("changes").and_then(Value::as_array_mut).ok_or_else(fail)?;let mut seen=HashSet::new();
+    for row in rows{
+        let row=row.as_object().filter(|row|row.len()==2&&row.contains_key("path")&&row.contains_key("text")).ok_or_else(fail)?;
+        let path=row["path"].as_str().filter(|path|paths.contains(*path)&&seen.insert(path.to_string())).ok_or_else(fail)?;
+        let text=row["text"].as_str().filter(|text|super::line(text,repair_text_limit(path))).ok_or_else(fail)?;
+        let edit=edits.iter_mut().find(|edit|edit["path"].as_str()==Some(path)).and_then(Value::as_object_mut).ok_or_else(fail)?;
+        // Kind, owner, due, all other patches and original evidence stay exact.
+        edit.insert("text".into(),json!(text));
+    }
+    Ok(original.to_string())
+}
 fn preserves_unclear_history(doc:&Document,history:&HashMap<String,Vec<String>>)->Result<(),String>{
     let value=serde_json::to_value(doc).map_err(|_|"纪要含混表达历史核对未完成，已有结果保留。")?;
     for(path,phrases)in history{
@@ -348,7 +375,7 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
     let source=sentences(units);
     let wire=json!(units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>());
     let mut current=doc.clone();let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let mut attempted_phrases:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
-    let mut unclear_history:HashMap<String,Vec<String>>=HashMap::new();
+    let mut unclear_history:HashMap<String,Vec<String>>=HashMap::new();let mut recovered_display=false;
     let mut verified_claims=verified.map(claims).unwrap_or_default().into_iter().map(|c|(c["path"].as_str().unwrap().to_string(),c)).collect::<HashMap<_,_>>();
     for round in 0..=2 {
         let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
@@ -393,10 +420,25 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
                 .get("text")?.as_str()?.contains(phrase).then(||(c.path.clone(),vec![phrase.clone()]))
         }).collect::<HashMap<_,_>>()}else{HashMap::new()};
         let deletion_only=unclear.iter().filter(|path|!conservative.contains_key(*path)).cloned().collect::<HashSet<_>>();
-        let repair_contracts=allowed.iter().map(|path|json!({"path":path,"maxCharacters":if path=="purpose"{80}else if path.ends_with(".title"){26}else if path.contains(".points["){90}else if path.contains(".details["){120}else{180},"textOnlyConservative":conservative.contains_key(path)})).collect::<Vec<_>>();
+        let repair_contracts=allowed.iter().map(|path|json!({"path":path,"maxCharacters":repair_text_limit(path),"textOnlyConservative":conservative.contains_key(path)})).collect::<Vec<_>>();
         let stage=if round==0{"source-factual-repair"}else{"source-factual-repair-2"};
-        let raw=super::request(endpoint,model,key,client,REPAIR,json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,"deletionOnlyPaths":deletion_only,"conservativeRewritePaths":conservative,"knownUnclearPhrases":unclear_history,"repairContracts":repair_contracts}),super::coverage::enabled(),start,trace,stage)?;
-        let next=apply_changes_with_policy(&raw,&current,&allowed,&unclear,&conservative,units)?;
+        let mut payload=json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,"deletionOnlyPaths":deletion_only,"conservativeRewritePaths":conservative,"knownUnclearPhrases":unclear_history,"repairContracts":repair_contracts});
+        let raw=super::request(endpoint,model,key,client,REPAIR,payload.clone(),super::coverage::enabled(),start,trace,stage)?;
+        let next=match apply_changes_with_policy(&raw,&current,&allowed,&unclear,&conservative,units){
+            Ok(doc)=>doc,
+            Err(reason)if super::coverage::enabled()&&!recovered_display&&reason.contains("须为")&&!oversized_repair_texts(&raw).is_empty()=>{
+                // An oversized patch has not been applied. Recover only its
+                // text once, keep valid patches exact, then use every original
+                // scope/history/shape guard and independently audit all changes.
+                recovered_display=true;let paths=oversized_repair_texts(&raw);
+                payload["previousResult"]=json!(raw);payload["formatOnlyTextPaths"]=json!(paths);payload["formatProblems"]=json!([reason]);
+                payload["instruction"]=json!("本次只缩短formatOnlyTextPaths列出的超长text，按repairContracts保留必要条件、否定、范围、人物及不确定性，不改kind/owner/due，不补事实、不截断原句。其它有效patch由程序原样保留，不要返回。只返回changes，每项仅path和text，列出的每个path恰好一次。随后仍会完整复审。");
+                let fixed=super::request(endpoint,model,key,client,REPAIR,payload,true,start,trace,&format!("{stage}-length-recovery"))?;
+                let merged=merge_shorter_repair_texts(&raw,&fixed,&paths)?;
+                apply_changes_with_policy(&merged,&current,&allowed,&unclear,&conservative,units)?
+            },
+            Err(reason)=>return Err(reason),
+        };
         preserves_unclear_history(&next,&unclear_history)?;current=next;
         for issue in audit.claim_audit.iter().filter(|c|c.status!="supported"){
             attempted.insert(issue.path.clone(),(issue.status.clone(),issue.status=="unclear"||issue.clarity.as_deref()==Some("unclear")));
@@ -409,6 +451,15 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn automatic_brief_length_recovery_preserves_valid_patches_and_metadata(){
+        let raw=json!({"changes":[{"path":"topics[0].points[0]","text":"长".repeat(91),"kind":"opinion"},{"path":"actionItems[0]","text":"保留条件后提交报告。","owner":"王梅","due":"周五"}]}).to_string();
+        let paths=oversized_repair_texts(&raw);assert_eq!(paths,HashSet::from(["topics[0].points[0]".to_string()]));
+        let good=json!({"changes":[{"path":"topics[0].points[0]","text":"若条件满足，可提交报告。"}]});
+        let merged:Value=serde_json::from_str(&merge_shorter_repair_texts(&raw,&good.to_string(),&paths).unwrap()).unwrap();let original:Value=serde_json::from_str(&raw).unwrap();
+        assert_eq!(merged["changes"][1],original["changes"][1]);assert_eq!(merged["changes"][0]["kind"],"opinion");
+        for bad in [json!({"changes":[]}),json!({"changes":[{"path":"actionItems[0]","text":"改负责人。"}]}),json!({"changes":[{"path":"topics[0].points[0]","text":"短句。","kind":"decision"}]}),json!({"changes":[{"path":"topics[0].points[0]","text":"长".repeat(91)}]})]{assert!(merge_shorter_repair_texts(&raw,&bad.to_string(),&paths).is_err());}
+    }
     #[test]
     fn automatic_brief_second_ambiguity_requires_actual_removal_of_the_first(){
         let claim=json!({"text":"保留明确做法，另一个含混词。","owner":null,"due":null});
