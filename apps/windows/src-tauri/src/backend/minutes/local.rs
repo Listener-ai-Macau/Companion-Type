@@ -1,14 +1,14 @@
-//! Native local minutes: fixed SDK/model, one source-only document, no Python,
-//! paid fallback, automatic judge rewrite, or persistent inference service.
+//! Native local minutes: fixed SDK/model, one source-only fact bank then
+//! ID-only organization. No Python, paid fallback, judge rewrite or daemon.
 mod assets;
 mod transport;
 mod probe;
 mod evidence_document;
+mod atomic_document;
 pub(crate) use probe::candidate as verify_candidate;
 use std::{net::TcpListener,sync::{Arc,Mutex},time::Instant};
 use serde_json::{json,Value};
 use crate::companion_v1::{CompanionV1HostSession,CompanionV1MeetingMinutes};
-use super::canonical_brief::local_document;
 
 // Enabled only after the frozen implementation passes the actual whole-meeting
 // content and installed-app gates. Diagnostics do not promote their own output.
@@ -23,10 +23,12 @@ pub(crate) fn check_assets()->Result<(),String>{
 
 fn arguments(model:&std::path::Path,port:u16,key:&str,alias:&str)->Result<Vec<String>,String>{
     let model=model.to_str().ok_or("无法读取本地模型路径。")?;
+    let profile=transport::profile()?;
+    let template=json!({"enable_thinking":profile["enableThinking"]}).to_string();
     Ok(["-m",model,"--host","127.0.0.1","--port",&port.to_string(),"--api-key",key,"--alias",alias,
         "-c","16384","-np","1","-ngl","0","-t","4","-tb","4","-b","128","-ub","64",
         "--fit","off","--load-mode","mmap","--no-repack","--cache-ram","256","-lv","0",
-        "--no-warmup","--no-context-shift","--no-webui","--chat-template-kwargs","{\"enable_thinking\":false}"]
+        "--no-warmup","--no-context-shift","--no-webui","--chat-template-kwargs",&template]
         .into_iter().map(str::to_owned).collect())
 }
 
@@ -48,7 +50,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
     let outcome=(||{
         if !session.meeting_notes.is_empty(){return Err("当前本地整理不能合并补充说明，已有内容保留。".into());}
         if !assets::cpu_supported(){return Err("这台电脑暂不支持当前本地纪要引擎，可选择云端整理。".into());}
-        let input=local_document::input(&session.transcript_text)?;let prompt=evidence_document::prompt();let schema=evidence_document::schema(&session.transcript_text);
+        let input=atomic_document::fact_input(&session.transcript_text)?;let prompt=atomic_document::fact_prompt();let schema=atomic_document::fact_schema(&session.transcript_text);
         let _lease=assets::compute_lease()?;
         let model=assets::model_path()?;assets::verified(&model,assets::MODEL_BYTES,assets::MODEL_SHA)?;
         let runtime=assets::runtime()?;
@@ -58,11 +60,16 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
         let args=arguments(&model,port,&key,&alias)?;let program=runtime.to_str().ok_or("本地纪要引擎路径无效。")?;
         if let Ok(mut trace)=trace.lock(){trace["stage"]=json!("loading-engine");}
         let cancellation=super::super::meeting_processing_job::current();
-        let raw=super::super::external_command::with_local_service(program,&args,cancellation.as_ref().map(|c|c.flag()),|stop|{
-            transport::generate(port,&key,&alias,&prompt,input,schema,stop,&trace)
+        let parsed=super::super::external_command::with_local_service(program,&args,cancellation.as_ref().map(|c|c.flag()),|stop|{
+            let raw=transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace)?;
+            record_call(&trace,"atomic-source-facts");
+            let bank=atomic_document::parse_bank(&raw,&session.transcript_text)?;
+            if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}
+            let layout=transport::generate(port,&key,&alias,atomic_document::layout_prompt(),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace)?;
+            record_call(&trace,"id-only-organization");
+            atomic_document::assemble(&layout,&bank,session,base)
         })?;
         release_confirmed=true;
-        let parsed=evidence_document::parse(&raw,session,base)?;
         if let Ok(mut trace)=trace.lock(){trace["documentReceipt"]=parsed.receipt;trace["stage"]=json!("candidate-parsed");}
         Ok(parsed.minutes)
     })();
@@ -71,6 +78,15 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
     receipt["serviceReleaseConfirmed"]=json!(release_confirmed);
     receipt["ownedJobKillOnCloseEnabled"]=json!(true);
     (outcome,receipt)
+}
+
+fn record_call(trace:&transport::Trace,stage:&str){
+    if let Ok(mut trace)=trace.lock(){
+        let mut call=json!({"stage":stage});
+        for key in ["request","inputTokens","output","reasoningCharacters","usage","finishReason","generationSeconds"]{call[key]=trace[key].clone();}
+        if !trace["calls"].is_array(){trace["calls"]=json!([]);}
+        trace["calls"].as_array_mut().unwrap().push(call);
+    }
 }
 
 #[cfg(test)]

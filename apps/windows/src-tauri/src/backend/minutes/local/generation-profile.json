@@ -1,7 +1,11 @@
 {
   "schemaVersion": 1,
   "model": "Qwen3.5-4B Q4_K_M",
-  "mode": "non-thinking",
+  "mode": "bounded-thinking",
+  "pipeline": "atomic source facts once, immutable IDs only for organization",
+  "enableThinking": true,
+  "reasoningBudgetTokens": 1024,
+  "thinkingSwitchSource": "https://huggingface.co/Qwen/Qwen3.5-4B#quickstart",
   "samplingSource": "https://huggingface.co/Qwen/Qwen3.5-4B#best-practices",
   "samplingSourceCheckedAt": "2026-11-18",
   "frameworkMapping": "The pinned llama.cpp server uses repeat_penalty for Qwen's repetition_penalty.",
@@ -15,5 +19,5 @@
     "seed": 42
   },
   "contentQualified": false,
-  "note": "Upstream's general non-thinking configuration, with a fixed seed for a reproducible candidate. It does not prove meeting accuracy; no seed or parameter search per meeting."
+  "note": "The mode-only monolithic writer failed. Architecture candidate reuses the original ID-only assembler: each source fact/task is written once, later organization cannot rewrite or merge it. Same fixed model, SDK and sampling; bounded thinking1024. Free prose is not grammar-truncated; original post-generation length checks remain. No training, prompt/seed search or content qualification."
 }

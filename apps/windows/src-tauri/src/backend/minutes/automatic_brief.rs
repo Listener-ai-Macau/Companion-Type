@@ -6,14 +6,13 @@ use serde_json::{json,Value};
 use super::canonical_brief::*;
 use crate::companion_v1::{CompanionV1ActionItem,CompanionV1HostSession,CompanionV1MeetingMinutes,MinutesTemplate};
 #[path="automatic_brief_factual_audit.rs"]
-mod factual_audit;
+pub(super) mod factual_audit;
 #[path="automatic_brief_coverage.rs"]
 mod coverage;
-// Preparation only: the new source-question writer is not wired into runtime
-// until the real content qualification finishes.
-#[cfg(test)]
+// The ID-only assembler is shared with the qualification-gated local writer;
+// the existing cloud writer and its release behavior remain independent.
 #[path="automatic_brief_answer_layout.rs"]
-mod answer_layout;
+pub(super) mod answer_layout;
 #[derive(Default,Deserialize)]
 enum ResponseFormatMarker {#[default] #[serde(skip)] Absent,#[serde(rename="json_object")] Present}
 

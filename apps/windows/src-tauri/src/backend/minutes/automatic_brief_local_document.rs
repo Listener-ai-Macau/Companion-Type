@@ -34,12 +34,16 @@ fn contains_identifier(original:&str,id:&str)->bool{
             &&!original[end..].chars().next().is_some_and(|c|c.is_ascii_alphanumeric())
     })
 }
+pub(in crate::backend::minutes) fn identifiers_bound(text:&str,original:&str)->bool{
+    let original=normalized(original).to_ascii_lowercase();
+    identifiers(text).iter().all(|id|contains_identifier(&original,id))
+}
 
 fn original_identifiers(doc:&Document,units:&[Unit])->Result<(),String>{
     let known=units.iter().map(|u|(u.id.as_str(),u.text.as_str())).collect::<HashMap<_,_>>();
     let check=|text:&str,ids:&[String]|{
         let original=normalized(&ids.iter().map(|id|known[id.as_str()]).collect::<Vec<_>>().join("\n")).to_ascii_lowercase();
-        identifiers(text).iter().all(|id|contains_identifier(&original,id))
+        identifiers_bound(text,&original)
     };
     let all=units.iter().map(|u|u.id.clone()).collect::<Vec<_>>();
     if !check(&doc.purpose,&all){return Err("纪要主线出现未能按原文确认的编号或数值，已有内容保留。".into());}

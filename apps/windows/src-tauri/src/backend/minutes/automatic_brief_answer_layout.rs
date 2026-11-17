@@ -6,11 +6,11 @@ use super::{Action,Document,Entry,Kind,Point,Topic,Unit};
 
 #[derive(Debug,Clone,Copy,Deserialize,Serialize,PartialEq,Eq)]
 #[serde(rename_all="lowercase")]
-pub(super) enum Placement {Topic,Decision,Action,Question}
+pub(in crate::backend::minutes) enum Placement {Topic,Decision,Action,Question}
 
 #[derive(Debug,Clone,Deserialize,Serialize)]
 #[serde(deny_unknown_fields)]
-pub(super) struct Fact {
+pub(in crate::backend::minutes) struct Fact {
     pub id:String,pub kind:Kind,pub placement:Placement,pub text:String,
     pub owner:Option<String>,pub due:Option<String>,pub evidence:Vec<String>,
 }
@@ -20,10 +20,10 @@ pub(super) struct Fact {
 struct TopicIds {title:String,points:Vec<Vec<String>>,details:Vec<Vec<String>>}
 #[derive(Debug,Deserialize,Serialize)]
 #[serde(rename_all="lowercase")]
-pub(super) enum ExclusionReason {Duplicate,Illustration,Background}
+pub(in crate::backend::minutes) enum ExclusionReason {Duplicate,Illustration,Background}
 #[derive(Debug,Deserialize,Serialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
-pub(super) struct Exclusion {pub id:String,pub reason:ExclusionReason,pub covered_by:Vec<String>}
+pub(in crate::backend::minutes) struct Exclusion {pub id:String,pub reason:ExclusionReason,pub covered_by:Vec<String>}
 #[derive(Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
 struct Layout {
@@ -31,8 +31,9 @@ struct Layout {
     purpose:String,topics:Vec<TopicIds>,decisions:Vec<Vec<String>>,
     action_items:Vec<Vec<String>>,questions:Vec<Vec<String>>,excluded:Vec<Exclusion>,
 }
-pub(super) struct Assembled {
+pub(in crate::backend::minutes) struct Assembled {
     pub document:Document,pub retained_ids:Vec<String>,pub excluded:Vec<Exclusion>,
+    pub bindings:Vec<(String,String)>,
 }
 fn fail()->String{"纪要分组尚未完整保留已核内容，原文和已有纪要保留。".into()}
 
@@ -62,6 +63,7 @@ fn bind_facts<'a>(facts:&'a[Fact],units:&[Unit])->Result<HashMap<&'a str,Bound<'
     }
     Ok(bound)
 }
+pub(in crate::backend::minutes) fn validate_facts(facts:&[Fact],units:&[Unit])->Result<(),String>{bind_facts(facts,units).map(|_|())}
 
 fn take<'a>(ids:&[String],placement:Placement,known:&'a HashMap<&str,Bound<'a>>,used:&mut HashSet<String>)->Result<&'a Bound<'a>,String>{
     // Separate actors and independent facts stay separate reader rows. No
@@ -72,25 +74,28 @@ fn take<'a>(ids:&[String],placement:Placement,known:&'a HashMap<&str,Bound<'a>>,
 }
 fn entry(bound:&Bound<'_>)->Entry{Entry{text:bound.fact.text.clone(),sources:bound.sources.clone()}}
 
-pub(super) fn assemble(raw:&str,facts:&[Fact],units:&[Unit])->Result<Assembled,String>{
+pub(in crate::backend::minutes) fn assemble(raw:&str,facts:&[Fact],units:&[Unit])->Result<Assembled,String>{
     let layout:Layout=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|fail())?;
     let known=bind_facts(facts,units)?;let mut used=HashSet::new();
     if layout.topics.is_empty()||layout.topics.len()>8||layout.decisions.len()>20||layout.action_items.len()>20||layout.questions.len()>20{return Err(fail());}
     let mut document=Document{purpose:layout.purpose,topics:Vec::new(),decisions:Vec::new(),action_items:Vec::new(),questions:Vec::new()};
-    for topic in layout.topics{
+    let mut bindings=Vec::new();
+    for (i,topic) in layout.topics.into_iter().enumerate(){
         if topic.points.is_empty()||topic.points.len()>3||topic.details.len()>8{return Err(fail());}
         let mut points=Vec::new();let mut details=Vec::new();
-        for ids in topic.points{
+        for (j,ids) in topic.points.into_iter().enumerate(){
             let bound=take(&ids,Placement::Topic,&known,&mut used)?;
+            bindings.push((format!("/topics/{i}/points/{j}"),bound.fact.id.clone()));
             points.push(Point{kind:bound.fact.kind.clone(),text:bound.fact.text.clone(),sources:bound.sources.clone()});
         }
-        for ids in topic.details{details.push(entry(take(&ids,Placement::Topic,&known,&mut used)?));}
+        for (j,ids) in topic.details.into_iter().enumerate(){let bound=take(&ids,Placement::Topic,&known,&mut used)?;bindings.push((format!("/topics/{i}/details/{j}"),bound.fact.id.clone()));details.push(entry(bound));}
         document.topics.push(Topic{title:topic.title,points,details});
     }
-    for ids in layout.decisions{document.decisions.push(entry(take(&ids,Placement::Decision,&known,&mut used)?));}
-    for ids in layout.questions{document.questions.push(entry(take(&ids,Placement::Question,&known,&mut used)?));}
-    for ids in layout.action_items{
+    for (i,ids) in layout.decisions.into_iter().enumerate(){let bound=take(&ids,Placement::Decision,&known,&mut used)?;bindings.push((format!("/decisions/{i}"),bound.fact.id.clone()));document.decisions.push(entry(bound));}
+    for (i,ids) in layout.questions.into_iter().enumerate(){let bound=take(&ids,Placement::Question,&known,&mut used)?;bindings.push((format!("/questions/{i}"),bound.fact.id.clone()));document.questions.push(entry(bound));}
+    for (i,ids) in layout.action_items.into_iter().enumerate(){
         let bound=take(&ids,Placement::Action,&known,&mut used)?;
+        bindings.push((format!("/actionItems/{i}"),bound.fact.id.clone()));
         document.action_items.push(Action{text:bound.fact.text.clone(),owner:bound.fact.owner.clone(),due:bound.fact.due.clone(),sources:bound.sources.clone()});
     }
     let retained=used.clone();
@@ -107,7 +112,7 @@ pub(super) fn assemble(raw:&str,facts:&[Fact],units:&[Unit])->Result<Assembled,S
     if used.len()!=known.len(){return Err(fail());}
     super::validate_with_details_limit(&document,units,8)?;
     let retained_ids=facts.iter().filter(|f|retained.contains(&f.id)).map(|f|f.id.clone()).collect();
-    Ok(Assembled{document,retained_ids,excluded:layout.excluded})
+    Ok(Assembled{document,retained_ids,excluded:layout.excluded,bindings})
 }
 
 #[cfg(test)]

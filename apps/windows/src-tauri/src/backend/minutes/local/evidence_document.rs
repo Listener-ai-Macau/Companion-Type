@@ -35,7 +35,9 @@ pub(super) fn wire(value:&Value)->String{
     fn write(value:&Value,properties:bool)->String{
         match value{
             Value::Object(map)=>{
-                let priority=["purpose","topics","title","points","evidence","source","quote","kind","text","details","decisions","actionItems","questions","owner","due"];
+                let priority:&[&str]=if properties&&map.contains_key("role"){
+                    &["evidence","role","owner","due","text"]
+                }else{&["purpose","topics","title","points","evidence","source","quote","kind","text","details","decisions","actionItems","questions","owner","due"]};
                 let mut keys=map.keys().collect::<Vec<_>>();
                 if properties{keys.sort_by_key(|key|priority.iter().position(|p|p==&key.as_str()).unwrap_or(priority.len()));}
                 let fields=keys.into_iter().map(|key|format!("{}:{}",json!(key),write(&map[key],key=="properties"))).collect::<Vec<_>>();
@@ -99,7 +101,7 @@ pub(super) fn parse(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1Me
         for row in rows{
             let row=row.as_object().filter(|r|r.len()==2).ok_or("本地纪要原话依据不完整。")?;
             let id=row.get("source").and_then(Value::as_str).ok_or("本地纪要原话来源不完整。")?;
-            let quote=row.get("quote").and_then(Value::as_str).filter(|q|!q.trim().is_empty()&&q.chars().count()<=500).ok_or("本地纪要原话依据不完整。")?;
+            let quote=row.get("quote").and_then(Value::as_str).filter(|q|!q.trim().is_empty()&&q.chars().count()<=1800).ok_or("本地纪要原话依据不完整。")?;
             let original=known.get(id).ok_or("本地纪要引用了不存在的原话。")?;
             let(start,end)=literal_span(original,quote).ok_or("本地纪要引用与原话不一致，已有内容保留。")?;
             let exact=&original[start..end];

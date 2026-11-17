@@ -30,7 +30,7 @@ fn sentences(units:&[Unit])->Vec<Sentence> {
     }
     out
 }
-pub(super) fn evidence_sentences(units:&[Unit])->Vec<Value> {
+pub(in crate::backend::minutes) fn evidence_sentences(units:&[Unit])->Vec<Value> {
     sentences(units).iter().map(|s|json!({"id":s.id,"source":s.source,"text":s.text})).collect()
 }
 fn claims(doc:&Document)->Vec<Value> {
