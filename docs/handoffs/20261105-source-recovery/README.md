@@ -1,1 +1,0 @@
-本目录为2026-11-05恢复/续作的不可变备份。唯一当前任务源仍为 C:/Users/Billy/Desktop/Denzic/Companion/docs/product_backlog.json，唯一当前时间线仍为其同目录development_log.md。ZIP是历史快照，不在其中执行或维护任务。恢复源/远端与删除边界见RECOVERY.md；050为日用交付，051复制为未安装源码检查点。
