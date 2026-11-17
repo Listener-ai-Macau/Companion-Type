@@ -1,0 +1,590 @@
+{
+  "state": "FAIL_CPU_TORCH_PAYLOAD",
+  "files": 11631,
+  "bytes": 423369439,
+  "mismatches": [
+    {
+      "file": "torch/include/ATen/native/transformers/cuda/mem_eff_attention/iterators/predicated_tile_access_iterator_residual_last.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torch/include/ATen/native/transformers/cuda/mem_eff_attention/iterators/predicated_tile_iterator_residual_last.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torch/include/ATen/ops/_fake_quantize_per_tensor_affine_cachemask_tensor_qparams_compositeexplicitautograd_dispatch.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torch/include/ATen/ops/_scaled_dot_product_fused_attention_overrideable_backward_compositeexplicitautograd_dispatch.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torch/include/ATen/ops/_test_autograd_multiple_dispatch_view_copy_compositeexplicitautogradnonfunctional_dispatch.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torch/include/ATen/ops/fake_quantize_per_channel_affine_cachemask_backward_compositeimplicitautograd_dispatch.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torch/include/ATen/ops/fake_quantize_per_tensor_affine_cachemask_backward_compositeimplicitautograd_dispatch.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torch/include/ATen/ops/special_shifted_chebyshev_polynomial_t_compositeexplicitautogradnonfunctional_dispatch.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torch/include/ATen/ops/special_shifted_chebyshev_polynomial_u_compositeexplicitautogradnonfunctional_dispatch.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torch/include/ATen/ops/special_shifted_chebyshev_polynomial_v_compositeexplicitautogradnonfunctional_dispatch.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torch/include/ATen/ops/special_shifted_chebyshev_polynomial_w_compositeexplicitautogradnonfunctional_dispatch.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/__init__.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/code_template.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/context.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/gen.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/gen_aoti_c_shim.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/gen_backend_stubs.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/gen_functionalization_type.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/gen_lazy_tensor.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/gen_schema_utils.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/gen_vmap_plumbing.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/local.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/model.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/native_function_generation.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/utils.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/yaml_utils.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/aoti/__init__.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/aoti/fallback_ops.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/__init__.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/autograd.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/cpp.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/dispatcher.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/functionalization.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/lazy.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/meta.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/native.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/python.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/structured.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/translate.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/ufunc.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/unboxing.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/types/__init__.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/types/signatures.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/types/types.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/api/types/types_base.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/dest/__init__.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/dest/lazy_ir.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/dest/lazy_ts_lowering.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/dest/native_functions.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/dest/register_dispatch_key.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/dest/ufunc.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/operator_versions/__init__.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/operator_versions/gen_mobile_upgraders.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/operator_versions/gen_mobile_upgraders_constant.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/native/native_functions.yaml",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/native/tags.yaml",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/ATenOpList.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/CompositeViewCopyKernels.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/DispatchKeyFunction.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/DispatchKeyFunctions.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/DispatchKeyFunctions_inl.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/DispatchKeyNativeFunctions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/DispatchKeyNativeFunctions.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/Function.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/FunctionalInverses.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/Functions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/Functions.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/LazyIr.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/LazyNonNativeIr.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/MethodOperators.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/NativeFunction.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/NativeFunctions.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/NativeMetaFunction.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/NativeMetaFunctions.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/Operator.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/Operators.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/Operators.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RedispatchFunctions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RedispatchFunctions.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegisterBackendSelect.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegisterCodegenUnboxedKernels.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegisterDispatchDefinitions.ini",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegisterDispatchKey.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegisterFunctionalization.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegisterSchema.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegistrationDeclarations.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/TensorBody.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/TensorMethods.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/UfuncCPU.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/UfuncCPUKernel.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/UfuncCUDA.cu",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/UnboxingFunctions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/UnboxingFunctions.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/ViewMetaClasses.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/ViewMetaClasses.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/ViewMetaClassesPythonBinding.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/aten_interned_strings.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/enum_tag.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/BUILD.bazel",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/README.md",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/__init__.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/build.bzl",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/context.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/deprecated.yaml",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/derivatives.yaml",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_annotated_fn_args.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_autograd.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_autograd_functions.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_inplace_or_view_type.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_python_functions.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_trace_type.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_variable_factories.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_variable_type.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_view_funcs.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/load_derivatives.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/ADInplaceOrViewType.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/Functions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/Functions.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/TraceType.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/VariableType.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/VariableType.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/ViewFuncs.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/ViewFuncs.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/annotated_fn_args.py.in",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_enum_tag.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_fft_functions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_functions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_functions.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_linalg_functions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_nested_functions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_nn_functions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_return_types.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_return_types.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_sparse_functions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_special_functions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_torch_functions.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_variable_methods.cpp",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/variable_factories.h",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/selective_build/__init__.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/selective_build/operator.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/selective_build/selector.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/static_runtime/__init__.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/static_runtime/config.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/static_runtime/gen_static_runtime_ops.py",
+      "reason": "missing original wheel payload"
+    },
+    {
+      "file": "torchgen/static_runtime/generator.py",
+      "reason": "missing original wheel payload"
+    }
+  ],
+  "pipExitCode": 1,
+  "pipFailurePreserved": "Windows cross-volume target move failed for generated long-path __pycache__ files. Original wheel payload checked independently; generated pyc files are not wheel payload.",
+  "newNeuralCalls": 0
+}

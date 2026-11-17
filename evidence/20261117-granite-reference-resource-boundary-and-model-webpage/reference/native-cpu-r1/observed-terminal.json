@@ -1,0 +1,7 @@
+{
+  "state": "PRE_MODEL_CPU_LIMIT_ADAPTER_FAILURE",
+  "exitCode": 1,
+  "error": "WorkerLimits responsive wrapper defaults to10percent; use the existing per-owned-job25percent adapter. Original policy unchanged.",
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0
+}
