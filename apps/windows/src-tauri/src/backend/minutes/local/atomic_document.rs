@@ -63,9 +63,39 @@ pub(super) fn parse_bank(raw:&str,source:&str)->Result<Bank,String>{
     }
     answer_layout::validate_facts(&facts,&units)?;
     let seals=facts.iter().map(|f|json!({"id":f.id,"bodySha256":format!("{:x}",Sha256::digest(serde_json::to_vec(f).unwrap()))})).collect::<Vec<_>>();
+    let coverage=source_coverage(&facts,&units,&sentences);
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
-        "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false});
+        "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage});
     Ok(Bank{facts,receipt})
+}
+
+fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
+    use std::collections::HashMap;
+    let mut linked:HashMap<&str,Vec<&str>>=HashMap::new();
+    for fact in facts{
+        for evidence in &fact.evidence{linked.entry(evidence.as_str()).or_default().push(&fact.id);}
+    }
+    let meaningful=sentences.iter().filter(|row|row["text"].as_str().is_some_and(|text|!text.trim().is_empty())).collect::<Vec<_>>();
+    let missing=meaningful.iter().filter(|row|!linked.contains_key(row["id"].as_str().unwrap())).collect::<Vec<_>>();
+    // Each constraint includes its trigger sentence and sometimes the preceding
+    // context. Only the trigger is the coverage anchor. Treating the broader
+    // source unit or the preceding context as a match hid missed clauses.
+    let mut by_unit:HashMap<&str,Vec<(usize,&str)>>=HashMap::new();
+    for row in sentences{
+        let unit=by_unit.entry(row["source"].as_str().unwrap()).or_default();
+        let end=unit.last().map_or(0,|(end,_)|*end)+row["text"].as_str().unwrap().len();
+        unit.push((end,row["id"].as_str().unwrap()));
+    }
+    let mut anchors=Vec::new();
+    let mut unresolved=Vec::new();
+    for (constraint,end) in canonical_brief::constraint_anchors(units){
+        let target=by_unit.get(constraint.source.as_str()).and_then(|rows|rows.iter().find(|(stop,_)|*stop>=end));
+        let Some((_,id))=target else{unresolved.push(constraint.id);continue;};
+        anchors.push(json!({"sentenceId":id,"constraintId":constraint.id,"factIds":linked.get(id).cloned().unwrap_or_default()}));
+    }
+    json!({"totalSourceSentences":meaningful.len(),"citedSourceSentences":meaningful.len()-missing.len(),
+        "uncitedSentenceIds":missing.iter().map(|row|&row["id"]).collect::<Vec<_>>(),"constraintAnchors":anchors,
+        "unresolvedConstraintIds":unresolved,"semanticAccuracyCertificate":false})
 }
 
 pub(super) fn layout_prompt()->&'static str{
@@ -151,6 +181,20 @@ mod tests{
     #[test]
     fn fact_parser_checks_owner_against_selected_sentences_not_nearby_people(){
         let(s,_,mut f,_)=fixture();f["facts"][1]["owner"]=json!("王强");assert!(parse_bank(&f.to_string(),&s.transcript_text).is_err());
+    }
+    #[test]
+    fn citing_preceding_sentence_does_not_cover_a_cost_or_condition_trigger(){
+        let source="先在门店演示。费用尚未确认。\n两项复测通过才具备启动条件";
+        let facts=json!({"facts":[{"evidence":["e0000"],"role":"status","text":"先在门店演示。","owner":null,"due":null},
+            {"evidence":["e0002"],"role":"status","text":"启动前需要通过两项复测。","owner":null,"due":null}]});
+        let bank=parse_bank(&facts.to_string(),source).unwrap();
+        let coverage=&bank.receipt["sourceCoverage"];
+        assert_eq!(coverage["uncitedSentenceIds"],json!(["e0001"]));
+        assert_eq!(coverage["constraintAnchors"],json!([
+            {"sentenceId":"e0001","constraintId":"c000","factIds":[]},
+            {"sentenceId":"e0002","constraintId":"c001","factIds":["a001"]}
+        ]));
+        assert_eq!(coverage["unresolvedConstraintIds"],json!([]));
     }
     #[test]
     fn source_sentences_are_complete_and_grammar_does_not_force_prose_cutoffs(){
