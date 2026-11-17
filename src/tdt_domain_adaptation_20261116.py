@@ -29,17 +29,24 @@ from english_transducer_worker_20261116 import make_empty
 from tdt_selected_loss_20261116 import gpu_loss_contract,blocked_joint_loss
 from tdt_adaptation_checkpoint_20261116 import CheckpointStore,frozen_digest,digest_tensors
 from tdt_adaptation_contract_20261117 import valid_resume_position,checkpoint_identity,require_final_checkpoint
+from model_thermal_guard_20261117 import ThermalGuard,inspect_thermal_policy
 
 now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
 
 def inspect(P):
+    inspect_thermal_policy(P['thermal'])
     for item in P['files']:require(sha(item['file'])==item['sha256'],'Frozen adaptation dependency changed: '+item['file'])
     plan=read(P['dataPlan']);require(plan['examples']==475 and plan['trainableParameters']==118886022,
         'Fixed adaptation data/parameter scope changed')
     require(plan['englishGlobalParticipantsDisjointFromSeenValidationVerified'],'English participant split not verified')
     require(plan['targetAnnotationProjection']['canonicalLexicalWordEdits']==0,'Training lexical words changed')
     require(P['training']['epochs']==1 and P['training']['learningRate']==1e-5
-        and P['training']['gradientAccumulationExamples']==4,'No parameter/epoch grid')
+        and P['training']['gradientAccumulationExamples']==4 and P['training']['seed']==20261116
+        and P['training']['optimizer']=='AdamW' and P['training']['betas']==[.9,.999]
+        and P['training']['weightDecay']==.01 and P['training']['epsilon']==1e-8
+        and P['training']['gradientClipNorm']==1.,'No parameter/epoch grid')
+    require(plan['publishedWeightsSha256']==P['weights']['sha256']
+        and sha(plan['trainingManifest'])==plan['trainingManifestSha256'],'Frozen training data/base mismatch')
     return plan
 
 def main():
@@ -62,13 +69,14 @@ def main():
         'binding':binding,'phase':a.phase,'newNeuralCalls':0,'completed':[],'parameterUpdates':0,
         'candidateOptimizerUpdates':0,'completedTrainingExamples':0,'validationReferencesRead':False,
         'qualityQualified':False,'saleQualified':False,'currentOperationBudgetSeconds':180}
-    pressure=SystemRamPressure();guard=None
+    pressure=SystemRamPressure();guard=None;thermal=ThermalGuard(P['thermal'])
     def save(**values):
         state.update(values,observedAt=now(),limits=limits.query());atomic_json(out/'state.json',state,progress=True)
     def stop():
         require(datetime.now().astimezone()<datetime.fromisoformat(P['stopAt']),'Original overnight cutoff')
         require(not pressure.low() and available_ram()>=P['minimumAvailableBytes'],'Original system RAM protection')
         require(not(run/'stop.request').exists(),'Owned stop requested; no automatic restart')
+        state['cpuThermalObservation']=thermal.check()
     def train_rows():
         require(sha(plan['trainingManifest'])==plan['trainingManifestSha256'],'Training manifest changed')
         rows=[json.loads(s) for s in Path(plan['trainingManifest']).read_text(encoding='utf-8').splitlines() if s]
@@ -85,7 +93,8 @@ def main():
     with exclusive_run(run),exclusive_file(Path(P['neuralLock'])),PowerLease():
         try:
             save();state['presentDevices']=present_discrete_gpu();began=time.monotonic()
-            while time.monotonic()-began<60:stop();time.sleep(1)
+            while time.monotonic()-began<60:
+                stop();state['cpuThermalObservation']=thermal.check(starting=True);save();time.sleep(1)
             import torch
             import numpy as np
             import transformers
@@ -118,8 +127,12 @@ def main():
             require(all(p.device==torch.device(device) and p.dtype==torch.float32 and not p.is_meta
                 for p in model.parameters()),'PublishedF32 native GPU parameters required')
             model.generation_config=GenerationConfig.from_pretrained(P['modelRoot'],local_files_only=True)
+            require(set(model.generation_config.suppress_tokens)==set(range(config.vocab_size,config.vocab_size+5)),
+                'Published duration-logit suppression differs')
             atomic_json(out/'factory-load.json',receipt);guard.attach(model)
             processor=AutoProcessor.from_pretrained(P['modelRoot'],local_files_only=True,trust_remote_code=False)
+            require(processor._decoder_type=='tdt' and processor.feature_extractor.sampling_rate==16000
+                and processor.feature_extractor.hop_length==160,'Published TDT frontend/decoder differs')
             named=dict(model.named_parameters());buffers=dict(model.named_buffers())
             names=plan['trainableParameterNames'];mutable=plan['allowedMutableBufferNames']
             require(sum(named[n].numel() for n in names)==118886022,'Exact trainable parameter count differs')
@@ -147,6 +160,8 @@ def main():
                     restored=checkpoint_store(run/'checkpoints').restore(include_optimizer=False,restore_rng=False)
                     evaluated_checkpoint=require_final_checkpoint(restored,final)
                     state['evaluatedCheckpoint']=evaluated_checkpoint
+                    state['candidateOptimizerUpdates']=restored['optimizerUpdates']
+                    state['completedTrainingExamples']=restored['completedExamples']
                     state['checkpointPointerSelection']=restored['pointerSelection']
                     require(frozen_digest(model,names,mutable,torch=torch,heartbeat=guard.heartbeat)==final['frozenDigest'],
                         'Validation factory frozen tensors differ')
@@ -164,6 +179,7 @@ def main():
                         stopping_criteria=StoppingCriteriaList([OwnedStop()]))
                     torch.cuda.synchronize();seconds=time.perf_counter()-tick
                     ids=result.sequences[0].cpu().tolist();durations=result.durations[0].cpu().tolist()
+                    require(len(ids)==len(durations) and all(d>=0 for d in durations),'Native token/duration pairing differs')
                     eos=model.generation_config.eos_token_id;eos=[eos] if isinstance(eos,int) else eos or []
                     natural=sum(durations)>=encoder_frames or bool(ids and ids[-1] in eos)
                     packet={'id':row['id'],'binding':binding,'audioSha256':row['audioSha256'],
@@ -172,7 +188,8 @@ def main():
                         'text':processor.batch_decode(result.sequences,skip_special_tokens=True,
                             clean_up_tokenization_spaces=False,group_tokens=False)[0],
                         'wordsPostEdited':False,'referenceUsed':False,'phase':a.phase,
-                        'evaluatedCheckpoint':evaluated_checkpoint,'inputFrames':row['frames']}
+                        'evaluatedCheckpoint':evaluated_checkpoint,'inputFrames':row['frames'],
+                        'weightsDtype':'published float32 unchanged','repeatedLexicalTokensCollapsed':False}
                     f=out/'results'/(row['id']+'.json');atomic_json(f,packet)
                     require(natural,'Incomplete TDT output; no changed-window retry')
                     state['completed'].append({'id':row['id'],'file':str(f),'sha256':sha(f)})

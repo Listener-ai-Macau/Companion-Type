@@ -1,0 +1,57 @@
+{
+  "state": "PASS_IDENTIFIED_CPU_THERMAL_POLICY_FAULT_CASES_AND_LIVE_LOGGER_BINDING",
+  "at": "2026-11-17T08:49:06.417714+08:00",
+  "rejectedMetadataFaults": [
+    "warm-runtime-allowed-but-start-rejected-85.01",
+    "warm-runtime-allowed-but-start-rejected-94.99",
+    "stop-or-invalid-95",
+    "stop-or-invalid-100",
+    "stop-or-invalid-130",
+    "stop-or-invalid-None",
+    "stop-or-invalid-nan",
+    "stale",
+    "future",
+    "unidentified-acpi-cannot-substitute-for-cpu",
+    "duplicate-sensor"
+  ],
+  "liveReading": {
+    "sampleAt": "2026-11-17T08:49:02.4386846+08:00",
+    "celsius": 80.625,
+    "sampleAgeSeconds": 3.97903,
+    "sensorIdentifier": "/amdcpu/0/temperature/2",
+    "taskStartThresholdCelsius": 85,
+    "taskStopThresholdCelsius": 95,
+    "hardwareOverheatCauseProven": false,
+    "physicalMainboardTemperatureMeasured": false,
+    "snapshotSelection": {
+      "selectedFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\latest.json",
+      "sha256": "8febcfaac2d1161567f6aabc0336cfbf80b8943f0ac253198e2b30de6780e1d2",
+      "usedPrevious": false,
+      "primaryFailures": [],
+      "originalCorruptBytesPreserved": true
+    }
+  },
+  "sourceSha256": "a7f58c34878323a73bfd19af5f1096619c0dc1e81e8fca720306884cf3fc8bf9",
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "hardwareTemperatureChangedByTest": false,
+  "physicalGpuAbortExecuted": false,
+  "overheatCauseProven": false,
+  "torchImported": false,
+  "limits": {
+    "pid": 19196,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 12173312,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

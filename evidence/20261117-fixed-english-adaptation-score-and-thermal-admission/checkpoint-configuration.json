@@ -1,0 +1,76 @@
+{
+  "revision": 57,
+  "evidenceDirectory": "evidence/20261117-fixed-english-adaptation-score-and-thermal-admission",
+  "sources": [
+    "src/tdt_domain_adaptation_20261116.py",
+    "src/run_owned_tdt_adaptation_20261117.py",
+    "src/model_thermal_guard_20261117.py",
+    "src/score_tdt_adaptation_20261117.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r1\\protocol.json",
+      "name": "prepared-r1/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r1\\scoring-control.json",
+      "name": "prepared-r1/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r1\\intake.json",
+      "name": "prepared-r1/intake.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r1\\validation-audio-only.json",
+      "name": "prepared-r1/validation-audio-only.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\thermal-policy-proof-r1\\result.json",
+      "name": "thermal-policy-proof-r1/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\score-policy-proof-r1\\result.json",
+      "name": "score-policy-proof-r1/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\execution-gates-proof-r1\\result.json",
+      "name": "execution-gates-proof-r1/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\execution-gates-proof-r1\\expected-missing-training-error.log",
+      "name": "execution-gates-proof-r1/expected-missing-training-error.log"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_tdt_adaptation_20261117.py",
+      "name": "local-tools/prepare_tdt_adaptation_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_tdt_thermal_policy_20261117.py",
+      "name": "local-tools/verify_tdt_thermal_policy_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_tdt_score_policy_20261117.py",
+      "name": "local-tools/verify_tdt_score_policy_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_tdt_execution_gates_20261117.py",
+      "name": "local-tools/verify_tdt_execution_gates_20261117.py"
+    }
+  ],
+  "commitMessage": "Freeze paired English adaptation scoring and identified CPU thermal admission",
+  "claims": {
+    "state": "OFFLINE_RECIPE_SCORER_AND_THERMAL_GUARD_VERIFIED_GPU_DISABLED",
+    "newNeuralCalls": 0,
+    "parameterUpdates": 0,
+    "actualModelAccuracyImproved": false,
+    "actualGpuLossGradientOrCheckpointPreflightPassed": false,
+    "originalExecutionWindowExtended": false,
+    "gpuExecutionEnabled": false,
+    "originalRawReferencesAndThresholdsChanged": false,
+    "physicalGpuThermalAbortExecuted": false,
+    "overheatCauseProven": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

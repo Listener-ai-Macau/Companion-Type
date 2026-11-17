@@ -1,0 +1,108 @@
+{
+  "at": "2026-11-17T08:52:28.408650+08:00",
+  "parent": "e0ffa04366ca2bb523780d1976c8a0f067700eb8",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r1\\protocol.json",
+      "file": "prepared-r1/protocol.json",
+      "bytes": 15160,
+      "sha256": "487d059f471238fb9d2e09ec4f624876fbb3326c005ec67599af5dceede52b0b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r1\\scoring-control.json",
+      "file": "prepared-r1/scoring-control.json",
+      "bytes": 4444,
+      "sha256": "b42533e2f6edd6bffbf5a0d9d4fd23e8a3dbe6f2f7bdfe0b4f9618267a6db49f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r1\\intake.json",
+      "file": "prepared-r1/intake.json",
+      "bytes": 1766,
+      "sha256": "e054c0eb2ac8812325d10574469754ac2565c189a3a0b0132626fb5a05e708bf"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r1\\validation-audio-only.json",
+      "file": "prepared-r1/validation-audio-only.json",
+      "bytes": 3281,
+      "sha256": "0a5cad62790ae6fd5a558a2b239e5380d9121450b1564a5908be7a28062400c9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\thermal-policy-proof-r1\\result.json",
+      "file": "thermal-policy-proof-r1/result.json",
+      "bytes": 2034,
+      "sha256": "c447c8f8e73647bb56b07dafe4bc1ab3b466cb256ca3b97d7d82b9aa6e17b170"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\score-policy-proof-r1\\result.json",
+      "file": "score-policy-proof-r1/result.json",
+      "bytes": 1203,
+      "sha256": "c7a88abda6df0dcdcd02d3e231dab329b0f7930c5896e078c6c55ebb7c2f278a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\execution-gates-proof-r1\\result.json",
+      "file": "execution-gates-proof-r1/result.json",
+      "bytes": 1198,
+      "sha256": "cebb0c718f44c8853b85fc2a3c816ed5d6d6f195d6a91b62c2c65fbb4a00b992"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\execution-gates-proof-r1\\expected-missing-training-error.log",
+      "file": "execution-gates-proof-r1/expected-missing-training-error.log",
+      "bytes": 1426,
+      "sha256": "36334d7749ace442ee4d7f4c06f3fd32380a7c794e23c5fc7e08ee2d1983b4bf"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_tdt_adaptation_20261117.py",
+      "file": "local-tools/prepare_tdt_adaptation_20261117.py",
+      "bytes": 7575,
+      "sha256": "28f625370b08095011cb5c7f8eaa48157af4463ec9da96a8383339c44ba39336"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_tdt_thermal_policy_20261117.py",
+      "file": "local-tools/verify_tdt_thermal_policy_20261117.py",
+      "bytes": 2950,
+      "sha256": "f983618489d8da78ccca4acf2dd66815a33e08c709bf9c45f9b3a2cc944ea84c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_tdt_score_policy_20261117.py",
+      "file": "local-tools/verify_tdt_score_policy_20261117.py",
+      "bytes": 2653,
+      "sha256": "8348ccd2331704a407f7909deb54346771a32d3db8f618d94336a28584d344ac"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_tdt_execution_gates_20261117.py",
+      "file": "local-tools/verify_tdt_execution_gates_20261117.py",
+      "bytes": 3010,
+      "sha256": "ce9c575086badca1b7d22bae02e6e8ffafbb06eb163da7211f3ad68d5cd9a848"
+    },
+    {
+      "source": "work\\checkpoint_tdt_recipe_r57.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 3989,
+      "sha256": "dcd191ec8a08670a7419ae534c2a6a6a9221025efba868aed15ba5bb44e52303"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/tdt_domain_adaptation_20261116.py": "acc0166d3243cef91a1be31bca0cd092cb6b6041854c287d40c40fefb80186f5",
+    "src/run_owned_tdt_adaptation_20261117.py": "ab461b44b088e58ad102a49921b22d5d0b092d9bc73e82febffa6ea68a2117d9",
+    "src/model_thermal_guard_20261117.py": "a7f58c34878323a73bfd19af5f1096619c0dc1e81e8fca720306884cf3fc8bf9",
+    "src/score_tdt_adaptation_20261117.py": "d7d931efc9f212656ea382d2cc409bfa0201d8737ec66c033443ae1faadba550"
+  },
+  "state": "OFFLINE_RECIPE_SCORER_AND_THERMAL_GUARD_VERIFIED_GPU_DISABLED",
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "actualModelAccuracyImproved": false,
+  "actualGpuLossGradientOrCheckpointPreflightPassed": false,
+  "originalExecutionWindowExtended": false,
+  "gpuExecutionEnabled": false,
+  "originalRawReferencesAndThresholdsChanged": false,
+  "physicalGpuThermalAbortExecuted": false,
+  "overheatCauseProven": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

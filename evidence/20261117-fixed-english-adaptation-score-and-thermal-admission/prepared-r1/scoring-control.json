@@ -1,0 +1,65 @@
+{
+  "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r1\\protocol.json",
+  "worker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_domain_adaptation_20261116.py",
+  "references": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json",
+  "qwenBaseline": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\raw-text-baseline.json",
+  "mossBaseline": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\score.json",
+  "admissionGate": {
+    "referenceWords": 709,
+    "maximumEnglishErrors": 99,
+    "minimumRelativeErrorReductionVsSameProfileBaseline": 0.2,
+    "eachMeetingAtMostSameProfileAndPriorMossErrors": true,
+    "actionIfPass": "Complete-source validation only; no deployment, no product qualification",
+    "actionIfFail": "Retain and reject; no learning-rate/epoch/checkpoint/model grid"
+  },
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r1\\protocol.json",
+      "sha256": "487d059f471238fb9d2e09ec4f624876fbb3326c005ec67599af5dceede52b0b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_tdt_adaptation_20261117.py",
+      "sha256": "d7d931efc9f212656ea382d2cc409bfa0201d8737ec66c033443ae1faadba550"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\score_sequential_meetings_20261115.py",
+      "sha256": "d27ad4d4253029d8f64e3a9e5ef1b3d0ef281471237ed9218160701ef6d1ea89"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_adaptation_contract_20261117.py",
+      "sha256": "329d50d6c73c95f9a2479a691e3abc7509e27b87f95f5a73d43554dfa49ae9c5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_adaptation_checkpoint_20261116.py",
+      "sha256": "fd5d7ea4d9d14942235a1f8223d62f0e94a9769a41fd220660895218c5addc4f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_contract_20261116.py",
+      "sha256": "4e238f87f06b7ed95a6bd6e30522e86b4129836074cabff138cd1fe5f76981c9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\durable_model_state_20261117.py",
+      "sha256": "5fea82f461da06e76afd3321c860c48a570147a4d9cce6c7cca37a595bb54e3b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json",
+      "sha256": "1bd61c8c2b9438a520b0f16879d94d7e320f1a7ea7fec72d74ad7d1047909f83"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\raw-text-baseline.json",
+      "sha256": "cc469e7acfda616f9dcc4775c722e6d5fbca3c77e7acccc6f750130099b2b8f4"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\stagea-cpu-composition-r2\\score.json",
+      "sha256": "48a266fb161a1c2424901761f35c5bc0719eeb789671f18bdfb0e365c84409c3"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_domain_adaptation_20261116.py",
+      "sha256": "acc0166d3243cef91a1be31bca0cd092cb6b6041854c287d40c40fefb80186f5"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\english-data-plan.json",
+      "sha256": "c7455354caaaf7dce1d7f30faff17876b6f2090e774f145e5fb86dfc065019ba"
+    }
+  ]
+}

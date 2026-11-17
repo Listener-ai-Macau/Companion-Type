@@ -1,0 +1,41 @@
+{
+  "state": "PASS_OFFLINE_TDT_RECIPE_AND_REFERENCE_SEPARATION_GPU_EXECUTION_DISABLED",
+  "at": "2026-11-17T08:47:15+08:00",
+  "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r1\\protocol.json",
+  "protocolSha256": "487d059f471238fb9d2e09ec4f624876fbb3326c005ec67599af5dceede52b0b",
+  "scoringControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r1\\scoring-control.json",
+  "scoringControlSha256": "b42533e2f6edd6bffbf5a0d9d4fd23e8a3dbe6f2f7bdfe0b4f9618267a6db49f",
+  "examples": 475,
+  "trainableParameters": 118886022,
+  "trainingUpdates": 0,
+  "newNeuralCalls": 0,
+  "validationAudioOnlyKeys": [
+    "id",
+    "audio",
+    "audioSha256",
+    "frames"
+  ],
+  "scoringReferenceManifestIncludedInGpuFiles": false,
+  "originalWindowExtended": false,
+  "gpuExecutionEnabled": false,
+  "torchImported": false,
+  "lossGradientLargestShapeAndGpuCheckpointProven": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 16240,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 16510976,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

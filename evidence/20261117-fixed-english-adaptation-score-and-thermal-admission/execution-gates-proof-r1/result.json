@@ -1,0 +1,32 @@
+{
+  "state": "PASS_DISABLED_GPU_AND_MISSING_TRAINING_FAIL_CLOSED",
+  "at": "2026-11-17T08:50:06.527945+08:00",
+  "disabledGpuProof": {
+    "disabledBeforeTorchImport": true,
+    "torchImported": false,
+    "error": "GPU execution not enabled in this frozen preparation"
+  },
+  "inferenceRunDirectoryCreated": false,
+  "scoreWithoutCompletedTrainingCreated": false,
+  "protocolSha256": "487d059f471238fb9d2e09ec4f624876fbb3326c005ec67599af5dceede52b0b",
+  "workerSha256": "acc0166d3243cef91a1be31bca0cd092cb6b6041854c287d40c40fefb80186f5",
+  "scorerSha256": "d7d931efc9f212656ea382d2cc409bfa0201d8737ec66c033443ae1faadba550",
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "limits": {
+    "pid": 19236,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 26447872,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

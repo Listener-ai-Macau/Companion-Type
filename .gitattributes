@@ -485,3 +485,9 @@ evidence/20261117-laptop-thermal-readings-and-adaptation-recovery/** -text -whit
 src/tdt_adaptation_contract_20261117.py -text -whitespace
 
 src/run_owned_tdt_adaptation_20261117.py -text -whitespace
+
+evidence/20261117-fixed-english-adaptation-score-and-thermal-admission/** -text -whitespace
+
+src/model_thermal_guard_20261117.py -text -whitespace
+
+src/score_tdt_adaptation_20261117.py -text -whitespace
