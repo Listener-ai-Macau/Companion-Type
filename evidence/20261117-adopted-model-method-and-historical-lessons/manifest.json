@@ -1,0 +1,172 @@
+{
+  "at": "2026-11-17T22:39:55.468182+08:00",
+  "parent": "b15a3de8722962f174cc0dcd745d8974d256c6ea",
+  "priorProtectedCommit": "b15a3de8722962f174cc0dcd745d8974d256c6ea",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\week-direction-review-20261117.json",
+      "file": "week-review-and-lessons.json",
+      "bytes": 181338,
+      "sha256": "0a544292559c034092ffa7aad70f5b73ac5afaf2b49ca53f999c7b2e8071ae16"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\bilingual_progress.json",
+      "file": "workpoint-snapshot.json",
+      "bytes": 829418,
+      "sha256": "2a6f92f76b206dd05c52d6b5b81214e920f4cc2d35af6a4fb8e62f6cc259e58e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\same-input-comparability-audit-r1.json",
+      "file": "same-input-comparability-audit-r1.json",
+      "bytes": 6075,
+      "sha256": "e47d8f406d26b8f5390edfac49626d1420e41daa9c4b81568d3f981a52856d49"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-source-checkpoint.json",
+      "file": "portal-method-source-checkpoint.json",
+      "bytes": 1195,
+      "sha256": "74136fb577b0d1a1c415c21a44744ad52324748b72c0596fb41223f90633ef44"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\method-web-canonical-receipt.json",
+      "file": "method-web-canonical-receipt.json",
+      "bytes": 381,
+      "sha256": "41ad3e0cc0f40049c3ceab587d1cce9bd8b9bc69edeccea8bd76ea22ee95de95"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\audit_model_comparability_20261117.py",
+      "file": "tools/audit_model_comparability_20261117.py",
+      "bytes": 4190,
+      "sha256": "0008494fb8c3a34d6986132e379d70f040442007e86686386bf7e741093f7d30"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\adopt_model_method_web_20261117.py",
+      "file": "tools/adopt_model_method_web_20261117.py",
+      "bytes": 11929,
+      "sha256": "f1558668d17ee8f676aa4aa063d25255bb0eb353ec6447b2b0c8285890da2187"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\check_model_portal_20261117.py",
+      "file": "tools/check_model_portal_20261117.py",
+      "bytes": 7077,
+      "sha256": "08bfeed54f5d332f7f9a055feaa0b998b4b688b6af399b810397372b10b751c9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\checkpoint_model_method_web_20261117.py",
+      "file": "tools/checkpoint_model_method_web_20261117.py",
+      "bytes": 4299,
+      "sha256": "8eaf7b49af8901c7c0bd8409983c3aa234ff79817a6c171818dfbb356896eaa2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\desktop-cpu-probe.png",
+      "file": "portal-qa/desktop-cpu-probe.png",
+      "bytes": 32284,
+      "sha256": "d691a1ad606784cb5ae811750fe23ff146be6a407bb5ca9951a88189bca6cc91"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\desktop-final-training.png",
+      "file": "portal-qa/desktop-final-training.png",
+      "bytes": 41521,
+      "sha256": "b90c0fbee2731fe0a22e13f4a149013b23b0f8de7c25206864a54364b27b5a3f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\desktop-models.png",
+      "file": "portal-qa/desktop-models.png",
+      "bytes": 862091,
+      "sha256": "22ed1f027853f008f193e27dd61ab553b17ee1ca2ac3be557077957f0de95951"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\desktop-overview.png",
+      "file": "portal-qa/desktop-overview.png",
+      "bytes": 178497,
+      "sha256": "ee48739a8170a4b62ffd8a4ce6a274b15b7d87b25aa1c2d4b698590cedd05990"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\desktop-training-lesson.png",
+      "file": "portal-qa/desktop-training-lesson.png",
+      "bytes": 32878,
+      "sha256": "6cf4b08a31cf8beee2b40f1b30aac84ee25879dbe2bc301067efbca3f3448349"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\desktop-visible-text.txt",
+      "file": "portal-qa/desktop-visible-text.txt",
+      "bytes": 13600,
+      "sha256": "af653019bd43ccc27b43de8b21806ccc433cad469c8f2ee5658203f2ce5301a6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\desktop-working-method.png",
+      "file": "portal-qa/desktop-working-method.png",
+      "bytes": 83881,
+      "sha256": "306b58d33fdd82b993aaeaa93a03f49e7dcb9060cd4bf0cb50d98c0f9d868b4f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\mobile-cpu-probe.png",
+      "file": "portal-qa/mobile-cpu-probe.png",
+      "bytes": 32069,
+      "sha256": "26df7d8610dded0454b35c2745334ce5874d8f8d5e0abf0ee5b48cd7186239ad"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\mobile-final-training.png",
+      "file": "portal-qa/mobile-final-training.png",
+      "bytes": 41729,
+      "sha256": "181d0e4a387d8cf3c0a22639676c2475e27f9165f8621461966716277d34f9d4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\mobile-models.png",
+      "file": "portal-qa/mobile-models.png",
+      "bytes": 852021,
+      "sha256": "2e60d1747a682a0b70d71f2b1a089c7087447f236509add029d245df338ea184"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\mobile-training-lesson.png",
+      "file": "portal-qa/mobile-training-lesson.png",
+      "bytes": 33512,
+      "sha256": "58cbbdcdd5c96f66ad00bcedbe07822333bd8d01caef3583bcdaa42c2ddfa6e6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\mobile-visible-text.txt",
+      "file": "portal-qa/mobile-visible-text.txt",
+      "bytes": 13577,
+      "sha256": "58687cb3aa8b7b854bb1b24cfa4be2eea580029b0167108e70c7b5755a9f002f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\mobile-working-method.png",
+      "file": "portal-qa/mobile-working-method.png",
+      "bytes": 88959,
+      "sha256": "b92911f01bc439418255cb2dc967ef42977a53b82b1da65c4789078e5da5319e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\result.json",
+      "file": "portal-qa/result.json",
+      "bytes": 746,
+      "sha256": "00eb8b9b34f5d2d4a20a10eca2e5d8c48be41b918d02c976c66b348b4ae317c2"
+    },
+    {
+      "source": "work\\checkpoint_model_method_r77.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 6812,
+      "sha256": "c1a0703cf31be5f7c8228ecb1d195d690b5b6645782662b58d4abd45aafd1657"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4790,
+      "sha256": "348de3c7f52ecb07d2f3b826854525b352d49797b141d5a1dfa05879db2ff522"
+    }
+  ],
+  "sources": {},
+  "state": "OWNER_ADOPTED_DIAGNOSE_FIRST_METHOD_AND_LESSONS_WEB_DELIVERED",
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "originalTwelveEnglishInputHashesAndFramesVerified": true,
+  "englishCasesWithChangedCpuSegmentation": 7,
+  "modelQualityImprovementClaimed": false,
+  "productDefaultChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "lessonCount": 8,
+  "portalLocalSourceCommit": "855e8f85e8dd19dcbdb0a7c727fffcd5426f946a",
+  "portalHostingOrSourcePush": false,
+  "rawAudioModelWeightsOrCredentialsIncluded": false,
+  "oldFailuresAndHistoricalStatementsRetained": true
+}

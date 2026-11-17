@@ -1,0 +1,21 @@
+{
+  "state": "LOCAL_MODEL_METHOD_AND_LESSONS_PAGE_SOURCE_CHECKPOINT",
+  "at": "2026-11-17T22:38:41+08:00",
+  "commit": "855e8f85e8dd19dcbdb0a7c727fffcd5426f946a",
+  "parent": "7c3b367974f8735d975986bad921bdf3ea274cae",
+  "files": [
+    "src/app.js",
+    "src/style.css",
+    "tools/model_progress.py"
+  ],
+  "hostingOrRemotePush": false,
+  "originalBacklogIsExecutionSource": true,
+  "lessonSource": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\week-direction-review-20261117.json",
+  "qa": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-method-lessons-r1\\result.json",
+  "sourceSha256": {
+    "src/app.js": "f1ba762d4cea2e0bd4edbeaf2915b03c70b3a9782959088f90cbd28882328b0d",
+    "src/style.css": "70dbcb40266d86c66ba505cf8e0977c153ac591b06cbb5e29bdce9faf68bec44",
+    "tools/model_progress.py": "4268c549652e71ba24e4bcf89233a7afbe9927779c26203dd6b5c2bf6db1fdb2"
+  },
+  "localHtmlSha256": "12c2b19eea3c26079c984e1c3fdcf503c4f74fa9e6f2ddfea37a22b9facc7fe3"
+}

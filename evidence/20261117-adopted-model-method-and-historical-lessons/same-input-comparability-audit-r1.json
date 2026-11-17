@@ -1,0 +1,228 @@
+{
+  "at": "2026-11-17T22:30:25+08:00",
+  "state": "EXISTING_INPUTS_AND_COMPARISON_FACTORS_AUDITED_NO_NEW_INFERENCE",
+  "englishCases": 12,
+  "allTwelveOriginalWaveformHashesAndFramesMatch": true,
+  "nativeBaselineVersusAdapted": {
+    "sameInputsRuntimePrecisionAndDecodingPolicy": true,
+    "changedVariable": "Final selected-parameter trained checkpoint",
+    "baselineErrors": 123,
+    "candidateErrors": 118,
+    "referenceWords": 709,
+    "admissionPassed": false
+  },
+  "cpuProfilePair": {
+    "sameInputsRuntimeThreadsChunkScheduleAndTextPolicy": true,
+    "changedVariable": "Existing ChineseParaformer versus existing SenseVoice-auto model",
+    "modelFileHashes": [
+      "8234905d74db17f7466a1cd110ce20f57c1ff9c1fc95db0615d8931955da5c54",
+      "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51"
+    ]
+  },
+  "nativeVersusExistingCpu": {
+    "sameOriginalInputs": true,
+    "sameModelWeights": false,
+    "sameRuntime": false,
+    "sameSegmentation": false,
+    "englishCasesCutIntoMultipleCpuChunks": 7,
+    "totalEnglishCpuChunks": 19,
+    "pureCpuPenaltyOrPureQuantizationLossCanBeInferred": false
+  },
+  "installedClientRuntimeVersion": "1.13.1",
+  "probeRuntimeVersion": "sherpa-onnx1.13.4",
+  "installedClientBinaryAcceptance": false,
+  "rows": [
+    {
+      "id": "ES2003b-seq-000",
+      "audioSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+      "frames": 192800,
+      "nativeResearchWholeCase": true,
+      "cpuChunkCount": 1,
+      "cpuSchedule": [
+        [
+          0,
+          192800
+        ]
+      ]
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "audioSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+      "frames": 476000,
+      "nativeResearchWholeCase": true,
+      "cpuChunkCount": 2,
+      "cpuSchedule": [
+        [
+          0,
+          240000
+        ],
+        [
+          240000,
+          236000
+        ]
+      ]
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "audioSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+      "frames": 475520,
+      "nativeResearchWholeCase": true,
+      "cpuChunkCount": 2,
+      "cpuSchedule": [
+        [
+          0,
+          233600
+        ],
+        [
+          233600,
+          241920
+        ]
+      ]
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "audioSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+      "frames": 473280,
+      "nativeResearchWholeCase": true,
+      "cpuChunkCount": 2,
+      "cpuSchedule": [
+        [
+          0,
+          275200
+        ],
+        [
+          275200,
+          198080
+        ]
+      ]
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "audioSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+      "frames": 203840,
+      "nativeResearchWholeCase": true,
+      "cpuChunkCount": 1,
+      "cpuSchedule": [
+        [
+          0,
+          203840
+        ]
+      ]
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "audioSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+      "frames": 162401,
+      "nativeResearchWholeCase": true,
+      "cpuChunkCount": 1,
+      "cpuSchedule": [
+        [
+          0,
+          162401
+        ]
+      ]
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "audioSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+      "frames": 187360,
+      "nativeResearchWholeCase": true,
+      "cpuChunkCount": 1,
+      "cpuSchedule": [
+        [
+          0,
+          187360
+        ]
+      ]
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "audioSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+      "frames": 475520,
+      "nativeResearchWholeCase": true,
+      "cpuChunkCount": 2,
+      "cpuSchedule": [
+        [
+          0,
+          240000
+        ],
+        [
+          240000,
+          235520
+        ]
+      ]
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "audioSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+      "frames": 362720,
+      "nativeResearchWholeCase": true,
+      "cpuChunkCount": 2,
+      "cpuSchedule": [
+        [
+          0,
+          240000
+        ],
+        [
+          240000,
+          122720
+        ]
+      ]
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "audioSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+      "frames": 476000,
+      "nativeResearchWholeCase": true,
+      "cpuChunkCount": 2,
+      "cpuSchedule": [
+        [
+          0,
+          268800
+        ],
+        [
+          268800,
+          207200
+        ]
+      ]
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "audioSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+      "frames": 473600,
+      "nativeResearchWholeCase": true,
+      "cpuChunkCount": 2,
+      "cpuSchedule": [
+        [
+          0,
+          268800
+        ],
+        [
+          268800,
+          204800
+        ]
+      ]
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "audioSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+      "frames": 289920,
+      "nativeResearchWholeCase": true,
+      "cpuChunkCount": 1,
+      "cpuSchedule": [
+        [
+          0,
+          289920
+        ]
+      ]
+    }
+  ],
+  "conclusion": "Research training and existingCPU-model rates are different comparisons, not a chronological quality trend. Additional error cause is not yet isolated.",
+  "next": "One fixed selected-family CPU deployment comparison; declare model/export/precision differences. Use same-weight single-variable controls before attributing losses to device, quantization or chunking.",
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "newScoring": 0,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}
