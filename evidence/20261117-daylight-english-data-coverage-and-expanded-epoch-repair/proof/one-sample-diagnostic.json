@@ -1,0 +1,21 @@
+{
+  "state": "INDEPENDENT_TRAINING_WORD_COMPLETENESS_FAILED",
+  "id": "IS1000b-sequential-0008",
+  "supplement": false,
+  "startFrame": 8376959,
+  "endFrame": 8436480,
+  "extraUnlabelledSourceIndices": [
+    971
+  ],
+  "selectedButOutsidePcmSourceIndices": [],
+  "differentSourceEventBounds": [
+    {
+      "start": 522.59,
+      "end": 523.56,
+      "speaker": "A",
+      "index": 499
+    }
+  ],
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0
+}

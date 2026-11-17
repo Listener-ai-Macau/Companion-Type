@@ -1,0 +1,198 @@
+{
+  "state": "COMPLETE_EXPANDED_ENGLISH_TRAINING_EXPORT_NO_MODEL_EXECUTION",
+  "at": "2026-11-17T10:55:52.448475+08:00",
+  "pid": 2424,
+  "createdAt": 1794884151.7656758,
+  "completed": [
+    {
+      "meeting": "ES2002b",
+      "examples": 160,
+      "audioSeconds": 1294.94,
+      "lexicalWords": 4409,
+      "selectionStats": {
+        "retainedOriginalWordEvents": 588,
+        "taggedOrInvalidSourceEvents": 1117,
+        "omittedWordEventsInside_barrier": 0,
+        "omittedWordEventsInside_true_word_overlap": 1572,
+        "wordsInGroupsOutsideExisting2To30sPolicy": 455,
+        "supplementExamples": 160,
+        "supplementOriginalWordEvents": 4378
+      },
+      "originalReferenceSha256": "88bdb51bc956c33ef85ac5c2604d32f35ce7f74399885038eadcc88f571af66a"
+    },
+    {
+      "meeting": "ES2005b",
+      "examples": 154,
+      "audioSeconds": 1157.3875,
+      "lexicalWords": 3376,
+      "selectionStats": {
+        "retainedOriginalWordEvents": 1129,
+        "taggedOrInvalidSourceEvents": 1009,
+        "omittedWordEventsInside_barrier": 0,
+        "omittedWordEventsInside_true_word_overlap": 1457,
+        "wordsInGroupsOutsideExisting2To30sPolicy": 266,
+        "supplementExamples": 154,
+        "supplementOriginalWordEvents": 3338
+      },
+      "originalReferenceSha256": "f5d4b11e97131aeab4e5a514baed30ecd20d6f37cdb62a7159a8bdc31b8b03a0"
+    },
+    {
+      "meeting": "ES2006b",
+      "examples": 143,
+      "audioSeconds": 1248.1675,
+      "lexicalWords": 3642,
+      "selectionStats": {
+        "retainedOriginalWordEvents": 781,
+        "taggedOrInvalidSourceEvents": 1019,
+        "omittedWordEventsInside_barrier": 0,
+        "wordsInGroupsOutsideExisting2To30sPolicy": 326,
+        "omittedWordEventsInside_true_word_overlap": 1485,
+        "supplementExamples": 143,
+        "supplementOriginalWordEvents": 3609
+      },
+      "originalReferenceSha256": "8cd8376cb21562a6ac1cdf55f023e08b7f8bb5f174368e5af8d0f37b7506e353"
+    },
+    {
+      "meeting": "ES2007b",
+      "examples": 91,
+      "audioSeconds": 800.59,
+      "lexicalWords": 2310,
+      "selectionStats": {
+        "taggedOrInvalidSourceEvents": 706,
+        "retainedOriginalWordEvents": 721,
+        "wordsInGroupsOutsideExisting2To30sPolicy": 221,
+        "omittedWordEventsInside_true_word_overlap": 899,
+        "omittedWordEventsInside_barrier": 0,
+        "supplementExamples": 91,
+        "supplementOriginalWordEvents": 2293
+      },
+      "originalReferenceSha256": "09554f60187c0dde5a3727cc81c299f75da11533500058ce80b762288966112c"
+    },
+    {
+      "meeting": "IS1000b",
+      "examples": 150,
+      "audioSeconds": 1149.055,
+      "lexicalWords": 3197,
+      "selectionStats": {
+        "taggedOrInvalidSourceEvents": 760,
+        "retainedOriginalWordEvents": 1027,
+        "nonlexicalSourceEvents": 2,
+        "omittedWordEventsInside_true_word_overlap": 1260,
+        "wordsInGroupsOutsideExisting2To30sPolicy": 318,
+        "omittedWordEventsInside_barrier": 6,
+        "supplementExamples": 150,
+        "supplementOriginalWordEvents": 3165
+      },
+      "originalReferenceSha256": "cabe49a5e63b25453f44b118aa341eb105c6f33fca00fa55fefd040496d19c67"
+    },
+    {
+      "meeting": "IS1001b",
+      "examples": 136,
+      "audioSeconds": 865.3225,
+      "lexicalWords": 2295,
+      "selectionStats": {
+        "retainedOriginalWordEvents": 1398,
+        "taggedOrInvalidSourceEvents": 692,
+        "omittedWordEventsInside_barrier": 0,
+        "wordsInGroupsOutsideExisting2To30sPolicy": 226,
+        "omittedWordEventsInside_true_word_overlap": 969,
+        "supplementExamples": 136,
+        "supplementOriginalWordEvents": 2275
+      },
+      "originalReferenceSha256": "a144ade41e954bb3eac0b119cecf18cbc577526f4676c31c92e6713b9c094220"
+    },
+    {
+      "meeting": "TS3005b",
+      "examples": 145,
+      "audioSeconds": 974.19,
+      "lexicalWords": 3073,
+      "selectionStats": {
+        "taggedOrInvalidSourceEvents": 1388,
+        "retainedOriginalWordEvents": 1581,
+        "wordsInGroupsOutsideExisting2To30sPolicy": 575,
+        "omittedWordEventsInside_true_word_overlap": 2335,
+        "omittedWordEventsInside_barrier": 0,
+        "supplementExamples": 145,
+        "supplementOriginalWordEvents": 3027
+      },
+      "originalReferenceSha256": "1eee879b85b012c9a83a34dcf3ee1b9e53c94efa8344b59b6dd2bfbc13f4e317"
+    },
+    {
+      "meeting": "TS3008b",
+      "examples": 162,
+      "audioSeconds": 1159.25,
+      "lexicalWords": 3692,
+      "selectionStats": {
+        "taggedOrInvalidSourceEvents": 1306,
+        "retainedOriginalWordEvents": 1128,
+        "wordsInGroupsOutsideExisting2To30sPolicy": 403,
+        "omittedWordEventsInside_true_word_overlap": 1946,
+        "omittedWordEventsInside_barrier": 0,
+        "supplementExamples": 162,
+        "supplementOriginalWordEvents": 3670
+      },
+      "originalReferenceSha256": "218767d86ed6dcf4e77229814ef7bc7b718feff7b5a66d3f3af2a88462828f15"
+    },
+    {
+      "meeting": "TS3009b",
+      "examples": 174,
+      "audioSeconds": 1021.355,
+      "lexicalWords": 3089,
+      "selectionStats": {
+        "retainedOriginalWordEvents": 1217,
+        "taggedOrInvalidSourceEvents": 1349,
+        "omittedWordEventsInside_barrier": 0,
+        "omittedWordEventsInside_true_word_overlap": 2983,
+        "wordsInGroupsOutsideExisting2To30sPolicy": 535,
+        "supplementExamples": 174,
+        "supplementOriginalWordEvents": 3044
+      },
+      "originalReferenceSha256": "0f00f9dd0ba0f358cf9acbcbb985d458d6d4f78528ea24b1a6b92abdcd25f221"
+    },
+    {
+      "meeting": "TS3010b",
+      "examples": 38,
+      "audioSeconds": 288.99,
+      "lexicalWords": 783,
+      "selectionStats": {
+        "retainedOriginalWordEvents": 2367,
+        "taggedOrInvalidSourceEvents": 589,
+        "omittedWordEventsInside_barrier": 0,
+        "omittedWordEventsInside_true_word_overlap": 268,
+        "wordsInGroupsOutsideExisting2To30sPolicy": 151,
+        "supplementExamples": 38,
+        "supplementOriginalWordEvents": 771
+      },
+      "originalReferenceSha256": "3dbf4efe86fda6e42d7f8f5d59eb2202602e32aeda8bb00f34f3afea655ba970"
+    }
+  ],
+  "expectedSupplementExamples": 1353,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "observedAt": "2026-11-17T10:56:06.992769+08:00",
+  "limits": {
+    "pid": 2424,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 118984704,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "supplementExamplesExported": 1353,
+  "examples": 1828,
+  "supplementExamples": 1353,
+  "trainingManifestSha256": "1362f5cbf3c85e9ec6bfb3f76d942728264bfe6c9c3a1436f432293ed81e7696",
+  "dataPlan": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-data-r3\\english-data-plan.json",
+  "torchImported": false,
+  "original475ManifestUnchanged": true,
+  "originalValidationOrFinalInputsRead": false
+}

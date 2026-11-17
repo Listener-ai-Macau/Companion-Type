@@ -11,7 +11,7 @@ from meeting_acoustic_contract_20261116 import read,require,sha
 from score_sequential_meetings_20261115 import measure
 from moss_windows_resource_limits_20261104 import WorkerLimits
 from durable_model_state_20261117 import atomic_json
-from tdt_adaptation_contract_20261117 import require_final_checkpoint
+from tdt_adaptation_contract_20261117 import require_final_checkpoint,training_scope
 from tdt_adaptation_checkpoint_20261116 import committed_tdt_checkpoint
 
 def summarize_pair(rows,gate):
@@ -38,11 +38,13 @@ def main():
     limits=WorkerLimits(cpu_percent=5,memory_bytes=256*1024**2);C=read(a.control)
     for entry in C['files']:require(sha(entry['file'])==entry['sha256'],'Frozen scoring dependency changed')
     P=read(C['protocol']);plan=read(P['dataPlan'])
+    total_examples,total_updates,_,_=training_scope(P)
+    require(plan['examples']==total_examples,'Frozen scorer/training data scope differs')
     expected={'protocolSha256':sha(C['protocol']),'workerSha256':sha(C['worker']),
         'publishedWeightsSha256':P['weights']['sha256'],'dataSha256':plan['trainingManifestSha256']}
     training=read(a.run/'training-completed.json')
-    require(training['binding']==expected and training['completedTrainingExamples']==475
-        and training['candidateOptimizerUpdates']==119,'Fixed one-epoch candidate incomplete')
+    require(training['binding']==expected and training['completedTrainingExamples']==total_examples
+        and training['candidateOptimizerUpdates']==total_updates,'Fixed one-epoch candidate incomplete')
     preflight=read(a.run/'preflight/completed.json')
     require(preflight['binding']==expected
         and preflight['state']=='PASS_REAL_TDT_GPU_TRAINING_AND_CHECKPOINT_PREFLIGHT'
@@ -52,7 +54,7 @@ def main():
         and preflight['preflightParameterUpdates']==1 and preflight['preflightWeightsMustNotInitializeCandidate'],
         'Actual GPU preflight proof missing')
     _,checkpoint=committed_tdt_checkpoint(a.run/'checkpoints',expected)
-    candidate_identity=require_final_checkpoint(checkpoint,training)
+    candidate_identity=require_final_checkpoint(checkpoint,training,examples=total_examples)
     cases={r['id']:r for r in read(P['validationAudioOnly'])}
     require(len(cases)==12,'Original12 English inputs missing')
     references={r['id']:r for r in read(C['references']) if r['language']=='English' and r['role']=='validation'}
@@ -64,7 +66,7 @@ def main():
         state=read(a.run/phase/'completed.json');states[phase]=state
         require(state['state']=='COMPLETE_TDT_'+phase.upper()+'_12_PENDING_INDEPENDENT_SCORE'
             and state['binding']==expected and len(state['completed'])==12,'Incomplete/different '+phase)
-        require(state['parameterUpdates']==0 and state['candidateOptimizerUpdates']==(119 if phase=='validate' else 0),
+        require(state['parameterUpdates']==0 and state['candidateOptimizerUpdates']==(total_updates if phase=='validate' else 0),
             'Inference phase unexpectedly updated weights')
         factory=read(a.run/phase/'factory-load.json')
         require(factory['fileSha256']==factory['deviceRoundtripSha256']==P['weights']['sha256'],
@@ -103,7 +105,7 @@ def main():
     result.update(state='FIXED_ONE_EPOCH_ENGLISH_ADAPTATION_'+('ADVANCE_TO_WHOLE_SOURCE_VALIDATION'
         if result['advanceToCompleteSources'] else 'REJECT_PAIRED_ADMISSION_NO_GRID'),
         at=datetime.now().astimezone().isoformat(timespec='seconds'),cases=rows,
-        evaluatedCheckpoint=candidate_identity,trainingExamples=475,candidateOptimizerUpdates=119,
+        evaluatedCheckpoint=candidate_identity,trainingExamples=total_examples,candidateOptimizerUpdates=total_updates,
         protocolSha256=sha(C['protocol']),controlSha256=sha(a.control),scorerSha256=sha(__file__),
         baselineStateSha256=sha(a.run/'baseline/completed.json'),validationStateSha256=sha(a.run/'validate/completed.json'),
         admissionGate=C['admissionGate'],originalReferencesAndNormalizationUnchanged=True,

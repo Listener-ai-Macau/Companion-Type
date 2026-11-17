@@ -1,0 +1,259 @@
+{
+  "state": "PASS_EXPANDED_ENGLISH_DATA_PCM_WORDS_TOKENS_NONOVERLAP_AND_PARTICIPANT_INTEGRITY",
+  "at": "2026-11-17T11:03:53.164979+08:00",
+  "examples": 1828,
+  "preservedExamples": 475,
+  "supplementExamples": 1353,
+  "audioSeconds": 15053.027125,
+  "lexicalWords": 41952,
+  "trainingGlobalParticipants": [
+    "FEE005",
+    "FEE019",
+    "FEE021",
+    "FEE024",
+    "FEE028",
+    "FEO023",
+    "FEO026",
+    "FIE081",
+    "FIO074",
+    "FTD019UID",
+    "MEE006",
+    "MEE007",
+    "MEE008",
+    "MEE017",
+    "MEE018",
+    "MEE025",
+    "MEE027",
+    "MEO020",
+    "MEO022",
+    "MIO012",
+    "MIO016",
+    "MIO020",
+    "MIO043",
+    "MIO050",
+    "MIO082",
+    "MTD017PM",
+    "MTD018ID",
+    "MTD020ME",
+    "MTD029PM",
+    "MTD030ID",
+    "MTD031UID",
+    "MTD032ME",
+    "MTD033PM",
+    "MTD034ID",
+    "MTD035UID",
+    "MTD036ME",
+    "MTD037PM",
+    "MTD038ID",
+    "MTD039UID",
+    "MTD040ME"
+  ],
+  "seenDevelopmentGlobalParticipants": [
+    "FEO065",
+    "FEO066",
+    "FEO070",
+    "FEO072",
+    "MEE009",
+    "MEE010",
+    "MEE011",
+    "MEE012",
+    "MEE067",
+    "MEE068",
+    "MEE071",
+    "MEE073",
+    "MEO069"
+  ],
+  "globalParticipantIntersection": [],
+  "seenDevelopmentMeetings": [
+    "EN2001a",
+    "EN2002a",
+    "ES2003b"
+  ],
+  "meetings": [
+    {
+      "meeting": "ES2002b",
+      "examples": 183,
+      "uniqueOriginalWordEvents": 4966,
+      "lexicalWords": 4998,
+      "participants": [
+        "FEE005",
+        "MEE006",
+        "MEE007",
+        "MEE008"
+      ],
+      "allOriginalPcmSlicesAndLabelsExact": true,
+      "repeatedAudioFrames": 0
+    },
+    {
+      "meeting": "ES2005b",
+      "examples": 200,
+      "uniqueOriginalWordEvents": 4467,
+      "lexicalWords": 4521,
+      "participants": [
+        "FEE019",
+        "MEE017",
+        "MEE018",
+        "MEO020"
+      ],
+      "allOriginalPcmSlicesAndLabelsExact": true,
+      "repeatedAudioFrames": 0
+    },
+    {
+      "meeting": "ES2006b",
+      "examples": 171,
+      "uniqueOriginalWordEvents": 4390,
+      "lexicalWords": 4425,
+      "participants": [
+        "FEE021",
+        "FEE024",
+        "FEO023",
+        "MEO022"
+      ],
+      "allOriginalPcmSlicesAndLabelsExact": true,
+      "repeatedAudioFrames": 0
+    },
+    {
+      "meeting": "ES2007b",
+      "examples": 124,
+      "uniqueOriginalWordEvents": 3014,
+      "lexicalWords": 3043,
+      "participants": [
+        "FEE028",
+        "FEO026",
+        "MEE025",
+        "MEE027"
+      ],
+      "allOriginalPcmSlicesAndLabelsExact": true,
+      "repeatedAudioFrames": 0
+    },
+    {
+      "meeting": "IS1000b",
+      "examples": 200,
+      "uniqueOriginalWordEvents": 4192,
+      "lexicalWords": 4234,
+      "participants": [
+        "FIE081",
+        "MIO016",
+        "MIO050",
+        "MIO082"
+      ],
+      "allOriginalPcmSlicesAndLabelsExact": true,
+      "repeatedAudioFrames": 0
+    },
+    {
+      "meeting": "IS1001b",
+      "examples": 194,
+      "uniqueOriginalWordEvents": 3673,
+      "lexicalWords": 3711,
+      "participants": [
+        "FIO074",
+        "MIO012",
+        "MIO020",
+        "MIO043"
+      ],
+      "allOriginalPcmSlicesAndLabelsExact": true,
+      "repeatedAudioFrames": 0
+    },
+    {
+      "meeting": "TS3005b",
+      "examples": 208,
+      "uniqueOriginalWordEvents": 4608,
+      "lexicalWords": 4706,
+      "participants": [
+        "FTD019UID",
+        "MTD017PM",
+        "MTD018ID",
+        "MTD020ME"
+      ],
+      "allOriginalPcmSlicesAndLabelsExact": true,
+      "repeatedAudioFrames": 0
+    },
+    {
+      "meeting": "TS3008b",
+      "examples": 208,
+      "uniqueOriginalWordEvents": 4798,
+      "lexicalWords": 4826,
+      "participants": [
+        "MTD029PM",
+        "MTD030ID",
+        "MTD031UID",
+        "MTD032ME"
+      ],
+      "allOriginalPcmSlicesAndLabelsExact": true,
+      "repeatedAudioFrames": 0
+    },
+    {
+      "meeting": "TS3009b",
+      "examples": 225,
+      "uniqueOriginalWordEvents": 4261,
+      "lexicalWords": 4319,
+      "participants": [
+        "MTD033PM",
+        "MTD034ID",
+        "MTD035UID",
+        "MTD036ME"
+      ],
+      "allOriginalPcmSlicesAndLabelsExact": true,
+      "repeatedAudioFrames": 0
+    },
+    {
+      "meeting": "TS3010b",
+      "examples": 115,
+      "uniqueOriginalWordEvents": 3138,
+      "lexicalWords": 3169,
+      "participants": [
+        "MTD037PM",
+        "MTD038ID",
+        "MTD039UID",
+        "MTD040ME"
+      ],
+      "allOriginalPcmSlicesAndLabelsExact": true,
+      "repeatedAudioFrames": 0
+    }
+  ],
+  "metadataSha256": "8ab6cdcf03ed863e839418f31c7380392397a2eed892d73b9bc1b438c7ec520a",
+  "dataPlanInputSha256": "e39b5b5599fbf7ac4ccd40c0b7808c518aca79f270d4b7f49469f1e06d60e66a",
+  "manifestSha256": "1362f5cbf3c85e9ec6bfb3f76d942728264bfe6c9c3a1436f432293ed81e7696",
+  "provenanceSha256": "4ed058a475c5384b1203273cd7027d3806eaa17c01885f3b332b1df26f0313a5",
+  "verifierSha256": "7db1d67081797faf020692a065e664038964ab156e6a71245d23c7cdceffa72a",
+  "all475OriginalRowsAndBytePrefixPreserved": true,
+  "all1828PcmSourceFrameSlicesCheckedByteForByte": true,
+  "allSelectedWordMetadataMatchedOfficialTrainingXml": true,
+  "unlabelledLexicalEventsBeyondOneSampleBoundaryContact": 0,
+  "singleSourceSampleAnnotationBoundaryContacts": [
+    {
+      "id": "IS1000b-sequential-0008",
+      "sourceIndex": 971,
+      "contactSamples": 1.0,
+      "fullWordMidpointOutsideClip": true,
+      "originalPcmOrTargetsChanged": false
+    }
+  ],
+  "boundaryDiagnosticCorrection": "Initial continuous-time completeness assertion flagged an old475clip with exactlyone sample of contact at the preceding annotated word boundary. These contacts are retained explicitly, require the full word midpoint outside the clip, and cannot excuse any full word or >1sample overlap. Original PCM/labels/scoring are unchanged.",
+  "repeatedPcmFramesOrWordSupervision": 0,
+  "trueCrossSpeakerOverlapFound": false,
+  "tokenizerTargetsAllExact": true,
+  "validationWordLabelsRead": false,
+  "finalHoldoutOpened": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "torchImported": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 25628,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 79269888,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

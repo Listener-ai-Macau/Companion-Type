@@ -1,0 +1,100 @@
+{
+  "at": "2026-11-17T11:13:25+08:00",
+  "state": "DAYLIGHT_DATA_SELECTION_REPAIRED_EXPANDED1828_INPUT_AND457_UPDATE_RECIPE_FROZEN_NO_TRAINING",
+  "ownerSteering": "GPU available at night; daytime data/error-analysis/code work withoutGPU. Do not repeatedly pollGPU availability or keep driver preparation as the daytime task.",
+  "diagnosis": {
+    "oldTrainingWords": 12086,
+    "availableAnnotatedNonoverlapWords": 45465,
+    "oldCoverage": 0.26583085890245245,
+    "referenceSideTdtErrorsOnTrainingWordsSeenAtLeast5Times": 74,
+    "referenceSideTdtErrorsTotal": 102,
+    "conclusion": "Training data selection, rather than a missing-word glossary alone, deserves correction. No acoustic-causality or newWER claim from text-frequency association."
+  },
+  "repair": {
+    "implementation": "Original word overlap before turn grouping; preserve old475 clips as barriers and add only omitted natural nonoverlap windows. Existing2-30s/3s-gap/100ms-pad policy unchanged.",
+    "old475RowsAndManifestBytePrefixPreserved": true,
+    "supplementExamples": 1353,
+    "totalExamples": 1828,
+    "oldAudioSeconds": 5093.779625,
+    "newAudioSeconds": 15053.027125,
+    "oldTrainingWords": 12086,
+    "newTrainingWords": 41952,
+    "newNonoverlapWordCoverage": 0.9227317716925107,
+    "meetings": 10,
+    "globalTrainingParticipants": 40,
+    "seenDevelopmentParticipants": 13,
+    "participantIntersection": [],
+    "all1828PcmSlicesComparedByteForByte": true,
+    "unlabelledWholeOrMultiSampleWordIntervals": 0,
+    "duplicateTrainingPcmFrames": 0,
+    "oneSampleOldAnnotationBoundaryContactsExplicitlyRetained": [
+      {
+        "id": "IS1000b-sequential-0008",
+        "sourceIndex": 971,
+        "contactSamples": 1.0,
+        "fullWordMidpointOutsideClip": true,
+        "originalPcmOrTargetsChanged": false
+      }
+    ]
+  },
+  "executor": {
+    "trainableParameters": 118886022,
+    "fixedEpochs": 1,
+    "examples": 1828,
+    "optimizerUpdates": 457,
+    "learningRate": 1e-05,
+    "original32GiBCheckpointBudgetRetained": true,
+    "checkpointStoragePlan": {
+      "checkpointUpdates": [
+        1,
+        32,
+        64,
+        96,
+        128,
+        160,
+        192,
+        224,
+        256,
+        288,
+        320,
+        352,
+        384,
+        416,
+        448,
+        457
+      ],
+      "maximumCandidateFullCheckpoints": 16,
+      "payloadUpperBoundBytesIncluding1MiBMetadata": 1427713608,
+      "candidateCheckpointBytesUpperBound": 22843417728,
+      "original32GiBBudgetRetained": true,
+      "automaticDeletion": false,
+      "preflightCheckpointIsSeparateDisposableRun": true
+    },
+    "old119AndNew457RecoveryContractsPassed": true,
+    "original12Clip709WordAdmissionUnchanged": true,
+    "originalValidationAudioBytesUnchanged": true,
+    "gpuExecutionEnabled": false,
+    "actualGpuLossGradientsLargestShapeCheckpointProof": false
+  },
+  "receipts": {
+    "coverage": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\english-training-coverage-20261117.json",
+    "dataPlan": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-data-r3\\english-data-plan.json",
+    "integrity": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-data-r3\\integrity.json",
+    "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\protocol.json",
+    "scoringControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\scoring-control.json",
+    "intake": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\intake.json",
+    "expandedEpochProof": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-epoch-contract-r3\\result.json",
+    "legacyRecoveryProof": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\cpu-recovery-contract-expanded-legacy-r3\\result.json"
+  },
+  "retainedPreparationFailures": [
+    "DefaultPython lackedrapidfuzz; established scoring runtime reused without installing packages.",
+    "The first independent completeness checker classified a one-source-sample oldclip boundary contact as an unlabelled whole word. Original failure/source retained; corrected diagnosis explicitly records that contact and still rejects any word with midpoint inside the clip or >1sample intersection. No audio/targets/reference/metric changed."
+  ],
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "cpuOrIntegratedGpuTraining": false,
+  "originalAcceptanceMetricsChanged": false,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

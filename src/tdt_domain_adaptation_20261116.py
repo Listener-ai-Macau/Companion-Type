@@ -28,7 +28,7 @@ from companion_gpu_execution_20261116 import GuardedGpu
 from english_transducer_worker_20261116 import make_empty
 from tdt_selected_loss_20261116 import gpu_loss_contract,blocked_joint_loss
 from tdt_adaptation_checkpoint_20261116 import CheckpointStore,frozen_digest,digest_tensors
-from tdt_adaptation_contract_20261117 import valid_resume_position,checkpoint_identity,require_final_checkpoint
+from tdt_adaptation_contract_20261117 import valid_resume_position,checkpoint_identity,require_final_checkpoint,training_scope,checkpoint_due
 from model_thermal_guard_20261117 import ThermalGuard,inspect_thermal_policy,CpuThermalLimit
 
 now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
@@ -36,8 +36,16 @@ now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
 def inspect(P):
     inspect_thermal_policy(P['thermal'])
     for item in P['files']:require(sha(item['file'])==item['sha256'],'Frozen adaptation dependency changed: '+item['file'])
-    plan=read(P['dataPlan']);require(plan['examples']==475 and plan['trainableParameters']==118886022,
+    examples,updates,_,_=training_scope(P)
+    plan=read(P['dataPlan']);require(plan['examples']==examples and plan['trainableParameters']==118886022,
         'Fixed adaptation data/parameter scope changed')
+    if examples!=475:
+        proof=read(plan['integrityReceipt'])
+        require(plan['independentIntegrityPassed'] and sha(plan['integrityReceipt'])==plan['integrityReceiptSha256']
+            and proof['examples']==examples and proof['manifestSha256']==plan['trainingManifestSha256']
+            and proof['all1828PcmSourceFrameSlicesCheckedByteForByte']
+            and proof['globalParticipantIntersection']==[],
+            'Expanded training source integrity/participant proof missing')
     require(plan['englishGlobalParticipantsDisjointFromSeenValidationVerified'],'English participant split not verified')
     require(plan['targetAnnotationProjection']['canonicalLexicalWordEdits']==0,'Training lexical words changed')
     require(P['training']['epochs']==1 and P['training']['learningRate']==1e-5
@@ -55,9 +63,11 @@ def main():
     resume=a.phase.startswith('resume-') and a.phase[7:].isdigit()
     require(a.phase in ('inspect','baseline','preflight','train','validate') or resume,'Unknown adaptation phase')
     limits=own_limits(5 if a.phase=='inspect' else 25);P=read(a.protocol);plan=inspect(P)
+    total_examples,total_updates,checkpoint_every,checkpoint_first=training_scope(P)
     if a.phase=='inspect':
         require('torch' not in sys.modules,'Offline inspect imported torch')
-        print(json.dumps({'state':'PASS_ENGLISH_DOMAIN_ADAPTATION_OFFLINE_CONTRACT','examples':475,
+        print(json.dumps({'state':'PASS_ENGLISH_DOMAIN_ADAPTATION_OFFLINE_CONTRACT','examples':total_examples,
+            'plannedOptimizerUpdates':total_updates,
             'trainableParameters':118886022,'gpuPreflightPassed':False,'trainingStarted':False,'torchImported':False}));return
     require(P.get('gpuExecutionEnabled') is True,'GPU execution not enabled in this frozen preparation')
     require(datetime.now().astimezone()<datetime.fromisoformat(P['stopAt']),'Frozen execution window expired')
@@ -82,7 +92,7 @@ def main():
     def train_rows():
         require(sha(plan['trainingManifest'])==plan['trainingManifestSha256'],'Training manifest changed')
         rows=[json.loads(s) for s in Path(plan['trainingManifest']).read_text(encoding='utf-8').splitlines() if s]
-        require(len(rows)==475 and all(r['role']=='train-only' and r['language']=='English' for r in rows),
+        require(len(rows)==total_examples and all(r['role']=='train-only' and r['language']=='English' for r in rows),
             'Nontraining rows entered adaptation')
         for row in rows:require(sha(row['audio'])==row['audioSha256'],'Training PCM changed')
         return rows
@@ -157,10 +167,10 @@ def main():
                 evaluated_checkpoint=None
                 if a.phase=='validate':
                     final=read(run/'training-completed.json')
-                    require(final['binding']==binding and final['completedTrainingExamples']==475
-                        and final['candidateOptimizerUpdates']==119,'Fixed one-epoch training incomplete')
+                    require(final['binding']==binding and final['completedTrainingExamples']==total_examples
+                        and final['candidateOptimizerUpdates']==total_updates,'Fixed one-epoch training incomplete')
                     restored=checkpoint_store(run/'checkpoints').restore(include_optimizer=False,restore_rng=False)
-                    evaluated_checkpoint=require_final_checkpoint(restored,final)
+                    evaluated_checkpoint=require_final_checkpoint(restored,final,examples=total_examples)
                     state['evaluatedCheckpoint']=evaluated_checkpoint
                     state['candidateOptimizerUpdates']=restored['optimizerUpdates']
                     state['completedTrainingExamples']=restored['completedExamples']
@@ -206,7 +216,7 @@ def main():
                         and pre['integerBuffersOptimizerStepsAndRngExactRoundtrip'],
                         'Actual GPU preflight not passed; training prohibited')
                     require_baseline()
-                rows=train_rows();order=list(range(475));random.Random(P['training']['seed']).shuffle(order)
+                rows=train_rows();order=list(range(total_examples));random.Random(P['training']['seed']).shuffle(order)
                 order_sha=hashlib.sha256(json.dumps([rows[i]['id'] for i in order]).encode()).hexdigest()
                 before=frozen_digest(model,names,mutable,torch=torch,heartbeat=guard.heartbeat)
                 model.eval()
@@ -236,7 +246,7 @@ def main():
                     saved=store.restore();require(not saved['preflightOnly'] and saved['orderSha256']==order_sha
                         and saved['frozenDigest']==before,'Recovery data/order/frozen factory differs')
                     start=saved['completedExamples'];updates=saved['optimizerUpdates']
-                    valid_resume_position(start,updates)
+                    valid_resume_position(start,updates,examples=total_examples)
                     state['checkpointPointerSelection']=saved['pointerSelection']
                 elif a.phase=='train':require(not(run/'checkpoints/latest-checkpoint.json').exists(),'Use explicit resume for committed progress')
                 def loss_for(row):
@@ -294,7 +304,7 @@ def main():
                 else:
                     losses=[];completed=start;last_saved=saved if resume else None
                     with (out/'training-loss.jsonl').open('w',encoding='utf-8') as log:
-                        for first in range(start,475,4):
+                        for first in range(start,total_examples,4):
                             stop();group=order[first:first+4];optimizer.zero_grad(set_to_none=True)
                             for within,index in enumerate(group):
                                 row=rows[index];tick=time.perf_counter();loss=loss_for(row);value=float(loss)
@@ -309,18 +319,18 @@ def main():
                             completed=first+len(group)
                             save(state='TRAINING_FIXED_ONE_TDT_EPOCH',candidateOptimizerUpdates=updates,
                                 completedTrainingExamples=completed,lastGradientNormBeforeClip=float(norm))
-                            if updates%8==0 or completed==475:
+                            if checkpoint_due(updates,total_updates,every=checkpoint_every,first=checkpoint_first):
                                 _,last_saved=store.save(completed_examples=completed,optimizer_updates=updates,
                                     order_sha256=order_sha,frozen_sha256=before)
                     require(frozen_digest(model,names,mutable,torch=torch,heartbeat=guard.heartbeat)==before,'Frozen factory mutated in epoch')
-                    require(updates==119 and completed==475,'Fixed epoch incomplete')
-                    require(last_saved is not None and last_saved['completedExamples']==475
-                        and last_saved['optimizerUpdates']==119,'Final durable checkpoint missing')
+                    require(updates==total_updates and completed==total_examples,'Fixed epoch incomplete')
+                    require(last_saved is not None and last_saved['completedExamples']==total_examples
+                        and last_saved['optimizerUpdates']==total_updates,'Final durable checkpoint missing')
                     save(state='COMPLETE_FIXED_ONE_EPOCH_TDT_ENGLISH_ADAPTATION_PENDING_VALIDATION',
                         candidateOptimizerUpdates=updates,completedTrainingExamples=completed,
                         frozenDigest=before,meanTrainingLossThisProcess=sum(losses)/len(losses) if losses else None,
                         finalCheckpoint=checkpoint_identity(last_saved),freshFactoryInitialization=not resume,
-                        finalizedCompletedCheckpointWithoutNewUpdates=bool(start==475))
+                        finalizedCompletedCheckpointWithoutNewUpdates=bool(start==total_examples))
                     atomic_json(run/'training-completed.json',state)
             state['gpuSummary']=guard.close();guard=None;save(currentOperation=None)
             atomic_json(out/'completed.json',state)

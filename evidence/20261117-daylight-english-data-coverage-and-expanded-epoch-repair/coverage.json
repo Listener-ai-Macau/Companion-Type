@@ -1,0 +1,307 @@
+{
+  "state": "ENGLISH_TDT_ERRORS_AND_TRAINING_NONOVERLAP_COVERAGE_AUDITED_NO_MODEL_EXECUTION",
+  "at": "2026-11-17T10:44:45.910619+08:00",
+  "fixedOriginalScore": {
+    "errors": 123,
+    "referenceWords": 709,
+    "operationCounts": {
+      "insert": 21,
+      "replace": 56,
+      "delete": 46
+    }
+  },
+  "trainingLexicalWordCount": 12086,
+  "trainingDistinctWordTypes": 1323,
+  "validationWordFrequencyInTraining": {
+    "training_frequency_at_least5": 565,
+    "not_in_training_text": 78,
+    "training_frequency1_to4": 66
+  },
+  "referenceSideErrorFrequencyInTraining": {
+    "not_in_training_text": 17,
+    "training_frequency_at_least5": 74,
+    "training_frequency1_to4": 11
+  },
+  "insertionWordFrequencyInTraining": {
+    "not_in_training_text": 1,
+    "training_frequency_at_least5": 19,
+    "training_frequency1_to4": 1
+  },
+  "shortTurnDiagnosticSamePriorTwoSecondDefinition": {
+    "turns": 14,
+    "words": 44,
+    "deletedWords": 13,
+    "referenceSideErrors": 25,
+    "fullyDeletedTurns": 5
+  },
+  "trainingCoverageByMeeting": [
+    {
+      "meeting": "ES2002b",
+      "originalReferenceEvents": 8110,
+      "usableLexicalEvents": 6993,
+      "nonoverlapLexicalEvents": 5421,
+      "oldTrainingSelectedEvents": 588,
+      "oldSelectedOverlappingEvents": 0,
+      "nonoverlapWords": 5455,
+      "oldSelectedNonoverlapWords": 589,
+      "unselectedNonoverlapWords": 4866,
+      "unselectedNonoverlapAnnotatedWordSeconds": 1380.4499999999996,
+      "oldPremergedTurnsLongerThan30s": 4,
+      "unselectedNonoverlapWordsInsideOldLongTurns": 475,
+      "originalReferenceSha256": "88bdb51bc956c33ef85ac5c2604d32f35ce7f74399885038eadcc88f571af66a"
+    },
+    {
+      "meeting": "ES2005b",
+      "originalReferenceEvents": 7199,
+      "usableLexicalEvents": 6190,
+      "nonoverlapLexicalEvents": 4733,
+      "oldTrainingSelectedEvents": 1129,
+      "oldSelectedOverlappingEvents": 0,
+      "nonoverlapWords": 4788,
+      "oldSelectedNonoverlapWords": 1145,
+      "unselectedNonoverlapWords": 3643,
+      "unselectedNonoverlapAnnotatedWordSeconds": 1184.2599999999998,
+      "oldPremergedTurnsLongerThan30s": 4,
+      "unselectedNonoverlapWordsInsideOldLongTurns": 441,
+      "originalReferenceSha256": "f5d4b11e97131aeab4e5a514baed30ecd20d6f37cdb62a7159a8bdc31b8b03a0"
+    },
+    {
+      "meeting": "ES2006b",
+      "originalReferenceEvents": 7220,
+      "usableLexicalEvents": 6201,
+      "nonoverlapLexicalEvents": 4716,
+      "oldTrainingSelectedEvents": 781,
+      "oldSelectedOverlappingEvents": 0,
+      "nonoverlapWords": 4753,
+      "oldSelectedNonoverlapWords": 783,
+      "unselectedNonoverlapWords": 3970,
+      "unselectedNonoverlapAnnotatedWordSeconds": 1292.0599999999995,
+      "oldPremergedTurnsLongerThan30s": 9,
+      "unselectedNonoverlapWordsInsideOldLongTurns": 925,
+      "originalReferenceSha256": "8cd8376cb21562a6ac1cdf55f023e08b7f8bb5f174368e5af8d0f37b7506e353"
+    },
+    {
+      "meeting": "ES2007b",
+      "originalReferenceEvents": 4840,
+      "usableLexicalEvents": 4134,
+      "nonoverlapLexicalEvents": 3235,
+      "oldTrainingSelectedEvents": 721,
+      "oldSelectedOverlappingEvents": 0,
+      "nonoverlapWords": 3266,
+      "oldSelectedNonoverlapWords": 733,
+      "unselectedNonoverlapWords": 2533,
+      "unselectedNonoverlapAnnotatedWordSeconds": 825.8099999999993,
+      "oldPremergedTurnsLongerThan30s": 2,
+      "unselectedNonoverlapWordsInsideOldLongTurns": 200,
+      "originalReferenceSha256": "09554f60187c0dde5a3727cc81c299f75da11533500058ce80b762288966112c"
+    },
+    {
+      "meeting": "IS1000b",
+      "originalReferenceEvents": 6538,
+      "usableLexicalEvents": 5776,
+      "nonoverlapLexicalEvents": 4510,
+      "oldTrainingSelectedEvents": 1027,
+      "oldSelectedOverlappingEvents": 0,
+      "nonoverlapWords": 4553,
+      "oldSelectedNonoverlapWords": 1037,
+      "unselectedNonoverlapWords": 3516,
+      "unselectedNonoverlapAnnotatedWordSeconds": 1192.0899999999979,
+      "oldPremergedTurnsLongerThan30s": 4,
+      "unselectedNonoverlapWordsInsideOldLongTurns": 384,
+      "originalReferenceSha256": "cabe49a5e63b25453f44b118aa341eb105c6f33fca00fa55fefd040496d19c67"
+    },
+    {
+      "meeting": "IS1001b",
+      "originalReferenceEvents": 5560,
+      "usableLexicalEvents": 4868,
+      "nonoverlapLexicalEvents": 3899,
+      "oldTrainingSelectedEvents": 1398,
+      "oldSelectedOverlappingEvents": 0,
+      "nonoverlapWords": 3942,
+      "oldSelectedNonoverlapWords": 1416,
+      "unselectedNonoverlapWords": 2526,
+      "unselectedNonoverlapAnnotatedWordSeconds": 885.390000000001,
+      "oldPremergedTurnsLongerThan30s": 0,
+      "unselectedNonoverlapWordsInsideOldLongTurns": 0,
+      "originalReferenceSha256": "a144ade41e954bb3eac0b119cecf18cbc577526f4676c31c92e6713b9c094220"
+    },
+    {
+      "meeting": "TS3005b",
+      "originalReferenceEvents": 8906,
+      "usableLexicalEvents": 7518,
+      "nonoverlapLexicalEvents": 5183,
+      "oldTrainingSelectedEvents": 1581,
+      "oldSelectedOverlappingEvents": 0,
+      "nonoverlapWords": 5290,
+      "oldSelectedNonoverlapWords": 1633,
+      "unselectedNonoverlapWords": 3657,
+      "unselectedNonoverlapAnnotatedWordSeconds": 1078.5299999999993,
+      "oldPremergedTurnsLongerThan30s": 7,
+      "unselectedNonoverlapWordsInsideOldLongTurns": 804,
+      "originalReferenceSha256": "1eee879b85b012c9a83a34dcf3ee1b9e53c94efa8344b59b6dd2bfbc13f4e317"
+    },
+    {
+      "meeting": "TS3008b",
+      "originalReferenceEvents": 8453,
+      "usableLexicalEvents": 7147,
+      "nonoverlapLexicalEvents": 5201,
+      "oldTrainingSelectedEvents": 1128,
+      "oldSelectedOverlappingEvents": 0,
+      "nonoverlapWords": 5230,
+      "oldSelectedNonoverlapWords": 1134,
+      "unselectedNonoverlapWords": 4096,
+      "unselectedNonoverlapAnnotatedWordSeconds": 1209.69,
+      "oldPremergedTurnsLongerThan30s": 2,
+      "unselectedNonoverlapWordsInsideOldLongTurns": 193,
+      "originalReferenceSha256": "218767d86ed6dcf4e77229814ef7bc7b718feff7b5a66d3f3af2a88462828f15"
+    },
+    {
+      "meeting": "TS3009b",
+      "originalReferenceEvents": 9128,
+      "usableLexicalEvents": 7779,
+      "nonoverlapLexicalEvents": 4796,
+      "oldTrainingSelectedEvents": 1217,
+      "oldSelectedOverlappingEvents": 0,
+      "nonoverlapWords": 4868,
+      "oldSelectedNonoverlapWords": 1230,
+      "unselectedNonoverlapWords": 3638,
+      "unselectedNonoverlapAnnotatedWordSeconds": 1086.3299999999995,
+      "oldPremergedTurnsLongerThan30s": 1,
+      "unselectedNonoverlapWordsInsideOldLongTurns": 102,
+      "originalReferenceSha256": "0f00f9dd0ba0f358cf9acbcbb985d458d6d4f78528ea24b1a6b92abdcd25f221"
+    },
+    {
+      "meeting": "TS3010b",
+      "originalReferenceEvents": 4146,
+      "usableLexicalEvents": 3557,
+      "nonoverlapLexicalEvents": 3289,
+      "oldTrainingSelectedEvents": 2367,
+      "oldSelectedOverlappingEvents": 0,
+      "nonoverlapWords": 3320,
+      "oldSelectedNonoverlapWords": 2386,
+      "unselectedNonoverlapWords": 934,
+      "unselectedNonoverlapAnnotatedWordSeconds": 321.93000000000075,
+      "oldPremergedTurnsLongerThan30s": 3,
+      "unselectedNonoverlapWordsInsideOldLongTurns": 292,
+      "originalReferenceSha256": "3dbf4efe86fda6e42d7f8f5d59eb2202602e32aeda8bb00f34f3afea655ba970"
+    }
+  ],
+  "trainingCoverageTotals": {
+    "originalReferenceEvents": 70100,
+    "usableLexicalEvents": 60163,
+    "nonoverlapLexicalEvents": 44983,
+    "oldTrainingSelectedEvents": 11937,
+    "oldSelectedOverlappingEvents": 0,
+    "nonoverlapWords": 45465,
+    "oldSelectedNonoverlapWords": 12086,
+    "unselectedNonoverlapWords": 33379,
+    "unselectedNonoverlapAnnotatedWordSeconds": 10456.539999999997,
+    "oldPremergedTurnsLongerThan30s": 36,
+    "unselectedNonoverlapWordsInsideOldLongTurns": 3816
+  },
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "errors": 6,
+      "referenceWords": 26,
+      "referenceSideErrorsOnKnownFrequentTrainingWords": 1
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "errors": 9,
+      "referenceWords": 103,
+      "referenceSideErrorsOnKnownFrequentTrainingWords": 7
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "errors": 11,
+      "referenceWords": 31,
+      "referenceSideErrorsOnKnownFrequentTrainingWords": 6
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "errors": 6,
+      "referenceWords": 75,
+      "referenceSideErrorsOnKnownFrequentTrainingWords": 4
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "errors": 8,
+      "referenceWords": 38,
+      "referenceSideErrorsOnKnownFrequentTrainingWords": 5
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "errors": 12,
+      "referenceWords": 17,
+      "referenceSideErrorsOnKnownFrequentTrainingWords": 2
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "errors": 5,
+      "referenceWords": 28,
+      "referenceSideErrorsOnKnownFrequentTrainingWords": 5
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "errors": 8,
+      "referenceWords": 107,
+      "referenceSideErrorsOnKnownFrequentTrainingWords": 6
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "errors": 15,
+      "referenceWords": 66,
+      "referenceSideErrorsOnKnownFrequentTrainingWords": 12
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "errors": 20,
+      "referenceWords": 87,
+      "referenceSideErrorsOnKnownFrequentTrainingWords": 14
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "errors": 8,
+      "referenceWords": 94,
+      "referenceSideErrorsOnKnownFrequentTrainingWords": 5
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "errors": 15,
+      "referenceWords": 37,
+      "referenceSideErrorsOnKnownFrequentTrainingWords": 7
+    }
+  ],
+  "scope": "Frozen exposed12-clip TDT output diagnosis plus existing10 English training sources. Frequency is training-text coverage, not tokenizerOOV, acoustic learnability or a validation-derived training word list.",
+  "method": "Existing strict English scorer tokens and a singleLevenshtein alignment; no words, reference, metric or gate edits. Complete original training word metadata used to count nonoverlap words omitted by old selected clips. Old same-person0.5s pre-merge reconstructed for >30s exclusion diagnosis.",
+  "inputs": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\english-data-plan.json": "c7455354caaaf7dce1d7f30faff17876b6f2090e774f145e5fb86dfc065019ba",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\score.json": "f6f43bd15fc6c26131ae61d4c168b5fed090010e29079ff80fe58715c7a393d7",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\acoustic-nonoverlap-r2\\example-provenance.json": "351b097b3619626bca5b81674c9c470569a0081daa957f899dbc06ee28da6b44",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json": "1bd61c8c2b9438a520b0f16879d94d7e320f1a7ea7fec72d74ad7d1047909f83"
+  },
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "audioDecoded": false,
+  "trainingManifestOrValidationChanged": false,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 22176,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 34164736,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

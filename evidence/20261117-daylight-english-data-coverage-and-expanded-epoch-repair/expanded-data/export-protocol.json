@@ -1,0 +1,34 @@
+{
+  "state": "FROZEN_TRAINING_ONLY_NONOVERLAP_SUPPLEMENT_EXISTING475_RETAINED_EXACTLY",
+  "at": "2026-11-17T10:55:52.448475+08:00",
+  "sourceSha256": "9d46e39581c1f6d1fbca7c61fae91a87df77a0e43ebe6d54f13ea7f4b91ff154",
+  "selectorSha256": "4a21424e49dfebfbfa8008cfec791eecc3c7c346643aaf562f4da6828751d351",
+  "oldPlanSha256": "c7455354caaaf7dce1d7f30faff17876b6f2090e774f145e5fb86dfc065019ba",
+  "oldManifestSha256": "ebacf518782407f55caf6f36494c774f6f9803405bb9a62e219b8d355345c519",
+  "meetings": [
+    "ES2002b",
+    "ES2005b",
+    "ES2006b",
+    "ES2007b",
+    "IS1000b",
+    "IS1001b",
+    "TS3005b",
+    "TS3008b",
+    "TS3009b",
+    "TS3010b"
+  ],
+  "preservedExamples": 475,
+  "supplementExamples": 1353,
+  "selection": "Word-level overlap before grouping; old475clip PCM ranges are immutable barriers. Same2-30s speech span,3s maximum gap and100ms pad; no waveformVAD/denoise/gain/resample. Only omitted complete lexical annotations are eligible.",
+  "sourceLabels": "Existing10 English public training meetings with previously verified global participant separation. No validation/final labels are read by this exporter.",
+  "targetProjection": "Original training text retained; underscore-to-space only, canonical lexical sequence unchanged.",
+  "regressionCases": {
+    "longTurnWordBoundarySplit": true,
+    "briefOverlapDoesNotEraseWholeTurn": true,
+    "retainedTrainingFramesProtected": true,
+    "newNeuralCalls": 0
+  },
+  "trainingStarted": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0
+}

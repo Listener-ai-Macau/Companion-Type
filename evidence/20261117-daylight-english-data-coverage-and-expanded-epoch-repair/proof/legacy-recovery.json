@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-17T11:09:48.311055+08:00",
+  "state": "PASS_TDT_METADATA_RECOVERY_AND_FINAL_CHECKPOINT_BINDING",
+  "validOptimizerBoundariesChecked": 119,
+  "rejectedFaultCases": [
+    "resume-0-0",
+    "resume-1-1",
+    "resume-474-119",
+    "resume-475-118",
+    "resume-476-119",
+    "resume-True-1",
+    "corrupt-pointer-recovers-only-hash-verified-previous-with-explicit-provenance",
+    "foreign-binding",
+    "corrupt-committed-payload-not-silently-accepted",
+    "validation-cannot-evaluate-preflight-weights",
+    "validation-cannot-use-earlier-checkpoint",
+    "validation-payload-binding-differs",
+    "supervisor-separates-preflight-process-candidate-and-unknown-update-counts"
+  ],
+  "sourceSha256": {
+    "tdt_adaptation_checkpoint_20261116.py": "fd5d7ea4d9d14942235a1f8223d62f0e94a9769a41fd220660895218c5addc4f",
+    "tdt_adaptation_contract_20261117.py": "06a97997e00d98839437528736b403b5088435e845333a0181803fe1c423d665",
+    "tdt_domain_adaptation_20261116.py": "72595d8aa35ae674f96a1573b5b43b7357151dfc021da78d12bdc5dde3ffac44",
+    "run_owned_tdt_adaptation_20261117.py": "3c416c6f43ebfb159af8f6e98d479164249136585d2e99a0301eacbec7e9e8f6"
+  },
+  "gpuPreflightPassed": false,
+  "actualGpuTensorAdamRngRoundtripExecuted": false,
+  "torchImported": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "limits": {
+    "pid": 22048,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 15609856,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "revision": 64,
+  "evidenceDirectory": "evidence/20261117-daylight-english-data-coverage-and-expanded-epoch-repair",
+  "sources": [
+    "src/english_nonoverlap_training_windows_20261117.py",
+    "src/tdt_adaptation_contract_20261117.py",
+    "src/tdt_domain_adaptation_20261116.py",
+    "src/score_tdt_adaptation_20261117.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\english-training-coverage-20261117.json",
+      "name": "coverage.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\daylight-training-data-repair-20261117.json",
+      "name": "daylight-repair.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-data-r3\\export-protocol.json",
+      "name": "expanded-data/export-protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-data-r3\\english-data-plan.json",
+      "name": "expanded-data/english-data-plan.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-data-r3\\integrity.json",
+      "name": "expanded-data/integrity.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\protocol.json",
+      "name": "prepared-r3/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\scoring-control.json",
+      "name": "prepared-r3/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\intake.json",
+      "name": "prepared-r3/intake.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\validation-audio-only.json",
+      "name": "prepared-r3/validation-audio-only.json"
+    },
+    {
+      "source": "work\\analyze_english_training_coverage_20261117.py",
+      "name": "tools/analyze_english_training_coverage_20261117.py"
+    },
+    {
+      "source": "work\\export_english_training_supplement_20261117.py",
+      "name": "tools/export_english_training_supplement_20261117.py"
+    },
+    {
+      "source": "work\\verify_expanded_english_training_20261117.py",
+      "name": "tools/verify_expanded_english_training_20261117.py"
+    },
+    {
+      "source": "work\\prepare_tdt_adaptation_20261117.py",
+      "name": "tools/prepare_tdt_adaptation_20261117.py"
+    },
+    {
+      "source": "work\\verify_expanded_epoch_contract_20261117.py",
+      "name": "tools/verify_expanded_epoch_contract_20261117.py"
+    },
+    {
+      "source": "work\\verify_tdt_recovery_legacy_replay_r3.py",
+      "name": "tools/verify_tdt_recovery_legacy_replay_r3.py"
+    },
+    {
+      "source": "work\\record_daylight_training_repair_20261117.py",
+      "name": "tools/record_daylight_training_repair_20261117.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-epoch-contract-r3\\result.json",
+      "name": "proof/expanded-epoch.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\cpu-recovery-contract-expanded-legacy-r3\\result.json",
+      "name": "proof/legacy-recovery.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\training-coverage-audit-r1\\initial-runtime-failure.json",
+      "name": "proof/initial-runtime-failure.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\english-word-nonoverlap-r3\\first-integrity-failure.json",
+      "name": "proof/first-integrity-failure.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\english-word-nonoverlap-r3\\word-completeness-failure.json",
+      "name": "proof/one-sample-diagnostic.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\english-word-nonoverlap-r3\\verifier-before-complete-word-diagnostic.py",
+      "name": "proof/prior-completeness-verifier.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\english-word-nonoverlap-r3\\plan-before-independent-integrity.json",
+      "name": "proof/plan-before-integrity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\english-word-nonoverlap-r3\\completed.json",
+      "name": "proof/completed-data-export.json"
+    }
+  ],
+  "commitMessage": "Recover omitted English training speech and bind verified1828-example one-epoch recipe",
+  "claims": {
+    "state": "DAYLIGHT_ENGLISH_DATA_COVERAGE26_TO92_PERCENT_EXECUTOR1828_457_READY_NO_TRAINING",
+    "old475RowsAndAudioPreserved": true,
+    "newSupplementExamples": 1353,
+    "totalExamples": 1828,
+    "trainingLexicalWords": 41952,
+    "allPcmSlicesIndependentlyChecked": true,
+    "globalParticipantsDisjointFromSeenDevelopment": true,
+    "newNeuralCalls": 0,
+    "parameterUpdates": 0,
+    "cpuOrIntegratedGpuTraining": false,
+    "originalEvaluationGatesChanged": false,
+    "actualGpuPreflightPassed": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

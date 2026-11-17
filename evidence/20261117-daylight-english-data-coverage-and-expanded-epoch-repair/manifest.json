@@ -1,0 +1,182 @@
+{
+  "at": "2026-11-17T11:14:38.270934+08:00",
+  "parent": "1b3d71ca6496cd102be8676a6fd5c58a0ce87899",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\english-training-coverage-20261117.json",
+      "file": "coverage.json",
+      "bytes": 12172,
+      "sha256": "c247cf3bdb5f2106ceea0a0787b81455388f3fc6cb7dca6162a55ffb2530c8a1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\daylight-training-data-repair-20261117.json",
+      "file": "daylight-repair.json",
+      "bytes": 5500,
+      "sha256": "91cfac8fcb6ae136a464090befac33583ea3c0f7f846197f25bdca44a9163b1e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-data-r3\\export-protocol.json",
+      "file": "expanded-data/export-protocol.json",
+      "bytes": 1514,
+      "sha256": "16219fb24a0fd27162c0d2c81383e1590e7358a186cce816a10e66f9195ebb77"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-data-r3\\english-data-plan.json",
+      "file": "expanded-data/english-data-plan.json",
+      "bytes": 10738,
+      "sha256": "23ad4e28fed9505ef6490561ebb26ff61286026323f134e8e31aaa59a510b959"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-data-r3\\integrity.json",
+      "file": "expanded-data/integrity.json",
+      "bytes": 6619,
+      "sha256": "30e1384441454630c0e55e6855bf188395c6fa1137ed3f53d2923072e2b040e7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\protocol.json",
+      "file": "prepared-r3/protocol.json",
+      "bytes": 16172,
+      "sha256": "005c192a84e288e339c919f34934f2681072562fa5aa3da28262c9c3ffc8c89d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\scoring-control.json",
+      "file": "prepared-r3/scoring-control.json",
+      "bytes": 4462,
+      "sha256": "2be2fe750177b6841c04f2c7ff9b5db8cbb319e911cd0fb63fd4dea827517458"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\intake.json",
+      "file": "prepared-r3/intake.json",
+      "bytes": 1801,
+      "sha256": "d0312d07b7490ce2d4670510e08951f2325587aade5471b99471a6c2186c5c41"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\validation-audio-only.json",
+      "file": "prepared-r3/validation-audio-only.json",
+      "bytes": 3281,
+      "sha256": "0a5cad62790ae6fd5a558a2b239e5380d9121450b1564a5908be7a28062400c9"
+    },
+    {
+      "source": "work\\analyze_english_training_coverage_20261117.py",
+      "file": "tools/analyze_english_training_coverage_20261117.py",
+      "bytes": 9993,
+      "sha256": "548bdae7dced111b84073cc36fd46a8e8b644a91c75ca02b39eea904d861e35e"
+    },
+    {
+      "source": "work\\export_english_training_supplement_20261117.py",
+      "file": "tools/export_english_training_supplement_20261117.py",
+      "bytes": 13169,
+      "sha256": "9d46e39581c1f6d1fbca7c61fae91a87df77a0e43ebe6d54f13ea7f4b91ff154"
+    },
+    {
+      "source": "work\\verify_expanded_english_training_20261117.py",
+      "file": "tools/verify_expanded_english_training_20261117.py",
+      "bytes": 14031,
+      "sha256": "7db1d67081797faf020692a065e664038964ab156e6a71245d23c7cdceffa72a"
+    },
+    {
+      "source": "work\\prepare_tdt_adaptation_20261117.py",
+      "file": "tools/prepare_tdt_adaptation_20261117.py",
+      "bytes": 9761,
+      "sha256": "1e2b3073674160cda96fa40d4d95b103d34b84df88d5d91d4761758ce37044a9"
+    },
+    {
+      "source": "work\\verify_expanded_epoch_contract_20261117.py",
+      "file": "tools/verify_expanded_epoch_contract_20261117.py",
+      "bytes": 4688,
+      "sha256": "ef3e44bd6f21a8c21e8fb8066fd35e800686fb462c362562a655f6a76da716bd"
+    },
+    {
+      "source": "work\\verify_tdt_recovery_legacy_replay_r3.py",
+      "file": "tools/verify_tdt_recovery_legacy_replay_r3.py",
+      "bytes": 4924,
+      "sha256": "909c5cc0fb48aa3b182fc31d5932f6246e80344ed68c60d942cf33f3733d97bb"
+    },
+    {
+      "source": "work\\record_daylight_training_repair_20261117.py",
+      "file": "tools/record_daylight_training_repair_20261117.py",
+      "bytes": 9618,
+      "sha256": "ee62fc74a78b72e91ba98109e739f83a1d5d02dc639ec749f0af6a6c3bdb3f5f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-epoch-contract-r3\\result.json",
+      "file": "proof/expanded-epoch.json",
+      "bytes": 2606,
+      "sha256": "2af7fa6b97d1c4aab82431be9626e2c5ba7f1cec1bcd1fc7fed11fbd1d25529a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\cpu-recovery-contract-expanded-legacy-r3\\result.json",
+      "file": "proof/legacy-recovery.json",
+      "bytes": 1849,
+      "sha256": "d30f567be65c6d09b02cbb7986ff835e57fd2c8f27cb0ec7c3f800ccedb9f6a8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\training-coverage-audit-r1\\initial-runtime-failure.json",
+      "file": "proof/initial-runtime-failure.json",
+      "bytes": 245,
+      "sha256": "bdc6077ef28cdc5c8cbf8088f5c71c3010528f0e64b459f0bc2eb5c4159988ef"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\english-word-nonoverlap-r3\\first-integrity-failure.json",
+      "file": "proof/first-integrity-failure.json",
+      "bytes": 295,
+      "sha256": "866aa7a845f3f12a64ed176aba3f7212e7a6fc0fe60eb18f33da3f9909503327"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\english-word-nonoverlap-r3\\word-completeness-failure.json",
+      "file": "proof/one-sample-diagnostic.json",
+      "bytes": 446,
+      "sha256": "76391afa663722dfdeb27e6831eaf3012342b10a966c4148a4a41779da18d255"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\english-word-nonoverlap-r3\\verifier-before-complete-word-diagnostic.py",
+      "file": "proof/prior-completeness-verifier.py",
+      "bytes": 11377,
+      "sha256": "113a876062eca1e6a65b0e84225972faa3370b79dacac7389b44da1c91380351"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\english-word-nonoverlap-r3\\plan-before-independent-integrity.json",
+      "file": "proof/plan-before-integrity.json",
+      "bytes": 10402,
+      "sha256": "e39b5b5599fbf7ac4ccd40c0b7808c518aca79f270d4b7f49469f1e06d60e66a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\english-word-nonoverlap-r3\\completed.json",
+      "file": "proof/completed-data-export.json",
+      "bytes": 7344,
+      "sha256": "ec811a1c9f8b4e951bb06db76e922c095a6e9d894b2c1c5f5847b3c54ad1d4bf"
+    },
+    {
+      "source": "work\\checkpoint_daylight_data_r64.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 6812,
+      "sha256": "bb23c2d98a87562e1de0b1771f871b5f0cfba277551c8cd701b7bbdcc2fcf282"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/english_nonoverlap_training_windows_20261117.py": "4a21424e49dfebfbfa8008cfec791eecc3c7c346643aaf562f4da6828751d351",
+    "src/tdt_adaptation_contract_20261117.py": "06a97997e00d98839437528736b403b5088435e845333a0181803fe1c423d665",
+    "src/tdt_domain_adaptation_20261116.py": "72595d8aa35ae674f96a1573b5b43b7357151dfc021da78d12bdc5dde3ffac44",
+    "src/score_tdt_adaptation_20261117.py": "77e5d041e618cd371b7565dfc66b84832dfb52a92ab8a7fd3fa79e5c7a322a1a"
+  },
+  "state": "DAYLIGHT_ENGLISH_DATA_COVERAGE26_TO92_PERCENT_EXECUTOR1828_457_READY_NO_TRAINING",
+  "old475RowsAndAudioPreserved": true,
+  "newSupplementExamples": 1353,
+  "totalExamples": 1828,
+  "trainingLexicalWords": 41952,
+  "allPcmSlicesIndependentlyChecked": true,
+  "globalParticipantsDisjointFromSeenDevelopment": true,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "cpuOrIntegratedGpuTraining": false,
+  "originalEvaluationGatesChanged": false,
+  "actualGpuPreflightPassed": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}
