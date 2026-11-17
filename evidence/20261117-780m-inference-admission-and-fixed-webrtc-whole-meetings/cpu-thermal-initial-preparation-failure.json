@@ -1,0 +1,7 @@
+{
+  "at": "2026-11-17T11:18:27.435559+08:00",
+  "state": "LOGGER_NOT_STARTED_DIRECTORY_PRECREATED_BY_PREPARER",
+  "error": "The logger intentionally requires a new output directory; source snapshot preparation created it too early. Preserve this directory and use a new not-yet-created output.",
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0
+}

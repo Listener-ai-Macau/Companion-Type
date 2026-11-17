@@ -1,0 +1,45 @@
+{
+  "state": "FAILED_CPU_VAD_RETAINED_NO_AUTOMATIC_RETRY",
+  "at": "2026-11-17T11:20:54.567962+08:00",
+  "pid": 6392,
+  "binding": {
+    "protocolSha256": "ed697ad5f374de6dbe3efef656e37b296209c9fa2052a7d709f41e5d55159bd0",
+    "workerSha256": "1eb03bf3c454a97c3f3f661001990d0c1db874975e73e633e68a895e5ae19318",
+    "weightsSha256": "e1122837f4154c511485fe0b9c64455f7b929c96fbb8d79fbdb336383ebd3720"
+  },
+  "completed": [],
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "cpuInferenceOnly": true,
+  "referenceRead": false,
+  "gpuInitialized": false,
+  "qualityQualified": false,
+  "observedAt": "2026-11-17T11:21:28.679124+08:00",
+  "limits": {
+    "pid": 6392,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 13012992,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "cpuTemperature": {
+    "sampleAt": "2026-11-17T11:21:27.8341505+08:00",
+    "celsius": 95.5,
+    "sampleAgeSeconds": 0.844974,
+    "sensorIdentifier": "/amdcpu/0/temperature/2",
+    "taskStartThresholdCelsius": 85,
+    "taskStopThresholdCelsius": 95,
+    "hardwareOverheatCauseProven": false,
+    "physicalMainboardTemperatureMeasured": false
+  },
+  "error": "CpuThermalLimit('CPU temperature reached task stop threshold95C')"
+}

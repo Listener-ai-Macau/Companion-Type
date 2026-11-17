@@ -1,0 +1,137 @@
+{
+  "at": "2026-11-17T11:46:46+08:00",
+  "state": "WEBRTC_FIXED_DSP_REJECTED_780M_ADMISSION_STOPPED_BEFORE_COMPUTE",
+  "ownerSteering": "核显; use780M for daytime compatible inference rather than treating absent6800XT as noGPU.",
+  "igpu": {
+    "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1",
+    "workerState": "FAILED_NATIVE8_PARTIAL_RETAINED",
+    "error": "CpuThermalLimit('CPU temperature reached task stop threshold95C')",
+    "neuralPushes": 0,
+    "gpuInitialized": false,
+    "trainingUpdates": 0,
+    "actualInferenceCompatibilityOrPerformanceProven": false,
+    "originalStrict6800SelectorUnchanged": true,
+    "loggerTerminal": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-thermal-r1\\completed.json",
+    "ownedLoggerClosed": true,
+    "reason": "Original95C task guard interrupted60s admission before native DLL/model loading. Not evidence780M cannot compute, and not reboot-cause proof.",
+    "observationRecordingLimitation": "Worker retains the last successful temperature observation, rather than the exception trigger observation. Original sensor timeline and error are retained; no fabricated trigger value.",
+    "next": "No unchanged automatic retry; explicit780M path is frozen for a later admissible inference window."
+  },
+  "cpuSilero": {
+    "state": "FAILED_CPU_VAD_RETAINED_NO_AUTOMATIC_RETRY",
+    "newNeuralCalls": 0,
+    "parameterUpdates": 0,
+    "receipt": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-presence-day-r2\\run-default\\state.json",
+    "decision": "Admission stopped; no new quality result, no unchanged retry."
+  },
+  "webrtc": {
+    "mode": 0,
+    "frameMilliseconds": 10,
+    "extraPaddingSmoothingOrThresholdSweep": false,
+    "sourceCount": 2,
+    "wholeSourceSeconds": 4252.52275,
+    "dspWindows": 425253,
+    "workerPeakPrivateCommitBytes": 17993728,
+    "cpuCapPercent": 5,
+    "newNeuralCalls": 0,
+    "parameterUpdates": 0,
+    "scores": {
+      "ES2003b": {
+        "baseline": {
+          "referenceSpeakerSeconds": 1958.649999999878,
+          "missSeconds": 488.3916319999852,
+          "falseAlarmSeconds": 13.661632000108053,
+          "confusionSeconds": 7.55031000000346,
+          "errorSeconds": 509.60357400009667,
+          "DER": 0.260181029790993,
+          "identityForScoringOnly": {
+            "speaker_0": "C",
+            "speaker_1": "B",
+            "speaker_2": "A",
+            "speaker_3": "D"
+          }
+        },
+        "combined": {
+          "referenceSpeakerSeconds": 1958.649999999878,
+          "missSeconds": 404.34959299998815,
+          "falseAlarmSeconds": 58.515341000110936,
+          "confusionSeconds": 16.420835000001208,
+          "errorSeconds": 479.2857690001003,
+          "DER": 0.2447021004263805,
+          "identityForScoringOnly": {
+            "speaker_0": "C",
+            "speaker_1": "B",
+            "speaker_2": "A",
+            "speaker_3": "D"
+          }
+        },
+        "relativeDerReduction": 0.05949292066776331,
+        "passesFixed20PercentReduction": false,
+        "originalDerTenPercentGate": false,
+        "audioSeconds": 2109.813375,
+        "dspSeconds": 2.6183135000028415,
+        "dspWindows": 210982,
+        "fullOriginalFrames": 33757014,
+        "tailZeroPaddingSamples": 106,
+        "score": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\ES2003b-score.json",
+        "scoreSha256": "e356d4708bbf1fb56e2f8f364a2190f3bec86305191074d95a7e99308aed8b2d"
+      },
+      "EN2002a": {
+        "baseline": {
+          "referenceSpeakerSeconds": 2530.26,
+          "missSeconds": 724.893519000002,
+          "falseAlarmSeconds": 29.963519000000858,
+          "confusionSeconds": 31.4625419999988,
+          "errorSeconds": 786.3195800000017,
+          "DER": 0.31076631650502384,
+          "identityForScoringOnly": {
+            "speaker_0": "MEE071",
+            "speaker_1": "MEE073",
+            "speaker_2": "FEO072",
+            "speaker_3": "FEO070"
+          }
+        },
+        "combined": {
+          "referenceSpeakerSeconds": 2530.2600000000016,
+          "missSeconds": 566.4422580000021,
+          "falseAlarmSeconds": 83.34402899999873,
+          "confusionSeconds": 63.89310499999635,
+          "errorSeconds": 713.6793919999972,
+          "DER": 0.2820577300356472,
+          "identityForScoringOnly": {
+            "speaker_0": "MEE071",
+            "speaker_1": "MEE073",
+            "speaker_2": "FEO072",
+            "speaker_3": "FEO070"
+          }
+        },
+        "relativeDerReduction": 0.0923799811776336,
+        "passesFixed20PercentReduction": false,
+        "originalDerTenPercentGate": false,
+        "audioSeconds": 2142.709375,
+        "dspSeconds": 3.1798678999984986,
+        "dspWindows": 214271,
+        "fullOriginalFrames": 34283350,
+        "tailZeroPaddingSamples": 10,
+        "score": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\EN2002a-score.json",
+        "scoreSha256": "b4b43678a69735bbbce6440266f4bc9164a3d191e9ca4539ac7da45d5c3e7205"
+      }
+    },
+    "decision": "Reject this fixed VAD plus unchanged Native8 gap-only identity composition: both fail the predeclared20percent relative DER reduction and original10percent full DER gate. No mode/frame/pad grid.",
+    "interpretation": "A presence-only supplement cannot be assumed to solve missed/overlapping speakers or English word recognition. These scores do not establish a universal failure of all speech detectors."
+  },
+  "quality": {
+    "newAsrWerCerMeasured": false,
+    "existingWholeEnglishWer": 0.18180245632243555,
+    "existingOneWholeChineseCer": 0.05141141141141141,
+    "theseAreIndividualWholeMeetingScoresNotUniversalLanguageAccuracy": true,
+    "minimumErrorRateBelow": 0.05,
+    "targetErrorRateAtMost": 0.02,
+    "qualityQualified": false,
+    "saleQualified": false
+  },
+  "next": "Keep repaired English1828-clip/4.1814h fixed adaptation input and original held-out admission. Daytime explicit780M inference when guards admit; no CPU/iGPU training. NightGPU actual gradient/largestshape/recovery proof before one fixed epoch. Speaker failures remain separate from raw-language ASR and overlap gates.",
+  "finalHoldoutOpened": false,
+  "productDefaultChanged": false,
+  "weightsChanged": false
+}

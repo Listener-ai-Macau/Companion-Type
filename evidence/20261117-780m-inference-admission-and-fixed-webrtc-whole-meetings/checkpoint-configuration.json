@@ -1,0 +1,158 @@
+{
+  "revision": 65,
+  "evidenceDirectory": "evidence/20261117-780m-inference-admission-and-fixed-webrtc-whole-meetings",
+  "sources": [
+    "src/native8_780m_inference_20261117.py",
+    "src/run_native8_780m_inference_20261117.py",
+    "src/compare_native8_780m_control_20261117.py",
+    "src/webrtc_presence_worker_20261117.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_780m_native8_20261117.py",
+      "name": "tools/prepare_780m_native8_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_webrtc_cpu_presence_asset_20261117.py",
+      "name": "tools/prepare_webrtc_cpu_presence_asset_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_webrtc_presence_20261117.py",
+      "name": "tools/prepare_webrtc_presence_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_daylight_igpu_dsp_20261117.py",
+      "name": "tools/record_daylight_igpu_dsp_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\daylight-igpu-dsp-20261117.json",
+      "name": "daylight-results.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1\\protocol.json",
+      "name": "igpu-control/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1\\binding.json",
+      "name": "igpu-control/binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1\\audio-only.json",
+      "name": "igpu-control/audio-only.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1\\results\\cpu-native8-control61\\state.json",
+      "name": "igpu-control/results/cpu-native8-control61/state.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1\\results\\cpu-native8-control61\\completed-state.json",
+      "name": "igpu-control/results/cpu-native8-control61/completed-state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r1\\cpu-native8-control61-run.json",
+      "name": "igpu-run/cpu-native8-control61-run.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r1\\cpu-native8-control61-worker.log",
+      "name": "igpu-run/cpu-native8-control61-worker.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-thermal-r1\\started.json",
+      "name": "igpu-thermal/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-thermal-r1\\completed.json",
+      "name": "igpu-thermal/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\cpu-presence-day-thermal-r6\\started.json",
+      "name": "cpu-thermal/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\cpu-presence-day-thermal-r6\\completed.json",
+      "name": "cpu-thermal/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\cpu-presence-day-thermal-r5\\preparation-failure.json",
+      "name": "cpu-thermal-initial-preparation-failure.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-presence-day-r2\\run-default\\state.json",
+      "name": "cpu-silero-state.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\protocol.json",
+      "name": "webrtc-control/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\scoring-control.json",
+      "name": "webrtc-control/scoring-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\state.json",
+      "name": "webrtc-run/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\completed.json",
+      "name": "webrtc-run/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\silence-control.json",
+      "name": "webrtc-run/silence-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\ES2003b-presence.json",
+      "name": "webrtc-run/ES2003b-presence.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\ES2003b-score.json",
+      "name": "webrtc-run/ES2003b-score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\ES2003b-composition\\prediction.json",
+      "name": "webrtc-run/ES2003b-composition/prediction.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\ES2003b-composition\\combined.rttm",
+      "name": "webrtc-run/ES2003b-composition/combined.rttm"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\EN2002a-presence.json",
+      "name": "webrtc-run/EN2002a-presence.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\EN2002a-score.json",
+      "name": "webrtc-run/EN2002a-score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\EN2002a-composition\\prediction.json",
+      "name": "webrtc-run/EN2002a-composition/prediction.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\EN2002a-composition\\combined.rttm",
+      "name": "webrtc-run/EN2002a-composition/combined.rttm"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\asset-receipt.json",
+      "name": "webrtc-asset.json"
+    }
+  ],
+  "commitMessage": "Add explicit780M inference path and reject fixed WebRTC presence on original full English meetings",
+  "claims": {
+    "state": "WEBRTC_FIXED_DSP_REJECTED_780M_ADMISSION_STOPPED_BEFORE_COMPUTE",
+    "actual780mNeuralInferencePerformed": false,
+    "unchangedThermalResourceGuards": true,
+    "oldStrict6800SelectorChanged": false,
+    "fullDspSources": 2,
+    "dspWindows": 425253,
+    "newNeuralCalls": 0,
+    "trainingUpdates": 0,
+    "cpuOrIntegratedGpuTraining": false,
+    "webRtcCompositionRejectedBothSources": true,
+    "originalEvaluationGatesChanged": false,
+    "productDefaultChanged": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

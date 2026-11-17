@@ -1,0 +1,45 @@
+{
+  "at": "2026-11-17T11:44:32.622686+08:00",
+  "state": "COMPLETE_TWO_CPU_VAD_FULL_SOURCES_PENDING_COMPOSITION",
+  "binding": {
+    "protocolSha256": "8f352f0fab199da3d737ef011a0fa7b07080207241e72bb5e1fb3fd59f4faac2",
+    "workerSha256": "97f626a1bbe0b8679b5585a4000fd0c2ddbbc62f2ac7c4716133ec7de81c790e",
+    "assetReceiptSha256": "81e5b4606146d8db8eed67cb1d070daab77df2f512f39d09b93b85c18f984c22"
+  },
+  "completed": [
+    {
+      "meeting": "ES2003b",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\ES2003b-presence.json",
+      "sha256": "d9d441b9c760df8801f94a007f0159fcf7755513cd76cdb33e2e8c09d41210ec"
+    },
+    {
+      "meeting": "EN2002a",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\EN2002a-presence.json",
+      "sha256": "2e11c8ed5c33a2ba9cab3314b65e4beffae487d5bed8eaae8ddcdd5986327b86"
+    }
+  ],
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "gpuInitialized": false,
+  "referencesRead": false,
+  "processedDspFrames": 425253,
+  "observedAt": "2026-11-17T11:44:38.725198+08:00",
+  "limits": {
+    "pid": 26016,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 17993728,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "currentMeeting": null,
+  "submittedFrames": 34240000
+}

@@ -515,3 +515,13 @@ evidence/20261117-signed-driver-comparison-prepared-with-original-exports/** -te
 evidence/20261117-daylight-english-data-coverage-and-expanded-epoch-repair/** -text -whitespace
 
 src/english_nonoverlap_training_windows_20261117.py -text -whitespace
+
+evidence/20261117-780m-inference-admission-and-fixed-webrtc-whole-meetings/** -text -whitespace
+
+src/native8_780m_inference_20261117.py -text -whitespace
+
+src/run_native8_780m_inference_20261117.py -text -whitespace
+
+src/compare_native8_780m_control_20261117.py -text -whitespace
+
+src/webrtc_presence_worker_20261117.py -text -whitespace

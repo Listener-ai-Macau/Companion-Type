@@ -1,0 +1,76 @@
+{
+  "state": "PINNED_PUBLISHED_CPU_WEBRTCVAD_WHEEL_NOT_SHARED_RUNTIME_INSTALL",
+  "at": "2026-11-17T11:31:18.651466+08:00",
+  "distribution": "webrtcvad-wheels",
+  "version": "2.0.14.post1",
+  "projectUrls": {
+    "Homepage": "https://github.com/daanzu/py-webrtcvad-wheels"
+  },
+  "pypiMetadataSha256": "c05370214a49f6215df27e0517256b686537dc6128072c536dc18611c6c2c61d",
+  "wheel": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\webrtcvad_wheels-2.0.14.post1-cp311-cp311-win_amd64.whl",
+  "wheelBytes": 20658,
+  "wheelSha256": "36dd717f96cdd071026c094d6b165b30da1bd974b52cef1fbfba306034c60606",
+  "wheelPublisherUrl": "https://files.pythonhosted.org/packages/08/6c/49f8dfce31e9258b096b6a61911c7e6a66c55d440becf5b671adc08a616f/webrtcvad_wheels-2.0.14.post1-cp311-cp311-win_amd64.whl",
+  "localImportRoot": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\package",
+  "licenseFiles": [
+    "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\package\\webrtcvad_wheels-2.0.14.post1.dist-info\\licenses\\LICENSE"
+  ],
+  "packageFiles": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\package\\webrtcvad.py",
+      "bytes": 1427,
+      "sha256": "4ddfe4ee7b8210b3ebb9e4bb99acc1969ccdaad3b55b693e06af76d30599d72a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\package\\_webrtcvad.cp311-win_amd64.pyd",
+      "bytes": 32256,
+      "sha256": "61090fd9171247063fefa3c8f19284359011ff257058d6c8b21dc4e316599129"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\package\\webrtcvad_wheels-2.0.14.post1.dist-info\\METADATA",
+      "bytes": 6080,
+      "sha256": "57a6154f06406c4d2ea7770a14ac8d5c8f826dfe63e3463e9e3a7151071d3db5"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\package\\webrtcvad_wheels-2.0.14.post1.dist-info\\RECORD",
+      "bytes": 633,
+      "sha256": "123af71d7e674f6cca2a3ae0955d4cc115777f49a268a1e37e449067294ea55d"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\package\\webrtcvad_wheels-2.0.14.post1.dist-info\\top_level.txt",
+      "bytes": 21,
+      "sha256": "da8c0167bcdfa5d9246d3087cdc732b049cab22026fce09a3c084e4dfdccab01"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\package\\webrtcvad_wheels-2.0.14.post1.dist-info\\WHEEL",
+      "bytes": 101,
+      "sha256": "55ad5e704e1a425731c9b664712be1d8578dd7f0e50bc21a24d249b02258123d"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\package\\webrtcvad_wheels-2.0.14.post1.dist-info\\licenses\\LICENSE",
+      "bytes": 2770,
+      "sha256": "df49a6fde45c3acc8ebd34815d1eaf9c4f5d91a20bc7c2a00ed5ce47d9df9092"
+    }
+  ],
+  "sharedPythonOrSystemPackagesChanged": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "upstreamWrapper": "https://github.com/daanzu/py-webrtcvad-wheels",
+  "originalWrapper": "https://github.com/wiseman/py-webrtcvad",
+  "limits": {
+    "pid": 24892,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 17190912,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

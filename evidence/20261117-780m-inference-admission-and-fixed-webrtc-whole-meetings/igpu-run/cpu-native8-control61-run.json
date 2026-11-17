@@ -1,0 +1,19 @@
+{
+  "state": "FAILED_EXPLICIT_780M_INFERENCE_RETAINED_NO_RETRY",
+  "at": "2026-11-17T11:42:13.902038+08:00",
+  "meeting": "cpu-native8-control61",
+  "training": false,
+  "parameterUpdates": 0,
+  "automaticRetries": 0,
+  "privateFamilyPeakBytes": 15147008,
+  "minimumAvailableBytes": 6737649664,
+  "pid": 25608,
+  "createdAt": 1794886933.905608,
+  "exitCode": 1,
+  "workerReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1\\results\\cpu-native8-control61\\completed-state.json",
+  "workerState": "FAILED_NATIVE8_PARTIAL_RETAINED",
+  "newNeuralPushes": 0,
+  "completedNeuralFrames": 0,
+  "error": "AssertionError('Owned iGPU worker did not complete')",
+  "finishedAt": "2026-11-17T11:42:30.287647+08:00"
+}

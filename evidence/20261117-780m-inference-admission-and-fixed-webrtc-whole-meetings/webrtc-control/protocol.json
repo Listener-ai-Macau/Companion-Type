@@ -1,0 +1,65 @@
+{
+  "state": "FROZEN_ONE_WEBRTC_DSP_MODE0_NO_NEURAL_COMPUTATION",
+  "at": "2026-11-17T11:44:32.225230+08:00",
+  "assetReceipt": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\asset-receipt.json",
+  "sampleRate": 16000,
+  "frameSamples": 160,
+  "mode": 0,
+  "audioOnly": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\full-audio-only.json",
+  "predictedBindings": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\predicted-speaker-bindings.json",
+  "meetings": [
+    "ES2003b",
+    "EN2002a"
+  ],
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\webrtc_presence_worker_20261117.py",
+      "sha256": "97f626a1bbe0b8679b5585a4000fd0c2ddbbc62f2ac7c4716133ec7de81c790e"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\compose_vad_presence_20261117.py",
+      "sha256": "0fbac755e2aad1e88ef49080480e27400b2bcdd21c71af3dfb1cd8dea1b72c54"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\fixed_presence_identity_core_20261117.py",
+      "sha256": "67c1d5caa09de26c55781db4b471463f165ab0322346a26e4bfde0ae2c037a85"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py",
+      "sha256": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\durable_model_state_20261117.py",
+      "sha256": "5fea82f461da06e76afd3321c860c48a570147a4d9cce6c7cca37a595bb54e3b"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_contract_20261116.py",
+      "sha256": "4e238f87f06b7ed95a6bd6e30522e86b4129836074cabff138cd1fe5f76981c9"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\asset-receipt.json",
+      "sha256": "81e5b4606146d8db8eed67cb1d070daab77df2f512f39d09b93b85c18f984c22"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\full-audio-only.json",
+      "sha256": "13a02cd0f2a59e3359bb46250b74aeba41aa9138c05e7f7909afc441f17e6938"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\cpu-fixed-whole-r2\\predicted-speaker-bindings.json",
+      "sha256": "43287a3d3f92044647fcfae1aab75da0686170ad1a0060a22b463088ce53c95d"
+    }
+  ],
+  "minimumAvailableBytes": 3414499000,
+  "cpuPercent": 5,
+  "privateCommitBytes": 268435456,
+  "stopAt": "2026-11-17T11:59:32.225230+08:00",
+  "extraPaddingOrSmoothing": false,
+  "decisionBasis": "Native8 misses speech. One very small non-neural published DSP VAD provides a distinct CPU-only presence option after neural admission stopped. Same two complete original English recordings/unchanged Native8 identity fusion/zero-collar overlap-included scoring. Not another acoustic model or threshold grid.",
+  "admissionGate": "Each complete original English source must reduce DER by>=20percent, have valid times/no unknown identity. Original full10percent DER and all raw-word/fact gates remain. Reject if not passed; no threshold/padding/model grid.",
+  "qualityQualified": false,
+  "parameterUpdates": 0,
+  "newNeuralCalls": 0,
+  "fallbackChangesProductDefault": false,
+  "referencesPassedToWorker": false,
+  "originalWordsAndAcceptanceMetricsChanged": false
+}

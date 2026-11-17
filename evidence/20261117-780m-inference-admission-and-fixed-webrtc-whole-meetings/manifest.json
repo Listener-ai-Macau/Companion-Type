@@ -1,0 +1,230 @@
+{
+  "at": "2026-11-17T11:47:21.768165+08:00",
+  "parent": "5f8523bd833f7741b459261af9d2bd73f05a03a1",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_780m_native8_20261117.py",
+      "file": "tools/prepare_780m_native8_20261117.py",
+      "bytes": 7450,
+      "sha256": "3d88217d2e5c73eb4c41d1084a92ac5e04d3bd773a476832b81097e2231ac99d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_webrtc_cpu_presence_asset_20261117.py",
+      "file": "tools/prepare_webrtc_cpu_presence_asset_20261117.py",
+      "bytes": 2910,
+      "sha256": "fbacac3543ed5caebe5742dcaf521ec92b6c0fab86ae11ff99e77c096765b8c2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_webrtc_presence_20261117.py",
+      "file": "tools/prepare_webrtc_presence_20261117.py",
+      "bytes": 2853,
+      "sha256": "545c9aa605b356eb9a554cc6799c0a18f42deb09865fa84d3ed9eaae9c9c236d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_daylight_igpu_dsp_20261117.py",
+      "file": "tools/record_daylight_igpu_dsp_20261117.py",
+      "bytes": 8257,
+      "sha256": "8ab57c08bd6495d51093baebaee0749d98a14fc2c157b70cc3c9ce48c1be192a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\daylight-igpu-dsp-20261117.json",
+      "file": "daylight-results.json",
+      "bytes": 6722,
+      "sha256": "8a0a71a48f403dc720e08743f5bea7c30a5d3830a400ffb534a5a16f957e2db6"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1\\protocol.json",
+      "file": "igpu-control/protocol.json",
+      "bytes": 7173,
+      "sha256": "b658f9de9035b145f45f713040f6700dada67b3330ef41e8f83b706ddd760ad4"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1\\binding.json",
+      "file": "igpu-control/binding.json",
+      "bytes": 1760,
+      "sha256": "7c5f2333ff0bb30544711a517d12b8555fea8ca99339bd50312c8a20d938289f"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1\\audio-only.json",
+      "file": "igpu-control/audio-only.json",
+      "bytes": 538,
+      "sha256": "16969524593eb19b619f17335a620bf747e82a8e889f3163680f669db48fe0fb"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1\\results\\cpu-native8-control61\\state.json",
+      "file": "igpu-control/results/cpu-native8-control61/state.json",
+      "bytes": 3191,
+      "sha256": "d65e1c6225e64d23d6af93299ea86d5151ab1a27d2070a377ea05c1b989a57d1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1\\results\\cpu-native8-control61\\completed-state.json",
+      "file": "igpu-control/results/cpu-native8-control61/completed-state.json",
+      "bytes": 3191,
+      "sha256": "d65e1c6225e64d23d6af93299ea86d5151ab1a27d2070a377ea05c1b989a57d1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r1\\cpu-native8-control61-run.json",
+      "file": "igpu-run/cpu-native8-control61-run.json",
+      "bytes": 836,
+      "sha256": "21368d45ee753f89769fb2a540c526f502948a0f35efd6b76fc6fdd3499c2c1b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r1\\cpu-native8-control61-worker.log",
+      "file": "igpu-run/cpu-native8-control61-worker.log",
+      "bytes": 4590,
+      "sha256": "f50eb5f38b8cd32f898090baa4fecb4e99cc5ffcd4b81ee85036eb3a5fea6769"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-thermal-r1\\started.json",
+      "file": "igpu-thermal/started.json",
+      "bytes": 963,
+      "sha256": "a2a18c0d71378663af6fb23456a41cf8567dd2642b4a90f910272d460854d971"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-thermal-r1\\completed.json",
+      "file": "igpu-thermal/completed.json",
+      "bytes": 979,
+      "sha256": "870cf75847047306705623ea7351103e3fbb2e6d3655412328e651374698c0a8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\cpu-presence-day-thermal-r6\\started.json",
+      "file": "cpu-thermal/started.json",
+      "bytes": 961,
+      "sha256": "7446025917594efca365fec890f82b45fcba4738335eb888bbba23e31258c8da"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\cpu-presence-day-thermal-r6\\completed.json",
+      "file": "cpu-thermal/completed.json",
+      "bytes": 980,
+      "sha256": "77947d48c35d2421d80548154166f70a016fb9ca0d9b25e327aced254b47f9be"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\cpu-presence-day-thermal-r5\\preparation-failure.json",
+      "file": "cpu-thermal-initial-preparation-failure.json",
+      "bytes": 352,
+      "sha256": "5c6439ebc7d22a3c4e185de3d0236897c69111f27f3bb543cec483f17e8748de"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-presence-day-r2\\run-default\\state.json",
+      "file": "cpu-silero-state.json",
+      "bytes": 1589,
+      "sha256": "e44b1de85c25f9d6495f7e002647c794dbb04325e70e33e78830d1f6c16e4082"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\protocol.json",
+      "file": "webrtc-control/protocol.json",
+      "bytes": 3911,
+      "sha256": "8f352f0fab199da3d737ef011a0fa7b07080207241e72bb5e1fb3fd59f4faac2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\scoring-control.json",
+      "file": "webrtc-control/scoring-control.json",
+      "bytes": 1575,
+      "sha256": "f67d59b9f30daadbbbc94cb18aaa0c72dd69ff1de9de10479bf143b07d4d9bc8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\state.json",
+      "file": "webrtc-run/state.json",
+      "bytes": 1768,
+      "sha256": "f90a0804f6612181a5a4d21e92fc3d976480e063ba311ea1d79e64db4da3d9df"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\completed.json",
+      "file": "webrtc-run/completed.json",
+      "bytes": 1768,
+      "sha256": "f90a0804f6612181a5a4d21e92fc3d976480e063ba311ea1d79e64db4da3d9df"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\silence-control.json",
+      "file": "webrtc-run/silence-control.json",
+      "bytes": 84,
+      "sha256": "071134eb1705c1c821f2665276f092340bdb0d6ae697aab0c098dc01032c18d4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\ES2003b-presence.json",
+      "file": "webrtc-run/ES2003b-presence.json",
+      "bytes": 135146,
+      "sha256": "d9d441b9c760df8801f94a007f0159fcf7755513cd76cdb33e2e8c09d41210ec"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\ES2003b-score.json",
+      "file": "webrtc-run/ES2003b-score.json",
+      "bytes": 2815,
+      "sha256": "e356d4708bbf1fb56e2f8f364a2190f3bec86305191074d95a7e99308aed8b2d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\ES2003b-composition\\prediction.json",
+      "file": "webrtc-run/ES2003b-composition/prediction.json",
+      "bytes": 2948,
+      "sha256": "ad60d514fb89e1e258642c54667306fe9cc7a4aab970d9e8bbc061aba505593d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\ES2003b-composition\\combined.rttm",
+      "file": "webrtc-run/ES2003b-composition/combined.rttm",
+      "bytes": 97103,
+      "sha256": "ab6c8cda1c342ac956419e7dd070e531484e921afff5954ec0b54735f0f7a923"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\EN2002a-presence.json",
+      "file": "webrtc-run/EN2002a-presence.json",
+      "bytes": 117221,
+      "sha256": "2e11c8ed5c33a2ba9cab3314b65e4beffae487d5bed8eaae8ddcdd5986327b86"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\EN2002a-score.json",
+      "file": "webrtc-run/EN2002a-score.json",
+      "bytes": 2864,
+      "sha256": "b4b43678a69735bbbce6440266f4bc9164a3d191e9ca4539ac7da45d5c3e7205"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\EN2002a-composition\\prediction.json",
+      "file": "webrtc-run/EN2002a-composition/prediction.json",
+      "bytes": 2899,
+      "sha256": "e8834a3a6e8d2780eb440c3848d0c35863c78d4e9885d4b7eff88a793a20ba22"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\webrtc-presence-r1\\run-mode0\\EN2002a-composition\\combined.rttm",
+      "file": "webrtc-run/EN2002a-composition/combined.rttm",
+      "bytes": 146514,
+      "sha256": "304b5160eab5e9851869d9619444c8e49062e23c263b5facd33bb4e40d534ce9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\webrtcvad-wheels-20261117\\asset-receipt.json",
+      "file": "webrtc-asset.json",
+      "bytes": 3695,
+      "sha256": "81e5b4606146d8db8eed67cb1d070daab77df2f512f39d09b93b85c18f984c22"
+    },
+    {
+      "source": "work\\checkpoint_igpu_dsp_r65.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 8755,
+      "sha256": "896d932684e9d2c766895b5adc2673896f034a7f844acbcd60852229ba60aa52"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/native8_780m_inference_20261117.py": "5b70a496a32eb89e83ab3a8b5014674e3c712541d8c77bf62b60f7db8329d150",
+    "src/run_native8_780m_inference_20261117.py": "98a024a0f7f7fd0daa75122023f2bb66eb90209c79981d98980e11ed67621daa",
+    "src/compare_native8_780m_control_20261117.py": "136f48e005fdfab763f071b06641b75bc4dc365d664a5436346c33cf6d161000",
+    "src/webrtc_presence_worker_20261117.py": "97f626a1bbe0b8679b5585a4000fd0c2ddbbc62f2ac7c4716133ec7de81c790e"
+  },
+  "state": "WEBRTC_FIXED_DSP_REJECTED_780M_ADMISSION_STOPPED_BEFORE_COMPUTE",
+  "actual780mNeuralInferencePerformed": false,
+  "unchangedThermalResourceGuards": true,
+  "oldStrict6800SelectorChanged": false,
+  "fullDspSources": 2,
+  "dspWindows": 425253,
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "cpuOrIntegratedGpuTraining": false,
+  "webRtcCompositionRejectedBothSources": true,
+  "originalEvaluationGatesChanged": false,
+  "productDefaultChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}
