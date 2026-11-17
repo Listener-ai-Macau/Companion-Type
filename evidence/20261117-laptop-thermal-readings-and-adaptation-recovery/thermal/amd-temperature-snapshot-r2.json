@@ -1,0 +1,118 @@
+{
+  "at": "2026-11-17T08:07:53.215706+08:00",
+  "readOnly": true,
+  "newDriverInstalled": false,
+  "neuralRuntimeLoaded": false,
+  "setApisCalled": false,
+  "initializationCode": 0,
+  "adapters": [
+    {
+      "name": "AMD Radeon 780M Graphics",
+      "adapterIndex": 0,
+      "pciBus": 99,
+      "legacySensors": {
+        "edge": {
+          "returnCode": -1,
+          "celsius": null
+        },
+        "memory": {
+          "returnCode": -8,
+          "celsius": null
+        },
+        "hotspot": {
+          "returnCode": -8,
+          "celsius": null
+        }
+      },
+      "pmLogReturnCode": 0,
+      "sensors": {
+        "edge": {
+          "supported": false,
+          "celsius": null
+        },
+        "memory": {
+          "supported": false,
+          "celsius": null
+        },
+        "vrmSoc": {
+          "supported": false,
+          "celsius": null
+        },
+        "hotspot": {
+          "supported": false,
+          "celsius": null
+        },
+        "graphics": {
+          "supported": true,
+          "celsius": 75
+        },
+        "soc": {
+          "supported": true,
+          "celsius": 76
+        }
+      }
+    },
+    {
+      "name": "AMD Radeon RX 6800 XT",
+      "adapterIndex": 5,
+      "pciBus": 8,
+      "legacySensors": {
+        "edge": {
+          "returnCode": -1,
+          "celsius": null
+        },
+        "memory": {
+          "returnCode": -8,
+          "celsius": null
+        },
+        "hotspot": {
+          "returnCode": -8,
+          "celsius": null
+        }
+      },
+      "pmLogReturnCode": 0,
+      "sensors": {
+        "edge": {
+          "supported": true,
+          "celsius": 47
+        },
+        "memory": {
+          "supported": false,
+          "celsius": null
+        },
+        "vrmSoc": {
+          "supported": false,
+          "celsius": null
+        },
+        "hotspot": {
+          "supported": true,
+          "celsius": 51
+        },
+        "graphics": {
+          "supported": false,
+          "celsius": null
+        },
+        "soc": {
+          "supported": false,
+          "celsius": null
+        }
+      }
+    }
+  ],
+  "limits": {
+    "pid": 18912,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 10952704,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

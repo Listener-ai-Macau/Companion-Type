@@ -12,9 +12,21 @@ import random
 import shutil
 import uuid
 from meeting_acoustic_contract_20261116 import (
-    read,require,sha,tensor_header,write_float_checkpoint,committed_checkpoint,
+    read,require,sha,tensor_header,write_float_checkpoint,
 )
-from durable_model_state_20261117 import atomic_json
+from durable_model_state_20261117 import atomic_json,read_snapshot
+
+def committed_tdt_checkpoint(root,binding):
+    """Recover a corrupt pointer explicitly, then verify its immutable payload."""
+    root=Path(root);pointer,selection=read_snapshot(root/'latest-checkpoint.json')
+    require(pointer['binding']==binding,'Checkpoint belongs to a different recipe/data/source')
+    name=pointer['receipt'];require(Path(name).name==name,'Checkpoint receipt escaped run')
+    proof=root/name;require(sha(proof)==pointer['receiptSha256'],'Checkpoint receipt changed')
+    receipt=read(proof);require(receipt['binding']==binding,'Checkpoint binding mismatch')
+    require(Path(receipt['file']).name==receipt['file'],'Checkpoint payload escaped run')
+    path=root/receipt['file'];require(sha(path)==receipt['sha256'],'Committed checkpoint is missing or corrupted')
+    return path,{**receipt,'receiptFile':name,'receiptSha256':pointer['receiptSha256'],
+        'pointerSelection':selection}
 
 def digest_tensors(items,*,torch,heartbeat=lambda:None):
     digest=hashlib.sha256()
@@ -37,6 +49,13 @@ class CheckpointStore:
         self.torch=torch;self.model=model;self.names=list(names);self.buffer_names=list(buffer_names)
         self.optimizer=optimizer;self.device=device;self.heartbeat=heartbeat
         self.minimum_free_bytes=minimum_free_bytes;self.budget_bytes=budget_bytes
+    def auxiliary_state(self):
+        t=self.torch;parameters=dict(self.model.named_parameters());buffers=dict(self.model.named_buffers())
+        return {'optimizerSteps':{n:int(self.optimizer.state[parameters[n]]['step']) for n in self.names},
+            'integerBuffers':{n:int(buffers[n]) for n in self.buffer_names if buffers[n].dtype!=t.float32},
+            'cpuRngHex':t.get_rng_state().numpy().tobytes().hex(),
+            'gpuRngHex':t.cuda.get_rng_state(self.device).cpu().numpy().tobytes().hex(),
+            'pythonRng':random.getstate()}
     def tensors(self,include_optimizer=True):
         t=self.torch;parameters=dict(self.model.named_parameters());buffers=dict(self.model.named_buffers())
         values={}
@@ -67,16 +86,12 @@ class CheckpointStore:
             'file':target.name,**encoded,'completedExamples':completed_examples,'optimizerUpdates':optimizer_updates,
             'orderSha256':order_sha256,'frozenDigest':frozen_sha256,'preflightOnly':preflight_only,
             'parameterNames':self.names,'mutableBufferNames':self.buffer_names,
-            'optimizerSteps':{n:int(self.optimizer.state[parameters[n]]['step']) for n in self.names},
-            'integerBuffers':{n:int(buffers[n]) for n in self.buffer_names if buffers[n].dtype!=t.float32},
-            'cpuRngHex':t.get_rng_state().numpy().tobytes().hex(),
-            'gpuRngHex':t.cuda.get_rng_state(self.device).cpu().numpy().tobytes().hex(),
-            'pythonRng':random.getstate(),'noFullHostStateDict':True,'maximumHostTensorChunkBytes':1024**2}
+            **self.auxiliary_state(),'noFullHostStateDict':True,'maximumHostTensorChunkBytes':1024**2}
         proof=self.root/(identity+'.json');atomic_json(proof,receipt)
         atomic_json(self.root/'latest-checkpoint.json',{'binding':self.binding,'receipt':proof.name,'receiptSha256':sha(proof)})
-        return target,receipt
+        return target,{**receipt,'receiptFile':proof.name,'receiptSha256':sha(proof)}
     def restore(self,*,include_optimizer=True,restore_rng=True):
-        t=self.torch;path,receipt=committed_checkpoint(self.root,self.binding)
+        t=self.torch;path,receipt=committed_tdt_checkpoint(self.root,self.binding)
         require(receipt['parameterNames']==self.names and receipt['mutableBufferNames']==self.buffer_names,
             'Checkpoint trainable/buffer scope differs')
         parameters=dict(self.model.named_parameters());buffers=dict(self.model.named_buffers())

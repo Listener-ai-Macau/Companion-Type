@@ -18,7 +18,7 @@ import wave
 
 os.environ.update(OMP_NUM_THREADS='4',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='4',
     HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',TOKENIZERS_PARALLELISM='false')
-from meeting_acoustic_contract_20261116 import read,require,sha,committed_checkpoint
+from meeting_acoustic_contract_20261116 import read,require,sha
 from meeting_acoustic_worker_20261116 import own_limits,available_ram,present_discrete_gpu,exclusive_run
 from moss_windows_resource_limits_20261104 import SystemRamPressure
 from companion_local_pcm_session_20261114 import exclusive_file
@@ -28,6 +28,7 @@ from companion_gpu_execution_20261116 import GuardedGpu
 from english_transducer_worker_20261116 import make_empty
 from tdt_selected_loss_20261116 import gpu_loss_contract,blocked_joint_loss
 from tdt_adaptation_checkpoint_20261116 import CheckpointStore,frozen_digest,digest_tensors
+from tdt_adaptation_contract_20261117 import valid_resume_position,checkpoint_identity,require_final_checkpoint
 
 now=lambda:datetime.now().astimezone().isoformat(timespec='seconds')
 
@@ -51,6 +52,8 @@ def main():
         require('torch' not in sys.modules,'Offline inspect imported torch')
         print(json.dumps({'state':'PASS_ENGLISH_DOMAIN_ADAPTATION_OFFLINE_CONTRACT','examples':475,
             'trainableParameters':118886022,'gpuPreflightPassed':False,'trainingStarted':False,'torchImported':False}));return
+    require(P.get('gpuExecutionEnabled') is True,'GPU execution not enabled in this frozen preparation')
+    require(datetime.now().astimezone()<datetime.fromisoformat(P['stopAt']),'Frozen execution window expired')
     require(a.run is not None,'Explicit isolated run required');run=a.run.resolve();run.mkdir(parents=True,exist_ok=True)
     out=run/a.phase;out.mkdir(exist_ok=False);(out/'results').mkdir()
     binding={'protocolSha256':sha(a.protocol),'workerSha256':sha(__file__),
@@ -73,6 +76,12 @@ def main():
             'Nontraining rows entered adaptation')
         for row in rows:require(sha(row['audio'])==row['audioSha256'],'Training PCM changed')
         return rows
+    def require_baseline():
+        baseline=read(run/'baseline/completed.json')
+        require(baseline['state']=='COMPLETE_TDT_BASELINE_12_PENDING_INDEPENDENT_SCORE'
+            and baseline['binding']==binding and len(baseline['completed'])==12
+            and baseline['parameterUpdates']==0,'Same-profile complete untrained baseline missing')
+        return baseline
     with exclusive_run(run),exclusive_file(Path(P['neuralLock'])),PowerLease():
         try:
             save();state['presentDevices']=present_discrete_gpu();began=time.monotonic()
@@ -92,6 +101,7 @@ def main():
             pin_rocm_blas(P['blas']['file'],P['blas']['sha256']);save(device=chosen)
             guard=GuardedGpu(torch,out,save,stop,fraction=.5,minimum_ram=P['minimumAvailableBytes'])
             if a.phase=='preflight':
+                require_baseline()
                 guard.heartbeat(force=True,state='PROVING_NATIVE_AND_BLOCKED_GPU_TDT_LOSS')
                 proof=gpu_loss_contract(torch,device);atomic_json(out/'loss-contract.json',proof)
                 state['tinyLossGradientProofPassed']=True;gc.collect();torch.cuda.empty_cache()
@@ -129,11 +139,15 @@ def main():
                 return request
             training=a.phase in ('preflight','train') or resume
             if not training:
+                evaluated_checkpoint=None
                 if a.phase=='validate':
                     final=read(run/'training-completed.json')
                     require(final['binding']==binding and final['completedTrainingExamples']==475
                         and final['candidateOptimizerUpdates']==119,'Fixed one-epoch training incomplete')
-                    checkpoint_store(run/'checkpoints').restore(include_optimizer=False,restore_rng=False)
+                    restored=checkpoint_store(run/'checkpoints').restore(include_optimizer=False,restore_rng=False)
+                    evaluated_checkpoint=require_final_checkpoint(restored,final)
+                    state['evaluatedCheckpoint']=evaluated_checkpoint
+                    state['checkpointPointerSelection']=restored['pointerSelection']
                     require(frozen_digest(model,names,mutable,torch=torch,heartbeat=guard.heartbeat)==final['frozenDigest'],
                         'Validation factory frozen tensors differ')
                 cases=read(P['validationAudioOnly']);require(len(cases)==12,'Fixed English12 required')
@@ -157,7 +171,8 @@ def main():
                         'naturalTermination':natural,'seconds':seconds,'allInputFramesPreserved':True,
                         'text':processor.batch_decode(result.sequences,skip_special_tokens=True,
                             clean_up_tokenization_spaces=False,group_tokens=False)[0],
-                        'wordsPostEdited':False,'referenceUsed':False,'phase':a.phase}
+                        'wordsPostEdited':False,'referenceUsed':False,'phase':a.phase,
+                        'evaluatedCheckpoint':evaluated_checkpoint,'inputFrames':row['frames']}
                     f=out/'results'/(row['id']+'.json');atomic_json(f,packet)
                     require(natural,'Incomplete TDT output; no changed-window retry')
                     state['completed'].append({'id':row['id'],'file':str(f),'sha256':sha(f)})
@@ -167,9 +182,11 @@ def main():
                 if a.phase!='preflight':
                     pre=read(run/'preflight/completed.json')
                     require(pre['binding']==binding and pre['state']=='PASS_REAL_TDT_GPU_TRAINING_AND_CHECKPOINT_PREFLIGHT'
-                        and pre['checkpointExactRoundtrip'] and pre['tinyLossGradientProofPassed'],
+                        and pre['checkpointExactRoundtrip'] and pre['tinyLossGradientProofPassed']
+                        and pre['steadyAdamStatesPresentForMaximumShape']
+                        and pre['integerBuffersOptimizerStepsAndRngExactRoundtrip'],
                         'Actual GPU preflight not passed; training prohibited')
-                    require((run/'baseline/completed.json').exists(),'Same-profile untrained baseline missing')
+                    require_baseline()
                 rows=train_rows();order=list(range(475));random.Random(P['training']['seed']).shuffle(order)
                 order_sha=hashlib.sha256(json.dumps([rows[i]['id'] for i in order]).encode()).hexdigest()
                 before=frozen_digest(model,names,mutable,torch=torch,heartbeat=guard.heartbeat)
@@ -184,6 +201,13 @@ def main():
                 parameters=[named[n] for n in names]
                 optimizer=torch.optim.AdamW(parameters,lr=1e-5,betas=(.9,.999),eps=1e-8,
                     weight_decay=.01,foreach=False,fused=False,amsgrad=False)
+                # Account for steady-state Adam storage before the largest
+                # real backward, rather than allocating it only afterwards.
+                for parameter in parameters:
+                    adam=optimizer.state[parameter]
+                    adam['step']=torch.tensor(0.,dtype=torch.float32)
+                    adam['exp_avg']=torch.zeros_like(parameter)
+                    adam['exp_avg_sq']=torch.zeros_like(parameter)
                 optimizer.zero_grad(set_to_none=True)
                 torch.random.default_generator.manual_seed(P['training']['seed']);torch.cuda.manual_seed(P['training']['seed'])
                 random.seed(P['training']['seed'])
@@ -193,7 +217,8 @@ def main():
                     saved=store.restore();require(not saved['preflightOnly'] and saved['orderSha256']==order_sha
                         and saved['frozenDigest']==before,'Recovery data/order/frozen factory differs')
                     start=saved['completedExamples'];updates=saved['optimizerUpdates']
-                    require(0<start<475 and start%4==0,'No incomplete epoch boundary to resume')
+                    valid_resume_position(start,updates)
+                    state['checkpointPointerSelection']=saved['pointerSelection']
                 elif a.phase=='train':require(not(run/'checkpoints/latest-checkpoint.json').exists(),'Use explicit resume for committed progress')
                 def loss_for(row):
                     guard.heartbeat(force=True,state='FORWARD_TDT_TRAIN_ONLY',currentId=row['id'])
@@ -225,31 +250,38 @@ def main():
                     optimizer.step();state['parameterUpdates']+=1;optimizer.zero_grad(set_to_none=True)
                     require(frozen_digest(model,names,mutable,torch=torch,heartbeat=guard.heartbeat)==before,'Frozen factory mutated')
                     expected=digest_tensors(store.tensors().items(),torch=torch,heartbeat=guard.heartbeat)
+                    expected_auxiliary=json.dumps(store.auxiliary_state(),sort_keys=True)
                     path,saved=store.save(completed_examples=0,optimizer_updates=1,order_sha256=order_sha,
                         frozen_sha256=before,preflight_only=True)
                     with torch.no_grad():
                         for value in store.tensors().values():value.zero_()
                         for name in mutable:
                             if buffers[name].dtype!=torch.float32:buffers[name].zero_()
+                        for parameter in parameters:optimizer.state[parameter]['step'].zero_()
+                    torch.random.default_generator.manual_seed(P['training']['seed']+1)
+                    torch.cuda.manual_seed(P['training']['seed']+1);random.seed(P['training']['seed']+1)
                     store.restore()
                     actual=digest_tensors(store.tensors().items(),torch=torch,heartbeat=guard.heartbeat)
                     require(actual==expected,'Restored learned tensors/Adam state differ')
+                    require(json.dumps(store.auxiliary_state(),sort_keys=True)==expected_auxiliary,
+                        'Restored integer buffers, optimizer steps or RNG differ')
                     require(frozen_digest(model,names,mutable,torch=torch,heartbeat=guard.heartbeat)==before,
                         'Checkpoint roundtrip mutated frozen tensors')
                     save(state='PASS_REAL_TDT_GPU_TRAINING_AND_CHECKPOINT_PREFLIGHT',maximumShapeProofs=measurements,
                         checkpointExactRoundtrip=True,checkpointPayloadSha256=sha(path),frozenDigest=before,
                         candidateTrainingStarted=False,preflightParameterUpdates=1,
-                        preflightWeightsMustNotInitializeCandidate=True)
+                        preflightWeightsMustNotInitializeCandidate=True,steadyAdamStatesPresentForMaximumShape=True,
+                        integerBuffersOptimizerStepsAndRngExactRoundtrip=True)
                 else:
-                    losses=[]
+                    losses=[];completed=start;last_saved=saved if resume else None
                     with (out/'training-loss.jsonl').open('w',encoding='utf-8') as log:
                         for first in range(start,475,4):
                             stop();group=order[first:first+4];optimizer.zero_grad(set_to_none=True)
-                            for index in group:
+                            for within,index in enumerate(group):
                                 row=rows[index];tick=time.perf_counter();loss=loss_for(row);value=float(loss)
                                 guard.heartbeat(force=True,state='BACKWARD_FIXED_TDT_EPOCH',currentId=row['id'])
                                 (loss/len(group)).backward();del loss
-                                item={'id':row['id'],'trainingIndex':first+len(losses)%4,'loss':value,
+                                item={'id':row['id'],'trainingIndex':first+within,'loss':value,
                                     'seconds':time.perf_counter()-tick,'at':now()}
                                 log.write(json.dumps(item)+'\n');log.flush();losses.append(value)
                                 guard.heartbeat(force=True)
@@ -259,13 +291,17 @@ def main():
                             save(state='TRAINING_FIXED_ONE_TDT_EPOCH',candidateOptimizerUpdates=updates,
                                 completedTrainingExamples=completed,lastGradientNormBeforeClip=float(norm))
                             if updates%8==0 or completed==475:
-                                store.save(completed_examples=completed,optimizer_updates=updates,
+                                _,last_saved=store.save(completed_examples=completed,optimizer_updates=updates,
                                     order_sha256=order_sha,frozen_sha256=before)
                     require(frozen_digest(model,names,mutable,torch=torch,heartbeat=guard.heartbeat)==before,'Frozen factory mutated in epoch')
                     require(updates==119 and completed==475,'Fixed epoch incomplete')
+                    require(last_saved is not None and last_saved['completedExamples']==475
+                        and last_saved['optimizerUpdates']==119,'Final durable checkpoint missing')
                     save(state='COMPLETE_FIXED_ONE_EPOCH_TDT_ENGLISH_ADAPTATION_PENDING_VALIDATION',
                         candidateOptimizerUpdates=updates,completedTrainingExamples=completed,
-                        frozenDigest=before,meanTrainingLossThisProcess=sum(losses)/len(losses),freshFactoryInitialization=not resume)
+                        frozenDigest=before,meanTrainingLossThisProcess=sum(losses)/len(losses) if losses else None,
+                        finalCheckpoint=checkpoint_identity(last_saved),freshFactoryInitialization=not resume,
+                        finalizedCompletedCheckpointWithoutNewUpdates=bool(start==475))
                     atomic_json(run/'training-completed.json',state)
             state['gpuSummary']=guard.close();guard=None;save(currentOperation=None)
             atomic_json(out/'completed.json',state)

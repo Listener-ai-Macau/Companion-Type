@@ -1,0 +1,163 @@
+{
+  "at": "2026-11-17T08:28:08.899583+08:00",
+  "parent": "4329d035fb77b441106c19135f701324f59e7bfe",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\thermal-monitor-status-20261117.json",
+      "file": "thermal/thermal-monitor-status-20261117.json",
+      "bytes": 3085,
+      "sha256": "15630229f8e1338e8ece45c943c2ea8342db14a018263f3b2751c7941293adba"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\laptop-thermal-status-20261117.json",
+      "file": "thermal/laptop-thermal-status-20261117.json",
+      "bytes": 6300,
+      "sha256": "0510ff4ce44c88a2179490a870f7ae99dd32b44d856634e4280a9a98913b7f72"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\usb4-history.json",
+      "file": "thermal/usb4-history.json",
+      "bytes": 6667,
+      "sha256": "e1624f14e9603a2579fe9abdf7eb3679560a5c3647d3ba490dc2e77b5720e3a5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\thermal-event-history.json",
+      "file": "thermal/thermal-event-history.json",
+      "bytes": 147,
+      "sha256": "6be7619da5bd100b12821c0b8f4392348e4b686fec0c6e4b49730361b7f89bb5"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\amd-temperature-snapshot-r1.json",
+      "file": "thermal/amd-temperature-snapshot-r1.json",
+      "bytes": 1547,
+      "sha256": "79ebaf94fcdbaaf4afa9edcf28224394f21de644b2cfc3f340b51c60c9aab108"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\amd-temperature-snapshot-r2.json",
+      "file": "thermal/amd-temperature-snapshot-r2.json",
+      "bytes": 2751,
+      "sha256": "cc0f70dbc636abb3b5da48cf8adf9d71427176489393902cae06a6414691fd8b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\prepared-cpu-sensor-tool\\prepared-receipt.json",
+      "file": "thermal/prepared-cpu-sensor-tool/prepared-receipt.json",
+      "bytes": 643,
+      "sha256": "4dece082a610daaf53fb76e47056ee66a54c3a68bf2b5caa4298cdcf402ff240"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\prepared-cpu-sensor-tool\\installation-result.json",
+      "file": "thermal/prepared-cpu-sensor-tool/installation-result.json",
+      "bytes": 363,
+      "sha256": "4f110d1457508d4c1b244a5d567a80eaec866e236a1a8db2077fc8485c2eddb9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\cpu-package-r1\\result.json",
+      "file": "thermal/cpu-package-r1/result.json",
+      "bytes": 705,
+      "sha256": "deb2a3701d0313b5c958ac8de5931d71dd0b2ab763c2a6e8f56a4981cda918f6"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\thermal-monitor-r1\\completed.json",
+      "file": "thermal/thermal-monitor-r1/completed.json",
+      "bytes": 855,
+      "sha256": "cd41dd2067a00423e1a251ca7604c901e9646292190fe5c8f8ee3e21424f5b29"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\thermal-monitor-r2\\completed.json",
+      "file": "thermal/thermal-monitor-r2/completed.json",
+      "bytes": 887,
+      "sha256": "cccd1f183606005c2daf2bfb40f6cba4cf72acbadb1ab5af6e4bae49a3f02f9c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\cpu-recovery-contract-r1\\result.json",
+      "file": "adaptation/cpu-recovery-contract-r1.json",
+      "bytes": 1849,
+      "sha256": "be7efc203d52119012addc3aa8aed9f7491234ef026ce3366259f86112c4c669"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\read_usb4_properties_20261117.ps1",
+      "file": "local-tools/read_usb4_properties_20261117.ps1",
+      "bytes": 1097,
+      "sha256": "d62f8ba77951733bb0808284fd5c96422d05464801efc65718d9f0101760b40c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\inspect_usb4_history_20261117.py",
+      "file": "local-tools/inspect_usb4_history_20261117.py",
+      "bytes": 3517,
+      "sha256": "39932ab92a645f9766263863744972d4e38e6dce83e3774a0364a419771a8512"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\read_thermal_stream_20261117.ps1",
+      "file": "local-tools/read_thermal_stream_20261117.ps1",
+      "bytes": 1417,
+      "sha256": "f00fe11f52e3bed9e7fcc44f503e45e0051bc86f131561a51bb0ab4de4cdf37c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\monitor_thermal_20261117.py",
+      "file": "local-tools/monitor_thermal_20261117.py",
+      "bytes": 5305,
+      "sha256": "a28ab46a34bc31127ca3c8fb7de63d0d866005456639d62d2df8d2603c4f37c1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\read_amd_temperatures_20261117.py",
+      "file": "local-tools/read_amd_temperatures_20261117.py",
+      "bytes": 4627,
+      "sha256": "32aee56db4060150e9218ffa5b3ed27903902d3b21d201eeb3e8852c905457dc"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\read_cpu_package_20261117.ps1",
+      "file": "local-tools/read_cpu_package_20261117.ps1",
+      "bytes": 2495,
+      "sha256": "e5aec0743eb849534bd28f0e4d3fd400321ab68ccbb61839b71c5dccc94a8e2b"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\read_laptop_thermal_stream_20261117.ps1",
+      "file": "local-tools/read_laptop_thermal_stream_20261117.ps1",
+      "bytes": 2717,
+      "sha256": "0e0a177ffecddda95818c5c50f1fd58acc272fb516da1e397ba9e6fd8745c964"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_tdt_recovery_contract_20261117.py",
+      "file": "local-tools/verify_tdt_recovery_contract_20261117.py",
+      "bytes": 4848,
+      "sha256": "2385070f265a49c564ee09e8823c4d5ac9ad814fdfd96b505c5426fd9df3e794"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_laptop_thermal_20261117.py",
+      "file": "local-tools/record_laptop_thermal_20261117.py",
+      "bytes": 6776,
+      "sha256": "30f9131c481086645d29d338285d41c0c20df8032ebb49f6a2a4c75a4dbb0fa4"
+    },
+    {
+      "source": "work\\checkpoint_laptop_thermal_r56.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 5769,
+      "sha256": "b2550b6fb849c2cd692ef2afed34f8dd314a5f68ef05be9962067bd58abf7b2d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/tdt_adaptation_checkpoint_20261116.py": "fd5d7ea4d9d14942235a1f8223d62f0e94a9769a41fd220660895218c5addc4f",
+    "src/tdt_domain_adaptation_20261116.py": "9756687e188b7ac2860a1cc375abcfc948a1d3a6978665b33e3b9d12c21fa865",
+    "src/tdt_adaptation_contract_20261117.py": "329d50d6c73c95f9a2479a691e3abc7509e27b87f95f5a73d43554dfa49ae9c5",
+    "src/run_owned_tdt_adaptation_20261117.py": "3ab90ad8365759a0123849cf7fa8b48f99b3276039761649953aa35b8f210dd7"
+  },
+  "state": "LAPTOP_THERMAL_MONITOR_LIVE_CAUSE_UNPROVEN_TDT_METADATA_RECOVERY_VERIFIED",
+  "trainingStarted": false,
+  "parameterUpdates": 0,
+  "newNeuralCalls": 0,
+  "actualGpuGradientAndTensorRngRoundtripProven": false,
+  "cpuMetadataRecoveryFaultCasesPassed": true,
+  "cpuSensorDriverInstalledAfterExplicitUserPermission": true,
+  "identifiedCpuTemperatureMeasured": true,
+  "motherboardPhysicalTemperatureMeasured": false,
+  "overheatRestartProven": false,
+  "independentAdaptationScorerAndProtocolPending": true,
+  "qualityQualified": false,
+  "saleQualified": false
+}

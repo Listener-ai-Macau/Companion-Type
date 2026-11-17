@@ -479,3 +479,9 @@ src/durable_model_state_20261117.py -text -whitespace
 src/tdt_adaptation_checkpoint_20261116.py -text -whitespace
 
 src/tdt_domain_adaptation_20261116.py -text -whitespace
+
+evidence/20261117-laptop-thermal-readings-and-adaptation-recovery/** -text -whitespace
+
+src/tdt_adaptation_contract_20261117.py -text -whitespace
+
+src/run_owned_tdt_adaptation_20261117.py -text -whitespace

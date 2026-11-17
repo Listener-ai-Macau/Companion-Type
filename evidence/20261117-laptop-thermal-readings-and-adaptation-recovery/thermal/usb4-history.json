@@ -1,0 +1,150 @@
+{
+  "at": "2026-11-17T07:59:56.972005+08:00",
+  "ownerConfirmedConnection": "USB4/Thunderbolt",
+  "readOnly": true,
+  "neuralRuntimeLoaded": false,
+  "deviceSettingsChanged": false,
+  "deviceProperties": {
+    "At": "2026-11-17T07:59:56.6963329+08:00",
+    "ReadOnly": true,
+    "DeviceSettingsChanged": false,
+    "Nodes": [
+      {
+        "Name": "PCI Express 下游交换机端口",
+        "InstanceId": "PCI\\VEN_1B21&DEV_2463&SUBSYS_24631B21&REV_00\\5&3724F955&0&000021",
+        "Class": "System",
+        "Status": "OK",
+        "Properties": {
+          "DEVPKEY_Device_InstallDate": "2026-07-14T22:56:27.1763070+08:00",
+          "DEVPKEY_Device_DriverVersion": "10.0.26100.8737",
+          "DEVPKEY_Device_DriverInfPath": "pci.inf",
+          "DEVPKEY_Device_DriverDate": "2006-06-21T08:00:00.0000000+08:00",
+          "DEVPKEY_Device_LastRemovalDate": null,
+          "DEVPKEY_Device_FirstInstallDate": "2026-07-14T22:56:27.1763070+08:00",
+          "DEVPKEY_Device_DriverProvider": "Microsoft",
+          "DEVPKEY_Device_LastArrivalDate": "2026-11-16T23:16:24.9132290+08:00"
+        }
+      },
+      {
+        "Name": "USB4(TM) 主机路由器 (Microsoft)",
+        "InstanceId": "PCI\\VEN_1022&DEV_1669&SUBSYS_16691022&REV_00&USB4_MS_CM\\4&DEDE588&0&0643",
+        "Class": "USB",
+        "Status": "OK",
+        "Properties": {
+          "DEVPKEY_Device_InstallDate": "2026-07-16T00:30:45.0868940+08:00",
+          "DEVPKEY_Device_DriverVersion": "10.0.26100.8737",
+          "DEVPKEY_Device_DriverInfPath": "usb4hostrouter.inf",
+          "DEVPKEY_Device_DriverDate": "2026-06-18T08:00:00.0000000+08:00",
+          "DEVPKEY_Device_LastRemovalDate": null,
+          "DEVPKEY_Device_FirstInstallDate": "2026-06-28T23:07:53.1127810+08:00",
+          "DEVPKEY_Device_DriverProvider": "Microsoft",
+          "DEVPKEY_Device_LastArrivalDate": "2026-11-16T23:16:09.1337600+08:00"
+        }
+      },
+      {
+        "Name": "USB4 根路由器 (1.0)",
+        "InstanceId": "USB4\\ROOT_DEVICE_ROUTER&VID_1022&PID_1669\\5&1BD1E696&0&0",
+        "Class": "USB",
+        "Status": "OK",
+        "Properties": {
+          "DEVPKEY_Device_InstallDate": "2026-07-16T00:30:47.0457750+08:00",
+          "DEVPKEY_Device_DriverVersion": "10.0.26100.8737",
+          "DEVPKEY_Device_DriverInfPath": "usb4devicerouter.inf",
+          "DEVPKEY_Device_DriverDate": "2026-06-18T08:00:00.0000000+08:00",
+          "DEVPKEY_Device_LastRemovalDate": null,
+          "DEVPKEY_Device_FirstInstallDate": "2026-06-28T23:07:54.6429660+08:00",
+          "DEVPKEY_Device_DriverProvider": "Microsoft",
+          "DEVPKEY_Device_LastArrivalDate": "2026-11-16T23:16:11.7710620+08:00"
+        }
+      },
+      {
+        "Name": "AMD Radeon RX 6800 XT",
+        "InstanceId": "PCI\\VEN_1002&DEV_73BF&SUBSYS_67011EAE&REV_C1\\8&1BD3869F&0&000000000021",
+        "Class": "Display",
+        "Status": "OK",
+        "Properties": {
+          "DEVPKEY_Device_InstallDate": "2026-07-14T22:56:27.8090330+08:00",
+          "DEVPKEY_Device_DriverVersion": "32.0.21043.19003",
+          "DEVPKEY_Device_DriverInfPath": "oem1.inf",
+          "DEVPKEY_Device_DriverDate": "2026-06-26T08:00:00.0000000+08:00",
+          "DEVPKEY_Device_LastRemovalDate": null,
+          "DEVPKEY_Device_FirstInstallDate": "2026-07-14T22:56:27.8090330+08:00",
+          "DEVPKEY_Device_DriverProvider": "Advanced Micro Devices, Inc.",
+          "DEVPKEY_Device_LastArrivalDate": "2026-11-16T23:16:25.4997910+08:00"
+        }
+      },
+      {
+        "Name": "PCI Express 上游交换机端口",
+        "InstanceId": "PCI\\VEN_1B21&DEV_2463&SUBSYS_24631B21&REV_00\\4&27681E3F&0&0021",
+        "Class": "System",
+        "Status": "OK",
+        "Properties": {
+          "DEVPKEY_Device_InstallDate": "2026-07-14T22:56:26.9776640+08:00",
+          "DEVPKEY_Device_DriverVersion": "10.0.26100.8737",
+          "DEVPKEY_Device_DriverInfPath": "pci.inf",
+          "DEVPKEY_Device_DriverDate": "2006-06-21T08:00:00.0000000+08:00",
+          "DEVPKEY_Device_LastRemovalDate": null,
+          "DEVPKEY_Device_FirstInstallDate": "2026-07-14T22:56:26.9776640+08:00",
+          "DEVPKEY_Device_DriverProvider": "Microsoft",
+          "DEVPKEY_Device_LastArrivalDate": "2026-11-16T23:16:24.4750680+08:00"
+        }
+      },
+      {
+        "Name": "USB4 路由器 (1.0)，CYID - TBT-U4",
+        "InstanceId": "USB4\\VID_174C&PID_2463\\6&2C05871F&0&2",
+        "Class": "USB",
+        "Status": "OK",
+        "Properties": {
+          "DEVPKEY_Device_InstallDate": "2026-07-16T00:30:47.6759860+08:00",
+          "DEVPKEY_Device_DriverVersion": "10.0.26100.8737",
+          "DEVPKEY_Device_DriverInfPath": "usb4devicerouter.inf",
+          "DEVPKEY_Device_DriverDate": "2026-06-18T08:00:00.0000000+08:00",
+          "DEVPKEY_Device_LastRemovalDate": null,
+          "DEVPKEY_Device_FirstInstallDate": "2026-07-14T22:56:25.7710770+08:00",
+          "DEVPKEY_Device_DriverProvider": "Microsoft",
+          "DEVPKEY_Device_LastArrivalDate": "2026-11-16T23:16:23.7933760+08:00"
+        }
+      }
+    ]
+  },
+  "existingEventChannels": {
+    "Microsoft-Windows-Kernel-PnP/Configuration": {
+      "returnedEvents": 0,
+      "limit": 100,
+      "events": []
+    },
+    "Microsoft-Windows-Kernel-PnP/Configuration Diagnostic": {
+      "queryError": "The request is not supported.\r\n\nFailed to open event query.\r\nThe request is not supported.\r\n"
+    },
+    "Microsoft-Windows-USB-USBXHCI-Analytic": {
+      "queryError": "The request is not supported.\r\n\nFailed to open event query.\r\nThe request is not supported.\r\n"
+    },
+    "Microsoft-Windows-USB-USBXHCI-Operational": {
+      "returnedEvents": 0,
+      "limit": 100,
+      "events": []
+    },
+    "Microsoft-Windows-USB-USBXHCI-Trustlet-Analytic": {
+      "queryError": "The request is not supported.\r\n\nFailed to open event query.\r\nThe request is not supported.\r\n"
+    }
+  },
+  "setupApiLogBytes": 1088140,
+  "matchingInstallSections": [],
+  "noMatchingEventDoesNotExcludeLinkFailure": true,
+  "limits": {
+    "pid": 18040,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 94666752,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

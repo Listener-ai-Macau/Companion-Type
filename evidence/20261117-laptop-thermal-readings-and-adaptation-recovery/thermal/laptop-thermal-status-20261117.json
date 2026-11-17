@@ -1,0 +1,147 @@
+{
+  "at": "2026-11-17T08:27:38+08:00",
+  "state": "IDENTIFIED_CPU_TCTL_TDIE_CONTINUOUS_LAPTOP_MONITOR_LIVE_NO_OVERHEAT_CAUSE_PROOF",
+  "ownerQuotes": [
+    "允许安装并读取 CPU 温度",
+    "感觉像是显卡，我在训练的时候太热了，然后把那个东西给搞死机了。是不是要买个外部的散热器呢？因为我发现开空调的时候就不死机。",
+    "显卡屋的温度就不用管，应该是笔记本的温度。显卡屋的温度不会导致笔记本死机的。"
+  ],
+  "priority": "Laptop CPU and internal thermal behavior. ExternalGPU temperature polling stopped as requested; external-link/runtime hypotheses are not logically disproven.",
+  "driver": {
+    "at": "2026-11-17T08:22:27.867047+08:00",
+    "userExplicitlyAuthorized": true,
+    "command": [
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\prepared-cpu-sensor-tool\\PawnIO_setup.exe",
+      "-install"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "rebootRequestedByUs": false,
+    "provenance": {
+      "Installed": false,
+      "Signer": "E=admin@namazso.eu, CN=namazso.eu, O=namazso, L=Debrecen, C=HU",
+      "AssemblyEntryPointExecuted": false,
+      "Resource": "LibreHardwareMonitor.Resources.PawnIO_setup.exe",
+      "SignatureStatus": "Valid",
+      "Thumbprint": "F380DCC9F706E2756A5047B832FFE719E1BC35F5",
+      "installerSha256": "a3a46226c5e2824f4cdd42be0eecbabfc672c86f7889710f5ab1e6ad385b47a0",
+      "proposedCommand": [
+        "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\prepared-cpu-sensor-tool\\PawnIO_setup.exe",
+        "-install"
+      ],
+      "permissionRequiredForNewKernelDriver": true
+    },
+    "officialArchiveSha256": "086d9f1b5a99e643edc2cfaaac16051685b551e4c5ac0b32a57c58c0e529c001",
+    "release": "https://github.com/LibreHardwareMonitor/LibreHardwareMonitor/releases/tag/v0.9.6"
+  },
+  "firstIdentifiedCpuBaseline": {
+    "state": "COMPLETE_FIRST_IDENTIFIED_CPU_TCTL_TDIE_BASELINE",
+    "samples": 13,
+    "firstAt": "2026-11-17T08:23:05.4534291+08:00",
+    "lastAt": "2026-11-17T08:24:05.7010530+08:00",
+    "minimumCelsius": 86.125,
+    "maximumCelsius": 92.375,
+    "last": {
+      "At": "2026-11-17T08:24:05.7010530+08:00",
+      "Sensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 88
+        }
+      ],
+      "SensorSettingsWritten": false,
+      "MotherboardOrEcProbed": false
+    },
+    "gpuModelTaskRunning": false,
+    "cpuModelTraining": false,
+    "overheatRestartProven": false
+  },
+  "currentMonitor": {
+    "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3",
+    "pid": 20252,
+    "createdAt": 1794875118.6039047,
+    "session": 69371,
+    "liveVerifiedAt": "2026-11-17T08:27:38+08:00",
+    "durationSeconds": 3600,
+    "sampleIntervalSeconds": 5,
+    "sourceSha256": {
+      "monitor_thermal_20261117.py": "a28ab46a34bc31127ca3c8fb7de63d0d866005456639d62d2df8d2603c4f37c1",
+      "read_laptop_thermal_stream_20261117.ps1": "0e0a177ffecddda95818c5c50f1fd58acc272fb516da1e397ba9e6fd8745c964"
+    },
+    "latestAt": "2026-11-17T08:27:36.2570466+08:00",
+    "samplesObserved": 27,
+    "cpuRangeCelsius": [
+      81.75,
+      91.25
+    ],
+    "acpiRangeCelsius": [
+      55.05,
+      55.05
+    ],
+    "latest": {
+      "At": "2026-11-17T08:27:36.2570466+08:00",
+      "CpuSensors": [
+        {
+          "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+          "Name": "Core (Tctl/Tdie)",
+          "Identifier": "/amdcpu/0/temperature/2",
+          "Celsius": 85.625
+        }
+      ],
+      "Zones": [
+        {
+          "Name": "ACPI\\ThermalZone\\TZ01_0",
+          "CurrentRawTenthsKelvin": 3282,
+          "Celsius": 55.05,
+          "FirmwareCriticalCelsius": 110.05,
+          "PhysicalLocation": "Unidentified firmware thermal zone"
+        }
+      ],
+      "QueryErrors": [],
+      "NoHardwareSettingWrites": true,
+      "ExternalGpuQueried": false,
+      "MotherboardEcOrSmbusProbed": false,
+      "cpuPercent": 15.3,
+      "availableRamBytes": 10072731648,
+      "topCpuProcesses": [
+        {
+          "pid": 15156,
+          "name": "java.exe",
+          "cpuPercentOfWholeMachine": 6.99
+        },
+        {
+          "pid": 13420,
+          "name": "Code.exe",
+          "cpuPercentOfWholeMachine": 2.4
+        }
+      ]
+    },
+    "privateMemoryBytes": 12832768
+  },
+  "cpuSensorPhysicalIdentity": "AMD Ryzen7 7840HS Core(Tctl/Tdie), /amdcpu/0/temperature/2",
+  "cpuPackageMeasured": true,
+  "motherboardVrmsUsb4ControllerTemperaturesMeasured": false,
+  "acpiZoneIsNotCpuSensor": true,
+  "acpiPhysicalLocationUnknown": true,
+  "oldAcpi96CWasNotPersistentAcrossWholeRun": true,
+  "airConditioningObservationIsOwnerReportNotControlledExperiment": true,
+  "lastNightTemperaturePeakKnown": false,
+  "overheatRestartProven": false,
+  "cpuTjmax": {
+    "celsius": 100,
+    "url": "https://www.amd.com/zh-cn/products/processors/laptop/ryzen/7000-series/amd-ryzen-7-7840hs.html"
+  },
+  "coolingDecision": "Improve laptop intake clearance/room cooling first; use an existing fan for a matched normal-workload temperature comparison before choosing a pad. A cooling pad may help airflow; it does not repair a failing internal fan/heatsink/thermal interface. No product-specific temperature reduction or purchase guarantee.",
+  "coolingReference": "https://www.dell.com/support/kbdoc/en-us/000133111/dell-portable-system-heat-issue-or-the-system-is-overheating",
+  "modelGpuTasksStarted": 0,
+  "cpuModelTraining": false,
+  "fanClockPowerSettingsChanged": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "next": "Continue bounded laptop-only logging and correlate identified CPU temperature with ordinary workload/cooling. Do not trigger a thermal shutdown to prove the hypothesis. Keep original ASR data/code work moving without CPU/iGPU training."
+}

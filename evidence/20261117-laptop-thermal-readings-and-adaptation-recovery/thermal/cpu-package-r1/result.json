@@ -1,0 +1,24 @@
+{
+  "state": "COMPLETE_FIRST_IDENTIFIED_CPU_TCTL_TDIE_BASELINE",
+  "samples": 13,
+  "firstAt": "2026-11-17T08:23:05.4534291+08:00",
+  "lastAt": "2026-11-17T08:24:05.7010530+08:00",
+  "minimumCelsius": 86.125,
+  "maximumCelsius": 92.375,
+  "last": {
+    "At": "2026-11-17T08:24:05.7010530+08:00",
+    "Sensors": [
+      {
+        "Hardware": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics",
+        "Name": "Core (Tctl/Tdie)",
+        "Identifier": "/amdcpu/0/temperature/2",
+        "Celsius": 88
+      }
+    ],
+    "SensorSettingsWritten": false,
+    "MotherboardOrEcProbed": false
+  },
+  "gpuModelTaskRunning": false,
+  "cpuModelTraining": false,
+  "overheatRestartProven": false
+}

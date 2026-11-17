@@ -1,0 +1,76 @@
+{
+  "at": "2026-11-17T08:11:17+08:00",
+  "state": "LIVE_READ_ONLY_THERMAL_LOG_ACPI_LOCATION_AND_CPU_PACKAGE_UNVERIFIED",
+  "ownerQuote": "我还是倾向感觉像是那个主板太热了，然后它重启了。估计应该是过温重启了，能监控到主板的温度啥的吗？",
+  "ownerConfirmedConnection": "USB4/Thunderbolt",
+  "modelGpuTasksRunning": false,
+  "cpuModelTrainingRunning": false,
+  "monitor": {
+    "pid": 10068,
+    "createdAt": 1794874119.0761275,
+    "session": 19123,
+    "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\thermal-monitor-r2",
+    "durationSeconds": 3600,
+    "sampleIntervalSeconds": 5,
+    "liveProcessVerifiedAt": "2026-11-17T08:11:17+08:00",
+    "parentPrivateBytes": 15327232,
+    "latestAt": "2026-11-17T08:11:15.1475835+08:00"
+  },
+  "completedAcpiOnlyRun": {
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\thermal-monitor-r1\\completed.json",
+    "stoppedByUsToAddVerifiedAmdGetters": true,
+    "childExitCode1WasOwnedTermination": true
+  },
+  "observedSamples": 32,
+  "firstAt": "2026-11-17T08:08:39.4801016+08:00",
+  "lastAt": "2026-11-17T08:11:15.1475835+08:00",
+  "acpiRangeCelsius": [
+    96.05,
+    96.05
+  ],
+  "amdRangesCelsius": {
+    "AMD Radeon 780M Graphics/graphics": [
+      73,
+      78
+    ],
+    "AMD Radeon 780M Graphics/soc": [
+      75,
+      79
+    ],
+    "AMD Radeon RX 6800 XT/edge": [
+      47,
+      55
+    ],
+    "AMD Radeon RX 6800 XT/hotspot": [
+      51,
+      59
+    ]
+  },
+  "latestCpuPercent": 20.0,
+  "physicalAcpiSensorLocationKnown": false,
+  "cpuPackageTemperatureMeasured": false,
+  "motherboardOrVrmTemperatureMeasured": false,
+  "usb4BridgeTemperatureMeasured": false,
+  "currentTemperatureDoesNotReconstructLastNight": true,
+  "overheatRestartProven": false,
+  "criticalThermalEvent86FoundInExisting31DayLog": false,
+  "sensorDriversInstalled": false,
+  "fanPowerClockSettingsChanged": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "thermalSources": [
+    {
+      "url": "https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/design-guide",
+      "scope": "Firmware thermal fail-safe can remove power without a normal OS shutdown; missing event does not exclude it."
+    },
+    {
+      "url": "https://gpuopen-librariesandsdks.github.io/adl/structADLTemperature.html",
+      "scope": "ADL temperature units; legacy getters did not return valid values."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/LibreHardwareMonitor/LibreHardwareMonitor/master/LibreHardwareMonitorLib/Interop/AtiAdlxx.cs",
+      "scope": "AMD PMLog sensor identifiers used by the successful modern getter."
+    }
+  ],
+  "next": "Keep the bounded logger live; validate ACPI96.05C against identified CPU-package/mainboard sensors before attributing the reboot or scheduling sustained GPU work. Preserve existing runtime/dock hypotheses and completed quality failures."
+}

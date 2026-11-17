@@ -1,0 +1,14 @@
+{
+  "Installed": false,
+  "Signer": "E=admin@namazso.eu, CN=namazso.eu, O=namazso, L=Debrecen, C=HU",
+  "AssemblyEntryPointExecuted": false,
+  "Resource": "LibreHardwareMonitor.Resources.PawnIO_setup.exe",
+  "SignatureStatus": "Valid",
+  "Thumbprint": "F380DCC9F706E2756A5047B832FFE719E1BC35F5",
+  "installerSha256": "a3a46226c5e2824f4cdd42be0eecbabfc672c86f7889710f5ab1e6ad385b47a0",
+  "proposedCommand": [
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\prepared-cpu-sensor-tool\\PawnIO_setup.exe",
+    "-install"
+  ],
+  "permissionRequiredForNewKernelDriver": true
+}

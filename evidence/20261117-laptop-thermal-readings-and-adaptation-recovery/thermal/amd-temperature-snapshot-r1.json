@@ -1,0 +1,64 @@
+{
+  "at": "2026-11-17T08:07:32.289323+08:00",
+  "readOnly": true,
+  "newDriverInstalled": false,
+  "neuralRuntimeLoaded": false,
+  "setApisCalled": false,
+  "initializationCode": 0,
+  "adapters": [
+    {
+      "name": "AMD Radeon 780M Graphics",
+      "adapterIndex": 0,
+      "pciBus": 99,
+      "sensors": {
+        "edge": {
+          "returnCode": -1,
+          "celsius": null
+        },
+        "memory": {
+          "returnCode": -8,
+          "celsius": null
+        },
+        "hotspot": {
+          "returnCode": -8,
+          "celsius": null
+        }
+      }
+    },
+    {
+      "name": "AMD Radeon RX 6800 XT",
+      "adapterIndex": 5,
+      "pciBus": 8,
+      "sensors": {
+        "edge": {
+          "returnCode": -1,
+          "celsius": null
+        },
+        "memory": {
+          "returnCode": -8,
+          "celsius": null
+        },
+        "hotspot": {
+          "returnCode": -8,
+          "celsius": null
+        }
+      }
+    }
+  ],
+  "limits": {
+    "pid": 17596,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 11223040,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

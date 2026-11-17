@@ -1,0 +1,113 @@
+{
+  "revision": 56,
+  "evidenceDirectory": "evidence/20261117-laptop-thermal-readings-and-adaptation-recovery",
+  "sources": [
+    "src/tdt_adaptation_checkpoint_20261116.py",
+    "src/tdt_domain_adaptation_20261116.py",
+    "src/tdt_adaptation_contract_20261117.py",
+    "src/run_owned_tdt_adaptation_20261117.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\thermal-monitor-status-20261117.json",
+      "name": "thermal/thermal-monitor-status-20261117.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\laptop-thermal-status-20261117.json",
+      "name": "thermal/laptop-thermal-status-20261117.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\usb4-history.json",
+      "name": "thermal/usb4-history.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\thermal-event-history.json",
+      "name": "thermal/thermal-event-history.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\amd-temperature-snapshot-r1.json",
+      "name": "thermal/amd-temperature-snapshot-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\amd-temperature-snapshot-r2.json",
+      "name": "thermal/amd-temperature-snapshot-r2.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\prepared-cpu-sensor-tool\\prepared-receipt.json",
+      "name": "thermal/prepared-cpu-sensor-tool/prepared-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\prepared-cpu-sensor-tool\\installation-result.json",
+      "name": "thermal/prepared-cpu-sensor-tool/installation-result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\cpu-package-r1\\result.json",
+      "name": "thermal/cpu-package-r1/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\thermal-monitor-r1\\completed.json",
+      "name": "thermal/thermal-monitor-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\thermal-monitor-r2\\completed.json",
+      "name": "thermal/thermal-monitor-r2/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\cpu-recovery-contract-r1\\result.json",
+      "name": "adaptation/cpu-recovery-contract-r1.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\read_usb4_properties_20261117.ps1",
+      "name": "local-tools/read_usb4_properties_20261117.ps1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\inspect_usb4_history_20261117.py",
+      "name": "local-tools/inspect_usb4_history_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\read_thermal_stream_20261117.ps1",
+      "name": "local-tools/read_thermal_stream_20261117.ps1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\monitor_thermal_20261117.py",
+      "name": "local-tools/monitor_thermal_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\read_amd_temperatures_20261117.py",
+      "name": "local-tools/read_amd_temperatures_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\read_cpu_package_20261117.ps1",
+      "name": "local-tools/read_cpu_package_20261117.ps1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\read_laptop_thermal_stream_20261117.ps1",
+      "name": "local-tools/read_laptop_thermal_stream_20261117.ps1"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_tdt_recovery_contract_20261117.py",
+      "name": "local-tools/verify_tdt_recovery_contract_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_laptop_thermal_20261117.py",
+      "name": "local-tools/record_laptop_thermal_20261117.py"
+    }
+  ],
+  "commitMessage": "Read identified laptop CPU temperature and repair adaptation recovery contracts",
+  "claims": {
+    "state": "LAPTOP_THERMAL_MONITOR_LIVE_CAUSE_UNPROVEN_TDT_METADATA_RECOVERY_VERIFIED",
+    "trainingStarted": false,
+    "parameterUpdates": 0,
+    "newNeuralCalls": 0,
+    "actualGpuGradientAndTensorRngRoundtripProven": false,
+    "cpuMetadataRecoveryFaultCasesPassed": true,
+    "cpuSensorDriverInstalledAfterExplicitUserPermission": true,
+    "identifiedCpuTemperatureMeasured": true,
+    "motherboardPhysicalTemperatureMeasured": false,
+    "overheatRestartProven": false,
+    "independentAdaptationScorerAndProtocolPending": true,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}
