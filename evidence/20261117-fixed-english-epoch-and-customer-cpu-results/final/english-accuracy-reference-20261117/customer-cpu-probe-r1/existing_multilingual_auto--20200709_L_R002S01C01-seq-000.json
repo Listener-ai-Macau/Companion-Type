@@ -1,0 +1,28 @@
+{
+  "id": "20200709_L_R002S01C01-seq-000",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 436001,
+  "audioSha256": "0e3615a5dc8437ca3129e82d269dbf3419fefd5871dde831d8898eb01b4f85bf",
+  "pcmSha256": "1693f208b2d6103a4cfc69b36b47a833fb913bd3becd2e42c02c6db4a5f10a30",
+  "text": "嗯今天呢把大家叫来咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的呃汇报和总结因为上半年其实由由由于受到疫情的影响想必大家这个工作都有一些新的进程然后现在咱们就先 从教练部这边简单的总结一下上半年的情况上半年的情况主要是有像一些",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 284800,
+      "text": "嗯今天呢把大家叫来咱们就是对咱们健身中心上半年咱们的经营情况做一个简单的呃汇报和总结因为上半年其实由由由于受到疫情的影响想必大家这个工作都有一些新的进程然后现在咱们就先",
+      "language": "<|zh|>"
+    },
+    {
+      "startFrame": 284800,
+      "frames": 151201,
+      "text": "从教练部这边简单的总结一下上半年的情况上半年的情况主要是有像一些",
+      "language": "<|zh|>"
+    }
+  ],
+  "seconds": 2.7939587000000756,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

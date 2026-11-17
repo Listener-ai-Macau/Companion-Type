@@ -1,0 +1,548 @@
+{
+  "state": "PASS_ALL12_NATIVE_PROCESSOR_GEOMETRY_AND_PINNED_TEMPLATE",
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "frames": 192800,
+      "featureShape": [
+        1,
+        603,
+        160
+      ],
+      "promptTokens": 142,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\ES2003b-seq-000.safetensors",
+      "sha256": "b756abe541cdf00297b066468d5b40366cba58ce148683d3dc10c7d22f069764",
+      "audioSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+      "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92",
+      "tensors": {
+        "input_ids": {
+          "shape": [
+            1,
+            142
+          ],
+          "dtype": "torch.int64"
+        },
+        "attention_mask": {
+          "shape": [
+            1,
+            142
+          ],
+          "dtype": "torch.int64"
+        },
+        "input_features": {
+          "shape": [
+            1,
+            603,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        "input_features_mask": {
+          "shape": [
+            1,
+            123
+          ],
+          "dtype": "torch.bool"
+        }
+      }
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "frames": 476000,
+      "featureShape": [
+        1,
+        1488,
+        160
+      ],
+      "promptTokens": 319,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\ES2003b-seq-005.safetensors",
+      "sha256": "e14df02bc69830bc62a1f0b7598f9ddc006d4e2954fe7bb85fbf314207207aa5",
+      "audioSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+      "pcmSha256": "ec8c4c16829d1d95404cb3fd3fcd8ee32cc310edaaf7b8901d562a90696b04e7",
+      "tensors": {
+        "input_ids": {
+          "shape": [
+            1,
+            319
+          ],
+          "dtype": "torch.int64"
+        },
+        "attention_mask": {
+          "shape": [
+            1,
+            319
+          ],
+          "dtype": "torch.int64"
+        },
+        "input_features": {
+          "shape": [
+            1,
+            1488,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        "input_features_mask": {
+          "shape": [
+            1,
+            300
+          ],
+          "dtype": "torch.bool"
+        }
+      }
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "frames": 475520,
+      "featureShape": [
+        1,
+        1486,
+        160
+      ],
+      "promptTokens": 319,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\ES2003b-seq-010.safetensors",
+      "sha256": "5c2f8c2b565cf448aa05539c3998c62c755bc0a895849122299869715afeafca",
+      "audioSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+      "pcmSha256": "e087cf4e22224bfc9c3ad810c56bd3595ad7343c30b6d53fc5c1ce00d445b32f",
+      "tensors": {
+        "input_ids": {
+          "shape": [
+            1,
+            319
+          ],
+          "dtype": "torch.int64"
+        },
+        "attention_mask": {
+          "shape": [
+            1,
+            319
+          ],
+          "dtype": "torch.int64"
+        },
+        "input_features": {
+          "shape": [
+            1,
+            1486,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        "input_features_mask": {
+          "shape": [
+            1,
+            300
+          ],
+          "dtype": "torch.bool"
+        }
+      }
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "frames": 473280,
+      "featureShape": [
+        1,
+        1479,
+        160
+      ],
+      "promptTokens": 316,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\ES2003b-seq-016.safetensors",
+      "sha256": "8c592bf5107a5d9d9ead7688474932eb00c6c159fe9bffabd534258fa787160e",
+      "audioSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+      "pcmSha256": "7e8c174955670b930e9b657a8fdcbea730374845ac6668f4a916ddc867ee7f6e",
+      "tensors": {
+        "input_ids": {
+          "shape": [
+            1,
+            316
+          ],
+          "dtype": "torch.int64"
+        },
+        "attention_mask": {
+          "shape": [
+            1,
+            316
+          ],
+          "dtype": "torch.int64"
+        },
+        "input_features": {
+          "shape": [
+            1,
+            1479,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        "input_features_mask": {
+          "shape": [
+            1,
+            297
+          ],
+          "dtype": "torch.bool"
+        }
+      }
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "frames": 203840,
+      "featureShape": [
+        1,
+        637,
+        160
+      ],
+      "promptTokens": 148,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\ES2003b-seq-021.safetensors",
+      "sha256": "46abf8274fb2dd3aad209020e4a41333d3a49509b9187d5b9487ec954ba7f7c5",
+      "audioSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+      "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f",
+      "tensors": {
+        "input_ids": {
+          "shape": [
+            1,
+            148
+          ],
+          "dtype": "torch.int64"
+        },
+        "attention_mask": {
+          "shape": [
+            1,
+            148
+          ],
+          "dtype": "torch.int64"
+        },
+        "input_features": {
+          "shape": [
+            1,
+            637,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        "input_features_mask": {
+          "shape": [
+            1,
+            129
+          ],
+          "dtype": "torch.bool"
+        }
+      }
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "frames": 162401,
+      "featureShape": [
+        1,
+        508,
+        160
+      ],
+      "promptTokens": 121,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\ES2003b-seq-027.safetensors",
+      "sha256": "a661d8e40eddfe1591e3a326a527b33a44c5b895c34afcffd009577880b14684",
+      "audioSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+      "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+      "tensors": {
+        "input_ids": {
+          "shape": [
+            1,
+            121
+          ],
+          "dtype": "torch.int64"
+        },
+        "attention_mask": {
+          "shape": [
+            1,
+            121
+          ],
+          "dtype": "torch.int64"
+        },
+        "input_features": {
+          "shape": [
+            1,
+            508,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        "input_features_mask": {
+          "shape": [
+            1,
+            102
+          ],
+          "dtype": "torch.bool"
+        }
+      }
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "frames": 187360,
+      "featureShape": [
+        1,
+        586,
+        160
+      ],
+      "promptTokens": 139,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\EN2001a-a2-000.safetensors",
+      "sha256": "e9192b2bfe531166e2779f2df4aa029ad8036ed96fb725a3fafc3e3857f09acf",
+      "audioSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+      "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f",
+      "tensors": {
+        "input_ids": {
+          "shape": [
+            1,
+            139
+          ],
+          "dtype": "torch.int64"
+        },
+        "attention_mask": {
+          "shape": [
+            1,
+            139
+          ],
+          "dtype": "torch.int64"
+        },
+        "input_features": {
+          "shape": [
+            1,
+            586,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        "input_features_mask": {
+          "shape": [
+            1,
+            120
+          ],
+          "dtype": "torch.bool"
+        }
+      }
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "frames": 475520,
+      "featureShape": [
+        1,
+        1486,
+        160
+      ],
+      "promptTokens": 319,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\EN2001a-a2-023.safetensors",
+      "sha256": "55122ca870fcfad00d6f14ad13e51a8139db1fd51d76b6af9a524450ffed27ae",
+      "audioSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+      "pcmSha256": "490510a15ef6f46ebac736fb41e975068df6e61349ac7f589c257fe724ae9d33",
+      "tensors": {
+        "input_ids": {
+          "shape": [
+            1,
+            319
+          ],
+          "dtype": "torch.int64"
+        },
+        "attention_mask": {
+          "shape": [
+            1,
+            319
+          ],
+          "dtype": "torch.int64"
+        },
+        "input_features": {
+          "shape": [
+            1,
+            1486,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        "input_features_mask": {
+          "shape": [
+            1,
+            300
+          ],
+          "dtype": "torch.bool"
+        }
+      }
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "frames": 362720,
+      "featureShape": [
+        1,
+        1134,
+        160
+      ],
+      "promptTokens": 247,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\EN2001a-a2-046.safetensors",
+      "sha256": "ed12451174d791a0899f52997d0055a31f81385e14d474f2ddd8375e453cbd1a",
+      "audioSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+      "pcmSha256": "7c06b4b1859d19da0fe23e80c043ebb406245e57d456d2776536102c041cc8a4",
+      "tensors": {
+        "input_ids": {
+          "shape": [
+            1,
+            247
+          ],
+          "dtype": "torch.int64"
+        },
+        "attention_mask": {
+          "shape": [
+            1,
+            247
+          ],
+          "dtype": "torch.int64"
+        },
+        "input_features": {
+          "shape": [
+            1,
+            1134,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        "input_features_mask": {
+          "shape": [
+            1,
+            228
+          ],
+          "dtype": "torch.bool"
+        }
+      }
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "frames": 476000,
+      "featureShape": [
+        1,
+        1488,
+        160
+      ],
+      "promptTokens": 319,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\EN2001a-a2-069.safetensors",
+      "sha256": "b1a6d6c7a19cd747eaf3f83d4c700d1072fc10ae04cbd00a55534b46e45e701d",
+      "audioSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+      "pcmSha256": "01439b3125f9e794a9ffae891fd0cccc470ae701397a2b889487dc87d166bb39",
+      "tensors": {
+        "input_ids": {
+          "shape": [
+            1,
+            319
+          ],
+          "dtype": "torch.int64"
+        },
+        "attention_mask": {
+          "shape": [
+            1,
+            319
+          ],
+          "dtype": "torch.int64"
+        },
+        "input_features": {
+          "shape": [
+            1,
+            1488,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        "input_features_mask": {
+          "shape": [
+            1,
+            300
+          ],
+          "dtype": "torch.bool"
+        }
+      }
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "frames": 473600,
+      "featureShape": [
+        1,
+        1480,
+        160
+      ],
+      "promptTokens": 316,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\EN2001a-a2-092.safetensors",
+      "sha256": "95e89ae7c70cbede7f9b09aa58b378aaa9266674c330d4242b97c1517616f01a",
+      "audioSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+      "pcmSha256": "14091b430e04787c3694b572f922d0a4da22a3ce4f10cc7978dde91fa4797bb7",
+      "tensors": {
+        "input_ids": {
+          "shape": [
+            1,
+            316
+          ],
+          "dtype": "torch.int64"
+        },
+        "attention_mask": {
+          "shape": [
+            1,
+            316
+          ],
+          "dtype": "torch.int64"
+        },
+        "input_features": {
+          "shape": [
+            1,
+            1480,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        "input_features_mask": {
+          "shape": [
+            1,
+            297
+          ],
+          "dtype": "torch.bool"
+        }
+      }
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "frames": 289920,
+      "featureShape": [
+        1,
+        906,
+        160
+      ],
+      "promptTokens": 202,
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\EN2001a-a2-116.safetensors",
+      "sha256": "ad50c905e585802735073bcf58e07513ba6063af976c93b0f08f32d43f806cc8",
+      "audioSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+      "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f",
+      "tensors": {
+        "input_ids": {
+          "shape": [
+            1,
+            202
+          ],
+          "dtype": "torch.int64"
+        },
+        "attention_mask": {
+          "shape": [
+            1,
+            202
+          ],
+          "dtype": "torch.int64"
+        },
+        "input_features": {
+          "shape": [
+            1,
+            906,
+            160
+          ],
+          "dtype": "torch.float32"
+        },
+        "input_features_mask": {
+          "shape": [
+            1,
+            183
+          ],
+          "dtype": "torch.bool"
+        }
+      }
+    }
+  ],
+  "prompt": "USER: <|audio|>transcribe the speech with proper punctuation and capitalization.\n ASSISTANT:",
+  "referenceUsed": false,
+  "pretrainedNeuralCalls": 0
+}

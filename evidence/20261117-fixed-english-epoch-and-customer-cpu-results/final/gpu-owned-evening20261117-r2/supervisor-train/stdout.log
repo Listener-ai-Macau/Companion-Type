@@ -1,0 +1,17 @@
+W1117 20:19:25.994000 23400 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\tdt_domain_adaptation_20261116.py:310: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at B:\src\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:837.)
+  row=rows[index];tick=time.perf_counter();loss=loss_for(row);value=float(loss)
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\tdt_domain_adaptation_20261116.py", line 344, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\tdt_domain_adaptation_20261116.py", line 316, in main
+    guard.heartbeat(force=True)
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\companion_gpu_execution_20261116.py", line 31, in heartbeat
+    self.stop()
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\tdt_domain_adaptation_20261116.py", line 87, in stop
+    require(not pressure.low() and available_ram()>=P['minimumAvailableBytes'],'Original system RAM protection')
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\meeting_acoustic_contract_20261116.py", line 36, in require
+    raise RuntimeError(message)
+RuntimeError: Original system RAM protection

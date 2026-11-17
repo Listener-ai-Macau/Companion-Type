@@ -1,0 +1,1369 @@
+{
+  "revision": 76,
+  "evidenceDirectory": "evidence/20261117-fixed-english-epoch-and-customer-cpu-results",
+  "sources": [],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\canonical-record-receipt.json",
+      "name": "reference/canonical-record-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\config.json",
+      "name": "reference/config.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\cpu-scoring-runtime-recovery.json",
+      "name": "reference/cpu-scoring-runtime-recovery.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-protocol-r1.json",
+      "name": "reference/customer-cpu-probe-protocol-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\execution-protocol-gpu-r1.json",
+      "name": "reference/execution-protocol-gpu-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\execution-protocol-r1.json",
+      "name": "reference/execution-protocol-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\execution-protocol-r2.json",
+      "name": "reference/execution-protocol-r2.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\execution-protocol-r3.json",
+      "name": "reference/execution-protocol-r3.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\execution-protocol-r4.json",
+      "name": "reference/execution-protocol-r4.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\execution-protocol-r5.json",
+      "name": "reference/execution-protocol-r5.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\execution-protocol-r6.json",
+      "name": "reference/execution-protocol-r6.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\execution-protocol-readonly-r1.json",
+      "name": "reference/execution-protocol-readonly-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\fixed-epoch-error-budget.json",
+      "name": "reference/fixed-epoch-error-budget.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-error-attribution.json",
+      "name": "reference/granite-error-attribution.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\metadata-receipt.json",
+      "name": "reference/metadata-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\model.safetensors.index.json",
+      "name": "reference/model.safetensors.index.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\parakeet-cpu-export-asset-metadata.json",
+      "name": "reference/parakeet-cpu-export-asset-metadata.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-final-source-checkpoint.json",
+      "name": "reference/portal-final-source-checkpoint.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-source-checkpoint.json",
+      "name": "reference/portal-source-checkpoint.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-training-source-checkpoint.json",
+      "name": "reference/portal-training-source-checkpoint.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preflight-readonly-r1.json",
+      "name": "reference/preflight-readonly-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepare-native-inputs-protocol-r1.json",
+      "name": "reference/prepare-native-inputs-protocol-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessor_config.json",
+      "name": "reference/preprocessor_config.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\processor-assets-completion.json",
+      "name": "reference/processor-assets-completion.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\processor_config.json",
+      "name": "reference/processor_config.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\score.json",
+      "name": "reference/score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\torch-install-payload-integrity-before-longpath-completion.json",
+      "name": "reference/torch-install-payload-integrity-before-longpath-completion.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\torch-install-payload-integrity.json",
+      "name": "reference/torch-install-payload-integrity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\untrained-current-parakeet-baseline.json",
+      "name": "reference/untrained-current-parakeet-baseline.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-launcher-live-identity-proof.json",
+      "name": "reference/venv-launcher-live-identity-proof.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\supervisor-before-venv-identity-fix.py",
+      "name": "reference/supervisor-before-venv-identity-fix.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r1\\observed-terminal.json",
+      "name": "reference/native-cpu-r1/observed-terminal.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r1\\worker-before-responsive-limit-adapter.py",
+      "name": "reference/native-cpu-r1/worker-before-responsive-limit-adapter.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r2\\completed.json",
+      "name": "reference/native-cpu-r2/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r2\\native-state-contract.json",
+      "name": "reference/native-cpu-r2/native-state-contract.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r2\\offload-control.json",
+      "name": "reference/native-cpu-r2/offload-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r2\\state.json",
+      "name": "reference/native-cpu-r2/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r2\\state.json.previous",
+      "name": "reference/native-cpu-r2/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r2\\worker-before-buffer-dtype-fix.py",
+      "name": "reference/native-cpu-r2/worker-before-buffer-dtype-fix.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r3\\completed.json",
+      "name": "reference/native-cpu-r3/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r3\\native-state-contract.json",
+      "name": "reference/native-cpu-r3/native-state-contract.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r3\\offload-byte-binding.json",
+      "name": "reference/native-cpu-r3/offload-byte-binding.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r3\\offload-control.json",
+      "name": "reference/native-cpu-r3/offload-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r3\\state.json",
+      "name": "reference/native-cpu-r3/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r3\\state.json.previous",
+      "name": "reference/native-cpu-r3/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r3\\worker-before-torchaudio-dependency.py",
+      "name": "reference/native-cpu-r3/worker-before-torchaudio-dependency.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r4\\completed.json",
+      "name": "reference/native-cpu-r4/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r4\\native-state-contract.json",
+      "name": "reference/native-cpu-r4/native-state-contract.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r4\\offload-byte-binding.json",
+      "name": "reference/native-cpu-r4/offload-byte-binding.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r4\\offload-control.json",
+      "name": "reference/native-cpu-r4/offload-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r4\\state.json",
+      "name": "reference/native-cpu-r4/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r4\\state.json.previous",
+      "name": "reference/native-cpu-r4/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r4\\worker-before-processor-input-completion.py",
+      "name": "reference/native-cpu-r4/worker-before-processor-input-completion.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r5\\observed-terminal.json",
+      "name": "reference/native-cpu-r5/observed-terminal.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r5\\state.json",
+      "name": "reference/native-cpu-r5/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r5\\state.json.previous",
+      "name": "reference/native-cpu-r5/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r5\\worker-before-official-cpu-runtime.py",
+      "name": "reference/native-cpu-r5/worker-before-official-cpu-runtime.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r6\\completed.json",
+      "name": "reference/native-cpu-r6/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r6\\ES2003b-seq-000.json",
+      "name": "reference/native-cpu-r6/ES2003b-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r6\\native-frontend-control.json",
+      "name": "reference/native-cpu-r6/native-frontend-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r6\\native-state-contract.json",
+      "name": "reference/native-cpu-r6/native-state-contract.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r6\\offload-byte-binding.json",
+      "name": "reference/native-cpu-r6/offload-byte-binding.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r6\\offload-control.json",
+      "name": "reference/native-cpu-r6/offload-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r6\\runtime-control.json",
+      "name": "reference/native-cpu-r6/runtime-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r6\\state.json",
+      "name": "reference/native-cpu-r6/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r6\\state.json.previous",
+      "name": "reference/native-cpu-r6/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-readonly-r1\\completed.json",
+      "name": "reference/native-cpu-readonly-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-readonly-r1\\native-frontend-control.json",
+      "name": "reference/native-cpu-readonly-r1/native-frontend-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-readonly-r1\\native-state-contract.json",
+      "name": "reference/native-cpu-readonly-r1/native-state-contract.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-readonly-r1\\offload-byte-binding.json",
+      "name": "reference/native-cpu-readonly-r1/offload-byte-binding.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-readonly-r1\\offload-control.json",
+      "name": "reference/native-cpu-readonly-r1/offload-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-readonly-r1\\readonly-view-control.json",
+      "name": "reference/native-cpu-readonly-r1/readonly-view-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-readonly-r1\\runtime-control.json",
+      "name": "reference/native-cpu-readonly-r1/runtime-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-readonly-r1\\state.json",
+      "name": "reference/native-cpu-readonly-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-readonly-r1\\state.json.previous",
+      "name": "reference/native-cpu-readonly-r1/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-readonly-r1\\worker-executed.py",
+      "name": "reference/native-cpu-readonly-r1/worker-executed.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\completed.json",
+      "name": "reference/native-gpu-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\EN2001a-a2-000.json",
+      "name": "reference/native-gpu-r1/EN2001a-a2-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\EN2001a-a2-023.json",
+      "name": "reference/native-gpu-r1/EN2001a-a2-023.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\EN2001a-a2-046.json",
+      "name": "reference/native-gpu-r1/EN2001a-a2-046.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\EN2001a-a2-069.json",
+      "name": "reference/native-gpu-r1/EN2001a-a2-069.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\EN2001a-a2-092.json",
+      "name": "reference/native-gpu-r1/EN2001a-a2-092.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\EN2001a-a2-116.json",
+      "name": "reference/native-gpu-r1/EN2001a-a2-116.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\ES2003b-seq-000.json",
+      "name": "reference/native-gpu-r1/ES2003b-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\ES2003b-seq-005.json",
+      "name": "reference/native-gpu-r1/ES2003b-seq-005.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\ES2003b-seq-010.json",
+      "name": "reference/native-gpu-r1/ES2003b-seq-010.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\ES2003b-seq-016.json",
+      "name": "reference/native-gpu-r1/ES2003b-seq-016.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\ES2003b-seq-021.json",
+      "name": "reference/native-gpu-r1/ES2003b-seq-021.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\ES2003b-seq-027.json",
+      "name": "reference/native-gpu-r1/ES2003b-seq-027.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\native-gpu-transfer-control.json",
+      "name": "reference/native-gpu-r1/native-gpu-transfer-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\native-gpu-weight-roundtrip.json",
+      "name": "reference/native-gpu-r1/native-gpu-weight-roundtrip.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\observed-runtime-warnings.txt",
+      "name": "reference/native-gpu-r1/observed-runtime-warnings.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\state.json",
+      "name": "reference/native-gpu-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\state.json.previous",
+      "name": "reference/native-gpu-r1/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\completed.json",
+      "name": "reference/prepared-native-inputs-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\native-frontend-control.json",
+      "name": "reference/prepared-native-inputs-r1/native-frontend-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\runtime-control.json",
+      "name": "reference/prepared-native-inputs-r1/runtime-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\state.json",
+      "name": "reference/prepared-native-inputs-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\state.json.previous",
+      "name": "reference/prepared-native-inputs-r1/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\owned_probe.py",
+      "name": "reference/venv-supervisor-regression-r1/owned_probe.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\protocol.json",
+      "name": "reference/venv-supervisor-regression-r1/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\result.json",
+      "name": "reference/venv-supervisor-regression-r1/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\stdout.log",
+      "name": "reference/venv-supervisor-regression-r1/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\run\\baseline\\completed.json",
+      "name": "reference/venv-supervisor-regression-r1/run/baseline/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\run\\baseline\\state.json",
+      "name": "reference/venv-supervisor-regression-r1/run/baseline/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\run\\supervisor-baseline\\completed.json",
+      "name": "reference/venv-supervisor-regression-r1/run/supervisor-baseline/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\run\\supervisor-baseline\\started.json",
+      "name": "reference/venv-supervisor-regression-r1/run/supervisor-baseline/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\run\\supervisor-baseline\\stdout.log",
+      "name": "reference/venv-supervisor-regression-r1/run/supervisor-baseline/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\run\\supervisor-baseline\\worker-identity.json",
+      "name": "reference/venv-supervisor-regression-r1/run/supervisor-baseline/worker-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r1\\baseline\\state.json",
+      "name": "adaptation/language-specific-adaptation-r1/gpu-owned-evening20261117-r1/baseline/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r1\\supervisor-baseline\\started.json",
+      "name": "adaptation/language-specific-adaptation-r1/gpu-owned-evening20261117-r1/supervisor-baseline/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r1\\supervisor-baseline\\stdout.log",
+      "name": "adaptation/language-specific-adaptation-r1/gpu-owned-evening20261117-r1/supervisor-baseline/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\completed.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\factory-load.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/factory-load.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\state.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\state.json.previous",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\EN2001a-a2-000.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/results/EN2001a-a2-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\EN2001a-a2-023.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/results/EN2001a-a2-023.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\EN2001a-a2-046.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/results/EN2001a-a2-046.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\EN2001a-a2-069.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/results/EN2001a-a2-069.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\EN2001a-a2-092.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/results/EN2001a-a2-092.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\EN2001a-a2-116.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/results/EN2001a-a2-116.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\ES2003b-seq-000.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/results/ES2003b-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\ES2003b-seq-005.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/results/ES2003b-seq-005.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\ES2003b-seq-010.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/results/ES2003b-seq-010.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\ES2003b-seq-016.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/results/ES2003b-seq-016.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\ES2003b-seq-021.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/results/ES2003b-seq-021.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\ES2003b-seq-027.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/baseline/results/ES2003b-seq-027.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-baseline\\completed.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/supervisor-baseline/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-baseline\\started.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/supervisor-baseline/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-baseline\\stdout.log",
+      "name": "adaptation/gpu-owned-evening20261117-r2/supervisor-baseline/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-baseline\\worker-identity.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/supervisor-baseline/worker-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\preflight\\completed.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/preflight/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\preflight\\factory-load.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/preflight/factory-load.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\preflight\\loss-contract.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/preflight/loss-contract.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\preflight\\state.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/preflight/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\preflight\\state.json.previous",
+      "name": "adaptation/gpu-owned-evening20261117-r2/preflight/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\preflight\\checkpoints\\latest-checkpoint.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/preflight/checkpoints/latest-checkpoint.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\preflight\\checkpoints\\step-00001-cced1290e3df.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/preflight/checkpoints/step-00001-cced1290e3df.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-preflight\\completed.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/supervisor-preflight/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-preflight\\started.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/supervisor-preflight/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-preflight\\stdout.log",
+      "name": "adaptation/gpu-owned-evening20261117-r2/supervisor-preflight/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-preflight\\worker-identity.json",
+      "name": "adaptation/gpu-owned-evening20261117-r2/supervisor-preflight/worker-identity.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r1\\protocol.json",
+      "name": "adaptation/prepared-gpu-evening20261117-r1/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r1\\scoring-control.json",
+      "name": "adaptation/prepared-gpu-evening20261117-r1/scoring-control.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r2\\protocol.json",
+      "name": "adaptation/prepared-gpu-evening20261117-r2/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r2\\scoring-control-binding-repair.json",
+      "name": "adaptation/prepared-gpu-evening20261117-r2/scoring-control-binding-repair.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r2\\scoring-control-verified.json",
+      "name": "adaptation/prepared-gpu-evening20261117-r2/scoring-control-verified.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r2\\scoring-control.json",
+      "name": "adaptation/prepared-gpu-evening20261117-r2/scoring-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\asset-acquisition-r1\\asset-plan.json",
+      "name": "reference/asset-acquisition-r1/asset-plan.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\asset-acquisition-r1\\completed.json",
+      "name": "reference/asset-acquisition-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\asset-acquisition-r1\\state.json",
+      "name": "reference/asset-acquisition-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-browser-r5\\desktop-models.png",
+      "name": "portal-browser-r5/desktop-models.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-browser-r5\\desktop-overview.png",
+      "name": "portal-browser-r5/desktop-overview.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-browser-r5\\desktop-visible-text.txt",
+      "name": "portal-browser-r5/desktop-visible-text.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-browser-r5\\mobile-models.png",
+      "name": "portal-browser-r5/mobile-models.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-browser-r5\\mobile-visible-text.txt",
+      "name": "portal-browser-r5/mobile-visible-text.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-browser-r5\\result.json",
+      "name": "portal-browser-r5/result.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\acquire_granite_reference_20261117.py",
+      "name": "tools/acquire_granite_reference_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_granite_execution_20261117.py",
+      "name": "tools/prepare_granite_execution_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\score_granite_reference_20261117.py",
+      "name": "tools/score_granite_reference_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_granite_and_portal_20261117.py",
+      "name": "tools/record_granite_and_portal_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_bilingual_progress.py",
+      "name": "tools/record_bilingual_progress.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\check_model_portal_20261117.py",
+      "name": "tools/check_model_portal_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\checkpoint_model_portal_20261117.py",
+      "name": "tools/checkpoint_model_portal_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\complete_cpu_wheel_payload_20261117.py",
+      "name": "tools/complete_cpu_wheel_payload_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_granite_checkpoint_20261117.py",
+      "name": "tools/prepare_granite_checkpoint_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\bilingual_progress.json",
+      "name": "workpoint-snapshot.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\audit_granite_errors_20261117.py",
+      "name": "tools/audit_granite_errors_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_tdt_adaptation_20261117.py",
+      "name": "tools/prepare_tdt_adaptation_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\verify_live_venv_supervisor_20261117.py",
+      "name": "tools/verify_live_venv_supervisor_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_tdt_evening_20261117.py",
+      "name": "tools/record_tdt_evening_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\finish_fixed_tdt_evaluation_20261117.py",
+      "name": "tools/finish_fixed_tdt_evaluation_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\finish_resumed_tdt_evaluation_20261117.py",
+      "name": "tools/finish_resumed_tdt_evaluation_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\finish_tdt_after_shared_lease_20261117.py",
+      "name": "tools/finish_tdt_after_shared_lease_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_customer_cpu_deployment_20261117.py",
+      "name": "tools/record_customer_cpu_deployment_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\probe_customer_cpu_bilingual_20261117.py",
+      "name": "tools/probe_customer_cpu_bilingual_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_customer_cpu_probe_20261117.py",
+      "name": "tools/record_customer_cpu_probe_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\acquire_parakeet_cpu_export_20261117.py",
+      "name": "tools/acquire_parakeet_cpu_export_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\close_model_direction_review_20261117.py",
+      "name": "tools/close_model_direction_review_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\customer-cpu-bilingual-deployment-20261117.json",
+      "name": "customer-cpu-deployment-research.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\week-direction-review-20261117.json",
+      "name": "latest-week-direction-review.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\train\\factory-load.json",
+      "name": "final/gpu-owned-evening20261117-r2/train/factory-load.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\closed-training-operators.jsonl.gz",
+      "name": "final/gpu-owned-evening20261117-r2/train/gpu-operators.jsonl.gz"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\closed-training-operators-receipt.json",
+      "name": "final/gpu-owned-evening20261117-r2/train/gpu-operators.jsonl.gzip-receipt.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\train\\state.json",
+      "name": "final/gpu-owned-evening20261117-r2/train/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\train\\state.json.previous",
+      "name": "final/gpu-owned-evening20261117-r2/train/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\train\\training-loss.jsonl",
+      "name": "final/gpu-owned-evening20261117-r2/train/training-loss.jsonl"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-train\\completed.json",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-train/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-train\\started.json",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-train/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-train\\stdout.log",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-train/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-train\\worker-identity.json",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-train/worker-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\completed.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\factory-load.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/factory-load.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\gpu-operators.jsonl",
+      "name": "final/gpu-owned-evening20261117-r2/validate/gpu-operators.jsonl"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\state.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\state.json.previous",
+      "name": "final/gpu-owned-evening20261117-r2/validate/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\results\\EN2001a-a2-000.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/results/EN2001a-a2-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\results\\EN2001a-a2-023.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/results/EN2001a-a2-023.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\results\\EN2001a-a2-046.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/results/EN2001a-a2-046.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\results\\EN2001a-a2-069.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/results/EN2001a-a2-069.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\results\\EN2001a-a2-092.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/results/EN2001a-a2-092.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\results\\EN2001a-a2-116.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/results/EN2001a-a2-116.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\results\\ES2003b-seq-000.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/results/ES2003b-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\results\\ES2003b-seq-005.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/results/ES2003b-seq-005.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\results\\ES2003b-seq-010.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/results/ES2003b-seq-010.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\results\\ES2003b-seq-016.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/results/ES2003b-seq-016.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\results\\ES2003b-seq-021.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/results/ES2003b-seq-021.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\results\\ES2003b-seq-027.json",
+      "name": "final/gpu-owned-evening20261117-r2/validate/results/ES2003b-seq-027.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-validate\\completed.json",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-validate/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-validate\\started.json",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-validate/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-validate\\stdout.log",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-validate/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-validate\\worker-identity.json",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-validate/worker-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-r1\\completed.json",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-r1\\state.json",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-r1\\state.json.previous",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-r1/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-resume-r1\\completed.json",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-resume-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-resume-r1\\state.json",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-resume-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-resume-r1\\state.json.previous",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-resume-r1/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-resume-r1\\validate-supervisor.log",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-resume-r1/validate-supervisor.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-shared-lease-r1\\admission-recovery.json",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-shared-lease-r1/admission-recovery.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-shared-lease-r1\\completed.json",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-shared-lease-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-shared-lease-r1\\CPU_EXISTING_BILINGUAL_MODEL_PROBE.log",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-shared-lease-r1/CPU_EXISTING_BILINGUAL_MODEL_PROBE.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-shared-lease-r1\\SCORING_EXISTING_CPU_BILINGUAL_PROBE.log",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-shared-lease-r1/SCORING_EXISTING_CPU_BILINGUAL_PROBE.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-shared-lease-r1\\SCORING_ORIGINAL12_AND709_WORDS.log",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-shared-lease-r1/SCORING_ORIGINAL12_AND709_WORDS.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-shared-lease-r1\\state.json",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-shared-lease-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-shared-lease-r1\\state.json.previous",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-shared-lease-r1/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-shared-lease-r1\\VALIDATING_EXACT_FINAL457_CHECKPOINT.log",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-shared-lease-r1/VALIDATING_EXACT_FINAL457_CHECKPOINT.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-shared-lease-r1\\worker-executed.py",
+      "name": "final/gpu-owned-evening20261117-r2/finish-evaluation-shared-lease-r1/worker-executed.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-validate-lock-admission-failed-r1\\completed.json",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-validate-lock-admission-failed-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-validate-lock-admission-failed-r1\\started.json",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-validate-lock-admission-failed-r1/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-validate-lock-admission-failed-r1\\stdout.log",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-validate-lock-admission-failed-r1/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\resume-1\\completed.json",
+      "name": "final/gpu-owned-evening20261117-r2/resume-1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\resume-1\\factory-load.json",
+      "name": "final/gpu-owned-evening20261117-r2/resume-1/factory-load.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\resume-1\\gpu-operators.jsonl",
+      "name": "final/gpu-owned-evening20261117-r2/resume-1/gpu-operators.jsonl"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\resume-1\\state.json",
+      "name": "final/gpu-owned-evening20261117-r2/resume-1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\resume-1\\state.json.previous",
+      "name": "final/gpu-owned-evening20261117-r2/resume-1/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\resume-1\\training-loss.jsonl",
+      "name": "final/gpu-owned-evening20261117-r2/resume-1/training-loss.jsonl"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-resume-1\\completed.json",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-resume-1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-resume-1\\started.json",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-resume-1/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-resume-1\\stdout.log",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-resume-1/stdout.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-resume-1\\worker-identity.json",
+      "name": "final/gpu-owned-evening20261117-r2/supervisor-resume-1/worker-identity.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\latest-checkpoint.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/latest-checkpoint.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\latest-checkpoint.json.previous",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/latest-checkpoint.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00001-9218095a8fbc.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00001-9218095a8fbc.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00032-5cbef6c4d172.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00032-5cbef6c4d172.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00064-78bb17e5471a.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00064-78bb17e5471a.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00096-85129c1895d1.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00096-85129c1895d1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00128-7455157d87ae.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00128-7455157d87ae.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00160-3cb50b9fb9ab.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00160-3cb50b9fb9ab.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00192-2f19ffd3ae42.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00192-2f19ffd3ae42.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00224-d442582f07c0.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00224-d442582f07c0.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00256-dd386092f8ab.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00256-dd386092f8ab.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00288-da86397cce2b.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00288-da86397cce2b.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00320-02f21e67bbc0.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00320-02f21e67bbc0.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00352-b96ac575e234.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00352-b96ac575e234.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00384-6b3d6a19d0a1.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00384-6b3d6a19d0a1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00416-7906723c2da8.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00416-7906723c2da8.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00448-69fa0ae616cb.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00448-69fa0ae616cb.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\step-00457-cd738cb0a797.json",
+      "name": "final/gpu-owned-evening20261117-r2/checkpoints/step-00457-cd738cb0a797.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\completed.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--20200709_L_R002S01C01-seq-000.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--20200709_L_R002S01C01-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--20200709_L_R002S01C01-seq-003.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--20200709_L_R002S01C01-seq-003.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--20200709_L_R002S01C01-seq-006.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--20200709_L_R002S01C01-seq-006.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--20200709_L_R002S01C01-seq-009.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--20200709_L_R002S01C01-seq-009.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--20200709_L_R002S01C01-seq-012.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--20200709_L_R002S01C01-seq-012.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--20200709_L_R002S01C01-seq-016.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--20200709_L_R002S01C01-seq-016.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--20200805_S_R001S01C01-seq-000.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--20200805_S_R001S01C01-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--20200805_S_R001S01C01-seq-002.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--20200805_S_R001S01C01-seq-002.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--20200805_S_R001S01C01-seq-004.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--20200805_S_R001S01C01-seq-004.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--20200805_S_R001S01C01-seq-006.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--20200805_S_R001S01C01-seq-006.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--20200805_S_R001S01C01-seq-008.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--20200805_S_R001S01C01-seq-008.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--20200805_S_R001S01C01-seq-011.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--20200805_S_R001S01C01-seq-011.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--EN2001a-a2-000.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--EN2001a-a2-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--EN2001a-a2-023.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--EN2001a-a2-023.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--EN2001a-a2-046.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--EN2001a-a2-046.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--EN2001a-a2-069.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--EN2001a-a2-069.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--EN2001a-a2-092.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--EN2001a-a2-092.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--EN2001a-a2-116.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--EN2001a-a2-116.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--ES2003b-seq-000.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--ES2003b-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--ES2003b-seq-005.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--ES2003b-seq-005.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--ES2003b-seq-010.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--ES2003b-seq-010.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--ES2003b-seq-016.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--ES2003b-seq-016.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--ES2003b-seq-021.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--ES2003b-seq-021.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_chinese_default--ES2003b-seq-027.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_chinese_default--ES2003b-seq-027.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--20200709_L_R002S01C01-seq-000.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--20200709_L_R002S01C01-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--20200709_L_R002S01C01-seq-003.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--20200709_L_R002S01C01-seq-003.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--20200709_L_R002S01C01-seq-006.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--20200709_L_R002S01C01-seq-006.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--20200709_L_R002S01C01-seq-009.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--20200709_L_R002S01C01-seq-009.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--20200709_L_R002S01C01-seq-012.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--20200709_L_R002S01C01-seq-012.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--20200709_L_R002S01C01-seq-016.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--20200709_L_R002S01C01-seq-016.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--20200805_S_R001S01C01-seq-000.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--20200805_S_R001S01C01-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--20200805_S_R001S01C01-seq-002.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--20200805_S_R001S01C01-seq-002.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--20200805_S_R001S01C01-seq-004.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--20200805_S_R001S01C01-seq-004.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--20200805_S_R001S01C01-seq-006.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--20200805_S_R001S01C01-seq-006.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--20200805_S_R001S01C01-seq-008.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--20200805_S_R001S01C01-seq-008.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--20200805_S_R001S01C01-seq-011.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--20200805_S_R001S01C01-seq-011.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--EN2001a-a2-000.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--EN2001a-a2-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--EN2001a-a2-023.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--EN2001a-a2-023.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--EN2001a-a2-046.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--EN2001a-a2-046.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--EN2001a-a2-069.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--EN2001a-a2-069.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--EN2001a-a2-092.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--EN2001a-a2-092.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--EN2001a-a2-116.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--EN2001a-a2-116.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--ES2003b-seq-000.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--ES2003b-seq-000.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--ES2003b-seq-005.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--ES2003b-seq-005.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--ES2003b-seq-010.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--ES2003b-seq-010.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--ES2003b-seq-016.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--ES2003b-seq-016.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--ES2003b-seq-021.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--ES2003b-seq-021.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\existing_multilingual_auto--ES2003b-seq-027.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/existing_multilingual_auto--ES2003b-seq-027.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\score.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\state.json",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\state.json.previous",
+      "name": "final/english-accuracy-reference-20261117/customer-cpu-probe-r1/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\parakeet-cpu-export-acquisition-r1\\completed.json",
+      "name": "final/english-accuracy-reference-20261117/parakeet-cpu-export-acquisition-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\parakeet-cpu-export-acquisition-r1\\state.json",
+      "name": "final/english-accuracy-reference-20261117/parakeet-cpu-export-acquisition-r1/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\parakeet-cpu-export-acquisition-r1\\state.json.previous",
+      "name": "final/english-accuracy-reference-20261117/parakeet-cpu-export-acquisition-r1/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-cpu-requirement-r1\\desktop-models.png",
+      "name": "final/english-accuracy-reference-20261117/portal-cpu-requirement-r1/desktop-models.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-cpu-requirement-r1\\desktop-overview.png",
+      "name": "final/english-accuracy-reference-20261117/portal-cpu-requirement-r1/desktop-overview.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-cpu-requirement-r1\\desktop-visible-text.txt",
+      "name": "final/english-accuracy-reference-20261117/portal-cpu-requirement-r1/desktop-visible-text.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-cpu-requirement-r1\\mobile-models.png",
+      "name": "final/english-accuracy-reference-20261117/portal-cpu-requirement-r1/mobile-models.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-cpu-requirement-r1\\mobile-visible-text.txt",
+      "name": "final/english-accuracy-reference-20261117/portal-cpu-requirement-r1/mobile-visible-text.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-cpu-requirement-r1\\result.json",
+      "name": "final/english-accuracy-reference-20261117/portal-cpu-requirement-r1/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-final-epoch-cpu-r1\\desktop-cpu-probe.png",
+      "name": "final/english-accuracy-reference-20261117/portal-final-epoch-cpu-r1/desktop-cpu-probe.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-final-epoch-cpu-r1\\desktop-final-training.png",
+      "name": "final/english-accuracy-reference-20261117/portal-final-epoch-cpu-r1/desktop-final-training.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-final-epoch-cpu-r1\\desktop-models.png",
+      "name": "final/english-accuracy-reference-20261117/portal-final-epoch-cpu-r1/desktop-models.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-final-epoch-cpu-r1\\desktop-overview.png",
+      "name": "final/english-accuracy-reference-20261117/portal-final-epoch-cpu-r1/desktop-overview.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-final-epoch-cpu-r1\\desktop-visible-text.txt",
+      "name": "final/english-accuracy-reference-20261117/portal-final-epoch-cpu-r1/desktop-visible-text.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-final-epoch-cpu-r1\\mobile-cpu-probe.png",
+      "name": "final/english-accuracy-reference-20261117/portal-final-epoch-cpu-r1/mobile-cpu-probe.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-final-epoch-cpu-r1\\mobile-final-training.png",
+      "name": "final/english-accuracy-reference-20261117/portal-final-epoch-cpu-r1/mobile-final-training.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-final-epoch-cpu-r1\\mobile-models.png",
+      "name": "final/english-accuracy-reference-20261117/portal-final-epoch-cpu-r1/mobile-models.png"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-final-epoch-cpu-r1\\mobile-visible-text.txt",
+      "name": "final/english-accuracy-reference-20261117/portal-final-epoch-cpu-r1/mobile-visible-text.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-final-epoch-cpu-r1\\result.json",
+      "name": "final/english-accuracy-reference-20261117/portal-final-epoch-cpu-r1/result.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\training-completed.json",
+      "name": "final/training-completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\paired-score.json",
+      "name": "final/paired-score.json"
+    }
+  ],
+  "commitMessage": "Record complete fixed English adaptation and CPU bilingual deployment evidence",
+  "claims": {
+    "state": "FIXED_ENGLISH_EPOCH_SCORED_CUSTOMER_CPU_EVIDENCE_RETAINED",
+    "completedOriginalAudioOutputs": 12,
+    "attemptedOriginalAudioCases": 12,
+    "originalCaseCount": 12,
+    "newTrainingUpdates": 475,
+    "fullFixedReferenceScoreExists": true,
+    "cpuDiskOffloadProfileEndedWithoutAutomaticRetry": true,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "originalReferencesAndMetricsUnchanged": true,
+    "rawAudioInputFeaturesModelWeightsRuntimeWheelsOrCredentialsIncluded": false,
+    "webpageLocalSourceCommit": "198953ca5cf58990558ed3806718666b6df25638",
+    "trainingCandidateOptimizerUpdates": 457,
+    "preflightOnlyParameterUpdates": 1,
+    "existingTrainingGpuPreflightPassed": true,
+    "discardedUncommittedTrainingUpdates": 17,
+    "explicitCheckpointRecoveryFromUpdate": 416,
+    "pairedBaselineErrors": 123,
+    "pairedCandidateErrors": 118,
+    "pairedAdmissionPassed": false,
+    "original709WordsRetained": true,
+    "finalHoldoutOpened": false,
+    "productDefaultModelChanged": false,
+    "customerCpuProbeCompleted": true,
+    "ownerRequestedWorkingModeReviewRecorded": true,
+    "newCpuExportInferencePerformed": false
+  }
+}

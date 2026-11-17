@@ -1,0 +1,85 @@
+{
+  "repository": "ibm-granite/granite-speech-4.1-2b",
+  "revision": "823ca793aa49925d4eb2e758709b7f2c98513e8e",
+  "assets": [
+    {
+      "name": "README.md",
+      "bytes": 20185,
+      "expectedSha256": null,
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/README.md"
+    },
+    {
+      "name": "config.json",
+      "bytes": 2276,
+      "expectedSha256": null,
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/config.json"
+    },
+    {
+      "name": "model.safetensors.index.json",
+      "bytes": 84396,
+      "expectedSha256": null,
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/model.safetensors.index.json"
+    },
+    {
+      "name": "preprocessor_config.json",
+      "bytes": 336,
+      "expectedSha256": null,
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/preprocessor_config.json"
+    },
+    {
+      "name": "processor_config.json",
+      "bytes": 80,
+      "expectedSha256": null,
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/processor_config.json"
+    },
+    {
+      "name": "tokenizer.json",
+      "bytes": 7153607,
+      "expectedSha256": null,
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/tokenizer.json"
+    },
+    {
+      "name": "tokenizer_config.json",
+      "bytes": 17882,
+      "expectedSha256": null,
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/tokenizer_config.json"
+    },
+    {
+      "name": "special_tokens_map.json",
+      "bytes": 579,
+      "expectedSha256": null,
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/special_tokens_map.json"
+    },
+    {
+      "name": "added_tokens.json",
+      "bytes": 26,
+      "expectedSha256": null,
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/added_tokens.json"
+    },
+    {
+      "name": "vocab.json",
+      "bytes": 1612704,
+      "expectedSha256": null,
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/vocab.json"
+    },
+    {
+      "name": "model-00001-of-00003.safetensors",
+      "bytes": 2143518808,
+      "expectedSha256": "3c987fdc29940c49d2498ea5925e8d57f88661af3ef30f73e56e2434ded3e42f",
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/model-00001-of-00003.safetensors"
+    },
+    {
+      "name": "model-00002-of-00003.safetensors",
+      "bytes": 2143963456,
+      "expectedSha256": "8e18d6d3fbe009a95a4cf305e31c2aab4a3484eccbce29aa1aa1454fc8c046ee",
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/model-00002-of-00003.safetensors"
+    },
+    {
+      "name": "model-00003-of-00003.safetensors",
+      "bytes": 339045512,
+      "expectedSha256": "32f823497bc179f6f346efdd46984ab60e44b3d443bf40a18d757ddce626a2d2",
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/model-00003-of-00003.safetensors"
+    }
+  ],
+  "expectedBytes": 4635419847
+}

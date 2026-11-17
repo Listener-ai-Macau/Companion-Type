@@ -1,0 +1,69 @@
+{
+  "state": "CPU_CUSTOMER_CAPABILITY_PROBE_SCORED_NOT_PRODUCT_QUALIFIED",
+  "summaries": [
+    {
+      "profile": "existing_chinese_default",
+      "language": "Chinese",
+      "cases": 12,
+      "referenceUnits": 1258,
+      "errors": 89,
+      "errorRate": 0.07074721780604133,
+      "seconds": 19.788704900012817,
+      "audioSeconds": 282.29137499999996,
+      "realTimeFactor": 0.07010028166823312,
+      "substitutions": 53,
+      "deletions": 26,
+      "insertions": 10
+    },
+    {
+      "profile": "existing_chinese_default",
+      "language": "English",
+      "cases": 12,
+      "referenceUnits": 709,
+      "errors": 308,
+      "errorRate": 0.43441466854724964,
+      "seconds": 20.739490500011016,
+      "audioSeconds": 265.56006249999996,
+      "realTimeFactor": 0.07809717434454595,
+      "substitutions": 175,
+      "deletions": 117,
+      "insertions": 16
+    },
+    {
+      "profile": "existing_multilingual_auto",
+      "language": "Chinese",
+      "cases": 12,
+      "referenceUnits": 1258,
+      "errors": 94,
+      "errorRate": 0.07472178060413355,
+      "seconds": 31.847396300014225,
+      "audioSeconds": 282.29137499999996,
+      "realTimeFactor": 0.11281746139078543,
+      "substitutions": 47,
+      "deletions": 37,
+      "insertions": 10
+    },
+    {
+      "profile": "existing_multilingual_auto",
+      "language": "English",
+      "cases": 12,
+      "referenceUnits": 709,
+      "errors": 233,
+      "errorRate": 0.32863187588152326,
+      "seconds": 25.458511100019678,
+      "audioSeconds": 265.56006249999996,
+      "realTimeFactor": 0.09586724321553314,
+      "substitutions": 70,
+      "deletions": 161,
+      "insertions": 2
+    }
+  ],
+  "provider": "cpu",
+  "privatePeakBytes": 471470080,
+  "installedClientBinaryTest": false,
+  "originalReferencesUnchanged": true,
+  "finalHoldoutOpened": false,
+  "newInferenceByScorer": 0,
+  "qualityQualified": false,
+  "saleQualified": false
+}

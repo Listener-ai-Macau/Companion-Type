@@ -1,0 +1,31 @@
+{
+  "state": "PREPARING_ONE_NATIVE_GRANITE_REFERENCE",
+  "startedAt": "2026-11-17T18:22:44+08:00",
+  "pid": 15088,
+  "createdAt": 1794910964.8174694,
+  "completed": [],
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "referenceRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "protocolSha256": "82a88ad6f0e6e7e2582f5e95f2afec978c15cd3a97c711e3e62a14b6a85bcd8a",
+  "observedAt": "2026-11-17T18:23:55+08:00",
+  "elapsedSeconds": 70.5789999999979,
+  "limits": {
+    "pid": 15088,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 488497152,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

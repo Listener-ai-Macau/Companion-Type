@@ -1,0 +1,32 @@
+{
+  "state": "STOPPED_FIXED_EPOCH_FOLLOWUP_WITHOUT_AUTOMATIC_RETRY",
+  "pid": 13400,
+  "createdAt": 1794919970.4625845,
+  "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r2\\protocol.json",
+  "protocolSha256": "46b0e3e8f60e5a2e88f86b4d311347a8cf65c2dbb258194d77c85125b0122d29",
+  "scoringControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r2\\scoring-control-verified.json",
+  "scoringControlSha256": "a8bc41c03f1c92b323d655996cba2fbb4485909ea48040f42b5814a5b1f72b68",
+  "trainLauncherPid": 2608,
+  "trainLauncherCreatedAt": 1794917956.2231145,
+  "automaticRetry": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "at": "2026-11-17T21:41:07.328090+08:00",
+  "limits": {
+    "pid": 13400,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 12967936,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "error": "AssertionError('Training did not complete cleanly')"
+}

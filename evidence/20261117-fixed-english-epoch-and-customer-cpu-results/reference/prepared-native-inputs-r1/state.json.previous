@@ -1,0 +1,32 @@
+{
+  "state": "CHECKING_NATIVE_PROCESSOR_ALL12_ORIGINAL_INPUTS",
+  "startedAt": "2026-11-17T19:53:45+08:00",
+  "pid": 15628,
+  "createdAt": 1794916425.6670964,
+  "completed": [],
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "referenceRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "protocolSha256": "11afc80239d755b0b50f5c9891c693eabd1e77caad2f8ff537d4befd75835f34",
+  "observedAt": "2026-11-17T19:54:01+08:00",
+  "elapsedSeconds": 16.030999999988126,
+  "limits": {
+    "pid": 15628,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 431865856,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "activeFrontendCase": "EN2001a-a2-116"
+}

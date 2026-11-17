@@ -1,0 +1,10 @@
+{
+  "state": "PASS_NATIVE_DENSE_SELECTED_ORACLE_AND_CHECKPOINTED_JOINT_GPU_LOSS_GRADIENTS",
+  "nativeLoss": 4.331719875335693,
+  "scalarOracle": 4.331720606480789,
+  "chunkedLoss": 4.418430805206299,
+  "maximumChunkedGradientDifference": 5.960464477539063e-08,
+  "parameterUpdates": 0,
+  "cpuModelTraining": false,
+  "actualPretrainedLargestShapeProven": false
+}

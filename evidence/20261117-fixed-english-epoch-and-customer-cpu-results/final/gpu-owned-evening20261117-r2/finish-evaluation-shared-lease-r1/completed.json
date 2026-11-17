@@ -1,0 +1,44 @@
+{
+  "state": "STOPPED_SHARED_LEASE_FOLLOWUP_WITHOUT_MODEL_RETRY",
+  "pid": 23932,
+  "createdAt": 1794923676.8073175,
+  "otherPid": 4668,
+  "otherCreatedAt": 1794923433.4203124,
+  "protocolSha256": "46b0e3e8f60e5a2e88f86b4d311347a8cf65c2dbb258194d77c85125b0122d29",
+  "noAutomaticModelRetry": true,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "at": "2026-11-17T22:05:54.582757+08:00",
+  "limits": {
+    "pid": 23932,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1473433600,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "preservedDirectories": [
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate-lock-admission-failed-r1",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\supervisor-validate-lock-admission-failed-r1"
+  ],
+  "failedAdmissionNewNeuralCalls": 0,
+  "failedAdmissionParameterUpdates": 0,
+  "command": [
+    "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\probe_customer_cpu_bilingual_20261117.py",
+    "--score"
+  ],
+  "baselineErrors": 123,
+  "candidateErrors": 118,
+  "candidateWer": 0.16643159379407615,
+  "advanceToCompleteSources": false,
+  "error": "AssertionError(('SCORING_EXISTING_CPU_BILINGUAL_PROBE', 1))"
+}

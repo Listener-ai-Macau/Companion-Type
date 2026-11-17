@@ -1,0 +1,22 @@
+{
+  "id": "20200805_S_R001S01C01-seq-008",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 169343,
+  "audioSha256": "ec6cb287103798a2424f839fb40522da652b8677f162aa9d05a5aa1c743d6b0b",
+  "pcmSha256": "e3dd3a9849bd0d6515af65df219f40a7cceaa57f28ea97c9b9b5f708dda82784",
+  "text": "请来一个张师傅行吗不关辛干好了就行嗯反正这个维修这边我已经换人员了",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 169343,
+      "text": "请来一个张师傅行吗不关辛干好了就行嗯反正这个维修这边我已经换人员了",
+      "language": "<|zh|>"
+    }
+  ],
+  "seconds": 1.188399800012121,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

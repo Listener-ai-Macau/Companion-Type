@@ -1,0 +1,28 @@
+{
+  "id": "EN2001a-a2-092",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 473600,
+  "audioSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+  "pcmSha256": "14091b430e04787c3694b572f922d0a4da22a3ce4f10cc7978dde91fa4797bb7",
+  "text": "they'd be treated with this in algorithm one but i mean it could be as many nodes as you want like this one could be deeper maybe so so then you start with all your utterances here and when you go up to get topic segments you go to here here here we here here here that might be a bit confusing have things on different levels yeah not sure how we can go than",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 268800,
+      "text": "they'd be treated with this in algorithm one but i mean it could be as many nodes as you want like this one could be deeper maybe so so then you start with all your utterances here and when you go up to get topic segments you go to here here here we here here here",
+      "language": "<|en|>"
+    },
+    {
+      "startFrame": 268800,
+      "frames": 204800,
+      "text": "that might be a bit confusing have things on different levels yeah not sure how we can go than",
+      "language": "<|en|>"
+    }
+  ],
+  "seconds": 2.8717088000121294,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

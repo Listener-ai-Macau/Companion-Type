@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\companion_local_pcm_session_20261114.py", line 71, in exclusive_file
+    msvcrt.locking(stream.fileno(),msvcrt.LK_NBLCK,1)
+PermissionError: [Errno 13] Permission denied
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\tdt_domain_adaptation_20261116.py", line 344, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\tdt_domain_adaptation_20261116.py", line 105, in main
+    with exclusive_run(run),exclusive_file(Path(P['neuralLock'])),PowerLease():
+  File "C:\Users\Billy\AppData\Local\Programs\Python\Python311\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\companion_local_pcm_session_20261114.py", line 76, in exclusive_file
+    raise SessionConflict('Another operation owns this session lock') from error
+companion_local_pcm_session_20261114.SessionConflict: Another operation owns this session lock

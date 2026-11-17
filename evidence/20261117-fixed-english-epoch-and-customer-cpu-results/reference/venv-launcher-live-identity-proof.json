@@ -1,0 +1,15 @@
+{
+  "launcherPid": 20960,
+  "worker": {
+    "pid": 21608,
+    "ppid": 20960,
+    "exe": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Scripts\\python.exe",
+    "base": "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+    "cmd": [
+      "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "-c",
+      "import os,sys,json,psutil; print(json.dumps(dict(pid=os.getpid(),ppid=os.getppid(),exe=sys.executable,base=sys._base_executable,cmd=psutil.Process().cmdline())))"
+    ]
+  },
+  "exitCode": 0
+}

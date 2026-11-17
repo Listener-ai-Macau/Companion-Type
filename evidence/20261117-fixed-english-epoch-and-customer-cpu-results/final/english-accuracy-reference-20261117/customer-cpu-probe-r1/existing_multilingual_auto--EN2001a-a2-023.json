@@ -1,0 +1,28 @@
+{
+  "id": "EN2001a-a2-023",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 475520,
+  "audioSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+  "pcmSha256": "490510a15ef6f46ebac736fb41e975068df6e61349ac7f589c257fe724ae9d33",
+  "text": "and in that way we could probably use the same algorithm and just like make like one or two if that say okay if you are on whole document whole series level that doesn't double click then don't just go into that segment but load a new file or something like it for in general use the same algorithm that't been on2 to fifty can't actually load the whole thing in because also like even if we maybe this whole like maybe i'm worrying too much about the whole series in one thing display because actually",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 240000,
+      "text": "and in that way we could probably use the same algorithm and just like make like one or two if that say okay if you are on whole document whole series level that doesn't double click then don't just go into that segment but load a new file or something like it",
+      "language": "<|en|>"
+    },
+    {
+      "startFrame": 240000,
+      "frames": 235520,
+      "text": "for in general use the same algorithm that't been on2 to fifty can't actually load the whole thing in because also like even if we maybe this whole like maybe i'm worrying too much about the whole series in one thing display because actually",
+      "language": "<|en|>"
+    }
+  ],
+  "seconds": 2.310966599994572,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

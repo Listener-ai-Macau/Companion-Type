@@ -1,0 +1,28 @@
+{
+  "id": "20200805_S_R001S01C01-seq-000",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 399261,
+  "audioSha256": "6c1818fbe8f564715e6cbcb498a7ea3ef91e7dd38449f25ce802c4ed367d4094",
+  "pcmSha256": "2fd5e1492ae266f668ec7d665ade16aca1f7c8a07b4a08f0087f5fe661ef3935",
+  "text": "上半年的一些情况以及下半年怎么做然后接下来由我们的主管来主持一下这场会议嗯上半年呢嗯大家 嗯待会先呃说一下各个岗位的上半年的情况因为毕竟我们这个物业跟其他物业不一样我们是全国一级资质的",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 230400,
+      "text": "上半年的一些情况以及下半年怎么做然后接下来由我们的主管来主持一下这场会议嗯上半年呢嗯大家",
+      "language": "<|zh|>"
+    },
+    {
+      "startFrame": 230400,
+      "frames": 168861,
+      "text": "嗯待会先呃说一下各个岗位的上半年的情况因为毕竟我们这个物业跟其他物业不一样我们是全国一级资质的",
+      "language": "<|zh|>"
+    }
+  ],
+  "seconds": 2.9728109999996377,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

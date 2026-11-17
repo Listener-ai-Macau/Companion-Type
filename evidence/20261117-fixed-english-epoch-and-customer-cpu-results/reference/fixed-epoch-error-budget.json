@@ -1,0 +1,48 @@
+{
+  "state": "FINAL_FIXED_EPOCH_ERROR_BUDGET_DIAGNOSIS_SCORE_UNCHANGED",
+  "at": "2026-11-17T22:07:40.803976+08:00",
+  "baselineErrors": 123,
+  "candidateErrors": 118,
+  "referenceWords": 709,
+  "operations": {
+    "baseline": {
+      "substitutions": 56,
+      "deletions": 46,
+      "insertions": 21
+    },
+    "candidate": {
+      "substitutions": 59,
+      "deletions": 39,
+      "insertions": 20
+    }
+  },
+  "meetings": [
+    {
+      "meeting": "EN2001a",
+      "referenceWords": 419,
+      "baselineErrors": 71,
+      "candidateErrors": 64,
+      "priorMossErrors": 73
+    },
+    {
+      "meeting": "ES2003b",
+      "referenceWords": 290,
+      "baselineErrors": 52,
+      "candidateErrors": 54,
+      "priorMossErrors": 51
+    }
+  ],
+  "improvedClips": 6,
+  "worsenedClips": 4,
+  "unchangedClips": 2,
+  "furtherErrorsToRemoveForFivePercent": 83,
+  "furtherErrorsToRemoveForTwoPercent": 104,
+  "admissionPassed": false,
+  "decision": "Reject and retain this fixed one-epoch recipe; no further epoch/LR/checkpoint grid and no full-source expansion of this rejected candidate.",
+  "newInference": 0,
+  "newTrainingUpdates": 0,
+  "originalReferencesUnchanged": true,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

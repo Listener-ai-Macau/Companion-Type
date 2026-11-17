@@ -1,0 +1,75 @@
+{
+  "at": "2026-11-17T17:23:45+08:00",
+  "state": "ONE_ENGLISH_ACCURACY_REFERENCE_PINNED_METADATA_ONLY_NO_MODEL_EXECUTION",
+  "repository": "ibm-granite/granite-speech-4.1-2b",
+  "revision": "823ca793aa49925d4eb2e758709b7f2c98513e8e",
+  "licenseIdentifier": "apache-2.0",
+  "apiSnapshotSha256": "b45fe70e74915bbd12cd1504fb6ff31149a62692de6b86c733f68be0397ea793",
+  "files": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\config.json",
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/config.json",
+      "bytes": 2276,
+      "sha256": "cd1d45c8f93ea1b1c92efd5dbdeb134406cb28c8510a7c71d9b78a854d299691"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\model.safetensors.index.json",
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/model.safetensors.index.json",
+      "bytes": 84396,
+      "sha256": "dec67acdc06e74d87650a54a4b5fbb07bfcdb4ed9fd1b95edef8651f5d64599b"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\preprocessor_config.json",
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/preprocessor_config.json",
+      "bytes": 336,
+      "sha256": "382a6f26300937721969b01909c96c2e519620b6781f7b45cb8b2e348a932d87"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\processor_config.json",
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/processor_config.json",
+      "bytes": 80,
+      "sha256": "13edc723022827cc3620ba2e2b4bcf52287b365d77e60a31227f0a4b7dea5f9c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\README.md",
+      "url": "https://huggingface.co/ibm-granite/granite-speech-4.1-2b/resolve/823ca793aa49925d4eb2e758709b7f2c98513e8e/README.md",
+      "bytes": 20185,
+      "sha256": "33eaacb2b553a130c58b1131886617e10818a283d8921cfc3b0bcabeb483cb23"
+    }
+  ],
+  "architecture": [
+    "GraniteSpeechForConditionalGeneration"
+  ],
+  "modelType": "granite_speech",
+  "publishedDtype": "bfloat16",
+  "totalCheckpointTensorBytes": 4626414392,
+  "checkpointShards": [
+    "model-00001-of-00003.safetensors",
+    "model-00002-of-00003.safetensors",
+    "model-00003-of-00003.safetensors"
+  ],
+  "processorClass": "GraniteSpeechProcessor",
+  "existingTransformersImplementationFiles": [
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\modeling_granite_speech.py",
+      "exists": true,
+      "sha256": "6dfbc64376f10be0530e1b605bf1ef6f7d5ea3261b43d9b8c21e1feeb3ca6fa7"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\configuration_granite_speech.py",
+      "exists": true,
+      "sha256": "52d7934e5abac605684b2abefd54112cde00f770e5b1a2a98673eedb313dd4dd"
+    }
+  ],
+  "referenceFrameworkDeclaredByPublisher": "Native Transformers and llama.cpp, per pinned README. Existence of source does not prove the new checkpoint runs unchanged here.",
+  "privateMemoryLimitBytes": 2147483648,
+  "minimumAvailableRamBytes": 3414499000,
+  "admission": "Check dtype/parameter handling, audio coverage and actual memory with an original fixed clip before any all-clip run. Do not initialize GPU or implement a custom engine port during metadata inspection.",
+  "largeWeightsDownloaded": false,
+  "remotePythonExecuted": false,
+  "torchImported": false,
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false
+}

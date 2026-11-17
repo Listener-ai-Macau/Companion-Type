@@ -1,0 +1,28 @@
+{
+  "id": "ES2003b-seq-005",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 476000,
+  "audioSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+  "pcmSha256": "ec8c4c16829d1d95404cb3fd3fcd8ee32cc310edaaf7b8901d562a90696b04e7",
+  "text": "in remote song training for you it's bit impractical to have just voice recognition by so if you can have voice recognition and the regular remote but imagine you got rid of the regular remote part then you can design the remote to look any you want it to go because there no restrictions on physical size or shape it it could be as fancy as you want to be you know it could be like a lot something like that something weird like that as long as the voice recognition works that's fine",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 240000,
+      "text": "in remote song training for you it's bit impractical to have just voice recognition by so if you can have voice recognition and the regular remote but imagine you got rid of the regular remote part then you can design the remote to look any you want it to go",
+      "language": "<|en|>"
+    },
+    {
+      "startFrame": 240000,
+      "frames": 236000,
+      "text": "because there no restrictions on physical size or shape it it could be as fancy as you want to be you know it could be like a lot something like that something weird like that as long as the voice recognition works that's fine",
+      "language": "<|en|>"
+    }
+  ],
+  "seconds": 3.1894171000021743,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

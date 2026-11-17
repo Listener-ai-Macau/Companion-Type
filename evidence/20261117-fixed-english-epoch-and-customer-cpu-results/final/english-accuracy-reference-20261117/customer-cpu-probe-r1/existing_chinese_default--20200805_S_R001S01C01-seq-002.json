@@ -1,0 +1,28 @@
+{
+  "id": "20200805_S_R001S01C01-seq-002",
+  "profile": "existing_chinese_default",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 347300,
+  "audioSha256": "c71881acc5ca1293b41190421f61f8af4106d1acbe9a3f216aca263e66cbe130",
+  "pcmSha256": "916d8a53c3e18b5a92b2aa282099ce93c78fc61d7410ed88db72934b546b626e",
+  "text": "那些想要去当空乘的或者说是动车动车这个动保他们最后没有选上的就是最后有好大一部分分咱咱们这现在门口站岗的这个保安呢其实是 很重要的因为大家在往往的咱们小区嗯大门口守着是一条大路是全是是是去一条主路",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 224000,
+      "text": "那些想要去当空乘的或者说是动车动车这个动保他们最后没有选上的就是最后有好大一部分分咱咱们这现在门口站岗的这个保安呢其实是",
+      "language": ""
+    },
+    {
+      "startFrame": 224000,
+      "frames": 123300,
+      "text": "很重要的因为大家在往往的咱们小区嗯大门口守着是一条大路是全是是是去一条主路",
+      "language": ""
+    }
+  ],
+  "seconds": 1.7436315000086324,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

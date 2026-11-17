@@ -1,0 +1,22 @@
+{
+  "id": "ES2003b-seq-000",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 192800,
+  "audioSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+  "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92",
+  "text": "just put on the on the youll find you should find that there's a project link",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 192800,
+      "text": "just put on the on the youll find you should find that there's a project link",
+      "language": "<|en|>"
+    }
+  ],
+  "seconds": 1.5835290000104578,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

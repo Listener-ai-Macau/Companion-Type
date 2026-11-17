@@ -1,0 +1,12 @@
+{
+  "state": "TERMINAL_BEFORE_NATIVE_FRONTEND_COMPLETED",
+  "exitCode": 1,
+  "output": "OpenBLAS error: Memory allocation still failed after 10 retries, giving up. (4lines)",
+  "noPythonFinallyReceipt": true,
+  "lastStateFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r5\\state.json",
+  "lastPersistedPrivatePeakBytes": 488497152,
+  "actualTerminalPrivatePeakUnknown": true,
+  "pretrainedNeuralCallsCompleted": 0,
+  "trainingUpdates": 0,
+  "decision": "End this ROCm-runtime CPU execution path; use matching officialCPU Torch once, keeping all limits and original model/profile."
+}

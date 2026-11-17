@@ -1,0 +1,4 @@
+C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\tdt_selected_loss_20261116.py:122: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at B:\src\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:837.)
+  assert abs(float(dense)-expected)<1e-5 and torch.allclose(dense,selected,atol=1e-6,rtol=1e-6)
+W1117 20:14:01.541000 20976 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.

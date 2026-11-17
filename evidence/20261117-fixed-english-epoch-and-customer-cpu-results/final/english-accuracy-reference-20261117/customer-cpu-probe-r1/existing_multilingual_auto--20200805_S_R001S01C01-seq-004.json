@@ -1,0 +1,28 @@
+{
+  "id": "20200805_S_R001S01C01-seq-004",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 456807,
+  "audioSha256": "3294e64009f3fd81af0ad2afb0949bb97ce215601aa9ffc0914ea2c1cda7b2a7",
+  "pcmSha256": "bd9e80cc5752015b0c405264aac434fb7b003c222e5e74eb98b5dcaa97d044d8",
+  "text": "或者说根本就不让他萌芽这是我们的工作的目的这才是我们收费或者说我们的金牌的为什么是金牌我们为什么是一级的资质为什么人家要要掏避别人小区 贵一倍的物业费接受我们的服务他们是愿意的是还有宠物方面我也就是提醒各个业主都注意一下安全不要让他们到处乱跑",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 256000,
+      "text": "或者说根本就不让他萌芽这是我们的工作的目的这才是我们收费或者说我们的金牌的为什么是金牌我们为什么是一级的资质为什么人家要要掏避别人小区",
+      "language": "<|zh|>"
+    },
+    {
+      "startFrame": 256000,
+      "frames": 200807,
+      "text": "贵一倍的物业费接受我们的服务他们是愿意的是还有宠物方面我也就是提醒各个业主都注意一下安全不要让他们到处乱跑",
+      "language": "<|zh|>"
+    }
+  ],
+  "seconds": 3.0552334999956656,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

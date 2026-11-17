@@ -1,0 +1,315 @@
+{
+  "referenceWords": 709,
+  "baselineErrors": 123,
+  "candidateErrors": 118,
+  "baselineWer": 0.17348377997179126,
+  "candidateWer": 0.16643159379407615,
+  "maximumErrorsForThisPairedAdmission": 98,
+  "relativeErrorReductionVsSameProfileBaseline": 0.04065040650406504,
+  "meetings": [
+    {
+      "meeting": "EN2001a",
+      "referenceWords": 419,
+      "baselineErrors": 71,
+      "candidateErrors": 64,
+      "priorMossErrors": 73
+    },
+    {
+      "meeting": "ES2003b",
+      "referenceWords": 290,
+      "baselineErrors": 52,
+      "candidateErrors": 54,
+      "priorMossErrors": 51
+    }
+  ],
+  "advanceToCompleteSources": false,
+  "englishFivePercentFloorPassedOnThisExposedSubset": false,
+  "englishTwoPercentTargetPassedOnThisExposedSubset": false,
+  "state": "FIXED_ONE_EPOCH_ENGLISH_ADAPTATION_REJECT_PAIRED_ADMISSION_NO_GRID",
+  "at": "2026-11-17T22:04:10+08:00",
+  "cases": [
+    {
+      "id": "EN2001a-a2-000",
+      "meeting": "EN2001a",
+      "referenceWords": 28,
+      "baselineErrors": 5,
+      "candidateErrors": 4,
+      "priorMossErrors": 4,
+      "priorQwenErrors": 5,
+      "baselineOperations": {
+        "substitutions": 2,
+        "deletions": 3,
+        "insertions": 0
+      },
+      "candidateOperations": {
+        "substitutions": 2,
+        "deletions": 1,
+        "insertions": 1
+      }
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "meeting": "EN2001a",
+      "referenceWords": 107,
+      "baselineErrors": 8,
+      "candidateErrors": 7,
+      "priorMossErrors": 8,
+      "priorQwenErrors": 10,
+      "baselineOperations": {
+        "substitutions": 3,
+        "deletions": 5,
+        "insertions": 0
+      },
+      "candidateOperations": {
+        "substitutions": 4,
+        "deletions": 3,
+        "insertions": 0
+      }
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "meeting": "EN2001a",
+      "referenceWords": 66,
+      "baselineErrors": 15,
+      "candidateErrors": 12,
+      "priorMossErrors": 10,
+      "priorQwenErrors": 13,
+      "baselineOperations": {
+        "substitutions": 5,
+        "deletions": 9,
+        "insertions": 1
+      },
+      "candidateOperations": {
+        "substitutions": 7,
+        "deletions": 4,
+        "insertions": 1
+      }
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "meeting": "EN2001a",
+      "referenceWords": 87,
+      "baselineErrors": 20,
+      "candidateErrors": 19,
+      "priorMossErrors": 12,
+      "priorQwenErrors": 23,
+      "baselineOperations": {
+        "substitutions": 13,
+        "deletions": 7,
+        "insertions": 0
+      },
+      "candidateOperations": {
+        "substitutions": 12,
+        "deletions": 7,
+        "insertions": 0
+      }
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "meeting": "EN2001a",
+      "referenceWords": 94,
+      "baselineErrors": 8,
+      "candidateErrors": 6,
+      "priorMossErrors": 14,
+      "priorQwenErrors": 10,
+      "baselineOperations": {
+        "substitutions": 8,
+        "deletions": 0,
+        "insertions": 0
+      },
+      "candidateOperations": {
+        "substitutions": 6,
+        "deletions": 0,
+        "insertions": 0
+      }
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "meeting": "EN2001a",
+      "referenceWords": 37,
+      "baselineErrors": 15,
+      "candidateErrors": 16,
+      "priorMossErrors": 25,
+      "priorQwenErrors": 20,
+      "baselineOperations": {
+        "substitutions": 5,
+        "deletions": 5,
+        "insertions": 5
+      },
+      "candidateOperations": {
+        "substitutions": 7,
+        "deletions": 4,
+        "insertions": 5
+      }
+    },
+    {
+      "id": "ES2003b-seq-000",
+      "meeting": "ES2003b",
+      "referenceWords": 26,
+      "baselineErrors": 6,
+      "candidateErrors": 6,
+      "priorMossErrors": 6,
+      "priorQwenErrors": 7,
+      "baselineOperations": {
+        "substitutions": 1,
+        "deletions": 1,
+        "insertions": 4
+      },
+      "candidateOperations": {
+        "substitutions": 1,
+        "deletions": 1,
+        "insertions": 4
+      }
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "meeting": "ES2003b",
+      "referenceWords": 103,
+      "baselineErrors": 9,
+      "candidateErrors": 10,
+      "priorMossErrors": 7,
+      "priorQwenErrors": 12,
+      "baselineOperations": {
+        "substitutions": 0,
+        "deletions": 9,
+        "insertions": 0
+      },
+      "candidateOperations": {
+        "substitutions": 1,
+        "deletions": 8,
+        "insertions": 1
+      }
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "meeting": "ES2003b",
+      "referenceWords": 31,
+      "baselineErrors": 11,
+      "candidateErrors": 11,
+      "priorMossErrors": 11,
+      "priorQwenErrors": 12,
+      "baselineOperations": {
+        "substitutions": 7,
+        "deletions": 3,
+        "insertions": 1
+      },
+      "candidateOperations": {
+        "substitutions": 4,
+        "deletions": 6,
+        "insertions": 1
+      }
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "meeting": "ES2003b",
+      "referenceWords": 75,
+      "baselineErrors": 6,
+      "candidateErrors": 7,
+      "priorMossErrors": 8,
+      "priorQwenErrors": 9,
+      "baselineOperations": {
+        "substitutions": 4,
+        "deletions": 1,
+        "insertions": 1
+      },
+      "candidateOperations": {
+        "substitutions": 4,
+        "deletions": 1,
+        "insertions": 2
+      }
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "meeting": "ES2003b",
+      "referenceWords": 38,
+      "baselineErrors": 8,
+      "candidateErrors": 9,
+      "priorMossErrors": 4,
+      "priorQwenErrors": 6,
+      "baselineOperations": {
+        "substitutions": 5,
+        "deletions": 3,
+        "insertions": 0
+      },
+      "candidateOperations": {
+        "substitutions": 7,
+        "deletions": 2,
+        "insertions": 0
+      }
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "meeting": "ES2003b",
+      "referenceWords": 17,
+      "baselineErrors": 12,
+      "candidateErrors": 11,
+      "priorMossErrors": 15,
+      "priorQwenErrors": 14,
+      "baselineOperations": {
+        "substitutions": 3,
+        "deletions": 0,
+        "insertions": 9
+      },
+      "candidateOperations": {
+        "substitutions": 4,
+        "deletions": 2,
+        "insertions": 5
+      }
+    }
+  ],
+  "evaluatedCheckpoint": {
+    "file": "step-00457-cd738cb0a797.safetensors",
+    "sha256": "a03e256e0d7b27759b5cfbfc95417e8bcae2bddb1613f30de2d38e050c14e1c5",
+    "receiptFile": "step-00457-cd738cb0a797.json",
+    "receiptSha256": "4d7cfc4021228b2f72540e3833f193d83c8ce6cc08915577746730b4577b5489",
+    "completedExamples": 1828,
+    "optimizerUpdates": 457,
+    "orderSha256": "62a3eb5881516a75faca3be551af4ef19a85f7b6d0b4ada08aab35dd6294c371",
+    "frozenDigest": "eeaaf482a673c635c8e5ad129202f2f1443ea335f371d7b4a0bd4baee38a62c2",
+    "preflightOnly": false
+  },
+  "trainingExamples": 1828,
+  "candidateOptimizerUpdates": 457,
+  "protocolSha256": "46b0e3e8f60e5a2e88f86b4d311347a8cf65c2dbb258194d77c85125b0122d29",
+  "controlSha256": "a8bc41c03f1c92b323d655996cba2fbb4485909ea48040f42b5814a5b1f72b68",
+  "scorerSha256": "77e5d041e618cd371b7565dfc66b84832dfb52a92ab8a7fd3fa79e5c7a322a1a",
+  "baselineStateSha256": "c16704fb52b692a449bbd65daf824572c13da1486e2b3f85731d26852d60c8a3",
+  "validationStateSha256": "4c69bc2caa0770cf967a7a1f34a7a366bf32a938b625854f2178c65765ae044f",
+  "admissionGate": {
+    "referenceWords": 709,
+    "maximumEnglishErrors": 99,
+    "minimumRelativeErrorReductionVsSameProfileBaseline": 0.2,
+    "eachMeetingAtMostSameProfileAndPriorMossErrors": true,
+    "actionIfPass": "Complete-source validation only; no deployment, no product qualification",
+    "actionIfFail": "Retain and reject; no learning-rate/epoch/checkpoint/model grid"
+  },
+  "originalReferencesAndNormalizationUnchanged": true,
+  "referencesWereReadByIndependentScorerOnly": true,
+  "validationLabelsUsedForCheckpointSelection": false,
+  "exposedSubsetOnly": true,
+  "heldOutBlindCohortEvaluated": false,
+  "wholeSourceAcceptance": false,
+  "speakerAttributionEvaluated": false,
+  "chineseEngineChanged": false,
+  "automaticBilingualRoutingAccepted": false,
+  "newNeuralCallsByScorer": 0,
+  "parameterUpdatesByScorer": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "limits": {
+    "pid": 17152,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 18321408,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

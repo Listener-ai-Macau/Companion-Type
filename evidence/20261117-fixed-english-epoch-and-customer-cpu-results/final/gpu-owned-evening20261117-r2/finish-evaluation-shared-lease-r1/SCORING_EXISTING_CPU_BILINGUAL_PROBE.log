@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "C:\Users\Billy\Documents\Codex\2026-11-14\xu-y\work\probe_customer_cpu_bilingual_20261117.py", line 50, in <module>
+    from score_sequential_meetings_20261115 import measure
+  File "C:\Users\Billy\Desktop\Denzic\Companion\model-research\src\score_sequential_meetings_20261115.py", line 5, in <module>
+    from rapidfuzz.distance import Levenshtein
+ModuleNotFoundError: No module named 'rapidfuzz'

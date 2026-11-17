@@ -1,0 +1,59 @@
+{
+  "state": "OWNED_TDT_PHASE_COMPLETE",
+  "at": "2026-11-17T20:12:25.302826+08:00",
+  "exitCode": 0,
+  "watchdogReason": null,
+  "pid": 19028,
+  "createdAt": 1794917543.2327187,
+  "workerIdentity": {
+    "pid": 9680,
+    "createdAt": 1794917543.2487297,
+    "command": [
+      "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\owned_probe.py",
+      "--protocol",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\protocol.json",
+      "--phase",
+      "baseline",
+      "--run",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\run"
+    ],
+    "launcherPid": 19028
+  },
+  "phase": "baseline",
+  "stateSelection": {
+    "selectedFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\run\\baseline\\state.json",
+    "sha256": "2c74c404569df37174eed80eec7cfbbdf7128c076c5d2f78bd033e079c0963c7",
+    "usedPrevious": false,
+    "primaryFailures": [],
+    "originalCorruptBytesPreserved": true
+  },
+  "stateReadError": "psutil.NoSuchProcess(pid=9680, msg='process PID not found')",
+  "triggeringCpuTemperature": null,
+  "parameterUpdatesThisProcess": 0,
+  "candidateOptimizerUpdates": 0,
+  "preflightParameterUpdates": 0,
+  "completedTrainingExamples": 0,
+  "countsUnknown": false,
+  "observedWorkerState": "LIVE_OWNED_VENV_PROBE",
+  "observedAt": "2026-11-17T20:12:23.285910+08:00",
+  "countsAreLastPersistedObservationNotUnloggedCrashInstant": true,
+  "limits": {
+    "pid": 1492,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 23842816,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "cannotGuaranteeGpuDriverRecovery": true,
+  "noAutomaticRetry": true
+}

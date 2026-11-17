@@ -1,0 +1,20 @@
+{
+  "state": "LOCAL_TRAINING_PROGRESS_PAGE_SOURCE_CHECKPOINT",
+  "parent": "f53f2d01d16e69b11c2642e345e740702ad4ffa7",
+  "commit": "ac1c36e4bb56aa0e580a91e730f48b43216e7ca1",
+  "files": [
+    "src/app.js",
+    "src/style.css",
+    "src/handbook.json",
+    "tools/model_progress.py"
+  ],
+  "hostingOrRemotePush": false,
+  "generatedDistStaged": false,
+  "qa": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-training-r1\\result.json",
+  "sourceSha256": {
+    "src/app.js": "5a5070d79f6e09344e4609125b844dc094a11cfb53b9c33de6918a094ab428f9",
+    "src/style.css": "36eb27e0945c7ecee05cdf7ae67b4ea024a5f6430aed45be4ec9c10d8a76fb9f",
+    "src/handbook.json": "7b6733b5a4fa2c2aaae8ddf0e6d396378b9dbea651f4b389f1755fed6d61bd65",
+    "tools/model_progress.py": "aef9fc4e1a77958009d3ab4eb45002a4bb9c6795bedd97d1bba5a63a6d6cf322"
+  }
+}

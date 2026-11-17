@@ -1,0 +1,54 @@
+{
+  "state": "ACQUIRING_SINGLE_EXISTING_PARakeet_CPU_EXPORT",
+  "revision": "ed5d745623472f97cfc2e6c2916ee248798fc5a8",
+  "files": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\parakeet-v3-int8-cpu-official20261117\\encoder.int8.onnx",
+      "bytes": 652282294,
+      "sha256": "1afbe69c1ffdabee94755f42e4daf1d93549131a3da11356bda84fcef0f2c479",
+      "sourceUrl": "https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/resolve/ed5d745623472f97cfc2e6c2916ee248798fc5a8/encoder.int8.onnx"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\parakeet-v3-int8-cpu-official20261117\\decoder.int8.onnx",
+      "bytes": 11845274,
+      "sha256": "0222a86147299d4dee90edf95b6d13827edb42ad8b7c9cf0b2582f030937c0b5",
+      "sourceUrl": "https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/resolve/ed5d745623472f97cfc2e6c2916ee248798fc5a8/decoder.int8.onnx"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\parakeet-v3-int8-cpu-official20261117\\joiner.int8.onnx",
+      "bytes": 6355277,
+      "sha256": "cbd02f3696e9944970111fb439d9c3fd365a80374565f13f2b9c7007d253fc98",
+      "sourceUrl": "https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/resolve/ed5d745623472f97cfc2e6c2916ee248798fc5a8/joiner.int8.onnx"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\parakeet-v3-int8-cpu-official20261117\\tokens.txt",
+      "bytes": 93939,
+      "sha256": "d58544679ea4bc6ac563d1f545eb7d474bd6cfa467f0a6e2c1dc1c7d37e3c35d",
+      "sourceUrl": "https://huggingface.co/csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8/resolve/ed5d745623472f97cfc2e6c2916ee248798fc5a8/tokens.txt"
+    }
+  ],
+  "newInference": 0,
+  "newTrainingUpdates": 0,
+  "failedAdaptedWeightsIncluded": false,
+  "trainingCandidatePromoted": false,
+  "qualityQualified": false,
+  "activeFile": "tokens.txt",
+  "receivedBytes": 93939,
+  "at": "2026-11-17T22:10:37.003995+08:00",
+  "limits": {
+    "pid": 25392,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 37818368,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

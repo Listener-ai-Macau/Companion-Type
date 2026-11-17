@@ -1,0 +1,59 @@
+{
+  "state": "OWNED_TDT_PHASE_COMPLETE",
+  "at": "2026-11-17T22:04:05.762955+08:00",
+  "exitCode": 0,
+  "watchdogReason": null,
+  "pid": 24376,
+  "createdAt": 1794923985.182916,
+  "workerIdentity": {
+    "pid": 22584,
+    "createdAt": 1794923985.2000725,
+    "command": [
+      "C:\\Users\\Billy\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_domain_adaptation_20261116.py",
+      "--protocol",
+      "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r2\\protocol.json",
+      "--phase",
+      "validate",
+      "--run",
+      "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2"
+    ],
+    "launcherPid": 24376
+  },
+  "phase": "validate",
+  "stateSelection": {
+    "selectedFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\validate\\state.json",
+    "sha256": "4c69bc2caa0770cf967a7a1f34a7a366bf32a938b625854f2178c65765ae044f",
+    "usedPrevious": false,
+    "primaryFailures": [],
+    "originalCorruptBytesPreserved": true
+  },
+  "stateReadError": "psutil.NoSuchProcess(pid=22584, msg='process PID not found')",
+  "triggeringCpuTemperature": null,
+  "parameterUpdatesThisProcess": 0,
+  "candidateOptimizerUpdates": 457,
+  "preflightParameterUpdates": 0,
+  "completedTrainingExamples": 1828,
+  "countsUnknown": false,
+  "observedWorkerState": "COMPLETE_TDT_VALIDATE_12_PENDING_INDEPENDENT_SCORE",
+  "observedAt": "2026-11-17T22:04:00+08:00",
+  "countsAreLastPersistedObservationNotUnloggedCrashInstant": true,
+  "limits": {
+    "pid": 23296,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1458896896,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "cannotGuaranteeGpuDriverRecovery": true,
+  "noAutomaticRetry": true
+}

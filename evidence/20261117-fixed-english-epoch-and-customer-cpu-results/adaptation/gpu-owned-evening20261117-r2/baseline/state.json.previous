@@ -1,0 +1,139 @@
+{
+  "state": "COMPLETE_TDT_BASELINE_12_PENDING_INDEPENDENT_SCORE",
+  "at": "2026-11-17T20:12:29+08:00",
+  "pid": 27584,
+  "binding": {
+    "protocolSha256": "46b0e3e8f60e5a2e88f86b4d311347a8cf65c2dbb258194d77c85125b0122d29",
+    "workerSha256": "3f93174619f57f24f4e9727a24fbf74617808a5f17b675c7ab63c9da6bcba889",
+    "publishedWeightsSha256": "3a2026366188c8c68598edbbff92f8d11590a08e0ae2e6775544e7b07d6a5e11",
+    "dataSha256": "1362f5cbf3c85e9ec6bfb3f76d942728264bfe6c9c3a1436f432293ed81e7696"
+  },
+  "phase": "baseline",
+  "newNeuralCalls": 12,
+  "completed": [
+    {
+      "id": "ES2003b-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\ES2003b-seq-000.json",
+      "sha256": "35631fe85999dfc9e2b04635e6d96b63f030923d5008a6471b1193932c92ec0f"
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\ES2003b-seq-005.json",
+      "sha256": "b8120186138c1d1cdb1887c99d4ba3dc681444c0fdaba0000519b96f18504a91"
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\ES2003b-seq-010.json",
+      "sha256": "47741d1119bd8a7cce780b124c1b4aaefd8d6ef9c585c4856ac83307734a2800"
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\ES2003b-seq-016.json",
+      "sha256": "e9c2e8e25c03dba59ffa721b9a29249c5c681889e403463f4c9e5732747ec2bd"
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\ES2003b-seq-021.json",
+      "sha256": "ae88133d2edb4889a2daa41f9751e75b6ee42af313b8fa8de6b9c22e9d801684"
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\ES2003b-seq-027.json",
+      "sha256": "eea1dcb5802ac5b0c5bde900f975a9b3e4eb5b1703dcceb4a8493efa59c296ab"
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\EN2001a-a2-000.json",
+      "sha256": "cbec170fb07723c65ad985e128f2b6ffed011d137dc6afdf2a87320b8bc8dd4d"
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\EN2001a-a2-023.json",
+      "sha256": "6faa5bcad1d9ee29d5468c02e56e08cfd2e661491fa0153f18955978e9bf00cb"
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\EN2001a-a2-046.json",
+      "sha256": "40c51c69d6d3ce31e2b7b197f4c5b41b53416db387d7b57a0708d490ebc5f248"
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\EN2001a-a2-069.json",
+      "sha256": "af4af2d4500b5e215501d68130d6a82b0c3b98f8a48f9d46c0a10256646ba8b7"
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\EN2001a-a2-092.json",
+      "sha256": "58459e7334d6e2294577709918b240ebb22ff9257e1013eacba96991eb877cf4"
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\baseline\\results\\EN2001a-a2-116.json",
+      "sha256": "32e2407c292db751fd1a9ae400c0f8d328244fde5e1dafe5beedf1e41d2d0557"
+    }
+  ],
+  "parameterUpdates": 0,
+  "candidateOptimizerUpdates": 0,
+  "completedTrainingExamples": 0,
+  "validationReferencesRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "currentOperationBudgetSeconds": 90,
+  "observedAt": "2026-11-17T20:13:25+08:00",
+  "limits": {
+    "pid": 27584,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1443160064,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "presentDevices": [
+    {
+      "FriendlyName": "AMD Radeon RX 6800 XT",
+      "Status": "OK"
+    },
+    {
+      "FriendlyName": "AMD Radeon 780M Graphics",
+      "Status": "OK"
+    }
+  ],
+  "device": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  },
+  "cpuThermalObservation": {
+    "observationOnly": true,
+    "cpuTelemetryAvailable": false,
+    "telemetryError": "RuntimeError('Temperature logger process identity changed')",
+    "taskStartThresholdCelsius": null,
+    "taskStopThresholdCelsius": null,
+    "hardwareOverheatCauseProven": false
+  },
+  "gpu": {
+    "allocatedBytes": 2542846976,
+    "reservedBytes": 2550136832,
+    "peakAllocatedBytes": 2742016000,
+    "peakReservedBytes": 2770337792,
+    "driverFreeBytes": 14294056960,
+    "driverTotalBytes": 17163091968,
+    "systemAvailableBytes": 5607907328
+  },
+  "gpuProfile": {
+    "cudnnEnabled": false,
+    "allocatorFraction": 0.5,
+    "operatorSynchronization": true,
+    "hardGpuUtilizationOrPowerCap": false
+  },
+  "currentId": "EN2001a-a2-116",
+  "currentOperation": "encoder.layers.23.conv.pointwise_conv2"
+}

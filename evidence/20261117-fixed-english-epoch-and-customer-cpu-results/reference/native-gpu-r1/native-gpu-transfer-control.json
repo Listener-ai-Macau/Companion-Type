@@ -1,0 +1,24 @@
+{
+  "state": "PASS_BIT_IDENTICAL_GPU_BF16_STANDARD_AND_STREAMED_WEIGHTS",
+  "transfer": {
+    "state": "PINNED_TENSOR_BYTES_STREAMED_AND_ROUNDTRIP_VERIFIED",
+    "tensorCount": 4,
+    "dataBytesCopied": 560,
+    "maximumTransferChunkBytes": 256,
+    "scratchBytes": 4096,
+    "roundtripBufferBytes": 4096,
+    "roundtripCpuBufferReused": true,
+    "fileSha256": "9ce35ba5131973a2a1c8e8e6536cb3a309d5fa2e1316b1c5065a42575e7ab994",
+    "deviceRoundtripSha256": "9ce35ba5131973a2a1c8e8e6536cb3a309d5fa2e1316b1c5065a42575e7ab994",
+    "selectedSourceBytesSha256": "53f3c74a3acc2753045bc26edcfcbe9f9277e67b50ef2726ef283f7f0675b701",
+    "selectedDeviceBytesSha256": "53f3c74a3acc2753045bc26edcfcbe9f9277e67b50ef2726ef283f7f0675b701",
+    "selectedPrefixes": null,
+    "sourceTensorCount": 4,
+    "skippedTensorCount": 0,
+    "targetDevice": "cuda:1",
+    "mmapUsed": false,
+    "wholeCpuStateDictCreated": false,
+    "seconds": 0.009772400007932447
+  },
+  "maxAbsDifference": 0.0
+}

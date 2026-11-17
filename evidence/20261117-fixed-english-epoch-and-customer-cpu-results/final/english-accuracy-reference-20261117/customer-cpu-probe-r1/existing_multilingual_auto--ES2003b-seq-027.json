@@ -1,0 +1,22 @@
+{
+  "id": "ES2003b-seq-027",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 162401,
+  "audioSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+  "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+  "text": "i'm pointing at my laptop the fashion into real action and such so this is that",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 162401,
+      "text": "i'm pointing at my laptop the fashion into real action and such so this is that",
+      "language": "<|en|>"
+    }
+  ],
+  "seconds": 0.7405678000068292,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

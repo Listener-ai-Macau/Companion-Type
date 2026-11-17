@@ -1,0 +1,28 @@
+{
+  "id": "20200709_L_R002S01C01-seq-016",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 473887,
+  "audioSha256": "d08df775867bd3aeb82b4e24ed7a14488dc935c46169e5e54c0602c641f5a090",
+  "pcmSha256": "76ef981586fce2f41b31b1ca68a7a72bb68e3116e1181b9648b0c56a01bd2231",
+  "text": "所以我告诉我每一个保洁人员我们的工作其实很重要我们就是什么我们就是这个健身中心的美容师我们给他在做美容如果我们这个工作做的不到位的话 那我们就再给他抹黑了所以他们都知道自己的工作非常重要所以每个人的积性还是蛮高嗯好不行我这边这个情况是这样那咱们来听一下前台这边下半年的计划",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 240000,
+      "text": "所以我告诉我每一个保洁人员我们的工作其实很重要我们就是什么我们就是这个健身中心的美容师我们给他在做美容如果我们这个工作做的不到位的话",
+      "language": "<|zh|>"
+    },
+    {
+      "startFrame": 240000,
+      "frames": 233887,
+      "text": "那我们就再给他抹黑了所以他们都知道自己的工作非常重要所以每个人的积性还是蛮高嗯好不行我这边这个情况是这样那咱们来听一下前台这边下半年的计划",
+      "language": "<|zh|>"
+    }
+  ],
+  "seconds": 3.4560999999957858,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

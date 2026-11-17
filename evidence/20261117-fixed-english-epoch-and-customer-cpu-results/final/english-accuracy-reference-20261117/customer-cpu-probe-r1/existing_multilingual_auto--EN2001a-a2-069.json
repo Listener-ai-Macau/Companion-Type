@@ -1,0 +1,28 @@
+{
+  "id": "EN2001a-a2-069",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 476000,
+  "audioSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+  "pcmSha256": "01439b3125f9e794a9ffae891fd0cccc470ae701397a2b889487dc87d166bb39",
+  "text": "i mean there's no guarantee that anything stays there but overnight it' will stay and i think the temps usually have but that would have to be the temp directory of the ma unique h intodirecty of ssh yeah i can do it from that session i can compress it from a remote session and that see in the same session yeah they they probably hate you for doing it",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 268800,
+      "text": "i mean there's no guarantee that anything stays there but overnight it' will stay and i think the temps usually have but that would have to be the temp directory of the ma unique h intodirecty of ssh",
+      "language": "<|en|>"
+    },
+    {
+      "startFrame": 268800,
+      "frames": 207200,
+      "text": "yeah i can do it from that session i can compress it from a remote session and that see in the same session yeah they they probably hate you for doing it",
+      "language": "<|en|>"
+    }
+  ],
+  "seconds": 2.515886399996816,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

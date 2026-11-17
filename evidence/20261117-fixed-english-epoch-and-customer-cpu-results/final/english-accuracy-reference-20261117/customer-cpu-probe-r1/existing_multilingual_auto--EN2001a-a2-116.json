@@ -1,0 +1,22 @@
+{
+  "id": "EN2001a-a2-116",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 289920,
+  "audioSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+  "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f",
+  "text": "once we doing",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 289920,
+      "text": "once we doing",
+      "language": "<|nospeech|>"
+    }
+  ],
+  "seconds": 1.8661587000096915,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

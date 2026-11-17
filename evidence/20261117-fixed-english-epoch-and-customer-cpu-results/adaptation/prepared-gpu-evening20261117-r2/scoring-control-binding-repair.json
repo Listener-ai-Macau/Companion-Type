@@ -1,0 +1,31 @@
+{
+  "state": "PASS_ACTIVE_TRAINING_PROTOCOL_AND_SCORER_INPUT_BINDINGS",
+  "changes": [
+    {
+      "before": {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\protocol.json",
+        "sha256": "005c192a84e288e339c919f34934f2681072562fa5aa3da28262c9c3ffc8c89d"
+      },
+      "after": {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r2\\protocol.json",
+        "sha256": "46b0e3e8f60e5a2e88f86b4d311347a8cf65c2dbb258194d77c85125b0122d29"
+      }
+    },
+    {
+      "before": {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_domain_adaptation_20261116.py",
+        "sha256": "72595d8aa35ae674f96a1573b5b43b7357151dfc021da78d12bdc5dde3ffac44"
+      },
+      "after": {
+        "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_domain_adaptation_20261116.py",
+        "sha256": "3f93174619f57f24f4e9727a24fbf74617808a5f17b675c7ab63c9da6bcba889"
+      }
+    }
+  ],
+  "sourceControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r2\\scoring-control.json",
+  "verifiedControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r2\\scoring-control-verified.json",
+  "gateUnchanged": true,
+  "originalReferencesUnchanged": true,
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0
+}

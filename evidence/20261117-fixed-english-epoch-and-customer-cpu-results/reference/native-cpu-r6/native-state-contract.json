@@ -1,0 +1,42 @@
+{
+  "state": "PASS_ALL_NATIVE_KEYS_SHAPES_AND_OFFICIAL_RENAMINGS",
+  "keys": 954,
+  "parameterCount": 2313141596,
+  "rawTensorBytes": 4626414392,
+  "conversion": [
+    {
+      "sources": [
+        "^language_model.model"
+      ],
+      "targets": [
+        "model.language_model"
+      ]
+    },
+    {
+      "sources": [
+        "^language_model.lm_head"
+      ],
+      "targets": [
+        "lm_head"
+      ]
+    },
+    {
+      "sources": [
+        "^encoder"
+      ],
+      "targets": [
+        "model.encoder"
+      ]
+    },
+    {
+      "sources": [
+        "^projector"
+      ],
+      "targets": [
+        "model.projector"
+      ]
+    }
+  ],
+  "publishedWeightsChanged": false,
+  "trainingUpdates": 0
+}

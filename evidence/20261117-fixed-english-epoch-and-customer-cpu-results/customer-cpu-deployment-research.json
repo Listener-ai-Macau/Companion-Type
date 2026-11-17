@@ -1,0 +1,206 @@
+{
+  "at": "2026-11-17T20:40:37.552241+08:00",
+  "state": "EXISTING_CPU_BILINGUAL_PROBE_SCORED_PRODUCT_ROUTING_EXPORT_AND_QUALIFICATION_OPEN",
+  "ownerQuote": "客户没有独显，也能本地识别中英文会议",
+  "decision": "CPU-only inference is the customer baseline; discreteGPU is optional. Developer trainingGPU dependencies must not be customer prerequisites.",
+  "currentSourceEvidence": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\apps\\windows\\src-tauri\\src\\backend\\transcription\\paraformer_shared.rs",
+      "sha256": "c3cc9b8cd08bf44fc49c30e9d337bad53e84f5650e63733fc3d320566b9b3422",
+      "findings": [
+        "ModelKind::available prefers OfficialParaformer when present, thenSenseVoice, thenlegacyParaformer.",
+        "Runtime provider iscpu and num_threads2; no customerCUDA/ROCm runtime selected.",
+        "SenseVoice language is hard-codedzh; this is a bilingual routing/configuration gap, not proof of the cause of the separate research-model English errors."
+      ]
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\apps\\windows\\src-tauri\\src\\backend\\transcription\\local_paraformer.rs",
+      "sha256": "9864961e2b338a01c8e799d52806d994f579303650b34b41f37d53f4cd388cf3",
+      "findings": [
+        "Separate hash-checked model/runtime assets underAPPDATA/Companion Type/models/local-asr.",
+        "Current prepare downloads the official ChineseParaformer export; model selection is availability/fallback order rather than language-aware dispatch.",
+        "Existing chunk/PCM cache and preserved original audio should be retained during model replacement."
+      ]
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\companion-device-closure055\\apps\\windows\\src-tauri\\src\\backend\\product_settings.rs",
+      "sha256": "68ce1abc848725b11b8a10944475f1236f7467ab32aa845d3b632445c8f83759",
+      "findings": [
+        "Current source default asr_provider islocal-paraformer."
+      ]
+    }
+  ],
+  "localAssetPresenceOnly": [
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\onnxruntime.dll",
+      "bytes": 15394304
+    },
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\onnxruntime_providers_shared.dll",
+      "bytes": 10752
+    },
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\sherpa-onnx-c-api.dll",
+      "bytes": 2741248
+    },
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\ct-transformer-punctuation-zh-en-2024\\model.onnx",
+      "bytes": 294372519
+    },
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\model.int8.onnx",
+      "bytes": 237664716
+    },
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\ready",
+      "bytes": 64
+    },
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\funasr-paraformer-large-zh-2024\\tokens.txt",
+      "bytes": 75756
+    },
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\sherpa-onnx-sense-voice-2024-07-17\\model.int8.onnx",
+      "bytes": 239233841
+    },
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\sherpa-onnx-sense-voice-2024-07-17\\ready",
+      "bytes": 64
+    },
+    {
+      "file": "C:\\Users\\Billy\\AppData\\Roaming\\Companion Type\\models\\local-asr\\sherpa-onnx-sense-voice-2024-07-17\\tokens.txt",
+      "bytes": 315894
+    }
+  ],
+  "actualInstalledBinaryRetested": false,
+  "newCustomerCpuInferencePerformed": true,
+  "newClientBuildOrInstall": false,
+  "primarySources": [
+    {
+      "url": "https://k2-fsa.github.io/sherpa/onnx/pretrained_models/offline-transducer/nemo-transducer-models.html#sherpa-onnx-nemo-parakeet-tdt-0-6b-v3-int8-25-european-languages",
+      "supports": "SameParakeetv3 architecture has maintainedINT8 encoder/decoder/joiner export scripts, CPU provider/2thread examples and a Windows executable path. Published files total about640MiB; this is not processRAM or a benchmark on customer hardware."
+    },
+    {
+      "url": "https://k2-fsa.github.io/sherpa/onnx/sense-voice/index.html",
+      "supports": "SenseVoice supports Chinese/English and WindowsCPU-capable native integration; provides incremental/VAD examples."
+    },
+    {
+      "url": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+      "supports": "Current training base supports25European languages includingEnglish, notMandarin; separateChinese role is necessary. Publisher licenses itCC-BY4.0."
+    },
+    {
+      "url": "https://github.com/k2-fsa/sherpa-onnx/tree/master/scripts/nemo/parakeet-tdt-0.6b-v3",
+      "supports": "Officialproject export-source entry linked from its docs; source retrieval was restricted inwebtool. Do not call the trainedHF-toNeMo/export bridge implemented or verified."
+    }
+  ],
+  "deploymentPath": [
+    "Keep existing verified localChinese path while qualifying the English adaptation; do not replace working defaults with this research candidate.",
+    "Make language selection explicit in the model contract; remove the unconditionalChinese hint where multilingual inference is intended, and validate Chinese/English/code-switch behavior separately.",
+    "After a useful trained quality result, merge exactly its declared final parameter/buffer checkpoint with the pinned factory; export that exact model and compare nativeF32 against exportedF32 before a singleINT8 conversion.",
+    "Reuse the existing nativeONNX CPU runtime; provide versioned hashed assets and retained old model. Product use should not require Python, Torch, CUDA orROCm installation.",
+    "Preserve durable incrementalPCM/intake and offline resume. ThisTDT is an offline model used in simulated incremental segments; do not claim true native token streaming.",
+    "Measure CPU-only latency/RTF/privateRAM and original per-language word/character error rates on the same audio, followed by independent meetings; source-supported feasibility is not customer qualification."
+  ],
+  "unresolved": [
+    "Exact current trainedHF checkpoint export/import bridge and numerical equivalence are unproven.",
+    "Default preferredChinese model and fixedzh SenseVoice configuration do not establish complete bilingual dispatch.",
+    "Existing assets measured on this host only; exact installedDLL1.13.1, integrated incremental intake, longer independent meetings and minimum customer hardware remain unqualified.",
+    "Adapted candidate failed paired admission and is ended; only selected-family base CPU/export parity remains a future diagnostic, with precision and source-weight equivalence unproven."
+  ],
+  "originalGatesRetained": {
+    "perLanguageErrorFloor": 0.05,
+    "target": 0.02,
+    "wholeMeetingPerPersonFactsRequired": true
+  },
+  "noAutomaticCloudUpload": true,
+  "noCustomerRecordingsReadOrUploaded": true,
+  "newNeuralCalls": 80,
+  "newTrainingUpdates": 0,
+  "ongoingEnglishTrainingContinues": true,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "updatedAt": "2026-11-17T22:08:32+08:00",
+  "probe": {
+    "state": "CPU_CUSTOMER_CAPABILITY_PROBE_SCORED_NOT_PRODUCT_QUALIFIED",
+    "summaries": [
+      {
+        "profile": "existing_chinese_default",
+        "language": "Chinese",
+        "cases": 12,
+        "referenceUnits": 1258,
+        "errors": 89,
+        "errorRate": 0.07074721780604133,
+        "seconds": 19.788704900012817,
+        "audioSeconds": 282.29137499999996,
+        "realTimeFactor": 0.07010028166823312,
+        "substitutions": 53,
+        "deletions": 26,
+        "insertions": 10
+      },
+      {
+        "profile": "existing_chinese_default",
+        "language": "English",
+        "cases": 12,
+        "referenceUnits": 709,
+        "errors": 308,
+        "errorRate": 0.43441466854724964,
+        "seconds": 20.739490500011016,
+        "audioSeconds": 265.56006249999996,
+        "realTimeFactor": 0.07809717434454595,
+        "substitutions": 175,
+        "deletions": 117,
+        "insertions": 16
+      },
+      {
+        "profile": "existing_multilingual_auto",
+        "language": "Chinese",
+        "cases": 12,
+        "referenceUnits": 1258,
+        "errors": 94,
+        "errorRate": 0.07472178060413355,
+        "seconds": 31.847396300014225,
+        "audioSeconds": 282.29137499999996,
+        "realTimeFactor": 0.11281746139078543,
+        "substitutions": 47,
+        "deletions": 37,
+        "insertions": 10
+      },
+      {
+        "profile": "existing_multilingual_auto",
+        "language": "English",
+        "cases": 12,
+        "referenceUnits": 709,
+        "errors": 233,
+        "errorRate": 0.32863187588152326,
+        "seconds": 25.458511100019678,
+        "audioSeconds": 265.56006249999996,
+        "realTimeFactor": 0.09586724321553314,
+        "substitutions": 70,
+        "deletions": 161,
+        "insertions": 2
+      }
+    ],
+    "provider": "cpu",
+    "privatePeakBytes": 471470080,
+    "installedClientBinaryTest": false,
+    "originalReferencesUnchanged": true,
+    "finalHoldoutOpened": false,
+    "newInferenceByScorer": 0,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\score.json",
+    "sha256": "ad3db647f5a780c24350c08fb9c6522af1078469e1a6cb53f9465640087767ca",
+    "runtime": "sherpa-onnx1.13.4",
+    "clientPinnedRuntime": "1.13.1",
+    "cpuThreads": 2,
+    "newWeightsDownloaded": false,
+    "clientDefaultChanged": false
+  },
+  "trainingCandidateDecision": {
+    "errors": 118,
+    "referenceWords": 709,
+    "admissionPassed": false,
+    "deployOrExportAdaptedWeights": false
+  },
+  "currentNext": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\week-direction-review-20261117.json"
+}

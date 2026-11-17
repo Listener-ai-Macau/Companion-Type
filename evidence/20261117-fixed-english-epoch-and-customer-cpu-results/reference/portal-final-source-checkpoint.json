@@ -1,0 +1,18 @@
+{
+  "state": "LOCAL_FIXED_EPOCH_AND_CUSTOMER_CPU_PAGE_SOURCE_CHECKPOINT",
+  "parent": "ac1c36e4bb56aa0e580a91e730f48b43216e7ca1",
+  "commit": "7c3b367974f8735d975986bad921bdf3ea274cae",
+  "files": [
+    "src/app.js",
+    "src/handbook.json",
+    "tools/model_progress.py"
+  ],
+  "hostingOrRemotePush": false,
+  "generatedDistStaged": false,
+  "qa": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-final-epoch-cpu-r1\\result.json",
+  "sourceSha256": {
+    "src/handbook.json": "a8ab8ef6f5a0d4dcb0c8cecb787717c56efd814d42d445aa57922940e704b95d",
+    "src/app.js": "a44a16d342a1fd65e7817c43ddd869c33dbff26c42c39666f37bbf39403cb315",
+    "tools/model_progress.py": "2414a95ad393e8fcd104e75e2809bb8a781dc738ce76944e2ce67b3ad53f08ac"
+  }
+}

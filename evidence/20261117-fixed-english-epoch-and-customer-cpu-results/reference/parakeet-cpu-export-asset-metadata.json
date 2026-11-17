@@ -1,0 +1,199 @@
+{
+  "_id": "68a033194fecdee6cf8c83aa",
+  "id": "csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8",
+  "private": false,
+  "pipeline_tag": "automatic-speech-recognition",
+  "library_name": "sherpa-onnx",
+  "tags": [
+    "sherpa-onnx",
+    "onnx",
+    "parakeet",
+    "tdt",
+    "nemo",
+    "automatic-speech-recognition",
+    "bg",
+    "hr",
+    "cs",
+    "da",
+    "nl",
+    "en",
+    "et",
+    "fi",
+    "fr",
+    "de",
+    "el",
+    "hu",
+    "it",
+    "lv",
+    "lt",
+    "mt",
+    "pl",
+    "pt",
+    "ro",
+    "sk",
+    "sl",
+    "es",
+    "sv",
+    "ru",
+    "uk",
+    "base_model:nvidia/parakeet-tdt-0.6b-v3",
+    "base_model:quantized:nvidia/parakeet-tdt-0.6b-v3",
+    "license:cc-by-4.0",
+    "region:us"
+  ],
+  "downloads": 0,
+  "likes": 9,
+  "modelId": "csukuangfj/sherpa-onnx-nemo-parakeet-tdt-0.6b-v3-int8",
+  "author": "csukuangfj",
+  "sha": "ed5d745623472f97cfc2e6c2916ee248798fc5a8",
+  "lastModified": "2026-11-07T05:50:33.000Z",
+  "gated": false,
+  "disabled": false,
+  "model-index": null,
+  "config": {},
+  "cardData": {
+    "license": "cc-by-4.0",
+    "language": [
+      "bg",
+      "hr",
+      "cs",
+      "da",
+      "nl",
+      "en",
+      "et",
+      "fi",
+      "fr",
+      "de",
+      "el",
+      "hu",
+      "it",
+      "lv",
+      "lt",
+      "mt",
+      "pl",
+      "pt",
+      "ro",
+      "sk",
+      "sl",
+      "es",
+      "sv",
+      "ru",
+      "uk"
+    ],
+    "pipeline_tag": "automatic-speech-recognition",
+    "library_name": "sherpa-onnx",
+    "base_model": "nvidia/parakeet-tdt-0.6b-v3",
+    "tags": [
+      "parakeet",
+      "tdt",
+      "onnx",
+      "nemo",
+      "sherpa-onnx"
+    ]
+  },
+  "siblings": [
+    {
+      "rfilename": ".gitattributes",
+      "blobId": "6f2cdb7f33d37dd32beac8847295ee32f41bea53",
+      "size": 1607
+    },
+    {
+      "rfilename": "README.md",
+      "blobId": "c53a4e8f91fcd5988e4b87355693c5a06597d346",
+      "size": 4905
+    },
+    {
+      "rfilename": "decoder.int8.onnx",
+      "blobId": "d551dd304dc5e1b3f6859fdf7eb579e398773e94",
+      "size": 11845274,
+      "lfs": {
+        "sha256": "0222a86147299d4dee90edf95b6d13827edb42ad8b7c9cf0b2582f030937c0b5",
+        "size": 11845274,
+        "pointerSize": 133
+      }
+    },
+    {
+      "rfilename": "encoder.int8.onnx",
+      "blobId": "09763610dc664c2c9929481a1ff144b464c18671",
+      "size": 652282294,
+      "lfs": {
+        "sha256": "1afbe69c1ffdabee94755f42e4daf1d93549131a3da11356bda84fcef0f2c479",
+        "size": 652282294,
+        "pointerSize": 134
+      }
+    },
+    {
+      "rfilename": "joiner.int8.onnx",
+      "blobId": "4948c5ebfdac83144beb084ebeb523b98411d484",
+      "size": 6355277,
+      "lfs": {
+        "sha256": "cbd02f3696e9944970111fb439d9c3fd365a80374565f13f2b9c7007d253fc98",
+        "size": 6355277,
+        "pointerSize": 132
+      }
+    },
+    {
+      "rfilename": "test_wavs/de.wav",
+      "blobId": "00de675dfdc312cee5cc4ba9c063c3ef092d19f3",
+      "size": 121388,
+      "lfs": {
+        "sha256": "36d3c4845b9808a1656a2a2e92d884590e2db94389e6fe559643291ae0cd3710",
+        "size": 121388,
+        "pointerSize": 131
+      }
+    },
+    {
+      "rfilename": "test_wavs/en.wav",
+      "blobId": "ebea278122e9608f621fd8cc95190c8ae6f2a2fe",
+      "size": 184608,
+      "lfs": {
+        "sha256": "148b936b43ce7c546a866e64da059f0458aee2d65e617f16e9d94f06e8d99ed6",
+        "size": 184608,
+        "pointerSize": 131
+      }
+    },
+    {
+      "rfilename": "test_wavs/es.wav",
+      "blobId": "7224f282a3c5645188aa7611b4ab9214ba53ef09",
+      "size": 235052,
+      "lfs": {
+        "sha256": "49fd2cfa4b62db7068143c582b35de9d31ec2733495ece3611105131d21de06c",
+        "size": 235052,
+        "pointerSize": 131
+      }
+    },
+    {
+      "rfilename": "test_wavs/fr.wav",
+      "blobId": "5a7616988a8d0c5f8a9c50a4c73f5af27c20b978",
+      "size": 219180,
+      "lfs": {
+        "sha256": "b59be4349b92d344fb903677165eaf4694025d1ab119c608726ecbcb3164b528",
+        "size": 219180,
+        "pointerSize": 131
+      }
+    },
+    {
+      "rfilename": "tokens.txt",
+      "blobId": "fc43e1c723e262df60b70e1919614417162d1fe2",
+      "size": 93939
+    }
+  ],
+  "spaces": [
+    "k2-fsa/automatic-speech-recognition",
+    "k2-fsa/generate-subtitles-for-videos",
+    "RO-Rtechs/Am-Srt-v1",
+    "walidadebayo/generate-subtitles-for-videos",
+    "Achilles13/automatic-speech-recognition",
+    "Audrey178/automatic-speech-recognition",
+    "hoanglinhn0/SUB-CN-01",
+    "skvsmdarman/automatic-speech-recognition",
+    "nenalinda/generate-subtitles-for-videos",
+    "raiyan8/generate-subtitles-for-videos",
+    "Raju2024/automatic-speech-recognition",
+    "zliyk/automatic-speech-recognition",
+    "mecanisoft/generate-subtitles-for-videos",
+    "esthermariamh/semantic-cover-search"
+  ],
+  "createdAt": "2025-08-16T07:28:25.000Z",
+  "usedStorage": 1341627906
+}

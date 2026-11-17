@@ -1,0 +1,2882 @@
+{
+  "at": "2026-11-17T20:05:51.885866+08:00",
+  "state": "COMPLETED_REFERENCE_ERROR_ATTRIBUTION_ORIGINAL_SCORE_UNCHANGED",
+  "errors": 113,
+  "referenceWords": 709,
+  "wer": 0.15937940761636107,
+  "prior": {
+    "errors": 123,
+    "substitutions": 56,
+    "deletions": 46,
+    "insertions": 21,
+    "seconds": 17.666919599985704
+  },
+  "current": {
+    "substitutions": 34,
+    "deletions": 71,
+    "insertions": 8,
+    "seconds": 164.89263299999584
+  },
+  "deletedWords": [
+    [
+      "yeah",
+      6
+    ],
+    [
+      "a",
+      4
+    ],
+    [
+      "is",
+      3
+    ],
+    [
+      "right",
+      2
+    ],
+    [
+      "that's",
+      2
+    ],
+    [
+      "what",
+      2
+    ],
+    [
+      "um",
+      2
+    ],
+    [
+      "the",
+      2
+    ],
+    [
+      "s",
+      2
+    ],
+    [
+      "just",
+      2
+    ],
+    [
+      "or",
+      1
+    ],
+    [
+      "okay",
+      1
+    ],
+    [
+      "you",
+      1
+    ],
+    [
+      "as",
+      1
+    ],
+    [
+      "oh",
+      1
+    ],
+    [
+      "it",
+      1
+    ],
+    [
+      "plus",
+      1
+    ],
+    [
+      "nice",
+      1
+    ],
+    [
+      "wee",
+      1
+    ],
+    [
+      "design",
+      1
+    ],
+    [
+      "touch",
+      1
+    ],
+    [
+      "in",
+      1
+    ],
+    [
+      "god",
+      1
+    ],
+    [
+      "real",
+      1
+    ],
+    [
+      "reaction",
+      1
+    ],
+    [
+      "and",
+      1
+    ],
+    [
+      "such",
+      1
+    ],
+    [
+      "so",
+      1
+    ],
+    [
+      "slogan",
+      1
+    ],
+    [
+      "hmm",
+      1
+    ],
+    [
+      "was",
+      1
+    ],
+    [
+      "which",
+      1
+    ],
+    [
+      "mm",
+      1
+    ],
+    [
+      "i",
+      1
+    ],
+    [
+      "b",
+      1
+    ],
+    [
+      "m",
+      1
+    ],
+    [
+      "h",
+      1
+    ],
+    [
+      "they'd",
+      1
+    ],
+    [
+      "here",
+      1
+    ],
+    [
+      "also",
+      1
+    ],
+    [
+      "have",
+      1
+    ],
+    [
+      "f",
+      1
+    ],
+    [
+      "it's",
+      1
+    ],
+    [
+      "we",
+      1
+    ],
+    [
+      "are",
+      1
+    ],
+    [
+      "half",
+      1
+    ],
+    [
+      "way",
+      1
+    ],
+    [
+      "through",
+      1
+    ],
+    [
+      "project",
+      1
+    ],
+    [
+      "time",
+      1
+    ],
+    [
+      "table",
+      1
+    ],
+    [
+      "freaks",
+      1
+    ],
+    [
+      "me",
+      1
+    ],
+    [
+      "out",
+      1
+    ]
+  ],
+  "replacementPairs": [
+    {
+      "expected": "deskt",
+      "actual": "is",
+      "count": 1
+    },
+    {
+      "expected": "and",
+      "actual": "the",
+      "count": 1
+    },
+    {
+      "expected": "the",
+      "actual": "new",
+      "count": 1
+    },
+    {
+      "expected": "yeah",
+      "actual": "uh",
+      "count": 1
+    },
+    {
+      "expected": "file",
+      "actual": "fast",
+      "count": 1
+    },
+    {
+      "expected": "save",
+      "actual": "forward",
+      "count": 1
+    },
+    {
+      "expected": "uh",
+      "actual": "um",
+      "count": 1
+    },
+    {
+      "expected": "fraid",
+      "actual": "right",
+      "count": 1
+    },
+    {
+      "expected": "on",
+      "actual": "or",
+      "count": 1
+    },
+    {
+      "expected": "with",
+      "actual": "w",
+      "count": 1
+    },
+    {
+      "expected": "you",
+      "actual": "we",
+      "count": 1
+    },
+    {
+      "expected": "he",
+      "actual": "you're",
+      "count": 1
+    },
+    {
+      "expected": "vir",
+      "actual": "ver",
+      "count": 1
+    },
+    {
+      "expected": "and",
+      "actual": "uh",
+      "count": 1
+    },
+    {
+      "expected": "we",
+      "actual": "you",
+      "count": 1
+    },
+    {
+      "expected": "display",
+      "actual": "displayed",
+      "count": 1
+    },
+    {
+      "expected": "they're",
+      "actual": "they",
+      "count": 1
+    },
+    {
+      "expected": "one",
+      "actual": "one's",
+      "count": 1
+    },
+    {
+      "expected": "do",
+      "actual": "don't",
+      "count": 1
+    },
+    {
+      "expected": "not",
+      "actual": "no",
+      "count": 1
+    },
+    {
+      "expected": "temps",
+      "actual": "temp",
+      "count": 1
+    },
+    {
+      "expected": "off",
+      "actual": "of",
+      "count": 1
+    },
+    {
+      "expected": "you",
+      "actual": "i",
+      "count": 1
+    },
+    {
+      "expected": "and",
+      "actual": "an",
+      "count": 1
+    },
+    {
+      "expected": "it",
+      "actual": "a",
+      "count": 1
+    },
+    {
+      "expected": "wou",
+      "actual": "they",
+      "count": 1
+    },
+    {
+      "expected": "they'd",
+      "actual": "they",
+      "count": 1
+    },
+    {
+      "expected": "that",
+      "actual": "then",
+      "count": 1
+    },
+    {
+      "expected": "or",
+      "actual": "once",
+      "count": 1
+    },
+    {
+      "expected": "say",
+      "actual": "so",
+      "count": 1
+    },
+    {
+      "expected": "i",
+      "actual": "i've",
+      "count": 1
+    },
+    {
+      "expected": "it's",
+      "actual": "of",
+      "count": 1
+    },
+    {
+      "expected": "oh",
+      "actual": "ah",
+      "count": 1
+    },
+    {
+      "expected": "i'm",
+      "actual": "um",
+      "count": 1
+    }
+  ],
+  "insertedWords": [
+    [
+      "we",
+      2
+    ],
+    [
+      "you",
+      1
+    ],
+    [
+      "desk",
+      1
+    ],
+    [
+      "all",
+      1
+    ],
+    [
+      "i",
+      1
+    ],
+    [
+      "see",
+      1
+    ],
+    [
+      "w",
+      1
+    ]
+  ],
+  "explicitFillerDefinition": [
+    "ah",
+    "er",
+    "erm",
+    "hmm",
+    "huh",
+    "mhm",
+    "mm",
+    "uh",
+    "uhh",
+    "uhum",
+    "um"
+  ],
+  "explicitFillerDeletions": 4,
+  "otherDeletions": 67,
+  "errorsIfOnlyTheseFillerDeletionsWereCorrected": 109,
+  "thisIsACounterfactualDiagnosticNotANewScore": true,
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "errors": 7,
+      "operations": [
+        {
+          "operation": "insert",
+          "expected": null,
+          "actual": "you",
+          "referenceContext": [
+            "just",
+            "put",
+            "it",
+            "on"
+          ],
+          "hypothesisContext": [
+            "you",
+            "just",
+            "put",
+            "it"
+          ]
+        },
+        {
+          "operation": "insert",
+          "expected": null,
+          "actual": "desk",
+          "referenceContext": [
+            "it",
+            "on",
+            "the",
+            "deskt",
+            "desktop",
+            "no",
+            "on"
+          ],
+          "hypothesisContext": [
+            "it",
+            "on",
+            "the",
+            "desk",
+            "all",
+            "i",
+            "see"
+          ]
+        },
+        {
+          "operation": "insert",
+          "expected": null,
+          "actual": "all",
+          "referenceContext": [
+            "it",
+            "on",
+            "the",
+            "deskt",
+            "desktop",
+            "no",
+            "on"
+          ],
+          "hypothesisContext": [
+            "on",
+            "the",
+            "desk",
+            "all",
+            "i",
+            "see",
+            "is"
+          ]
+        },
+        {
+          "operation": "insert",
+          "expected": null,
+          "actual": "i",
+          "referenceContext": [
+            "it",
+            "on",
+            "the",
+            "deskt",
+            "desktop",
+            "no",
+            "on"
+          ],
+          "hypothesisContext": [
+            "the",
+            "desk",
+            "all",
+            "i",
+            "see",
+            "is",
+            "desktop"
+          ]
+        },
+        {
+          "operation": "insert",
+          "expected": null,
+          "actual": "see",
+          "referenceContext": [
+            "it",
+            "on",
+            "the",
+            "deskt",
+            "desktop",
+            "no",
+            "on"
+          ],
+          "hypothesisContext": [
+            "desk",
+            "all",
+            "i",
+            "see",
+            "is",
+            "desktop",
+            "no"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "deskt",
+          "actual": "is",
+          "referenceContext": [
+            "it",
+            "on",
+            "the",
+            "deskt",
+            "desktop",
+            "no",
+            "on"
+          ],
+          "hypothesisContext": [
+            "all",
+            "i",
+            "see",
+            "is",
+            "desktop",
+            "no",
+            "on"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "a",
+          "actual": null,
+          "referenceContext": [
+            "project",
+            "documents",
+            "link",
+            "a",
+            "well",
+            "actually",
+            "just"
+          ],
+          "hypothesisContext": [
+            "project",
+            "documents",
+            "link",
+            "well",
+            "actually",
+            "just"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "errors": 4,
+      "operations": [
+        {
+          "operation": "replace",
+          "expected": "and",
+          "actual": "the",
+          "referenceContext": [
+            "and",
+            "the",
+            "remote's",
+            "only"
+          ],
+          "hypothesisContext": [
+            "the",
+            "new",
+            "remote's",
+            "only"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "the",
+          "actual": "new",
+          "referenceContext": [
+            "and",
+            "the",
+            "remote's",
+            "only",
+            "trained"
+          ],
+          "hypothesisContext": [
+            "the",
+            "new",
+            "remote's",
+            "only",
+            "trained"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "or",
+          "actual": null,
+          "referenceContext": [
+            "like",
+            "a",
+            "lollipop",
+            "or",
+            "something",
+            "like",
+            "that"
+          ],
+          "hypothesisContext": [
+            "like",
+            "a",
+            "lollipop",
+            "something",
+            "like",
+            "that",
+            "something"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "okay",
+          "actual": null,
+          "referenceContext": [
+            "that's",
+            "that's",
+            "fine",
+            "okay"
+          ],
+          "hypothesisContext": [
+            "that's",
+            "that's",
+            "fine"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "errors": 9,
+      "operations": [
+        {
+          "operation": "replace",
+          "expected": "yeah",
+          "actual": "uh",
+          "referenceContext": [
+            "yeah",
+            "and",
+            "you",
+            "just"
+          ],
+          "hypothesisContext": [
+            "uh",
+            "and",
+            "just",
+            "click"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "you",
+          "actual": null,
+          "referenceContext": [
+            "yeah",
+            "and",
+            "you",
+            "just",
+            "click",
+            "file"
+          ],
+          "hypothesisContext": [
+            "uh",
+            "and",
+            "just",
+            "click",
+            "fast",
+            "forward"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "file",
+          "actual": "fast",
+          "referenceContext": [
+            "you",
+            "just",
+            "click",
+            "file",
+            "save",
+            "as",
+            "oh"
+          ],
+          "hypothesisContext": [
+            "and",
+            "just",
+            "click",
+            "fast",
+            "forward",
+            "okay",
+            "um"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "save",
+          "actual": "forward",
+          "referenceContext": [
+            "just",
+            "click",
+            "file",
+            "save",
+            "as",
+            "oh",
+            "right"
+          ],
+          "hypothesisContext": [
+            "just",
+            "click",
+            "fast",
+            "forward",
+            "okay",
+            "um",
+            "i'm"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "as",
+          "actual": null,
+          "referenceContext": [
+            "click",
+            "file",
+            "save",
+            "as",
+            "oh",
+            "right",
+            "okay"
+          ],
+          "hypothesisContext": [
+            "click",
+            "fast",
+            "forward",
+            "okay",
+            "um",
+            "i'm",
+            "responsible"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "oh",
+          "actual": null,
+          "referenceContext": [
+            "file",
+            "save",
+            "as",
+            "oh",
+            "right",
+            "okay",
+            "uh"
+          ],
+          "hypothesisContext": [
+            "click",
+            "fast",
+            "forward",
+            "okay",
+            "um",
+            "i'm",
+            "responsible"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "right",
+          "actual": null,
+          "referenceContext": [
+            "save",
+            "as",
+            "oh",
+            "right",
+            "okay",
+            "uh",
+            "right"
+          ],
+          "hypothesisContext": [
+            "click",
+            "fast",
+            "forward",
+            "okay",
+            "um",
+            "i'm",
+            "responsible"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "uh",
+          "actual": "um",
+          "referenceContext": [
+            "oh",
+            "right",
+            "okay",
+            "uh",
+            "right",
+            "i'm",
+            "responsible"
+          ],
+          "hypothesisContext": [
+            "fast",
+            "forward",
+            "okay",
+            "um",
+            "i'm",
+            "responsible",
+            "for"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "right",
+          "actual": null,
+          "referenceContext": [
+            "right",
+            "okay",
+            "uh",
+            "right",
+            "i'm",
+            "responsible",
+            "for"
+          ],
+          "hypothesisContext": [
+            "forward",
+            "okay",
+            "um",
+            "i'm",
+            "responsible",
+            "for",
+            "working"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "errors": 4,
+      "operations": [
+        {
+          "operation": "replace",
+          "expected": "fraid",
+          "actual": "right",
+          "referenceContext": [
+            "spec",
+            "for",
+            "now",
+            "fraid",
+            "to",
+            "say",
+            "um"
+          ],
+          "hypothesisContext": [
+            "spec",
+            "for",
+            "now",
+            "right",
+            "to",
+            "say",
+            "um"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "on",
+          "actual": "or",
+          "referenceContext": [
+            "say",
+            "interactive",
+            "functions",
+            "on",
+            "digital",
+            "or",
+            "cable"
+          ],
+          "hypothesisContext": [
+            "say",
+            "interactive",
+            "functions",
+            "or",
+            "digital",
+            "or",
+            "cable"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "yeah",
+          "actual": null,
+          "referenceContext": [
+            "digital",
+            "or",
+            "cable",
+            "yeah",
+            "i",
+            "would",
+            "say"
+          ],
+          "hypothesisContext": [
+            "digital",
+            "or",
+            "cable",
+            "i",
+            "would",
+            "say",
+            "so"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "it",
+          "actual": null,
+          "referenceContext": [
+            "i",
+            "think",
+            "that",
+            "it",
+            "i",
+            "would",
+            "say"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "that",
+            "i",
+            "would",
+            "say",
+            "that"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "errors": 10,
+      "operations": [
+        {
+          "operation": "delete",
+          "expected": "plus",
+          "actual": null,
+          "referenceContext": [
+            "plus",
+            "that's",
+            "a",
+            "nice"
+          ],
+          "hypothesisContext": [
+            "so",
+            "by",
+            "the",
+            "sounds"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "that's",
+          "actual": null,
+          "referenceContext": [
+            "plus",
+            "that's",
+            "a",
+            "nice",
+            "wee"
+          ],
+          "hypothesisContext": [
+            "so",
+            "by",
+            "the",
+            "sounds"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "a",
+          "actual": null,
+          "referenceContext": [
+            "plus",
+            "that's",
+            "a",
+            "nice",
+            "wee",
+            "design"
+          ],
+          "hypothesisContext": [
+            "so",
+            "by",
+            "the",
+            "sounds"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "nice",
+          "actual": null,
+          "referenceContext": [
+            "plus",
+            "that's",
+            "a",
+            "nice",
+            "wee",
+            "design",
+            "touch"
+          ],
+          "hypothesisContext": [
+            "so",
+            "by",
+            "the",
+            "sounds"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "wee",
+          "actual": null,
+          "referenceContext": [
+            "that's",
+            "a",
+            "nice",
+            "wee",
+            "design",
+            "touch",
+            "yeah"
+          ],
+          "hypothesisContext": [
+            "so",
+            "by",
+            "the",
+            "sounds"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "design",
+          "actual": null,
+          "referenceContext": [
+            "a",
+            "nice",
+            "wee",
+            "design",
+            "touch",
+            "yeah",
+            "so"
+          ],
+          "hypothesisContext": [
+            "so",
+            "by",
+            "the",
+            "sounds"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "touch",
+          "actual": null,
+          "referenceContext": [
+            "nice",
+            "wee",
+            "design",
+            "touch",
+            "yeah",
+            "so",
+            "by"
+          ],
+          "hypothesisContext": [
+            "so",
+            "by",
+            "the",
+            "sounds"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "yeah",
+          "actual": null,
+          "referenceContext": [
+            "wee",
+            "design",
+            "touch",
+            "yeah",
+            "so",
+            "by",
+            "the"
+          ],
+          "hypothesisContext": [
+            "so",
+            "by",
+            "the",
+            "sounds"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "with",
+          "actual": "w",
+          "referenceContext": [
+            "sounds",
+            "of",
+            "it",
+            "with",
+            "what",
+            "we're",
+            "suggesting"
+          ],
+          "hypothesisContext": [
+            "sounds",
+            "of",
+            "it",
+            "w",
+            "what",
+            "we're",
+            "suggesting"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "you",
+          "actual": "we",
+          "referenceContext": [
+            "still",
+            "quite",
+            "open",
+            "you",
+            "could",
+            "go",
+            "for"
+          ],
+          "hypothesisContext": [
+            "still",
+            "quite",
+            "open",
+            "we",
+            "could",
+            "go",
+            "for"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "errors": 12,
+      "operations": [
+        {
+          "operation": "delete",
+          "expected": "what",
+          "actual": null,
+          "referenceContext": [
+            "at",
+            "my",
+            "laptop",
+            "what",
+            "in",
+            "god",
+            "real"
+          ],
+          "hypothesisContext": [
+            "at",
+            "my",
+            "laptop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "in",
+          "actual": null,
+          "referenceContext": [
+            "my",
+            "laptop",
+            "what",
+            "in",
+            "god",
+            "real",
+            "reaction"
+          ],
+          "hypothesisContext": [
+            "at",
+            "my",
+            "laptop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "god",
+          "actual": null,
+          "referenceContext": [
+            "laptop",
+            "what",
+            "in",
+            "god",
+            "real",
+            "reaction",
+            "and"
+          ],
+          "hypothesisContext": [
+            "at",
+            "my",
+            "laptop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "real",
+          "actual": null,
+          "referenceContext": [
+            "what",
+            "in",
+            "god",
+            "real",
+            "reaction",
+            "and",
+            "such"
+          ],
+          "hypothesisContext": [
+            "at",
+            "my",
+            "laptop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "reaction",
+          "actual": null,
+          "referenceContext": [
+            "in",
+            "god",
+            "real",
+            "reaction",
+            "and",
+            "such",
+            "so"
+          ],
+          "hypothesisContext": [
+            "at",
+            "my",
+            "laptop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "and",
+          "actual": null,
+          "referenceContext": [
+            "god",
+            "real",
+            "reaction",
+            "and",
+            "such",
+            "so",
+            "um"
+          ],
+          "hypothesisContext": [
+            "at",
+            "my",
+            "laptop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "such",
+          "actual": null,
+          "referenceContext": [
+            "real",
+            "reaction",
+            "and",
+            "such",
+            "so",
+            "um",
+            "the"
+          ],
+          "hypothesisContext": [
+            "at",
+            "my",
+            "laptop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "so",
+          "actual": null,
+          "referenceContext": [
+            "reaction",
+            "and",
+            "such",
+            "so",
+            "um",
+            "the",
+            "slogan"
+          ],
+          "hypothesisContext": [
+            "at",
+            "my",
+            "laptop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "um",
+          "actual": null,
+          "referenceContext": [
+            "and",
+            "such",
+            "so",
+            "um",
+            "the",
+            "slogan",
+            "is"
+          ],
+          "hypothesisContext": [
+            "at",
+            "my",
+            "laptop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "the",
+          "actual": null,
+          "referenceContext": [
+            "such",
+            "so",
+            "um",
+            "the",
+            "slogan",
+            "is"
+          ],
+          "hypothesisContext": [
+            "at",
+            "my",
+            "laptop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "slogan",
+          "actual": null,
+          "referenceContext": [
+            "so",
+            "um",
+            "the",
+            "slogan",
+            "is"
+          ],
+          "hypothesisContext": [
+            "at",
+            "my",
+            "laptop"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "is",
+          "actual": null,
+          "referenceContext": [
+            "um",
+            "the",
+            "slogan",
+            "is"
+          ],
+          "hypothesisContext": [
+            "at",
+            "my",
+            "laptop"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "errors": 5,
+      "operations": [
+        {
+          "operation": "delete",
+          "expected": "hmm",
+          "actual": null,
+          "referenceContext": [
+            "hmm",
+            "like",
+            "duplication",
+            "of"
+          ],
+          "hypothesisContext": [
+            "like",
+            "duplication",
+            "of",
+            "effort"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "he",
+          "actual": "you're",
+          "referenceContext": [
+            "and",
+            "um",
+            "yeah",
+            "he",
+            "was",
+            "saying",
+            "that"
+          ],
+          "hypothesisContext": [
+            "and",
+            "um",
+            "yeah",
+            "you're",
+            "saying",
+            "that",
+            "we"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "was",
+          "actual": null,
+          "referenceContext": [
+            "um",
+            "yeah",
+            "he",
+            "was",
+            "saying",
+            "that",
+            "we"
+          ],
+          "hypothesisContext": [
+            "um",
+            "yeah",
+            "you're",
+            "saying",
+            "that",
+            "we",
+            "should"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "which",
+          "actual": null,
+          "referenceContext": [
+            "for",
+            "week",
+            "six",
+            "which",
+            "is"
+          ],
+          "hypothesisContext": [
+            "for",
+            "week",
+            "six"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "is",
+          "actual": null,
+          "referenceContext": [
+            "week",
+            "six",
+            "which",
+            "is"
+          ],
+          "hypothesisContext": [
+            "for",
+            "week",
+            "six"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "errors": 9,
+      "operations": [
+        {
+          "operation": "replace",
+          "expected": "vir",
+          "actual": "ver",
+          "referenceContext": [
+            "just",
+            "like",
+            "make",
+            "vir",
+            "like",
+            "one",
+            "or"
+          ],
+          "hypothesisContext": [
+            "just",
+            "like",
+            "make",
+            "ver",
+            "like",
+            "one",
+            "or"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "a",
+          "actual": null,
+          "referenceContext": [
+            "you",
+            "are",
+            "on",
+            "a",
+            "whole",
+            "document",
+            "uh"
+          ],
+          "hypothesisContext": [
+            "you",
+            "are",
+            "on",
+            "whole",
+            "document",
+            "uh",
+            "whole"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "a",
+          "actual": null,
+          "referenceContext": [
+            "whole",
+            "document",
+            "uh",
+            "a",
+            "whole",
+            "series",
+            "level"
+          ],
+          "hypothesisContext": [
+            "whole",
+            "document",
+            "uh",
+            "whole",
+            "series",
+            "level",
+            "uh"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "and",
+          "actual": "uh",
+          "referenceContext": [
+            "whole",
+            "series",
+            "level",
+            "and",
+            "that",
+            "was",
+            "a"
+          ],
+          "hypothesisContext": [
+            "whole",
+            "series",
+            "level",
+            "uh",
+            "that",
+            "was",
+            "a"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "we",
+          "actual": "you",
+          "referenceContext": [
+            "an",
+            "alternative",
+            "if",
+            "we",
+            "can't",
+            "actually",
+            "load"
+          ],
+          "hypothesisContext": [
+            "an",
+            "alternative",
+            "if",
+            "you",
+            "can't",
+            "actually",
+            "load"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "mm",
+          "actual": null,
+          "referenceContext": [
+            "whole",
+            "thing",
+            "and",
+            "mm",
+            "cause",
+            "also",
+            "like"
+          ],
+          "hypothesisContext": [
+            "whole",
+            "thing",
+            "and",
+            "cause",
+            "also",
+            "like",
+            "even"
+          ]
+        },
+        {
+          "operation": "insert",
+          "expected": null,
+          "actual": "w",
+          "referenceContext": [
+            "whole",
+            "like",
+            "maybe",
+            "i'm",
+            "worrying",
+            "too",
+            "much"
+          ],
+          "hypothesisContext": [
+            "whole",
+            "like",
+            "maybe",
+            "w",
+            "i'm",
+            "worrying",
+            "too"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "display",
+          "actual": "displayed",
+          "referenceContext": [
+            "in",
+            "one",
+            "thing",
+            "display",
+            "because",
+            "actually",
+            "i"
+          ],
+          "hypothesisContext": [
+            "in",
+            "one",
+            "thing",
+            "displayed",
+            "because",
+            "actually"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "i",
+          "actual": null,
+          "referenceContext": [
+            "display",
+            "because",
+            "actually",
+            "i"
+          ],
+          "hypothesisContext": [
+            "displayed",
+            "because",
+            "actually"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "errors": 10,
+      "operations": [
+        {
+          "operation": "delete",
+          "expected": "yeah",
+          "actual": null,
+          "referenceContext": [
+            "be",
+            "difficult",
+            "yeah",
+            "yeah",
+            "i",
+            "know"
+          ],
+          "hypothesisContext": [
+            "be",
+            "difficult",
+            "i",
+            "know",
+            "but",
+            "we"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "yeah",
+          "actual": null,
+          "referenceContext": [
+            "be",
+            "difficult",
+            "yeah",
+            "yeah",
+            "i",
+            "know",
+            "but"
+          ],
+          "hypothesisContext": [
+            "be",
+            "difficult",
+            "i",
+            "know",
+            "but",
+            "we"
+          ]
+        },
+        {
+          "operation": "insert",
+          "expected": null,
+          "actual": "we",
+          "referenceContext": [
+            "i",
+            "know",
+            "but",
+            "uh",
+            "b",
+            "i",
+            "guess"
+          ],
+          "hypothesisContext": [
+            "i",
+            "know",
+            "but",
+            "we",
+            "we",
+            "uh",
+            "i"
+          ]
+        },
+        {
+          "operation": "insert",
+          "expected": null,
+          "actual": "we",
+          "referenceContext": [
+            "i",
+            "know",
+            "but",
+            "uh",
+            "b",
+            "i",
+            "guess"
+          ],
+          "hypothesisContext": [
+            "know",
+            "but",
+            "we",
+            "we",
+            "uh",
+            "i",
+            "guess"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "b",
+          "actual": null,
+          "referenceContext": [
+            "know",
+            "but",
+            "uh",
+            "b",
+            "i",
+            "guess",
+            "we"
+          ],
+          "hypothesisContext": [
+            "we",
+            "we",
+            "uh",
+            "i",
+            "guess",
+            "we",
+            "can"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "they're",
+          "actual": "they",
+          "referenceContext": [
+            "make",
+            "sure",
+            "that",
+            "they're",
+            "always",
+            "f",
+            "understand"
+          ],
+          "hypothesisContext": [
+            "make",
+            "sure",
+            "that",
+            "they",
+            "always",
+            "f",
+            "understand"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "one",
+          "actual": "one's",
+          "referenceContext": [
+            "what",
+            "the",
+            "other",
+            "one",
+            "is",
+            "doing",
+            "yeah"
+          ],
+          "hypothesisContext": [
+            "what",
+            "the",
+            "other",
+            "one's",
+            "doing",
+            "well",
+            "i"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "is",
+          "actual": null,
+          "referenceContext": [
+            "the",
+            "other",
+            "one",
+            "is",
+            "doing",
+            "yeah",
+            "well"
+          ],
+          "hypothesisContext": [
+            "the",
+            "other",
+            "one's",
+            "doing",
+            "well",
+            "i",
+            "guess"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "yeah",
+          "actual": null,
+          "referenceContext": [
+            "one",
+            "is",
+            "doing",
+            "yeah",
+            "well",
+            "i",
+            "guess"
+          ],
+          "hypothesisContext": [
+            "other",
+            "one's",
+            "doing",
+            "well",
+            "i",
+            "guess",
+            "the"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "m",
+          "actual": null,
+          "referenceContext": [
+            "get",
+            "the",
+            "crucial",
+            "m",
+            "modules",
+            "built",
+            "or"
+          ],
+          "hypothesisContext": [
+            "get",
+            "the",
+            "crucial",
+            "modules",
+            "built",
+            "or",
+            "at"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "errors": 13,
+      "operations": [
+        {
+          "operation": "replace",
+          "expected": "do",
+          "actual": "don't",
+          "referenceContext": [
+            "i",
+            "do",
+            "like",
+            "i",
+            "mean"
+          ],
+          "hypothesisContext": [
+            "i",
+            "don't",
+            "like",
+            "i",
+            "mean"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "not",
+          "actual": "no",
+          "referenceContext": [
+            "i",
+            "mean",
+            "there's",
+            "not",
+            "guarantee",
+            "that",
+            "anything"
+          ],
+          "hypothesisContext": [
+            "i",
+            "mean",
+            "there's",
+            "no",
+            "guarantee",
+            "that",
+            "anything"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "temps",
+          "actual": "temp",
+          "referenceContext": [
+            "i",
+            "think",
+            "the",
+            "temps",
+            "usually",
+            "have",
+            "ah"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "the",
+            "temp",
+            "usually",
+            "have",
+            "ah"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "off",
+          "actual": "of",
+          "referenceContext": [
+            "the",
+            "temp",
+            "directory",
+            "off",
+            "the",
+            "machine",
+            "you"
+          ],
+          "hypothesisContext": [
+            "the",
+            "temp",
+            "directory",
+            "of",
+            "the",
+            "machine",
+            "you"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "s",
+          "actual": null,
+          "referenceContext": [
+            "into",
+            "directory",
+            "of",
+            "s",
+            "s",
+            "h",
+            "yeah"
+          ],
+          "hypothesisContext": [
+            "into",
+            "directory",
+            "of",
+            "yeah",
+            "but",
+            "i",
+            "can"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "s",
+          "actual": null,
+          "referenceContext": [
+            "directory",
+            "of",
+            "s",
+            "s",
+            "h",
+            "yeah",
+            "but"
+          ],
+          "hypothesisContext": [
+            "into",
+            "directory",
+            "of",
+            "yeah",
+            "but",
+            "i",
+            "can"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "h",
+          "actual": null,
+          "referenceContext": [
+            "of",
+            "s",
+            "s",
+            "h",
+            "yeah",
+            "but",
+            "i"
+          ],
+          "hypothesisContext": [
+            "into",
+            "directory",
+            "of",
+            "yeah",
+            "but",
+            "i",
+            "can"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "you",
+          "actual": "i",
+          "referenceContext": [
+            "session",
+            "can't",
+            "i",
+            "you",
+            "can",
+            "compress",
+            "it"
+          ],
+          "hypothesisContext": [
+            "session",
+            "can't",
+            "i",
+            "i",
+            "can",
+            "compress",
+            "it"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "and",
+          "actual": "an",
+          "referenceContext": [
+            "a",
+            "remote",
+            "session",
+            "and",
+            "s",
+            "c",
+            "p"
+          ],
+          "hypothesisContext": [
+            "a",
+            "remote",
+            "session",
+            "an",
+            "s",
+            "c",
+            "p"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "it",
+          "actual": "a",
+          "referenceContext": [
+            "s",
+            "c",
+            "p",
+            "it",
+            "from",
+            "the",
+            "same"
+          ],
+          "hypothesisContext": [
+            "s",
+            "c",
+            "p",
+            "a",
+            "from",
+            "the",
+            "same"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "wou",
+          "actual": "they",
+          "referenceContext": [
+            "session",
+            "yeah",
+            "they",
+            "wou",
+            "they'd",
+            "they'd",
+            "probably"
+          ],
+          "hypothesisContext": [
+            "session",
+            "yeah",
+            "they",
+            "they",
+            "they",
+            "probably",
+            "hate"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "they'd",
+          "actual": "they",
+          "referenceContext": [
+            "yeah",
+            "they",
+            "wou",
+            "they'd",
+            "they'd",
+            "probably",
+            "hate"
+          ],
+          "hypothesisContext": [
+            "yeah",
+            "they",
+            "they",
+            "they",
+            "probably",
+            "hate",
+            "you"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "they'd",
+          "actual": null,
+          "referenceContext": [
+            "they",
+            "wou",
+            "they'd",
+            "they'd",
+            "probably",
+            "hate",
+            "you"
+          ],
+          "hypothesisContext": [
+            "they",
+            "they",
+            "they",
+            "probably",
+            "hate",
+            "you",
+            "for"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "errors": 9,
+      "operations": [
+        {
+          "operation": "replace",
+          "expected": "that",
+          "actual": "then",
+          "referenceContext": [
+            "that",
+            "we",
+            "can",
+            "treat"
+          ],
+          "hypothesisContext": [
+            "then",
+            "we",
+            "can",
+            "treat"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "or",
+          "actual": "once",
+          "referenceContext": [
+            "the",
+            "same",
+            "algorithm",
+            "or",
+            "but",
+            "i",
+            "mean"
+          ],
+          "hypothesisContext": [
+            "the",
+            "same",
+            "algorithm",
+            "once",
+            "but",
+            "i",
+            "mean"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "say",
+          "actual": "so",
+          "referenceContext": [
+            "be",
+            "deeper",
+            "maybe",
+            "say",
+            "so",
+            "then",
+            "you'd"
+          ],
+          "hypothesisContext": [
+            "be",
+            "deeper",
+            "maybe",
+            "so",
+            "so",
+            "then",
+            "you'd"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "here",
+          "actual": null,
+          "referenceContext": [
+            "here",
+            "here",
+            "here",
+            "here",
+            "that",
+            "might",
+            "be"
+          ],
+          "hypothesisContext": [
+            "here",
+            "here",
+            "here",
+            "that",
+            "might",
+            "be",
+            "a"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "also",
+          "actual": null,
+          "referenceContext": [
+            "levels",
+            "yeah",
+            "i'm",
+            "also",
+            "not",
+            "sure",
+            "how"
+          ],
+          "hypothesisContext": [
+            "levels",
+            "yeah",
+            "i'm",
+            "not",
+            "sure",
+            "how",
+            "we"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "i",
+          "actual": "i've",
+          "referenceContext": [
+            "from",
+            "bottom",
+            "up",
+            "i",
+            "have",
+            "always",
+            "thought"
+          ],
+          "hypothesisContext": [
+            "from",
+            "bottom",
+            "up",
+            "i've",
+            "always",
+            "thought",
+            "of"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "have",
+          "actual": null,
+          "referenceContext": [
+            "bottom",
+            "up",
+            "i",
+            "have",
+            "always",
+            "thought",
+            "it's"
+          ],
+          "hypothesisContext": [
+            "bottom",
+            "up",
+            "i've",
+            "always",
+            "thought",
+            "of",
+            "like"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "it's",
+          "actual": "of",
+          "referenceContext": [
+            "have",
+            "always",
+            "thought",
+            "it's",
+            "like",
+            "more",
+            "that"
+          ],
+          "hypothesisContext": [
+            "i've",
+            "always",
+            "thought",
+            "of",
+            "like",
+            "more",
+            "that"
+          ]
+        },
+        {
+          "operation": "replace",
+          "expected": "oh",
+          "actual": "ah",
+          "referenceContext": [
+            "like",
+            "more",
+            "that",
+            "oh"
+          ],
+          "hypothesisContext": [
+            "like",
+            "more",
+            "that",
+            "ah"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "errors": 21,
+      "operations": [
+        {
+          "operation": "replace",
+          "expected": "i'm",
+          "actual": "um",
+          "referenceContext": [
+            "i'm",
+            "f",
+            "once",
+            "we"
+          ],
+          "hypothesisContext": [
+            "um",
+            "once",
+            "we",
+            "start"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "f",
+          "actual": null,
+          "referenceContext": [
+            "i'm",
+            "f",
+            "once",
+            "we",
+            "start"
+          ],
+          "hypothesisContext": [
+            "um",
+            "once",
+            "we",
+            "start",
+            "doing"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "yeah",
+          "actual": null,
+          "referenceContext": [
+            "i",
+            "think",
+            "anyway",
+            "yeah",
+            "it's",
+            "just",
+            "we"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "it's",
+          "actual": null,
+          "referenceContext": [
+            "think",
+            "anyway",
+            "yeah",
+            "it's",
+            "just",
+            "we",
+            "are"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "just",
+          "actual": null,
+          "referenceContext": [
+            "anyway",
+            "yeah",
+            "it's",
+            "just",
+            "we",
+            "are",
+            "half"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "we",
+          "actual": null,
+          "referenceContext": [
+            "yeah",
+            "it's",
+            "just",
+            "we",
+            "are",
+            "half",
+            "way"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "are",
+          "actual": null,
+          "referenceContext": [
+            "it's",
+            "just",
+            "we",
+            "are",
+            "half",
+            "way",
+            "through"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "half",
+          "actual": null,
+          "referenceContext": [
+            "just",
+            "we",
+            "are",
+            "half",
+            "way",
+            "through",
+            "the"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "way",
+          "actual": null,
+          "referenceContext": [
+            "we",
+            "are",
+            "half",
+            "way",
+            "through",
+            "the",
+            "project"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "through",
+          "actual": null,
+          "referenceContext": [
+            "are",
+            "half",
+            "way",
+            "through",
+            "the",
+            "project",
+            "time"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "the",
+          "actual": null,
+          "referenceContext": [
+            "half",
+            "way",
+            "through",
+            "the",
+            "project",
+            "time",
+            "table"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "project",
+          "actual": null,
+          "referenceContext": [
+            "way",
+            "through",
+            "the",
+            "project",
+            "time",
+            "table",
+            "that's"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "time",
+          "actual": null,
+          "referenceContext": [
+            "through",
+            "the",
+            "project",
+            "time",
+            "table",
+            "that's",
+            "just"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "table",
+          "actual": null,
+          "referenceContext": [
+            "the",
+            "project",
+            "time",
+            "table",
+            "that's",
+            "just",
+            "what"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "that's",
+          "actual": null,
+          "referenceContext": [
+            "project",
+            "time",
+            "table",
+            "that's",
+            "just",
+            "what",
+            "freaks"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "just",
+          "actual": null,
+          "referenceContext": [
+            "time",
+            "table",
+            "that's",
+            "just",
+            "what",
+            "freaks",
+            "me"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "what",
+          "actual": null,
+          "referenceContext": [
+            "table",
+            "that's",
+            "just",
+            "what",
+            "freaks",
+            "me",
+            "out"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "freaks",
+          "actual": null,
+          "referenceContext": [
+            "that's",
+            "just",
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "me",
+          "actual": null,
+          "referenceContext": [
+            "just",
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "out",
+          "actual": null,
+          "referenceContext": [
+            "what",
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        },
+        {
+          "operation": "delete",
+          "expected": "um",
+          "actual": null,
+          "referenceContext": [
+            "freaks",
+            "me",
+            "out",
+            "um"
+          ],
+          "hypothesisContext": [
+            "i",
+            "think",
+            "anyway"
+          ]
+        }
+      ]
+    }
+  ],
+  "newInference": 0,
+  "newTrainingUpdates": 0,
+  "referenceChanged": false,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

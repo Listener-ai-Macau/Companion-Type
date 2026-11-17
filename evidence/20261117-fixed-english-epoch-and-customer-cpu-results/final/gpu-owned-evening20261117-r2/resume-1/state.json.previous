@@ -1,0 +1,101 @@
+{
+  "state": "COMPLETE_FIXED_ONE_EPOCH_TDT_ENGLISH_ADAPTATION_PENDING_VALIDATION",
+  "at": "2026-11-17T21:43:12+08:00",
+  "pid": 8112,
+  "binding": {
+    "protocolSha256": "46b0e3e8f60e5a2e88f86b4d311347a8cf65c2dbb258194d77c85125b0122d29",
+    "workerSha256": "3f93174619f57f24f4e9727a24fbf74617808a5f17b675c7ab63c9da6bcba889",
+    "publishedWeightsSha256": "3a2026366188c8c68598edbbff92f8d11590a08e0ae2e6775544e7b07d6a5e11",
+    "dataSha256": "1362f5cbf3c85e9ec6bfb3f76d942728264bfe6c9c3a1436f432293ed81e7696"
+  },
+  "phase": "resume-1",
+  "newNeuralCalls": 164,
+  "completed": [],
+  "parameterUpdates": 41,
+  "candidateOptimizerUpdates": 457,
+  "completedTrainingExamples": 1828,
+  "validationReferencesRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "currentOperationBudgetSeconds": 90,
+  "observedAt": "2026-11-17T21:52:26+08:00",
+  "limits": {
+    "pid": 8112,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1935044608,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "presentDevices": [
+    {
+      "FriendlyName": "AMD Radeon RX 6800 XT",
+      "Status": "OK"
+    },
+    {
+      "FriendlyName": "AMD Radeon 780M Graphics",
+      "Status": "OK"
+    }
+  ],
+  "device": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  },
+  "cpuThermalObservation": {
+    "observationOnly": true,
+    "cpuTelemetryAvailable": false,
+    "telemetryError": "RuntimeError('Identified CPU temperature logger is not live')",
+    "taskStartThresholdCelsius": null,
+    "taskStopThresholdCelsius": null,
+    "hardwareOverheatCauseProven": false
+  },
+  "gpu": {
+    "allocatedBytes": 3529114112,
+    "reservedBytes": 5207228416,
+    "peakAllocatedBytes": 4596784128,
+    "peakReservedBytes": 5207228416,
+    "driverFreeBytes": 11615469568,
+    "driverTotalBytes": 17163091968,
+    "systemAvailableBytes": 6763175936
+  },
+  "gpuProfile": {
+    "cudnnEnabled": false,
+    "allocatorFraction": 0.5,
+    "operatorSynchronization": true,
+    "hardGpuUtilizationOrPowerCap": false
+  },
+  "checkpointPointerSelection": {
+    "selectedFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\checkpoints\\latest-checkpoint.json",
+    "sha256": "e15d0ebbe5b220e929d12b7a9202227e0446857240fedfe55a1d3fdddf687f81",
+    "usedPrevious": false,
+    "primaryFailures": [],
+    "originalCorruptBytesPreserved": true
+  },
+  "currentId": "IS1000b-sequential-0018",
+  "currentOperation": "encoder.layers.23.conv.pointwise_conv2",
+  "lastGradientNormBeforeClip": 6.4992594718933105,
+  "frozenDigest": "eeaaf482a673c635c8e5ad129202f2f1443ea335f371d7b4a0bd4baee38a62c2",
+  "meanTrainingLossThisProcess": 0.6922116992745276,
+  "finalCheckpoint": {
+    "file": "step-00457-cd738cb0a797.safetensors",
+    "sha256": "a03e256e0d7b27759b5cfbfc95417e8bcae2bddb1613f30de2d38e050c14e1c5",
+    "receiptFile": "step-00457-cd738cb0a797.json",
+    "receiptSha256": "4d7cfc4021228b2f72540e3833f193d83c8ce6cc08915577746730b4577b5489",
+    "completedExamples": 1828,
+    "optimizerUpdates": 457,
+    "orderSha256": "62a3eb5881516a75faca3be551af4ef19a85f7b6d0b4ada08aab35dd6294c371",
+    "frozenDigest": "eeaaf482a673c635c8e5ad129202f2f1443ea335f371d7b4a0bd4baee38a62c2",
+    "preflightOnly": false
+  },
+  "freshFactoryInitialization": false,
+  "finalizedCompletedCheckpointWithoutNewUpdates": false
+}

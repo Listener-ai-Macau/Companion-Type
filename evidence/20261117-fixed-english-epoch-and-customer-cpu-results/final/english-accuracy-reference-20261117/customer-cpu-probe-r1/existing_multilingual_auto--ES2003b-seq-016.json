@@ -1,0 +1,28 @@
+{
+  "id": "ES2003b-seq-016",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 473280,
+  "audioSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+  "pcmSha256": "7e8c174955670b930e9b657a8fdcbea730374845ac6668f4a916ddc867ee7f6e",
+  "text": "so i can understand your point and i would agree with you but this is our design spec for now great to say does that would that include access to say interactive functions on digital or cable yeah im going to say so yes because then we have to be able to control the remote boxes and that has a separate unit i would say",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 275200,
+      "text": "so i can understand your point and i would agree with you but this is our design spec for now great to say does that would that include access to say interactive functions on digital or cable",
+      "language": "<|en|>"
+    },
+    {
+      "startFrame": 275200,
+      "frames": 198080,
+      "text": "yeah im going to say so yes because then we have to be able to control the remote boxes and that has a separate unit i would say",
+      "language": "<|en|>"
+    }
+  ],
+  "seconds": 2.983491699997103,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

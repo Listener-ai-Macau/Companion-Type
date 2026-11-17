@@ -1,0 +1,28 @@
+{
+  "id": "EN2001a-a2-046",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 362720,
+  "audioSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+  "pcmSha256": "7c06b4b1859d19da0fe23e80c043ebb406245e57d456d2776536102c041cc8a4",
+  "text": "and we u i guess we can do it like several people together it's probably just those people have to work together a lot and very closely and just make sure that they always understand what the other ones doing yeah i guess the important things is to get the crucial modules built are at haste",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 240000,
+      "text": "and we u i guess we can do it like several people together it's probably just those people have to work together a lot and very closely and just make sure that they always understand what the other ones doing",
+      "language": "<|en|>"
+    },
+    {
+      "startFrame": 240000,
+      "frames": 122720,
+      "text": "yeah i guess the important things is to get the crucial modules built are at haste",
+      "language": "<|en|>"
+    }
+  ],
+  "seconds": 1.7648302000015974,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

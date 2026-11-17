@@ -1,0 +1,7 @@
+Observed from unified execution session74832 at first output poll; this is the observed warning excerpt, not a complete process stderr capture.
+W1117 19:57:41.407000 12980 Lib\site-packages\torch\distributed\elastic\multiprocessing\redirects.py:29] NOTE: Redirects are currently not supported in Windows or MacOs.
+MIOpen: Warning [OpenRuntimeLibraryForDevice] CK grouped conv library not found for device gfx1030: 找不到指定的模块。
+MIOpen: Error [Prefetch] Ill-formed record: key not found: "C:\Users\Billy\.miopen\db\gfx1030_36.HIP.3_6_0_8d1ae90e.ufdb.txt"#12809
+MIOpen: Error [Prefetch] Ill-formed record: key not found: "C:\Users\Billy\.miopen\db\gfx1030_36.HIP.3_6_0_8d1ae90e.ufdb.txt"#12809
+MIOpen: Error [FindRecordUnsafe] Ill-formed record: key not found: "C:\Users\Billy\.miopen\db\gfx1030_36.HIP.3_6_0_8d1ae90e.ufdb.txt"#12809
+The original first audio case completed after these messages. No global cache, driver or registry settings were changed.

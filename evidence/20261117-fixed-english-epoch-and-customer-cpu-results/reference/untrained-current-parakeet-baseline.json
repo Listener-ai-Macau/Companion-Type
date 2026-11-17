@@ -1,0 +1,113 @@
+{
+  "state": "CURRENT_SAME_PROFILE_UNTRAINED_BASELINE_SCORED",
+  "aggregate": {
+    "errors": 123,
+    "referenceUnits": 709,
+    "substitutions": 56,
+    "deletions": 46,
+    "insertions": 21
+  },
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "errors": 6,
+      "referenceUnits": 26,
+      "substitutions": 1,
+      "deletions": 1,
+      "insertions": 4
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "errors": 9,
+      "referenceUnits": 103,
+      "substitutions": 0,
+      "deletions": 9,
+      "insertions": 0
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "errors": 11,
+      "referenceUnits": 31,
+      "substitutions": 7,
+      "deletions": 3,
+      "insertions": 1
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "errors": 6,
+      "referenceUnits": 75,
+      "substitutions": 4,
+      "deletions": 1,
+      "insertions": 1
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "errors": 8,
+      "referenceUnits": 38,
+      "substitutions": 5,
+      "deletions": 3,
+      "insertions": 0
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "errors": 12,
+      "referenceUnits": 17,
+      "substitutions": 3,
+      "deletions": 0,
+      "insertions": 9
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "errors": 5,
+      "referenceUnits": 28,
+      "substitutions": 2,
+      "deletions": 3,
+      "insertions": 0
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "errors": 8,
+      "referenceUnits": 107,
+      "substitutions": 3,
+      "deletions": 5,
+      "insertions": 0
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "errors": 15,
+      "referenceUnits": 66,
+      "substitutions": 5,
+      "deletions": 9,
+      "insertions": 1
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "errors": 20,
+      "referenceUnits": 87,
+      "substitutions": 13,
+      "deletions": 7,
+      "insertions": 0
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "errors": 8,
+      "referenceUnits": 94,
+      "substitutions": 8,
+      "deletions": 0,
+      "insertions": 0
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "errors": 15,
+      "referenceUnits": 37,
+      "substitutions": 5,
+      "deletions": 5,
+      "insertions": 5
+    }
+  ],
+  "priorOriginalErrors": 123,
+  "originalReferencesUnchanged": true,
+  "finalHoldoutOpened": false,
+  "newInferenceByScorer": 0,
+  "trainingUpdates": 0
+}

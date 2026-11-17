@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-17T22:16:05+08:00",
+  "state": "COMPLETE_CPU_OUTPUTS_SCORED_IN_EXISTING_CLEAN_SCORING_RUNTIME",
+  "originalFailure": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2\\finish-evaluation-shared-lease-r1\\SCORING_EXISTING_CPU_BILINGUAL_PROBE.log",
+  "cause": "Orchestrator used systemPython for scoring; rapidfuzz is in the existing clean scorer runtime.",
+  "correctedRuntime": "E:/CodexData/Companion/.model-cache/scoring-runtime-clean-20261106/Scripts/python.exe",
+  "originalInferenceRuntime": "sherpa-onnx1.13.4/systemPython",
+  "newInferenceCalls": 0,
+  "newTrainingUpdates": 0,
+  "cpuInferenceCasesComplete": 48,
+  "score": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\customer-cpu-probe-r1\\score.json"
+}

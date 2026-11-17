@@ -1,0 +1,28 @@
+{
+  "id": "20200709_L_R002S01C01-seq-003",
+  "profile": "existing_multilingual_auto",
+  "provider": "cpu",
+  "threads": 2,
+  "frames": 357561,
+  "audioSha256": "e64a93b033e9102767a10d49040eabe4d96085c5c8076aabd6b0727a8886766e",
+  "pcmSha256": "59a5853e6cd1235b2c77b461806f2186fde768f07b90cc4e656b454799795c6f",
+  "text": "然后调动顾客积极性还有就是毕竟是健身房嘛这些教练是吧他们肯定会以安全为目的像什么亚铃一些维修啊砸到脚面之类的这方面是绝对不会发生然后咱们这边其实呢有那个 意见反馈就是说然后还在学游泳嘛学游泳的时候因为以前没有接触过",
+  "chunks": [
+    {
+      "startFrame": 0,
+      "frames": 265600,
+      "text": "然后调动顾客积极性还有就是毕竟是健身房嘛这些教练是吧他们肯定会以安全为目的像什么亚铃一些维修啊砸到脚面之类的这方面是绝对不会发生然后咱们这边其实呢有那个",
+      "language": "<|zh|>"
+    },
+    {
+      "startFrame": 265600,
+      "frames": 91961,
+      "text": "意见反馈就是说然后还在学游泳嘛学游泳的时候因为以前没有接触过",
+      "language": "<|zh|>"
+    }
+  ],
+  "seconds": 2.4154784999991534,
+  "allInputFramesPreservedExactlyOnce": true,
+  "referenceUsed": false,
+  "wordsPostEdited": false
+}

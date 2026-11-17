@@ -1,0 +1,26 @@
+{
+  "state": "LOCAL_MODEL_PAGE_SOURCE_CHECKPOINT",
+  "parent": "7301f49fc449c1dd05e5100d963818bdd6426556",
+  "commit": "198953ca5cf58990558ed3806718666b6df25638",
+  "files": [
+    "src/app.js",
+    "src/handbook.json",
+    "src/index.html",
+    "src/style.css",
+    "tools/build_portal.py",
+    "tools/model_progress.py"
+  ],
+  "hostingOrRemotePush": false,
+  "generatedDistStaged": false,
+  "concurrentDocstoreBuilderEditsPreservedUnstaged": true,
+  "workingSourceSha256": {
+    "src/app.js": "82ad5346363d22f5fc1025f8d360261a3eba54508a064be09c747cf1c54bf9e1",
+    "src/handbook.json": "ca7c7aa5da6ec6e794dbbdce8c13c64d166963db1f9c32fd1e845214193b9de0",
+    "src/index.html": "96243b76fc3b0ab30dede6c2a65f12370d595d803a512598b11fb0135acbcf77",
+    "src/style.css": "77c4975ba20bff25cd97cdc084b7088090061662ca9f9d7a7fd0eb9adfc3a06a",
+    "tools/build_portal.py": "fb4aaa91daec45349331d16d87000dd083f1ecbf453d49d60ab3e1b1a03dd473",
+    "tools/model_progress.py": "79360b3e35cc8e8cf97b74be49645d601ff87b7cf43a08faaa8ec895b7444512"
+  },
+  "stagedBuilderBlob": "1ee92e2f2758c2bff9836d21a7e3e55e45da8f87",
+  "qa": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\portal-browser-r5\\result.json"
+}
