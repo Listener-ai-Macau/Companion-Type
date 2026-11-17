@@ -214,8 +214,33 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
         source.iter().filter(move|s|!phrase.is_empty()&&c.evidence.contains(&s.id)&&s.text.contains(phrase))
             .map(move|s|json!({"source":s.source,"sentenceId":s.id,"text":phrase}))
     }).collect::<Vec<_>>();
-    if !uncertain.is_empty(){if let Some(call)=trace.last_mut(){call["sourceUncertainties"]=json!(uncertain);}}
+    let history=claims.iter().filter(|c|c.clarity.as_deref()==Some("unclear")).map(|c|{
+        let mut ids=c.evidence.iter().filter_map(|id|source.iter().find(|s|&s.id==id).map(|s|s.source.clone())).collect::<HashSet<_>>();
+        if let Some(original)=expected.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str())){if let Some(refs)=original["sources"].as_array(){ids.extend(refs.iter().filter_map(Value::as_str).map(str::to_string));}}
+        json!({"path":c.path,"phrase":c.unclear_text,"sourceIds":ids})
+    }).collect::<Vec<_>>();
+    if let Some(call)=trace.last_mut(){if !uncertain.is_empty(){call["sourceUncertainties"]=json!(uncertain);}if !history.is_empty(){call["unclearClaimHistory"]=json!(history);}}
     Ok(Audit{claim_audit:claims,format_kind:None})
+}
+fn apply_historical_veto(audit:&mut Audit,expected:&[Value],history:&[Value],source:&[Sentence])->Vec<String>{
+    let mut vetoed=Vec::new();
+    for verdict in &mut audit.claim_audit{
+        let Some(claim)=expected.iter().find(|c|c["path"].as_str()==Some(verdict.path.as_str()))else{continue;};
+        let mut context=verdict.evidence.iter().filter_map(|id|source.iter().find(|s|&s.id==id).map(|s|s.source.as_str())).collect::<HashSet<_>>();
+        if let Some(refs)=claim["sources"].as_array(){context.extend(refs.iter().filter_map(Value::as_str));}
+        let found=history.iter().find_map(|record|{
+            let phrase=record["phrase"].as_str().filter(|s|!s.is_empty())?;let ids=record["sourceIds"].as_array()?;
+            (ids.is_empty()||ids.iter().filter_map(Value::as_str).any(|id|context.contains(id))).then_some(())?;
+            ["text","owner","due"].iter().any(|field|claim[*field].as_str().is_some_and(|text|text.contains(phrase))).then_some(phrase)
+        });
+        if let Some(phrase)=found{
+            if verdict.clarity.as_deref()==Some("unclear")&&verdict.unclear_text.as_deref()==Some(phrase){continue;}
+            if verdict.status=="supported"{verdict.status="unclear".into();}
+            verdict.clarity=Some("unclear".into());verdict.unclear_text=Some(phrase.into());
+            verdict.reason=format!("本次同一原文此前已否决此含混表达，不能在新增或修改内容中重新当作确定信息；{}",verdict.reason).chars().take(300).collect();vetoed.push(verdict.path.clone());
+        }
+    }
+    vetoed
 }
 #[cfg(test)]
 fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,units:&[Unit])->Result<Document,String> {
@@ -322,7 +347,12 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
         if expected.is_empty(){return Ok(current);}
         emphasize_source_scope(&mut expected,&source);
         let stage=match round{0=>"source-factual-audit",1=>"source-factual-reaudit",_=>"source-factual-reaudit-2"};
-        let audit=partitioned_audit(endpoint,model,key,client,&current,&wire,&expected,&source,stage,start,trace,&recovered_format)?;
+        // Only earlier completed verdicts constrain new/changed claims. Do not
+        // retroactively rewrite other claims in this same independent batch.
+        let history=trace.iter().filter_map(|c|c.get("unclearClaimHistory").and_then(Value::as_array)).flatten().cloned().collect::<Vec<_>>();
+        let mut audit=partitioned_audit(endpoint,model,key,client,&current,&wire,&expected,&source,stage,start,trace,&recovered_format)?;
+        let vetoed=apply_historical_veto(&mut audit,&expected,&history,&source);
+        if !vetoed.is_empty(){if let Some(call)=trace.last_mut(){call["historicalUnclearVetoes"]=json!(vetoed);}}
         // Bind original jumps to the exact immutable evidence actually checked,
         // rather than retaining an earlier writer's incomplete source list.
         current=bind_supported_sources(&current,&audit,&source,units)?;
@@ -380,6 +410,16 @@ mod tests {
         let mut doc:Document=serde_json::from_value(json!({"purpose":"讨论组织方案","topics":[{"title":"组织协作","points":[{"kind":"recommendation","text":"由产业联盟整合资源，具体机构名称待核对。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap();
         let history=HashMap::from([("topics[0].points[0]".to_string(),vec!["牵头单位".to_string()])]);
         assert!(preserves_unclear_history(&doc,&history).is_ok());doc.topics[0].points[0].text="由牵头单位整合资源。".into();assert!(preserves_unclear_history(&doc,&history).is_err());
+    }
+    #[test]
+    fn automatic_brief_append_cannot_override_a_prior_source_bound_unclear_verdict(){
+        let source=vec![Sentence{id:"e0000".into(),source:"u000".into(),text:"原话含混称谓".into()},Sentence{id:"e0001".into(),source:"u001".into(),text:"另一明确上下文".into()}];
+        let expected=vec![json!({"path":"topics[1].points[0]","text":"由牵头单位组织。","sources":["u000"]})];
+        let history=vec![json!({"path":"topics[0].details[0]","phrase":"牵头单位","sourceIds":["u000"]})];
+        let mut audit:Audit=serde_json::from_value(json!({"claimAudit":[{"path":"topics[1].points[0]","status":"supported","clarity":"clear","unclearText":null,"reason":"新一轮模型改判支持","evidence":["e0000"]}]})).unwrap();
+        assert_eq!(apply_historical_veto(&mut audit,&expected,&history,&source),vec!["topics[1].points[0]"]);assert_eq!(audit.claim_audit[0].status,"unclear");
+        audit.claim_audit[0].status="unsupported".into();audit.claim_audit[0].clarity=Some("clear".into());apply_historical_veto(&mut audit,&expected,&history,&source);assert_eq!(audit.claim_audit[0].status,"unsupported");
+        let mut other=expected.clone();other[0]["sources"]=json!(["u001"]);audit.claim_audit[0].evidence=vec!["e0001".into()];audit.claim_audit[0].clarity=Some("clear".into());assert!(apply_historical_veto(&mut audit,&other,&history,&source).is_empty());
     }
     #[test]
     fn automatic_brief_parallel_audit_keeps_parent_job_cancellation(){
