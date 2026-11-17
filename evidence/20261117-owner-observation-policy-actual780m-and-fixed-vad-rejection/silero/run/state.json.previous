@@ -1,0 +1,72 @@
+{
+  "state": "DETECTING_CPU_ONLY_SILERO_DEFAULT",
+  "at": "2026-11-17T14:38:43.750179+08:00",
+  "pid": 11636,
+  "binding": {
+    "protocolSha256": "cd68707553f45aed099d468edce51bba31dd5d66591087760e52124ed6f25661",
+    "workerSha256": "566746a67ab6fb000ea8f63ccf5743f237bb9786a3df31da5e4b885da389b0d3",
+    "weightsSha256": "e1122837f4154c511485fe0b9c64455f7b929c96fbb8d79fbdb336383ebd3720"
+  },
+  "completed": [
+    {
+      "meeting": "ES2003b",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\ES2003b-presence.json",
+      "sha256": "12bae1d6e97387a36932fdba9eaab18e34f436955f3daf352d07b205f0ec9829"
+    },
+    {
+      "meeting": "EN2002a",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\EN2002a-presence.json",
+      "sha256": "e30831b0141b00e95c6d9f93ac51252e8b27e496a1caab6fcb2fad821a457fb1"
+    }
+  ],
+  "newNeuralCalls": 132955,
+  "parameterUpdates": 0,
+  "cpuInferenceOnly": true,
+  "referenceRead": false,
+  "gpuInitialized": false,
+  "qualityQualified": false,
+  "observedAt": "2026-11-17T14:42:55.884723+08:00",
+  "limits": {
+    "pid": 11636,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 853729280,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "cpuTemperature": {
+    "sampleAt": "2026-11-17T14:42:51.8415419+08:00",
+    "celsius": 90.625,
+    "sampleAgeSeconds": 3.453921,
+    "sensorIdentifier": "/amdcpu/0/temperature/2",
+    "taskStartThresholdCelsius": null,
+    "taskStopThresholdCelsius": null,
+    "observationOnly": true,
+    "hardwareOverheatCauseProven": false,
+    "physicalMainboardTemperatureMeasured": false,
+    "snapshotSelection": {
+      "selectedFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\latest.json",
+      "sha256": "01e639951a03567b4b1c6744343508441e128be4b12e76ec1a14c0e42670aa9b",
+      "usedPrevious": false,
+      "primaryFailures": [],
+      "originalCorruptBytesPreserved": true
+    }
+  },
+  "cpuBlasThreadPin": {
+    "library": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0",
+    "before": 16,
+    "after": 1
+  },
+  "currentId": null,
+  "currentProgressPercent": 98.97301168059714,
+  "currentCompletedWindows": 66272
+}

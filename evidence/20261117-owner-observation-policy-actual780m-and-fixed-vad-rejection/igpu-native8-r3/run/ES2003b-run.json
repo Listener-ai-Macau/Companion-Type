@@ -1,0 +1,18 @@
+{
+  "state": "COMPLETE_EXPLICIT_780M_INFERENCE_PENDING_INDEPENDENT_COMPARISON",
+  "at": "2026-11-17T14:32:42.246084+08:00",
+  "meeting": "ES2003b",
+  "training": false,
+  "parameterUpdates": 0,
+  "automaticRetries": 0,
+  "privateFamilyPeakBytes": 1770049536,
+  "minimumAvailableBytes": 6143856640,
+  "pid": 7956,
+  "createdAt": 1794897162.2488508,
+  "exitCode": 0,
+  "workerReceipt": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\ES2003b\\completed-state.json",
+  "workerState": "COMPLETE_780M_SPEAKER_JOURNAL_UNQUALIFIED",
+  "newNeuralPushes": 70,
+  "completedNeuralFrames": 210982,
+  "finishedAt": "2026-11-17T14:33:58.180354+08:00"
+}

@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-17T14:17:02.472308+08:00",
+  "control": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2",
+  "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r2",
+  "logger": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2",
+  "readyForOriginal60SecondAdmission": true,
+  "cpuObservation": {
+    "sampleAt": "2026-11-17T14:16:59.0468158+08:00",
+    "celsius": 84.5,
+    "sampleAgeSeconds": 3.443652,
+    "sensorIdentifier": "/amdcpu/0/temperature/2",
+    "taskStartThresholdCelsius": 85,
+    "taskStopThresholdCelsius": 95,
+    "hardwareOverheatCauseProven": false,
+    "physicalMainboardTemperatureMeasured": false,
+    "snapshotSelection": {
+      "selectedFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\latest.json",
+      "sha256": "af14aa83085c6a9d08bdace2d2605f5cc29c1ec019ab30718607e0bdad1e5768",
+      "usedPrevious": false,
+      "primaryFailures": [],
+      "originalCorruptBytesPreserved": true
+    }
+  },
+  "error": null,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "training": false,
+  "originalResourceOrQualityGatesChanged": false
+}

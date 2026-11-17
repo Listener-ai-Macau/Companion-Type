@@ -1,0 +1,33 @@
+{
+  "state": "READ_ONLY_ACPI_THERMAL_MONITOR_FINISHED",
+  "at": "2026-11-17T14:28:26.675161+08:00",
+  "exitCode": 1,
+  "samples": 164,
+  "minimumCelsius": 50.05,
+  "maximumCelsius": 50.05,
+  "cpuMinimumCelsius": 75.62501,
+  "cpuMaximumCelsius": 96.25,
+  "externalGpuQueried": false,
+  "physicalSensorLocationVerified": false,
+  "overheatCauseProven": false,
+  "readOnly": true,
+  "ownedStopRequested": true,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "limits": {
+    "pid": 1860,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 109441024,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

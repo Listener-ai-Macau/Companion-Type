@@ -1,0 +1,80 @@
+{
+  "state": "CONTEXT_ACTIVITY_UNION_SCORED_NOT_PRODUCT_QUALIFIED",
+  "at": "2026-11-17T14:44:31+08:00",
+  "meeting": "ES2003b",
+  "language": "English",
+  "originalRawMultiVoice": {
+    "referenceSpeakerSeconds": 1958.649999999878,
+    "missSeconds": 488.3916319999852,
+    "falseAlarmSeconds": 13.661632000108053,
+    "confusionSeconds": 7.55031000000346,
+    "errorSeconds": 509.60357400009667,
+    "DER": 0.260181029790993,
+    "identityForScoringOnly": {
+      "speaker_0": "C",
+      "speaker_1": "B",
+      "speaker_2": "A",
+      "speaker_3": "D"
+    }
+  },
+  "mossMappedWithOriginalFixedIdentity": {
+    "referenceSpeakerSeconds": 1958.649999999878,
+    "missSeconds": 1917.912706999879,
+    "falseAlarmSeconds": 7.376341000001183,
+    "confusionSeconds": 2.5003669999995566,
+    "errorSeconds": 1927.78941499988,
+    "DER": 0.9842439511908713,
+    "identityForScoringOnly": {
+      "speaker_0": "C",
+      "speaker_1": "B",
+      "speaker_2": "A",
+      "speaker_3": "D"
+    }
+  },
+  "combinedWithOriginalFixedIdentity": {
+    "referenceSpeakerSeconds": 1958.649999999878,
+    "missSeconds": 447.6543389999846,
+    "falseAlarmSeconds": 21.037973000109123,
+    "confusionSeconds": 10.050677000003358,
+    "errorSeconds": 478.74298900009705,
+    "DER": 0.24442498098186347,
+    "identityForScoringOnly": {
+      "speaker_0": "C",
+      "speaker_1": "B",
+      "speaker_2": "A",
+      "speaker_3": "D"
+    }
+  },
+  "relativeDerReduction": 0.06055802308794991,
+  "nativeTimesAndAssociationStructurallyComplete": true,
+  "advanceToSecondEnglishSource": false,
+  "originalDerTenPercentGate": false,
+  "oneOriginalWholeSourceIdentityMappingForAllConditions": true,
+  "noPerBlockGoldPermutation": true,
+  "collarSeconds": 0,
+  "overlapIncluded": true,
+  "thresholdPaddingAndWordsChanged": false,
+  "newNeuralCalls": 0,
+  "trainingUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "predictionSha256": "1beb29f6ec579f380f22451ac73594df47b27510c8e7c32cb0a81a0b21a0c991",
+  "scorerSha256": "2735b1ec98437103fd30854c987e8b062d9ded1c53df5053f312e096504b1766",
+  "scope": "English-only activity supplement candidate; Chinese default remains the original continuous journal. ASR words, per-person text, facts, unseen meetings and end-user CPU execution remain separate gates.",
+  "limits": {
+    "pid": 22596,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 57065472,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

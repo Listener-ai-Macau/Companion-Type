@@ -1,0 +1,72 @@
+{
+  "at": "2026-11-17T14:39:27.251847+08:00",
+  "state": "COMPLETE_780M_WHOLE_SOURCE_ACTIVITY_SCORED_NOT_QUALITY_QUALIFIED",
+  "meeting": "ES2003b",
+  "audioSeconds": 2109.813375,
+  "allOriginalFrames": 33757014,
+  "originalNative8Baseline": {
+    "referenceSpeakerSeconds": 1958.649999999878,
+    "missSeconds": 488.3916319999852,
+    "falseAlarmSeconds": 13.661632000108053,
+    "confusionSeconds": 7.55031000000346,
+    "errorSeconds": 509.60357400009667,
+    "DER": 0.260181029790993,
+    "identityForScoringOnly": {
+      "speaker_0": "C",
+      "speaker_1": "B",
+      "speaker_2": "A",
+      "speaker_3": "D"
+    }
+  },
+  "native780mUsingSameWholeSourceIdentity": {
+    "referenceSpeakerSeconds": 1958.649999999878,
+    "missSeconds": 487.8815739999841,
+    "falseAlarmSeconds": 13.531574000107888,
+    "confusionSeconds": 6.9703110000036155,
+    "errorSeconds": 508.38345900009557,
+    "DER": 0.25955809307437633,
+    "identityForScoringOnly": {
+      "speaker_0": "C",
+      "speaker_1": "B",
+      "speaker_2": "A",
+      "speaker_3": "D"
+    }
+  },
+  "sameFrozenWeights": true,
+  "originalWholeMappingForBothConditions": true,
+  "collarSeconds": 0,
+  "overlapIncluded": true,
+  "selectedNativeDevice": {
+    "registryIndex": 0,
+    "name": "Vulkan0",
+    "description": "AMD Radeon 780M Graphics",
+    "type": 2,
+    "gpuOrdinal": 0
+  },
+  "nativeCreateAndFullInferenceSeconds": 14.71955909999815,
+  "wholeWorkerSeconds": 75.74201039999753,
+  "jobPeakPrivateCommitBytes": 1891921920,
+  "protocolSha256": "5890a924060707d3b99d173aa7e9ce5558a3e90e21f513e9a3015091e79d5b76",
+  "workerReceiptSha256": "67744d78690f555c49a59319dce74dd8e74b83b214b196923feac045028b8e28",
+  "newTextAsrMeasured": false,
+  "parameterUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "scope": "Native8 speaker activity runtime/backend comparison, not a new ASR model or a qualified diarization improvement.",
+  "limits": {
+    "pid": 25976,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 536870912,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 57012224,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

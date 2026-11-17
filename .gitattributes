@@ -535,3 +535,5 @@ evidence/20261117-chinese-moss-target-native-inputs-and-existing-supervisor-guar
 src/prepare_chinese_moss_inputs_20261117.py -text -whitespace
 
 src/moss_target_only_batch_20261117.py -text -whitespace
+
+evidence/20261117-owner-observation-policy-actual780m-and-fixed-vad-rejection/** -text -whitespace

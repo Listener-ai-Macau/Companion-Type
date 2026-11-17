@@ -2,6 +2,8 @@
 
 These conservative task thresholds are below the7840HS100C Tjmax. They are
 not a diagnosis, a board-temperature measurement or a hardware safety limit.
+An explicit owner observation-only policy removes these task temperature gates
+while retaining their historical behavior for frozen, unmodified protocols.
 """
 from datetime import datetime
 from pathlib import Path
@@ -16,8 +18,16 @@ class CpuThermalLimit(RuntimeError):
 
 def inspect_thermal_policy(policy):
     require(policy['sensorIdentifier']=='/amdcpu/0/temperature/2','Use the identified laptop CPU sensor')
-    require(policy['maximumStartCelsius']==85 and policy['stopCelsius']==95,
-        'Fixed conservative task thresholds changed')
+    mode=policy.get('mode','enforce')
+    require(mode in ('enforce','observe-only'),'Unknown task temperature policy')
+    if mode=='observe-only':
+        require(policy.get('ownerAuthorizedObservationOnly') is True and bool(policy.get('ownerQuote')),
+            'Observation-only policy must retain the explicit owner instruction')
+        require(policy['maximumStartCelsius'] is None and policy['stopCelsius'] is None,
+            'Observation-only policy cannot declare active CPU temperature cutoffs')
+    else:
+        require(policy['maximumStartCelsius']==85 and policy['stopCelsius']==95,
+            'Fixed conservative task thresholds changed')
     require(policy['maximumSampleAgeSeconds']==15 and policy['cacheSeconds']==1,
         'Fixed temperature freshness changed')
     require(policy['scope']=='owned model worker only; no system power/fan/clock changes',
@@ -34,8 +44,11 @@ def evaluate_temperature(snapshot,policy,*,now=None,starting=False):
     require(type(value) in (int,float) and math.isfinite(value) and 0<value<130,
         'Invalid identified CPU temperature')
     observed={'sampleAt':latest['At'],'celsius':value,'sampleAgeSeconds':age,
-        'sensorIdentifier':values[0]['Identifier'],'taskStartThresholdCelsius':85,'taskStopThresholdCelsius':95,
+        'sensorIdentifier':values[0]['Identifier'],
+        'taskStartThresholdCelsius':policy['maximumStartCelsius'],'taskStopThresholdCelsius':policy['stopCelsius'],
+        'observationOnly':policy.get('mode')=='observe-only',
         'hardwareOverheatCauseProven':False,'physicalMainboardTemperatureMeasured':False}
+    if policy.get('mode')=='observe-only':return observed
     if value>=policy['stopCelsius']:raise CpuThermalLimit('CPU temperature reached task stop threshold95C',observed)
     if starting and value>policy['maximumStartCelsius']:
         raise CpuThermalLimit('CPU temperature above task startup threshold85C',observed)
@@ -47,6 +60,17 @@ class ThermalGuard:
         for entry in policy['loggerSources']:
             require(sha(entry['file'])==entry['sha256'],'Frozen laptop logger source changed')
     def check(self,*,starting=False):
+        try:return self._read(starting=starting)
+        except (OSError,KeyError,RuntimeError,ValueError,psutil.Error) as error:
+            if self.policy.get('mode')!='observe-only':raise
+            # Missing telemetry is a diagnostic loss, not an inference gate,
+            # after the owner explicitly removed task CPU temperature cutoffs.
+            self.last=time.monotonic()
+            self.observed={'observationOnly':True,'cpuTelemetryAvailable':False,
+                'telemetryError':repr(error),'taskStartThresholdCelsius':None,
+                'taskStopThresholdCelsius':None,'hardwareOverheatCauseProven':False}
+            return self.observed
+    def _read(self,*,starting=False):
         tick=time.monotonic()
         if not starting and self.observed is not None and tick-self.last<self.policy['cacheSeconds']:
             return self.observed

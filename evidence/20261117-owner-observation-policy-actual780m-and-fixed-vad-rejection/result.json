@@ -1,0 +1,102 @@
+{
+  "at": "2026-11-17T14:56:00+08:00",
+  "state": "ACTUAL_780M_CONTROL_AND_WHOLE_MEETING_PASS_RUNTIME_FIXED_SILERO_REJECTED_QUALITY",
+  "ownerCpuTemperaturePolicy": {
+    "quote": "这个为什么会有这个软件门栏呢？没有必要有这个东西啊。",
+    "mode": "observe-only",
+    "maximumStartCelsius": null,
+    "stopCelsius": null,
+    "scope": "Current Companion model work. CPU temperature no longer starts/stops inference; telemetry failures are diagnostic only.",
+    "hardwareOsThermalControlsChanged": false,
+    "originalMemoryCpuLowRamAndTimeGuardsRetained": true
+  },
+  "rebootInvestigation": {
+    "ownerReport": "Games/3DMark high load stable; repeated restarts associated with model work and USB4 externalGPU dock.",
+    "priority": "Compute runtime/driver/USB4 eGPU path; preserve evidence and change one execution condition at a time.",
+    "cpuThermalCauseProven": false,
+    "gpuDriverOrVramCauseProven": false,
+    "existingGpuRebootsWereInferenceNotWeightTraining": true,
+    "driverOrTdrRegistrySettingsChanged": false,
+    "primaryMechanismReference": "https://learn.microsoft.com/en-us/windows-hardware/drivers/display/timeout-detection-and-recovery",
+    "successful780mVulkanTestDoesNotQualifyExternal6800xtHipOrUsb4Path": true
+  },
+  "integratedGpu": {
+    "device": {
+      "registryIndex": 0,
+      "name": "Vulkan0",
+      "description": "AMD Radeon 780M Graphics",
+      "type": 2,
+      "gpuOrdinal": 0
+    },
+    "backend": "Vulkan",
+    "model": "PinnedNative8FP16 speaker activity",
+    "weightsSha256": "5c7947680e6060e0d88cbbdd432bcee2b3edd2d3ea04c242326b067947e2027e",
+    "controlAudioSeconds": 61,
+    "controlPosteriorValues": 48808,
+    "maximumPosteriorDifference": 0.016933917999267578,
+    "meanPosteriorDifference": 0.00010267178004141897,
+    "thresholdActivityDisagreements": 13,
+    "thresholdDisagreementFraction": 0.0002663497787247992,
+    "sameFrozenRuntimeTolerancePassed": true,
+    "bitwiseEquivalent": false,
+    "controlModelCreateAndInferSeconds": 2.4110264999981155,
+    "controlPeakPrivateBytes": 1920823296,
+    "fullMeeting": "ES2003b",
+    "fullAudioSeconds": 2109.813375,
+    "allOriginalSamples": 33757014,
+    "fullModelCreateAndInferSeconds": 14.71955909999815,
+    "fullPeakPrivateBytes": 1891921920,
+    "baselineDer": 0.260181029790993,
+    "integratedGpuDerSameFixedMapping": 0.25955809307437633,
+    "neuralPushesControl": 3,
+    "neuralPushesWhole": 70,
+    "wholeSourceTimingIsObservedNotCrossBackendSpeedClaim": true,
+    "newTextAsrOrOverallProductAccuracyProven": false
+  },
+  "fixedVad": {
+    "model": "Original officialSilero defaultweights;CPU inference1thread and explicitBLAS1thread",
+    "protocol": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\protocol.json",
+    "protocolSha256": "cd68707553f45aed099d468edce51bba31dd5d66591087760e52124ed6f25661",
+    "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default",
+    "sourceHours": 1.1812563194444445,
+    "newNeuralCalls": 132955,
+    "privatePeakBytes": 853729280,
+    "cpuPercentMaximum": 5,
+    "sources": [
+      {
+        "meeting": "ES2003b",
+        "baselineDer": 0.260181029790993,
+        "combinedDer": 0.24442498098186347,
+        "relativeDerReduction": 0.06055802308794991,
+        "wholeSourceTwentyPercentAdmissionPassed": false,
+        "originalTenPercentDerPassed": false
+      },
+      {
+        "meeting": "EN2002a",
+        "baselineDer": 0.31076631650502384,
+        "combinedDer": 0.28068017832159725,
+        "relativeDerReduction": 0.096812738657731,
+        "wholeSourceTwentyPercentAdmissionPassed": false,
+        "originalTenPercentDerPassed": false
+      }
+    ],
+    "decision": "REJECT_FIXED_SILERO_PRESENCE_UNION_NO_GRID",
+    "directionDecision": "DefaultSilero and earlier fixedWebRTC both provide only small gains; stop replacing VAD or sweeping thresholds as the main diarization strategy. More reliable speaker activity/identity remains required.",
+    "originalNative8ActiveIntervalsWordsTimesAndScoringMappingChanged": false
+  },
+  "resources": {
+    "cpuPercentMaximum": 5,
+    "modelPrivateCommitMaximumBytes": 2147483648,
+    "minimumAvailableRamBytes": 3414499000,
+    "originalLowRamStopsRetained": true,
+    "parameterUpdates": 0,
+    "cpuOrIntegratedGpuTraining": false,
+    "ownedNeuralAndLoggerJobsTerminal": true
+  },
+  "qualityQualified": false,
+  "saleQualified": false,
+  "rawWord95Floor98TargetChanged": false,
+  "productDefaultChanged": false,
+  "finalHoldoutOpened": false,
+  "next": "Use the demonstrated780M path for model inference/comparison. Inspect whether the already selected English adaptation base has an exact nativeVulkan ASR execution path before spending training time; explicit model only, no new default download, no rejectedQwen quantization rerun or model/threshold grid. DedicatedGPU training remains a separate evening activity."
+}

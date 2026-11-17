@@ -1,0 +1,32 @@
+{
+  "at": "2026-11-17T14:31:16.433466+08:00",
+  "state": "PASS_780M_FP16_CONTROL_RUNTIME_ONLY",
+  "comparedPosteriorValues": 48808,
+  "maximumAbsoluteError": 0.016933917999267578,
+  "meanAbsoluteError": 0.00010267178004141897,
+  "thresholdActivityDisagreements": 13,
+  "thresholdActivityDisagreementFraction": 0.0002663497787247992,
+  "gate": {
+    "maximumAbsoluteError": 0.02,
+    "meanAbsoluteError": 0.001,
+    "maximumThresholdActivityDisagreementFraction": 0.001,
+    "scope": "Execution sanity check only, no quality gate replacement or bitwise equivalence claim."
+  },
+  "selectedNativeDevice": {
+    "registryIndex": 0,
+    "name": "Vulkan0",
+    "description": "AMD Radeon 780M Graphics",
+    "type": 2,
+    "gpuOrdinal": 0
+  },
+  "nativeCreateAndFullInferenceSeconds": 2.4110264999981155,
+  "audioSeconds": 61,
+  "jobPeakPrivateCommitBytes": 1920823296,
+  "originalCpuWholeWorkerSeconds": 3.270223599996825,
+  "timingIsNotControlledCrossBackendBenchmark": true,
+  "bitwiseEquivalent": false,
+  "qualityQualified": false,
+  "parameterUpdates": 0,
+  "wholeMeetingAcceptance": false,
+  "referencesRead": false
+}

@@ -1,0 +1,29 @@
+{
+  "at": "2026-11-17T14:17:02.472308+08:00",
+  "originalWorker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_nemotron_worker_20261107.py",
+  "originalWorkerSha256": "19e1d1f37e2c09c1c73cbe57860eefc795f6e2bbebfb36dbddef9ee6d9629cfc",
+  "newWorker": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\native8_780m_inference_20261117.py",
+  "newWorkerSha256": "5b70a496a32eb89e83ab3a8b5014674e3c712541d8c77bf62b60f7db8329d150",
+  "originalStrict6800SelectorUnchanged": true,
+  "runtimeOnly": true,
+  "parameterUpdates": 0,
+  "referenceLabelsPassedToWorker": false,
+  "controlPurpose": "One exact retained61s waveform to compare raw FP16 posteriors/threshold activity with CPU. Not a quality sample.",
+  "followupPurpose": "One original full ES2003b only if the61s runtime comparison passes; no new model/threshold grid.",
+  "originalAcceptanceMetricsChanged": false,
+  "qualityQualified": false,
+  "cpuControlManifest": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r1\\probabilities\\cpu-native8-control61\\probabilities.json",
+  "cpuControlManifestSha256": "19d6a3d6666b67ddbac3abe3434f11d20e355246186af5c18f1d5bd1a9a93aec",
+  "cpuControlState": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\cpu-native8-r1\\results\\cpu-native8-control61\\completed-state.json",
+  "cpuControlStateSha256": "fd67eeac50158e3ec442885783478402fc67d67e39ed20a73716780054a2426e",
+  "posteriorComparison": {
+    "maximumAbsoluteError": 0.02,
+    "meanAbsoluteError": 0.001,
+    "maximumThresholdActivityDisagreementFraction": 0.001,
+    "scope": "Execution sanity check only, no quality gate replacement or bitwise equivalence claim."
+  },
+  "priorControl": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r1",
+  "ownerResumedExplicit780mInference": true,
+  "priorFailureWasPreModelThermalAdmissionNotBackendUnsupported": true,
+  "automaticRetry": false
+}

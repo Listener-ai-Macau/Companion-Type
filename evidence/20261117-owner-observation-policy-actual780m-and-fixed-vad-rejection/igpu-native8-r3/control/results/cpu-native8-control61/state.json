@@ -1,0 +1,95 @@
+{
+  "state": "COMPLETE_780M_SPEAKER_JOURNAL_UNQUALIFIED",
+  "pid": 25984,
+  "startedAt": "2026-11-17T14:29:32+08:00",
+  "audioSha256": "c503b7334e26b9ef3dbc05a410870d5059e4bf5369a787ddd5e1e3915f83ccdd",
+  "referencePassedToWorker": false,
+  "gpuUsed": true,
+  "automaticRetries": 0,
+  "sourceSha256": "9818584756c1de2d8c68555ad399d4ab4598acfc59a6d6145bb5123cf1f5221d",
+  "nativeGeometry": "author-offline-explicit",
+  "newNeuralPushes": 3,
+  "completedNeuralFrames": 6101,
+  "limits": {
+    "pid": 25984,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1920823296,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "cpuTemperature": {
+    "sampleAt": "2026-11-17T14:30:38.9819967+08:00",
+    "celsius": 93.125,
+    "sampleAgeSeconds": 3.370888,
+    "sensorIdentifier": "/amdcpu/0/temperature/2",
+    "taskStartThresholdCelsius": null,
+    "taskStopThresholdCelsius": null,
+    "observationOnly": true,
+    "hardwareOverheatCauseProven": false,
+    "physicalMainboardTemperatureMeasured": false,
+    "snapshotSelection": {
+      "selectedFile": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\latest.json",
+      "sha256": "81b7e3c0d08d992a9cc0e33c9817f127fa4545e3e466c7db2c5d71fb48430a85",
+      "usedPrevious": false,
+      "primaryFailures": [],
+      "originalCorruptBytesPreserved": true
+    }
+  },
+  "nativeDeviceInventory": [
+    {
+      "registryIndex": 0,
+      "name": "Vulkan0",
+      "description": "AMD Radeon 780M Graphics",
+      "type": 2,
+      "gpuOrdinal": 0
+    },
+    {
+      "registryIndex": 1,
+      "name": "CPU",
+      "description": "AMD Ryzen 7 7840HS w/ Radeon 780M Graphics     ",
+      "type": 0
+    }
+  ],
+  "selectedNativeDevice": {
+    "registryIndex": 0,
+    "name": "Vulkan0",
+    "description": "AMD Radeon 780M Graphics",
+    "type": 2,
+    "gpuOrdinal": 0
+  },
+  "nativeInferenceStartedAt": "2026-11-17T14:30:40+08:00",
+  "backend": "vulkan-780m",
+  "appliedExplicitGeometry": {
+    "spkcache_len": 264,
+    "fifo_len": 40,
+    "chunk_len": 340,
+    "right_context": 40,
+    "update_period": 300,
+    "left_context": 0
+  },
+  "submittedSamples": 976000,
+  "totalAudioSamples": 976000,
+  "nativeFrameProbabilitiesStart": 0,
+  "nativeOutputSpeakers": 8,
+  "nativeSecondsPerFrame": 0.009999999776482582,
+  "nativeCreateAndFullInferenceSeconds": 2.4110264999981155,
+  "meeting": "cpu-native8-control61",
+  "audioSeconds": 61.0,
+  "predictedSpeakers": 4,
+  "segments": 9,
+  "rttmSha256": "3dfc0f0b4e400187e7ea8c9141fd4f8383bdb7df3ca3b09eb83a2bd2e4dbed73",
+  "allOriginalAudioSamplesSubmitted": true,
+  "oneContinuousSpeakerState": true,
+  "probabilityManifestSha256": "00ffd7f57ce1c6e013bb62ef1e504ea8d34845390284df1d815e86ed8237c96a",
+  "finishedAt": "2026-11-17T14:30:42+08:00",
+  "wholeWorkerSeconds": 69.79052729999967
+}

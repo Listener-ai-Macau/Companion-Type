@@ -11,7 +11,7 @@ os.environ.update(OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',MKL_NUM_THREADS='
 from moss_windows_resource_limits_20261104 import WorkerLimits
 from practical_io_20261107 import atomic_json
 from moss_windows_resource_limits_20261104 import SystemRamPressure
-from model_thermal_guard_20261117 import ThermalGuard
+from model_thermal_guard_20261117 import ThermalGuard,CpuThermalLimit
 from companion_local_pcm_session_20261114 import exclusive_file
 import psutil
 
@@ -48,7 +48,10 @@ def main():
         assert not pressure.low() and psutil.virtual_memory().available>=P['minimumAvailableBytes'],'Original RAM guard'
         assert datetime.now().astimezone()<datetime.fromisoformat(P['stopAt']),'Bounded iGPU test deadline'
         assert not (C/'stop.request').exists(),'Owned stop requested'
-        state['cpuTemperature']=thermal.check(starting=starting)
+        try:state['cpuTemperature']=thermal.check(starting=starting)
+        except CpuThermalLimit as error:
+            state['cpuTemperature']=error.observation
+            raise
     save()
     try:
         assert sha(__file__)==P['workerSourceSha256']
@@ -104,7 +107,7 @@ def main():
             check(lib.nemo_speech_diar_stream_finish(stream));collect();assert submitted==count and done>=math.floor(case['audioSeconds']/cadence)
         state['nativeCreateAndFullInferenceSeconds']=time.perf_counter()-inference_tick
         rows=probability_segments(array,done,cadence,case['audioSeconds'],P['probabilityThreshold']);assert rows
-        atomic_json(out/'speaker-journal.json',{'meeting':case['meeting'],'audioSha256':case['audioSha256'],'audioSeconds':case['audioSeconds'],'segments':rows,'scope':'Official native Q8 eight-channel activity; one continuous cached stream, uniform0.5 frame threshold. Anonymous IDs only, not separated words or real names/roles. No reference input.'})
+        atomic_json(out/'speaker-journal.json',{'meeting':case['meeting'],'audioSha256':case['audioSha256'],'audioSeconds':case['audioSeconds'],'segments':rows,'scope':'Official native eight-channel activity with the pinned model precision; one continuous cached stream, uniform0.5 frame threshold. Anonymous IDs only, not separated words or real names/roles. No reference input.'})
         rttm=out/'predicted.rttm';rttm.write_text(''.join(f"SPEAKER {case['meeting']} 1 {r['start']:.6f} {r['end']-r['start']:.6f} <NA> <NA> speaker_{r['speaker']} <NA> <NA>\n" for r in rows),encoding='utf8')
         state.update(state='COMPLETE_780M_SPEAKER_JOURNAL_UNQUALIFIED',meeting=case['meeting'],audioSeconds=case['audioSeconds'],predictedSpeakers=len({r['speaker'] for r in rows}),segments=len(rows),rttmSha256=sha(rttm),allOriginalAudioSamplesSubmitted=True,oneContinuousSpeakerState=True,probabilityManifestSha256=sha(cache/'probabilities.json'))
     except BaseException as error:

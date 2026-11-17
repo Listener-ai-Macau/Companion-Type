@@ -1,0 +1,325 @@
+{
+  "revision": 69,
+  "evidenceDirectory": "evidence/20261117-owner-observation-policy-actual780m-and-fixed-vad-rejection",
+  "sources": [
+    "src/model_thermal_guard_20261117.py",
+    "src/native8_780m_inference_20261117.py"
+  ],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "work\\prepare_owner_resumed_780m_20261117.py",
+      "name": "tools/prepare_owner_resumed_780m_20261117.py"
+    },
+    {
+      "source": "work\\record_780m_owner_policy_and_run_20261117.py",
+      "name": "tools/record_780m_owner_policy_and_run_20261117.py"
+    },
+    {
+      "source": "work\\prepare_owner_observed_silero_20261117.py",
+      "name": "tools/prepare_owner_observed_silero_20261117.py"
+    },
+    {
+      "source": "work\\score_780m_full_activity_20261117.py",
+      "name": "tools/score_780m_full_activity_20261117.py"
+    },
+    {
+      "source": "work\\record_owner_780m_and_vad_results_20261117.py",
+      "name": "tools/record_owner_780m_and_vad_results_20261117.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\owner-780m-and-fixed-vad-results-20261117.json",
+      "name": "result.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\audio-only.json",
+      "name": "igpu-native8-r2/control/audio-only.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\binding.json",
+      "name": "igpu-native8-r2/control/binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\owner-observation-policy-proof.json",
+      "name": "igpu-native8-r2/control/owner-observation-policy-proof.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\preparation.json",
+      "name": "igpu-native8-r2/control/preparation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\protocol.json",
+      "name": "igpu-native8-r2/control/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\thermal-guard-before-owner-observation-policy.py",
+      "name": "igpu-native8-r2/control/thermal-guard-before-owner-observation-policy.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\worker-before-trigger-observation-fix.py",
+      "name": "igpu-native8-r2/control/worker-before-trigger-observation-fix.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\results\\cpu-native8-control61\\completed-state.json",
+      "name": "igpu-native8-r2/control/results/cpu-native8-control61/completed-state.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\results\\cpu-native8-control61\\state.json",
+      "name": "igpu-native8-r2/control/results/cpu-native8-control61/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r2\\cpu-native8-control61-run.json",
+      "name": "igpu-native8-r2/run/cpu-native8-control61-run.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r2\\cpu-native8-control61-worker.log",
+      "name": "igpu-native8-r2/run/cpu-native8-control61-worker.log"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\audio-only.json",
+      "name": "igpu-native8-r3/control/audio-only.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\binding.json",
+      "name": "igpu-native8-r3/control/binding.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\preparation.json",
+      "name": "igpu-native8-r3/control/preparation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\protocol.json",
+      "name": "igpu-native8-r3/control/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\cpu-native8-control61\\completed-state.json",
+      "name": "igpu-native8-r3/control/results/cpu-native8-control61/completed-state.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\cpu-native8-control61\\predicted.rttm",
+      "name": "igpu-native8-r3/control/results/cpu-native8-control61/predicted.rttm"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\cpu-native8-control61\\speaker-journal.json",
+      "name": "igpu-native8-r3/control/results/cpu-native8-control61/speaker-journal.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\cpu-native8-control61\\state.json",
+      "name": "igpu-native8-r3/control/results/cpu-native8-control61/state.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\ES2003b\\completed-state.json",
+      "name": "igpu-native8-r3/control/results/ES2003b/completed-state.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\ES2003b\\predicted.rttm",
+      "name": "igpu-native8-r3/control/results/ES2003b/predicted.rttm"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\ES2003b\\speaker-journal.json",
+      "name": "igpu-native8-r3/control/results/ES2003b/speaker-journal.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\ES2003b\\state.json",
+      "name": "igpu-native8-r3/control/results/ES2003b/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\cpu-native8-control61-run.json",
+      "name": "igpu-native8-r3/run/cpu-native8-control61-run.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\cpu-native8-control61-worker.log",
+      "name": "igpu-native8-r3/run/cpu-native8-control61-worker.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\cpu61-vs-780m.json",
+      "name": "igpu-native8-r3/run/cpu61-vs-780m.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\ES2003b-fixed-mapping-activity-score.json",
+      "name": "igpu-native8-r3/run/ES2003b-fixed-mapping-activity-score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\ES2003b-run.json",
+      "name": "igpu-native8-r3/run/ES2003b-run.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\ES2003b-worker.log",
+      "name": "igpu-native8-r3/run/ES2003b-worker.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\probabilities\\cpu-native8-control61\\probabilities.json",
+      "name": "igpu-native8-r3/run/probabilities/cpu-native8-control61/probabilities.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\probabilities\\cpu-native8-control61\\probabilities.npy",
+      "name": "igpu-native8-r3/run/probabilities/cpu-native8-control61/probabilities.npy"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\probabilities\\ES2003b\\probabilities.json",
+      "name": "igpu-native8-r3/run/probabilities/ES2003b/probabilities.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\probabilities\\ES2003b\\probabilities.npy",
+      "name": "igpu-native8-r3/run/probabilities/ES2003b/probabilities.npy"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\preparation.json",
+      "name": "silero/control/preparation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\protocol.json",
+      "name": "silero/control/protocol.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\scoring-control.json",
+      "name": "silero/control/scoring-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\completed.json",
+      "name": "silero/run/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\EN2002a-presence.json",
+      "name": "silero/run/EN2002a-presence.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\EN2002a-score.json",
+      "name": "silero/run/EN2002a-score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\ES2003b-presence.json",
+      "name": "silero/run/ES2003b-presence.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\ES2003b-score.json",
+      "name": "silero/run/ES2003b-score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\silence-control.json",
+      "name": "silero/run/silence-control.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\state.json",
+      "name": "silero/run/state.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\state.json.previous",
+      "name": "silero/run/state.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\worker.lock",
+      "name": "silero/run/worker.lock"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\EN2002a-composition\\combined.rttm",
+      "name": "silero/run/EN2002a-composition/combined.rttm"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\EN2002a-composition\\prediction.json",
+      "name": "silero/run/EN2002a-composition/prediction.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\EN2002a-composition\\presence-identity-supplement.rttm",
+      "name": "silero/run/EN2002a-composition/presence-identity-supplement.rttm"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\ES2003b-composition\\combined.rttm",
+      "name": "silero/run/ES2003b-composition/combined.rttm"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\ES2003b-composition\\prediction.json",
+      "name": "silero/run/ES2003b-composition/prediction.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\ES2003b-composition\\presence-identity-supplement.rttm",
+      "name": "silero/run/ES2003b-composition/presence-identity-supplement.rttm"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\completed.json",
+      "name": "thermal/igpu-native8-owner-resume-thermal-r2/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\latest.json",
+      "name": "thermal/igpu-native8-owner-resume-thermal-r2/latest.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\latest.json.previous",
+      "name": "thermal/igpu-native8-owner-resume-thermal-r2/latest.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\monitor_thermal_20261117.py",
+      "name": "thermal/igpu-native8-owner-resume-thermal-r2/monitor_thermal_20261117.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\read_laptop_thermal_stream_20261117.ps1",
+      "name": "thermal/igpu-native8-owner-resume-thermal-r2/read_laptop_thermal_stream_20261117.ps1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\samples.jsonl",
+      "name": "thermal/igpu-native8-owner-resume-thermal-r2/samples.jsonl"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\started.json",
+      "name": "thermal/igpu-native8-owner-resume-thermal-r2/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\stderr.log",
+      "name": "thermal/igpu-native8-owner-resume-thermal-r2/stderr.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\stop.request",
+      "name": "thermal/igpu-native8-owner-resume-thermal-r2/stop.request"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\completed.json",
+      "name": "thermal/igpu-native8-owner-observe-thermal-r3/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\latest.json",
+      "name": "thermal/igpu-native8-owner-observe-thermal-r3/latest.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\latest.json.previous",
+      "name": "thermal/igpu-native8-owner-observe-thermal-r3/latest.json.previous"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\monitor_thermal_20261117.py",
+      "name": "thermal/igpu-native8-owner-observe-thermal-r3/monitor_thermal_20261117.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\read_laptop_thermal_stream_20261117.ps1",
+      "name": "thermal/igpu-native8-owner-observe-thermal-r3/read_laptop_thermal_stream_20261117.ps1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\samples.jsonl",
+      "name": "thermal/igpu-native8-owner-observe-thermal-r3/samples.jsonl"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\started.json",
+      "name": "thermal/igpu-native8-owner-observe-thermal-r3/started.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\stderr.log",
+      "name": "thermal/igpu-native8-owner-observe-thermal-r3/stderr.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\stop.request",
+      "name": "thermal/igpu-native8-owner-observe-thermal-r3/stop.request"
+    }
+  ],
+  "commitMessage": "Apply owner CPU telemetry policy and prove780M whole inference; reject fixed defaultSilero union",
+  "claims": {
+    "state": "ACTUAL_780M_CONTROL_AND_WHOLE_MEETING_PASS_RUNTIME_FIXED_SILERO_REJECTED_QUALITY",
+    "actual780mControlAndWholeInference": true,
+    "sileroCandidateRejected": true,
+    "cpuTemperatureMode": "owner-authorized-observe-only",
+    "parameterUpdates": 0,
+    "cpuOrIntegratedGpuTraining": false,
+    "originalMemoryCpuAndQualityGatesRetained": true,
+    "rawAudioModelWeightsOrCredentialsIncluded": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "systemDriverTdrOrHardwareThermalSettingsChanged": false
+  }
+}

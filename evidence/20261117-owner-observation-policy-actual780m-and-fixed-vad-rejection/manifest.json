@@ -1,0 +1,483 @@
+{
+  "at": "2026-11-17T14:56:00.836391+08:00",
+  "parent": "e1db3a98fe7be07f93da92a88d60c647c6b8b38d",
+  "entries": [
+    {
+      "source": "work\\prepare_owner_resumed_780m_20261117.py",
+      "file": "tools/prepare_owner_resumed_780m_20261117.py",
+      "bytes": 5358,
+      "sha256": "45b08a71a0e7428edbf1aa8388277b976dc8f1366248ef7105ba5e48e31b1c96"
+    },
+    {
+      "source": "work\\record_780m_owner_policy_and_run_20261117.py",
+      "file": "tools/record_780m_owner_policy_and_run_20261117.py",
+      "bytes": 3868,
+      "sha256": "eae513d728fbf03a11a51193b9df36a34f7ce8b416cd7e86930d9fe21cc02d2d"
+    },
+    {
+      "source": "work\\prepare_owner_observed_silero_20261117.py",
+      "file": "tools/prepare_owner_observed_silero_20261117.py",
+      "bytes": 2972,
+      "sha256": "78d09c7fbb9f992d99d3e7e729956f7fe497da0511c2fe8d8e99da38ff3470e5"
+    },
+    {
+      "source": "work\\score_780m_full_activity_20261117.py",
+      "file": "tools/score_780m_full_activity_20261117.py",
+      "bytes": 3721,
+      "sha256": "1904362607eb2c42cae495ae0d04ae6631dbc6b04fad92ee5d2032355d4feeae"
+    },
+    {
+      "source": "work\\record_owner_780m_and_vad_results_20261117.py",
+      "file": "tools/record_owner_780m_and_vad_results_20261117.py",
+      "bytes": 11673,
+      "sha256": "224141ed3d44e8d92b655e50602ea845768c1f3f65fd689a5700cbe0fb483057"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\owner-780m-and-fixed-vad-results-20261117.json",
+      "file": "result.json",
+      "bytes": 5200,
+      "sha256": "71405404a10e585f15bda5d1050894187b179fd81573488a99dd29ccabe83e6d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\audio-only.json",
+      "file": "igpu-native8-r2/control/audio-only.json",
+      "bytes": 538,
+      "sha256": "16969524593eb19b619f17335a620bf747e82a8e889f3163680f669db48fe0fb"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\binding.json",
+      "file": "igpu-native8-r2/control/binding.json",
+      "bytes": 2101,
+      "sha256": "99f1d3038fffa02579fb0376db159349bf8eb5e0a24025cce2c2878311e9f06c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\owner-observation-policy-proof.json",
+      "file": "igpu-native8-r2/control/owner-observation-policy-proof.json",
+      "bytes": 314,
+      "sha256": "dac6019dc471a296cc0fd8dd8b302bc4d6c94a37aa23dba8ce1995773d890822"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\preparation.json",
+      "file": "igpu-native8-r2/control/preparation.json",
+      "bytes": 1447,
+      "sha256": "e3e3583a5600cee2668f544101bf7fe6556d19ef4c23a995221fcf1c0480b3ae"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\protocol.json",
+      "file": "igpu-native8-r2/control/protocol.json",
+      "bytes": 7385,
+      "sha256": "5bb6961e88eefe9671da9b0e5de739880d5f6edda4bf83fca650c03db91d63d7"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\thermal-guard-before-owner-observation-policy.py",
+      "file": "igpu-native8-r2/control/thermal-guard-before-owner-observation-policy.py",
+      "bytes": 3826,
+      "sha256": "08bbcffcb0a018982bc2d6b4804deb306dc427c2be033525faf7417eff18561d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\worker-before-trigger-observation-fix.py",
+      "file": "igpu-native8-r2/control/worker-before-trigger-observation-fix.py",
+      "bytes": 12282,
+      "sha256": "5b70a496a32eb89e83ab3a8b5014674e3c712541d8c77bf62b60f7db8329d150"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\results\\cpu-native8-control61\\completed-state.json",
+      "file": "igpu-native8-r2/control/results/cpu-native8-control61/completed-state.json",
+      "bytes": 3206,
+      "sha256": "634cd771ea5b2d02630c4b2882720001a9fb56751cd8e8d0d453f8dab24e7092"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r2\\results\\cpu-native8-control61\\state.json",
+      "file": "igpu-native8-r2/control/results/cpu-native8-control61/state.json",
+      "bytes": 3206,
+      "sha256": "634cd771ea5b2d02630c4b2882720001a9fb56751cd8e8d0d453f8dab24e7092"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r2\\cpu-native8-control61-run.json",
+      "file": "igpu-native8-r2/run/cpu-native8-control61-run.json",
+      "bytes": 837,
+      "sha256": "0e0fe8edf53599e7b1234c29a436ecbfa12e4d61315fb6b59e78e00fe362ac5a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r2\\cpu-native8-control61-worker.log",
+      "file": "igpu-native8-r2/run/cpu-native8-control61-worker.log",
+      "bytes": 4605,
+      "sha256": "5c3a41b1d4ba5c5992fdb94e7c67629e5ddcb16efef97a27e7031233dd069cfa"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\audio-only.json",
+      "file": "igpu-native8-r3/control/audio-only.json",
+      "bytes": 538,
+      "sha256": "16969524593eb19b619f17335a620bf747e82a8e889f3163680f669db48fe0fb"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\binding.json",
+      "file": "igpu-native8-r3/control/binding.json",
+      "bytes": 2312,
+      "sha256": "c2dd1208cd9811206599faa71dd918fa67aacabc4add68919ea552f889b749dc"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\preparation.json",
+      "file": "igpu-native8-r3/control/preparation.json",
+      "bytes": 1528,
+      "sha256": "adfd4480290d633c85005f60dca3ce94791ca44b9b3e056760e705263ec069c2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\protocol.json",
+      "file": "igpu-native8-r3/control/protocol.json",
+      "bytes": 7623,
+      "sha256": "5890a924060707d3b99d173aa7e9ce5558a3e90e21f513e9a3015091e79d5b76"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\cpu-native8-control61\\completed-state.json",
+      "file": "igpu-native8-r3/control/results/cpu-native8-control61/completed-state.json",
+      "bytes": 3238,
+      "sha256": "997088a01f34217349fddf51d778597a1358c8474059c357e5da89175b1948c2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\cpu-native8-control61\\predicted.rttm",
+      "file": "igpu-native8-r3/control/results/cpu-native8-control61/predicted.rttm",
+      "bytes": 739,
+      "sha256": "3dfc0f0b4e400187e7ea8c9141fd4f8383bdb7df3ca3b09eb83a2bd2e4dbed73"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\cpu-native8-control61\\speaker-journal.json",
+      "file": "igpu-native8-r3/control/results/cpu-native8-control61/speaker-journal.json",
+      "bytes": 1274,
+      "sha256": "b1b7f01bb8a1b1fc05c584a7873df38f24b7e0c01cbbc41985216cfb2d903634"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\cpu-native8-control61\\state.json",
+      "file": "igpu-native8-r3/control/results/cpu-native8-control61/state.json",
+      "bytes": 3238,
+      "sha256": "997088a01f34217349fddf51d778597a1358c8474059c357e5da89175b1948c2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\ES2003b\\completed-state.json",
+      "file": "igpu-native8-r3/control/results/ES2003b/completed-state.json",
+      "bytes": 3241,
+      "sha256": "67744d78690f555c49a59319dce74dd8e74b83b214b196923feac045028b8e28"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\ES2003b\\predicted.rttm",
+      "file": "igpu-native8-r3/control/results/ES2003b/predicted.rttm",
+      "bytes": 69254,
+      "sha256": "f18a193b5989010870d91e6eb3c1c645197b6534d8607df44d7a265d89b66478"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\ES2003b\\speaker-journal.json",
+      "file": "igpu-native8-r3/control/results/ES2003b/speaker-journal.json",
+      "bytes": 98986,
+      "sha256": "6782f4ccfd79993c5ea1a4c3e7804a0f71512241890fa35659ed7ea25757b5e8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\igpu-native8-r3\\results\\ES2003b\\state.json",
+      "file": "igpu-native8-r3/control/results/ES2003b/state.json",
+      "bytes": 3241,
+      "sha256": "67744d78690f555c49a59319dce74dd8e74b83b214b196923feac045028b8e28"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\cpu-native8-control61-run.json",
+      "file": "igpu-native8-r3/run/cpu-native8-control61-run.json",
+      "bytes": 800,
+      "sha256": "04e1501a0cf7d885adccb61dd284150af48f2dbb84cc81f02e5071ffaa889913"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\cpu-native8-control61-worker.log",
+      "file": "igpu-native8-r3/run/cpu-native8-control61-worker.log",
+      "bytes": 3121,
+      "sha256": "9d762d9cec783b482dd16c52da8d2b5986b326f312fca0f7ba9e1730e07e88d4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\cpu61-vs-780m.json",
+      "file": "igpu-native8-r3/run/cpu61-vs-780m.json",
+      "bytes": 1152,
+      "sha256": "a71cf1b26b0f6e183db95684f86539e0523f87912457e77034bfdd3af37b7442"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\ES2003b-fixed-mapping-activity-score.json",
+      "file": "igpu-native8-r3/run/ES2003b-fixed-mapping-activity-score.json",
+      "bytes": 2439,
+      "sha256": "4d22fa3cdfd73e680dba6d736483bb570117d22a237967020151e5c47aa8f813"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\ES2003b-run.json",
+      "file": "igpu-native8-r3/run/ES2003b-run.json",
+      "bytes": 774,
+      "sha256": "a27ad71d0ab0077f132946565c639a68d45b76a3198022d60c7e77eeb8a4b69f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\ES2003b-worker.log",
+      "file": "igpu-native8-r3/run/ES2003b-worker.log",
+      "bytes": 3124,
+      "sha256": "798aaa884bbe5671479c3491b8366ca8b3c961db2a1d5a6970228fe572faf188"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\probabilities\\cpu-native8-control61\\probabilities.json",
+      "file": "igpu-native8-r3/run/probabilities/cpu-native8-control61/probabilities.json",
+      "bytes": 733,
+      "sha256": "00ffd7f57ce1c6e013bb62ef1e504ea8d34845390284df1d815e86ed8237c96a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\probabilities\\cpu-native8-control61\\probabilities.npy",
+      "file": "igpu-native8-r3/run/probabilities/cpu-native8-control61/probabilities.npy",
+      "bytes": 228128,
+      "sha256": "0a47cafaf5822567e1d020eaaf5f26ea8809cb5453e730bbd017f21b2277afaa"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\probabilities\\ES2003b\\probabilities.json",
+      "file": "igpu-native8-r3/run/probabilities/ES2003b/probabilities.json",
+      "bytes": 739,
+      "sha256": "db2fc2dbbdcba4559d14444d9038965b372c31dff7f97fcf76cbca9f2053d0c0"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\igpu-native8-r3\\probabilities\\ES2003b\\probabilities.npy",
+      "file": "igpu-native8-r3/run/probabilities/ES2003b/probabilities.npy",
+      "bytes": 6784320,
+      "sha256": "f4682822f72246c74e55d0e08ed5cd096c739bf5258eed517c4aa56d94e3472e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\preparation.json",
+      "file": "silero/control/preparation.json",
+      "bytes": 684,
+      "sha256": "baf29af08e3d42297ed89b2a92055d229779ff380d9831a5c97833a87a290a78"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\protocol.json",
+      "file": "silero/control/protocol.json",
+      "bytes": 10565,
+      "sha256": "cd68707553f45aed099d468edce51bba31dd5d66591087760e52124ed6f25661"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\scoring-control.json",
+      "file": "silero/control/scoring-control.json",
+      "bytes": 1563,
+      "sha256": "069c71eb4992a23d740da79c751784fb01ad753add0259e247fdc890ea92cd0d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\completed.json",
+      "file": "silero/run/completed.json",
+      "bytes": 3064,
+      "sha256": "622793183072db398521aae01bfb6c4a583a1b3afe97d3b7c4d66feb33a10c0d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\EN2002a-presence.json",
+      "file": "silero/run/EN2002a-presence.json",
+      "bytes": 45148,
+      "sha256": "e30831b0141b00e95c6d9f93ac51252e8b27e496a1caab6fcb2fad821a457fb1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\EN2002a-score.json",
+      "file": "silero/run/EN2002a-score.json",
+      "bytes": 2862,
+      "sha256": "a391523df6145d10ee27517f15afe5d32e3ea71037435a7212269c8fba898da4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\ES2003b-presence.json",
+      "file": "silero/run/ES2003b-presence.json",
+      "bytes": 44856,
+      "sha256": "12bae1d6e97387a36932fdba9eaab18e34f436955f3daf352d07b205f0ec9829"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\ES2003b-score.json",
+      "file": "silero/run/ES2003b-score.json",
+      "bytes": 2817,
+      "sha256": "d69970bb019a463797c1276eb233bba3d7c1a94a463aa27c2143507910e4735f"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\silence-control.json",
+      "file": "silero/run/silence-control.json",
+      "bytes": 94,
+      "sha256": "a83911d450ba2d188b8ddf9d4368ba88cece81a3e4d9157d4fb8bfa99e795511"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\state.json",
+      "file": "silero/run/state.json",
+      "bytes": 3064,
+      "sha256": "622793183072db398521aae01bfb6c4a583a1b3afe97d3b7c4d66feb33a10c0d"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\state.json.previous",
+      "file": "silero/run/state.json.previous",
+      "bytes": 2955,
+      "sha256": "eb30006763db6cf505fa69456c4ffbf27aa018ddf2db27d7cbdad8a88fa1f272"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\worker.lock",
+      "file": "silero/run/worker.lock",
+      "bytes": 1,
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\EN2002a-composition\\combined.rttm",
+      "file": "silero/run/EN2002a-composition/combined.rttm",
+      "bytes": 116430,
+      "sha256": "6b2ebf07f8c062dc244cedb8ff2ca5fe3147c71e8bb8403520308ae8e5ebde6e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\EN2002a-composition\\prediction.json",
+      "file": "silero/run/EN2002a-composition/prediction.json",
+      "bytes": 2916,
+      "sha256": "1df89f08b53ad6dd066f62bde5b14ab7248a4ae7566b09c900ad9e3b9cd2a325"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\EN2002a-composition\\presence-identity-supplement.rttm",
+      "file": "silero/run/EN2002a-composition/presence-identity-supplement.rttm",
+      "bytes": 64543,
+      "sha256": "a6b32d63221e7525caa91270896b0c836e37142e8264dcee0cb9a7f117de731c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\ES2003b-composition\\combined.rttm",
+      "file": "silero/run/ES2003b-composition/combined.rttm",
+      "bytes": 70704,
+      "sha256": "b6826d3028c26c3c030a1d1ccc61134b5524d338a7015504c5a7b07a83b71473"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\ES2003b-composition\\prediction.json",
+      "file": "silero/run/ES2003b-composition/prediction.json",
+      "bytes": 2964,
+      "sha256": "1beb29f6ec579f380f22451ac73594df47b27510c8e7c32cb0a81a0b21a0c991"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\context-activity-r1\\silero-owner-observe-r4\\run-default\\ES2003b-composition\\presence-identity-supplement.rttm",
+      "file": "silero/run/ES2003b-composition/presence-identity-supplement.rttm",
+      "bytes": 33518,
+      "sha256": "b8f3800a9c9e02ee7bf7553d733ef3fd94c9fa34c0e7a9f15061993058f7e564"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\completed.json",
+      "file": "thermal/igpu-native8-owner-resume-thermal-r2/completed.json",
+      "bytes": 981,
+      "sha256": "ec03d4ae12c48325e4125db7898c530338d654a07e62641e6ef08638c6bf2207"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\latest.json",
+      "file": "thermal/igpu-native8-owner-resume-thermal-r2/latest.json",
+      "bytes": 1446,
+      "sha256": "938d4c880d1f394f726b00fb38bd91f23fc7582e99f5834b7c539518b1882014"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\latest.json.previous",
+      "file": "thermal/igpu-native8-owner-resume-thermal-r2/latest.json.previous",
+      "bytes": 1340,
+      "sha256": "ecac90e18d6b248ba93523813b1a2a440e18feb0a0f05d77bfa5ea2c9d1d29f2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\monitor_thermal_20261117.py",
+      "file": "thermal/igpu-native8-owner-resume-thermal-r2/monitor_thermal_20261117.py",
+      "bytes": 5305,
+      "sha256": "a28ab46a34bc31127ca3c8fb7de63d0d866005456639d62d2df8d2603c4f37c1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\read_laptop_thermal_stream_20261117.ps1",
+      "file": "thermal/igpu-native8-owner-resume-thermal-r2/read_laptop_thermal_stream_20261117.ps1",
+      "bytes": 2717,
+      "sha256": "0e0a177ffecddda95818c5c50f1fd58acc272fb516da1e397ba9e6fd8745c964"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\samples.jsonl",
+      "file": "thermal/igpu-native8-owner-resume-thermal-r2/samples.jsonl",
+      "bytes": 130362,
+      "sha256": "191a767955e20a6593f3e6e37ef1deef636e706676c9c23725bc8a8fed0e16b2"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\started.json",
+      "file": "thermal/igpu-native8-owner-resume-thermal-r2/started.json",
+      "bytes": 960,
+      "sha256": "732058f3c97b56efaba3c4cc1638a077e9f9eb1c457fe32fe8fe5bd26c3d190c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\stderr.log",
+      "file": "thermal/igpu-native8-owner-resume-thermal-r2/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-resume-thermal-r2\\stop.request",
+      "file": "thermal/igpu-native8-owner-resume-thermal-r2/stop.request",
+      "bytes": 108,
+      "sha256": "7c82e667cbe630e28069d8446103f7c7fb6a4b3b85e22e422353ec4a7ccc50a9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\completed.json",
+      "file": "thermal/igpu-native8-owner-observe-thermal-r3/completed.json",
+      "bytes": 983,
+      "sha256": "2f6b389952cee53fdfa25e66d1df9377853e9e60b59ec235c57296ae2321ee37"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\latest.json",
+      "file": "thermal/igpu-native8-owner-observe-thermal-r3/latest.json",
+      "bytes": 1224,
+      "sha256": "7e80ea906243133add4496b56ec50379ee13b365ea195896345960df8c849e2a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\latest.json.previous",
+      "file": "thermal/igpu-native8-owner-observe-thermal-r3/latest.json.previous",
+      "bytes": 1224,
+      "sha256": "f24ff129a9f4df75f4e29464180a3af5885ca26b2d516bbeda02ff3fbdbec5b8"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\monitor_thermal_20261117.py",
+      "file": "thermal/igpu-native8-owner-observe-thermal-r3/monitor_thermal_20261117.py",
+      "bytes": 5305,
+      "sha256": "a28ab46a34bc31127ca3c8fb7de63d0d866005456639d62d2df8d2603c4f37c1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\read_laptop_thermal_stream_20261117.ps1",
+      "file": "thermal/igpu-native8-owner-observe-thermal-r3/read_laptop_thermal_stream_20261117.ps1",
+      "bytes": 2717,
+      "sha256": "0e0a177ffecddda95818c5c50f1fd58acc272fb516da1e397ba9e6fd8745c964"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\samples.jsonl",
+      "file": "thermal/igpu-native8-owner-observe-thermal-r3/samples.jsonl",
+      "bytes": 194858,
+      "sha256": "41f4fc1bfec7665e0486be8a7cac8bbc9b0149d658d4596b3593b9696ca8772a"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\started.json",
+      "file": "thermal/igpu-native8-owner-observe-thermal-r3/started.json",
+      "bytes": 963,
+      "sha256": "37259666f1e16ae7e3b2b85e15dcf8ab640865172b0e49f5c28c58a66be2624b"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\stderr.log",
+      "file": "thermal/igpu-native8-owner-observe-thermal-r3/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\igpu-native8-owner-observe-thermal-r3\\stop.request",
+      "file": "thermal/igpu-native8-owner-observe-thermal-r3/stop.request",
+      "bytes": 125,
+      "sha256": "5c1ef1f1a7a9df755ae91395d7190db193e22ec76f14c0a5e2bd4ba8f74f2fcd"
+    },
+    {
+      "source": "work\\checkpoint_owner_780m_r69.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 20937,
+      "sha256": "e9577fc1eee95bcfdfca0dbe6d4c13b59b697d4b93e0752ac53d77c5b4d5701e"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {
+    "src/model_thermal_guard_20261117.py": "34a1a53828e70cd82117f8717d528b26ee89280e4eac6d33e2f0bdb20a8a15eb",
+    "src/native8_780m_inference_20261117.py": "9818584756c1de2d8c68555ad399d4ab4598acfc59a6d6145bb5123cf1f5221d"
+  },
+  "state": "ACTUAL_780M_CONTROL_AND_WHOLE_MEETING_PASS_RUNTIME_FIXED_SILERO_REJECTED_QUALITY",
+  "actual780mControlAndWholeInference": true,
+  "sileroCandidateRejected": true,
+  "cpuTemperatureMode": "owner-authorized-observe-only",
+  "parameterUpdates": 0,
+  "cpuOrIntegratedGpuTraining": false,
+  "originalMemoryCpuAndQualityGatesRetained": true,
+  "rawAudioModelWeightsOrCredentialsIncluded": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "systemDriverTdrOrHardwareThermalSettingsChanged": false
+}
