@@ -1,0 +1,31 @@
+{
+  "treeSha": "bad82b77c3753df1b232c5c6491cd3e2f2e32d24",
+  "truncated": false,
+  "entries": 273,
+  "speakerInformationTables": [],
+  "perMeetingEvalCsvCount": 20,
+  "evaluationCsvFilesOpened": false,
+  "globalIdentityTableFound": false,
+  "at": "2026-11-17T10:05:50.262025+08:00",
+  "officialDocHeadProbes": [
+    {
+      "url": "https://aishell-4.oss-cn-hangzhou.aliyuncs.com/DOC/spk_info.xlsx",
+      "httpStatusLines": [
+        "HTTP/1.1 200 Connection established",
+        "HTTP/1.1 404 Not Found"
+      ],
+      "headersSha256": "85b57bf1c0184aebdd853e35f2cbeec1e52334323f3f01e3432b2a46cf0fbb67",
+      "responseBodyRead": false
+    },
+    {
+      "url": "https://www.openslr.org/resources/111/DOC/spk_info.xlsx",
+      "httpStatusLines": [
+        "HTTP/1.1 200 Connection established",
+        "HTTP/1.1 404 Not Found"
+      ],
+      "headersSha256": "c5a9de126034aae22df2d9fb2d2f2e65ca960848f0c38de30752468c8e4eaed1",
+      "responseBodyRead": false
+    }
+  ],
+  "specific404PathsDoNotProveNoPublicTableAnywhere": true
+}

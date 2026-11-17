@@ -1,0 +1,65 @@
+{
+  "revision": 62,
+  "evidenceDirectory": "evidence/20261117-chinese-person-isolation-and-rocm-driver-alignment",
+  "sources": [],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-global-speaker-audit-20261117.json",
+      "name": "chinese-global-speaker-audit.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\rocm10-driver-alignment-20261117.json",
+      "name": "rocm10-driver-alignment.json"
+    },
+    {
+      "source": "work\\audit_chinese_speaker_metadata_20261117.py",
+      "name": "tools/audit_chinese_speaker_metadata_20261117.py"
+    },
+    {
+      "source": "work\\record_chinese_metadata_batch_20261117.py",
+      "name": "tools/record_chinese_metadata_batch_20261117.py"
+    },
+    {
+      "source": "work\\audit_rocm_release_alignment_20261117.py",
+      "name": "tools/audit_rocm_release_alignment_20261117.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-speaker-audit-r1\\global-table-location-evidence.json",
+      "name": "metadata-evidence/global-table-location-evidence.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-speaker-audit-r1\\official-doc-table-head.txt",
+      "name": "metadata-evidence/official-doc-table-head.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-speaker-audit-r1\\openslr-doc-table-head.txt",
+      "name": "metadata-evidence/openslr-doc-table-head.txt"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-speaker-audit-r1\\bounded-archive-probe.json",
+      "name": "metadata-evidence/bounded-archive-probe.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-speaker-audit-r1\\audit-before-metadata-path-fix.py",
+      "name": "metadata-evidence/audit-before-metadata-path-fix.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-speaker-audit-r1\\audit-metadata-path-failure.json",
+      "name": "metadata-evidence/audit-metadata-path-failure.json"
+    }
+  ],
+  "commitMessage": "Audit Chinese speaker isolation and version-specific ROCm driver alignment",
+  "claims": {
+    "state": "METADATA_AUDITS_COMPLETE_GLOBAL_CHINESE_IDENTITIES_AND_GPU_STABILITY_REMAIN_OPEN",
+    "newNeuralCalls": 0,
+    "newGpuCalls": 0,
+    "parameterUpdates": 0,
+    "chinesePersonSplitVerified": false,
+    "driverMismatchProvenCause": false,
+    "driverChanged": false,
+    "finalHoldoutOpened": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

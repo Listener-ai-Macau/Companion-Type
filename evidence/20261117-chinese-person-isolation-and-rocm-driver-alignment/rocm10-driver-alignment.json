@@ -1,0 +1,133 @@
+{
+  "at": "2026-11-17T10:12:01+08:00",
+  "state": "VERSION_SPECIFIC_DRIVER_ALIGNMENT_GAP_FOUND_NOT_A_PROVEN_RESTART_CAUSE",
+  "os": {
+    "DisplayVersion": "25H2",
+    "CurrentBuildNumber": "26200",
+    "UBR": 8875
+  },
+  "computerModelWithoutSerialOrUuid": {
+    "Manufacturer": "WOOKING",
+    "Model": "X14 Pro",
+    "SystemType": "x64-based PC"
+  },
+  "installedPackagesReadWithoutImportingTorch": [
+    {
+      "name": "torch",
+      "version": "2.11.0+rocm10.0.0"
+    },
+    {
+      "name": "amd-torch-device-gfx1030",
+      "version": "2.11.0+rocm10.0.0"
+    },
+    {
+      "name": "rocm",
+      "version": "10.0.0"
+    },
+    {
+      "name": "rocm-sdk-core",
+      "version": "10.0.0"
+    },
+    {
+      "name": "rocm-sdk-device-gfx1030",
+      "version": "10.0.0"
+    },
+    {
+      "name": "rocm-sdk-libraries",
+      "version": "10.0.0"
+    }
+  ],
+  "cachedWheelMetadataChecks": [
+    {
+      "name": "torch",
+      "wheel": "torch-2.11.0+rocm10.0.0-cp311-cp311-win_amd64.whl",
+      "wheelMetadataSha256": "f558ca1b532b7456a2fa04fc98ef16ddc3cadffea77cbb801d11ba58fc4cee40",
+      "installedMetadataSha256": "f558ca1b532b7456a2fa04fc98ef16ddc3cadffea77cbb801d11ba58fc4cee40",
+      "metadataLfEquivalent": true
+    },
+    {
+      "name": "rocm-sdk-core",
+      "wheel": "rocm_sdk_core-10.0.0-py3-none-win_amd64.whl",
+      "wheelMetadataSha256": "691757cdde68e4e5e76452d4bf8556efd017a1fb898dd76be2e10c3b9a616e0c",
+      "installedMetadataSha256": "691757cdde68e4e5e76452d4bf8556efd017a1fb898dd76be2e10c3b9a616e0c",
+      "metadataLfEquivalent": true
+    },
+    {
+      "name": "amd-torch-device-gfx1030",
+      "wheel": "amd_torch_device_gfx1030-2.11.0+rocm10.0.0-cp311-cp311-win_amd64.whl",
+      "wheelMetadataSha256": "fefd39ac85258a4c2bd021f4ae697792dd44d583747f9b3dfdbcb0083a639bcb",
+      "installedMetadataSha256": "fefd39ac85258a4c2bd021f4ae697792dd44d583747f9b3dfdbcb0083a639bcb",
+      "metadataLfEquivalent": true
+    }
+  ],
+  "installedDriverStoreVersionsFromRetainedPnpEvidence": {
+    "rx6800xt": "32.0.21043.19003",
+    "radeon780m": "32.0.31021.5001"
+  },
+  "officialSources": [
+    {
+      "url": "https://rocm.docs.amd.com/en/docs-10.0.0/compatibility/compatibility-matrix.html",
+      "scope": "Version-specific10.0.0 matrix, rather than the older7.2.1 site or latest10.1 matrix.",
+      "facts": [
+        "RadeonWindows configuration listsWindows11 25H2 andAdrenalin26.8.1.",
+        "RX6800XT is not individually listed in this matrix; PROV620/W6800 gfx1030 entries cannot qualify the consumer card plusUSB4dock."
+      ]
+    },
+    {
+      "url": "https://www.amd.com/en/resources/support-articles/release-notes/rn-rad-win-26-6-4.html",
+      "facts": [
+        "Both installed driver-store versions occur inAdrenalin26.6.4. Different numbers are expected for its different driver branches; they do not establish mixed-install corruption."
+      ]
+    },
+    {
+      "url": "https://www.amd.com/en/resources/support-articles/release-notes/RN-RAD-WIN-26-8-1.html",
+      "facts": [
+        "The26.8.1 graphics driver product list includesRX6800series.",
+        "Its package contains32.0.31041.1004 and32.0.21045.5002, differing from this machine.",
+        "The graphics-driver product list is not itself qualification ofROCmtraining or aUSB4eGPUconfiguration.",
+        "AMD recommendsOEM-specific drivers for laptop-specific features."
+      ]
+    },
+    {
+      "url": "https://github.com/ROCm/TheRock/blob/main/RELEASES.md",
+      "facts": [
+        "TheRock publishes stable10.0 and nightly artifacts; it mapsRX6800XT todevice-gfx1030.",
+        "The installed10.0.0 version string alone does not prove a nightly or release-candidate install. Originaldownload-index provenance is not recovered by the localfile direct_url."
+      ]
+    },
+    {
+      "url": "https://github.com/ROCm/TheRock/blob/main/docs/development/windows_support.md",
+      "facts": [
+        "The Windows development-support maturity warning remains relevant, but it does not by itself identify this incident or prove every installed stable artifact is a nightly build."
+      ]
+    }
+  ],
+  "findings": {
+    "osVersionMatchesDocumentedWindowsVersion": true,
+    "observedRocmComponentVersionsInternallyAgree": true,
+    "installedDriverMatchesDocumented26_8_1Configuration": false,
+    "installedDriverProvenIncompatible": false,
+    "installedPackageProvenNightly": false,
+    "usb4Rx6800xtWholeStackQualified": false,
+    "rootCauseIdentified": false
+  },
+  "decision": "Use the actual10.0/26.6.4 versus documented26.8.1 alignment difference as one concrete future discrimination condition. Do not conclude that upgrading will fix the reboots, install blindly, change runtime and driver together, or restart the unchanged long model batch.",
+  "futureReviewableDriverComparisonBoundary": {
+    "candidate": "Adrenalin26.8.1 is a documented comparison candidate, not an approved installation or guaranteed fix.",
+    "beforeAnyDriverChange": [
+      "VerifyRX6800XT is actually present and exact currentINF/driver identities.",
+      "Prepare a working existing-driver backup/rollback and checkOEM laptop support.",
+      "Prepare and verify the exact signed official candidate package and affectedGPUINFs.",
+      "Keep the existing runtime, original failed audio and model fixed; change a single driver condition.",
+      "Review the concrete machine-wide driver action withOwner before installation. Sensor-driver consent is not graphics-driver consent."
+    ],
+    "gpuJobLaunchedByThisAudit": false,
+    "candidateDownloadedOrInstalledByThisAudit": false
+  },
+  "newNeuralCalls": 0,
+  "newGpuCalls": 0,
+  "parameterUpdates": 0,
+  "driverTdrPowerBiosNetworkChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

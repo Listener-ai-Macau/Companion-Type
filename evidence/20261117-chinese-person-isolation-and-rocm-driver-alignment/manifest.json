@@ -1,0 +1,95 @@
+{
+  "at": "2026-11-17T10:12:40.815114+08:00",
+  "parent": "6e70398d7e8b70694a491ce5ca6ec9305a38ed50",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-global-speaker-audit-20261117.json",
+      "file": "chinese-global-speaker-audit.json",
+      "bytes": 14629,
+      "sha256": "f973defc3c0efa3091ff54f667928baa469ab977ab777418da5db7e41389b30d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\gpu-compatibility-r1\\rocm10-driver-alignment-20261117.json",
+      "file": "rocm10-driver-alignment.json",
+      "bytes": 5880,
+      "sha256": "b5c7a340b1bcee09ed42b0881e2ddb749f7ccb8a61f07e6b647c35387de37e4d"
+    },
+    {
+      "source": "work\\audit_chinese_speaker_metadata_20261117.py",
+      "file": "tools/audit_chinese_speaker_metadata_20261117.py",
+      "bytes": 7757,
+      "sha256": "706864dcff0a73edce9061ff6aa296b8ed81b25e472dd130b3f82fc54bbca632"
+    },
+    {
+      "source": "work\\record_chinese_metadata_batch_20261117.py",
+      "file": "tools/record_chinese_metadata_batch_20261117.py",
+      "bytes": 3949,
+      "sha256": "b889a8024f9e56a73d7ccc6e8d5e9da64ff9062e412225d9efedbe83c9c47760"
+    },
+    {
+      "source": "work\\audit_rocm_release_alignment_20261117.py",
+      "file": "tools/audit_rocm_release_alignment_20261117.py",
+      "bytes": 9508,
+      "sha256": "fce2ff03141d35edfa1a8e1160738f3afad1bfded318bc4d392ed108c593ddde"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-speaker-audit-r1\\global-table-location-evidence.json",
+      "file": "metadata-evidence/global-table-location-evidence.json",
+      "bytes": 1064,
+      "sha256": "acf52af95f63c1a571f5fa5f2caddeec94758ad3f4a2b44f49076890975b5f69"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-speaker-audit-r1\\official-doc-table-head.txt",
+      "file": "metadata-evidence/official-doc-table-head.txt",
+      "bytes": 813,
+      "sha256": "85b57bf1c0184aebdd853e35f2cbeec1e52334323f3f01e3432b2a46cf0fbb67"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-speaker-audit-r1\\openslr-doc-table-head.txt",
+      "file": "metadata-evidence/openslr-doc-table-head.txt",
+      "bytes": 179,
+      "sha256": "c5a9de126034aae22df2d9fb2d2f2e65ca960848f0c38de30752468c8e4eaed1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-speaker-audit-r1\\bounded-archive-probe.json",
+      "file": "metadata-evidence/bounded-archive-probe.json",
+      "bytes": 281,
+      "sha256": "8266f9dbd81ddcd6ef2f31d6e2fbe4b9f5b9ea5d05779baa096a1fa8d14ae720"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-speaker-audit-r1\\audit-before-metadata-path-fix.py",
+      "file": "metadata-evidence/audit-before-metadata-path-fix.py",
+      "bytes": 7542,
+      "sha256": "5126be2582985dd546f69dd156c3358620a4e3218e31ab9b5b973231ec2d1062"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\chinese-speaker-audit-r1\\audit-metadata-path-failure.json",
+      "file": "metadata-evidence/audit-metadata-path-failure.json",
+      "bytes": 280,
+      "sha256": "2be50ba4b9cc50c46befd61cb2137e419e50a5bed9d46bd2cd527a55d766164c"
+    },
+    {
+      "source": "work\\checkpoint_metadata_alignment_r62.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 3257,
+      "sha256": "2efb900e7e906abe444db935ec2db636a7571e282acd9e903e5bdb40dca8e547"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4275,
+      "sha256": "79639765d2387a02e1fc1a39148b4774f2db30115ec1806f17dbdae5ec2aa4ba"
+    }
+  ],
+  "sources": {},
+  "state": "METADATA_AUDITS_COMPLETE_GLOBAL_CHINESE_IDENTITIES_AND_GPU_STABILITY_REMAIN_OPEN",
+  "newNeuralCalls": 0,
+  "newGpuCalls": 0,
+  "parameterUpdates": 0,
+  "chinesePersonSplitVerified": false,
+  "driverMismatchProvenCause": false,
+  "driverChanged": false,
+  "finalHoldoutOpened": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

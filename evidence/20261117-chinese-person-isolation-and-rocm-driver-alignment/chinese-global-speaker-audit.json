@@ -1,0 +1,481 @@
+{
+  "at": "2026-11-17T10:05:50+08:00",
+  "state": "CHINESE_GLOBAL_SPEAKER_DISJOINTNESS_UNPROVEN_TRAINING_STAYS_UNREADY",
+  "sourcePlan": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\meeting-domain-data-r1\\plan.json",
+  "sourcePlanSha256": "dc5f852a8a54d2f78e103da1e7d8aacfd1e137a452c52eb7c8dd9fb8164a96c6",
+  "selectedTrainMeetings": 12,
+  "selectedTrainingReferenceTiers": [
+    {
+      "meeting": "20200616_M_R001S05C01",
+      "referenceSha256": "127463f0c36a758038926f2df70bd9f8684f37013c80ee0b546e9ddc8df9330b",
+      "tierNames": [
+        "001-M",
+        "002-F",
+        "003-F",
+        "004-F"
+      ],
+      "tierCount": 4
+    },
+    {
+      "meeting": "20200618_M_R001S03C01",
+      "referenceSha256": "8a6f4f8ceed94ea0e3c45fb9d5e3e4d4fe74739aa4274ef1541c00a6003af21c",
+      "tierNames": [
+        "001-M",
+        "003-M",
+        "004-M"
+      ],
+      "tierCount": 3
+    },
+    {
+      "meeting": "20200621_M_R002S06C01",
+      "referenceSha256": "fa3fdb7a6062a869b46469eec1092267fd06d834bae6cfb8569fa243acecbc57",
+      "tierNames": [
+        "005-M",
+        "004-M",
+        "003-M",
+        "002-M",
+        "001-F"
+      ],
+      "tierCount": 5
+    },
+    {
+      "meeting": "20200622_M_R002S03C01",
+      "referenceSha256": "1524b57d5526e036ab1f54afdf4e7d9bdf7a1619682d7652f688eedc840e9f27",
+      "tierNames": [
+        "005-M",
+        "004-F",
+        "003-F",
+        "002-F"
+      ],
+      "tierCount": 4
+    },
+    {
+      "meeting": "20200630_S_R001S03C01",
+      "referenceSha256": "160ee2671485e213e8e8c5f26ff5ba2c8f8d6f8c2696d1ad31fa00a5cc7bcac7",
+      "tierNames": [
+        "006-M",
+        "001-F",
+        "003-F",
+        "004-F"
+      ],
+      "tierCount": 4
+    },
+    {
+      "meeting": "20200706_L_R001S06C01",
+      "referenceSha256": "0aca5a3ebc0c82f2294e45939d77149473e839d0ff5d886f541ca805ff72fd14",
+      "tierNames": [
+        "001-M",
+        "002-M",
+        "003-M",
+        "004-M",
+        "005-F",
+        "006-F",
+        "007-M"
+      ],
+      "tierCount": 7
+    },
+    {
+      "meeting": "20200707_L_R001S01C01",
+      "referenceSha256": "c679f0805986c049f70dc3f30fbed936626cf4c7d16fa14ef1a16117bb57f3d2",
+      "tierNames": [
+        "001-M",
+        "002-M",
+        "003-M",
+        "004-M",
+        "005-F",
+        "006-F",
+        "007-M"
+      ],
+      "tierCount": 7
+    },
+    {
+      "meeting": "20200707_L_R001S02C01",
+      "referenceSha256": "73a865d63ac377939efc66f2b9e4b21e38c14d3ebe9cc4804abf16b6f925501c",
+      "tierNames": [
+        "001-M",
+        "002-M",
+        "003-M",
+        "004-M",
+        "005-F",
+        "006-F",
+        "007-M"
+      ],
+      "tierCount": 7
+    },
+    {
+      "meeting": "20200709_L_R002S08C01",
+      "referenceSha256": "cbc804b0dfdf25a3a0f6a62bcad77f04b697b8dd2425e261e5fa9c8217fe6ebc",
+      "tierNames": [
+        "001-M",
+        "002-M",
+        "003-M",
+        "004-F",
+        "005-F",
+        "006-F",
+        "007-F"
+      ],
+      "tierCount": 7
+    },
+    {
+      "meeting": "20200805_S_R001S06C01",
+      "referenceSha256": "1758cf601959b82dac12406db8e8e648651639f042a2d2365690f6d0415e532e",
+      "tierNames": [
+        "006-F",
+        "001-M",
+        "005-M",
+        "002-F",
+        "004-F"
+      ],
+      "tierCount": 5
+    },
+    {
+      "meeting": "20200807_S_R001S04C01",
+      "referenceSha256": "f0cdcb1cf10022f383fa2a506082255ec2cbf7c4eb7560863afa63b21acda72b",
+      "tierNames": [
+        "006-F",
+        "005-F",
+        "004-F",
+        "002-M",
+        "001-F"
+      ],
+      "tierCount": 5
+    },
+    {
+      "meeting": "20200807_S_R001S06C01",
+      "referenceSha256": "0d0c96e489dc9cc247630f76c818d41df7fd63948dc1b9ee138f0a855163dee1",
+      "tierNames": [
+        "006-F",
+        "001-F",
+        "005-F",
+        "002-M",
+        "004-F"
+      ],
+      "tierCount": 5
+    }
+  ],
+  "selectedTrainingTierInstances": 63,
+  "distinctLocalLabelsDoNotEqualGlobalPeople": [
+    "001-F",
+    "001-M",
+    "002-F",
+    "002-M",
+    "003-F",
+    "003-M",
+    "004-F",
+    "004-M",
+    "005-F",
+    "005-M",
+    "006-F",
+    "006-M",
+    "007-F",
+    "007-M"
+  ],
+  "wholePublisherMetadataRevision": "aada72727856313b19d4a030383c426364931dbf",
+  "publisherMetadataFileCount": 505,
+  "globalSpeakerTableCandidatesInCachedMirrorIndex": [],
+  "boundedGlobalTableLocationEvidence": {
+    "treeSha": "bad82b77c3753df1b232c5c6491cd3e2f2e32d24",
+    "truncated": false,
+    "entries": 273,
+    "speakerInformationTables": [],
+    "perMeetingEvalCsvCount": 20,
+    "evaluationCsvFilesOpened": false,
+    "globalIdentityTableFound": false,
+    "at": "2026-11-17T10:05:50.262025+08:00",
+    "officialDocHeadProbes": [
+      {
+        "url": "https://aishell-4.oss-cn-hangzhou.aliyuncs.com/DOC/spk_info.xlsx",
+        "httpStatusLines": [
+          "HTTP/1.1 200 Connection established",
+          "HTTP/1.1 404 Not Found"
+        ],
+        "headersSha256": "85b57bf1c0184aebdd853e35f2cbeec1e52334323f3f01e3432b2a46cf0fbb67",
+        "responseBodyRead": false
+      },
+      {
+        "url": "https://www.openslr.org/resources/111/DOC/spk_info.xlsx",
+        "httpStatusLines": [
+          "HTTP/1.1 200 Connection established",
+          "HTTP/1.1 404 Not Found"
+        ],
+        "headersSha256": "c5a9de126034aae22df2d9fb2d2f2e65ca960848f0c38de30752468c8e4eaed1",
+        "responseBodyRead": false
+      }
+    ],
+    "specific404PathsDoNotProveNoPublicTableAnywhere": true
+  },
+  "officialSources": [
+    {
+      "url": "https://www.isca-archive.org/interspeech_2021/fu21b_interspeech.pdf",
+      "finding": "The publisher paper reports36training and25evaluation participants, with one speaker shared between those splits."
+    },
+    {
+      "url": "https://aishell-4.oss-cn-hangzhou.aliyuncs.com/AISHELL-4%20Data-Specification.pdf",
+      "finding": "The corpus directory diagram names DOC/spk_info.xlsx. Its existence in a specification does not provide a downloadable global speaker-to-meeting mapping."
+    },
+    {
+      "url": "https://github.com/felixfuyihui/AISHELL-4/blob/master/data_preparation/generate_spk_testdata.py",
+      "finding": "The baseline speaker-dependent test preparation consumes per-meetingRTTM speaker labels and uses them in clip names; this code does not establish cross-meeting identity."
+    },
+    {
+      "url": "https://www.openslr.org/111/",
+      "finding": "Official licenseCC-BY-SA4.0 retained; the mirrorApache tag is not substituted."
+    }
+  ],
+  "boundedExistingPrefixInspection": {
+    "originalFetch": {
+      "url": "https://openslr.magicdatatech.com/resources/111/train_L.tar.gz",
+      "curlExitCode": 28,
+      "maximumRequestedBytes": 1048576,
+      "membersObserved": [],
+      "entireArchiveAudited": false,
+      "reservedHoldoutOpened": false,
+      "at": "2026-11-17T09:46:30.560596+08:00"
+    },
+    "compressedBytes": 524288,
+    "compressedSha256": "f56f803759588ffcfe19d056a17cd0f8a35aa5b8e8b0f2ec57ff6ee1adf96723",
+    "membersObserved": [
+      {
+        "name": "train_L",
+        "bytes": 0,
+        "type": "5"
+      },
+      {
+        "name": "train_L/TextGrid",
+        "bytes": 0,
+        "type": "5"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S08C01.rttm",
+        "bytes": 37489,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200707_L_R001S07C01.TextGrid",
+        "bytes": 137516,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200708_L_R002S08C01.rttm",
+        "bytes": 40925,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S01C01.rttm",
+        "bytes": 40939,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S01C01.TextGrid",
+        "bytes": 154537,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S02C01.rttm",
+        "bytes": 32362,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S02C01.TextGrid",
+        "bytes": 133543,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S03C01.rttm",
+        "bytes": 36176,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S03C01.TextGrid",
+        "bytes": 138428,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S04C01.rttm",
+        "bytes": 40755,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S04C01.TextGrid",
+        "bytes": 156337,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S05C01.rttm",
+        "bytes": 24969,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S05C01.TextGrid",
+        "bytes": 104792,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S06C01.rttm",
+        "bytes": 38369,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S06C01.TextGrid",
+        "bytes": 146507,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S07C01.rttm",
+        "bytes": 26749,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S07C01.TextGrid",
+        "bytes": 110334,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200706_L_R001S08C01.TextGrid",
+        "bytes": 141238,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200707_L_R001S01C01.rttm",
+        "bytes": 50678,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200707_L_R001S01C01.TextGrid",
+        "bytes": 187392,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200707_L_R001S02C01.rttm",
+        "bytes": 31786,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200707_L_R001S02C01.TextGrid",
+        "bytes": 129139,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200707_L_R001S03C01.rttm",
+        "bytes": 32705,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200707_L_R001S03C01.TextGrid",
+        "bytes": 130397,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200707_L_R001S04C01.rttm",
+        "bytes": 35768,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200707_L_R001S04C01.TextGrid",
+        "bytes": 137890,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200707_L_R001S05C01.rttm",
+        "bytes": 31613,
+        "type": "0"
+      },
+      {
+        "name": "train_L/TextGrid/20200707_L_R001S05C01.TextGrid",
+        "bytes": 128683,
+        "type": "0"
+      }
+    ],
+    "stopReason": "member_limit30",
+    "entireArchiveAudited": false,
+    "fullArchiveAbsenceOfGlobalTableProven": false,
+    "selectedReferenceComparisons": [
+      {
+        "meeting": "20200706_L_R001S06C01",
+        "officialPrefixReferenceBytes": 146507,
+        "cachedReferenceBytes": 142331,
+        "officialRawSha256": "3564d70229c3545fdacc9eea81fc0cddf9464cd88509832beb6b2c6ae4391a0b",
+        "cachedRawSha256": "0aca5a3ebc0c82f2294e45939d77149473e839d0ff5d886f541ca805ff72fd14",
+        "exactBytesEqual": false,
+        "lfNormalizedBytesEqual": true,
+        "normalizationOnlyForSourceComparisonNotModelOrEvaluation": true
+      },
+      {
+        "meeting": "20200707_L_R001S01C01",
+        "officialPrefixReferenceBytes": 187392,
+        "cachedReferenceBytes": 181910,
+        "officialRawSha256": "94824c9e3264377038f2776de0d0a840dc774f1b1fb29fdd17eed4dcc58380f5",
+        "cachedRawSha256": "c679f0805986c049f70dc3f30fbed936626cf4c7d16fa14ef1a16117bb57f3d2",
+        "exactBytesEqual": false,
+        "lfNormalizedBytesEqual": true,
+        "normalizationOnlyForSourceComparisonNotModelOrEvaluation": true
+      },
+      {
+        "meeting": "20200707_L_R001S02C01",
+        "officialPrefixReferenceBytes": 129139,
+        "cachedReferenceBytes": 125693,
+        "officialRawSha256": "9048becaa3352708ebd006498fca2600364045fdd034fd7e682319c474d1668a",
+        "cachedRawSha256": "73a865d63ac377939efc66f2b9e4b21e38c14d3ebe9cc4804abf16b6f925501c",
+        "exactBytesEqual": false,
+        "lfNormalizedBytesEqual": true,
+        "normalizationOnlyForSourceComparisonNotModelOrEvaluation": true
+      }
+    ],
+    "selectedRttmSpeakerLabels": [
+      {
+        "meeting": "20200706_L_R001S06C01",
+        "speakerLabels": [
+          "001-M",
+          "002-M",
+          "003-M",
+          "004-M",
+          "005-F",
+          "006-F",
+          "007-M"
+        ]
+      },
+      {
+        "meeting": "20200707_L_R001S01C01",
+        "speakerLabels": [
+          "001-M",
+          "002-M",
+          "003-M",
+          "004-M",
+          "005-F",
+          "006-F",
+          "007-M"
+        ]
+      },
+      {
+        "meeting": "20200707_L_R001S02C01",
+        "speakerLabels": [
+          "001-M",
+          "002-M",
+          "003-M",
+          "004-M",
+          "005-F",
+          "006-F",
+          "007-M"
+        ]
+      }
+    ],
+    "newNetworkRequestsByThisAudit": 0,
+    "originalFetchWasTimeout28WithUsablePartialBytes": true
+  },
+  "decision": {
+    "chineseGlobalSpeakerDisjointnessVerified": false,
+    "chineseAdaptationLaunchAllowed": false,
+    "inferGlobalIdentityByLocalIdOrRoomOrGenderAllowed": false,
+    "meetingDisjointnessAloneIsNotGlobalSpeakerDisjointness": true,
+    "englishVerifiedParticipantSplitAffected": false,
+    "existingChineseEvaluationScoreChanged": false,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "next": "Keep current Chinese published-model baseline and original evaluations. Before Chinese adaptation, obtain a verifiable public global speaker-to-session map or an independently auditable speaker-disjoint training source. Do not consume the reserved final holdout or relabel an unknown split as verified."
+  },
+  "reservedFinalAudioLabelsOrEmbeddingsOpened": false,
+  "newNeuralCalls": 0,
+  "parameterUpdates": 0,
+  "audioDecoded": false,
+  "trainingOrEvaluationTextsModified": false
+}
