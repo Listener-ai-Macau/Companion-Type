@@ -58,7 +58,10 @@ fn decode_omissions(raw:&str,source:&[Value])->Result<Omissions,String>{
     let data:OmissionAudit=parse(raw)?;if data.omissions.len()>4{return Err(fail());}
     let known=source.iter().map(|s|(s["id"].as_str().unwrap(),s)).collect::<HashMap<_,_>>();let mut out=Vec::new();
     for item in data.omissions{
-        if item.importance!="essential"||!super::line(&item.question,50)||item.question.chars().filter(|c|matches!(c,'?'|'？')).count()>1
+        // This question is internal audit data, never the rendered minutes.
+        // Keep the writer's 50-character target, but tolerate bounded wording
+        // overhead instead of rejecting an otherwise grounded review at 51.
+        if item.importance!="essential"||!super::line(&item.question,100)||item.question.chars().filter(|c|matches!(c,'?'|'？')).count()>1
             ||!super::line(&item.difference,100)||item.evidence.is_empty()||item.evidence.len()>8{return Err(fail());}
         let mut evidence=Vec::new();
         for id in item.evidence{
@@ -423,6 +426,17 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn automatic_brief_internal_audit_question_length_does_not_change_display_or_evidence_limits(){
+        let source=super::super::factual_audit::evidence_sentences(&units());
+        let question="是否缺校长除教书外需懂管理、财务、人心、心理、营养，具未来/全球/全局观和总设计师职责并整合社会资源？";
+        assert_eq!(question.chars().count(),51);
+        let raw=json!({"omissions":[{"question":question,"difference":"缺具体角色与资源关系","importance":"essential","evidence":["e0000"]}]});
+        assert!(decode_omissions(&raw.to_string(),&source).is_ok());
+        let mut bad=raw.clone();bad["omissions"][0]["evidence"]=json!(["e9999"]);assert!(decode_omissions(&bad.to_string(),&source).is_err());
+        bad=raw.clone();bad["omissions"][0]["question"]=json!("长".repeat(101));assert!(decode_omissions(&bad.to_string(),&source).is_err());
+        bad=raw;bad["omissions"][0]["question"]=json!("谁负责？什么时候完成？");assert!(decode_omissions(&bad.to_string(),&source).is_err());
+    }
     fn units()->Vec<Unit>{vec![Unit{id:"u000".into(),text:"预算尚未审批。\n不得先采购。".into()},Unit{id:"u001".into(),text:"王梅承诺周五提交报告。".into()}]}
     fn doc()->Document{serde_json::from_value(json!({"purpose":"确认采购前提","topics":[{"title":"采购","points":[{"kind":"status","text":"预算尚未审批。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap()}
     #[test]
