@@ -8,6 +8,13 @@ use crate::companion_v1::{CompanionV1ActionItem,CompanionV1HostSession,Companion
 mod factual_audit;
 #[path="automatic_brief_coverage.rs"]
 mod coverage;
+// Preparation only: the new source-question writer is not wired into runtime
+// until the real content qualification finishes.
+#[cfg(test)]
+#[path="automatic_brief_answer_layout.rs"]
+mod answer_layout;
+#[derive(Default,Deserialize)]
+enum ResponseFormatMarker {#[default] #[serde(skip)] Absent,#[serde(rename="json_object")] Present}
 
 const DRAFT:&str=include_str!("automatic_brief_draft.txt");
 const REVIEW:&str=include_str!("automatic_brief_review.txt");

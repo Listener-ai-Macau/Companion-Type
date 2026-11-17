@@ -24,8 +24,7 @@ fn parse<T:serde::de::DeserializeOwned>(raw:&str)->Result<T,String>{
 }
 // Harmless response-format metadata is accepted only with its exact value.
 // Deserialize the typed root directly so duplicate keys still fail.
-#[derive(Default,Deserialize)]
-enum JsonObjectMarker {#[default] #[serde(skip)] Absent,#[serde(rename="json_object")] Present}
+use super::ResponseFormatMarker as JsonObjectMarker;
 #[derive(Debug,Clone,Deserialize,Serialize,PartialEq,Eq)]
 #[serde(deny_unknown_fields)]
 struct Evidence {source:String,quote:String}
