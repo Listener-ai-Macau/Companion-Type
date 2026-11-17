@@ -1,0 +1,137 @@
+{
+  "state": "PASS_REAL_TDT_GPU_TRAINING_AND_CHECKPOINT_PREFLIGHT",
+  "at": "2026-11-17T20:13:49+08:00",
+  "pid": 20976,
+  "binding": {
+    "protocolSha256": "46b0e3e8f60e5a2e88f86b4d311347a8cf65c2dbb258194d77c85125b0122d29",
+    "workerSha256": "3f93174619f57f24f4e9727a24fbf74617808a5f17b675c7ab63c9da6bcba889",
+    "publishedWeightsSha256": "3a2026366188c8c68598edbbff92f8d11590a08e0ae2e6775544e7b07d6a5e11",
+    "dataSha256": "1362f5cbf3c85e9ec6bfb3f76d942728264bfe6c9c3a1436f432293ed81e7696"
+  },
+  "phase": "preflight",
+  "newNeuralCalls": 2,
+  "completed": [],
+  "parameterUpdates": 1,
+  "candidateOptimizerUpdates": 0,
+  "completedTrainingExamples": 0,
+  "validationReferencesRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "currentOperationBudgetSeconds": 90,
+  "observedAt": "2026-11-17T20:15:19+08:00",
+  "limits": {
+    "pid": 20976,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1834266624,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "presentDevices": [
+    {
+      "FriendlyName": "AMD Radeon RX 6800 XT",
+      "Status": "OK"
+    },
+    {
+      "FriendlyName": "AMD Radeon 780M Graphics",
+      "Status": "OK"
+    }
+  ],
+  "device": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  },
+  "cpuThermalObservation": {
+    "observationOnly": true,
+    "cpuTelemetryAvailable": false,
+    "telemetryError": "RuntimeError('Temperature logger process identity changed')",
+    "taskStartThresholdCelsius": null,
+    "taskStopThresholdCelsius": null,
+    "hardwareOverheatCauseProven": false
+  },
+  "gpu": {
+    "allocatedBytes": 3550100992,
+    "reservedBytes": 4462739456,
+    "peakAllocatedBytes": 4094769664,
+    "peakReservedBytes": 4462739456,
+    "driverFreeBytes": 12351569920,
+    "driverTotalBytes": 17163091968,
+    "systemAvailableBytes": 5069570048
+  },
+  "gpuProfile": {
+    "cudnnEnabled": false,
+    "allocatorFraction": 0.5,
+    "operatorSynchronization": true,
+    "hardGpuUtilizationOrPowerCap": false
+  },
+  "tinyLossGradientProofPassed": true,
+  "currentId": "ES2005b-word-nonoverlap-r3-0029",
+  "currentOperation": null,
+  "maximumShapeProofs": [
+    {
+      "id": "ES2002b-word-nonoverlap-r3-0044",
+      "frames": 478640,
+      "labels": 161,
+      "loss": 0.3688591420650482,
+      "gradientNormBeforeClip": 3.2224695682525635,
+      "seconds": 9.935590199995204,
+      "gpu": {
+        "allocatedBytes": 4009860608,
+        "reservedBytes": 4462739456,
+        "peakAllocatedBytes": 4213003264,
+        "peakReservedBytes": 4462739456,
+        "driverFreeBytes": 12359565312,
+        "driverTotalBytes": 17163091968,
+        "systemAvailableBytes": 5142376448
+      }
+    },
+    {
+      "id": "ES2005b-word-nonoverlap-r3-0029",
+      "frames": 479680,
+      "labels": 109,
+      "loss": 0.33756986260414124,
+      "gradientNormBeforeClip": 3.142974376678467,
+      "seconds": 8.50919499999145,
+      "gpu": {
+        "allocatedBytes": 4013559296,
+        "reservedBytes": 4462739456,
+        "peakAllocatedBytes": 4094769664,
+        "peakReservedBytes": 4462739456,
+        "driverFreeBytes": 12359565312,
+        "driverTotalBytes": 17163091968,
+        "systemAvailableBytes": 5131427840
+      }
+    }
+  ],
+  "checkpointExactRoundtrip": true,
+  "checkpointPayloadSha256": "f4fa8ea55f1155f6ae65579e0ab93dd5412349a047b6899dcf3a0b972b025376",
+  "frozenDigest": "eeaaf482a673c635c8e5ad129202f2f1443ea335f371d7b4a0bd4baee38a62c2",
+  "candidateTrainingStarted": false,
+  "preflightParameterUpdates": 1,
+  "preflightWeightsMustNotInitializeCandidate": true,
+  "steadyAdamStatesPresentForMaximumShape": true,
+  "integerBuffersOptimizerStepsAndRngExactRoundtrip": true,
+  "gpuSummary": {
+    "operatorCalls": 688,
+    "maximumOperatorSeconds": 0.444892899991828,
+    "gpu": {
+      "allocatedBytes": 3550100992,
+      "reservedBytes": 4462739456,
+      "peakAllocatedBytes": 4094769664,
+      "peakReservedBytes": 4462739456,
+      "driverFreeBytes": 12351569920,
+      "driverTotalBytes": 17163091968,
+      "systemAvailableBytes": 5058232320
+    },
+    "driverStabilityOrOriginalCauseProven": false
+  }
+}

@@ -1,0 +1,345 @@
+{
+  "state": "FROZEN_EXISTING_ENGLISH_ADAPTATION_GPU_WINDOW_NO_RECIPE_GRID",
+  "at": "2026-11-17T20:09:18.383350+08:00",
+  "modelRoot": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116",
+  "weights": {
+    "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\model.safetensors",
+    "sha256": "3a2026366188c8c68598edbbff92f8d11590a08e0ae2e6775544e7b07d6a5e11",
+    "bytes": 2508311120
+  },
+  "runtime": {
+    "python": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Scripts\\python.exe",
+    "torch": "2.11.0+rocm10.0.0",
+    "transformers": "5.22.1"
+  },
+  "blas": {
+    "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0"
+  },
+  "dataPlan": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-data-r3\\english-data-plan.json",
+  "validationAudioOnly": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\validation-audio-only.json",
+  "neuralLock": "E:/CodexData/Companion/.model-cache/local-qwen-decoder.lock",
+  "minimumAvailableBytes": 3414499000,
+  "minimumDiskFreeBytes": 53687091200,
+  "checkpointBudgetBytes": 34359738368,
+  "cpuPercent": 25,
+  "privateMemoryLimitBytes": 2147483648,
+  "stopAt": "2026-11-18T00:09:18.383350+08:00",
+  "gpuExecutionEnabled": true,
+  "executionDisabledReasons": [],
+  "thermal": {
+    "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3",
+    "sensorIdentifier": "/amdcpu/0/temperature/2",
+    "maximumStartCelsius": null,
+    "stopCelsius": null,
+    "maximumSampleAgeSeconds": 15,
+    "cacheSeconds": 1,
+    "scope": "owned model worker only; no system power/fan/clock changes",
+    "loggerSources": [
+      {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\monitor_thermal_20261117.py",
+        "sha256": "a28ab46a34bc31127ca3c8fb7de63d0d866005456639d62d2df8d2603c4f37c1"
+      },
+      {
+        "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\read_laptop_thermal_stream_20261117.ps1",
+        "sha256": "0e0a177ffecddda95818c5c50f1fd58acc272fb516da1e397ba9e6fd8745c964"
+      }
+    ],
+    "identifiedCpuTjmaxCelsius": 100,
+    "taskThresholdsAreNotHardwareLimitsOrRootCauseProof": true,
+    "mode": "observe-only",
+    "ownerAuthorizedObservationOnly": true,
+    "ownerQuote": "这个为什么会有这个软件门栏呢？没有必要有这个东西啊。"
+  },
+  "training": {
+    "epochs": 1,
+    "learningRate": 1e-05,
+    "optimizer": "AdamW",
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "weightDecay": 0.01,
+    "epsilon": 1e-08,
+    "gradientAccumulationExamples": 4,
+    "gradientClipNorm": 1.0,
+    "seed": 20261116,
+    "examples": 1828,
+    "optimizerUpdates": 457,
+    "checkpointEveryUpdates": 32,
+    "checkpointAtFirstUpdate": true,
+    "noValidationCheckpointSelection": true
+  },
+  "sequence": [
+    "baseline12",
+    "native/scalar/selected/chunked GPU gradient proof",
+    "largest real joint and longest real example with steady Adam storage; one disposable update",
+    "GPU tensor/Adam/integer/RNG checkpoint destructive roundtrip",
+    "fresh original factory initialization",
+    "one fixed training epoch or exact explicit checkpoint resume",
+    "final457-update checkpoint validation12",
+    "independent original-reference paired score"
+  ],
+  "gpuProfile": {
+    "publishedFloat32": true,
+    "cudnnDisabled": true,
+    "allocatorFraction": 0.5,
+    "leafOperatorSynchronization": true,
+    "jointChunkFrames": 16,
+    "hardGpuPowerOrTemperatureCap": false,
+    "longTermCompatibilityEstablished": false
+  },
+  "validationScope": "Same12 exposed nonoverlap English clips; not blind, not whole-meeting, not speaker identity",
+  "chineseTrainingIncluded": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\english_transducer_worker_20261116.py",
+      "sha256": "2e071a979d3c5b67053ec84188e7e23c5cd7b54c68c40a98c323afe138bd0a15",
+      "bytes": 12402
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\audio-only.json",
+      "sha256": "0a5cad62790ae6fd5a558a2b239e5380d9121450b1564a5908be7a28062400c9",
+      "bytes": 3281
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-transducer-r1\\asset-receipt.json",
+      "sha256": "995fdc1aadeae7cd113757d9a59920fa056a2aa1f72ffa419df80a5e7dbbfee6",
+      "bytes": 3477
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\config.json",
+      "sha256": "e747b85e1bdfd300c8b8ac63bac8dd5221f8fe9bc275b48d06c735fcd6971b6e",
+      "bytes": 1153
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\generation_config.json",
+      "sha256": "b141de6ec6d7f982ece13f98f604e3fe1807ea9c0e839185d0ab7064604209d0",
+      "bytes": 289
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\processor_config.json",
+      "sha256": "8346a93a3b987fa1dec57a78f045cd0817d21786589a5a096b41a57a446fd1d7",
+      "bytes": 392
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\tokenizer.json",
+      "sha256": "bd321b096832a3f270bd3b2a88823957920f1a5c5ada71114a26ea729d0cbe91",
+      "bytes": 1159960
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-transducer-official20261116\\tokenizer_config.json",
+      "sha256": "0b2fe0037599ee335f0b972fa682bf0ece74e4ccfec755cb7daa3405d3d3e874",
+      "bytes": 290
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_contract_20261116.py",
+      "sha256": "4e238f87f06b7ed95a6bd6e30522e86b4129836074cabff138cd1fe5f76981c9",
+      "bytes": 7962
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_worker_20261116.py",
+      "sha256": "afbf977c6904a99634a5278d1fb1bf1ffcea4dad418d187aaf6f1284c31b5896",
+      "bytes": 28204
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py",
+      "sha256": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a",
+      "bytes": 8998
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_streamed_weights_20261104.py",
+      "sha256": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f",
+      "bytes": 5288
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\practical_io_20261107.py",
+      "sha256": "23a632cfb8c8c593a226afc5c513e70b82e43a9575566f8a8d53254e1036945d",
+      "bytes": 1498
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_community1_adapter_20261115.py",
+      "sha256": "a6905264e2787ac059c7500e0e87ef8b5bf7e8a57502fbad42e53eea6b4e189d",
+      "bytes": 3872
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_local_pcm_session_20261114.py",
+      "sha256": "182006e169fd89ab4fdc5990f3b76138a49181863c4db3ccb26d23c18f0dc7b9",
+      "bytes": 16745
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_windows_power_request_20261115.py",
+      "sha256": "768ec264ea4b068765b3ab07ef2f275295e81b6cf746bdb21bfb694a1fbdccbc",
+      "bytes": 2619
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\parakeet\\configuration_parakeet.py",
+      "sha256": "ff8b0d27644915e9938ed2168cf3c8e838053a264eac67034d2b7df996ced73f",
+      "bytes": 8648
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\parakeet\\feature_extraction_parakeet.py",
+      "sha256": "5ec8a9664456edfc0b56c64083bdcdd74dd78364504d35207ab917d1c3b9f575",
+      "bytes": 13110
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\parakeet\\generation_parakeet.py",
+      "sha256": "ee5ac5310d699f7d48d9c04e525bebae6b905e663f74fb418470ce514703d0ba",
+      "bytes": 13257
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\parakeet\\modeling_parakeet.py",
+      "sha256": "41790099a63adb77e87ba42667637c4c356e49f8423af6f8044f33b0bd98308f",
+      "bytes": 47969
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\parakeet\\modular_parakeet.py",
+      "sha256": "84367ce5e7b0edb720f7175c892e9bbb5f665dc8fa22ada75900555c90ff307e",
+      "bytes": 40418
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\parakeet\\processing_parakeet.py",
+      "sha256": "b6f7e7628d6eb995077a41a393b456972489a0948b438bb5c138e6e3d4e2ca45",
+      "bytes": 9356
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\parakeet\\tokenization_parakeet.py",
+      "sha256": "f170422f744bfddd63a994d861a67f90aa0ee7df9d874c2ac8e1fbf0641cecf7",
+      "bytes": 1873
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\parakeet\\__init__.py",
+      "sha256": "23a02ab1ee80dfcee5b5aa223f44344acd888e5ef67b6fdf685dd46207f77d67",
+      "bytes": 1942
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_domain_adaptation_20261116.py",
+      "sha256": "3f93174619f57f24f4e9727a24fbf74617808a5f17b675c7ab63c9da6bcba889",
+      "bytes": 27074
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_adaptation_checkpoint_20261116.py",
+      "sha256": "fd5d7ea4d9d14942235a1f8223d62f0e94a9769a41fd220660895218c5addc4f",
+      "bytes": 8534
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_adaptation_contract_20261117.py",
+      "sha256": "06a97997e00d98839437528736b403b5088435e845333a0181803fe1c423d665",
+      "bytes": 2528
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_selected_loss_20261116.py",
+      "sha256": "de968fc0365992d0bd97770e1ef965fa92d56395acd5009f701827f974375288",
+      "bytes": 8895
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\durable_model_state_20261117.py",
+      "sha256": "5fea82f461da06e76afd3321c860c48a570147a4d9cce6c7cca37a595bb54e3b",
+      "bytes": 2402
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\model_thermal_guard_20261117.py",
+      "sha256": "34a1a53828e70cd82117f8717d528b26ee89280e4eac6d33e2f0bdb20a8a15eb",
+      "bytes": 3826
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\run_owned_tdt_adaptation_20261117.py",
+      "sha256": "3c416c6f43ebfb159af8f6e98d479164249136585d2e99a0301eacbec7e9e8f6",
+      "bytes": 5499
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_gpu_execution_20261116.py",
+      "sha256": "9d4674334f37266ef52d8c9bb1c3573452da8b7df230973babf7b2c969a86346",
+      "bytes": 4235
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\validation-audio-only.json",
+      "sha256": "0a5cad62790ae6fd5a558a2b239e5380d9121450b1564a5908be7a28062400c9",
+      "bytes": 3281
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-data-r3\\english-data-plan.json",
+      "sha256": "23ad4e28fed9505ef6490561ebb26ff61286026323f134e8e31aaa59a510b959",
+      "bytes": 10738
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\meeting-domain-data-r1\\english-word-nonoverlap-r3\\english-tdt-train.jsonl",
+      "sha256": "1362f5cbf3c85e9ec6bfb3f76d942728264bfe6c9c3a1436f432293ed81e7696",
+      "bytes": 1624703
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\loss\\loss_tdt.py",
+      "sha256": "a800f7704b1103de66ad55ff18a11064eb6fc104e039f52a430258fadbec1b83",
+      "bytes": 7372
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\torch\\optim\\adamw.py",
+      "sha256": "b54164da70821c47d1e4753907d375eb252773bd034863b7804a943fbdfa837a",
+      "bytes": 7569
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\torch\\utils\\checkpoint.py",
+      "sha256": "98949eca97131fcb72b419ab93c76e208559a09daf0614eebd307357a86a0cce",
+      "bytes": 74558
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\monitor_thermal_20261117.py",
+      "sha256": "a28ab46a34bc31127ca3c8fb7de63d0d866005456639d62d2df8d2603c4f37c1",
+      "bytes": 5305
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\system-restart-20261116-2315\\laptop-thermal-r3\\read_laptop_thermal_stream_20261117.ps1",
+      "sha256": "0e0a177ffecddda95818c5c50f1fd58acc272fb516da1e397ba9e6fd8745c964",
+      "bytes": 2717
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\expanded-data-r3\\integrity.json",
+      "sha256": "30e1384441454630c0e55e6855bf188395c6fa1137ed3f53d2923072e2b040e7",
+      "bytes": 6619
+    }
+  ],
+  "checkpointStoragePlan": {
+    "checkpointUpdates": [
+      1,
+      32,
+      64,
+      96,
+      128,
+      160,
+      192,
+      224,
+      256,
+      288,
+      320,
+      352,
+      384,
+      416,
+      448,
+      457
+    ],
+    "maximumCandidateFullCheckpoints": 16,
+    "payloadUpperBoundBytesIncluding1MiBMetadata": 1427713608,
+    "candidateCheckpointBytesUpperBound": 22843417728,
+    "original32GiBBudgetRetained": true,
+    "automaticDeletion": false,
+    "preflightCheckpointIsSeparateDisposableRun": true
+  },
+  "admissionSeconds": 0,
+  "ownerComputeQuote": "现在是插上显卡了",
+  "originalPreparedRecipe": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-r3\\protocol.json",
+  "controlledSourceChanges": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_domain_adaptation_20261116.py",
+      "before": "72595d8aa35ae674f96a1573b5b43b7357151dfc021da78d12bdc5dde3ffac44",
+      "after": "3f93174619f57f24f4e9727a24fbf74617808a5f17b675c7ab63c9da6bcba889"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\model_thermal_guard_20261117.py",
+      "before": "08bbcffcb0a018982bc2d6b4804deb306dc427c2be033525faf7417eff18561d",
+      "after": "34a1a53828e70cd82117f8717d528b26ee89280e4eac6d33e2f0bdb20a8a15eb"
+    }
+  ],
+  "decisionBasis": "Granite fixed113/709 does not qualify and its profile is ended. Existing publishedF32 Parakeet recipe1828train-only/participant-disjoint clips is retained unchanged. Measure real GPU loss/gradient/maximum-shape/roundtrip and cost before deciding whether one fixed epoch is feasible; no model/epoch/hyperparameter grid."
+}

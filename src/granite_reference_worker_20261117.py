@@ -1,4 +1,4 @@
-"""One native BF16 English reference using standard Accelerate disk offload."""
+"""One native BF16 English reference with an explicitly frozen CPU loading mode."""
 from pathlib import Path
 from datetime import datetime, timezone, timedelta
 import argparse, copy, ctypes, gc, hashlib, json, os, re, struct, sys, threading, time, traceback, wave
@@ -69,7 +69,7 @@ try:
         assert read(P['assets'])['state'] == 'COMPLETE_PINNED_GRANITE_REFERENCE_ASSETS_NO_MODEL_EXECUTION'
         threading.Thread(target=watch, daemon=True).start()
         admit = time.monotonic()
-        while time.monotonic()-admit < 60: check(); time.sleep(1)
+        while time.monotonic()-admit < P.get('admissionSeconds',60): check(); time.sleep(1)
         import numpy as np
         import torch
         from accelerate import init_empty_weights, disk_offload
@@ -101,9 +101,20 @@ try:
             assert inputs['input_features'].shape[1]==(c['frames']//160+1)//2
             frontend_control.append({'id':c['id'],'frames':c['frames'],'featureShape':list(inputs['input_features'].shape),
                                      'promptTokens':inputs['input_ids'].shape[-1]})
+            if P.get('prepareNativeInputsOnly'):
+                from safetensors.torch import save_file
+                file=out/(c['id']+'.safetensors')
+                save_file({key:value.contiguous() for key,value in inputs.items()},str(file))
+                frontend_control[-1].update(file=str(file),sha256=sha(file),audioSha256=c['audioSha256'],
+                    pcmSha256=c['pcmSha256'],tensors={key:{'shape':list(value.shape),'dtype':str(value.dtype)} for key,value in inputs.items()})
             del pcm,samples,inputs
         atomic_json(out/'native-frontend-control.json',{'state':'PASS_ALL12_NATIVE_PROCESSOR_GEOMETRY_AND_PINNED_TEMPLATE',
                     'cases':frontend_control,'prompt':prompt,'referenceUsed':False,'pretrainedNeuralCalls':0})
+        if P.get('prepareNativeInputsOnly'):
+            save(state='COMPLETE_NATIVE_INPUTS_NO_PRETRAINED_INFERENCE',activeFrontendCase=None)
+            atomic_json(out/'completed.json',state)
+            print(json.dumps({'state':state['state'],'cases':len(frontend_control),'newNeuralCalls':0}),flush=True)
+            raise SystemExit(0)
         save(state='VERIFYING_STANDARD_DISK_OFFLOAD_AND_NATIVE_METADATA', torch=torch.__version__, activeFrontendCase=None)
         torch.manual_seed(20261117)
         tiny = torch.nn.Sequential(torch.nn.Linear(8,16), torch.nn.GELU(), torch.nn.Linear(16,8)).to(dtype=torch.bfloat16).eval().requires_grad_(False)
@@ -116,6 +127,18 @@ try:
         atomic_json(out/'offload-control.json', {'state': 'PASS_IDENTICAL_BF16_TINY_STANDARD_DISK_OFFLOAD',
                     'maxAbsDifference': float((actual-expected).abs().max()), 'trainingUpdates': 0,
                     'doesNotProveFullModelQuality': True})
+        if P.get('loadingMode')=='readonly_cpu_views':
+            from readonly_cpu_offload_20261117 import readonly_cpu_disk_offload
+            tiny_view=copy.deepcopy(tiny)
+            view_map=readonly_cpu_disk_offload(tiny_view,out/'tiny-offload')
+            with torch.inference_mode():
+                view_actual=tiny_view(x)
+            assert torch.equal(expected,view_actual), 'Read-only weight view changed BF16 calculation'
+            atomic_json(out/'readonly-view-control.json',{'state':'PASS_BIT_IDENTICAL_NATIVE_BF16_COPY_AND_READONLY_VIEWS',
+                        'maxAbsDifference':float((view_actual-expected).abs().max()),
+                        'tensorLoads':view_map.loads,'mappedBytes':view_map.mapped_bytes,
+                        'copiesMadeByViewLoader':0,'trainingUpdates':0})
+            del tiny_view,view_actual,view_map
         del tiny, tiny_disk, x, expected, actual
         gc.collect()
         config = AutoConfig.from_pretrained(P['modelRoot'], local_files_only=True, trust_remote_code=False)
@@ -198,7 +221,10 @@ try:
         atomic_json(out/'offload-byte-binding.json', {'state': 'COMPLETE_RAW_PUBLISHED_TENSOR_COPY_NO_DTYPE_CHANGE', 'tensors': receipts})
         del meta, tensors
         gc.collect()
-        disk_offload(model, disk, execution_device=torch.device('cpu'), offload_buffers=False)
+        if P.get('loadingMode')=='readonly_cpu_views':
+            weight_views=readonly_cpu_disk_offload(model,disk)
+        else:
+            disk_offload(model, disk, execution_device=torch.device('cpu'), offload_buffers=False)
         hooks = []
         last_check = [0.0]
         def hook(module, args):
@@ -215,12 +241,14 @@ try:
             assert inputs['input_features'].device.type == 'cpu'
             assert inputs['input_features'].shape[1] == (c['frames']//160+1)//2, 'Native frontend truncated original audio'
             began = time.perf_counter()
+            state['attemptedOriginalCases']=state.get('attemptedOriginalCases',0)+1
             save(state='DECODING_ONE_NATIVE_GRANITE_ENGLISH_REFERENCE', activeCase=c['id'], inputFrames=c['frames'],
                  featureShape=list(inputs['input_features'].shape), promptTokens=inputs['input_ids'].shape[-1])
             class BoundedStop(StoppingCriteria):
                 def __call__(self, input_ids, scores, **kwargs):
                     check()
-                    if time.perf_counter()-began > P['maximumCaseSeconds']: raise InterruptedError('Bounded per-case reference deadline')
+                    deadline=P['maximumFirstCaseSeconds'] if P.get('maximumFirstCaseSeconds') and not state['completed'] else P['maximumCaseSeconds']
+                    if time.perf_counter()-began > deadline: raise InterruptedError('Bounded per-case reference deadline')
                     return False
             with torch.inference_mode():
                 output = model.generate(**inputs, do_sample=False, num_beams=1, max_new_tokens=P['maxNewTokens'],
@@ -235,13 +263,29 @@ try:
                       'seconds': time.perf_counter()-began, 'audioSha256': c['audioSha256'], 'pcmSha256': c['pcmSha256'],
                       'frames': c['frames'], 'protocolSha256': sha(a.protocol), 'referenceUsed': False,
                       'wordsPostEdited': False, 'trainingUpdates': 0, 'actualDevice': 'cpu', 'actualDtype': 'published bfloat16',
-                      'standardAccelerateDiskOffload': True, 'qualityQualified': False}
+                      'standardAccelerateDiskOffload': P.get('loadingMode')!='readonly_cpu_views',
+                      'standardAccelerateAlignHooks':True,
+                      'readOnlyCpuWeightViews':P.get('loadingMode')=='readonly_cpu_views','qualityQualified': False}
             path = out/(c['id']+'.json')
             atomic_json(path, packet)
             state['newNeuralCalls'] += 1
             state['completed'].append({'id': c['id'], 'file': str(path), 'sha256': sha(path)})
             save()
             assert natural and text.strip(), 'Incomplete native generation; no changed-parameter retry'
+            if P.get('loadingMode')=='readonly_cpu_views' and len(state['completed'])==1:
+                control=read(P['sameOriginalOutputControl'])
+                assert generated==control['generatedIds'], 'Same original input/control generated IDs differ'
+                speedup=control['seconds']/packet['seconds']
+                atomic_json(out/'same-original-output-and-speed-control.json',{
+                    'state':'PASS_IDENTICAL_ORIGINAL_GENERATION_AND_MEASURED_SPEED' if speedup>=P['minimumFirstCaseSpeedup'] else 'NO_MATERIAL_SPEEDUP_STOP_THIS_PROFILE',
+                    'sameOriginalAudioSha256':control['audioSha256']==packet['audioSha256'],
+                    'allGeneratedIdsIdentical':True,'baselineSeconds':control['seconds'],
+                    'seconds':packet['seconds'],'speedup':speedup,
+                    'minimumRequiredSpeedup':P['minimumFirstCaseSpeedup'],
+                    'viewTensorLoads':weight_views.loads,'viewMappedBytes':weight_views.mapped_bytes,
+                    'copiesMadeByViewLoader':0,'qualityScoreProduced':False})
+                assert control['audioSha256']==packet['audioSha256']
+                assert speedup>=P['minimumFirstCaseSpeedup'], 'No material speed gain; end bounded loading-profile experiment'
             del inputs, output, samples, pcm
             gc.collect()
         assert not torch.cuda.is_initialized()
@@ -250,6 +294,8 @@ try:
         print(json.dumps({'state': state['state'], 'clips': len(state['completed']), 'seconds': time.monotonic()-start,
                           'privatePeakBytes': limits.query()['jobPeakPrivateCommitBytes']}), flush=True)
 except BaseException as error:
+    if isinstance(error,SystemExit) and error.code==0 and P.get('prepareNativeInputsOnly'):
+        raise
     save(state='FAILED_NATIVE_GRANITE_REFERENCE_RETAINED_NO_AUTOMATIC_RETRY', error=repr(error), traceback=traceback.format_exc())
     atomic_json(out/'completed.json', state)
     raise

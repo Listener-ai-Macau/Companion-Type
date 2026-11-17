@@ -1,0 +1,128 @@
+{
+  "state": "PASS_ALL12_NATIVE_PROCESSOR_GEOMETRY_AND_PINNED_TEMPLATE",
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "frames": 192800,
+      "featureShape": [
+        1,
+        603,
+        160
+      ],
+      "promptTokens": 142
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "frames": 476000,
+      "featureShape": [
+        1,
+        1488,
+        160
+      ],
+      "promptTokens": 319
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "frames": 475520,
+      "featureShape": [
+        1,
+        1486,
+        160
+      ],
+      "promptTokens": 319
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "frames": 473280,
+      "featureShape": [
+        1,
+        1479,
+        160
+      ],
+      "promptTokens": 316
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "frames": 203840,
+      "featureShape": [
+        1,
+        637,
+        160
+      ],
+      "promptTokens": 148
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "frames": 162401,
+      "featureShape": [
+        1,
+        508,
+        160
+      ],
+      "promptTokens": 121
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "frames": 187360,
+      "featureShape": [
+        1,
+        586,
+        160
+      ],
+      "promptTokens": 139
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "frames": 475520,
+      "featureShape": [
+        1,
+        1486,
+        160
+      ],
+      "promptTokens": 319
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "frames": 362720,
+      "featureShape": [
+        1,
+        1134,
+        160
+      ],
+      "promptTokens": 247
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "frames": 476000,
+      "featureShape": [
+        1,
+        1488,
+        160
+      ],
+      "promptTokens": 319
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "frames": 473600,
+      "featureShape": [
+        1,
+        1480,
+        160
+      ],
+      "promptTokens": 316
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "frames": 289920,
+      "featureShape": [
+        1,
+        906,
+        160
+      ],
+      "promptTokens": 202
+    }
+  ],
+  "prompt": "USER: <|audio|>transcribe the speech with proper punctuation and capitalization.\n ASSISTANT:",
+  "referenceUsed": false,
+  "pretrainedNeuralCalls": 0
+}

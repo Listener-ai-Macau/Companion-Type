@@ -1,0 +1,22 @@
+{
+  "state": "PASS_INPUT_DEPENDENCY_BINDING_AND_ONE_LAYER_MEMORY_ENVELOPE",
+  "protocol": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\execution-protocol-readonly-r1.json",
+  "protocolSha256": "857c9034a8049fac5ea5c3fc67d95596357035172e854720a4bd78859cfc6bce",
+  "sourceChange": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\granite_reference_worker_20261117.py",
+      "before": "a369413b61462024b79c9fdf85c5f36e6961ca50f89fbd4283a7b90bc530ec91",
+      "after": "a28412e1ec3b68f578506940cb7a4838c7623394a02ba21af6d504ad98d641e7"
+    }
+  ],
+  "availableRamBytes": 7326101504,
+  "conservativeStartRequirementBytes": 5973028536,
+  "originalPrivateLimitBytes": 2147483648,
+  "originalCpuPercent": 25,
+  "firstCaseMustFinishWithinSeconds": 150.09167824999895,
+  "maximumCaseSeconds": 600,
+  "minimumAvailableBytes": 3414499000,
+  "originalReferencesAndDecodingUnchanged": true,
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0
+}

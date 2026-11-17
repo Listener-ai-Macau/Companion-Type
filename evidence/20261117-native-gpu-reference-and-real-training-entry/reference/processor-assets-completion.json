@@ -1,0 +1,55 @@
+{
+  "state": "COMPLETE_OFFICIAL_PINNED_PROCESSOR_ASSETS_GIT_CHAIN_VERIFIED",
+  "revision": "823ca793aa49925d4eb2e758709b7f2c98513e8e",
+  "transport": "Read-only public hf-mirror Git; commit independently pinned from officialHF before TLS failure. No routing or proxy configuration changed.",
+  "assets": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\chat_template.jinja",
+      "bytes": 193,
+      "gitBlob": "7401247dfd924fd8e3ce8981378996f4f504549f",
+      "sha256": "e3219da52634178f68696475ea4518ade9d1b5c9a71b825f28312b73afc432c0"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\merges.txt",
+      "bytes": 916646,
+      "gitBlob": "354558edcdbd64ca7abd407b8be3d5d09d39d781",
+      "sha256": "b6fe424e334903f7fb84d3a106d9730455f4744b9fe3c21ee136d97a00e72502"
+    }
+  ],
+  "fullTrackedFileNames": [
+    ".eval_results/MODEL_ibm-granite-granite-speech-4.1-2b_DATASET_hf-audio-esb-datasets-test-only-sorted_ami_test.jsonl",
+    ".eval_results/MODEL_ibm-granite-granite-speech-4.1-2b_DATASET_hf-audio-esb-datasets-test-only-sorted_earnings22_test.jsonl",
+    ".eval_results/MODEL_ibm-granite-granite-speech-4.1-2b_DATASET_hf-audio-esb-datasets-test-only-sorted_gigaspeech_test.jsonl",
+    ".eval_results/MODEL_ibm-granite-granite-speech-4.1-2b_DATASET_hf-audio-esb-datasets-test-only-sorted_librispeech_test.clean.jsonl",
+    ".eval_results/MODEL_ibm-granite-granite-speech-4.1-2b_DATASET_hf-audio-esb-datasets-test-only-sorted_librispeech_test.other.jsonl",
+    ".eval_results/MODEL_ibm-granite-granite-speech-4.1-2b_DATASET_hf-audio-esb-datasets-test-only-sorted_spgispeech_test.jsonl",
+    ".eval_results/MODEL_ibm-granite-granite-speech-4.1-2b_DATASET_hf-audio-esb-datasets-test-only-sorted_tedlium_test.jsonl",
+    ".eval_results/MODEL_ibm-granite-granite-speech-4.1-2b_DATASET_hf-audio-esb-datasets-test-only-sorted_voxpopuli_test.jsonl",
+    ".eval_results/open_asr_leaderboard.yaml",
+    ".eval_results/output.log",
+    ".gitattributes",
+    "README.md",
+    "added_tokens.json",
+    "chat_template.jinja",
+    "config.json",
+    "merges.txt",
+    "model-00001-of-00003.safetensors",
+    "model-00002-of-00003.safetensors",
+    "model-00003-of-00003.safetensors",
+    "model.safetensors.index.json",
+    "model.sig",
+    "multilingual_sample.wav",
+    "out_llm.safetensors",
+    "preprocessor_config.json",
+    "processor_config.json",
+    "special_tokens_map.json",
+    "tokenizer.json",
+    "tokenizer_config.json",
+    "vocab.json"
+  ],
+  "originalDirectReadFailures": [
+    "2 urllib SSLEOF",
+    "curl Schannel handshake failure"
+  ],
+  "neuralCalls": 0
+}

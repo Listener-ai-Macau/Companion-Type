@@ -1,0 +1,51 @@
+{
+  "state": "FAILED_NATIVE_GRANITE_REFERENCE_RETAINED_NO_AUTOMATIC_RETRY",
+  "startedAt": "2026-11-17T18:37:55+08:00",
+  "pid": 22648,
+  "createdAt": 1794911875.1667924,
+  "completed": [
+    {
+      "id": "ES2003b-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r6\\ES2003b-seq-000.json",
+      "sha256": "c34f82a80e36fe882f32200d3e226220f13cdfd7baa7db4aeb40d31dfcd3c676"
+    }
+  ],
+  "newNeuralCalls": 1,
+  "newTrainingUpdates": 0,
+  "referenceRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "protocolSha256": "c221ede5c513b663db38bc2eb91f8086d0f10f087a82ec2bb063dacf70fc00a1",
+  "observedAt": "2026-11-17T18:54:24+08:00",
+  "elapsedSeconds": 989.0309999999881,
+  "limits": {
+    "pid": 22648,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1694150656,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "activeFrontendCase": null,
+  "torch": "2.11.0+cpu",
+  "tensorsPrepared": 921,
+  "tensorCount": 954,
+  "activeCase": "ES2003b-seq-005",
+  "inputFrames": 476000,
+  "featureShape": [
+    1,
+    1488,
+    160
+  ],
+  "promptTokens": 319,
+  "error": "InterruptedError('Bounded per-case reference deadline')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\granite_reference_worker_20261117.py\", line 226, in <module>\n    output = model.generate(**inputs, do_sample=False, num_beams=1, max_new_tokens=P['maxNewTokens'],\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\modeling_granite_speech.py\", line 594, in generate\n    return super().generate(*args, input_features=input_features, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\utils\\_contextlib.py\", line 124, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\generation\\utils.py\", line 3000, in generate\n    result = decoding_method(\n             ^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\generation\\utils.py\", line 3280, in _sample\n    unfinished_sequences = unfinished_sequences & ~stopping_criteria(input_ids, scores)\n                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\generation\\stopping_criteria.py\", line 625, in __call__\n    is_done = is_done | criteria(input_ids, scores, **kwargs)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\granite_reference_worker_20261117.py\", line 223, in __call__\n    if time.perf_counter()-began > P['maximumCaseSeconds']: raise InterruptedError('Bounded per-case reference deadline')\n                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nInterruptedError: Bounded per-case reference deadline\n"
+}

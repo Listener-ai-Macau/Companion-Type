@@ -1,0 +1,49 @@
+{
+  "state": "DECODING_ONE_NATIVE_GRANITE_ENGLISH_REFERENCE",
+  "startedAt": "2026-11-17T18:37:55+08:00",
+  "pid": 22648,
+  "createdAt": 1794911875.1667924,
+  "completed": [
+    {
+      "id": "ES2003b-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r6\\ES2003b-seq-000.json",
+      "sha256": "c34f82a80e36fe882f32200d3e226220f13cdfd7baa7db4aeb40d31dfcd3c676"
+    }
+  ],
+  "newNeuralCalls": 1,
+  "newTrainingUpdates": 0,
+  "referenceRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "protocolSha256": "c221ede5c513b663db38bc2eb91f8086d0f10f087a82ec2bb063dacf70fc00a1",
+  "observedAt": "2026-11-17T18:54:20+08:00",
+  "elapsedSeconds": 985.6089999999967,
+  "limits": {
+    "pid": 22648,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1694150656,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "activeFrontendCase": null,
+  "torch": "2.11.0+cpu",
+  "tensorsPrepared": 921,
+  "tensorCount": 954,
+  "activeCase": "ES2003b-seq-005",
+  "inputFrames": 476000,
+  "featureShape": [
+    1,
+    1488,
+    160
+  ],
+  "promptTokens": 319
+}

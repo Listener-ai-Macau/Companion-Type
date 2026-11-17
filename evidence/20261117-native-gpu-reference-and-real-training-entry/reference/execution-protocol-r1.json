@@ -1,0 +1,225 @@
+{
+  "at": "2026-11-17T18:00:37+08:00",
+  "state": "FROZEN_ONE_NATIVE_BF16_GRANITE_ENGLISH_REFERENCE",
+  "modelRoot": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117",
+  "repository": "ibm-granite/granite-speech-4.1-2b",
+  "revision": "823ca793aa49925d4eb2e758709b7f2c98513e8e",
+  "assets": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\asset-acquisition-r1\\completed.json",
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\granite_reference_worker_20261117.py",
+      "sha256": "284232dd3bceaecb15172ecb22d77d122b66202086fc2d0f6ac21fc53f3d73fc"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py",
+      "sha256": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\durable_model_state_20261117.py",
+      "sha256": "5fea82f461da06e76afd3321c860c48a570147a4d9cce6c7cca37a595bb54e3b"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\accelerate\\big_modeling.py",
+      "sha256": "b38df85d2e081ef89d5117b3fa238a029cb95750e462686cb474abdcb681ea5a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\accelerate\\utils\\offload.py",
+      "sha256": "37a013a4e66987b806ad9523ae289c0fb17aa08859be624d0faea3472cb59e5c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\accelerate\\hooks.py",
+      "sha256": "18418fd0636991c75ccabaa95d38deccc7082cb34eed308004e080afd7ca80ed"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\conversion_mapping.py",
+      "sha256": "1b65519bbb5ad9cf63be1be182517fd32345e05944c9b43e56f19fd97075ef4e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\core_model_loading.py",
+      "sha256": "9ced6f791538f04a69614db29f3dfc694f68872ae6cd769e20fd52886fe7efae"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\configuration_granite_speech.py",
+      "sha256": "52d7934e5abac605684b2abefd54112cde00f770e5b1a2a98673eedb313dd4dd"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\feature_extraction_granite_speech.py",
+      "sha256": "d939e2bf7ddc32eeced3d0216cedff7a2c3bacfa3fe587efa7319a81bde3c4e4"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\modeling_granite_speech.py",
+      "sha256": "6dfbc64376f10be0530e1b605bf1ef6f7d5ea3261b43d9b8c21e1feeb3ca6fa7"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\processing_granite_speech.py",
+      "sha256": "d7803fb8b5269dfca8ce85a5fc2e992e4f80b79fd992724eeb0c79aef8fbd5ea"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\__init__.py",
+      "sha256": "0c92b0e7fe2baff2c04ece52461c94bf5eebb3ad14c1fa7825f342d00e953db9"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\README.md",
+      "sha256": "33eaacb2b553a130c58b1131886617e10818a283d8921cfc3b0bcabeb483cb23"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\config.json",
+      "sha256": "cd1d45c8f93ea1b1c92efd5dbdeb134406cb28c8510a7c71d9b78a854d299691"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\model.safetensors.index.json",
+      "sha256": "dec67acdc06e74d87650a54a4b5fbb07bfcdb4ed9fd1b95edef8651f5d64599b"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\preprocessor_config.json",
+      "sha256": "382a6f26300937721969b01909c96c2e519620b6781f7b45cb8b2e348a932d87"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\processor_config.json",
+      "sha256": "13edc723022827cc3620ba2e2b4bcf52287b365d77e60a31227f0a4b7dea5f9c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\tokenizer.json",
+      "sha256": "43ca88fd0519c64ef93fa0a90cbc4e560fe485b5ba60348a86bc3c624f37918e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\tokenizer_config.json",
+      "sha256": "de233c19cd9efa63738f7481f318fc2048060f751ac9fd7957b131c43226b403"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\special_tokens_map.json",
+      "sha256": "c08676c49fd7969a3130f72be6d4bf34da66aa484a6e21dffe359893a1bd5f2e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\added_tokens.json",
+      "sha256": "b4956ad3505e979f2f25cc2e2be2163d8e23730f854b6c5a14ed106f3dd90549"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\vocab.json",
+      "sha256": "8af71076de8b0b626eed0f4c984faf0a7c062479164b2a31308a948524d4f69c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\model-00001-of-00003.safetensors",
+      "sha256": "3c987fdc29940c49d2498ea5925e8d57f88661af3ef30f73e56e2434ded3e42f"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\model-00002-of-00003.safetensors",
+      "sha256": "8e18d6d3fbe009a95a4cf305e31c2aab4a3484eccbce29aa1aa1454fc8c046ee"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\model-00003-of-00003.safetensors",
+      "sha256": "32f823497bc179f6f346efdd46984ab60e44b3d443bf40a18d757ddce626a2d2"
+    }
+  ],
+  "workerSha256": "284232dd3bceaecb15172ecb22d77d122b66202086fc2d0f6ac21fc53f3d73fc",
+  "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r1",
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+      "audioSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+      "frames": 192800,
+      "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92"
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-005.wav",
+      "audioSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+      "frames": 476000,
+      "pcmSha256": "ec8c4c16829d1d95404cb3fd3fcd8ee32cc310edaaf7b8901d562a90696b04e7"
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-010.wav",
+      "audioSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+      "frames": 475520,
+      "pcmSha256": "e087cf4e22224bfc9c3ad810c56bd3595ad7343c30b6d53fc5c1ce00d445b32f"
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-016.wav",
+      "audioSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+      "frames": 473280,
+      "pcmSha256": "7e8c174955670b930e9b657a8fdcbea730374845ac6668f4a916ddc867ee7f6e"
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-021.wav",
+      "audioSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+      "frames": 203840,
+      "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f"
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-027.wav",
+      "audioSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+      "frames": 162401,
+      "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239"
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-000.wav",
+      "audioSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+      "frames": 187360,
+      "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f"
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-023.wav",
+      "audioSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+      "frames": 475520,
+      "pcmSha256": "490510a15ef6f46ebac736fb41e975068df6e61349ac7f589c257fe724ae9d33"
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-046.wav",
+      "audioSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+      "frames": 362720,
+      "pcmSha256": "7c06b4b1859d19da0fe23e80c043ebb406245e57d456d2776536102c041cc8a4"
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-069.wav",
+      "audioSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+      "frames": 476000,
+      "pcmSha256": "01439b3125f9e794a9ffae891fd0cccc470ae701397a2b889487dc87d166bb39"
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-092.wav",
+      "audioSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+      "frames": 473600,
+      "pcmSha256": "14091b430e04787c3694b572f922d0a4da22a3ce4f10cc7978dde91fa4797bb7"
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-116.wav",
+      "audioSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+      "frames": 289920,
+      "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f"
+    }
+  ],
+  "neuralLock": "E:/CodexData/Companion/.model-cache/local-qwen-decoder.lock",
+  "privateLimitBytes": 2147483648,
+  "minimumAvailableBytes": 3414499000,
+  "cpuPercent": 25,
+  "nativeThreads": 4,
+  "blasThreads": 1,
+  "cpuTemperatureMode": "observe-only",
+  "maximumSeconds": 2700,
+  "maximumCaseSeconds": 600,
+  "maxNewTokens": 512,
+  "prompt": "<|audio|>transcribe the speech with proper punctuation and capitalization.",
+  "recipe": "Original official model/processor, eager CPU BF16, greedy decode; standard Accelerate disk_offload with byte-identical per-tensor files. Official four key renamings, no tensor arithmetic conversion, externalLM, hotword, VAD, denoise or word post-edit.",
+  "gate": {
+    "maximumEnglishErrors": 70,
+    "referenceWords": 709,
+    "eachMeetingNoWorseThanBestExistingBase": true,
+    "stricterThanOriginal99ErrorGate": true,
+    "saleQualification": false
+  },
+  "trainingUpdates": 0,
+  "referenceReadByInference": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

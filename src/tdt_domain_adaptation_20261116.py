@@ -105,7 +105,7 @@ def main():
     with exclusive_run(run),exclusive_file(Path(P['neuralLock'])),PowerLease():
         try:
             save();state['presentDevices']=present_discrete_gpu();began=time.monotonic()
-            while time.monotonic()-began<60:
+            while time.monotonic()-began<P.get('admissionSeconds',60):
                 stop();state['cpuThermalObservation']=thermal.check(starting=True);save();time.sleep(1)
             import torch
             import numpy as np

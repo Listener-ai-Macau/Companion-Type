@@ -1,0 +1,657 @@
+{
+  "at": "2026-11-17T19:55:02+08:00",
+  "state": "FROZEN_NATIVE_GPU_REFERENCE_PREPARED_INPUTS_DEVICE_UNVERIFIED",
+  "modelRoot": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117",
+  "repository": "ibm-granite/granite-speech-4.1-2b",
+  "revision": "823ca793aa49925d4eb2e758709b7f2c98513e8e",
+  "assets": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\asset-acquisition-r1\\completed.json",
+  "files": [
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\granite_reference_worker_20261117.py",
+      "sha256": "981244f5a3dbf9a897d32d9d505bcba3ff260f71ba9e9f6d3c7c22d64967dbf0"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_windows_resource_limits_20261104.py",
+      "sha256": "f70ffa5c3cb4cd45be42a4508d67dd3b10bf439f6ff49de807ac3f6825e7cb5a"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\durable_model_state_20261117.py",
+      "sha256": "5fea82f461da06e76afd3321c860c48a570147a4d9cce6c7cca37a595bb54e3b"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\accelerate\\big_modeling.py",
+      "sha256": "b38df85d2e081ef89d5117b3fa238a029cb95750e462686cb474abdcb681ea5a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\accelerate\\utils\\offload.py",
+      "sha256": "37a013a4e66987b806ad9523ae289c0fb17aa08859be624d0faea3472cb59e5c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\accelerate\\hooks.py",
+      "sha256": "18418fd0636991c75ccabaa95d38deccc7082cb34eed308004e080afd7ca80ed"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\conversion_mapping.py",
+      "sha256": "1b65519bbb5ad9cf63be1be182517fd32345e05944c9b43e56f19fd97075ef4e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\core_model_loading.py",
+      "sha256": "9ced6f791538f04a69614db29f3dfc694f68872ae6cd769e20fd52886fe7efae"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\configuration_granite_speech.py",
+      "sha256": "52d7934e5abac605684b2abefd54112cde00f770e5b1a2a98673eedb313dd4dd"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\feature_extraction_granite_speech.py",
+      "sha256": "d939e2bf7ddc32eeced3d0216cedff7a2c3bacfa3fe587efa7319a81bde3c4e4"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\modeling_granite_speech.py",
+      "sha256": "6dfbc64376f10be0530e1b605bf1ef6f7d5ea3261b43d9b8c21e1feeb3ca6fa7"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\processing_granite_speech.py",
+      "sha256": "d7803fb8b5269dfca8ce85a5fc2e992e4f80b79fd992724eeb0c79aef8fbd5ea"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\transformers\\models\\granite_speech\\__init__.py",
+      "sha256": "0c92b0e7fe2baff2c04ece52461c94bf5eebb3ad14c1fa7825f342d00e953db9"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\README.md",
+      "sha256": "33eaacb2b553a130c58b1131886617e10818a283d8921cfc3b0bcabeb483cb23"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\config.json",
+      "sha256": "cd1d45c8f93ea1b1c92efd5dbdeb134406cb28c8510a7c71d9b78a854d299691"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\model.safetensors.index.json",
+      "sha256": "dec67acdc06e74d87650a54a4b5fbb07bfcdb4ed9fd1b95edef8651f5d64599b"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\preprocessor_config.json",
+      "sha256": "382a6f26300937721969b01909c96c2e519620b6781f7b45cb8b2e348a932d87"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\processor_config.json",
+      "sha256": "13edc723022827cc3620ba2e2b4bcf52287b365d77e60a31227f0a4b7dea5f9c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\tokenizer.json",
+      "sha256": "43ca88fd0519c64ef93fa0a90cbc4e560fe485b5ba60348a86bc3c624f37918e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\tokenizer_config.json",
+      "sha256": "de233c19cd9efa63738f7481f318fc2048060f751ac9fd7957b131c43226b403"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\special_tokens_map.json",
+      "sha256": "c08676c49fd7969a3130f72be6d4bf34da66aa484a6e21dffe359893a1bd5f2e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\added_tokens.json",
+      "sha256": "b4956ad3505e979f2f25cc2e2be2163d8e23730f854b6c5a14ed106f3dd90549"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\vocab.json",
+      "sha256": "8af71076de8b0b626eed0f4c984faf0a7c062479164b2a31308a948524d4f69c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\model-00001-of-00003.safetensors",
+      "sha256": "3c987fdc29940c49d2498ea5925e8d57f88661af3ef30f73e56e2434ded3e42f"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\model-00002-of-00003.safetensors",
+      "sha256": "8e18d6d3fbe009a95a4cf305e31c2aab4a3484eccbce29aa1aa1454fc8c046ee"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\model-00003-of-00003.safetensors",
+      "sha256": "32f823497bc179f6f346efdd46984ab60e44b3d443bf40a18d757ddce626a2d2"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\version.py",
+      "sha256": "9f1bcb6f2e8e26f540cca31d908d0db2768f1d6708336cb95e7090ff8dc4345c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\_torchcodec.py",
+      "sha256": "dac6a27c0d01761135d996f9d6f812eb3af0b04d62afb9a6be6275945396b4b2"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\__init__.py",
+      "sha256": "fb25996556e5580d3a1d0e1c512f2c46c69266e82a69cab0d00eef4042f18d81"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\compliance\\kaldi.py",
+      "sha256": "6d2eea2604b793c14ad5190c88d1283f7ab4c618de57f57844743d8e8feba8e3"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\compliance\\__init__.py",
+      "sha256": "24d1fff9d4d05669b9e58c1c54cb95bd460559d5e11a7e02ffff52f0852c3685"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\cmuarctic.py",
+      "sha256": "64bda218bc4d6cab7449a85324699bbac79faf6a94172c362eb97c91db8bb38c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\cmudict.py",
+      "sha256": "ffdbd3cfbffc04556b707780eb5ffe8765cb3a5e88b1d582a6d90c5b388e5bb5"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\commonvoice.py",
+      "sha256": "39c167fa71b861f048cf4608a47f75c47f6b1646bcc85266af1cb8bc56640b82"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\dr_vctk.py",
+      "sha256": "0327fce69ac336bd4b7164386f2b1559d4553ebcb62402e3bfa32dabeea20696"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\fluentcommands.py",
+      "sha256": "2a7987d58dbc9393e1a905fa795fbbe4cab04d1c621d251472f02c6be2bde78b"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\gtzan.py",
+      "sha256": "92ddb92f2f6a0c6ba28955e0b17852d39b468ba95a461464a3cd7e050e2c67ec"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\iemocap.py",
+      "sha256": "64c306fc5a5c59c30711b86e4584506945a2fc3a1e823c42ae75720a0e441151"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\librilight_limited.py",
+      "sha256": "8b06419522952eb5f3859bdaaa3b954463ba733c57e1fa5dcddf3059ee5f7964"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\librimix.py",
+      "sha256": "027704ebbd403a5d387513ec6a33595be671c48fcfc00dac8c17ed74183843e9"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\librispeech.py",
+      "sha256": "cacefaf48d14cc6d3b5049b267f283c004e1e32734f21154b826b22bcb582068"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\librispeech_biasing.py",
+      "sha256": "2841a995153fc2981bd15aab4feb78da4bed0bb960e2e32cb19728b15bef3e18"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\libritts.py",
+      "sha256": "f75129d8cab73b24ab7b6e469e25c12e64734f010f88a98c6aa5e7ce2ae7d316"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\ljspeech.py",
+      "sha256": "974f41481407efa23e2e1624211174bb5f2d4e2fb8cb2b1a178823d864996b1c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\musdb_hq.py",
+      "sha256": "15594ab061011e24f9d32f462ecc27b76405a61d8f8e223ac82cb5331886e9ff"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\quesst14.py",
+      "sha256": "df2e87dd3de0efc8e40ea71af23391401395899847d51865b1fb98f0727639c5"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\snips.py",
+      "sha256": "9b055ce4ab1b3253d027cedec988239d0e52e04157a10be6d7774ed2b5e926e1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\speechcommands.py",
+      "sha256": "ff09ab2928847b408e3bbba4d09557ca9066371bb4bab9dc787b8543accc3a4d"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\tedlium.py",
+      "sha256": "51065469e52a9859ed656707f475cea46796eadb02706f356cf8d7dbf096c5b8"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\utils.py",
+      "sha256": "9a9838b748458ad4468fd3b0ecc5f008534a1939d5b04ad52e9c5fb1b3fb144f"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\vctk.py",
+      "sha256": "bcdfd5cf14cbc875b5d48febcdfccc540de1e495bdd7b15a5373429d1fb370bd"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\voxceleb1.py",
+      "sha256": "2656246f260e0055058462d42dede582e7003567ff1bba86ab0e3b623897d883"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\yesno.py",
+      "sha256": "0778513546b3bc1f15f12c0e52543396207dbc8f6032497d48497e759e0f11ac"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\datasets\\__init__.py",
+      "sha256": "85d1e5766dcece840b6c8d241e3f2d2f1ab00e1ccc7de76ad3fb759002bb3918"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\functional\\filtering.py",
+      "sha256": "4a1f5cc0ee3c59795c482688d0582198d7516a3cc5092edc44c8c5daef783c59"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\functional\\functional.py",
+      "sha256": "0f124d0f0b9eb9fc1750f1b726469350a664c9ecfe01d325523d72db611462e7"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\functional\\_alignment.py",
+      "sha256": "3f67a14d9ec8c2e30559536aae16237358a604a3729300b4dc3eeebdb8310420"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\functional\\__init__.py",
+      "sha256": "73e940269428c6c002838347f7391543364e26d816cd48073e46d8bea9e3c4d0"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\lib\\__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\conformer.py",
+      "sha256": "815ace61e2643e555a5fee1e6695733547bfaf793b83563a35a690f0964ffabe"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\conv_tasnet.py",
+      "sha256": "0fb635d2c3b32ded3783281f37527947bdd220790819540e92a290e8d8b7a3fb"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\deepspeech.py",
+      "sha256": "9d561cdb1c16a453ba82ee4247499ba8b880cc99fc9407c771d70ff768b6da6a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\emformer.py",
+      "sha256": "59b69e65cacf14e38b9f88a0ab0784d007ee17f490669aa0ed73c612197b0bc7"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\rnnt.py",
+      "sha256": "3cd26965ddef1fac11abc4c47f85253ed5476ed7bdc0e27e6d1304ba0ea0a74f"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\rnnt_decoder.py",
+      "sha256": "08104c66186ae4181ac74ff7a774990fe3acdd2d4b14707dd684e05440f86e66"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\tacotron2.py",
+      "sha256": "999e652d26bbe68a9cd21824737b089b9fe02be92786d817ddd9a0f7ea0b41aa"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\wav2letter.py",
+      "sha256": "a1eb71a47e511b44da75807be483a660eae7ada68fbd295c48da5165bd8513f0"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\wavernn.py",
+      "sha256": "2d180bdfa8c0e96cc8d4f033058e8fe76a023064933ab69707c7c4824c294b1c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\_hdemucs.py",
+      "sha256": "8a9023efdeb93cefd6119a90c16d689bd8108fdd1485039e53a1d4dcba6fcf0a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\__init__.py",
+      "sha256": "1a2dd442fc63c132d6f707ca945e363b756ea7bd1dd1b936c7ead94bcf404b02"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\decoder\\_ctc_decoder.py",
+      "sha256": "ccab0e74f36b527eefd9026696e0b790ea7dd1141a3f70929904aeadcd67005c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\decoder\\_cuda_ctc_decoder.py",
+      "sha256": "47b579583585b1f4ccf2aaf6ee373bfa5b65a4a2bc966c7ce3d492c2a87790c3"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\decoder\\__init__.py",
+      "sha256": "58c878b9d37c08617e4af80de8905748d323859aa6d5eb7b17232bb24e95e913"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\squim\\objective.py",
+      "sha256": "14262ed22d8e5d8ddee99f813b6a7eadceab5343efa49674800f823d9640f5fc"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\squim\\subjective.py",
+      "sha256": "d7f80af4ede7beb8e28a4a4fe3a21db0ccca76e493b7dd642a4940ebdc10aa2c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\squim\\__init__.py",
+      "sha256": "790a31f243ef88eb612ae969cd9bcf2b46bae8d1d6ecccd813868e17bbdafe45"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\wav2vec2\\components.py",
+      "sha256": "1339ae19ce6a1d53eb1c21aa6151d3bdd8ea3f6802ac17e71d2a132bd1ac675c"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\wav2vec2\\model.py",
+      "sha256": "90fe902ac1753e395ec9432168f8f2762d29091cb8186500ad1581cdf0c999d1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\wav2vec2\\wavlm_attention.py",
+      "sha256": "89875ef60aec6ff45a12cf3b148e72932377cf4231d6996aa6c30dbda9008963"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\wav2vec2\\__init__.py",
+      "sha256": "8f915d4057ee229748298c2830ba29e016bbd061a84be94aeb5b54fa8346e708"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\wav2vec2\\utils\\import_fairseq.py",
+      "sha256": "b28ed3fa8b43342b1352dcc9454145196c9dd1c696977458fd46c53312780c91"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\wav2vec2\\utils\\import_huggingface.py",
+      "sha256": "34c2ba62b0080df3b0f23d6d57edd74f0c7f9b06c91ef83c95d4eb016473b483"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\models\\wav2vec2\\utils\\__init__.py",
+      "sha256": "d5ea3068e10a45ba7b25a8c536ffebe3b44426a9cc99789dba44bb32bc29ff94"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\pipelines\\rnnt_pipeline.py",
+      "sha256": "d7a38c37fe326354c428b5a3aa4cc548c281c884f12e86e3e97d6e93bf29c102"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\pipelines\\_source_separation_pipeline.py",
+      "sha256": "b6d1ea8dcc029823d62e3d18783b136b5f977adbb28cf0d9f43d9d784dc59a40"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\pipelines\\_squim_pipeline.py",
+      "sha256": "79876b2955d4aeedd575fa5a0e730de6a0ae28736f78477f8f01aab5e995f65b"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\pipelines\\__init__.py",
+      "sha256": "a0cc0ebbed53fee8099a175aa08e4dac20eb5001aba433a52503bc87e6cb016e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\pipelines\\_tts\\impl.py",
+      "sha256": "c30ad3c9310491ec36d809f307f66495aa46680b2d2525016b0840edb39c1973"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\pipelines\\_tts\\interface.py",
+      "sha256": "cb5994d38e3a572da11e90b032a459b75508e195e5f82e2d269f761329701e1d"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\pipelines\\_tts\\utils.py",
+      "sha256": "b6e8840397aaa01360b78e93c4603b94e12a9636ee1022f4fa973fb92728d31a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\pipelines\\_tts\\__init__.py",
+      "sha256": "58a739734e9bfccf4cbc4a212598212495802fbbd7bdfc11224772f39502874e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\pipelines\\_wav2vec2\\aligner.py",
+      "sha256": "1ce72d84582ea7ded0331f595c29a4bfa8ddc3fcf17514fe7bf4a295712e8cd5"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\pipelines\\_wav2vec2\\impl.py",
+      "sha256": "23a86d368e16b792cfc57f59f2b9b16ab144f0164e641505214f53f64d64d8fa"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\pipelines\\_wav2vec2\\utils.py",
+      "sha256": "0956b07d799519663c9a3fbfeabe0a3bdd3b06917aed601558710787270521a3"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\pipelines\\_wav2vec2\\__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\transforms\\_multi_channel.py",
+      "sha256": "32eb30edd4eedb91cd8ca78870a1d40eea819a3fc60b67b74da6a4a8971f7d6f"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\transforms\\_transforms.py",
+      "sha256": "d8f7fc9f0b808e72e4019ef190de5c3a101e63e89ca450ca88234fedeae54023"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\transforms\\__init__.py",
+      "sha256": "1115860f9d891e82a5918815d1ed2f1fbeb39997ea9dca9cd4f6e64929f41ff7"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\utils\\download.py",
+      "sha256": "adfff24b5f22ee7e0961b206a568967348a97b8b06bf746f8afbfaa740da6605"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\utils\\__init__.py",
+      "sha256": "c8d316223a0677af053f157a3e10dd8ced6845e9a533440f26cbbf93a8956864"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\_extension\\utils.py",
+      "sha256": "cfb6a592ff1609da55fbbc5cc047b3994a023e95648a382500f050119cba3d04"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\_extension\\__init__.py",
+      "sha256": "841fc37bdddb65a49b34ebc84aa6f49b5ac382649c8ae25c1674c2aed78c923e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\_internal\\module_utils.py",
+      "sha256": "fac95dfa55a6cda0282d3497ce4da4a215e9cc6885829c404c1f9356a57e89a4"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torchaudio\\_internal\\__init__.py",
+      "sha256": "f3472925f4d2f3defb618ad4deae69e0344018092a109ae61bd2eada1103a68a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\dependency-wheels\\torchaudio-2.11.0+cpu-cp311-cp311-win_amd64.whl",
+      "sha256": "abbff04127caf6e16e3a7c3e1ca2739b68899e14926d7cbec4bd8b40f72375d5"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\processor-assets-completion.json",
+      "sha256": "b28ad7115bbbefb8b3057bc4a8b860ae86b9d238864a066a653c42028c1dcd09"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r4\\offload-byte-binding.json",
+      "sha256": "50638a84eee42edcb0fca95a68c9f4269302bfd04e95ede42147026448d67d91"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r4\\published-bf16-offload\\index.json",
+      "sha256": "f3d5ef1492cc34ccc23f1584da4f7cba2aba336e8ebda939ee1d4949d22fee49"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\chat_template.jinja",
+      "sha256": "e3219da52634178f68696475ea4518ade9d1b5c9a71b825f28312b73afc432c0"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\merges.txt",
+      "sha256": "b6fe424e334903f7fb84d3a106d9730455f4744b9fe3c21ee136d97a00e72502"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\__init__.py",
+      "sha256": "9805fe98af34a65b1ab758c7909cc7b9906f40777257e513968545b19e319aa1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\version.py",
+      "sha256": "4b5b7b131adbefef6928f7f505c0a38a3682b57152ace45e8ea0474abf39b896"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\_C.cp311-win_amd64.pyd",
+      "sha256": "f649cd47650fd5e315957eaf1e4119bb65b494975f7ac3b7be8fa3cb4dd0857b"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\lib\\c10.dll",
+      "sha256": "c11383af6f528b830705c600c89fc6486dd66df41bc6b7f73fdd822de2bb3b63"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\lib\\libiomp5md.dll",
+      "sha256": "eb14cf741b10a6ca176acded284bff7b069e421f49927e28fef9685c6f62abf3"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\lib\\libiompstubs5md.dll",
+      "sha256": "3707fae5baa5c77da4a355d9977cf132251310db89923bf944b1da6dec702922"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\lib\\shm.dll",
+      "sha256": "e2b24c08880901d2ab11f862dbae44513576014c196eb27c23856e7cec348d7f"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\lib\\torch.dll",
+      "sha256": "08582236a1d1a8bb0d7e8232909da46d329dd58c42de6641303923b7e570e421"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\lib\\torch_cpu.dll",
+      "sha256": "aaba404407adac72936d9e15e8c1457c85b894c973db773341c9f995ebb3159e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\lib\\torch_global_deps.dll",
+      "sha256": "c21c62cddc4e94fa13aab7c825da9d497be4ab05d6ed473beff2a2d0bc93e23e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\lib\\torch_python.dll",
+      "sha256": "e56acd5dacad8ef1d7010d6e17699ceb2e7e9611ee6b704f9b7fc9749cd28f45"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\candidate-deps\\torch\\lib\\uv.dll",
+      "sha256": "fa569e682fc5fb7a8eb94c6829af9f30a569748dbbc6bce39735d48bc960bcf8"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\dependency-wheels\\torch-2.11.0+cpu-cp311-cp311-win_amd64.whl",
+      "sha256": "51a221769d4a316f4b47a786c12e67c3f4807db8ed13c7b8817ebe73786acbbc"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\granite_reference_gpu_worker_20261117.py",
+      "sha256": "b192c3bc4cdbe3b66db30d729878b348491669800eb21c27f49a92a83aa5654d"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\moss_streamed_weights_20261104.py",
+      "sha256": "cf2711555ea22d079e4fbdf405692de403e718877a9a4105df3e4fd872d2a82f"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_contract_20261116.py",
+      "sha256": "4e238f87f06b7ed95a6bd6e30522e86b4129836074cabff138cd1fe5f76981c9"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\meeting_acoustic_worker_20261116.py",
+      "sha256": "afbf977c6904a99634a5278d1fb1bf1ffcea4dad418d187aaf6f1284c31b5896"
+    },
+    {
+      "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\companion_community1_adapter_20261115.py",
+      "sha256": "a6905264e2787ac059c7500e0e87ef8b5bf7e8a57502fbad42e53eea6b4e189d"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\native-frontend-control.json",
+      "sha256": "21fb96f44f45b3a3985f225075d96ece556023a000239dae665935244a897976"
+    }
+  ],
+  "workerSha256": "b192c3bc4cdbe3b66db30d729878b348491669800eb21c27f49a92a83aa5654d",
+  "run": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1",
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-000.wav",
+      "audioSha256": "5bf81d573f8bfb13754db3fae8bc74cc1da4eafe5e0ca37657c9897de9ad49fe",
+      "frames": 192800,
+      "pcmSha256": "718c8b98ec5ca727b0bd9256e5e81535d22421fb5679a63ff446879ad7591d92"
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-005.wav",
+      "audioSha256": "bb53a8dc9fe6221bb530ee08f2fc851e4d7941f450557aab4fd649bcdcc305fd",
+      "frames": 476000,
+      "pcmSha256": "ec8c4c16829d1d95404cb3fd3fcd8ee32cc310edaaf7b8901d562a90696b04e7"
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-010.wav",
+      "audioSha256": "f92eb46f472e6e1d3e5bc2abc7fa18d6a43518ca72cc24e24c339b54a21d8de7",
+      "frames": 475520,
+      "pcmSha256": "e087cf4e22224bfc9c3ad810c56bd3595ad7343c30b6d53fc5c1ce00d445b32f"
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-016.wav",
+      "audioSha256": "e8a42ce0d00b1d4ed1c7fc40b6dff5598a148fda67acabb454871167ab403bf9",
+      "frames": 473280,
+      "pcmSha256": "7e8c174955670b930e9b657a8fdcbea730374845ac6668f4a916ddc867ee7f6e"
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-021.wav",
+      "audioSha256": "32855436c7a814e3c3155064606421175bc91258540e51016c8b656d38307b5f",
+      "frames": 203840,
+      "pcmSha256": "5389a9b8396fa379563ca20e65c6c10f4b9d6c03928913eea205a105a6f49b2f"
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r1\\audio\\ES2003b-seq-027.wav",
+      "audioSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+      "frames": 162401,
+      "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239"
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-000.wav",
+      "audioSha256": "688d783480b24f23163ea0f2e1db37d21c288332ba0d9f638b9c057919f9d868",
+      "frames": 187360,
+      "pcmSha256": "0c041e3fe8dd8ea34c4060c6e3df0afc0e913cfa5850713dba82f5c3f44a180f"
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-023.wav",
+      "audioSha256": "1836da74ea14d2d5cd98db0ba75e390464467345401caac17656b38c470e8613",
+      "frames": 475520,
+      "pcmSha256": "490510a15ef6f46ebac736fb41e975068df6e61349ac7f589c257fe724ae9d33"
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-046.wav",
+      "audioSha256": "01c3edfb5d2de1b1e2f2fb7aa7b211302b5a40e987578c15c84229fda8c2d9d4",
+      "frames": 362720,
+      "pcmSha256": "7c06b4b1859d19da0fe23e80c043ebb406245e57d456d2776536102c041cc8a4"
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-069.wav",
+      "audioSha256": "c3592e27f4f0a81f2eb297597c89df98a79a57bd32f80546740cb45b7c694350",
+      "frames": 476000,
+      "pcmSha256": "01439b3125f9e794a9ffae891fd0cccc470ae701397a2b889487dc87d166bb39"
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-092.wav",
+      "audioSha256": "5d6bf6c39855028df3fef6f8b172b3917fa584cc25225b9b81b65893fbb5b389",
+      "frames": 473600,
+      "pcmSha256": "14091b430e04787c3694b572f922d0a4da22a3ce4f10cc7978dde91fa4797bb7"
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "audio": "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\audio\\EN2001a-a2-116.wav",
+      "audioSha256": "eb84595d9707cd80af20ba0eb7df4fad4cd095fdd0afbfe05b60bc677b89c545",
+      "frames": 289920,
+      "pcmSha256": "06885da3f4522b4cfa2bb5cbb40401c326dc3decde4821bfa16101247164421f"
+    }
+  ],
+  "neuralLock": "E:/CodexData/Companion/.model-cache/local-qwen-decoder.lock",
+  "privateLimitBytes": 2147483648,
+  "minimumAvailableBytes": 3414499000,
+  "cpuPercent": 25,
+  "nativeThreads": 4,
+  "blasThreads": 1,
+  "cpuTemperatureMode": "observe-only",
+  "maximumSeconds": 2700,
+  "maximumCaseSeconds": 600,
+  "maxNewTokens": 512,
+  "prompt": "<|audio|>transcribe the speech with proper punctuation and capitalization.",
+  "recipe": "Same native officialBF16/greedy/originalPCM reference. Exact CPU-native inputs prepared once; original tensors streamed once into6800XT via existing byte-roundtrip-verified loader. No CPU frontend or CPU parameter offload during GPU generation.",
+  "gate": {
+    "maximumEnglishErrors": 70,
+    "referenceWords": 709,
+    "eachMeetingNoWorseThanBestExistingBase": true,
+    "stricterThanOriginal99ErrorGate": true,
+    "saleQualification": false
+  },
+  "trainingUpdates": 0,
+  "referenceReadByInference": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "priorPreparationFailure": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-cpu-r5\\observed-terminal.json",
+  "admissionSeconds": 0,
+  "computeDevice": "rx6800xt",
+  "gpuRuntime": {
+    "python": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Scripts\\python.exe",
+    "torch": "2.11.0+rocm10.0.0",
+    "transformers": "5.22.1"
+  },
+  "blas": {
+    "file": "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Lib\\site-packages\\_rocm_sdk_core\\bin\\rocm-openblas.dll",
+    "sha256": "88f7631d9f7c49cfbf710551a7fa69bef2fd54052007532a518d7ba3699534c0"
+  },
+  "preparedNativeInputs": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\prepared-native-inputs-r1\\native-frontend-control.json",
+  "checkpointTensorBytes": 4626414392,
+  "shardSha256": {
+    "model-00001-of-00003.safetensors": "3c987fdc29940c49d2498ea5925e8d57f88661af3ef30f73e56e2434ded3e42f",
+    "model-00002-of-00003.safetensors": "8e18d6d3fbe009a95a4cf305e31c2aab4a3484eccbce29aa1aa1454fc8c046ee",
+    "model-00003-of-00003.safetensors": "32f823497bc179f6f346efdd46984ab60e44b3d443bf40a18d757ddce626a2d2"
+  },
+  "gpuExecutionVerified": false
+}

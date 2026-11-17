@@ -1,0 +1,26 @@
+{
+  "pid": 19028,
+  "createdAt": 1794917543.2327187,
+  "at": "2026-11-17T20:12:23.233822+08:00",
+  "command": [
+    "E:/CodexData/Companion/pretrained-route-selection-20261104/night-6800xt-20261104/amd-runtime/Scripts/python.exe",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\owned_probe.py",
+    "--protocol",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\protocol.json",
+    "--phase",
+    "baseline",
+    "--run",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\venv-supervisor-regression-r1\\run"
+  ],
+  "protocolSha256": "73a51978881984e9ad207d1885475555672130f6aaccecef1c9cf81b70fe5701",
+  "workerSha256": "360807ba65f0a9d79566b459940cdac7590884d3bb0e8648caf2ae8a1ca54b0c",
+  "noAutomaticRetry": true,
+  "initialCpuTemperature": {
+    "observationOnly": true,
+    "cpuTelemetryAvailable": false,
+    "telemetryError": "RuntimeError('Temperature logger process identity changed')",
+    "taskStartThresholdCelsius": null,
+    "taskStopThresholdCelsius": null,
+    "hardwareOverheatCauseProven": false
+  }
+}

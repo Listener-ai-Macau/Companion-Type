@@ -1,0 +1,741 @@
+{
+  "state": "PASS_ORIGINAL_CPU_TORCH_WHEEL_PAYLOAD_AFTER_LONGPATH_COMPLETION",
+  "at": "2026-11-17T19:06:59.078556+08:00",
+  "previousReceipt": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\torch-install-payload-integrity-before-longpath-completion.json",
+  "previouslyVerifiedFiles": 11631,
+  "previouslyVerifiedBytes": 423369439,
+  "restoredFiles": 145,
+  "restored": [
+    {
+      "file": "torch/include/ATen/native/transformers/cuda/mem_eff_attention/iterators/predicated_tile_access_iterator_residual_last.h",
+      "bytes": 66840,
+      "sha256": "eefb1c163242635159703077b8f1dd938cc7224101954c3c835cfa54596b4594"
+    },
+    {
+      "file": "torch/include/ATen/native/transformers/cuda/mem_eff_attention/iterators/predicated_tile_iterator_residual_last.h",
+      "bytes": 66878,
+      "sha256": "b61340e0df0b11f52cda839c2202570bb2273506300d2f25c22aa5d585c5d940"
+    },
+    {
+      "file": "torch/include/ATen/ops/_fake_quantize_per_tensor_affine_cachemask_tensor_qparams_compositeexplicitautograd_dispatch.h",
+      "bytes": 1614,
+      "sha256": "cac84aa38d01818a8cb213b0a37d32b1da05765cb5a51b3c62fb103b57b9e5ba"
+    },
+    {
+      "file": "torch/include/ATen/ops/_scaled_dot_product_fused_attention_overrideable_backward_compositeexplicitautograd_dispatch.h",
+      "bytes": 2188,
+      "sha256": "52db2c395da011cc05a33eb9ad5f8209939e46f09bb716674585bd83e3229860"
+    },
+    {
+      "file": "torch/include/ATen/ops/_test_autograd_multiple_dispatch_view_copy_compositeexplicitautogradnonfunctional_dispatch.h",
+      "bytes": 1108,
+      "sha256": "d7ad9d58ac3de7f2a3f3574007f39519a4f95e008909b9fd659a53843bec0445"
+    },
+    {
+      "file": "torch/include/ATen/ops/fake_quantize_per_channel_affine_cachemask_backward_compositeimplicitautograd_dispatch.h",
+      "bytes": 1116,
+      "sha256": "87c720aec49fb9ef79e96a9cc74c728c0a3003379dd7b430c87c8a440bc1906a"
+    },
+    {
+      "file": "torch/include/ATen/ops/fake_quantize_per_tensor_affine_cachemask_backward_compositeimplicitautograd_dispatch.h",
+      "bytes": 1115,
+      "sha256": "f31b88d70c63ac15d27ec5934521b70c46894ef62302e45cdfd40e9fb437a6e0"
+    },
+    {
+      "file": "torch/include/ATen/ops/special_shifted_chebyshev_polynomial_t_compositeexplicitautogradnonfunctional_dispatch.h",
+      "bytes": 1123,
+      "sha256": "0417fb910b6e501ade35eee05276ba1a46ed53a9952adfec5da9a350ac0ac0fd"
+    },
+    {
+      "file": "torch/include/ATen/ops/special_shifted_chebyshev_polynomial_u_compositeexplicitautogradnonfunctional_dispatch.h",
+      "bytes": 1123,
+      "sha256": "d327fafc9528d2558f6471f1b1f901c3aa0eebe031b2b0bb08fac983901dca7d"
+    },
+    {
+      "file": "torch/include/ATen/ops/special_shifted_chebyshev_polynomial_v_compositeexplicitautogradnonfunctional_dispatch.h",
+      "bytes": 1123,
+      "sha256": "ba849159f005dd384b556ff0a85c6009bf461caabec5ba900f0b92cdeab7b779"
+    },
+    {
+      "file": "torch/include/ATen/ops/special_shifted_chebyshev_polynomial_w_compositeexplicitautogradnonfunctional_dispatch.h",
+      "bytes": 1123,
+      "sha256": "a643a329c0138481b8c272b78fb21c23bae8fab5c8f5b87687aa79c028f60db2"
+    },
+    {
+      "file": "torchgen/__init__.py",
+      "bytes": 358,
+      "sha256": "1fe4ac7e452631f8b0bd6b5f8b987fc00eac675f139df0c3801ff7d4ad18b79d"
+    },
+    {
+      "file": "torchgen/code_template.py",
+      "bytes": 3374,
+      "sha256": "ad8c53d32e454c79a7ee82be773170fdc2a5ac95616389107f6745f7b29b53f8"
+    },
+    {
+      "file": "torchgen/context.py",
+      "bytes": 4158,
+      "sha256": "403360aad979c80d95be20c3dd69294042da3b697e94b32e8a20ca34a82e81d8"
+    },
+    {
+      "file": "torchgen/gen.py",
+      "bytes": 119079,
+      "sha256": "b2674e47c1c5ec7d276586fcdfe020dd081e330778b3c0f81cc6767e795bc9bf"
+    },
+    {
+      "file": "torchgen/gen_aoti_c_shim.py",
+      "bytes": 29206,
+      "sha256": "917039bdfbff2c3c211df6aeba1fc9c144ef4ba4833529c12a50cc6c51f69b5e"
+    },
+    {
+      "file": "torchgen/gen_backend_stubs.py",
+      "bytes": 23831,
+      "sha256": "8625364c51f6323db8eade32d48509080271cf407c1538056e832f7a04096a00"
+    },
+    {
+      "file": "torchgen/gen_functionalization_type.py",
+      "bytes": 50209,
+      "sha256": "9352ecb3def7781c5964e8282d34096eec60661df32673355996126e01a5442e"
+    },
+    {
+      "file": "torchgen/gen_lazy_tensor.py",
+      "bytes": 23798,
+      "sha256": "48123e3973c51a2331d2ea8461b7fc53c330baaa24ed47f9fa4e3615a0bb42a2"
+    },
+    {
+      "file": "torchgen/gen_schema_utils.py",
+      "bytes": 3448,
+      "sha256": "646e67f6e218cd6c909b7183cd356c6a67f5afcc91c443b9d9c8401097545b91"
+    },
+    {
+      "file": "torchgen/gen_vmap_plumbing.py",
+      "bytes": 9800,
+      "sha256": "9abe9fd74d76b3d4ec40bca8b7df41bf283e875480abb357c575b5fc82e7146f"
+    },
+    {
+      "file": "torchgen/local.py",
+      "bytes": 2291,
+      "sha256": "458dfcf33849bfd17736bc18c75d2f1b52fa278c5ddf0d774fc58d52edbc337c"
+    },
+    {
+      "file": "torchgen/model.py",
+      "bytes": 127118,
+      "sha256": "8bfe43159696921589a49213752cdb25d16554e0dc7e72d5a9b9289f826e6f28"
+    },
+    {
+      "file": "torchgen/native_function_generation.py",
+      "bytes": 31230,
+      "sha256": "bb58bd0834d6c5a02ad117554038f101517b37fb7f7bbd60ab75b971ff942e72"
+    },
+    {
+      "file": "torchgen/utils.py",
+      "bytes": 17485,
+      "sha256": "5b3471c776b05e03c12789e22562bbb44cc6d9e29ee4b3cd71654da67b37b08f"
+    },
+    {
+      "file": "torchgen/yaml_utils.py",
+      "bytes": 1143,
+      "sha256": "72899d1a4b8abe8be5121d12c1599c26d899df7c8d7c8be17a0200870ef666e0"
+    },
+    {
+      "file": "torchgen/aoti/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "torchgen/aoti/fallback_ops.py",
+      "bytes": 8645,
+      "sha256": "46fd959537f50038ceab9a3fb64ac5080a5ebd054dfcedead5c92994a4d8ecdb"
+    },
+    {
+      "file": "torchgen/api/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "torchgen/api/autograd.py",
+      "bytes": 40558,
+      "sha256": "98325686fb91997d28cda5ed61e8e7d565b06d4154fdd81253680d0500a91172"
+    },
+    {
+      "file": "torchgen/api/cpp.py",
+      "bytes": 17017,
+      "sha256": "38aa2b72948ae05cfc72847512b0b8cd3b630bf593ffbc8ebec5213fb1e004b5"
+    },
+    {
+      "file": "torchgen/api/dispatcher.py",
+      "bytes": 3604,
+      "sha256": "9b29dcde5606e712ae69e7a111c5dd69b655574f5adc745137154abcbf6582bf"
+    },
+    {
+      "file": "torchgen/api/functionalization.py",
+      "bytes": 8571,
+      "sha256": "a3d5c3b2e683dbdc1aa6b1b23901ce2b76716242c219e6ef904cf61a0de351f2"
+    },
+    {
+      "file": "torchgen/api/lazy.py",
+      "bytes": 17611,
+      "sha256": "5920b6ded2944b72b0d97e0f229a9f74a459d071178eca9b5f54f7576bea12a2"
+    },
+    {
+      "file": "torchgen/api/meta.py",
+      "bytes": 496,
+      "sha256": "8ed4c851042f2b8590c1804f88aec205f1fd8a1eec6043d89d695772327b36fb"
+    },
+    {
+      "file": "torchgen/api/native.py",
+      "bytes": 5364,
+      "sha256": "a70250b75e325ac70646c3b35ed97d63b0a663ec659a26e6924c761cd836aead"
+    },
+    {
+      "file": "torchgen/api/python.py",
+      "bytes": 61382,
+      "sha256": "e7946b36779d3c83e6d601a09f75c39afebd28f9ee17640c0717ab131c88a8ee"
+    },
+    {
+      "file": "torchgen/api/structured.py",
+      "bytes": 6273,
+      "sha256": "565358313f1a08675966357d42626ba37c80d02438cad308b8ed3d6b9a7f0be5"
+    },
+    {
+      "file": "torchgen/api/translate.py",
+      "bytes": 19734,
+      "sha256": "a908cd72c625bd465dad0ef4aeac4fa4322c2ab304698cb35c9bdc642d0cf4e7"
+    },
+    {
+      "file": "torchgen/api/ufunc.py",
+      "bytes": 7021,
+      "sha256": "bce9203695826b23ae053fd063fac87986f28fc4f4602c48f8450ed959e6de32"
+    },
+    {
+      "file": "torchgen/api/unboxing.py",
+      "bytes": 9622,
+      "sha256": "78e2db27576250489437fc69c34e748d8d4d73a854004b9fd6439268838e29b0"
+    },
+    {
+      "file": "torchgen/api/types/__init__.py",
+      "bytes": 149,
+      "sha256": "0bdf73aff544e73e5615929d93ddd55b764ddb6353e078f189bdcf924f53d954"
+    },
+    {
+      "file": "torchgen/api/types/signatures.py",
+      "bytes": 13242,
+      "sha256": "68c791595db94d5bd2a9c9b7e58872b97ccc9c2ab5f31fe628da7145755c940a"
+    },
+    {
+      "file": "torchgen/api/types/types.py",
+      "bytes": 6393,
+      "sha256": "3fb36833b69ac16f7f72f0eb6eb44775f252fe34927d9412fdd91fa897e54ab1"
+    },
+    {
+      "file": "torchgen/api/types/types_base.py",
+      "bytes": 7422,
+      "sha256": "9ca275762aaa8108cecfff74a9b426c28876d3e32b3f2fe3fe581705810ebca0"
+    },
+    {
+      "file": "torchgen/dest/__init__.py",
+      "bytes": 824,
+      "sha256": "15b3a26072ecc93d0509937b307be7c7492481d9de7b84e6992b9e783caa6d06"
+    },
+    {
+      "file": "torchgen/dest/lazy_ir.py",
+      "bytes": 30411,
+      "sha256": "61500d3c65322b147089a24bd71388cd0cd8d5ef61e426f7c8e828b49c8b671e"
+    },
+    {
+      "file": "torchgen/dest/lazy_ts_lowering.py",
+      "bytes": 1879,
+      "sha256": "4e849e91e450d3d27d34ebada980207d2c50432184956ab5f283d4fcb633a228"
+    },
+    {
+      "file": "torchgen/dest/native_functions.py",
+      "bytes": 3255,
+      "sha256": "47122ef4983dd9752c356a79c2783cfad6f771a7e7cc52c945d976b2bc7ae839"
+    },
+    {
+      "file": "torchgen/dest/register_dispatch_key.py",
+      "bytes": 43402,
+      "sha256": "6a75721729fe5fac90d372a095c1e206954e43988d3e12d2b87f1f2136edf9d5"
+    },
+    {
+      "file": "torchgen/dest/ufunc.py",
+      "bytes": 18765,
+      "sha256": "2a52f478b5780eb3c3d00e666a337342575caab9c696513610f2ec6d256fd6d5"
+    },
+    {
+      "file": "torchgen/operator_versions/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "torchgen/operator_versions/gen_mobile_upgraders.py",
+      "bytes": 12973,
+      "sha256": "22327bca3cb9b8f7adc5794bd854bca5836bb4d549cdef2f9366761000d4d5d9"
+    },
+    {
+      "file": "torchgen/operator_versions/gen_mobile_upgraders_constant.py",
+      "bytes": 250,
+      "sha256": "5b9eccd475a4ad0cd8fd5c36e7dfcf3c14d11f8d58542d9f160e64d93b7fc820"
+    },
+    {
+      "file": "torchgen/packaged/ATen/native/native_functions.yaml",
+      "bytes": 638136,
+      "sha256": "3ca9286a9de3159afe33bb6741677ff357ba30795aa4be75fb13056561ac63ae"
+    },
+    {
+      "file": "torchgen/packaged/ATen/native/tags.yaml",
+      "bytes": 5925,
+      "sha256": "fced2b89dc8e557e13e612792f2546b8ff7ad0b578756afcb7cace6ebba5a719"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/ATenOpList.cpp",
+      "bytes": 1095,
+      "sha256": "dbe6df6522261f3f6b731f6fd4b8e2635793f9bb4dcfa03950830c8be1758b99"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/CompositeViewCopyKernels.cpp",
+      "bytes": 2150,
+      "sha256": "4bb28505e957163942eabc438a62b617e6f9f96aae36325bc4fd5bfe784fee49"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/DispatchKeyFunction.h",
+      "bytes": 725,
+      "sha256": "0294d6c431b5463682e434e3429c5bae409a4267d66ddc546ad0cb3379c13ff1"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/DispatchKeyFunctions.h",
+      "bytes": 1966,
+      "sha256": "6d6f9deeb919448aa6564c0e97c52644bb636e8cf55cb6f89c9509e80ad18c2e"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/DispatchKeyFunctions_inl.h",
+      "bytes": 846,
+      "sha256": "6402fd1555f6cf77be0f2eeb171ecba49e81e118266f59f5ccf14a9578d127d8"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/DispatchKeyNativeFunctions.cpp",
+      "bytes": 197,
+      "sha256": "78a8ef21e882928886fa29b1f9b7526928a3b1ae9808f75d4777901351f87b21"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/DispatchKeyNativeFunctions.h",
+      "bytes": 403,
+      "sha256": "0dcf346208de4bb20a865aef0db7057c5f5d2b58111cacc0a00943587669bc63"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/Function.h",
+      "bytes": 546,
+      "sha256": "e41b0602a29ee2b3d57407bedcce58fda3ee9931ab318d8aea86d729e64f3340"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/FunctionalInverses.h",
+      "bytes": 820,
+      "sha256": "fe1b9da3324022f2f2ce660fdec230d44f35e928666bb915e5c3751ccafca8a2"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/Functions.cpp",
+      "bytes": 3212,
+      "sha256": "b6bbcbeb3661010f952eba39928bc01cb615aee3aa254050f968ed40971c3c89"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/Functions.h",
+      "bytes": 4780,
+      "sha256": "bf78c6d0b651659dadf65b059b0c7bf4bb3842e9e9412ec6d8f41a80ec999bcc"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/LazyIr.h",
+      "bytes": 604,
+      "sha256": "a3a8db68d52655eb02b433e2e96f5112df3f851ad2eacbc501ef711e22f06c9b"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/LazyNonNativeIr.h",
+      "bytes": 189,
+      "sha256": "3ca6d0b2fc8ecebcbfbbb880b549f32ab174e010174c8618df338c4a7a032c17"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/MethodOperators.h",
+      "bytes": 854,
+      "sha256": "34294a784ea08c9010a6c6501b038ce96a91de799939d2173169018b56657561"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/NativeFunction.h",
+      "bytes": 383,
+      "sha256": "9ba0c4cf1a43ffa3b754cfef06230833b88a92d5ade7e6340b1689dcb8031602"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/NativeFunctions.h",
+      "bytes": 1182,
+      "sha256": "49b72fd5a332affec70ecfd93ab1db760496efe0dff431de9d9d5eec384c5d8a"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/NativeMetaFunction.h",
+      "bytes": 475,
+      "sha256": "7064ab78e7c197a0190d43eee79a41f0a1d0069672f9bf7e929ed2675379c4b8"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/NativeMetaFunctions.h",
+      "bytes": 325,
+      "sha256": "e3285e4aa3a17a2baecb67ac19c70e274a00c98ce13b0c82dffd389ebb5e2fe0"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/Operator.h",
+      "bytes": 467,
+      "sha256": "6073fb64fa84574c9e0aacfb4dcb41b69ec2803cd62d97dc22492085bd7a80e9"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/Operators.cpp",
+      "bytes": 366,
+      "sha256": "6dac24dd5faebf5de20fe6437e5673cd2a642a256337eaf1db6aefa9a96e615a"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/Operators.h",
+      "bytes": 3274,
+      "sha256": "94b8e4f75bffce7ad97f2438fbbbea3dddb1e11721f508f65aea2b24e5167607"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RedispatchFunctions.cpp",
+      "bytes": 322,
+      "sha256": "7194ccfe9faa8024e5e859d79afe25105c40b21399d40c803d2453759ab622ab"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RedispatchFunctions.h",
+      "bytes": 914,
+      "sha256": "8f79a40ae6095382e4eaa2145f3781945f7f637132d6566f7db45b3ff4f54894"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegisterBackendSelect.cpp",
+      "bytes": 781,
+      "sha256": "82a1b5500a3b63b4e623175e488d2c9e4e1764a30683fa91b1889bb6acc661a4"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegisterCodegenUnboxedKernels.cpp",
+      "bytes": 1160,
+      "sha256": "57f574c3c751ac0e265c14d7fe9d9b2b3cb6c5afcd71ea07d33cf87c945a0a58"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegisterDispatchDefinitions.ini",
+      "bytes": 477,
+      "sha256": "29fb1e89d7073d12e829264972961226265e68d56847952f369768d93cfadc82"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegisterDispatchKey.cpp",
+      "bytes": 1479,
+      "sha256": "f073ba1bd2d2c25950da6ee5b0a8a7c299058e63773412035d37a311bd92df17"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegisterFunctionalization.cpp",
+      "bytes": 3577,
+      "sha256": "0eca9f60d4100f598331174dcd75822137aa6504ff99dfb55442c97d89a2417b"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegisterSchema.cpp",
+      "bytes": 396,
+      "sha256": "baf193a26ffff90046156b3a99dc223ae02a50b63c3ed91243e5b4015cc882b6"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/RegistrationDeclarations.h",
+      "bytes": 164,
+      "sha256": "a268c797acfb985ecaa5175decf2846c7a65107002cf42100b7ff1d27bcee2fa"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/TensorBody.h",
+      "bytes": 30085,
+      "sha256": "52cbdf030bebdc258431ecd834993f30cf255026005dc36bc17f791b1bafc762"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/TensorMethods.cpp",
+      "bytes": 2674,
+      "sha256": "24a18b1bcca1088e286161a77a913a51d53ada1b1d7b3ccd0fa4fb43b8ad040e"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/UfuncCPU.cpp",
+      "bytes": 464,
+      "sha256": "b0dbae92809b0f2d37e09f456a55c83f5078f50aa4711aa0d271ab28c8734851"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/UfuncCPUKernel.cpp",
+      "bytes": 364,
+      "sha256": "aed14b3983dfa412f250021e23f31282734c231a4616f3ddfa30adc7043981d5"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/UfuncCUDA.cu",
+      "bytes": 515,
+      "sha256": "f67b9a16f3136655a7e3f15d44be2007cf3a046ee4a92e8c116eb6b350219ca8"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/UnboxingFunctions.cpp",
+      "bytes": 744,
+      "sha256": "53cdcf4c9c70463284dad90dcca9a28166076c52c1d1afcc2147562e3f1ab4f6"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/UnboxingFunctions.h",
+      "bytes": 1058,
+      "sha256": "b8e90ad17fa7722ee0b9c9fb303d5ce692fe161e76238eb8ace8736095874b28"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/ViewMetaClasses.cpp",
+      "bytes": 365,
+      "sha256": "cfb1ed74980b75c4116edc807cc717760bb5f58974769c40ae06e326e330018d"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/ViewMetaClasses.h",
+      "bytes": 245,
+      "sha256": "7f89c3b9514b96b21043b9c746639e43b4319bc085de2fc4a35a1bb0a996b2ac"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/ViewMetaClassesPythonBinding.cpp",
+      "bytes": 303,
+      "sha256": "ce0509ba89a63da6a13feb1a263bfb1a5774190d6683f07fd702195f98943605"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/aten_interned_strings.h",
+      "bytes": 827,
+      "sha256": "c92bbebe44d3a921083a980a84283fbfbb4969bd5e396044a8a50605e3c9af88"
+    },
+    {
+      "file": "torchgen/packaged/ATen/templates/enum_tag.h",
+      "bytes": 189,
+      "sha256": "9e8215d793d1f326d27c45bb2ddca46012b975af4efcd44cf105be0d5e962a55"
+    },
+    {
+      "file": "torchgen/packaged/autograd/BUILD.bazel",
+      "bytes": 108,
+      "sha256": "e64fae7365ba38c15bd0dba807b540f756327e56dd474604980a4ddd5eabe522"
+    },
+    {
+      "file": "torchgen/packaged/autograd/README.md",
+      "bytes": 150,
+      "sha256": "67f841759d34e3d830f572c456b6e6af1b84285e7d87ca479c40cfde2659fda6"
+    },
+    {
+      "file": "torchgen/packaged/autograd/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "torchgen/packaged/autograd/build.bzl",
+      "bytes": 511,
+      "sha256": "a551099a553bc2707a1268c8093f10812487f56c07c09e7c8f84739d31716151"
+    },
+    {
+      "file": "torchgen/packaged/autograd/context.py",
+      "bytes": 985,
+      "sha256": "35e52f90279d3a62d8cd1708652fdc99aeb1d5a15f72432af7ead0bd8879d46d"
+    },
+    {
+      "file": "torchgen/packaged/autograd/deprecated.yaml",
+      "bytes": 6384,
+      "sha256": "9eac328a70a0ef2696a824989edd8addee1c37d5213a7e041e7ca31ea3db1400"
+    },
+    {
+      "file": "torchgen/packaged/autograd/derivatives.yaml",
+      "bytes": 186827,
+      "sha256": "f379849f21430a10f9f8e69f708c71d009b5fa8477925eeb706fd5668f7d5596"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_annotated_fn_args.py",
+      "bytes": 4610,
+      "sha256": "dee8f076b23bc79acf66ebde80c33e2be01055da8772fca851dbbc07a6531ebf"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_autograd.py",
+      "bytes": 4764,
+      "sha256": "45d1ae085812594064f33447ecb68703ec33966385da26399f68c53c6b9e8d29"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_autograd_functions.py",
+      "bytes": 39534,
+      "sha256": "ebc2673de1d5a4696e2626290d6d2df0e4362efdb9dc69a9e6110fbc51844325"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_inplace_or_view_type.py",
+      "bytes": 23590,
+      "sha256": "b2d9de69003d099f6e83580aec50e518a8d4970405dfa1f632467359a45b580c"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_python_functions.py",
+      "bytes": 47991,
+      "sha256": "28d0d8f5cf7cd57174225c3007f2c6800ac2291d316b8170cd0d9865f8b73e1e"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_trace_type.py",
+      "bytes": 19709,
+      "sha256": "251097edf7e5c368d7c23d40109fb84352c88c204975d242c703d99afcde7325"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_variable_factories.py",
+      "bytes": 4595,
+      "sha256": "a21b124e1818786cf50e40e36669300c41eba05777b459f958d286bddee7e054"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_variable_type.py",
+      "bytes": 90164,
+      "sha256": "eba3bdaa384735a4147faf731255f7d233f02eb6949d1891027cde703dc2edb9"
+    },
+    {
+      "file": "torchgen/packaged/autograd/gen_view_funcs.py",
+      "bytes": 12159,
+      "sha256": "0e9c1cb095abeecc4af64e20d1fd62b539189aac208fc2d7f3f490004fcda11a"
+    },
+    {
+      "file": "torchgen/packaged/autograd/load_derivatives.py",
+      "bytes": 42614,
+      "sha256": "55738b955d108e4b2a301fa53b2e012f5d5c74e58dbc9d4299e1c57e57bcc14e"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/ADInplaceOrViewType.cpp",
+      "bytes": 828,
+      "sha256": "63f6934787187e516dc816d6612e2e90f93b615577f468196dbb17489171f8f1"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/Functions.cpp",
+      "bytes": 1522,
+      "sha256": "c1b6eca5c1e3b6458ca28eb9b1bfa8cfebfff5ae287943231f3d7cd81c8fccb0"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/Functions.h",
+      "bytes": 1628,
+      "sha256": "e929a165fd882313eb56f7f9c636a82de0a69017cb2c5aa715486548e8465c5d"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/TraceType.cpp",
+      "bytes": 735,
+      "sha256": "6adcf9fafdf5dc8ca5f6b8027e5e3bfde8ee0997cb7b2d5b070af35ea5da0197"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/VariableType.cpp",
+      "bytes": 2336,
+      "sha256": "fa30ff9d7242df8608b7344f66dbbe98fc8012b1ace1898a7f895b24647e5414"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/VariableType.h",
+      "bytes": 1522,
+      "sha256": "611f93a6a2a396b1b94475c9c7ff97850894b88e1b98cae6ece47f3a13a501cb"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/ViewFuncs.cpp",
+      "bytes": 283,
+      "sha256": "65a054ea614cc6b147515fa62790b91be6e7302509248111c7a9a4bfa165038b"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/ViewFuncs.h",
+      "bytes": 526,
+      "sha256": "f7bfa2adc9ae6842adcee977a94c1d998012d90751c02c0f6056a7c9643a6397"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/annotated_fn_args.py.in",
+      "bytes": 210,
+      "sha256": "9512be7b6dc9607354f6d3a12823f2bc77b454291f134a024c73d8f3bd31726b"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_enum_tag.cpp",
+      "bytes": 510,
+      "sha256": "c89f2d913b837f2c1e3e3d6b1d53055006f55bde1b2d7cef12f7081e5d091467"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_fft_functions.cpp",
+      "bytes": 2032,
+      "sha256": "857dc8634c9dc3f20aa59b48b563c0b9fb8f3446fe567c083c187b5cd088847d"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_functions.cpp",
+      "bytes": 1158,
+      "sha256": "f6158802e191e0c719dfedde181c8dffe5ebb3731aac71b761973c157ebd66dc"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_functions.h",
+      "bytes": 362,
+      "sha256": "b0f6deb8e2bba0bc1e22182f39279a8a8c10a00cb83864fde46c00c68f6ea6bb"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_linalg_functions.cpp",
+      "bytes": 1682,
+      "sha256": "067d0cfd8d3cee932e388fb6c8a2007387facc7da3fd24c23cb7969db999ba77"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_nested_functions.cpp",
+      "bytes": 2110,
+      "sha256": "8d459cf60c7e593c8ed48537c7bd390faee27163bcce284c775d90dddd3694b3"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_nn_functions.cpp",
+      "bytes": 3614,
+      "sha256": "81bea75cfeef962172b992d112cbf87741acd1615f1ecf7ea568fadc168b1184"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_return_types.cpp",
+      "bytes": 1271,
+      "sha256": "ac5d71bfab0400a913e50af87c552e968ce95e291675d1726a410256af529ff2"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_return_types.h",
+      "bytes": 212,
+      "sha256": "a9ecc0cbab3a66912de427c220d547d8f9e39f5b113197056bf902cffedbdc64"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_sparse_functions.cpp",
+      "bytes": 1618,
+      "sha256": "2769afac2e89ef53b78846e86f8e687436fbbae63c52fbe94128894529fc9d88"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_special_functions.cpp",
+      "bytes": 2051,
+      "sha256": "33c803fac79a1239178d5d10ab8184511287fda1966233dcba7f06a0cc03d849"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_torch_functions.cpp",
+      "bytes": 2694,
+      "sha256": "1a24cec7a49800106344342361b2c4d7fc197a1684623e83d8bfcaa934d3bd00"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/python_variable_methods.cpp",
+      "bytes": 55315,
+      "sha256": "563dae7b926ccbeb4065d8f788be89a7cae7a5a0ac0beb555351840df806835b"
+    },
+    {
+      "file": "torchgen/packaged/autograd/templates/variable_factories.h",
+      "bytes": 5772,
+      "sha256": "405b96632941582fa6ecc76d0fbcbf48957985bf2d2df3c8302e9954f2f2e802"
+    },
+    {
+      "file": "torchgen/selective_build/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "torchgen/selective_build/operator.py",
+      "bytes": 7395,
+      "sha256": "28bf622a581af61c5db777623b01fed3a5190df2131a4fcde0a0a2823e375f13"
+    },
+    {
+      "file": "torchgen/selective_build/selector.py",
+      "bytes": 14190,
+      "sha256": "9aaaa58c12f04f5e8b2b0bc756ee3e666b12f5c9445d7bb9dc2eed6a2ba581c6"
+    },
+    {
+      "file": "torchgen/static_runtime/__init__.py",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "torchgen/static_runtime/config.py",
+      "bytes": 14935,
+      "sha256": "b48f8a046c6800f458e7180994c05bdc6e44e09a8db1b1cb4fd10dfbb8c689b3"
+    },
+    {
+      "file": "torchgen/static_runtime/gen_static_runtime_ops.py",
+      "bytes": 7626,
+      "sha256": "56b0b8ba40d48ffd9eeff7c3df30b26579d2e785e2901002aded85d2f19773c0"
+    },
+    {
+      "file": "torchgen/static_runtime/generator.py",
+      "bytes": 30402,
+      "sha256": "0baee4b4e5aff4f7e4c7b33f66313e3ae323d980c4a872f96995d59b561c5965"
+    }
+  ],
+  "totalOriginalFiles": 11776,
+  "pipExitCode": 1,
+  "pipFailurePreserved": "pip target move exited1; missing original source/compiler files restored byte-for-byte from the same official wheel via Windows extended paths. Existing files, DLLs and Python runtime modules were not overwritten.",
+  "gpuEnvironmentModified": false,
+  "systemLongPathSettingsModified": false,
+  "newNeuralCalls": 0
+}

@@ -1,0 +1,26 @@
+{
+  "pid": 8144,
+  "createdAt": 1794917549.1439996,
+  "at": "2026-11-17T20:12:29.144240+08:00",
+  "command": [
+    "E:\\CodexData\\Companion\\pretrained-route-selection-20261104\\night-6800xt-20261104\\amd-runtime\\Scripts\\python.exe",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\model-research\\src\\tdt_domain_adaptation_20261116.py",
+    "--protocol",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\language-specific-adaptation-r1\\prepared-gpu-evening20261117-r2\\protocol.json",
+    "--phase",
+    "baseline",
+    "--run",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\gpu-owned-evening20261117-r2"
+  ],
+  "protocolSha256": "46b0e3e8f60e5a2e88f86b4d311347a8cf65c2dbb258194d77c85125b0122d29",
+  "workerSha256": "3f93174619f57f24f4e9727a24fbf74617808a5f17b675c7ab63c9da6bcba889",
+  "noAutomaticRetry": true,
+  "initialCpuTemperature": {
+    "observationOnly": true,
+    "cpuTelemetryAvailable": false,
+    "telemetryError": "RuntimeError('Temperature logger process identity changed')",
+    "taskStartThresholdCelsius": null,
+    "taskStopThresholdCelsius": null,
+    "hardwareOverheatCauseProven": false
+  }
+}

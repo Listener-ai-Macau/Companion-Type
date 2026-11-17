@@ -1,0 +1,118 @@
+{
+  "state": "DECODING_ONE_NATIVE_GRANITE_ENGLISH_REFERENCE",
+  "startedAt": "2026-11-17T19:57:33.049299+08:00",
+  "pid": 12980,
+  "createdAt": 1794916648.2178123,
+  "completed": [
+    {
+      "id": "ES2003b-seq-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\ES2003b-seq-000.json",
+      "sha256": "89cde62d8b9eac64215feb7ac207b69a236c0bfddffc887d32980634c3c720fb"
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\ES2003b-seq-005.json",
+      "sha256": "35c3d417aa34aa02349971581a30e54e005aea60bcb117c54aa10ec2fb7e39c7"
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\ES2003b-seq-010.json",
+      "sha256": "f7253fc5de96da8bb815727b1d4920b5476317520300730650a0400de94e0f08"
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\ES2003b-seq-016.json",
+      "sha256": "3f16f8fcb0aace708d5412e8b7b4619c19695750d978b1231c1364121a764436"
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\ES2003b-seq-021.json",
+      "sha256": "4564bf595012db05dd39e11b908a31f0f91d5ac1268d72c10cb417ee38ec72ef"
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\ES2003b-seq-027.json",
+      "sha256": "f37226c25811dca36d3feda7383ab16e4e5e375dcf5839cd65e1f1c246c9c46c"
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\EN2001a-a2-000.json",
+      "sha256": "e8df2efdfbf78b1b410c94e4e0fc148802c2195689fd0a996a75b2749959e84c"
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\EN2001a-a2-023.json",
+      "sha256": "7ec2b5bd6cae9e609af198a6c4bfb8e4cf5c43db4b287e57b78328b2997d715c"
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\EN2001a-a2-046.json",
+      "sha256": "af8c34c16d5b067c2a1b598be184865c639e6b2d512217d009cb067feee3b62e"
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\EN2001a-a2-069.json",
+      "sha256": "2c12b35ca7ec04c8d0ba7cb1dc490e10bb1c57a91200fcba2f677720533de52b"
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\EN2001a-a2-092.json",
+      "sha256": "d0a190a982e469dbf3b694761040482265b3502b084fb4a5a38f1bd4de379d38"
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\EN2001a-a2-116.json",
+      "sha256": "a6e7bce948bf5f385b35d7a577fe36c71c4a8d7fbb0a24d590e870c0f37a3c21"
+    }
+  ],
+  "newNeuralCalls": 12,
+  "attemptedOriginalCases": 12,
+  "newTrainingUpdates": 0,
+  "referenceRead": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "protocolSha256": "ccfe24db57172c63f8c9eba399d3c354ae03bc99ff148d29ad44ba5477ddbd30",
+  "presentDevices": [
+    {
+      "FriendlyName": "AMD Radeon RX 6800 XT",
+      "Status": "OK"
+    },
+    {
+      "FriendlyName": "AMD Radeon 780M Graphics",
+      "Status": "OK"
+    }
+  ],
+  "observedAt": "2026-11-17T20:01:02.071567+08:00",
+  "elapsedSeconds": 209.03099999998813,
+  "limits": {
+    "pid": 12980,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 1325277184,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "device": {
+    "index": 1,
+    "name": "AMD Radeon RX 6800 XT",
+    "architecture": "gfx1030"
+  },
+  "gpuFreeAtAdmission": 17015111680,
+  "gpuTotalBytes": 17163091968,
+  "activeShard": "model-00003-of-00003.safetensors",
+  "activeCase": "EN2001a-a2-116",
+  "featureShape": [
+    1,
+    906,
+    160
+  ],
+  "gpuPeakAllocatedBytes": 4782316032
+}

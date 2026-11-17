@@ -8,6 +8,19 @@ from meeting_acoustic_worker_20261116 import own_limits
 from durable_model_state_20261117 import atomic_json,read_snapshot
 from model_thermal_guard_20261117 import ThermalGuard
 
+def bind_owned_worker(launcher,command,pid):
+    """Bind a real worker behind Windows' venv redirector, within our own tree."""
+    worker=psutil.Process(pid)
+    require(worker.create_time()>=launcher.create_time()-.01,'Worker predates owned launcher')
+    if pid!=launcher.pid:
+        require(any(parent.pid==launcher.pid and abs(parent.create_time()-launcher.create_time())<.01
+            for parent in worker.parents()),'Reported worker is outside owned launcher tree')
+    actual=worker.cmdline()
+    require(actual[1:]==command[1:],'Owned worker script/arguments differ')
+    allowed={str(Path(command[0]).resolve()).casefold(),str(Path(sys._base_executable).resolve()).casefold()}
+    require(str(Path(actual[0]).resolve()).casefold() in allowed,'Unexpected Python executable behind launcher')
+    return {'pid':worker.pid,'createdAt':worker.create_time(),'command':actual,'launcherPid':launcher.pid}
+
 def observed_updates(state):
     if not state:return {'parameterUpdatesThisProcess':None,'candidateOptimizerUpdates':None,
         'preflightParameterUpdates':None,'completedTrainingExamples':None,'countsUnknown':True}
@@ -33,7 +46,7 @@ def main():
     owner=run/('supervisor-'+a.phase);owner.mkdir(exist_ok=False)
     command=[P['runtime']['python'],str(a.worker.resolve()),'--protocol',str(a.protocol.resolve()),
         '--phase',a.phase,'--run',str(run)]
-    last=None;selection=None;reason=None;read_error=None;thermal_stop=None
+    last=None;selection=None;reason=None;read_error=None;thermal_stop=None;worker_identity=None
     with (owner/'stdout.log').open('w',encoding='utf-8') as log:
         proc=subprocess.Popen(command,stdout=log,stderr=subprocess.STDOUT,creationflags=subprocess.CREATE_NO_WINDOW)
         owned=psutil.Process(proc.pid);created=owned.create_time();began=time.monotonic()
@@ -45,9 +58,17 @@ def main():
             time.sleep(.5);path=run/a.phase/'state.json'
             try:
                 current,selection=read_snapshot(path)
-                require(current['pid']==proc.pid and current['phase']==a.phase,'Worker identity mismatch')
+                require(current['phase']==a.phase,'Worker phase mismatch')
+                if worker_identity is None:
+                    worker_identity=bind_owned_worker(owned,command,current['pid'])
+                    atomic_json(owner/'worker-identity.json',worker_identity)
+                require(current['pid']==worker_identity['pid'],'Bound worker PID changed')
+                current_worker=psutil.Process(worker_identity['pid'])
+                require(abs(current_worker.create_time()-worker_identity['createdAt'])<.01,'Bound worker creation identity changed')
                 last=current;read_error=None
             except (OSError,ValueError) as error:read_error=repr(error)
+            except psutil.NoSuchProcess as error:read_error=repr(error)
+            except RuntimeError as error:reason='Owned worker identity verification failed: '+repr(error);read_error=repr(error)
             if last:
                 age=time.time()-datetime.fromisoformat(last['observedAt']).timestamp()
                 if age>last.get('currentOperationBudgetSeconds',180)+3:reason='Owned worker exceeded its progress budget'
@@ -68,7 +89,7 @@ def main():
     final=run/a.phase/'completed.json'
     if final.exists():
         current=read(final)
-        require(current['pid']==proc.pid and current['phase']==a.phase,'Final worker identity differs')
+        require(worker_identity is not None and current['pid']==worker_identity['pid'] and current['phase']==a.phase,'Final worker identity differs')
         last=current
     else:
         try:last,selection=read_snapshot(run/a.phase/'state.json')
@@ -76,7 +97,7 @@ def main():
     complete=code==0 and final.exists()
     result={'state':'OWNED_TDT_PHASE_COMPLETE' if complete else 'OWNED_TDT_PHASE_FAILED_NO_RETRY',
         'at':datetime.now().astimezone().isoformat(),'exitCode':code,'watchdogReason':reason,
-        'pid':proc.pid,'createdAt':created,'phase':a.phase,'stateSelection':selection,'stateReadError':read_error,
+        'pid':proc.pid,'createdAt':created,'workerIdentity':worker_identity,'phase':a.phase,'stateSelection':selection,'stateReadError':read_error,
         'triggeringCpuTemperature':thermal_stop,
         **observed_updates(last),'countsAreLastPersistedObservationNotUnloggedCrashInstant':True,
         'limits':limits.query(),'cannotGuaranteeGpuDriverRecovery':True,'noAutomaticRetry':True}

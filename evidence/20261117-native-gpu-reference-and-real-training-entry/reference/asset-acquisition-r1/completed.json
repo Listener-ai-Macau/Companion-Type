@@ -1,0 +1,128 @@
+{
+  "state": "COMPLETE_PINNED_GRANITE_REFERENCE_ASSETS_NO_MODEL_EXECUTION",
+  "startedAt": "2026-11-17T17:48:50+08:00",
+  "pid": 9012,
+  "createdAt": 1794908930.8745396,
+  "repository": "ibm-granite/granite-speech-4.1-2b",
+  "revision": "823ca793aa49925d4eb2e758709b7f2c98513e8e",
+  "cache": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117",
+  "completed": [
+    {
+      "name": "README.md",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\README.md",
+      "bytes": 20185,
+      "sha256": "33eaacb2b553a130c58b1131886617e10818a283d8921cfc3b0bcabeb483cb23",
+      "publisherSha256Verified": false
+    },
+    {
+      "name": "config.json",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\config.json",
+      "bytes": 2276,
+      "sha256": "cd1d45c8f93ea1b1c92efd5dbdeb134406cb28c8510a7c71d9b78a854d299691",
+      "publisherSha256Verified": false
+    },
+    {
+      "name": "model.safetensors.index.json",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\model.safetensors.index.json",
+      "bytes": 84396,
+      "sha256": "dec67acdc06e74d87650a54a4b5fbb07bfcdb4ed9fd1b95edef8651f5d64599b",
+      "publisherSha256Verified": false
+    },
+    {
+      "name": "preprocessor_config.json",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\preprocessor_config.json",
+      "bytes": 336,
+      "sha256": "382a6f26300937721969b01909c96c2e519620b6781f7b45cb8b2e348a932d87",
+      "publisherSha256Verified": false
+    },
+    {
+      "name": "processor_config.json",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\processor_config.json",
+      "bytes": 80,
+      "sha256": "13edc723022827cc3620ba2e2b4bcf52287b365d77e60a31227f0a4b7dea5f9c",
+      "publisherSha256Verified": false
+    },
+    {
+      "name": "tokenizer.json",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\tokenizer.json",
+      "bytes": 7153607,
+      "sha256": "43ca88fd0519c64ef93fa0a90cbc4e560fe485b5ba60348a86bc3c624f37918e",
+      "publisherSha256Verified": false
+    },
+    {
+      "name": "tokenizer_config.json",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\tokenizer_config.json",
+      "bytes": 17882,
+      "sha256": "de233c19cd9efa63738f7481f318fc2048060f751ac9fd7957b131c43226b403",
+      "publisherSha256Verified": false
+    },
+    {
+      "name": "special_tokens_map.json",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\special_tokens_map.json",
+      "bytes": 579,
+      "sha256": "c08676c49fd7969a3130f72be6d4bf34da66aa484a6e21dffe359893a1bd5f2e",
+      "publisherSha256Verified": false
+    },
+    {
+      "name": "added_tokens.json",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\added_tokens.json",
+      "bytes": 26,
+      "sha256": "b4956ad3505e979f2f25cc2e2be2163d8e23730f854b6c5a14ed106f3dd90549",
+      "publisherSha256Verified": false
+    },
+    {
+      "name": "vocab.json",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\vocab.json",
+      "bytes": 1612704,
+      "sha256": "8af71076de8b0b626eed0f4c984faf0a7c062479164b2a31308a948524d4f69c",
+      "publisherSha256Verified": false
+    },
+    {
+      "name": "model-00001-of-00003.safetensors",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\model-00001-of-00003.safetensors",
+      "bytes": 2143518808,
+      "sha256": "3c987fdc29940c49d2498ea5925e8d57f88661af3ef30f73e56e2434ded3e42f",
+      "publisherSha256Verified": true
+    },
+    {
+      "name": "model-00002-of-00003.safetensors",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\model-00002-of-00003.safetensors",
+      "bytes": 2143963456,
+      "sha256": "8e18d6d3fbe009a95a4cf305e31c2aab4a3484eccbce29aa1aa1454fc8c046ee",
+      "publisherSha256Verified": true
+    },
+    {
+      "name": "model-00003-of-00003.safetensors",
+      "file": "E:\\CodexData\\Companion\\.model-cache\\english-granite-official20261117\\model-00003-of-00003.safetensors",
+      "bytes": 339045512,
+      "sha256": "32f823497bc179f6f346efdd46984ab60e44b3d443bf40a18d757ddce626a2d2",
+      "publisherSha256Verified": true
+    }
+  ],
+  "newNeuralCalls": 0,
+  "newTrainingUpdates": 0,
+  "rawAudioUploaded": false,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "observedAt": "2026-11-17T17:50:06+08:00",
+  "elapsedSeconds": 75.34399999999732,
+  "limits": {
+    "pid": 9012,
+    "cpuRate": 500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 5.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 268435456,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 20144128,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "activeFile": null,
+  "fileBytes": 339045512,
+  "expectedFileBytes": 339045512
+}

@@ -1,0 +1,28 @@
+{
+  "id": "ES2003b-seq-027",
+  "text": "I'm pointing at my laptop.",
+  "generatedIds": [
+    40,
+    2846,
+    22364,
+    520,
+    856,
+    21288,
+    13,
+    100257
+  ],
+  "naturalTermination": true,
+  "seconds": 2.1404398000013316,
+  "audioSha256": "64799fe063fe45048bde092b8efe2b606d2f90302bb47ef08f99360caf5ce3ee",
+  "pcmSha256": "6912b006dee8c6c97547f1cd80c8d4367f3bfbe51c0432fe574dfafdc1cb9239",
+  "frames": 162401,
+  "protocolSha256": "ccfe24db57172c63f8c9eba399d3c354ae03bc99ff148d29ad44ba5477ddbd30",
+  "referenceUsed": false,
+  "wordsPostEdited": false,
+  "trainingUpdates": 0,
+  "actualDevice": "cuda:1",
+  "actualDtype": "published bfloat16",
+  "cpuFrontendPerformedInGpuWorker": false,
+  "weightTransfersDuringGeneration": false,
+  "qualityQualified": false
+}
