@@ -342,14 +342,18 @@ pub(super) fn complete_prepared(endpoint:&str,model:&str,key:&str,client:&reqwes
         // other's answers, and both inherit this job's cancellation/deadline.
         let ready=if round==0{initial.take()}else{None};
         let token=super::current_cancellation();
+        // Only validated source uncertainty metadata is context for question
+        // comparison. Preserve it across the worker boundary without exposing
+        // another reviewer's answers or recording the old calls a second time.
+        let uncertainty_context=trace.iter().filter_map(|call|call.get("sourceUncertainties").map(|spans|json!({"sourceUncertainties":spans}))).collect::<Vec<_>>();
         let(compared,omissions)=std::thread::scope(|scope|{
             let compare_token=token.clone();let omissions_token=token;
             let current=&current;let pending=&pending;
             let comparison=scope.spawn(move||{
-                let mut calls=Vec::new();let mut recovered=recovered_references;
+                let mut calls=uncertainty_context;let context_len=calls.len();let mut recovered=recovered_references;
                 let result=if let Some(seed)=ready{Ok(seed)}else if pending.is_empty(){Ok((Vec::new(),summary_units(current)))}else{
                     super::with_parent_job(compare_token,||evaluate(endpoint,model,key,client,current,pending,start,&mut calls,&round.to_string(),&mut recovered))
-                };(result,calls,recovered)
+                };(result,calls.split_off(context_len),recovered)
             });
             let omissions=scope.spawn(move||{
                 let mut calls=Vec::new();let result=if needs_omissions{
