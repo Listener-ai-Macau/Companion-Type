@@ -67,6 +67,9 @@ impl LiveAsrHub {
     /// Start live ASR for onlineLive. Ok(false) = intentionally not started.
     pub fn try_start_for_online_live(&self) -> Result<bool, String> {
         let _ = self.stop_and_take_text();
+        if super::transcription::local_meeting_selected() {
+            return Ok(false);
+        }
         if env_truthy("COMPANION_TYPE_LIVE_ASR_OFF") {
             return Ok(false);
         }

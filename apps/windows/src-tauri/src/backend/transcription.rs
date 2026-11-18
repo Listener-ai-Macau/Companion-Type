@@ -16,17 +16,27 @@ pub(super) const LOCAL_NO_SPEECH: &str = "没有识别到语音，原录音保�
 mod chunk_cache;
 mod gap;
 #[cfg(windows)]
+mod local_meeting;
+#[cfg(windows)]
+mod local_meeting_cache;
+#[cfg(windows)]
 mod local_paraformer;
 
 pub(crate) fn local_asr_assets_present() -> bool {
+    #[cfg(windows)]
+    if local_meeting_selected() { return local_meeting::check().is_ok(); }
     #[cfg(windows)] { local_paraformer::assets_present() }
     #[cfg(not(windows))] { false }
 }
 pub(crate) fn prepare_local_asr() -> Result<(),String> {
+    #[cfg(windows)]
+    if local_meeting_selected() { return local_meeting::check(); }
     #[cfg(windows)] { local_paraformer::prepare() }
     #[cfg(not(windows))] { Err("此平台暂不支持本地转写。".into()) }
 }
 pub(crate) fn check_local_asr() -> Result<(),String> {
+    #[cfg(windows)]
+    if local_meeting_selected() { return local_meeting::check(); }
     #[cfg(windows)] { local_paraformer::check() }
     #[cfg(not(windows))] { Err("此平台暂不支持本地转写。".into()) }
 }
@@ -133,7 +143,8 @@ impl CompanionTranscriptionManager {
 
     pub fn transcribe_session_owned(&self, session: &str, primary: Option<&str>, chunks: &[String]) -> Result<CompanionTranscript, String> {
         let _diagnostic_scope=super::diagnostics::RecordingScope::enter(session);
-        let result = self.transcribe_session(primary, chunks);
+        let result = super::diagnostics::Span::start(super::diagnostics::Operation::Transcription)
+            .result(self.transcribe_session_inner(primary, chunks, Some(session)));
         let paths: Vec<String> = primary.iter().map(|p| p.to_string()).chain(chunks.iter().cloned()).collect();
         // Bind successful chunks even when a later request failed. Recovery and
         // transcript deletion must find them after scratch cleanup or restart.
@@ -170,10 +181,10 @@ impl CompanionTranscriptionManager {
         primary_audio: Option<&str>,
         chunk_paths: &[String],
     ) -> Result<CompanionTranscript, String> {
-        super::diagnostics::Span::start(super::diagnostics::Operation::Transcription).result(self.transcribe_session_inner(primary_audio, chunk_paths))
+        super::diagnostics::Span::start(super::diagnostics::Operation::Transcription).result(self.transcribe_session_inner(primary_audio, chunk_paths, None))
     }
 
-    fn transcribe_session_inner(&self, primary_audio: Option<&str>, chunk_paths: &[String]) -> Result<CompanionTranscript, String> {
+    fn transcribe_session_inner(&self, primary_audio: Option<&str>, chunk_paths: &[String], owner: Option<&str>) -> Result<CompanionTranscript, String> {
         super::meeting_processing_job::check_current()?;
         // Validate the declared sequence before a provider, cache or test source
         // can consume it. Missing segments must never become a shorter meeting.
@@ -222,6 +233,14 @@ impl CompanionTranscriptionManager {
             );
         }
         let _usage = real_paths.iter().map(|p| super::audio_artifacts::usage(p)).collect::<Result<Vec<_>, _>>()?;
+        #[cfg(windows)]
+        if local_meeting_selected() {
+            // Process split recordings in one request to keep the source clock
+            // and speaker IDs continuous across physical file boundaries.
+            return local_meeting::transcribe(&real_paths, owner);
+        }
+        #[cfg(not(windows))]
+        let _ = owner;
         if real_paths.len() == 1 {
             return self.transcribe_single_path(&real_paths[0]);
         }
@@ -345,7 +364,12 @@ impl CompanionTranscriptionManager {
     fn transcribe_existing_path(&self, audio: &Path) -> Result<CompanionTranscript, String> {
         if self.local_selected() {
             #[cfg(windows)]
-            { return local_paraformer::transcribe(audio); }
+            {
+                if local_meeting_selected() {
+                    return Err("请在录音库中打开录音后使用本机会议识别；原录音保留。".into());
+                }
+                return local_paraformer::transcribe(audio);
+            }
             #[cfg(not(windows))]
             { return Err("此平台暂不支持本地转写；原录音保留。".into()); }
         }
@@ -404,6 +428,11 @@ impl CompanionTranscriptionManager {
 
 pub(super) fn local_provider_selected() -> bool {
     std::env::var("COMPANION_TYPE_ASR_PROVIDER").unwrap_or_default().eq_ignore_ascii_case("local-paraformer")
+        || local_meeting_selected()
+}
+
+pub(super) fn local_meeting_selected() -> bool {
+    std::env::var("COMPANION_TYPE_ASR_PROVIDER").is_ok_and(|value| value.eq_ignore_ascii_case("local-meeting"))
 }
 
 impl Default for CompanionTranscriptionManager {
@@ -901,7 +930,26 @@ pub(super) fn bind_cache_session(session: &str, paths: &[String]) -> Result<(), 
 pub(super) fn attach_cache_sources(sources: &std::collections::BTreeSet<String>, owner: &str) -> Result<(), String> {
     chunk_cache::ownership::attach(&asr_chunk_cache_root(), sources, owner)
 }
-pub(super) use chunk_cache::ownership::erase as erase_cache;
+pub(super) fn erase_cache(
+    root: &Path,
+    sessions: &std::collections::BTreeSet<String>,
+    sources: &[String],
+    retained_sessions: &std::collections::BTreeSet<String>,
+    retained: &[String],
+    all: bool,
+) -> Result<chunk_cache::ownership::Erase, String> {
+    #[cfg(windows)]
+    {
+        let meeting = local_meeting_cache::erase(root, sessions, retained_sessions, all)?;
+        let mut result = chunk_cache::ownership::erase(root, sessions, sources, retained_sessions, retained, all)?;
+        result.deleted += meeting.deleted;
+        result.shared += meeting.shared;
+        result.unknown += meeting.unknown;
+        Ok(result)
+    }
+    #[cfg(not(windows))]
+    chunk_cache::ownership::erase(root, sessions, sources, retained_sessions, retained, all)
+}
 pub(crate) use chunk_cache::ownership::verify as verify_cache_privacy;
 
 /// Recognize only a completely zero-valued PCM file. No amplitude threshold

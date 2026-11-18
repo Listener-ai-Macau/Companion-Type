@@ -80,6 +80,16 @@ pub(super) fn run(
     }
 }
 
+#[cfg(windows)]
+pub(super) fn run_local_meeting(program: &str, args: &[String], audio_seconds: u64) -> Result<String, Failure> {
+    if audio_seconds == 0 || audio_seconds > 8 * 60 * 60 {
+        return Err(Failure::Configuration);
+    }
+    let timeout = Duration::from_secs(audio_seconds.saturating_mul(2).saturating_add(300).min(12 * 60 * 60));
+    let cancellation = super::meeting_processing_job::current();
+    windows::run(program, args, Limits::for_timeout(timeout), cancellation.as_ref().map(|job| job.flag()))
+}
+
 fn validate(limits:Limits,cancel:Option<&AtomicBool>)->Result<(),Failure>{
     if limits.timeout.is_zero()
         || limits.timeout > Duration::from_secs(300)

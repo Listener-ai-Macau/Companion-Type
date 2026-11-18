@@ -21,7 +21,7 @@ pub struct CheckResult {
 #[derive(Debug, PartialEq, Eq)]
 enum Failure { Missing, Disabled, Configuration, Auth, RateLimit, Network, Timeout, Response, Service }
 #[derive(Debug)]
-enum ProbeKind { Cloud, LocalAsr, LocalMinutes }
+enum ProbeKind { Cloud, LocalAsr, LocalMeeting, LocalMinutes }
 
 fn env(key: &str) -> Option<String> { std::env::var(key).ok().map(|v| v.trim().to_string()).filter(|v| !v.is_empty()) }
 fn required(value: Option<String>) -> Result<String, Failure> { value.ok_or(Failure::Missing) }
@@ -126,6 +126,7 @@ fn probe(service: Service) -> Result<ProbeKind, Failure> {
         }
         Service::Asr => match public.asr_provider.as_str() {
             "local-paraformer" => super::transcription::check_local_asr().map(|_|ProbeKind::LocalAsr).map_err(|_| Failure::Missing),
+            "local-meeting" => super::transcription::check_local_asr().map(|_|ProbeKind::LocalMeeting).map_err(|_| Failure::Missing),
             "volcengine" => {
                 if !public.volc_app_key_set || !public.volc_access_key_set { return Err(Failure::Missing); }
                 let app_id = required(env("COMPANION_TYPE_VOLC_APP_KEY").or_else(|| (!settings.volc_app_key.trim().is_empty()).then_some(settings.volc_app_key)))?;
@@ -157,6 +158,7 @@ pub fn check(service: Service) -> CheckResult {
     let (status, message) = match probe(service) {
         Ok(ProbeKind::LocalMinutes)=>("available","本地纪要组件已校验；未发送会议或测试文字，整理效果仍以实际使用为准。"),
         Ok(ProbeKind::LocalAsr) => ("available", "本地转写模型已校验并加载；未上传录音，识别质量仍需实际使用验证。"),
+        Ok(ProbeKind::LocalMeeting) => ("available", "本地中英文会议模型包已校验，打开录音后可离线生成终稿。"),
         Ok(ProbeKind::Cloud) => ("available", "本次测试请求成功。只验证服务调用，不代表录音、识别或纪要准确率已通过。"),
         Err(Failure::Missing) => ("notConfigured", "缺少服务凭据或模型，请先保存配置。"),
         Err(Failure::Disabled) => ("disabled", "智能纪要已关闭，没有发送测试请求。"),
