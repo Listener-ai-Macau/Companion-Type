@@ -219,6 +219,8 @@ mod tests {
                 let projected = organize(saved_output, &bank, &session, &base).unwrap();
                 assert_eq!(projected.receipt["retainedFactIds"], parallel["receipt"]["documentReceipt"]["retainedFactIds"]);
                 assert_eq!(projected.receipt["factSeals"], parallel["receipt"]["documentReceipt"]["factSeals"]);
+                assert_eq!(projected.receipt["openingAgendaFactId"], "a315");
+                assert_eq!(projected.receipt["document"]["purpose"], "这场会议的主题是计量和标准，讨论了锂离子电池、欧洲标准和标准认证。");
                 assert!(projected.receipt["explicitReaderRecommendations"].as_array().unwrap().contains(&json!("a116")));
                 assert!(projected.minutes.markdown.contains("建议：第二呢就是说我们应该使用中国牵头的这个标准"));
                 assert!(!projected.minutes.markdown.contains("寿命预测、预测"));

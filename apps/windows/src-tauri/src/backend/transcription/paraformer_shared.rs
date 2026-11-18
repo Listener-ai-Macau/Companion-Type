@@ -531,13 +531,18 @@ pub(super) fn cut_samples(pcm: &[u8]) -> usize {
         return count;
     }
     let mut best = (u64::MAX, 16 * RATE);
-    for i in (14 * RATE..=18 * RATE).step_by(RATE / 5) {
+    // A brief dip between syllables can look like a pause in a 100 ms window.
+    // Scan through 19.8 s so speech near the end of the window can finish.
+    let radius = RATE * 12 / 100;
+    for i in (14 * RATE..=20 * RATE - RATE / 5).step_by(RATE / 5) {
         let mut energy = 0u64;
-        for s in (i - RATE / 20)..(i + RATE / 20) {
+        for s in (i - radius)..(i + radius) {
             let j = s * 2;
             energy += i16::from_le_bytes([pcm[j], pcm[j + 1]]).unsigned_abs() as u64;
         }
-        let score = energy + (i.abs_diff(16 * RATE) as u64) / 20;
+        // Compare the larger window on the old energy-per-sample scale.
+        let distance_penalty = (i.abs_diff(16 * RATE) as u64) / 20;
+        let score = energy * 5 + distance_penalty * 12;
         if score < best.0 {
             best = (score, i);
         }
