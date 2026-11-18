@@ -6,6 +6,7 @@ mod probe;
 mod evidence_document;
 mod atomic_document;
 mod chapter_spans;
+mod chapter_labels;
 mod source_windows;
 mod source_authority;
 mod source_grounding;

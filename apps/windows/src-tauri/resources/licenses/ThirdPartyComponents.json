@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "scope": "Windows x86_64 Companion Type: exact locked normal Cargo input closure and observed rendered frontend modules. This is a conservative attribution inventory, not a claim every dependency symbol is in the executable. Proc macros/build-only and other-target packages are excluded. Windows/WebView2 system runtime and unbundled optional speech models are not claimed as bundled components. Denzic-owned local crates retain their existing ownership; no new license is assigned.",
   "lockedInputs": {
-    "apps/windows/src-tauri/Cargo.lock": "f6e7427ddcc433611a1b35db32a1afd8f93a23231a74e1e81af0c86ade113473",
+    "apps/windows/src-tauri/Cargo.lock": "34f11fdea3dc513cf2272bc22f1d722a742a7b3da88f44f96f51a20e455824f4",
     "package-lock.json": "93d7ac443125c4953c79c577329237c57fe9bd75f0f3c705e5859188a87da0cf",
     "third_party/imu-pointer/gamepad/GamepadMotion.hpp": "f070bb1327cf5b1fbc336d570382d4c088e5ffae9f031dd0af8f81153581e690",
     "third_party/imu-pointer/grt/DTW.cpp": "46b23f180c683382fec55a03f43841862f4c9a373c8584ad9d9b3d6d74813a49"
@@ -9293,6 +9293,336 @@
           "origin": "Pinned DTW.cpp MIT notice"
         }
       ]
+    },
+    {
+      "name": "adler32",
+      "version": "1.2.0",
+      "license": "Zlib",
+      "repository": "https://github.com/remram44/adler32-rs",
+      "crateSha256": "aae1277d39aeec15cb388266ecc24b11c80469deae6067e17a1a7aa9e5c1f234",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/adler32/1.2.0/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "f5af8beef8f5f88f1b78494703bbfa019c4f3630ac111344390d6f9975ab22ed",
+          "file": "texts/f5af8beef8f5f88f1b78494703bbfa019c4f3630ac111344390d6f9975ab22ed.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "allocator-api2",
+      "version": "0.2.21",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/zakarumych/allocator-api2",
+      "crateSha256": "683d7910e743518b0e34f1186f92494becacb047c7b6bf616c96772180fef923",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/allocator-api2/0.2.21/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "20fe7b00e904ed690e3b9fd6073784d3fc428141dbd10b81c01fd143d0797f58",
+          "file": "texts/20fe7b00e904ed690e3b9fd6073784d3fc428141dbd10b81c01fd143d0797f58.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "36516aefdc84c5d5a1e7485425913a22dbda69eb1930c5e84d6ae4972b5194b9",
+          "file": "texts/36516aefdc84c5d5a1e7485425913a22dbda69eb1930c5e84d6ae4972b5194b9.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "bytecount",
+      "version": "0.6.9",
+      "license": "Apache-2.0/MIT",
+      "repository": "https://github.com/llogiq/bytecount",
+      "crateSha256": "175812e0be2bccb6abe50bb8d566126198344f707e304f45c648fd8f2cc0365e",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/bytecount/0.6.9/download",
+      "texts": [
+        {
+          "path": "LICENSE.Apache2",
+          "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+          "file": "texts/b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE.MIT",
+          "sha256": "a5dea80c1f383cb5f80a6bb0da5e55a2beb9f24adb123ce6300af2cbaaa3bf65",
+          "file": "texts/a5dea80c1f383cb5f80a6bb0da5e55a2beb9f24adb123ce6300af2cbaaa3bf65.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "dary_heap",
+      "version": "0.3.9",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/hanmertens/dary_heap",
+      "crateSha256": "8b1e3a325bc115f096c8b77bbf027a7c2592230e70be2d985be950d3d5e60ebe",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/dary_heap/0.3.9/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a",
+          "file": "texts/62c7a1e35f56406896d7aa7ca52d0cc0d272ac022b5d2796e7d6905db8a3636a.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3",
+          "file": "texts/23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "hashbrown",
+      "version": "0.16.1",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/rust-lang/hashbrown",
+      "crateSha256": "841d1cc9bed7f9236f321df977030373f4a4163ae1a7dbfe1a51a2c1a51d9100",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/hashbrown/0.16.1/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2",
+          "file": "texts/a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2",
+          "file": "texts/ff8f68cb076caf8cefe7a6430d4ac086ce6af2ca8ce2c4e5a2004d4552ef52a2.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "include-flate",
+      "version": "0.3.5",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/SOF3/include-flate.git",
+      "crateSha256": "f677e494e19ac4aa62375916f64b496f6b2655964c7313231c959858608cd9eb",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/include-flate/0.3.5/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "file": "texts/cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "include-flate-compress",
+      "version": "0.3.5",
+      "license": "Apache-2.0",
+      "repository": "https://github.com/SOF3/include-flate.git",
+      "crateSha256": "476a7e4feb3325e85ca85565893517e283a1e59d3c9b695c162791dead7f004d",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/include-flate-compress/0.3.5/download",
+      "texts": [
+        {
+          "path": "LICENSE (upstream repository root)",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "file": "texts/cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30.txt",
+          "origin": "https://raw.githubusercontent.com/SOF3/include-flate/67e17da7efc43f3bd92dae45b43c3baa1c543c9e/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "jieba-rs",
+      "version": "0.11.0",
+      "license": "MIT",
+      "repository": "https://github.com/messense/jieba-rs",
+      "crateSha256": "0a3a7d02ea31e6fc6f2fe10495dc7c5efcf381e1f21d7172f58ba792efa1c2fd",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/jieba-rs/0.11.0/download",
+      "texts": [
+        {
+          "path": "LICENSE (upstream repository root)",
+          "sha256": "92257c8d1c7a059fa02720b34fce017574a990bed14cee8f565597f4fbfb1f13",
+          "file": "texts/92257c8d1c7a059fa02720b34fce017574a990bed14cee8f565597f4fbfb1f13.txt",
+          "origin": "https://raw.githubusercontent.com/messense/jieba-rs/3a0d75cf7455e2006330a5b4e94156da272cd7b9/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "libflate",
+      "version": "2.3.2",
+      "license": "MIT",
+      "repository": "https://github.com/sile/libflate",
+      "crateSha256": "561a8da1a50e1428d3c51321dafeca849df992a5bb67720c386131234caba82e",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/libflate/2.3.2/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "aaa1a954b5800a30f2a932cfe6125936974144fe9611111a223ac49b70470ec5",
+          "file": "texts/aaa1a954b5800a30f2a932cfe6125936974144fe9611111a223ac49b70470ec5.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "libflate_lz77",
+      "version": "2.3.0",
+      "license": "MIT",
+      "repository": "https://github.com/sile/libflate",
+      "crateSha256": "ff7a10e427698aef6eef269482776debfef63384d30f13aad39a1a95e0e098fd",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/libflate_lz77/2.3.0/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "aaa1a954b5800a30f2a932cfe6125936974144fe9611111a223ac49b70470ec5",
+          "file": "texts/aaa1a954b5800a30f2a932cfe6125936974144fe9611111a223ac49b70470ec5.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "no_std_io2",
+      "version": "0.9.4",
+      "license": "Apache-2.0 OR MIT",
+      "repository": "https://github.com/wcampbell0x2a/no-std-io2",
+      "crateSha256": "418abd1b6d34fbf6cae440dc874771b0525a604428704c76e48b29a5e67b8003",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/no_std_io2/0.9.4/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
+          "file": "texts/c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "f21c3bfdc47749b5912eb55f0661b2b8fd9696b3e09e7d97a1fc78fb52c3eb1b",
+          "file": "texts/f21c3bfdc47749b5912eb55f0661b2b8fd9696b3e09e7d97a1fc78fb52c3eb1b.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "rle-decode-fast",
+      "version": "1.0.3",
+      "license": "MIT OR Apache-2.0",
+      "repository": "https://github.com/WanzenBug/rle-decode-helper",
+      "crateSha256": "3582f63211428f83597b51b2ddb88e2a91a9d52d12831f9d08f5e624e8977422",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/rle-decode-fast/1.0.3/download",
+      "texts": [
+        {
+          "path": "LICENSE-APACHE",
+          "sha256": "5fb0cdde856297d655f32ef6417d58d32ef7931f4731f27117db32ea53f3d9d2",
+          "file": "texts/5fb0cdde856297d655f32ef6417d58d32ef7931f4731f27117db32ea53f3d9d2.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE-MIT",
+          "sha256": "69780f2b66b1cc40966bc933773ddb3ab71071c85cc87331318d124e9fb22417",
+          "file": "texts/69780f2b66b1cc40966bc933773ddb3ab71071c85cc87331318d124e9fb22417.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "zstd",
+      "version": "0.14.4",
+      "license": "BSD-3-Clause",
+      "repository": "https://github.com/gyscos/zstd-rs",
+      "crateSha256": "ad5020ab8f27bfc0024ad0a07aed6bf022a16208f479686fbed4fdd0c85eb0b3",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/zstd/0.14.4/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "ce4868c8e4ebe47a7d4b3c93dbf6b802033e5ae2fa7638098173f80836daac60",
+          "file": "texts/ce4868c8e4ebe47a7d4b3c93dbf6b802033e5ae2fa7638098173f80836daac60.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "zstd-safe",
+      "version": "8.3.0",
+      "license": "BSD-3-Clause",
+      "repository": "https://github.com/gyscos/zstd-rs",
+      "crateSha256": "5a9ea9cc2576c2fcc104e9cec04f46e3ede564f4fbc206831e4ef7e859a4140d",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/zstd-safe/8.3.0/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "ce4868c8e4ebe47a7d4b3c93dbf6b802033e5ae2fa7638098173f80836daac60",
+          "file": "texts/ce4868c8e4ebe47a7d4b3c93dbf6b802033e5ae2fa7638098173f80836daac60.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
+    },
+    {
+      "name": "zstd-sys",
+      "version": "2.1.3+zstd.1.5.7",
+      "license": "BSD-3-Clause AND BSD-2-Clause",
+      "repository": "https://github.com/gyscos/zstd-rs",
+      "crateSha256": "f729a06d0257428fd9d997ac8db7e1407bd0262ab016b085b36bc52957c0052d",
+      "ecosystem": "cargo",
+      "role": "Windows local meeting chapter-label segmentation dependency; locked normal dependency input",
+      "source": "https://crates.io/api/v1/crates/zstd-sys/2.1.3%2Bzstd.1.5.7/download",
+      "texts": [
+        {
+          "path": "LICENSE",
+          "sha256": "ce4868c8e4ebe47a7d4b3c93dbf6b802033e5ae2fa7638098173f80836daac60",
+          "file": "texts/ce4868c8e4ebe47a7d4b3c93dbf6b802033e5ae2fa7638098173f80836daac60.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE.BSD-2-Clause",
+          "sha256": "982cd76c8a6b5c597aa999be672c4f16b953eb6d074fe29c0a931d7aae2c8fc2",
+          "file": "texts/982cd76c8a6b5c597aa999be672c4f16b953eb6d074fe29c0a931d7aae2c8fc2.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "LICENSE.BSD-3-Clause",
+          "sha256": "bf7017a73a95ea63bf3716b13ec2bcd79c92942356e3408c6fb66332bad6d977",
+          "file": "texts/bf7017a73a95ea63bf3716b13ec2bcd79c92942356e3408c6fb66332bad6d977.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "zstd/COPYING",
+          "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+          "file": "texts/f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505.txt",
+          "origin": "exact checksum-verified crate"
+        },
+        {
+          "path": "zstd/LICENSE",
+          "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+          "file": "texts/7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8.txt",
+          "origin": "exact checksum-verified crate"
+        }
+      ]
     }
   ],
   "localCompanyInputs": [
@@ -9324,5 +9654,5 @@
     }
   ],
   "platformSource": "6f30ab5888e3f603084d71359f3099ab5b8f66fc",
-  "licenseTextCount": 294
+  "licenseTextCount": 308
 }

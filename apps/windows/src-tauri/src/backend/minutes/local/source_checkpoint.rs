@@ -157,30 +157,43 @@ mod tests {
             assert!(organize(original, &bank, &session, &base).is_err());
             let mut fixture: Value = serde_json::from_str(original).unwrap();
             assert!(fixture["chapters"]["t4"]["title"].as_str().unwrap().contains("碳关税"));
-            // Replace presentation only. These literal test labels do not certify content.
-            for (index, labels) in [
-                ["锂离子电池", "材料基因组"],
-                ["测试资源", "公共平台"],
-                ["检测设备", "数字化"],
-                ["电池法规", "欧洲标准"],
-                ["寿命预测", "计量校准"],
-                ["在线监测", "产业集群"],
-                ["授权", "采购部门"],
-                ["标准认证", "标准研究中心"],
-            ].into_iter().enumerate() {
-                let chapter = fixture["chapters"][format!("t{}", index + 1)].as_object_mut().unwrap();
+            // Select from the runtime's source-only candidates without certifying readability.
+            let input = super::super::atomic_document::layout_input(&bank);
+            let chapters = input["chapters"].as_object().unwrap();
+            let mut seen = std::collections::HashSet::new();
+            let mut regulation = None;
+            if let Some(path) = std::env::var_os("COMPANION_TEST_REJECTED_FREE_LABEL_RECEIPT") {
+                let actual: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+                let rejected = actual["receipt"]["output"].as_str().unwrap();
+                assert_eq!(actual["sourceSha256"], result["sourceSha256"]);
+                assert!(rejected.contains("碳关税") && organize(rejected, &bank, &session, &base).is_err());
+            }
+            for (key, context) in chapters {
+                let choices = context["labelChoices"].as_object().unwrap();
+                let rows = context["facts"].as_array().unwrap();
+                assert!(!choices.is_empty());
+                assert!(choices.values().all(|term| rows.iter().any(|fact|
+                    fact[2].as_str().unwrap().contains(term.as_str().unwrap()))));
+                let mut distinct = choices.iter().filter(|(_, term)| !seen.contains(term.as_str().unwrap()));
+                let picked = if key == "t4" {
+                    distinct.find(|(_, term)| term.as_str().unwrap().contains("电池法规"))
+                } else { distinct.next() }.unwrap();
+                let label = picked.1.as_str().unwrap();
+                seen.insert(label.to_owned());
+                if key == "t4" { regulation = Some(label); }
+                let chapter = fixture["chapters"][key].as_object_mut().unwrap();
                 chapter.remove("title");
-                chapter.insert("labelTerms".into(), json!(labels));
+                chapter.insert("labelIds".into(), json!([picked.0]));
             }
             let mut invented = fixture.clone();
-            invented["chapters"]["t4"]["labelTerms"] = json!(["电池法规", "碳关税"]);
+            invented["chapters"]["t4"]["labelIds"] = json!(["碳关税"]);
             let error = organize(&invented.to_string(), &bank, &session, &base).err().unwrap();
             assert!(error.contains("缺少这一段的原话依据"));
             let parsed = organize(&fixture.to_string(), &bank, &session, &base).unwrap();
             assert_eq!(parsed.receipt["retainedFactIds"].as_array().unwrap().len(), 325);
             assert_eq!(parsed.receipt["document"]["topics"].as_array().unwrap().len(), 8);
             assert!(parsed.receipt["document"]["topics"].as_array().unwrap().iter()
-                .any(|topic| topic["title"] == "电池法规、欧洲标准"));
+                .any(|topic| topic["title"] == regulation.unwrap()));
             let final_points = parsed.receipt["document"]["topics"].as_array().unwrap().iter()
                 .flat_map(|topic| topic["points"].as_array().unwrap());
             let texts: Vec<_> = final_points.map(|p| p["text"].as_str().unwrap()).collect();
@@ -189,7 +202,7 @@ mod tests {
             if let Some(path) = std::env::var_os("COMPANION_TEST_CHAPTER_REPLAY_OUTPUT") {
                 let file = std::fs::OpenOptions::new().write(true).create_new(true).open(path).unwrap();
                 serde_json::to_writer_pretty(file, &serde_json::json!({
-                    "state":"ENGINEERING_FIXTURE_WITH_REPLACED_LABELS_NOT_PUBLICATION",
+                    "state":"ENGINEERING_FIXTURE_WITH_CLOSED_LABEL_IDS_NOT_PUBLICATION",
                     "document":parsed.receipt["document"],
                     "receipt":parsed.receipt,"minutes":parsed.minutes,"newInferenceRequests":0
                 })).unwrap();
