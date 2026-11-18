@@ -76,17 +76,20 @@ pub(super) fn literal_followup(source: &str, previous: Option<&str>) -> Option<F
         r"再(?:具体[上商]?)?(?:来)?(确认|确定|核对|复核|审阅|讨论)(?:一下)?"
     ).expect("valid review request pattern"));
     const OBJECTS: &[&str] = &["时间表", "交付计划", "设计稿", "方案", "报价", "预算", "计划", "排期", "需求", "报告", "样品"];
-    const TENTATIVE: &[&str] = &["如果", "假如", "要是", "可能", "建议", "或者", "还是", "比如", "例如", "举例",
-        "要不要", "能不能", "能否", "好不好", "行不行", "有没有意见", "要不", "是否", "未确定", "不用",
-        "取消", "不再", "不需要", "不要", "上周", "当时", "听说"];
-    if source.contains(['？', '?']) || has(source, TENTATIVE) {
+    const CONDITIONAL: &[&str] = &["如果", "假如", "要是", "可能", "建议", "比如", "例如", "举例",
+        "未确定", "不用", "取消", "不再", "不需要", "不要", "上周", "当时", "听说"];
+    const ALTERNATIVES: &[&str] = &["或者", "还是", "要不要", "能不能", "能否", "好不好", "行不行",
+        "有没有意见", "要不", "是否"];
+    if source.contains(['？', '?']) || has(source, CONDITIONAL) {
         return None;
     }
     static DIRECTIVE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:散会后|会后|回去之后|回去以后)[^。！？；]{0,18}(?:把|将)(?:这个|这份|这些)?(方案|报价|预算|计划|排期|报告|样品|设计稿)[^。！？；]{0,20}(整理|汇总|补齐|落实|提交|发来|交付)"
     ).expect("valid post-meeting work request pattern"));
     if has(source, &["给我", "请", "必须", "由"]) {
-        if let Some(work) = DIRECTIVE.captures(source) {
+        if let Some(work) = DIRECTIVE.captures(source).filter(|work| {
+            work.get(0).is_some_and(|directive| !has(directive.as_str(), ALTERNATIVES))
+        }) {
             return Some(Followup {
                 action: crate::companion_v1::CompanionV1ActionItem {
                     text: format!("{}{}", work.get(2)?.as_str(), work.get(1)?.as_str()),
@@ -97,6 +100,7 @@ pub(super) fn literal_followup(source: &str, previous: Option<&str>) -> Option<F
             });
         }
     }
+    if has(source, ALTERNATIVES) { return None; }
     let mut days = DAY.find_iter(source);
     let day = days.next()?;
     if days.next().is_some() || source[..day.start()].ends_with("下") {
@@ -112,7 +116,7 @@ pub(super) fn literal_followup(source: &str, previous: Option<&str>) -> Option<F
             let rest = after_review.trim_matches([' ', '。', '！', '，', ',', '.']);
             if !rest.is_empty() { return None; }
             let prior = previous?.trim().trim_end_matches(['。', '.', '！']);
-            if prior.contains(['？', '?']) || has(prior, TENTATIVE)
+            if prior.contains(['？', '?']) || has(prior, CONDITIONAL) || has(prior, ALTERNATIVES)
                 || !has(prior, &["安排", "回去", "催", "赶紧", "提交", "发来", "会后"]) {
                 return None;
             }

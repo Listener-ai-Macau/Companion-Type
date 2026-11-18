@@ -40,6 +40,7 @@ pub(super) enum OperationalEvidence {
     ResourceProposal,
     ConditionalDownside,
     ProcessPrerequisite,
+    PriorityChoice,
 }
 
 pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
@@ -79,6 +80,11 @@ pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
         && has(&["成本", "费用", "风险", "延期", "误差", "损失"])
         && has(&["采取", "处理", "选用", "采用", "使用", "这可能", "就会"]) {
         return Some(OperationalEvidence::ConditionalDownside);
+    }
+    if has(&["主推是", "主推方向", "优先选择", "优先采用", "首先执行"])
+        && has(&["咱们", "我们", "团队", "部门"])
+        && !has(&["是否", "要不要", "假如", "如果", "或者", "可不可以", "还没定"]) {
+        return Some(OperationalEvidence::PriorityChoice);
     }
     if has(&["标准", "资质", "授权", "校准", "审批"])
         && (has(&["需要有", "必须有", "前提是", "必须先"])

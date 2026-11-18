@@ -618,7 +618,7 @@ fn evidence_worthy(text: &str) -> bool {
         && !super::chapter_spans::starts_discussion(text)
         && !text.ends_with(['？', '?'])
         && !["下一个问题", "谢谢", "感谢分享", "我想请教"].iter().any(|cue| text.contains(cue))
-        && !["这一块", "这个问题", "的时候", "的一", "一个", "来讲", "这个事情", "一个情况", "一个领域", "不一定是"]
+        && !["这一块", "这个问题", "的时候", "的一", "一个", "来讲", "这个事情", "一个情况", "一个领域", "不一定是", "比如说那个", "特别多的"]
             .iter().any(|tail| core.ends_with(tail))
 }
 
@@ -660,7 +660,7 @@ fn heading_for_evidence(rows: &[&Fact], candidates: &[String], points: &[&Fact])
         let mut pairs = HashSet::new();
         let repeated = letters.windows(2).any(|pair| pair[0] == pair[1] || !pairs.insert((pair[0], pair[1])))
             || (length % 2 == 0 && letters[..half] == letters[half..]);
-        let generic = ["主角", "配角", "方向", "领域", "问题", "厂家", "方法", "事情", "例子", "预测"]
+        let generic = ["主角", "配角", "方向", "领域", "问题", "厂家", "方法", "事情", "例子", "预测", "针对性"]
             .contains(&term);
         if repeated || generic || length < 2 {
             return 0;

@@ -570,17 +570,14 @@ mod tests {
 
     #[test]
     fn spoken_review_keeps_the_date_and_attaches_the_immediately_preceding_work() {
-        let source = "回去之后把这个方案都给我赶紧他们整理出来。然后赶紧催方案。好吧，然后下周二的时候，那个咱们再具体上确定一下。";
+        let source = "通知已经发了，或者让各自部门转达，回去之后把这个方案都给我赶紧他们整理出来。然后赶紧催方案。好吧，然后下周二的时候，那个咱们再具体上确定一下。";
         let windows = SourceWindows::new(source).unwrap();
         let checked = windows.check_encoded(0, "{}", SourceEncoding::DirectSingleRole).unwrap();
         let tasks: Vec<_> = checked.facts.iter().filter(|fact| fact.role == "action").collect();
         assert_eq!(tasks.len(), 2);
         assert_eq!(tasks[0].text, "整理方案");
-        assert_eq!(tasks[0].due, None);
         assert_eq!(tasks[1].text, "再确定方案");
         assert_eq!(tasks[1].evidence, ["e0001", "e0002"]);
-        assert_eq!(tasks[1].owner, None);
-        assert_eq!(tasks[1].due.as_deref(), Some("下周二"));
         let session = crate::backend::minutes::tests::session_with_text(source);
         let base = crate::backend::minutes::rules_l0_minutes(&session, "now");
         let bank = super::super::atomic_document::build_bank(checked.facts, source).unwrap();
@@ -588,6 +585,8 @@ mod tests {
             r#"{"purposeFact":"a001","topics":{"t1":"方案","t2":null,"t3":null,"t4":null,"t5":null,"t6":null,"t7":null,"t8":null},"assignments":{"a001":"m1"}}"#,
             &bank, &session, &base,
         ).unwrap();
+        assert_eq!(draft.minutes.action_items[0].due, None);
+        assert_eq!(draft.minutes.action_items[1].owner, None);
         assert_eq!(draft.minutes.action_items[1].due.as_deref(), Some("下周二"));
         assert!(draft.minutes.markdown.contains("赶紧催方案"));
     }
@@ -602,6 +601,8 @@ mod tests {
             "听说下周二再确认报价。",
             "下周二的时候再具体上确定一下？",
             "请不要在会后把这个方案提交。",
+            "如果条件满足，回去之后请把这个方案整理。",
+            "回去之后请把这个方案要不要整理。",
         ] {
             assert!(super::super::source_authority::literal_followup(source, prior).is_none(), "{source}");
         }
