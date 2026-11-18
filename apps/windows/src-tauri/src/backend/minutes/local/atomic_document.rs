@@ -98,6 +98,8 @@ impl Bank {
 // The whole document already has this bound. Keep the overview compact, but
 // don't reject or lose verified facts solely because a topic has many details.
 pub(super) const MAX_FACTS:usize=512;
+const STANDARD_TOPIC_POINTS: usize = 3;
+const VERIFIED_TOPIC_POINTS: usize = 4;
 #[cfg(test)]
 pub(super) fn parse_bank(raw:&str,source:&str)->Result<Bank,String>{
     let extracted:Extracted=serde_json::from_str(crate::backend::minutes::strip_code_fences(raw).trim()).map_err(|_|fail())?;
@@ -598,7 +600,12 @@ fn evidence_reading_points<'a>(bank: &Bank, rows: &[&'a Fact]) -> Vec<&'a Fact> 
         .collect();
     let mut selected = if paired_options.len() == 2 { paired_options } else { Vec::new() };
     let mut evidence_types: HashSet<_> = selected.iter().filter_map(|fact| operational_evidence(&fact.text)).collect();
-    let available_slots = 3 - selected.len();
+    // A coordination gap is a distinct cause, alongside a forecast,
+    // resource shortage or recommendation that may already fill the topic.
+    let point_limit = if ordered.iter().any(|fact| {
+        operational_evidence(&fact.text) == Some(OperationalEvidence::CoordinationGap)
+    }) { VERIFIED_TOPIC_POINTS } else { STANDARD_TOPIC_POINTS };
+    let available_slots = point_limit - selected.len();
     selected.extend(ordered.iter().copied().filter(|fact| {
         operational_evidence(&fact.text).is_some_and(|kind| evidence_types.insert(kind))
     }).take(available_slots));
@@ -717,6 +724,15 @@ fn heading_for_evidence(rows: &[&Fact], candidates: &[String], points: &[&Fact])
             + 6 * usize::from(introduced) + 3 * supported.min(4) + 2 * length.min(6)
             + 8_usize.saturating_sub(index) - 3 * usize::from(length == 2)
     };
+    use super::reader_ranking::{operational_evidence, OperationalEvidence};
+    let offering_terms = ["赠品", "附赠", "套装", "套餐", "服务权益"];
+    let explicit_offering = offering_terms.into_iter().find(|term| {
+        points.iter().any(|point| point.text.contains(term)
+            && operational_evidence(&point.text) == Some(OperationalEvidence::OfferingOptions))
+    });
+    if let Some(term) = explicit_offering {
+        return Some(term.into());
+    }
     candidates.iter().enumerate().filter_map(|(index, term)| {
         let value = score(index, term);
         (value > 0).then_some((value, index, term))
@@ -789,7 +805,8 @@ fn render_organization(
     let mut optional_chars=1000_usize.checked_sub(required_chars).ok_or_else(fail)?;
     let mut reserved = HashSet::new();
     for items in &slots {
-        for (fact, main) in items.iter().skip(1).take(2) {
+        let point_limit = reading_topic_point_limit(items, focus.is_some());
+        for (fact, main) in items.iter().skip(1).take(point_limit - 1) {
             if important(fact, *main) && fact.text.chars().count() <= optional_chars {
                 optional_chars -= fact.text.chars().count();
                 reserved.insert(fact.id.as_str());
@@ -803,12 +820,13 @@ fn render_organization(
         let title=topics.remove(id).ok_or_else(fail)?;
         if items.is_empty(){continue;}
         let title=title.as_deref().and_then(theme_name).ok_or_else(fail)?;
+        let point_limit = reading_topic_point_limit(&items, focus.is_some());
         let mut points=Vec::new();let mut details=Vec::new();
         for (index,(fact,main)) in items.into_iter().enumerate(){
             let size=fact.text.chars().count();
             if index==0 || reserved.contains(fact.id.as_str()){
                 points.push([&fact.id]);
-            }else if main&&points.len()<3&&size<=optional_chars{
+            }else if main&&points.len()<point_limit&&size<=optional_chars{
                 optional_chars-=size;points.push([&fact.id]);
             }else{details.push([&fact.id]);}
         }
@@ -816,7 +834,8 @@ fn render_organization(
     }
     if !topics.is_empty(){return Err(fail());}
     let canonical=json!({"purpose":purpose,"topics":arranged,"decisions":decisions,"actionItems":actions,"questions":questions,"excluded":[]});
-    let mut parsed = assemble(&canonical.to_string(), bank, session, base)?;
+    let points_limit = if focus.is_some() { VERIFIED_TOPIC_POINTS } else { STANDARD_TOPIC_POINTS };
+    let mut parsed = assemble_with_points_limit(&canonical.to_string(), bank, session, base, points_limit)?;
     parsed.receipt["openingFactId"] = json!(purpose_id);
     if let Some(overview) = focus {
         parsed.receipt["openingTopicFactIds"] = json!(overview.primary_facts);
@@ -825,6 +844,13 @@ fn render_organization(
         }
     }
     Ok(parsed)
+}
+
+fn reading_topic_point_limit(items: &[(&Fact, bool)], verified_layout: bool) -> usize {
+    use super::reader_ranking::{operational_evidence, OperationalEvidence};
+    if verified_layout && items.iter().any(|(fact, main)| {
+        *main && operational_evidence(&fact.text) == Some(OperationalEvidence::CoordinationGap)
+    }) { VERIFIED_TOPIC_POINTS } else { STANDARD_TOPIC_POINTS }
 }
 
 // A one-fact heading can be redundant when its source sentence is already
@@ -920,8 +946,12 @@ fn adjacent_offering_tradeoff<'a>(prior: &'a Fact, current: &Fact) -> Option<(&'
 }
 
 pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
+    assemble_with_points_limit(raw, bank, session, base, STANDARD_TOPIC_POINTS)
+}
+
+fn assemble_with_points_limit(raw: &str, bank: &Bank, session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes, points_limit: usize) -> Result<canonical_brief::local_document::Parsed, String> {
     let sealed=serde_json::to_vec(&bank.facts).map_err(|_|fail())?;
-    let units=source_units(&session.transcript_text);let result=answer_layout::assemble_with_details_limit(raw,&bank.facts,&units,MAX_FACTS,MAX_FACTS)?;
+    let units=source_units(&session.transcript_text);let result=answer_layout::assemble_with_topic_limits(raw,&bank.facts,&units,points_limit,MAX_FACTS,MAX_FACTS)?;
     for excluded in &result.excluded{
         if bank.facts.iter().find(|f|f.id==excluded.id).is_none_or(|f|f.placement!=Placement::Topic){return Err(fail());}
     }
@@ -980,7 +1010,7 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             let s=known[id.as_str()];json!({"source":s["source"],"quote":s["text"]})
         }).collect::<Vec<_>>()));
     }
-    let mut parsed=super::evidence_document::parse_with_details_limit(&document.to_string(),session,base,MAX_FACTS)?;
+    let mut parsed=super::evidence_document::parse_with_topic_limits(&document.to_string(),session,base,points_limit,MAX_FACTS)?;
     if serde_json::to_vec(&bank.facts).map_err(|_|fail())?!=sealed{return Err(fail());}
     // The shared document parser assigns presentation entries its own aNNN
     // sequence. Never expose those aliases as identities for the frozen bank.

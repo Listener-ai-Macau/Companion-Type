@@ -98,13 +98,17 @@ pub(in crate::backend::minutes) fn refs(ids:&[String],known:&HashMap<&str,&str>)
 }
 pub(in crate::backend::minutes) fn normalized(text:&str)->String {text.chars().filter(|c|!c.is_whitespace()).collect()}
 pub(in crate::backend::minutes) fn validate_with_details_limit(doc:&Document,units:&[Unit],details_limit:usize)->Result<(),String> {
+    validate_with_topic_limits(doc, units, 3, details_limit)
+}
+
+pub(in crate::backend::minutes) fn validate_with_topic_limits(doc: &Document, units: &[Unit], points_limit: usize, details_limit: usize) -> Result<(), String> {
     let known=units.iter().map(|u|(u.id.as_str(),u.text.as_str())).collect::<HashMap<_,_>>();
     let mut issues=Vec::new();let mut titles=HashSet::new();let mut texts=HashSet::new();let mut chars=0;
     if !line(&doc.purpose,80){issues.push("purpose须为80字内完整单行".to_string());}
     if doc.topics.is_empty()||doc.topics.len()>8 {issues.push("topics须为1至8个实际内容组".into());}
     for (i,t) in doc.topics.iter().enumerate() {
         if !line(&t.title,26)||!titles.insert(&t.title){issues.push(format!("topics[{i}].title须为26字内不重复单行"));}
-        if t.points.is_empty()||t.points.len()>3||t.details.len()>details_limit {issues.push(format!("topics[{i}]主回答1至3条、补充0至{details_limit}条"));}
+        if t.points.is_empty()||t.points.len()>points_limit||t.details.len()>details_limit {issues.push(format!("topics[{i}]主回答1至{points_limit}条、补充0至{details_limit}条"));}
         for (j,p) in t.points.iter().enumerate() {
             if !line(&p.text,90)||!refs(&p.sources,&known)||!texts.insert(&p.text){issues.push(format!("topics[{i}].points[{j}]须为90字内不重复单行并引用实际原id"));}
             chars+=p.text.chars().count();

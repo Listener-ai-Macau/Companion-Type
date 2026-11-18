@@ -64,13 +64,13 @@ pub(in crate::backend::minutes) struct Parsed {
 }
 
 pub(in crate::backend::minutes) fn parse(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<Parsed,String>{
-    parse_with_details_limit(raw,session,base,8)
+    parse_with_topic_limits(raw,session,base,3,8)
 }
 
-pub(in crate::backend::minutes) fn parse_with_details_limit(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,details_limit:usize)->Result<Parsed,String>{
+pub(in crate::backend::minutes) fn parse_with_topic_limits(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,points_limit:usize,details_limit:usize)->Result<Parsed,String>{
     let doc:Document=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|"本地纪要返回结构不完整，原文和已有纪要保留。")?;
     let units=source_units(&session.transcript_text);
-    validate_with_details_limit(&doc,&units,details_limit)?;original_identifiers(&doc,&units)?;
+    validate_with_topic_limits(&doc,&units,points_limit,details_limit)?;original_identifiers(&doc,&units)?;
     let sealed=serde_json::to_vec(&doc).map_err(|_|"无法核对本地纪要。")?;
     let mut facts=Vec::new();
     let mut seal=|placement:&str,value:Value|{

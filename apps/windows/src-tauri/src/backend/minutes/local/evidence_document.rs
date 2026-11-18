@@ -89,10 +89,10 @@ fn exact_origins(markdown:&str,document:&Value,anchors:&[Value])->Result<String,
 }
 
 pub(super) fn parse(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
-    parse_with_details_limit(raw,session,base,8)
+    parse_with_topic_limits(raw,session,base,3,8)
 }
 
-pub(super) fn parse_with_details_limit(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,details_limit:usize)->Result<canonical_brief::local_document::Parsed,String>{
+pub(super) fn parse_with_topic_limits(raw:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,points_limit:usize,details_limit:usize)->Result<canonical_brief::local_document::Parsed,String>{
     let mut doc:Value=serde_json::from_str(crate::backend::minutes::strip_code_fences(raw).trim()).map_err(|_|"本地纪要返回结构不完整，原文和已有纪要保留。")?;
     let units=source_units(&session.transcript_text);
     let known=units.iter().map(|u|(u.id.as_str(),u.text.as_str())).collect::<std::collections::HashMap<_,_>>();
@@ -131,7 +131,7 @@ pub(super) fn parse_with_details_limit(raw:&str,session:&CompanionV1HostSession,
             for(j,entry)in entries.iter_mut().enumerate(){bind(entry,format!("topics[{i}].{name}[{j}]"))?;}
         }
     }
-    let mut parsed=canonical_brief::local_document::parse_with_details_limit(&doc.to_string(),session,base,details_limit)?;
+    let mut parsed=canonical_brief::local_document::parse_with_topic_limits(&doc.to_string(),session,base,points_limit,details_limit)?;
     parsed.minutes.markdown=exact_origins(&parsed.minutes.markdown,&doc,&anchors)?;
     parsed.receipt["evidenceAnchors"]=json!(anchors);
     parsed.receipt["literalEvidenceBound"]=json!(true);

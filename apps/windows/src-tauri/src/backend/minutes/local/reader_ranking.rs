@@ -38,6 +38,7 @@ pub(super) enum OperationalEvidence {
     RepeatedVerification,
     ResourceConstraint,
     ResourceProposal,
+    CoordinationGap,
     ConditionalDownside,
     ProcessPrerequisite,
     PriorityChoice,
@@ -90,6 +91,11 @@ pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
     if has(&["建议", "希望", "可以考虑"]) && has(&["引入", "协调", "整合", "共享", "增配"])
         && has(&["人员", "设备", "高校", "研究机构", "科研院所", "预算", "产能", "资源"]) {
         return Some(OperationalEvidence::ResourceProposal);
+    }
+    if has(&["平台", "系统", "流程", "部门", "团队"])
+        && has(&["没有整合", "没有一个很好的整合", "缺少整合", "缺乏整合", "尚未打通", "缺乏协同", "各自为政"])
+        && !text.contains(['？', '?']) {
+        return Some(OperationalEvidence::CoordinationGap);
     }
     if has(&["可能会增加", "会带来", "可能导致", "就会增加"])
         && has(&["成本", "费用", "风险", "延期", "误差", "损失"])

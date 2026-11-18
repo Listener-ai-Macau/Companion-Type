@@ -163,7 +163,7 @@ mod tests {
                 && after["evidence"].as_array().unwrap().len() == 2
         }));
         let purpose = receipt["document"]["purpose"].as_str().unwrap();
-        assert!(purpose.contains("手机") && purpose.contains("年轻"), "{purpose}");
+        assert!(purpose.contains("手机") && purpose.contains("年轻") && purpose.contains("赠品"), "{purpose}");
         assert!(receipt["openingAgendaFactId"].is_string());
         let topics = receipt["document"]["topics"].as_array().unwrap();
         assert!(topics.iter().flat_map(|topic| topic["points"].as_array().unwrap()).any(|point| {
@@ -216,6 +216,7 @@ mod tests {
         assert!(has(&["尝试成了多少钱", "尝试不成多少钱"]));
         assert!(has(&["引入", "高校", "科研院所"]));
         assert!(has(&["人员", "设备", "缺乏"]));
+        assert!(has(&["平台", "没有一个很好的整合"]));
         assert!(summaries.iter().any(|point| point["kind"] == "opinion"
             && point["text"].as_str().unwrap().contains("碳税")));
         assert!(summaries.iter().any(|point| point["kind"] == "opinion"
