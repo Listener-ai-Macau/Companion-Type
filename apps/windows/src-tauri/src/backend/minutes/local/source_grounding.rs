@@ -29,6 +29,27 @@ pub(super) fn context_only_fragment(source:&str)->bool{
     matches!(text.trim(),""|"嗯"|"呃"|"对"|"然后"|"所以"|"所以说"|"实际上"|"实际上在"|"问题"|"关于这个"|"也就是说"|"怎么说呢")
 }
 
+// In speech a tentative question and its short answer can be split across
+// sentences. An opinion needs both the subject and the words expressing doubt.
+pub(super) fn supports_followup_opinion(claim: &str, question: &str, answer: &str) -> bool {
+    let invites_judgment = ["能不能", "能否", "是否", "可不可以", "行不行"]
+        .iter()
+        .any(|cue| question.contains(cue));
+    let short_answer = answer.trim();
+    if !invites_judgment || short_answer.chars().count() > 36 {
+        return false;
+    }
+
+    let explicit_stance = ["我认为", "我个人", "我觉得", "我的看法", "我的观点", "观点其实"]
+        .iter()
+        .any(|cue| short_answer.contains(cue));
+    let uncertainty = ["比较难", "很难", "较难", "难以", "不容易", "不太可能", "可能性不大"];
+    explicit_stance
+        && uncertainty.iter().any(|cue| short_answer.contains(cue))
+        && uncertainty.iter().any(|cue| claim.contains(cue))
+        && additional_literal_support(claim, &[], &[("question", question)]).is_some()
+}
+
 pub(super) fn additional_literal_support<'a>(claim:&str,already:&[&str],nearby:&[(&'a str,&str)])->Option<&'a str>{
     // A distinctive contiguous Han phrase in the claim and one nearby source
     // can supply the missing antecedent. Ignore generic low-value overlap and

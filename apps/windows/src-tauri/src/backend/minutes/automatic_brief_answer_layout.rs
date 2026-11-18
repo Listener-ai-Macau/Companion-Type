@@ -72,7 +72,7 @@ fn take<'a>(ids:&[String],placement:Placement,known:&'a HashMap<&str,Bound<'a>>,
     let id=&ids[0];let bound=known.get(id.as_str()).ok_or_else(fail)?;
     if bound.fact.placement!=placement||!used.insert(id.clone()){return Err(fail());}Ok(bound)
 }
-fn entry(bound:&Bound<'_>)->Entry{Entry{text:bound.fact.text.clone(),sources:bound.sources.clone()}}
+fn entry(bound:&Bound<'_>)->Entry{Entry{text:bound.fact.text.clone(),sources:bound.sources.clone(),quantity_needs_review:false}}
 
 pub(in crate::backend::minutes) fn assemble(raw:&str,facts:&[Fact],units:&[Unit])->Result<Assembled,String>{
     assemble_with_details_limit(raw,facts,units,8)
@@ -90,7 +90,7 @@ pub(in crate::backend::minutes) fn assemble_with_details_limit(raw:&str,facts:&[
         for (j,ids) in topic.points.into_iter().enumerate(){
             let bound=take(&ids,Placement::Topic,&known,&mut used)?;
             bindings.push((format!("/topics/{i}/points/{j}"),bound.fact.id.clone()));
-            points.push(Point{kind:bound.fact.kind.clone(),text:bound.fact.text.clone(),sources:bound.sources.clone()});
+            points.push(Point{kind:bound.fact.kind.clone(),text:bound.fact.text.clone(),sources:bound.sources.clone(),quantity_needs_review:false});
         }
         for (j,ids) in topic.details.into_iter().enumerate(){let bound=take(&ids,Placement::Topic,&known,&mut used)?;bindings.push((format!("/topics/{i}/details/{j}"),bound.fact.id.clone()));details.push(entry(bound));}
         document.topics.push(Topic{title:topic.title,points,details});

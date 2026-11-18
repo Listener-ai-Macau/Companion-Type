@@ -143,6 +143,9 @@ impl SourceWindows {
                 if fact.evidence.len() > 7 || fact.evidence.iter().any(|r| !offered.contains_key(r.as_str()) || !seen.insert(r.as_str())) {
                     return Err(fail());
                 }
+                fact.evidence.retain(|reference| {
+                    !source_grounding::context_only_fragment(offered[reference.as_str()])
+                });
                 fact.evidence.insert(0, anchor.to_owned());
                 let sources:Vec<_>=fact.evidence.iter().map(|id|offered[id.as_str()]).collect();
                 unmatched.extend(source_grounding::unsupported_quantities(&fact.text,&sources));
@@ -155,6 +158,19 @@ impl SourceWindows {
                         fact.evidence.push(support.to_owned());
                     }
                 }
+                if fact.role == "opinion" && fact.evidence.len() < 8 {
+                    let support = self.offered(index).zip(self.offered(index).skip(1)).find_map(|(before, after)| {
+                        let question = &self.sentences[before];
+                        let answer = &self.sentences[after];
+                        let selected = |sentence: &Value| fact.evidence.iter().any(|reference| reference == id(sentence));
+                        if !selected(question) || selected(answer) {
+                            return None;
+                        }
+                        source_grounding::supports_followup_opinion(&fact.text, text(question), text(answer))
+                            .then(|| id(answer).to_owned())
+                    });
+                    fact.evidence.extend(support);
+                }
                 accepted.push(fact);
             }
             if unmatched.is_empty(){
@@ -165,7 +181,7 @@ impl SourceWindows {
                 // Generating a second paraphrase can copy a nearby claim over it.
                 let role = policy.literal_topic_role(text(source))
                     .ok_or("会议原话中的数量或单位仍无法确认，完整转写与已有纪要保留。")?;
-                facts.push(ExtractedFact::verbatim(anchor, role, text(source)));
+                facts.push(ExtractedFact::quantity_quote(anchor, role, text(source)));
                 reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":"quantity-source-quote","unmatched":unmatched}));
             }
         }
@@ -342,6 +358,52 @@ mod tests {
         assert_eq!(Authority::from_source(by_id("e0010")).allowed,["opinion"]);
         assert_eq!(source_grounding::additional_literal_support(output["e0010"][0]["text"].as_str().unwrap(),&[by_id("e0010")],&[("e0008",by_id("e0008"))]),Some("e0008"));
         println!("past real card failure reproduced: unsupported years and multiples, fragment and antecedent verified without a neural call");
+    }
+
+    #[test]
+    fn local_minutes_replays_the_real_card_opening_and_direct_opinion_quote() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_REAL_CARD_READING_RECEIPT") else { return; };
+        let receipt: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        let source = std::fs::read_to_string(receipt["sourceFile"].as_str().unwrap()).unwrap();
+        let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        let windows = SourceWindows::new(&source).unwrap();
+        let calls = receipt["receipt"]["calls"].as_array().unwrap();
+        assert_eq!(calls.len(), windows.len() + 1);
+        assert_eq!(calls.last().unwrap()["stage"], "id-only-organization");
+        let mut facts = Vec::new();
+        for (index, call) in calls.iter().take(windows.len()).enumerate() {
+            facts.extend(windows.decode(index, call["output"].as_str().unwrap()).unwrap().0);
+        }
+
+        let bank = super::super::atomic_document::build_bank(facts, &source).unwrap();
+        assert_eq!(bank.facts.len(), 10);
+        assert_eq!(bank.facts[7].evidence, ["e0010", "e0008", "e0011"]);
+        assert_eq!(bank.facts[9].evidence, ["e0013", "e0012", "e0010", "e0011"]);
+        let (input, schema) = (
+            super::super::atomic_document::layout_input(&bank),
+            super::super::atomic_document::layout_schema(&bank).unwrap(),
+        );
+        assert_eq!(input["purposeChoices"], json!(["a007", "a009"]));
+        assert_eq!(schema["properties"]["assignments"]["properties"]["a000"]["properties"]["topic"]["enum"],
+                   json!(["t1", "t2", "t3", "t4"]));
+
+        let session = crate::backend::minutes::tests::session_with_text(&source);
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "replay");
+        let parsed = super::super::atomic_document::organize(
+            calls.last().unwrap()["output"].as_str().unwrap(), &bank, &session, &base
+        ).unwrap();
+        assert_eq!(parsed.receipt["openingFactId"], "a007");
+        let document = &parsed.receipt["document"];
+        assert!(document["purpose"].as_str().unwrap().contains("钠离子电池"));
+        assert_eq!(document["topics"][0]["title"], "钠离子电池定位判断");
+        assert_eq!(document["topics"].as_array().unwrap().len(), 5);
+        assert_eq!(parsed.receipt["retainedFactIds"].as_array().unwrap().len(), 10);
+        assert_eq!(parsed.receipt["quantityQuoteFactIds"], json!(["a003", "a005"]));
+        assert!(parsed.minutes.markdown.contains("数量待核：实际上"));
+        assert!(parsed.minutes.markdown.contains("观点其实我认为还是比较难"));
+        assert!(!parsed.minutes.markdown.contains("- 实际上在。"));
+        assert!(parsed.minutes.action_items.is_empty());
+        println!("replayed real local output: source-bound opening, linked themes, quantity label, and direct opinion quote");
     }
 
     // Replay an existing real native candidate receipt in the engineering
