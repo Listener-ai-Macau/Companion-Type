@@ -162,6 +162,10 @@ mod tests {
             let chapters = input["chapters"].as_object().unwrap();
             let chapters_from_bank = bank.receipt["plannedChapters"].as_array().unwrap();
             assert_eq!(chapters.values().map(|chapter| chapter["facts"].as_array().unwrap().len()).sum::<usize>(),112);
+            let closing = chapters_from_bank.iter().find(|chapter| chapter["id"] == "t8").unwrap();
+            let closing_choices = closing["mainFactChoices"].as_array().unwrap();
+            assert!(closing_choices.contains(&json!("a316")));
+            assert!(!closing_choices.contains(&json!("a322")));
             let mut seen = std::collections::HashSet::new();
             let mut regulation = None;
             if let Some(path) = std::env::var_os("COMPANION_TEST_REJECTED_FREE_LABEL_RECEIPT") {
@@ -218,6 +222,11 @@ mod tests {
                 assert!(projected.receipt["explicitReaderRecommendations"].as_array().unwrap().contains(&json!("a116")));
                 assert!(projected.minutes.markdown.contains("建议：第二呢就是说我们应该使用中国牵头的这个标准"));
                 assert!(!projected.minutes.markdown.contains("寿命预测、预测"));
+                let bindings = projected.receipt["layoutBindings"].as_array().unwrap();
+                for id in ["a296", "a316"] {
+                    assert!(bindings.iter().any(|binding| binding[1] == id
+                        && binding[0].as_str().unwrap().contains("/points/")), "reader dropped {id}");
+                }
                 assert_eq!(projected.receipt["document"]["topics"].as_array().unwrap().len(), 8);
                 if let Some(path) = std::env::var_os("COMPANION_TEST_PARALLEL_CPU25_DRAFT_OUTPUT") {
                     let file = std::fs::OpenOptions::new().write(true).create_new(true).open(path).unwrap();
