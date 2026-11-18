@@ -14,8 +14,12 @@ fn prose()->Value{json!({"type":"string","minLength":1})}
 pub(super) fn array(items:Value,min:usize,max:usize)->Value{json!({"type":"array","items":items,"minItems":min,"maxItems":max})}
 
 pub(super) fn fact_properties(evidence: Value, roles:&[&str])->Value{
-    let optional=json!({"anyOf":[prose(),{"type":"null"}]});
-    json!({"evidence":evidence,"role":{"type":"string","enum":roles},"owner":optional,"due":optional,"text":prose()})
+    let action_field = if roles.contains(&"action") {
+        json!({"anyOf":[prose(),{"type":"null"}]})
+    } else {
+        json!({"type":"null"})
+    };
+    json!({"evidence":evidence,"role":{"type":"string","enum":roles},"owner":action_field,"due":action_field,"text":prose()})
 }
 #[cfg(test)]
 #[derive(Deserialize)]
@@ -25,6 +29,13 @@ struct Extracted {facts:Vec<ExtractedFact>}
 #[serde(deny_unknown_fields)]
 pub(super) struct ExtractedFact {pub(super) evidence:Vec<String>,pub(super) role:String,owner:Option<String>,due:Option<String>,pub(super) text:String}
 impl ExtractedFact{
+    pub(super) fn clear_non_action_metadata(&mut self) {
+        if self.role != "action" {
+            self.owner = None;
+            self.due = None;
+        }
+    }
+
     pub(super) fn verbatim(id:&str,role:&str,text:&str)->Self{
         Self{evidence:vec![id.to_owned()],role:role.to_owned(),owner:None,due:None,text:text.trim().to_owned()}
     }

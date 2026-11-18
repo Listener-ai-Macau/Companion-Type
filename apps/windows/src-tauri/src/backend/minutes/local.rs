@@ -74,19 +74,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                     record_call(&trace,&format!("source-window-{}",index+1));
                     raw
                 }else{"{}".into()};
-                let mut checked=windows.check(index,&raw,None)?;
-                if !checked.disputed.is_empty(){
-                    if let Ok(mut trace)=trace.lock(){
-                        if !trace["quantityRechecks"].is_array(){trace["quantityRechecks"]=json!([]);}
-                        trace["quantityRechecks"].as_array_mut().unwrap().push(json!({"window":index+1,"sentences":checked.reviewed}));
-                    }
-                    let (input,schema)=windows.recheck_input(index,&checked.disputed);
-                    let raw=transport::generate(port,&key,&alias,source_windows::QUANTITY_RECHECK,input,schema,stop,&trace,1024)?;
-                    record_call(&trace,&format!("source-window-{}-quantity-recheck",index+1));
-                    let corrected=windows.check(index,&raw,Some(&checked.disputed))?;
-                    if let Ok(mut trace)=trace.lock(){trace["lastQuantityRecheck"]=json!(corrected.reviewed);}
-                    checked.accept_recheck(corrected)?;
-                }
+                let mut checked = windows.check(index, &raw)?;
                 facts.append(&mut checked.facts);
                 reviewed.push(json!({"window":index+1,"sentences":checked.reviewed}));
                 if let Ok(mut trace)=trace.lock(){trace["reviewedSourceWindows"]=json!(reviewed);}

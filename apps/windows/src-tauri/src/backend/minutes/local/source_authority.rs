@@ -59,22 +59,32 @@ impl Authority {
         }
         if allowed.as_slice()==["status","opinion"]{allowed.remove(0);}
 
-        let has_typed_outcome = allowed.iter().any(|role| matches!(*role, "decision" | "action" | "question"));
         let explicit_open_item = allowed.contains(&"question") && !allowed.contains(&"action")
             && !allowed.contains(&"decision") && !non_binding
             && has(source, OPEN_AGENDA) && !has(source, CLOSED_AGENDA);
-        let verbatim = if explicit_open_item && canonical_brief::line(source, 90) {
+        let mut policy = Self {
+            allowed,
+            verbatim: None,
+            context_only: super::source_grounding::context_only_fragment(source),
+        };
+        policy.verbatim = if explicit_open_item && canonical_brief::line(source, 90) {
             Some("question")
-        } else if !has_typed_outcome && canonical_brief::line(source, 90)
-            && (has(source, EXACT_RELATION) || QUANTITY.is_match(source)
-                || (source.contains("讨论") && source.contains("是否"))) {
-            // Choose a conservative label without changing the actual words.
-            // An explicit recommendation or prediction remains such in the reader.
-            Some(if allowed.contains(&"recommendation") { "recommendation" }
-                else if allowed.contains(&"forecast") { "forecast" }
-                else if allowed.contains(&"opinion") { "opinion" }
-                else { "status" })
-        } else { None };
-        Self { allowed, verbatim, context_only:super::source_grounding::context_only_fragment(source) }
+        } else if has(source, EXACT_RELATION) || QUANTITY.is_match(source)
+            || (source.contains("讨论") && source.contains("是否")) {
+            policy.literal_topic_role(source)
+        } else {
+            None
+        };
+        policy
+    }
+
+    pub(super) fn literal_topic_role(&self, source: &str) -> Option<&'static str> {
+        if !canonical_brief::line(source.trim(), 90)
+            || self.allowed.iter().any(|role| matches!(*role, "decision" | "action" | "question")) {
+            return None;
+        }
+        ["recommendation", "forecast", "opinion", "status"]
+            .into_iter()
+            .find(|role| self.allowed.contains(role))
     }
 }
