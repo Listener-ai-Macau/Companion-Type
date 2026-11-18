@@ -59,6 +59,29 @@ pub(super) fn linked_secondary_status(claim: &str, source: &str) -> bool {
     shared_han_phrase(claim, source, 3)
 }
 
+pub(super) fn copied_from_other_sentence<'a>(claim: &str, anchor: &str, nearby: impl Iterator<Item = &'a str>) -> bool {
+    // A reference key alone does not establish a connection. Detect a clear
+    // drop in literal support at the claimed anchor without reassigning the fact.
+    let chars: Vec<_> = claim.chars().collect();
+    let phrases: HashSet<_> = chars.windows(2)
+        .filter(|pair| pair.iter().all(|ch| matches!(*ch, '\u{3400}'..='\u{9fff}')))
+        .map(|pair| pair.iter().collect::<String>())
+        .filter(|phrase| !["目前", "这个", "这些", "一些", "一个", "讨论", "问题", "认为", "建议"].contains(&phrase.as_str()))
+        .collect();
+    let overlap = |text: &str| phrases.iter().filter(|phrase| text.contains(phrase.as_str())).count();
+    let at_anchor = overlap(anchor);
+    at_anchor < 3 && nearby.into_iter().any(|text| overlap(text) >= (at_anchor + 3).max(4))
+}
+
+pub(super) fn concerns_approval(text: &str) -> bool {
+    ["批准", "批复", "获批"].iter().any(|marker| text.contains(marker))
+}
+
+pub(super) fn loses_binary_uncertainty(claim: &str, anchor: &str) -> bool {
+    anchor.contains("有无") && !has_open_qualifier(claim)
+        && !["有无", "有没有", "待确认", "待核", "尚不明确", "仍不明确"].iter().any(|cue| claim.contains(cue))
+}
+
 pub(super) fn context_only_fragment(source:&str)->bool{
     let text=source.trim().trim_end_matches(['。','！','？','；',',','，','…','.']);
     matches!(text.trim(),""|"嗯"|"呃"|"对"|"然后"|"所以"|"所以说"|"实际上"|"实际上在"|"问题"|"关于这个"|"也就是说"|"怎么说呢")
