@@ -18,6 +18,7 @@ const IN_MEETING: &[&str] = &["请发言", "请介绍", "请回答", "请讲", "
 const OPEN: &[&str] = &["未决", "待回答", "还没确定", "尚未确定", "还没有确定", "没有给明确答复", "没有明确答复"];
 const OPEN_AGENDA: &[&str] = &["未决事项", "未决问题", "记为未决", "列为未决", "还有一个未决"];
 const CLOSED_AGENDA: &[&str] = &["没有未决", "无未决", "已解决", "已经解决", "都已处理", "全部处理", "上次的未决", "上周的未决"];
+const REFERENCED_AGENDA: &[&str] = &["上述", "前述", "以上", "这些未决", "前面提到的", "刚才列出的"];
 const RECOMMEND: &[&str] = &["建议", "希望", "不妨", "可以考虑"];
 const FORECAST: &[&str] = &["预计", "预测", "预估", "大概会", "可能会", "有望"];
 const OPINION: &[&str] = &["我认为", "我觉得", "我的看法", "个人认为", "我判断"];
@@ -52,7 +53,9 @@ impl Authority {
         if !non_binding && !has(source, IN_MEETING) && has(source, NEXT_WORK) && has(source, ACTION) {
             allowed.push("action");
         }
-        if has(source, OPEN) && !has(source, CLOSED_AGENDA) { allowed.push("question"); }
+        if has(source, OPEN) && !has(source, CLOSED_AGENDA) && !has(source, REFERENCED_AGENDA) {
+            allowed.push("question");
+        }
 
         let has_typed_outcome = allowed.iter().any(|role| matches!(*role, "decision" | "action" | "question"));
         let explicit_open_item = allowed.contains(&"question") && !allowed.contains(&"action")
