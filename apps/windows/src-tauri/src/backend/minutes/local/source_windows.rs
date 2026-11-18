@@ -911,6 +911,8 @@ mod tests {
         let document=&parsed.minutes;
         assert_eq!(document.action_items.len(),3);
         assert_eq!(document.questions.len(),2);
+        assert!(document.markdown.contains("## Open Questions\n\n"));
+        assert!(!document.markdown.contains("## Questions\n\n"));
         assert!(document.markdown.contains("另外需要五千元安装费"));
         assert!(document.markdown.contains("是否可以开始试点"));
         assert!(document.markdown.contains("不会只发一个完成截图"));

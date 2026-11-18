@@ -302,6 +302,52 @@ struct ChapterFocus {
     primary_facts: Vec<String>,
 }
 
+fn heading_terms(title: &str) -> Vec<String> {
+    let letters: Vec<_> = title.chars().collect();
+    let mut terms: Vec<String> = letters.windows(2)
+        .filter(|pair| pair.iter().all(|letter| matches!(letter, '\u{3400}'..='\u{9fff}')))
+        .map(|pair| pair.iter().collect()).collect();
+    terms.sort();
+    terms.dedup();
+    terms
+}
+
+fn useful_reader_point(fact: &Fact) -> bool {
+    let text = fact.text.trim();
+    let words = text.chars().count();
+    words >= 12
+        && !["谢谢", "感谢", "下一个问题", "接下来请", "下面请", "的这些", "的这个"]
+            .iter().any(|lead| text.starts_with(lead))
+        && !["说到这儿", "说到这里", "就是这样，谢谢"].iter().any(|tail| text.contains(tail))
+        && !(words <= 32 && text.contains("这一块"))
+        && !(words <= 18 && ["第一类", "第二类", "第三类"].iter().any(|label| text.starts_with(label)))
+}
+
+fn reader_selection<'a>(rows: &[&'a Fact], requested: &HashSet<&str>, terms: &[String], bank: &Bank) -> Vec<&'a Fact> {
+    let mut primary: Vec<_> = rows.iter().copied().filter(|fact| requested.contains(fact.id.as_str())
+        && !bank.review_quote(&fact.id) && useful_reader_point(fact)).collect();
+    let mut alternatives: Vec<_> = rows.iter().copied().filter(|fact| !requested.contains(fact.id.as_str())
+        && !bank.review_quote(&fact.id) && useful_reader_point(fact)).collect();
+    alternatives.sort_by_key(|fact| {
+        let overlap = terms.iter().filter(|term| fact.text.contains(term.as_str())).count();
+        std::cmp::Reverse(overlap)
+    });
+    primary.extend(alternatives.into_iter().take(requested.len().saturating_sub(primary.len())));
+    if primary.is_empty() {
+        primary.extend(rows.iter().copied().filter(|fact| requested.contains(fact.id.as_str())));
+    }
+    let answer = primary.iter().find_map(|question| {
+        rows.iter().copied().find(|fact| !primary.iter().any(|point| point.id == fact.id)
+            && question.evidence.iter().skip(1).any(|source| fact.evidence.first() == Some(source))
+            && super::source_grounding::is_short_opinion_answer(&fact.text))
+    });
+    if let Some(answer) = answer {
+        if primary.len() >= 3 { primary.pop(); }
+        primary.push(answer);
+    }
+    primary
+}
+
 fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Organization, ChapterFocus), String> {
     let facts: Vec<_> = bank.topics().collect();
     let mut descriptions = layout.chapters.0;
@@ -314,7 +360,10 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
         let description = descriptions.remove(key).ok_or_else(fail)?;
         let title = theme_name(&description.title).ok_or_else(fail)?.to_owned();
         let rows = &facts[span.clone()];
-        if !rows.iter().any(|fact| super::source_grounding::shared_han_phrase(&title, &fact.text, 3)) {
+        let terms = heading_terms(&title);
+        let title_supported = rows.iter().any(|fact| fact.text.contains(&title))
+            || terms.iter().filter(|term| rows.iter().any(|fact| fact.text.contains(term.as_str()))).take(2).count() == 2;
+        if !title_supported {
             return Err("纪要主题标题缺少这一段的原话依据，完整转写与已有纪要保留。".into());
         }
         let main: HashSet<_> = description.main_facts.iter().map(String::as_str).collect();
@@ -322,15 +371,16 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
             || !main.iter().all(|id| rows.iter().any(|fact| fact.id == *id)) {
             return Err(fail());
         }
+        let chosen = reader_selection(rows, &main, &terms, bank);
         let next_slot = title_slots.len();
         let slot = *title_slots.entry(title.clone()).or_insert(next_slot);
         let topic = THEME_IDS[slot];
         topics.insert(topic.to_string(), Some(title.clone()));
         for fact in rows {
-            let rank = if main.contains(fact.id.as_str()) { 'm' } else { 't' };
+            let rank = if chosen.iter().any(|point| point.id == fact.id) { 'm' } else { 't' };
             assignments.insert(fact.id.clone(), Assignment::Compact(format!("{rank}{}", slot + 1)));
         }
-        chapter_focus.insert(key, (title, description.main_facts[0].clone()));
+        chapter_focus.insert(key, (title, chosen.first().ok_or_else(fail)?.id.clone()));
     }
     if !descriptions.is_empty() || layout.focus_chapters.len() < bank.chapter_spans.len().min(2)
         || layout.focus_chapters.len() > 3 {
