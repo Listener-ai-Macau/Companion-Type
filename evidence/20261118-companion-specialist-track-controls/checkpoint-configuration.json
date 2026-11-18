@@ -1,0 +1,91 @@
+{
+  "revision": 80,
+  "evidenceDirectory": "evidence/20261118-companion-specialist-track-controls",
+  "sources": [],
+  "closedDirectories": [],
+  "files": [
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\english-medium-manifest.json",
+      "name": "runtime/english-medium-manifest.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\model-acquisition-completed.json",
+      "name": "runtime/model-acquisition-completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\runtime-acquisition.json",
+      "name": "runtime/runtime-acquisition.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-protocol-r1.json",
+      "name": "control/moonshine-english-medium-reference-protocol-r1.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-protocol-r2.json",
+      "name": "control/moonshine-english-medium-reference-protocol-r2.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-worker-cpu-admission-failed-r1.py",
+      "name": "control/moonshine-worker-cpu-admission-failed-r1.py"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\completed.json",
+      "name": "run/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\score.json",
+      "name": "run/score.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\specialist-tracks-20261118.json",
+      "name": "decision/specialist-tracks-20261118.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\paired-far-field-omission-boundaries-20261118.json",
+      "name": "decision/paired-far-field-omission-boundaries-20261118.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\portal-specialist-qa-final-20261118\\result.json",
+      "name": "portal/result.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\portal-specialist-delivery-20261118.json",
+      "name": "portal/portal-specialist-delivery-20261118.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_moonshine_reference_20261118.py",
+      "name": "tools/prepare_moonshine_reference_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\acquire_moonshine_medium_20261118.py",
+      "name": "tools/acquire_moonshine_medium_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\probe_moonshine_medium_20261118.py",
+      "name": "tools/probe_moonshine_medium_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\audit_paired_omission_boundaries_20261118.py",
+      "name": "tools/audit_paired_omission_boundaries_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_specialist_tracks_20261118.py",
+      "name": "tools/record_specialist_tracks_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\check_model_portal_20261117.py",
+      "name": "tools/check_model_portal_20261117.py"
+    }
+  ],
+  "commitMessage": "Preserve Moonshine decision, paired omission diagnostic and Companion model workpoints",
+  "claims": {
+    "state": "SPECIALIST_TRACKS_ADOPTED_MOONSHINE_REJECTED_FACT_GATES_OPEN",
+    "moonshineErrors": 301,
+    "originalWords": 709,
+    "localPortalCommit": "0a894c79d49311437709f0f14c9dc387b12b33cb",
+    "newTrainingUpdates": 0,
+    "installedProductChanged": false,
+    "qualityQualified": false,
+    "saleQualified": false
+  }
+}

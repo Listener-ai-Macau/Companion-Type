@@ -1,0 +1,65 @@
+{
+  "groups": [
+    {
+      "base_url": "https://download.moonshine.ai/model/medium-streaming-en/quantized_26_11_02",
+      "files": [
+        {
+          "name": "adapter.ort",
+          "url": "https://download.moonshine.ai/model/medium-streaming-en/quantized_26_11_02/adapter.ort",
+          "size": 3651256,
+          "checksum": "z/YpJw==",
+          "checksum_type": "crc32c"
+        },
+        {
+          "name": "cross_kv.ort",
+          "url": "https://download.moonshine.ai/model/medium-streaming-en/quantized_26_11_02/cross_kv.ort",
+          "size": 11643720,
+          "checksum": "B8yR7Q==",
+          "checksum_type": "crc32c"
+        },
+        {
+          "name": "decoder_kv.ort",
+          "url": "https://download.moonshine.ai/model/medium-streaming-en/quantized_26_11_02/decoder_kv.ort",
+          "size": 147137432,
+          "checksum": "XHfhHg==",
+          "checksum_type": "crc32c"
+        },
+        {
+          "name": "encoder.ort",
+          "url": "https://download.moonshine.ai/model/medium-streaming-en/quantized_26_11_02/encoder.ort",
+          "size": 94705336,
+          "checksum": "NOcutw==",
+          "checksum_type": "crc32c"
+        },
+        {
+          "name": "frontend.model.ort",
+          "url": "https://download.moonshine.ai/model/medium-streaming-en/quantized_26_11_02/frontend.model.ort",
+          "size": 28768,
+          "checksum": "8DJD0w==",
+          "checksum_type": "crc32c"
+        },
+        {
+          "name": "frontend.weights.ort",
+          "url": "https://download.moonshine.ai/model/medium-streaming-en/quantized_26_11_02/frontend.weights.ort",
+          "size": 11889512,
+          "checksum": "IvbcFg==",
+          "checksum_type": "crc32c"
+        },
+        {
+          "name": "streaming_config.json",
+          "url": "https://download.moonshine.ai/model/medium-streaming-en/quantized_26_11_02/streaming_config.json",
+          "size": 513,
+          "checksum": "+1bE9Q==",
+          "checksum_type": "crc32c"
+        },
+        {
+          "name": "tokenizer.bin",
+          "url": "https://download.moonshine.ai/model/medium-streaming-en/quantized_26_11_02/tokenizer.bin",
+          "size": 249974,
+          "checksum": "B7s10Q==",
+          "checksum_type": "crc32c"
+        }
+      ]
+    }
+  ]
+}

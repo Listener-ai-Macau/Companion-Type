@@ -1,0 +1,136 @@
+{
+  "at": "2026-11-18T08:30:35.003647+08:00",
+  "parent": "3440efcc69c9992289dc419fdd4ebe068bcb0f02",
+  "priorProtectedCommit": "3440efcc69c9992289dc419fdd4ebe068bcb0f02",
+  "entries": [
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\english-medium-manifest.json",
+      "file": "runtime/english-medium-manifest.json",
+      "bytes": 2343,
+      "sha256": "9bf7d4609f4b869aa45aa4023f6b22390ca23b80781f45d880bbb442ef1198ba"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\model-acquisition-completed.json",
+      "file": "runtime/model-acquisition-completed.json",
+      "bytes": 3016,
+      "sha256": "5eab93b432eaee244105eacb451d20635d55d4a2f85b135e3c059a8e3d8851c4"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\runtime-acquisition.json",
+      "file": "runtime/runtime-acquisition.json",
+      "bytes": 544,
+      "sha256": "8d21395935342dc8a28d9c3b5668b4de9aab0e3b5d053d82f4bdcce92f28e391"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-protocol-r1.json",
+      "file": "control/moonshine-english-medium-reference-protocol-r1.json",
+      "bytes": 12741,
+      "sha256": "a4a6da0ba2ce9245bea1047f38b1ede90a28c7b6a9458f573238435563d24391"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-protocol-r2.json",
+      "file": "control/moonshine-english-medium-reference-protocol-r2.json",
+      "bytes": 12741,
+      "sha256": "8a7fda0eb25cff5e5c4670511f6828e4c3825b38137f6eb3e896def286fad39c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-worker-cpu-admission-failed-r1.py",
+      "file": "control/moonshine-worker-cpu-admission-failed-r1.py",
+      "bytes": 9500,
+      "sha256": "b3dab43704080114b744611bfa25f12fce193a6db5d104e3ac4e5a336bd658c1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\completed.json",
+      "file": "run/completed.json",
+      "bytes": 5341,
+      "sha256": "ba3368bfc6dffcf9fa7558fbb64cbdc7faefa281c58ef391f4c67290426ef688"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\score.json",
+      "file": "run/score.json",
+      "bytes": 4643,
+      "sha256": "a6c679026cdb146e50edc3346c45a293117f170e5d03750308660b7410a2bc12"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\specialist-tracks-20261118.json",
+      "file": "decision/specialist-tracks-20261118.json",
+      "bytes": 7746,
+      "sha256": "36ea4d2d3b135b98cca13d04559cbef0fda7b4ebd8cc035d0495884f8e1b4f2a"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\paired-far-field-omission-boundaries-20261118.json",
+      "file": "decision/paired-far-field-omission-boundaries-20261118.json",
+      "bytes": 2178,
+      "sha256": "9f01dc2cee6f1b506afdffe48d148d9d2956d25445e662fd7f51718041ba18f9"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\portal-specialist-qa-final-20261118\\result.json",
+      "file": "portal/result.json",
+      "bytes": 746,
+      "sha256": "4f80542e9d3eb4c5d93e9ad75443f43e4e92392361cc804d4cca7010ed2d4f1c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\portal-specialist-delivery-20261118.json",
+      "file": "portal/portal-specialist-delivery-20261118.json",
+      "bytes": 407,
+      "sha256": "46d5a79aa8b89f79f33e293eeac91f33a793d7bce2a2a8d07e5ee057022eef89"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\prepare_moonshine_reference_20261118.py",
+      "file": "tools/prepare_moonshine_reference_20261118.py",
+      "bytes": 1770,
+      "sha256": "76095864854b24c535845ddb6361a1d46cf24eff753d5d42b57952428899cf0d"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\acquire_moonshine_medium_20261118.py",
+      "file": "tools/acquire_moonshine_medium_20261118.py",
+      "bytes": 3741,
+      "sha256": "f1365818a519387e9cbf82fd7ad28f3db226bcc89415edbca5d68c1c90052516"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\probe_moonshine_medium_20261118.py",
+      "file": "tools/probe_moonshine_medium_20261118.py",
+      "bytes": 9531,
+      "sha256": "9eca9774497d0dc3c1be3e89ad9ea70e6f50b50baacdcdf2ad6f5431c757fea8"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\audit_paired_omission_boundaries_20261118.py",
+      "file": "tools/audit_paired_omission_boundaries_20261118.py",
+      "bytes": 4622,
+      "sha256": "71aa75dee7fb5d5de7c18527b712e6eece0257128335d7ab56bba88df31c59f5"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_specialist_tracks_20261118.py",
+      "file": "tools/record_specialist_tracks_20261118.py",
+      "bytes": 13885,
+      "sha256": "9a9dc0fa28195fbbae7c56df1c193e89a9a9dfc49032e9a9166b5343ae332e65"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\check_model_portal_20261117.py",
+      "file": "tools/check_model_portal_20261117.py",
+      "bytes": 10278,
+      "sha256": "f44f43bd93601b61ff7524cbb9dd9025a594b9a3084702f6e058d305f988111b"
+    },
+    {
+      "source": "work\\checkpoint_specialist_tracks_r80.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 4796,
+      "sha256": "207e1c1a976ee0bcb53410d221425b674197855ef3d9d32d6a4705bdd43ebd03"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4790,
+      "sha256": "348de3c7f52ecb07d2f3b826854525b352d49797b141d5a1dfa05879db2ff522"
+    }
+  ],
+  "sources": {},
+  "state": "SPECIALIST_TRACKS_ADOPTED_MOONSHINE_REJECTED_FACT_GATES_OPEN",
+  "moonshineErrors": 301,
+  "originalWords": 709,
+  "localPortalCommit": "0a894c79d49311437709f0f14c9dc387b12b33cb",
+  "newTrainingUpdates": 0,
+  "installedProductChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}

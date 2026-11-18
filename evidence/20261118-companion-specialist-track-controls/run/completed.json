@@ -1,0 +1,81 @@
+{
+  "state": "PUBLISHER_NATIVE_CPU_REFERENCE_COMPLETE",
+  "at": "2026-11-18T08:17:03+08:00",
+  "pid": 14492,
+  "completed": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\ES2003b-seq-000.json",
+      "sha256": "0340b5b9fdb588352a2ce2f246e32ce54ccc8de6eeda5c28ab5403ab33416adc"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\ES2003b-seq-005.json",
+      "sha256": "646883acd2cd9fdb8998882c84ea32474d38dd7cb385e0f4d72bde6ed9fdd5c1"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\ES2003b-seq-010.json",
+      "sha256": "bb87aefea08da43e13a4a8c324669056eaf79e81c45850ede34ae144b5ede5b7"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\ES2003b-seq-016.json",
+      "sha256": "2cbce417f1ca8e94a64497fedf81abfad9dc1b067917092e047b688c34b2213d"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\ES2003b-seq-021.json",
+      "sha256": "e4ef7891be75e15de7a4debb126fbf1755496792c9d1721e0ca8a52ff37dbe36"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\ES2003b-seq-027.json",
+      "sha256": "1f7ab1e53f9737b87d9e9cb086d3c5800eac4e8507f0f1d920c5b948ca6e027a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\EN2001a-a2-000.json",
+      "sha256": "b3f37e9452fd9b84a7a52af31c8433997f5aeeeb6202660598046ad6dd8e563a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\EN2001a-a2-023.json",
+      "sha256": "cbffa6cb17b9788e70e340aff980f0c52b8f72a047d68c693f8d97bd18ef7cc7"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\EN2001a-a2-046.json",
+      "sha256": "bf989c2134bad74b049b3f3687df39c3dee1aaaa66c65e3adb5a7a3aeaed38e0"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\EN2001a-a2-069.json",
+      "sha256": "8f35ca02c25b72d0040316d549c845d19b6718cff57bca07acd0f895fdeb66dd"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\EN2001a-a2-092.json",
+      "sha256": "20f78981ab46de9e5884135cf0969c7a0f4fa4057c7cc6b66402c4d8e85ef558"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\EN2001a-a2-116.json",
+      "sha256": "8f10a46d72281768ff337e2c80c64d5aef7a9453a98c7cd328184c3f99474e9e"
+    }
+  ],
+  "newInferenceCalls": 13,
+  "trainingUpdates": 0,
+  "observedAt": "2026-11-18T08:17:39+08:00",
+  "limits": {
+    "pid": 14492,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 877899776,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  },
+  "publisherControl": {
+    "text": "It was the best of times, it was the worst of times. It was the age of wisdom, It was the age of foolishness. It was the epoch of belief, It was the epoch of incredulity. It was the season of light. It was the season of darkness. It was the spring of hope, it was the winter of despair. We had everything before us, we had nothing before us. We were all going direct to heaven. We were all going to act the other way. In short, the period was so far like the present period, That some of its noisiest authorities insisted on its being received for good or for evil in the superlative degree of comparison only.",
+    "nonempty": true,
+    "sha256": "f3348494d77cb74a02862f5e685ed09faf3e75832c5cc5c80703282c2cd8b52e"
+  },
+  "activeCase": "EN2001a-a2-116",
+  "seconds": 36.25
+}

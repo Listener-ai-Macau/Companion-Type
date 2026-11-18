@@ -1,0 +1,170 @@
+{
+  "state": "ENGLISH_REFERENCE_SCREEN_FAILED_NO_VARIANT_GRID",
+  "at": "2026-11-18T08:19:56+08:00",
+  "errors": 301,
+  "referenceWords": 709,
+  "wer": 0.4245416078984485,
+  "meetings": {
+    "EN2001a": 193,
+    "ES2003b": 108
+  },
+  "emptyOutputs": 0,
+  "inferenceSeconds": 26.945327299999917,
+  "rtf": 0.10146603765014524,
+  "privatePeakBytes": 877899776,
+  "publisherControl": {
+    "text": "It was the best of times, it was the worst of times. It was the age of wisdom, It was the age of foolishness. It was the epoch of belief, It was the epoch of incredulity. It was the season of light. It was the season of darkness. It was the spring of hope, it was the winter of despair. We had everything before us, we had nothing before us. We were all going direct to heaven. We were all going to act the other way. In short, the period was so far like the present period, That some of its noisiest authorities insisted on its being received for good or for evil in the superlative degree of comparison only.",
+    "nonempty": true,
+    "sha256": "f3348494d77cb74a02862f5e685ed09faf3e75832c5cc5c80703282c2cd8b52e"
+  },
+  "screenPassed": false,
+  "trainingUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "cases": [
+    {
+      "id": "ES2003b-seq-000",
+      "meeting": "ES2003b",
+      "emptyOutput": false,
+      "seconds": 1.455975299999409,
+      "audioSeconds": 12.05,
+      "errors": 9,
+      "referenceUnits": 26,
+      "substitutions": 2,
+      "deletions": 4,
+      "insertions": 3
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "meeting": "ES2003b",
+      "emptyOutput": false,
+      "seconds": 4.187937500000771,
+      "audioSeconds": 29.75,
+      "errors": 27,
+      "referenceUnits": 103,
+      "substitutions": 14,
+      "deletions": 13,
+      "insertions": 0
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "meeting": "ES2003b",
+      "emptyOutput": false,
+      "seconds": 0.9028820999992604,
+      "audioSeconds": 29.72,
+      "errors": 25,
+      "referenceUnits": 31,
+      "substitutions": 3,
+      "deletions": 22,
+      "insertions": 0
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "meeting": "ES2003b",
+      "emptyOutput": false,
+      "seconds": 3.93276220000007,
+      "audioSeconds": 29.58,
+      "errors": 20,
+      "referenceUnits": 75,
+      "substitutions": 12,
+      "deletions": 5,
+      "insertions": 3
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "meeting": "ES2003b",
+      "emptyOutput": false,
+      "seconds": 1.6933418000007805,
+      "audioSeconds": 12.74,
+      "errors": 11,
+      "referenceUnits": 38,
+      "substitutions": 4,
+      "deletions": 7,
+      "insertions": 0
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "meeting": "ES2003b",
+      "emptyOutput": false,
+      "seconds": 1.023900300000605,
+      "audioSeconds": 10.1500625,
+      "errors": 16,
+      "referenceUnits": 17,
+      "substitutions": 12,
+      "deletions": 4,
+      "insertions": 0
+    },
+    {
+      "id": "EN2001a-a2-000",
+      "meeting": "EN2001a",
+      "emptyOutput": false,
+      "seconds": 2.625945399999182,
+      "audioSeconds": 11.71,
+      "errors": 15,
+      "referenceUnits": 28,
+      "substitutions": 8,
+      "deletions": 5,
+      "insertions": 2
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "meeting": "EN2001a",
+      "emptyOutput": false,
+      "seconds": 3.5821605000001,
+      "audioSeconds": 29.72,
+      "errors": 29,
+      "referenceUnits": 107,
+      "substitutions": 16,
+      "deletions": 12,
+      "insertions": 1
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "meeting": "EN2001a",
+      "emptyOutput": false,
+      "seconds": 1.650438299999223,
+      "audioSeconds": 22.67,
+      "errors": 43,
+      "referenceUnits": 66,
+      "substitutions": 13,
+      "deletions": 29,
+      "insertions": 1
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "meeting": "EN2001a",
+      "emptyOutput": false,
+      "seconds": 1.005909800000154,
+      "audioSeconds": 29.75,
+      "errors": 74,
+      "referenceUnits": 87,
+      "substitutions": 6,
+      "deletions": 68,
+      "insertions": 0
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "meeting": "EN2001a",
+      "emptyOutput": false,
+      "seconds": 3.2994443999996292,
+      "audioSeconds": 29.6,
+      "errors": 9,
+      "referenceUnits": 94,
+      "substitutions": 5,
+      "deletions": 4,
+      "insertions": 0
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "meeting": "EN2001a",
+      "emptyOutput": false,
+      "seconds": 1.5846297000007326,
+      "audioSeconds": 18.12,
+      "errors": 23,
+      "referenceUnits": 37,
+      "substitutions": 9,
+      "deletions": 8,
+      "insertions": 6
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "state": "COMPLETE_PINNED_PUBLISHER_MOONSHINE_ENGLISH_MEDIUM",
+  "files": [
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\medium-streaming-en-quantized-26-11-02\\adapter.ort",
+      "bytes": 3651256,
+      "sha256": "cbc25da09b781d3c7e4519fe7e7869d47caa6659e73b7d6f3dcc00613a5947af",
+      "publisherChecksumVerified": true
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\medium-streaming-en-quantized-26-11-02\\cross_kv.ort",
+      "bytes": 11643720,
+      "sha256": "5a93856515ee2ba577ab968f1238a55b84e6d4cc55b005f7d82d618d7b2db0fc",
+      "publisherChecksumVerified": true
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\medium-streaming-en-quantized-26-11-02\\decoder_kv.ort",
+      "bytes": 147137432,
+      "sha256": "83916c35fe11999ab1034cbc840602268b4f054282d4d7e0376ff2e55dcd4810",
+      "publisherChecksumVerified": true
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\medium-streaming-en-quantized-26-11-02\\encoder.ort",
+      "bytes": 94705336,
+      "sha256": "29ceb7c83876b44a2c47200f5f864c602e4a91d80fd8a09b17246b5b64f2341d",
+      "publisherChecksumVerified": true
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\medium-streaming-en-quantized-26-11-02\\frontend.model.ort",
+      "bytes": 28768,
+      "sha256": "70d3b8de94e3b8e3b81b0fbb019e32a67d3eb40a174292e0db2e3536bdd833ba",
+      "publisherChecksumVerified": true
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\medium-streaming-en-quantized-26-11-02\\frontend.weights.ort",
+      "bytes": 11889512,
+      "sha256": "627934b415c8db6f275a14e59ff419436b27279e00bbc8ea30a274973dfc6dec",
+      "publisherChecksumVerified": true
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\medium-streaming-en-quantized-26-11-02\\streaming_config.json",
+      "bytes": 513,
+      "sha256": "28e83b7a28e91472692a035e0dae3116422ae43aeb2bef5ed822c44ce89b88af",
+      "publisherChecksumVerified": true
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\medium-streaming-en-quantized-26-11-02\\tokenizer.bin",
+      "bytes": 249974,
+      "sha256": "6884b35fd6377d4c4d32336a0bc152f36b64d1e45b6503683cdc238250a8472d",
+      "publisherChecksumVerified": true
+    }
+  ],
+  "newInferenceCalls": 0,
+  "at": "2026-11-18T08:14:09+08:00",
+  "checksumWheelSha256": "71734788a88f551fbd6a97be9668a0020698e07b2bf5b3aa26a36c10cdfb27b2",
+  "activeFile": "tokenizer.bin",
+  "receivedBytes": 249974,
+  "modelPath": "E:\\CodexData\\Companion\\.model-cache\\moonshine-voice-0.1.6-reference20261118\\medium-streaming-en-quantized-26-11-02",
+  "modelArch": 5,
+  "downloadSeconds": 15.561999999999898
+}

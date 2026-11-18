@@ -1,0 +1,38 @@
+{
+  "at": "2026-11-18T08:27:45+08:00",
+  "state": "PAIRED_FAR_FIELD_OMISSION_LOCATION_AUDITED",
+  "groupsByNearEditAfterFarDeletion": {
+    "delete": {
+      "words": 42,
+      "withinOneSecondOfClipEdge": 10,
+      "shortTurnAtMostTwoSeconds": 8,
+      "eitherBoundary": 13,
+      "lowestRmsQuartile": 15
+    },
+    "equal": {
+      "words": 27,
+      "withinOneSecondOfClipEdge": 4,
+      "shortTurnAtMostTwoSeconds": 8,
+      "eitherBoundary": 8,
+      "lowestRmsQuartile": 12
+    },
+    "replace": {
+      "words": 3,
+      "withinOneSecondOfClipEdge": 0,
+      "shortTurnAtMostTwoSeconds": 1,
+      "eitherBoundary": 1,
+      "lowestRmsQuartile": 2
+    }
+  },
+  "sources": {
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\sequential-meeting-stageA-r2\\scoring-only.json": "1bd61c8c2b9438a520b0f16879d94d7e320f1a7ea7fec72d74ad7d1047909f83",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\english-acoustic-omission-review20261116.json": "f61f80b45c93234532f45195080543f03693d439dd0d4aae8a6a07731eb63f6a",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\microphone-diagnostic-r1\\gpu-run\\completed.json": "96d3f5ea220082c4e85384d4debb4bca37dfdc62657b93b5ac143284862757c0",
+    "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\microphone-diagnostic-r1\\error-decomposition.json": "6ffb82ced9c00865f458a00aea1efaa112d30dfdb69ac10c2aa672df9c3b4868"
+  },
+  "scope": "Reference midpoint within one second of an original clip edge, or in a contiguous turn of at most two seconds. RMS quartile is based on the earlier unchanged far-field audit.",
+  "limitations": "Two exposed AMI meetings. Word times and Levenshtein alignments are diagnostic. Neither reference boundaries nor mic pairing are proposed as product inputs.",
+  "newInferenceCalls": 0,
+  "trainingUpdates": 0,
+  "qualityQualified": false
+}

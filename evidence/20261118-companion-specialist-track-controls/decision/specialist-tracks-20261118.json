@@ -1,0 +1,104 @@
+{
+  "at": "2026-11-18T08:29:11+08:00",
+  "state": "SPECIALIST_TRACKS_ADOPTED_MOONSHINE_REJECTED_FACT_GATES_OPEN",
+  "ownerOriginal": "如果不值得的，那你就换个方案呗，然后看下那个网页。现在开发进度啊，然后走过的弯路啊，看下我们接下来继续要怎么跑这个东西。应该现在理论上网页上companion 整体的待办应该就只剩下这个语音，就是复杂会议场景识别的模型吧。然后。还有那个现在那个会议纪要的模型，这两个东西，然后专门的模型做专门的事情。",
+  "file": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\specialist-tracks-20261118.json",
+  "handoff": "转写交付原句、稳定片段编号、时间范围、说话人及待确认状态；纪要用同一版本的片段编号引用证据。",
+  "tracks": [
+    {
+      "id": "asr",
+      "title": "复杂会议识别",
+      "status": "英文终稿候选淘汰",
+      "scope": "单麦中英文原音。识别模型负责字词，说话人模型负责时间和身份；先做多人轮流讲话，再加入重叠和噪声。",
+      "result": "Moonshine v2 Medium 官方 Windows CPU 量化版实测 301/709 错（42.45%），峰值私有内存约 837 MiB。原同批 Granite 为 113 错（15.94%）。",
+      "diagnosis": "Moonshine 漏词 181 处。漏词最重的两段合计 97 处，Granite 在这两段合计 10 处。早前同模型的远场、近讲配对为 19.89% 和 11.71%。配对中有 27 个远场漏词由近讲恢复，还有 42 个两路都漏。恢复的 27 词中有 19 词既远离片段边缘，也不属于短发言。",
+      "decision": "结束 Moonshine 这份部署方案和上一份 Parakeet INT8 方案。保留现有交付路径、显著降错的候选和已验证的轻量预处理。",
+      "next": "优先看远场发言中段的漏词。用远场会议数据核对候选对这类漏词的覆盖；先做同源小对照，能恢复词且整批降错才扩大。两路都漏的词单独检查识别模型，中文沿原基线回归。",
+      "gate": "筛选用原12段709词，最多70错且每场达到原门。通过后验独立整会、说话人归属、增量与离线及无独显客户端。中文CER和英文WER分别以5%为底线、2%为目标。",
+      "evidence": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\score.json",
+      "support": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\paired-far-field-omission-boundaries-20261118.json"
+    },
+    {
+      "id": "minutes",
+      "title": "会议纪要",
+      "status": "事实准确性待验证",
+      "scope": "沿现有本地纪要模型，由原句生成事实、决定、行动、负责人、期限及引用。输入先用固定核对文本。",
+      "result": "本地 Qwen 3.5 4B 候选已引用首窗 12 句。把12项都归为决定，错写报价与安装费的包含关系，还漏了重复订单数量。后续原句校验候选停在主题标题格式校验，事实质量待复核。",
+      "diagnosis": "较早版本漏了必需原句，新版本覆盖变全，事实类型和关键信息关系仍出错。引用存在、引用对得上、引用支持结论分别核对。",
+      "decision": "先修从原句抽取与校验事实的环节。通过后由生成模型整理表达，沿用现有本地模型。",
+      "next": "先让格式失败能局部修复，复用已抽取的原句。按固定来源核对事实类型、费用关系、数量、负责人和期限。通过后验独立整会，再接实际转写。",
+      "gate": "关键事实完整、有原文可追溯；错误归类、金额、人员、期限和凭空决定都会退回。通过后再走正常客户端保存和阅读验证。",
+      "evidence": "E:\\CodexData\\Companion\\real-acoustic20261115\\vcsum125\\overnight-content-closure20261116\\native-local-minutes20261118\\scoped-source-clean-native-r1\\engineer-review.json",
+      "support": "E:\\CodexData\\Companion\\real-acoustic20261115\\vcsum125\\overnight-content-closure20261116\\native-local-minutes20261118\\source-authority-clean-native-r1\\completed.json"
+    }
+  ],
+  "scope": {
+    "summary": "当前模型开发集中这两条线。Companion 整机仍有待办，按各自原工作点推进。",
+    "allNonmodelComplete": false,
+    "items": [
+      {
+        "title": "客户端",
+        "status": "进行中",
+        "detail": "格式恢复、含混条目删除路径与实际编辑体验验收。"
+      },
+      {
+        "title": "IMU 手感",
+        "status": "进行中",
+        "detail": "原 CP04-08 平移方向、跟手、停手和实体体验验收；新候选未装。",
+        "task": "CP04-08"
+      },
+      {
+        "title": "电源与生产",
+        "status": "待条件",
+        "detail": "电池采样、充电与录中低电、续航实测，以及生产签名和出厂资格。"
+      }
+    ]
+  },
+  "nativeReference": {
+    "model": "Moonshine v2 Medium · Windows CPU",
+    "errors": 301,
+    "referenceWords": 709,
+    "WER": 0.4245416078984485,
+    "deletions": 181,
+    "worstDeletionCases": [
+      {
+        "id": "EN2001a-a2-069",
+        "words": 87,
+        "moonshineDeletions": 68,
+        "graniteDeletions": 4
+      },
+      {
+        "id": "EN2001a-a2-046",
+        "words": 66,
+        "moonshineDeletions": 29,
+        "graniteDeletions": 6
+      }
+    ],
+    "privatePeakBytes": 877899776,
+    "rtf": 0.10146603765014524,
+    "execution": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\completed.json",
+    "score": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\moonshine-english-medium-reference-r2\\score.json",
+    "sha256": "a6c679026cdb146e50edc3346c45a293117f170e5d03750308660b7410a2bc12",
+    "paper": "https://download.moonshine.ai/docs/moonshine_streaming_paper.pdf",
+    "screenPassed": false
+  },
+  "minutesEvidence": {
+    "prior": "E:\\CodexData\\Companion\\real-acoustic20261115\\vcsum125\\overnight-content-closure20261116\\native-local-minutes20261118\\reasoning-capacity-customer-native-r2\\engineer-review.json",
+    "latestClosed": "E:\\CodexData\\Companion\\real-acoustic20261115\\vcsum125\\overnight-content-closure20261116\\native-local-minutes20261118\\scoped-source-clean-native-r1\\engineer-review.json",
+    "latestNativeRun": "E:\\CodexData\\Companion\\real-acoustic20261115\\vcsum125\\overnight-content-closure20261116\\native-local-minutes20261118\\source-authority-clean-native-r1\\completed.json",
+    "latestNativeState": "native-candidate-failed-retained",
+    "sha256": "8cb897b1dabc5339fcd0e2664a6c0b11237b84d7b3708c95115ff8eed1f0b6de",
+    "verdict": "REJECTED_SCOPED_FACT_BANK_ROLE_COLLAPSE_AND_COST_RELATION",
+    "findingIds": [
+      "all-first-window-facts-decision",
+      "cost-relation-inverted",
+      "lossy-two-duplicate-orders",
+      "coverage-improved-first-window"
+    ]
+  },
+  "newTrainingUpdates": 0,
+  "pairedOmissionBoundaries": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\paired-far-field-omission-boundaries-20261118.json",
+  "installedProductChanged": false,
+  "qualityQualified": false,
+  "saleQualified": false
+}
