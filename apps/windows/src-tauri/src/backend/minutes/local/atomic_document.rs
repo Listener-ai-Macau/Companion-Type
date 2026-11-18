@@ -520,6 +520,8 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     } else {
         &bank.facts.iter().find(|fact| fact.id == purpose_id).ok_or_else(fail)?.text
     };
+    let timed_prediction = |fact: &Fact| matches!(fact.kind, Kind::Forecast)
+        && super::source_authority::timed_forecast(&fact.text);
     let mut assignments=layout.assignments.0;
     let mut topics=layout.topics.0;
     let mut slots:[Vec<(&Fact,bool)>;8]=Default::default();
@@ -529,7 +531,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             Placement::Topic=>{
                 let slot=assignments.remove(&fact.id).ok_or_else(fail)?;
                 let (topic, main) = slot.slot().ok_or_else(fail)?;
-                slots[topic].push((fact, main && !bank.review_quote(&fact.id)));
+                slots[topic].push((fact, (main || timed_prediction(fact)) && !bank.review_quote(&fact.id)));
             }
             Placement::Decision=>decisions.push([&fact.id]),
             Placement::Action=>actions.push([&fact.id]),
@@ -539,8 +541,9 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     if !assignments.is_empty(){return Err(fail());}
     merge_linked_singletons(&mut slots, purpose_id);
     let mut required_chars=0;
-    let important = |fact: &Fact, main: bool| focus.is_some() && main && !bank.review_quote(&fact.id)
-        && super::reader_ranking::operational_evidence(&fact.text).is_some();
+    let important = |fact: &Fact, main: bool| main && !bank.review_quote(&fact.id)
+        && (timed_prediction(fact) || (focus.is_some()
+            && super::reader_ranking::operational_evidence(&fact.text).is_some()));
     for items in &mut slots{
         items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), !*main, !important(fact, *main)));
         required_chars+=items.iter().take(1)

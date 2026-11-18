@@ -34,6 +34,7 @@ pub(super) enum OperationalEvidence {
     ConditionalCost,
     RuledOutBlocker,
     BlockingCondition,
+    TimedForecast,
 }
 
 pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
@@ -53,7 +54,7 @@ pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
         .iter().any(|cue| text.contains(cue)) {
         return Some(OperationalEvidence::BlockingCondition);
     }
-    None
+    super::source_authority::timed_forecast(text).then_some(OperationalEvidence::TimedForecast)
 }
 
 pub(super) struct ReadingInput<'a> {
