@@ -223,7 +223,7 @@ mod tests {
                 assert!(projected.minutes.markdown.contains("建议：第二呢就是说我们应该使用中国牵头的这个标准"));
                 assert!(!projected.minutes.markdown.contains("寿命预测、预测"));
                 let bindings = projected.receipt["layoutBindings"].as_array().unwrap();
-                for id in ["a296", "a316"] {
+                for id in ["a083", "a103", "a296", "a316"] {
                     assert!(bindings.iter().any(|binding| binding[1] == id
                         && binding[0].as_str().unwrap().contains("/points/")), "reader dropped {id}");
                 }

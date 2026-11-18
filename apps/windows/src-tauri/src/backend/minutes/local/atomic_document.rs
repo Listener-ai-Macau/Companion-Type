@@ -362,9 +362,11 @@ fn reader_selection<'a>(rows: &[&'a Fact], requested: &HashSet<&str>, allowed: &
     if primary.is_empty() {
         primary.extend(rows.iter().copied().filter(|fact| requested.contains(fact.id.as_str())));
     }
+    let mut evidence_types = HashSet::new();
     let mut protected: Vec<_> = rows.iter().copied().filter(|fact| allowed.contains(fact.id.as_str())
         && !bank.review_quote(&fact.id) && useful_reader_point(fact)
-        && super::reader_ranking::operational_evidence(&fact.text)).take(2).collect();
+        && super::reader_ranking::operational_evidence(&fact.text).is_some_and(|kind| evidence_types.insert(kind)))
+        .take(2).collect();
     let original = primary.into_iter().filter(|fact| protected.iter().all(|evidence| evidence.id != fact.id));
     let remaining: Vec<_> = original.take(requested.len().saturating_sub(protected.len())).collect();
     protected.extend(remaining);
@@ -500,7 +502,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     merge_linked_singletons(&mut slots, purpose_id);
     let mut required_chars=0;
     let important = |fact: &Fact, main: bool| focus.is_some() && main && !bank.review_quote(&fact.id)
-        && super::reader_ranking::operational_evidence(&fact.text);
+        && super::reader_ranking::operational_evidence(&fact.text).is_some();
     for items in &mut slots{
         items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), !*main, !important(fact, *main)));
         required_chars+=items.iter().take(1)
