@@ -114,9 +114,9 @@ impl CheckedSourcePrefix {
 mod tests {
     use super::*;
 
-    #[test]
-    fn whole_real_meeting_keeps_binding_and_operational_points_without_model_layout() {
-        let Some(path) = std::env::var_os("COMPANION_TEST_EVIDENCE_READER_WHOLE") else { return; };
+    fn reread_verified_whole(
+        path: std::ffi::OsString,
+    ) -> (Value, super::super::super::canonical_brief::local_document::Parsed, f64) {
         let original: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
         let source = std::fs::read_to_string(original["sourceFile"].as_str().unwrap()).unwrap();
         let normalized = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
@@ -134,10 +134,45 @@ mod tests {
         let session = crate::backend::minutes::tests::session_with_text(&normalized);
         let base = crate::backend::minutes::rules_l0_minutes(&session, "review");
         let result = super::super::atomic_document::organize_from_evidence(&bank, &session, &base).unwrap().unwrap();
+        (original, result, started.elapsed().as_secs_f64())
+    }
+
+    #[test]
+    fn public_launch_replay_recovers_the_purpose_direction_and_two_followups() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_PUBLIC_LAUNCH_MINUTES") else { return; };
+        let (original, result, seconds) = reread_verified_whole(path);
+        let receipt = &result.receipt;
+        if let Some(path) = std::env::var_os("COMPANION_TEST_PUBLIC_LAUNCH_REVIEW_OUTPUT") {
+            let file = std::fs::OpenOptions::new().write(true).create_new(true).open(path).unwrap();
+            serde_json::to_writer_pretty(file, &serde_json::json!({
+                "receipt": result.receipt, "minutes": result.minutes, "readerSeconds": seconds,
+                "newInferenceRequests": 0, "contentQualified": false
+            })).unwrap();
+        }
+        assert_eq!(receipt["factSeals"], original["receipt"]["documentReceipt"]["factSeals"]);
+        assert!(receipt["document"]["purpose"].as_str().unwrap().contains("手机"));
+        assert!(receipt["openingAgendaFactId"].is_string());
+        let topics = receipt["document"]["topics"].as_array().unwrap();
+        assert!(topics.iter().flat_map(|topic| topic["points"].as_array().unwrap()).any(|point| {
+            let text = point["text"].as_str().unwrap();
+            text.contains("主推") && text.contains("年轻")
+        }));
+        assert_eq!(result.minutes.action_items.len(), 2);
+        assert_eq!(result.minutes.action_items[0].text, "整理方案");
+        assert_eq!(result.minutes.action_items[0].due, None);
+        assert_eq!(result.minutes.action_items[1].text, "再确定方案");
+        assert_eq!(result.minutes.action_items[1].due.as_deref(), Some("下周二"));
+        assert!(result.minutes.action_items.iter().all(|task| task.owner.is_none()));
+    }
+
+    #[test]
+    fn whole_real_meeting_keeps_binding_and_operational_points_without_model_layout() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_EVIDENCE_READER_WHOLE") else { return; };
+        let (original, result, reader_seconds) = reread_verified_whole(path);
         if let Some(out) = std::env::var_os("COMPANION_TEST_EVIDENCE_READER_WHOLE_OUTPUT") {
             let file = std::fs::OpenOptions::new().write(true).create_new(true).open(out).unwrap();
             serde_json::to_writer_pretty(file, &serde_json::json!({
-                "receipt":result.receipt,"minutes":result.minutes,"readerSeconds":started.elapsed().as_secs_f64(),
+                "receipt":result.receipt,"minutes":result.minutes,"readerSeconds":reader_seconds,
                 "newInferenceRequests":0,"contentQualified":false
             })).unwrap();
         }

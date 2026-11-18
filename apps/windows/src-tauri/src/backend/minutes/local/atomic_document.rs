@@ -353,7 +353,20 @@ fn stated_meeting_agenda(bank: &Bank) -> Option<(&str, &str)> {
             }
         }
     }
-    agenda
+    agenda.or_else(|| introduced_discussion_subject(bank))
+}
+
+fn introduced_discussion_subject(bank: &Bank) -> Option<(&str, &str)> {
+    static SUBJECT: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| regex::Regex::new(
+        r"(?:新出了一款|新推出了一款|新发布了一款|新推出的(?:一款)?)(?:这个|这款)?(?P<name>[\p{Han}A-Za-z0-9]{2,10}?)[嗯呃啊 ]*(?:产品|设备|服务)[嗯呃啊 ]*[，,]"
+    ).expect("valid discussion subject pattern"));
+    bank.topics().take(12).filter(|fact| !bank.review_quote(&fact.id))
+        .filter(|fact| ["研讨会", "讨论会", "这个会", "这次会议"].iter().any(|cue| fact.text.contains(cue)))
+        .find_map(|fact| SUBJECT.captures(&fact.text).and_then(|cap| {
+            let subject = cap.name("name")?.as_str();
+            (!["一个", "那个", "这个"].iter().any(|word| subject.contains(word)))
+                .then_some((subject, fact.id.as_str()))
+        }))
 }
 
 fn heading_terms(title: &str) -> Vec<String> {
@@ -618,8 +631,10 @@ fn evidence_worthy(text: &str) -> bool {
         && !super::chapter_spans::starts_discussion(text)
         && !text.ends_with(['？', '?'])
         && !["下一个问题", "谢谢", "感谢分享", "我想请教"].iter().any(|cue| text.contains(cue))
-        && !["这一块", "这个问题", "的时候", "的一", "一个", "来讲", "这个事情", "一个情况", "一个领域", "不一定是", "比如说那个", "特别多的"]
+        && (!["这一块", "这个问题", "的时候", "的一", "一个", "来讲", "这个事情", "一个情况", "一个领域", "不一定是", "比如说那个", "特别多的"]
             .iter().any(|tail| core.ends_with(tail))
+            || super::reader_ranking::operational_evidence(text)
+                == Some(super::reader_ranking::OperationalEvidence::PriorityChoice))
 }
 
 fn near_duplicate(left: &str, right: &str) -> bool {
