@@ -400,12 +400,15 @@ impl SourceWindows {
                 }
                 accepted.push(fact);
             }
-            if oversized {
+            let rejected = source_quote_origin.is_some() || !unmatched.is_empty() || unsupported_cause;
+            let needs_bounded_original = rejected && policy.literal_topic_role(original).is_none();
+            if oversized || needs_bounded_original {
                 let start = facts.len();
                 facts.extend(original_reading_spans(original).into_iter()
                     .map(|span| ExtractedFact::review_quote(anchor, "status", span)));
-                reviewed.push(json!({"sentenceId":anchor,"factCount":facts.len()-start,
-                    "origin":"oversized-response-original-spans"}));
+                let origin = if oversized { "oversized-response-original-spans" }
+                    else { "rejected-rewrite-original-spans" };
+                reviewed.push(json!({"sentenceId":anchor,"factCount":facts.len()-start,"origin":origin}));
                 continue;
             }
             if unmatched.is_empty() && !unsupported_cause {
@@ -586,6 +589,25 @@ mod tests {
         assert_eq!(checked.facts.iter().map(|fact| fact.text.as_str()).collect::<String>(), source);
         assert!(checked.facts.iter().all(|fact| fact.evidence == ["e0000"] && fact.text.chars().count() <= 90));
         assert!(super::super::atomic_document::build_bank(checked.facts, source).is_ok());
+    }
+
+    #[test]
+    fn rejected_rewrite_of_published_source_preserves_original_topic() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_PUBLISHED_MEETING_REWRITE_FAILURE")
+            else { return; };
+        let report: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        let source = std::fs::read_to_string(report["sourceFile"].as_str().unwrap()).unwrap();
+        let normalized = source.replace("\r\n", "\n");
+        let windows = SourceWindows::new(&normalized).unwrap();
+        let call = &report["receipt"]["calls"][1];
+        assert_eq!(call["stage"], "source-window-2");
+        let checked = windows.check_encoded(1, call["output"].as_str().unwrap(), SourceEncoding::DirectSingleRole).unwrap();
+        let original = text(windows.sentences.iter().find(|sentence| id(sentence) == "e0008").unwrap());
+        let excerpts: Vec<_> = checked.facts.iter().filter(|fact| fact.evidence == ["e0008"]).collect();
+        assert_eq!(excerpts.len(), 2);
+        assert_eq!(excerpts.iter().map(|fact| fact.text.as_str()).collect::<String>().replace(' ', ""),
+            original.trim().replace(' ', ""));
+        assert!(checked.reviewed.iter().any(|row| row["sentenceId"] == "e0008" && row["origin"] == "rejected-rewrite-original-spans"));
     }
 
     #[test]
