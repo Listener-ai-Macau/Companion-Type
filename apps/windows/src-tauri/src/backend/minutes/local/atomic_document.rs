@@ -332,7 +332,7 @@ struct ChapterFocus {
 fn stated_meeting_agenda(bank: &Bank) -> Option<(&str, &str)> {
     let mut agenda = None;
     for fact in bank.topics().filter(|fact| !bank.review_quote(&fact.id)) {
-        for clause in fact.text.split(['。', '！', '；', '，', '、', ',', '\n']) {
+        for clause in fact.text.split(['。', '！', '；', '，', '、', ',', '\n', '嗯', '呃']) {
             let clause = clause.trim();
             let stated = ["本次会议的主题是", "本次会议主题是", "今天会议的主题是"]
                 .into_iter().find_map(|prefix| clause.strip_prefix(prefix))
@@ -373,6 +373,7 @@ fn useful_reader_point(fact: &Fact) -> bool {
         && !["谢谢", "感谢", "下一个问题", "接下来请", "下面请", "的这些", "的这个"]
             .iter().any(|lead| text.starts_with(lead))
         && !["说到这儿", "说到这里", "就是这样，谢谢"].iter().any(|tail| text.contains(tail))
+        && !(text.contains("想请") && ["介绍一下", "请教一下"].iter().any(|cue| text.contains(cue)))
         && !(words <= 32 && text.contains("这一块"))
         && !(words <= 18 && ["第一类", "第二类", "第三类"].iter().any(|label| text.starts_with(label)))
 }

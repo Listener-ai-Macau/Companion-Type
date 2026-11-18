@@ -107,10 +107,14 @@ impl SourceWindows {
         let mut authority: Vec<_> =
             sentences.iter().map(|sentence| Authority::from_source(text(sentence))).collect();
         for (index, pair) in sentences.windows(2).enumerate() {
-            if authority[index].verbatim == Some("forecast")
-                && forecast_continuation(&pair[0], &pair[1]).is_some()
-            {
-                authority[index + 1].context_only = true;
+            if let Some((role, _)) = linked_original(&pair[0], &pair[1]) {
+                if authority[index].allowed.contains(&role)
+                    && !authority[index].context_only
+                    && !authority[index + 1].allowed.iter().any(|role| matches!(*role, "action" | "decision" | "question"))
+                {
+                    authority[index].verbatim = Some(role);
+                    authority[index + 1].context_only = true;
+                }
             }
         }
         Ok(Self { sentences, authority, core })
@@ -231,11 +235,13 @@ impl SourceWindows {
                     "quantity-source-quote"
                 } else {
                     let mut fact = ExtractedFact::verbatim(anchor, role, original);
-                    if role == "forecast" {
-                        if let Some(next) = self.sentences.get(i + 1) {
-                            if let Some(continued) = forecast_continuation(source, next) {
-                                fact.text = continued;
-                                fact.evidence.push(id(next).to_owned());
+                    if let Some(next) = self.sentences.get(i + 1) {
+                        if self.authority[i + 1].context_only {
+                            if let Some((kind, continuation)) = linked_original(source, next) {
+                                if kind == role {
+                                    fact.text = continuation;
+                                    fact.evidence.push(id(next).to_owned());
+                                }
                             }
                         }
                     }
@@ -301,8 +307,13 @@ impl SourceWindows {
             let mut unmatched=Vec::new();
             let mut unsupported_cause = false;
             let mut source_quote_origin = None;
+            let mut oversized = false;
             for mut fact in entries {
                 if !policy.allowed.contains(&fact.role.as_str()){return Err(fail());}
+                if !canonical_brief::line(fact.text.trim(), 90) {
+                    oversized = true;
+                    continue;
+                }
                 if fact.text.trim().trim_end_matches(['。', '.']) == "[无独立内容]" {
                     continue;
                 }
@@ -389,6 +400,14 @@ impl SourceWindows {
                 }
                 accepted.push(fact);
             }
+            if oversized {
+                let start = facts.len();
+                facts.extend(original_reading_spans(original).into_iter()
+                    .map(|span| ExtractedFact::review_quote(anchor, "status", span)));
+                reviewed.push(json!({"sentenceId":anchor,"factCount":facts.len()-start,
+                    "origin":"oversized-response-original-spans"}));
+                continue;
+            }
             if unmatched.is_empty() && !unsupported_cause {
                 let origin = if let Some(reason) = source_quote_origin {
                     let original = text(source);
@@ -425,21 +444,45 @@ impl SourceWindows {
     }
 }
 
-// The explicit follow-on belongs to the same spoken passage. Both sentences
-// retain their original evidence IDs so the joined quotation remains auditable.
-fn forecast_continuation(source: &Value, followup: &Value) -> Option<String> {
-    let first = text(source);
-    let second = text(followup);
-    if source["source"] != followup["source"] || first.contains(['\r', '\n'])
-        || second.trim_start_matches([' ', '\t']).starts_with(['\r', '\n'])
-        || !super::source_authority::timed_forecast(first)
-        || source_grounding::quantity_question(first)
-        || !["那么相应的", "相应的"].iter().any(|prefix| second.trim_start().starts_with(prefix))
-    {
-        return None;
+// Keep explicit continuations attached to the original quote and preserve
+// both evidence IDs. Approval objects may begin in the next audio window.
+fn linked_original(source: &Value, followup: &Value) -> Option<(&'static str, String)> {
+    let first = text(source).trim();
+    let second = text(followup).trim();
+    let forecast = source["source"] == followup["source"]
+        && !text(source).contains(['\r', '\n'])
+        && super::source_authority::timed_forecast(first)
+        && !source_grounding::quantity_question(first)
+        && ["那么相应的", "相应的"].iter().any(|prefix| second.starts_with(prefix));
+    let recipient = first.trim_end_matches(['。', '！', '.']);
+    let approval = ["已经批准了", "已批准了", "已经同意了", "正式批准了"].iter()
+        .any(|verb| recipient.split_once(verb).is_some_and(|(_, object)| {
+            (2..=12).contains(&object.chars().count()) && ["省", "市", "区", "县", "公司", "机构"].iter().any(|suffix| object.ends_with(suffix))
+        }))
+        && ["建设", "设立", "组建", "成立", "建立"].iter().any(|verb| second.starts_with(verb))
+        && !first.contains(['？', '?'])
+        && !second.contains(['？', '?']);
+    let kind = if forecast { "forecast" } else if approval { "status" } else { return None; };
+    let joined = format!("{first}{second}");
+    canonical_brief::line(&joined, 90).then_some((kind, joined))
+}
+
+// A model can ignore the text budget. Retain literal, individually bounded
+// reading spans so one oversized rewrite cannot abort the rest of the meeting.
+fn original_reading_spans(source: &str) -> Vec<&str> {
+    let mut remaining = source.trim();
+    let mut spans = Vec::new();
+    while let Some((boundary, _)) = remaining.char_indices().nth(90) {
+        let split_at = remaining[..boundary].rmatch_indices(['，', '；', '。', '！', '？', '：'])
+            .next().map_or(boundary, |(index, punctuation)| index + punctuation.len());
+        let (excerpt, tail) = remaining.split_at(split_at);
+        spans.push(excerpt.trim());
+        remaining = tail.trim_start();
     }
-    let joined = format!("{}{}", first.trim(), second.trim());
-    canonical_brief::line(&joined, 90).then_some(joined)
+    if !remaining.is_empty() {
+        spans.push(remaining);
+    }
+    spans
 }
 
 fn id(row: &Value) -> &str { row["id"].as_str().expect("source sentence ID") }
@@ -531,6 +574,31 @@ mod tests {
         let broken = SourceWindows::new(broken).unwrap();
         let checked = broken.check_encoded(0, "{}", SourceEncoding::DirectSingleRole).unwrap();
         assert!(checked.facts.iter().all(|fact| fact.role == "status" && fact.evidence.len() == 1));
+    }
+
+    #[test]
+    fn oversized_response_leaves_complete_literal_spans_for_review() {
+        let source = "但是呢作为这台部件的角度，肯定有些人也是啊因为这个固件本身对电子这个产品的特征或者是识点周期的一些特征啊，没有那个理解清楚，导致了一些呃物件导致了一些错误死什的情况，导致了一些失效事情的发生啊，这个也是特别值得我们这个产业界。";
+        let parsed = SourceWindows::new(source).unwrap();
+        let output = json!({"e0000":[{"r":"status","t":source}]});
+        let checked = parsed.check_encoded(0, &output.to_string(), SourceEncoding::DirectSingleRole).unwrap();
+        assert_eq!(checked.reviewed[0]["origin"], "oversized-response-original-spans");
+        assert_eq!(checked.facts.iter().map(|fact| fact.text.as_str()).collect::<String>(), source);
+        assert!(checked.facts.iter().all(|fact| fact.evidence == ["e0000"] && fact.text.chars().count() <= 90));
+        assert!(super::super::atomic_document::build_bank(checked.facts, source).is_ok());
+    }
+
+    #[test]
+    fn approval_keeps_its_object_across_audio_windows() {
+        let source = "咱们广东省走在了非常前面的，就是国标委已经批准了广东省。\n建设粤港澳湾、粤港澳大湾区这个标准研究中心，涉及到大陆、香港、澳门。";
+        let parsed = SourceWindows::new(source).unwrap();
+        let checked = parsed.check_encoded(0, "{}", SourceEncoding::DirectSingleRole).unwrap();
+        assert_eq!(checked.facts.len(), 1);
+        let approval = &checked.facts[0];
+        assert_eq!(approval.evidence, ["e0000", "e0001"]);
+        assert!(approval.text.contains("已经批准") && approval.text.contains("大湾区这个标准研究中心"));
+        assert_eq!(approval.role, "status");
+        assert!(super::super::atomic_document::build_bank(checked.facts, source).is_ok());
     }
 
     #[test]
