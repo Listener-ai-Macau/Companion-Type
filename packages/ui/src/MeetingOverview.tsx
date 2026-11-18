@@ -35,6 +35,7 @@ export function MeetingOverview({markdown,onLocate,onRead}:{markdown:string;onLo
   </button>
  </li>);
  return <section className="meeting-overview" aria-label="会议一览">
+  {model.purpose&&<p className="meeting-overview-purpose">{model.purpose}</p>}
   <div className="meeting-overview-outcomes" aria-label="结论与后续安排">
    <Outcome label="讨论结论" section={model.decisions} icon={<CheckCheck size={16} aria-hidden="true"/>} onLocate={onLocate}/>
    <Outcome label="待确认" section={model.questions} icon={<MessageCircleQuestion size={16} aria-hidden="true"/>} onLocate={onLocate} previewCount={2}/>
@@ -45,7 +46,7 @@ export function MeetingOverview({markdown,onLocate,onRead}:{markdown:string;onLo
    <ol className="meeting-overview-topics" aria-label="选择讨论主题">{topics(model.topics.slice(0,6))}</ol>
    {model.topics.length>6&&<details className="meeting-glance-more"><summary>其余 {model.topics.length-6} 个{model.topicLabel}<ChevronDown size={13} aria-hidden="true"/></summary><ol className="meeting-overview-topics">{topics(model.topics.slice(6),6)}</ol></details>}
    <div className="meeting-overview-detail" ref={detail} id={id} hidden={!current} role="region" aria-label="所选主题的纪要原文" onKeyDown={event=>{if(event.key==='Escape'){event.stopPropagation();close();}}}>
-    {current&&<><div><span>主题 {String(model.topics.indexOf(current)+1).padStart(2,'0')} · 纪要原文</span><button type="button" aria-label="关闭主题原文" onClick={close}><X size={15}/></button></div><p>{current.text}</p><button type="button" onClick={()=>onLocate(current.section,current.text)}>纪要位置<ArrowUpRight size={13} aria-hidden="true"/></button></>}
+    {current&&<><div><span>主题 {String(model.topics.indexOf(current)+1).padStart(2,'0')} · 纪要原文</span><button type="button" aria-label="关闭主题原文" onClick={close}><X size={15}/></button></div><p>{current.text}</p><button type="button" onClick={()=>current.sourceSection?onLocate(current.sourceSection):onLocate(current.section,current.text)}>{current.sourceSection?"查看原话":"纪要位置"}<ArrowUpRight size={13} aria-hidden="true"/></button></>}
    </div>
   </>:<div className="meeting-overview-empty"><BookOpen size={20} aria-hidden="true"/><p>这份纪要还没有主题分组，先看完整内容。</p></div>}
   <button type="button" className="meeting-overview-read" onClick={onRead}><BookOpen size={16} aria-hidden="true"/><span>阅读完整纪要</span><ArrowUpRight size={15} aria-hidden="true"/></button>
