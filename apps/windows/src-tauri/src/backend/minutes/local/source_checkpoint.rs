@@ -145,6 +145,32 @@ mod tests {
             count
         }).sum();
         assert_eq!(total, 325);
+        if let Some(raw_path) = std::env::var_os("COMPANION_TEST_CHAPTER_OUTPUT_RECEIPT") {
+            let result: Value = serde_json::from_slice(&std::fs::read(raw_path).unwrap()).unwrap();
+            assert_eq!(result["sourceSha256"], report["sourceSha256"]);
+            assert_eq!(result["receipt"]["reusedSourceWindows"], 28);
+            let session = crate::backend::minutes::tests::session_with_text(&source);
+            let base = crate::backend::minutes::rules_l0_minutes(&session, "replay");
+            let parsed = super::super::atomic_document::organize(
+                result["receipt"]["output"].as_str().unwrap(), &bank, &session, &base
+            ).unwrap();
+            assert_eq!(parsed.receipt["retainedFactIds"].as_array().unwrap().len(), 325);
+            assert_eq!(parsed.receipt["document"]["topics"].as_array().unwrap().len(), 8);
+            assert!(parsed.receipt["document"]["topics"].as_array().unwrap().iter()
+                .any(|topic| topic["title"] == "检测资源整合与供需矛盾"));
+            let final_points = parsed.receipt["document"]["topics"].as_array().unwrap().iter()
+                .flat_map(|topic| topic["points"].as_array().unwrap());
+            let texts: Vec<_> = final_points.map(|p| p["text"].as_str().unwrap()).collect();
+            assert!(texts.iter().any(|point| point.contains("还是比较难")));
+            assert!(!texts.iter().any(|point| point.contains("说到这儿") || point.starts_with("的这些")));
+            if let Some(path) = std::env::var_os("COMPANION_TEST_CHAPTER_REPLAY_OUTPUT") {
+                let file = std::fs::OpenOptions::new().write(true).create_new(true).open(path).unwrap();
+                serde_json::to_writer_pretty(file, &serde_json::json!({
+                    "state":"ENGINEERING_REPLAY_NOT_PUBLICATION","document":parsed.receipt["document"],
+                    "receipt":parsed.receipt,"minutes":parsed.minutes,"newInferenceRequests":0
+                })).unwrap();
+            }
+        }
     }
 
     #[test]

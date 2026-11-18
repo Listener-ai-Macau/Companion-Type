@@ -145,7 +145,7 @@ pub(in crate::backend::minutes) fn render(doc:&Document,units:&[Unit],speaker:Op
         if let Some(v)=&a.owner{meta.push(format!("owner: {v}"));}if let Some(v)=&a.due{meta.push(format!("due: {v}"));}
         if !meta.is_empty(){md.push_str(&format!(" ({})",meta.join(", ")));}md.push('\n');
     }md.push('\n');}
-    if !doc.questions.is_empty(){md.push_str("## Questions\n\n");for p in &doc.questions{md.push_str(&format!("- {}\n",p.text));}md.push('\n');}
+    if !doc.questions.is_empty(){md.push_str("## Open Questions\n\n");for p in &doc.questions{md.push_str(&format!("- {}\n",p.text));}md.push('\n');}
     if let Some(section)=speaker{md.push_str(section);md.push_str("\n\n");}
     md.push_str("## 主题原话\n\n");
     for topic in &doc.topics {
