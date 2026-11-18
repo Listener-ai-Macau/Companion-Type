@@ -1,0 +1,128 @@
+{
+  "revision": 81,
+  "evidenceDirectory": "evidence/20261118-companion-complex-asr-cpu-granite5",
+  "files": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\complex-asr-continuation-20261118.json",
+      "name": "result/continuation.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\portal-complex-asr-qa-20261118\\result.json",
+      "name": "portal/qa.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\complex-asr-portal-delivery-20261118.json",
+      "name": "portal/version.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\granite-speech-5.0-q4-r1\\acquisition-state.json",
+      "name": "result/verified-assets.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\word-agreement-r1\\protocol.json",
+      "name": "word-agreement-r1/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\word-agreement-r1\\score.json",
+      "name": "word-agreement-r1/score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r1\\protocol.json",
+      "name": "granite5-q4-native-cpu-r1/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r1\\completed.json",
+      "name": "granite5-q4-native-cpu-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r1\\native.log",
+      "name": "granite5-q4-native-cpu-r1/native.log"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r2\\protocol.json",
+      "name": "granite5-q4-native-cpu-r2/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r2\\completed.json",
+      "name": "granite5-q4-native-cpu-r2/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r2\\score.json",
+      "name": "granite5-q4-native-cpu-r2/score.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r2\\residual-comparison.json",
+      "name": "granite5-q4-native-cpu-r2/residual-comparison.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\protocol.json",
+      "name": "granite-turboctc-q8-cpu-r1/protocol.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\completed.json",
+      "name": "granite-turboctc-q8-cpu-r1/completed.json"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\score.json",
+      "name": "granite-turboctc-q8-cpu-r1/score.json"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\evaluate_english_word_agreement_20261118.py",
+      "name": "tools/evaluate_english_word_agreement_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\frozen_english_word_agreement_composer_r1.py",
+      "name": "tools/frozen_english_word_agreement_composer_r1.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\acquire_granite5_cpu_candidate_20261118.py",
+      "name": "tools/acquire_granite5_cpu_candidate_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\frozen_granite5_cpu_probe_r1.py",
+      "name": "tools/frozen_granite5_cpu_probe_r1.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\probe_granite5_cpu_candidate_20261118.py",
+      "name": "tools/probe_granite5_cpu_candidate_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\compare_granite5_residuals_20261118.py",
+      "name": "tools/compare_granite5_residuals_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\probe_granite_turboctc_20261118.py",
+      "name": "tools/probe_granite_turboctc_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_complex_asr_continuation_20261118.py",
+      "name": "tools/record_complex_asr_continuation_20261118.py"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\check_model_portal_20261117.py",
+      "name": "tools/check_model_portal_20261117.py"
+    }
+  ],
+  "sources": [],
+  "closedDirectories": [],
+  "commitMessage": "Protect fixed English word agreement and Granite 5 CPU meeting evidence",
+  "claims": {
+    "state": "GRANITE5_CPU_REFERENCE_IMPROVED_FULL_MEETING_GATE_NOT_MET",
+    "candidate": {
+      "model": "Granite Speech 5.0 Q4 · Windows CPU",
+      "errors": 99,
+      "referenceWords": 709,
+      "WER": 0.13963328631875882
+    },
+    "turboCtc": {
+      "model": "Granite TurboCTC Q8 · Windows CPU",
+      "errors": 125,
+      "referenceWords": 709,
+      "WER": 0.1763046544428773
+    },
+    "newTrainingUpdates": 0,
+    "qualityQualified": false,
+    "saleQualified": false,
+    "localPortalCommit": "4509d10f9e07f803cce837b26278e2fb15dedccc"
+  }
+}

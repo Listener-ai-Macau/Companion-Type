@@ -1,0 +1,13 @@
+warning: no usable GPU found, --gpu-layers option will be ignored
+warning: one possible reason is that llama.cpp was compiled without GPU support
+warning: consult docs/build.md for compilation instructions
+0.00.003.551 I srv  llama_server: initializing ...
+0.00.003.571 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.003.749 I srv  init_listene: The UI is disabled
+0.00.003.752 I srv  init_listene: Use --ui/--no-ui (or deprecated --webui/--no-webui) to enable/disable
+0.00.003.887 W srv  server_setup: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)
+0.00.020.115 I srv    load_model: loading model 'E:\CodexData\Companion\.model-cache\granite-speech-5.0-q4-r1\granite-speech-5.0-2b-Q4_K_M.gguf'
+0.01.885.064 I cmn          init: llama threadpool init, n_threads = 4
+E:\CodexData\Companion\.build-cache\minutes-local\llama-cpp-python-0.3.37\source\llama_cpp_python-0.3.37\vendor\llama.cpp\ggml\src\ggml-backend.cpp:328: GGML_ASSERT(buffer) failed
+0.01.889.827 E ggml_backend_cpu_buffer_type_alloc_buffer: failed to allocate buffer of size 1159320960
+0.01.889.833 E ggml_backend_buft_alloc_buffer_n_default: failed to allocate CPU buffer of size 1159320960

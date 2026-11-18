@@ -1,0 +1,138 @@
+{
+  "at": "2026-11-18T08:49:27+08:00",
+  "errors": 99,
+  "referenceWords": 709,
+  "wer": 0.13963328631875882,
+  "meetings": {
+    "ES2003b": 40,
+    "EN2001a": 59
+  },
+  "cases": [
+    {
+      "errors": 6,
+      "referenceUnits": 26,
+      "deletions": 1,
+      "substitutions": 1,
+      "insertions": 4,
+      "id": "ES2003b-seq-000",
+      "audioSeconds": 12.05,
+      "seconds": 6.327999999997701
+    },
+    {
+      "errors": 4,
+      "referenceUnits": 103,
+      "deletions": 2,
+      "substitutions": 2,
+      "insertions": 0,
+      "id": "ES2003b-seq-005",
+      "audioSeconds": 29.75,
+      "seconds": 15.34400000000096
+    },
+    {
+      "errors": 8,
+      "referenceUnits": 31,
+      "deletions": 5,
+      "substitutions": 3,
+      "insertions": 0,
+      "id": "ES2003b-seq-010",
+      "audioSeconds": 29.72,
+      "seconds": 13.84400000000096
+    },
+    {
+      "errors": 4,
+      "referenceUnits": 75,
+      "deletions": 1,
+      "substitutions": 3,
+      "insertions": 0,
+      "id": "ES2003b-seq-016",
+      "audioSeconds": 29.58,
+      "seconds": 14.467999999997119
+    },
+    {
+      "errors": 6,
+      "referenceUnits": 38,
+      "deletions": 1,
+      "substitutions": 5,
+      "insertions": 0,
+      "id": "ES2003b-seq-021",
+      "audioSeconds": 12.74,
+      "seconds": 6.5
+    },
+    {
+      "errors": 12,
+      "referenceUnits": 17,
+      "deletions": 0,
+      "substitutions": 5,
+      "insertions": 7,
+      "id": "ES2003b-seq-027",
+      "audioSeconds": 10.1500625,
+      "seconds": 5.48399999999674
+    },
+    {
+      "errors": 5,
+      "referenceUnits": 28,
+      "deletions": 3,
+      "substitutions": 2,
+      "insertions": 0,
+      "id": "EN2001a-a2-000",
+      "audioSeconds": 11.71,
+      "seconds": 5.7189999999973224
+    },
+    {
+      "errors": 8,
+      "referenceUnits": 107,
+      "deletions": 4,
+      "substitutions": 3,
+      "insertions": 1,
+      "id": "EN2001a-a2-023",
+      "audioSeconds": 29.72,
+      "seconds": 16.2970000000023
+    },
+    {
+      "errors": 8,
+      "referenceUnits": 66,
+      "deletions": 5,
+      "substitutions": 2,
+      "insertions": 1,
+      "id": "EN2001a-a2-046",
+      "audioSeconds": 22.67,
+      "seconds": 11.484000000000378
+    },
+    {
+      "errors": 11,
+      "referenceUnits": 87,
+      "deletions": 4,
+      "substitutions": 7,
+      "insertions": 0,
+      "id": "EN2001a-a2-069",
+      "audioSeconds": 29.75,
+      "seconds": 15.359000000000378
+    },
+    {
+      "errors": 12,
+      "referenceUnits": 94,
+      "deletions": 5,
+      "substitutions": 7,
+      "insertions": 0,
+      "id": "EN2001a-a2-092",
+      "audioSeconds": 29.6,
+      "seconds": 15.296999999998661
+    },
+    {
+      "errors": 15,
+      "referenceUnits": 37,
+      "deletions": 5,
+      "substitutions": 5,
+      "insertions": 5,
+      "id": "EN2001a-a2-116",
+      "audioSeconds": 18.12,
+      "seconds": 9.06300000000192
+    }
+  ],
+  "rtf": 0.5090637452308721,
+  "privatePeakBytes": 2081857536,
+  "screenPassed": false,
+  "trainingUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false
+}

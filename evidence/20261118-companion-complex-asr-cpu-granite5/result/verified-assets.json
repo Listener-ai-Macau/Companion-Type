@@ -1,0 +1,22 @@
+{
+  "repository": "ibm-granite/granite-speech-5.0-2b-GGUF",
+  "revision": "945b4581e2b40cd9a3121de265fd8e387bdf782d",
+  "expectedBytes": 2298602112,
+  "assets": [
+    {
+      "name": "granite-speech-5.0-2b-Q4_K_M.gguf",
+      "bytes": 1139247360,
+      "sha256": "f5dc61477e08af62377b1d37b7b535e91667326fedefb9cee82f871f3f03df85"
+    },
+    {
+      "name": "mmproj-model-f16.gguf",
+      "bytes": 1159354752,
+      "sha256": "c0d108e1a3cf345b22c411245fc2762319f1c6b6e56bb15bdffe748c9342ca7d"
+    }
+  ],
+  "activeFile": null,
+  "receivedBytes": 1150980096,
+  "activeFileBytes": 1159354752,
+  "state": "READY_PINNED_GGUF_ASSETS",
+  "observedAt": "2026-11-18T08:45:47+08:00"
+}

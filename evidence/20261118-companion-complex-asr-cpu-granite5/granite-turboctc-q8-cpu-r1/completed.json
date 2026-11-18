@@ -1,0 +1,77 @@
+{
+  "state": "COMPLETE_CPU_TURBOCTC",
+  "at": "2026-11-18T08:53:45+08:00",
+  "completed": [
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\ES2003b-seq-000.json",
+      "sha256": "435b8b135c1c3c3828643e5c8b515966f72538f386a8af37090859cd76ecad43"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\ES2003b-seq-005.json",
+      "sha256": "70d5f7f1b2f75acb3b4aeb76e8701c1413d7cdc3d25d7eeb6ecffff4cdfb7c31"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\ES2003b-seq-010.json",
+      "sha256": "23aebdce6af672cd929b420a6dd1e2535beca21a79b4fbf47ad64af1db99616e"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\ES2003b-seq-016.json",
+      "sha256": "c43021442f4f5bf368e83063f7e8490946b0679afadfd6fa331679656ca43b40"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\ES2003b-seq-021.json",
+      "sha256": "2986d829b240a08ee7c522986ab2158ec83da5274d65df5e7a678386f8c79d4a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\ES2003b-seq-027.json",
+      "sha256": "33c21f09734ba948f6d244c92385459fe6776360ab67f21548b20fa2bb214f1f"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\EN2001a-a2-000.json",
+      "sha256": "352ef1e26d498dafc1f85a30263bd301752b79ca307419be20d50d8f7458ac66"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\EN2001a-a2-023.json",
+      "sha256": "db2efbebc2e86e71d38d513cafbbd9dcb3c8bd78587ad2b4b6f81ab1f0cd7b09"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\EN2001a-a2-046.json",
+      "sha256": "f46e083c2a93539e4d1b2edc753b011ad489ecb9ea5574985c192ef2b2c340b4"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\EN2001a-a2-069.json",
+      "sha256": "af6f3f0c464c1de3223ea874feeee58492275de0c359cf48e93973dfdea0ec7a"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\EN2001a-a2-092.json",
+      "sha256": "38cb055c8c657d705936ee23e53eb5cef48441f79e0ebaf5aa7914c09b1c4330"
+    },
+    {
+      "file": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\EN2001a-a2-116.json",
+      "sha256": "b39c8a3bbac689fadfeadc4c35c5f301ef29fe15e5dfe0c1183b20d2e4ae5588"
+    }
+  ],
+  "referenceRead": false,
+  "observedAt": "2026-11-18T08:55:02+08:00",
+  "backend": "CPU",
+  "architecture": "granite_speech5_ctc",
+  "nativeCommit": "275cd50",
+  "activeCase": null,
+  "publisherControlPassed": true,
+  "limits": {
+    "pid": 8736,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 496041984,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

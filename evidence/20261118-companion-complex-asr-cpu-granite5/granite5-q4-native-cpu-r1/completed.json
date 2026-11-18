@@ -1,0 +1,31 @@
+{
+  "state": "GRANITE5_CPU_PROBE_FAILED_RETAINED",
+  "at": "2026-11-18T08:45:50+08:00",
+  "completed": [],
+  "trainingUpdates": 0,
+  "referenceRead": false,
+  "gpuInitialized": false,
+  "protocolSha256": "ce835a4addf57ad242ca5c5f54b95f3320494cdd95f1a485e19cd0823d15745c",
+  "observedAt": "2026-11-18T08:45:55+08:00",
+  "nativePid": 21868,
+  "error": "RuntimeError('Native runtime did not become ready; exit=3221226505')",
+  "resourceMonitor": {
+    "minimumAvailableBytes": 8645345280
+  },
+  "limits": {
+    "pid": 1988,
+    "cpuRate": 2500,
+    "cpuControlFlags": 5,
+    "cpuPercentMaximum": 25.0,
+    "inLimitedJob": true,
+    "jobPrivateCommitLimitBytes": 2147483648,
+    "jobMemoryLimitEnabled": true,
+    "jobPeakPrivateCommitBytes": 2201231360,
+    "cpuPriorityClass": 64,
+    "memoryPagePriority": 1,
+    "memoryPagePriorityIsReclaimHintNotRamCap": true,
+    "gpuPriorityClass": 0,
+    "gpuUtilizationHardCapped": false,
+    "scope": "This worker and its descendants only; no global or other-app changes."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-18T08:55:47+08:00",
+  "state": "GRANITE5_CPU_REFERENCE_IMPROVED_FULL_MEETING_GATE_NOT_MET",
+  "ownerOriginal": "可以啊，那你这边还是要搞回这个复杂会议识别，这个东西还是要你继续做才行，不然我自己做不了。",
+  "agreement": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\word-agreement-r1\\score.json",
+  "granite5": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r2\\score.json",
+  "candidate": {
+    "model": "Granite Speech 5.0 Q4 · Windows CPU",
+    "errors": 99,
+    "referenceWords": 709,
+    "WER": 0.13963328631875882
+  },
+  "turboCtcCandidate": {
+    "model": "Granite TurboCTC Q8 · Windows CPU",
+    "errors": 125,
+    "referenceWords": 709,
+    "WER": 0.1763046544428773
+  },
+  "turboCtcEvidence": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\score.json",
+  "residualComparison": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r2\\residual-comparison.json",
+  "status": "英文短样本降错，整会门槛待达",
+  "result": "相同原音的四路组合由 113 错变为 112 错，英文词错率 15.94% 到 15.80%。筛选未通过。 Granite Speech 5.0 Q4 在 Windows CPU 上为 99/709 错（13.96%），RTF 0.509，峰值私有内存 1985 MiB。首次加载触及内存限额。按原上限关闭权重重排后，12 段全部完成。直接语音解码版 TurboCTC 为 125/709 错（17.63%），RTF 0.062，峰值私有内存 473 MiB。两场分别 36 和 89 错。",
+  "diagnosis": "Granite 漏掉的 71 个词位中，有 33 个存在至少两路正确识别。按固定词级规则实际补回 5 个，四路在 46 个参考词位均有错。逐词对齐在重复词附近可能有歧义。 Granite 5.0 补回原四路共同错误中的 4 个词位，还有 42 个共同错误词位未解决。",
+  "decision": "停止四路组合，保留 Granite Speech 5.0 为目前英文短样本准确率对照。 TurboCTC 保留为轻量速度对照，质量差距先在两场之间核对。",
+  "next": "冻结词位残差，优先验证能否减少新引入的替换和多写，同时保护已有漏词收益。用明确类别和会议隔离决定是否做一次有界远场适配。",
+  "scope": "固定的12段英文非重叠远场原音，共709词。中文、说话人和最终留出验收沿原条件。",
+  "firstNativeAttempt": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r1\\completed.json",
+  "newTrainingUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false
+}

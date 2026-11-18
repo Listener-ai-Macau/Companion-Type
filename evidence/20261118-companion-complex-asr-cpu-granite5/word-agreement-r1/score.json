@@ -1,0 +1,390 @@
+{
+  "at": "2026-11-18T08:37:14+08:00",
+  "state": "WORD_AGREEMENT_REJECT_FIXED_SCHEME",
+  "totals": {
+    "Granite": {
+      "errors": 113,
+      "substitutions": 34,
+      "deletions": 71,
+      "insertions": 8,
+      "referenceUnits": 709,
+      "WER": 0.15937940761636107
+    },
+    "Parakeet": {
+      "errors": 123,
+      "substitutions": 56,
+      "deletions": 46,
+      "insertions": 21,
+      "referenceUnits": 709,
+      "WER": 0.17348377997179126
+    },
+    "MOSS": {
+      "errors": 124,
+      "substitutions": 68,
+      "deletions": 22,
+      "insertions": 34,
+      "referenceUnits": 709,
+      "WER": 0.17489421720733428
+    },
+    "Qwen": {
+      "errors": 141,
+      "substitutions": 54,
+      "deletions": 72,
+      "insertions": 15,
+      "referenceUnits": 709,
+      "WER": 0.19887165021156558
+    },
+    "agreement": {
+      "errors": 112,
+      "substitutions": 37,
+      "deletions": 66,
+      "insertions": 9,
+      "referenceUnits": 709,
+      "WER": 0.15796897038081806
+    }
+  },
+  "meetingErrors": {
+    "EN2001a": {
+      "Granite": 67,
+      "Parakeet": 71,
+      "MOSS": 73,
+      "Qwen": 81,
+      "agreement": 66
+    },
+    "ES2003b": {
+      "Granite": 46,
+      "Parakeet": 52,
+      "MOSS": 51,
+      "Qwen": 60,
+      "agreement": 46
+    }
+  },
+  "diagnostics": {
+    "referenceWords": 709,
+    "graniteDeletions": 71,
+    "graniteDeletedButExactInOneAlternate": 45,
+    "graniteDeletedButExactInTwoAlternates": 33,
+    "allFourIncorrectAtSameReferencePosition": 46,
+    "graniteDeletedAndFusedExact": 5,
+    "newlyIncorrectGraniteExactPositions": 9
+  },
+  "diagnosticsByMeeting": {
+    "EN2001a": {
+      "referenceWords": 419,
+      "graniteDeletions": 41,
+      "graniteDeletedButExactInOneAlternate": 28,
+      "graniteDeletedButExactInTwoAlternates": 19,
+      "allFourIncorrectAtSameReferencePosition": 28,
+      "graniteDeletedAndFusedExact": 5,
+      "newlyIncorrectGraniteExactPositions": 7
+    },
+    "ES2003b": {
+      "referenceWords": 290,
+      "graniteDeletions": 30,
+      "graniteDeletedButExactInOneAlternate": 17,
+      "graniteDeletedButExactInTwoAlternates": 14,
+      "allFourIncorrectAtSameReferencePosition": 18,
+      "graniteDeletedAndFusedExact": 0,
+      "newlyIncorrectGraniteExactPositions": 2
+    }
+  },
+  "cases": [
+    {
+      "id": "EN2001a-a2-000",
+      "meeting": "EN2001a",
+      "appliedEdits": 0,
+      "granite": {
+        "errors": 5,
+        "substitutions": 1,
+        "deletions": 4,
+        "insertions": 0
+      },
+      "agreement": {
+        "errors": 5,
+        "substitutions": 1,
+        "deletions": 4,
+        "insertions": 0
+      },
+      "referenceWords": 28,
+      "graniteDeletions": 4,
+      "graniteDeletedButExactInOneAlternate": 2,
+      "graniteDeletedButExactInTwoAlternates": 2,
+      "allFourIncorrectAtSameReferencePosition": 3,
+      "graniteDeletedAndFusedExact": 0,
+      "newlyIncorrectGraniteExactPositions": 0
+    },
+    {
+      "id": "EN2001a-a2-023",
+      "meeting": "EN2001a",
+      "appliedEdits": 2,
+      "granite": {
+        "errors": 9,
+        "substitutions": 4,
+        "deletions": 4,
+        "insertions": 1
+      },
+      "agreement": {
+        "errors": 10,
+        "substitutions": 5,
+        "deletions": 4,
+        "insertions": 1
+      },
+      "referenceWords": 107,
+      "graniteDeletions": 4,
+      "graniteDeletedButExactInOneAlternate": 3,
+      "graniteDeletedButExactInTwoAlternates": 0,
+      "allFourIncorrectAtSameReferencePosition": 3,
+      "graniteDeletedAndFusedExact": 0,
+      "newlyIncorrectGraniteExactPositions": 2
+    },
+    {
+      "id": "EN2001a-a2-046",
+      "meeting": "EN2001a",
+      "appliedEdits": 3,
+      "granite": {
+        "errors": 10,
+        "substitutions": 2,
+        "deletions": 6,
+        "insertions": 2
+      },
+      "agreement": {
+        "errors": 7,
+        "substitutions": 2,
+        "deletions": 3,
+        "insertions": 2
+      },
+      "referenceWords": 66,
+      "graniteDeletions": 6,
+      "graniteDeletedButExactInOneAlternate": 3,
+      "graniteDeletedButExactInTwoAlternates": 3,
+      "allFourIncorrectAtSameReferencePosition": 5,
+      "graniteDeletedAndFusedExact": 3,
+      "newlyIncorrectGraniteExactPositions": 0
+    },
+    {
+      "id": "EN2001a-a2-069",
+      "meeting": "EN2001a",
+      "appliedEdits": 2,
+      "granite": {
+        "errors": 13,
+        "substitutions": 9,
+        "deletions": 4,
+        "insertions": 0
+      },
+      "agreement": {
+        "errors": 13,
+        "substitutions": 9,
+        "deletions": 4,
+        "insertions": 0
+      },
+      "referenceWords": 87,
+      "graniteDeletions": 4,
+      "graniteDeletedButExactInOneAlternate": 3,
+      "graniteDeletedButExactInTwoAlternates": 0,
+      "allFourIncorrectAtSameReferencePosition": 7,
+      "graniteDeletedAndFusedExact": 0,
+      "newlyIncorrectGraniteExactPositions": 1
+    },
+    {
+      "id": "EN2001a-a2-092",
+      "meeting": "EN2001a",
+      "appliedEdits": 5,
+      "granite": {
+        "errors": 9,
+        "substitutions": 6,
+        "deletions": 3,
+        "insertions": 0
+      },
+      "agreement": {
+        "errors": 8,
+        "substitutions": 7,
+        "deletions": 1,
+        "insertions": 0
+      },
+      "referenceWords": 94,
+      "graniteDeletions": 3,
+      "graniteDeletedButExactInOneAlternate": 2,
+      "graniteDeletedButExactInTwoAlternates": 2,
+      "allFourIncorrectAtSameReferencePosition": 4,
+      "graniteDeletedAndFusedExact": 2,
+      "newlyIncorrectGraniteExactPositions": 2
+    },
+    {
+      "id": "EN2001a-a2-116",
+      "meeting": "EN2001a",
+      "appliedEdits": 1,
+      "granite": {
+        "errors": 21,
+        "substitutions": 1,
+        "deletions": 20,
+        "insertions": 0
+      },
+      "agreement": {
+        "errors": 23,
+        "substitutions": 3,
+        "deletions": 20,
+        "insertions": 0
+      },
+      "referenceWords": 37,
+      "graniteDeletions": 20,
+      "graniteDeletedButExactInOneAlternate": 15,
+      "graniteDeletedButExactInTwoAlternates": 12,
+      "allFourIncorrectAtSameReferencePosition": 6,
+      "graniteDeletedAndFusedExact": 0,
+      "newlyIncorrectGraniteExactPositions": 2
+    },
+    {
+      "id": "ES2003b-seq-000",
+      "meeting": "ES2003b",
+      "appliedEdits": 0,
+      "granite": {
+        "errors": 7,
+        "substitutions": 1,
+        "deletions": 1,
+        "insertions": 5
+      },
+      "agreement": {
+        "errors": 7,
+        "substitutions": 1,
+        "deletions": 1,
+        "insertions": 5
+      },
+      "referenceWords": 26,
+      "graniteDeletions": 1,
+      "graniteDeletedButExactInOneAlternate": 0,
+      "graniteDeletedButExactInTwoAlternates": 0,
+      "allFourIncorrectAtSameReferencePosition": 2,
+      "graniteDeletedAndFusedExact": 0,
+      "newlyIncorrectGraniteExactPositions": 0
+    },
+    {
+      "id": "ES2003b-seq-005",
+      "meeting": "ES2003b",
+      "appliedEdits": 0,
+      "granite": {
+        "errors": 4,
+        "substitutions": 2,
+        "deletions": 2,
+        "insertions": 0
+      },
+      "agreement": {
+        "errors": 4,
+        "substitutions": 2,
+        "deletions": 2,
+        "insertions": 0
+      },
+      "referenceWords": 103,
+      "graniteDeletions": 2,
+      "graniteDeletedButExactInOneAlternate": 1,
+      "graniteDeletedButExactInTwoAlternates": 0,
+      "allFourIncorrectAtSameReferencePosition": 2,
+      "graniteDeletedAndFusedExact": 0,
+      "newlyIncorrectGraniteExactPositions": 0
+    },
+    {
+      "id": "ES2003b-seq-010",
+      "meeting": "ES2003b",
+      "appliedEdits": 3,
+      "granite": {
+        "errors": 9,
+        "substitutions": 4,
+        "deletions": 5,
+        "insertions": 0
+      },
+      "agreement": {
+        "errors": 10,
+        "substitutions": 4,
+        "deletions": 5,
+        "insertions": 1
+      },
+      "referenceWords": 31,
+      "graniteDeletions": 5,
+      "graniteDeletedButExactInOneAlternate": 0,
+      "graniteDeletedButExactInTwoAlternates": 0,
+      "allFourIncorrectAtSameReferencePosition": 7,
+      "graniteDeletedAndFusedExact": 0,
+      "newlyIncorrectGraniteExactPositions": 1
+    },
+    {
+      "id": "ES2003b-seq-016",
+      "meeting": "ES2003b",
+      "appliedEdits": 3,
+      "granite": {
+        "errors": 4,
+        "substitutions": 2,
+        "deletions": 2,
+        "insertions": 0
+      },
+      "agreement": {
+        "errors": 4,
+        "substitutions": 2,
+        "deletions": 2,
+        "insertions": 0
+      },
+      "referenceWords": 75,
+      "graniteDeletions": 2,
+      "graniteDeletedButExactInOneAlternate": 1,
+      "graniteDeletedButExactInTwoAlternates": 1,
+      "allFourIncorrectAtSameReferencePosition": 2,
+      "graniteDeletedAndFusedExact": 0,
+      "newlyIncorrectGraniteExactPositions": 1
+    },
+    {
+      "id": "ES2003b-seq-021",
+      "meeting": "ES2003b",
+      "appliedEdits": 1,
+      "granite": {
+        "errors": 10,
+        "substitutions": 2,
+        "deletions": 8,
+        "insertions": 0
+      },
+      "agreement": {
+        "errors": 9,
+        "substitutions": 1,
+        "deletions": 8,
+        "insertions": 0
+      },
+      "referenceWords": 38,
+      "graniteDeletions": 8,
+      "graniteDeletedButExactInOneAlternate": 6,
+      "graniteDeletedButExactInTwoAlternates": 4,
+      "allFourIncorrectAtSameReferencePosition": 2,
+      "graniteDeletedAndFusedExact": 0,
+      "newlyIncorrectGraniteExactPositions": 0
+    },
+    {
+      "id": "ES2003b-seq-027",
+      "meeting": "ES2003b",
+      "appliedEdits": 0,
+      "granite": {
+        "errors": 12,
+        "substitutions": 0,
+        "deletions": 12,
+        "insertions": 0
+      },
+      "agreement": {
+        "errors": 12,
+        "substitutions": 0,
+        "deletions": 12,
+        "insertions": 0
+      },
+      "referenceWords": 17,
+      "graniteDeletions": 12,
+      "graniteDeletedButExactInOneAlternate": 9,
+      "graniteDeletedButExactInTwoAlternates": 9,
+      "allFourIncorrectAtSameReferencePosition": 3,
+      "graniteDeletedAndFusedExact": 0,
+      "newlyIncorrectGraniteExactPositions": 0
+    }
+  ],
+  "sourceSha256": "ca06d8d4eb116fd66457be3b1a22cb8b7f3d9dd3623b6659a1bd7dd779476a30",
+  "hypothesesSha256": "5cdca346fef07f46ef58771f081bc4ec78d866b121ae48a3819fab3b3164196f",
+  "referenceSha256": "1bd61c8c2b9438a520b0f16879d94d7e320f1a7ea7fec72d74ad7d1047909f83",
+  "scope": "Aligned public reference positions are diagnostic. Edit alignments can differ for repeated words. Evidence does not measure full meetings, streaming, speaker attribution or product latency.",
+  "advanceToWholeMeetings": false,
+  "newInferenceCalls": 0,
+  "trainingUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false
+}

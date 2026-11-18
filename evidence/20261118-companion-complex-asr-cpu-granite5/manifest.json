@@ -1,0 +1,187 @@
+{
+  "at": "2026-11-18T08:56:48.949685+08:00",
+  "parent": "9d081c257cf04650bb8cf8feaa53f16ea479b5ef",
+  "priorProtectedCommit": "9d081c257cf04650bb8cf8feaa53f16ea479b5ef",
+  "entries": [
+    {
+      "source": "C:\\Users\\Billy\\Desktop\\Denzic\\Companion\\docs\\handoffs\\20261109-paired-real-meeting\\bilingual-local20261114\\d1d2-execution\\joint-architecture-r1\\complex-asr-continuation-20261118.json",
+      "file": "result/continuation.json",
+      "bytes": 3070,
+      "sha256": "9ae81f1a9071c9e2199547479574b1a6a5c6f61eeffbbd8b956a82ad12bcf916"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\portal-complex-asr-qa-20261118\\result.json",
+      "file": "portal/qa.json",
+      "bytes": 746,
+      "sha256": "2c36848c28ca4831c55511e85efcd4ed0d949e2ca87c95f681cbff68be63c520"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\complex-asr-portal-delivery-20261118.json",
+      "file": "portal/version.json",
+      "bytes": 360,
+      "sha256": "eb0f670805c97db7c682cb65f3c41fe76ae0dcfe6dfb4493eb9ad00fb8981762"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\.model-cache\\granite-speech-5.0-q4-r1\\acquisition-state.json",
+      "file": "result/verified-assets.json",
+      "bytes": 674,
+      "sha256": "5e0b1a0b8482bbce3711147d925b94cef15a34fb7484da89ae4e3f9b78bac851"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\word-agreement-r1\\protocol.json",
+      "file": "word-agreement-r1/protocol.json",
+      "bytes": 1387,
+      "sha256": "825b4c506ff4cfd0c425b44dd44f60656382f958770d97fc5ef43b7aa60b8998"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\word-agreement-r1\\score.json",
+      "file": "word-agreement-r1/score.json",
+      "bytes": 11030,
+      "sha256": "23f65fef5d29763cb5b0c837b2dc2237deaa2a553ce4fc4eb22ab19fcbf56efd"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r1\\protocol.json",
+      "file": "granite5-q4-native-cpu-r1/protocol.json",
+      "bytes": 13609,
+      "sha256": "ce835a4addf57ad242ca5c5f54b95f3320494cdd95f1a485e19cd0823d15745c"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r1\\completed.json",
+      "file": "granite5-q4-native-cpu-r1/completed.json",
+      "bytes": 1019,
+      "sha256": "9384fa6e2e197a92074fe99f18ec0697431da4e07f389c2e97f56c62b216d455"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r1\\native.log",
+      "file": "granite5-q4-native-cpu-r1/native.log",
+      "bytes": 1285,
+      "sha256": "96805076be09011eaf1746bc8010a8ddf087e4f24e351b2c93674d8d364ac084"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r2\\protocol.json",
+      "file": "granite5-q4-native-cpu-r2/protocol.json",
+      "bytes": 13638,
+      "sha256": "c5ff7eaecd0bb8ea58d8aff653f58dd4c9ba2d904e6eabc7f3fb34516ba392b9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r2\\completed.json",
+      "file": "granite5-q4-native-cpu-r2/completed.json",
+      "bytes": 4658,
+      "sha256": "6a4e006a3b1ab083f786832dffd576f7013d9e02478a19ae0afb6a97a1b82631"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r2\\score.json",
+      "file": "granite5-q4-native-cpu-r2/score.json",
+      "bytes": 3057,
+      "sha256": "ba8c2fce2dc71141f0f9f5f210178a2a00928510ec269748bbe172db8e5027c9"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite5-q4-native-cpu-r2\\residual-comparison.json",
+      "file": "granite5-q4-native-cpu-r2/residual-comparison.json",
+      "bytes": 701,
+      "sha256": "42b10e65538247f4db892fe408c791818141d72320a48f9dce3d1b061c4da0f1"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\protocol.json",
+      "file": "granite-turboctc-q8-cpu-r1/protocol.json",
+      "bytes": 6002,
+      "sha256": "ab59d2f9fad953c92f21329bc3a6508c9d71d09c208c8c6970b8f5cb15c89c8e"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\completed.json",
+      "file": "granite-turboctc-q8-cpu-r1/completed.json",
+      "bytes": 4483,
+      "sha256": "14c60a37707a38e020bd36d50e5df2c3ad983696fe6e3e3ebbe074248058fc94"
+    },
+    {
+      "source": "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\granite-turboctc-q8-cpu-r1\\score.json",
+      "file": "granite-turboctc-q8-cpu-r1/score.json",
+      "bytes": 3071,
+      "sha256": "d7264320ba14ff4f7a800576433fa7ad4c099a7d84f7731b5d37fd77eb58c543"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\evaluate_english_word_agreement_20261118.py",
+      "file": "tools/evaluate_english_word_agreement_20261118.py",
+      "bytes": 11315,
+      "sha256": "ca06d8d4eb116fd66457be3b1a22cb8b7f3d9dd3623b6659a1bd7dd779476a30"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\frozen_english_word_agreement_composer_r1.py",
+      "file": "tools/frozen_english_word_agreement_composer_r1.py",
+      "bytes": 10991,
+      "sha256": "eb2a15f9ade6e6fd9f4eb906d35679c44991d545459b83bec8fd1d3f697355a2"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\acquire_granite5_cpu_candidate_20261118.py",
+      "file": "tools/acquire_granite5_cpu_candidate_20261118.py",
+      "bytes": 3736,
+      "sha256": "0eb5b59cf5380b129bb93a253a1af2ffc0651793f423aa49a948d886270a5c6c"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\frozen_granite5_cpu_probe_r1.py",
+      "file": "tools/frozen_granite5_cpu_probe_r1.py",
+      "bytes": 14138,
+      "sha256": "357c3a1d0b70cc825f78f78adc0b7bc7afeacf32b4be50a001914567f596ba23"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\probe_granite5_cpu_candidate_20261118.py",
+      "file": "tools/probe_granite5_cpu_candidate_20261118.py",
+      "bytes": 14213,
+      "sha256": "8de387d171a711802a27d794e30299f5e289349ccc040f6d21ae588363896b96"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\compare_granite5_residuals_20261118.py",
+      "file": "tools/compare_granite5_residuals_20261118.py",
+      "bytes": 3381,
+      "sha256": "fda054088724fd543f0f212bcc5ed2655e3912c202652b808d85ddb7991cef96"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\probe_granite_turboctc_20261118.py",
+      "file": "tools/probe_granite_turboctc_20261118.py",
+      "bytes": 7960,
+      "sha256": "f51af75b4b1bdd74118c2cdced68509e7c0264edf881fda84348003468e2f0ad"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\record_complex_asr_continuation_20261118.py",
+      "file": "tools/record_complex_asr_continuation_20261118.py",
+      "bytes": 10891,
+      "sha256": "916e941178636d7c07210b4f1a8a6987e5cab9b658a27ae7b3daef50a7db8221"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\check_model_portal_20261117.py",
+      "file": "tools/check_model_portal_20261117.py",
+      "bytes": 10885,
+      "sha256": "b8a136862c6f085ea79b2d50c351e2627d5963518973b16cc6d53712add81f7f"
+    },
+    {
+      "source": "work\\checkpoint_complex_asr_r81.json",
+      "file": "checkpoint-configuration.json",
+      "bytes": 6687,
+      "sha256": "c079594c11264504e8e14c7e014c4f65ef324694d3dc4704a832cd187e28ecce"
+    },
+    {
+      "source": "C:\\Users\\Billy\\Documents\\Codex\\2026-11-14\\xu-y\\work\\protect_cpu_day_checkpoint_20261116.py",
+      "file": "checkpoint-preparation.py",
+      "bytes": 4790,
+      "sha256": "348de3c7f52ecb07d2f3b826854525b352d49797b141d5a1dfa05879db2ff522"
+    }
+  ],
+  "sources": {},
+  "state": "GRANITE5_CPU_REFERENCE_IMPROVED_FULL_MEETING_GATE_NOT_MET",
+  "candidate": {
+    "model": "Granite Speech 5.0 Q4 · Windows CPU",
+    "errors": 99,
+    "referenceWords": 709,
+    "WER": 0.13963328631875882
+  },
+  "turboCtc": {
+    "model": "Granite TurboCTC Q8 · Windows CPU",
+    "errors": 125,
+    "referenceWords": 709,
+    "WER": 0.1763046544428773
+  },
+  "newTrainingUpdates": 0,
+  "qualityQualified": false,
+  "saleQualified": false,
+  "localPortalCommit": "4509d10f9e07f803cce837b26278e2fb15dedccc"
+}

@@ -1,0 +1,17 @@
+{
+  "inputStateDigests": {
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\language-specific-adaptation-r1\\english-accuracy-reference-20261117\\native-gpu-r1\\completed.json": "d4066b225fd2dd9bf947b4019368f7435c1fa3100faaa26a8af295d2f5273452",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\english-transducer-r1\\run-r1\\completed.json": "796eb714bf4089fc20b0c74015351e4e877ada774162170551e38949bfe89c52",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\joint-architecture-r1\\stagea-cpu-composition-r2\\inference-state.json": "ba2f53431f04aa715c344c609d70c171690dbc8cc0baea4fc7a03e30c0619479",
+    "E:\\CodexData\\Companion\\product-d1d2-20261114\\sequential-meeting-stageA-r2\\asr-r2\\baseline-state.json": "8cb32df1aee84dfafa962259ed9292fe7d67cbb1db45e25607d5844def195a57"
+  },
+  "sourceDigest": "eb2a15f9ade6e6fd9f4eb906d35679c44991d545459b83bec8fd1d3f697355a2",
+  "rule": "An insertion or substitution in Granite requires two decoders to propose the identical span with equal immediately adjacent words on both sides. Conflicting proposals stay with Granite. No standalone deletion.",
+  "cohort": "Original fixed 12 English non-overlap clips, unchanged raw PCM",
+  "maximumTotalErrors": 70,
+  "maximumMeetingErrors": {
+    "ES2003b": 46,
+    "EN2001a": 67
+  },
+  "referenceReadByComposer": false
+}
