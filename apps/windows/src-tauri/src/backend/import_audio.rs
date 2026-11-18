@@ -2,7 +2,7 @@
 //! The selected original is never modified; the caller owns its preserved copy.
 use std::{fs::{self,File,OpenOptions}, io::{ErrorKind,Read,Seek,SeekFrom,Write}, path::{Path,PathBuf}, sync::atomic::{AtomicBool,Ordering}};
 use sha2::{Digest,Sha256};
-use symphonia::core::{audio::SampleBuffer, codecs::DecoderOptions, errors::Error,
+use symphonia::core::{audio::{AudioBufferRef, SampleBuffer, Signal}, codecs::DecoderOptions, errors::Error,
     formats::FormatOptions, io::MediaSourceStream, meta::MetadataOptions, probe::Hint};
 use super::{audio_artifacts::{self, Purpose, WriteLease}, host_recording::RatioResampler,
     host_segmented_capture::{HostAudioPart, RollingHostWav}};
@@ -118,8 +118,17 @@ pub(super) fn decode_to_speech_wav(input:&Path,anchor:&Path)->Result<Vec<HostAud
             if converter.is_none() { converter=Some(SpeechConverter::new(spec.rate,channels)?); }
             let c=converter.as_mut().expect("converter initialized");
             if c.rate!=spec.rate||c.channels!=channels {return Err("音频中途改变采样格式，暂无法完整导入。原文件未改变。".into());}
-            let mut buf=SampleBuffer::<f32>::new(audio.capacity() as u64,spec);buf.copy_interleaved_ref(audio);
-            let pcm=c.process(buf.samples());samples_written=samples_written.checked_add(pcm.len() as u64).ok_or("音频时长无效。")?;
+            let pcm = match audio {
+                // The decoder already returned the target speech format. A
+                // float round trip modifies negative PCM16 values.
+                AudioBufferRef::S16(samples) if spec.rate == 16000 && channels == 1 => samples.chan(0).to_vec(),
+                audio => {
+                    let mut buf = SampleBuffer::<f32>::new(audio.capacity() as u64, spec);
+                    buf.copy_interleaved_ref(audio);
+                    c.process(buf.samples())
+                }
+            };
+            samples_written=samples_written.checked_add(pcm.len() as u64).ok_or("音频时长无效。")?;
             writer.append_bulk(&pcm,|next| {
                 let lease=WriteLease::begin(next,next,Purpose::Recording).map_err(std::io::Error::other)?;
                 audio_artifacts::attach_group(next,anchor).map_err(std::io::Error::other)?;
@@ -341,10 +350,11 @@ mod tests {
         let dir=std::env::temp_dir().join(format!("companion-import-{}",uuid::Uuid::new_v4()));std::fs::create_dir(&dir).unwrap();
         let src=dir.join("chosen.wav");let dst=dir.join("decoded.wav");
         let mut w=denzic_host_audio_v1_core::wav::WavWriter::create(&src).unwrap();
-        let input=(0..16000).map(|i|(((i as f32)*0.1).sin()*8000.0) as i16).collect::<Vec<_>>();
+        let input=[i16::MIN, i16::MIN + 1, -16385, -1, 0, 1, 16385, i16::MAX].repeat(2000);
         w.append_samples(&input).unwrap();w.finalize().unwrap();drop(w);
         let before=std::fs::read(&src).unwrap();let parts=decode_to_speech_wav(&src,&dst).unwrap();
         assert_eq!(parts.len(),1);assert_eq!(parts[0].samples,16000);assert_eq!(std::fs::read(&src).unwrap(),before);
+        assert_eq!(&std::fs::read(&dst).unwrap()[44..], &before[44..]);
         assert_eq!(super::super::meeting_workspace::wav_duration_ms(&dst).unwrap(),1000);
         std::fs::remove_dir_all(dir).unwrap();
     }
