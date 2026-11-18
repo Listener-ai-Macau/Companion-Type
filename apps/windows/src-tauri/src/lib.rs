@@ -605,6 +605,7 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         "--meeting-transcribe-request" => Some((i,12)),
         "--local-recording-snapshot" => Some((i,13)),
         "--local-recording-select" => Some((i,14)),
+        "--local-recording-import" => Some((i,21)),
         "--library-backup-request" => Some((i,15)),
         "--library-restore-request" => Some((i,16)),
         _ => None,
@@ -616,7 +617,12 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
         if file.metadata().map_err(|_| "无法读取请求文件大小。")?.len() > 4*1024*1024 {
             return Err("会议请求文件不能超过 4 MB。".into());
         }
-        if matches!(operation,6|12|13|14) {let _=backend::product_settings::load_and_apply();}
+        if operation == 21 && !["COMPANION_TYPE_STATE_PATH", "COMPANION_TYPE_RECORDING_DIR", "COMPANION_TYPE_PRODUCT_SETTINGS_PATH"]
+            .into_iter().all(|key| std::env::var_os(key).is_some_and(|path| PathBuf::from(path).is_absolute()))
+        {
+            return Err("后台导入需要明确指定独立录音库、资料状态和设置路径。".into());
+        }
+        if matches!(operation,6|12|13|14|21) {let _=backend::product_settings::load_and_apply();}
         let coordinator = CompanionCoordinator::new_fixture();
         if matches!(operation,15|16) {
             #[derive(serde::Deserialize)] #[serde(rename_all="camelCase",deny_unknown_fields)]
@@ -634,6 +640,18 @@ fn run_meeting_workspace_cli(args: &[String]) -> Option<Result<(), String>> {
                 backend::export::write_atomic(Path::new(destination),&serde_json::to_vec_pretty(&result).map_err(|e|e.to_string())?)?;
             }
             println!("library_backup_result=LOCAL_OPERATION_COMPLETED");
+        } else if operation == 21 {
+            #[derive(serde::Deserialize)]
+            #[serde(rename_all = "camelCase", deny_unknown_fields)]
+            struct ImportRequest { source_path: PathBuf }
+            let request: ImportRequest = serde_json::from_reader(file).map_err(|_| "音频导入请求只接受原件路径。")?;
+            let snapshot = coordinator.import_audio_file(&request.source_path)?;
+            backend::export::write_atomic(Path::new(destination), &serde_json::to_vec_pretty(&snapshot)
+                .map_err(|_| "导入结果暂不可读取。")?)?;
+            if snapshot.host.persistence.status != "ready" {
+                return Err("原音已保留，导入会议尚未保存，请重试保存。".into());
+            }
+            println!("local_recording_result=IMPORTED_ORIGINAL_AUDIO_THROUGH_PRODUCT");
         } else if matches!(operation,12|13|14) {
             #[derive(serde::Deserialize)] #[serde(rename_all="camelCase",deny_unknown_fields)]
             struct LocalRecordingRequest { session_id: Option<String> }
