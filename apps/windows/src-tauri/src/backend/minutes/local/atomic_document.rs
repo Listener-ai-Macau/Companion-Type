@@ -65,6 +65,10 @@ impl ExtractedFact{
         }
     }
 
+    pub(super) fn original_action(id: &str, source: &str, item: crate::companion_v1::CompanionV1ActionItem) -> Self {
+        Self { owner: item.owner, due: item.due, ..Self::verbatim(id, "action", source) }
+    }
+
     pub(super) fn review_quote(id: &str, role: &str, text: &str) -> Self {
         Self { source_needs_review: true, ..Self::verbatim(id, role, text) }
     }

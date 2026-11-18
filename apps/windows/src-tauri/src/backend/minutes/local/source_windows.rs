@@ -199,6 +199,18 @@ impl SourceWindows {
                 reviewed.push(json!({"sentenceId":anchor,"factCount":0,"origin":"turn-transition"}));
                 continue;
             }
+            if encoding == SourceEncoding::SelectOriginal {
+                if policy.literal_collective_decision(original) {
+                    facts.push(ExtractedFact::verbatim(anchor, "decision", original));
+                    reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":"literal-decision"}));
+                    continue;
+                }
+                if let Some(assignment) = Authority::literal_named_assignment(original) {
+                    facts.push(ExtractedFact::original_action(anchor, original, assignment));
+                    reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":"literal-named-assignment"}));
+                    continue;
+                }
+            }
             if let Some(role) = literal_role.filter(|_| source_grounding::concerns_approval(original)) {
                 facts.push(ExtractedFact::verbatim(anchor, role, original));
                 reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":"approval-source-quote"}));
@@ -640,6 +652,29 @@ mod tests {
         wire["e0001"] = json!([]);
         wire["e0000"] = json!([{"r":"status","t":"设备已量产。"}]);
         assert!(windows.check_encoded(0, &wire.to_string(), format).is_err());
+    }
+
+    #[test]
+    fn source_selection_keeps_named_deadlines_and_collective_decisions_when_the_model_omits_them() {
+        let source = "王岚在周四前完成离线验收。会议决定先在本机保存转写。建议赵信在周五前提交复盘。";
+        let windows = SourceWindows::new(source).unwrap();
+        let format = SourceEncoding::SelectOriginal;
+        let wire = json!({"e0000":"skip","e0001":[],"e0002":"recommendation"});
+        let checked = windows.check_encoded(0, &wire.to_string(), format).unwrap();
+        let bank = super::super::atomic_document::build_bank(checked.facts, source).unwrap();
+        assert_eq!(bank.facts[0].placement, super::super::super::automatic_brief::answer_layout::Placement::Action);
+        assert_eq!(bank.facts[0].text, "王岚在周四前完成离线验收。");
+        assert_eq!(bank.facts[0].owner.as_deref(), Some("王岚"));
+        assert_eq!(bank.facts[0].due.as_deref(), Some("周四前"));
+        assert_eq!(bank.facts[1].placement, super::super::super::automatic_brief::answer_layout::Placement::Decision);
+        assert_eq!(bank.facts[1].text, "会议决定先在本机保存转写。");
+        assert_eq!(bank.facts[2].placement, super::super::super::automatic_brief::answer_layout::Placement::Topic);
+        assert_eq!(bank.facts[2].owner, None);
+        assert_eq!(bank.facts[2].due, None);
+        let example = "例如赵信在周五前提交复盘。";
+        assert!(Authority::literal_named_assignment(example).is_none());
+        let completed = "王岚在周四前完成了离线验收。";
+        assert!(Authority::literal_named_assignment(completed).is_none());
     }
 
     #[test]
