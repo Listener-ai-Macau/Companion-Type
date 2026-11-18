@@ -60,9 +60,14 @@ pub(super) fn reader_opinion(source: &str) -> bool {
 }
 
 
+#[derive(Clone, Copy)]
+pub(super) enum FollowupContext {
+    Previous,
+    Next,
+}
 pub(super) struct Followup {
     pub(super) action: crate::companion_v1::CompanionV1ActionItem,
-    pub(super) cites_previous: bool,
+    pub(super) context: Option<FollowupContext>,
 }
 
 // Record a definite dated review as a task. If the spoken follow-up uses a
@@ -96,7 +101,7 @@ pub(super) fn literal_followup(source: &str, previous: Option<&str>) -> Option<F
                     owner: None,
                     due: None,
                 },
-                cites_previous: false,
+                context: None,
             });
         }
     }
@@ -129,7 +134,37 @@ pub(super) fn literal_followup(source: &str, previous: Option<&str>) -> Option<F
             owner: None,
             due: Some(day.as_str().to_owned()),
         },
-        cites_previous,
+        context: cites_previous.then_some(FollowupContext::Previous),
+    })
+}
+
+// An explicit delegated search and the immediately following comparison
+// instruction are one task. The continuation must name both the multiple
+// candidates and the comparison; no date or person's identity is inferred.
+pub(super) fn literal_supplier_comparison(source: &str, next: &str) -> Option<Followup> {
+    static REQUEST: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:你这边安排|你安排|请安排|安排人|你负责|由你)[^。！？；]{0,20}(?:厂商|供应商|厂家)[^。！？；]{0,17}(?:找|联系|询价)"
+    ).expect("valid delegated search pattern"));
+    if [source, next].iter().any(|text| text.contains(['？', '?']) || has(text, &[
+        "如果", "假如", "要是", "建议", "比如", "例如", "可能", "要不要", "能不能", "不知道", "不需要",
+        "不用", "不要", "取消", "不再", "没必要", "不由你", "无需安排", "上周", "去年", "已经", "曾经", "听说",
+    ])) {
+        return None;
+    }
+    let request = REQUEST.find(source)?.as_str();
+    let search = next.trim_start_matches(['啊', '嗯', '呃', '，', ',', ' ']);
+    if !["多找几家", "多联系几家", "至少找两家", "找几家"].iter().any(|lead| search.starts_with(lead))
+        || !has(search, &["比价", "对比", "比较", "比一比"]) {
+        return None;
+    }
+    let counterpart = ["厂商", "供应商", "厂家"].iter().find(|term| request.contains(**term))?;
+    Some(Followup {
+        action: crate::companion_v1::CompanionV1ActionItem {
+            text: format!("联系多家{counterpart}并比较"),
+            owner: None,
+            due: None,
+        },
+        context: Some(FollowupContext::Next),
     })
 }
 

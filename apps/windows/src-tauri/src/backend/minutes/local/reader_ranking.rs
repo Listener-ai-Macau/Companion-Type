@@ -41,6 +41,12 @@ pub(super) enum OperationalEvidence {
     ConditionalDownside,
     ProcessPrerequisite,
     PriorityChoice,
+    LimitedChannel,
+    ParallelChannel,
+    PriceVersusFit,
+    VerificationMaterial,
+    BudgetAndAvailability,
+    OfferingOptions,
 }
 
 pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
@@ -85,6 +91,36 @@ pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
         && has(&["咱们", "我们", "团队", "部门"])
         && !has(&["是否", "要不要", "假如", "如果", "或者", "可不可以", "还没定"]) {
         return Some(OperationalEvidence::PriorityChoice);
+    }
+    let live_scope = has(&["直播", "同时播", "投放", "同步投"]);
+    if live_scope && !text.contains(['？', '?']) {
+        let one = has(&["给一个平台", "只用一个平台", "只选一个平台", "单一平台", "只选一个渠道"]);
+        let many = has(&["几个平台", "多平台", "多个平台", "多个渠道", "几个渠道"]);
+        if one && !many { return Some(OperationalEvidence::LimitedChannel); }
+        if many && !one && has(&["同时", "都去直播", "一起播", "同时投"]) {
+            return Some(OperationalEvidence::ParallelChannel);
+        }
+    }
+    if has(&["低价", "廉价", "便宜", "降价", "压价", "压成本"])
+        && (has(&["客户看不上", "客户不接受", "用户不接受", "质量也要", "保证质量", "质量不能", "牺牲质量"])
+            || (has(&["赠品", "送的东西", "给客户"]) && has(&["大家看不上", "没有人要"]))) {
+        return Some(OperationalEvidence::PriceVersusFit);
+    }
+    if has(&["赠品", "附赠", "增值服务", "服务权益", "套装", "套餐"])
+        && has(&["几种", "多类", "多种", "多选", "多元化", "盲盒", "可选", "搭配"])
+        && !text.contains(['？', '?']) {
+        return Some(OperationalEvidence::OfferingOptions);
+    }
+    if has(&["样品", "样件", "试样", "样机"])
+        && has(&["拿到", "弄到", "拿来", "送过来", "寄过来", "验样", "看样", "送检"]) {
+        return Some(OperationalEvidence::VerificationMaterial);
+    }
+    let budget = has(&["预算", "费用", "报价"]);
+    let timing = has(&["档期", "工期", "交期", "产能"]);
+    let stated_budget = has(&["联系", "聘请", "邀请", "筛选", "选择"])
+        && has(&["要跟着", "要根据", "必须符合", "要控制在", "取决于"]);
+    if budget && ((timing && has(&["考虑", "取决于", "匹配", "根据", "看"])) || stated_budget) {
+        return Some(OperationalEvidence::BudgetAndAvailability);
     }
     if has(&["标准", "资质", "授权", "校准", "审批"])
         && (has(&["需要有", "必须有", "前提是", "必须先"])

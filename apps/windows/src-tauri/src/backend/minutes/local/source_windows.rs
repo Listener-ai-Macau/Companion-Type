@@ -123,7 +123,10 @@ impl SourceWindows {
                 return None;
             }
             let previous = index.checked_sub(1).map(|i| text(&sentences[i]));
-            super::source_authority::literal_followup(text(row), previous)
+            super::source_authority::literal_followup(text(row), previous).or_else(|| {
+                let next = sentences.get(index + 1)?;
+                super::source_authority::literal_supplier_comparison(text(row), text(next))
+            })
         }).collect();
         for (policy, followup) in authority.iter_mut().zip(&followups) {
             if followup.is_some() {
@@ -245,11 +248,14 @@ impl SourceWindows {
                 let original = text(source);
                 let origin = if let Some(followup) = &self.followups[i] {
                     let mut fact = ExtractedFact::original_action(anchor, &followup.action.text, followup.action.clone());
-                    if followup.cites_previous {
-                        fact.evidence.insert(0, id(&self.sentences[i - 1]).to_owned());
+                    use super::source_authority::FollowupContext;
+                    match followup.context {
+                        Some(FollowupContext::Previous) => fact.evidence.insert(0, id(&self.sentences[i - 1]).to_owned()),
+                        Some(FollowupContext::Next) => fact.evidence.push(id(&self.sentences[i + 1]).to_owned()),
+                        None => {}
                     }
                     facts.push(fact);
-                    "literal-dated-review"
+                    "literal-spoken-followup"
                 } else if role != "question" && source_grounding::quantity_question(original) {
                     facts.push(ExtractedFact::quantity_quote(anchor, role, original));
                     "quantity-source-quote"
@@ -589,6 +595,16 @@ mod tests {
         assert_eq!(draft.minutes.action_items[1].owner, None);
         assert_eq!(draft.minutes.action_items[1].due.as_deref(), Some("下周二"));
         assert!(draft.minutes.markdown.contains("赶紧催方案"));
+    }
+
+    #[test]
+    fn comparison_continuation_does_not_turn_suggestions_into_assignments() {
+        use super::super::source_authority::literal_supplier_comparison;
+        let action = "你这边安排去厂商那边去找一些。";
+        assert!(literal_supplier_comparison(action, "啊，多找几家，然后做个对比。").is_some());
+        assert!(literal_supplier_comparison("建议你安排找供应商。", "多找几家对比。").is_none());
+        assert!(literal_supplier_comparison(action, "多找几家投放。").is_none());
+        assert!(literal_supplier_comparison(action, "能不能多找几家对比？").is_none());
     }
 
     #[test]

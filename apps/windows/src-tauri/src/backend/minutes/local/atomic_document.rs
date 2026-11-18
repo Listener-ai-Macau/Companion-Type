@@ -575,7 +575,7 @@ fn evidence_organization(bank: &Bank) -> Result<(Organization, ChapterFocus), St
 }
 
 fn evidence_reading_points<'a>(bank: &Bank, rows: &[&'a Fact]) -> Vec<&'a Fact> {
-    use super::reader_ranking::{operational_evidence, rank, ReadingInput};
+    use super::reader_ranking::{operational_evidence, rank, OperationalEvidence, ReadingInput};
     let eligible: Vec<_> = rows.iter().copied().filter(|fact| {
         !bank.review_quote(&fact.id) && evidence_worthy(&fact.text)
     }).collect();
@@ -588,10 +588,15 @@ fn evidence_reading_points<'a>(bank: &Bank, rows: &[&'a Fact]) -> Vec<&'a Fact> 
         review_only: false,
     }).collect();
     let ordered: Vec<_> = rank(&inputs).into_iter().map(|position| eligible[position]).collect();
-    let mut evidence_types = HashSet::new();
-    let mut selected: Vec<_> = ordered.iter().copied().filter(|fact| {
+    let paired_options: Vec<_> = [OperationalEvidence::LimitedChannel, OperationalEvidence::ParallelChannel]
+        .into_iter().filter_map(|kind| ordered.iter().copied().find(|fact| operational_evidence(&fact.text) == Some(kind)))
+        .collect();
+    let mut selected = if paired_options.len() == 2 { paired_options } else { Vec::new() };
+    let mut evidence_types: HashSet<_> = selected.iter().filter_map(|fact| operational_evidence(&fact.text)).collect();
+    let available_slots = 3 - selected.len();
+    selected.extend(ordered.iter().copied().filter(|fact| {
         operational_evidence(&fact.text).is_some_and(|kind| evidence_types.insert(kind))
-    }).take(3).collect();
+    }).take(available_slots));
     if selected.is_empty() {
         selected.push(ordered[0]);
     }
@@ -686,9 +691,13 @@ fn heading_for_evidence(rows: &[&Fact], candidates: &[String], points: &[&Fact])
             && super::reader_ranking::operational_evidence(&point.text)
                 == Some(super::reader_ranking::OperationalEvidence::Approval));
         let stated_priority = points.iter().any(|point| {
-            super::reader_ranking::operational_evidence(&point.text)
-                == Some(super::reader_ranking::OperationalEvidence::PriorityChoice)
-                && super::source_grounding::shared_han_phrase(&point.text, term, 2)
+            use super::reader_ranking::OperationalEvidence;
+            let kind = super::reader_ranking::operational_evidence(&point.text);
+            (kind == Some(OperationalEvidence::PriorityChoice)
+                && super::source_grounding::shared_han_phrase(&point.text, term, 2))
+                || (kind == Some(OperationalEvidence::OfferingOptions)
+                    && ["赠品", "附赠", "套装", "套餐", "服务权益"].contains(&term)
+                    && point.text.contains(term))
         });
         let introduced = rows.iter().take(6).any(|row| super::chapter_spans::starts_discussion(&row.text)
             && row.text.contains(term));
@@ -850,6 +859,43 @@ fn explicit_reader_recommendation(source: &str) -> bool {
             .iter().any(|verb| action.starts_with(verb)))
 }
 
+// Keep a compact contiguous quote when the complete condition is inside
+// the original fact. Never remove an earlier condition, attribution or negation.
+fn reader_qualified_excerpt(text: &str) -> Option<&str> {
+    use super::reader_ranking::{operational_evidence, OperationalEvidence};
+    let kind = operational_evidence(text)?;
+    let markers: &[&str] = match kind {
+        OperationalEvidence::PriceVersusFit => &["越便宜越好的话"],
+        OperationalEvidence::BudgetAndAvailability => &["一定要跟着", "必须按照", "要根据"],
+        OperationalEvidence::VerificationMaterial => &["尽量安排"],
+        _ => return None,
+    };
+    let start = markers.iter().filter_map(|marker| text.find(marker)).min()?;
+    let before = &text[..start];
+    if before.chars().any(char::is_numeric)
+        || ["如果", "假如", "要是", "前提", "除非", "不能", "不要", "不会", "未必", "不是", "并非",
+            "我觉得", "我认为", "负责人", "负责", "转达", "转述", "表示"]
+            .iter().any(|cue| before.contains(cue)) {
+        return None;
+    }
+    let tail = &text[start..];
+    let excerpt = match kind {
+        OperationalEvidence::BudgetAndAvailability if !text.contains("档期") => {
+            // The budget requirement is complete before a new suggested choice.
+            let end = ["，然后尽量", "，尽量", "，再建议"].iter()
+                .filter_map(|marker| tail.find(marker)).min()?;
+            text[..start + end].trim()
+        }
+        OperationalEvidence::VerificationMaterial => tail.split_once("，及时").map_or(tail, |(stay, _)| stay),
+        OperationalEvidence::PriceVersusFit => tail,
+        _ => return None,
+    };
+    // A local change to the wording must preserve the class of the point.
+    if excerpt.len() == text.len() || !canonical_brief::line(excerpt, 90)
+        || operational_evidence(excerpt) != Some(kind) { return None; }
+    Some(excerpt)
+}
+
 pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
     let sealed=serde_json::to_vec(&bank.facts).map_err(|_|fail())?;
     let units=source_units(&session.transcript_text);let result=answer_layout::assemble_with_details_limit(raw,&bank.facts,&units,MAX_FACTS,MAX_FACTS)?;
@@ -865,6 +911,11 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         let fact=bank.facts.iter().find(|f|&f.id==id).ok_or_else(fail)?;
         let entry=document.pointer_mut(pointer).and_then(Value::as_object_mut).ok_or_else(fail)?;
         if entry.contains_key("kind") {
+            if !bank.review_quote(id) {
+                if let Some(excerpt) = reader_qualified_excerpt(&fact.text) {
+                    entry.insert("text".into(), json!(excerpt));
+                }
+            }
             let source = fact.evidence.first().and_then(|id| known[id.as_str()]["text"].as_str());
             if matches!(fact.kind, Kind::Status) && source.is_some_and(explicit_reader_recommendation) {
                 entry.insert("kind".into(), json!(Kind::Recommendation));

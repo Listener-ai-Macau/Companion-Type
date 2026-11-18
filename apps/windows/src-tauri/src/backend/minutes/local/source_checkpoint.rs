@@ -138,7 +138,7 @@ mod tests {
     }
 
     #[test]
-    fn public_launch_replay_recovers_the_purpose_direction_and_two_followups() {
+    fn public_launch_replay_preserves_options_constraints_and_delegated_work() {
         let Some(path) = std::env::var_os("COMPANION_TEST_PUBLIC_LAUNCH_MINUTES") else { return; };
         let (original, result, seconds) = reread_verified_whole(path);
         let receipt = &result.receipt;
@@ -149,7 +149,19 @@ mod tests {
                 "newInferenceRequests": 0, "contentQualified": false
             })).unwrap();
         }
-        assert_eq!(receipt["factSeals"], original["receipt"]["documentReceipt"]["factSeals"]);
+        let before = &original["receipt"]["documentReceipt"];
+        let after_facts = receipt["facts"].as_array().unwrap();
+        let before_facts = before["facts"].as_array().unwrap();
+        assert_eq!(after_facts.len(), before_facts.len());
+        assert_eq!(after_facts.iter().zip(before_facts)
+            .filter(|(a, b)| a != b).count(), 1);
+        assert!(after_facts.iter().zip(before_facts).any(|(after, before)| {
+            after["id"] == before["id"]
+                && after["text"] == "联系多家厂商并比较"
+                && after["placement"] == "action"
+                && before["placement"] == "topic"
+                && after["evidence"].as_array().unwrap().len() == 2
+        }));
         let purpose = receipt["document"]["purpose"].as_str().unwrap();
         assert!(purpose.contains("手机") && purpose.contains("年轻"), "{purpose}");
         assert!(receipt["openingAgendaFactId"].is_string());
@@ -158,11 +170,18 @@ mod tests {
             let text = point["text"].as_str().unwrap();
             text.contains("主推") && text.contains("年轻")
         }));
-        assert_eq!(result.minutes.action_items.len(), 2);
-        assert_eq!(result.minutes.action_items[0].text, "整理方案");
+        let points: Vec<_> = topics.iter().flat_map(|topic| topic["points"].as_array().unwrap())
+            .map(|point| point["text"].as_str().unwrap()).collect();
+        assert!(points.iter().any(|text| text.contains("一个平台")));
+        assert!(points.iter().any(|text| text.contains("几个平台") && text.contains("同时")));
+        assert!(points.iter().any(|text| text.contains("便宜") && text.contains("看不上")));
+        assert!(points.iter().any(|text| text.contains("样品")));
+        assert_eq!(result.minutes.action_items.len(), 3);
+        assert_eq!(result.minutes.action_items[0].text, "联系多家厂商并比较");
         assert_eq!(result.minutes.action_items[0].due, None);
-        assert_eq!(result.minutes.action_items[1].text, "再确定方案");
-        assert_eq!(result.minutes.action_items[1].due.as_deref(), Some("下周二"));
+        assert_eq!(result.minutes.action_items[1].text, "整理方案");
+        assert_eq!(result.minutes.action_items[2].text, "再确定方案");
+        assert_eq!(result.minutes.action_items[2].due.as_deref(), Some("下周二"));
         assert!(result.minutes.action_items.iter().all(|task| task.owner.is_none()));
     }
 
