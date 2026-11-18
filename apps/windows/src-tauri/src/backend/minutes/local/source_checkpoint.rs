@@ -5,7 +5,7 @@ use serde::Deserialize;
 use serde_json::Value;
 use sha2::{Digest, Sha256};
 
-use super::{assets, source_windows::{self, SourceWindows}, transport};
+use super::{assets, source_windows::{SourceEncoding, SourceWindows}, transport};
 
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -16,7 +16,7 @@ pub(super) struct CheckpointInput {
 
 #[derive(Default)]
 pub(super) struct CheckedSourcePrefix {
-    calls: Vec<Option<Value>>,
+    calls: Vec<Option<(Value, SourceEncoding)>>,
 }
 
 fn failure() -> String {
@@ -66,21 +66,25 @@ impl CheckedSourcePrefix {
                 let call = calls.next().ok_or_else(failure)?;
                 let request = &call["request"];
                 let alias = request["model"].as_str().ok_or_else(failure)?;
-                let (input, schema) = windows.input_and_schema(index);
-                let expected = transport::request_body(alias, source_windows::PROMPT, input, schema, super::SOURCE_OUTPUT_TOKENS, &profile)?;
+                let encoding = request.pointer("/messages/0/content").and_then(Value::as_str)
+                    .and_then(SourceEncoding::for_prompt).ok_or_else(failure)?;
+                let (input, schema) = windows.contract(index, encoding);
+                let expected = transport::request_body(alias, encoding.prompt(), input, schema, super::SOURCE_OUTPUT_TOKENS, &profile)?;
                 if *request != expected
                     || call["stage"] != format!("source-window-{}", index + 1)
                     || call["finishReason"] != "stop"
                 {
                     return Err(failure());
                 }
-                Some(call.clone())
+                Some((call.clone(), encoding))
             } else {
                 None
             };
-            let raw = saved.as_ref().map(|call| call["output"].as_str().ok_or_else(failure))
-                .transpose()?.unwrap_or("{}");
-            windows.check(index, raw)?;
+            let (raw, encoding) = match &saved {
+                Some((call, format)) => (call["output"].as_str().ok_or_else(failure)?, *format),
+                None => ("{}", SourceEncoding::SelectOriginal),
+            };
+            windows.check_encoded(index, raw, encoding)?;
             prefix.push(saved);
         }
         Ok(Self { calls: prefix })
@@ -88,8 +92,8 @@ impl CheckedSourcePrefix {
 
     pub(super) fn len(&self) -> usize { self.calls.len() }
 
-    pub(super) fn call(&self, index: usize) -> Option<&Value> {
-        self.calls.get(index).and_then(Option::as_ref)
+    pub(super) fn call(&self, index: usize) -> Option<(&Value, SourceEncoding)> {
+        self.calls.get(index).and_then(Option::as_ref).map(|(call, encoding)| (call, *encoding))
     }
 }
 
@@ -115,7 +119,7 @@ mod tests {
         assert_eq!(windows.len(), 28);
         let mut facts = Vec::new();
         for index in 0..prefix.len() {
-            let raw = prefix.call(index).map(|call| call["output"].as_str().unwrap()).unwrap_or("{}");
+            let raw = prefix.call(index).map(|(call, _)| call["output"].as_str().unwrap()).unwrap_or("{}");
             facts.extend(windows.check(index, raw).unwrap().facts);
         }
         assert!(!facts.iter().any(|fact| fact.evidence[0] == "e0140" && fact.text.contains("欧洲人")));
@@ -133,7 +137,7 @@ mod tests {
         let windows = SourceWindows::new(source).unwrap();
         let (input, schema) = windows.input_and_schema(0);
         let profile = transport::profile().unwrap();
-        let request = transport::request_body("previous", source_windows::PROMPT, input, schema,
+        let request = transport::request_body("previous", SourceEncoding::Detailed.prompt(), input, schema,
             super::super::SOURCE_OUTPUT_TOKENS, &profile).unwrap();
         let mut data = serde_json::json!({
             "state": "native-candidate-failed-retained",
@@ -151,6 +155,16 @@ mod tests {
         assert!(CheckedSourcePrefix::from_report(&data, source, "changed", 10).is_err());
         data["receipt"]["calls"][0]["request"]["seed"] = serde_json::json!(99);
         assert!(CheckedSourcePrefix::from_report(&data, source, "frozen", 10).is_err());
+
+        let encoding = SourceEncoding::SelectOriginal;
+        let (input, schema) = windows.contract(0, encoding);
+        data["receipt"]["calls"][0]["request"] = transport::request_body("previous", encoding.prompt(), input, schema,
+            super::super::SOURCE_OUTPUT_TOKENS, &profile).unwrap();
+        assert!(CheckedSourcePrefix::from_report(&data, source, "frozen", 10).is_err());
+        data["receipt"]["calls"][0]["output"] = serde_json::json!(r#"{"e0000":"status"}"#);
+        let selected = CheckedSourcePrefix::from_report(&data, source, "frozen", 10).unwrap();
+        assert!(matches!(selected.call(0), Some((_, SourceEncoding::SelectOriginal))));
+
         data["receipt"]["reviewedSourceWindows"] = serde_json::json!([]);
         assert!(CheckedSourcePrefix::from_report(&data, source, "frozen", 10).is_err());
     }

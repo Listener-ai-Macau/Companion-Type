@@ -37,7 +37,7 @@ pub(super) fn wire(value:&Value)->String{
             Value::Object(map)=>{
                 let priority:&[&str]=if properties&&map.contains_key("role"){
                     &["evidence","role","owner","due","text"]
-                }else{&["purpose","purposeFact","topics","assignments","title","points","evidence","source","quote","kind","text","details","decisions","actionItems","questions","owner","due"]};
+                }else{&["purpose","purposeFact","topics","assignments","ranges","startFact","title","mainFacts","points","evidence","source","quote","kind","text","details","decisions","actionItems","questions","owner","due"]};
                 let mut keys=map.keys().collect::<Vec<_>>();
                 if properties{keys.sort_by_key(|key|priority.iter().position(|p|p==&key.as_str()).unwrap_or(priority.len()));}
                 let fields=keys.into_iter().map(|key|format!("{}:{}",json!(key),write(&map[key],key=="properties"))).collect::<Vec<_>>();

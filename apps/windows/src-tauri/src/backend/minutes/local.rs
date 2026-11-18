@@ -75,7 +75,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
             let mut reviewed=Vec::new();
             for index in 0..windows.len(){
                 if let Ok(mut trace)=trace.lock(){trace["sourceWindow"]=json!({"current":index+1,"total":windows.len()});}
-                let raw=if let Some(call) = reused.call(index) {
+                let (raw, encoding) = if let Some((call, encoding)) = reused.call(index) {
                     let mut replay = call.clone();
                     replay["reused"] = json!(true);
                     let raw = replay["output"].as_str().expect("validated reusable response").to_owned();
@@ -83,14 +83,15 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                         if !trace["calls"].is_array() { trace["calls"] = json!([]); }
                         trace["calls"].as_array_mut().unwrap().push(replay);
                     }
-                    raw
+                    (raw, encoding)
                 } else if windows.requires_model(index) {
-                    let (input,schema)=windows.input_and_schema(index);
-                    let raw=transport::generate(port,&key,&alias,source_windows::PROMPT,input,schema,stop,&trace,SOURCE_OUTPUT_TOKENS)?;
+                    let encoding = source_windows::SourceEncoding::SelectOriginal;
+                    let (input,schema)=windows.contract(index, encoding);
+                    let raw=transport::generate(port,&key,&alias,encoding.prompt(),input,schema,stop,&trace,SOURCE_OUTPUT_TOKENS)?;
                     record_call(&trace,&format!("source-window-{}",index+1));
-                    raw
-                }else{"{}".into()};
-                let mut checked = windows.check(index, &raw)?;
+                    (raw, encoding)
+                } else { ("{}".into(), source_windows::SourceEncoding::SelectOriginal) };
+                let mut checked = windows.check_encoded(index, &raw, encoding)?;
                 facts.append(&mut checked.facts);
                 reviewed.push(json!({"window":index+1,"sentences":checked.reviewed}));
                 if let Ok(mut trace)=trace.lock(){trace["reviewedSourceWindows"]=json!(reviewed);}

@@ -108,7 +108,7 @@ pub(super) fn supports_followup_opinion(claim: &str, question: &str, answer: &st
         && shared_han_phrase(claim, question, 4)
 }
 
-fn shared_han_phrase(left: &str, right: &str, length: usize) -> bool {
+pub(super) fn shared_han_phrase(left: &str, right: &str, length: usize) -> bool {
     let chars: Vec<_> = left.chars().collect();
     chars.windows(length).any(|part| {
         part.iter().all(|ch| matches!(*ch, '\u{3400}'..='\u{9fff}'))
