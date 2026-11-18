@@ -115,6 +115,50 @@ mod tests {
     use super::*;
 
     #[test]
+    fn whole_real_meeting_keeps_binding_and_operational_points_without_model_layout() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_EVIDENCE_READER_WHOLE") else { return; };
+        let original: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        let source = std::fs::read_to_string(original["sourceFile"].as_str().unwrap()).unwrap();
+        let normalized = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        let prefix = CheckedSourcePrefix::from_report(&original, &normalized, original["sourceSha256"].as_str().unwrap(),
+            original["durationMs"].as_u64().unwrap()).unwrap();
+        let windows = SourceWindows::new(&normalized).unwrap();
+        assert_eq!(prefix.len(), windows.len());
+        let facts = (0..windows.len()).flat_map(|i| {
+            let (encoding, call) = prefix.window(i).unwrap();
+            let output = call.and_then(|call| call["output"].as_str()).unwrap_or("{}");
+            windows.check_encoded(i, output, encoding).unwrap().facts
+        }).collect();
+        let started = std::time::Instant::now();
+        let bank = super::super::atomic_document::build_bank(facts, &normalized).unwrap();
+        let session = crate::backend::minutes::tests::session_with_text(&normalized);
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "review");
+        let result = super::super::atomic_document::organize_from_evidence(&bank, &session, &base).unwrap().unwrap();
+        if let Some(out) = std::env::var_os("COMPANION_TEST_EVIDENCE_READER_WHOLE_OUTPUT") {
+            let file = std::fs::OpenOptions::new().write(true).create_new(true).open(out).unwrap();
+            serde_json::to_writer_pretty(file, &serde_json::json!({
+                "receipt":result.receipt,"minutes":result.minutes,"readerSeconds":started.elapsed().as_secs_f64(),
+                "newInferenceRequests":0,"contentQualified":false
+            })).unwrap();
+        }
+        let previous = &original["receipt"]["documentReceipt"];
+        assert_eq!(result.receipt["factSeals"], previous["factSeals"]);
+        assert_eq!(result.receipt["retainedFactIds"], previous["retainedFactIds"]);
+        let topics = result.receipt["document"]["topics"].as_array().unwrap();
+        assert!((6..=8).contains(&topics.len()));
+        assert!(topics.iter().all(|topic| !["主角","配角","电信","认证认证","中国做买卖","神经计量院","公共服务台服务平台"].iter().any(|bad| topic["title"].as_str().unwrap().contains(bad))));
+        let summaries: Vec<_> = topics.iter().flat_map(|topic| topic["points"].as_array().unwrap()).collect();
+        let has = |words: &[&str]| summaries.iter().any(|point| {
+            words.iter().all(|word| point["text"].as_str().unwrap().contains(word))
+        });
+        assert!(has(&["半年到一年", "回调"]));
+        assert!(has(&["批准", "标准研究中心"]));
+        assert!(has(&["尝试成了多少钱", "尝试不成多少钱"]));
+        assert!(!has(&["主角要变成主角"]));
+        assert!(result.receipt["document"]["purpose"].as_str().unwrap().contains("计量和标准"));
+    }
+
+    #[test]
     fn direct_whole_card_replay_plans_every_record_without_a_model_assignment() {
         let Some(path) = std::env::var_os("COMPANION_TEST_DIRECT_REALCARD_RECEIPT") else { return; };
         let report: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();

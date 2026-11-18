@@ -74,7 +74,7 @@ pub(super) fn shortlist(rows: &[ReadingInput<'_>]) -> Vec<usize> {
         .take(MAX_READER_CHOICES).collect()
 }
 
-fn rank(rows: &[ReadingInput<'_>]) -> Vec<usize> {
+pub(super) fn rank(rows: &[ReadingInput<'_>]) -> Vec<usize> {
     let stop: BTreeSet<_> = STOP_WORDS.split_whitespace().collect();
     let words: Vec<BTreeSet<&str>> = rows.iter().map(|row| {
         segmenter().tag(row.text, false).into_iter().filter_map(|tag| {

@@ -7,6 +7,22 @@ const MAX_CHAPTERS: usize = 8;
 type Terms = BTreeMap<(char, char), usize>;
 
 pub(super) fn plan(texts: &[&str]) -> Vec<Range<usize>> {
+    partition(texts, 2, |text| if starts_topic(text) { 0.22 } else { 0.0 })
+}
+
+pub(super) fn for_reading(texts: &[&str]) -> Vec<Range<usize>> {
+    partition(texts, 3, |text| {
+        if starts_topic(text) {
+            0.8
+        } else if starts_discussion(text) {
+            0.6
+        } else {
+            0.0
+        }
+    })
+}
+
+fn partition(texts: &[&str], min_divisor: usize, shift_weight: impl Fn(&str) -> f64) -> Vec<Range<usize>> {
     let total = texts.len();
     if total <= 1 {
         return if total == 0 { vec![] } else { vec![0..1] };
@@ -23,12 +39,12 @@ pub(super) fn plan(texts: &[&str]) -> Vec<Range<usize>> {
         if i == 0 || i == total { return 0.0; }
         let left = aggregate(&rows[i.saturating_sub(NEARBY_ROWS)..i], &frequency, total);
         let right = aggregate(&rows[i..(i + NEARBY_ROWS).min(total)], &frequency, total);
-        let transition = if starts_topic(texts[i]) { 0.22 } else { 0.0 };
+        let transition = shift_weight(texts[i]);
         1.0 - cosine(&left, &right) + transition
     }).collect();
 
     let ideal = total as f64 / chapters as f64;
-    let min_length = (total / chapters / 2).max(1);
+    let min_length = (total / chapters / min_divisor).max(1);
     let max_length = (3 * total).div_ceil(2 * chapters);
     let mut best = vec![vec![(f64::NEG_INFINITY, 0); total + 1]; chapters + 1];
     best[0][0].0 = 0.0;
@@ -91,6 +107,14 @@ fn cosine(left: &BTreeMap<(char, char), f64>, right: &BTreeMap<(char, char), f64
     let norm = |weights: &BTreeMap<(char, char), f64>| weights.values().map(|weight| weight * weight).sum::<f64>();
     let scale = (norm(left) * norm(right)).sqrt();
     if scale > 0.0 { (dot / scale).min(1.0) } else { 0.0 }
+}
+
+pub(super) fn starts_discussion(text: &str) -> bool {
+    let lead = text.trim_start_matches(['嗯', '呃', '啊', ' ', '，', '、']);
+    ["想请", "我想请", "我们想请", "下面我想请", "下面我也想请", "现在请", "请教一下"]
+        .iter().any(|cue| lead.starts_with(cue))
+        && ["介绍", "讲一下", "从", "哪些", "如何", "怎么", "请教"].iter().any(|cue| lead.contains(cue))
+        || ["每个人用一句", "最后一个议题", "最后请各位"].iter().any(|cue| lead.contains(cue))
 }
 
 fn starts_topic(text: &str) -> bool {

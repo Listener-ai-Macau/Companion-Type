@@ -496,6 +496,201 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
     }, overview))
 }
 
+// Long meetings already have source-bound facts. Build the reading layer from
+// the actual discussion boundaries and select substantive facts from each range.
+pub(super) fn organize_from_evidence(
+    bank: &Bank, session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes,
+) -> Option<Result<canonical_brief::local_document::Parsed, String>> {
+    if bank.chapter_spans.is_empty() {
+        return None;
+    }
+    Some(evidence_organization(bank).and_then(|(layout, focus)| {
+        render_organization(layout, Some(focus), bank, session, base)
+    }))
+}
+
+fn evidence_organization(bank: &Bank) -> Result<(Organization, ChapterFocus), String> {
+    let facts: Vec<_> = bank.topics().collect();
+    let text: Vec<_> = facts.iter().map(|fact| fact.text.as_str()).collect();
+    let spans = super::chapter_spans::for_reading(&text);
+    let views: Vec<_> = spans.iter().map(|span| &text[span.clone()]).collect();
+    let terms = super::chapter_labels::rank(&views);
+    let mut titles = HashMap::new();
+    let mut topics: BTreeMap<_, _> = THEME_IDS.iter().map(|id| (id.to_string(), None)).collect();
+    let mut assignments = BTreeMap::new();
+    let mut opening_topics = Vec::new();
+    for (span, candidates) in spans.into_iter().zip(terms) {
+        let rows = &facts[span];
+        let chosen = evidence_reading_points(bank, rows);
+        let title = evidence_heading(rows, &candidates, &chosen).ok_or_else(fail)?;
+        let next = titles.len();
+        let slot = *titles.entry(title.clone()).or_insert(next);
+        topics.insert(THEME_IDS[slot].to_owned(), Some(title.clone()));
+        for fact in rows {
+            let role = if chosen.iter().any(|point| point.id == fact.id) { 'm' } else { 't' };
+            assignments.insert(fact.id.clone(), Assignment::Compact(format!("{role}{}", slot + 1)));
+        }
+        if opening_topics.iter().all(|(name, _)| *name != title) {
+            opening_topics.push((title, chosen[0].id.clone()));
+        }
+    }
+
+    let primary = opening_topics.first().ok_or_else(fail)?.1.clone();
+    let (agenda, agenda_fact) = stated_meeting_agenda(bank).map_or((None, None), |(name, id)| {
+        (Some(name), Some(id.to_owned()))
+    });
+    let focus_topics: Vec<_> = opening_topics.iter().filter(|(title, _)| agenda != Some(title.as_str()))
+        .take(3).collect();
+    let names: Vec<_> = focus_topics.iter().filter_map(|(title, _)| title.split('、').next()).collect();
+    let subjects = match names.split_last() {
+        Some((last, rest)) if !rest.is_empty() => format!("{}和{last}", rest.join("、")),
+        Some((last, _)) => (*last).to_owned(),
+        None => String::new(),
+    };
+    let overview = match (agenda, subjects.is_empty()) {
+        (Some(agenda), false) => format!("这场会议围绕{agenda}展开，讨论了{subjects}。"),
+        (Some(agenda), true) => format!("这场会议围绕{agenda}展开。"),
+        (None, _) => format!("这场会议讨论了{subjects}。"),
+    };
+    let focus = ChapterFocus { overview, primary_facts: focus_topics.iter().map(|(_, id)| id.clone()).collect(), agenda_fact };
+    let layout = Organization {
+        purpose_fact: primary,
+        topics: super::source_windows::UniqueMap(topics),
+        assignments: super::source_windows::UniqueMap(assignments),
+    };
+    Ok((layout, focus))
+}
+
+fn evidence_reading_points<'a>(bank: &Bank, rows: &[&'a Fact]) -> Vec<&'a Fact> {
+    use super::reader_ranking::{operational_evidence, rank, ReadingInput};
+    let eligible: Vec<_> = rows.iter().copied().filter(|fact| {
+        !bank.review_quote(&fact.id) && evidence_worthy(&fact.text)
+    }).collect();
+    if eligible.is_empty() {
+        return vec![rows.iter().copied().find(|fact| !bank.review_quote(&fact.id)).unwrap_or(rows[0])];
+    }
+    let inputs: Vec<_> = eligible.iter().map(|fact| ReadingInput {
+        text: &fact.text,
+        judgment: matches!(fact.kind, Kind::Opinion | Kind::Recommendation | Kind::Forecast),
+        review_only: false,
+    }).collect();
+    let ordered: Vec<_> = rank(&inputs).into_iter().map(|position| eligible[position]).collect();
+    let mut evidence_types = HashSet::new();
+    let mut selected: Vec<_> = ordered.iter().copied().filter(|fact| {
+        operational_evidence(&fact.text).is_some_and(|kind| evidence_types.insert(kind))
+    }).take(2).collect();
+    if selected.is_empty() {
+        selected.push(ordered[0]);
+    }
+    if selected.len() == 2 {
+        return selected;
+    }
+    let distinct = |fact: &&Fact| fact.id != selected[0].id
+        && !near_duplicate(&selected[0].text, &fact.text);
+    let first_index = rows.iter().position(|fact| fact.id == selected[0].id).expect("selected from this range");
+    let different_discussion = |fact: &&Fact| {
+        let index = rows.iter().position(|row| row.id == fact.id).expect("ranked in this range");
+        let (low, high) = (index.min(first_index), index.max(first_index));
+        rows[low + 1..=high].iter().any(|row| super::chapter_spans::starts_discussion(&row.text))
+    };
+    if let Some(other) = ordered.iter().copied().filter(distinct).find(different_discussion)
+        .or_else(|| ordered.iter().copied().find(distinct)) {
+        selected.push(other);
+    }
+    selected
+}
+
+fn evidence_worthy(text: &str) -> bool {
+    let text = text.trim();
+    let core = text.trim_end_matches(['。', '！', '？', '；']);
+    let self_comparison = ["要变成", "又变成", "变成了", "要成为"].iter().any(|verb| {
+        core.split_once(verb).is_some_and(|(subject, rest)| {
+            let subject = subject.trim_start_matches(['那', '嗯', '呃', ' ']);
+            (2..=6).contains(&subject.chars().count()) && rest.starts_with(subject)
+        })
+    });
+    let unanswered = ["能不能", "有没有", "要不要", "是否"].iter().any(|cue| text.contains(cue))
+        && !["我认为", "我觉得", "我个人的观点", "还没确定", "尚未确认"].iter().any(|cue| text.contains(cue));
+    let weak_conditional = text.trim_start_matches(['然', '后', '，', ' ', '嗯', '呃'])
+        .starts_with("如果")
+        && !["就", "会", "无法", "必须", "需要", "不能", "才能"].iter().any(|cue| text.contains(cue));
+    text.chars().count() >= 16 && !self_comparison && !unanswered && !weak_conditional
+        && !super::chapter_spans::starts_discussion(text)
+        && !text.ends_with(['？', '?'])
+        && !["下一个问题", "谢谢", "感谢分享", "我想请教"].iter().any(|cue| text.contains(cue))
+        && !["这一块", "这个问题", "的时候", "的一", "一个", "来讲", "这个事情", "一个情况", "一个领域", "不一定是"]
+            .iter().any(|tail| core.ends_with(tail))
+}
+
+fn near_duplicate(left: &str, right: &str) -> bool {
+    let relevance = super::reader_ranking::operational_evidence(left);
+    if relevance.is_some() && relevance == super::reader_ranking::operational_evidence(right)
+        && super::source_grounding::shared_han_phrase(left, right, 8) {
+        return true;
+    }
+    let phrases = |value| heading_terms(value).into_iter().collect::<HashSet<_>>();
+    let (left, right) = (phrases(left), phrases(right));
+    let same = left.intersection(&right).count();
+    same >= 5 && same * 5 >= left.len().min(right.len()) * 4
+}
+
+fn evidence_heading(rows: &[&Fact], candidates: &[String], points: &[&Fact]) -> Option<String> {
+    let at = |point: &Fact| rows.iter().position(|fact| fact.id == point.id).expect("point in source range");
+    if let [first, second] = points {
+        let first_index = at(first);
+        let second_index = at(second);
+        let (start, end) = (first_index.min(second_index), first_index.max(second_index));
+        if let Some(shift) = (start + 1..=end).find(|&i| super::chapter_spans::starts_discussion(&rows[i].text)) {
+            let (early, late) = if first_index < second_index { (*first, *second) } else { (*second, *first) };
+            if let (Some(early_title), Some(late_title)) = (
+                heading_for_evidence(&rows[..shift], candidates, &[early]),
+                heading_for_evidence(&rows[shift..], candidates, &[late]),
+            ) {
+                if !early_title.contains(&late_title) && !late_title.contains(&early_title) {
+                    return Some(format!("{early_title}、{late_title}"));
+                }
+            }
+        }
+    }
+    heading_for_evidence(rows, candidates, points)
+}
+
+fn heading_for_evidence(rows: &[&Fact], candidates: &[String], points: &[&Fact]) -> Option<String> {
+    let score = |index: usize, term: &str| {
+        let letters: Vec<_> = term.chars().collect();
+        let length = letters.len();
+        let half = length / 2;
+        let mut pairs = HashSet::new();
+        let repeated = letters.windows(2).any(|pair| pair[0] == pair[1] || !pairs.insert((pair[0], pair[1])))
+            || (length % 2 == 0 && letters[..half] == letters[half..]);
+        let generic = ["主角", "配角", "方向", "领域", "问题", "厂家", "方法", "事情", "例子", "预测"]
+            .contains(&term);
+        if repeated || generic || length < 2 {
+            return 0;
+        }
+        let supported = rows.iter().filter(|row| row.text.contains(term)).count();
+        let selected = points.iter().filter(|point| point.text.contains(term)).count();
+        let specific_outcome = points.iter().any(|point| point.text.contains(term)
+            && super::reader_ranking::operational_evidence(&point.text)
+                == Some(super::reader_ranking::OperationalEvidence::Approval));
+        let introduced = rows.iter().take(6).any(|row| super::chapter_spans::starts_discussion(&row.text)
+            && row.text.contains(term));
+        if supported < 2 && !specific_outcome && !introduced { return 0; }
+        let terms = heading_terms(term);
+        let overlap: usize = points.iter().map(|point| terms.iter()
+            .filter(|part| point.text.contains(part.as_str())).count()).sum();
+        13 * selected + 7 * overlap.min(6) + 8 * usize::from(overlap > 0)
+            + 6 * usize::from(introduced) + 3 * supported.min(4) + 2 * length.min(6)
+            + 8_usize.saturating_sub(index) - 3 * usize::from(length == 2)
+    };
+    candidates.iter().enumerate().filter_map(|(index, term)| {
+        let value = score(index, term);
+        (value > 0).then_some((value, index, term))
+    }).max_by_key(|(score, index, _)| (*score, std::cmp::Reverse(*index)))
+        .map(|(_, _, name)| name.clone())
+        .or_else(|| candidates.iter().find(|term| rows.iter().any(|fact| fact.text.contains(term.as_str()))).cloned())
+}
+
 pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
     let unfenced = crate::backend::minutes::strip_code_fences(raw);
     let raw = unfenced.trim();
@@ -505,6 +700,13 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     } else {
         (serde_json::from_str::<Organization>(raw).map_err(|_| fail())?, None)
     };
+    render_organization(layout, focus, bank, session, base)
+}
+
+fn render_organization(
+    layout: Organization, focus: Option<ChapterFocus>, bank: &Bank,
+    session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes,
+) -> Result<canonical_brief::local_document::Parsed, String> {
     let purpose_id = if focus.is_some() {
         layout.purpose_fact.as_str()
     } else {

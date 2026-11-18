@@ -103,6 +103,14 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
             }
             let bank=atomic_document::build_bank(facts,&session.transcript_text)?;
             if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}
+            let planning_started = Instant::now();
+            if let Some(result) = atomic_document::organize_from_evidence(&bank, session, base) {
+                if let Ok(mut trace) = trace.lock() {
+                    trace["readerOrganization"] = json!("source-evidence");
+                    trace["readerOrganizationSeconds"] = json!(planning_started.elapsed().as_secs_f64());
+                }
+                return result;
+            }
             let layout=transport::generate(port,&key,&alias,atomic_document::layout_prompt(&bank),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,3072)?;
             record_call(&trace,"id-only-organization");
             atomic_document::organize(&layout,&bank,session,base)
