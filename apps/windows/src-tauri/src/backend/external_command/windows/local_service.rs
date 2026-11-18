@@ -1,13 +1,12 @@
 //! One CPU inference server, using the same atomic Windows job ownership as
 //! external wrappers. Runtime output goes to NUL; no rotating model/server logs.
 use super::*;
-use ::windows::Win32::{Foundation::GENERIC_WRITE,System::{
-    Memory::{CreateMemoryResourceNotification,LowMemoryResourceNotification,QueryMemoryResourceNotification},
-    SystemInformation::{GlobalMemoryStatusEx,MEMORYSTATUSEX},
-}};
+use ::windows::Win32::{
+    Foundation::GENERIC_WRITE,
+    System::Memory::{CreateMemoryResourceNotification,LowMemoryResourceNotification,QueryMemoryResourceNotification},
+};
 
 const PRIVATE_BYTES:usize=2*1024*1024*1024;
-const MIN_FREE_BYTES:u64=2*1024*1024*1024;
 const WALL:Duration=Duration::from_secs(2700);
 fn failure()->String{"本地纪要引擎未能完成处理，原文和已有纪要保留。".into()}
 
@@ -62,10 +61,8 @@ impl Pressure {
     }
     fn low(&self)->Result<bool,String>{
         let mut low=::windows::Win32::Foundation::BOOL::default();
-        let mut memory=MEMORYSTATUSEX{dwLength:size_of::<MEMORYSTATUSEX>()as u32,..Default::default()};
         unsafe{QueryMemoryResourceNotification(self.0.0,&mut low)}.map_err(|_|failure())?;
-        unsafe{GlobalMemoryStatusEx(&mut memory)}.map_err(|_|failure())?;
-        Ok(low.as_bool()||memory.ullAvailPhys<MIN_FREE_BYTES)
+        Ok(low.as_bool())
     }
 }
 
@@ -76,7 +73,6 @@ pub(crate) fn with_local_service<T:Send>(program:&str,args:&[String],cancel:Opti
 fn controlled<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,wall:Duration,work:impl FnOnce(&AtomicBool)->Result<T,String>+Send)->Result<T,String>{
     if cancel.is_some_and(|v|v.load(Ordering::SeqCst)){return Err("本地纪要已取消，已有内容保留。".into());}
     let pressure=Pressure::new()?;
-    if pressure.low()?{return Err("可用内存不足，本地纪要暂未启动，已有内容保留。".into());}
     let service=Service::start(program,args).map_err(|_|failure())?;let started=Instant::now();
     let aborted=AtomicBool::new(false);
     thread::scope(|scope|{

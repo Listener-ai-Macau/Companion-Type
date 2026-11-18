@@ -8,10 +8,13 @@ mod atomic_document;
 mod source_windows;
 mod source_authority;
 mod source_grounding;
+mod source_checkpoint;
 pub(crate) use probe::candidate as verify_candidate;
 use std::{net::TcpListener,sync::{Arc,Mutex},time::Instant};
 use serde_json::{json,Value};
 use crate::companion_v1::{CompanionV1HostSession,CompanionV1MeetingMinutes};
+
+const SOURCE_OUTPUT_TOKENS: usize = 2048;
 
 // Enabled only after the frozen implementation passes the actual whole-meeting
 // content and installed-app gates. Diagnostics do not promote their own output.
@@ -41,19 +44,23 @@ pub(crate) fn generate(session:&CompanionV1HostSession,base:&CompanionV1MeetingM
 }
 
 pub(crate) fn attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->(Result<CompanionV1MeetingMinutes,String>,Value){
-    recorded_attempt(session,base,new_trace())
+    recorded_attempt(session,base,new_trace(),&source_checkpoint::CheckedSourcePrefix::default())
 }
 fn new_trace()->transport::Trace{
     Arc::new(Mutex::new(json!({"provider":"local","model":"Qwen3.5-4B-Q4_K_M","runtimeSha256":assets::SERVER_SHA,
         "modelSha256":assets::MODEL_SHA,"stage":"preflight","newCloudCalls":0,"trainingUpdates":0,"semanticAccuracyCertificate":false,"contentQualified":false})))
 }
-fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,trace:transport::Trace)->(Result<CompanionV1MeetingMinutes,String>,Value){
+fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,trace:transport::Trace,reused:&source_checkpoint::CheckedSourcePrefix)->(Result<CompanionV1MeetingMinutes,String>,Value){
     let start=Instant::now();
     let mut release_confirmed=false;
     let outcome=(||{
         if !session.meeting_notes.is_empty(){return Err("当前本地整理不能合并补充说明，已有内容保留。".into());}
         if !assets::cpu_supported(){return Err("这台电脑暂不支持当前本地纪要引擎，可选择云端整理。".into());}
         let windows=source_windows::SourceWindows::new(&session.transcript_text)?;
+        if let Ok(mut trace)=trace.lock() {
+            trace["reusedSourceWindows"] = json!(reused.len());
+            trace["freshWholeRun"] = json!(reused.len() == 0);
+        }
         let _lease=assets::compute_lease()?;
         let model=assets::model_path()?;assets::verified(&model,assets::MODEL_BYTES,assets::MODEL_SHA)?;
         let runtime=assets::runtime()?;
@@ -68,9 +75,18 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
             let mut reviewed=Vec::new();
             for index in 0..windows.len(){
                 if let Ok(mut trace)=trace.lock(){trace["sourceWindow"]=json!({"current":index+1,"total":windows.len()});}
-                let raw=if windows.requires_model(index){
+                let raw=if let Some(call) = reused.call(index) {
+                    let mut replay = call.clone();
+                    replay["reused"] = json!(true);
+                    let raw = replay["output"].as_str().expect("validated reusable response").to_owned();
+                    if let Ok(mut trace)=trace.lock() {
+                        if !trace["calls"].is_array() { trace["calls"] = json!([]); }
+                        trace["calls"].as_array_mut().unwrap().push(replay);
+                    }
+                    raw
+                } else if windows.requires_model(index) {
                     let (input,schema)=windows.input_and_schema(index);
-                    let raw=transport::generate(port,&key,&alias,source_windows::PROMPT,input,schema,stop,&trace,2048)?;
+                    let raw=transport::generate(port,&key,&alias,source_windows::PROMPT,input,schema,stop,&trace,SOURCE_OUTPUT_TOKENS)?;
                     record_call(&trace,&format!("source-window-{}",index+1));
                     raw
                 }else{"{}".into()};

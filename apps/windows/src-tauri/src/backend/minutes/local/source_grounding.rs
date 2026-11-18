@@ -43,6 +43,22 @@ pub(super) fn unsupported_quantities(claim:&str,sources:&[&str])->Vec<String>{
     }).collect()
 }
 
+pub(super) fn is_brief_thanks(source: &str) -> bool {
+    let source = source.trim();
+    source.chars().count() <= 15
+        && ["谢谢", "好，谢谢", "好的，谢谢", "好谢谢", "好的谢谢"].iter().any(|prefix| source.starts_with(prefix))
+        && !source.contains(['；', '?', '？'])
+}
+
+pub(super) fn says_meeting_ended(text: &str) -> bool {
+    ["会议结束", "结束会议", "圆桌结束", "讨论结束", "暂告一段落", "暂告于段落"]
+        .iter().any(|cue| text.contains(cue))
+}
+
+pub(super) fn linked_secondary_status(claim: &str, source: &str) -> bool {
+    shared_han_phrase(claim, source, 3)
+}
+
 pub(super) fn context_only_fragment(source:&str)->bool{
     let text=source.trim().trim_end_matches(['。','！','？','；',',','，','…','.']);
     matches!(text.trim(),""|"嗯"|"呃"|"对"|"然后"|"所以"|"所以说"|"实际上"|"实际上在"|"问题"|"关于这个"|"也就是说"|"怎么说呢")

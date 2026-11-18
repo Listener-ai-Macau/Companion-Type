@@ -36,8 +36,25 @@ fn post(client:&Client,address:&str,key:&str,path:&str,body:&Value,stop:&AtomicB
     limited_json(client.post(format!("{address}{path}")).bearer_auth(key).json(body).timeout(Duration::from_secs(30)).send().map_err(|_|error())?)
 }
 
+pub(super) fn request_body(alias: &str, prompt: &str, input: Value, schema: Value, max_output_tokens: usize, profile: &Value) -> Result<Value, String> {
+    if !(1..=MAX_NEW_TOKENS).contains(&max_output_tokens) {
+        return Err(error());
+    }
+    let thinking=profile["enableThinking"].as_bool().ok_or_else(error)?;
+    let kwargs=json!({"enable_thinking":thinking});
+    let messages=json!([{"role":"system","content":prompt},{"role":"user","content":super::super::canonical_brief::source_first_input(&input)}]);
+    let mut body=json!({"model":alias,"messages":messages,"max_tokens":max_output_tokens,
+        "stream":true,"stream_options":{"include_usage":true},"chat_template_kwargs":kwargs,
+        "reasoning_format":"deepseek","reasoning_budget_tokens":profile["reasoningBudgetTokens"],
+        "response_format":{"type":"json_schema","schema":schema}});
+    let allowed=["temperature","top_p","top_k","min_p","presence_penalty","repeat_penalty","seed"];
+    for(key,value)in profile["requestParameters"].as_object().ok_or_else(error)?{
+        if !allowed.contains(&key.as_str()){return Err(error());}body[key]=value.clone();
+    }
+    Ok(body)
+}
+
 pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,schema:Value,stop:&AtomicBool,trace:&Trace,max_output_tokens:usize)->Result<String,String>{
-    if !(1..=MAX_NEW_TOKENS).contains(&max_output_tokens){return Err(error());}
     let address=format!("http://127.0.0.1:{port}");
     let client=Client::builder().no_proxy().redirect(reqwest::redirect::Policy::none()).connect_timeout(Duration::from_secs(2))
         .timeout(Duration::from_secs(900)).build().map_err(|_|error())?;
@@ -53,22 +70,12 @@ pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,sche
     }
     if !ready{return Err("本地纪要引擎未就绪，已有内容保留。".into());}
     let profile=profile()?;
-    let thinking=profile["enableThinking"].as_bool().ok_or_else(error)?;
-    let kwargs=json!({"enable_thinking":thinking});
-    let messages=json!([{"role":"system","content":prompt},{"role":"user","content":super::super::canonical_brief::source_first_input(&input)}]);
-    let rendered=post(&client,&address,key,"/apply-template",&json!({"messages":messages,"chat_template_kwargs":kwargs}),stop)?;
+    let body = request_body(alias, prompt, input, schema, max_output_tokens, &profile)?;
+    let rendered=post(&client,&address,key,"/apply-template",&json!({"messages":body["messages"],"chat_template_kwargs":body["chat_template_kwargs"]}),stop)?;
     let rendered=rendered["prompt"].as_str().ok_or_else(error)?;
     let tokenized=post(&client,&address,key,"/tokenize",&json!({"content":rendered,"add_special":false,"parse_special":true}),stop)?;
     let tokens=tokenized["tokens"].as_array().ok_or_else(error)?.len();
     if tokens>12288||tokens+max_output_tokens>16384{return Err("本场文字超出本地模型容量，未截断转写，已有内容保留。".into());}
-    let mut body=json!({"model":alias,"messages":messages,"max_tokens":max_output_tokens,
-        "stream":true,"stream_options":{"include_usage":true},"chat_template_kwargs":kwargs,
-        "reasoning_format":"deepseek","reasoning_budget_tokens":profile["reasoningBudgetTokens"],
-        "response_format":{"type":"json_schema","schema":schema}});
-    let allowed=["temperature","top_p","top_k","min_p","presence_penalty","repeat_penalty","seed"];
-    for(key,value)in profile["requestParameters"].as_object().ok_or_else(error)?{
-        if !allowed.contains(&key.as_str()){return Err(error());}body[key]=value.clone();
-    }
     if let Ok(mut trace)=trace.lock(){trace["generationProfile"]=profile;}
     let wire=super::evidence_document::wire(&body);
     if let Ok(mut trace)=trace.lock(){
