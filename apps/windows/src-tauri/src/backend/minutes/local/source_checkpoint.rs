@@ -151,13 +151,36 @@ mod tests {
             assert_eq!(result["receipt"]["reusedSourceWindows"], 28);
             let session = crate::backend::minutes::tests::session_with_text(&source);
             let base = crate::backend::minutes::rules_l0_minutes(&session, "replay");
-            let parsed = super::super::atomic_document::organize(
-                result["receipt"]["output"].as_str().unwrap(), &bank, &session, &base
-            ).unwrap();
+            use super::super::atomic_document::organize;
+            use serde_json::json;
+            let original = result["receipt"]["output"].as_str().unwrap();
+            assert!(organize(original, &bank, &session, &base).is_err());
+            let mut fixture: Value = serde_json::from_str(original).unwrap();
+            assert!(fixture["chapters"]["t4"]["title"].as_str().unwrap().contains("碳关税"));
+            // Replace presentation only. These literal test labels do not certify content.
+            for (index, labels) in [
+                ["锂离子电池", "材料基因组"],
+                ["测试资源", "公共平台"],
+                ["检测设备", "数字化"],
+                ["电池法规", "欧洲标准"],
+                ["寿命预测", "计量校准"],
+                ["在线监测", "产业集群"],
+                ["授权", "采购部门"],
+                ["标准认证", "标准研究中心"],
+            ].into_iter().enumerate() {
+                let chapter = fixture["chapters"][format!("t{}", index + 1)].as_object_mut().unwrap();
+                chapter.remove("title");
+                chapter.insert("labelTerms".into(), json!(labels));
+            }
+            let mut invented = fixture.clone();
+            invented["chapters"]["t4"]["labelTerms"] = json!(["电池法规", "碳关税"]);
+            let error = organize(&invented.to_string(), &bank, &session, &base).err().unwrap();
+            assert!(error.contains("缺少这一段的原话依据"));
+            let parsed = organize(&fixture.to_string(), &bank, &session, &base).unwrap();
             assert_eq!(parsed.receipt["retainedFactIds"].as_array().unwrap().len(), 325);
             assert_eq!(parsed.receipt["document"]["topics"].as_array().unwrap().len(), 8);
             assert!(parsed.receipt["document"]["topics"].as_array().unwrap().iter()
-                .any(|topic| topic["title"] == "检测资源整合与供需矛盾"));
+                .any(|topic| topic["title"] == "电池法规、欧洲标准"));
             let final_points = parsed.receipt["document"]["topics"].as_array().unwrap().iter()
                 .flat_map(|topic| topic["points"].as_array().unwrap());
             let texts: Vec<_> = final_points.map(|p| p["text"].as_str().unwrap()).collect();
@@ -166,7 +189,8 @@ mod tests {
             if let Some(path) = std::env::var_os("COMPANION_TEST_CHAPTER_REPLAY_OUTPUT") {
                 let file = std::fs::OpenOptions::new().write(true).create_new(true).open(path).unwrap();
                 serde_json::to_writer_pretty(file, &serde_json::json!({
-                    "state":"ENGINEERING_REPLAY_NOT_PUBLICATION","document":parsed.receipt["document"],
+                    "state":"ENGINEERING_FIXTURE_WITH_REPLACED_LABELS_NOT_PUBLICATION",
+                    "document":parsed.receipt["document"],
                     "receipt":parsed.receipt,"minutes":parsed.minutes,"newInferenceRequests":0
                 })).unwrap();
             }
