@@ -89,22 +89,23 @@ pub(super) fn context_only_fragment(source:&str)->bool{
 
 // In speech a tentative question and its short answer can be split across
 // sentences. An opinion needs both the subject and the words expressing doubt.
-pub(super) fn supports_followup_opinion(claim: &str, question: &str, answer: &str) -> bool {
-    let invites_judgment = ["能不能", "能否", "是否", "可不可以", "行不行"]
-        .iter()
-        .any(|cue| question.contains(cue));
-    let short_answer = answer.trim();
-    if !invites_judgment || short_answer.chars().count() > 36 {
-        return false;
-    }
+const OPINION_UNCERTAINTY: &[&str] = &["比较难", "很难", "较难", "难以", "不容易", "不太可能", "可能性不大"];
 
-    let explicit_stance = ["我认为", "我个人", "我觉得", "我的看法", "我的观点", "观点其实"]
-        .iter()
-        .any(|cue| short_answer.contains(cue));
-    let uncertainty = ["比较难", "很难", "较难", "难以", "不容易", "不太可能", "可能性不大"];
-    explicit_stance
-        && uncertainty.iter().any(|cue| short_answer.contains(cue))
-        && uncertainty.iter().any(|cue| claim.contains(cue))
+pub(super) fn is_short_opinion_answer(text: &str) -> bool {
+    let text = text.trim();
+    let stance = ["我认为", "我个人", "我觉得", "我的看法", "我的观点", "观点其实"];
+    text.chars().count() <= 36 && stance.iter().any(|cue| text.contains(cue))
+        && OPINION_UNCERTAINTY.iter().any(|cue| text.contains(cue))
+}
+
+pub(super) fn links_opinion_followup(question: &str, answer: &str) -> bool {
+    ["能不能", "能否", "是否", "可不可以", "行不行"].iter().any(|cue| question.contains(cue))
+        && is_short_opinion_answer(answer)
+}
+
+pub(super) fn supports_followup_opinion(claim: &str, question: &str, answer: &str) -> bool {
+    links_opinion_followup(question, answer)
+        && OPINION_UNCERTAINTY.iter().any(|cue| claim.contains(cue))
         && shared_han_phrase(claim, question, 4)
 }
 

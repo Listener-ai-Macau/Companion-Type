@@ -188,11 +188,14 @@ fn purpose_choices(bank: &Bank) -> Vec<&str> {
         ["会议目标", "会议目的", "会议议题", "讨论主题", "本次议题", "会议围绕", "会议主要讨论", "今天讨论", "今天主要讨论", "本次讨论", "主要议题"]
             .iter().any(|cue| fact.text.contains(cue))
     }).collect();
+    let contextual_point = |fact: &Fact| matches!(fact.kind, Kind::Opinion | Kind::Recommendation | Kind::Forecast)
+        && !super::source_grounding::is_short_opinion_answer(&fact.text);
     let discussion: Vec<_> = clear.iter().copied().filter(|fact| {
-        fact.placement == Placement::Decision
-            || (matches!(fact.kind, Kind::Opinion | Kind::Recommendation | Kind::Forecast) && fact.evidence.len() > 1)
+        fact.placement == Placement::Decision || (contextual_point(fact) && fact.evidence.len() > 1)
     }).collect();
-    [agenda, discussion, clear, eligible].into_iter().find(|facts| !facts.is_empty()).unwrap_or_default()
+    let standalone: Vec<_> = clear.iter().copied()
+        .filter(|fact| contextual_point(fact) && fact.text.chars().count() >= 28).collect();
+    [agenda, discussion, standalone, clear, eligible].into_iter().find(|facts| !facts.is_empty()).unwrap_or_default()
         .into_iter().map(|fact| fact.id.as_str()).collect()
 }
 
