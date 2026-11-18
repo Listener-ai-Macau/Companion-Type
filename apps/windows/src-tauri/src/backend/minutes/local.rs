@@ -98,7 +98,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
             }
             let bank=atomic_document::build_bank(facts,&session.transcript_text)?;
             if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}
-            let layout=transport::generate(port,&key,&alias,atomic_document::layout_prompt(),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,3072)?;
+            let layout=transport::generate(port,&key,&alias,atomic_document::layout_prompt(&bank),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,3072)?;
             record_call(&trace,"id-only-organization");
             atomic_document::organize(&layout,&bank,session,base)
         })?;
