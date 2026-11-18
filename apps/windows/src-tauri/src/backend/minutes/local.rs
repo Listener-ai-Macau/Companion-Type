@@ -7,6 +7,7 @@ mod evidence_document;
 mod atomic_document;
 mod source_windows;
 mod source_authority;
+mod source_grounding;
 pub(crate) use probe::candidate as verify_candidate;
 use std::{net::TcpListener,sync::{Arc,Mutex},time::Instant};
 use serde_json::{json,Value};
@@ -73,9 +74,21 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                     record_call(&trace,&format!("source-window-{}",index+1));
                     raw
                 }else{"{}".into()};
-                let (mut extracted,coverage)=windows.decode(index,&raw)?;
-                facts.append(&mut extracted);
-                reviewed.push(coverage);
+                let mut checked=windows.check(index,&raw,None)?;
+                if !checked.disputed.is_empty(){
+                    if let Ok(mut trace)=trace.lock(){
+                        if !trace["quantityRechecks"].is_array(){trace["quantityRechecks"]=json!([]);}
+                        trace["quantityRechecks"].as_array_mut().unwrap().push(json!({"window":index+1,"sentences":checked.reviewed}));
+                    }
+                    let (input,schema)=windows.recheck_input(index,&checked.disputed);
+                    let raw=transport::generate(port,&key,&alias,source_windows::QUANTITY_RECHECK,input,schema,stop,&trace,1024)?;
+                    record_call(&trace,&format!("source-window-{}-quantity-recheck",index+1));
+                    let corrected=windows.check(index,&raw,Some(&checked.disputed))?;
+                    if let Ok(mut trace)=trace.lock(){trace["lastQuantityRecheck"]=json!(corrected.reviewed);}
+                    checked.accept_recheck(corrected)?;
+                }
+                facts.append(&mut checked.facts);
+                reviewed.push(json!({"window":index+1,"sentences":checked.reviewed}));
                 if let Ok(mut trace)=trace.lock(){trace["reviewedSourceWindows"]=json!(reviewed);}
                 if facts.len()>atomic_document::MAX_FACTS{return Err(atomic_document::fail());}
             }

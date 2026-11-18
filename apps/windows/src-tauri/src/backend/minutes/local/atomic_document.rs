@@ -23,7 +23,7 @@ pub(super) fn fact_properties(evidence: Value, roles:&[&str])->Value{
 struct Extracted {facts:Vec<ExtractedFact>}
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
-pub(super) struct ExtractedFact {pub(super) evidence:Vec<String>,pub(super) role:String,owner:Option<String>,due:Option<String>,text:String}
+pub(super) struct ExtractedFact {pub(super) evidence:Vec<String>,pub(super) role:String,owner:Option<String>,due:Option<String>,pub(super) text:String}
 impl ExtractedFact{
     pub(super) fn verbatim(id:&str,role:&str,text:&str)->Self{
         Self{evidence:vec![id.to_owned()],role:role.to_owned(),owner:None,due:None,text:text.trim().to_owned()}
