@@ -154,6 +154,13 @@ mod tests {
         assert!(has(&["半年到一年", "回调"]));
         assert!(has(&["批准", "标准研究中心"]));
         assert!(has(&["尝试成了多少钱", "尝试不成多少钱"]));
+        assert!(has(&["引入", "高校", "科研院所"]));
+        assert!(has(&["人员", "设备", "缺乏"]));
+        assert!(summaries.iter().any(|point| point["kind"] == "opinion"
+            && point["text"].as_str().unwrap().contains("碳税")));
+        assert!(summaries.iter().any(|point| point["kind"] == "opinion"
+            && point["text"].as_str().unwrap().contains("不确定度")));
+        assert!(!has(&["不均度", "评定"]));
         assert!(!has(&["主角要变成主角"]));
         assert!(result.receipt["document"]["purpose"].as_str().unwrap().contains("计量和标准"));
     }

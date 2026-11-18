@@ -578,11 +578,11 @@ fn evidence_reading_points<'a>(bank: &Bank, rows: &[&'a Fact]) -> Vec<&'a Fact> 
     let mut evidence_types = HashSet::new();
     let mut selected: Vec<_> = ordered.iter().copied().filter(|fact| {
         operational_evidence(&fact.text).is_some_and(|kind| evidence_types.insert(kind))
-    }).take(2).collect();
+    }).take(3).collect();
     if selected.is_empty() {
         selected.push(ordered[0]);
     }
-    if selected.len() == 2 {
+    if selected.len() >= 2 {
         return selected;
     }
     let distinct = |fact: &&Fact| fact.id != selected[0].id
@@ -636,19 +636,16 @@ fn near_duplicate(left: &str, right: &str) -> bool {
 
 fn evidence_heading(rows: &[&Fact], candidates: &[String], points: &[&Fact]) -> Option<String> {
     let at = |point: &Fact| rows.iter().position(|fact| fact.id == point.id).expect("point in source range");
-    if let [first, second] = points {
-        let first_index = at(first);
-        let second_index = at(second);
-        let (start, end) = (first_index.min(second_index), first_index.max(second_index));
-        if let Some(shift) = (start + 1..=end).find(|&i| super::chapter_spans::starts_discussion(&rows[i].text)) {
-            let (early, late) = if first_index < second_index { (*first, *second) } else { (*second, *first) };
-            if let (Some(early_title), Some(late_title)) = (
-                heading_for_evidence(&rows[..shift], candidates, &[early]),
-                heading_for_evidence(&rows[shift..], candidates, &[late]),
-            ) {
-                if !early_title.contains(&late_title) && !late_title.contains(&early_title) {
-                    return Some(format!("{early_title}、{late_title}"));
-                }
+    let first = points.iter().map(|point| at(point)).min()?;
+    let last = points.iter().map(|point| at(point)).max()?;
+    if let Some(shift) = (first + 1..=last).find(|&i| super::chapter_spans::starts_discussion(&rows[i].text)) {
+        let (early, late): (Vec<_>, Vec<_>) = points.iter().copied().partition(|point| at(point) < shift);
+        if let (Some(early_title), Some(late_title)) = (
+            heading_for_evidence(&rows[..shift], candidates, &early),
+            heading_for_evidence(&rows[shift..], candidates, &late),
+        ) {
+            if !early_title.contains(&late_title) && !late_title.contains(&early_title) {
+                return Some(format!("{early_title}、{late_title}"));
             }
         }
     }
@@ -842,15 +839,22 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     let known=sentences.iter().map(|s|(s["id"].as_str().unwrap(),s)).collect::<std::collections::HashMap<_,_>>();
     let mut document=serde_json::to_value(&result.document).map_err(|_|fail())?;
     let mut reader_recommendations = Vec::new();
+    let mut reader_opinions = Vec::new();
     for(pointer,id)in &result.bindings{
         let fact=bank.facts.iter().find(|f|&f.id==id).ok_or_else(fail)?;
         let entry=document.pointer_mut(pointer).and_then(Value::as_object_mut).ok_or_else(fail)?;
-        if matches!(fact.kind, Kind::Status) && entry.contains_key("kind")
-            && fact.evidence.first().and_then(|source| known[source.as_str()]["text"].as_str())
-                .is_some_and(explicit_reader_recommendation)
-        {
-            entry.insert("kind".into(), json!(Kind::Recommendation));
-            reader_recommendations.push(id);
+        if entry.contains_key("kind") {
+            let source = fact.evidence.first().and_then(|id| known[id.as_str()]["text"].as_str());
+            if matches!(fact.kind, Kind::Status) && source.is_some_and(explicit_reader_recommendation) {
+                entry.insert("kind".into(), json!(Kind::Recommendation));
+                reader_recommendations.push(id);
+            } else if matches!(fact.kind, Kind::Status | Kind::Forecast)
+                && !super::source_authority::timed_forecast(&fact.text)
+                && source.is_some_and(super::source_authority::reader_opinion)
+            {
+                entry.insert("kind".into(), json!(Kind::Opinion));
+                reader_opinions.push(id);
+            }
         }
         if bank.quantity_quotes.contains(id) {
             entry.insert("quantityNeedsReview".into(), json!(true));
@@ -876,6 +880,7 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     parsed.receipt["sourceQuoteFactIds"] = json!(source_quote_ids);
     parsed.receipt["factBodiesUnchangedAfterOrganization"]=json!(true);
     parsed.receipt["explicitReaderRecommendations"]=json!(reader_recommendations);
+    parsed.receipt["explicitReaderOpinions"]=json!(reader_opinions);
     Ok(parsed)
 }
 

@@ -49,6 +49,16 @@ pub(super) fn timed_forecast(source: &str) -> bool {
         && outcome.trim_start_matches(['，', '、', ' ', '。']).chars().take(2).count() == 2
 }
 
+// These are assertions by a participant, even if spoken without an
+// explicit first-person marker. A minutes entry cannot establish a legal
+// exemption on that basis. A report of an already issued approval is separate.
+pub(super) fn reader_opinion(source: &str) -> bool {
+    if timed_forecast(source) { return false; }
+    if has(source, OPINION) || has(source, &["在我看来", "我个人来讲"]) { return true; }
+    has(source, &["碳税", "关税", "免税", "免征", "缴税", "征税", "缴纳税款", "审批", "许可证"])
+        && has(source, &["不需要", "无需", "不用", "不必", "不应", "不该", "可以免", "可以不交"])
+}
+
 fn has(source: &str, markers: &[&str]) -> bool {
     markers.iter().any(|marker| source.contains(marker))
 }

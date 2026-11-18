@@ -35,6 +35,11 @@ pub(super) enum OperationalEvidence {
     RuledOutBlocker,
     BlockingCondition,
     TimedForecast,
+    RepeatedVerification,
+    ResourceConstraint,
+    ResourceProposal,
+    ConditionalDownside,
+    ProcessPrerequisite,
 }
 
 pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
@@ -54,7 +59,34 @@ pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
         .iter().any(|cue| text.contains(cue)) {
         return Some(OperationalEvidence::BlockingCondition);
     }
-    super::source_authority::timed_forecast(text).then_some(OperationalEvidence::TimedForecast)
+    if super::source_authority::timed_forecast(text) {
+        return Some(OperationalEvidence::TimedForecast);
+    }
+    let has = |signals: &[&str]| signals.iter().any(|signal| text.contains(signal));
+    if has(&["每次", "每批", "逐次", "逐批"]) && has(&["评定", "验证", "校准", "复核"])
+        && has(&["测量", "精度", "校验", "检测", "性能", "误差"]) {
+        return Some(OperationalEvidence::RepeatedVerification);
+    }
+    if has(&["人员", "设备", "预算", "产能", "资源"]) && has(&["缺乏", "短缺", "不具备", "不足"])
+        && has(&["缺口", "检测", "测试", "运营", "交付", "研发", "人力", "生产"]) {
+        return Some(OperationalEvidence::ResourceConstraint);
+    }
+    if has(&["建议", "希望", "可以考虑"]) && has(&["引入", "协调", "整合", "共享", "增配"])
+        && has(&["人员", "设备", "高校", "研究机构", "科研院所", "预算", "产能", "资源"]) {
+        return Some(OperationalEvidence::ResourceProposal);
+    }
+    if has(&["可能会增加", "会带来", "可能导致", "就会增加"])
+        && has(&["成本", "费用", "风险", "延期", "误差", "损失"])
+        && has(&["采取", "处理", "选用", "采用", "使用", "这可能", "就会"]) {
+        return Some(OperationalEvidence::ConditionalDownside);
+    }
+    if has(&["标准", "资质", "授权", "校准", "审批"])
+        && (has(&["需要有", "必须有", "前提是", "必须先"])
+            || (has(&["要用", "要做到", "要达到", "要实现", "依赖"])
+                && has(&["需要", "必须", "要有"]))) {
+        return Some(OperationalEvidence::ProcessPrerequisite);
+    }
+    None
 }
 
 pub(super) struct ReadingInput<'a> {

@@ -1,0 +1,269 @@
+{
+  "case": "vcsum125-card",
+  "assessment": "36:55 中文电池计量圆桌开发样本，15组可定位事实为预先核对的工程参考，覆盖术语、建议、限制、时间、机构和已发生事项。主题事实以录音转写及公开同源会议文本相互核对。重复术语错误参考录音片段的本地对照结果。该样本参与诊断和调参。",
+  "sourceSha256": "10e3073687c549df62e501412db68db292e1423da4a205b8d8d6b093f9b0c3b2",
+  "recordingSha256": "bec53e1980bbcca72edba33cda721dafb65e891359456f751b6ab12db9be836f",
+  "gates": {
+    "minKeyCoverage": 0.9,
+    "minCriticalCoverage": 1,
+    "minLiteralTraceability": 1,
+    "maxCriticalErrors": 0
+  },
+  "expectedEventCounts": {
+    "decisions": 0,
+    "actionItems": 0
+  },
+  "reference": [
+    {
+      "id": "materials-throughput",
+      "label": "材料基因组的高通量工作需要相应标准",
+      "source": [
+        "e0028/e0029"
+      ],
+      "all": [
+        "高通量",
+        "标准"
+      ]
+    },
+    {
+      "id": "supply-forecast",
+      "label": "发言人预测半年至一年供应紧张缓和、价格回调",
+      "source": [
+        "e0045/e0046"
+      ],
+      "kind": [
+        "forecast"
+      ],
+      "all": [
+        "半年到一年",
+        "回调"
+      ],
+      "critical": true
+    },
+    {
+      "id": "testing-service-gap",
+      "label": "检测平台的人员和测试设备都有缺口",
+      "source": [
+        "e0059"
+      ],
+      "all": [
+        "人员",
+        "设备",
+        "缺乏"
+      ]
+    },
+    {
+      "id": "testing-service-proposal",
+      "label": "建议公共平台引入高校与科研院所",
+      "source": [
+        "e0060"
+      ],
+      "kind": [
+        "recommendation"
+      ],
+      "all": [
+        "引入",
+        "高校",
+        "科研院所"
+      ]
+    },
+    {
+      "id": "testing-platform-fragmentation",
+      "label": "发言人认为检测平台缺少整合",
+      "source": [
+        "e0072"
+      ],
+      "kind": [
+        "opinion"
+      ],
+      "all": [
+        "平台",
+        "没有",
+        "整合"
+      ]
+    },
+    {
+      "id": "precision-obstacle",
+      "label": "参与者表示设备精度已不构成主要问题",
+      "source": [
+        "e0086/e0087"
+      ],
+      "all": [
+        "精度",
+        "已经不是问题"
+      ]
+    },
+    {
+      "id": "equipment-digitalization",
+      "label": "发言人指出缺少设备数字化能力会限制后续工作",
+      "source": [
+        "e0101/e0102"
+      ],
+      "all": [
+        "设备",
+        "数字化",
+        "很难"
+      ]
+    },
+    {
+      "id": "china-led-standards",
+      "label": "参会者建议采用中国牵头的标准",
+      "source": [
+        "e0118"
+      ],
+      "kind": [
+        "recommendation"
+      ],
+      "all": [
+        "使用",
+        "中国牵头",
+        "标准"
+      ]
+    },
+    {
+      "id": "carbon-tax-attribution",
+      "label": "碳税豁免的说法应标为参会者观点",
+      "source": [
+        "e0122"
+      ],
+      "kind": [
+        "opinion"
+      ],
+      "all": [
+        "碳负",
+        "碳税"
+      ],
+      "critical": true
+    },
+    {
+      "id": "cell-failure-lifetime",
+      "label": "讨论成品电芯失效分析和寿命预测",
+      "source": [
+        "e0145",
+        "15:58–16:22"
+      ],
+      "all": [
+        "电芯",
+        "失效分析",
+        "寿命预测"
+      ],
+      "critical": true
+    },
+    {
+      "id": "measurement-uncertainty",
+      "label": "电池测量需按次评定测量不确定度",
+      "source": [
+        "e0188/e0190",
+        "21:03–21:23"
+      ],
+      "kind": [
+        "opinion",
+        "recommendation"
+      ],
+      "all": [
+        "每",
+        "测量",
+        "不确定度",
+        "评定"
+      ],
+      "critical": true
+    },
+    {
+      "id": "measurement-cost-caveat",
+      "label": "发言人认为所提检测方式可能增加企业成本",
+      "source": [
+        "e0208"
+      ],
+      "kind": [
+        "opinion"
+      ],
+      "all": [
+        "可能会增加",
+        "成本"
+      ]
+    },
+    {
+      "id": "institution-name",
+      "label": "企业检测服务的机构举例为深圳计量院、广电计量",
+      "source": [
+        "e0228",
+        "24:52–25:10"
+      ],
+      "all": [
+        "深圳计量院",
+        "广电计量"
+      ],
+      "critical": true
+    },
+    {
+      "id": "service-fee-modes",
+      "label": "试验服务区分成功与失败的收费",
+      "source": [
+        "e0297"
+      ],
+      "all": [
+        "尝试成了多少钱",
+        "尝试不成多少钱"
+      ],
+      "critical": true
+    },
+    {
+      "id": "research-center-approved",
+      "label": "国标委已批准建设粤港澳大湾区标准研究中心，属于既有状态",
+      "source": [
+        "e0318/e0319"
+      ],
+      "kind": [
+        "status"
+      ],
+      "all": [
+        "国标委",
+        "已经批准",
+        "粤港澳大湾区",
+        "标准研究中心"
+      ],
+      "critical": true
+    }
+  ],
+  "rejected": [
+    {
+      "id": "wrong-cell-entity",
+      "label": "电芯误作电信",
+      "all": [
+        "电信"
+      ],
+      "critical": true
+    },
+    {
+      "id": "wrong-measurement-term",
+      "label": "不确定度误作不均度",
+      "all": [
+        "不均度",
+        "评定"
+      ],
+      "critical": true
+    },
+    {
+      "id": "wrong-institution",
+      "label": "深圳计量院误作神经计量院",
+      "all": [
+        "神经计量院"
+      ],
+      "critical": true
+    },
+    {
+      "id": "unsupported-tax-status",
+      "label": "把发言人对税负的看法写成现状、决定或预计",
+      "kind": [
+        "status",
+        "decision",
+        "forecast"
+      ],
+      "all": [
+        "碳负",
+        "碳税"
+      ],
+      "critical": true
+    }
+  ]
+}
