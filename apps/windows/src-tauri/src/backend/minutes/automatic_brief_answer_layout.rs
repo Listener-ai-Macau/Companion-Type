@@ -38,8 +38,8 @@ pub(in crate::backend::minutes) struct Assembled {
 fn fail()->String{"纪要分组尚未完整保留已核内容，原文和已有纪要保留。".into()}
 
 struct Bound<'a>{fact:&'a Fact,sources:Vec<String>}
-fn bind_facts<'a>(facts:&'a[Fact],units:&[Unit])->Result<HashMap<&'a str,Bound<'a>>,String>{
-    if facts.is_empty()||facts.len()>128{return Err(fail());}
+fn bind_facts<'a>(facts:&'a[Fact],units:&[Unit],fact_limit:usize)->Result<HashMap<&'a str,Bound<'a>>,String>{
+    if facts.is_empty()||facts.len()>fact_limit{return Err(fail());}
     let sentences=super::factual_audit::evidence_sentences(units);
     let known=sentences.iter().map(|s|(s["id"].as_str().unwrap(),s)).collect::<HashMap<_,_>>();
     let supplied=known.keys().copied().collect::<HashSet<_>>();let mut bound=HashMap::new();
@@ -63,7 +63,7 @@ fn bind_facts<'a>(facts:&'a[Fact],units:&[Unit])->Result<HashMap<&'a str,Bound<'
     }
     Ok(bound)
 }
-pub(in crate::backend::minutes) fn validate_facts(facts:&[Fact],units:&[Unit])->Result<(),String>{bind_facts(facts,units).map(|_|())}
+pub(in crate::backend::minutes) fn validate_facts(facts:&[Fact],units:&[Unit],fact_limit:usize)->Result<(),String>{bind_facts(facts,units,fact_limit).map(|_|())}
 
 fn take<'a>(ids:&[String],placement:Placement,known:&'a HashMap<&str,Bound<'a>>,used:&mut HashSet<String>)->Result<&'a Bound<'a>,String>{
     // Separate actors and independent facts stay separate reader rows. No
@@ -75,12 +75,12 @@ fn take<'a>(ids:&[String],placement:Placement,known:&'a HashMap<&str,Bound<'a>>,
 fn entry(bound:&Bound<'_>)->Entry{Entry{text:bound.fact.text.clone(),sources:bound.sources.clone(),quantity_needs_review:false}}
 
 pub(in crate::backend::minutes) fn assemble(raw:&str,facts:&[Fact],units:&[Unit])->Result<Assembled,String>{
-    assemble_with_details_limit(raw,facts,units,8)
+    assemble_with_details_limit(raw,facts,units,8,128)
 }
 
-pub(in crate::backend::minutes) fn assemble_with_details_limit(raw:&str,facts:&[Fact],units:&[Unit],details_limit:usize)->Result<Assembled,String>{
+pub(in crate::backend::minutes) fn assemble_with_details_limit(raw:&str,facts:&[Fact],units:&[Unit],details_limit:usize,fact_limit:usize)->Result<Assembled,String>{
     let layout:Layout=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|fail())?;
-    let known=bind_facts(facts,units)?;let mut used=HashSet::new();
+    let known=bind_facts(facts,units,fact_limit)?;let mut used=HashSet::new();
     if layout.topics.is_empty()||layout.topics.len()>8||layout.decisions.len()>20||layout.action_items.len()>20||layout.questions.len()>20{return Err(fail());}
     let mut document=Document{purpose:layout.purpose,topics:Vec::new(),decisions:Vec::new(),action_items:Vec::new(),questions:Vec::new()};
     let mut bindings=Vec::new();

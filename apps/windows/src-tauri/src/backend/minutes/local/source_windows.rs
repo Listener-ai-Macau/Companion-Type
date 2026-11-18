@@ -138,15 +138,28 @@ impl SourceWindows {
             }
             let entries = answers.remove(anchor).ok_or_else(fail)?;
             if entries.len() > FACTS_PER_SENTENCE { return Err(fail()); }
+            // Thanks and hand-offs are not meeting decisions or closing statements.
+            if source_grounding::is_brief_thanks(text(source)) {
+                reviewed.push(json!({"sentenceId":anchor,"factCount":0,"origin":"turn-transition"}));
+                continue;
+            }
             let mut accepted=Vec::new();
             let mut unmatched=Vec::new();
             let mut unsupported_cause = false;
+            let mut unsupported_identifier = false;
             for mut fact in entries {
                 if !policy.allowed.contains(&fact.role.as_str()){return Err(fail());}
                 if fact.text.trim().trim_end_matches(['。', '.']) == "[无独立内容]" {
                     continue;
                 }
                 fact.clear_non_action_metadata();
+                if source_grounding::says_meeting_ended(&fact.text) && !source_grounding::says_meeting_ended(text(source)) {
+                    continue;
+                }
+                if !accepted.is_empty() && fact.role == "status" && fact.evidence.is_empty()
+                    && !source_grounding::linked_secondary_status(&fact.text, text(source)) {
+                    continue;
+                }
                 let mut seen = HashSet::from([anchor]);
                 if fact.evidence.len() > 7 || fact.evidence.iter().any(|r| !offered.contains_key(r.as_str()) || !seen.insert(r.as_str())) {
                     return Err(fail());
@@ -198,10 +211,27 @@ impl SourceWindows {
                         unsupported_cause = true;
                     }
                 }
+                let cited = fact.evidence.iter().map(|id| offered[id.as_str()]).collect::<Vec<_>>().join("\n");
+                if !canonical_brief::local_document::identifiers_bound(&fact.text, &cited) {
+                    unsupported_identifier = true;
+                    continue;
+                }
                 accepted.push(fact);
             }
             if unmatched.is_empty() && !unsupported_cause {
-                reviewed.push(json!({"sentenceId":anchor,"factCount":accepted.len(),"origin":"model"}));
+                let origin = if unsupported_identifier {
+                    let original = text(source);
+                    let role = policy.literal_topic_role(original)
+                        .ok_or("会议原话未能支持提取的术语或编号，完整转写与已有纪要保留。")?;
+                    let quote = ExtractedFact::verbatim(anchor, role, original);
+                    if !accepted.iter().any(|fact| fact.text == quote.text) {
+                        accepted.push(quote);
+                    }
+                    "identifier-source-quote"
+                } else {
+                    "model"
+                };
+                reviewed.push(json!({"sentenceId":anchor,"factCount":accepted.len(),"origin":origin}));
                 facts.extend(accepted);
             } else {
                 // Replace the disputed paraphrases with the exact anchor.
@@ -419,8 +449,8 @@ mod tests {
             super::super::atomic_document::layout_schema(&bank).unwrap(),
         );
         assert_eq!(input["purposeChoices"], json!(["a007", "a009"]));
-        assert_eq!(schema["properties"]["assignments"]["properties"]["a000"]["properties"]["topic"]["enum"],
-                   json!(["t1", "t2", "t3", "t4"]));
+        assert_eq!(schema["properties"]["assignments"]["properties"]["a000"]["enum"],
+                   json!(["t1", "m1", "t2", "m2", "t3", "m3", "t4", "m4"]));
 
         let session = crate::backend::minutes::tests::session_with_text(&source);
         let base = crate::backend::minutes::rules_l0_minutes(&session, "replay");

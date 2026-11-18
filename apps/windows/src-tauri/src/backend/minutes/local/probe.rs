@@ -7,7 +7,13 @@ use sha2::{Digest,Sha256};
 use crate::companion_v1::CompanionV1HostSession;
 #[derive(Deserialize)]
 #[serde(rename_all="camelCase",deny_unknown_fields)]
-struct Input {source_file:PathBuf,expected_file_sha256:String,title:String,duration_ms:u64}
+struct Input {
+    source_file: PathBuf,
+    expected_file_sha256: String,
+    title: String,
+    duration_ms: u64,
+    reuse_checkpoint: Option<super::source_checkpoint::CheckpointInput>,
+}
 struct Finish<'a>(&'a AtomicBool);
 impl Drop for Finish<'_>{fn drop(&mut self){self.0.store(true,Ordering::Release);}}
 
@@ -43,6 +49,9 @@ pub(crate) fn candidate(input:&Path,output:&Path)->Result<Value,String>{
     let text=String::from_utf8(bytes).map_err(|_|"指定原文不是UTF-8。")?;
     let text=text.strip_prefix('\u{feff}').unwrap_or(&text).replace("\r\n","\n");
     let source_hash=format!("{:x}",Sha256::digest(text.as_bytes()));
+    let reused = input.reuse_checkpoint.as_ref().map(|checkpoint| {
+        super::source_checkpoint::CheckedSourcePrefix::load(checkpoint, &text, &source_hash, input.duration_ms)
+    }).transpose()?.unwrap_or_default();
     let session=session(text,&input.title,input.duration_ms)?;
     fs::create_dir(output).map_err(|_|"工程输出目录必须是新的目录，已有证据保留。")?;
     let root=output.canonicalize().map_err(|_|"无法定位工程输出目录。")?;
@@ -86,7 +95,7 @@ pub(crate) fn candidate(input:&Path,output:&Path)->Result<Value,String>{
         let finish=Finish(&finished);
         let result=super::super::super::meeting_processing_job::run(&session.id,&job_id,
             super::super::super::meeting_processing_job::Kind::Minutes,||{
-                let(result,record)=super::recorded_attempt(&session,&base,trace.clone());receipt=Some(record);result
+                let(result,record)=super::recorded_attempt(&session,&base,trace.clone(),&reused);receipt=Some(record);result
             });
         drop(finish);let _=monitor.join();result
     });
