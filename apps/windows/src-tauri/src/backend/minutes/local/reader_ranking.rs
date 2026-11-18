@@ -18,12 +18,25 @@ const QUALIFIERS: &[&str] = &[
 ];
 const HANDOFFS: &[&str] = &[
     "发表一下他的意见", "发表一下意见", "说到这儿", "说到这里", "有请", "下一个问题",
-    "下一问题", "我想请教", "谢谢", "欢迎",
+    "下一问题", "我想请教", "请各位嘉宾", "由于时间关系", "谢谢", "欢迎",
+];
+const APPROVAL_STATUS: &[&str] = &[
+    "已经批准", "已批准", "已经获批", "正式获批", "尚未获批", "尚未批准", "暂未批准", "未获批准",
 ];
 const INCOMPLETE_ENDS: &[&str] = &[
     "比如说", "也就是说", "主要做到两点", "我们", "的话", "可能", "是这样的", "这一块",
     "很有价值", "一个方向", "我觉得", "是不是", "是一个", "的过程",
 ];
+
+pub(super) fn operational_evidence(text: &str) -> bool {
+    if APPROVAL_STATUS.iter().any(|signal| text.contains(signal)) {
+        return true;
+    }
+    let price = ["多少钱", "费用", "报价", "金额", "收费"].iter().any(|signal| text.contains(signal));
+    let compared_outcomes = [("成了", "不成"), ("成功", "失败"), ("已通过", "未通过"), ("含", "另收")]
+        .iter().any(|(first, second)| text.contains(first) && text.contains(second));
+    price && compared_outcomes
+}
 
 pub(super) struct ReadingInput<'a> {
     pub text: &'a str,
@@ -85,6 +98,7 @@ fn rank(rows: &[ReadingInput<'_>]) -> Vec<usize> {
         count as f64 * 0.16 + 0.24 * u8::from(cost) as f64 + 0.14 * u8::from(qualifies) as f64
             + 0.16 * u8::from(row.judgment) as f64 + 0.047 * words[index].len().min(8) as f64
             + 0.24 * rows.len() as f64 * centrality[index]
+            + 1.00 * u8::from(operational_evidence(text)) as f64
             - 0.82 * u8::from(handoff) as f64 - 0.55 * u8::from(incomplete) as f64
             - 0.35 * u8::from(text.chars().count() < 20) as f64 - 0.30 * u8::from(row.review_only) as f64
     }).collect();

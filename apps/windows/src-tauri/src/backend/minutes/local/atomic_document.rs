@@ -362,6 +362,14 @@ fn reader_selection<'a>(rows: &[&'a Fact], requested: &HashSet<&str>, allowed: &
     if primary.is_empty() {
         primary.extend(rows.iter().copied().filter(|fact| requested.contains(fact.id.as_str())));
     }
+    let mut protected: Vec<_> = rows.iter().copied().filter(|fact| allowed.contains(fact.id.as_str())
+        && !bank.review_quote(&fact.id) && useful_reader_point(fact)
+        && super::reader_ranking::operational_evidence(&fact.text)).take(2).collect();
+    let original = primary.into_iter().filter(|fact| protected.iter().all(|evidence| evidence.id != fact.id));
+    let remaining: Vec<_> = original.take(requested.len().saturating_sub(protected.len())).collect();
+    protected.extend(remaining);
+    protected.truncate(requested.len());
+    let mut primary = protected;
     let answer = primary.iter().find_map(|question| {
         rows.iter().copied().find(|fact| !primary.iter().any(|point| point.id == fact.id)
             && question.evidence.iter().skip(1).any(|source| fact.evidence.first() == Some(source))
@@ -491,12 +499,23 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     if !assignments.is_empty(){return Err(fail());}
     merge_linked_singletons(&mut slots, purpose_id);
     let mut required_chars=0;
+    let important = |fact: &Fact, main: bool| focus.is_some() && main && !bank.review_quote(&fact.id)
+        && super::reader_ranking::operational_evidence(&fact.text);
     for items in &mut slots{
-        items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), !*main));
+        items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), !*main, !important(fact, *main)));
         required_chars+=items.iter().take(1)
             .map(|(fact,_)|fact.text.chars().count()).sum::<usize>();
     }
     let mut optional_chars=1000_usize.checked_sub(required_chars).ok_or_else(fail)?;
+    let mut reserved = HashSet::new();
+    for items in &slots {
+        for (fact, main) in items.iter().skip(1).take(2) {
+            if important(fact, *main) && fact.text.chars().count() <= optional_chars {
+                optional_chars -= fact.text.chars().count();
+                reserved.insert(fact.id.as_str());
+            }
+        }
+    }
     let mut arranged=Vec::new();
     let mut groups: Vec<_> = THEME_IDS.into_iter().zip(slots).collect();
     groups.sort_by_key(|(_, items)| !items.iter().any(|(fact, _)| fact.id == purpose_id));
@@ -507,7 +526,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         let mut points=Vec::new();let mut details=Vec::new();
         for (index,(fact,main)) in items.into_iter().enumerate(){
             let size=fact.text.chars().count();
-            if index==0{
+            if index==0 || reserved.contains(fact.id.as_str()){
                 points.push([&fact.id]);
             }else if main&&points.len()<3&&size<=optional_chars{
                 optional_chars-=size;points.push([&fact.id]);
