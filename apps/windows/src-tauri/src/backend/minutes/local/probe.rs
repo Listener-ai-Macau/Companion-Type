@@ -65,6 +65,7 @@ pub(crate) fn candidate(input:&Path,output:&Path)->Result<Value,String>{
                 let mut checkpoint=None;
                 if let Ok(trace)=trace.lock(){
                     live["stage"]=trace["stage"].clone();live["generationSeconds"]=trace["generationSeconds"].clone();
+                    live["sourceWindow"]=trace["sourceWindow"].clone();
                     live["outputCharacters"]=json!(trace["output"].as_str().map(|s|s.chars().count()).unwrap_or(0));
                     live["reasoningCharacters"]=trace["reasoningCharacters"].clone();
                     if last_checkpoint.is_none_or(|last:Instant|last.elapsed()>=Duration::from_secs(10)){

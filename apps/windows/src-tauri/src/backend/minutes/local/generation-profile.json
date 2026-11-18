@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "model": "Qwen3.5-4B Q4_K_M",
-  "mode": "bounded-thinking",
-  "pipeline": "atomic source facts once, immutable IDs only for organization",
-  "enableThinking": true,
-  "reasoningBudgetTokens": 4096,
+  "mode": "bounded-source-windows",
+  "pipeline": "one anchored record per source sentence, immutable fact IDs for organization",
+  "enableThinking": false,
+  "reasoningBudgetTokens": 0,
   "thinkingSwitchSource": "https://huggingface.co/Qwen/Qwen3.5-4B#quickstart",
   "samplingSource": "https://huggingface.co/Qwen/Qwen3.5-4B#best-practices",
   "samplingSourceCheckedAt": "2026-11-18",
@@ -19,5 +19,5 @@
     "seed": 42
   },
   "contentQualified": false,
-  "note": "One capacity correction after official-tokenizer counting proved every completed1024-token reasoning stage exhausted that cap (completion minus answer tokens1027). Reasoning4096 within unchanged total output6144/context16384, with2048 answer tokens reserved. Atomic source facts and immutable-ID organization, source, schemas, model, SDK, sampling and resource guards stay fixed. No training, prompt/seed search or content qualification."
+  "note": "Full-source passes exhausted their reasoning budget and still missed facts or cited adjacent statements. Bounded source windows assign primary references mechanically and record an explicit response per sentence. Extra references must be in the offered window. Explicit scope replaces long reasoning; weights, decoder, sampling and process limits stay fixed."
 }
