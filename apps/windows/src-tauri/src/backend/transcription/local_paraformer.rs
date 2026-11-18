@@ -8,6 +8,8 @@ use std::{
 mod shared;
 #[path = "model_download.rs"]
 mod model_download;
+#[path = "battery_term_review.rs"]
+mod battery_term_review;
 use shared::{cut_samples, is_digital_silence, wav_data, ModelKind, Runtime, MODEL_SHA, RATE, TOKENS_SHA};
 use std::{fs, path::PathBuf, sync::Mutex};
 
@@ -315,6 +317,9 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
         }
         offset += buf.len() as u64;
     }
+    runtime.finish_recognition();
+    battery_term_review::apply(&mut file, start, len, &root, &mut parts, &anchors,
+        super::super::meeting_processing_job::check_current)?;
     runtime.finish_punctuation(&root,&mut parts,super::super::meeting_processing_job::check_current)?;
     for (anchor,text) in anchors.iter_mut().zip(&parts){anchor.text=text.clone();}
     super::super::meeting_processing_job::check_current()?;
@@ -335,6 +340,36 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn real_battery_review_uses_ordinary_local_transcription() {
+        let Some(fixture) = std::env::var_os("COMPANION_TEST_BATTERY_REVIEW_FIXTURE") else { return; };
+        let saved: serde_json::Value = serde_json::from_slice(&fs::read(fixture).unwrap()).unwrap();
+        let audio = PathBuf::from(saved["audioPath"].as_str().unwrap());
+        let result = transcribe(&audio).unwrap();
+        let original = saved["utterances"].as_array().unwrap();
+        assert_eq!(result.utterances.len(), original.len());
+        let mut changes = Vec::new();
+        for (after, before) in result.utterances.iter().zip(original) {
+            assert_eq!(after.start_ms, before["startMs"].as_u64().unwrap());
+            assert_eq!(after.end_ms, before["endMs"].as_u64().unwrap());
+            let text = before["text"].as_str().unwrap();
+            if after.text != text {
+                changes.push(serde_json::json!({"startMs":after.start_ms,"endMs":after.end_ms,
+                    "before":text,"after":after.text}));
+            }
+        }
+        if let Some(destination) = std::env::var_os("COMPANION_TEST_BATTERY_REVIEW_OUTPUT") {
+            let file = fs::OpenOptions::new().create_new(true).write(true).open(destination).unwrap();
+            serde_json::to_writer_pretty(file, &serde_json::json!({
+                "changes":changes,"text":result.text,"utterances":result.utterances,
+                "provider":result.provider_id,"scope":"normal local transcription function with original primary cache"
+            })).unwrap();
+        }
+        assert!(result.utterances.iter().any(|line| line.start_ms == 1_013_200 && line.text.contains("电芯")));
+        assert!(result.utterances.iter().any(|line| line.start_ms == 1_493_600 && line.text.contains("神经计量院")));
+        assert!(result.utterances.iter().any(|line| line.start_ms == 1_543_600 && line.text.contains("深圳计量院")));
+    }
 
     #[test]
     #[ignore = "requires the public supply meeting WAV and the official local ASR model"]

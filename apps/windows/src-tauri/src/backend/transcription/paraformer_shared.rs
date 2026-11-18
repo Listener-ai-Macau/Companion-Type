@@ -46,6 +46,12 @@ impl ModelKind {
         match self { Self::OfficialParaformer => "local-paraformer-official", Self::Paraformer => "local-paraformer", Self::SenseVoice => "local-sensevoice" }
     }
 }
+enum RecognitionModel {
+    Primary(ModelKind),
+    #[cfg(windows)]
+    FireRedReview,
+}
+
 #[repr(C)]
 struct FeatureConfig {
     sample_rate: i32,
@@ -269,15 +275,39 @@ impl Runtime {
         Self::load_model(root, runtime_root, ModelKind::Paraformer)
     }
     pub(super) fn load_model(root: &Path, runtime_root: &Path, kind: ModelKind) -> Result<Self, String> {
-        let (dir, model_sha, tokens_sha) = match kind {
-            ModelKind::OfficialParaformer => (OFFICIAL_DIR, OFFICIAL_MODEL_SHA, OFFICIAL_TOKENS_SHA),
-            ModelKind::Paraformer => ("sherpa-onnx-paraformer-zh-small-2024-03-09", MODEL_SHA, TOKENS_SHA),
-            ModelKind::SenseVoice => (SENSE_DIR, SENSE_MODEL_SHA, SENSE_TOKENS_SHA),
+        Self::load_recognizer(root, runtime_root, RecognitionModel::Primary(kind))
+    }
+
+    #[cfg(windows)]
+    pub(super) fn load_fire_red_review(root: &Path, runtime_root: &Path) -> Result<Self, String> {
+        Self::load_recognizer(root, runtime_root, RecognitionModel::FireRedReview)
+    }
+
+    fn load_recognizer(root: &Path, runtime_root: &Path, selection: RecognitionModel) -> Result<Self, String> {
+        let (model, tokens, decoder) = match selection {
+            RecognitionModel::Primary(kind) => {
+                let (dir, model_sha, tokens_sha) = match kind {
+                    ModelKind::OfficialParaformer => (OFFICIAL_DIR, OFFICIAL_MODEL_SHA, OFFICIAL_TOKENS_SHA),
+                    ModelKind::Paraformer => ("sherpa-onnx-paraformer-zh-small-2024-03-09", MODEL_SHA, TOKENS_SHA),
+                    ModelKind::SenseVoice => (SENSE_DIR, SENSE_MODEL_SHA, SENSE_TOKENS_SHA),
+                };
+                let model = root.join(dir).join("model.int8.onnx");
+                let tokens = root.join(dir).join("tokens.txt");
+                verified(&model, model_sha)?;
+                verified(&tokens, tokens_sha)?;
+                (cpath(&model)?, cpath(&tokens)?, None::<CString>)
+            }
+            #[cfg(windows)]
+            RecognitionModel::FireRedReview => {
+                let encoder = root.join("encoder.int8.onnx");
+                let decoder = root.join("decoder.int8.onnx");
+                let tokens = root.join("tokens.txt");
+                verified(&encoder, "54048d66b6e8f3c80ea7ce95efe794587b0fd81d7271651d0decd3803852ae82")?;
+                verified(&decoder, "b840ce7196ae4a14d05ae84bbf56082b6b61ccec5610fda907dddbcea37354ff")?;
+                verified(&tokens, "1bc613de2112d257e61a349c3e72d1b1a9cf19c33d3ca954197ad2171e5ea07b")?;
+                (cpath(&encoder)?, cpath(&tokens)?, Some(cpath(&decoder)?))
+            }
         };
-        let model = root.join(dir).join("model.int8.onnx");
-        let tokens = root.join(dir).join("tokens.txt");
-        verified(&model, model_sha)?;
-        verified(&tokens, tokens_sha)?;
         #[cfg(windows)]
         for (name, hash) in [
             (
@@ -310,8 +340,6 @@ impl Runtime {
                 verified(&runtime_root.join(name), hash)?;
             }
         }
-        let model = cpath(&model)?;
-        let tokens = cpath(&tokens)?;
         let cpu = CString::new("cpu").unwrap();
         let chinese = CString::new("zh").unwrap();
         let greedy = CString::new("greedy_search").unwrap();
@@ -366,16 +394,23 @@ impl Runtime {
             let mut config: OfflineRecognizerConfig = std::mem::zeroed();
             config.feat_config.sample_rate = RATE as i32;
             config.feat_config.feature_dim = 80;
-            match kind {
-                ModelKind::OfficialParaformer | ModelKind::Paraformer => config.model_config.paraformer.model = model.as_ptr(),
-                ModelKind::SenseVoice => {
+            match selection {
+                RecognitionModel::Primary(ModelKind::OfficialParaformer | ModelKind::Paraformer) => {
+                    config.model_config.paraformer.model = model.as_ptr();
+                }
+                RecognitionModel::Primary(ModelKind::SenseVoice) => {
                     config.model_config.sense_voice.model = model.as_ptr();
                     config.model_config.sense_voice.language = chinese.as_ptr();
                     config.model_config.sense_voice.use_itn = 0;
                 }
+                #[cfg(windows)]
+                RecognitionModel::FireRedReview => {
+                    config.model_config.fire_red_asr.encoder = model.as_ptr();
+                    config.model_config.fire_red_asr.decoder = decoder.as_ref().expect("verified decoder").as_ptr();
+                }
             }
             config.model_config.tokens = tokens.as_ptr();
-            config.model_config.num_threads = 2;
+            config.model_config.num_threads = if decoder.is_some() { 1 } else { 2 };
             config.model_config.provider = cpu.as_ptr();
             config.decoding_method = greedy.as_ptr();
             let recognizer = create(&config);
@@ -400,12 +435,19 @@ impl Runtime {
             })
         }
     }
-    // Keep only one neural model resident. Raw ASR cache entries stay raw;
-    // punctuation is a later stage and never changes their recognition words.
+    pub(super) fn finish_recognition(&mut self) {
+        if !self.recognizer.is_null() {
+            unsafe { (self.destroy)(self.recognizer) };
+            self.recognizer = std::ptr::null_mut();
+        }
+    }
+
+    // Release recognition before loading punctuation. Cache entries keep
+    // the original ASR words for repeatable recovery and source comparison.
     pub(super) fn finish_punctuation<F>(&mut self,root:&Path,texts:&mut [String],mut check:F)->Result<(),String>
     where F:FnMut()->Result<(),String> {
         check()?;
-        if !self.recognizer.is_null(){unsafe{(self.destroy)(self.recognizer)};self.recognizer=std::ptr::null();}
+        self.finish_recognition();
         if texts.is_empty(){return Ok(());}
         self.punctuation=punctuation::Punctuator::optional(&self._sherpa,root);
         if let Some(punctuation)=&self.punctuation {
