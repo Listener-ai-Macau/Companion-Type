@@ -208,6 +208,26 @@ mod tests {
             let texts: Vec<_> = final_points.map(|p| p["text"].as_str().unwrap()).collect();
             assert!(texts.iter().any(|point| point.contains("还是比较难")));
             assert!(!texts.iter().any(|point| point.contains("说到这儿") || point.starts_with("的这些")));
+            if let Some(path) = std::env::var_os("COMPANION_TEST_PARALLEL_CPU25_DRAFT_RECEIPT") {
+                let parallel: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+                assert_eq!(parallel["sourceSha256"], report["sourceSha256"]);
+                let saved_output = parallel["receipt"]["output"].as_str().unwrap();
+                let projected = organize(saved_output, &bank, &session, &base).unwrap();
+                assert_eq!(projected.receipt["retainedFactIds"], parallel["receipt"]["documentReceipt"]["retainedFactIds"]);
+                assert_eq!(projected.receipt["factSeals"], parallel["receipt"]["documentReceipt"]["factSeals"]);
+                assert!(projected.receipt["explicitReaderRecommendations"].as_array().unwrap().contains(&json!("a116")));
+                assert!(projected.minutes.markdown.contains("建议：第二呢就是说我们应该使用中国牵头的这个标准"));
+                assert!(!projected.minutes.markdown.contains("寿命预测、预测"));
+                assert_eq!(projected.receipt["document"]["topics"].as_array().unwrap().len(), 8);
+                if let Some(path) = std::env::var_os("COMPANION_TEST_PARALLEL_CPU25_DRAFT_OUTPUT") {
+                    let file = std::fs::OpenOptions::new().write(true).create_new(true).open(path).unwrap();
+                    serde_json::to_writer_pretty(file, &json!({
+                        "state":"ENGINEERING_REPLAY_NOT_PUBLICATION",
+                        "document":projected.receipt["document"],"receipt":projected.receipt,
+                        "minutes":projected.minutes,"newInferenceRequests":0
+                    })).unwrap();
+                }
+            }
             if let Some(path) = std::env::var_os("COMPANION_TEST_CHAPTER_REPLAY_OUTPUT") {
                 let file = std::fs::OpenOptions::new().write(true).create_new(true).open(path).unwrap();
                 serde_json::to_writer_pretty(file, &serde_json::json!({

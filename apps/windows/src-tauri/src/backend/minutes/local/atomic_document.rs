@@ -392,7 +392,11 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
         if !(1..=2).contains(&labels.len()) || (labels.len() == 2 && labels[0] == labels[1]) {
             return Err(label_error());
         }
-        let title = labels.join("、");
+        let title = match labels.as_slice() {
+            [first, second] if first.contains(*second) => (*first).to_owned(),
+            [first, second] if second.contains(*first) => (*second).to_owned(),
+            _ => labels.join("、"),
+        };
         let terms = heading_terms(&title);
         let main: HashSet<_> = description.main_facts.iter().map(String::as_str).collect();
         let allowed: HashSet<_> = bank.chapter_point_choices[index].iter().map(|pos| rows[*pos].id.as_str()).collect();
@@ -549,6 +553,17 @@ fn theme_name(title:&str)->Option<&str>{
     (canonical_brief::line(name,26)&&!name.contains(['。','！','？','；','!','?',';'])).then_some(name)
 }
 
+fn explicit_reader_recommendation(source: &str) -> bool {
+    if source.contains(['?', '？']) || ["是否", "该不该", "能不能", "不是说", "没说", "不代表"]
+        .iter().any(|cue| source.contains(cue)) {
+        return false;
+    }
+    ["我们应该", "我们应当", "我们不应该", "我们不应当"].iter()
+        .filter_map(|lead| source.split_once(lead).map(|(_, action)| action.trim_start()))
+        .any(|action| ["使用", "采用", "选择", "保留", "调整", "提交", "核对", "评估", "避免", "优先"]
+            .iter().any(|verb| action.starts_with(verb)))
+}
+
 pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
     let sealed=serde_json::to_vec(&bank.facts).map_err(|_|fail())?;
     let units=source_units(&session.transcript_text);let result=answer_layout::assemble_with_details_limit(raw,&bank.facts,&units,MAX_FACTS,MAX_FACTS)?;
@@ -558,9 +573,17 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     let sentences=factual_audit::evidence_sentences(&units);
     let known=sentences.iter().map(|s|(s["id"].as_str().unwrap(),s)).collect::<std::collections::HashMap<_,_>>();
     let mut document=serde_json::to_value(&result.document).map_err(|_|fail())?;
+    let mut reader_recommendations = Vec::new();
     for(pointer,id)in &result.bindings{
         let fact=bank.facts.iter().find(|f|&f.id==id).ok_or_else(fail)?;
         let entry=document.pointer_mut(pointer).and_then(Value::as_object_mut).ok_or_else(fail)?;
+        if matches!(fact.kind, Kind::Status) && entry.contains_key("kind")
+            && fact.evidence.first().and_then(|source| known[source.as_str()]["text"].as_str())
+                .is_some_and(explicit_reader_recommendation)
+        {
+            entry.insert("kind".into(), json!(Kind::Recommendation));
+            reader_recommendations.push(id);
+        }
         if bank.quantity_quotes.contains(id) {
             entry.insert("quantityNeedsReview".into(), json!(true));
         }
@@ -584,6 +607,7 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     source_quote_ids.sort();
     parsed.receipt["sourceQuoteFactIds"] = json!(source_quote_ids);
     parsed.receipt["factBodiesUnchangedAfterOrganization"]=json!(true);
+    parsed.receipt["explicitReaderRecommendations"]=json!(reader_recommendations);
     Ok(parsed)
 }
 
@@ -707,6 +731,15 @@ mod tests{
         assert!(organize(&invalid.to_string(), &bank, &session, &base).is_err());
         invalid["chapters"]["t2"]["labelIds"] = json!(["l00", "l00"]);
         assert!(organize(&invalid.to_string(), &bank, &session, &base).is_err());
+    }
+
+    #[test]
+    fn explicit_recommendations_keep_inference_questions_and_denials_distinct() {
+        assert!(explicit_reader_recommendation("所以我们应该采用已经验收的方案。"));
+        assert!(explicit_reader_recommendation("我们不应当保留旧限额。"));
+        assert!(!explicit_reader_recommendation("我们应该已经提交过了。"));
+        assert!(!explicit_reader_recommendation("是否我们应该采用这套方案"));
+        assert!(!explicit_reader_recommendation("我不是说我们应该采用这套方案。"));
     }
 
     #[test]
