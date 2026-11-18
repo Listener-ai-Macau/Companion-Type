@@ -77,6 +77,7 @@ pub(super) struct CheckedWindow {
 pub(super) struct SourceWindows {
     sentences: Vec<Value>,
     authority: Vec<Authority>,
+    followups: Vec<Option<super::source_authority::Followup>>,
     core: Vec<Range<usize>>,
 }
 
@@ -117,7 +118,19 @@ impl SourceWindows {
                 }
             }
         }
-        Ok(Self { sentences, authority, core })
+        let followups: Vec<_> = sentences.iter().enumerate().map(|(index, row)| {
+            if authority[index].context_only || authority[index].verbatim.is_some() {
+                return None;
+            }
+            let previous = index.checked_sub(1).map(|i| text(&sentences[i]));
+            super::source_authority::literal_followup(text(row), previous)
+        }).collect();
+        for (policy, followup) in authority.iter_mut().zip(&followups) {
+            if followup.is_some() {
+                policy.verbatim = Some("action");
+            }
+        }
+        Ok(Self { sentences, authority, followups, core })
     }
 
     pub(super) fn len(&self) -> usize { self.core.len() }
@@ -230,7 +243,14 @@ impl SourceWindows {
             }
             if let Some(role)=policy.verbatim {
                 let original = text(source);
-                let origin = if role != "question" && source_grounding::quantity_question(original) {
+                let origin = if let Some(followup) = &self.followups[i] {
+                    let mut fact = ExtractedFact::original_action(anchor, &followup.action.text, followup.action.clone());
+                    if followup.cites_previous {
+                        fact.evidence.insert(0, id(&self.sentences[i - 1]).to_owned());
+                    }
+                    facts.push(fact);
+                    "literal-dated-review"
+                } else if role != "question" && source_grounding::quantity_question(original) {
                     facts.push(ExtractedFact::quantity_quote(anchor, role, original));
                     "quantity-source-quote"
                 } else {
@@ -546,6 +566,47 @@ mod tests {
         let (facts, reviewed) = w.decode(0, &raw.to_string()).unwrap();
         assert_eq!(facts[0].evidence, ["e0001"]);
         assert_eq!(reviewed["sentences"][0]["factCount"], 0);
+    }
+
+    #[test]
+    fn spoken_review_keeps_the_date_and_attaches_the_immediately_preceding_work() {
+        let source = "回去之后把这个方案都给我赶紧他们整理出来。然后赶紧催方案。好吧，然后下周二的时候，那个咱们再具体上确定一下。";
+        let windows = SourceWindows::new(source).unwrap();
+        let checked = windows.check_encoded(0, "{}", SourceEncoding::DirectSingleRole).unwrap();
+        let tasks: Vec<_> = checked.facts.iter().filter(|fact| fact.role == "action").collect();
+        assert_eq!(tasks.len(), 2);
+        assert_eq!(tasks[0].text, "整理方案");
+        assert_eq!(tasks[0].due, None);
+        assert_eq!(tasks[1].text, "再确定方案");
+        assert_eq!(tasks[1].evidence, ["e0001", "e0002"]);
+        assert_eq!(tasks[1].owner, None);
+        assert_eq!(tasks[1].due.as_deref(), Some("下周二"));
+        let session = crate::backend::minutes::tests::session_with_text(source);
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "now");
+        let bank = super::super::atomic_document::build_bank(checked.facts, source).unwrap();
+        let draft = super::super::atomic_document::organize(
+            r#"{"purposeFact":"a001","topics":{"t1":"方案","t2":null,"t3":null,"t4":null,"t5":null,"t6":null,"t7":null,"t8":null},"assignments":{"a001":"m1"}}"#,
+            &bank, &session, &base,
+        ).unwrap();
+        assert_eq!(draft.minutes.action_items[1].due.as_deref(), Some("下周二"));
+        assert!(draft.minutes.markdown.contains("赶紧催方案"));
+    }
+
+    #[test]
+    fn dates_in_suggestions_alternatives_or_unsupported_fragments_do_not_create_tasks() {
+        let prior = Some("会后赶紧催报价。");
+        for source in [
+            "如果预算能批，我们下周二的时候再确定一下。",
+            "下周二或者下周三再确认报价。",
+            "下下周二再确认报价。",
+            "听说下周二再确认报价。",
+            "下周二的时候再具体上确定一下？",
+            "请不要在会后把这个方案提交。",
+        ] {
+            assert!(super::super::source_authority::literal_followup(source, prior).is_none(), "{source}");
+        }
+        let no_prior_instruction = Some("市场上也有供应商给的方案。");
+        assert!(super::super::source_authority::literal_followup("下周二再确认一下。", no_prior_instruction).is_none());
     }
 
     #[test]

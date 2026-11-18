@@ -59,6 +59,76 @@ pub(super) fn reader_opinion(source: &str) -> bool {
         && has(source, &["不需要", "无需", "不用", "不必", "不应", "不该", "可以免", "可以不交"])
 }
 
+
+pub(super) struct Followup {
+    pub(super) action: crate::companion_v1::CompanionV1ActionItem,
+    pub(super) cites_previous: bool,
+}
+
+// Record a definite dated review as a task. If the spoken follow-up uses a
+// pronoun or drops its object, only the immediately preceding work instruction
+// may supply it. Missing names are left empty.
+pub(super) fn literal_followup(source: &str, previous: Option<&str>) -> Option<Followup> {
+    static DAY: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:本周|这周|下周|星期)[一二三四五六日天](?:上午|下午|晚上)?"
+    ).expect("valid review date pattern"));
+    static REVIEW: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"再(?:具体[上商]?)?(?:来)?(确认|确定|核对|复核|审阅|讨论)(?:一下)?"
+    ).expect("valid review request pattern"));
+    const OBJECTS: &[&str] = &["时间表", "交付计划", "设计稿", "方案", "报价", "预算", "计划", "排期", "需求", "报告", "样品"];
+    const TENTATIVE: &[&str] = &["如果", "假如", "要是", "可能", "建议", "或者", "还是", "比如", "例如", "举例",
+        "要不要", "能不能", "能否", "好不好", "行不行", "有没有意见", "要不", "是否", "未确定", "不用",
+        "取消", "不再", "不需要", "不要", "上周", "当时", "听说"];
+    if source.contains(['？', '?']) || has(source, TENTATIVE) {
+        return None;
+    }
+    static DIRECTIVE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:散会后|会后|回去之后|回去以后)[^。！？；]{0,18}(?:把|将)(?:这个|这份|这些)?(方案|报价|预算|计划|排期|报告|样品|设计稿)[^。！？；]{0,20}(整理|汇总|补齐|落实|提交|发来|交付)"
+    ).expect("valid post-meeting work request pattern"));
+    if has(source, &["给我", "请", "必须", "由"]) {
+        if let Some(work) = DIRECTIVE.captures(source) {
+            return Some(Followup {
+                action: crate::companion_v1::CompanionV1ActionItem {
+                    text: format!("{}{}", work.get(2)?.as_str(), work.get(1)?.as_str()),
+                    owner: None,
+                    due: None,
+                },
+                cites_previous: false,
+            });
+        }
+    }
+    let mut days = DAY.find_iter(source);
+    let day = days.next()?;
+    if days.next().is_some() || source[..day.start()].ends_with("下") {
+        return None;
+    }
+    let review = REVIEW.captures(&source[day.end()..])?;
+    let after_review = source[day.end() + review.get(0)?.end()..].trim_start_matches([' ', '，', ',']);
+    let after_review = after_review.strip_prefix("这个").or_else(|| after_review.strip_prefix('这')).unwrap_or(after_review);
+    let object = OBJECTS.iter().copied().find(|object| after_review.starts_with(object));
+    let (object, cites_previous) = match object {
+        Some(object) => (object, false),
+        None => {
+            let rest = after_review.trim_matches([' ', '。', '！', '，', ',', '.']);
+            if !rest.is_empty() { return None; }
+            let prior = previous?.trim().trim_end_matches(['。', '.', '！']);
+            if prior.contains(['？', '?']) || has(prior, TENTATIVE)
+                || !has(prior, &["安排", "回去", "催", "赶紧", "提交", "发来", "会后"]) {
+                return None;
+            }
+            (OBJECTS.iter().copied().find(|object| prior.ends_with(object))?, true)
+        }
+    };
+    Some(Followup {
+        action: crate::companion_v1::CompanionV1ActionItem {
+            text: format!("再{}{object}", review.get(1)?.as_str()),
+            owner: None,
+            due: Some(day.as_str().to_owned()),
+        },
+        cites_previous,
+    })
+}
+
 fn has(source: &str, markers: &[&str]) -> bool {
     markers.iter().any(|marker| source.contains(marker))
 }
