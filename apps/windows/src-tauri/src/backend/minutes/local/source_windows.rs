@@ -400,9 +400,13 @@ impl SourceWindows {
                 }
                 accepted.push(fact);
             }
+            let topic_only = !policy.allowed.iter().any(|role| matches!(*role, "action" | "decision" | "question"));
+            if oversized && !topic_only {
+                return Err("会议决定、任务或待确认事项的来源需要核对，原文和已有纪要保留。".into());
+            }
             let rejected = source_quote_origin.is_some() || !unmatched.is_empty() || unsupported_cause;
             let needs_bounded_original = rejected && policy.literal_topic_role(original).is_none();
-            if oversized || needs_bounded_original {
+            if topic_only && (oversized || needs_bounded_original) {
                 let start = facts.len();
                 facts.extend(original_reading_spans(original).into_iter()
                     .map(|span| ExtractedFact::review_quote(anchor, "status", span)));
