@@ -21,7 +21,7 @@ const CLOSED_AGENDA: &[&str] = &["没有未决", "无未决", "已解决", "已�
 const REFERENCED_AGENDA: &[&str] = &["上述", "前述", "以上", "这些未决", "前面提到的", "刚才列出的"];
 const RECOMMEND: &[&str] = &["建议", "希望", "不妨", "可以考虑"];
 const FORECAST: &[&str] = &["预计", "预测", "预估", "大概会", "可能会", "有望"];
-const OPINION: &[&str] = &["我认为", "我觉得", "我的看法", "个人认为", "我判断"];
+const OPINION: &[&str] = &["我认为", "我觉得", "我的看法", "个人认为", "我判断", "我个人的观点", "个人的观点"];
 const EXACT_RELATION: &[&str] = &[
     "报价", "价格", "费用", "收费", "成本", "预算", "金额", "计费", "付款", "采购价",
     "不意味着", "才具备", "必须先", "条件不满足", "不能因为", "不能把", "不会只", "不承诺", "没有批准", "没有约定", "除非", "顺延",
@@ -39,6 +39,7 @@ fn has(source: &str, markers: &[&str]) -> bool {
 pub(super) struct Authority {
     pub(super) allowed: Vec<&'static str>,
     pub(super) verbatim: Option<&'static str>,
+    pub(super) context_only: bool,
 }
 
 impl Authority {
@@ -56,6 +57,7 @@ impl Authority {
         if has(source, OPEN) && !has(source, CLOSED_AGENDA) && !has(source, REFERENCED_AGENDA) {
             allowed.push("question");
         }
+        if allowed.as_slice()==["status","opinion"]{allowed.remove(0);}
 
         let has_typed_outcome = allowed.iter().any(|role| matches!(*role, "decision" | "action" | "question"));
         let explicit_open_item = allowed.contains(&"question") && !allowed.contains(&"action")
@@ -73,6 +75,6 @@ impl Authority {
                 else if allowed.contains(&"opinion") { "opinion" }
                 else { "status" })
         } else { None };
-        Self { allowed, verbatim }
+        Self { allowed, verbatim, context_only:super::source_grounding::context_only_fragment(source) }
     }
 }

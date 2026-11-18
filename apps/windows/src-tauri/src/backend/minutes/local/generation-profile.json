@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "model": "Qwen3.5-4B Q4_K_M",
   "mode": "bounded-source-windows",
-  "pipeline": "source permissions and verbatim protected clauses, scoped facts, immutable fact IDs for organization",
+  "pipeline": "source permissions and literal clauses, scoped facts with at most one measurement recheck per window, immutable fact IDs for organization",
   "enableThinking": false,
   "reasoningBudgetTokens": 0,
   "thinkingSwitchSource": "https://huggingface.co/Qwen/Qwen3.5-4B#quickstart",
@@ -19,5 +19,5 @@
     "seed": 42
   },
   "contentQualified": false,
-  "note": "First scoped control returned every requested sentence but assigned all rows to decisions and changed an additional fee into a bundled one. The original clause is retained for concise quantity and condition anchors. Elevated role candidates require a positive marker on their primary sentence. No change to weights, decoder, sampling, or process limits."
+  "note": "The clean short source passed. The first real-card window invented unsupported years and a multiplier from unclear ASR and bound a substantive fact to a fragment. Check literal measurement forms and references before freezing a window. Keep fragments as context and re-extract only unsupported measurement anchors once. No change to weights, decoder, sampling, or process limits."
 }
