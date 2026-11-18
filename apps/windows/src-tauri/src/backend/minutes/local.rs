@@ -6,6 +6,7 @@ mod probe;
 mod evidence_document;
 mod atomic_document;
 mod source_windows;
+mod source_authority;
 pub(crate) use probe::candidate as verify_candidate;
 use std::{net::TcpListener,sync::{Arc,Mutex},time::Instant};
 use serde_json::{json,Value};
@@ -65,10 +66,13 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
             let mut facts=Vec::new();
             let mut reviewed=Vec::new();
             for index in 0..windows.len(){
-                let (input,schema)=windows.input_and_schema(index);
                 if let Ok(mut trace)=trace.lock(){trace["sourceWindow"]=json!({"current":index+1,"total":windows.len()});}
-                let raw=transport::generate(port,&key,&alias,source_windows::PROMPT,input,schema,stop,&trace,2048)?;
-                record_call(&trace,&format!("source-window-{}",index+1));
+                let raw=if windows.requires_model(index){
+                    let (input,schema)=windows.input_and_schema(index);
+                    let raw=transport::generate(port,&key,&alias,source_windows::PROMPT,input,schema,stop,&trace,2048)?;
+                    record_call(&trace,&format!("source-window-{}",index+1));
+                    raw
+                }else{"{}".into()};
                 let (mut extracted,coverage)=windows.decode(index,&raw)?;
                 facts.append(&mut extracted);
                 reviewed.push(coverage);

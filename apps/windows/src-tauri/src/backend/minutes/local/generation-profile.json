@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "model": "Qwen3.5-4B Q4_K_M",
   "mode": "bounded-source-windows",
-  "pipeline": "one anchored record per source sentence, immutable fact IDs for organization",
+  "pipeline": "source permissions and verbatim protected clauses, scoped facts, immutable fact IDs for organization",
   "enableThinking": false,
   "reasoningBudgetTokens": 0,
   "thinkingSwitchSource": "https://huggingface.co/Qwen/Qwen3.5-4B#quickstart",
@@ -19,5 +19,5 @@
     "seed": 42
   },
   "contentQualified": false,
-  "note": "Full-source passes exhausted their reasoning budget and still missed facts or cited adjacent statements. Bounded source windows assign primary references mechanically and record an explicit response per sentence. Extra references must be in the offered window. Explicit scope replaces long reasoning; weights, decoder, sampling and process limits stay fixed."
+  "note": "First scoped control returned every requested sentence but assigned all rows to decisions and changed an additional fee into a bundled one. The original clause is retained for concise quantity and condition anchors. Elevated role candidates require a positive marker on their primary sentence. No change to weights, decoder, sampling, or process limits."
 }

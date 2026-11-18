@@ -1,0 +1,67 @@
+//! Conservative permissions for claims that appear as decisions or tasks.
+//! Protected clauses retain their original wording and attribution.
+use std::sync::LazyLock;
+
+use super::super::canonical_brief;
+
+const DECISION: &[&str] = &[
+    "会议决定", "一致决定", "一致同意", "共同决定", "我们决定", "大家同意",
+    "本次会议通过", "同意通过", "确认先", "最终确定", "就这么定", "就按这个执行",
+];
+const ACTION: &[&str] = &["我承诺", "我负责", "我来负责", "由你负责", "由他负责", "请", "负责提交", "负责交付"];
+const NEXT_WORK: &[&str] = &["会后", "下次会议", "下周", "本周", "明天", "后天", "周一", "周二", "周三", "周四", "周五", "周六", "周日", "周末", "截止", "之前", "下班前"];
+const NON_BINDING: &[&str] = &[
+    "没有决定", "未作决定", "还没决定", "没有同意", "不决定", "不承诺", "还未确认",
+    "如果", "假如", "假设", "建议", "希望", "可能", "讨论是否", "曾经", "上周", "上次", "过去", "之前已经",
+];
+const IN_MEETING: &[&str] = &["请发言", "请介绍", "请回答", "请讲", "请分享", "请谈", "接下来请", "下面请", "有请"];
+const OPEN: &[&str] = &["未决", "待回答", "还没确定", "尚未确定", "还没有确定", "没有给明确答复", "没有明确答复"];
+const RECOMMEND: &[&str] = &["建议", "希望", "不妨", "可以考虑"];
+const FORECAST: &[&str] = &["预计", "预测", "预估", "大概会", "可能会", "有望"];
+const OPINION: &[&str] = &["我认为", "我觉得", "我的看法", "个人认为", "我判断"];
+const EXACT_RELATION: &[&str] = &[
+    "报价", "价格", "费用", "收费", "成本", "预算", "金额", "计费", "付款", "采购价",
+    "不意味着", "才具备", "必须先", "条件不满足", "不能因为", "不能把", "不承诺", "没有批准", "除非", "顺延",
+];
+
+static QUANTITY: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+    r"(?:[0-9]+(?:[.．][0-9]+)?|[零〇一二两三四五六七八九十百千万亿半]+)\s*(?:[%％]|元|美元|块钱|台|家|天|小时|分钟|笔|吨|公斤|个月)"
+).expect("valid source quantity pattern"));
+
+fn has(source: &str, markers: &[&str]) -> bool {
+    markers.iter().any(|marker| source.contains(marker))
+}
+
+#[derive(Clone)]
+pub(super) struct Authority {
+    pub(super) allowed: Vec<&'static str>,
+    pub(super) verbatim: Option<&'static str>,
+}
+
+impl Authority {
+    pub(super) fn from_source(source: &str) -> Self {
+        let source = source.trim();
+        let mut allowed = vec!["status"];
+        if has(source, RECOMMEND) { allowed.push("recommendation"); }
+        if has(source, FORECAST) { allowed.push("forecast"); }
+        if has(source, OPINION) { allowed.push("opinion"); }
+        let non_binding = has(source, NON_BINDING);
+        if !non_binding && has(source, DECISION) { allowed.push("decision"); }
+        if !non_binding && !has(source, IN_MEETING) && has(source, NEXT_WORK) && has(source, ACTION) {
+            allowed.push("action");
+        }
+        if has(source, OPEN) { allowed.push("question"); }
+
+        let has_typed_outcome = allowed.iter().any(|role| matches!(*role, "decision" | "action" | "question"));
+        let verbatim = if !has_typed_outcome && canonical_brief::line(source, 90)
+            && (has(source, EXACT_RELATION) || QUANTITY.is_match(source)) {
+            // Choose a conservative label without changing the actual words.
+            // An explicit recommendation or prediction remains such in the reader.
+            Some(if allowed.contains(&"recommendation") { "recommendation" }
+                else if allowed.contains(&"forecast") { "forecast" }
+                else if allowed.contains(&"opinion") { "opinion" }
+                else { "status" })
+        } else { None };
+        Self { allowed, verbatim }
+    }
+}

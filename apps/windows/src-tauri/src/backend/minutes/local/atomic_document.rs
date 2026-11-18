@@ -13,9 +13,9 @@ pub(super) fn object(props:Value)->Value{let required=props.as_object().unwrap()
 fn prose()->Value{json!({"type":"string","minLength":1})}
 pub(super) fn array(items:Value,min:usize,max:usize)->Value{json!({"type":"array","items":items,"minItems":min,"maxItems":max})}
 
-pub(super) fn fact_properties(evidence: Value)->Value{
+pub(super) fn fact_properties(evidence: Value, roles:&[&str])->Value{
     let optional=json!({"anyOf":[prose(),{"type":"null"}]});
-    json!({"evidence":evidence,"role":{"type":"string","enum":["status","opinion","recommendation","forecast","decision","action","question"]},"owner":optional,"due":optional,"text":prose()})
+    json!({"evidence":evidence,"role":{"type":"string","enum":roles},"owner":optional,"due":optional,"text":prose()})
 }
 #[cfg(test)]
 #[derive(Deserialize)]
@@ -23,7 +23,12 @@ pub(super) fn fact_properties(evidence: Value)->Value{
 struct Extracted {facts:Vec<ExtractedFact>}
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
-pub(super) struct ExtractedFact {pub(super) evidence:Vec<String>,role:String,owner:Option<String>,due:Option<String>,text:String}
+pub(super) struct ExtractedFact {pub(super) evidence:Vec<String>,pub(super) role:String,owner:Option<String>,due:Option<String>,text:String}
+impl ExtractedFact{
+    pub(super) fn verbatim(id:&str,role:&str,text:&str)->Self{
+        Self{evidence:vec![id.to_owned()],role:role.to_owned(),owner:None,due:None,text:text.trim().to_owned()}
+    }
+}
 pub(super) struct Bank {pub facts:Vec<Fact>,pub receipt:Value}
 #[cfg(test)]
 pub(super) fn parse_bank(raw:&str,source:&str)->Result<Bank,String>{
@@ -263,7 +268,7 @@ mod tests{
     }
     #[test]
     fn prose_is_checked_after_generation_without_forcing_grammar_cutoffs(){
-        assert!(fact_properties(json!({}))["text"].get("maxLength").is_none());
+        assert!(fact_properties(json!({}),&["status"])["text"].get("maxLength").is_none());
         let(s,_,mut f,_)=fixture();f["facts"][0]["text"]=json!("长".repeat(91));assert!(parse_bank(&f.to_string(),&s.transcript_text).is_err());
     }
 }
