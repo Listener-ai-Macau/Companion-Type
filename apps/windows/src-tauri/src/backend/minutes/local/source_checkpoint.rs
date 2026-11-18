@@ -160,6 +160,8 @@ mod tests {
             // Select from the runtime's source-only candidates without certifying readability.
             let input = super::super::atomic_document::layout_input(&bank);
             let chapters = input["chapters"].as_object().unwrap();
+            let chapters_from_bank = bank.receipt["plannedChapters"].as_array().unwrap();
+            assert_eq!(chapters.values().map(|chapter| chapter["facts"].as_array().unwrap().len()).sum::<usize>(),112);
             let mut seen = std::collections::HashSet::new();
             let mut regulation = None;
             if let Some(path) = std::env::var_os("COMPANION_TEST_REJECTED_FREE_LABEL_RECEIPT") {
@@ -171,9 +173,13 @@ mod tests {
             for (key, context) in chapters {
                 let choices = context["labelChoices"].as_object().unwrap();
                 let rows = context["facts"].as_array().unwrap();
-                assert!(!choices.is_empty());
-                assert!(choices.values().all(|term| rows.iter().any(|fact|
-                    fact[2].as_str().unwrap().contains(term.as_str().unwrap()))));
+                let offered: std::collections::HashSet<_> = rows.iter().map(|row| row[0].as_str().unwrap()).collect();
+                let scope = chapters_from_bank.iter().find(|row| row["id"] == key.as_str()).unwrap();
+                assert!(!choices.is_empty() && rows.len() <= 14);
+                assert!(choices.values().all(|term| bank.facts.iter().any(|fact| {
+                    (scope["firstFact"].as_str().unwrap()..=scope["lastFact"].as_str().unwrap()).contains(&fact.id.as_str())
+                        && fact.text.contains(term.as_str().unwrap())
+                })));
                 let mut distinct = choices.iter().filter(|(_, term)| !seen.contains(term.as_str().unwrap()));
                 let picked = if key == "t4" {
                     distinct.find(|(_, term)| term.as_str().unwrap().contains("电池法规"))
@@ -184,6 +190,9 @@ mod tests {
                 let chapter = fixture["chapters"][key].as_object_mut().unwrap();
                 chapter.remove("title");
                 chapter.insert("labelIds".into(), json!([picked.0]));
+                let points = chapter.get_mut("mainFacts").unwrap().as_array_mut().unwrap();
+                points.retain(|id| offered.contains(id.as_str().unwrap()));
+                if points.is_empty() { points.push(rows[0][0].clone()); }
             }
             let mut invented = fixture.clone();
             invented["chapters"]["t4"]["labelIds"] = json!(["碳关税"]);
@@ -202,7 +211,7 @@ mod tests {
             if let Some(path) = std::env::var_os("COMPANION_TEST_CHAPTER_REPLAY_OUTPUT") {
                 let file = std::fs::OpenOptions::new().write(true).create_new(true).open(path).unwrap();
                 serde_json::to_writer_pretty(file, &serde_json::json!({
-                    "state":"ENGINEERING_FIXTURE_WITH_CLOSED_LABEL_IDS_NOT_PUBLICATION",
+                    "state":"ENGINEERING_FIXTURE_WITH_STRATIFIED_PRIMARIES_NOT_PUBLICATION",
                     "document":parsed.receipt["document"],
                     "receipt":parsed.receipt,"minutes":parsed.minutes,"newInferenceRequests":0
                 })).unwrap();
