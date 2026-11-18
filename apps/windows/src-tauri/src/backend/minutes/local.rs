@@ -48,7 +48,7 @@ pub(crate) fn attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMi
 }
 fn new_trace()->transport::Trace{
     Arc::new(Mutex::new(json!({"provider":"local","model":"Qwen3.5-4B-Q4_K_M","runtimeSha256":assets::SERVER_SHA,
-        "modelSha256":assets::MODEL_SHA,"stage":"preflight","newCloudCalls":0,"trainingUpdates":0,"semanticAccuracyCertificate":false,"contentQualified":false})))
+        "modelSha256":assets::MODEL_SHA,"stage":"preflight","calls":[],"newCloudCalls":0,"trainingUpdates":0,"semanticAccuracyCertificate":false,"contentQualified":false})))
 }
 fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,trace:transport::Trace,reused:&source_checkpoint::CheckedSourcePrefix)->(Result<CompanionV1MeetingMinutes,String>,Value){
     let start=Instant::now();
@@ -75,7 +75,9 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
             let mut reviewed=Vec::new();
             for index in 0..windows.len(){
                 if let Ok(mut trace)=trace.lock(){trace["sourceWindow"]=json!({"current":index+1,"total":windows.len()});}
-                let (raw, encoding) = if let Some((call, encoding)) = reused.call(index) {
+                let (encoding, saved) = reused.window(index)
+                    .unwrap_or((source_windows::SourceEncoding::DirectSingleRole, None));
+                let raw = if let Some(call) = saved {
                     let mut replay = call.clone();
                     replay["reused"] = json!(true);
                     let raw = replay["output"].as_str().expect("validated reusable response").to_owned();
@@ -83,17 +85,16 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                         if !trace["calls"].is_array() { trace["calls"] = json!([]); }
                         trace["calls"].as_array_mut().unwrap().push(replay);
                     }
-                    (raw, encoding)
-                } else if windows.requires_model(index) {
-                    let encoding = source_windows::SourceEncoding::SelectOriginal;
+                    raw
+                } else if windows.requires_model(index, encoding) {
                     let (input,schema)=windows.contract(index, encoding);
                     let raw=transport::generate(port,&key,&alias,encoding.prompt(),input,schema,stop,&trace,SOURCE_OUTPUT_TOKENS)?;
                     record_call(&trace,&format!("source-window-{}",index+1));
-                    (raw, encoding)
-                } else { ("{}".into(), source_windows::SourceEncoding::SelectOriginal) };
+                    raw
+                } else { "{}".into() };
                 let mut checked = windows.check_encoded(index, &raw, encoding)?;
                 facts.append(&mut checked.facts);
-                reviewed.push(json!({"window":index+1,"sentences":checked.reviewed}));
+                reviewed.push(json!({"window":index+1,"sourceEncoding":encoding.name(),"sentences":checked.reviewed}));
                 if let Ok(mut trace)=trace.lock(){trace["reviewedSourceWindows"]=json!(reviewed);}
                 if facts.len()>atomic_document::MAX_FACTS{return Err(atomic_document::fail());}
             }
