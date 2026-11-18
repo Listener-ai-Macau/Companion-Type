@@ -36,7 +36,8 @@ fn post(client:&Client,address:&str,key:&str,path:&str,body:&Value,stop:&AtomicB
     limited_json(client.post(format!("{address}{path}")).bearer_auth(key).json(body).timeout(Duration::from_secs(30)).send().map_err(|_|error())?)
 }
 
-pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,schema:Value,stop:&AtomicBool,trace:&Trace)->Result<String,String>{
+pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,schema:Value,stop:&AtomicBool,trace:&Trace,max_output_tokens:usize)->Result<String,String>{
+    if !(1..=MAX_NEW_TOKENS).contains(&max_output_tokens){return Err(error());}
     let address=format!("http://127.0.0.1:{port}");
     let client=Client::builder().no_proxy().redirect(reqwest::redirect::Policy::none()).connect_timeout(Duration::from_secs(2))
         .timeout(Duration::from_secs(900)).build().map_err(|_|error())?;
@@ -59,8 +60,8 @@ pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,sche
     let rendered=rendered["prompt"].as_str().ok_or_else(error)?;
     let tokenized=post(&client,&address,key,"/tokenize",&json!({"content":rendered,"add_special":false,"parse_special":true}),stop)?;
     let tokens=tokenized["tokens"].as_array().ok_or_else(error)?.len();
-    if tokens>12288||tokens+MAX_NEW_TOKENS>16384{return Err("本场文字超出本地模型容量，未截断转写，已有内容保留。".into());}
-    let mut body=json!({"model":alias,"messages":messages,"max_tokens":MAX_NEW_TOKENS,
+    if tokens>12288||tokens+max_output_tokens>16384{return Err("本场文字超出本地模型容量，未截断转写，已有内容保留。".into());}
+    let mut body=json!({"model":alias,"messages":messages,"max_tokens":max_output_tokens,
         "stream":true,"stream_options":{"include_usage":true},"chat_template_kwargs":kwargs,
         "reasoning_format":"deepseek","reasoning_budget_tokens":profile["reasoningBudgetTokens"],
         "response_format":{"type":"json_schema","schema":schema}});
@@ -70,7 +71,12 @@ pub(super) fn generate(port:u16,key:&str,alias:&str,prompt:&str,input:Value,sche
     }
     if let Ok(mut trace)=trace.lock(){trace["generationProfile"]=profile;}
     let wire=super::evidence_document::wire(&body);
-    if let Ok(mut trace)=trace.lock(){trace["request"]=body.clone();trace["schemaPropertyOrder"]=json!("evidence,role,owner,due,text for source facts; purpose/topics then typed singleton fact IDs for organization");trace["inputTokens"]=json!(tokens);let count=trace["inferenceRequestAttempts"].as_u64().unwrap_or(0)+1;trace["inferenceRequestAttempts"]=json!(count);trace["stage"]=json!("generating");}
+    if let Ok(mut trace)=trace.lock(){
+        for key in ["output","reasoningCharacters","usage","finishReason","generationSeconds"]{trace[key]=Value::Null;}
+        trace["request"]=body.clone();trace["inputTokens"]=json!(tokens);
+        let count=trace["inferenceRequestAttempts"].as_u64().unwrap_or(0)+1;
+        trace["inferenceRequestAttempts"]=json!(count);trace["stage"]=json!("generating");
+    }
     check(stop)?;let generated=Instant::now();
     let response=client.post(format!("{address}/v1/chat/completions")).bearer_auth(key).header(reqwest::header::CONTENT_TYPE,"application/json").body(wire).send().map_err(|_|error())?;
     if !response.status().is_success(){return Err(error());}

@@ -44,18 +44,27 @@ pub(in crate::backend::minutes) fn source_units(text:&str)->Vec<Unit> {
     parts.into_iter().enumerate().map(|(i,text)|Unit{id:format!("u{i:03}"),text}).collect()
 }
 pub(in crate::backend::minutes) fn constraints(units:&[Unit])->Vec<Constraint> {
+    constraint_anchors(units).into_iter().map(|(constraint,_)|constraint).collect()
+}
+
+// The end byte of the trigger within the original unit. The display quote may
+// include preceding context; the end byte still identifies the actual trigger.
+pub(in crate::backend::minutes) fn constraint_anchors(units:&[Unit])->Vec<(Constraint,usize)> {
     const KEYS:[&str;20]=["成本","费用","预算","报价","代价","价格","只有","除非","前提","如果","尚未","还没","未通过","暂定","未决定","不批准","不确定","不能","风险","条件"];
     let mut out=Vec::new();let mut seen=HashSet::new();
     for unit in units {
-        let mut previous=String::new();let mut sentence=String::new();
+        let mut previous=String::new();let mut sentence=String::new();let mut offset=0;
         for c in unit.text.chars().chain(std::iter::once('\n')) {
+            offset+=c.len_utf8();
             sentence.push(c);
             if !matches!(c,'。'|'！'|'？'|'；'|'\n'){continue;}
             let part=sentence.trim().to_string();sentence.clear();
             if part.is_empty(){continue;}
             if KEYS.iter().any(|key|part.contains(key)) {
                 let quote=if previous.chars().count()+part.chars().count()<=300 {format!("{previous} {part}").trim().to_string()}else{part.clone()};
-                if quote.chars().count()<=300&&seen.insert(quote.clone()) {out.push(Constraint{id:format!("c{:03}",out.len()),source:unit.id.clone(),quote});}
+                if quote.chars().count()<=300&&seen.insert(quote.clone()) {
+                    out.push((Constraint{id:format!("c{:03}",out.len()),source:unit.id.clone(),quote},offset.min(unit.text.len())));
+                }
             }
             previous=part;
         }

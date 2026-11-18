@@ -5,6 +5,8 @@ mod transport;
 mod probe;
 mod evidence_document;
 mod atomic_document;
+mod source_windows;
+mod source_authority;
 pub(crate) use probe::candidate as verify_candidate;
 use std::{net::TcpListener,sync::{Arc,Mutex},time::Instant};
 use serde_json::{json,Value};
@@ -50,7 +52,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
     let outcome=(||{
         if !session.meeting_notes.is_empty(){return Err("当前本地整理不能合并补充说明，已有内容保留。".into());}
         if !assets::cpu_supported(){return Err("这台电脑暂不支持当前本地纪要引擎，可选择云端整理。".into());}
-        let input=atomic_document::fact_input(&session.transcript_text)?;let prompt=atomic_document::fact_prompt();let schema=atomic_document::fact_schema(&session.transcript_text);
+        let windows=source_windows::SourceWindows::new(&session.transcript_text)?;
         let _lease=assets::compute_lease()?;
         let model=assets::model_path()?;assets::verified(&model,assets::MODEL_BYTES,assets::MODEL_SHA)?;
         let runtime=assets::runtime()?;
@@ -61,13 +63,27 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
         if let Ok(mut trace)=trace.lock(){trace["stage"]=json!("loading-engine");}
         let cancellation=super::super::meeting_processing_job::current();
         let parsed=super::super::external_command::with_local_service(program,&args,cancellation.as_ref().map(|c|c.flag()),|stop|{
-            let raw=transport::generate(port,&key,&alias,prompt,input,schema,stop,&trace)?;
-            record_call(&trace,"atomic-source-facts");
-            let bank=atomic_document::parse_bank(&raw,&session.transcript_text)?;
+            let mut facts=Vec::new();
+            let mut reviewed=Vec::new();
+            for index in 0..windows.len(){
+                if let Ok(mut trace)=trace.lock(){trace["sourceWindow"]=json!({"current":index+1,"total":windows.len()});}
+                let raw=if windows.requires_model(index){
+                    let (input,schema)=windows.input_and_schema(index);
+                    let raw=transport::generate(port,&key,&alias,source_windows::PROMPT,input,schema,stop,&trace,2048)?;
+                    record_call(&trace,&format!("source-window-{}",index+1));
+                    raw
+                }else{"{}".into()};
+                let (mut extracted,coverage)=windows.decode(index,&raw)?;
+                facts.append(&mut extracted);
+                reviewed.push(coverage);
+                if let Ok(mut trace)=trace.lock(){trace["reviewedSourceWindows"]=json!(reviewed);}
+                if facts.len()>128{return Err(atomic_document::fail());}
+            }
+            let bank=atomic_document::build_bank(facts,&session.transcript_text)?;
             if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}
-            let layout=transport::generate(port,&key,&alias,atomic_document::layout_prompt(),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace)?;
+            let layout=transport::generate(port,&key,&alias,atomic_document::layout_prompt(),atomic_document::layout_input(&bank),atomic_document::layout_schema(&bank)?,stop,&trace,3072)?;
             record_call(&trace,"id-only-organization");
-            atomic_document::assemble(&layout,&bank,session,base)
+            atomic_document::organize(&layout,&bank,session,base)
         })?;
         release_confirmed=true;
         if let Ok(mut trace)=trace.lock(){trace["documentReceipt"]=parsed.receipt;trace["stage"]=json!("candidate-parsed");}
