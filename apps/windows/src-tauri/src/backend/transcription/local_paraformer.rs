@@ -317,10 +317,13 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
         }
         offset += buf.len() as u64;
     }
+    battery_term_review::verify_failure_analysis(&runtime, &mut file, start, len, &mut parts, &anchors,
+        super::super::meeting_processing_job::check_current)?;
     runtime.finish_recognition();
     battery_term_review::apply(&mut file, start, len, &root, &mut parts, &anchors,
         super::super::meeting_processing_job::check_current)?;
     runtime.finish_punctuation(&root,&mut parts,super::super::meeting_processing_job::check_current)?;
+    battery_term_review::resolve_institution_references(&mut parts);
     for (anchor,text) in anchors.iter_mut().zip(&parts){anchor.text=text.clone();}
     super::super::meeting_processing_job::check_current()?;
     let text = super::normalize_transcript(&parts.join("\n"));
@@ -367,7 +370,9 @@ mod tests {
             })).unwrap();
         }
         assert!(result.utterances.iter().any(|line| line.start_ms == 1_013_200 && line.text.contains("电芯")));
-        assert!(result.utterances.iter().any(|line| line.start_ms == 1_493_600 && line.text.contains("神经计量院")));
+        assert!(result.utterances.iter().any(|line| line.start_ms == 959_800 && line.text.contains("电芯") && line.text.contains("失效分析")));
+        assert!(result.utterances.iter().any(|line| line.start_ms == 979_600 && line.text.contains("电芯")));
+        assert!(result.utterances.iter().any(|line| line.start_ms == 1_493_600 && line.text.contains("深圳计量院")));
         assert!(result.utterances.iter().any(|line| line.start_ms == 1_543_600 && line.text.contains("深圳计量院")));
     }
 

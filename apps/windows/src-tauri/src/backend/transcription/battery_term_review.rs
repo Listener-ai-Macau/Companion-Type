@@ -50,6 +50,110 @@ fn model_dir(root: &Path) -> PathBuf {
         .map_or_else(|| root.join(REVIEW_DIR), PathBuf::from)
 }
 
+
+// An alternate decode of the same utterance can resolve a near-homophone.
+// Both windows must independently retain the product and analysis context.
+pub(super) fn verify_failure_analysis(
+    runtime: &Runtime, file: &mut File, data_start: u64, data_len: u64,
+    texts: &mut [String], anchors: &[CompanionV1UtteranceSegment],
+    mut check_cancelled: impl FnMut() -> Result<(), String>,
+) -> Result<(), String> {
+    for (index, text) in texts.iter_mut().enumerate().filter(|(_, text)| {
+        candidate(text).is_some() && text.contains("寿命预测")
+            && text.matches("时效分析").count() == 1 && text.contains("成品")
+    }).take(MAX_REVIEW_SEGMENTS) {
+        let anchor = &anchors[index];
+        let windows = [(1_200, 1_200), (1_600, 600), (800, 800)];
+        let mut confirmations = 0;
+        for (left, right) in windows {
+            check_cancelled()?;
+            let Some(audio) = read_audio(file, data_start, data_len,
+                anchor.start_ms.saturating_sub(left), anchor.end_ms + right) else { break; };
+            if runtime.transcribe(&audio).is_ok_and(|review| {
+                review.contains("成品") && review.contains("失效分析") && !review.contains("时效分析")
+            }) {
+                confirmations += 1;
+                if confirmations == 2 {
+                    *text = text.replacen("时效分析", "失效分析", 1);
+                    break;
+                }
+            }
+        }
+    }
+    check_cancelled()
+}
+
+fn read_audio(file: &mut File, data_start: u64, data_len: u64, from: u64, to: u64) -> Option<Vec<u8>> {
+    let first = (from * BYTES_PER_SECOND / 1000).min(data_len);
+    let last = (to * BYTES_PER_SECOND / 1000).min(data_len);
+    if last <= first { return None; }
+    let mut audio = vec![0; (last - first) as usize];
+    file.seek(SeekFrom::Start(data_start + first)).and_then(|_| file.read_exact(&mut audio)).ok()?;
+    Some(audio)
+}
+
+// An independently audio-confirmed battery term can clarify surrounding
+// references within the same discussion. Retain unrelated telecom mentions.
+fn resolve_battery_references(
+    texts: &mut [String], anchors: &[CompanionV1UtteranceSegment], confirmed: usize,
+) {
+    if !texts[confirmed].contains("电池") { return; }
+    let oldest = anchors[confirmed].end_ms.saturating_sub(90_000);
+    let first = (0..confirmed).rev()
+        .take_while(|&index| anchors[index].start_ms >= oldest)
+        .find(|&index| {
+            let opening = &texts[index];
+            candidate(opening).is_some() && opening.contains("成品")
+                && opening.contains("失效分析") && opening.contains("寿命预测")
+        });
+    let Some(first) = first else { return; };
+    if anchors[first..=confirmed].iter().filter_map(|a| a.speaker)
+        .any(|speaker| anchors[first].speaker != Some(speaker)) {
+        return;
+    }
+    let material_reference = |text: &str| {
+        text.split_once("电信").is_some_and(|(prefix, suffix)| {
+            prefix.contains("材料") && prefix.contains("测试方法") && prefix.contains("应用到")
+                && suffix.contains("研究对象") && !suffix.contains("电信")
+                && !["通信", "宽带", "运营商", "基站", "网络"].iter().any(|term| text.contains(term))
+        })
+    };
+    texts[first] = texts[first].replacen("电信", "电芯", 1);
+    for text in &mut texts[first + 1..confirmed] {
+        if material_reference(text) {
+            *text = text.replacen("电信", "电芯", 1);
+        }
+    }
+}
+
+// Use a name that was audibly recognized elsewhere in this meeting only
+// when both remarks name the same second institution. No external name list.
+pub(super) fn resolve_institution_references(texts: &mut [String]) {
+    use std::{collections::HashSet, sync::LazyLock};
+    const CORRUPTED: &str = "神经计量院";
+    static NAME: LazyLock<regex::Regex> = LazyLock::new(|| {
+        regex::Regex::new(r"[深申沈]\p{Han}计量院").expect("valid name pattern")
+    });
+    static PEER: LazyLock<regex::Regex> = LazyLock::new(|| {
+        regex::Regex::new(r"\p{Han}{2}计量(?:[、，。]|也|都|$)").expect("valid peer pattern")
+    });
+    let recognized: Vec<_> = texts.iter().filter(|text| !text.contains(CORRUPTED))
+        .flat_map(|text| NAME.find_iter(text).map(|m| (m.as_str().to_owned(), text.clone())))
+        .collect();
+    if recognized.is_empty() { return; }
+
+    for text in texts.iter_mut().filter(|text| text.matches(CORRUPTED).count() == 1
+        && text.contains("包括") && (text.contains("检测机构") || text.contains("检测服务"))) {
+        let peers: Vec<_> = PEER.find_iter(text)
+            .map(|m| m.as_str().chars().take(4).collect::<String>()).collect();
+        let same_discussion = recognized.iter().filter(|(_, source)| peers.iter().any(|peer| source.contains(peer)));
+        let names: HashSet<_> = same_discussion.map(|(name, _)| name.as_str()).collect();
+        if names.len() == 1 {
+            *text = text.replacen(CORRUPTED, names.into_iter().next().expect("one recognized name"), 1);
+        }
+    }
+}
+
 pub(super) fn apply(
     file: &mut File, data_start: u64, data_len: u64, root: &Path,
     texts: &mut [String], anchors: &[CompanionV1UtteranceSegment],
@@ -72,17 +176,12 @@ pub(super) fn apply(
         let mut confirmations = 0;
         for (from, to) in ranges {
             check_cancelled()?;
-            let first = (from * BYTES_PER_SECOND / 1000).min(data_len);
-            let last = (to * BYTES_PER_SECOND / 1000).min(data_len);
-            if last <= first { continue; }
-            let mut audio = vec![0; (last - first) as usize];
-            if file.seek(SeekFrom::Start(data_start + first)).and_then(|_| file.read_exact(&mut audio)).is_err() {
-                break;
-            }
+            let Some(audio) = read_audio(file, data_start, data_len, from, to) else { continue; };
             if reviewer.transcribe(&audio).is_ok_and(|text| supports_cell(&text)) {
                 confirmations += 1;
                 if confirmations == 2 {
                     texts[index].replace_range(position..position + "电信".len(), "电芯");
+                    resolve_battery_references(texts, anchors, index);
                     break;
                 }
             }

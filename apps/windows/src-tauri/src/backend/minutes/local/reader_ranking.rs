@@ -177,6 +177,10 @@ pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
         && has(&["达不到", "不够", "不足", "无法", "有限", "跟不上"]) {
         return Some(OperationalEvidence::RolloutCapacity);
     }
+    if has(&["盲盒", "组合包", "试用装"]) && has(&["可以做", "可以弄", "可以送", "建议做", "建议送"])
+        && !text.contains(['？', '?']) && !has(&["不建议", "不需要", "不能", "不用"]) {
+        return Some(OperationalEvidence::OfferingOptions);
+    }
     if has(&["赠品", "附赠", "增值服务", "服务权益", "套装", "套餐"])
         && has(&["几种", "多类", "多种", "多选", "多元化", "盲盒", "可选", "搭配"])
         && !text.contains(['？', '?']) {

@@ -47,7 +47,7 @@ pub(super) fn runtime()->Result<PathBuf,String>{
     Ok(root.join("llama-server.exe"))
 }
 #[cfg(windows)]
-pub(super) fn engineering_vulkan(root: &Path) -> Result<(PathBuf, String), String> {
+pub(super) fn verified_vulkan(root: &Path) -> Result<(PathBuf, String), String> {
     use std::os::windows::process::CommandExt;
     let manifest: RuntimeManifest = serde_json::from_slice(include_bytes!("local-vulkan-runtime-manifest.json"))
         .map_err(|_| "本地 Vulkan 引擎清单无效。")?;

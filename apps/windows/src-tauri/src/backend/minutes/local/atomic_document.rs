@@ -937,6 +937,8 @@ fn explicit_reader_recommendation(source: &str) -> bool {
             .iter().any(|verb| action.starts_with(verb)))
 }
 
+// Keep the complete selection criteria when a budget condition is followed
+// by a preference, such as availability or reach.
 // Keep a compact contiguous quote when the complete condition is inside
 // the original fact. Never remove an earlier condition, attribution or negation.
 fn reader_qualified_excerpt(text: &str) -> Option<&str> {
@@ -944,7 +946,6 @@ fn reader_qualified_excerpt(text: &str) -> Option<&str> {
     let kind = operational_evidence(text)?;
     let markers: &[&str] = match kind {
         OperationalEvidence::PriceVersusFit => &["越便宜越好的话"],
-        OperationalEvidence::BudgetAndAvailability => &["一定要跟着", "必须按照", "要根据"],
         OperationalEvidence::VerificationMaterial => &["尽量安排"],
         _ => return None,
     };
@@ -958,12 +959,6 @@ fn reader_qualified_excerpt(text: &str) -> Option<&str> {
     }
     let tail = &text[start..];
     let excerpt = match kind {
-        OperationalEvidence::BudgetAndAvailability if !text.contains("档期") => {
-            // The budget requirement is complete before a new suggested choice.
-            let end = ["，然后尽量", "，尽量", "，再建议"].iter()
-                .filter_map(|marker| tail.find(marker)).min()?;
-            text[..start + end].trim()
-        }
         OperationalEvidence::VerificationMaterial => tail.split_once("，及时").map_or(tail, |(stay, _)| stay),
         OperationalEvidence::PriceVersusFit => tail,
         _ => return None,
