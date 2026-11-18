@@ -16,7 +16,7 @@ pub(super) struct CheckpointInput {
 
 #[derive(Default)]
 pub(super) struct CheckedSourcePrefix {
-    calls: Vec<Option<(Value, SourceEncoding)>>,
+    windows: Vec<(SourceEncoding, Option<Value>)>,
 }
 
 fn failure() -> String {
@@ -50,7 +50,7 @@ impl CheckedSourcePrefix {
             return Err(failure());
         }
         let reviewed = trace["reviewedSourceWindows"].as_array().ok_or_else(failure)?;
-        let mut calls = trace["calls"].as_array().ok_or_else(failure)?.iter();
+        let mut calls = trace["calls"].as_array().ok_or_else(failure)?.iter().peekable();
         let windows = SourceWindows::new(source)?;
         if reviewed.is_empty() || reviewed.len() > windows.len() {
             return Err(failure());
@@ -62,38 +62,51 @@ impl CheckedSourcePrefix {
             if window["window"] != index + 1 {
                 return Err(failure());
             }
-            let saved = if windows.requires_model(index) {
+            let stage = format!("source-window-{}", index + 1);
+            let has_call = calls.peek().is_some_and(|call| call["stage"] == stage);
+            let encoding = if let Some(name) = window["sourceEncoding"].as_str() {
+                SourceEncoding::for_name(name).ok_or_else(failure)?
+            } else if window["sourceEncoding"].is_null() && has_call {
+                calls.peek().and_then(|call| call.pointer("/request/messages/0/content"))
+                    .and_then(Value::as_str).and_then(SourceEncoding::for_prompt).ok_or_else(failure)?
+            } else if window["sourceEncoding"].is_null() {
+                SourceEncoding::Detailed
+            } else {
+                return Err(failure());
+            };
+            if windows.requires_model(index, encoding) != has_call {
+                return Err(failure());
+            }
+            let saved = if has_call {
                 let call = calls.next().ok_or_else(failure)?;
                 let request = &call["request"];
                 let alias = request["model"].as_str().ok_or_else(failure)?;
-                let encoding = request.pointer("/messages/0/content").and_then(Value::as_str)
-                    .and_then(SourceEncoding::for_prompt).ok_or_else(failure)?;
                 let (input, schema) = windows.contract(index, encoding);
                 let expected = transport::request_body(alias, encoding.prompt(), input, schema, super::SOURCE_OUTPUT_TOKENS, &profile)?;
-                if *request != expected
-                    || call["stage"] != format!("source-window-{}", index + 1)
-                    || call["finishReason"] != "stop"
-                {
+                if *request != expected || call["finishReason"] != "stop" {
                     return Err(failure());
                 }
-                Some((call.clone(), encoding))
+                Some(call.clone())
             } else {
                 None
             };
-            let (raw, encoding) = match &saved {
-                Some((call, format)) => (call["output"].as_str().ok_or_else(failure)?, *format),
-                None => ("{}", SourceEncoding::SelectOriginal),
-            };
+            let raw = saved.as_ref().map(|call| call["output"].as_str().ok_or_else(failure))
+                .transpose()?.unwrap_or("{}");
             windows.check_encoded(index, raw, encoding)?;
-            prefix.push(saved);
+            prefix.push((encoding, saved));
         }
-        Ok(Self { calls: prefix })
+        Ok(Self { windows: prefix })
     }
 
-    pub(super) fn len(&self) -> usize { self.calls.len() }
+    pub(super) fn len(&self) -> usize { self.windows.len() }
 
-    pub(super) fn call(&self, index: usize) -> Option<(&Value, SourceEncoding)> {
-        self.calls.get(index).and_then(Option::as_ref).map(|(call, encoding)| (call, *encoding))
+    pub(super) fn window(&self, index: usize) -> Option<(SourceEncoding, Option<&Value>)> {
+        self.windows.get(index).map(|(encoding, call)| (*encoding, call.as_ref()))
+    }
+
+    #[cfg(test)]
+    fn call(&self, index: usize) -> Option<(&Value, SourceEncoding)> {
+        self.window(index).and_then(|(encoding, call)| call.map(|call| (call, encoding)))
     }
 }
 
@@ -166,6 +179,13 @@ mod tests {
         assert!(matches!(selected.call(0), Some((_, SourceEncoding::SelectOriginal))));
 
         data["receipt"]["reviewedSourceWindows"] = serde_json::json!([]);
+        assert!(CheckedSourcePrefix::from_report(&data, source, "frozen", 10).is_err());
+
+        data["receipt"]["calls"] = serde_json::json!([]);
+        data["receipt"]["reviewedSourceWindows"] = serde_json::json!([{"window":1,"sourceEncoding":"direct-single-role"}]);
+        let direct = CheckedSourcePrefix::from_report(&data, source, "frozen", 10).unwrap();
+        assert!(matches!(direct.window(0), Some((SourceEncoding::DirectSingleRole, None))));
+        data["receipt"]["reviewedSourceWindows"][0]["sourceEncoding"] = serde_json::json!("select-original");
         assert!(CheckedSourcePrefix::from_report(&data, source, "frozen", 10).is_err());
     }
 }

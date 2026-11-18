@@ -29,18 +29,36 @@ const SELECTION_PROMPT: &str = "逐条阅读中文会议原话，挑独立且对
 pub(super) enum SourceEncoding {
     Detailed,
     SelectOriginal,
+    DirectSingleRole,
 }
 
 impl SourceEncoding {
     pub(super) fn prompt(self) -> &'static str {
         match self {
             Self::Detailed => PROMPT,
-            Self::SelectOriginal => SELECTION_PROMPT,
+            Self::SelectOriginal | Self::DirectSingleRole => SELECTION_PROMPT,
         }
     }
 
     pub(super) fn for_prompt(prompt: &str) -> Option<Self> {
         [Self::Detailed, Self::SelectOriginal].into_iter().find(|encoding| encoding.prompt() == prompt)
+    }
+
+    pub(super) fn name(self) -> &'static str {
+        match self {
+            Self::Detailed => "detailed",
+            Self::SelectOriginal => "select-original",
+            Self::DirectSingleRole => "direct-single-role",
+        }
+    }
+
+    pub(super) fn for_name(name: &str) -> Option<Self> {
+        [Self::Detailed, Self::SelectOriginal, Self::DirectSingleRole]
+            .into_iter().find(|encoding| encoding.name() == name)
+    }
+
+    fn selects_original(self) -> bool {
+        self != Self::Detailed
     }
 }
 
@@ -92,13 +110,21 @@ impl SourceWindows {
 
     pub(super) fn len(&self) -> usize { self.core.len() }
 
-    pub(super) fn requires_model(&self,index:usize)->bool{
-        self.core[index].clone().any(|i| self.pending(i))
+    pub(super) fn requires_model(&self, index: usize, encoding: SourceEncoding) -> bool {
+        self.core[index].clone().any(|i| self.pending(i, encoding))
     }
 
-    fn pending(&self, i: usize) -> bool {
+    fn pending(&self, i: usize, encoding: SourceEncoding) -> bool {
         let policy = &self.authority[i];
-        policy.verbatim.is_none() && !policy.context_only
+        policy.verbatim.is_none() && !policy.context_only && self.direct_role(i, encoding).is_none()
+    }
+
+    fn direct_role(&self, i: usize, encoding: SourceEncoding) -> Option<&'static str> {
+        let policy = &self.authority[i];
+        if encoding != SourceEncoding::DirectSingleRole || policy.allowed.len() != 1 {
+            return None;
+        }
+        policy.literal_topic_role(text(&self.sentences[i]))
     }
 
     fn offered(&self, index: usize) -> Range<usize> {
@@ -126,44 +152,42 @@ impl SourceWindows {
         None
     }
 
+    #[cfg(test)]
     pub(super) fn input_and_schema(&self, index: usize) -> (Value, Value) {
-        let core = &self.core[index];
-        let offered = self.offered(index);
-        let rows: Vec<_> = offered.clone().map(|i| {
-            let s = &self.sentences[i];
-            let policy=&self.authority[i];
-            if core.contains(&i)&&self.pending(i){
-                json!({"id":id(s),"text":text(s),"anchor":true,"allowedRoles":policy.allowed})
-            }else{json!({"id":id(s),"text":text(s),"anchor":false})}
-        }).collect();
-        let mut properties = serde_json::Map::new();
-        for i in core.clone() {
-            let policy=&self.authority[i];
-            if !self.pending(i){continue;}
-            let related: Vec<&str> = offered.clone().filter(|j| *j != i).map(|j| id(&self.sentences[j])).collect();
-            let evidence = if related.is_empty() {
-                array(json!({"type": "string"}), 0, 0)
-            } else {
-                array(json!({"type": "string", "enum": related}), 0, 7)
-            };
-            properties.insert(id(&self.sentences[i]).into(), array(fact_schema(evidence, &policy.allowed), 0, FACTS_PER_SENTENCE));
-        }
-        (json!({"sourceSentences": rows}), object(Value::Object(properties)))
+        self.contract(index, SourceEncoding::Detailed)
     }
 
     pub(super) fn contract(&self, index: usize, encoding: SourceEncoding) -> (Value, Value) {
-        let (input, mut schema) = self.input_and_schema(index);
-        if encoding == SourceEncoding::SelectOriginal {
-            for i in self.core[index].clone().filter(|i| self.pending(*i)) {
-                let sentence = &self.sentences[i];
-                let policy = &self.authority[i];
-                if policy.literal_topic_role(text(sentence)).is_some() {
-                    let roles: Vec<_> = policy.allowed.iter().copied().chain(["skip"]).collect();
-                    schema["properties"][id(sentence)] = json!({"type":"string","enum":roles});
-                }
+        let core = &self.core[index];
+        let offered = self.offered(index);
+        let rows: Vec<_> = offered.clone().map(|i| {
+            let sentence = &self.sentences[i];
+            let policy = &self.authority[i];
+            if core.contains(&i) && self.pending(i, encoding) {
+                json!({"id":id(sentence),"text":text(sentence),"anchor":true,"allowedRoles":policy.allowed})
+            } else {
+                json!({"id":id(sentence),"text":text(sentence),"anchor":false})
             }
+        }).collect();
+        let mut properties = serde_json::Map::new();
+        for i in core.clone().filter(|i| self.pending(*i, encoding)) {
+            let sentence = &self.sentences[i];
+            let policy = &self.authority[i];
+            let schema = if encoding.selects_original() && policy.literal_topic_role(text(sentence)).is_some() {
+                let roles: Vec<_> = policy.allowed.iter().copied().chain(["skip"]).collect();
+                json!({"type":"string","enum":roles})
+            } else {
+                let related: Vec<&str> = offered.clone().filter(|j| *j != i).map(|j| id(&self.sentences[j])).collect();
+                let evidence = if related.is_empty() {
+                    array(json!({"type": "string"}), 0, 0)
+                } else {
+                    array(json!({"type": "string", "enum": related}), 0, 7)
+                };
+                array(fact_schema(evidence, &policy.allowed), 0, FACTS_PER_SENTENCE)
+            };
+            properties.insert(id(sentence).into(), schema);
         }
-        (input, schema)
+        (json!({"sourceSentences": rows}), object(Value::Object(properties)))
     }
 
     #[cfg(test)]
@@ -204,10 +228,14 @@ impl SourceWindows {
                 reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":origin}));
                 continue;
             }
-            let answer = answers.remove(anchor).ok_or_else(fail)?;
+            let direct = self.direct_role(i, encoding);
+            let answer = match direct {
+                Some(role) => WindowAnswer::Role(role.to_owned()),
+                None => answers.remove(anchor).ok_or_else(fail)?,
+            };
             let original = text(source);
             let literal_role = policy.literal_topic_role(original);
-            let selects_original = encoding == SourceEncoding::SelectOriginal && literal_role.is_some();
+            let selects_original = encoding.selects_original() && literal_role.is_some();
             match &answer {
                 WindowAnswer::Role(role) if selects_original
                     && (role == "skip" || policy.allowed.contains(&role.as_str())) => (),
@@ -219,7 +247,7 @@ impl SourceWindows {
                 reviewed.push(json!({"sentenceId":anchor,"factCount":0,"origin":"turn-transition"}));
                 continue;
             }
-            if encoding == SourceEncoding::SelectOriginal {
+            if encoding.selects_original() {
                 if policy.literal_collective_decision(original) {
                     facts.push(ExtractedFact::verbatim(anchor, "decision", original));
                     reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":"literal-decision"}));
@@ -246,7 +274,8 @@ impl SourceWindows {
                         }
                         facts.push(fact);
                     }
-                    reviewed.push(json!({"sentenceId":anchor, "factCount":usize::from(kept), "origin":"source-selection"}));
+                    let origin = if direct.is_some() { "single-role-original" } else { "source-selection" };
+                    reviewed.push(json!({"sentenceId":anchor, "factCount":usize::from(kept), "origin":origin}));
                     continue;
                 }
                 WindowAnswer::Facts(entries) => entries,
@@ -702,6 +731,29 @@ mod tests {
     }
 
     #[test]
+    fn direct_single_role_uses_model_only_for_remaining_content_and_keeps_original_assignments() {
+        let source = "设备仍在试运行。王岚在周四前完成离线验收。会议决定先在本机保存转写。建议赵信提前提交复盘。";
+        let windows = SourceWindows::new(source).unwrap();
+        let format = SourceEncoding::DirectSingleRole;
+        let (input, schema) = windows.contract(0, format);
+        assert_eq!(input["sourceSentences"][0]["anchor"], false);
+        assert_eq!(input["sourceSentences"][1]["anchor"], false);
+        assert_eq!(input["sourceSentences"][2]["anchor"], true);
+        assert_eq!(input["sourceSentences"][3]["anchor"], true);
+        assert_eq!(schema["required"], json!(["e0002", "e0003"]));
+        let mut wire = json!({"e0002":[],"e0003":"recommendation"});
+        let checked = windows.check_encoded(0, &wire.to_string(), format).unwrap();
+        let bank = super::super::atomic_document::build_bank(checked.facts, source).unwrap();
+        assert_eq!(bank.facts[0].text, "设备仍在试运行。");
+        assert_eq!(bank.facts[1].owner.as_deref(), Some("王岚"));
+        assert_eq!(bank.facts[1].due.as_deref(), Some("周四前"));
+        assert_eq!(bank.facts[2].text, "会议决定先在本机保存转写。");
+        assert_eq!(bank.facts[3].text, "建议赵信提前提交复盘。");
+        wire["e0000"] = json!("skip");
+        assert!(windows.check_encoded(0, &wire.to_string(), format).is_err());
+    }
+
+    #[test]
     fn fresh_selected_real_card_prefix_keeps_the_discussion_as_lead() {
         let Some(path) = std::env::var_os("COMPANION_TEST_SOURCE_SELECTION_LIVE_RECEIPT") else { return; };
         let report: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
@@ -748,6 +800,10 @@ mod tests {
         assert_eq!(trace["reusedSourceWindows"], 12);
         assert_eq!(reviewed.len(), windows.len());
         assert!(reviewed.len() <= calls.len());
+        let model_windows: Vec<_> = (0..windows.len())
+            .filter(|i| windows.requires_model(*i, SourceEncoding::DirectSingleRole))
+            .map(|i| i + 1).collect();
+        assert_eq!(model_windows, [5, 6, 10, 13, 15, 17, 26, 27]);
         let expected_repairs = [
             ("e0145", "source-scope-quote"),
             ("e0146", "source-scope-quote"),
