@@ -115,6 +115,39 @@ mod tests {
     use super::*;
 
     #[test]
+    fn direct_whole_card_replay_plans_every_record_without_a_model_assignment() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_DIRECT_REALCARD_RECEIPT") else { return; };
+        let report: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        let source = std::fs::read_to_string(report["sourceFile"].as_str().unwrap()).unwrap();
+        let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        let prefix = CheckedSourcePrefix::from_report(&report, &source, report["sourceSha256"].as_str().unwrap(),
+            report["durationMs"].as_u64().unwrap()).unwrap();
+        let windows = SourceWindows::new(&source).unwrap();
+        assert_eq!(prefix.len(), 28);
+        let mut facts = Vec::new();
+        let mut model_windows = 0;
+        for index in 0..windows.len() {
+            let (encoding, call) = prefix.window(index).unwrap();
+            assert!(matches!(encoding, SourceEncoding::DirectSingleRole));
+            model_windows += usize::from(call.is_some());
+            let raw = call.map(|row| row["output"].as_str().unwrap()).unwrap_or("{}");
+            facts.extend(windows.check_encoded(index, raw, encoding).unwrap().facts);
+        }
+        assert_eq!(model_windows, 8);
+        let bank = super::super::atomic_document::build_bank(facts, &source).unwrap();
+        assert_eq!(bank.facts.len(), 325);
+        let chapters = bank.receipt["plannedChapters"].as_array().unwrap();
+        assert_eq!(chapters.len(), 8);
+        assert_eq!(chapters.last().unwrap()["lastFact"], "a324");
+        let total: usize = chapters.iter().map(|chapter| {
+            let count = chapter["facts"].as_u64().unwrap() as usize;
+            assert!((1..=61).contains(&count));
+            count
+        }).sum();
+        assert_eq!(total, 325);
+    }
+
+    #[test]
     fn verified_source_reuse_replays_real_whole_card_failure_without_false_closing() {
         let Some(path) = std::env::var_os("COMPANION_TEST_REAL_CARD_WHOLE_LIMIT_RECEIPT") else { return; };
         let report: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
