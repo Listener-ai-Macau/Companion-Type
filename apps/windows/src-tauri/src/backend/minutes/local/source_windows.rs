@@ -106,6 +106,26 @@ impl SourceWindows {
         core.start.saturating_sub(CONTEXT_SENTENCES)..(core.end + CONTEXT_SENTENCES).min(self.sentences.len())
     }
 
+    fn linked_opinion_context(&self, window: usize, index: usize) -> Option<&str> {
+        let offered = self.offered(window);
+        let original = text(&self.sentences[index]);
+        let prior = index.checked_sub(1).filter(|i| offered.contains(i));
+        if let Some(i) = prior {
+            let question = &self.sentences[i];
+            if source_grounding::links_opinion_followup(text(question), original) {
+                return Some(id(question));
+            }
+        }
+        let next = index + 1;
+        if offered.contains(&next) {
+            let reply = &self.sentences[next];
+            if source_grounding::links_opinion_followup(original, text(reply)) {
+                return Some(id(reply));
+            }
+        }
+        None
+    }
+
     pub(super) fn input_and_schema(&self, index: usize) -> (Value, Value) {
         let core = &self.core[index];
         let offered = self.offered(index);
@@ -220,7 +240,11 @@ impl SourceWindows {
                 WindowAnswer::Role(role) => {
                     let kept = role != "skip";
                     if kept {
-                        facts.push(ExtractedFact::verbatim(anchor, &role, original));
+                        let mut fact = ExtractedFact::verbatim(anchor, &role, original);
+                        if role == "opinion" {
+                            fact.evidence.extend(self.linked_opinion_context(index, i).map(str::to_owned));
+                        }
+                        facts.push(fact);
                     }
                     reviewed.push(json!({"sentenceId":anchor, "factCount":usize::from(kept), "origin":"source-selection"}));
                     continue;
@@ -675,6 +699,38 @@ mod tests {
         assert!(Authority::literal_named_assignment(example).is_none());
         let completed = "王岚在周四前完成了离线验收。";
         assert!(Authority::literal_named_assignment(completed).is_none());
+    }
+
+    #[test]
+    fn fresh_selected_real_card_prefix_keeps_the_discussion_as_lead() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_SOURCE_SELECTION_LIVE_RECEIPT") else { return; };
+        let report: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        let source = std::fs::read_to_string(report["sourceFile"].as_str().unwrap()).unwrap();
+        let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        let windows = SourceWindows::new(&source).unwrap();
+        let calls = report["receipt"]["calls"].as_array().unwrap();
+        assert_eq!(calls.len(), windows.len() + 1);
+        assert_eq!(report["receipt"]["documentReceipt"]["openingFactId"], "a000");
+
+        let mut facts = Vec::new();
+        for (index, call) in calls.iter().take(windows.len()).enumerate() {
+            let checked = windows.check_encoded(index, call["output"].as_str().unwrap(), SourceEncoding::SelectOriginal).unwrap();
+            facts.extend(checked.facts);
+        }
+        let bank = super::super::atomic_document::build_bank(facts, &source).unwrap();
+        let question = bank.facts.iter().find(|f| f.evidence[0] == "e0010").unwrap();
+        let reply = bank.facts.iter().find(|f| f.evidence[0] == "e0011").unwrap();
+        assert_eq!(question.evidence, ["e0010", "e0011"]);
+        assert_eq!(reply.evidence, ["e0011", "e0010"]);
+        let session = crate::backend::minutes::tests::session_with_text(&source);
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "replay");
+        let parsed = super::super::atomic_document::organize(
+            calls.last().unwrap()["output"].as_str().unwrap(), &bank, &session, &base
+        ).unwrap();
+        assert_eq!(parsed.receipt["openingFactId"], question.id);
+        assert_ne!(parsed.receipt["openingFactId"], "a000");
+        assert_eq!(parsed.receipt["retainedFactIds"].as_array().unwrap().len(), 13);
+        assert!(parsed.minutes.markdown.contains("还是比较难"));
     }
 
     #[test]
