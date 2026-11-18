@@ -80,6 +80,30 @@ impl Authority {
         policy
     }
 
+    pub(super) fn literal_collective_decision(&self, source: &str) -> bool {
+        self.allowed.contains(&"decision")
+            && canonical_brief::line(source.trim(), 90)
+            && ["会议决定", "本次会议通过", "一致决定", "共同决定", "我们决定", "大家一致同意", "一致同意"]
+                .iter().any(|cue| source.trim_start().starts_with(cue))
+    }
+
+    pub(super) fn literal_named_assignment(source: &str) -> Option<crate::companion_v1::CompanionV1ActionItem> {
+        let source = source.trim();
+        if !canonical_brief::line(source, 90) || has(source, NON_BINDING)
+            || has(source, &["暂定", "举例", "比如", "例如", "示例", "曾说", "声称", "听说", "已经", "已于", "已在",
+                "完成了", "提交了", "交付了", "核对了", "确认了", "跟进了"]) {
+            return None;
+        }
+        let assignments = super::super::named_deadline_actions(source);
+        let [assignment] = assignments.as_slice() else { return None; };
+        let owner = assignment.owner.as_deref()?;
+        if has(owner, &["暂定", "计划", "拟", "由", "要求", "安排", "会上", "会议", "当时", "曾经", "表示", "预计", "负责人"])
+            || assignment.text != source.trim_end_matches(['。', '！', '.']) {
+            return None;
+        }
+        assignments.into_iter().next()
+    }
+
     pub(super) fn literal_topic_role(&self, source: &str) -> Option<&'static str> {
         if !canonical_brief::line(source.trim(), 90)
             || self.allowed.iter().any(|role| matches!(*role, "decision" | "action" | "question")) {
