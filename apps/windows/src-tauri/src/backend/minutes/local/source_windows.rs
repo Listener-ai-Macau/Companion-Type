@@ -125,14 +125,22 @@ impl SourceWindows {
                 continue;
             }
             if let Some(role)=policy.verbatim {
-                facts.push(ExtractedFact::verbatim(anchor,role,text(source)));
-                reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":"verbatim"}));
+                let original = text(source);
+                let origin = if role != "question" && source_grounding::quantity_question(original) {
+                    facts.push(ExtractedFact::quantity_quote(anchor, role, original));
+                    "quantity-source-quote"
+                } else {
+                    facts.push(ExtractedFact::verbatim(anchor, role, original));
+                    "verbatim"
+                };
+                reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":origin}));
                 continue;
             }
             let entries = answers.remove(anchor).ok_or_else(fail)?;
             if entries.len() > FACTS_PER_SENTENCE { return Err(fail()); }
             let mut accepted=Vec::new();
             let mut unmatched=Vec::new();
+            let mut unsupported_cause = false;
             for mut fact in entries {
                 if !policy.allowed.contains(&fact.role.as_str()){return Err(fail());}
                 if fact.text.trim().trim_end_matches(['。', '.']) == "[无独立内容]" {
@@ -149,6 +157,9 @@ impl SourceWindows {
                 fact.evidence.insert(0, anchor.to_owned());
                 let sources:Vec<_>=fact.evidence.iter().map(|id|offered[id.as_str()]).collect();
                 unmatched.extend(source_grounding::unsupported_quantities(&fact.text,&sources));
+                if source_grounding::quantity_question(text(source)) && !source_grounding::has_open_qualifier(&fact.text) {
+                    unmatched.push("原话仍待确认".to_owned());
+                }
                 let referential=["它","这个","这种","这些","他们","上述","前面"].iter().any(|cue|text(source).contains(cue));
                 if referential&&fact.evidence.len()<8&&matches!(fact.role.as_str(),"status"|"opinion"|"forecast"|"recommendation"){
                     let prior:Vec<_>=self.offered(index).take_while(|j|*j<i)
@@ -163,26 +174,49 @@ impl SourceWindows {
                         let question = &self.sentences[before];
                         let answer = &self.sentences[after];
                         let selected = |sentence: &Value| fact.evidence.iter().any(|reference| reference == id(sentence));
-                        if !selected(question) || selected(answer) {
+                        if !source_grounding::supports_followup_opinion(&fact.text, text(question), text(answer)) {
                             return None;
                         }
-                        source_grounding::supports_followup_opinion(&fact.text, text(question), text(answer))
-                            .then(|| id(answer).to_owned())
+                        match (selected(question), selected(answer)) {
+                            (true, false) => Some(id(answer).to_owned()),
+                            (false, true) if after == i => Some(id(question).to_owned()),
+                            _ => None,
+                        }
                     });
                     fact.evidence.extend(support);
                 }
+                let support: Vec<_> = fact.evidence.iter().map(|id| offered[id.as_str()]).collect();
+                if source_grounding::cost_cause_needs_source(&fact.text, &support) {
+                    let previous = i.checked_sub(1).filter(|previous| self.offered(index).contains(previous));
+                    let linked = previous.map(|index| &self.sentences[index]).filter(|previous| {
+                        fact.evidence.len() < 8
+                            && source_grounding::adjacent_cost_support(&fact.text, text(source), text(previous))
+                    });
+                    if let Some(previous) = linked {
+                        fact.evidence.push(id(previous).to_owned());
+                    } else {
+                        unsupported_cause = true;
+                    }
+                }
                 accepted.push(fact);
             }
-            if unmatched.is_empty(){
+            if unmatched.is_empty() && !unsupported_cause {
                 reviewed.push(json!({"sentenceId":anchor,"factCount":accepted.len(),"origin":"model"}));
                 facts.extend(accepted);
             } else {
                 // Replace the disputed paraphrases with the exact anchor.
                 // Generating a second paraphrase can copy a nearby claim over it.
-                let role = policy.literal_topic_role(text(source))
-                    .ok_or("会议原话中的数量或单位仍无法确认，完整转写与已有纪要保留。")?;
-                facts.push(ExtractedFact::quantity_quote(anchor, role, text(source)));
-                reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":"quantity-source-quote","unmatched":unmatched}));
+                let original = text(source);
+                let role = policy.literal_topic_role(original)
+                    .ok_or("会议原话未能支持提取的数量或因果关系，完整转写与已有纪要保留。")?;
+                let origin = if unmatched.is_empty() {
+                    facts.push(ExtractedFact::verbatim(anchor, role, original));
+                    "causal-source-quote"
+                } else {
+                    facts.push(ExtractedFact::quantity_quote(anchor, role, original));
+                    "quantity-source-quote"
+                };
+                reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":origin,"unmatched":unmatched}));
             }
         }
         if !answers.is_empty() { return Err(fail()); }
@@ -267,7 +301,7 @@ mod tests {
 
     #[test]
     fn local_minutes_quotes_the_disputed_anchor_and_links_an_antecedent() {
-        let source = "钠离子电池在这个方向上有新的进展。实际上在。对于这个，我个人的观点是它可以作为现有体系的补充。未来十年还要看能否扩大。";
+        let source = "钠离子电池在这个方向上有新的进展。实际上在。对于这个，我个人的观点是它可以作为现有体系的补充。未来十年继续观察扩产进展。";
         let windows = SourceWindows::new(source).unwrap();
         let raw = json!({
             "e0000": [{"role":"status","text":"[无独立内容]。","owner":null,"due":null,"evidence":[]}],
@@ -280,7 +314,7 @@ mod tests {
         assert_eq!(facts.len(), 2);
         assert_eq!(facts[0].evidence, ["e0002", "e0000"]);
         assert_eq!(facts[1].evidence, ["e0003"]);
-        assert_eq!(facts[1].text, "未来十年还要看能否扩大。");
+        assert_eq!(facts[1].text, "未来十年继续观察扩产进展。");
         assert_eq!(coverage["sentences"][1]["origin"], "context-fragment");
         assert_eq!(coverage["sentences"][3]["origin"], "quantity-source-quote");
         let bank = super::super::atomic_document::build_bank(facts, source).unwrap();
@@ -314,7 +348,7 @@ mod tests {
         let windows = SourceWindows::new("我负责在周五前提交五份资料。").unwrap();
         let raw = json!({"e0000":[{"role":"action","text":"周五前提交十份资料，安排两台设备。","owner":null,"due":"周五前","evidence":[]}]});
         let error = windows.check(0, &raw.to_string()).err().unwrap();
-        assert!(error.contains("数量或单位仍无法确认"));
+        assert!(error.contains("未能支持提取的数量或因果关系"));
     }
 
     #[test]
@@ -325,14 +359,15 @@ mod tests {
         let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
         let windows = SourceWindows::new(&source).unwrap();
         let calls = receipt["receipt"]["calls"].as_array().unwrap();
-        let (mut facts, coverage) = windows.decode(0, calls[0]["output"].as_str().unwrap()).unwrap();
+        let (mut facts, coverage) = decode_saved_window(&windows, 0, &calls[0]);
         for anchor in ["e0003", "e0005"] {
             let original = windows.sentences.iter().find(|sentence| id(sentence) == anchor).unwrap();
             let accepted = facts.iter().find(|fact| fact.evidence[0] == anchor).unwrap();
             assert_eq!(accepted.text, text(original).trim());
             assert_eq!(accepted.evidence, [anchor]);
             let checked = coverage["sentences"].as_array().unwrap().iter().find(|row| row["sentenceId"] == anchor).unwrap();
-            assert_eq!(checked["origin"], "quantity-source-quote");
+            let expected = if anchor == "e0005" { "quantity-source-quote" } else { "verbatim" };
+            assert_eq!(checked["origin"], expected);
         }
         assert!(windows.decode(0, calls[1]["output"].as_str().unwrap()).is_err());
         facts.extend(windows.decode(1, calls[2]["output"].as_str().unwrap()).unwrap().0);
@@ -372,7 +407,7 @@ mod tests {
         assert_eq!(calls.last().unwrap()["stage"], "id-only-organization");
         let mut facts = Vec::new();
         for (index, call) in calls.iter().take(windows.len()).enumerate() {
-            facts.extend(windows.decode(index, call["output"].as_str().unwrap()).unwrap().0);
+            facts.extend(decode_saved_window(&windows, index, call).0);
         }
 
         let bank = super::super::atomic_document::build_bank(facts, &source).unwrap();
@@ -398,12 +433,77 @@ mod tests {
         assert_eq!(document["topics"][0]["title"], "钠离子电池定位判断");
         assert_eq!(document["topics"].as_array().unwrap().len(), 5);
         assert_eq!(parsed.receipt["retainedFactIds"].as_array().unwrap().len(), 10);
-        assert_eq!(parsed.receipt["quantityQuoteFactIds"], json!(["a003", "a005"]));
+        assert_eq!(parsed.receipt["quantityQuoteFactIds"], json!(["a005"]));
         assert!(parsed.minutes.markdown.contains("数量待核：实际上"));
         assert!(parsed.minutes.markdown.contains("观点其实我认为还是比较难"));
         assert!(!parsed.minutes.markdown.contains("- 实际上在。"));
         assert!(parsed.minutes.action_items.is_empty());
         println!("replayed real local output: source-bound opening, linked themes, quantity label, and direct opinion quote");
+    }
+
+    // Older responses include entries for dates and open quantities now quoted
+    // directly from the source. Replay unchanged remaining model entries.
+    fn decode_saved_window(windows: &SourceWindows, index: usize, call: &Value) -> (Vec<ExtractedFact>, Value) {
+        let mut raw: Value = serde_json::from_str(call["output"].as_str().unwrap()).unwrap();
+        for position in windows.core[index].clone() {
+            let row = &windows.sentences[position];
+            if windows.authority[position].verbatim.is_some()
+                && (source_grounding::quantity_question(text(row)) || source_grounding::has_historical_year(text(row)))
+            {
+                raw.as_object_mut().unwrap().remove(id(row));
+            }
+        }
+        windows.decode(index, &raw.to_string()).unwrap()
+    }
+
+    #[test]
+    fn reads_open_numbers_dates_and_causal_context_in_actual_compact_response() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_REAL_CARD_QUALIFIERS_RECEIPT") else { return; };
+        let receipt: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        let source = std::fs::read_to_string(receipt["sourceFile"].as_str().unwrap()).unwrap();
+        let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        let windows = SourceWindows::new(&source).unwrap();
+        let calls = receipt["receipt"]["calls"].as_array().unwrap();
+        assert_eq!(calls.len(), windows.len() + 1);
+        let mut facts = Vec::new();
+        for (index, call) in calls.iter().take(windows.len()).enumerate() {
+            let (input, _) = windows.input_and_schema(index);
+            if index == 0 {
+                let rows = input["sourceSentences"].as_array().unwrap();
+                for anchor in ["e0003", "e0005"] {
+                    assert_eq!(rows.iter().find(|row| id(row) == anchor).unwrap()["anchor"], false);
+                }
+            }
+            facts.extend(decode_saved_window(&windows, index, call).0);
+        }
+        let bank = super::super::atomic_document::build_bank(facts, &source).unwrap();
+        assert_eq!(bank.facts.len(), 13);
+        assert!(bank.facts[3].text.contains("从九一年产业化"));
+        assert!(bank.facts[5].text.contains("有没有可能"));
+        assert_eq!(bank.facts[5].evidence, ["e0005"]);
+        assert!(bank.facts[10].evidence.iter().any(|row| row == "e0010"));
+        assert!(bank.facts[12].evidence.iter().any(|row| row == "e0012"));
+        let session = crate::backend::minutes::tests::session_with_text(&source);
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "replay");
+        let parsed = super::super::atomic_document::organize(
+            calls.last().unwrap()["output"].as_str().unwrap(), &bank, &session, &base
+        ).unwrap();
+        assert_eq!(parsed.receipt["quantityQuoteFactIds"], json!(["a005"]));
+        assert_eq!(parsed.receipt["retainedFactIds"].as_array().unwrap().len(), 13);
+        assert!(parsed.minutes.markdown.contains("数量待核：实际上"));
+        assert!(parsed.minutes.markdown.contains("从九一年产业化"));
+        assert!(!parsed.minutes.markdown.contains("预测未来十年"));
+        println!("actual compact reply replayed: open quantity, historical year and causal source preserved");
+    }
+
+    #[test]
+    fn cost_source_with_opposite_polarity_cannot_support_a_claim() {
+        let claim = "如果供应商更换方案，会导致成本下降。";
+        let negated = "如果供应商更换方案，成本不会下降。";
+        assert!(source_grounding::cost_cause_needs_source(claim, &[negated]));
+        assert!(!source_grounding::adjacent_cost_support(claim, "这个供应商更换了方案。", negated));
+        let compatible = "如果供应商更换方案，成本会降低。";
+        assert!(source_grounding::adjacent_cost_support(claim, "这个供应商更换了方案。", compatible));
     }
 
     // Replay an existing real native candidate receipt in the engineering

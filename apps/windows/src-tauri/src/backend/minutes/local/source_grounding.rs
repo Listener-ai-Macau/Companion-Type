@@ -7,6 +7,25 @@ static MEASUREMENT:LazyLock<regex::Regex>=LazyLock::new(||{
     regex::Regex::new(&format!(r"(?:约|近|大约|最多|至少|不足)?{number}(?:(?:到|至|—|~|～){number})?(?:多|余)?\s*(?:个百分点|%|％|美元|万元|亿元|块钱|人民币|元|亿吨|万吨|公斤|吨|平方米|毫秒|分钟|小时|个月|年|天|倍|位|台|家|笔)(?:以内|以上|以下|左右)?")).expect("valid measurement expression")
 });
 
+static HISTORICAL_YEAR: LazyLock<regex::Regex> = LazyLock::new(|| {
+    regex::Regex::new(r"(?:从|自|在|于|截至)\s*(?:[0-9０-９]{2,4}|[零〇一二两三四五六七八九]{2,4})年")
+        .expect("valid historical year expression")
+});
+
+const OPEN_QUANTITY: &[&str] = &["有没有可能", "是否有可能", "能不能", "能否", "是否", "可不可以", "尚未确认", "还没确定"];
+
+pub(super) fn quantity_question(source: &str) -> bool {
+    has_open_qualifier(source) && MEASUREMENT.is_match(source)
+}
+
+pub(super) fn has_open_qualifier(text: &str) -> bool {
+    OPEN_QUANTITY.iter().any(|cue| text.contains(cue))
+}
+
+pub(super) fn has_historical_year(source: &str) -> bool {
+    HISTORICAL_YEAR.is_match(source)
+}
+
 fn normalize_number(value:&str)->String{
     value.chars().filter(|c|!c.is_whitespace()).map(|c|match c {
         '至'|'—'|'~'|'～'=>'到',
@@ -47,7 +66,54 @@ pub(super) fn supports_followup_opinion(claim: &str, question: &str, answer: &st
     explicit_stance
         && uncertainty.iter().any(|cue| short_answer.contains(cue))
         && uncertainty.iter().any(|cue| claim.contains(cue))
-        && additional_literal_support(claim, &[], &[("question", question)]).is_some()
+        && shared_han_phrase(claim, question, 4)
+}
+
+fn shared_han_phrase(left: &str, right: &str, length: usize) -> bool {
+    let chars: Vec<_> = left.chars().collect();
+    chars.windows(length).any(|part| {
+        part.iter().all(|ch| matches!(*ch, '\u{3400}'..='\u{9fff}'))
+            && right.contains(&part.iter().collect::<String>())
+    })
+}
+
+pub(super) fn supports_cost_consequence(claim: &str, context: &str) -> bool {
+    const COST: &[&str] = &["成本", "费用", "支出", "开销"];
+    const DIRECTIONS: &[&[&str]] = &[
+        &["下降", "降低", "减少", "下调"],
+        &["上升", "增加", "增长", "上调", "上涨"],
+    ];
+    const NEGATIONS: &[&str] = &["不", "不会", "未", "没有", "未能"];
+    let changes = |text: &str, cues: &[&str]| {
+        cues.iter().flat_map(|cue| text.match_indices(cue)).map(|(index, _)| {
+            let before = text[..index].trim_end();
+            NEGATIONS.iter().any(|negation| before.ends_with(negation))
+        }).collect::<HashSet<_>>()
+    };
+    COST.iter().any(|cue| claim.contains(cue))
+        && COST.iter().any(|cue| context.contains(cue))
+        && DIRECTIONS.iter().any(|cues| {
+            let expected = changes(claim, cues);
+            !expected.is_empty() && expected == changes(context, cues)
+        })
+}
+
+pub(super) fn adjacent_cost_support(claim: &str, anchor: &str, previous: &str) -> bool {
+    if !["这", "那", "所以", "因此"].iter().any(|cue| anchor.contains(cue))
+        || !supports_cost_consequence(claim, previous) {
+        return false;
+    }
+    let context: Vec<_> = anchor.chars().collect();
+    context.windows(2).filter(|pair| pair.iter().all(|ch| matches!(*ch, '\u{3400}'..='\u{9fff}')))
+        .map(|pair| pair.iter().collect::<String>())
+        .filter(|phrase| previous.contains(phrase.as_str()) && !["因为", "如果", "这样", "因此", "所以", "的话", "就是", "我们"].contains(&phrase.as_str()))
+        .collect::<HashSet<_>>().len() >= 2
+}
+
+pub(super) fn cost_cause_needs_source(claim: &str, sources: &[&str]) -> bool {
+    ["导致", "因为", "由于", "从而", "取决于"].iter().any(|cue| claim.contains(cue))
+        && supports_cost_consequence(claim, claim)
+        && !sources.iter().any(|source| supports_cost_consequence(claim, source))
 }
 
 pub(super) fn additional_literal_support<'a>(claim:&str,already:&[&str],nearby:&[(&'a str,&str)])->Option<&'a str>{

@@ -70,6 +70,8 @@ impl Authority {
         policy.verbatim = if explicit_open_item && canonical_brief::line(source, 90) {
             Some("question")
         } else if has(source, EXACT_RELATION) || QUANTITY.is_match(source)
+            || super::source_grounding::quantity_question(source)
+            || super::source_grounding::has_historical_year(source)
             || (source.contains("讨论") && source.contains("是否")) {
             policy.literal_topic_role(source)
         } else {
