@@ -223,4 +223,42 @@ mod tests {
         assert!(windows.decode(0,&old.to_string()).is_err());
         println!("saved scope output rejected; old historical rows remain invalid without the protected quote keys");
     }
+
+    #[test]
+    fn local_minutes_replay_saved_layout_without_promoting_caption_prose(){
+        let Some(path)=std::env::var_os("COMPANION_TEST_REJECTED_LAYOUT_RECEIPT") else{return;};
+        let receipt:Value=serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        let source=std::fs::read_to_string(receipt["sourceFile"].as_str().unwrap()).unwrap();
+        let source=source.trim_start_matches('\u{feff}').replace("\r\n","\n");
+        let windows=SourceWindows::new(&source).unwrap();
+        let calls=receipt["receipt"]["calls"].as_array().unwrap();
+        assert_eq!(calls.len(),windows.len()+1);
+        let mut facts=Vec::new();
+        for (i,call) in calls.iter().take(windows.len()).enumerate(){
+            let (input,_)=windows.input_and_schema(i);
+            let required:HashSet<_>=input["sourceSentences"].as_array().unwrap().iter()
+                .filter(|s|s["anchor"]==true).map(id).collect();
+            let mut old:Value=serde_json::from_str(call["output"].as_str().unwrap()).unwrap();
+            old.as_object_mut().unwrap().retain(|key,_|required.contains(key.as_str()));
+            facts.extend(windows.decode(i,&old.to_string()).unwrap().0);
+        }
+        let bank=super::super::atomic_document::build_bank(facts,&source).unwrap();
+        let mut layout:Value=serde_json::from_str(calls.last().unwrap()["output"].as_str().unwrap()).unwrap();
+        let topic_ids:HashSet<_>=bank.facts.iter().filter(|f|f.placement==super::super::super::automatic_brief::answer_layout::Placement::Topic)
+            .map(|f|f.id.as_str()).collect();
+        layout["assignments"].as_object_mut().unwrap().retain(|id,_|topic_ids.contains(id.as_str()));
+        layout.as_object_mut().unwrap().remove("purpose");
+        // For the replay select the first source fact, not prose from the old caption.
+        layout["purposeFact"]=json!(bank.facts[0].id);
+        let session=crate::backend::minutes::tests::session_with_text(&source);
+        let base=crate::backend::minutes::rules_l0_minutes(&session,"replay");
+        let parsed=super::super::atomic_document::organize(&layout.to_string(),&bank,&session,&base).unwrap();
+        let document=&parsed.minutes;
+        assert_eq!(document.action_items.len(),3);
+        assert_eq!(document.questions.len(),2);
+        assert!(document.markdown.contains("另外需要五千元安装费"));
+        assert!(!document.markdown.contains("乙方案含安装费"));
+        assert!(!document.markdown.contains("主分支"));
+        println!("saved model layout reconstructed through the protected headings and exact-source open items; no neural call");
+    }
 }

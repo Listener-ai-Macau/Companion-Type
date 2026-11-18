@@ -16,12 +16,14 @@ const NON_BINDING: &[&str] = &[
 ];
 const IN_MEETING: &[&str] = &["请发言", "请介绍", "请回答", "请讲", "请分享", "请谈", "接下来请", "下面请", "有请"];
 const OPEN: &[&str] = &["未决", "待回答", "还没确定", "尚未确定", "还没有确定", "没有给明确答复", "没有明确答复"];
+const OPEN_AGENDA: &[&str] = &["未决事项", "未决问题", "记为未决", "列为未决", "还有一个未决"];
+const CLOSED_AGENDA: &[&str] = &["没有未决", "无未决", "已解决", "已经解决", "都已处理", "全部处理", "上次的未决", "上周的未决"];
 const RECOMMEND: &[&str] = &["建议", "希望", "不妨", "可以考虑"];
 const FORECAST: &[&str] = &["预计", "预测", "预估", "大概会", "可能会", "有望"];
 const OPINION: &[&str] = &["我认为", "我觉得", "我的看法", "个人认为", "我判断"];
 const EXACT_RELATION: &[&str] = &[
     "报价", "价格", "费用", "收费", "成本", "预算", "金额", "计费", "付款", "采购价",
-    "不意味着", "才具备", "必须先", "条件不满足", "不能因为", "不能把", "不承诺", "没有批准", "除非", "顺延",
+    "不意味着", "才具备", "必须先", "条件不满足", "不能因为", "不能把", "不承诺", "没有批准", "没有约定", "讨论是否", "除非", "顺延",
 ];
 
 static QUANTITY: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
@@ -50,10 +52,15 @@ impl Authority {
         if !non_binding && !has(source, IN_MEETING) && has(source, NEXT_WORK) && has(source, ACTION) {
             allowed.push("action");
         }
-        if has(source, OPEN) { allowed.push("question"); }
+        if has(source, OPEN) && !has(source, CLOSED_AGENDA) { allowed.push("question"); }
 
         let has_typed_outcome = allowed.iter().any(|role| matches!(*role, "decision" | "action" | "question"));
-        let verbatim = if !has_typed_outcome && canonical_brief::line(source, 90)
+        let explicit_open_item = allowed.contains(&"question") && !allowed.contains(&"action")
+            && !allowed.contains(&"decision") && !non_binding
+            && has(source, OPEN_AGENDA) && !has(source, CLOSED_AGENDA);
+        let verbatim = if explicit_open_item && canonical_brief::line(source, 90) {
+            Some("question")
+        } else if !has_typed_outcome && canonical_brief::line(source, 90)
             && (has(source, EXACT_RELATION) || QUANTITY.is_match(source)) {
             // Choose a conservative label without changing the actual words.
             // An explicit recommendation or prediction remains such in the reader.
