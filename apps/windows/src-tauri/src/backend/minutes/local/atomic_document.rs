@@ -13,13 +13,19 @@ pub(super) fn object(props:Value)->Value{let required=props.as_object().unwrap()
 fn prose()->Value{json!({"type":"string","minLength":1})}
 pub(super) fn array(items:Value,min:usize,max:usize)->Value{json!({"type":"array","items":items,"minItems":min,"maxItems":max})}
 
-pub(super) fn fact_properties(evidence: Value, roles:&[&str])->Value{
-    let action_field = if roles.contains(&"action") {
-        json!({"anyOf":[prose(),{"type":"null"}]})
-    } else {
-        json!({"type":"null"})
-    };
-    json!({"evidence":evidence,"role":{"type":"string","enum":roles},"owner":action_field,"due":action_field,"text":prose()})
+pub(super) fn fact_schema(evidence: Value, roles: &[&str]) -> Value {
+    let mut properties = json!({
+        "r": {"type":"string","enum":roles},
+        "t": prose(),
+        "e": evidence,
+    });
+    if roles.contains(&"action") {
+        properties["o"] = prose();
+        properties["d"] = prose();
+    }
+    // The anchor is already the enclosing key. Only role and wording need to
+    // be returned for each fact; empty attribution and evidence consume tokens.
+    json!({"type":"object","properties":properties,"required":["r","t"],"additionalProperties":false})
 }
 #[cfg(test)]
 #[derive(Deserialize)]
@@ -27,7 +33,18 @@ pub(super) fn fact_properties(evidence: Value, roles:&[&str])->Value{
 struct Extracted {facts:Vec<ExtractedFact>}
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
-pub(super) struct ExtractedFact {pub(super) evidence:Vec<String>,pub(super) role:String,owner:Option<String>,due:Option<String>,pub(super) text:String}
+pub(super) struct ExtractedFact {
+    #[serde(default, rename = "e", alias = "evidence")]
+    pub(super) evidence: Vec<String>,
+    #[serde(rename = "r", alias = "role")]
+    pub(super) role: String,
+    #[serde(rename = "o", alias = "owner")]
+    owner: Option<String>,
+    #[serde(rename = "d", alias = "due")]
+    due: Option<String>,
+    #[serde(rename = "t", alias = "text")]
+    pub(super) text: String,
+}
 impl ExtractedFact{
     pub(super) fn clear_non_action_metadata(&mut self) {
         if self.role != "action" {
@@ -298,7 +315,7 @@ mod tests{
     }
     #[test]
     fn prose_is_checked_after_generation_without_forcing_grammar_cutoffs(){
-        assert!(fact_properties(json!({}),&["status"])["text"].get("maxLength").is_none());
+        assert!(fact_schema(json!({}),&["status"])["properties"]["t"].get("maxLength").is_none());
         let(s,_,mut f,_)=fixture();f["facts"][0]["text"]=json!("长".repeat(91));assert!(parse_bank(&f.to_string(),&s.transcript_text).is_err());
     }
 }
