@@ -104,7 +104,15 @@ impl SourceWindows {
         if core.len() > MAX_WINDOWS {
             return Err("本场文字超出当前本地整理容量，完整转写与已有纪要保留。".into());
         }
-        let authority=sentences.iter().map(|sentence|Authority::from_source(text(sentence))).collect();
+        let mut authority: Vec<_> =
+            sentences.iter().map(|sentence| Authority::from_source(text(sentence))).collect();
+        for (index, pair) in sentences.windows(2).enumerate() {
+            if authority[index].verbatim == Some("forecast")
+                && forecast_continuation(&pair[0], &pair[1]).is_some()
+            {
+                authority[index + 1].context_only = true;
+            }
+        }
         Ok(Self { sentences, authority, core })
     }
 
@@ -222,7 +230,16 @@ impl SourceWindows {
                     facts.push(ExtractedFact::quantity_quote(anchor, role, original));
                     "quantity-source-quote"
                 } else {
-                    facts.push(ExtractedFact::verbatim(anchor, role, original));
+                    let mut fact = ExtractedFact::verbatim(anchor, role, original);
+                    if role == "forecast" {
+                        if let Some(next) = self.sentences.get(i + 1) {
+                            if let Some(continued) = forecast_continuation(source, next) {
+                                fact.text = continued;
+                                fact.evidence.push(id(next).to_owned());
+                            }
+                        }
+                    }
+                    facts.push(fact);
                     "verbatim"
                 };
                 reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":origin}));
@@ -408,6 +425,23 @@ impl SourceWindows {
     }
 }
 
+// The explicit follow-on belongs to the same spoken passage. Both sentences
+// retain their original evidence IDs so the joined quotation remains auditable.
+fn forecast_continuation(source: &Value, followup: &Value) -> Option<String> {
+    let first = text(source);
+    let second = text(followup);
+    if source["source"] != followup["source"] || first.contains(['\r', '\n'])
+        || second.trim_start_matches([' ', '\t']).starts_with(['\r', '\n'])
+        || !super::source_authority::timed_forecast(first)
+        || source_grounding::quantity_question(first)
+        || !["那么相应的", "相应的"].iter().any(|prefix| second.trim_start().starts_with(prefix))
+    {
+        return None;
+    }
+    let joined = format!("{}{}", first.trim(), second.trim());
+    canonical_brief::line(&joined, 90).then_some(joined)
+}
+
 fn id(row: &Value) -> &str { row["id"].as_str().expect("source sentence ID") }
 fn text(row: &Value) -> &str { row["text"].as_str().expect("source sentence text") }
 
@@ -462,6 +496,41 @@ mod tests {
         let (facts, reviewed) = w.decode(0, &raw.to_string()).unwrap();
         assert_eq!(facts[0].evidence, ["e0001"]);
         assert_eq!(reviewed["sentences"][0]["factCount"], 0);
+    }
+
+    #[test]
+    fn local_minutes_keeps_a_timed_forecast_and_its_consequence_in_the_reader() {
+        use super::super::atomic_document::{build_bank, organize};
+
+        let source = "首先那个各种材料吧都有很大的投资，都在加紧的扩张。那么未来的话，应该说在半年到一年之内吧，这种紧急的就紧急的状态就会缓缓了。那么相应的价格也发呃，逐渐的回调。";
+        let windows = SourceWindows::new(source).unwrap();
+        let checked = windows.check_encoded(0, "{}", SourceEncoding::DirectSingleRole).unwrap();
+        assert_eq!(checked.facts.len(), 2);
+        let forecast = &checked.facts[1];
+        assert_eq!(forecast.role, "forecast");
+        assert_eq!(forecast.evidence, ["e0001", "e0002"]);
+        assert!(forecast.text.contains("半年到一年") && forecast.text.contains("回调"));
+        assert!(source.ends_with(&forecast.text));
+
+        let bank = build_bank(checked.facts, source).unwrap();
+        let session = crate::backend::minutes::tests::session_with_text(source);
+        let base = crate::backend::minutes::rules_l0_minutes(&session, "replay");
+        let layout = json!({
+            "purposeFact":"a000",
+            "topics":{"t1":"供应链投资","t2":null,"t3":null,"t4":null,"t5":null,"t6":null,"t7":null,"t8":null},
+            "assignments":{"a000":"m1","a001":"t1"}
+        });
+        let report = organize(&layout.to_string(), &bank, &session, &base).unwrap();
+        let first = &report.receipt["document"]["topics"][0]["points"][0];
+        assert_eq!(first["kind"], "forecast");
+        let text = first["text"].as_str().unwrap();
+        assert!(text.contains("半年到一年") && text.contains("回调"));
+        assert!(report.receipt["layoutBindings"].as_array().unwrap().contains(&json!(["/topics/0/points/0","a001"])));
+
+        let broken = "那么未来的话，应该说在半年到一年之内吧，这种紧急的状态就会。房款啊，那么相应的价格也逐渐回调。";
+        let broken = SourceWindows::new(broken).unwrap();
+        let checked = broken.check_encoded(0, "{}", SourceEncoding::DirectSingleRole).unwrap();
+        assert!(checked.facts.iter().all(|fact| fact.role == "status" && fact.evidence.len() == 1));
     }
 
     #[test]

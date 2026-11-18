@@ -31,6 +31,24 @@ static QUANTITY: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
     r"(?:[0-9]+(?:[.．][0-9]+)?|[零〇一二两三四五六七八九十百千万亿半]+)\s*(?:[%％]|元|美元|块钱|台|家|天|小时|分钟|笔|吨|公斤|个月)"
 ).expect("valid source quantity pattern"));
 
+static FORECAST_HORIZON: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+    r"(?:[0-9０-９]+|[零〇一二两三四五六七八九十百半]+)(?:个?月|年|周|天)"
+).expect("valid forecast horizon"));
+
+pub(super) fn timed_forecast(source: &str) -> bool {
+    let source = source.trim().trim_end_matches(['。', '！', '.']);
+    if source.contains(['？', '?']) || has(source, &["是否", "能不能", "还没确定", "曾经预测"]) {
+        return false;
+    }
+    let Some((beginning, outcome)) = source.split_once("就会").or_else(|| source.split_once("将会")) else {
+        return false;
+    };
+    // The time phrase and a complete outcome must both be present.
+    has(beginning, &["未来", "往后", "接下来", "预计", "预测", "预估"])
+        && FORECAST_HORIZON.is_match(beginning)
+        && outcome.trim_start_matches(['，', '、', ' ', '。']).chars().take(2).count() == 2
+}
+
 fn has(source: &str, markers: &[&str]) -> bool {
     markers.iter().any(|marker| source.contains(marker))
 }
@@ -47,7 +65,8 @@ impl Authority {
         let source = source.trim();
         let mut allowed = vec!["status"];
         if has(source, RECOMMEND) { allowed.push("recommendation"); }
-        if has(source, FORECAST) { allowed.push("forecast"); }
+        let timed_prediction = timed_forecast(source);
+        if has(source, FORECAST) || timed_prediction { allowed.push("forecast"); }
         if has(source, OPINION) { allowed.push("opinion"); }
         let non_binding = has(source, NON_BINDING);
         if !non_binding && has(source, DECISION) { allowed.push("decision"); }
@@ -69,7 +88,7 @@ impl Authority {
         };
         policy.verbatim = if explicit_open_item && canonical_brief::line(source, 90) {
             Some("question")
-        } else if has(source, EXACT_RELATION) || QUANTITY.is_match(source)
+        } else if timed_prediction || has(source, EXACT_RELATION) || QUANTITY.is_match(source)
             || super::source_grounding::quantity_question(source)
             || super::source_grounding::has_historical_year(source)
             || (source.contains("讨论") && source.contains("是否")) {
