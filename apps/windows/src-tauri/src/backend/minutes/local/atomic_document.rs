@@ -47,6 +47,8 @@ pub(super) struct ExtractedFact {
     pub(super) text: String,
     #[serde(skip)]
     quantity_needs_review: bool,
+    #[serde(skip)]
+    source_needs_review: bool,
 }
 impl ExtractedFact{
     pub(super) fn clear_non_action_metadata(&mut self) {
@@ -59,8 +61,12 @@ impl ExtractedFact{
     pub(super) fn verbatim(id:&str,role:&str,text:&str)->Self{
         Self {
             evidence: vec![id.to_owned()], role: role.to_owned(), owner: None, due: None,
-            text: text.trim().to_owned(), quantity_needs_review: false,
+            text: text.trim().to_owned(), quantity_needs_review: false, source_needs_review: false,
         }
+    }
+
+    pub(super) fn review_quote(id: &str, role: &str, text: &str) -> Self {
+        Self { source_needs_review: true, ..Self::verbatim(id, role, text) }
     }
 
     pub(super) fn quantity_quote(id: &str, role: &str, text: &str) -> Self {
@@ -71,6 +77,12 @@ pub(super) struct Bank {
     pub facts: Vec<Fact>,
     pub receipt: Value,
     quantity_quotes: HashSet<String>,
+    source_quotes: HashSet<String>,
+}
+impl Bank {
+    fn review_quote(&self, id: &str) -> bool {
+        self.quantity_quotes.contains(id) || self.source_quotes.contains(id)
+    }
 }
 // The whole document already has this bound. Keep the overview compact, but
 // don't reject or lose verified facts solely because a topic has many details.
@@ -86,6 +98,7 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     let known=sentences.iter().map(|s|(s["id"].as_str().unwrap(),s["text"].as_str().unwrap())).collect::<std::collections::HashMap<_,_>>();
     let mut facts=Vec::new();
     let mut quantity_quotes = HashSet::new();
+    let mut source_quotes = HashSet::new();
     for f in extracted{
         let(kind,placement)=match f.role.as_str(){
             "status"=>(Kind::Status,Placement::Topic),"opinion"=>(Kind::Opinion,Placement::Topic),
@@ -99,6 +112,9 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
         if f.quantity_needs_review {
             quantity_quotes.insert(id.clone());
         }
+        if f.source_needs_review {
+            source_quotes.insert(id.clone());
+        }
         facts.push(Fact { id, kind, placement, text:f.text, owner:f.owner, due:f.due, evidence:f.evidence });
         if facts.len()>MAX_FACTS{return Err(fail());}
     }
@@ -107,7 +123,7 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     let coverage=source_coverage(&facts,&units,&sentences);
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage});
-    Ok(Bank { facts, receipt, quantity_quotes })
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -157,7 +173,7 @@ fn purpose_choices(bank: &Bank) -> Vec<&str> {
         matches!(fact.placement, Placement::Topic | Placement::Decision)
             && canonical_brief::line(&fact.text, 80)
     }).collect();
-    let clear: Vec<_> = eligible.iter().copied().filter(|fact| !bank.quantity_quotes.contains(&fact.id)).collect();
+    let clear: Vec<_> = eligible.iter().copied().filter(|fact| !bank.review_quote(&fact.id)).collect();
     let agenda: Vec<_> = clear.iter().copied().filter(|fact| {
         ["会议目标", "会议目的", "会议主要讨论", "今天讨论", "今天主要讨论", "本次讨论", "主要议题"]
             .iter().any(|cue| fact.text.contains(cue))
@@ -241,7 +257,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             Placement::Topic=>{
                 let slot=assignments.remove(&fact.id).ok_or_else(fail)?;
                 let (topic, main) = slot.slot().ok_or_else(fail)?;
-                slots[topic].push((fact, main && !bank.quantity_quotes.contains(&fact.id)));
+                slots[topic].push((fact, main && !bank.review_quote(&fact.id)));
             }
             Placement::Decision=>decisions.push([&fact.id]),
             Placement::Action=>actions.push([&fact.id]),
@@ -252,7 +268,7 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     merge_linked_singletons(&mut slots, purpose_id);
     let mut required_chars=0;
     for items in &mut slots{
-        items.sort_by_key(|(fact, main)| (bank.quantity_quotes.contains(&fact.id), !*main));
+        items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), !*main));
         required_chars+=items.iter().take(1)
             .map(|(fact,_)|fact.text.chars().count()).sum::<usize>();
     }
@@ -341,6 +357,9 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     let mut quantity_quote_ids: Vec<_> = bank.quantity_quotes.iter().collect();
     quantity_quote_ids.sort();
     parsed.receipt["quantityQuoteFactIds"] = json!(quantity_quote_ids);
+    let mut source_quote_ids: Vec<_> = bank.source_quotes.iter().collect();
+    source_quote_ids.sort();
+    parsed.receipt["sourceQuoteFactIds"] = json!(source_quote_ids);
     parsed.receipt["factBodiesUnchangedAfterOrganization"]=json!(true);
     Ok(parsed)
 }

@@ -143,10 +143,17 @@ impl SourceWindows {
                 reviewed.push(json!({"sentenceId":anchor,"factCount":0,"origin":"turn-transition"}));
                 continue;
             }
+            let original = text(source);
+            if let Some(role) = policy.literal_topic_role(original)
+                .filter(|_| source_grounding::concerns_approval(original)) {
+                facts.push(ExtractedFact::verbatim(anchor, role, original));
+                reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":"approval-source-quote"}));
+                continue;
+            }
             let mut accepted=Vec::new();
             let mut unmatched=Vec::new();
             let mut unsupported_cause = false;
-            let mut unsupported_identifier = false;
+            let mut source_quote_origin = None;
             for mut fact in entries {
                 if !policy.allowed.contains(&fact.role.as_str()){return Err(fail());}
                 if fact.text.trim().trim_end_matches(['。', '.']) == "[无独立内容]" {
@@ -213,21 +220,38 @@ impl SourceWindows {
                 }
                 let cited = fact.evidence.iter().map(|id| offered[id.as_str()]).collect::<Vec<_>>().join("\n");
                 if !canonical_brief::local_document::identifiers_bound(&fact.text, &cited) {
-                    unsupported_identifier = true;
+                    source_quote_origin = Some("identifier-source-quote");
+                    continue;
+                }
+                let uncited_neighbors = offered.iter()
+                    .filter(|(id, _)| **id != anchor)
+                    .map(|(_, nearby)| *nearby);
+                if fact.evidence.len() == 1
+                    && source_grounding::copied_from_other_sentence(&fact.text, original, uncited_neighbors) {
+                    source_quote_origin = Some("source-scope-quote");
+                    continue;
+                }
+                if source_grounding::concerns_approval(&fact.text)
+                    && !fact.evidence.iter().any(|id| source_grounding::concerns_approval(offered[id.as_str()])) {
+                    source_quote_origin = Some("approval-source-quote");
+                    continue;
+                }
+                if source_grounding::loses_binary_uncertainty(&fact.text, original) {
+                    source_quote_origin = Some("open-question-source-quote");
                     continue;
                 }
                 accepted.push(fact);
             }
             if unmatched.is_empty() && !unsupported_cause {
-                let origin = if unsupported_identifier {
+                let origin = if let Some(reason) = source_quote_origin {
                     let original = text(source);
                     let role = policy.literal_topic_role(original)
-                        .ok_or("会议原话未能支持提取的术语或编号，完整转写与已有纪要保留。")?;
-                    let quote = ExtractedFact::verbatim(anchor, role, original);
+                        .ok_or("会议原话未能支持这条改写，完整转写与已有纪要保留。")?;
+                    let quote = ExtractedFact::review_quote(anchor, role, original);
                     if !accepted.iter().any(|fact| fact.text == quote.text) {
                         accepted.push(quote);
                     }
-                    "identifier-source-quote"
+                    reason
                 } else {
                     "model"
                 };
@@ -524,6 +548,61 @@ mod tests {
         assert!(parsed.minutes.markdown.contains("从九一年产业化"));
         assert!(!parsed.minutes.markdown.contains("预测未来十年"));
         println!("actual compact reply replayed: open quantity, historical year and causal source preserved");
+    }
+
+    #[test]
+    fn saved_whole_meeting_replays_wrong_attribution_and_keeps_literal_claims() {
+        let Some(checkpoint) = std::env::var_os("COMPANION_TEST_DRIFT_CHECKPOINT") else { return; };
+        let source_receipt = std::env::var_os("COMPANION_TEST_REAL_CARD_WHOLE_LIMIT_RECEIPT").unwrap();
+        let previous: Value = serde_json::from_slice(&std::fs::read(source_receipt).unwrap()).unwrap();
+        let source = std::fs::read_to_string(previous["sourceFile"].as_str().unwrap()).unwrap();
+        let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+        let windows = SourceWindows::new(&source).unwrap();
+        let snapshot: Value = serde_json::from_slice(&std::fs::read(checkpoint).unwrap()).unwrap();
+        let trace = &snapshot["trace"];
+        let calls = trace["calls"].as_array().unwrap();
+        let reviewed = trace["reviewedSourceWindows"].as_array().unwrap();
+        assert_eq!(trace["reusedSourceWindows"], 12);
+        assert_eq!(reviewed.len(), windows.len());
+        assert!(reviewed.len() <= calls.len());
+        let expected_repairs = [
+            ("e0145", "source-scope-quote"),
+            ("e0146", "source-scope-quote"),
+            ("e0147", "source-scope-quote"),
+            ("e0151", "source-scope-quote"),
+            ("e0157", "source-scope-quote"),
+            ("e0160", "source-scope-quote"),
+            ("e0166", "source-scope-quote"),
+            ("e0172", "open-question-source-quote"),
+            ("e0323", "approval-source-quote"),
+        ];
+        let mut facts = Vec::new();
+        let mut repairs = BTreeMap::new();
+        for (index, call) in calls.iter().take(reviewed.len()).enumerate() {
+            assert_eq!(call["stage"], format!("source-window-{}", index + 1));
+            let result = windows.check(index, call["output"].as_str().unwrap())
+                .unwrap_or_else(|failure| panic!("source window {}: {failure}", index + 1));
+            for row in &result.reviewed {
+                let anchor = row["sentenceId"].as_str().unwrap();
+                let origin = row["origin"].as_str().unwrap();
+                if origin.ends_with("-quote") {
+                    repairs.insert(anchor.to_owned(), origin.to_owned());
+                }
+            }
+            facts.extend(result.facts);
+        }
+        for (anchor, origin) in expected_repairs {
+            assert_eq!(repairs.get(anchor).map(String::as_str), Some(origin), "{anchor}");
+            let original = text(windows.sentences.iter().find(|s| id(s) == anchor).unwrap()).trim();
+            let associated: Vec<_> = facts.iter().filter(|f| f.evidence[0] == anchor).collect();
+            assert_eq!(associated.len(), 1, "{anchor}");
+            assert_eq!(associated[0].text, original, "{anchor}");
+            assert_eq!(associated[0].evidence, [anchor], "{anchor}");
+        }
+        assert!(facts.iter().any(|f| f.evidence[0] == "e0144" && f.text == "建议从仪器角度提出电池检测的看法。"));
+        let bank = super::super::atomic_document::build_bank(facts, &source).unwrap();
+        println!("replayed {} whole-card windows with {} records, repaired {} known misplaced/uncertain claims",
+            reviewed.len(), bank.facts.len(), expected_repairs.len());
     }
 
     #[test]
