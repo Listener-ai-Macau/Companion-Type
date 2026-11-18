@@ -264,6 +264,6 @@ mod tests{
     #[test]
     fn prose_is_checked_after_generation_without_forcing_grammar_cutoffs(){
         assert!(fact_properties(json!({}))["text"].get("maxLength").is_none());
-        let(_,_,mut f,_)=fixture();f["facts"][0]["text"]=json!("长".repeat(91));assert!(parse_bank(&f.to_string(),&s.transcript_text).is_err());
+        let(s,_,mut f,_)=fixture();f["facts"][0]["text"]=json!("长".repeat(91));assert!(parse_bank(&f.to_string(),&s.transcript_text).is_err());
     }
 }
