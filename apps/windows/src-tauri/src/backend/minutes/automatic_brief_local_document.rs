@@ -87,7 +87,9 @@ pub(in crate::backend::minutes) fn parse_with_details_limit(raw:&str,session:&Co
     for entry in &doc.questions{seal("question",serde_json::to_value(entry).unwrap());}
     let mut minutes=base.clone();minutes.source="llm_local_qwen".into();minutes.quality="draft".into();
     minutes.processing=None;minutes.llm_note=None;
-    minutes.summary=doc.topics.iter().flat_map(|t|t.points.iter().map(|p|p.text.clone())).collect();
+    minutes.summary = doc.topics.iter().flat_map(|topic| {
+        topic.points.iter().map(|point| super::review_label(&point.text, point.quantity_needs_review).into_owned())
+    }).collect();
     minutes.decisions=doc.decisions.iter().map(|p|p.text.clone()).collect();
     minutes.action_items=doc.action_items.iter().map(|a|CompanionV1ActionItem{text:a.text.clone(),owner:a.owner.clone(),due:a.due.clone()}).collect();
     minutes.questions=doc.questions.iter().map(|p|p.text.clone()).collect();minutes.keywords=doc.topics.iter().map(|t|t.title.clone()).collect();

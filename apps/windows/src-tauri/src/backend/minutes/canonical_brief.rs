@@ -9,14 +9,35 @@ const MAX_REQUEST_BYTES:usize=96*1024;
 pub(super) mod local_document;
 #[derive(Debug,Clone,Deserialize,Serialize)]
 #[serde(deny_unknown_fields)]
-pub(in crate::backend::minutes) struct Entry {pub(in crate::backend::minutes) text:String,pub(in crate::backend::minutes) sources:Vec<String>}
+pub(in crate::backend::minutes) struct Entry {
+    pub(in crate::backend::minutes) text: String,
+    pub(in crate::backend::minutes) sources: Vec<String>,
+    #[serde(default, rename="quantityNeedsReview", skip_serializing_if="quantity_review_is_false")]
+    pub(in crate::backend::minutes) quantity_needs_review: bool,
+}
 #[derive(Debug,Clone,Deserialize,Serialize)]
 #[serde(rename_all="lowercase")]
 pub(in crate::backend::minutes) enum Kind {Opinion,Recommendation,Forecast,Status,Decision}
 impl Kind {pub(in crate::backend::minutes) fn label(&self)->&'static str {match self {Self::Opinion=>"观点",Self::Recommendation=>"建议",Self::Forecast=>"预计",Self::Status=>"现状",Self::Decision=>"决定"}}}
 #[derive(Debug,Clone,Deserialize,Serialize)]
 #[serde(deny_unknown_fields)]
-pub(in crate::backend::minutes) struct Point {pub(in crate::backend::minutes) kind:Kind,pub(in crate::backend::minutes) text:String,pub(in crate::backend::minutes) sources:Vec<String>}
+pub(in crate::backend::minutes) struct Point {
+    pub(in crate::backend::minutes) kind: Kind,
+    pub(in crate::backend::minutes) text: String,
+    pub(in crate::backend::minutes) sources: Vec<String>,
+    #[serde(default, rename="quantityNeedsReview", skip_serializing_if="quantity_review_is_false")]
+    pub(in crate::backend::minutes) quantity_needs_review: bool,
+}
+
+fn quantity_review_is_false(value: &bool) -> bool { !*value }
+
+fn review_label(text: &str, needs_review: bool) -> std::borrow::Cow<'_, str> {
+    if needs_review {
+        format!("数量待核：{text}").into()
+    } else {
+        text.into()
+    }
+}
 #[derive(Debug,Clone,Deserialize,Serialize)]
 #[serde(deny_unknown_fields)]
 pub(in crate::backend::minutes) struct Topic {pub(in crate::backend::minutes) title:String,pub(in crate::backend::minutes) points:Vec<Point>,#[serde(default)]pub(in crate::backend::minutes) details:Vec<Entry>}
@@ -110,8 +131,12 @@ pub(in crate::backend::minutes) fn render(doc:&Document,units:&[Unit],speaker:Op
     let mut md=format!("## 会议主线\n\n- {}\n\n## 主题脉络\n\n",doc.purpose.trim());
     for topic in &doc.topics {
         md.push_str(&format!("### {}\n\n",topic.title.trim()));
-        for p in &topic.points{md.push_str(&format!("- {}：{}\n",p.kind.label(),p.text.trim()));}
-        for p in &topic.details{md.push_str(&format!("- 补充：{}\n",p.text.trim()));}
+        for p in &topic.points {
+            md.push_str(&format!("- {}：{}\n", p.kind.label(), review_label(p.text.trim(), p.quantity_needs_review)));
+        }
+        for p in &topic.details {
+            md.push_str(&format!("- 补充：{}\n", review_label(p.text.trim(), p.quantity_needs_review)));
+        }
         md.push('\n');
     }
     if !doc.decisions.is_empty(){md.push_str("## Decisions\n\n");for p in &doc.decisions{md.push_str(&format!("- {}\n",p.text));}md.push('\n');}

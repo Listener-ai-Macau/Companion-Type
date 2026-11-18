@@ -232,10 +232,10 @@ mod tests {
     #[test]
     fn automatic_brief_candidate_keeps_eight_collapsed_details_without_expanding_main(){
         let mut doc=parse_review(&valid().to_string(),&units()).unwrap().document;
-        doc.topics[0].details=(0..8).map(|i|Entry{text:format!("可回查的补充{i}。"),sources:vec!["u000".into()]}).collect();
+        doc.topics[0].details=(0..8).map(|i|Entry{text:format!("可回查的补充{i}。"),sources:vec!["u000".into()],quantity_needs_review:false}).collect();
         assert!(validate_with_details_limit(&doc,&units(),8).is_ok());
         assert!(validate_with_details_limit(&doc,&units(),3).is_err());
-        doc.topics[0].details.push(Entry{text:"第九项。".into(),sources:vec!["u000".into()]});
+        doc.topics[0].details.push(Entry{text:"第九项。".into(),sources:vec!["u000".into()],quantity_needs_review:false});
         assert!(validate_with_details_limit(&doc,&units(),8).is_err());
         doc.topics[0].details.pop();doc.topics[0].points[0].text="长".repeat(91);
         assert!(validate_with_details_limit(&doc,&units(),8).is_err());

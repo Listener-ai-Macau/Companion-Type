@@ -508,7 +508,7 @@ mod tests {
     #[test]
     fn automatic_brief_second_append_requires_a_new_partial_answer_witness(){
         let old=summary_units(&doc());let previous=old.iter().map(signature).collect::<Vec<_>>();
-        let mut changed=doc();changed.topics[0].details.push(super::super::Entry{text:"审批未通过，不能先采购。".into(),sources:vec!["u000".into()]});
+        let mut changed=doc();changed.topics[0].details.push(super::super::Entry{text:"审批未通过，不能先采购。".into(),sources:vec!["u000".into()],quantity_needs_review:false});
         let now=summary_units(&changed);let known=now.iter().map(|unit|(unit.id.as_str(),unit)).collect::<HashMap<_,_>>();
         let mut check=Check{id:"q00".into(),result:"partial".into(),material:true,difference:"还缺预算数额".into(),summary_ids:vec![now.last().unwrap().id.clone()]};
         assert!(new_partial_witness(&check,&known,&previous));
