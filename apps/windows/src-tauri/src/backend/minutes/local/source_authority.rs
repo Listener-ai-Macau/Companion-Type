@@ -24,7 +24,7 @@ const FORECAST: &[&str] = &["预计", "预测", "预估", "大概会", "可能�
 const OPINION: &[&str] = &["我认为", "我觉得", "我的看法", "个人认为", "我判断"];
 const EXACT_RELATION: &[&str] = &[
     "报价", "价格", "费用", "收费", "成本", "预算", "金额", "计费", "付款", "采购价",
-    "不意味着", "才具备", "必须先", "条件不满足", "不能因为", "不能把", "不承诺", "没有批准", "没有约定", "讨论是否", "除非", "顺延",
+    "不意味着", "才具备", "必须先", "条件不满足", "不能因为", "不能把", "不会只", "不承诺", "没有批准", "没有约定", "除非", "顺延",
 ];
 
 static QUANTITY: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
@@ -64,7 +64,8 @@ impl Authority {
         let verbatim = if explicit_open_item && canonical_brief::line(source, 90) {
             Some("question")
         } else if !has_typed_outcome && canonical_brief::line(source, 90)
-            && (has(source, EXACT_RELATION) || QUANTITY.is_match(source)) {
+            && (has(source, EXACT_RELATION) || QUANTITY.is_match(source)
+                || (source.contains("讨论") && source.contains("是否"))) {
             // Choose a conservative label without changing the actual words.
             // An explicit recommendation or prediction remains such in the reader.
             Some(if allowed.contains(&"recommendation") { "recommendation" }

@@ -77,7 +77,7 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                 facts.append(&mut extracted);
                 reviewed.push(coverage);
                 if let Ok(mut trace)=trace.lock(){trace["reviewedSourceWindows"]=json!(reviewed);}
-                if facts.len()>128{return Err(atomic_document::fail());}
+                if facts.len()>atomic_document::MAX_FACTS{return Err(atomic_document::fail());}
             }
             let bank=atomic_document::build_bank(facts,&session.transcript_text)?;
             if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}

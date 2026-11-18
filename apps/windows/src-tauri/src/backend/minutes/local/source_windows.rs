@@ -247,9 +247,11 @@ mod tests {
         let topic_ids:HashSet<_>=bank.facts.iter().filter(|f|f.placement==super::super::super::automatic_brief::answer_layout::Placement::Topic)
             .map(|f|f.id.as_str()).collect();
         layout["assignments"].as_object_mut().unwrap().retain(|id,_|topic_ids.contains(id.as_str()));
-        layout.as_object_mut().unwrap().remove("purpose");
-        // For the replay select the first source fact, not prose from the old caption.
-        layout["purposeFact"]=json!(bank.facts[0].id);
+        if layout.as_object_mut().unwrap().remove("purpose").is_some(){
+            // Older receipts had prose instead of an opening fact ID. Do not
+            // reuse it to test whether the exact-source renderer is safe.
+            layout["purposeFact"]=json!(bank.facts[0].id);
+        }
         let session=crate::backend::minutes::tests::session_with_text(&source);
         let base=crate::backend::minutes::rules_l0_minutes(&session,"replay");
         let parsed=super::super::atomic_document::organize(&layout.to_string(),&bank,&session,&base).unwrap();
@@ -257,8 +259,11 @@ mod tests {
         assert_eq!(document.action_items.len(),3);
         assert_eq!(document.questions.len(),2);
         assert!(document.markdown.contains("另外需要五千元安装费"));
+        assert!(document.markdown.contains("是否可以开始试点"));
+        assert!(document.markdown.contains("不会只发一个完成截图"));
         assert!(!document.markdown.contains("乙方案含安装费"));
         assert!(!document.markdown.contains("主分支"));
+        assert_eq!(parsed.receipt["retainedFactIds"].as_array().unwrap().len(),bank.facts.len());
         println!("saved model layout reconstructed through the protected headings and exact-source open items; no neural call");
     }
 }

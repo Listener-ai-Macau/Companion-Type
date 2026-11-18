@@ -75,13 +75,17 @@ fn take<'a>(ids:&[String],placement:Placement,known:&'a HashMap<&str,Bound<'a>>,
 fn entry(bound:&Bound<'_>)->Entry{Entry{text:bound.fact.text.clone(),sources:bound.sources.clone()}}
 
 pub(in crate::backend::minutes) fn assemble(raw:&str,facts:&[Fact],units:&[Unit])->Result<Assembled,String>{
+    assemble_with_details_limit(raw,facts,units,8)
+}
+
+pub(in crate::backend::minutes) fn assemble_with_details_limit(raw:&str,facts:&[Fact],units:&[Unit],details_limit:usize)->Result<Assembled,String>{
     let layout:Layout=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|fail())?;
     let known=bind_facts(facts,units)?;let mut used=HashSet::new();
     if layout.topics.is_empty()||layout.topics.len()>8||layout.decisions.len()>20||layout.action_items.len()>20||layout.questions.len()>20{return Err(fail());}
     let mut document=Document{purpose:layout.purpose,topics:Vec::new(),decisions:Vec::new(),action_items:Vec::new(),questions:Vec::new()};
     let mut bindings=Vec::new();
     for (i,topic) in layout.topics.into_iter().enumerate(){
-        if topic.points.is_empty()||topic.points.len()>3||topic.details.len()>8{return Err(fail());}
+        if topic.points.is_empty()||topic.points.len()>3||topic.details.len()>details_limit{return Err(fail());}
         let mut points=Vec::new();let mut details=Vec::new();
         for (j,ids) in topic.points.into_iter().enumerate(){
             let bound=take(&ids,Placement::Topic,&known,&mut used)?;
@@ -110,7 +114,7 @@ pub(in crate::backend::minutes) fn assemble(raw:&str,facts:&[Fact],units:&[Unit]
         }
     }
     if used.len()!=known.len(){return Err(fail());}
-    super::validate_with_details_limit(&document,units,8)?;
+    super::validate_with_details_limit(&document,units,details_limit)?;
     let retained_ids=facts.iter().filter(|f|retained.contains(&f.id)).map(|f|f.id.clone()).collect();
     Ok(Assembled{document,retained_ids,excluded:layout.excluded,bindings})
 }

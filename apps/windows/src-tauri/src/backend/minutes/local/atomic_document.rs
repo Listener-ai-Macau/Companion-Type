@@ -30,6 +30,9 @@ impl ExtractedFact{
     }
 }
 pub(super) struct Bank {pub facts:Vec<Fact>,pub receipt:Value}
+// The whole document already has this bound. Keep the overview compact, but
+// don't reject or lose verified facts solely because a topic has many details.
+pub(super) const MAX_FACTS:usize=128;
 #[cfg(test)]
 pub(super) fn parse_bank(raw:&str,source:&str)->Result<Bank,String>{
     let extracted:Extracted=serde_json::from_str(crate::backend::minutes::strip_code_fences(raw).trim()).map_err(|_|fail())?;
@@ -50,7 +53,7 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
         let original=f.evidence.iter().map(|id|known.get(id.as_str()).copied().ok_or_else(fail)).collect::<Result<Vec<_>,_>>()?.join("\n");
         if !canonical_brief::local_document::identifiers_bound(&f.text,&original){return Err(fail());}
         facts.push(Fact{id:format!("a{:03}",facts.len()),kind,placement,text:f.text,owner:f.owner,due:f.due,evidence:f.evidence});
-        if facts.len()>128{return Err(fail());}
+        if facts.len()>MAX_FACTS{return Err(fail());}
     }
     answer_layout::validate_facts(&facts,&units)?;
     let seals=facts.iter().map(|f|json!({"id":f.id,"bodySha256":format!("{:x}",Sha256::digest(serde_json::to_vec(f).unwrap()))})).collect::<Vec<_>>();
@@ -107,7 +110,7 @@ const THEME_IDS:[&str;8]=["t1","t2","t3","t4","t5","t6","t7","t8"];
 
 pub(super) fn layout_schema(bank:&Bank)->Result<Value,String>{
     let topic_facts:Vec<_>=bank.facts.iter().filter(|f|f.placement==Placement::Topic).collect();
-    if topic_facts.is_empty()||topic_facts.len()>88{return Err(fail());}
+    if topic_facts.is_empty(){return Err(fail());}
     let choices=purpose_choices(bank);
     if choices.is_empty(){return Err(fail());}
     let title=json!({"anyOf":[{"type":"string","minLength":1,"maxLength":26},{"type":"null"}]});
@@ -152,9 +155,8 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     if !assignments.is_empty(){return Err(fail());}
     let mut required_chars=0;
     for items in &mut slots{
-        if items.len()>11{return Err(fail());}
         items.sort_by_key(|(_,main)|!*main);
-        required_chars+=items.iter().take(items.len().saturating_sub(8).max(1))
+        required_chars+=items.iter().take(1)
             .map(|(fact,_)|fact.text.chars().count()).sum::<usize>();
     }
     let mut optional_chars=1000_usize.checked_sub(required_chars).ok_or_else(fail)?;
@@ -163,11 +165,10 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         let title=topics.remove(id).ok_or_else(fail)?;
         if items.is_empty(){continue;}
         let title=title.as_deref().and_then(theme_name).ok_or_else(fail)?;
-        let min_points=items.len().saturating_sub(8).max(1);
         let mut points=Vec::new();let mut details=Vec::new();
         for (index,(fact,main)) in items.into_iter().enumerate(){
             let size=fact.text.chars().count();
-            if index<min_points{
+            if index==0{
                 points.push([&fact.id]);
             }else if main&&points.len()<3&&size<=optional_chars{
                 optional_chars-=size;points.push([&fact.id]);
@@ -189,7 +190,7 @@ fn theme_name(title:&str)->Option<&str>{
 
 pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
     let sealed=serde_json::to_vec(&bank.facts).map_err(|_|fail())?;
-    let units=source_units(&session.transcript_text);let result=answer_layout::assemble(raw,&bank.facts,&units)?;
+    let units=source_units(&session.transcript_text);let result=answer_layout::assemble_with_details_limit(raw,&bank.facts,&units,MAX_FACTS)?;
     for excluded in &result.excluded{
         if bank.facts.iter().find(|f|f.id==excluded.id).is_none_or(|f|f.placement!=Placement::Topic){return Err(fail());}
     }
@@ -203,7 +204,7 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
             let s=known[id.as_str()];json!({"source":s["source"],"quote":s["text"]})
         }).collect::<Vec<_>>()));
     }
-    let mut parsed=super::evidence_document::parse(&document.to_string(),session,base)?;
+    let mut parsed=super::evidence_document::parse_with_details_limit(&document.to_string(),session,base,MAX_FACTS)?;
     if serde_json::to_vec(&bank.facts).map_err(|_|fail())?!=sealed{return Err(fail());}
     // The shared document parser assigns presentation entries its own aNNN
     // sequence. Never expose those aliases as identities for the frozen bank.
