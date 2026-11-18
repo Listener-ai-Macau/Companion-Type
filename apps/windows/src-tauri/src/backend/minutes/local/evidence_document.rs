@@ -195,7 +195,13 @@ mod tests{
     }
     #[test]
     fn actual_schema_wire_puts_claim_evidence_before_wording_and_tasks_last(){
-        let v=json!({"response_format":{"schema":schema("文本")}});let wire=wire(&v);
+        use super::super::transport;
+        let expected_schema=schema("文本");
+        let v=transport::request_body("local", "测试", json!({}), expected_schema.clone(),
+            64, &transport::profile().unwrap()).unwrap();
+        assert_eq!(v["response_format"]["type"], "json_schema");
+        assert_eq!(v["response_format"]["json_schema"]["schema"], expected_schema);
+        let wire=wire(&v);
         assert_eq!(serde_json::from_str::<Value>(&wire).unwrap(),v);
         let root=&wire[wire.find("\"properties\":{\"purpose\"").unwrap()..];
         assert!(root.find("\"purpose\"").unwrap()<root.find("\"topics\"").unwrap());

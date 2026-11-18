@@ -43,7 +43,7 @@ impl CheckedSourcePrefix {
             || report["durationMs"] != duration_ms
             || trace["provider"] != "local"
             || trace["modelSha256"] != assets::MODEL_SHA
-            || trace["runtimeSha256"] != assets::SERVER_SHA
+            || !matches!(trace["runtimeSha256"].as_str(), Some(assets::SERVER_SHA | assets::VULKAN_SERVER_SHA))
             || trace["newCloudCalls"] != 0
             || trace["trainingUpdates"] != 0
         {

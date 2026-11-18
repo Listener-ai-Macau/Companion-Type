@@ -46,7 +46,7 @@ pub(super) fn request_body(alias: &str, prompt: &str, input: Value, schema: Valu
     let mut body=json!({"model":alias,"messages":messages,"max_tokens":max_output_tokens,
         "stream":true,"stream_options":{"include_usage":true},"chat_template_kwargs":kwargs,
         "reasoning_format":"deepseek","reasoning_budget_tokens":profile["reasoningBudgetTokens"],
-        "response_format":{"type":"json_schema","schema":schema}});
+        "response_format":{"type":"json_schema","json_schema":{"schema":schema}}});
     let allowed=["temperature","top_p","top_k","min_p","presence_penalty","repeat_penalty","seed"];
     for(key,value)in profile["requestParameters"].as_object().ok_or_else(error)?{
         if !allowed.contains(&key.as_str()){return Err(error());}body[key]=value.clone();
