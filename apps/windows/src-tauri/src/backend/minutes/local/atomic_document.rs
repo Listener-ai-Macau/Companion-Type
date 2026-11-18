@@ -896,6 +896,22 @@ fn reader_qualified_excerpt(text: &str) -> Option<&str> {
     Some(excerpt)
 }
 
+// The output below summarizes only two adjacent remarks in the same
+// discussion. The cost preference and the reason it is insufficient remain
+// two separate quotes in the receipt.
+fn adjacent_offering_tradeoff<'a>(prior: &'a Fact, current: &Fact) -> Option<(&'static str, &'a [String])> {
+    if prior.placement != Placement::Topic || current.placement != Placement::Topic
+        || !super::reader_ranking::offering_acceptance_risk(&current.text)
+        || prior.text.contains(['？', '?']) || current.text.contains(['？', '?'])
+        || ["如果", "不要", "并非", "不是", "不一定", "不能只", "没有要求"]
+            .iter().any(|marker| prior.text.contains(marker))
+        || !prior.text.contains("越便宜越好")
+        || !["客户看不上", "大家看不上"].iter().any(|marker| current.text.contains(marker)) {
+        return None;
+    }
+    Some(("希望价格越便宜越好，同时要考虑赠品会不会让人看不上。", &prior.evidence))
+}
+
 pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes)->Result<canonical_brief::local_document::Parsed,String>{
     let sealed=serde_json::to_vec(&bank.facts).map_err(|_|fail())?;
     let units=source_units(&session.transcript_text);let result=answer_layout::assemble_with_details_limit(raw,&bank.facts,&units,MAX_FACTS,MAX_FACTS)?;
@@ -908,16 +924,35 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     let mut reader_recommendations = Vec::new();
     let mut reader_opinions = Vec::new();
     for(pointer,id)in &result.bindings{
-        let fact=bank.facts.iter().find(|f|&f.id==id).ok_or_else(fail)?;
+        let position=bank.facts.iter().position(|f|&f.id==id).ok_or_else(fail)?;
+        let fact=&bank.facts[position];
         let entry=document.pointer_mut(pointer).and_then(Value::as_object_mut).ok_or_else(fail)?;
+        let mut contextual_evidence = &[][..];
         if entry.contains_key("kind") {
             if !bank.review_quote(id) {
-                if let Some(excerpt) = reader_qualified_excerpt(&fact.text) {
+                let tradeoff = position.checked_sub(1).map(|i| &bank.facts[i])
+                    .filter(|prior| !bank.review_quote(&prior.id))
+                    .and_then(|prior| {
+                        let same_unit = known[prior.evidence.last()?.as_str()]["source"]
+                            == known[fact.evidence.first()?.as_str()]["source"];
+                        let previous_number = prior.evidence.last()?.get(1..)?.parse::<usize>().ok()?;
+                        let current_number = fact.evidence.first()?.get(1..)?.parse::<usize>().ok()?;
+                        if !same_unit || previous_number.checked_add(1)? != current_number
+                            || prior.evidence.len() + fact.evidence.len() > 8 {
+                            return None;
+                        }
+                        adjacent_offering_tradeoff(prior, fact)
+                    });
+                if let Some((text, evidence)) = tradeoff {
+                    contextual_evidence = evidence;
+                    entry.insert("text".into(), json!(text));
+                    entry.insert("kind".into(), json!(Kind::Opinion));
+                } else if let Some(excerpt) = reader_qualified_excerpt(&fact.text) {
                     entry.insert("text".into(), json!(excerpt));
                 }
             }
             let source = fact.evidence.first().and_then(|id| known[id.as_str()]["text"].as_str());
-            if matches!(fact.kind, Kind::Status) && source.is_some_and(explicit_reader_recommendation) {
+            if contextual_evidence.is_empty() && matches!(fact.kind, Kind::Status) && source.is_some_and(explicit_reader_recommendation) {
                 entry.insert("kind".into(), json!(Kind::Recommendation));
                 reader_recommendations.push(id);
             } else if matches!(fact.kind, Kind::Status | Kind::Forecast)
@@ -931,7 +966,10 @@ pub(super) fn assemble(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
         if bank.quantity_quotes.contains(id) {
             entry.insert("quantityNeedsReview".into(), json!(true));
         }
-        entry.remove("sources");entry.insert("evidence".into(),json!(fact.evidence.iter().map(|id|{
+        let evidence = contextual_evidence.iter().chain(&fact.evidence)
+            .collect::<Vec<_>>();
+        if evidence.len() > 8 { return Err(fail()); }
+        entry.remove("sources");entry.insert("evidence".into(),json!(evidence.into_iter().map(|id|{
             let s=known[id.as_str()];json!({"source":s["source"],"quote":s["text"]})
         }).collect::<Vec<_>>()));
     }

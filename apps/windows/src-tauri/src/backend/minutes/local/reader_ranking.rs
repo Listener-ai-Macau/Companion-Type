@@ -47,6 +47,14 @@ pub(super) enum OperationalEvidence {
     VerificationMaterial,
     BudgetAndAvailability,
     OfferingOptions,
+    OfferingAcceptance,
+    RolloutCapacity,
+}
+
+pub(super) fn offering_acceptance_risk(text: &str) -> bool {
+    ["赠品", "送的东西", "附赠品"].iter().any(|word| text.contains(word))
+        && ["客户看不上", "大家看不上", "客户不接受", "用户不接受"]
+            .iter().any(|word| text.contains(word))
 }
 
 pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
@@ -103,8 +111,16 @@ pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
     }
     if has(&["低价", "廉价", "便宜", "降价", "压价", "压成本"])
         && (has(&["客户看不上", "客户不接受", "用户不接受", "质量也要", "保证质量", "质量不能", "牺牲质量"])
-            || (has(&["赠品", "送的东西", "给客户"]) && has(&["大家看不上", "没有人要"]))) {
+            || offering_acceptance_risk(text)) {
         return Some(OperationalEvidence::PriceVersusFit);
+    }
+    if offering_acceptance_risk(text) {
+        return Some(OperationalEvidence::OfferingAcceptance);
+    }
+    if has(&["并行", "同步推进", "同时开展", "同时推开", "同步开展", "同期上线"])
+        && has(&["人力", "物力", "物流", "团队", "产能", "资源"])
+        && has(&["达不到", "不够", "不足", "无法", "有限", "跟不上"]) {
+        return Some(OperationalEvidence::RolloutCapacity);
     }
     if has(&["赠品", "附赠", "增值服务", "服务权益", "套装", "套餐"])
         && has(&["几种", "多类", "多种", "多选", "多元化", "盲盒", "可选", "搭配"])
