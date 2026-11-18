@@ -28,14 +28,32 @@ const INCOMPLETE_ENDS: &[&str] = &[
     "很有价值", "一个方向", "我觉得", "是不是", "是一个", "的过程",
 ];
 
-pub(super) fn operational_evidence(text: &str) -> bool {
+#[derive(Clone, Copy, Eq, Hash, PartialEq)]
+pub(super) enum OperationalEvidence {
+    Approval,
+    ConditionalCost,
+    RuledOutBlocker,
+    BlockingCondition,
+}
+
+pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
     if APPROVAL_STATUS.iter().any(|signal| text.contains(signal)) {
-        return true;
+        return Some(OperationalEvidence::Approval);
     }
     let price = ["多少钱", "费用", "报价", "金额", "收费"].iter().any(|signal| text.contains(signal));
     let compared_outcomes = [("成了", "不成"), ("成功", "失败"), ("已通过", "未通过"), ("含", "另收")]
         .iter().any(|(first, second)| text.contains(first) && text.contains(second));
-    price && compared_outcomes
+    if price && compared_outcomes {
+        return Some(OperationalEvidence::ConditionalCost);
+    }
+    if ["已经不是问题", "不再是问题", "不构成障碍"].iter().any(|cue| text.contains(cue)) {
+        return Some(OperationalEvidence::RuledOutBlocker);
+    }
+    if text.contains("如果") && ["就很难", "就不能", "就没法", "无法继续", "无法开展"]
+        .iter().any(|cue| text.contains(cue)) {
+        return Some(OperationalEvidence::BlockingCondition);
+    }
+    None
 }
 
 pub(super) struct ReadingInput<'a> {
@@ -98,7 +116,7 @@ fn rank(rows: &[ReadingInput<'_>]) -> Vec<usize> {
         count as f64 * 0.16 + 0.24 * u8::from(cost) as f64 + 0.14 * u8::from(qualifies) as f64
             + 0.16 * u8::from(row.judgment) as f64 + 0.047 * words[index].len().min(8) as f64
             + 0.24 * rows.len() as f64 * centrality[index]
-            + 1.00 * u8::from(operational_evidence(text)) as f64
+            + 1.00 * u8::from(operational_evidence(text).is_some()) as f64
             - 0.82 * u8::from(handoff) as f64 - 0.55 * u8::from(incomplete) as f64
             - 0.35 * u8::from(text.chars().count() < 20) as f64 - 0.30 * u8::from(row.review_only) as f64
     }).collect();
