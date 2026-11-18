@@ -163,7 +163,11 @@ mod tests {
                 && after["evidence"].as_array().unwrap().len() == 2
         }));
         let purpose = receipt["document"]["purpose"].as_str().unwrap();
-        assert!(purpose.contains("手机") && purpose.contains("年轻") && purpose.contains("赠品"), "{purpose}");
+        assert!(["新出的手机", "面向哪些客户", "推广", "赠品", "产品推出方案"]
+            .iter().all(|subject| purpose.contains(subject)), "{purpose}");
+        let purpose_facts = receipt["openingPurposeFactIds"].as_array().unwrap();
+        assert_eq!(purpose_facts.len(), 5);
+        assert!(purpose_facts.iter().all(|id| after_facts.iter().any(|fact| fact["id"] == *id)));
         assert!(receipt["openingAgendaFactId"].is_string());
         let topics = receipt["document"]["topics"].as_array().unwrap();
         assert!(topics.iter().flat_map(|topic| topic["points"].as_array().unwrap()).any(|point| {

@@ -329,6 +329,7 @@ struct ChapterFocus {
     overview: String,
     primary_facts: Vec<String>,
     agenda_fact: Option<String>,
+    purpose_facts: Vec<String>,
 }
 
 fn stated_meeting_agenda(bank: &Bank) -> Option<(&str, &str)> {
@@ -369,6 +370,40 @@ fn introduced_discussion_subject(bank: &Bank) -> Option<(&str, &str)> {
             (!["一个", "那个", "这个"].iter().any(|word| subject.contains(word)))
                 .then_some((subject, fact.id.as_str()))
         }))
+}
+
+// Only paraphrase an explicitly introduced offering when the transcript also
+// supplies the separate goals. Each clause remains bound to its own fact.
+fn new_offering_purpose(bank: &Bank, agenda_id: &str) -> Option<(String, Vec<String>)> {
+    use super::reader_ranking::{operational_evidence, OperationalEvidence};
+
+    let (subject, introduction) = introduced_discussion_subject(bank)?;
+    if introduction != agenda_id { return None; }
+    let usable = || bank.topics().filter(|fact| !bank.review_quote(&fact.id));
+    let customer_goal = usable().take(12).find(|fact| {
+        let text = &fact.text;
+        ["确认", "确定", "讨论", "界定"].iter().any(|verb| text.contains(verb))
+            && ["目标人群", "目标客群", "目标客户", "人群客户群", "目标受众"]
+                .iter().any(|term| text.contains(term))
+            && !["不用", "不需要", "上次", "假如", "如果", "举例"].iter().any(|cue| text.contains(cue))
+    })?;
+    let promotion = usable().find(|fact| {
+        ["促销方式", "推广方式", "宣传方式"].iter().any(|term| fact.text.contains(term))
+            && ["讨论", "选择", "说这个", "说一下", "确认", "怎么"].iter().any(|term| fact.text.contains(term))
+    })?;
+    let gifts = usable().find(|fact| fact.text.contains("赠品")
+        && operational_evidence(&fact.text) == Some(OperationalEvidence::OfferingOptions))?;
+    let launch = usable().find(|fact| {
+        let text = &fact.text;
+        ["新的产品推出去", "新品推出", "产品发布方案", "产品上线方案"]
+            .iter().any(|term| text.contains(term))
+            && !["已经发布", "已发布", "上次", "举例", "不打算", "决定取消"]
+                .iter().any(|cue| text.contains(cue))
+    })?;
+    let text = format!("讨论新出的{subject}面向哪些客户、怎么推广、赠品怎么准备，以及产品推出方案。");
+    let facts = [introduction, &customer_goal.id, &promotion.id, &gifts.id, &launch.id]
+        .into_iter().map(str::to_owned).collect();
+    Some((text, facts))
 }
 
 fn heading_terms(title: &str) -> Vec<String> {
@@ -503,7 +538,7 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
         Some((topic, id)) => (format!("这场会议的主题是{topic}，讨论了{subject_list}。"), Some(id.to_owned())),
         None => (format!("这场会议讨论了{subject_list}。"), None),
     };
-    let overview = ChapterFocus { overview, primary_facts, agenda_fact };
+    let overview = ChapterFocus { overview, primary_facts, agenda_fact, purpose_facts: Vec::new() };
     Ok((Organization {
         purpose_fact: first,
         topics: super::source_windows::UniqueMap(topics),
@@ -567,7 +602,11 @@ fn evidence_organization(bank: &Bank) -> Result<(Organization, ChapterFocus), St
         (Some(agenda), true) => format!("这场会议围绕{agenda}展开。"),
         (None, _) => format!("这场会议讨论了{subjects}。"),
     };
-    let focus = ChapterFocus { overview, primary_facts: focus_topics.iter().map(|(_, id)| id.clone()).collect(), agenda_fact };
+    let (overview, purpose_facts) = agenda_fact.as_deref().and_then(|id| new_offering_purpose(bank, id))
+        .unwrap_or((overview, Vec::new()));
+    let focus = ChapterFocus {
+        overview, primary_facts: focus_topics.iter().map(|(_, id)| id.clone()).collect(), agenda_fact, purpose_facts,
+    };
     let layout = Organization {
         purpose_fact: primary,
         topics: super::source_windows::UniqueMap(topics),
@@ -841,6 +880,9 @@ fn render_organization(
     parsed.receipt["openingFactId"] = json!(purpose_id);
     if let Some(overview) = focus {
         parsed.receipt["openingTopicFactIds"] = json!(overview.primary_facts);
+        if !overview.purpose_facts.is_empty() {
+            parsed.receipt["openingPurposeFactIds"] = json!(overview.purpose_facts);
+        }
         if let Some(id) = overview.agenda_fact {
             parsed.receipt["openingAgendaFactId"] = json!(id);
         }
