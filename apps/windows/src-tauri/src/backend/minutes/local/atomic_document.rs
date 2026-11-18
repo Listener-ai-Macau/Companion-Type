@@ -685,6 +685,11 @@ fn heading_for_evidence(rows: &[&Fact], candidates: &[String], points: &[&Fact])
         let specific_outcome = points.iter().any(|point| point.text.contains(term)
             && super::reader_ranking::operational_evidence(&point.text)
                 == Some(super::reader_ranking::OperationalEvidence::Approval));
+        let stated_priority = points.iter().any(|point| {
+            super::reader_ranking::operational_evidence(&point.text)
+                == Some(super::reader_ranking::OperationalEvidence::PriorityChoice)
+                && super::source_grounding::shared_han_phrase(&point.text, term, 2)
+        });
         let introduced = rows.iter().take(6).any(|row| super::chapter_spans::starts_discussion(&row.text)
             && row.text.contains(term));
         if supported < 2 && !specific_outcome && !introduced { return 0; }
@@ -692,6 +697,7 @@ fn heading_for_evidence(rows: &[&Fact], candidates: &[String], points: &[&Fact])
         let overlap: usize = points.iter().map(|point| terms.iter()
             .filter(|part| point.text.contains(part.as_str())).count()).sum();
         13 * selected + 7 * overlap.min(6) + 8 * usize::from(overlap > 0)
+            + 30 * usize::from(stated_priority)
             + 6 * usize::from(introduced) + 3 * supported.min(4) + 2 * length.min(6)
             + 8_usize.saturating_sub(index) - 3 * usize::from(length == 2)
     };

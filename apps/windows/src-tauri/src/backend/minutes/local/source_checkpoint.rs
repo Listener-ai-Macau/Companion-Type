@@ -150,7 +150,8 @@ mod tests {
             })).unwrap();
         }
         assert_eq!(receipt["factSeals"], original["receipt"]["documentReceipt"]["factSeals"]);
-        assert!(receipt["document"]["purpose"].as_str().unwrap().contains("手机"));
+        let purpose = receipt["document"]["purpose"].as_str().unwrap();
+        assert!(purpose.contains("手机") && purpose.contains("年轻"), "{purpose}");
         assert!(receipt["openingAgendaFactId"].is_string());
         let topics = receipt["document"]["topics"].as_array().unwrap();
         assert!(topics.iter().flat_map(|topic| topic["points"].as_array().unwrap()).any(|point| {
