@@ -24,11 +24,11 @@ export function MeetingMapView({markdown,title='会议脉络',onLocate}:{markdow
    <button type="button" disabled={!expanded.size} onClick={()=>setSelection({source:markdown,ids:new Set()})}>收起</button>
   </div></div>
   <div className="meeting-map-canvas">
-   <div className="meeting-map-origin"><span className="meeting-map-origin-icon"><GitBranch size={20} aria-hidden="true"/></span><div><small>会议主题</small><strong>{title}</strong></div></div>
+   <div className="meeting-map-origin"><span className="meeting-map-origin-icon"><GitBranch size={20} aria-hidden="true"/></span><div><small>会议主题</small><strong>{title}</strong>{model.purpose&&<p>{model.purpose}</p>}</div></div>
    {model.topics.length?<ol className="meeting-map-branches">{model.topics.map((topic,i)=><li key={topic.id} style={{'--map-branch':i%3} as CSSProperties}>
     <details open={expanded.has(topic.id)} onToggle={event=>{if(event.currentTarget===event.target)toggle(topic.id,event.currentTarget.open);}}>
      <summary aria-controls={id+topic.id}><span className="meeting-map-topic-number">{String(i+1).padStart(2,'0')}</span><span className="meeting-map-topic-title">{topic.label}</span><ChevronDown size={15} aria-hidden="true"/></summary>
-     <div className="meeting-map-topic-content" id={id+topic.id}><p>{topic.text}</p>{onLocate&&<button type="button" onClick={()=>onLocate(topic.section,topic.text)}>查看纪要上下文<ArrowUpRight size={13}/></button>}</div>
+     <div className="meeting-map-topic-content" id={id+topic.id}><p>{topic.text}</p>{!!topic.details?.length&&<details><summary>其余内容</summary><ul>{topic.details.map((text,index)=><li key={index}>{text}</li>)}</ul></details>}{onLocate&&<button type="button" onClick={()=>onLocate(topic.sourceSection??topic.section,topic.sourceText??topic.text)}>查看纪要上下文<ArrowUpRight size={13}/></button>}</div>
     </details>
    </li>)}</ol>:<div className="meeting-map-empty"><strong>这份纪要还没有主题分组</strong><p>可以先阅读完整纪要；有标题或要点后，会在这里显示结构。</p></div>}
   </div>
