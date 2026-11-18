@@ -177,6 +177,12 @@ mod tests {
         assert!(points.iter().any(|text| text.contains("便宜") && text.contains("看不上")));
         assert!(points.iter().any(|text| text.contains("样品")));
         assert!(points.iter().any(|text| text.contains("档期")));
+        assert!(points.iter().any(|text| text.contains("先后顺序") && text.contains("商场") && text.contains("直播")));
+        assert!(points.iter().any(|text| text.contains("各部门相互配合")));
+        assert!(receipt["evidenceAnchors"].as_array().unwrap().iter().any(|anchor| {
+            anchor["path"].as_str().is_some_and(|path| path.contains(".points["))
+                && anchor["quote"].as_str().is_some_and(|quote| quote.contains("还是先做直播"))
+        }));
         let actions = &result.minutes.action_items;
         assert_eq!(actions.len(), 5);
         assert_eq!(actions[0].text, "核对主打颜色、主推意向");

@@ -594,16 +594,18 @@ fn evidence_reading_points<'a>(bank: &Bank, rows: &[&'a Fact]) -> Vec<&'a Fact> 
     // more example of the offer when they compete for the same chapter.
     ordered.sort_by_key(|fact| !matches!(operational_evidence(&fact.text),
         Some(OperationalEvidence::VerificationMaterial | OperationalEvidence::AvailabilityConstraint
-            | OperationalEvidence::RolloutCapacity)));
+            | OperationalEvidence::RolloutCapacity | OperationalEvidence::SequenceOptions
+            | OperationalEvidence::TeamCoordination)));
     let paired_options: Vec<_> = [OperationalEvidence::LimitedChannel, OperationalEvidence::ParallelChannel]
         .into_iter().filter_map(|kind| ordered.iter().copied().find(|fact| operational_evidence(&fact.text) == Some(kind)))
         .collect();
     let mut selected = if paired_options.len() == 2 { paired_options } else { Vec::new() };
     let mut evidence_types: HashSet<_> = selected.iter().filter_map(|fact| operational_evidence(&fact.text)).collect();
-    // A coordination gap is a distinct cause, alongside a forecast,
-    // resource shortage or recommendation that may already fill the topic.
+    // Keep a distinct coordination requirement alongside forecasts,
+    // resource constraints and proposed work.
     let point_limit = if ordered.iter().any(|fact| {
-        operational_evidence(&fact.text) == Some(OperationalEvidence::CoordinationGap)
+        matches!(operational_evidence(&fact.text),
+            Some(OperationalEvidence::CoordinationGap | OperationalEvidence::TeamCoordination))
     }) { VERIFIED_TOPIC_POINTS } else { STANDARD_TOPIC_POINTS };
     let available_slots = point_limit - selected.len();
     selected.extend(ordered.iter().copied().filter(|fact| {
@@ -849,7 +851,8 @@ fn render_organization(
 fn reading_topic_point_limit(items: &[(&Fact, bool)], verified_layout: bool) -> usize {
     use super::reader_ranking::{operational_evidence, OperationalEvidence};
     if verified_layout && items.iter().any(|(fact, main)| {
-        *main && operational_evidence(&fact.text) == Some(OperationalEvidence::CoordinationGap)
+        *main && matches!(operational_evidence(&fact.text),
+            Some(OperationalEvidence::CoordinationGap | OperationalEvidence::TeamCoordination))
     }) { VERIFIED_TOPIC_POINTS } else { STANDARD_TOPIC_POINTS }
 }
 
@@ -984,6 +987,18 @@ fn assemble_with_points_limit(raw: &str, bank: &Bank, session: &CompanionV1HostS
                     contextual_evidence = evidence;
                     entry.insert("text".into(), json!(text));
                     entry.insert("kind".into(), json!(Kind::Opinion));
+                } else if let Some(options) = super::reader_ranking::sequence_options(&fact.text) {
+                    let (first, last) = (options.first().ok_or_else(fail)?, options.last().ok_or_else(fail)?);
+                    let text = if options.len() > 2 {
+                        format!("讨论了先后顺序，包括{first}和{last}等选项。")
+                    } else {
+                        format!("讨论了先后顺序，包括{first}和{last}。")
+                    };
+                    entry.insert("text".into(), json!(text));
+                    entry.insert("kind".into(), json!(Kind::Status));
+                } else if let Some(team) = super::reader_ranking::coordination_request(&fact.text) {
+                    entry.insert("text".into(), json!(format!("提出由{team}相互配合。")));
+                    entry.insert("kind".into(), json!(Kind::Recommendation));
                 } else if let Some(excerpt) = reader_qualified_excerpt(&fact.text) {
                     entry.insert("text".into(), json!(excerpt));
                 }

@@ -1,4 +1,4 @@
-use std::collections::{BTreeMap, BTreeSet};
+use std::{collections::{BTreeMap, BTreeSet}, sync::LazyLock};
 
 use super::chapter_labels::segmenter;
 
@@ -51,12 +51,54 @@ pub(super) enum OperationalEvidence {
     OfferingAcceptance,
     RolloutCapacity,
     AvailabilityConstraint,
+    SequenceOptions,
+    TeamCoordination,
 }
 
 pub(super) fn offering_acceptance_risk(text: &str) -> bool {
     ["赠品", "送的东西", "附赠品"].iter().any(|word| text.contains(word))
         && ["客户看不上", "大家看不上", "客户不接受", "用户不接受"]
             .iter().any(|word| text.contains(word))
+}
+
+pub(super) fn sequence_options(text: &str) -> Option<Vec<String>> {
+    if !text.contains("还是先") || ["已经决定", "已经确定", "最终确定", "一致同意", "就按这个执行", "举例", "例如", "曾经", "上次", "不用比较", "不再讨论"]
+        .iter().any(|cue| text.contains(cue)) {
+        return None;
+    }
+    static OPTION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"先(?P<verb>安排|处理|启动|上线|发布|核对|联系|准备|提交|召开|做)(?:这个|那个)?(?P<subject>[\p{Han}A-Za-z]{2,14})"
+    ).expect("valid sequencing alternative pattern"));
+    let mut options = Vec::new();
+    let mut previous_end = None;
+    for candidate in OPTION.captures_iter(text) {
+        let matched = candidate.get(0)?;
+        if previous_end.is_some_and(|end| !text[end..matched.start()].trim_end().ends_with("还是")) {
+            continue;
+        }
+        let subject = candidate.name("subject")?.as_str().trim_end_matches('的');
+        if ["然后", "同时", "可以", "不需要", "不安排", "要不要"].iter().any(|part| subject.contains(part))
+            || subject.chars().count() < 2 {
+            return None;
+        }
+        let option = format!("先{}{}", candidate.name("verb")?.as_str(), subject);
+        if options.contains(&option) { return None; }
+        options.push(option);
+        previous_end = Some(matched.end());
+    }
+    (options.len() >= 2).then_some(options)
+}
+
+pub(super) fn coordination_request(text: &str) -> Option<&str> {
+    if text.contains(['？', '?']) || ["没有要求", "不要", "暂缓", "不需要", "不用", "建议",
+        "如果", "要是", "应该", "可能", "能不能", "要不要", "能否", "已经", "以前", "上次"]
+        .iter().any(|cue| text.contains(cue)) {
+        return None;
+    }
+    static REQUEST: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?P<team>各部门|各团队|各小组|各方)(?:也|都|就)?(?:要{1,2}|需要|必须)(?:互相|相互)(?:地|的)?(?:去)?配合"
+    ).expect("valid explicit coordination request pattern"));
+    REQUEST.captures(text)?.name("team").map(|capture| capture.as_str())
 }
 
 pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
@@ -83,6 +125,12 @@ pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
     if has(&["每次", "每批", "逐次", "逐批"]) && has(&["评定", "验证", "校准", "复核"])
         && has(&["测量", "精度", "校验", "检测", "性能", "误差"]) {
         return Some(OperationalEvidence::RepeatedVerification);
+    }
+    if sequence_options(text).is_some() {
+        return Some(OperationalEvidence::SequenceOptions);
+    }
+    if coordination_request(text).is_some() {
+        return Some(OperationalEvidence::TeamCoordination);
     }
     if has(&["人员", "设备", "预算", "产能", "资源"]) && has(&["缺乏", "短缺", "不具备", "不足"])
         && has(&["缺口", "检测", "测试", "运营", "交付", "研发", "人力", "生产"]) {
