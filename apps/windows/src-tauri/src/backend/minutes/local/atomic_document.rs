@@ -326,6 +326,34 @@ struct ChapterOrganization {
 struct ChapterFocus {
     overview: String,
     primary_facts: Vec<String>,
+    agenda_fact: Option<String>,
+}
+
+fn stated_meeting_agenda(bank: &Bank) -> Option<(&str, &str)> {
+    let mut agenda = None;
+    for fact in bank.topics().filter(|fact| !bank.review_quote(&fact.id)) {
+        for clause in fact.text.split(['。', '！', '；', '，', '、', ',', '\n']) {
+            let clause = clause.trim();
+            let stated = ["本次会议的主题是", "本次会议主题是", "今天会议的主题是"]
+                .into_iter().find_map(|prefix| clause.strip_prefix(prefix))
+                .or_else(|| {
+                    ["紧扣今天的这个", "围绕今天的这个"].into_iter()
+                        .find_map(|prefix| clause.strip_prefix(prefix))
+                        .and_then(|topic| topic.strip_suffix("的一个主题").or_else(|| topic.strip_suffix("的主题")))
+                });
+            let Some(topic) = stated.map(str::trim).filter(|topic| {
+                (2..=22).contains(&topic.chars().count())
+                    && !topic.contains(['？', '?', '“', '”', ':', '：'])
+                    && !["这个", "那个", "什么", "不是", "还没", "待定"].iter().any(|word| topic.contains(word))
+            }) else { continue; };
+            if let Some((previous, _)) = agenda {
+                if previous != topic { return None; }
+            } else {
+                agenda = Some((topic, fact.id.as_str()));
+            }
+        }
+    }
+    agenda
 }
 
 fn heading_terms(title: &str) -> Vec<String> {
@@ -449,7 +477,17 @@ fn chapter_assignments(layout: ChapterOrganization, bank: &Bank) -> Result<(Orga
         primary_facts.push(fact.clone());
     }
     let first = primary_facts.first().cloned().ok_or_else(fail)?;
-    let overview = ChapterFocus { overview: names.join("、"), primary_facts };
+    let mut seen = HashSet::new();
+    let subjects: Vec<_> = names.iter().filter_map(|title| title.split('、').next())
+        .filter(|term| seen.insert(*term)).collect();
+    let (last, rest) = subjects.split_last().ok_or_else(fail)?;
+    let subject_list = if rest.is_empty() { last.to_string() }
+        else { format!("{}和{last}", rest.join("、")) };
+    let (overview, agenda_fact) = match stated_meeting_agenda(bank) {
+        Some((topic, id)) => (format!("这场会议的主题是{topic}，讨论了{subject_list}。"), Some(id.to_owned())),
+        None => (format!("这场会议讨论了{subject_list}。"), None),
+    };
+    let overview = ChapterFocus { overview, primary_facts, agenda_fact };
     Ok((Organization {
         purpose_fact: first,
         topics: super::source_windows::UniqueMap(topics),
@@ -542,6 +580,9 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     parsed.receipt["openingFactId"] = json!(purpose_id);
     if let Some(overview) = focus {
         parsed.receipt["openingTopicFactIds"] = json!(overview.primary_facts);
+        if let Some(id) = overview.agenda_fact {
+            parsed.receipt["openingAgendaFactId"] = json!(id);
+        }
     }
     Ok(parsed)
 }
@@ -733,12 +774,12 @@ mod tests{
         assert_eq!(result.receipt["retainedFactIds"].as_array().unwrap().len(), 150);
         assert!(result.minutes.markdown.contains("项目记录149已核对"));
         assert_eq!(result.receipt["document"]["topics"].as_array().unwrap().len(), 2);
-        assert_eq!(result.receipt["document"]["purpose"], "项目记录、合作项目");
+        assert_eq!(result.receipt["document"]["purpose"], "这场会议讨论了项目记录和合作项目。");
         assert_eq!(result.receipt["openingTopicFactIds"], json!(["a000",format!("a{:03}", spans[1].start)]));
         let mut wrong_focus = organization.clone();
         wrong_focus["focusChapters"] = json!(["t1","t3"]);
         let repeated_title = organize(&wrong_focus.to_string(), &bank, &session, &base).unwrap();
-        assert_eq!(repeated_title.receipt["document"]["purpose"], "项目记录、合作项目");
+        assert_eq!(repeated_title.receipt["document"]["purpose"], "这场会议讨论了项目记录和合作项目。");
         wrong_focus["focusChapters"] = json!(["t1","a081"]);
         assert!(organize(&wrong_focus.to_string(), &bank, &session, &base).is_err());
         let mut without_tail = organization.clone();

@@ -270,6 +270,8 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
     let mut anchors = Vec::new();
     let mut unrecognized = Vec::new();
     let profile = super::chunk_cache::Profile::from_configuration(
+        // The chunk key includes its exact audio bytes. A different cut
+        // misses the old entry, while identical windows can still be reused.
         &serde_json::json!({"provider":kind.provider(),"model":kind.model_hash(),"language":"zh-en","runtime":"sherpa-onnx-1.13.1","segmentation":"quiet-16s-v1"}),
     )?;
     while offset < len {
@@ -333,6 +335,29 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    #[ignore = "requires the public supply meeting WAV and the official local ASR model"]
+    fn real_card_keeps_the_supply_forecast_together() {
+        let audio = std::env::var_os("COMPANION_TEST_PUBLIC_AUDIO").expect("public supply meeting WAV");
+        let mut file = File::open(audio).unwrap();
+        let (start, _) = wav_data(&mut file).unwrap();
+        let mut buffer = vec![0; 20 * RATE * 2 + 2];
+        let mut offset = 2844 * RATE / 10;
+        for expected in [2986 * RATE / 10, 315 * RATE, 3348 * RATE / 10] {
+            file.seek(SeekFrom::Start(start + (offset * 2) as u64)).unwrap();
+            file.read_exact(&mut buffer).unwrap();
+            let count = cut_samples(&buffer);
+            assert_eq!(offset + count, expected);
+            offset += count;
+        }
+        buffer.truncate((3348 * RATE / 10 - 315 * RATE) * 2);
+        let (runtime, kind) = load_preferred(&root().unwrap()).unwrap();
+        assert_eq!(kind, ModelKind::OfficialParaformer);
+        let forecast = runtime.transcribe(&buffer).unwrap();
+        assert!(forecast.contains("半年到一年") && forecast.contains("回调"), "{forecast}");
+        assert!(!forecast.contains("房款"), "{forecast}");
+    }
 
     #[test]
     #[ignore = "requires isolated cache, public WAV and locally installed ASR model"]
