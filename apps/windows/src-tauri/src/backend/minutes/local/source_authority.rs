@@ -168,6 +168,44 @@ pub(super) fn literal_supplier_comparison(source: &str, next: &str) -> Option<Fo
     })
 }
 
+// Keep a clearly requested review with its explicit organizational owner.
+// The words being reviewed must be stated, and a question in the object does
+// not make a directive into an unassigned suggestion.
+pub(super) fn literal_review_task(source: &str) -> Option<Followup> {
+    static REVIEW: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:^|[，,])\s*(?P<team>[\p{Han}]{2,7}?(?:部门|部|组|团队))(?:这一块|这块)?让(?:他们|它们)(?:去)?(?:看一下|核对一下|评估一下)[，,]\s*(?:就是)?(?P<work>[^。！？；]{4,100})"
+    ).expect("valid organizational review pattern"));
+    static TABLE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"列{1,3}(?:出)?(?:这个|一份|一张|个)?(?:进度表|表格)(?:过来|给我|发来|提交)"
+    ).expect("valid progress table instruction pattern"));
+    if has(source, &["建议", "可以考虑", "或许", "可能", "如果", "假如", "要是", "要不要", "是不是",
+        "能不能", "可不可以", "或者", "不要", "暂缓", "取消", "没有要求", "不需要", "不用", "不再",
+        "上周", "曾经", "举例", "比如", "听说"]) {
+        return None;
+    }
+    let (text, owner) = if let Some(review) = REVIEW.captures(source) {
+        let team = review.name("team")?.as_str();
+        if has(team, &["这个", "那个", "相关", "他们", "某个", "某部门", "其他", "所有", "由谁"]) { return None; }
+        let work = review.name("work")?.as_str();
+        let mut subjects: Vec<_> = ["主打颜色", "主推意向", "成本预算", "风险清单", "测试范围", "供应商报价",
+            "发布方案", "样品规格", "设备配置"].iter().filter_map(|topic| work.find(topic).map(|index| (index, *topic))).collect();
+        if subjects.is_empty() || subjects.len() > 3 { return None; }
+        subjects.sort_unstable();
+        let text = format!("核对{}", subjects.into_iter().map(|(_, topic)| topic).collect::<Vec<_>>().join("、"));
+        (text, Some(team.to_owned()))
+    } else if !source.contains(['？', '?'])
+        && has(source, &["方案实行进度", "方案实施进度", "方案执行进度", "项目进度", "交付进度"])
+        && TABLE.is_match(source) {
+        ("列出进度表".to_owned(), None)
+    } else {
+        return None;
+    };
+    Some(Followup {
+        action: crate::companion_v1::CompanionV1ActionItem { text, owner, due: None },
+        context: None,
+    })
+}
+
 fn has(source: &str, markers: &[&str]) -> bool {
     markers.iter().any(|marker| source.contains(marker))
 }

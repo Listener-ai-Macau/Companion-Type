@@ -587,7 +587,12 @@ fn evidence_reading_points<'a>(bank: &Bank, rows: &[&'a Fact]) -> Vec<&'a Fact> 
         judgment: matches!(fact.kind, Kind::Opinion | Kind::Recommendation | Kind::Forecast),
         review_only: false,
     }).collect();
-    let ordered: Vec<_> = rank(&inputs).into_iter().map(|position| eligible[position]).collect();
+    let mut ordered: Vec<_> = rank(&inputs).into_iter().map(|position| eligible[position]).collect();
+    // A qualification on how work can proceed takes precedence over one
+    // more example of the offer when they compete for the same chapter.
+    ordered.sort_by_key(|fact| !matches!(operational_evidence(&fact.text),
+        Some(OperationalEvidence::VerificationMaterial | OperationalEvidence::AvailabilityConstraint
+            | OperationalEvidence::RolloutCapacity)));
     let paired_options: Vec<_> = [OperationalEvidence::LimitedChannel, OperationalEvidence::ParallelChannel]
         .into_iter().filter_map(|kind| ordered.iter().copied().find(|fact| operational_evidence(&fact.text) == Some(kind)))
         .collect();
@@ -634,7 +639,9 @@ fn evidence_worthy(text: &str) -> bool {
         && !["就", "会", "无法", "必须", "需要", "不能", "才能"].iter().any(|cue| text.contains(cue));
     text.chars().count() >= 16 && !self_comparison && !unanswered && !weak_conditional
         && !super::chapter_spans::starts_discussion(text)
-        && !text.ends_with(['？', '?'])
+        && (!text.ends_with(['？', '?'])
+            || super::reader_ranking::operational_evidence(text)
+                == Some(super::reader_ranking::OperationalEvidence::AvailabilityConstraint))
         && !["下一个问题", "谢谢", "感谢分享", "我想请教"].iter().any(|cue| text.contains(cue))
         && (!["这一块", "这个问题", "的时候", "的一", "一个", "来讲", "这个事情", "一个情况", "一个领域", "不一定是", "比如说那个", "特别多的"]
             .iter().any(|tail| core.ends_with(tail))

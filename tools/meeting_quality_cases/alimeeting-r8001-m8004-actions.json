@@ -1,0 +1,149 @@
+{
+  "case": "alimeeting-r8001-m8004-explicit-actions",
+  "assessment": "中文多人实录的明确行动项，冻结自人工转录与之对应的完整候选转写。只记录明确请求或确认的动作。原话未落定的人名和日期使用空值。",
+  "sourceSha256": "d5c11f8eda6d4fd8034016a7bdeb57cdcb06d96dfa8d8191e661846cbda057a5",
+  "gates": {
+    "minKeyCoverage": 0.9,
+    "minCriticalCoverage": 1,
+    "minLiteralTraceability": 1,
+    "maxCriticalErrors": 0,
+    "minActionRecall": 0.95,
+    "minActionPrecision": 0.95,
+    "minExplicitActionFields": 1
+  },
+  "reference": [
+    {
+      "id": "market-review",
+      "label": "市场部核对主打颜色和主推意向",
+      "source": [
+        "e0148",
+        "15:17.37—15:44.40"
+      ],
+      "all": [
+        "主打颜色",
+        "主推意向"
+      ],
+      "kind": [
+        "action"
+      ],
+      "fields": {
+        "owner": "市场部",
+        "due": null
+      },
+      "critical": true
+    },
+    {
+      "id": "supplier-comparison",
+      "label": "联系多家厂商并比较",
+      "source": [
+        "e0165/e0166",
+        "17:28.20—18:05.60"
+      ],
+      "all": [
+        "联系",
+        "厂商",
+        "比较"
+      ],
+      "kind": [
+        "action"
+      ],
+      "fields": {
+        "owner": null,
+        "due": null
+      },
+      "critical": true
+    },
+    {
+      "id": "progress-table",
+      "label": "列出进度表",
+      "source": [
+        "e0210",
+        "22:28.60—22:53.82"
+      ],
+      "all": [
+        "列出",
+        "进度表"
+      ],
+      "kind": [
+        "action"
+      ],
+      "fields": {
+        "owner": null,
+        "due": null
+      },
+      "critical": true
+    },
+    {
+      "id": "write-plan",
+      "label": "整理方案",
+      "source": [
+        "e0234",
+        "24:55.60—25:14.20"
+      ],
+      "all": [
+        "整理",
+        "方案"
+      ],
+      "kind": [
+        "action"
+      ],
+      "fields": {
+        "owner": null,
+        "due": null
+      },
+      "critical": true
+    },
+    {
+      "id": "dated-review",
+      "label": "下周二再确定方案",
+      "source": [
+        "e0237/e0238",
+        "25:14.20—25:48.00"
+      ],
+      "all": [
+        "确定",
+        "方案"
+      ],
+      "kind": [
+        "action"
+      ],
+      "fields": {
+        "owner": null,
+        "due": "下周二"
+      },
+      "critical": true
+    }
+  ],
+  "rejected": [
+    {
+      "id": "example-promotion-date",
+      "label": "不能把促销示例日期写成会后行动",
+      "kind": [
+        "action"
+      ],
+      "all": [
+        "最低价"
+      ],
+      "critical": true
+    },
+    {
+      "id": "promoter-cutoff",
+      "label": "不从下周二复议时间推出采购任务截止",
+      "kind": [
+        "action"
+      ],
+      "all": [
+        "厂商",
+        "比较"
+      ],
+      "fields": {
+        "due": "下周二"
+      },
+      "critical": true
+    }
+  ],
+  "expectedEventCounts": {
+    "actionItems": 5,
+    "decisions": 0
+  }
+}

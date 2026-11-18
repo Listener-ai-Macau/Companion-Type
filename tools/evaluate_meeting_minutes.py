@@ -18,7 +18,26 @@ def display_path(pointer):
 def matches(rule, entry):
     return (not rule.get("kind") or entry.get("kind") in rule["kind"]) and all(
         word in entry["text"] for word in rule["all"]
-    )
+    ) and all(entry.get(name) == expected for name, expected in rule.get("fields", {}).items())
+
+
+def assign_once(findings):
+    """Find distinct minutes rows for the reference actions."""
+    used = {}
+
+    def assign(finding, seen):
+        for path in finding["visiblePaths"]:
+            if path in seen:
+                continue
+            seen.add(path)
+            if path not in used or assign(used[path], seen):
+                used[path] = finding
+                return True
+        return False
+
+    for finding in findings:
+        assign(finding, set())
+    return {row["id"] for row in used.values()}
 
 
 def score(case, receipt, source):
@@ -92,6 +111,18 @@ def score(case, receipt, source):
         "literalTraceability": {"hit": traced, "total": len(visible)},
         "criticalErrorTypes": critical_errors,
     }
+    action_rules = [rule for rule in case["reference"] if rule.get("kind") == ["action"]]
+    if action_rules:
+        action_ids = {rule["id"] for rule in action_rules}
+        matched = assign_once([row for row in findings if row["id"] in action_ids])
+        metrics["actionRecall"] = {"hit": len(matched), "total": len(action_rules)}
+        metrics["actionPrecision"] = {"hit": len(matched), "total": len(document["actionItems"])}
+        explicit_fields = [rule["id"] for rule in action_rules
+                           for name in ("owner", "due") if rule.get("fields", {}).get(name) is not None]
+        if explicit_fields:
+            metrics["explicitActionFields"] = {"hit": sum(id in matched for id in explicit_fields),
+                                               "total": len(explicit_fields)}
+
     gates = case["gates"]
 
     def at_least(hit, total, minimum):
@@ -103,6 +134,11 @@ def score(case, receipt, source):
         at_least(traced, len(visible), gates["minLiteralTraceability"]),
         critical_errors <= gates["maxCriticalErrors"],
     ))
+    for key, metric in (("minActionRecall", "actionRecall"), ("minActionPrecision", "actionPrecision"),
+                        ("minExplicitActionFields", "explicitActionFields")):
+        if key in gates:
+            check = metrics.get(metric, {"hit": 0, "total": 0})
+            passed = passed and at_least(check["hit"], check["total"], gates[key])
     return {"metrics": metrics, "gates": gates, "casePassed": passed,
             "findings": findings, "knownErrors": errors, "events": {
                 kind: len(document[kind]) for kind in case["expectedEventCounts"]

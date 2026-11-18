@@ -154,7 +154,7 @@ mod tests {
         let before_facts = before["facts"].as_array().unwrap();
         assert_eq!(after_facts.len(), before_facts.len());
         assert_eq!(after_facts.iter().zip(before_facts)
-            .filter(|(a, b)| a != b).count(), 1);
+            .filter(|(a, b)| a != b).count(), 3);
         assert!(after_facts.iter().zip(before_facts).any(|(after, before)| {
             after["id"] == before["id"]
                 && after["text"] == "联系多家厂商并比较"
@@ -176,13 +176,18 @@ mod tests {
         assert!(points.iter().any(|text| text.contains("几个平台") && text.contains("同时")));
         assert!(points.iter().any(|text| text.contains("便宜") && text.contains("看不上")));
         assert!(points.iter().any(|text| text.contains("样品")));
-        assert_eq!(result.minutes.action_items.len(), 3);
-        assert_eq!(result.minutes.action_items[0].text, "联系多家厂商并比较");
-        assert_eq!(result.minutes.action_items[0].due, None);
-        assert_eq!(result.minutes.action_items[1].text, "整理方案");
-        assert_eq!(result.minutes.action_items[2].text, "再确定方案");
-        assert_eq!(result.minutes.action_items[2].due.as_deref(), Some("下周二"));
-        assert!(result.minutes.action_items.iter().all(|task| task.owner.is_none()));
+        assert!(points.iter().any(|text| text.contains("档期")));
+        let actions = &result.minutes.action_items;
+        assert_eq!(actions.len(), 5);
+        assert_eq!(actions[0].text, "核对主打颜色、主推意向");
+        assert_eq!(actions[0].owner.as_deref(), Some("市场部"));
+        assert_eq!(actions[1].text, "联系多家厂商并比较");
+        assert_eq!(actions[2].text, "列出进度表");
+        assert_eq!(actions[3].text, "整理方案");
+        assert_eq!(actions[4].text, "再确定方案");
+        assert_eq!(actions[4].due.as_deref(), Some("下周二"));
+        assert!(actions[1..].iter().all(|task| task.owner.is_none()));
+        assert!(actions[..4].iter().all(|task| task.due.is_none()));
     }
 
     #[test]

@@ -49,6 +49,7 @@ pub(super) enum OperationalEvidence {
     OfferingOptions,
     OfferingAcceptance,
     RolloutCapacity,
+    AvailabilityConstraint,
 }
 
 pub(super) fn offering_acceptance_risk(text: &str) -> bool {
@@ -130,6 +131,13 @@ pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
     if has(&["样品", "样件", "试样", "样机"])
         && has(&["拿到", "弄到", "拿来", "送过来", "寄过来", "验样", "看样", "送检"]) {
         return Some(OperationalEvidence::VerificationMaterial);
+    }
+    let formal_check = text.trim_end().ends_with("，对吧？")
+        || !text.trim_end().ends_with(['？', '?']);
+    if has(&["档期", "排期", "工期", "交付周期"]) && formal_check
+        && has(&["都要考虑", "都要都要考虑", "还要考虑", "还得考虑", "需要考虑", "一定要考虑", "还要看"])
+        && !has(&["要不要", "能不能", "是不是", "如果"]) {
+        return Some(OperationalEvidence::AvailabilityConstraint);
     }
     let budget = has(&["预算", "费用", "报价"]);
     let timing = has(&["档期", "工期", "交期", "产能"]);

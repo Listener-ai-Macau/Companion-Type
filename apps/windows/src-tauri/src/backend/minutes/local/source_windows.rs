@@ -126,7 +126,7 @@ impl SourceWindows {
             super::source_authority::literal_followup(text(row), previous).or_else(|| {
                 let next = sentences.get(index + 1)?;
                 super::source_authority::literal_supplier_comparison(text(row), text(next))
-            })
+            }).or_else(|| super::source_authority::literal_review_task(text(row)))
         }).collect();
         for (policy, followup) in authority.iter_mut().zip(&followups) {
             if followup.is_some() {
@@ -605,6 +605,18 @@ mod tests {
         assert!(literal_supplier_comparison("建议你安排找供应商。", "多找几家对比。").is_none());
         assert!(literal_supplier_comparison(action, "多找几家投放。").is_none());
         assert!(literal_supplier_comparison(action, "能不能多找几家对比？").is_none());
+    }
+
+    #[test]
+    fn organizational_review_keeps_only_the_owner_and_subject_actually_requested() {
+        use super::super::source_authority::literal_review_task;
+        let action = literal_review_task("市场组这一块让他们核对一下，就是设备配置和测试范围。").unwrap().action;
+        assert_eq!(action.owner.as_deref(), Some("市场组"));
+        assert_eq!(action.text, "核对设备配置、测试范围");
+        assert!(action.due.is_none());
+        assert!(literal_review_task("建议市场部这一块让他们看一下，发布方案。").is_none());
+        assert!(literal_review_task("如果采购完成，给我列个表格过来把方案执行进度写清楚。").is_none());
+        assert!(literal_review_task("相关部门这一块让他们看一下，发布方案。").is_none());
     }
 
     #[test]
