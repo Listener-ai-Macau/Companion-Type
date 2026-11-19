@@ -7,6 +7,7 @@ use std::{
 
 use crate::companion_v1::CompanionV1UtteranceSegment;
 use super::shared::{Runtime, RATE};
+use super::meeting_constraint_review;
 
 const REVIEW_DIR: &str = "sherpa-onnx-fire-red-asr2-zh_en-int8-2026-02-26";
 const BYTES_PER_SECOND: u64 = (RATE * 2) as u64;
@@ -163,7 +164,8 @@ pub(super) fn apply(
         .filter_map(|(index, text)| candidate(text).map(|position| (index, position)))
         .take(MAX_REVIEW_SEGMENTS).collect();
     let weekdays = super::weekday_review::candidates(texts, anchors);
-    if candidates.is_empty() && weekdays.is_empty() { return Ok(()); }
+    let meeting_constraints = meeting_constraint_review::candidates(texts);
+    if candidates.is_empty() && weekdays.is_empty() && meeting_constraints.is_empty() { return Ok(()); }
 
     let model = model_dir(root);
     if !model.join("encoder.int8.onnx").is_file() { return Ok(()); }
@@ -189,6 +191,7 @@ pub(super) fn apply(
         }
     }
     super::weekday_review::apply(&reviewer, file, (data_start, data_len), texts, anchors, weekdays, &mut check_cancelled)?;
+    meeting_constraint_review::apply(&reviewer, file, (data_start, data_len), texts, anchors, meeting_constraints, &mut check_cancelled)?;
     check_cancelled()
 }
 

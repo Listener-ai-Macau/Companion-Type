@@ -8,6 +8,7 @@ mod atomic_document;
 mod chapter_spans;
 mod chapter_labels;
 mod reader_ranking;
+mod reader_projection;
 mod source_windows;
 mod source_authority;
 mod source_grounding;

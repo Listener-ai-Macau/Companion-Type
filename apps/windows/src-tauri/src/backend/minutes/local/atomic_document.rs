@@ -575,7 +575,8 @@ fn evidence_organization(bank: &Bank) -> Result<(Organization, ChapterFocus), St
     for (span, candidates) in spans.into_iter().zip(terms) {
         let rows = &facts[span];
         let chosen = evidence_reading_points(bank, rows);
-        let title = evidence_heading(rows, &candidates, &chosen).ok_or_else(fail)?;
+        let title = super::reader_projection::discussion_heading(chosen.iter().map(|fact| fact.text.as_str()))
+            .or_else(|| evidence_heading(rows, &candidates, &chosen)).ok_or_else(fail)?;
         let next = titles.len();
         let slot = *titles.entry(title.clone()).or_insert(next);
         topics.insert(THEME_IDS[slot].to_owned(), Some(title.clone()));
@@ -637,7 +638,8 @@ fn evidence_reading_points<'a>(bank: &Bank, rows: &[&'a Fact]) -> Vec<&'a Fact> 
     ordered.sort_by_key(|fact| !matches!(operational_evidence(&fact.text),
         Some(OperationalEvidence::VerificationMaterial | OperationalEvidence::AvailabilityConstraint
             | OperationalEvidence::RolloutCapacity | OperationalEvidence::SequenceOptions
-            | OperationalEvidence::TeamCoordination)));
+             | OperationalEvidence::TeamCoordination | OperationalEvidence::AcceptanceCriteria
+             | OperationalEvidence::PriceVersusFit | OperationalEvidence::DesignHandoff)));
     let paired_options: Vec<_> = [OperationalEvidence::LimitedChannel, OperationalEvidence::ParallelChannel]
         .into_iter().filter_map(|kind| ordered.iter().copied().find(|fact| operational_evidence(&fact.text) == Some(kind)))
         .collect();
@@ -688,11 +690,15 @@ fn evidence_worthy(text: &str) -> bool {
     let weak_conditional = text.trim_start_matches(['然', '后', '，', ' ', '嗯', '呃'])
         .starts_with("如果")
         && !["就", "会", "无法", "必须", "需要", "不能", "才能"].iter().any(|cue| text.contains(cue));
-    text.chars().count() >= 16 && !self_comparison && !unanswered && !weak_conditional
+    let operational = super::reader_ranking::operational_evidence(text);
+    (text.chars().count() >= 16
+        || operational == Some(super::reader_ranking::OperationalEvidence::AcceptanceCriteria))
+        && !self_comparison && !unanswered && !weak_conditional
         && !super::chapter_spans::starts_discussion(text)
-        && (!text.ends_with(['？', '?'])
-            || super::reader_ranking::operational_evidence(text)
-                == Some(super::reader_ranking::OperationalEvidence::AvailabilityConstraint))
+         && (!text.ends_with(['？', '?'])
+             || matches!(operational,
+                 Some(super::reader_ranking::OperationalEvidence::AvailabilityConstraint
+                     | super::reader_ranking::OperationalEvidence::PriceVersusFit)))
         && !["下一个问题", "谢谢", "感谢分享", "我想请教"].iter().any(|cue| text.contains(cue))
         && (!["这一块", "这个问题", "的时候", "的一", "一个", "来讲", "这个事情", "一个情况", "一个领域", "不一定是", "比如说那个", "特别多的"]
             .iter().any(|tail| core.ends_with(tail))
@@ -1009,7 +1015,14 @@ fn assemble_with_points_limit(raw: &str, bank: &Bank, session: &CompanionV1HostS
         let entry=document.pointer_mut(pointer).and_then(Value::as_object_mut).ok_or_else(fail)?;
         let mut contextual_evidence = &[][..];
         if entry.contains_key("kind") {
+            let source = fact.evidence.first().and_then(|id| known[id.as_str()]["text"].as_str());
             if !bank.review_quote(id) {
+                use super::reader_projection::{acceptance_tradeoff, clean_spoken_point, compact_proposal,
+                    confirmed_schedule, design_handoff, spoken_proposal};
+                let cleaned = clean_spoken_point(&fact.text);
+                if cleaned.as_ref() != fact.text {
+                    entry.insert("text".into(), json!(cleaned));
+                }
                 let tradeoff = position.checked_sub(1).map(|i| &bank.facts[i])
                     .filter(|prior| !bank.review_quote(&prior.id))
                     .and_then(|prior| {
@@ -1027,6 +1040,23 @@ fn assemble_with_points_limit(raw: &str, bank: &Bank, session: &CompanionV1HostS
                     contextual_evidence = evidence;
                     entry.insert("text".into(), json!(text));
                     entry.insert("kind".into(), json!(Kind::Opinion));
+                } else if let Some(text) = acceptance_tradeoff(&fact.text) {
+                    entry.insert("text".into(), json!(text));
+                    entry.insert("kind".into(), json!(Kind::Recommendation));
+                } else if let Some(text) = confirmed_schedule(&fact.text) {
+                    entry.insert("text".into(), json!(text));
+                    entry.insert("kind".into(), json!(Kind::Recommendation));
+                } else if let Some(text) = design_handoff(&fact.text) {
+                    entry.insert("text".into(), json!(text));
+                    entry.insert("kind".into(), json!(Kind::Recommendation));
+                } else if source.is_some_and(spoken_proposal) {
+                    if let Some(text) = compact_proposal(&fact.text) {
+                        entry.insert("text".into(), json!(text));
+                    }
+                    if matches!(fact.kind, Kind::Status | Kind::Opinion) {
+                        entry.insert("kind".into(), json!(Kind::Recommendation));
+                        reader_recommendations.push(id);
+                    }
                 } else if let Some(options) = super::reader_ranking::sequence_options(&fact.text) {
                     let (first, last) = (options.first().ok_or_else(fail)?, options.last().ok_or_else(fail)?);
                     let text = if options.len() > 2 {
@@ -1043,11 +1073,12 @@ fn assemble_with_points_limit(raw: &str, bank: &Bank, session: &CompanionV1HostS
                     entry.insert("text".into(), json!(excerpt));
                 }
             }
-            let source = fact.evidence.first().and_then(|id| known[id.as_str()]["text"].as_str());
-            if contextual_evidence.is_empty() && matches!(fact.kind, Kind::Status) && source.is_some_and(explicit_reader_recommendation) {
+            let status = entry.get("kind").and_then(Value::as_str) == Some("status");
+            let forecast = entry.get("kind").and_then(Value::as_str) == Some("forecast");
+            if contextual_evidence.is_empty() && status && source.is_some_and(explicit_reader_recommendation) {
                 entry.insert("kind".into(), json!(Kind::Recommendation));
                 reader_recommendations.push(id);
-            } else if matches!(fact.kind, Kind::Status | Kind::Forecast)
+            } else if (status || forecast)
                 && !super::source_authority::timed_forecast(&fact.text)
                 && source.is_some_and(super::source_authority::reader_opinion)
             {

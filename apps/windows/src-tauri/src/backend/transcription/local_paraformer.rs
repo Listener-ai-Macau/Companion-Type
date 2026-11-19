@@ -12,6 +12,8 @@ mod model_download;
 mod battery_term_review;
 #[path = "weekday_review.rs"]
 mod weekday_review;
+#[path = "meeting_constraint_review.rs"]
+mod meeting_constraint_review;
 use shared::{cut_samples, is_digital_silence, wav_data, ModelKind, Runtime, MODEL_SHA, RATE, TOKENS_SHA};
 use std::{fs, path::PathBuf, sync::Mutex};
 

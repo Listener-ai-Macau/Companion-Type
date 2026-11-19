@@ -68,7 +68,15 @@ fn literal_span(original:&str,reported:&str)->Option<(usize,usize)>{
 
 fn exact_origins(markdown:&str,document:&Value,anchors:&[Value])->Result<String,String>{
     let (body,_)=markdown.rsplit_once("## 主题原话\n\n").ok_or("纪要原话区不完整，已有内容保留。")?;
-    let mut rendered=format!("{body}## 主题原话\n\n");
+    // The source bank keeps every supporting excerpt. The main reading view
+    // shows only promoted points, so disfluent backfill cannot bury the result.
+    let mut rendered=String::with_capacity(markdown.len());
+    for line in body.split_inclusive('\n') {
+        if !line.starts_with("- 补充：") {
+            rendered.push_str(line);
+        }
+    }
+    rendered.push_str("## 主题原话\n\n");
     let mut section=|title:&str,prefix:String|{
         let mut seen=std::collections::HashSet::new();let mut quotes=Vec::new();
         for anchor in anchors{

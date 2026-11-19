@@ -49,6 +49,8 @@ pub(super) enum OperationalEvidence {
     BudgetAndAvailability,
     OfferingOptions,
     OfferingAcceptance,
+    AcceptanceCriteria,
+    DesignHandoff,
     RolloutCapacity,
     AvailabilityConstraint,
     SequenceOptions,
@@ -102,6 +104,12 @@ pub(super) fn coordination_request(text: &str) -> Option<&str> {
 }
 
 pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
+    if super::reader_projection::design_handoff(text).is_some() {
+        return Some(OperationalEvidence::DesignHandoff);
+    }
+    if super::reader_projection::acceptance_tradeoff(text).is_some() {
+        return Some(OperationalEvidence::PriceVersusFit);
+    }
     if APPROVAL_STATUS.iter().any(|signal| text.contains(signal)) {
         return Some(OperationalEvidence::Approval);
     }
@@ -171,6 +179,11 @@ pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
     }
     if offering_acceptance_risk(text) {
         return Some(OperationalEvidence::OfferingAcceptance);
+    }
+    let prescribes_quality = has(&["保证质量", "确保质量", "质量达标", "质量不能", "必须通过", "未通过不能"])
+        && !has(&["是否", "能不能", "要不要", "我不确定", "没有要求", "无需", "不用", "不必", "已经达标"]);
+    if prescribes_quality && !text.contains(['？', '?']) {
+        return Some(OperationalEvidence::AcceptanceCriteria);
     }
     if has(&["并行", "同步推进", "同时开展", "同时推开", "同步开展", "同期上线"])
         && has(&["人力", "物力", "物流", "团队", "产能", "资源"])
