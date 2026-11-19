@@ -1,7 +1,7 @@
 //! A whole-meeting reading pass over bounded, numbered transcript excerpts.
 //! The extractor below admits only evidence-linked additions to the fact bank.
 use std::{
-    collections::{BTreeSet, HashMap, HashSet},
+    collections::{BTreeSet, HashMap},
     sync::LazyLock,
 };
 
@@ -161,17 +161,31 @@ impl<'a> Context<'a> {
                 continue;
             };
             let source = row_text(row);
-            for action in source_actions(source) {
+            let next = self.rows.get(index + 1).and_then(|row| {
+                let id = row["id"].as_str()?;
+                let text = row_text(row);
+                linked_work(source, text).map(|action| (action, Some((id, text))))
+            });
+            for (action, continuation) in source_actions(source)
+                .into_iter()
+                .map(|action| (action, None))
+                .chain(next)
+            {
                 if recovered == 9 || facts.len() >= super::atomic_document::MAX_FACTS {
                     break 'sources;
                 }
-                let evidence = [id.to_owned()];
-                if verified_claim(&action, &[source], 90)
+                let mut sources = vec![source];
+                let mut fact = ExtractedFact::verbatim(id, "action", &action);
+                if let Some((next_id, next_source)) = continuation {
+                    fact.evidence.push(next_id.to_owned());
+                    sources.push(next_source);
+                }
+                if verified_claim(&action, &sources, 90)
                     && !facts
                         .iter()
-                        .any(|fact| same_entry(fact, "action", &action, &evidence))
+                        .any(|saved| same_entry(saved, "action", &action, &fact.evidence))
                 {
-                    facts.push(ExtractedFact::verbatim(id, "action", &action));
+                    facts.push(fact);
                     recovered += 1;
                 }
             }
@@ -199,12 +213,7 @@ impl<'a> Context<'a> {
             .selected()
             .filter_map(|i| Some((self.rows[i]["id"].as_str()?, i)))
             .collect::<HashMap<_, _>>();
-        let opening = self.opening.iter().copied().collect::<HashSet<_>>();
-        let purpose = answer
-            .purpose
-            .checked(&known, self.rows, 80)
-            .filter(|(_, sources)| sources.iter().any(|i| opening.contains(i)))
-            .map(|(evidence, _)| (answer.purpose.text.trim().to_owned(), evidence));
+        let purpose = self.checked_purpose(&answer.purpose, &known);
         let mut counts = Counts::default();
         let mut additions = Vec::new();
         for claim in answer.actions.into_iter().take(9) {
@@ -296,6 +305,78 @@ impl<'a> Context<'a> {
         }
         Ok(Checked { purpose, counts })
     }
+
+    fn checked_purpose(
+        &self,
+        claim: &Claim,
+        known: &HashMap<&str, usize>,
+    ) -> Option<(String, Vec<String>)> {
+        let mut indexes = claim.indexes(known)?;
+        if !indexes.iter().all(|index| self.opening.contains(index)) {
+            return None;
+        }
+        let text = claim.text.trim();
+        let check = |indexes: &[usize]| {
+            claim
+                .checked_indexes(indexes, self.rows, 80)
+                .map(|ids| (text.to_owned(), ids))
+        };
+        if let Some(purpose) = check(&indexes) {
+            return Some(purpose);
+        }
+        // Openers often span several short turns. Add only nearby opening
+        // lines that supply words missing from the model's cited fragment.
+        if [
+            "已决定",
+            "已批准",
+            "已承诺",
+            "已经通过",
+            "正式确定",
+            "定案",
+            "否决",
+        ]
+        .iter()
+        .any(|cue| text.contains(cue))
+        {
+            return None;
+        }
+        let tokens = significant(text);
+        let mut missing = tokens.clone();
+        for &index in &indexes {
+            missing.retain(|token| !row_text(&self.rows[index]).contains(token));
+        }
+        if missing.len() == tokens.len() {
+            return None;
+        }
+        let mut neighbors = self
+            .opening
+            .iter()
+            .copied()
+            .filter(|index| !indexes.contains(index))
+            .filter_map(|index| {
+                let distance = indexes.iter().map(|&cited| index.abs_diff(cited)).min()?;
+                let source = row_text(&self.rows[index]);
+                let purpose_cue = ["讨论", "目标", "希望", "商量", "想要", "打算", "提一提"]
+                    .iter()
+                    .any(|cue| source.contains(cue));
+                (distance <= 8).then_some((!purpose_cue, distance, index))
+            })
+            .collect::<Vec<_>>();
+        neighbors.sort_unstable();
+        for (_, _, index) in neighbors {
+            if indexes.len() == 5 {
+                break;
+            }
+            let before = missing.len();
+            missing.retain(|token| !row_text(&self.rows[index]).contains(token));
+            if missing.len() == before {
+                continue;
+            }
+            indexes.push(index);
+        }
+        indexes.sort_unstable();
+        check(&indexes)
+    }
 }
 
 #[derive(Default)]
@@ -353,6 +434,16 @@ impl Claim {
         limit: usize,
     ) -> Option<(Vec<String>, Vec<usize>)> {
         let indexes = self.indexes(known)?;
+        let ids = self.checked_indexes(&indexes, rows, limit)?;
+        Some((ids, indexes))
+    }
+
+    fn checked_indexes(
+        &self,
+        indexes: &[usize],
+        rows: &[Value],
+        limit: usize,
+    ) -> Option<Vec<String>> {
         let sources = indexes
             .iter()
             .map(|&i| row_text(&rows[i]))
@@ -366,11 +457,12 @@ impl Claim {
         {
             return None;
         }
-        let ids = indexes
-            .iter()
-            .map(|&i| rows[i]["id"].as_str().unwrap_or_default().to_owned())
-            .collect();
-        Some((ids, indexes))
+        Some(
+            indexes
+                .iter()
+                .map(|&i| rows[i]["id"].as_str().unwrap_or_default().to_owned())
+                .collect(),
+        )
     }
 }
 
@@ -559,6 +651,50 @@ fn authorizes_action(source: &str) -> bool {
         .any(|cue| source.contains(cue))
 }
 
+fn linked_work(source: &str, next: &str) -> Option<String> {
+    static OBJECT: LazyLock<regex::Regex> = LazyLock::new(|| {
+        regex::Regex::new(concat!(
+            r"(?:你们|大家|各(?:位|部门|小组))(?:都|各自|分别)[，, ]*",
+            r"(?:把[^，,。！？；]{1,24}[，,][嗯呃啊，, ]*)?(?:把|将)",
+            r"(?:自己的|自己这个|自己|各自的|本次的|本周的|这份|这个|这项|这些)?",
+            r"(?P<object>[\p{Han}a-zA-Z0-9]{0,12}?(?:工作|材料|进展|结果|数据|记录|",
+            r"方案|预算|报表|清单|报告|内容|意见|反馈|问题|台账))[。．.\s]*$",
+        ))
+        .expect("valid unfinished spoken work pattern")
+    });
+    if source.contains(['？', '?'])
+        || [
+            "如果", "假设", "要是", "建议", "例如", "比如", "原来", "上次", "曾经", "无需", "不用",
+            "不要",
+        ]
+        .iter()
+        .any(|cue| source.contains(cue))
+    {
+        return None;
+    }
+    let pending = OBJECT.captures(source)?;
+    let continuation = next.trim_start_matches(['嗯', '呃', '啊', ' ', '\n']);
+    if continuation.contains(['？', '?']) {
+        return None;
+    }
+    let clause = continuation
+        .split(['，', ',', '。', '！', '；'])
+        .next()?
+        .trim();
+    let clause = ["进行这个", "进行一下", "进行", "做一个", "做个"]
+        .iter()
+        .find_map(|prefix| clause.strip_prefix(prefix))
+        .unwrap_or(clause);
+    let verb = clause
+        .trim_end_matches(['呀', '啊', '呃', '吧', '呢'])
+        .trim_end_matches("一下");
+    [
+        "总结", "整理", "复盘", "核对", "归档", "提交", "汇总", "上报",
+    ]
+    .contains(&verb)
+    .then(|| format!("{verb}{}", &pending["object"]))
+}
+
 fn source_actions(source: &str) -> Vec<String> {
     if !authorizes_action(source)
         || source.trim_end().ends_with(['？', '?'])
@@ -577,7 +713,7 @@ fn source_actions(source: &str) -> Vec<String> {
             .expect("valid assigned inquiry pattern")
     });
     static TRAINING: LazyLock<regex::Regex> = LazyLock::new(|| {
-        regex::Regex::new(r"都(?:是|要)给给?([\p{Han}]{2,12}?)进行培训(?:培训)?[。！？；;]?\s*$")
+        regex::Regex::new(r"(?:你们都(?:是|要)给|各部门都要给)给?([\p{Han}]{2,12}?)进行培训(?:培训)?[。！？；;]?\s*$")
             .expect("valid assigned training pattern")
     });
     static YES_NO: LazyLock<regex::Regex> = LazyLock::new(|| {
@@ -638,6 +774,38 @@ mod tests {
         ];
         let context = Context::new(&source);
         assert_eq!(context.opening, [0, 2]);
+    }
+
+    #[test]
+    fn opening_claim_can_recover_missing_support_from_neighboring_opening_lines() {
+        let rows = [
+            json!({"id":"e0000","text":"请大家汇报部门的问题，我们讨论怎么解决。"}),
+            json!({"id":"e0001","text":"看看有什么活动和促销手段能留住客流量。"}),
+            json!({"id":"e0002","text":"毕竟现在客流量不太多。"}),
+            json!({"id":"e0003","text":"要讨论怎么把销售再提一提。"}),
+            json!({"id":"e0004","text":"会后正式确定新审批流程。"}),
+        ];
+        let context = Context {
+            rows: &rows,
+            opening: vec![0, 1, 2, 3],
+            discussion: Vec::new(),
+            closing: vec![4],
+        };
+        let known = context
+            .selected()
+            .map(|i| (rows[i]["id"].as_str().unwrap(), i))
+            .collect();
+        let mut claim = Claim {
+            text: "解决客流少问题，提升销售并留住客户。".into(),
+            evidence: vec!["e0001".into(), "e0002".into()],
+            kind: None,
+        };
+        assert!(claim.checked(&known, &rows, 80).is_none());
+        let (_, evidence) = context.checked_purpose(&claim, &known).unwrap();
+        assert_eq!(evidence, ["e0000", "e0001", "e0002", "e0003"]);
+        assert!(!evidence.contains(&"e0004".to_owned()));
+        claim.text = "该会议正式确定新审批流程。".into();
+        assert!(context.checked_purpose(&claim, &known).is_none());
     }
 
     #[test]
@@ -721,6 +889,33 @@ mod tests {
         );
         assert_eq!(facts[2].evidence, ["e0002"]);
         assert_eq!(split_work("通知采购、销售和客服"), ["通知采购、销售和客服"]);
+    }
+
+    #[test]
+    fn unfinished_spoken_handoff_uses_both_adjacent_original_sentences() {
+        let rows = [
+            json!({"id":"e0000","text":"所以下车了，你们都把自己的功课做一做，呃，把自己这个工作。"}),
+            json!({"id":"e0001","text":"进行这个总结啊，行，今天就到这儿。"}),
+        ];
+        let context = Context {
+            rows: &rows,
+            opening: Vec::new(),
+            discussion: Vec::new(),
+            closing: vec![0, 1],
+        };
+        let mut facts = Vec::new();
+        assert_eq!(context.recover_actions(&mut facts), 1);
+        assert_eq!(facts[0].text, "总结工作");
+        assert_eq!(facts[0].evidence, ["e0000", "e0001"]);
+        assert!(linked_work("如果需要，大家都把这份报告。", "进行核对。").is_none());
+        assert!(linked_work("各部门都把项目结束。", "做个总结。").is_none());
+        assert!(linked_work("各部门都把这份报告。", "我想讨论预算。").is_none());
+        assert_eq!(
+            linked_work("各部门都把这份报告。", "做个核对吧。").as_deref(),
+            Some("核对报告")
+        );
+        assert!(source_actions("如果要沟通，你们都是给给员工进行培训培训。").is_empty());
+        assert!(source_actions("他们都是给员工进行培训。").is_empty());
     }
 }
 
