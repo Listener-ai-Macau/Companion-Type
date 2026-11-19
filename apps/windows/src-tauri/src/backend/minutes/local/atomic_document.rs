@@ -676,7 +676,7 @@ fn evidence_reading_points<'a>(bank: &Bank, rows: &[&'a Fact]) -> Vec<&'a Fact> 
             Some(OperationalEvidence::CoordinationGap | OperationalEvidence::TeamCoordination))
     }) { VERIFIED_TOPIC_POINTS } else { STANDARD_TOPIC_POINTS };
     selected.extend(ordered.iter().copied().filter(|fact| bank.reader_priorities.contains(&fact.id))
-        .take(point_limit - selected.len()));
+        .take(1.min(point_limit - selected.len())));
     evidence_types.extend(selected.iter().filter_map(|fact| operational_evidence(&fact.text)));
     let available_slots = point_limit - selected.len();
     selected.extend(ordered.iter().copied().filter(|fact| {
@@ -844,7 +844,10 @@ fn render_organization(
         if choices.contains(&proposed.id.as_str()) { proposed.id.as_str() }
         else { choices.first().copied().ok_or_else(fail)? }
     };
-    let purpose = if let Some((overview, _)) = &bank.reader_purpose {
+    let reader_purpose = bank.reader_purpose.as_ref().filter(|_| {
+        focus.as_ref().is_none_or(|overview| overview.purpose_facts.is_empty())
+    });
+    let purpose = if let Some((overview, _)) = reader_purpose {
         overview.as_str()
     } else if let Some(overview) = &focus {
         overview.overview.as_str()
@@ -917,7 +920,7 @@ fn render_organization(
     let points_limit = if focus.is_some() { VERIFIED_TOPIC_POINTS } else { STANDARD_TOPIC_POINTS };
     let mut parsed = assemble_with_points_limit(&canonical.to_string(), bank, session, base, points_limit)?;
     parsed.receipt["openingFactId"] = json!(purpose_id);
-    if let Some((_, evidence)) = &bank.reader_purpose {
+    if let Some((_, evidence)) = reader_purpose {
         parsed.receipt["openingReaderEvidence"] = json!(evidence);
     }
     if let Some(overview) = focus {
