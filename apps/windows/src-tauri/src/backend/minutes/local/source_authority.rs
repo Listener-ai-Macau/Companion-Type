@@ -138,33 +138,48 @@ pub(super) fn literal_followup(source: &str, previous: Option<&str>) -> Option<F
     })
 }
 
-// An explicit delegated search and the immediately following comparison
-// instruction are one task. The continuation must name both the multiple
-// candidates and the comparison; no date or person's identity is inferred.
-pub(super) fn literal_supplier_comparison(source: &str, next: &str) -> Option<Followup> {
+// Keep an explicit assignment to contact suppliers and its comparison
+// instruction together even when transcription punctuation changes.
+pub(super) fn literal_supplier_comparison(source: &str, next: Option<&str>) -> Option<Followup> {
     static REQUEST: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
-        r"(?:你这边安排|你安排|请安排|安排人|你负责|由你)[^。！？；]{0,20}(?:厂商|供应商|厂家)[^。！？；]{0,17}(?:找|联系|询价)"
+        r"(?:你这边安排|你安排|请安排|安排人|你负责|由你)[^。！？；]{0,20}(?P<vendor>厂商|供应商|厂家)[^。！？；]{0,17}?(?:找|联系|询价)"
     ).expect("valid delegated search pattern"));
-    if [source, next].iter().any(|text| text.contains(['？', '?']) || has(text, &[
-        "如果", "假如", "要是", "建议", "比如", "例如", "可能", "要不要", "能不能", "不知道", "不需要",
-        "不用", "不要", "取消", "不再", "没必要", "不由你", "无需安排", "上周", "去年", "已经", "曾经", "听说",
-    ])) {
+    const NON_DIRECTIVE: &[&str] = &[
+        "如果", "假如", "要是", "建议", "比如", "例如", "举例", "可能", "要不要", "能不能", "不知道",
+        "不需要", "不用", "不要", "取消", "不再", "没必要", "不由你", "无需安排", "上周", "去年", "已经",
+        "曾经", "听说", "可以安排", "可以先安排", "可以请", "可考虑", "比方",
+    ];
+    const MULTIPLE_SUPPLIERS: &[&str] = &["多找几家", "多联系几家", "至少找两家", "找几家"];
+    let is_directive = |text: &str| !text.contains(['？', '?']) && !has(text, NON_DIRECTIVE);
+    if !is_directive(source) {
         return None;
     }
-    let request = REQUEST.find(source)?.as_str();
-    let search = next.trim_start_matches(['啊', '嗯', '呃', '，', ',', ' ']);
-    if !["多找几家", "多联系几家", "至少找两家", "找几家"].iter().any(|lead| search.starts_with(lead))
-        || !has(search, &["比价", "对比", "比较", "比一比"]) {
-        return None;
-    }
-    let counterpart = ["厂商", "供应商", "厂家"].iter().find(|term| request.contains(**term))?;
+    let request = REQUEST.captures(source)?;
+    let vendor = request.name("vendor")?;
+    let remainder = &source[request.get(0)?.end()..];
+    let explicit_count = has(&source[vendor.end()..], MULTIPLE_SUPPLIERS);
+    let (multiple, context) = if has(remainder, &["比价", "对比一下", "做个对比", "进行对比", "比较一下", "比一比"])
+        && (explicit_count || has(remainder, &["多找", "多联系", "多询价"]))
+    {
+        (explicit_count, None)
+    } else {
+        let following = next?.trim_start_matches(['啊', '嗯', '呃', '，', ',', ' ']);
+        if !is_directive(following)
+            || !MULTIPLE_SUPPLIERS.iter().any(|lead| following.starts_with(lead))
+            || !has(following, &["比价", "对比", "比较", "比一比"])
+        {
+            return None;
+        }
+        (true, Some(FollowupContext::Next))
+    };
+    let count = if multiple { "多家" } else { "" };
     Some(Followup {
         action: crate::companion_v1::CompanionV1ActionItem {
-            text: format!("联系多家{counterpart}并比较"),
+            text: format!("联系{count}{}并比较", vendor.as_str()),
             owner: None,
             due: None,
         },
-        context: Some(FollowupContext::Next),
+        context,
     })
 }
 
@@ -173,14 +188,19 @@ pub(super) fn literal_supplier_comparison(source: &str, next: &str) -> Option<Fo
 // not make a directive into an unassigned suggestion.
 pub(super) fn literal_review_task(source: &str) -> Option<Followup> {
     static REVIEW: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
-        r"(?:^|[，,])\s*(?P<team>[\p{Han}]{2,7}?(?:部门|部|组|团队))(?:这一块|这块)?让(?:他们|它们)(?:去)?(?:看一下|核对一下|评估一下)[，,]\s*(?:就是)?(?P<work>[^。！？；]{4,100})"
+        concat!(
+            r"(?:^|[，,])\s*(?P<team>[\p{Han}]{2,7}?(?:部门|部|组|团队))",
+            r"(?:(?:这一块|这块|这边)?让(?:他们|它们)(?:去)?|(?:这一块儿?|这块儿?|这边)[，, ]*(?:然后|请|麻烦)(?:去)?)",
+            r"(?:看一下|核对一下|评估一下)[，, ]*\s*(?:就是)?(?P<work>[^。！？；]{4,100})",
+        )
     ).expect("valid organizational review pattern"));
     static TABLE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"列{1,3}(?:出)?(?:这个|一份|一张|个)?(?:进度表|表格)(?:过来|给我|发来|提交)"
     ).expect("valid progress table instruction pattern"));
     if has(source, &["建议", "可以考虑", "或许", "可能", "如果", "假如", "要是", "要不要", "是不是",
         "能不能", "可不可以", "或者", "不要", "暂缓", "取消", "没有要求", "不需要", "不用", "不再",
-        "上周", "曾经", "举例", "比如", "听说"]) {
+        "上周", "曾经", "举例", "比如", "例如", "比方", "听说", "可以让", "可以请", "可以先",
+        "已经让", "已经请", "已经安排", "已经核对"]) {
         return None;
     }
     let (text, owner) = if let Some(review) = REVIEW.captures(source) {

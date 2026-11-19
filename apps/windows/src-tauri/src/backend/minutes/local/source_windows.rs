@@ -123,10 +123,10 @@ impl SourceWindows {
                 return None;
             }
             let previous = index.checked_sub(1).map(|i| text(&sentences[i]));
-            super::source_authority::literal_followup(text(row), previous).or_else(|| {
-                let next = sentences.get(index + 1)?;
-                super::source_authority::literal_supplier_comparison(text(row), text(next))
-            }).or_else(|| super::source_authority::literal_review_task(text(row)))
+            let next = sentences.get(index + 1).map(text);
+            super::source_authority::literal_followup(text(row), previous)
+                .or_else(|| super::source_authority::literal_supplier_comparison(text(row), next))
+                .or_else(|| super::source_authority::literal_review_task(text(row)))
         }).collect();
         for (policy, followup) in authority.iter_mut().zip(&followups) {
             if followup.is_some() {
@@ -601,10 +601,10 @@ mod tests {
     fn comparison_continuation_does_not_turn_suggestions_into_assignments() {
         use super::super::source_authority::literal_supplier_comparison;
         let action = "你这边安排去厂商那边去找一些。";
-        assert!(literal_supplier_comparison(action, "啊，多找几家，然后做个对比。").is_some());
-        assert!(literal_supplier_comparison("建议你安排找供应商。", "多找几家对比。").is_none());
-        assert!(literal_supplier_comparison(action, "多找几家投放。").is_none());
-        assert!(literal_supplier_comparison(action, "能不能多找几家对比？").is_none());
+        assert!(literal_supplier_comparison(action, Some("啊，多找几家，然后做个对比。")).is_some());
+        assert!(literal_supplier_comparison("建议你安排找供应商。", Some("多找几家对比。")).is_none());
+        assert!(literal_supplier_comparison(action, Some("多找几家投放。")).is_none());
+        assert!(literal_supplier_comparison(action, Some("能不能多找几家对比？")).is_none());
     }
 
     #[test]
@@ -617,6 +617,49 @@ mod tests {
         assert!(literal_review_task("建议市场部这一块让他们看一下，发布方案。").is_none());
         assert!(literal_review_task("如果采购完成，给我列个表格过来把方案执行进度写清楚。").is_none());
         assert!(literal_review_task("相关部门这一块让他们看一下，发布方案。").is_none());
+    }
+
+    #[test]
+    fn spoken_assignments_survive_punctuation_and_keep_their_original_evidence() {
+        let source = concat!(
+            "销售这一块啊，市场部这一块儿，然后看一下就是颜颜色的一个主主打颜色，然后包括看他们一个主主推意向是什么？",
+            "嗯，然后首先这个赠品这边刚才说的，你这边安排去去厂商那边去找一些个啊，多找点点的事，然后对对对对比一下。"
+        );
+        let windows = SourceWindows::new(source).unwrap();
+        let checked = windows.check_encoded(0, "{}", SourceEncoding::DirectSingleRole).unwrap();
+        let actions: Vec<_> = checked.facts.iter().filter(|fact| fact.role == "action").collect();
+        assert_eq!(actions.len(), 2);
+        assert_eq!(actions[0].text, "核对主打颜色、主推意向");
+        assert_eq!(actions[0].evidence, ["e0000"]);
+        assert_eq!(actions[1].text, "联系厂商并比较");
+        assert_eq!(actions[1].evidence, ["e0001"]);
+        let bank = super::super::atomic_document::build_bank(checked.facts, source).unwrap();
+        assert_eq!(bank.facts[0].owner.as_deref(), Some("市场部"));
+        assert_eq!(bank.facts[1].owner, None);
+        assert!(bank.facts.iter().all(|fact| fact.due.is_none()));
+    }
+
+    #[test]
+    fn similar_suggestions_and_vendor_descriptions_remain_discussion() {
+        use super::super::source_authority::{literal_review_task, literal_supplier_comparison};
+        for source in [
+            "例如质量组这一块儿，然后核对一下设备配置。",
+            "质量组这边，然后看一下设备配置或者测试范围。",
+            "建议质量部这一块儿，然后核对一下测试范围。",
+        ] {
+            assert!(literal_review_task(source).is_none(), "{source}");
+        }
+        for source in [
+            "比如说你这边安排去厂商去找一下，多找一些再对比一下。",
+            "你这边安排去供应商那边联系，多找一些比较适合做推广的样品。",
+            "你这边安排去厂商那边找样品，多找一些备用。",
+        ] {
+            assert!(literal_supplier_comparison(source, None).is_none(), "{source}");
+        }
+        let different_team = literal_review_task("请先沟通，质量组这边，请核对一下测试范围。")
+            .unwrap().action;
+        assert_eq!(different_team.owner.as_deref(), Some("质量组"));
+        assert_eq!(different_team.text, "核对测试范围");
     }
 
     #[test]
