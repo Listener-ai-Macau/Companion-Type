@@ -177,8 +177,9 @@ fn spoken_group_handoff(source: &str) -> Option<Followup> {
 /// calendar date or name. Suggestions and questions do not count as handoffs.
 pub(super) fn spoken_work_request(source: &str) -> Option<Followup> {
     use crate::companion_v1::CompanionV1ActionItem;
-    if has(source, &["不用", "不需要", "不要", "或许", "比如", "举个例", "如果", "假如", "上次",
-        "建议", "有没有", "能不能", "是否", "不确定", "要不要", "计划不"]) {
+    if has(source, &["不用", "不必", "不需要", "不要", "不打算", "不会请", "还没答应", "或许",
+        "比如", "举个例", "如果", "假如", "上次", "上周", "曾经", "建议", "有没有",
+        "能不能", "是否", "不确定", "要不要", "计划不"]) {
         return None;
     }
     let work = |text: String, owner: Option<&str>| Some(Followup {
@@ -199,6 +200,9 @@ pub(super) fn spoken_work_request(source: &str) -> Option<Followup> {
         if let Some(request) = DELIVERABLE.captures(source) {
             let item = request.name("item")?.as_str();
             let tail = &source[request.get(0)?.end()..];
+            if source.contains(['？', '?']) && !tail.trim_start_matches(['，', ',', ' ', '嗯', '呃']).starts_with("怎么") {
+                return None;
+            }
             let text = if item == "方案" {
                 if let Some(goal) = OBJECT.captures(tail) {
                     format!("拟定{}{}方案", goal.name("subject")?.as_str(), goal.name("goal")?.as_str())
@@ -257,6 +261,8 @@ mod spoken_work_tests {
             "后期你可以出一份方案。",
             "建议你后期作一份报告。",
             "我想问后期是不是可以写报告。",
+            "你后期出一个方案吗？",
+            "公司不会请厂家给员工培训。",
         ] {
             assert!(ask(example).is_none(), "{example}");
         }
