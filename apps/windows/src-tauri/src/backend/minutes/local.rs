@@ -1,5 +1,5 @@
-//! Native local minutes: fixed SDK/model, one source-only fact bank then
-//! ID-only organization. No Python, paid fallback, judge rewrite or daemon.
+//! Native local minutes: verified local runtime, evidence-backed facts
+//! and a whole-meeting reading pass before organization.
 mod assets;
 mod transport;
 mod probe;
@@ -9,6 +9,7 @@ mod chapter_spans;
 mod chapter_labels;
 mod reader_ranking;
 mod reader_projection;
+mod reader_plan;
 mod source_windows;
 mod source_authority;
 mod source_grounding;
@@ -130,7 +131,33 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                 if let Ok(mut trace)=trace.lock(){trace["reviewedSourceWindows"]=json!(reviewed);}
                 if facts.len()>atomic_document::MAX_FACTS{return Err(atomic_document::fail());}
             }
-            let bank=atomic_document::build_bank(facts,&session.transcript_text)?;
+            let mut checked = reader_plan::Checked::default();
+            if windows.len() >= 3 {
+                let context = windows.reader_context();
+                let (input, schema) = context.request(&facts);
+                if let Ok(mut trace) = trace.lock() { trace["stage"] = json!("whole-meeting-reading"); }
+                match transport::generate(port,&key,&alias,reader_plan::PROMPT,input,schema,stop,&trace,1600) {
+                    Ok(raw) => {
+                        record_call(&trace,"whole-meeting-reading");
+                        match context.check(&raw, &mut facts) {
+                            Ok(plan) => checked = plan,
+                            Err(error) => {
+                                if let Ok(mut trace) = trace.lock() { trace["readerPlanError"] = json!(error); }
+                            }
+                        }
+                    }
+                    Err(error) => {
+                        if stop.load(std::sync::atomic::Ordering::Acquire) { return Err(error); }
+                        if let Ok(mut trace) = trace.lock() { trace["readerPlanError"] = json!(error); }
+                    }
+                }
+                if let Ok(mut trace) = trace.lock() {
+                    trace["readerPlanAccepted"] = json!({"purpose":checked.purpose.is_some(),
+                        "actions":checked.counts.actions,"pending":checked.counts.pending,"highlights":checked.counts.highlights});
+                }
+            }
+            let mut bank=atomic_document::build_bank(facts,&session.transcript_text)?;
+            bank.reader_purpose = checked.purpose;
             if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}
             let planning_started = Instant::now();
             if let Some(result) = atomic_document::organize_from_evidence(&bank, session, base) {

@@ -49,6 +49,8 @@ pub(super) struct ExtractedFact {
     quantity_needs_review: bool,
     #[serde(skip)]
     source_needs_review: bool,
+    #[serde(skip)]
+    pub(super) reader_priority: bool,
 }
 impl ExtractedFact{
     pub(super) fn clear_non_action_metadata(&mut self) {
@@ -61,7 +63,7 @@ impl ExtractedFact{
     pub(super) fn verbatim(id:&str,role:&str,text:&str)->Self{
         Self {
             evidence: vec![id.to_owned()], role: role.to_owned(), owner: None, due: None,
-            text: text.trim().to_owned(), quantity_needs_review: false, source_needs_review: false,
+            text: text.trim().to_owned(), quantity_needs_review: false, source_needs_review: false, reader_priority: false,
         }
     }
 
@@ -82,6 +84,8 @@ pub(super) struct Bank {
     pub receipt: Value,
     quantity_quotes: HashSet<String>,
     source_quotes: HashSet<String>,
+    reader_priorities: HashSet<String>,
+    pub(super) reader_purpose: Option<(String, Vec<String>)>,
     chapter_spans: Vec<Range<usize>>,
     chapter_label_choices: Vec<BTreeMap<String, String>>,
     chapter_point_choices: Vec<Vec<usize>>,
@@ -112,6 +116,7 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     let mut facts=Vec::new();
     let mut quantity_quotes = HashSet::new();
     let mut source_quotes = HashSet::new();
+    let mut reader_priorities = HashSet::new();
     for f in extracted{
         let(kind,placement)=match f.role.as_str(){
             "status"=>(Kind::Status,Placement::Topic),"opinion"=>(Kind::Opinion,Placement::Topic),
@@ -127,6 +132,9 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
         }
         if f.source_needs_review {
             source_quotes.insert(id.clone());
+        }
+        if f.reader_priority {
+            reader_priorities.insert(id.clone());
         }
         facts.push(Fact { id, kind, placement, text:f.text, owner:f.owner, due:f.due, evidence:f.evidence });
         if facts.len()>MAX_FACTS{return Err(fail());}
@@ -165,7 +173,8 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage,
         "plannedChapters":chapters});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices })
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, reader_priorities, reader_purpose: None,
+        chapter_spans, chapter_label_choices, chapter_point_choices })
 }
 
 fn source_coverage(facts:&[Fact],units:&[canonical_brief::Unit],sentences:&[Value])->Value{
@@ -636,7 +645,7 @@ fn evidence_organization(bank: &Bank) -> Result<(Organization, ChapterFocus), St
 fn evidence_reading_points<'a>(bank: &Bank, rows: &[&'a Fact]) -> Vec<&'a Fact> {
     use super::reader_ranking::{operational_evidence, rank, OperationalEvidence, ReadingInput};
     let eligible: Vec<_> = rows.iter().copied().filter(|fact| {
-        !bank.review_quote(&fact.id) && evidence_worthy(&fact.text)
+        !bank.review_quote(&fact.id) && (bank.reader_priorities.contains(&fact.id) || evidence_worthy(&fact.text))
     }).collect();
     if eligible.is_empty() {
         return vec![rows.iter().copied().find(|fact| !bank.review_quote(&fact.id)).unwrap_or(rows[0])];
@@ -666,6 +675,9 @@ fn evidence_reading_points<'a>(bank: &Bank, rows: &[&'a Fact]) -> Vec<&'a Fact> 
         matches!(operational_evidence(&fact.text),
             Some(OperationalEvidence::CoordinationGap | OperationalEvidence::TeamCoordination))
     }) { VERIFIED_TOPIC_POINTS } else { STANDARD_TOPIC_POINTS };
+    selected.extend(ordered.iter().copied().filter(|fact| bank.reader_priorities.contains(&fact.id))
+        .take(point_limit - selected.len()));
+    evidence_types.extend(selected.iter().filter_map(|fact| operational_evidence(&fact.text)));
     let available_slots = point_limit - selected.len();
     selected.extend(ordered.iter().copied().filter(|fact| {
         operational_evidence(&fact.text).is_some_and(|kind| evidence_types.insert(kind))
@@ -832,7 +844,9 @@ fn render_organization(
         if choices.contains(&proposed.id.as_str()) { proposed.id.as_str() }
         else { choices.first().copied().ok_or_else(fail)? }
     };
-    let purpose = if let Some(overview) = &focus {
+    let purpose = if let Some((overview, _)) = &bank.reader_purpose {
+        overview.as_str()
+    } else if let Some(overview) = &focus {
         overview.overview.as_str()
     } else if bank.quantity_quotes.contains(purpose_id) {
         "会议原话中的数量待核对"
@@ -861,7 +875,7 @@ fn render_organization(
     merge_linked_singletons(&mut slots, purpose_id);
     let mut required_chars=0;
     let important = |fact: &Fact, main: bool| main && !bank.review_quote(&fact.id)
-        && (timed_prediction(fact) || (focus.is_some()
+        && (bank.reader_priorities.contains(&fact.id) || timed_prediction(fact) || (focus.is_some()
             && super::reader_ranking::operational_evidence(&fact.text).is_some()));
     for items in &mut slots{
         items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), !*main, !important(fact, *main)));
@@ -903,6 +917,9 @@ fn render_organization(
     let points_limit = if focus.is_some() { VERIFIED_TOPIC_POINTS } else { STANDARD_TOPIC_POINTS };
     let mut parsed = assemble_with_points_limit(&canonical.to_string(), bank, session, base, points_limit)?;
     parsed.receipt["openingFactId"] = json!(purpose_id);
+    if let Some((_, evidence)) = &bank.reader_purpose {
+        parsed.receipt["openingReaderEvidence"] = json!(evidence);
+    }
     if let Some(overview) = focus {
         parsed.receipt["openingTopicFactIds"] = json!(overview.primary_facts);
         if !overview.purpose_facts.is_empty() {

@@ -148,6 +148,10 @@ impl SourceWindows {
 
     pub(super) fn len(&self) -> usize { self.core.len() }
 
+    pub(super) fn reader_context(&self) -> super::reader_plan::Context<'_> {
+        super::reader_plan::Context::new(&self.sentences)
+    }
+
     pub(super) fn requires_model(&self, index: usize, encoding: SourceEncoding) -> bool {
         self.core[index].clone().any(|i| self.pending(i, encoding))
     }
