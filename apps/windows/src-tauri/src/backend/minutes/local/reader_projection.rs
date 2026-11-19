@@ -196,11 +196,51 @@ pub(super) fn design_handoff(text: &str) -> Option<&'static str> {
     }
 }
 
+pub(super) fn delivery_threshold(text: &str) -> Option<(&str, &str)> {
+    if !["送货", "配送"].iter().any(|cue| text.contains(cue))
+        || !["可以", "考虑", "方案", "建议"]
+            .iter()
+            .any(|cue| text.contains(cue))
+        || [
+            "已经确定",
+            "正式确定",
+            "会议决定",
+            "已决定",
+            "原来",
+            "上次",
+            "不用送货",
+            "不配送",
+        ]
+        .iter()
+        .any(|cue| text.contains(cue))
+    {
+        return None;
+    }
+    static RANGE: LazyLock<Regex> = LazyLock::new(|| {
+        Regex::new(concat!(
+        r"(?P<left>[1-9][0-9]{1,6}|[一二两三四五六七八九][十百千][零一二两三四五六七八九十百千]{0,5})",
+        r"(?:元|块钱)?[，, ]*或(?:者)?[，, ]*",
+        r"(?P<right>[1-9][0-9]{1,6}|[一二两三四五六七八九][十百千][零一二两三四五六七八九十百千]{0,5})",
+        r"(?:元|块钱)?(?:及)?以上",
+    )).expect("valid delivery options pattern")
+    });
+    let options = RANGE.captures(text)?;
+    let left = options.name("left")?.as_str();
+    let right = options.name("right")?.as_str();
+    (left != right).then_some((left, right))
+}
+
 /// Use the subject of the discussion rather than an adjective or a single
 /// incidental term. Leave unfamiliar subjects to the source vocabulary.
 pub(super) fn discussion_heading<'a>(points: impl Iterator<Item = &'a str>) -> Option<String> {
     fn subject(text: &str) -> Option<&'static str> {
         let has = |cues: &[&str]| cues.iter().any(|cue| text.contains(cue));
+        if delivery_threshold(text).is_some() {
+            return Some("配送门槛");
+        }
+        if design_handoff(text).is_some() {
+            return Some("设计方案");
+        }
         if has(&["直播", "主播", "推广", "投放", "流量", "平台", "联系"])
             && has(&["预算", "报价", "费用"])
         {
@@ -237,7 +277,11 @@ pub(super) fn discussion_heading<'a>(points: impl Iterator<Item = &'a str>) -> O
     }
     match known.as_slice() {
         [title] if seen > 0 => Some((*title).into()),
-        [first, second] if [*first, *second].contains(&"产品配色") => {
+        [first, second]
+            if ["产品配色", "设计方案", "配送门槛"]
+                .iter()
+                .any(|name| [*first, *second].contains(name)) =>
+        {
             Some(format!("{first}与{second}"))
         }
         _ => None,
@@ -298,5 +342,15 @@ mod tests {
             operational_evidence("样品能不能通过检测？"),
             Some(OperationalEvidence::AcceptanceCriteria)
         ));
+    }
+
+    #[test]
+    fn monetary_alternatives_are_preserved_as_options() {
+        assert_eq!(
+            delivery_threshold("二百或者一百以上的，咱可以送货。"),
+            Some(("二百", "一百"))
+        );
+        assert!(delivery_threshold("会议决定一百元以上可以配送。").is_none());
+        assert!(delivery_threshold("两百件或一百件以上可配送。").is_none());
     }
 }

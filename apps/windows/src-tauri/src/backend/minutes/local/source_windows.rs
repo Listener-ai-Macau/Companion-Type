@@ -135,6 +135,7 @@ impl SourceWindows {
             super::source_authority::literal_followup(text(row), previous)
                 .or_else(|| super::source_authority::literal_supplier_comparison(text(row), next))
                 .or_else(|| super::source_authority::literal_review_task(text(row)))
+                .or_else(|| super::source_authority::linked_procurement_request(text(row), next))
                 .or_else(addressed_work)
         }).collect();
         for (policy, followup) in authority.iter_mut().zip(&followups) {

@@ -51,6 +51,7 @@ pub(super) enum OperationalEvidence {
     OfferingAcceptance,
     AcceptanceCriteria,
     DesignHandoff,
+    DeliveryThreshold,
     RolloutCapacity,
     AvailabilityConstraint,
     SequenceOptions,
@@ -104,6 +105,9 @@ pub(super) fn coordination_request(text: &str) -> Option<&str> {
 }
 
 pub(super) fn operational_evidence(text: &str) -> Option<OperationalEvidence> {
+    if super::reader_projection::delivery_threshold(text).is_some() {
+        return Some(OperationalEvidence::DeliveryThreshold);
+    }
     if super::reader_projection::design_handoff(text).is_some() {
         return Some(OperationalEvidence::DesignHandoff);
     }

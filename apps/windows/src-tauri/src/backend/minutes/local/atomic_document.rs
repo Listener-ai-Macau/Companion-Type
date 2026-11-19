@@ -653,7 +653,8 @@ fn evidence_reading_points<'a>(bank: &Bank, rows: &[&'a Fact]) -> Vec<&'a Fact> 
         Some(OperationalEvidence::VerificationMaterial | OperationalEvidence::AvailabilityConstraint
             | OperationalEvidence::RolloutCapacity | OperationalEvidence::SequenceOptions
              | OperationalEvidence::TeamCoordination | OperationalEvidence::AcceptanceCriteria
-             | OperationalEvidence::PriceVersusFit | OperationalEvidence::DesignHandoff)));
+             | OperationalEvidence::PriceVersusFit | OperationalEvidence::DesignHandoff
+             | OperationalEvidence::DeliveryThreshold)));
     let paired_options: Vec<_> = [OperationalEvidence::LimitedChannel, OperationalEvidence::ParallelChannel]
         .into_iter().filter_map(|kind| ordered.iter().copied().find(|fact| operational_evidence(&fact.text) == Some(kind)))
         .collect();
@@ -712,7 +713,8 @@ fn evidence_worthy(text: &str) -> bool {
          && (!text.ends_with(['？', '?'])
              || matches!(operational,
                  Some(super::reader_ranking::OperationalEvidence::AvailabilityConstraint
-                     | super::reader_ranking::OperationalEvidence::PriceVersusFit)))
+                     | super::reader_ranking::OperationalEvidence::PriceVersusFit
+                     | super::reader_ranking::OperationalEvidence::DeliveryThreshold)))
         && !["下一个问题", "谢谢", "感谢分享", "我想请教"].iter().any(|cue| text.contains(cue))
         && (!["这一块", "这个问题", "的时候", "的一", "一个", "来讲", "这个事情", "一个情况", "一个领域", "不一定是", "比如说那个", "特别多的"]
             .iter().any(|tail| core.ends_with(tail))
@@ -1032,7 +1034,7 @@ fn assemble_with_points_limit(raw: &str, bank: &Bank, session: &CompanionV1HostS
             let source = fact.evidence.first().and_then(|id| known[id.as_str()]["text"].as_str());
             if !bank.review_quote(id) {
                 use super::reader_projection::{acceptance_tradeoff, clean_spoken_point, compact_proposal,
-                    confirmed_schedule, design_handoff, spoken_proposal};
+                    confirmed_schedule, delivery_threshold, design_handoff, spoken_proposal};
                 let cleaned = clean_spoken_point(&fact.text);
                 if cleaned.as_ref() != fact.text {
                     entry.insert("text".into(), json!(cleaned));
@@ -1062,6 +1064,9 @@ fn assemble_with_points_limit(raw: &str, bank: &Bank, session: &CompanionV1HostS
                     entry.insert("kind".into(), json!(Kind::Recommendation));
                 } else if let Some(text) = design_handoff(&fact.text) {
                     entry.insert("text".into(), json!(text));
+                    entry.insert("kind".into(), json!(Kind::Recommendation));
+                } else if let Some((left, right)) = delivery_threshold(&fact.text) {
+                    entry.insert("text".into(), json!(format!("讨论了{left}元或{right}元起送，门槛待确定。")));
                     entry.insert("kind".into(), json!(Kind::Recommendation));
                 } else if source.is_some_and(spoken_proposal) {
                     if let Some(text) = compact_proposal(&fact.text) {

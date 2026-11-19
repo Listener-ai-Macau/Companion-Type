@@ -243,6 +243,37 @@ pub(super) fn spoken_work_request(source: &str) -> Option<Followup> {
     None
 }
 
+pub(super) fn linked_procurement_request(source: &str, next: Option<&str>) -> Option<Followup> {
+    static REQUEST: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(concat!(
+        r"请{1,2}(?P<owner>公司|采购部|采购团队|供应部门)(?:呢|啊)?(?:尽快|抓紧)",
+        r"(?:把|将)(?:这个|这条|该)?(?P<channel>进货渠道|供应渠道|采购渠道)[。.，, ]*$"
+    )).expect("valid cross-sentence procurement request pattern"));
+    if source.contains(['？', '?']) || has(source, &["不用", "不要", "不需要", "之前", "如果", "假如", "建议", "能不能"]) {
+        return None;
+    }
+    let request = REQUEST.captures(source.trim())?;
+    let continuation = next?.trim_start_matches(['，', ',', ' ', '嗯', '呃', '啊']);
+    let directive = ["尽快能疏疏通", "尽快能疏通", "尽快疏通", "疏通", "先疏通", "打通"]
+        .iter().any(|cue| continuation.starts_with(cue));
+    if !directive || continuation.contains(['？', '?'])
+        || has(continuation, &["不用", "不能", "不必", "可能无法"]) {
+        return None;
+    }
+    let channel = request.name("channel")?.as_str();
+    let text = if continuation.contains("交了定金")
+        && (continuation.contains("拿到") || continuation.contains("拿拿到")) {
+        format!("尽快疏通{channel}，让已交定金的顾客拿到货")
+    } else {
+        format!("尽快疏通{channel}")
+    };
+    Some(Followup {
+        action: crate::companion_v1::CompanionV1ActionItem {
+            text, owner: Some(request.name("owner")?.as_str().to_owned()), due: None,
+        },
+        context: Some(FollowupContext::Next),
+    })
+}
+
 #[cfg(test)]
 mod spoken_work_tests {
     use super::*;
@@ -266,6 +297,16 @@ mod spoken_work_tests {
         ] {
             assert!(ask(example).is_none(), "{example}");
         }
+    }
+
+    #[test]
+    fn completes_a_procurement_request_across_utterances() {
+        let first = "所以说请请公司呢尽快把这个进货渠道。";
+        let result = linked_procurement_request(first, Some("尽快能疏疏通一下，然后让这些交了定金的顾客，尽快的把货拿拿到。")).unwrap();
+        assert_eq!(result.action.text, "尽快疏通进货渠道，让已交定金的顾客拿到货");
+        assert_eq!(result.action.owner.as_deref(), Some("公司"));
+        assert!(linked_procurement_request(first, Some("这个以后再议。")).is_none());
+        assert!(linked_procurement_request("如果可以，请采购部尽快把进货渠道。", Some("尽快疏通。")).is_none());
     }
 }
 
