@@ -1,10 +1,7 @@
 //! One local inference server, using the same atomic Windows job ownership as
 //! external wrappers. Runtime output goes to NUL; no rotating model/server logs.
 use super::*;
-use ::windows::Win32::{
-    Foundation::GENERIC_WRITE,
-    System::Memory::{CreateMemoryResourceNotification,LowMemoryResourceNotification,QueryMemoryResourceNotification},
-};
+use ::windows::Win32::Foundation::GENERIC_WRITE;
 
 const CPU_PRIVATE_BYTES:usize=2*1024*1024*1024;
 // WDDM charges Vulkan device allocations to the process job during model
@@ -57,18 +54,6 @@ impl Service {
     }
 }
 
-struct Pressure(Handle);
-impl Pressure {
-    fn new()->Result<Self,String>{
-        Ok(Self(Handle(unsafe{CreateMemoryResourceNotification(LowMemoryResourceNotification)}.map_err(|_|failure())?)))
-    }
-    fn low(&self)->Result<bool,String>{
-        let mut low=::windows::Win32::Foundation::BOOL::default();
-        unsafe{QueryMemoryResourceNotification(self.0.0,&mut low)}.map_err(|_|failure())?;
-        Ok(low.as_bool())
-    }
-}
-
 pub(crate) fn with_local_service<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,vulkan:bool,work:impl FnOnce(&AtomicBool)->Result<T,String>+Send)->Result<T,String>{
     let private_bytes = if vulkan { VULKAN_PRIVATE_BYTES } else { CPU_PRIVATE_BYTES };
     controlled(program,args,cancel,WALL,private_bytes,work)
@@ -76,7 +61,8 @@ pub(crate) fn with_local_service<T:Send>(program:&str,args:&[String],cancel:Opti
 
 fn controlled<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,wall:Duration,private_bytes:usize,work:impl FnOnce(&AtomicBool)->Result<T,String>+Send)->Result<T,String>{
     if cancel.is_some_and(|v|v.load(Ordering::SeqCst)){return Err("本地纪要已取消，已有内容保留。".into());}
-    let pressure=Pressure::new()?;
+    // The job accounts for the service's allocations. A machine-wide
+    // physical-memory notification does not indicate this service failed.
     let service=Service::start(program,args,private_bytes).map_err(|_|failure())?;let started=Instant::now();
     let aborted=AtomicBool::new(false);
     thread::scope(|scope|{
@@ -91,11 +77,6 @@ fn controlled<T:Send>(program:&str,args:&[String],cancel:Option<&AtomicBool>,wal
             }
             if cancel.is_some_and(|v|v.load(Ordering::SeqCst)){break Err("本地纪要已取消，已有内容保留。".into());}
             if started.elapsed()>=wall{break Err("本地纪要本次处理已到期限，已有内容保留。".into());}
-            match pressure.low(){
-                Ok(true)=>break Err("可用内存不足，本地纪要已停止，已有内容保留。".into()),
-                Err(error)=>break Err(error),
-                Ok(false)=>{},
-            }
             if !service.running(){break Err(failure());}
         };
         // Close the loopback transport before joining its worker. This also

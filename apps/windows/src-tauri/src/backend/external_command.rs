@@ -131,7 +131,7 @@ pub(super) fn closed_output_matches(path:&std::path::Path,prefix:&[u8],suffix:&[
 mod windows;
 
 /// The local minutes engine is owned by one invocation. It never survives its
-/// caller, cancellation, memory pressure, or the bounded processing deadline.
+/// caller, cancellation, service exit, or the bounded processing deadline.
 #[cfg(windows)]
 pub(super) fn with_local_service<T:Send>(
     program:&str,args:&[String],cancel:Option<&AtomicBool>,vulkan:bool,
