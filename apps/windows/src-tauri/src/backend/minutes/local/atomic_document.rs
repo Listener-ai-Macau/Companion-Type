@@ -51,6 +51,8 @@ pub(super) struct ExtractedFact {
     source_needs_review: bool,
     #[serde(skip)]
     pub(super) reader_priority: bool,
+    #[serde(skip)]
+    pub(super) reader_required: bool,
 }
 impl ExtractedFact{
     pub(super) fn clear_non_action_metadata(&mut self) {
@@ -63,7 +65,8 @@ impl ExtractedFact{
     pub(super) fn verbatim(id:&str,role:&str,text:&str)->Self{
         Self {
             evidence: vec![id.to_owned()], role: role.to_owned(), owner: None, due: None,
-            text: text.trim().to_owned(), quantity_needs_review: false, source_needs_review: false, reader_priority: false,
+            text: text.trim().to_owned(), quantity_needs_review: false, source_needs_review: false,
+            reader_priority: false, reader_required: false,
         }
     }
 
@@ -85,6 +88,7 @@ pub(super) struct Bank {
     quantity_quotes: HashSet<String>,
     source_quotes: HashSet<String>,
     reader_priorities: HashSet<String>,
+    reader_required: HashSet<String>,
     pub(super) reader_purpose: Option<(String, Vec<String>)>,
     chapter_spans: Vec<Range<usize>>,
     chapter_label_choices: Vec<BTreeMap<String, String>>,
@@ -117,6 +121,7 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     let mut quantity_quotes = HashSet::new();
     let mut source_quotes = HashSet::new();
     let mut reader_priorities = HashSet::new();
+    let mut reader_required = HashSet::new();
     for f in extracted{
         let(kind,placement)=match f.role.as_str(){
             "status"=>(Kind::Status,Placement::Topic),"opinion"=>(Kind::Opinion,Placement::Topic),
@@ -135,6 +140,9 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
         }
         if f.reader_priority {
             reader_priorities.insert(id.clone());
+        }
+        if f.reader_required && !f.quantity_needs_review && !f.source_needs_review {
+            reader_required.insert(id.clone());
         }
         facts.push(Fact { id, kind, placement, text:f.text, owner:f.owner, due:f.due, evidence:f.evidence });
         if facts.len()>MAX_FACTS{return Err(fail());}
@@ -173,7 +181,7 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage,
         "plannedChapters":chapters});
-    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, reader_priorities, reader_purpose: None,
+    Ok(Bank { facts, receipt, quantity_quotes, source_quotes, reader_priorities, reader_required, reader_purpose: None,
         chapter_spans, chapter_label_choices, chapter_point_choices })
 }
 
@@ -867,7 +875,7 @@ fn render_organization(
             Placement::Topic=>{
                 let slot=assignments.remove(&fact.id).ok_or_else(fail)?;
                 let (topic, main) = slot.slot().ok_or_else(fail)?;
-                slots[topic].push((fact, (main || timed_prediction(fact)) && !bank.review_quote(&fact.id)));
+                slots[topic].push((fact, (main || timed_prediction(fact) || bank.reader_required.contains(&fact.id)) && !bank.review_quote(&fact.id)));
             }
             Placement::Decision=>decisions.push([&fact.id]),
             Placement::Action=>actions.push([&fact.id]),
@@ -881,16 +889,22 @@ fn render_organization(
         && (bank.reader_priorities.contains(&fact.id) || timed_prediction(fact) || (focus.is_some()
             && super::reader_ranking::operational_evidence(&fact.text).is_some()));
     for items in &mut slots{
-        items.sort_by_key(|(fact, main)| (bank.review_quote(&fact.id), !*main, !important(fact, *main)));
+        items.sort_by_key(|(fact, main)| (!bank.reader_required.contains(&fact.id), bank.review_quote(&fact.id), !*main, !important(fact, *main)));
         required_chars+=items.iter().take(1)
             .map(|(fact,_)|fact.text.chars().count()).sum::<usize>();
     }
     let mut optional_chars=1000_usize.checked_sub(required_chars).ok_or_else(fail)?;
     let mut reserved = HashSet::new();
     for items in &slots {
+        for (fact, _) in items.iter().skip(1).filter(|(fact, _)| bank.reader_required.contains(&fact.id)) {
+            optional_chars = optional_chars.saturating_sub(fact.text.chars().count());
+            reserved.insert(fact.id.as_str());
+        }
+    }
+    for items in &slots {
         let point_limit = reading_topic_point_limit(items, focus.is_some());
         for (fact, main) in items.iter().skip(1).take(point_limit - 1) {
-            if important(fact, *main) && fact.text.chars().count() <= optional_chars {
+            if !reserved.contains(fact.id.as_str()) && important(fact, *main) && fact.text.chars().count() <= optional_chars {
                 optional_chars -= fact.text.chars().count();
                 reserved.insert(fact.id.as_str());
             }
@@ -1144,6 +1158,13 @@ fn assemble_with_points_limit(raw: &str, bank: &Bank, session: &CompanionV1HostS
     parsed.receipt["nextFactIndex"]=json!(bank.facts.len());
     parsed.receipt["atomicFactBank"]=bank.receipt.clone();parsed.receipt["layoutBindings"]=json!(result.bindings);
     parsed.receipt["retainedFactIds"]=json!(result.retained_ids);parsed.receipt["excluded"]=json!(result.excluded);
+    let mut checked=bank.reader_required.iter().collect::<Vec<_>>();
+    checked.sort_unstable();
+    let visible=result.bindings.iter().filter_map(|(path,id)| {
+        (!path.contains("/details/") && bank.reader_required.contains(id)).then_some(id)
+    }).collect::<HashSet<_>>();
+    let missing=checked.iter().copied().filter(|id| !visible.contains(id)).collect::<Vec<_>>();
+    parsed.receipt["readerCoverage"]=json!({"required":checked,"missingFromBody":missing});
     let mut quantity_quote_ids: Vec<_> = bank.quantity_quotes.iter().collect();
     quantity_quote_ids.sort();
     parsed.receipt["quantityQuoteFactIds"] = json!(quantity_quote_ids);

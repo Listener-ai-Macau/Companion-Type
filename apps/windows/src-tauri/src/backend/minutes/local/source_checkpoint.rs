@@ -201,6 +201,61 @@ mod tests {
     }
 
     #[test]
+    fn replay_reader_coverage_from_exact_model_responses() {
+        let Some(path) = std::env::var_os("COMPANION_TEST_READER_COVERAGE_REPLAY") else {
+            return;
+        };
+        let setup: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        let mut results = Vec::new();
+        for case in setup["cases"].as_array().unwrap() {
+            let original: Value = serde_json::from_slice(
+                &std::fs::read(case["receipt"].as_str().unwrap()).unwrap(),
+            ).unwrap();
+            let source = std::fs::read_to_string(original["sourceFile"].as_str().unwrap()).unwrap();
+            let source = source.trim_start_matches('\u{feff}').replace("\r\n", "\n");
+            let hash = format!("{:x}", Sha256::digest(source.as_bytes()));
+            let prefix = CheckedSourcePrefix::from_report(
+                &original, &source, &hash, original["durationMs"].as_u64().unwrap(),
+            ).unwrap();
+            let windows = SourceWindows::new(&source).unwrap();
+            assert_eq!(prefix.len(), windows.len());
+            let mut facts = (0..windows.len()).flat_map(|i| {
+                let (encoding, call) = prefix.window(i).unwrap();
+                let raw = call.and_then(|c| c["output"].as_str()).unwrap_or("{}");
+                windows.check_encoded(i, raw, encoding).unwrap().facts
+            }).collect::<Vec<_>>();
+            let context = windows.reader_context();
+            let call = original["receipt"]["calls"].as_array().unwrap().iter()
+                .find(|c| c["stage"] == "whole-meeting-reading").unwrap();
+            let (input, schema) = context.request(&facts);
+            let alias = call["request"]["model"].as_str().unwrap();
+            let request = transport::request_body(
+                alias, super::super::reader_plan::PROMPT, input, schema, 1600,
+                &transport::profile().unwrap(),
+            ).unwrap();
+            assert_eq!(request, call["request"]);
+            let plan = context.check(call["output"].as_str().unwrap(), &mut facts).unwrap();
+            context.recover_actions(&mut facts);
+            let checked = windows.review_reader_coverage(&mut facts);
+            let mut bank = super::super::atomic_document::build_bank(facts, &source).unwrap();
+            bank.reader_purpose = plan.purpose;
+            let session = crate::backend::minutes::tests::session_with_text(&source);
+            let base = crate::backend::minutes::rules_l0_minutes(&session, "coverage-replay");
+            let generated = super::super::atomic_document::organize_from_evidence(
+                &bank, &session, &base,
+            ).unwrap().unwrap();
+            assert_eq!(generated.receipt["readerCoverage"]["missingFromBody"], serde_json::json!([]));
+            results.push(serde_json::json!({
+                "case":case["name"],"sourceSha256":hash,"coverageChecks":checked,"minutes":generated.minutes,
+                "receipt":generated.receipt,"newInferenceRequests":0
+            }));
+        }
+        let file = std::fs::OpenOptions::new().create_new(true).write(true)
+            .open(setup["output"].as_str().unwrap()).unwrap();
+        serde_json::to_writer_pretty(file, &results).unwrap();
+    }
+
+    #[test]
     fn whole_real_meeting_keeps_binding_and_operational_points_without_model_layout() {
         let Some(path) = std::env::var_os("COMPANION_TEST_EVIDENCE_READER_WHOLE") else { return; };
         let (original, result, reader_seconds) = reread_verified_whole(path);

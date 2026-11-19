@@ -10,6 +10,7 @@ mod chapter_labels;
 mod reader_ranking;
 mod reader_projection;
 mod reader_plan;
+mod reader_coverage;
 mod source_windows;
 mod source_authority;
 mod source_grounding;
@@ -157,6 +158,8 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                         "actions":checked.counts.actions,"pending":checked.counts.pending,"highlights":checked.counts.highlights,"recoveredSourceActions":source_actions});
                 }
             }
+            let reviewed_for_reader = windows.review_reader_coverage(&mut facts);
+            if let Ok(mut trace)=trace.lock(){trace["readerCoverageCandidates"]=json!(reviewed_for_reader);}
             let mut bank=atomic_document::build_bank(facts,&session.transcript_text)?;
             bank.reader_purpose = checked.purpose;
             if let Ok(mut trace)=trace.lock(){trace["atomicFactBank"]=bank.receipt.clone();trace["stage"]=json!("organizing-fact-ids");}

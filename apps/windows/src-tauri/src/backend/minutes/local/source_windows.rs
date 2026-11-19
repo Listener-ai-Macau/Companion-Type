@@ -152,6 +152,10 @@ impl SourceWindows {
         super::reader_plan::Context::new(&self.sentences)
     }
 
+    pub(super) fn review_reader_coverage(&self, facts: &mut Vec<ExtractedFact>) -> usize {
+        super::reader_coverage::check(&self.sentences, facts)
+    }
+
     pub(super) fn requires_model(&self, index: usize, encoding: SourceEncoding) -> bool {
         self.core[index].clone().any(|i| self.pending(i, encoding))
     }
