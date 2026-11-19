@@ -435,7 +435,14 @@ fn starts_work(text: &str) -> bool {
         return false;
     };
     let object = text[first.word.len()..].trim_start();
-    first.tag.starts_with('v')
+    // Jieba also tags several common instructions as nouns in short phrases.
+    // The caller still requires the verb and object in an explicit directive.
+    let work_verb = first.tag.starts_with('v')
+        || [
+            "联系", "总结", "复盘", "协调", "沟通", "记录", "汇报", "登记", "归档", "对接", "跟进",
+        ]
+        .contains(&first.word);
+    work_verb
         && first.word.chars().count() >= 2
         && !object.is_empty()
         && !object.starts_with(['和', '与', '及', '、', '，', ',', '。', '；'])
