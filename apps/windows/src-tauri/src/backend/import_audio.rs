@@ -43,20 +43,109 @@ impl LowPass {
         self.x2=self.x1;self.x1=x;self.y2=self.y1;self.y1=y;y
     }
 }
-struct SpeechConverter {rate:u32, channels:usize,resampler:RatioResampler,filters:Option<[LowPass;2]>,invert_right:bool}
+// A multi-microphone recording can contain a much clearer voice on
+// one channel. Averaging all channels can bury a quiet speaker or cancel
+// out-of-phase speech. Choose a clean speech-band channel per short window.
+struct MicrophoneArray {
+    rate: u32,
+    channels: usize,
+    previous: Option<usize>,
+    tail: Vec<f32>,
+}
+
+impl MicrophoneArray {
+    fn new(rate: u32, channels: usize) -> Self {
+        Self { rate, channels, previous: None, tail: Vec::new() }
+    }
+
+    fn append(&mut self, input: &[f32], final_block: bool) -> Vec<f32> {
+        self.tail.extend_from_slice(input);
+        let window = (self.rate as usize * 3).min(288_000) * self.channels;
+        let boundary = if final_block {
+            self.tail.len()
+        } else {
+            self.tail.len() / window * window
+        };
+        if boundary == 0 {
+            return Vec::new();
+        }
+        let later = self.tail.split_off(boundary);
+        let full = std::mem::replace(&mut self.tail, later);
+        let mut output = Vec::with_capacity(full.len() / self.channels);
+        for block in full.chunks(window) {
+            self.render(block, &mut output);
+        }
+        output
+    }
+
+    fn render(&mut self, block: &[f32], output: &mut Vec<f32>) {
+        let rate = self.rate as f64;
+        let high_pass = 1.0 - (-2.0 * std::f64::consts::PI * 150.0 / rate).exp();
+        let low_pass = 1.0 - (-2.0 * std::f64::consts::PI * 3600.0 / rate).exp();
+        let frames = block.len() / self.channels;
+        let energy: Vec<f64> = (0..self.channels).map(|channel| {
+            let mut dc = 0.0;
+            let mut band = 0.0;
+            let mut sum = 0.0;
+            let mut clipped = 0;
+            for frame in block.chunks_exact(self.channels) {
+                let sample = finite_sample(frame[channel]);
+                dc += high_pass * (sample - dc);
+                band += low_pass * ((sample - dc) - band);
+                sum += band * band;
+                clipped += usize::from(sample.abs() >= 0.995);
+            }
+            let clean = 1.0 - clipped as f64 / frames as f64;
+            sum * clean.powi(6)
+        }).collect();
+
+        let strongest = energy.iter().enumerate().max_by(|(ia, a), (ib, b)| {
+            a.total_cmp(b).then_with(|| ib.cmp(ia))
+        }).map(|(index, _)| index).unwrap_or(0);
+        let previous = self.previous.unwrap_or(strongest);
+        let selected = if energy[strongest] > 1.4 * energy[previous] {
+            strongest
+        } else {
+            previous
+        };
+        let fade = (self.rate as usize / 50).min(frames);
+        for (i, frame) in block.chunks_exact(self.channels).enumerate() {
+            let current = finite_sample(frame[selected]);
+            let mix = if previous != selected && i < fade {
+                let blend = (i + 1) as f64 / fade as f64;
+                current * blend + finite_sample(frame[previous]) * (1.0 - blend)
+            } else {
+                current
+            };
+            output.push(mix as f32);
+        }
+        self.previous = Some(selected);
+    }
+}
+
+fn finite_sample(sample: f32) -> f64 {
+    if sample.is_finite() { f64::from(sample) } else { 0.0 }
+}
+
+struct SpeechConverter {rate:u32, channels:usize,resampler:RatioResampler,filters:Option<[LowPass;2]>,invert_right:bool,array:Option<MicrophoneArray>}
 impl SpeechConverter {
     fn new(rate:u32,channels:usize)->Result<Self,String> {
         if rate==0 || channels==0 {return Err("音频采样格式不完整。".into());}
         Ok(Self {rate,channels,resampler:RatioResampler::new(rate,16000),
-            filters:(rate>16000).then(||[LowPass::new(rate,0.5411961),LowPass::new(rate,1.306563)]),invert_right:false})
+            filters:(rate>16000).then(||[LowPass::new(rate,0.5411961),LowPass::new(rate,1.306563)]),invert_right:false,
+            array:(channels>2).then(||MicrophoneArray::new(rate,channels))})
     }
     fn process(&mut self,samples:&[f32])->Vec<i16> {
+        if let Some(array)=&mut self.array {
+            let mono=array.append(samples,false);
+            return self.resample(mono);
+        }
         let mut mono=Vec::with_capacity(samples.len()/self.channels);
         if self.channels==2 {
             let (mut left,mut right,mut dot)=(0.0_f64,0.0_f64,0.0_f64);
             for frame in samples.chunks_exact(2) {
-                let l=if frame[0].is_finite(){f64::from(frame[0])}else{0.0};
-                let r=if frame[1].is_finite(){f64::from(frame[1])}else{0.0};
+                let l=finite_sample(frame[0]);
+                let r=finite_sample(frame[1]);
                 left+=l*l;right+=r*r;dot+=l*r;
             }
             // Only reverse a channel when both carry a clear signal and their
@@ -70,11 +159,26 @@ impl SpeechConverter {
         }
         for frame in samples.chunks_exact(self.channels) {
             let mut sample=frame.iter().enumerate().map(|(index,v)|{
-                let value=if v.is_finite(){*v as f64}else{0.0};
+                let value=finite_sample(*v);
                 if self.channels==2 && index==1 && self.invert_right {-value}else{value}
             }).sum::<f64>()/self.channels as f64;
             if let Some(filters)=&mut self.filters { for filter in filters { sample=filter.process(sample); } }
             mono.push(sample.clamp(-1.0,1.0) as f32);
+        }
+        self.resampler.process(&mono)
+    }
+    fn finish(&mut self)->Vec<i16> {
+        let Some(array)=&mut self.array else { return Vec::new(); };
+        let tail=array.append(&[],true);
+        self.resample(tail)
+    }
+    fn resample(&mut self,mut mono:Vec<f32>)->Vec<i16> {
+        if let Some(filters)=&mut self.filters {
+            for sample in &mut mono {
+                let mut value=f64::from(*sample);
+                for filter in filters.iter_mut() { value=filter.process(value); }
+                *sample=value.clamp(-1.0,1.0) as f32;
+            }
         }
         self.resampler.process(&mono)
     }
@@ -105,6 +209,14 @@ pub(super) fn decode_to_speech_wav(input:&Path,anchor:&Path)->Result<Vec<HostAud
         let mut writer=RollingHostWav::create(anchor).map_err(|e|format!("无法保存导入录音：{e}"))?;
         let mut converter:Option<SpeechConverter>=None;
         let mut samples_written=0u64;
+        let mut append=|writer:&mut RollingHostWav,pcm:&[i16]|->Result<(),String> {
+            samples_written=samples_written.checked_add(pcm.len() as u64).ok_or("音频时长无效。")?;
+            writer.append_bulk(pcm,|next| {
+                let lease=WriteLease::begin(next,next,Purpose::Recording).map_err(std::io::Error::other)?;
+                audio_artifacts::attach_group(next,anchor).map_err(std::io::Error::other)?;
+                if let Some(lease)=lease {leases.push(lease);} Ok(())
+            }).map_err(|e|format!("保存导入录音失败，原文件未改变：{e}"))
+        };
         loop {
             check_cancel()?;
             let packet=match format.next_packet() {
@@ -119,12 +231,10 @@ pub(super) fn decode_to_speech_wav(input:&Path,anchor:&Path)->Result<Vec<HostAud
             let c=converter.as_mut().expect("converter initialized");
             if c.rate!=spec.rate||c.channels!=channels {return Err("音频中途改变采样格式，暂无法完整导入。原文件未改变。".into());}
             let mut buf=SampleBuffer::<f32>::new(audio.capacity() as u64,spec);buf.copy_interleaved_ref(audio);
-            let pcm=c.process(buf.samples());samples_written=samples_written.checked_add(pcm.len() as u64).ok_or("音频时长无效。")?;
-            writer.append_bulk(&pcm,|next| {
-                let lease=WriteLease::begin(next,next,Purpose::Recording).map_err(std::io::Error::other)?;
-                audio_artifacts::attach_group(next,anchor).map_err(std::io::Error::other)?;
-                if let Some(lease)=lease {leases.push(lease);} Ok(())
-            }).map_err(|e|format!("保存导入录音失败，原文件未改变：{e}"))?;
+            append(&mut writer,&c.process(buf.samples()))?;
+        }
+        if let Some(converter)=&mut converter {
+            append(&mut writer,&converter.finish())?;
         }
         if samples_written==0 {return Err("音频没有可用的声音数据，原文件未改变。".into());}
         let parts=writer.finish().map_err(|e|format!("完成导入录音失败，原文件未改变：{e}"))?;
@@ -212,6 +322,29 @@ pub(super) fn verify_original(row:&crate::companion_v1::CompanionV1HostSession,r
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn array_decoder_keeps_a_clearer_microphone_and_drains_the_last_partial_window() {
+        let rate = 16_000_usize;
+        let mut converter = SpeechConverter::new(rate as u32, 4).unwrap();
+        let frames = 3 * rate + 997;
+        let mut interleaved = Vec::with_capacity(frames * 4);
+        let mut expected = Vec::with_capacity(frames);
+        for position in 0..frames {
+            let wave = (position as f32 * std::f32::consts::TAU * 520.0 / rate as f32).sin();
+            let clear = 0.45 * wave;
+            expected.push(clear);
+            interleaved.extend_from_slice(&[0.02 * wave, -0.04 * wave, clear, 0.01 * wave]);
+        }
+        let mut actual = Vec::new();
+        for packet in interleaved.chunks(4 * 731) {
+            actual.extend(converter.process(packet));
+        }
+        actual.extend(converter.finish());
+        let mut original = SpeechConverter::new(rate as u32, 1).unwrap();
+        assert_eq!(actual, original.process(&expected));
+    }
+
     #[test]
     fn conversion_is_streaming_and_reduces_aliasing() {
         let mut converter=SpeechConverter::new(48000,2).unwrap();
