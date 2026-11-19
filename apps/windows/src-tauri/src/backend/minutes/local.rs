@@ -151,9 +151,10 @@ fn recorded_attempt(session:&CompanionV1HostSession,base:&CompanionV1MeetingMinu
                         if let Ok(mut trace) = trace.lock() { trace["readerPlanError"] = json!(error); }
                     }
                 }
+                let source_actions = context.recover_actions(&mut facts);
                 if let Ok(mut trace) = trace.lock() {
                     trace["readerPlanAccepted"] = json!({"purpose":checked.purpose.is_some(),
-                        "actions":checked.counts.actions,"pending":checked.counts.pending,"highlights":checked.counts.highlights});
+                        "actions":checked.counts.actions,"pending":checked.counts.pending,"highlights":checked.counts.highlights,"recoveredSourceActions":source_actions});
                 }
             }
             let mut bank=atomic_document::build_bank(facts,&session.transcript_text)?;

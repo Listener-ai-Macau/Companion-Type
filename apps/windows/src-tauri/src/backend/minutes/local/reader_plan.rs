@@ -151,6 +151,42 @@ impl<'a> Context<'a> {
         (request, schema)
     }
 
+    // Recover handoffs with an explicit instruction in the source even when the
+    // model omits that instruction or puts the wrong task in its place.
+    pub(super) fn recover_actions(&self, facts: &mut Vec<ExtractedFact>) -> usize {
+        let mut recovered = 0;
+        'sources: for &index in &self.closing {
+            let row = &self.rows[index];
+            let Some(id) = row["id"].as_str() else {
+                continue;
+            };
+            let source = row_text(row);
+            for action in source_actions(source) {
+                if recovered == 9 || facts.len() >= super::atomic_document::MAX_FACTS {
+                    break 'sources;
+                }
+                let evidence = [id.to_owned()];
+                if verified_claim(&action, &[source], 90)
+                    && !facts
+                        .iter()
+                        .any(|fact| same_entry(fact, "action", &action, &evidence))
+                {
+                    facts.push(ExtractedFact::verbatim(id, "action", &action));
+                    recovered += 1;
+                }
+            }
+        }
+        if recovered > 0 {
+            facts.sort_by_key(|fact| {
+                fact.evidence
+                    .first()
+                    .and_then(|id| id.get(1..)?.parse::<usize>().ok())
+                    .unwrap_or(usize::MAX)
+            });
+        }
+        recovered
+    }
+
     pub(super) fn check(
         &self,
         raw: &str,
@@ -523,6 +559,72 @@ fn authorizes_action(source: &str) -> bool {
         .any(|cue| source.contains(cue))
 }
 
+fn source_actions(source: &str) -> Vec<String> {
+    if !authorizes_action(source)
+        || source.trim_end().ends_with(['？', '?'])
+        || ["建议", "例如", "比如", "拟由", "不要", "不再", "不负责"]
+            .iter()
+            .any(|cue| source.contains(cue))
+    {
+        return Vec::new();
+    }
+    static ASSIGNMENT: LazyLock<regex::Regex> = LazyLock::new(|| {
+        regex::Regex::new(r"(?:由[您你](?:们)?(?:来)?负责|(?:首先|接下来)要做的[，, ]*(?:就是|是))[，,：: ]*([^。！？；;]{2,65})")
+            .expect("valid explicit assignment pattern")
+    });
+    static INQUIRY: LazyLock<regex::Regex> = LazyLock::new(|| {
+        regex::Regex::new(r"你(?:们)?再去(?:看)?(调查|核实|确认|统计)一下[，,：: ]*(?:具体)?((?:有多少|有没有|是否|谁需要)[^，,。！？；;]{2,35})")
+            .expect("valid assigned inquiry pattern")
+    });
+    static TRAINING: LazyLock<regex::Regex> = LazyLock::new(|| {
+        regex::Regex::new(r"都(?:是|要)给给?([\p{Han}]{2,12}?)进行培训(?:培训)?[。！？；;]?\s*$")
+            .expect("valid assigned training pattern")
+    });
+    static YES_NO: LazyLock<regex::Regex> = LazyLock::new(|| {
+        regex::Regex::new(r"^(?:收集|核实|确认)([\p{Han}]{2,12}?)(?:这个)?(?:给(?:咱们|我们))?([\p{Han}]{2})不([\p{Han}]{2})([\p{Han}]{2,16})$")
+            .expect("valid repeated verb question pattern")
+    });
+    let mut actions = Vec::new();
+    if let Some(capture) = ASSIGNMENT.captures(source) {
+        let task = capture[1].trim();
+        let task = ["后边儿", "后边", "后面", "后续", "接着"]
+            .iter()
+            .find_map(|prefix| task.strip_prefix(prefix))
+            .unwrap_or(task);
+        for part in task.split(['，', ',']) {
+            let part = part.trim().trim_start_matches("还有");
+            if ["如果", "要是", "假如", "否则", "再考虑", "后续"]
+                .iter()
+                .any(|cue| part.starts_with(cue))
+            {
+                break;
+            }
+            let part = part
+                .trim_end_matches("这些事儿可以")
+                .trim_end_matches("这些事情")
+                .trim_end_matches(['呀', '啊', '呢'])
+                .trim();
+            for work in split_work(part) {
+                if let Some(question) = YES_NO.captures(work).filter(|m| m[2] == m[3]) {
+                    actions.push(format!(
+                        "确认{}是否{}{}",
+                        &question[1], &question[2], &question[4]
+                    ));
+                } else {
+                    actions.push(work.to_owned());
+                }
+            }
+        }
+    }
+    if let Some(capture) = INQUIRY.captures(source) {
+        actions.push(format!("{}{}", &capture[1], &capture[2]));
+    }
+    if let Some(capture) = TRAINING.captures(source) {
+        actions.push(format!("给{}进行培训", &capture[1]));
+    }
+    actions
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -563,6 +665,31 @@ mod tests {
             "制定预算。",
             &["e0002".into()]
         ));
+    }
+
+    #[test]
+    fn explicit_handoffs_survive_model_omissions_and_spoken_connectors() {
+        assert_eq!(
+            source_actions("然后主要由您来负责，后边儿联系搬家公司呀，还有制定预算这些事儿可以。"),
+            ["联系搬家公司", "制定预算"],
+        );
+        assert_eq!(
+            source_actions("人员安排的话，就是你们再去看调查一下，具体有多少人要停车。"),
+            ["调查有多少人要停车"],
+        );
+        assert_eq!(
+            source_actions("就是咱们首先要做的，就是收集老师这个给咱们提供不提供地址。"),
+            ["确认老师是否提供地址"],
+        );
+        assert_eq!(
+            source_actions("你下面下边都是你们都是给给员工进行培训培训。"),
+            ["给员工进行培训"],
+        );
+        assert!(source_actions("假设由你来负责联系搬家公司。").is_empty());
+        assert!(source_actions("如果需要，你们再去调查一下，具体有多少人要停车。").is_empty());
+        assert!(source_actions("你们都可以给员工进行培训。").is_empty());
+        assert!(source_actions("我们建议由您负责联系搬家公司。").is_empty());
+        assert!(source_actions("由您来负责联系搬家公司吗？").is_empty());
     }
 
     #[test]
