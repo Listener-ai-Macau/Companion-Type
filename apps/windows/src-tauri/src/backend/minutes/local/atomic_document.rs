@@ -361,7 +361,7 @@ fn stated_meeting_agenda(bank: &Bank) -> Option<(&str, &str)> {
 
 fn introduced_discussion_subject(bank: &Bank) -> Option<(&str, &str)> {
     static SUBJECT: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| regex::Regex::new(
-        r"(?:新出了一款|新推出了一款|新发布了一款|新推出的(?:一款)?)(?:这个|这款)?(?P<name>[\p{Han}A-Za-z0-9]{2,10}?)[嗯呃啊 ]*(?:产品|设备|服务)[嗯呃啊 ]*[，,]"
+        r"(?:新(?:出|推出|发布)(?:了|的)?一款|新推出的)(?:这个|这款)?(?P<name>[\p{Han}A-Za-z0-9]{2,10}?)[嗯呃啊 ]*(?:产品|设备|服务)[嗯呃啊 ]*(?:[，,]|进行|举办|召开)"
     ).expect("valid discussion subject pattern"));
     bank.topics().take(12).filter(|fact| !bank.review_quote(&fact.id))
         .filter(|fact| ["研讨会", "讨论会", "这个会", "这次会议"].iter().any(|cue| fact.text.contains(cue)))
@@ -379,12 +379,15 @@ fn new_offering_purpose(bank: &Bank, agenda_id: &str) -> Option<(String, Vec<Str
 
     let (subject, introduction) = introduced_discussion_subject(bank)?;
     if introduction != agenda_id { return None; }
+    static TARGET_AUDIENCE: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(r"目标[，、, 这个嗯呃啊]{0,7}(?:人群|客群|客户|受众)|人群客户群")
+            .expect("valid target audience pattern")
+    });
     let usable = || bank.topics().filter(|fact| !bank.review_quote(&fact.id));
     let customer_goal = usable().take(12).find(|fact| {
         let text = &fact.text;
         ["确认", "确定", "讨论", "界定"].iter().any(|verb| text.contains(verb))
-            && ["目标人群", "目标客群", "目标客户", "人群客户群", "目标受众"]
-                .iter().any(|term| text.contains(term))
+            && TARGET_AUDIENCE.is_match(text)
             && !["不用", "不需要", "上次", "假如", "如果", "举例"].iter().any(|cue| text.contains(cue))
     })?;
     let promotion = usable().find(|fact| {
@@ -1096,6 +1099,28 @@ mod tests{
         let layout=json!({"purpose":"确认采购条件与测试分工","topics":[{"title":"采购前提","points":[["a000"]],"details":[]}],"decisions":[],"actionItems":[["a001"],["a002"]],"questions":[["a003"]],"excluded":[]});
         (s,b,facts,layout)
     }
+    #[test]
+    fn opening_agenda_keeps_an_explicit_subject_through_speech_hesitations() {
+        let source = concat!(
+            "今天是给咱们新出了新出的一款这个阅读器啊设备啊进行一次研讨会。",
+            "首先咱们确定一下目标，这个客户群。",
+            "下面说这个推广方式怎么选。",
+            "我觉得可以做几种赠品。",
+            "下面继续讨论新品推出。"
+        );
+        let facts = factual_audit::evidence_sentences(&source_units(source))
+            .into_iter()
+            .map(|row| ExtractedFact::verbatim(
+                row["id"].as_str().unwrap(), "status", row["text"].as_str().unwrap(),
+            ))
+            .collect();
+        let bank = build_bank(facts, source).unwrap();
+        let (_, agenda_id) = stated_meeting_agenda(&bank).unwrap();
+        let (purpose, evidence) = new_offering_purpose(&bank, agenda_id).unwrap();
+        assert_eq!(purpose, "讨论新出的阅读器面向哪些客户、怎么推广、赠品怎么准备，以及产品推出方案。");
+        assert_eq!(evidence.len(), 5);
+    }
+
     #[test]
     fn native_id_organization_keeps_separate_tasks_dates_and_original_quotes(){
         let(s,b,f,l)=fixture();let bank=parse_bank(&f.to_string(),&s.transcript_text).unwrap();
