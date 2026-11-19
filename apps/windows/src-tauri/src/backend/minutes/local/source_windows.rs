@@ -663,6 +663,25 @@ mod tests {
     }
 
     #[test]
+    fn spoken_handoff_retains_the_work_and_leaves_unclear_review_date_open() {
+        let source = concat!(
+            "啊，大家伙儿就是各自部门儿啊，回去之后把这个方案都会赶紧做。",
+            "好，那咱们那个就就这样，然后下次回家之后，赶紧提着方案。",
+            "好吧，下下周二的时候，我们再跟再具体体确定一下。"
+        );
+        let windows = SourceWindows::new(source).unwrap();
+        let checked = windows.check_encoded(0, "{}", SourceEncoding::DirectSingleRole).unwrap();
+        let tasks: Vec<_> = checked.facts.iter().filter(|fact| fact.role == "action").collect();
+        assert_eq!(tasks.len(), 2);
+        assert_eq!(tasks[0].text, "会后尽快完成方案");
+        assert_eq!(tasks[0].evidence, ["e0000"]);
+        assert_eq!(tasks[1].text, "再确定方案（复核日期待确认）");
+        assert_eq!(tasks[1].evidence, ["e0001", "e0002"]);
+        let bank = super::super::atomic_document::build_bank(checked.facts, source).unwrap();
+        assert!(bank.facts.iter().all(|fact| fact.due.is_none()));
+    }
+
+    #[test]
     fn dates_in_suggestions_alternatives_or_unsupported_fragments_do_not_create_tasks() {
         let prior = Some("会后赶紧催报价。");
         for source in [
@@ -674,6 +693,8 @@ mod tests {
             "请不要在会后把这个方案提交。",
             "如果条件满足，回去之后请把这个方案整理。",
             "回去之后请把这个方案要不要整理。",
+            "比如各部门回去之后把方案赶紧做。",
+            "如果获批，各部门回去之后把设计稿尽快完成。",
         ] {
             assert!(super::super::source_authority::literal_followup(source, prior).is_none(), "{source}");
         }

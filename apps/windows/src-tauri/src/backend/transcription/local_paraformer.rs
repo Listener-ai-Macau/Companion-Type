@@ -10,6 +10,8 @@ mod shared;
 mod model_download;
 #[path = "battery_term_review.rs"]
 mod battery_term_review;
+#[path = "weekday_review.rs"]
+mod weekday_review;
 use shared::{cut_samples, is_digital_silence, wav_data, ModelKind, Runtime, MODEL_SHA, RATE, TOKENS_SHA};
 use std::{fs, path::PathBuf, sync::Mutex};
 

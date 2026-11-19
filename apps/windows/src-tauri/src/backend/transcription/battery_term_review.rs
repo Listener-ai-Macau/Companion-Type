@@ -83,7 +83,7 @@ pub(super) fn verify_failure_analysis(
     check_cancelled()
 }
 
-fn read_audio(file: &mut File, data_start: u64, data_len: u64, from: u64, to: u64) -> Option<Vec<u8>> {
+pub(super) fn read_audio(file: &mut File, data_start: u64, data_len: u64, from: u64, to: u64) -> Option<Vec<u8>> {
     let first = (from * BYTES_PER_SECOND / 1000).min(data_len);
     let last = (to * BYTES_PER_SECOND / 1000).min(data_len);
     if last <= first { return None; }
@@ -162,7 +162,8 @@ pub(super) fn apply(
     let candidates: Vec<_> = texts.iter().enumerate()
         .filter_map(|(index, text)| candidate(text).map(|position| (index, position)))
         .take(MAX_REVIEW_SEGMENTS).collect();
-    if candidates.is_empty() { return Ok(()); }
+    let weekdays = super::weekday_review::candidates(texts, anchors);
+    if candidates.is_empty() && weekdays.is_empty() { return Ok(()); }
 
     let model = model_dir(root);
     if !model.join("encoder.int8.onnx").is_file() { return Ok(()); }
@@ -187,6 +188,7 @@ pub(super) fn apply(
             }
         }
     }
+    super::weekday_review::apply(&reviewer, file, (data_start, data_len), texts, anchors, weekdays, &mut check_cancelled)?;
     check_cancelled()
 }
 

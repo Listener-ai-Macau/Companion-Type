@@ -78,7 +78,7 @@ pub(super) fn literal_followup(source: &str, previous: Option<&str>) -> Option<F
         r"(?:本周|这周|下周|星期)[一二三四五六日天](?:上午|下午|晚上)?"
     ).expect("valid review date pattern"));
     static REVIEW: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
-        r"再(?:具体[上商]?)?(?:来)?(确认|确定|核对|复核|审阅|讨论)(?:一下)?"
+        r"再(?:跟再|再)?(?:具体[体上商]?)?(?:来)?(确认|确定|核对|复核|审阅|讨论)(?:一下)?"
     ).expect("valid review request pattern"));
     const OBJECTS: &[&str] = &["时间表", "交付计划", "设计稿", "方案", "报价", "预算", "计划", "排期", "需求", "报告", "样品"];
     const CONDITIONAL: &[&str] = &["如果", "假如", "要是", "可能", "建议", "比如", "例如", "举例",
@@ -106,12 +106,17 @@ pub(super) fn literal_followup(source: &str, previous: Option<&str>) -> Option<F
         }
     }
     if has(source, ALTERNATIVES) { return None; }
+    if let Some(task) = spoken_group_handoff(source) {
+        return Some(task);
+    }
     let mut days = DAY.find_iter(source);
     let day = days.next()?;
-    if days.next().is_some() || source[..day.start()].ends_with("下") {
+    let repeated_week = source[..day.start()].ends_with("下");
+    if days.next().is_some() {
         return None;
     }
-    let review = REVIEW.captures(&source[day.end()..])?;
+    let timing_phrase = &source[day.end()..];
+    let review = REVIEW.captures(timing_phrase)?;
     let after_review = source[day.end() + review.get(0)?.end()..].trim_start_matches([' ', '，', ',']);
     let after_review = after_review.strip_prefix("这个").or_else(|| after_review.strip_prefix('这')).unwrap_or(after_review);
     let object = OBJECTS.iter().copied().find(|object| after_review.starts_with(object));
@@ -128,13 +133,43 @@ pub(super) fn literal_followup(source: &str, previous: Option<&str>) -> Option<F
             (OBJECTS.iter().copied().find(|object| prior.ends_with(object))?, true)
         }
     };
+    // A repeated relative week can be a transcription stutter or a real
+    // later week. Retain a strongly anchored review without guessing its date.
+    if repeated_week && !(cites_previous
+        && has(&source[..day.start()], &["好吧", "就这样"])
+        && has(timing_phrase, &["的时候", "那天"])
+        && has(&timing_phrase[..review.get(0)?.start()], &["我们", "咱们"]))
+    {
+        return None;
+    }
+    let timing_note = if repeated_week { "（复核日期待确认）" } else { "" };
     Some(Followup {
         action: crate::companion_v1::CompanionV1ActionItem {
-            text: format!("再{}{object}", review.get(1)?.as_str()),
+            text: format!("再{}{object}{timing_note}", review.get(1)?.as_str()),
             owner: None,
-            due: Some(day.as_str().to_owned()),
+            due: (!repeated_week).then(|| day.as_str().to_owned()),
         },
         context: cites_previous.then_some(FollowupContext::Previous),
+    })
+}
+
+fn spoken_group_handoff(source: &str) -> Option<Followup> {
+    static REQUEST: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(concat!(
+        r"(?:各自?部门|各个部门|各自?小组|各个小组)儿?[啊嗯呃，, ]*",
+        r"(?:散会后|会后|回去之后|回去以后)[，, ]*(?:把|将)(?:这个|这份|这些)?",
+        r"(?P<item>方案|报价|预算|计划|排期|报告|样品|设计稿)[，, ]*",
+        r"(?:都)?(?:要|得|会)?(?:抓紧|尽快|赶紧)(?:完成|做(?:好|完)?|准备)(?:起来|出来)?",
+        r"[吧啊呀。！，, ]*$",
+    )).expect("valid spoken group handoff pattern"));
+    let task = REQUEST.captures(source.trim())?;
+    let item = task.name("item")?.as_str();
+    Some(Followup {
+        action: crate::companion_v1::CompanionV1ActionItem {
+            text: format!("会后尽快完成{item}"),
+            owner: None,
+            due: None,
+        },
+        context: None,
     })
 }
 
