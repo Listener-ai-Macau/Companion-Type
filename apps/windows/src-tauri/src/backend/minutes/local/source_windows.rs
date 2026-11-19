@@ -119,14 +119,23 @@ impl SourceWindows {
             }
         }
         let followups: Vec<_> = sentences.iter().enumerate().map(|(index, row)| {
-            if authority[index].context_only || authority[index].verbatim.is_some() {
+            if authority[index].context_only {
                 return None;
             }
             let previous = index.checked_sub(1).map(|i| text(&sentences[i]));
             let next = sentences.get(index + 1).map(text);
+            let addressed_work = || super::source_authority::spoken_work_request(text(row)).filter(|followup| {
+                !matches!(followup.context, Some(super::source_authority::FollowupContext::Next))
+                    || next.is_some_and(|line| ["本次会议", "今天的会", "今天会", "会议主题"]
+                        .iter().any(|cue| line.contains(cue)))
+            });
+            if authority[index].verbatim.is_some() {
+                return addressed_work();
+            }
             super::source_authority::literal_followup(text(row), previous)
                 .or_else(|| super::source_authority::literal_supplier_comparison(text(row), next))
                 .or_else(|| super::source_authority::literal_review_task(text(row)))
+                .or_else(addressed_work)
         }).collect();
         for (policy, followup) in authority.iter_mut().zip(&followups) {
             if followup.is_some() {

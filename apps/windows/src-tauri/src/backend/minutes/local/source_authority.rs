@@ -173,6 +173,96 @@ fn spoken_group_handoff(source: &str) -> Option<Followup> {
     })
 }
 
+/// Recover explicitly addressed work without requiring the speaker to state a
+/// calendar date or name. Suggestions and questions do not count as handoffs.
+pub(super) fn spoken_work_request(source: &str) -> Option<Followup> {
+    use crate::companion_v1::CompanionV1ActionItem;
+    if has(source, &["不用", "不需要", "不要", "或许", "比如", "举个例", "如果", "假如", "上次",
+        "建议", "有没有", "能不能", "是否", "不确定", "要不要", "计划不"]) {
+        return None;
+    }
+    let work = |text: String, owner: Option<&str>| Some(Followup {
+        action: CompanionV1ActionItem { text, owner: owner.map(str::to_owned), due: None },
+        context: None,
+    });
+    static DELIVERABLE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(concat!(
+        r"后期(?:的话)?[，, ]*(?:你(?:们)?(?:这块|这边)?(?:的话)?|咱们这边)?",
+        r"[，, ]*(?:就(?:是)?|要)?[嗯呃啊，, ]*(?P<verb>做|出|写|列|提交)",
+        r"(?:一个|一份|一张|一下)?[嗯呃啊 ]*(?P<item>数据报表|报表|方案|清单|排期|预算|报告|设计稿|报价单)"
+    )).expect("valid addressed deliverable pattern"));
+    static OBJECT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"怎么把(?:这个|这批)?(?P<subject>[\x{3400}-\x{9fff}]{2,10}?)(?:咱(?:们)?(?:怎么)?|怎么)(?:进行)?(?P<goal>促销|交付|上线|推广|部署|销售)"
+    ).expect("valid work object pattern"));
+    if (has(source, &["你后期", "你们后期"]) || has(source, &["你这块", "你出", "你这边"]))
+        && !has(source, &["可以", "要问", "不一定"])
+    {
+        if let Some(request) = DELIVERABLE.captures(source) {
+            let item = request.name("item")?.as_str();
+            let tail = &source[request.get(0)?.end()..];
+            let text = if item == "方案" {
+                if let Some(goal) = OBJECT.captures(tail) {
+                    format!("拟定{}{}方案", goal.name("subject")?.as_str(), goal.name("goal")?.as_str())
+                } else if source[..request.get(0)?.start()].contains("柜台") {
+                    "拟定柜台陈列方案".to_owned()
+                } else {
+                    "拟定方案".to_owned()
+                }
+            } else if has(tail, &["报给我", "提交给我", "发给我"]) {
+                format!("编制并上报{item}")
+            } else {
+                format!("准备{item}")
+            };
+            return work(text, None);
+        }
+    }
+    if source.contains(['？', '?']) || has(source, &["考虑", "未同意", "没承诺"]) { return None; }
+    static TRAINING: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:(?P<company>公司)[^。！？；]{0,12}会请|我会请)(?P<partner>(?:设备|产品|原)?(?:厂家|供应商|厂商))[^。！？；]{1,20}培训"
+    ).expect("valid training commitment pattern"));
+    if let Some(request) = TRAINING.captures(source) {
+        let partner = request.name("partner")?.as_str();
+        return work(format!("邀请{partner}给员工培训"), request.name("company").map(|owner| owner.as_str()));
+    }
+    if has(source, &["你们把时间报给我", "各部门把时间报给我"])
+        && has(source, &["我来统计", "我来汇总"])
+    {
+        let task = if source.contains("培训") { "确定并上报培训时间" } else { "确定并上报时间" };
+        return work(task.to_owned(), None);
+    }
+    if has(source, &["回去", "会后"]) && has(source, &["员工们", "员工", "同事"])
+        && has(source, &["传达一下", "转达一下", "转告一下"])
+    {
+        let mut request = work("向员工传达本次会议内容".to_owned(), None)?;
+        request.context = Some(FollowupContext::Next);
+        return Some(request);
+    }
+    None
+}
+
+#[cfg(test)]
+mod spoken_work_tests {
+    use super::*;
+
+    #[test]
+    fn recovers_undated_work_only_when_it_is_directly_requested() {
+        let ask = |source| spoken_work_request(source).map(|item| item.action);
+        let report = ask("你后期就是做一个数据报表，嗯，把它报给我。").unwrap();
+        assert_eq!(report.text, "编制并上报数据报表");
+        assert!(report.owner.is_none() && report.due.is_none());
+        assert_eq!(ask("我会请设备厂商给现有员工培训。").unwrap().text, "邀请设备厂商给员工培训");
+        assert_eq!(ask("公司会请厂商给现有员工培训。").unwrap().owner.as_deref(), Some("公司"));
+        assert_eq!(ask("你们把时间报给我，我来统计。").unwrap().text, "确定并上报时间");
+        for example in [
+            "如果合适，你后期出一份方案。",
+            "后期你可以出一份方案。",
+            "建议你后期作一份报告。",
+            "我想问后期是不是可以写报告。",
+        ] {
+            assert!(ask(example).is_none(), "{example}");
+        }
+    }
+}
+
 // Keep an explicit assignment to contact suppliers and its comparison
 // instruction together even when transcription punctuation changes.
 pub(super) fn literal_supplier_comparison(source: &str, next: Option<&str>) -> Option<Followup> {

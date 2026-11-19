@@ -18,7 +18,7 @@ pub(super) enum Review {
 pub(super) fn candidates(texts: &[String]) -> Vec<Review> {
     static INCLUDED: LazyLock<Regex> = LazyLock::new(|| {
         Regex::new(
-            r"包括(?:说(?:及)?|了)?(?P<metric>[\p{Han}]{2,5})(?:的)?问题[，, ]*(?:咱们|我们)?都要",
+            r"包括(?:说(?:及)?|了)?(?P<metric>[\x{3400}-\x{9fff}]{2,5}?)(?:的)?问题[，, ]*(?:咱们|我们)?都要",
         )
         .expect("valid spoken selection criteria pattern")
     });

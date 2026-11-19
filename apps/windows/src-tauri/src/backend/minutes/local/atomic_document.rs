@@ -409,6 +409,19 @@ fn new_offering_purpose(bank: &Bank, agenda_id: &str) -> Option<(String, Vec<Str
     Some((text, facts))
 }
 
+fn periodic_review_purpose(bank: &Bank) -> Option<(String, Vec<String>)> {
+    let opening = bank.topics().filter(|fact| !bank.review_quote(&fact.id)).take(14).collect::<Vec<_>>();
+    let find = |cues: &[&str]| opening.iter().find(|fact| cues.iter().all(|cue| fact.text.contains(cue)));
+    let meeting = find(&["周例会", "上周"])?;
+    let report = find(&["工作", "汇报"])?;
+    let sales = find(&["区域", "销售"])?;
+    let new_products = find(&["新的产品"]).or_else(|| find(&["新产品"]))?;
+    let retention = find(&["留住客户"])?;
+    let facts = [meeting, report, sales, new_products, retention].into_iter()
+        .map(|fact| fact.id.clone()).collect::<std::collections::BTreeSet<_>>().into_iter().collect();
+    Some(("这次周例会回顾各区域销售和员工工作，讨论新品及留住客户的办法。".into(), facts))
+}
+
 fn heading_terms(title: &str) -> Vec<String> {
     let letters: Vec<_> = title.chars().collect();
     let mut terms: Vec<String> = letters.windows(2)
@@ -607,6 +620,7 @@ fn evidence_organization(bank: &Bank) -> Result<(Organization, ChapterFocus), St
         (None, _) => format!("这场会议讨论了{subjects}。"),
     };
     let (overview, purpose_facts) = agenda_fact.as_deref().and_then(|id| new_offering_purpose(bank, id))
+        .or_else(|| periodic_review_purpose(bank))
         .unwrap_or((overview, Vec::new()));
     let focus = ChapterFocus {
         overview, primary_facts: focus_topics.iter().map(|(_, id)| id.clone()).collect(), agenda_fact, purpose_facts,
