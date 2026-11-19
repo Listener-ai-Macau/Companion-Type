@@ -8,6 +8,8 @@ use std::{
 mod shared;
 #[path = "model_download.rs"]
 mod model_download;
+#[path = "paraformer_tail_frames.rs"]
+mod tail_frames;
 use shared::{cut_samples, is_digital_silence, wav_data, ModelKind, Runtime, MODEL_SHA, RATE, TOKENS_SHA};
 use std::{fs, path::PathBuf, sync::Mutex};
 
@@ -105,10 +107,11 @@ pub(super) fn prepare() -> Result<(), String> {
         .map_err(|_| "本地转写模型正在准备，请稍候。")?;
     let dest = root()?;
     let official = dest.join(shared::OFFICIAL_DIR);
-    if ModelKind::available(&dest) == ModelKind::OfficialParaformer
+    if official.join("ready").is_file()
         && shared::verified(&official.join("model.int8.onnx"), shared::OFFICIAL_MODEL_SHA).is_ok()
         && shared::verified(&official.join("tokens.txt"), shared::OFFICIAL_TOKENS_SHA).is_ok()
         && ASSETS[2..].iter().all(|(name, hash)| shared::verified(&dest.join(name), hash).is_ok()) {
+        let _ = tail_frames::prepare(&official);
         let _=prepare_punctuation(&dest);
         return Ok(());
     }
@@ -185,6 +188,7 @@ pub(super) fn prepare() -> Result<(), String> {
         }
     }
     result?;
+    let _ = tail_frames::prepare(&official);
     // Optional punctuation must not turn a verified usable ASR setup into a
     // failure when the network is unavailable. The runtime keeps raw words.
     let _=prepare_punctuation(&dest);
@@ -206,10 +210,19 @@ fn prepare_punctuation(dest:&Path)->Result<(),String>{
 }
 // A broken preferred model must not hide a usable verified older model.
 fn load_preferred(root: &Path) -> Result<(Runtime, ModelKind), String> {
+    if ModelKind::available(root) == ModelKind::OfficialParaformer {
+        let _ = tail_frames::prepare(&root.join(shared::OFFICIAL_DIR));
+    }
     let preferred = ModelKind::available(root);
     let mut first_error = None;
-    for (index, kind) in [preferred, ModelKind::SenseVoice, ModelKind::Paraformer].into_iter().enumerate() {
-        if index > 0 && kind == preferred { continue; }
+    let mut alternatives = [None; 4];
+    alternatives[0] = Some(preferred);
+    if preferred == ModelKind::OfficialParaformerTail {
+        alternatives[1] = Some(ModelKind::OfficialParaformer);
+    }
+    if preferred != ModelKind::SenseVoice { alternatives[2] = Some(ModelKind::SenseVoice); }
+    if preferred != ModelKind::Paraformer { alternatives[3] = Some(ModelKind::Paraformer); }
+    for kind in alternatives.into_iter().flatten() {
         match Runtime::load_model(root, root, kind) {
             Ok(runtime) => return Ok((runtime, kind)),
             Err(error) => if first_error.is_none() { first_error = Some(error); },
@@ -325,7 +338,7 @@ pub(super) fn transcribe(audio: &Path) -> Result<super::CompanionTranscript, Str
     Ok(super::CompanionTranscript {
         text,
         provider_id: format!("companion-type-{}", kind.provider()),
-        mode: match kind { ModelKind::OfficialParaformer | ModelKind::Paraformer => "offline:paraformer", ModelKind::SenseVoice => "offline:sensevoice" }.into(),
+        mode: match kind { ModelKind::OfficialParaformerTail | ModelKind::OfficialParaformer | ModelKind::Paraformer => "offline:paraformer", ModelKind::SenseVoice => "offline:sensevoice" }.into(),
         evidence_path: None,
         utterances: anchors,
         unrecognized,
@@ -353,7 +366,7 @@ mod tests {
         }
         buffer.truncate((3348 * RATE / 10 - 315 * RATE) * 2);
         let (runtime, kind) = load_preferred(&root().unwrap()).unwrap();
-        assert_eq!(kind, ModelKind::OfficialParaformer);
+        assert!(matches!(kind, ModelKind::OfficialParaformerTail | ModelKind::OfficialParaformer));
         let forecast = runtime.transcribe(&buffer).unwrap();
         assert!(forecast.contains("半年到一年") && forecast.contains("回调"), "{forecast}");
         assert!(!forecast.contains("房款"), "{forecast}");

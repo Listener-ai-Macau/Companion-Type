@@ -22,15 +22,22 @@ pub(super) const SENSE_TOKENS_SHA: &str =
 pub(super) const SENSE_DIR: &str = "sherpa-onnx-sense-voice-2024-07-17";
 pub(super) const OFFICIAL_DIR: &str = "funasr-paraformer-large-zh-2024";
 pub(super) const OFFICIAL_MODEL_SHA: &str = "8234905d74db17f7466a1cd110ce20f57c1ff9c1fc95db0615d8931955da5c54";
+pub(super) const OFFICIAL_TAIL_FILE: &str = "model.tail-frames.int8.onnx";
+pub(super) const OFFICIAL_TAIL_SHA: &str =
+    "23c020fbe6a1d97a57a237f132b85d1b78f76e03d6ecd0962a1f11e0a58ce538";
 pub(super) const OFFICIAL_TOKENS_SHA: &str = "59aba8873a2ed1e122c25fee421e25f283b63290efbde85c1f01a853d83cb6e6";
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub(super) enum ModelKind { OfficialParaformer, Paraformer, SenseVoice }
+pub(super) enum ModelKind { OfficialParaformerTail, OfficialParaformer, Paraformer, SenseVoice }
 impl ModelKind {
     pub(super) fn available(root: &Path) -> Self {
         let official = root.join(OFFICIAL_DIR);
         if official.join("ready").is_file() && official.join("model.int8.onnx").is_file() && official.join("tokens.txt").is_file() {
-            return Self::OfficialParaformer;
+            return if cfg!(windows) && official.join(OFFICIAL_TAIL_FILE).is_file() {
+                Self::OfficialParaformerTail
+            } else {
+                Self::OfficialParaformer
+            };
         }
         let sense = root.join(SENSE_DIR);
         if sense.join("ready").is_file() && sense.join("model.int8.onnx").is_file() && sense.join("tokens.txt").is_file() {
@@ -40,10 +47,10 @@ impl ModelKind {
         }
     }
     pub(super) fn model_hash(self) -> &'static str {
-        match self { Self::OfficialParaformer => OFFICIAL_MODEL_SHA, Self::Paraformer => MODEL_SHA, Self::SenseVoice => SENSE_MODEL_SHA }
+        match self { Self::OfficialParaformerTail => OFFICIAL_TAIL_SHA, Self::OfficialParaformer => OFFICIAL_MODEL_SHA, Self::Paraformer => MODEL_SHA, Self::SenseVoice => SENSE_MODEL_SHA }
     }
     pub(super) fn provider(self) -> &'static str {
-        match self { Self::OfficialParaformer => "local-paraformer-official", Self::Paraformer => "local-paraformer", Self::SenseVoice => "local-sensevoice" }
+        match self { Self::OfficialParaformerTail | Self::OfficialParaformer => "local-paraformer-official", Self::Paraformer => "local-paraformer", Self::SenseVoice => "local-sensevoice" }
     }
 }
 #[repr(C)]
@@ -270,11 +277,13 @@ impl Runtime {
     }
     pub(super) fn load_model(root: &Path, runtime_root: &Path, kind: ModelKind) -> Result<Self, String> {
         let (dir, model_sha, tokens_sha) = match kind {
+            ModelKind::OfficialParaformerTail => (OFFICIAL_DIR, OFFICIAL_TAIL_SHA, OFFICIAL_TOKENS_SHA),
             ModelKind::OfficialParaformer => (OFFICIAL_DIR, OFFICIAL_MODEL_SHA, OFFICIAL_TOKENS_SHA),
             ModelKind::Paraformer => ("sherpa-onnx-paraformer-zh-small-2024-03-09", MODEL_SHA, TOKENS_SHA),
             ModelKind::SenseVoice => (SENSE_DIR, SENSE_MODEL_SHA, SENSE_TOKENS_SHA),
         };
-        let model = root.join(dir).join("model.int8.onnx");
+        let filename = if kind == ModelKind::OfficialParaformerTail { OFFICIAL_TAIL_FILE } else { "model.int8.onnx" };
+        let model = root.join(dir).join(filename);
         let tokens = root.join(dir).join("tokens.txt");
         verified(&model, model_sha)?;
         verified(&tokens, tokens_sha)?;
@@ -367,7 +376,9 @@ impl Runtime {
             config.feat_config.sample_rate = RATE as i32;
             config.feat_config.feature_dim = 80;
             match kind {
-                ModelKind::OfficialParaformer | ModelKind::Paraformer => config.model_config.paraformer.model = model.as_ptr(),
+                ModelKind::OfficialParaformerTail | ModelKind::OfficialParaformer | ModelKind::Paraformer => {
+                    config.model_config.paraformer.model = model.as_ptr();
+                }
                 ModelKind::SenseVoice => {
                     config.model_config.sense_voice.model = model.as_ptr();
                     config.model_config.sense_voice.language = chinese.as_ptr();
