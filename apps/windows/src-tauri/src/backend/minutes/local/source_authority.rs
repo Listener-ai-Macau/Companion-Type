@@ -186,6 +186,22 @@ pub(super) fn spoken_work_request(source: &str) -> Option<Followup> {
         action: CompanionV1ActionItem { text, owner: owner.map(str::to_owned), due: None },
         context: None,
     });
+    static STAFF_TRAINING: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:一定要|必须|务必)(?:先|多)?(?:给[^，,。！？；]{1,12}进行)?培训(?:培训)?[^，,。！？；]{0,11}?(?:员工|同事|实习生)"
+    ).expect("valid explicit staff training request"));
+    if let Some(request) = STAFF_TRAINING.find(source).filter(|request| {
+        let lead = &source[..request.start()];
+        !has(lead, &["是不是", "有没有必要", "问要不要", "原本", "原先", "别人说", "不是"])
+    }) {
+        let subject = if request.as_str().ends_with("员工") { "员工" }
+            else if request.as_str().ends_with("同事") { "同事" } else { "实习生" };
+        let followup = source[request.end()..].split(['。', '！', '？', '；']).next().unwrap_or_default();
+        // Additional scope belongs to this task only when the same instruction
+        // spells it out. A sentence-final spoken tag does not negate the order.
+        let goal = if has(followup, &["让他", "让这些", "让大家", "多了解"])
+            && followup.contains("新产品") { "了解新产品" } else { "" };
+        return work(format!("培训{subject}{goal}"), None);
+    }
     static DELIVERABLE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(concat!(
         r"后期(?:的话)?[，, ]*(?:你(?:们)?(?:这块|这边)?(?:的话)?|咱们这边)?",
         r"[，, ]*(?:就(?:是)?|要)?[嗯呃啊，, ]*(?P<verb>做|出|写|列|提交)",
@@ -287,6 +303,10 @@ mod spoken_work_tests {
         assert_eq!(ask("我会请设备厂商给现有员工培训。").unwrap().text, "邀请设备厂商给员工培训");
         assert_eq!(ask("公司会请厂商给现有员工培训。").unwrap().owner.as_deref(), Some("公司"));
         assert_eq!(ask("你们把时间报给我，我来统计。").unwrap().text, "确定并上报时间");
+        assert_eq!(
+            ask("手机这块一定要多培训一主的那个项目员工，他他多了解了解一些新产品，一些新动态啊，对吧？").unwrap().text,
+            "培训员工了解新产品"
+        );
         for example in [
             "如果合适，你后期出一份方案。",
             "后期你可以出一份方案。",
@@ -294,6 +314,9 @@ mod spoken_work_tests {
             "我想问后期是不是可以写报告。",
             "你后期出一个方案吗？",
             "公司不会请厂家给员工培训。",
+            "如果获批，一定要培训员工。",
+            "是不是一定要培训员工？",
+            "我建议先看看是否一定要培训员工。",
         ] {
             assert!(ask(example).is_none(), "{example}");
         }
