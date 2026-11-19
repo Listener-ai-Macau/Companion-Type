@@ -562,10 +562,30 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     let mut arranged=Vec::new();
     let mut groups: Vec<_> = THEME_IDS.into_iter().zip(slots).collect();
     groups.sort_by_key(|(_, items)| !items.iter().any(|(fact, _)| fact.id == purpose_id));
+    let mut used_names: HashSet<String> = topics.values().flatten()
+        .filter_map(|name| theme_name(name).map(str::to_owned)).collect();
+    let mut fallback_topics = Vec::new();
+    let mut next_fallback = 1;
     for (id,items) in groups {
         let title=topics.remove(id).ok_or_else(fail)?;
         if items.is_empty(){continue;}
-        let title=title.as_deref().and_then(theme_name).ok_or_else(fail)?;
+        let title = match title.as_deref() {
+            Some(name) => theme_name(name).ok_or_else(fail)?.to_owned(),
+            None => {
+                fallback_topics.push(id);
+                loop {
+                    let name = if next_fallback == 1 {
+                        "补充讨论".to_owned()
+                    } else {
+                        format!("补充讨论（{next_fallback}）")
+                    };
+                    next_fallback += 1;
+                    if used_names.insert(name.clone()) {
+                        break name;
+                    }
+                }
+            }
+        };
         let mut points=Vec::new();let mut details=Vec::new();
         for (index,(fact,main)) in items.into_iter().enumerate(){
             let size=fact.text.chars().count();
@@ -580,6 +600,9 @@ pub(super) fn organize(raw:&str,bank:&Bank,session:&CompanionV1HostSession,base:
     if !topics.is_empty(){return Err(fail());}
     let canonical=json!({"purpose":purpose,"topics":arranged,"decisions":decisions,"actionItems":actions,"questions":questions,"excluded":[]});
     let mut parsed = assemble(&canonical.to_string(), bank, session, base)?;
+    if !fallback_topics.is_empty() {
+        parsed.receipt["topicsGivenNeutralTitles"] = json!(fallback_topics);
+    }
     parsed.receipt["openingFactId"] = json!(purpose_id);
     if let Some(overview) = focus {
         parsed.receipt["openingTopicFactIds"] = json!(overview.primary_facts);
@@ -725,6 +748,22 @@ mod tests{
         assert!(organize(&substituted.to_string(),&bank,&s,&b).is_err());
         let duplicated=layout.to_string().replace("\"a000\":{", "\"a000\":{\"topic\":\"t1\",\"main\":true},\"a000\":{");
         assert!(organize(&duplicated,&bank,&s,&b).is_err());
+    }
+    #[test]
+    fn keyed_organization_keeps_facts_when_assigned_topic_has_no_title() {
+        let (s, b, facts, _) = fixture();
+        let bank = parse_bank(&facts.to_string(), &s.transcript_text).unwrap();
+        let layout = json!({
+            "purposeFact": "a000",
+            "topics": {"t1": null, "t2": null, "t3": null, "t4": null, "t5": null, "t6": null, "t7": null, "t8": null},
+            "assignments": {"a000": "t1"}
+        });
+        let parsed = organize(&layout.to_string(), &bank, &s, &b).unwrap();
+        assert_eq!(parsed.receipt["topicsGivenNeutralTitles"], json!(["t1"]));
+        assert_eq!(parsed.receipt["retainedFactIds"], json!(["a000", "a001", "a002", "a003"]));
+        assert!(parsed.minutes.markdown.contains("补充讨论"));
+        assert!(parsed.minutes.markdown.contains("预算未批，不能采购。"));
+        assert_eq!(parsed.minutes.action_items.len(), 2);
     }
     #[test]
     fn fact_parser_checks_owner_against_selected_sentences_not_nearby_people(){
