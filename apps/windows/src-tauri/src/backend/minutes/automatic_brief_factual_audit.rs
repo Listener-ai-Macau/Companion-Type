@@ -613,8 +613,14 @@ fn verified_owner_from_repair(issue: &Value, text: &str, source: &[Sentence]) ->
     let witnesses = issue["evidence"].as_array()?;
     source.iter().any(|sentence| witnesses.iter().any(|id| id == sentence.id.as_str())
         && sentence.text.match_indices(owner).any(|(start, label)| {
-            let instruction: String = sentence.text[start + label.len()..].chars().take(14).collect();
-            ["要", "得", "需要", "负责"].iter().any(|word| instruction.contains(word))
+            let instruction = sentence.text[start + label.len()..].trim_start_matches('儿').trim_start();
+            let prefix = sentence.text[..start].trim_end();
+            let explicit = ["要", "得", "需要", "负责"].iter().any(|word| instruction.starts_with(word));
+            let collective = ["咱们", "我们"].iter().any(|word| prefix.ends_with(word));
+            let predicate: String = instruction.chars().take(3).collect();
+            explicit || (collective && predicate.chars().count() == 3
+                && predicate.chars().all(|ch| ('㐀'..='鿿').contains(&ch))
+                && text.contains(&predicate))
         }))
         .then(|| owner.to_owned())
 }
@@ -702,6 +708,9 @@ fn an_audited_assignee_is_applied_to_the_action_owner_field() {
         text:"主持人：质检这边儿要完成入库检查。".into()}];
     assert_eq!(verified_owner_from_repair(&report, text, &source).as_deref(), Some("质检这边"));
     assert_eq!(verified_owner_from_repair(&report, "主持人要求完成入库检查。", &source), None);
+    let collective = [Sentence {id:"e0003".into(),source:"u000".into(),
+        text:"主持人：近期咱们质检这边儿完成入库检查。".into()}];
+    assert_eq!(verified_owner_from_repair(&report, text, &collective).as_deref(), Some("质检这边"));
     let raw = json!({"changes":[{"path":path,"text":text}]}).to_string();
     let (normalized, count) = normalize_repair_reply(&raw, &[report], &source);
     assert_eq!(count, 1);
