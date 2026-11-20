@@ -158,10 +158,25 @@ pub(super) fn spoken_assignment(source: &str) -> Option<crate::companion_v1::Com
     let text = super::super::source_resolution::split_turn_label(original)
         .map_or(original, |(_, body)| body.trim());
     if has(text, NON_BINDING) || has(text, IN_MEETING) || has(text, OPEN)
-        || has(text, &["能不能", "要不要", "可不可以", "有没有", "是不是", "无需", "不用", "不再", "不要", "没有安排", "不必", "不需要", "不一定",
+        || has(text, &["能不能", "要不要", "可不可以", "有没有", "是不是", "不一定",
             "已完成", "已经", "当时", "听说", "举例", "比如", "例如", "示例"])
         || text.contains(['？', '?'])
     {
+        return None;
+    }
+    const NEGATIONS: &[&str] = &["无需", "不用", "不再", "不要", "没有安排", "不必", "不需要", "取消"];
+    let mut group_work = GROUP_WORK.find_iter(text);
+    if let Some(task) = group_work.next().filter(|_| group_work.next().is_none()) {
+        // The preceding description can mention something unnecessary. An
+        // explicit new subject starts a separately authorized instruction.
+        let before = &text[..task.start()];
+        let context = before.rfind("咱们这边").or_else(|| before.rfind("我们这边"))
+            .map_or(text, |start| &text[start..]);
+        if !has(context, NEGATIONS) {
+            return Some(CompanionV1ActionItem { text: task.as_str().to_owned(), owner: None, due: None });
+        }
+    }
+    if has(text, NEGATIONS) {
         return None;
     }
     if has(text, &["会后", "散会后", "回去", "下去以后", "先开到这儿", "会议结束后"]) {
@@ -173,10 +188,6 @@ pub(super) fn spoken_assignment(source: &str) -> Option<crate::companion_v1::Com
                 due: None,
             });
         }
-    }
-    let mut group_work = GROUP_WORK.find_iter(text);
-    if let Some(task) = group_work.next().filter(|_| group_work.next().is_none()) {
-        return Some(CompanionV1ActionItem { text: task.as_str().to_owned(), owner: None, due: None });
     }
     let mut owners = NAMED_FOLLOWUP.captures_iter(text);
     let recipient = owners.next().filter(|_| owners.next().is_none())?;
