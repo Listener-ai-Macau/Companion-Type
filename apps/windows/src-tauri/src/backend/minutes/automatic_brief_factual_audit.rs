@@ -537,22 +537,61 @@ fn disputed_relation(reason: &str) -> bool {
 fn remove_fused_example(text: &str, issue: &Value, source: &[Sentence]) -> Option<String> {
     use std::sync::LazyLock;
     static EXAMPLE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
-        r"(?:比如|例如|如)(?P<example>[\p{Han}]{2,8})等(?P<group>[\p{Han}]{2,8}(?:城市|地区|省份|口岸|区县))"
+        r"(?:比如|例如|如)(?P<link>(?P<example>[\p{Han}]{2,8})等(?P<category>[\p{Han}]{2,8}?)(?P<place>城市|地区|省份|口岸|区县))"
     ).unwrap());
     if issue["status"] != "overstated" {
         return None;
     }
     let matched = EXAMPLE.captures(text)?;
+    let link = matched.name("link")?.as_str();
+    let reason = issue["reason"].as_str()?;
+    if !reason.contains(link) || !["另说", "分别", "混为", "误归"].iter().any(|cue| reason.contains(cue)) {
+        return None;
+    }
     let example = matched.name("example")?.as_str();
-    let group = matched.name("group")?.as_str();
+    let category = matched.name("category")?.as_str();
+    let place = matched.name("place")?.as_str();
+    let category_phrase = regex::Regex::new(&format!(
+        r"{}[\p{{Han}}]{{0,6}}{}", regex::escape(category), regex::escape(place)
+    )).ok()?;
     let evidence: Vec<_> = issue["evidence"].as_array()?.iter().filter_map(|id| {
         source.iter().find(|sentence| id == sentence.id.as_str()).map(|sentence| sentence.text.as_str())
     }).collect();
-    let example_witness = evidence.iter().any(|source| source.contains(example));
-    let category_witness = evidence.iter().any(|source| source.contains(group));
-    let linked = evidence.iter().any(|source| source.contains(example) && source.contains(group));
+    let example_witness = evidence.iter().any(|excerpt| excerpt.contains(example));
+    let category_witness = evidence.iter().any(|excerpt| category_phrase.is_match(excerpt));
+    let linked = evidence.iter().any(|excerpt| excerpt.contains(example) && category_phrase.is_match(excerpt));
     (example_witness && category_witness && !linked)
         .then(|| text.replacen(matched.get(0).unwrap().as_str(), "", 1))
+}
+
+fn repair_separately_cited_examples(issues: &[Value], claims: &[Value], source: &[Sentence]) -> Option<String> {
+    let changes = issues.iter().map(|issue| {
+        let path = issue["path"].as_str()?;
+        if !path.contains(".details[") && !path.contains(".points[") {
+            return None;
+        }
+        let claim = claims.iter().find(|claim| claim["path"] == path)?;
+        let text = remove_fused_example(claim["text"].as_str()?, issue, source)?;
+        Some(json!({"path":path,"text":text}))
+    }).collect::<Option<Vec<_>>>()?;
+    Some(json!({"changes":changes}).to_string())
+}
+
+#[cfg(test)]
+#[test]
+fn separate_example_citations_are_required_to_remove_a_false_link() {
+    let source = ["未去例如甲城等地方", "靠近边境的这些城市举例"]
+        .into_iter().enumerate().map(|(index, text)| Sentence {
+            id: format!("e{index:04}"), source: "u000".into(), text: text.into(),
+        }).collect::<Vec<_>>();
+    let claim = json!({"path":"topics[0].details[0]","text":"未去高风险地区如甲城等边境城市。"});
+    let mut issue = json!({"path":claim["path"],"status":"overstated",
+        "reason":"甲城作为高风险地区举例，另说边境城市，合并成甲城等边境城市有误归。",
+        "evidence":["e0000","e0001"]});
+    let fix = repair_separately_cited_examples(&[issue.clone()], &[claim.clone()], &source).unwrap();
+    assert_eq!(serde_json::from_str::<Value>(&fix).unwrap()["changes"][0]["text"], "未去高风险地区。");
+    issue["evidence"] = json!(["e0000"]);
+    assert!(repair_separately_cited_examples(&[issue], &[claim], &source).is_none());
 }
 
 fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence]) -> (String, usize) {
@@ -571,8 +610,6 @@ fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence]) -> (
             Some(("remove", json!(true)))
         } else if let Some(deletions) = text.trim().strip_prefix("delete:").filter(|_| issue["status"] == "unclear") {
             serde_json::from_str::<Vec<String>>(deletions.trim()).ok().map(|parts| ("delete", json!(parts)))
-        } else if let Some(corrected) = remove_fused_example(text, issue, source) {
-            Some(("text", json!(corrected)))
         } else {
             let term = issue["unclearText"].as_str();
             let explanation = issue["reason"].as_str().unwrap_or_default();
@@ -1078,7 +1115,12 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
                     ||distinct_ambiguity||sourced_new_issue||modality_after_attribution))
             })
         });
-        if round==2||repeated {
+        // A re-audit can identify a different defect after attribution was fixed.
+        // Remove only the explicit false link, with its two separately cited witnesses.
+        let separated_examples = if round == 1 && super::source_items::enabled() {
+            repair_separately_cited_examples(&issues, &audited_claims, &source)
+        } else { None };
+        if round==2||(repeated && separated_examples.is_none()) {
             return Err(format!("纪要复审仍有{}处未解决表述，已有结果保留。",issues.len()));
         }
         let unclear=audit.claim_audit.iter().filter(|c|c.status=="unclear"||source_wording_unclear(c)).map(|c|c.path.clone()).collect::<HashSet<_>>();
@@ -1100,7 +1142,9 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             payload["roleCorrectionContract"]=json!("placementUnsupported为true的决定、交办或未决条目将由程序移出原栏目。仍有用的内容只返回path和120字内text，写清实际是意见、现状、设想或已回答的提问；程序保留出处并放入相关主题，之后独立复审。完全无依据、散会或重复无用条目可remove:true。不要在text内继续称已定案。只有需要指定补充主题且不含糊时，才附moveToTopic的已有主题下标。");
         }
         let scoped = super::source_items::enabled() && verified.is_some();
-        let local = if scoped {
+        let local = if let Some(raw) = separated_examples {
+            Some((raw, "localSeparateExampleRepair"))
+        } else if scoped {
             undisputed_action_text(&issues, &audited_claims).map(|raw| (raw, "localUnclearActionRepair"))
                 .or_else(|| relocate_ownerless_requirements(&issues, &audited_claims)
                     .map(|raw| (raw, "localOwnerlessRequirementMove")))
