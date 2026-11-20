@@ -37,7 +37,7 @@ pub(super) fn fetch_pinned_model_asset(client:&reqwest::blocking::Client,url:&st
 }
 
 use super::diarization::{self, EmbeddingSegment};
-use super::volcengine::{Utterance, VolcengineCredentials, VolcengineSaucAsr};
+use super::volcengine::{Utterance, VolcengineCredentials, VolcengineSaucAsr, HOURLY_V1_RESOURCE};
 use crate::companion_v1::CompanionV1UtteranceSegment;
 use denzic_host_audio_v1_core::asr::{
     normalize_transcript as platform_normalize_transcript, BatchAsrProvider,
@@ -489,13 +489,16 @@ fn volcengine_client() -> Result<VolcengineSaucAsr, String> {
         .map_err(|_| "COMPANION_TYPE_VOLC_APP_KEY is not set".to_string())?;
     let access_token = std::env::var("COMPANION_TYPE_VOLC_ACCESS_KEY")
         .map_err(|_| "COMPANION_TYPE_VOLC_ACCESS_KEY is not set".to_string())?;
-    let resource_id = std::env::var("COMPANION_TYPE_VOLC_RESOURCE_ID")
-        .unwrap_or_else(|_| VolcengineCredentials::default_resource_id().to_string());
     Ok(VolcengineSaucAsr::new(VolcengineCredentials {
         app_id,
         access_token,
-        resource_id,
+        resource_id: configured_volcengine_resource_id(),
     }))
+}
+
+fn configured_volcengine_resource_id() -> String {
+    std::env::var("COMPANION_TYPE_VOLC_RESOURCE_ID")
+        .unwrap_or_else(|_| VolcengineCredentials::default_resource_id().to_string())
 }
 
 /// For each utterance, find the index of the speaker-embedding segment with the
@@ -964,10 +967,45 @@ fn write_pcm16k_mono_wav(path: &Path, pcm: &[u8]) -> Result<(), String> {
     fs::write(path, out).map_err(|e| format!("write chunk wav {}: {e}", path.display()))
 }
 
-/// Split one long 16 kHz / mono / s16 WAV into fixed-duration, 100 ms aligned
-/// chunks in original order. The final chunk may be shorter; coverage is exact
-/// with no overlap, gap, or duplicated PCM.
+const VOLC_CUT_FRAME_BYTES: usize = PCM_BYTES_PER_SECOND / 10;
+const VOLC_CUT_WINDOW_RADIUS_BYTES: usize = PCM_BYTES_PER_SECOND * 12 / 100;
+
+fn quiet_volcengine_cut(pcm: &[u8], cap: usize, remaining: u64) -> usize {
+    let cap_u64 = cap as u64;
+    // Moving the cut back consumes the spare capacity in the existing requests.
+    // Preserve their count and keep each request at or below the verified cap.
+    let spare = (cap_u64 - remaining % cap_u64) % cap_u64;
+    let max_back = (spare as usize).min(3 * PCM_BYTES_PER_SECOND);
+    if max_back < VOLC_CUT_FRAME_BYTES || pcm.len() < cap + VOLC_CUT_WINDOW_RADIUS_BYTES {
+        return cap;
+    }
+    let energy = |center: usize| {
+        pcm[center - VOLC_CUT_WINDOW_RADIUS_BYTES..center + VOLC_CUT_WINDOW_RADIUS_BYTES]
+            .chunks_exact(2)
+            .map(|s| i16::from_le_bytes([s[0], s[1]]).unsigned_abs() as u64)
+            .sum::<u64>()
+    };
+    let at_cap = energy(cap);
+    let best = (VOLC_CUT_FRAME_BYTES..=max_back)
+        .step_by(VOLC_CUT_FRAME_BYTES)
+        .map(|back| (energy(cap - back), back))
+        .min();
+    match best {
+        Some((level, back)) if level * 2 < at_cap => cap - back,
+        _ => cap,
+    }
+}
+
+/// Split a 16 kHz mono WAV into provider-sized chunks. Within the verified
+/// hourly profile, prefer a quiet cut where there is room in the same number
+/// of requests. Every sample is still included once and in original order.
 pub(super) fn split_long_wav_into_chunks(src: &Path, chunk_seconds: usize) -> Result<Vec<PathBuf>, String> {
+    let prefer_pause = chunk_seconds == 30
+        && configured_volcengine_resource_id().eq_ignore_ascii_case(HOURLY_V1_RESOURCE);
+    split_long_wav_with_pause_policy(src, chunk_seconds, prefer_pause)
+}
+
+fn split_long_wav_with_pause_policy(src: &Path, chunk_seconds: usize, prefer_pause: bool) -> Result<Vec<PathBuf>, String> {
     use std::io::{Read, Seek, SeekFrom};
     let mut options = fs::OpenOptions::new();
     options.read(true);
@@ -978,7 +1016,7 @@ pub(super) fn split_long_wav_into_chunks(src: &Path, chunk_seconds: usize) -> Re
     }
     let mut source = options.open(src).map_err(|e| format!("read wav {}: {e}", src.display()))?;
     let (data_start, pcm_bytes) = diarization::pcm16k_mono_wav_range(&mut source)?;
-    let frame = 3_200usize; // 100 ms at 16 kHz / s16 / mono
+    let frame = VOLC_CUT_FRAME_BYTES;
     let chunk_bytes = chunk_seconds.max(1).checked_mul(PCM_BYTES_PER_SECOND)
         .ok_or("WAV chunk size overflow")? / frame * frame;
     if pcm_bytes <= chunk_bytes as u64 { return Ok(vec![src.to_path_buf()]); }
@@ -992,11 +1030,25 @@ pub(super) fn split_long_wav_into_chunks(src: &Path, chunk_seconds: usize) -> Re
             for created in &paths { let _ = super::audio_artifacts::remove_temporary(created); }
             return Err(error);
         }
-        let count = remaining.min(chunk_bytes as u64) as usize;
-        let mut pcm = vec![0u8; count];
+        let nominal = remaining.min(chunk_bytes as u64) as usize;
+        let lookahead = if prefer_pause { VOLC_CUT_WINDOW_RADIUS_BYTES } else { 0 };
+        let read_len = remaining.min((nominal + lookahead) as u64) as usize;
+        let mut pcm = vec![0u8; read_len];
         if source.read_exact(&mut pcm).is_err() {
             for created in &paths { let _ = super::audio_artifacts::remove_temporary(created); }
             return Err("truncated WAV PCM; original recording preserved".into());
+        }
+        let count = if prefer_pause && remaining > chunk_bytes as u64 {
+            quiet_volcengine_cut(&pcm, chunk_bytes, remaining)
+        } else {
+            nominal
+        };
+        if read_len > count {
+            if let Err(error) = source.seek(SeekFrom::Current(-((read_len - count) as i64))) {
+                for created in &paths { let _ = super::audio_artifacts::remove_temporary(created); }
+                return Err(format!("could not restore WAV split position: {error}"));
+            }
+            pcm.truncate(count);
         }
         let path = temp_dir.join(format!(".companion-asr-{split_id}-{}.wav", paths.len()));
         if let Err(error) = super::audio_artifacts::generated(src, &path, super::audio_artifacts::Purpose::AsrTemporary,
@@ -1832,6 +1884,28 @@ mod tests {
             collected, total,
             "chunks must cover all PCM with no loss or dup"
         );
+    }
+
+    #[test]
+    fn saved_meeting_split_preserves_pcm_and_request_count_at_a_pause() {
+        let dir = std::env::temp_dir().join(format!("companion-asr-pause-test-{}", uuid::Uuid::new_v4()));
+        fs::create_dir_all(&dir).unwrap();
+        let _recordings = RecordingOverride::new(&dir);
+        let nominal = 30 * PCM_BYTES_PER_SECOND;
+        let pause = 29 * PCM_BYTES_PER_SECOND;
+        let length = 65 * PCM_BYTES_PER_SECOND + VOLC_CUT_FRAME_BYTES;
+        let mut pcm = vec![0x11; length];
+        pcm[pause-VOLC_CUT_WINDOW_RADIUS_BYTES..pause+VOLC_CUT_WINDOW_RADIUS_BYTES].fill(0);
+        let src = dir.join("meeting.wav");
+        write_pcm16k_mono_wav(&src, &pcm).unwrap();
+
+        let chunks = split_long_wav_with_pause_policy(&src, 30, true).unwrap();
+        assert_eq!(chunks.len(), 3);
+        let decoded: Vec<_> = chunks.iter().map(|path| diarization::read_pcm16k_mono_wav(path).unwrap()).collect();
+        assert_eq!(decoded[0].len(), pause);
+        assert!(decoded.iter().all(|part|part.len() <= nominal));
+        assert_eq!(decoded.concat(), pcm);
+        assert_eq!(quiet_volcengine_cut(&pcm,nominal,(2*nominal) as u64),nominal);
     }
 
     // Exercises the production splitter on a two-hour file without involving

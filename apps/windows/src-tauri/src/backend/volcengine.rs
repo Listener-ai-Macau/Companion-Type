@@ -32,6 +32,7 @@ use uuid::Uuid;
 
 const SAUC_ENDPOINT_ASYNC: &str = "wss://openspeech.bytedance.com/api/v3/sauc/bigmodel_async";
 const SAUC_ENDPOINT_NOSTREAM: &str = "wss://openspeech.bytedance.com/api/v3/sauc/bigmodel_nostream";
+pub(super) const HOURLY_V1_RESOURCE: &str = "volc.bigasr.sauc.duration";
 /// 100 ms of 16 kHz / 16-bit / mono PCM.
 const TARGET_AUDIO_CHUNK_BYTES: usize = 3_200;
 const SAVED_MEETING_AUDIO_CHUNK_BYTES: usize = 6_400;
@@ -580,7 +581,7 @@ impl VolcengineSaucAsr {
     /// Pace each owned saved-meeting chunk at the verified rate. Cached audio
     /// identity and recognition parameters are independent of packet size.
     pub(crate) fn transcribe_saved_meeting_pcm_bytes(&self, pcm: &[u8]) -> Result<(String, Vec<Utterance>), String> {
-        let packet_bytes = if self.credentials.resource_id.eq_ignore_ascii_case("volc.bigasr.sauc.duration")
+        let packet_bytes = if self.credentials.resource_id.eq_ignore_ascii_case(HOURLY_V1_RESOURCE)
             && pcm.len() <= MAX_ACCELERATED_MEETING_PCM_BYTES
         {
             SAVED_MEETING_AUDIO_CHUNK_BYTES
@@ -678,7 +679,7 @@ impl VolcengineSaucAsr {
 
         // 2. Spawn the receive loop. It collects the best transcript text and
         //    resolves once the server signals the final frame (or errors).
-        let (final_tx, final_rx) = oneshot::channel::<Result<(String, Vec<Utterance>), String>>();
+        let (final_tx, mut final_rx) = oneshot::channel::<Result<(String, Vec<Utterance>), String>>();
         let audio_ended = Arc::new(AtomicBool::new(false));
         let audio_ended_r = Arc::clone(&audio_ended);
         let _receiver_task = ReceiveTask(tokio::spawn(async move {
@@ -713,7 +714,12 @@ impl VolcengineSaucAsr {
             seq = seq.wrapping_add(1);
             // Keep a 100 ms cadence even for larger saved-meeting packets.
             // Unpaced upload has previously caused incomplete cloud results.
-            tokio::time::sleep(Duration::from_millis(100)).await;
+            tokio::select! {
+                outcome = &mut final_rx => {
+                    return outcome.map_err(|_| "Volcengine final-result channel closed".to_string())?;
+                }
+                _ = tokio::time::sleep(Duration::from_millis(100)) => {}
+            }
         }
 
         // 4. End-of-stream frame: NegativeSequence + negative seq signals end.
@@ -1556,6 +1562,46 @@ mod tests {
         worker.join().unwrap();server.join().unwrap();
         assert!(reported_before_stop,"service error remained hidden until recording stopped");
         assert!(result.is_err());assert_eq!(&*seen.lock().unwrap(),"retained partial");
+    }
+
+    #[test]
+    fn saved_meeting_stops_upload_when_provider_rejects_request() {
+        let listener = std::net::TcpListener::bind("127.0.0.1:0").unwrap();
+        let endpoint = format!("ws://{}", listener.local_addr().unwrap());
+        listener.set_nonblocking(true).unwrap();
+        let server = std::thread::spawn(move || {
+            let runtime = tokio::runtime::Builder::new_current_thread().enable_all().build().unwrap();
+            runtime.block_on(async {
+                let listener = tokio::net::TcpListener::from_std(listener).unwrap();
+                let (stream, _) = listener.accept().await.unwrap();
+                let mut socket = tokio_tungstenite::accept_async(stream).await.unwrap();
+                assert!(matches!(socket.next().await.unwrap().unwrap(), Message::Binary(_)));
+                let Message::Binary(first) = socket.next().await.unwrap().unwrap() else {
+                    panic!("Expected the first audio packet");
+                };
+                assert_eq!(frame_parse(&first).unwrap().message_type, Some(MessageType::AudioOnlyRequest));
+                socket.send(Message::Binary(frame_build(
+                    MessageType::FullServerResponse, Flags::None, Serialization::Json,
+                    br#"{"error":"synthetic failure"}"#, None,
+                ))).await.unwrap();
+                let mut packets_seen = 1;
+                while let Ok(Some(Ok(Message::Binary(_)))) =
+                    tokio::time::timeout(Duration::from_secs(2), socket.next()).await
+                {
+                    packets_seen += 1;
+                }
+                packets_seen
+            })
+        });
+        let mut client = VolcengineSaucAsr::new(VolcengineCredentials {
+            app_id: "test-app".into(),
+            access_token: "test-key".into(),
+            resource_id: "volc.bigasr.sauc.duration".into(),
+        });
+        client.endpoint = endpoint;
+        let result = client.transcribe_saved_meeting_pcm_bytes(&vec![0; 20 * SAVED_MEETING_AUDIO_CHUNK_BYTES]);
+        assert_eq!(result.unwrap_err(), safe_provider_error(None));
+        assert!(server.join().unwrap() < 20, "client sent the entire recording after rejection");
     }
 
     #[test]
