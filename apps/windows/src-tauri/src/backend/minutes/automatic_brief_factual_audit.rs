@@ -685,16 +685,65 @@ fn unverified_claims(doc:&Document,verified:Option<&Document>)->Vec<Value> {
     claims(doc).into_iter().filter(|claim|previous.get(claim["path"].as_str().unwrap())!=Some(claim)).collect()
 }
 
+fn source_assertion_identity(doc: &Document, claim: &Value) -> String {
+    let path = claim["path"].as_str().unwrap();
+    let topic = path.strip_prefix("topics[").and_then(|path| path.split_once(']'))
+        .and_then(|(index, _)| index.parse::<usize>().ok()).and_then(|index| doc.topics.get(index));
+    json!([statement_identity(path, claim), topic.map(|topic| &topic.title), claim["sources"]]).to_string()
+}
+
 fn unchanged_source_assertions(doc: &Document, verified: &Document) -> HashMap<String, Value> {
-    fn identity(doc: &Document, claim: &Value) -> String {
-        let path = claim["path"].as_str().unwrap();
-        let topic = path.strip_prefix("topics[").and_then(|path| path.split_once(']'))
-            .and_then(|(index, _)| index.parse::<usize>().ok()).and_then(|index| doc.topics.get(index));
-        json!([statement_identity(path, claim), topic.map(|topic| &topic.title), claim["sources"]]).to_string()
-    }
-    let previous: HashSet<_> = claims(verified).iter().map(|claim| identity(verified, claim)).collect();
-    claims(doc).into_iter().filter(|claim| previous.contains(&identity(doc, claim)))
+    let previous: HashSet<_> = claims(verified).iter().map(|claim| source_assertion_identity(verified, claim)).collect();
+    claims(doc).into_iter().filter(|claim| previous.contains(&source_assertion_identity(doc, claim)))
         .map(|claim| (claim["path"].as_str().unwrap().to_owned(), claim)).collect()
+}
+
+fn carry_verified_after_scoped_repair(next: &Document, current: &Document,
+    verified: &mut HashMap<String, Value>, evidence: &mut HashMap<String, Vec<String>>,
+) {
+    let mut by_assertion = HashMap::new();
+    for claim in claims(current) {
+        let path = claim["path"].as_str().unwrap();
+        if verified.get(path) == Some(&claim) {
+            let bound = evidence.get(path).cloned();
+            by_assertion.insert(source_assertion_identity(current, &claim), bound);
+        }
+    }
+    verified.clear();
+    evidence.clear();
+    for claim in claims(next) {
+        if let Some(bound) = by_assertion.get(&source_assertion_identity(next, &claim)) {
+            let path = claim["path"].as_str().unwrap().to_owned();
+            if let Some(bound) = bound { evidence.insert(path.clone(), bound.clone()); }
+            verified.insert(path, claim);
+        }
+    }
+}
+
+// A disputed speaker label can be removed without guessing a new actor.
+// The independent verdict must already accept the task's placement, and the
+// exact unclear label must be the beginning of the existing task text.
+fn undisputed_action_text(issues: &[Value], claims: &[Value]) -> Option<String> {
+    let changes = issues.iter().map(|issue| {
+        let path = issue["path"].as_str()?.strip_prefix("actionItems[")?;
+        if issue["status"] != "unclear" || issue["placementUnsupported"] != false || path.is_empty() {
+            return None;
+        }
+        let claim = claims.iter().find(|claim| claim["path"] == issue["path"])?;
+        let owner = claim["owner"].as_str()?;
+        if issue["unclearText"] != owner || owner.is_empty() {
+            return None;
+        }
+        let body = claim["text"].as_str()?.strip_prefix(owner)?
+            .trim_start_matches([' ', '，', ',', '：', ':']);
+        if body.chars().count() < 8 || body.contains(owner) {
+            return None;
+        }
+        let body = body.trim_end_matches(['。', '！', '；', '.', ';']);
+        let text = format!("{body}。负责人待核实。");
+        super::line(&text, 180).then(|| json!({"path":issue["path"],"text":text}))
+    }).collect::<Option<Vec<_>>>()?;
+    (!changes.is_empty()).then(|| json!({"changes":changes}).to_string())
 }
 
 #[cfg(test)]
@@ -860,7 +909,16 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
         if super::source_items::enabled() {
             payload["roleCorrectionContract"]=json!("placementUnsupported为true的决定、交办或未决条目将由程序移出原栏目。仍有用的内容只返回path和120字内text，写清实际是意见、现状、设想或已回答的提问；程序保留出处并放入相关主题，之后独立复审。完全无依据、散会或重复无用条目可remove:true。不要在text内继续称已定案。只有需要指定补充主题且不含糊时，才附moveToTopic的已有主题下标。");
         }
-        let raw=super::request(endpoint,model,key,client,REPAIR,payload.clone(),super::coverage::enabled(),start,trace,stage)?;
+        let local = if super::source_items::enabled() && verified.is_some() {
+            undisputed_action_text(&issues, &audited_claims)
+        } else { None };
+        let raw = match local {
+            Some(raw) => {
+                if let Some(call) = trace.last_mut() { call["localUnclearActionRepair"] = json!(true); }
+                raw
+            },
+            None => super::request(endpoint,model,key,client,REPAIR,payload.clone(),super::coverage::enabled(),start,trace,stage)?,
+        };
         let next=match apply_repair(&raw,&current,&allowed,&unclear,&conservative,&misplaced,units){
             Ok(doc)=>doc,
             Err(reason)if super::coverage::enabled()&&!recovered_display&&reason.contains("须为")&&!oversized_repair_texts(&raw).is_empty()=>{
@@ -876,7 +934,11 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             },
             Err(reason)=>return Err(reason),
         };
-        preserves_unclear_history(&next.document,&unclear_history)?;current=next.document;
+        preserves_unclear_history(&next.document,&unclear_history)?;
+        if super::source_items::enabled() && verified.is_some() {
+            carry_verified_after_scoped_repair(&next.document, &current, &mut verified_claims, &mut evidence);
+        }
+        current=next.document;
         for issue in audit.claim_audit.iter().filter(|c|c.status!="supported"){
             let key = if super::source_items::enabled() {
                 let Some(key) = next.corrected_statements.get(&issue.path) else {continue;};

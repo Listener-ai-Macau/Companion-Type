@@ -7,6 +7,7 @@ use serde_json::{Value, json};
 use super::{Action, Document, Entry, Kind, Unit, answer_layout::{Fact, Placement}, factual_audit, source_items};
 
 const PROMPT: &str = include_str!("automatic_brief_commitments.txt");
+const STANCE_PROMPT: &str = include_str!("automatic_brief_commitment_stance.txt");
 const INCOMPLETE: &str = "纪要定向核对没有返回完整证据，已有结果保留。";
 
 fn with_turn_labels(source: &[Value]) -> Vec<Value> {
@@ -221,6 +222,71 @@ fn decode_edits(candidates: &[Value], raw: &str, known: &SourceIndex<'_>, must_r
     Ok(result)
 }
 
+fn stance_checks(rows: &[Value], accepted: &HashMap<String, Fact>) -> Vec<Value> {
+    rows.iter().filter_map(|row| {
+        let claim = &row["claim"];
+        let proposed = accepted.get(row["id"].as_str().unwrap());
+        let text = proposed.map(|fact| fact.text.as_str()).unwrap_or_else(|| claim["text"].as_str().unwrap());
+        let decision = proposed.map(|fact| fact.placement == Placement::Decision).unwrap_or(claim["kind"] == "decision");
+        let action = proposed.map(|fact| fact.placement == Placement::Action).unwrap_or(claim["kind"] == "action");
+        let financial_condition = ["费用", "运费", "收费", "分摊", "支付", "承担一半", "扣款"].iter().any(|term| text.contains(term));
+        let option = ["建议", "考虑", "备选", "拟定", "可以", "可选", "尚未决定"].iter().any(|term| text.contains(term));
+        let risk = row["sourceSignals"].as_array().unwrap().iter().any(|signal| {
+            signal["checks"].as_array().unwrap().iter().any(|check| check == "可选方案及其条件")
+        });
+        if !risk || option || (!decision && (action || !financial_condition)) { return None; }
+        let mut row = row.clone();
+        if let Some(proposed) = proposed {
+            row["claim"]["text"] = json!(&proposed.text);
+            row["claim"]["kind"] = json!(if decision {"decision"} else {"status"});
+        }
+        Some(row)
+    }).collect()
+}
+
+fn explicit_stance(quote: &str, statement: &str) -> bool {
+    let definite = ["已经决定", "明确决定", "定下来", "拍板", "确定", "已通过", "一致同意", "就这么办",
+        "一定要", "必须", "不允许", "禁止", "以此为准"];
+    let optional = ["可以", "如果", "建议", "是否", "可能", "考虑", "没决定", "未确定", "没有确定", "尚未决定", "不一定", "待确认"];
+    let chars: Vec<_> = statement.chars().collect();
+    let relevant = chars.windows(4).any(|window| quote.contains(&window.iter().collect::<String>()));
+    relevant && definite.iter().any(|term| quote.contains(term)) && !optional.iter().any(|term| quote.contains(term))
+}
+
+fn decode_stance(candidates: &[Value], raw: &str, known: &SourceIndex<'_>) -> Result<HashMap<String, Fact>, String> {
+    let fail = || "仍有候选方案缺少定案依据，已有结果保留。".to_owned();
+    let mut response: Value = serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_| fail())?;
+    let rows = response["roleChecks"].as_array_mut().ok_or_else(fail)?;
+    if rows.len() != candidates.len() { return Err(fail()); }
+    let allowed: HashMap<_,_> = candidates.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
+    for row in rows {
+        let candidate = allowed.get(row["id"].as_str().ok_or_else(fail)?).ok_or_else(fail)?;
+        let proof = row.as_object_mut().ok_or_else(fail)?.remove("confirmation");
+        if row["replacement"].is_null() && row["clarification"].is_null() {
+            let proof: Clarification = serde_json::from_value(proof.ok_or_else(fail)?).map_err(|_| fail())?;
+            let source = known.get(proof.evidence.as_str()).ok_or_else(fail)?;
+            let context = candidate["context"].as_array().unwrap();
+            if !super::line(&proof.quote, 80) || !context.contains(&json!(proof.evidence))
+                || !source["text"].as_str().unwrap().contains(&proof.quote)
+                || !explicit_stance(&proof.quote, candidate["claim"]["text"].as_str().unwrap()) {
+                return Err(fail());
+            }
+        } else {
+            if proof.is_some() { return Err(fail()); }
+            if let Some(edit) = row["replacement"].as_object() {
+                let text = edit["text"].as_str().ok_or_else(fail)?;
+                if !matches!(edit["role"].as_str(), Some("recommendation" | "status"))
+                    || !["建议","考虑","可","拟","设想","待定","尚未","待核实"].iter().any(|term| text.contains(term)) {
+                    return Err(fail());
+                }
+            }
+        }
+    }
+    let bound = decode_edits(candidates, &response.to_string(), known, false)?;
+    if !bound.rejected.is_empty() { return Err(fail()); }
+    Ok(bound.accepted)
+}
+
 fn apply(doc: &Document, candidates: &[Value], mut edits: HashMap<String, Fact>, known: &SourceIndex<'_>, units: &[Unit]) -> Result<Document, String> {
     let fail = || INCOMPLETE.to_owned();
     let mut work = serde_json::to_value(doc).map_err(|_| fail())?;
@@ -316,6 +382,12 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
             return Err(format!("仍有{}条纪要修正缺少原话证据，已有结果保留。", repaired.rejected.len()));
         }
         bound.accepted.extend(repaired.accepted);
+    }
+    let stance = stance_checks(&rows, &bound.accepted);
+    if !stance.is_empty() {
+        let input = json!({"stanceChecks":stance,"sourceSentences":quotes_for(&stance)});
+        let raw = super::request(endpoint,model,key,client,STANCE_PROMPT,input,false,start,trace,"source-commitment-stance")?;
+        bound.accepted.extend(decode_stance(&stance, &raw, &known)?);
     }
     let improved = apply(&verified.document, &rows, bound.accepted, &known, units)?;
     factual_audit::review_and_repair_since(endpoint,model,key,client,&improved,units,Some(&verified.document),start,trace)
