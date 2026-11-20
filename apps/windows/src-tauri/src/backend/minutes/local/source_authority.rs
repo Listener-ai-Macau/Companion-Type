@@ -139,3 +139,71 @@ impl Authority {
             .find(|role| self.allowed.contains(role))
     }
 }
+
+pub(super) fn spoken_assignment(source: &str) -> Option<crate::companion_v1::CompanionV1ActionItem> {
+    use crate::companion_v1::CompanionV1ActionItem;
+    static DEPARTMENT_TASK: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?P<owner>各部门|各小组|各单位|各分部|各团队|每个部门|每个小组)(?:儿)?\s*(?P<task>(?:会后|回去|下去以后|散会后)?\s*(?:就|要|务必|需要|请)?\s*(?:写|调查|核实|汇报|提交|整理|准备|检查|汇总|完成|联系|交付)[^，,。！？；;\r\n]{2,65})"
+    ).unwrap());
+    static NAMED_FOLLOWUP: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?P<owner>总监|主管|负责人|组长|项目经理|经理|主持人)(?:这边儿?|那边儿?)\s*(?:一定要|务必|必须)"
+    ).unwrap());
+    static WORK: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:咱们|我们)?(?:要做|需要做|要制定|需要制定|要准备|需要准备|要完成|需要完成)[^，,。！？；;\r\n]{2,65}"
+    ).unwrap());
+    let original = source.trim();
+    let text = super::super::source_resolution::split_turn_label(original)
+        .map_or(original, |(_, body)| body.trim());
+    if has(text, NON_BINDING) || has(text, IN_MEETING) || has(text, OPEN)
+        || has(text, &["能不能", "要不要", "可不可以", "有没有", "无需", "不用", "不再", "不要", "没有安排",
+            "已完成", "已经", "当时", "听说", "举例", "比如", "例如", "示例"])
+        || text.contains(['？', '?'])
+    {
+        return None;
+    }
+    if has(text, &["会后", "散会后", "回去", "下去以后", "先开到这儿", "会议结束后"]) {
+        let mut matches = DEPARTMENT_TASK.captures_iter(text);
+        if let Some(item) = matches.next().filter(|_| matches.next().is_none()) {
+            return Some(CompanionV1ActionItem {
+                text: item.get(0)?.as_str().trim().to_owned(),
+                owner: Some(item.name("owner")?.as_str().to_owned()),
+                due: None,
+            });
+        }
+    }
+    let mut owners = NAMED_FOLLOWUP.captures_iter(text);
+    let recipient = owners.next().filter(|_| owners.next().is_none())?;
+    let owner = recipient.name("owner")?.as_str();
+    let prefix = &text[..recipient.get(0)?.start()];
+    let mut tasks = WORK.find_iter(prefix);
+    let task = tasks.next().filter(|_| tasks.next().is_none())?;
+    let action = text[task.start()..].trim_end_matches(['，', '、', ',', ' ']).trim();
+    canonical_brief::line(action, 90).then(|| CompanionV1ActionItem {
+        text: action.to_owned(),
+        owner: Some(owner.to_owned()),
+        due: None,
+    })
+}
+
+pub(super) fn protected_stance(source: &str) -> Option<&'static str> {
+    // A speaker can make a proposal, estimate or judgment without saying
+    // “I think”. The role is governed by the original clause, not by the model.
+    if has(source, &["仅代表", "只代表", "仅以个人", "这是我的想法"])
+        && has(source, &["意见", "打算", "想法", "提议", "我想"])
+    {
+        return Some("recommendation");
+    }
+    if has(source, &["好像", "大概", "估计", "预计", "约莫", "大约"]) && QUANTITY.is_match(source) {
+        return Some("forecast");
+    }
+    let hypothetical = has(source, &["如果", "假如", "假设", "比如", "举个例", "请问"]);
+    let uncertain = has(source, &["可能", "会不会", "是否", "好像", "有待", "尚不清楚"]);
+    let judgment = has(source, &["负主要责任", "负次要责任", "有责任", "没有责任", "违法", "违规",
+        "承担责任", "构成犯罪", "承担行政", "赔偿责任", "负全责", "责任可能", "违背意愿"]);
+    if (hypothetical && has(source, &["案例", "责任", "请问", "违法", "是否", "个人", "怎么办"]))
+        || (judgment && (hypothetical || uncertain || has(source, &["合情合法", "就是强迫", "我觉得"])))
+    {
+        return Some("opinion");
+    }
+    None
+}

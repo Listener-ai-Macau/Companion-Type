@@ -103,10 +103,100 @@ pub(super) fn parse_bank(raw:&str,source:&str)->Result<Bank,String>{
     let extracted:Extracted=serde_json::from_str(crate::backend::minutes::strip_code_fences(raw).trim()).map_err(|_|fail())?;
     build_bank(extracted.facts,source)
 }
+
+fn source_verified_facts(
+    extracted: Vec<ExtractedFact>,
+    sentences: &[Value],
+) -> Result<(Vec<ExtractedFact>, Vec<Value>), String> {
+    use std::collections::HashMap;
+    use super::{source_authority, source_grounding, source_windows::bounded_original_quotes};
+
+    let known: HashMap<_, _> = sentences.iter().map(|row| {
+        (row["id"].as_str().unwrap(), row["text"].as_str().unwrap())
+    }).collect();
+    let mut by_anchor: HashMap<String, Vec<ExtractedFact>> = HashMap::new();
+    for fact in extracted {
+        let anchor = fact.evidence.first().ok_or_else(fail)?;
+        if fact.evidence.iter().any(|id| !known.contains_key(id.as_str())) {
+            return Err(fail());
+        }
+        by_anchor.entry(anchor.clone()).or_default().push(fact);
+    }
+
+    let mut verified = Vec::new();
+    let mut audit = Vec::new();
+    for sentence in sentences {
+        let id = sentence["id"].as_str().unwrap();
+        let original = known[id];
+        let mut current = by_anchor.remove(id).unwrap_or_default();
+        if let Some(action) = source_authority::spoken_assignment(original) {
+            if !current.iter().any(|item| item.role == "action") {
+                let text = action.text.clone();
+                verified.push(ExtractedFact::original_action(id, &text, action));
+                audit.push(json!({"sentenceId":id,"reason":"explicit-spoken-assignment"}));
+                // Keep other matters that happened to be spoken before the
+                // assignment. The bank stores the task itself only once.
+                current.retain(|item| !verified.last().is_some_and(|action| {
+                    canonical_brief::normalized(&item.text).contains(&canonical_brief::normalized(&action.text))
+                }));
+            }
+        }
+
+        let topic_role = source_authority::protected_stance(original);
+        let ambiguous_fee = source_grounding::ambiguous_payment_reference(original);
+        let removed = current.iter().any(|item| {
+            let cited: Vec<_> = item.evidence.iter().map(|id| known[id.as_str()]).collect();
+            item.role == "status" && (
+                source_grounding::adds_categorical_outcome(&item.text, &cited)
+                || (["\"}]", "”}]", "}]}", "\"t\":", "\"r\":"].iter().any(|token| item.text.contains(token))
+                    && !cited.iter().any(|source| source.contains(&item.text)))
+            )
+        });
+        if !current.is_empty() && (topic_role.is_some() || ambiguous_fee.is_some() || removed)
+            && !current.iter().any(|item| matches!(item.role.as_str(), "action" | "decision" | "question"))
+        {
+            let reason = if ambiguous_fee.is_some() { "unclear-referent" }
+                else if topic_role.is_some() { "qualified-statement" } else { "unsupported-categorical-outcome" };
+            let mut passage = original.trim().to_owned();
+            if let Some(change) = ambiguous_fee {
+                let prefix = original[..change].trim_end_matches(['，', ',', ' ', ':', '：']);
+                passage = format!("{prefix}。收费或费用所指待核实。");
+            } else if original.contains("仅代表") || original.contains("只代表") {
+                for group in ["部门", "小组", "团队", "单位"] {
+                    for suffix in ["", "儿"] {
+                        let broad = format!("我们各{group}{suffix}我们这个{group}");
+                        if passage.contains(&broad) {
+                            passage = passage.replace(&broad, &format!("我们这个{group}"));
+                        }
+                    }
+                }
+            } else if original.contains("违法") && original.contains("就是强迫") {
+                let (_, condition) = original.split_once("就是强迫").unwrap();
+                if let Some((speaker, _)) = super::super::source_resolution::split_turn_label(original) {
+                    passage = format!("{speaker}：强迫{}", condition.trim());
+                }
+            }
+            let role = topic_role.unwrap_or("status");
+            for line in bounded_original_quotes(&passage) {
+                verified.push(if removed || ambiguous_fee.is_some() {
+                    ExtractedFact::review_quote(id, role, &line)
+                } else {
+                    ExtractedFact::verbatim(id, role, &line)
+                });
+            }
+            audit.push(json!({"sentenceId":id,"reason":reason,"kind":role}));
+        } else {
+            verified.extend(current);
+        }
+    }
+    Ok((verified, audit))
+}
+
 pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,String>{
     if extracted.is_empty(){return Err(fail());}
     let units=source_units(source);let sentences=factual_audit::evidence_sentences(&units);
     let known=sentences.iter().map(|s|(s["id"].as_str().unwrap(),s["text"].as_str().unwrap())).collect::<std::collections::HashMap<_,_>>();
+    let (extracted, verification) = source_verified_facts(extracted, &sentences)?;
     let mut facts=Vec::new();
     let mut quantity_quotes = HashSet::new();
     let mut source_quotes = HashSet::new();
@@ -162,7 +252,7 @@ pub(super) fn build_bank(extracted:Vec<ExtractedFact>,source:&str)->Result<Bank,
     }).collect();
     let receipt=json!({"facts":facts,"seals":seals,"nextFactIndex":facts.len(),"sourceSha256":format!("{:x}",Sha256::digest(source.as_bytes())),
         "allSourceCharactersProvided":true,"mechanicalChecksPassed":true,"semanticAccuracyCertificate":false,"sourceCoverage":coverage,
-        "plannedChapters":chapters});
+        "plannedChapters":chapters,"claimSourceReview":verification});
     Ok(Bank { facts, receipt, quantity_quotes, source_quotes, chapter_spans, chapter_label_choices, chapter_point_choices })
 }
 

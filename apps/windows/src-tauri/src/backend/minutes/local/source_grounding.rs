@@ -103,6 +103,26 @@ pub(super) fn loses_binary_uncertainty(claim: &str, anchor: &str) -> bool {
         && !["有无", "有没有", "待确认", "待核", "尚不明确", "仍不明确"].iter().any(|cue| claim.contains(cue))
 }
 
+pub(super) fn adds_categorical_outcome(claim: &str, evidence: &[&str]) -> bool {
+    // These expressions claim that an outcome already occurred or that a
+    // scope is exhaustive. A paraphrase with no literal witness is returned
+    // to the original passage before it can become a meeting conclusion.
+    const OUTCOMES: &[&str] = &["严重流失", "流失严重", "大量流失", "而离开", "已辞退", "已解聘",
+        "全部完成", "全部到账", "已经到账", "全部退出", "已经关闭", "已经停业", "全部停产",
+        "全部批准", "全体同意", "无一例外", "基本无人参加教学", "从未发生",
+        "一律取消", "已经退款", "永久停用"];
+    OUTCOMES.iter().any(|term| claim.contains(term) && !evidence.iter().any(|source| source.contains(term)))
+}
+
+pub(super) fn ambiguous_payment_reference(source: &str) -> Option<usize> {
+    static PAYMENT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:他的|她的|它的|其)(?:这项|这个)?(?:收费|价格|费用|成本)"
+    ).unwrap());
+    let unresolved = PAYMENT.find(source)?;
+    let before = &source[..unresolved.start()];
+    (before.contains("和") || before.contains('或')).then_some(unresolved.start())
+}
+
 pub(super) fn context_only_fragment(source:&str)->bool{
     let text=source.trim().trim_end_matches(['。','！','？','；',',','，','…','.']);
     matches!(text.trim(),""|"嗯"|"呃"|"对"|"然后"|"所以"|"所以说"|"实际上"|"实际上在"|"问题"|"关于这个"|"也就是说"|"怎么说呢")

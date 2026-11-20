@@ -490,7 +490,7 @@ fn complete_leading_excerpt(source: &str) -> Option<&str> {
         }).last())
 }
 
-fn bounded_original_quotes(source: &str) -> Vec<String> {
+pub(super) fn bounded_original_quotes(source: &str) -> Vec<String> {
     let mut remaining = source.trim();
     let label = super::super::source_resolution::split_turn_label(remaining)
         .map(|(speaker, _)| format!("{speaker}："));
@@ -1106,6 +1106,33 @@ mod tests {
             assert!(excerpts > 0);
             let bank = super::super::atomic_document::build_bank(facts, &source).unwrap();
             assert!(!bank.facts.is_empty());
+            use super::super::super::automatic_brief::answer_layout::{Kind, Placement};
+            let at = |anchor: &str| bank.facts.iter().filter(|fact| fact.evidence[0] == anchor);
+            let owns = |anchor: &str, owner: &str| at(anchor).any(|fact|
+                fact.placement == Placement::Action && fact.owner.as_deref() == Some(owner) && fact.due.is_none());
+            match case {
+                "training-business" => {
+                    assert!(at("e0152").any(|fact| fact.text.contains("基本上是没有什么人参加")));
+                    assert!(!at("e0152").any(|fact| fact.text.contains("流失严重")));
+                    assert!(at("e0172").any(|fact| fact.text.contains("所指待核实")));
+                    assert!(owns("e0257", "各部门"));
+                }
+                "legal-qa" => {
+                    assert!(!at("e0085").any(|fact| fact.text.contains("属于猥亵")));
+                    assert!(at("e0086").any(|fact| fact.text.contains("强迫") && fact.kind == Kind::Opinion));
+                    assert!(at("e0190").any(|fact| fact.text.contains("责任可能") && fact.kind == Kind::Opinion));
+                    assert!(at("e0276").all(|fact| fact.kind == Kind::Opinion));
+                    assert!(!bank.facts.iter().any(|fact| fact.placement == Placement::Action));
+                }
+                "team-planning" => {
+                    assert!(at("e0029").any(|fact| fact.text.contains("我们这个部门") && fact.kind == Kind::Recommendation));
+                    assert!(!at("e0029").any(|fact| fact.text.contains("仅代表我们各部门")));
+                    assert!(at("e0303").any(|fact| fact.text.contains("好像是两天到三天") && fact.kind == Kind::Forecast));
+                    assert!(owns("e0343", "各部门"));
+                    assert!(owns("e0349", "总监"));
+                }
+                _ => unreachable!(),
+            }
             println!("{case}: {} source windows, {} bounded source records, {} facts",
                 windows.len(),excerpts,bank.facts.len());
         }
