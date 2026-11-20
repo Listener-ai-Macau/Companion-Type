@@ -301,6 +301,7 @@ impl SourceWindows {
             let mut unmatched=Vec::new();
             let mut rejected_causal_claim = false;
             let mut source_quote_origin = None;
+            let mut overlong = false;
             for mut fact in entries {
                 if !policy.allowed.contains(&fact.role.as_str()){return Err(fail());}
                 if fact.text.trim().trim_end_matches(['。', '.']) == "[无独立内容]" {
@@ -322,6 +323,10 @@ impl SourceWindows {
                     !source_grounding::context_only_fragment(offered[reference.as_str()])
                 });
                 fact.evidence.insert(0, anchor.to_owned());
+                if !canonical_brief::line(&fact.text, 90) {
+                    overlong = true;
+                    continue;
+                }
                 let sources:Vec<_>=fact.evidence.iter().map(|id|offered[id.as_str()]).collect();
                 let mut disputed_quantities = source_grounding::unsupported_quantities(&fact.text, &sources);
                 if source_grounding::quantity_question(text(source)) && !source_grounding::has_open_qualifier(&fact.text) {
@@ -399,6 +404,16 @@ impl SourceWindows {
                 }
                 accepted.push(fact);
             }
+            if overlong {
+                let role = policy.safe_topic_role()
+                    .ok_or("纪要提取的决定或交办超出单条范围，原文和已有纪要保留。")?;
+                for excerpt in bounded_original_quotes(original) {
+                    let quote = ExtractedFact::review_quote(anchor, role, &excerpt);
+                    if !accepted.iter().any(|fact| fact.text == quote.text) {
+                        accepted.push(quote);
+                    }
+                }
+            }
             if unmatched.is_empty() && !rejected_causal_claim {
                 let origin = if let Some(reason) = source_quote_origin {
                     let role = policy.safe_topic_role()
@@ -419,6 +434,8 @@ impl SourceWindows {
                     } else {
                         "independently-supported-claims"
                     }
+                } else if overlong {
+                    "bounded-original-quotes"
                 } else {
                     "model"
                 };
@@ -471,6 +488,38 @@ fn complete_leading_excerpt(source: &str) -> Option<&str> {
             }
             None
         }).last())
+}
+
+fn bounded_original_quotes(source: &str) -> Vec<String> {
+    let mut remaining = source.trim();
+    let label = super::super::source_resolution::split_turn_label(remaining)
+        .map(|(speaker, _)| format!("{speaker}："));
+    let mut excerpts = Vec::new();
+    while !remaining.is_empty() {
+        let prefix = if excerpts.is_empty() { "" } else { label.as_deref().unwrap_or("") };
+        let width = 90_usize.saturating_sub(prefix.chars().count()).max(12);
+        let bound = remaining.char_indices().nth(width - 1).map(|(index, _)| index);
+        if canonical_brief::line(remaining, width) {
+            excerpts.push(format!("{prefix}{remaining}"));
+            break;
+        }
+        let first_line = remaining.split(['\n', '\r']).next().unwrap();
+        let boundary = canonical_brief::line(first_line, width).then_some(first_line.len())
+            .or_else(|| first_line.char_indices().take(width).filter_map(|(index, ch)| {
+            if matches!(ch, '。' | '；' | '！' | '？' | '，' | ',') {
+                return Some(index + ch.len_utf8());
+            }
+            None
+        }).last().filter(|index| remaining[..*index].chars().count() >= 12));
+        let Some(end) = boundary.or(bound) else { break; };
+        let excerpt = remaining[..end].trim();
+        if !excerpt.is_empty() {
+            let suffix = if boundary.is_some() { "" } else { "…" };
+            excerpts.push(format!("{prefix}{excerpt}{suffix}"));
+        }
+        remaining = remaining[end..].trim_start();
+    }
+    excerpts
 }
 
 // The explicit follow-on belongs to the same spoken passage. Both sentences
@@ -1029,6 +1078,36 @@ mod tests {
                 assert!(checked.reviewed.iter().any(|row| row["origin"] == "comparison-source-quote"));
             }
             println!("{case}: {}", serde_json::to_string(&checked.reviewed).unwrap());
+        }
+    }
+
+    #[test]
+    #[ignore = "check all retained source windows of the three whole meetings"]
+    fn local_minutes_replay_full_source_banks() {
+        let root = std::path::PathBuf::from(std::env::var_os("COMPANION_TEST_LOCAL_COMPLETE_BANKS").unwrap());
+        for case in ["training-business", "legal-qa", "team-planning"] {
+            let receipt: Value = serde_json::from_slice(&std::fs::read(root.join(case).join("completed.json")).unwrap()).unwrap();
+            let source = std::fs::read_to_string(receipt["sourceFile"].as_str().unwrap()).unwrap();
+            let windows = SourceWindows::new(&source).unwrap();
+            let trace = &receipt["receipt"];
+            assert_eq!(trace["reviewedSourceWindows"].as_array().unwrap().len(), windows.len());
+            let calls = trace["calls"].as_array().unwrap();
+            let mut facts = Vec::new();
+            let mut excerpts = 0;
+            for index in 0..windows.len() {
+                let stage = format!("source-window-{}", index + 1);
+                let raw = calls.iter().find(|call| call["stage"] == stage).map(|call| call["output"].as_str().unwrap());
+                assert_eq!(raw.is_some(), windows.requires_model(index, SourceEncoding::DirectSingleRole));
+                let checked = windows.check_encoded(index, raw.unwrap_or("{}"), SourceEncoding::DirectSingleRole).unwrap();
+                excerpts += checked.reviewed.iter().filter(|row| row["origin"] == "bounded-original-quotes").count();
+                assert!(checked.facts.iter().all(|fact| canonical_brief::line(&fact.text, 90)));
+                facts.extend(checked.facts);
+            }
+            assert!(excerpts > 0);
+            let bank = super::super::atomic_document::build_bank(facts, &source).unwrap();
+            assert!(!bank.facts.is_empty());
+            println!("{case}: {} source windows, {} bounded source records, {} facts",
+                windows.len(),excerpts,bank.facts.len());
         }
     }
 
