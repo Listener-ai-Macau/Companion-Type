@@ -163,7 +163,22 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     // Each independent batch still sees the complete immutable source and
     // document. Bound concurrency to three; every claim needs a verdict.
     if expected.is_empty(){return Ok(Audit{claim_audit:Vec::new(),format_kind:None});}
-    let batches=if super::coverage::enabled(){expected.len().div_ceil(4).clamp(1,3)}else{1};let size=expected.len().div_ceil(batches);
+    let batches = if super::source_items::enabled() {
+        // With a fuller brief, sending all claim rows duplicates enough text
+        // to cross the native request ceiling. Split only the claim list,
+        // keeping the same complete source and document in every request.
+        (1..=3).find(|count| {
+            expected.chunks(expected.len().div_ceil(*count)).all(|claims| {
+                let payload = json!({"sourceUnits":wire,"document":doc,"checkClaims":claims});
+                PROMPT.len() + payload.to_string().len() <= super::MAX_REQUEST_BYTES
+            })
+        }).ok_or("本场完整原文和逐项审核超出上下文预算，已有纪要保留。")?
+    } else if super::coverage::enabled() {
+        expected.len().div_ceil(4).clamp(1,3)
+    } else {
+        1
+    };
+    let size=expected.len().div_ceil(batches);
     let token=super::current_cancellation();check_cancellation(token.as_ref())?;
     let results=std::thread::scope(|scope|{
         let workers=expected.chunks(size).enumerate().map(|(i,claims)|{
