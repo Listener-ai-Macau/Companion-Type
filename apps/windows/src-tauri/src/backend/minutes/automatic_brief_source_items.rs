@@ -19,6 +19,7 @@ const EXTRACT: &str = include_str!("automatic_brief_source_items.txt");
 const ORGANIZE: &str = include_str!("automatic_brief_source_item_layout.txt");
 const FIND_MISSING: &str = include_str!("automatic_brief_source_item_missing.txt");
 const RECHECK_MEASURES: &str = include_str!("automatic_brief_source_item_recheck.txt");
+const REPAIR_COVERAGE: &str = include_str!("automatic_brief_source_coverage_repair.txt");
 const WINDOW_BYTES: usize = 13 * 1024;
 const WINDOW_WORKERS: usize = 3;
 const FACT_LIMIT: usize = 128;
@@ -643,17 +644,42 @@ fn coverage_quote_is_grounded(quote: &str, text: &str) -> bool {
         && normalized(text).contains(&normalized(quote))
 }
 
-fn rechecked_coverage_is_grounded(checks: &[SourceCheck], disputed: &[Value], doc: &Document, evidence: &[Value]) -> bool {
+fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document, evidence: &[Value],
+    bindings: &HashMap<String, &Vec<String>>,
+) -> Vec<Value> {
+    static RESTRICTION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:不是(?:特别|很|太|那么)|不(?:够|太|能|得|允许)|没有|尚未|仍未|不得)[\p{Han}]{2,10}"
+    ).unwrap());
     let clauses = factual_audit::claims(doc);
-    checks.iter().all(|check| {
-        let SourceCheck::Covered { id, claim, proof } = check else { return true; };
-        let Some(context) = disputed.iter().find(|row| row["cue"]["id"] == id.as_str()) else { return false; };
-        let Some(proof) = proof else { return false; };
-        let source = evidence.iter().find(|row| row["id"] == context["cue"]["evidence"]);
+    checks.iter().filter_map(|check| {
+        let SourceCheck::Covered { id, claim, proof } = check else { return None; };
+        let context = disputed.iter().find(|row| row["cue"]["id"] == id.as_str())?;
+        let source = evidence.iter().find(|row| row["id"] == context["cue"]["evidence"])?;
         let target = clauses.iter().find(|row| row["path"] == claim.as_str());
-        source.and_then(|row| row["text"].as_str()).is_some_and(|text| coverage_quote_is_grounded(&proof.source_quote, text))
-            && target.and_then(|row| row["text"].as_str()).is_some_and(|text| coverage_quote_is_grounded(&proof.statement_quote, text))
-    })
+        let source_text = source["text"].as_str()?;
+        let cited = bindings.get(claim);
+        let grounded = proof.as_ref().is_some_and(|proof| {
+            (coverage_quote_is_grounded(&proof.source_quote, source_text) || evidence.iter().any(|row| {
+                row["id"].as_str().is_some_and(|e| cited.is_some_and(|ids| ids.iter().any(|id| id == e)))
+                    && coverage_quote_is_grounded(&proof.source_quote, row["text"].as_str().unwrap())
+            })) && target.and_then(|row| row["text"].as_str())
+                .is_some_and(|text| coverage_quote_is_grounded(&proof.statement_quote, text))
+        });
+        let omitted_qualification = RESTRICTION.find(source_text).filter(|_| {
+            context["sourceNeedsCheck"] == true && !target.and_then(|row| row["text"].as_str())
+                .is_some_and(|text| RESTRICTION.is_match(text))
+        });
+        if grounded && omitted_qualification.is_none() { return None; }
+        let mut issue = context.clone();
+        issue["previousClaim"] = json!(claim);
+        issue["reason"] = json!(if omitted_qualification.is_some() {
+            "原话有明确的限制或不足，所指正文只写了其他内容，未表达这条限制。"
+        } else { "必须分别提供原话与现有正文实际出现的同一事实短句。" });
+        if let Some(qualification) = omitted_qualification {
+            issue["unrepresentedSourceQuote"] = json!(qualification.as_str());
+        }
+        Some(issue)
+    }).collect()
 }
 
 fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, facts: &[Fact], evidence: &[Value])
@@ -754,11 +780,25 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         }).collect();
         let raw = super::request(endpoint,model,key,client,RECHECK_MEASURES,
             json!({"sourceSentences":context,"sourceCheckRecheck":disputed,"currentBrief":doc}),false,start,trace,"source-items-omissions-recheck")?;
-        let fixed: MissingItems = parse(&raw)?;
+        let mut fixed: MissingItems = parse(&raw)?;
         let returned: HashSet<_> = fixed.checks.iter().map(SourceCheck::id).collect();
-        if returned != selected || fixed.checks.len() != selected.len() || !fixed.additions.is_empty()
-            || !rechecked_coverage_is_grounded(&fixed.checks, &disputed, &doc, &evidence) {
+        if returned != selected || fixed.checks.len() != selected.len() || !fixed.additions.is_empty() {
             return Err("纪要存在未完成的关键原话覆盖复核，已有结果保留。".into());
+        }
+        let rejected = rejected_coverage(&fixed.checks, &disputed, &doc, &evidence, &bindings);
+        if !rejected.is_empty() {
+            let ids: HashSet<_> = rejected.iter().filter_map(|row| row["cue"]["id"].as_str()).collect();
+            let raw = super::request(endpoint,model,key,client,REPAIR_COVERAGE,
+                json!({"sourceSentences":context,"sourceCoverageRepair":rejected,"currentBrief":doc}),
+                false,start,trace,"source-items-coverage-repair")?;
+            let repair: MissingItems = parse(&raw)?;
+            let returned: HashSet<_> = repair.checks.iter().map(SourceCheck::id).collect();
+            if returned != ids || repair.checks.len() != ids.len() || !repair.additions.is_empty()
+                || !rejected_coverage(&repair.checks, &rejected, &doc, &evidence, &bindings).is_empty() {
+                return Err("纪要存在未完成的关键原话覆盖复核，已有结果保留。".into());
+            }
+            fixed.checks.retain(|row| !ids.contains(row.id()));
+            fixed.checks.extend(repair.checks);
         }
         checked.checks.retain(|check| !selected.contains(check.id()));
         checked.checks.extend(fixed.checks);
