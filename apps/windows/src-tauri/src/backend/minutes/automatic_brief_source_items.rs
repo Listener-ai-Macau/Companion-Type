@@ -389,10 +389,11 @@ fn append_missing(raw: &str, mut doc: Document, units: &[Unit], evidence: &[Valu
             (Placement::Topic, title) => {
                 // The fact and its evidence have already been checked for
                 // shape. A missing display hint does not erase an entire reply.
-                let index = match title {
-                    Some(title) => doc.topics.iter().position(|topic| topic.title == title),
-                    None => omission_topic(&doc, &entry.sources, units),
-                }.ok_or("补充事项没有对应的原议题，已有纪要保留。")?;
+                let fail = || "补充事项没有对应的原议题，已有纪要保留。".to_string();
+                let requested = title.as_ref().map(|title| doc.topics.iter().position(|topic| &topic.title == title)
+                    .ok_or_else(fail)).transpose()?;
+                let index = requested.filter(|index| doc.topics[*index].details.len() < DETAILS_LIMIT)
+                    .or_else(|| omission_topic(&doc, &entry.sources, units)).ok_or_else(fail)?;
                 doc.topics[index].details.push(entry);
             }
             (Placement::Decision, None) => doc.decisions.push(entry),
