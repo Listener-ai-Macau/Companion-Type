@@ -225,6 +225,11 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
         if expected.iter().any(|claim| claim.get("competingSourceIds").is_some()) {
             role_prompt.push_str("\ncompetingSourceIds 是从原文反查提出的候选冲突。逐个看这些原话及邻句，并对照当前条目出处。能分清早期提议和后来明确否定时保留先后。原话确实冲突而无法确定时标为含混；不能原样保留一个无条件版本。候选提示本身也要核实。");
         }
+        if expected.iter().any(|claim| claim["text"].as_str().is_some_and(|text| {
+            text.starts_with("会上提到「") && text.ends_with("」，具体所指待核实。")
+        })) {
+            role_prompt.push_str("\n主题中「会上提到……具体所指待核实」只报告原话及记录上的疑点。核对引语是否原文、所指是否确实没有确证。若引语是原文且原话所指未明，可以 supported；不要求会议发言者当时明确提问。若上下文已清楚说明所指或引语偏离原话，正常判错。");
+        }
         role_prompt.as_str()
     } else {
         PROMPT
@@ -663,6 +668,34 @@ fn unverified_claims(doc:&Document,verified:Option<&Document>)->Vec<Value> {
     let previous=verified.map(claims).unwrap_or_default().into_iter().map(|claim|(claim["path"].as_str().unwrap().to_string(),claim)).collect::<HashMap<_,_>>();
     claims(doc).into_iter().filter(|claim|previous.get(claim["path"].as_str().unwrap())!=Some(claim)).collect()
 }
+
+fn unchanged_source_assertions(doc: &Document, verified: &Document) -> HashMap<String, Value> {
+    fn identity(doc: &Document, claim: &Value) -> String {
+        let path = claim["path"].as_str().unwrap();
+        let topic = path.strip_prefix("topics[").and_then(|path| path.split_once(']'))
+            .and_then(|(index, _)| index.parse::<usize>().ok()).and_then(|index| doc.topics.get(index));
+        json!([statement_identity(path, claim), topic.map(|topic| &topic.title), claim["sources"]]).to_string()
+    }
+    let previous: HashSet<_> = claims(verified).iter().map(|claim| identity(verified, claim)).collect();
+    claims(doc).into_iter().filter(|claim| previous.contains(&identity(doc, claim)))
+        .map(|claim| (claim["path"].as_str().unwrap().to_owned(), claim)).collect()
+}
+
+#[cfg(test)]
+#[test]
+fn unchanged_source_assertion_keeps_evidence_after_a_neighbor_is_removed() {
+    let previous: Document = serde_json::from_value(json!({
+        "purpose":"协调采购",
+        "topics":[{"title":"物流","points":[{"kind":"status","text":"物流已联系。","sources":["u000"]}]}],
+        "actionItems":[{"text":"讨论运输。","sources":["u000"]},{"text":"张敏提交报价。","owner":"张敏","sources":["u001"]}],
+        "decisions":[],"questions":[]
+    })).unwrap();
+    let mut next = previous.clone();
+    next.action_items.remove(0);
+    assert!(unchanged_source_assertions(&next, &previous).contains_key("actionItems[0]"));
+    next.action_items[0].sources = vec!["u000".into()];
+    assert!(!unchanged_source_assertions(&next, &previous).contains_key("actionItems[0]"));
+}
 // The caller keeps the same immutable source and a document just verified in
 // this invocation. Unchanged claims retain that evidence; new/changed claims
 // still see the complete original source, never a model inventory.
@@ -715,7 +748,11 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
     let wire=json!(units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>());
     let mut current=doc.clone();let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let mut attempted_phrases:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
     let mut unclear_history:HashMap<String,Vec<String>>=HashMap::new();let mut recovered_display=false;
-    let mut verified_claims=verified.map(claims).unwrap_or_default().into_iter().map(|c|(c["path"].as_str().unwrap().to_string(),c)).collect::<HashMap<_,_>>();
+    let mut verified_claims = match verified {
+        Some(verified) if super::source_items::enabled() => unchanged_source_assertions(doc, verified),
+        _ => verified.map(claims).unwrap_or_default().into_iter()
+            .map(|claim| (claim["path"].as_str().unwrap().to_owned(), claim)).collect(),
+    };
     let mut evidence = HashMap::new();
     let mut supported_conflicts = HashSet::new();
     for round in 0..=2 {

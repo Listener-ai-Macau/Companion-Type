@@ -8,23 +8,19 @@ use super::{Action, Document, Entry, Kind, Unit, answer_layout::Placement, factu
 
 const PROMPT: &str = include_str!("automatic_brief_commitments.txt");
 
-fn needs_review(claim: &Value, cited: &[&str]) -> bool {
-    let path = claim["path"].as_str().unwrap();
-    if path.starts_with("actionItems[") || path.starts_with("decisions[") {
-        return true;
-    }
+fn source_signals(quote: &str) -> Vec<&'static str> {
     static ASSIGNMENT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:到时候|会后|下去以后|散会后|你们?|得|要).{0,38}(?:具体.{0,6}计划|计划.{0,5}(?:写|充分)|写.{0,10}(?:计划|方案)|主抓|交给|提交)"
     ).unwrap());
     static TIME: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:接下来|未来|打算|计划|准备).{0,24}(?:半年|[一二两三四五六七八九十0-9]{1,4}(?:年|个?月))"
     ).unwrap());
-    let text = claim["text"].as_str().unwrap();
-    let stated_possibility = ["建议", "拟", "考虑", "可以", "提议", "设想", "备选", "待核实"]
-        .iter().any(|term| text.contains(term));
-    cited.iter().any(|quote| ASSIGNMENT.is_match(quote) || TIME.is_match(quote)
-        || (!stated_possibility && ["可以采用", "也可以", "我觉得可以", "我建议", "还可考虑"]
-            .iter().any(|cue| quote.contains(cue))))
+    let optional = ["可以采用", "也可以", "我觉得可以", "我建议", "还可考虑"];
+    [
+        ("交办与承接者", ASSIGNMENT.is_match(quote)),
+        ("时间是谁提出的", TIME.is_match(quote)),
+        ("可选方案及其条件", optional.iter().any(|cue| quote.contains(cue))),
+    ].into_iter().filter_map(|(name, matched)| matched.then_some(name)).collect()
 }
 
 fn candidates(doc: &factual_audit::VerifiedBrief, source: &[Value]) -> Vec<Value> {
@@ -35,9 +31,19 @@ fn candidates(doc: &factual_audit::VerifiedBrief, source: &[Value]) -> Vec<Value
         let path = claim["path"].as_str().unwrap();
         if claim.get("sources").is_none() || path.starts_with("questions[") { continue; }
         let Some(ids) = doc.evidence.get(path) else { continue; };
-        let cited: Vec<_> = ids.iter().filter_map(|id| positions.get(id.as_str()))
-            .map(|index| source[*index]["text"].as_str().unwrap()).collect();
-        if !needs_review(&claim, &cited) { continue; }
+        let signals: Vec<_> = ids.iter().filter_map(|id| {
+            let index = *positions.get(id.as_str())?;
+            let checks = source_signals(source[index]["text"].as_str().unwrap());
+            (!checks.is_empty()).then(|| json!({"evidence":id,"checks":checks}))
+        }).collect();
+        let required = path.starts_with("actionItems[") || path.starts_with("decisions[");
+        let text = claim["text"].as_str().unwrap();
+        let stated_possibility = ["建议", "拟", "考虑", "可以", "提议", "设想", "备选", "待核实"]
+            .iter().any(|term| text.contains(term));
+        let has_material_signal = signals.iter().any(|signal| {
+            signal["checks"].as_array().unwrap().iter().any(|check| check != "可选方案及其条件" || !stated_possibility)
+        });
+        if !required && !has_material_signal { continue; }
         let mut context = Vec::new();
         for index in ids.iter().filter_map(|id| positions.get(id.as_str())) {
             // Keep both sides of the turn boundary. The surrounding turn can
@@ -47,7 +53,7 @@ fn candidates(doc: &factual_audit::VerifiedBrief, source: &[Value]) -> Vec<Value
         context.sort_unstable();
         context.dedup();
         let context: Vec<_> = context.into_iter().map(|index| &source[index]["id"]).collect();
-        candidates.push(json!({"id":path,"claim":claim,"basis":ids,"context":context}));
+        candidates.push(json!({"id":path,"claim":claim,"basis":ids,"context":context,"sourceSignals":signals}));
     }
     candidates
 }
@@ -55,6 +61,8 @@ fn candidates(doc: &factual_audit::VerifiedBrief, source: &[Value]) -> Vec<Value
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct Response {
+    #[serde(default, rename = "type")]
+    _format: super::ResponseFormatMarker,
     #[serde(rename = "roleChecks")]
     role_checks: Vec<Check>,
 }
@@ -64,6 +72,32 @@ struct Response {
 struct Check {
     id: String,
     replacement: Option<source_items::SourceItem>,
+    clarification: Option<Clarification>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct Clarification {
+    evidence: String,
+    quote: String,
+}
+
+fn spoken_department<'a>(requested: &str, snippets: impl Iterator<Item = &'a str> + Clone) -> Option<String> {
+    let stem = requested.strip_suffix("部门").or_else(|| requested.strip_suffix('部'))?;
+    if !(2..=18).contains(&stem.chars().count()) || !stem.chars().all(|c| ('\u{3400}'..='\u{9fff}').contains(&c)) {
+        return None;
+    }
+    ["的部门", "这边"].into_iter().map(|ending| format!("{stem}{ending}"))
+        .find(|form| snippets.clone().any(|text| super::normalized(text).contains(form)))
+}
+
+fn preserve_assigned_action(original: &Value, fact: &super::answer_layout::Fact) -> bool {
+    let claim = &original["claim"];
+    claim["kind"] == "action" && fact.placement == Placement::Action && (
+        (fact.owner.is_none() && !claim["owner"].is_null())
+        || (fact.due.is_none() && !claim["due"].is_null())
+        || (fact.owner.is_none() && fact.text.contains("待核实"))
+    )
 }
 
 fn apply(doc: &Document, candidates: &[Value], source: &[Value], raw: &str, units: &[Unit]) -> Result<Document, String> {
@@ -78,18 +112,42 @@ fn apply(doc: &Document, candidates: &[Value], source: &[Value], raw: &str, unit
     let mut additions = Vec::new();
     for check in response.role_checks {
         let original = by_id.remove(check.id.as_str()).ok_or_else(fail)?;
-        let Some(item) = check.replacement else { continue; };
-        let (owner, due) = (item.owner.clone(), item.due.clone());
-        let fact = item.bind(&known, &known_ids)?;
+        let fact = match (check.replacement, check.clarification) {
+            (None, None) => continue,
+            (Some(item), None) => {
+                let requested = item.owner.clone();
+                let due = item.due.clone();
+                let mut fact = item.bind(&known, &known_ids)?;
+                if fact.placement == Placement::Action {
+                    if let Some(requested) = requested.filter(|_| fact.owner.is_none()) {
+                        let snippets: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]["text"].as_str().unwrap()).collect();
+                        fact.owner = Some(spoken_department(&requested, snippets.iter().copied()).ok_or_else(fail)?);
+                    }
+                    if due != fact.due { return Err(fail()); }
+                }
+                fact
+            },
+            (None, Some(item)) => {
+                let id = factual_audit::canonical_sentence_reference(&item.evidence, &known_ids).ok_or_else(fail)?;
+                let quote = item.quote.trim();
+                if !super::line(quote, 66) || quote.contains(['「', '」'])
+                    || !super::normalized(known[id.as_str()]["text"].as_str().unwrap()).contains(&super::normalized(quote)) {
+                    return Err(fail());
+                }
+                super::answer_layout::Fact {
+                    id: String::new(), kind: Kind::Status, placement: Placement::Topic,
+                    text: format!("会上提到「{quote}」，具体所指待核实。"),
+                    owner: None, due: None, evidence: vec![id],
+                }
+            },
+            (Some(_), Some(_)) => return Err(fail()),
+        };
         let context: HashSet<_> = original["context"].as_array().unwrap().iter().filter_map(Value::as_str).collect();
         if fact.evidence.iter().any(|id| !context.contains(id.as_str()))
-            || !fact.evidence.iter().any(|id| original["basis"].as_array().unwrap().iter().any(|value| value.as_str() == Some(id.as_str())))
-            || (fact.placement == Placement::Action && (owner != fact.owner || due != fact.due)) {
+            || !fact.evidence.iter().any(|id| original["basis"].as_array().unwrap().iter().any(|value| value.as_str() == Some(id.as_str()))) {
             return Err(fail());
         }
-        if fact.placement == Placement::Question && !fact.text.contains("待核实") {
-            return Err(fail());
-        }
+        if preserve_assigned_action(original, &fact) { continue; }
         let mut sources: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]["source"].as_str().unwrap().to_owned()).collect();
         sources.sort_unstable();
         sources.dedup();
