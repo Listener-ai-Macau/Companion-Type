@@ -37,7 +37,7 @@ fn sentences(units:&[Unit])->Vec<Sentence> {
 pub(in crate::backend::minutes) fn evidence_sentences(units:&[Unit])->Vec<Value> {
     sentences(units).iter().map(|s|json!({"id":s.id,"source":s.source,"text":s.text})).collect()
 }
-fn claims(doc:&Document)->Vec<Value> {
+pub(super) fn claims(doc:&Document)->Vec<Value> {
     let mut out=vec![json!({"path":"purpose","text":doc.purpose})];
     for (i,t) in doc.topics.iter().enumerate() {
         out.push(json!({"path":format!("topics[{i}].title"),"text":t.title}));
@@ -185,9 +185,12 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     // Each independent batch still sees the complete immutable source and
     // document. Bound concurrency to three; every claim needs a verdict.
     if expected.is_empty(){return Ok(Audit{claim_audit:Vec::new(),format_kind:None});}
-    let role_prompt;
+    let mut role_prompt;
     let prompt = if super::source_items::enabled() {
         role_prompt = format!("{PROMPT}\n栏目本身也是需要单独核对的主张。对decisions、actionItems、questions的每一条，另外返回placementUnsupported布尔值。真有本场定案、会后承诺或指派、尚未解决的问题时填false；当其实只是开场目的、个人设想、举例、建议、现场已经回答的疑问或散会提示时填true，并将status判为overstated、unsupported或unclear。文字有原话不代表栏目正确。只写错截止日期、责任人或数值但栏目确实成立时填false，按独立事实问题判status。其他栏目无须此字段。");
+        if expected.iter().any(|claim| claim.get("competingSourceIds").is_some()) {
+            role_prompt.push_str("\ncompetingSourceIds 是从原文反查提出的候选冲突。逐个看这些原话及邻句，并对照当前条目出处。能分清早期提议和后来明确否定时保留先后。原话确实冲突而无法确定时标为含混；不能原样保留一个无条件版本。候选提示本身也要核实。");
+        }
         role_prompt.as_str()
     } else {
         PROMPT
@@ -525,6 +528,23 @@ fn unverified_claims(doc:&Document,verified:Option<&Document>)->Vec<Value> {
 // this invocation. Unchanged claims retain that evidence; new/changed claims
 // still see the complete original source, never a model inventory.
 pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
+    review(endpoint,model,key,client,doc,units,verified,&[],start,trace)
+}
+
+fn same_assertion(left: &Value, right: &Value) -> bool {
+    ["text", "owner", "due"].iter().all(|field| left[*field] == right[*field])
+}
+
+pub(super) fn review_and_repair_with_conflicts(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
+    let audited = review(endpoint,model,key,client,doc,units,None,conflicts,start,trace)?;
+    let final_claims = claims(&audited);
+    if conflicts.iter().any(|conflict| final_claims.iter().any(|claim| same_assertion(claim, &conflict["claim"]))) {
+        return Err("纪要中仍有原话与正文冲突，已有结果保留。".into());
+    }
+    Ok(audited)
+}
+
+fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
     let source=sentences(units);
     let wire=json!(units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>());
     let mut current=doc.clone();let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let mut attempted_phrases:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
@@ -534,6 +554,13 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
         let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
         if expected.is_empty(){return Ok(current);}
         emphasize_source_scope(&mut expected,&source);
+        for claim in &mut expected {
+            let competing: Vec<_> = conflicts.iter().filter(|conflict| same_assertion(claim, &conflict["claim"]))
+                .map(|conflict| &conflict["evidence"]).collect();
+            if !competing.is_empty() {
+                claim["competingSourceIds"] = json!(competing);
+            }
+        }
         let stage=match round{0=>"source-factual-audit",1=>"source-factual-reaudit",_=>"source-factual-reaudit-2"};
         // Only earlier completed verdicts constrain new/changed claims. Do not
         // retroactively rewrite other claims in this same independent batch.

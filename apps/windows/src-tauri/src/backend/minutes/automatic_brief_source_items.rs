@@ -6,7 +6,7 @@ use std::{
     time::Instant,
 };
 
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 
 use super::{
@@ -131,6 +131,8 @@ struct Layout {
 struct MissingItems {
     #[serde(default, rename = "type")]
     _format: super::ResponseFormatMarker,
+    #[serde(default)]
+    checks: Vec<SourceCheck>,
     additions: Vec<MissingItem>,
 }
 
@@ -139,6 +141,39 @@ struct MissingItems {
 struct MissingItem {
     item: SourceItem,
     topic: Option<String>,
+    #[serde(rename = "newAspect")]
+    new_aspect: Option<String>,
+}
+
+#[derive(Serialize, Debug)]
+struct SourceCue {
+    id: String,
+    evidence: String,
+    span: String,
+}
+
+#[derive(Deserialize)]
+#[serde(tag = "status", rename_all = "camelCase", deny_unknown_fields)]
+enum SourceCheck {
+    Covered { id: String, claim: String },
+    Missing { id: String, addition: MissingItem },
+    NeedsReview { id: String, addition: MissingItem },
+    Conflict { id: String, claim: String },
+    Background { id: String, reason: String },
+}
+
+impl SourceCheck {
+    fn id(&self) -> &str {
+        match self {
+            Self::Covered { id, .. } | Self::Missing { id, .. } | Self::NeedsReview { id, .. }
+            | Self::Conflict { id, .. } | Self::Background { id, .. } => id,
+        }
+    }
+}
+
+pub(super) struct CheckedOmissions {
+    pub(super) doc: Document,
+    pub(super) conflicts: Vec<Value>,
 }
 
 fn parse<T: serde::de::DeserializeOwned>(raw: &str) -> Result<T, String> {
@@ -352,11 +387,7 @@ fn omission_topic(doc: &Document, sources: &[String], units: &[Unit]) -> Option<
         .min().map(|(_, index)| index)
 }
 
-fn append_missing(raw: &str, mut doc: Document, units: &[Unit], evidence: &[Value]) -> Result<Document, String> {
-    let missing: MissingItems = parse(raw)?;
-    if missing.additions.len() > 4 {
-        return Err("纪要本轮漏项核对超出补充范围，已有纪要保留。".into());
-    }
+fn append_missing(additions: Vec<MissingItem>, mut doc: Document, units: &[Unit], evidence: &[Value]) -> Result<Document, String> {
     let known: HashMap<_, _> = evidence.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
     let known_ids = known.keys().copied().collect();
     let mut represented: HashSet<_> = doc.topics.iter().flat_map(|topic| {
@@ -364,7 +395,7 @@ fn append_missing(raw: &str, mut doc: Document, units: &[Unit], evidence: &[Valu
             .chain(topic.details.iter().map(|entry| normalized(&entry.text)))
     }).chain(doc.decisions.iter().map(|entry| normalized(&entry.text)))
         .chain(doc.questions.iter().map(|entry| normalized(&entry.text))).collect();
-    for addition in missing.additions {
+    for addition in additions {
         let fact = addition.item.bind(&known, &known_ids)?;
         let mut selected = HashSet::new();
         let sources: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]["source"].as_str().unwrap())
@@ -405,67 +436,148 @@ fn append_missing(raw: &str, mut doc: Document, units: &[Unit], evidence: &[Valu
     Ok(doc)
 }
 
-fn omission_cues(doc: &Document, evidence: &[Value]) -> Vec<Value> {
+fn omission_cues(facts: &[Fact], evidence: &[Value]) -> Vec<SourceCue> {
     static LITERAL: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
-        r"(?:[0-9０-９]+(?:[.．][0-9０-９]+)?|[零〇一二两三四五六七八九十百千万亿半]+)\s*(?:美元|元|块钱|个月|季度|工作日|小时|分钟|周|天|年|%|％)|(?:明天|后天|下周|本周|下个月|本月底|周[一二三四五六日])(?:之前|以前|截止|前|为止)"
+        r"(?:[0-9０-９]+(?:[.．][0-9０-９]+)?|[零〇一二两三四五六七八九十百千万亿半]+)\s*(?:美元|元|块钱|个月|季度|工作日|小时|分钟|周|天|年|%|％)|(?:明天|后天|[本下]周[一二三四五六日]?|下个月|本月底|周[一二三四五六日])(?:之前|以前|截止|前|为止)"
     ).expect("constant omission cue expression"));
-    let mut displayed: HashMap<String, String> = HashMap::new();
-    let mut include = |sources: &[String], text: &str| {
-        for source in sources {
-            displayed.entry(source.clone()).or_default().push_str(&normalized(text));
-        }
-    };
-    for topic in &doc.topics {
-        for point in &topic.points {
-            include(&point.sources, &point.text);
-        }
-        for detail in &topic.details {
-            include(&detail.sources, &detail.text);
+    static STATUS: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"不是主+打|不(?:再|用|需要|得|能)?(?:同时推|主推|推销|签字|放行|上线|下单|开工|发货|执行)|未(?:批准|通过|定案|决定)|暂不(?:批准|签字|执行|上线)|取消(?:原定|计划|订单|审批)|改(?:为|到|成)|以.{1,18}为准|除非|只有.{1,18}(?:才|才能)|.{1,14}为前提"
+    ).expect("constant status cue expression"));
+    let mut shown: HashMap<&str, HashSet<String>> = HashMap::new();
+    for fact in facts {
+        let measures: Vec<_> = std::iter::once(fact.text.as_str()).chain(fact.due.as_deref())
+            .flat_map(|text| LITERAL.find_iter(text).map(|hit| normalized(hit.as_str())))
+            .collect();
+        for id in &fact.evidence {
+            shown.entry(id).or_default().extend(measures.iter().cloned());
         }
     }
-    for entry in doc.decisions.iter().chain(&doc.questions) {
-        include(&entry.sources, &entry.text);
-    }
-    for action in &doc.action_items {
-        include(&action.sources, &action.text);
-        if let Some(due) = &action.due {
-            include(&action.sources, due);
+    let mut literals = Vec::new();
+    let mut reversals = Vec::new();
+    for row in evidence {
+        let id = row["id"].as_str().unwrap();
+        let source = row["text"].as_str().unwrap();
+        let text = source.split_once([':', '：']).filter(|(head, _)| head.starts_with("说话人"))
+            .map_or(source, |(_, rest)| rest);
+        let mut seen = HashSet::new();
+        for hit in LITERAL.find_iter(text) {
+            let span = hit.as_str();
+            let value = normalized(span);
+            if !shown.get(id).is_some_and(|claims| claims.contains(&value))
+                && seen.insert(span)
+            {
+                literals.push((id, span));
+            }
+        }
+        if let Some(hit) = STATUS.find(text) {
+            reversals.push((id, hit.as_str()));
         }
     }
-    let mut seen = HashSet::new();
-    let candidates: Vec<_> = evidence.iter().filter_map(|row| {
-        let unit = row["source"].as_str()?;
-        let text = row["text"].as_str()?;
-        let text = text.split_once([':', '：']).filter(|(head, _)| head.starts_with("说话人"))
-            .map_or(text, |(_, rest)| rest);
-        let span = LITERAL.find_iter(text).find(|item| {
-            let value = normalized(item.as_str());
-            !displayed.get(unit).is_some_and(|current| current.contains(&value))
-                && seen.insert((unit, value))
-        })?;
-        Some(json!({"id":row["id"],"span":span.as_str()}))
-    }).collect();
-    let count = candidates.len().min(24);
-    (0..count).map(|index| candidates[index*candidates.len()/count].clone()).collect()
+    // Reserve places for both source numbers and final-state changes when the
+    // meeting has enough candidates to fill the existing review budget.
+    let total = (literals.len() + reversals.len()).min(24);
+    let literal_count = literals.len().min(total - reversals.len().min(total / 2));
+    let mut cues = Vec::with_capacity(total);
+    for (candidates, count) in [(&literals, literal_count), (&reversals, total - literal_count)] {
+        for index in 0..count {
+            let (evidence, span) = candidates[index * candidates.len() / count];
+            cues.push(SourceCue { id: format!("v{:03}", cues.len()), evidence: evidence.into(), span: span.into() });
+        }
+    }
+    cues
+}
+
+fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, facts: &[Fact], evidence: &[Value])
+    -> Result<(Vec<MissingItem>, Vec<Value>), String>
+{
+    let fail = || "纪要关键原话核对不完整，已有结果保留。".to_string();
+    if missing.checks.len() != cues.len() || missing.additions.len() > 4 {
+        return Err(fail());
+    }
+    let claims = factual_audit::claims(doc);
+    let by_path: HashMap<_, _> = claims.iter().filter(|claim| claim.get("sources").is_some())
+        .map(|claim| (claim["path"].as_str().unwrap(), claim)).collect();
+    let known: HashMap<_, _> = evidence.iter().map(|row| (row["id"].as_str().unwrap(), row["text"].as_str().unwrap())).collect();
+    let known_ids = known.keys().copied().collect();
+    let mut pending: HashMap<_, _> = cues.iter().map(|cue| (cue.id.as_str(), cue)).collect();
+    let mut additions = Vec::new();
+    let mut conflicts = Vec::new();
+    for check in missing.checks {
+        let cue = pending.remove(check.id()).ok_or_else(fail)?;
+        match check {
+            SourceCheck::Covered { claim, .. } => {
+                if !by_path.contains_key(claim.as_str()) { return Err(fail()); }
+            }
+            SourceCheck::Conflict { claim, .. } => {
+                let existing = by_path.get(claim.as_str()).ok_or_else(fail)?;
+                conflicts.push(json!({"claim":existing, "evidence":cue.evidence}));
+            }
+            check @ (SourceCheck::Missing { .. } | SourceCheck::NeedsReview { .. }) => {
+                let review = matches!(check, SourceCheck::NeedsReview { .. });
+                let (SourceCheck::Missing { addition, .. } | SourceCheck::NeedsReview { addition, .. }) = check else {
+                    unreachable!()
+                };
+                if !addition.item.evidence.iter().any(|id| {
+                    factual_audit::canonical_sentence_reference(id, &known_ids).as_deref() == Some(cue.evidence.as_str())
+                }) || (review && (!matches!(addition.item.role, Role::Status | Role::Question)
+                    || !addition.item.text.starts_with("待核实")))
+                {
+                    return Err(fail());
+                }
+                additions.push(addition);
+            }
+            SourceCheck::Background { reason, .. } => {
+                if !line(&reason, 100) { return Err(fail()); }
+            }
+        }
+    }
+    let reused: HashSet<_> = facts.iter().flat_map(|fact| fact.evidence.iter().map(String::as_str)).collect();
+    for addition in missing.additions {
+        let ids: Vec<_> = addition.item.evidence.iter().map(|id| {
+            factual_audit::canonical_sentence_reference(id, &known_ids).ok_or_else(fail)
+        }).collect::<Result<_, _>>()?;
+        let uses_new_source = ids.iter().any(|id| !reused.contains(id.as_str()));
+        let has_new_aspect = addition.new_aspect.as_ref().is_some_and(|aspect| {
+            line(aspect, 100) && aspect.chars().count() >= 5
+                && ids.iter().any(|id| known[id.as_str()].contains(aspect))
+                && !facts.iter().any(|fact| normalized(&fact.text).contains(&normalized(aspect)))
+        });
+        if uses_new_source || has_new_aspect {
+            additions.push(addition);
+        }
+    }
+    Ok((additions, conflicts))
 }
 
 pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &reqwest::blocking::Client,
-    doc: Document, units: &[Unit], start: Instant, trace: &mut Vec<Value>) -> Result<Document, String>
+    doc: Document, facts: &[Fact], units: &[Unit], start: Instant, trace: &mut Vec<Value>) -> Result<CheckedOmissions, String>
 {
     let evidence = factual_audit::evidence_sentences(units);
-    let cues = omission_cues(&doc, &evidence);
-    // This pass locates at most four source relations. The separate factual
-    // audit remains responsible for judging them before publication.
+    let cues = omission_cues(facts, &evidence);
+    let evidence_by_claim: HashMap<_, _> = facts.iter().map(|fact| {
+        ((fact.text.as_str(), fact.owner.as_deref(), fact.due.as_deref()), &fact.evidence)
+    }).collect();
+    let bindings: HashMap<_, _> = factual_audit::claims(&doc).into_iter().filter_map(|claim| {
+        claim.get("sources")?;
+        let key = (claim["text"].as_str()?, claim["owner"].as_str(), claim["due"].as_str());
+        Some((claim["path"].as_str()?.to_owned(), *evidence_by_claim.get(&key)?))
+    }).collect();
     let raw = super::request(endpoint, model, key, client, FIND_MISSING,
-        json!({"sourceSentences":evidence,"currentBrief":doc,"lexicalCues":cues}), false, start, trace, "source-items-omissions")?;
+        json!({"sourceSentences":evidence,"currentBrief":doc,"lexicalCues":cues,"claimEvidence":bindings}),
+        false, start, trace, "source-items-omissions")?;
     if let Some(call) = trace.last_mut() {
         call["omissionCues"] = json!(cues);
     }
-    append_missing(&raw, doc, units, &evidence)
+    let (additions, conflicts) = checked_additions(parse(&raw)?, &cues, &doc, facts, &evidence)?;
+    if let Some(call) = trace.last_mut() {
+        call["boundAdditions"] = json!(additions.len());
+        call["conflictingClaims"] = json!(conflicts);
+    }
+    Ok(CheckedOmissions { doc: append_missing(additions, doc, units, &evidence)?, conflicts })
 }
 
 pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest::blocking::Client,
-    units: &[Unit], start: Instant, trace: &mut Vec<Value>) -> Result<Document, String>
+    units: &[Unit], start: Instant, trace: &mut Vec<Value>) -> Result<(Document, Vec<Fact>), String>
 {
     let evidence = factual_audit::evidence_sentences(units);
     let mut facts = Vec::new();
@@ -530,7 +642,7 @@ pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest:
     if let Some(last) = trace.last_mut() {
         last["layoutProjection"] = projection;
     }
-    Ok(doc)
+    Ok((doc, facts))
 }
 
 #[cfg(test)]
@@ -603,12 +715,14 @@ mod tests {
             {"topic":null,"item":{"role":"action","text":"提交面料清单。","owner":"采购组","due":"周五前","evidence":["e0001"]}},
             {"topic":"校服筹备","item":{"role":"status","text":"讨论校服。","evidence":["e0000"]}}
         ]}).to_string();
-        let enriched = append_missing(&raw, doc.clone(), &units, &evidence).unwrap();
+        let additions = parse::<MissingItems>(&raw).unwrap().additions;
+        let enriched = append_missing(additions, doc.clone(), &units, &evidence).unwrap();
         assert_eq!(enriched.topics[0].points[0].text, doc.topics[0].points[0].text);
         assert_eq!(enriched.topics[0].details.len(), 1);
         assert_eq!(enriched.topics[0].details[0].text, "运动服预算未通过。");
         assert_eq!(enriched.action_items[0].due.as_deref(), Some("周五前"));
-        assert!(append_missing(&raw.replace("e0002","e9999"), doc, &units, &evidence).is_err());
+        let invalid = parse::<MissingItems>(&raw.replace("e0002","e9999")).unwrap().additions;
+        assert!(append_missing(invalid, doc, &units, &evidence).is_err());
     }
 
     #[test]
@@ -630,13 +744,30 @@ mod tests {
     }
 
     #[test]
-    fn omission_cue_finds_an_unwritten_duration_in_an_already_cited_sentence() {
-        let units = vec![Unit{id:"u000".into(),text:"客户来自学校，学校每年有三个月的假期。".into()}];
+    fn checked_cues_preserve_the_other_fact_in_an_already_cited_sentence() {
+        let units = vec![Unit{id:"u000".into(),text:"客户多是附近学生，学校有三个月假期。试营安排三个月。".into()}];
         let evidence = factual_audit::evidence_sentences(&units);
+        let facts = vec![
+            Fact {id:"a000".into(), kind:Kind::Status, placement:Placement::Topic, text:"顾客以学生为主。".into(),
+                owner:None, due:None, evidence:vec!["e0000".into()]},
+            Fact {id:"a001".into(), kind:Kind::Status, placement:Placement::Topic, text:"先试营三个月。".into(),
+                owner:None, due:None, evidence:vec!["e0001".into()]},
+        ];
         let doc: Document = serde_json::from_value(json!({"purpose":"餐饮讨论",
-            "topics":[{"title":"客流","points":[{"kind":"status","text":"客户来自学校。","sources":["u000"]}]}],
+            "topics":[{"title":"客流","points":[{"kind":"status","text":facts[0].text,"sources":["u000"]}],
+                "details":[{"text":facts[1].text,"sources":["u000"]}]}],
             "decisions":[],"actionItems":[],"questions":[]})).unwrap();
-        assert_eq!(omission_cues(&doc,&evidence),json!([{"id":"e0000","span":"三个月"}]).as_array().unwrap().clone());
+        let cues = omission_cues(&facts, &evidence);
+        assert_eq!(json!(cues), json!([{"id":"v000","evidence":"e0000","span":"三个月"}]));
+        assert!(checked_additions(parse(r#"{"additions":[]}"#).unwrap(), &cues, &doc, &facts, &evidence).is_err());
+        let reply = json!({"checks":[{"id":"v000","status":"missing","addition":{
+                "topic":"客流","item":{"role":"status","text":"学校约有三个月假期。","evidence":["e0000"]}}}],
+            "additions":[{"topic":"客流","item":{"role":"status","text":"附近学生是主要顾客。","evidence":["e0000"]}}]});
+        let (additions, conflicts) = checked_additions(parse(&reply.to_string()).unwrap(), &cues, &doc, &facts, &evidence).unwrap();
+        assert!(conflicts.is_empty());
+        assert_eq!(additions.len(), 1);
+        let checked = append_missing(additions, doc, &units, &evidence).unwrap();
+        assert_eq!(checked.topics[0].details.last().unwrap().text, "学校约有三个月假期。");
     }
 
     #[test]

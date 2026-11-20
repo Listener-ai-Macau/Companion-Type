@@ -188,8 +188,9 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
     let start=Instant::now();let units=source_units(&session.transcript_text);let anchors=constraints(&units);let mut trace=Vec::new();let mut traced_document=None;
     let outcome=(|| {
         let source = Source::new(&session.transcript_text);
-        let doc = if source_items::enabled() {
-            source_items::generate(endpoint, model, key, client, &units, start, &mut trace)?
+        let (doc, source_facts) = if source_items::enabled() {
+            let (draft, facts) = source_items::generate(endpoint, model, key, client, &units, start, &mut trace)?;
+            (draft, Some(facts))
         } else {
         let reading_budget=json!({"mainCharacterBudget":if units.iter().map(|u|u.text.chars().count()).sum::<usize>()>8000{900}else{600},"pointsPerTopicMaximum":3});
         let draft=request(endpoint,model,key,client,DRAFT,json!({"sourceUnits":units,"readingBudget":reading_budget}),coverage::enabled(),start,&mut trace,"draft")?;
@@ -234,13 +235,13 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         if let Ok(original) = serde_json::from_str::<Document>(super::strip_code_fences(&draft).trim()) {
             restore_cited_assignments(&mut doc, &original, &units, &source);
         }
-        doc
+        (doc, None)
         };
         traced_document=Some(doc.clone());
-        let mut doc=if source_items::enabled() {
-            let doc=source_items::fill_omissions(endpoint,model,key,client,doc,&units,start,&mut trace)?;
-            traced_document=Some(doc.clone());
-            factual_audit::review_and_repair(endpoint,model,key,client,&doc,&units,start,&mut trace)?
+        let mut doc=if let Some(facts)=source_facts {
+            let checked=source_items::fill_omissions(endpoint,model,key,client,doc,&facts,&units,start,&mut trace)?;
+            traced_document=Some(checked.doc.clone());
+            factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&checked.doc,&units,&checked.conflicts,start,&mut trace)?
         }else if coverage::enabled(){
             let(audited,prepared,omissions,calls)=parallel_reviews(endpoint,model,key,client,&doc,&units,start);trace.extend(calls);check_current()?;
             let doc=audited?;traced_document=Some(doc.clone());
