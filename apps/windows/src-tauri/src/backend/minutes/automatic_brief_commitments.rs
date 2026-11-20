@@ -8,6 +8,7 @@ use super::{Action, Document, Entry, Kind, Unit, answer_layout::{Fact, Placement
 
 const PROMPT: &str = include_str!("automatic_brief_commitments.txt");
 const STANCE_PROMPT: &str = include_str!("automatic_brief_commitment_stance.txt");
+const EXECUTION_PROMPT: &str = include_str!("automatic_brief_execution_scope.txt");
 const INCOMPLETE: &str = "纪要定向核对没有返回完整证据，已有结果保留。";
 
 fn with_turn_labels(source: &[Value]) -> Vec<Value> {
@@ -222,7 +223,30 @@ fn decode_edits(candidates: &[Value], raw: &str, known: &SourceIndex<'_>, must_r
     Ok(result)
 }
 
-fn stance_checks(rows: &[Value], accepted: &HashMap<String, Fact>) -> Vec<Value> {
+fn statement_has_literal_commitment(text: &str, evidence: &Value, known: &SourceIndex<'_>) -> bool {
+    // An exact content-bearing requirement survives a mixed utterance. Only
+    // the surrounding optional proposals need the additional stance check.
+    let statement = super::normalized(text);
+    ["一定要", "必须", "不得", "不允许", "禁止"].iter().any(|marker| {
+        let Some((before, after)) = statement.split_once(marker) else { return false; };
+        let clause = after.trim_end_matches(['。', '！', '；', '.', '!']);
+        if clause.chars().count() < 5 || clause.contains(['，', '。', '；', ',', ';']) {
+            return false;
+        }
+        let subject: String = before.chars().rev().take(4).collect::<Vec<_>>().into_iter().rev().collect();
+        if subject.chars().count() < 4 { return false; }
+        let anchor = format!("{subject}{marker}{clause}");
+        evidence.as_array().unwrap().iter().filter_map(Value::as_str).any(|id| {
+            let quote = super::normalized(known[id]["text"].as_str().unwrap());
+            quote.match_indices(&anchor).any(|(start, _)| {
+                let lead: String = quote[..start].chars().rev().take(11).collect::<Vec<_>>().into_iter().rev().collect();
+                !["如果", "可以", "建议", "未定", "未确认", "有人提", "并非", "不是", "不", "考虑"].iter().any(|cue| lead.contains(cue))
+            })
+        })
+    })
+}
+
+fn stance_checks(rows: &[Value], accepted: &HashMap<String, Fact>, known: &SourceIndex<'_>) -> Vec<Value> {
     rows.iter().filter_map(|row| {
         let claim = &row["claim"];
         let proposed = accepted.get(row["id"].as_str().unwrap());
@@ -235,6 +259,9 @@ fn stance_checks(rows: &[Value], accepted: &HashMap<String, Fact>) -> Vec<Value>
             signal["checks"].as_array().unwrap().iter().any(|check| check == "可选方案及其条件")
         });
         if !risk || option || (!decision && (action || !financial_condition)) { return None; }
+        if proposed.is_none() && decision && statement_has_literal_commitment(text, &row["basis"], known) {
+            return None;
+        }
         let mut row = row.clone();
         if let Some(proposed) = proposed {
             row["claim"]["text"] = json!(&proposed.text);
@@ -242,6 +269,80 @@ fn stance_checks(rows: &[Value], accepted: &HashMap<String, Fact>) -> Vec<Value>
         }
         Some(row)
     }).collect()
+}
+
+fn execution_checks(rows: &[Value], accepted: &HashMap<String, Fact>, known: &SourceIndex<'_>) -> Vec<Value> {
+    static DURATION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:接下来|未来|计划|打算|准备).{0,12}?([一二两三四五六七八九十半0-9]{1,4}(?:个?月|年))"
+    ).unwrap());
+    static SPEAKER: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(r"^说话人[0-9]+").unwrap());
+    static FOLLOWUP: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"还有.{0,20}?(?:提到|说到)(?:这个|这项)?([\p{Han}0-9A-Za-z]{2,16}?)这个问题"
+    ).unwrap());
+    let mut checks = Vec::new();
+    for row in rows {
+        let path = row["id"].as_str().unwrap();
+        let claim = &row["claim"];
+        let proposed = accepted.get(path);
+        let text = proposed.map_or_else(|| claim["text"].as_str().unwrap(), |fact| fact.text.as_str());
+        let mut evidence = Vec::new();
+        if claim["kind"] == "forecast" && proposed.is_none() {
+            for id in row["basis"].as_array().unwrap().iter().filter_map(Value::as_str) {
+                let source = known[id];
+                let Some(speaker) = source["turnSpeaker"].as_str() else { continue; };
+                let Some(duration) = DURATION.captures(source["text"].as_str().unwrap()).and_then(|m| m.get(1)) else { continue; };
+                if SPEAKER.find(text).is_some_and(|actor| actor.as_str() != speaker) && text.contains(duration.as_str()) {
+                    evidence.push(json!({"kind":"timeSpeaker","evidence":id,"speaker":speaker,"duration":duration.as_str()}));
+                }
+            }
+        }
+        if let Some(fact) = proposed.filter(|fact| fact.placement == Placement::Action) {
+            for id in &fact.evidence {
+                let quote = known[id.as_str()]["text"].as_str().unwrap();
+                let Some(cue) = FOLLOWUP.captures(quote).and_then(|m| m.get(1)) else { continue; };
+                let condition = cue.as_str().trim_end_matches('儿');
+                if !text.contains(condition) {
+                    evidence.push(json!({"kind":"executionCondition","evidence":id,"condition":condition}));
+                }
+            }
+        }
+        if !evidence.is_empty() {
+            let mut packet = row.clone();
+            packet["requiredChecks"] = json!(evidence);
+            packet["claim"]["text"] = json!(text);
+            if let Some(fact) = proposed {
+                packet["claim"]["owner"] = json!(&fact.owner);
+                packet["claim"]["due"] = json!(&fact.due);
+            }
+            checks.push(packet);
+        }
+    }
+    checks
+}
+
+fn decode_execution(candidates: &[Value], raw: &str, known: &SourceIndex<'_>) -> Result<HashMap<String, Fact>, String> {
+    let fail = || "纪要仍有时间归属或执行条件未核对，已有结果保留。".to_owned();
+    let bound = decode_edits(candidates, raw, known, true)?;
+    if !bound.rejected.is_empty() { return Err(fail()); }
+    for row in candidates {
+        let fact = bound.accepted.get(row["id"].as_str().unwrap()).ok_or_else(fail)?;
+        for check in row["requiredChecks"].as_array().unwrap() {
+            if !fact.evidence.iter().any(|id| check["evidence"] == id.as_str()) {
+                return Err(fail());
+            }
+            if check["kind"] == "timeSpeaker" {
+                let Some(speaker) = check["speaker"].as_str() else { return Err(fail()); };
+                let attributed = fact.text.strip_prefix(speaker).and_then(|remainder| remainder.chars().next())
+                    .is_some_and(|next| !next.is_ascii_digit());
+                if fact.placement != Placement::Topic || !attributed
+                    || !fact.text.contains(check["duration"].as_str().unwrap()) { return Err(fail()); }
+            } else if fact.placement != Placement::Action || json!(&fact.owner) != row["claim"]["owner"]
+                || json!(&fact.due) != row["claim"]["due"] || !fact.text.contains(check["condition"].as_str().unwrap()) {
+                return Err(fail());
+            }
+        }
+    }
+    Ok(bound.accepted)
 }
 
 fn explicit_stance(quote: &str, statement: &str) -> bool {
@@ -383,11 +484,17 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
         }
         bound.accepted.extend(repaired.accepted);
     }
-    let stance = stance_checks(&rows, &bound.accepted);
+    let stance = stance_checks(&rows, &bound.accepted, &known);
     if !stance.is_empty() {
         let input = json!({"stanceChecks":stance,"sourceSentences":quotes_for(&stance)});
         let raw = super::request(endpoint,model,key,client,STANCE_PROMPT,input,false,start,trace,"source-commitment-stance")?;
         bound.accepted.extend(decode_stance(&stance, &raw, &known)?);
+    }
+    let execution = execution_checks(&rows, &bound.accepted, &known);
+    if !execution.is_empty() {
+        let input = json!({"executionChecks":execution,"sourceSentences":quotes_for(&execution)});
+        let raw = super::request(endpoint,model,key,client,EXECUTION_PROMPT,input,false,start,trace,"source-execution-scope")?;
+        bound.accepted.extend(decode_execution(&execution, &raw, &known)?);
     }
     let improved = apply(&verified.document, &rows, bound.accepted, &known, units)?;
     factual_audit::review_and_repair_since(endpoint,model,key,client,&improved,units,Some(&verified.document),start,trace)

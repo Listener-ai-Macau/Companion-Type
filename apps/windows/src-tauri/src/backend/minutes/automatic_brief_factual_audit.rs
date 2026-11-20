@@ -411,7 +411,7 @@ fn review_masks_only_an_exact_quote_marked_as_unresolved() {
         "租赁城市（已确认，不待核对）。");
 }
 
-fn demote_item(value: &mut Value, pointer: &str, units: &[Unit], preferred: Option<usize>) -> Option<()> {
+fn demote_item(value: &mut Value, pointer: &str, units: &[Unit], preferred: Option<usize>, source_first: bool) -> Option<()> {
     let item = value.pointer(pointer)?;
     let text = item["text"].as_str()?.to_owned();
     if !super::line(&text, 120) {
@@ -431,7 +431,8 @@ fn demote_item(value: &mut Value, pointer: &str, units: &[Unit], preferred: Opti
             .filter_map(|id| offsets.get(id.as_str()?))
             .flat_map(|offset| anchors.iter().map(move |anchor| offset.abs_diff(*anchor)))
             .min().unwrap_or(usize::MAX);
-        (Some(*index) != preferred, distance)
+        let differs = usize::from(Some(*index) != preferred);
+        if source_first { (distance, differs) } else { (differs, distance) }
     })?;
     target["details"].as_array_mut()?.push(json!({"text":text,"sources":sources}));
     Some(())
@@ -457,7 +458,7 @@ fn unique_repair_rows(edits: &[Value], allow_equal_echoes: bool) -> Option<Vec<&
 #[cfg(test)]
 fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,
     conservative:&HashMap<String,Vec<String>>,misplaced:&HashSet<String>,units:&[Unit])->Result<Document,String> {
-    apply_repair(raw,doc,allowed,unclear,conservative,misplaced,units).map(|repair| repair.document)
+    apply_repair(raw,doc,allowed,unclear,conservative,misplaced,units,false).map(|repair| repair.document)
 }
 
 struct AppliedRepair {
@@ -487,7 +488,7 @@ fn unresolved_action_fields(target: &Value, text: &str, rejected: &[String]) -> 
 }
 
 fn apply_repair(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,
-    conservative:&HashMap<String,Vec<String>>,misplaced:&HashSet<String>,units:&[Unit])->Result<AppliedRepair,String> {
+    conservative:&HashMap<String,Vec<String>>,misplaced:&HashSet<String>,units:&[Unit],source_first:bool)->Result<AppliedRepair,String> {
     let fail=||"纪要修正没有遵守受影响范围，已有结果保留。".to_string();
     let changes:Value=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|fail())?;
     let root=changes.as_object().ok_or_else(fail)?;
@@ -509,7 +510,7 @@ fn apply_repair(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet
             let text=row.get("text").and_then(Value::as_str).filter(|text|super::line(text,120)).ok_or_else(fail)?;
             let item=value.pointer_mut(&pointer).and_then(Value::as_object_mut).ok_or_else(fail)?;
             item.insert("text".into(), json!(text));
-            demote_item(&mut value, &pointer, units, Some(index)).ok_or_else(fail)?;
+            demote_item(&mut value, &pointer, units, Some(index), source_first).ok_or_else(fail)?;
             removals.push(pointer);
             continue;
         }
@@ -571,7 +572,7 @@ fn apply_repair(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet
         if removals.contains(&pointer) {
             continue;
         }
-        if !seen.contains(path.as_str()) || !independent_path(path) || demote_item(&mut value,&pointer,units,None).is_none() {
+        if !seen.contains(path.as_str()) || !independent_path(path) || demote_item(&mut value,&pointer,units,None,source_first).is_none() {
             return Err(fail());
         }
         removals.push(pointer);
@@ -736,12 +737,27 @@ fn undisputed_action_text(issues: &[Value], claims: &[Value]) -> Option<String> 
         }
         let body = claim["text"].as_str()?.strip_prefix(owner)?
             .trim_start_matches([' ', '，', ',', '：', ':']);
-        if body.chars().count() < 8 || body.contains(owner) {
+        if body.chars().count() < 8 || body.contains(owner) || body.starts_with(|ch: char| ch.is_ascii_digit()) {
             return None;
         }
         let body = body.trim_end_matches(['。', '！', '；', '.', ';']);
         let text = format!("{body}。负责人待核实。");
         super::line(&text, 180).then(|| json!({"path":issue["path"],"text":text}))
+    }).collect::<Option<Vec<_>>>()?;
+    (!changes.is_empty()).then(|| json!({"changes":changes}).to_string())
+}
+
+fn relocate_ownerless_requirements(issues: &[Value], claims: &[Value]) -> Option<String> {
+    let changes = issues.iter().map(|issue| {
+        let path = issue["path"].as_str()?;
+        if !path.starts_with("actionItems[") || issue["status"] != "overstated"
+            || issue["clarity"] != "clear" || issue["placementUnsupported"] != true {
+            return None;
+        }
+        let claim = claims.iter().find(|claim| claim["path"] == issue["path"])?;
+        let text = claim["text"].as_str()?;
+        (claim["owner"].is_null() && claim["due"].is_null() && super::line(text, 120))
+            .then(|| json!({"path":path,"text":text}))
     }).collect::<Option<Vec<_>>>()?;
     (!changes.is_empty()).then(|| json!({"changes":changes}).to_string())
 }
@@ -803,7 +819,7 @@ fn a_requested_move_respects_the_topic_detail_limit() {
     let mut doc = json!({"decisions":[{"text":"备选的交付方式。","sources":["u000"]}],
         "topics":[{"points":[{"text":"原议题","sources":["u000"]}],"details":full},
                   {"points":[{"text":"提交方案","sources":["u000"]}],"details":[]}]});
-    assert!(demote_item(&mut doc, "/decisions/0", &units, Some(0)).is_some());
+    assert!(demote_item(&mut doc, "/decisions/0", &units, Some(0), true).is_some());
     assert_eq!(doc["topics"][0]["details"].as_array().unwrap().len(), super::topic_details_limit());
     assert_eq!(doc["topics"][1]["details"][0]["text"], "备选的交付方式。");
 }
@@ -909,17 +925,20 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
         if super::source_items::enabled() {
             payload["roleCorrectionContract"]=json!("placementUnsupported为true的决定、交办或未决条目将由程序移出原栏目。仍有用的内容只返回path和120字内text，写清实际是意见、现状、设想或已回答的提问；程序保留出处并放入相关主题，之后独立复审。完全无依据、散会或重复无用条目可remove:true。不要在text内继续称已定案。只有需要指定补充主题且不含糊时，才附moveToTopic的已有主题下标。");
         }
-        let local = if super::source_items::enabled() && verified.is_some() {
-            undisputed_action_text(&issues, &audited_claims)
+        let scoped = super::source_items::enabled() && verified.is_some();
+        let local = if scoped {
+            undisputed_action_text(&issues, &audited_claims).map(|raw| (raw, "localUnclearActionRepair"))
+                .or_else(|| relocate_ownerless_requirements(&issues, &audited_claims)
+                    .map(|raw| (raw, "localOwnerlessRequirementMove")))
         } else { None };
         let raw = match local {
-            Some(raw) => {
-                if let Some(call) = trace.last_mut() { call["localUnclearActionRepair"] = json!(true); }
+            Some((raw, operation)) => {
+                if let Some(call) = trace.last_mut() { call[operation] = json!(true); }
                 raw
             },
             None => super::request(endpoint,model,key,client,REPAIR,payload.clone(),super::coverage::enabled(),start,trace,stage)?,
         };
-        let next=match apply_repair(&raw,&current,&allowed,&unclear,&conservative,&misplaced,units){
+        let next=match apply_repair(&raw,&current,&allowed,&unclear,&conservative,&misplaced,units,scoped){
             Ok(doc)=>doc,
             Err(reason)if super::coverage::enabled()&&!recovered_display&&reason.contains("须为")&&!oversized_repair_texts(&raw).is_empty()=>{
                 // An oversized patch has not been applied. Recover only its
@@ -930,7 +949,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
                 payload["instruction"]=json!("本次只缩短formatOnlyTextPaths列出的超长text，按repairContracts保留必要条件、否定、范围、人物及不确定性，不改kind/owner/due，不补事实、不截断原句。其它有效patch由程序原样保留，不要返回。只返回changes，每项仅path和text，列出的每个path恰好一次。随后仍会完整复审。");
                 let fixed=super::request(endpoint,model,key,client,REPAIR,payload,true,start,trace,&format!("{stage}-length-recovery"))?;
                 let merged=merge_shorter_repair_texts(&raw,&fixed,&paths)?;
-                apply_repair(&merged,&current,&allowed,&unclear,&conservative,&misplaced,units)?
+                apply_repair(&merged,&current,&allowed,&unclear,&conservative,&misplaced,units,scoped)?
             },
             Err(reason)=>return Err(reason),
         };
