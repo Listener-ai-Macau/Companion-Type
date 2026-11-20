@@ -575,6 +575,19 @@ fn contextual_measure_witness(span: &str, claim: &Value, source: &str) -> bool {
             return true;
         }
     }
+    if span == "一年" {
+        let mut occurrences = source.match_indices(span).peekable();
+        if occurrences.peek().is_some() && occurrences.all(|(start, term)| source[start + term.len()..].starts_with("四季")) {
+            return true;
+        }
+    }
+    if span == "半个月" && claim["kind"] != "action" && claim["kind"] != "decision"
+        && (source.contains("如果") || source.contains("大约") || source.contains("大概"))
+        && measure_has_witness("十五天", claim) {
+        // Conversational estimates can use half a month or fifteen days.
+        // A deadline or a finalized arrangement still needs its own wording.
+        return true;
+    }
     if measure_has_witness(span, claim) { return true; }
     let Some((value, "年")) = measures(span).next() else { return false; };
     let occurrences: Vec<_> = source.match_indices(span).map(|(start, word)| {
@@ -686,6 +699,9 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
             })) && target.and_then(|row| row["text"].as_str())
                 .is_some_and(|text| coverage_quote_is_grounded(&proof.statement_quote, text))
         });
+        let measure_matches = target.is_some_and(|claim| {
+            contextual_measure_witness(context["cue"]["span"].as_str().unwrap(), claim, source_text)
+        });
         let omitted_qualification = restriction().find_iter(source_text).find(|hit| {
             !hit.as_str().ends_with(['吗', '么', '呢'])
                 && !(hit.as_str().starts_with("没有") && source_text[..hit.start()].ends_with('有'))
@@ -693,10 +709,12 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
             context["sourceNeedsCheck"] == true && !target.and_then(|row| row["text"].as_str())
                 .is_some_and(|text| restriction().is_match(text))
         });
-        if grounded && omitted_qualification.is_none() { return None; }
+        if grounded && measure_matches && omitted_qualification.is_none() { return None; }
         let mut issue = context.clone();
         issue["previousClaim"] = json!(claim);
-        issue["reason"] = json!(if omitted_qualification.is_some() {
+        issue["reason"] = json!(if !measure_matches {
+            "该正文未保留原话的同一数量或时长。若原话数字只是口语描述、例子或含混片段，应说明其性质；若关乎实际理解或执行，补入正确事实或写待核实。"
+        } else if omitted_qualification.is_some() {
             "原话有明确的限制或不足，所指正文只写了其他内容，未表达这条限制。"
         } else { "必须分别提供原话与现有正文实际出现的同一事实短句。" });
         if let Some(qualification) = omitted_qualification {
