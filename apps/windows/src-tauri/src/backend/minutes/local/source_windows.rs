@@ -1136,6 +1136,9 @@ mod tests {
                     assert!(!at("e0029").any(|fact| fact.text.contains("仅代表我们各部门")));
                     assert!(at("e0303").any(|fact| fact.text.contains("好像是两天到三天") && matches!(fact.kind, Kind::Forecast)));
                     assert!(owns("e0343", "各部门"));
+                    assert!(at("e0343").any(|fact| fact.placement == Placement::Action
+                        && fact.text.contains("员工个人身体问题")
+                        && fact.evidence.iter().any(|id|id=="e0342")));
                     assert!(owns("e0349", "总监"));
                 }
                 _ => unreachable!(),

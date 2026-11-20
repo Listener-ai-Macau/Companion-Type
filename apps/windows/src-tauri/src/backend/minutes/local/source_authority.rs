@@ -203,6 +203,24 @@ pub(super) fn spoken_assignment(source: &str) -> Option<crate::companion_v1::Com
     })
 }
 
+pub(super) fn explicit_followup_object(assignment: &str, source: &str, previous: &str) -> Option<String> {
+    static SUBJECT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:员工|客户|学员|供应商|产品|设备|现场|门店)[\p{Han}]{1,10}?(?:问题|情况|状态)"
+    ).unwrap());
+    if !has(source, &["这个事情", "这件事", "这个问题", "这一点"]) {
+        return None;
+    }
+    let (prefix, verb) = ["调查", "核实", "核对", "检查"].into_iter().find_map(|verb| {
+        let (prefix, end) = assignment.rsplit_once(verb)?;
+        matches!(end.trim_end_matches(['。', ' ']), "" | "下" | "一下" | "一下儿")
+            .then_some((prefix, verb))
+    })?;
+    let mut subjects = SUBJECT.find_iter(previous);
+    let subject = subjects.next().filter(|_| subjects.next().is_none())?.as_str();
+    let joined = format!("{prefix}{verb}{subject}");
+    canonical_brief::line(&joined, 90).then_some(joined)
+}
+
 pub(super) fn protected_stance(source: &str) -> Option<&'static str> {
     // A speaker can make a proposal, estimate or judgment without saying
     // “I think”. The role is governed by the original clause, not by the model.

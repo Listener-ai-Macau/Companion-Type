@@ -125,7 +125,7 @@ fn source_verified_facts(
 
     let mut verified = Vec::new();
     let mut audit = Vec::new();
-    for sentence in sentences {
+    for (index, sentence) in sentences.iter().enumerate() {
         let id = sentence["id"].as_str().unwrap();
         let original = known[id];
         let mut current = by_anchor.remove(id).unwrap_or_default();
@@ -145,16 +145,27 @@ fn source_verified_facts(
             fact.source_needs_review = true;
             audit.push(json!({"sentenceId":id,"reason":"unclear-supporting-reference"}));
         }
-        if let Some(action) = source_authority::spoken_assignment(original) {
+        if let Some(mut action) = source_authority::spoken_assignment(original) {
             if !current.iter().any(|item| item.role == "action") {
+                let literal_task = canonical_brief::normalized(&action.text);
+                let related = index.checked_sub(1).and_then(|previous| {
+                    let anchor = sentences[previous]["id"].as_str()?;
+                    source_authority::explicit_followup_object(&action.text, original, known[anchor])
+                        .map(|description| (anchor, description))
+                });
+                if let Some((_, description)) = &related {
+                    action.text = description.clone();
+                }
                 let text = action.text.clone();
-                verified.push(ExtractedFact::original_action(id, &text, action));
+                let mut fact = ExtractedFact::original_action(id, &text, action);
+                if let Some((anchor, _)) = related {
+                    fact.evidence.push(anchor.to_owned());
+                }
+                verified.push(fact);
                 audit.push(json!({"sentenceId":id,"reason":"explicit-spoken-assignment"}));
                 // Keep other matters that happened to be spoken before the
                 // assignment. The bank stores the task itself only once.
-                current.retain(|item| !verified.last().is_some_and(|action| {
-                    canonical_brief::normalized(&item.text).contains(&canonical_brief::normalized(&action.text))
-                }));
+                current.retain(|item| !canonical_brief::normalized(&item.text).contains(&literal_task));
             }
         }
 
