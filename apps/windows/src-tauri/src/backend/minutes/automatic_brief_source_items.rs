@@ -9,13 +9,14 @@ use serde::Deserialize;
 use serde_json::{Value, json};
 
 use super::{
-    Document, Kind, Unit,
+    Action, Document, Entry, Kind, Unit,
     answer_layout::{self, Fact, Placement},
     factual_audit, line, normalized,
 };
 
 const EXTRACT: &str = include_str!("automatic_brief_source_items.txt");
 const ORGANIZE: &str = include_str!("automatic_brief_source_item_layout.txt");
+const FIND_MISSING: &str = include_str!("automatic_brief_source_item_missing.txt");
 const WINDOW_BYTES: usize = 13 * 1024;
 const WINDOW_WORKERS: usize = 3;
 const FACT_LIMIT: usize = 128;
@@ -61,6 +62,39 @@ struct SourceItem {
     due: Option<String>,
 }
 
+impl SourceItem {
+    fn bind(self, known: &HashMap<&str, &Value>, known_ids: &HashSet<&str>) -> Result<Fact, String> {
+        let (kind, placement) = self.role.category();
+        if !line(&self.text, 90) || self.evidence.is_empty() || self.evidence.len() > 8 {
+            return Err("纪要事项格式不完整，已有纪要和原文保留。".into());
+        }
+        let evidence = self.evidence.iter().map(|id| {
+            factual_audit::canonical_sentence_reference(id, known_ids)
+                .ok_or_else(|| "纪要事项引用了未提供的原话。".to_string())
+        }).collect::<Result<Vec<_>, _>>()?;
+        let mut seen = HashSet::new();
+        let evidence: Vec<_> = evidence.into_iter().filter(|id| seen.insert(id.clone())).collect();
+        let snippets: Vec<_> = evidence.iter().map(|id| known[id.as_str()]["text"].as_str().unwrap()).collect();
+        let owner = self.owner.filter(|owner| line(owner, 80) && snippets.iter()
+            .any(|text| normalized(text).contains(&normalized(owner))));
+        let (text, owner, due) = if placement == Placement::Action {
+            let due = self.due.filter(|due| line(due, 80) && snippets.iter()
+                .any(|text| due_is_bound(text, due)));
+            (self.text, owner, due)
+        } else {
+            // A speaker label is not a work assignment. Preserve an exact
+            // speaking label as attribution where it is absent.
+            let text = owner.as_deref().filter(|name| matches!(kind, Kind::Opinion | Kind::Recommendation | Kind::Forecast)
+                && !self.text.contains(name)
+                && snippets.iter().any(|source| source.split_once([':', '：'])
+                    .is_some_and(|(label, _)| label.trim() == *name)))
+                .map(|name| format!("{name}表示，{}", self.text));
+            (text.filter(|text| line(text, 90)).unwrap_or(self.text), None, None)
+        };
+        Ok(Fact {id: String::new(), kind, placement, text, owner, due, evidence})
+    }
+}
+
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct SourceAnswer {
@@ -85,8 +119,25 @@ struct TopicIds {
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct Layout {
+    #[serde(default, rename = "type")]
+    _format: super::ResponseFormatMarker,
     purpose: String,
     topics: Vec<TopicIds>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct MissingItems {
+    #[serde(default, rename = "type")]
+    _format: super::ResponseFormatMarker,
+    additions: Vec<MissingItem>,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct MissingItem {
+    item: SourceItem,
+    topic: Option<String>,
 }
 
 fn parse<T: serde::de::DeserializeOwned>(raw: &str) -> Result<T, String> {
@@ -166,41 +217,16 @@ impl Window<'_> {
         let mut normalized_topic_metadata = 0;
         for unit in self.core {
             for item in by_id.remove(&unit.id).ok_or_else(missing)? {
-                let (kind, placement) = item.role.category();
-                if !line(&item.text, 90) || item.evidence.is_empty() || item.evidence.len() > 8 {
-                    return Err("纪要事项格式不完整，已有纪要和原文保留。".into());
-                }
-                let evidence = item.evidence.iter().map(|id| {
-                    factual_audit::canonical_sentence_reference(id, &known_ids)
-                        .ok_or_else(|| "纪要事项引用了未提供的原话。".to_string())
-                }).collect::<Result<Vec<_>, _>>()?;
-                if !evidence.iter().any(|id| primary.contains(known[id.as_str()]["source"].as_str().unwrap())) {
+                let has_metadata = item.owner.is_some() || item.due.is_some();
+                let fact = item.bind(&known, &known_ids)?;
+                if !fact.evidence.iter().any(|id| primary.contains(known[id.as_str()]["source"].as_str().unwrap())) {
                     ignored_neighbor_only_items += 1;
                     continue;
                 }
-                let snippets: Vec<_> = evidence.iter().map(|id| known[id.as_str()]["text"].as_str().unwrap()).collect();
-                let has_metadata = item.owner.is_some() || item.due.is_some();
-                let owner = item.owner.filter(|owner| line(owner, 80) && snippets.iter()
-                    .any(|text| normalized(text).contains(&normalized(owner))));
-                let due = item.due.filter(|due| line(due, 80) && snippets.iter()
-                    .any(|text| due_is_bound(text, due)));
-                let (text, owner, due) = if placement == Placement::Action {
-                    (item.text, owner, due)
-                } else {
-                    if has_metadata {
-                        normalized_topic_metadata += 1;
-                    }
-                    // A speaker label is not a work assignment. Preserve an
-                    // exact speaking label as attribution where it is absent.
-                    let text = owner.as_deref().filter(|name| matches!(kind, Kind::Opinion | Kind::Recommendation | Kind::Forecast)
-                        && !item.text.contains(name)
-                        && snippets.iter().any(|source| source.split_once([':', '：'])
-                            .is_some_and(|(label, _)| label.trim() == *name)))
-                        .map(|name| format!("{name}表示，{}", item.text));
-                    let text = text.filter(|text| line(text, 90)).unwrap_or(item.text);
-                    (text, None, None)
-                };
-                facts.push(Fact {id: String::new(), kind, placement, text, owner, due, evidence});
+                if has_metadata && fact.placement != Placement::Action {
+                    normalized_topic_metadata += 1;
+                }
+                facts.push(fact);
                 if facts.len() > FACT_LIMIT {
                     return Err("纪要分段返回的事项超过整理容量，完整原文保留。".into());
                 }
@@ -250,6 +276,63 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<Document, Strin
         "actionItems":placed(Placement::Action),"questions":placed(Placement::Question),"excluded":[]});
     answer_layout::assemble_with_details_limit(&mapped.to_string(), facts, units, DETAILS_LIMIT, FACT_LIMIT)
         .map(|assembled| assembled.document)
+}
+
+fn append_missing(raw: &str, mut doc: Document, units: &[Unit], evidence: &[Value]) -> Result<Document, String> {
+    let missing: MissingItems = parse(raw)?;
+    if missing.additions.len() > 4 {
+        return Err("纪要本轮漏项核对超出补充范围，已有纪要保留。".into());
+    }
+    let known: HashMap<_, _> = evidence.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
+    let known_ids = known.keys().copied().collect();
+    let mut represented: HashSet<_> = doc.topics.iter().flat_map(|topic| {
+        topic.points.iter().map(|entry| normalized(&entry.text))
+            .chain(topic.details.iter().map(|entry| normalized(&entry.text)))
+    }).chain(doc.decisions.iter().map(|entry| normalized(&entry.text)))
+        .chain(doc.questions.iter().map(|entry| normalized(&entry.text))).collect();
+    for addition in missing.additions {
+        let fact = addition.item.bind(&known, &known_ids)?;
+        let mut selected = HashSet::new();
+        let sources: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]["source"].as_str().unwrap())
+            .filter(|id| selected.insert(*id)).map(str::to_owned).collect();
+        let key = normalized(&fact.text);
+        if fact.placement == Placement::Action {
+            if addition.topic.is_some() {
+                return Err("补充交办的栏目无效，已有纪要保留。".into());
+            }
+            if !doc.action_items.iter().any(|action| normalized(&action.text) == key
+                && action.owner == fact.owner && action.due == fact.due)
+            {
+                doc.action_items.push(Action { text:fact.text, owner:fact.owner, due:fact.due, sources });
+            }
+            continue;
+        }
+        if !represented.insert(key) {
+            continue;
+        }
+        let entry = Entry {text:fact.text, sources, quantity_needs_review:false};
+        match (fact.placement, addition.topic) {
+            (Placement::Topic, Some(title)) => {
+                let topic = doc.topics.iter_mut().find(|topic| topic.title == title)
+                    .ok_or("补充事项没有对应的原议题，已有纪要保留。")?;
+                topic.details.push(entry);
+            }
+            (Placement::Decision, None) => doc.decisions.push(entry),
+            (Placement::Question, None) => doc.questions.push(entry),
+            _ => return Err("补充事项的栏目无效，已有纪要保留。".into()),
+        }
+    }
+    super::validate(&doc, units)?;
+    Ok(doc)
+}
+
+pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &reqwest::blocking::Client,
+    doc: Document, units: &[Unit], start: Instant, trace: &mut Vec<Value>) -> Result<Document, String>
+{
+    let evidence = factual_audit::evidence_sentences(units);
+    let raw = super::request(endpoint, model, key, client, FIND_MISSING,
+        json!({"sourceSentences":evidence,"currentBrief":doc}), true, start, trace, "source-items-omissions")?;
+    append_missing(&raw, doc, units, &evidence)
 }
 
 pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest::blocking::Client,
@@ -372,6 +455,27 @@ mod tests {
         assert_eq!(result.facts[0].text, "说话人2表示，面料要透气。");
         assert!(result.facts[0].owner.is_none());
         assert!(window.decode(&raw.replace("u001","u999")).is_err());
+    }
+
+    #[test]
+    fn source_omissions_preserve_prior_items_and_require_real_evidence() {
+        let units = vec![Unit { id:"u000".into(),
+            text:"讨论校服。\n采购组周五前提交面料清单。\n运动服预算未通过。".into() }];
+        let evidence = factual_audit::evidence_sentences(&units);
+        let doc: Document = serde_json::from_value(json!({"purpose":"讨论校服",
+            "topics":[{"title":"校服筹备","points":[{"kind":"status","text":"讨论校服。","sources":["u000"]}],
+                "details":[]}],"decisions":[],"actionItems":[],"questions":[]})).unwrap();
+        let raw = json!({"additions":[
+            {"topic":"校服筹备","item":{"role":"status","text":"运动服预算未通过。","evidence":["e0002"]}},
+            {"topic":null,"item":{"role":"action","text":"提交面料清单。","owner":"采购组","due":"周五前","evidence":["e0001"]}},
+            {"topic":"校服筹备","item":{"role":"status","text":"讨论校服。","evidence":["e0000"]}}
+        ]}).to_string();
+        let enriched = append_missing(&raw, doc.clone(), &units, &evidence).unwrap();
+        assert_eq!(enriched.topics[0].points[0].text, doc.topics[0].points[0].text);
+        assert_eq!(enriched.topics[0].details.len(), 1);
+        assert_eq!(enriched.topics[0].details[0].text, "运动服预算未通过。");
+        assert_eq!(enriched.action_items[0].due.as_deref(), Some("周五前"));
+        assert!(append_missing(&raw.replace("e0002","e9999"), doc, &units, &evidence).is_err());
     }
 
     #[test]

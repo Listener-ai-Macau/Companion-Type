@@ -237,7 +237,11 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         doc
         };
         traced_document=Some(doc.clone());
-        let mut doc=if coverage::enabled()&&!source_items::enabled(){
+        let mut doc=if source_items::enabled() {
+            let doc=source_items::fill_omissions(endpoint,model,key,client,doc,&units,start,&mut trace)?;
+            traced_document=Some(doc.clone());
+            factual_audit::review_and_repair(endpoint,model,key,client,&doc,&units,start,&mut trace)?
+        }else if coverage::enabled(){
             let(audited,prepared,omissions,calls)=parallel_reviews(endpoint,model,key,client,&doc,&units,start);trace.extend(calls);check_current()?;
             let doc=audited?;traced_document=Some(doc.clone());
             let prepared=coverage::combine_omissions(prepared?,omissions?)?;
@@ -259,7 +263,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
     if let Ok(path)=std::env::var("COMPANION_TYPE_AUTOMATIC_BRIEF_TRACE_PATH") {
         if !path.is_empty(){if let Ok(mut f)=std::fs::OpenOptions::new().write(true).create_new(true).open(path) {
             use std::io::Write;
-            let flow=if source_items::enabled(){"windowed source items, ID-only organization, independent factual audit"}
+            let flow=if source_items::enabled(){"windowed source items, ID-only organization, direct source omission scan, independent factual audit"}
                 else if coverage::enabled(){"source-only draft, independent factual audit and grounded question coverage"}
                 else{"source-only draft then reviewed canonical brief"};
             let _=serde_json::to_vec_pretty(&json!({"flow":flow,"calls":trace,"acceptedStructure":outcome.is_ok(),"document":traced_document,"error":outcome.as_ref().err(),"sourceUnitCount":units.len(),"constraintCount":anchors.len(),"sourceConstraints":anchors,"seconds":start.elapsed().as_secs_f64(),"thinkingContentStored":false,"semanticAccuracyCertificate":false})).map(|v|f.write_all(&v));
