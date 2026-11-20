@@ -1106,8 +1106,10 @@ mod tests {
             assert!(excerpts > 0);
             let bank = super::super::atomic_document::build_bank(facts, &source).unwrap();
             assert!(!bank.facts.is_empty());
-            use super::super::super::automatic_brief::answer_layout::{Kind, Placement};
-            let at = |anchor: &str| bank.facts.iter().filter(|fact| fact.evidence[0] == anchor);
+            use super::super::super::automatic_brief::answer_layout::Placement;
+            use canonical_brief::Kind;
+            let at = |anchor: &str| bank.facts.iter().filter(|fact| fact.evidence[0] == anchor)
+                .collect::<Vec<_>>().into_iter();
             let owns = |anchor: &str, owner: &str| at(anchor).any(|fact|
                 fact.placement == Placement::Action && fact.owner.as_deref() == Some(owner) && fact.due.is_none());
             match case {
