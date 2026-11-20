@@ -136,7 +136,8 @@ impl<'a> SourceBindings<'a> {
             let cost = fact.evidence.iter().find_map(|id| {
                 let text = self.by_id.get(id.as_str())?["text"].as_str()?.trim();
                 if !text.contains("成本") { return None; }
-                let quote = text.split_once("还有").map_or(text, |(head, _)| head);
+                let (_, text) = super::super::source_resolution::split_turn_label(text)?;
+                let quote = text.split_once("还有").map_or(text, |(head, _)| head).trim();
                 line(quote, 53).then_some((id, quote))
             });
             if has_cost && cost.is_none() {
@@ -154,7 +155,7 @@ impl<'a> SourceBindings<'a> {
                     evidence: vec![id.clone()] });
             }
             if let Some((cost_id, quote)) = cost.filter(|_| has_cost) {
-                output.push(Fact { id: format!("{}-cost", fact.id), kind: Kind::Status, placement: Placement::Topic,
+                output.push(Fact { id: format!("{}-cost", fact.id), kind: Kind::Status, placement: Placement::Question,
                     text: format!("会上另提到「{quote}」，各方案的成本要求待核实。"), owner: None, due: None,
                     evidence: vec![id.clone(), cost_id.clone()] });
             }

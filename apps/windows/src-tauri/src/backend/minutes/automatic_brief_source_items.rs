@@ -385,9 +385,9 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
     let mut moved = Vec::new();
     for (id, before, after) in &renamed {
         let current = layout.topics.iter().position(|topic| {
-            topic.title.contains(before) && topic.points.iter().chain(&topic.details).any(|item| item == id)
+            topic.title.starts_with(before) && topic.points.iter().chain(&topic.details).any(|item| item == id)
         });
-        let correct = layout.topics.iter().position(|topic| topic.title.contains(after) && topic.details.len() < DETAILS_LIMIT);
+        let correct = layout.topics.iter().position(|topic| topic.title.starts_with(after) && topic.details.len() < DETAILS_LIMIT);
         let (Some(current), Some(correct)) = (current, correct) else { continue; };
         if current == correct {
             continue;
