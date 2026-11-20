@@ -356,4 +356,32 @@ mod tests {
             assert_eq!(result.unwrap().0, "Controlled final");
         }
     }
+
+    #[test]
+    fn saved_hourly_meeting_rejects_reported_short_finals() {
+        use super::*;
+
+        let cases = [
+            (vec![server_frame(r#"{"result":{"text":"a misleading partial"},"audio_info":{"duration":96}}"#, true)], false),
+            (vec![server_frame(r#"{"result":{"additions":{}},"audio_info":{"duration":96}}"#, true)], false),
+            (vec![
+                server_frame(r#"{"result":{"text":"a misleading partial"},"audio_info":{"duration":96}}"#, true),
+                server_frame(r#"{"result":{"text":"Full text"},"audio_info":{"duration":199}}"#, true),
+            ], true),
+        ];
+        for (frames, expect_full) in cases {
+            let (endpoint, worker) = fixture(frames).unwrap();
+            let mut client = provider(endpoint);
+            client.credentials.resource_id = HOURLY_V1_RESOURCE.into();
+            let result = client.transcribe_saved_meeting_pcm_bytes(&vec![0; SAVED_MEETING_AUDIO_CHUNK_BYTES]);
+            worker.join().unwrap().unwrap();
+            if expect_full {
+                assert_eq!(result.unwrap().0, "Full text");
+            } else {
+                let error = result.unwrap_err();
+                assert!(error.contains("covers less audio"));
+                assert!(!is_no_speech_error(&error));
+            }
+        }
+    }
 }

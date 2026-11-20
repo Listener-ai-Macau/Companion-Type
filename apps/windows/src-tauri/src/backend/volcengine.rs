@@ -314,7 +314,7 @@ impl VolcengineSaucAsr {
             let silence = vec![0u8; 32_000];
             tokio::time::timeout(
                 Duration::from_secs(25),
-                self.transcribe_pcm_inner(&silence, true, TARGET_AUDIO_CHUNK_BYTES),
+                self.transcribe_pcm_inner(&silence, true, TARGET_AUDIO_CHUNK_BYTES, None),
             ).await
                 .map_err(|_| "connection test timed out".to_string())?
                 .map(|_| ())
@@ -575,23 +575,22 @@ impl VolcengineSaucAsr {
     }
 
     pub(crate) fn transcribe_pcm_bytes(&self, pcm: &[u8]) -> Result<(String, Vec<Utterance>), String> {
-        self.transcribe_pcm_with_packet_bytes(pcm, TARGET_AUDIO_CHUNK_BYTES)
+        self.transcribe_pcm_with_packet_bytes(pcm, TARGET_AUDIO_CHUNK_BYTES, None)
     }
 
     /// Pace each owned saved-meeting chunk at the verified rate. Cached audio
     /// identity and recognition parameters are independent of packet size.
     pub(crate) fn transcribe_saved_meeting_pcm_bytes(&self, pcm: &[u8]) -> Result<(String, Vec<Utterance>), String> {
-        let packet_bytes = if self.credentials.resource_id.eq_ignore_ascii_case(HOURLY_V1_RESOURCE)
-            && pcm.len() <= MAX_ACCELERATED_MEETING_PCM_BYTES
-        {
+        let hourly_v1 = self.credentials.resource_id.eq_ignore_ascii_case(HOURLY_V1_RESOURCE);
+        let packet_bytes = if hourly_v1 && pcm.len() <= MAX_ACCELERATED_MEETING_PCM_BYTES {
             SAVED_MEETING_AUDIO_CHUNK_BYTES
         } else {
             TARGET_AUDIO_CHUNK_BYTES
         };
-        self.transcribe_pcm_with_packet_bytes(pcm, packet_bytes)
+        self.transcribe_pcm_with_packet_bytes(pcm, packet_bytes, hourly_v1.then_some(pcm.len() as u64 / 32))
     }
 
-    fn transcribe_pcm_with_packet_bytes(&self, pcm: &[u8], packet_bytes: usize) -> Result<(String, Vec<Utterance>), String> {
+    fn transcribe_pcm_with_packet_bytes(&self, pcm: &[u8], packet_bytes: usize, expected_duration_ms: Option<u64>) -> Result<(String, Vec<Utterance>), String> {
         let deadline = Duration::from_secs((pcm.len() as u64 / 32_000).saturating_add(60)).min(BATCH_REQUEST_MAX_DURATION);
         // The transcription path is normally reached from a Tauri
         // spawn_blocking thread (no runtime context). Be defensive anyway: if
@@ -599,7 +598,7 @@ impl VolcengineSaucAsr {
         // instead of panicking on nested runtime creation.
         if let Ok(handle) = tokio::runtime::Handle::try_current() {
             return tokio::task::block_in_place(move || handle.block_on(async {
-                tokio::time::timeout(deadline, self.transcribe_pcm_inner(pcm, false, packet_bytes)).await
+                tokio::time::timeout(deadline, self.transcribe_pcm_inner(pcm, false, packet_bytes, expected_duration_ms)).await
                     .map_err(|_| "Volcengine request timed out".to_string())?
             }));
         }
@@ -608,11 +607,11 @@ impl VolcengineSaucAsr {
             .enable_all()
             .build()
             .map_err(|e| format!("build tokio runtime: {e}"))?;
-        runtime.block_on(async { tokio::time::timeout(deadline, self.transcribe_pcm_inner(pcm, false, packet_bytes)).await
+        runtime.block_on(async { tokio::time::timeout(deadline, self.transcribe_pcm_inner(pcm, false, packet_bytes, expected_duration_ms)).await
             .map_err(|_| "Volcengine request timed out".to_string())? })
     }
 
-    async fn transcribe_pcm_inner(&self, pcm: &[u8], probe: bool, packet_bytes: usize) -> Result<(String, Vec<Utterance>), String> {
+    async fn transcribe_pcm_inner(&self, pcm: &[u8], probe: bool, packet_bytes: usize, expected_duration_ms: Option<u64>) -> Result<(String, Vec<Utterance>), String> {
         if pcm.is_empty() {
             return Err("Volcengine ASR received empty PCM".to_string());
         }
@@ -683,7 +682,7 @@ impl VolcengineSaucAsr {
         let audio_ended = Arc::new(AtomicBool::new(false));
         let audio_ended_r = Arc::clone(&audio_ended);
         let _receiver_task = ReceiveTask(tokio::spawn(async move {
-            let outcome = run_receive_loop(&mut read, probe, audio_ended_r).await;
+            let outcome = run_receive_loop(&mut read, probe, audio_ended_r, expected_duration_ms).await;
             let _ = final_tx.send(outcome);
         }));
 
@@ -785,11 +784,13 @@ async fn run_receive_loop<S>(
     read: &mut S,
     allow_silent_probe: bool,
     audio_ended: Arc<AtomicBool>,
+    expected_duration_ms: Option<u64>,
 ) -> Result<(String, Vec<Utterance>), String>
 where S: futures::Stream<Item = Result<Message, tokio_tungstenite::tungstenite::Error>> + Unpin,
 {
     let mut empty_final_after_audio = false;
     let mut premature_text_final = false;
+    let mut shortened_final = false;
     while let Some(msg) = read.next().await {
         match msg {
             Ok(Message::Binary(data)) => {
@@ -833,13 +834,19 @@ where S: futures::Stream<Item = Result<Message, tokio_tungstenite::tungstenite::
                     // flag while the audio stream is still active. Treating
                     // those as the session result races long inputs and
                     // produces the misleading "final frame with no text".
+                    let explicit_empty = parsed.is_final() && explicit_empty_recognition(&json, text.as_deref());
+                    if parsed.is_final() && (response_has_content || explicit_empty) &&
+                        reported_duration_is_short(&json, expected_duration_ms)
+                    {
+                        shortened_final = true;
+                        continue;
+                    }
                     if parsed.is_final() && (response_has_content || (allow_silent_probe && text.is_some())) {
                         // A final frame is authoritative. Never combine it
                         // with text or speaker timings from an earlier partial.
                         return Ok((text.unwrap_or_default(), extract_utterances(&json)));
                     }
-                    if parsed.is_final() && explicit_empty_recognition(&json, text.as_deref()) &&
-                       audio_ended.load(Ordering::Acquire) {
+                    if explicit_empty && audio_ended.load(Ordering::Acquire) {
                         // Seed may send an empty control final even after EOS,
                         // followed by the real result. Wait for that result or
                         // a normal close; a timeout/transport error stays an
@@ -859,9 +866,19 @@ where S: futures::Stream<Item = Result<Message, tokio_tungstenite::tungstenite::
         }
     }
     if premature_text_final { return Err("Volcengine final arrived before complete audio input".into()); }
+    if shortened_final { return Err("Volcengine final covers less audio than the saved recording; original audio preserved".into()); }
     if empty_final_after_audio { return Err(NO_SPEECH_ERROR.into()); }
     Err(if allow_silent_probe { "connection test closed without a valid final response" }
         else { "Volcengine connection closed without a final result" }.into())
+}
+
+fn reported_duration_is_short(json: &Value, expected_ms: Option<u64>) -> bool {
+    let reported = json.get("audio_info")
+        .and_then(|audio| value_millis(audio, &["duration"]))
+        .and_then(|duration| u64::try_from(duration).ok());
+    // The provider exposes integer milliseconds. Permit one millisecond of
+    // rounding, and keep compatibility with responses without audio metadata.
+    matches!((reported, expected_ms), (Some(actual), Some(expected)) if actual.saturating_add(1) < expected)
 }
 
 /// Live receive loop: notify on every non-empty hypothesis; exit on final/close.
@@ -1341,7 +1358,7 @@ mod tests {
                 let mut messages=futures::stream::iter(rows).map(move |(complete,msg)|{flag.store(complete,Ordering::Release);msg});
                 let mut seen=Vec::new();
                 let error=if live {run_receive_loop_live(&mut messages,|x|seen.push(x.to_string()),ended).await.unwrap_err()}
-                    else {run_receive_loop(&mut messages,false,ended).await.unwrap_err()};
+                    else {run_receive_loop(&mut messages,false,ended,None).await.unwrap_err()};
                 assert!(seen.is_empty());assert!(!is_no_speech_error(&error));
                 assert!(error.contains("before complete audio input"));
             }}
@@ -1362,7 +1379,7 @@ mod tests {
                     let mut seen=Vec::new();run_receive_loop_live(&mut messages,|x|seen.push(x.to_string()),ended).await.unwrap();
                     assert_eq!(seen,["complete answer"],"early final text cannot be presented as a completed result");
                 } else {
-                    assert_eq!(run_receive_loop(&mut messages,false,ended).await.unwrap().0,"complete answer",
+                    assert_eq!(run_receive_loop(&mut messages,false,ended,None).await.unwrap().0,"complete answer",
                         "early final cannot hide later complete text");
                 }
             }
@@ -1390,12 +1407,12 @@ mod tests {
                         let mut received=Vec::new();
                         run_receive_loop_live(&mut messages,|text|received.push(text.to_string()),ended).await.unwrap();
                         assert_eq!(received,["actual final text"]);
-                    } else {assert_eq!(run_receive_loop(&mut messages,false,ended).await.unwrap().0,"actual final text");}
+                    } else {assert_eq!(run_receive_loop(&mut messages,false,ended,None).await.unwrap().0,"actual final text");}
                 }
             }
 
             let mut messages = futures::stream::iter(vec![response(empty)]);
-            let error = run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(true))).await.unwrap_err();
+            let error = run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(true)), None).await.unwrap_err();
             assert!(is_no_speech_error(&error));
             let mut messages = futures::stream::iter(vec![response(empty)]);
             assert!(is_no_speech_error(&run_receive_loop_live(&mut messages, |_| panic!("no partial text"),
@@ -1405,35 +1422,35 @@ mod tests {
             // connection failure, even after upload. Silent probes remain separate.
             for body in [b"{}".as_slice(), empty] {
                 let mut messages = futures::stream::iter(vec![response(body)]);
-                let error = run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(false))).await.unwrap_err();
+                let error = run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(false)), None).await.unwrap_err();
                 assert!(!is_no_speech_error(&error));
             }
             let mut messages = futures::stream::iter(vec![response(b"{}")]);
             assert!(!is_no_speech_error(&run_receive_loop(&mut messages, false,
-                Arc::new(AtomicBool::new(true))).await.unwrap_err()));
+                Arc::new(AtomicBool::new(true)), None).await.unwrap_err()));
             let mut messages = futures::stream::iter(vec![response(empty)]);
             assert_eq!(run_receive_loop(&mut messages, true,
-                Arc::new(AtomicBool::new(true))).await.unwrap().0, "");
+                Arc::new(AtomicBool::new(true)), None).await.unwrap().0, "");
 
             let metadata = br#"{"result":{"additions":{}},"audio_info":{"duration":21180}}"#;
             for body in [empty.as_slice(), metadata.as_slice()] {
                 for ended in [false, true] {
                     let mut messages = futures::stream::iter(vec![response(body)]);
-                    let error = run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(ended))).await.unwrap_err();
+                    let error = run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(ended)), None).await.unwrap_err();
                     assert_eq!(is_no_speech_error(&error), ended);
                     let mut messages = futures::stream::iter(vec![response(body)]);
                     let error = run_receive_loop_live(&mut messages, |_| {}, Arc::new(AtomicBool::new(ended))).await.unwrap_err();
                     assert_eq!(is_no_speech_error(&error), ended);
                 }
                 let mut messages = futures::stream::iter(vec![response(body), response(final_text)]);
-                assert_eq!(run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(true))).await.unwrap().0, "actual final text");
+                assert_eq!(run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(true)), None).await.unwrap().0, "actual final text");
             }
             for body in [br#"{"result":{"additions":{}}}"#.as_slice(),
                          br#"{"result":{"additions":{}},"audio_info":{"duration":"unknown"}}"#,
                          br#"{"result":{"additions":{},"unknown":true},"audio_info":{"duration":100}}"#] {
                 let mut messages = futures::stream::iter(vec![response(body)]);
                 assert!(!is_no_speech_error(&run_receive_loop(&mut messages, false,
-                    Arc::new(AtomicBool::new(true))).await.unwrap_err()));
+                    Arc::new(AtomicBool::new(true)), None).await.unwrap_err()));
             }
 
             for live in [false, true] {
@@ -1441,7 +1458,7 @@ mod tests {
                 let error = if live {
                     run_receive_loop_live(&mut messages, |_| {}, Arc::new(AtomicBool::new(true))).await.unwrap_err()
                 } else {
-                    run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(true))).await.unwrap_err()
+                    run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(true)), None).await.unwrap_err()
                 };
                 assert!(error.contains("protocol invalid") && !is_no_speech_error(&error));
             }
@@ -1457,7 +1474,7 @@ mod tests {
                     let error = if live {
                         run_receive_loop_live(&mut messages, |_| {}, Arc::new(AtomicBool::new(true))).await.unwrap_err()
                     } else {
-                        run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(true))).await.unwrap_err()
+                        run_receive_loop(&mut messages, false, Arc::new(AtomicBool::new(true)), None).await.unwrap_err()
                     };
                     assert_eq!(is_no_speech_error(&error), code == CloseCode::Normal, "live={live} close={code:?}");
                 }
