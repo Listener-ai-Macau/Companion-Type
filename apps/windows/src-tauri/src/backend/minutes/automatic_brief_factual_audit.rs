@@ -199,7 +199,10 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
         // With a fuller brief, sending all claim rows duplicates enough text
         // to cross the native request ceiling. Split only the claim list,
         // keeping the same complete source and document in every request.
-        (1..=3).find(|count| {
+        // The provider's output ceiling includes reasoning tokens. A request
+        // fitting the input budget can still truncate a long verdict list.
+        let first = expected.len().div_ceil(32).clamp(1, 3);
+        (first..=3).find(|count| {
             expected.chunks(expected.len().div_ceil(*count)).all(|claims| {
                 let payload = json!({"sourceUnits":wire,"document":doc,"checkClaims":claims});
                 prompt.len() + payload.to_string().len() <= super::MAX_REQUEST_BYTES
@@ -346,7 +349,7 @@ fn review_masks_only_an_exact_quote_marked_as_unresolved() {
         "租赁城市已定，门店名称（具体所指待核对）。");
 }
 
-fn demote_item(value: &mut Value, pointer: &str, units: &[Unit]) -> Option<()> {
+fn demote_item(value: &mut Value, pointer: &str, units: &[Unit], preferred: Option<usize>) -> Option<()> {
     let item = value.pointer(pointer)?;
     let text = item["text"].as_str()?.to_owned();
     if !super::line(&text, 120) {
@@ -356,13 +359,17 @@ fn demote_item(value: &mut Value, pointer: &str, units: &[Unit]) -> Option<()> {
     let offsets: HashMap<_, _> = units.iter().enumerate().map(|(index, unit)|(unit.id.as_str(),index)).collect();
     let anchors: Vec<_> = sources.iter().filter_map(|id| offsets.get(id.as_str()?)).copied().collect();
     let topics = value["topics"].as_array_mut()?;
-    let target = topics.iter_mut().filter(|topic| topic["details"].as_array()
-        .is_some_and(|details| details.len() < super::topic_details_limit())).min_by_key(|topic| {
-        topic["points"].as_array().into_iter().flatten().chain(topic["details"].as_array().into_iter().flatten())
+    if preferred.is_some_and(|index| index >= topics.len()) {
+        return None;
+    }
+    let (_, target) = topics.iter_mut().enumerate().filter(|(_, topic)| topic["details"].as_array()
+        .is_some_and(|details| details.len() < super::topic_details_limit())).min_by_key(|(index, topic)| {
+        let distance = topic["points"].as_array().into_iter().flatten().chain(topic["details"].as_array().into_iter().flatten())
             .flat_map(|entry| entry["sources"].as_array().into_iter().flatten())
             .filter_map(|id| offsets.get(id.as_str()?))
             .flat_map(|offset| anchors.iter().map(move |anchor| offset.abs_diff(*anchor)))
-            .min().unwrap_or(usize::MAX)
+            .min().unwrap_or(usize::MAX);
+        (Some(*index) != preferred, distance)
     })?;
     target["details"].as_array_mut()?.push(json!({"text":text,"sources":sources}));
     Some(())
@@ -388,10 +395,9 @@ fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unc
                 ||!independent_path(path){return Err(fail());}
             let index=topic.as_u64().and_then(|index|usize::try_from(index).ok()).ok_or_else(fail)?;
             let text=row.get("text").and_then(Value::as_str).filter(|text|super::line(text,120)).ok_or_else(fail)?;
-            let sources=value.pointer(&pointer).and_then(|item|item.get("sources")).cloned().ok_or_else(fail)?;
-            let details=value.get_mut("topics").and_then(|topics|topics.get_mut(index))
-                .and_then(|topic|topic.get_mut("details")).and_then(Value::as_array_mut).ok_or_else(fail)?;
-            details.push(json!({"text":text,"sources":sources}));
+            let item=value.pointer_mut(&pointer).and_then(Value::as_object_mut).ok_or_else(fail)?;
+            item.insert("text".into(), json!(text));
+            demote_item(&mut value, &pointer, units, Some(index)).ok_or_else(fail)?;
             removals.push(pointer);
             continue;
         }
@@ -447,7 +453,7 @@ fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unc
         if removals.contains(&pointer) {
             continue;
         }
-        if !seen.contains(path.as_str()) || !independent_path(path) || demote_item(&mut value,&pointer,units).is_none() {
+        if !seen.contains(path.as_str()) || !independent_path(path) || demote_item(&mut value,&pointer,units,None).is_none() {
             return Err(fail());
         }
         removals.push(pointer);
@@ -536,12 +542,34 @@ fn same_assertion(left: &Value, right: &Value) -> bool {
 }
 
 pub(super) fn review_and_repair_with_conflicts(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
-    let audited = review(endpoint,model,key,client,doc,units,None,conflicts,start,trace)?;
-    let final_claims = claims(&audited);
-    if conflicts.iter().any(|conflict| final_claims.iter().any(|claim| same_assertion(claim, &conflict["claim"]))) {
+    review(endpoint,model,key,client,doc,units,None,conflicts,start,trace)
+}
+
+fn finish_conflicts(doc: Document, conflicts: &[Value], supported: &HashSet<usize>) -> Result<Document,String> {
+    if conflicts.is_empty() {
+        return Ok(doc);
+    }
+    let final_claims = claims(&doc);
+    if conflicts.iter().enumerate().any(|(index, conflict)| !supported.contains(&index)
+        && final_claims.iter().any(|claim| same_assertion(claim, &conflict["claim"]))) {
         return Err("纪要中仍有原话与正文冲突，已有结果保留。".into());
     }
-    Ok(audited)
+    Ok(doc)
+}
+
+#[cfg(test)]
+#[test]
+fn a_requested_move_respects_the_topic_detail_limit() {
+    let units = vec![Unit {id: "u000".into(), text: "讨论交付方法。".into()}];
+    let full = (0..super::topic_details_limit()).map(|index| {
+        json!({"text":format!("说明{index}。"),"sources":["u000"]})
+    }).collect::<Vec<_>>();
+    let mut doc = json!({"decisions":[{"text":"备选的交付方式。","sources":["u000"]}],
+        "topics":[{"points":[{"text":"原议题","sources":["u000"]}],"details":full},
+                  {"points":[{"text":"提交方案","sources":["u000"]}],"details":[]}]});
+    assert!(demote_item(&mut doc, "/decisions/0", &units, Some(0)).is_some());
+    assert_eq!(doc["topics"][0]["details"].as_array().unwrap().len(), super::topic_details_limit());
+    assert_eq!(doc["topics"][1]["details"][0]["text"], "备选的交付方式。");
 }
 
 fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
@@ -550,9 +578,10 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
     let mut current=doc.clone();let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let mut attempted_phrases:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
     let mut unclear_history:HashMap<String,Vec<String>>=HashMap::new();let mut recovered_display=false;
     let mut verified_claims=verified.map(claims).unwrap_or_default().into_iter().map(|c|(c["path"].as_str().unwrap().to_string(),c)).collect::<HashMap<_,_>>();
+    let mut supported_conflicts = HashSet::new();
     for round in 0..=2 {
         let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
-        if expected.is_empty(){return Ok(current);}
+        if expected.is_empty(){return finish_conflicts(current, conflicts, &supported_conflicts);}
         emphasize_source_scope(&mut expected,&source);
         for claim in &mut expected {
             let competing: Vec<_> = conflicts.iter().filter(|conflict| same_assertion(claim, &conflict["claim"]))
@@ -575,14 +604,23 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
         // Retain only exact in-call positive claims. Changed text, kind,
         // refs, owner/due, or shifted array positions are automatically audited.
         for verdict in audit.claim_audit.iter().filter(|c|c.status=="supported") {
-            if let Some(claim)=audited_claims.iter().find(|c|c["path"].as_str()==Some(verdict.path.as_str())){verified_claims.insert(verdict.path.clone(),claim.clone());}
+            if let Some(claim)=audited_claims.iter().find(|c|c["path"].as_str()==Some(verdict.path.as_str())){
+                verified_claims.insert(verdict.path.clone(),claim.clone());
+                for (index, conflict) in conflicts.iter().enumerate().filter(|(_, conflict)| same_assertion(claim, &conflict["claim"])) {
+                    if verdict.evidence.iter().any(|id| conflict["evidence"].as_str() == Some(id.as_str())) {
+                        supported_conflicts.insert(index);
+                    } else {
+                        supported_conflicts.remove(&index);
+                    }
+                }
+            }
         }
         let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|{
             let mut issue=json!({"path":c.path,"status":c.status,"clarity":c.clarity,"unclearText":c.unclear_text,"reason":c.reason,"evidence":c.evidence});
             if let Some(misplaced)=c.placement_unsupported{issue["placementUnsupported"]=json!(misplaced);}
             issue
         }).collect::<Vec<_>>();
-        if issues.is_empty(){return Ok(current);}
+        if issues.is_empty(){return finish_conflicts(current, conflicts, &supported_conflicts);}
         let allowed=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|c.path.clone()).collect::<HashSet<_>>();
         let misplaced=audit.claim_audit.iter().filter(|c|super::source_items::enabled()&&c.placement_unsupported==Some(true))
             .map(|c|c.path.clone()).collect::<HashSet<_>>();
