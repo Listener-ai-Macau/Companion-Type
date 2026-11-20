@@ -559,6 +559,14 @@ fn measure_has_witness(span: &str, claim: &Value) -> bool {
 }
 
 fn contextual_measure_witness(span: &str, claim: &Value, source: &str) -> bool {
+    if span == "半年" {
+        let mut occurrences = source.match_indices(span).peekable();
+        if occurrences.peek().is_some() && occurrences.all(|(start, _)| source[..start].ends_with(['上', '下'])) {
+            // 上半年/下半年 locate a calendar period. The factual audit
+            // still checks the period and does not require a duration claim.
+            return true;
+        }
+    }
     if measure_has_witness(span, claim) { return true; }
     let Some((value, "年")) = measures(span).next() else { return false; };
     let occurrences: Vec<_> = source.match_indices(span).map(|(start, word)| {
@@ -590,6 +598,16 @@ fn contextual_measure_witness(span: &str, claim: &Value, source: &str) -> bool {
         text.match_indices("每年").filter_map(|(start, term)| rate(&text[start + term.len()..]))
             .any(|written| spoken_rates.contains(&written))
     })
+}
+
+#[cfg(test)]
+#[test]
+fn period_half_year_is_distinct_from_a_stated_duration() {
+    let claim = json!({"text":"奥数线上教学不够直接。"});
+    assert!(contextual_measure_witness("半年", &claim, "上半年在线上授课，不够直接。"));
+    assert!(contextual_measure_witness("半年", &claim, "下半年还有上半年的安排。"));
+    assert!(!contextual_measure_witness("半年", &claim, "上半年讨论了半年的学习安排。"));
+    assert!(!contextual_measure_witness("半年", &claim, "计划至少学习半年。"));
 }
 
 fn disputed_measures(missing: &MissingItems, cues: &[SourceCue], doc: &Document, evidence: &[Value]) -> Vec<Value> {
