@@ -111,6 +111,19 @@ fn restore_cited_assignments(doc: &mut Document, draft: &Document, units: &[Unit
     }
 }
 
+fn clean_question_annotations(doc: &mut Document) {
+    static EVIDENCE_ID: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(r"\be[0-9]{4}\b|e[0-9]{4}称").unwrap()
+    });
+    for question in &mut doc.questions {
+        let Some((question_text, annotation)) = question.text.split_once(['：', ':']) else { continue; };
+        if question_text.starts_with("待核实") && question_text.chars().count() > 5
+            && annotation.trim_start().starts_with("cue原话") && EVIDENCE_ID.is_match(annotation) {
+            question.text = format!("{question_text}。");
+        }
+    }
+}
+
 fn reconcile_citations(doc: &mut Document, source: &Source<'_>) {
     fn revise(item: &mut String, maximum: usize, source: &Source<'_>) {
         let corrected = source.reconcile_text(item);
@@ -269,6 +282,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             let prepared=coverage::combine_omissions(prepared?,omissions?)?;
             coverage::complete_prepared(endpoint,model,key,client,&doc,&units,prepared,start,&mut trace)?
         }else{factual_audit::review_and_repair(endpoint,model,key,client,&doc,&units,start,&mut trace)?};
+        if source_items::enabled() { clean_question_annotations(&mut doc); }
         reconcile_citations(&mut doc, &source);
         validate(&doc, &units)?;
         traced_document=Some(doc.clone());

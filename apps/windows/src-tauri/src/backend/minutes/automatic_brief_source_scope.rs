@@ -18,7 +18,24 @@ use super::{
 const PROMPT: &str = include_str!("automatic_brief_source_scope.txt");
 const FAIL: &str = "纪要的限定或案情补核缺少原话证据，已有结果保留。";
 
+fn budget_exclusion(text: &str) -> Option<&str> {
+    static EXCLUDED: LazyLock<regex::Regex> = LazyLock::new(|| {
+        regex::Regex::new(
+        r"(?:不在|不走|不是|并非|不计入|不从|不使用)[^，。；,;]{0,10}?(运营费|运行费|部门预算|部门经费|专项经费)"
+    ).unwrap()
+    });
+    EXCLUDED.captures(text)?.get(1).map(|term| term.as_str())
+}
+
 fn literal_scope(quote: &str, statement: &str) -> Option<&'static str> {
+    if quote.contains("报销")
+        && statement.contains("报销")
+        && budget_exclusion(quote).is_some_and(|account| statement.contains(account))
+        && budget_exclusion(statement).is_none()
+        && !statement.contains("待核实")
+    {
+        return Some("budgetBoundary");
+    }
     static BARE_FEE: LazyLock<regex::Regex> = LazyLock::new(|| {
         regex::Regex::new(r"(?:他的|她的|它的|它这个|其)(?:这个|这项)?(?:收费|价格|费用|成本)")
             .unwrap()
@@ -164,8 +181,12 @@ fn packet(
     claim: Option<&Value>,
 ) -> Value {
     let context = &source[anchor.saturating_sub(2)..(anchor + 6).min(source.len())];
-    json!({"kind":kind,"requiredEvidence":required.into_iter().map(|index| &source[index]["id"]).collect::<Vec<_>>(),
-           "context":context.iter().map(|row| &row["id"]).collect::<Vec<_>>(),"claim":claim})
+    let mut check = json!({"kind":kind,"requiredEvidence":required.into_iter().map(|index| &source[index]["id"]).collect::<Vec<_>>(),
+           "context":context.iter().map(|row| &row["id"]).collect::<Vec<_>>(),"claim":claim});
+    if kind == "budgetBoundary" {
+        check["instruction"] = json!("分开写谁报销和哪项经费被排除。原话明确报销方但后半句口齿含混时，保留会上提出的报销方，将经费归属列为待核实。不可把报销写成已批准，也不可把否定的经费连到报销方。");
+    }
+    check
 }
 
 #[derive(Deserialize)]
@@ -186,6 +207,36 @@ fn has_condition(text: &str) -> bool {
     ["强迫", "胁迫", "违背", "不愿"]
         .iter()
         .any(|term| text.contains(term))
+}
+
+fn preserve_unfinished_contact(item: &mut SourceItem, check: &Value, source: &[Value]) {
+    static UNFINISHED: LazyLock<regex::Regex> = LazyLock::new(|| {
+        regex::Regex::new(r"联系不上[，,、\s]*(?:当时)?[\s]*(?:那个|这个)?[，,。\s]*$").unwrap()
+    });
+    static CONTACT: LazyLock<regex::Regex> =
+        LazyLock::new(|| regex::Regex::new(r"联系不上[^，,。；;！？\s]{1,16}").unwrap());
+    if check["kind"] != "caseApplicability" || !CONTACT.is_match(&item.text) {
+        return;
+    }
+    let mut mentions = source.iter().filter(|row| {
+        row["text"]
+            .as_str()
+            .is_some_and(|text| text.contains("联系不上"))
+            && check["context"].as_array().unwrap().contains(&row["id"])
+    });
+    let Some(original) = mentions.next() else {
+        return;
+    };
+    if mentions.next().is_some() || !UNFINISHED.is_match(original["text"].as_str().unwrap()) {
+        return;
+    }
+    let id = original["id"].as_str().unwrap();
+    if !item.evidence.iter().any(|evidence| evidence == id) {
+        item.evidence.push(id.to_owned());
+    }
+    item.text = CONTACT
+        .replacen(&item.text, 1, "联系不上，具体联系对象待核实")
+        .into_owned();
 }
 
 fn missing_conditions(raw: &str, checks: &[Value]) -> Option<(Value, Vec<Value>)> {
@@ -284,8 +335,9 @@ fn apply_scope(
     let ids = known.keys().copied().collect();
     let mut replacements = Vec::new();
     let mut additions = Vec::new();
-    for reply in response.scope_checks {
+    for mut reply in response.scope_checks {
         let check = pending.remove(reply.id.as_str()).ok_or_else(fail)?;
+        preserve_unfinished_contact(&mut reply.item, check, source);
         let fact = reply.item.clone().bind(&known, &ids)?;
         if fact.placement != Placement::Topic
             || fact.evidence.iter().any(|id| {
@@ -304,6 +356,22 @@ fn apply_scope(
             return Err(fail());
         }
         if check["kind"] == "ambiguousReference" && !fact.text.contains("待核实") {
+            return Err(fail());
+        }
+        if check["kind"] == "budgetBoundary"
+            && !(fact.text.contains("报销")
+                && (fact.text.contains("待核实")
+                    || budget_exclusion(&fact.text).is_some()
+                    || check["requiredEvidence"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .filter_map(Value::as_str)
+                        .all(|id| {
+                            budget_exclusion(known[id]["text"].as_str().unwrap())
+                                .is_some_and(|name| !fact.text.contains(name))
+                        })))
+        {
             return Err(fail());
         }
         if check["kind"] == "narrowedConclusion" && !has_condition(&fact.text) {
