@@ -1117,6 +1117,10 @@ mod tests {
                     assert!(at("e0152").any(|fact| fact.text.contains("基本上是没有什么人参加")));
                     assert!(!at("e0152").any(|fact| fact.text.contains("流失严重")));
                     assert!(at("e0172").any(|fact| fact.text.contains("所指待核实")));
+                    assert!(at("e0169").any(|fact| fact.text.contains("所指待核实")));
+                    assert!(at("e0036").any(|fact| fact.placement == Placement::Action
+                        && fact.text.contains("英语老师") && fact.text.contains("培训") && fact.owner.is_none()));
+                    assert!(at("e0141").any(|fact| fact.text.contains("稍微大一点儿年龄")));
                     assert!(owns("e0257", "各部门"));
                 }
                 "legal-qa" => {
@@ -1124,6 +1128,7 @@ mod tests {
                     assert!(at("e0086").any(|fact| fact.text.contains("强迫") && matches!(fact.kind, Kind::Opinion)));
                     assert!(at("e0190").any(|fact| fact.text.contains("责任可能") && matches!(fact.kind, Kind::Opinion)));
                     assert!(at("e0276").all(|fact| matches!(fact.kind, Kind::Opinion)));
+                    assert!(at("e0229").any(|fact| fact.text.contains("待核实")));
                     assert!(!bank.facts.iter().any(|fact| fact.placement == Placement::Action));
                 }
                 "team-planning" => {

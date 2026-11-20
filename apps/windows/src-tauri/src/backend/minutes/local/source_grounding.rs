@@ -123,6 +123,24 @@ pub(super) fn ambiguous_payment_reference(source: &str) -> Option<usize> {
     (before.contains("和") || before.contains('或')).then_some(unresolved.start())
 }
 
+pub(super) fn payment_without_guessing(source: &str, reference: usize) -> String {
+    let before = source[..reference].trim_end_matches(['，', ',', ' ', ':', '：']);
+    let before = before.strip_suffix("但是").unwrap_or(before).trim_end_matches(['，', ',', ' ']);
+    format!("{before}。具体收费所指待核实。")
+}
+
+pub(super) fn dropped_source_clause(claim: &str, source: &str) -> bool {
+    let text = claim.trim();
+    source.trim().chars().count() >= 40 && text.chars().count() <= 12
+        && ["是", "就是", "因为", "然后", "主要是", "为了"].iter().any(|end| text.ends_with(end))
+        && source.contains(text)
+}
+
+pub(super) fn explicit_source_uncertainty(source: &str) -> bool {
+    ["情况还不清楚", "情况尚不明确", "事情还没弄清", "信息还没核实", "有点儿模棱两可", "事实暂时不清"]
+        .iter().any(|cue| source.contains(cue))
+}
+
 pub(super) fn context_only_fragment(source:&str)->bool{
     let text=source.trim().trim_end_matches(['。','！','？','；',',','，','…','.']);
     matches!(text.trim(),""|"嗯"|"呃"|"对"|"然后"|"所以"|"所以说"|"实际上"|"实际上在"|"问题"|"关于这个"|"也就是说"|"怎么说呢")

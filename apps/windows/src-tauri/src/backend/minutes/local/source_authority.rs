@@ -151,11 +151,14 @@ pub(super) fn spoken_assignment(source: &str) -> Option<crate::companion_v1::Com
     static WORK: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:咱们|我们)?(?:要做|需要做|要制定|需要制定|要准备|需要准备|要完成|需要完成)[^，,。！？；;\r\n]{2,65}"
     ).unwrap());
+    static GROUP_WORK: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:也要|务必|必须)(?:给|对|为)[^，,。！？；;\r\n]{2,28}?(?:做|组织|开展|安排|进行)[^，,。！？；;\r\n]{1,25}?(?:培训|交接|演练|核验|复盘|走查|检查)"
+    ).unwrap());
     let original = source.trim();
     let text = super::super::source_resolution::split_turn_label(original)
         .map_or(original, |(_, body)| body.trim());
     if has(text, NON_BINDING) || has(text, IN_MEETING) || has(text, OPEN)
-        || has(text, &["能不能", "要不要", "可不可以", "有没有", "无需", "不用", "不再", "不要", "没有安排",
+        || has(text, &["能不能", "要不要", "可不可以", "有没有", "是不是", "无需", "不用", "不再", "不要", "没有安排", "不必", "不需要", "不一定",
             "已完成", "已经", "当时", "听说", "举例", "比如", "例如", "示例"])
         || text.contains(['？', '?'])
     {
@@ -170,6 +173,10 @@ pub(super) fn spoken_assignment(source: &str) -> Option<crate::companion_v1::Com
                 due: None,
             });
         }
+    }
+    let mut group_work = GROUP_WORK.find_iter(text);
+    if let Some(task) = group_work.next().filter(|_| group_work.next().is_none()) {
+        return Some(CompanionV1ActionItem { text: task.as_str().to_owned(), owner: None, due: None });
     }
     let mut owners = NAMED_FOLLOWUP.captures_iter(text);
     let recipient = owners.next().filter(|_| owners.next().is_none())?;

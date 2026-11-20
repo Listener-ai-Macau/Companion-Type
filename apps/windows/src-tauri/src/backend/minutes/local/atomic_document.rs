@@ -129,6 +129,22 @@ fn source_verified_facts(
         let id = sentence["id"].as_str().unwrap();
         let original = known[id];
         let mut current = by_anchor.remove(id).unwrap_or_default();
+        for fact in &mut current {
+            if matches!(fact.role.as_str(), "action" | "decision" | "question")
+                || !["收费", "价格", "费用", "成本"].iter().any(|term| fact.text.contains(term))
+            {
+                continue;
+            }
+            let Some((qualifier, reference)) = fact.evidence.iter().skip(1).find_map(|citation| {
+                let excerpt = known[citation.as_str()];
+                source_grounding::ambiguous_payment_reference(excerpt).map(|reference| (excerpt, reference))
+            }) else { continue; };
+            let rewrite = source_grounding::payment_without_guessing(qualifier, reference);
+            fact.text = if canonical_brief::line(&rewrite, 90) { rewrite }
+                else { "原话中的具体收费所指待核实。".into() };
+            fact.source_needs_review = true;
+            audit.push(json!({"sentenceId":id,"reason":"unclear-supporting-reference"}));
+        }
         if let Some(action) = source_authority::spoken_assignment(original) {
             if !current.iter().any(|item| item.role == "action") {
                 let text = action.text.clone();
@@ -144,23 +160,26 @@ fn source_verified_facts(
 
         let topic_role = source_authority::protected_stance(original);
         let ambiguous_fee = source_grounding::ambiguous_payment_reference(original);
+        let pending = source_grounding::explicit_source_uncertainty(original);
         let removed = current.iter().any(|item| {
             let cited: Vec<_> = item.evidence.iter().map(|id| known[id.as_str()]).collect();
             item.role == "status" && (
                 source_grounding::adds_categorical_outcome(&item.text, &cited)
+                || source_grounding::dropped_source_clause(&item.text, original)
                 || (["\"}]", "”}]", "}]}", "\"t\":", "\"r\":"].iter().any(|token| item.text.contains(token))
                     && !cited.iter().any(|source| source.contains(&item.text)))
             )
         });
-        if !current.is_empty() && (topic_role.is_some() || ambiguous_fee.is_some() || removed)
+        if !current.is_empty() && (topic_role.is_some() || ambiguous_fee.is_some() || pending || removed)
             && !current.iter().any(|item| matches!(item.role.as_str(), "action" | "decision" | "question"))
         {
-            let reason = if ambiguous_fee.is_some() { "unclear-referent" }
+            let reason = if ambiguous_fee.is_some() || pending { "unclear-referent" }
                 else if topic_role.is_some() { "qualified-statement" } else { "unsupported-categorical-outcome" };
             let mut passage = original.trim().to_owned();
             if let Some(change) = ambiguous_fee {
-                let prefix = original[..change].trim_end_matches(['，', ',', ' ', ':', '：']);
-                passage = format!("{prefix}。收费或费用所指待核实。");
+                passage = source_grounding::payment_without_guessing(original, change);
+            } else if pending {
+                passage = format!("待核实。{passage}");
             } else if original.contains("仅代表") || original.contains("只代表") {
                 for group in ["部门", "小组", "团队", "单位"] {
                     for suffix in ["", "儿"] {
@@ -178,7 +197,7 @@ fn source_verified_facts(
             }
             let role = topic_role.unwrap_or("status");
             for line in bounded_original_quotes(&passage) {
-                verified.push(if removed || ambiguous_fee.is_some() {
+                verified.push(if removed || ambiguous_fee.is_some() || pending {
                     ExtractedFact::review_quote(id, role, &line)
                 } else {
                     ExtractedFact::verbatim(id, role, &line)
