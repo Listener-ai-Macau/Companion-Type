@@ -4,9 +4,10 @@ use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::{
     collections::BTreeSet,
-    fs::{self, File, OpenOptions},
+    fs::{self, File, OpenOptions, TryLockError},
     io::{Read, Seek, SeekFrom},
     path::{Path, PathBuf},
+    time::{Duration, Instant},
 };
 
 const MANIFEST: &str = ".audio-artifacts.json";
@@ -265,18 +266,37 @@ fn save(root: &Path, data: &Manifest) -> Result<(), String> {
     super::export::write_atomic(&root.join(MANIFEST), &bytes)
         .map(|_| ())
 }
-fn lock(root: &Path) -> Result<File, String> {
+fn open_journal_lock(root: &Path) -> Result<File, String> {
     let path = root.join(".audio-artifacts.lock");
     no_link(&path)?;
-    let file = OpenOptions::new()
+    OpenOptions::new()
         .read(true)
         .write(true)
         .create(true)
         .truncate(false)
         .open(path)
-        .map_err(|_| fail())?;
+        .map_err(|_| fail())
+}
+
+fn lock(root: &Path) -> Result<File, String> {
+    let file = open_journal_lock(root)?;
     file.try_lock().map_err(|_| fail())?;
     Ok(file)
+}
+
+/// Let simultaneous ASR windows briefly share journal access. These guards
+/// cover local metadata only and are released before any provider request.
+pub(super) fn wait_for_asr_journal(file: File) -> Result<File, TryLockError> {
+    let until = Instant::now() + Duration::from_millis(300);
+    loop {
+        match file.try_lock() {
+            Ok(()) => return Ok(file),
+            Err(TryLockError::WouldBlock) if Instant::now() < until => {
+                std::thread::sleep(Duration::from_millis(10));
+            }
+            Err(error) => return Err(error),
+        }
+    }
 }
 fn lease(root: &Path, leaf: &str) -> Result<File, String> {
     reference_lease(root, &reference_key(&root.join(leaf))?, false)
@@ -931,7 +951,7 @@ pub(crate) fn source_references(path: &Path) -> Result<BTreeSet<String>, String>
     let Some(root) = managed_root(path) else {
         return Ok(keys);
     };
-    let _lock = lock(&root)?;
+    let _lock = wait_for_asr_journal(open_journal_lock(&root)?).map_err(|_| fail())?;
     let data = load(&root)?;
     loop {
         let before = keys.len();

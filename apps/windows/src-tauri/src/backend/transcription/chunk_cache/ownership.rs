@@ -102,20 +102,24 @@ fn save(root: &Path, data: &Journal) -> Result<(), String> {
         .map(|_| ())
         .map_err(|_| fail())
 }
-fn lock(root: &Path) -> Result<File, String> {
+fn open_journal_lock(root: &Path) -> Result<File, String> {
     let m = fs::symlink_metadata(root).map_err(|_| fail())?;
     if !m.is_dir() || m.file_type().is_symlink() {
         return Err(fail());
     }
     let path = root.join(".cache-owners.lock");
     no_link(&path)?;
-    let file = OpenOptions::new()
+    OpenOptions::new()
         .read(true)
         .write(true)
         .create(true)
         .truncate(false)
         .open(path)
-        .map_err(|_| fail())?;
+        .map_err(|_| fail())
+}
+
+fn lock(root: &Path) -> Result<File, String> {
+    let file = open_journal_lock(root)?;
     file.try_lock().map_err(|_| fail())?;
     Ok(file)
 }
@@ -162,7 +166,8 @@ fn hit(
     if !root.exists() {
         return Ok(None);
     }
-    let _lock = lock(root)?;
+    let _lock = super::super::super::audio_artifacts::wait_for_asr_journal(open_journal_lock(root)?)
+        .map_err(|_| fail())?;
     let mut data = load_journal(root)?;
     let path = key.path(root)?;
     no_link(&path)?;
@@ -195,7 +200,8 @@ fn publish(
     sources: &BTreeSet<String>,
 ) -> Result<(), String> {
     fs::create_dir_all(root).map_err(|_| fail())?;
-    let _lock = lock(root)?;
+    let _lock = super::super::super::audio_artifacts::wait_for_asr_journal(open_journal_lock(root)?)
+        .map_err(|_| fail())?;
     let mut data = load_journal(root)?;
     let path = key.path(root)?;
     no_link(&path)?;
@@ -428,6 +434,42 @@ pub(crate) use probe::verify;
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn concurrent_asr_windows_wait_for_cache_publication() {
+        let dir = std::env::temp_dir().join(format!("companion-cache-parallel-{}", uuid::Uuid::new_v4()));
+        fs::create_dir(&dir).unwrap();
+        let profile = Profile::from_configuration(&serde_json::json!({
+            "provider":"test", "model":"test", "language":"zh"
+        })).unwrap();
+        let sources = BTreeSet::from(["same-recording".to_string()]);
+        let occupied = lock(&dir).unwrap();
+        let barrier = std::sync::Barrier::new(3);
+        std::thread::scope(|scope| {
+            let workers = [1_u32, 2].map(|value| {
+                let key = Key::new(&value.to_le_bytes(), profile.clone()).unwrap();
+                let dir = &dir;
+                let sources = &sources;
+                let barrier = &barrier;
+                scope.spawn(move || {
+                    barrier.wait();
+                    publish(dir, &key, "完成", &[], sources).unwrap();
+                    assert!(hit(dir, &key, sources).unwrap().is_some());
+                })
+            });
+            barrier.wait();
+            std::thread::sleep(std::time::Duration::from_millis(40));
+            drop(occupied);
+            for worker in workers {
+                worker.join().unwrap();
+            }
+        });
+        assert_eq!(load_journal(&dir).unwrap().records.len(), 2);
+        for file in fs::read_dir(&dir).unwrap() {
+            fs::remove_file(file.unwrap().path()).unwrap();
+        }
+        fs::remove_dir(dir).unwrap();
+    }
 
     #[test]
     fn retention_preserves_all_windows_of_current_long_recording() {
