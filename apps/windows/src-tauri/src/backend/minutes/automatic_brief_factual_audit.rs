@@ -505,6 +505,74 @@ fn unresolved_action_fields(target: &Value, text: &str, rejected: &[String]) -> 
     }).collect()
 }
 
+fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence]) -> (String, usize) {
+    let original = || (raw.to_owned(), 0);
+    let Ok(mut reply) = serde_json::from_str::<Value>(super::super::strip_code_fences(raw).trim()) else {
+        return original();
+    };
+    let Some(rows) = reply["changes"].as_array_mut() else { return original(); };
+    let mut count = 0;
+    for row in rows {
+        let Some(body) = row.as_object_mut().filter(|body| body.len() == 2) else { continue; };
+        let Some(path) = body.get("path").and_then(Value::as_str) else { continue; };
+        let Some(issue) = issues.iter().find(|issue| issue["path"] == path) else { continue; };
+        let Some(text) = body.get("text").and_then(Value::as_str) else { continue; };
+        let fix = if text.trim() == "remove" && issue["placementUnsupported"] == true && independent_path(path) {
+            Some(("remove", json!(true)))
+        } else if let Some(deletions) = text.trim().strip_prefix("delete:").filter(|_| issue["status"] == "unclear") {
+            serde_json::from_str::<Vec<String>>(deletions.trim()).ok().map(|parts| ("delete", json!(parts)))
+        } else {
+            let term = issue["unclearText"].as_str();
+            let explanation = issue["reason"].as_str().unwrap_or_default();
+            if issue["status"] != "unclear" || !term.is_some_and(|term| text.contains(term))
+                || !explanation.contains("未明确") || !explanation.contains("则")
+                || !["关系", "也可", "同时", "也能"].iter().any(|cue| explanation.contains(cue))
+            {
+                continue;
+            }
+            let evidence: Vec<_> = issue["evidence"].as_array().into_iter().flatten().filter_map(|id| {
+                let sentence = source.iter().find(|sentence| id == sentence.id.as_str())?;
+                let excerpt = super::super::source_resolution::split_turn_label(sentence.text.trim())
+                    .map_or(sentence.text.trim(), |(_, value)| value.trim());
+                (super::line(excerpt, 34) && !excerpt.contains(term.unwrap())
+                    && !excerpt.contains(['「', '」'])).then_some(excerpt)
+            }).collect();
+            match evidence.as_slice() {
+                [first, second] if first != second => {
+                    Some(("text", json!(format!("会上分别提到「{first}」和「{second}」。两处说法之间的关系待核实。"))))
+                }
+                _ => None,
+            }
+        };
+        if let Some((key, value)) = fix {
+            body.remove("text");
+            body.insert(key.into(), value);
+            count += 1;
+        }
+    }
+    if count > 0 { (reply.to_string(), count) } else { original() }
+}
+
+#[cfg(test)]
+#[test]
+fn repair_reply_keeps_typed_deletions_inside_the_audited_scope() {
+    let reply = json!({"changes":[
+        {"path":"decisions[0]","text":"remove"},
+        {"path":"questions[0]","text":"delete:[\"可疑表述\"]"},
+        {"path":"topics[0].details[1]","text":"remove"},
+    ]});
+    let issues = [
+        json!({"path":"decisions[0]","placementUnsupported":true}),
+        json!({"path":"questions[0]","status":"unclear"}),
+    ];
+    let (normalized, count) = normalize_repair_reply(&reply.to_string(), &issues, &[]);
+    let normalized: Value = serde_json::from_str(&normalized).unwrap();
+    assert_eq!(count, 2);
+    assert_eq!(normalized["changes"][0], json!({"path":"decisions[0]","remove":true}));
+    assert_eq!(normalized["changes"][1], json!({"path":"questions[0]","delete":["可疑表述"]}));
+    assert_eq!(normalized["changes"][2], reply["changes"][2]);
+}
+
 fn apply_repair(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,
     conservative:&HashMap<String,Vec<String>>,misplaced:&HashSet<String>,units:&[Unit],source_first:bool)->Result<AppliedRepair,String> {
     let fail=||"纪要修正没有遵守受影响范围，已有结果保留。".to_string();
@@ -976,6 +1044,14 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             },
             None => super::request(endpoint,model,key,client,REPAIR,payload.clone(),super::coverage::enabled(),start,trace,stage)?,
         };
+        let (raw, normalized) = if super::source_items::enabled() {
+            normalize_repair_reply(&raw, &issues, &source)
+        } else { (raw, 0) };
+        if normalized > 0 {
+            if let Some(call) = trace.last_mut() {
+                call["sourceBoundRepairNormalization"] = json!(normalized);
+            }
+        }
         let next=match apply_repair(&raw,&current,&allowed,&unclear,&conservative,&misplaced,units,scoped){
             Ok(doc)=>doc,
             Err(reason)if super::coverage::enabled()&&!recovered_display&&reason.contains("须为")&&!oversized_repair_texts(&raw).is_empty()=>{
