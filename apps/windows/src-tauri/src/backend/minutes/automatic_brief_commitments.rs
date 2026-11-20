@@ -120,6 +120,47 @@ fn spoken_department<'a>(requested: &str, snippets: impl Iterator<Item = &'a str
         .find(|form| snippets.clone().any(|text| super::normalized(text).contains(form)))
 }
 
+fn spoken_collective(requested: &str, quote: &str) -> Option<String> {
+    if requested == "各园" && quote.contains("各院") {
+        return Some("各院".to_owned());
+    }
+    let group = requested.strip_prefix('各')?;
+    if !(2..=14).contains(&group.chars().count()) || !group.chars().all(|ch| ('㐀'..='鿿').contains(&ch)) {
+        return None;
+    }
+    ["每个", "每一个", "每位", "每一位"].into_iter().map(|prefix| format!("{prefix}{group}"))
+        .find(|utterance| quote.contains(utterance))
+}
+
+fn owner_as_spoken(requested: &str, row: &Value) -> Option<String> {
+    let quote = row["text"].as_str()?;
+    if super::normalized(quote).contains(&super::normalized(requested)) {
+        return Some(requested.to_owned());
+    }
+    if let Some(literal) = spoken_collective(requested, quote)
+        .or_else(|| spoken_department(requested, std::iter::once(quote))) {
+        return Some(literal);
+    }
+    let group = requested.strip_suffix("园长")?;
+    if group.is_empty() || !quote.contains(group) || !["我会", "我来"].iter().any(|phrase| quote.contains(phrase)) {
+        return None;
+    }
+    let (speaker, _) = super::super::source_resolution::split_turn_label(quote)?;
+    (row["turnSpeaker"].as_str() == Some(speaker)).then(|| speaker.to_owned())
+}
+
+#[cfg(test)]
+#[test]
+fn checks_literal_collectives_and_first_person_attribution() {
+    assert_eq!(owner_as_spoken("各园长", &json!({"text":"每个园长在园里开会时都要强调。"})).as_deref(),Some("每个园长"));
+    assert_eq!(owner_as_spoken("各园", &json!({"text":"各院把计划发给我。"})).as_deref(),Some("各院"));
+    let first_person = json!({"turnSpeaker":"说话人2","text":"说话人2: 我会给下面的老师吩咐。我们一幼讲究创新。"});
+    assert_eq!(owner_as_spoken("一幼园长", &first_person).as_deref(),Some("说话人2"));
+    assert!(owner_as_spoken("二幼园长", &first_person).is_none());
+    assert!(owner_as_spoken("一幼园长",&json!({"turnSpeaker":"说话人2","text":"说话人2: 一幼园长会处理。"})).is_some());
+    assert!(owner_as_spoken("一幼园长",&json!({"turnSpeaker":"说话人2","text":"说话人2: 我希望一幼有人处理。"})).is_none());
+}
+
 fn preserve_assigned_action(original: &Value, fact: &Fact) -> bool {
     let claim = &original["claim"];
     claim["kind"] == "action" && fact.placement == Placement::Action && (
@@ -130,8 +171,6 @@ fn preserve_assigned_action(original: &Value, fact: &Fact) -> bool {
 }
 
 type SourceIndex<'a> = HashMap<&'a str, &'a Value>;
-const UNSUPPORTED_REPLACEMENT_BASIS: &str = "任务缺少 basis 中说明原事项的句子。承接者发言不能代替任务原话。";
-
 
 fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids: &HashSet<&str>) -> Result<Option<Fact>, &'static str> {
     let context: HashSet<_> = original["context"].as_array().unwrap().iter().filter_map(Value::as_str).collect();
@@ -141,21 +180,22 @@ fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids:
     let fact = match (check.replacement, check.clarification, check.owner_evidence) {
         (None, None, None) => return Ok(None),
         (Some(mut item), None, owner_evidence) => {
-            let requested = item.owner.clone();
+            let mut requested = item.owner.clone();
             let due = item.due.clone();
             let evidence_ids: HashSet<_> = item.evidence.iter()
                 .filter_map(|id| factual_audit::canonical_sentence_reference(id, known_ids)).collect();
             if !evidence_ids.iter().any(|id| basis.contains(id.as_str())) {
-                return Err(UNSUPPORTED_REPLACEMENT_BASIS);
+                return Err("任务缺少 basis 中说明原事项的句子。承接者发言不能代替任务原话。");
             }
             if let Some(proof) = owner_evidence {
                 let proof = allowed(&proof).ok_or("ownerEvidence 不在本条相邻原话中。")?;
                 let owner = requested.as_deref().ok_or("ownerEvidence 需要对应明确的 owner。")?;
-                let quote = known[proof.as_str()]["text"].as_str().unwrap();
-                if !super::normalized(quote).contains(&super::normalized(owner))
-                    && spoken_department(owner, std::iter::once(quote)).is_none() {
-                    return Err("ownerEvidence 未出现所填负责人。请区分承接者、主持人和附近讨论者。");
-                }
+                let literal = owner_as_spoken(owner, known[proof.as_str()])
+                    .ok_or("ownerEvidence 未出现所填负责人。请区分承接者、主持人和附近讨论者。")?;
+                // Store the words the source actually supports, including a
+                // collective alias or the label of an explicit self-commitment.
+                item.owner = Some(literal.clone());
+                requested = Some(literal);
                 if !evidence_ids.contains(&proof) { item.evidence.push(proof); }
             }
             let mut fact = item.bind(known, known_ids).map_err(|_| "修正的文字、类型或证据编号无效。")?;
@@ -223,38 +263,6 @@ fn decode_edits(candidates: &[Value], raw: &str, known: &SourceIndex<'_>, must_r
         result.rejected.push(json!({"id":id,"reason":reason,"previousAnswer":rows.first()}));
     }
     Ok(result)
-}
-
-fn retain_previously_verified_tasks(rejected: &mut Vec<Value>, requested: &[Value]) -> Vec<String> {
-    let mut retained = Vec::new();
-    rejected.retain(|issue| {
-        let preserve = issue["reason"] == UNSUPPORTED_REPLACEMENT_BASIS
-            && requested.iter().any(|row| row["id"] == issue["id"]
-                && row["claim"]["kind"] == "action"
-                && row["basis"].as_array().is_some_and(|basis| !basis.is_empty()));
-        if preserve {
-            retained.push(issue["id"].as_str().unwrap().to_owned());
-        }
-        !preserve
-    });
-    retained
-}
-
-#[cfg(test)]
-#[test]
-fn a_nearby_unrelated_replacement_keeps_the_verified_task() {
-    let requested = [
-        json!({"id":"actionItems[0]","claim":{"kind":"action"},"basis":["e0000"]}),
-        json!({"id":"actionItems[1]","claim":{"kind":"action"},"basis":[]}),
-        json!({"id":"topics[0].points[0]","claim":{"kind":"status"},"basis":["e0002"]}),
-    ];
-    let mut rejected = vec![
-        json!({"id":"actionItems[0]","reason":UNSUPPORTED_REPLACEMENT_BASIS}),
-        json!({"id":"actionItems[1]","reason":UNSUPPORTED_REPLACEMENT_BASIS}),
-        json!({"id":"topics[0].points[0]","reason":UNSUPPORTED_REPLACEMENT_BASIS}),
-    ];
-    assert_eq!(retain_previously_verified_tasks(&mut rejected, &requested), ["actionItems[0]"]);
-    assert_eq!(rejected.len(), 2);
 }
 
 fn statement_has_literal_commitment(text: &str, evidence: &Value, known: &SourceIndex<'_>) -> bool {
@@ -540,13 +548,7 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
         let requested: Vec<_> = rows.iter().filter(|row| rejected_ids.contains(row["id"].as_str().unwrap())).cloned().collect();
         let request = json!({"roleChecks":requested,"sourceSentences":quotes_for(&requested),"rejectedEdits":bound.rejected});
         let retry = super::request(endpoint,model,key,client,PROMPT,request,false,start,trace,"source-commitment-evidence")?;
-        let mut repaired = decode_edits(&requested, &retry, &known, true)?;
-        let retained = retain_previously_verified_tasks(&mut repaired.rejected, &requested);
-        if !retained.is_empty() {
-            if let Some(call) = trace.last_mut() {
-                call["retainedOriginalCommitments"] = json!(retained);
-            }
-        }
+        let repaired = decode_edits(&requested, &retry, &known, true)?;
         if !repaired.rejected.is_empty() {
             return Err(format!("仍有{}条纪要修正缺少原话证据，已有结果保留。", repaired.rejected.len()));
         }
