@@ -1025,6 +1025,9 @@ mod tests {
             let checked = windows.check_encoded(index, raw, SourceEncoding::DirectSingleRole).unwrap();
             assert!(checked.facts.iter().any(|fact| fact.text.contains(expected)), "{case} {:?}", checked.reviewed);
             assert!(!checked.facts.iter().any(|fact| fact.text.contains(rejected)), "{case}");
+            if case == "training-business" {
+                assert!(checked.reviewed.iter().any(|row| row["origin"] == "comparison-source-quote"));
+            }
             println!("{case}: {}", serde_json::to_string(&checked.reviewed).unwrap());
         }
     }
