@@ -320,9 +320,35 @@ fn execution_checks(rows: &[Value], accepted: &HashMap<String, Fact>, known: &So
     checks
 }
 
-fn decode_execution(candidates: &[Value], raw: &str, known: &SourceIndex<'_>) -> Result<HashMap<String, Fact>, String> {
+fn decode_execution(candidates: &[Value], raw: &str, known: &SourceIndex<'_>,
+    previous: &HashMap<String, Fact>,
+) -> Result<HashMap<String, Fact>, String> {
     let fail = || "纪要仍有时间归属或执行条件未核对，已有结果保留。".to_owned();
-    let bound = decode_edits(candidates, raw, known, true)?;
+    let mut response: Value = serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_| fail())?;
+    for row in response["roleChecks"].as_array_mut().ok_or_else(fail)? {
+        let Some(prior) = row["id"].as_str().and_then(|id| previous.get(id))
+            .filter(|fact| fact.placement == Placement::Action) else { continue; };
+        let item = &mut row["replacement"];
+        if item["role"] != "action" || item["owner"] != json!(&prior.owner) || item["due"] != json!(&prior.due) {
+            continue;
+        }
+        // This pass changes execution wording only. Reuse the evidence for
+        // the identical assignee and due date already bound in the first pass.
+        if let Some(ids) = item["evidence"].as_array_mut() {
+            for value in [&prior.owner, &prior.due].into_iter().flatten() {
+                let value = super::normalized(value);
+                let contains = |id: &str| known.get(id).is_some_and(|quote| {
+                    super::normalized(quote["text"].as_str().unwrap()).contains(&value)
+                });
+                if !ids.iter().filter_map(Value::as_str).any(contains) {
+                    if let Some(id) = prior.evidence.iter().find(|id| contains(id.as_str())) {
+                        ids.push(json!(id));
+                    }
+                }
+            }
+        }
+    }
+    let bound = decode_edits(candidates, &response.to_string(), known, true)?;
     if !bound.rejected.is_empty() { return Err(fail()); }
     for row in candidates {
         let fact = bound.accepted.get(row["id"].as_str().unwrap()).ok_or_else(fail)?;
@@ -494,7 +520,8 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
     if !execution.is_empty() {
         let input = json!({"executionChecks":execution,"sourceSentences":quotes_for(&execution)});
         let raw = super::request(endpoint,model,key,client,EXECUTION_PROMPT,input,false,start,trace,"source-execution-scope")?;
-        bound.accepted.extend(decode_execution(&execution, &raw, &known)?);
+        let edits = decode_execution(&execution, &raw, &known, &bound.accepted)?;
+        bound.accepted.extend(edits);
     }
     let improved = apply(&verified.document, &rows, bound.accepted, &known, units)?;
     factual_audit::review_and_repair_since(endpoint,model,key,client,&improved,units,Some(&verified.document),start,trace)
