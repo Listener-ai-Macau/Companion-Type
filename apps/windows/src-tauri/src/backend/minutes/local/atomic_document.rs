@@ -109,7 +109,7 @@ fn source_verified_facts(
     sentences: &[Value],
 ) -> Result<(Vec<ExtractedFact>, Vec<Value>), String> {
     use std::collections::HashMap;
-    use super::{source_authority, source_grounding, source_windows::bounded_original_quotes};
+    use super::{source_authority, source_grounding, source_windows::{bounded_original_quotes, bounded_original_quotes_with_width}};
 
     let known: HashMap<_, _> = sentences.iter().map(|row| {
         (row["id"].as_str().unwrap(), row["text"].as_str().unwrap())
@@ -129,6 +129,26 @@ fn source_verified_facts(
         let id = sentence["id"].as_str().unwrap();
         let original = known[id];
         let mut current = by_anchor.remove(id).unwrap_or_default();
+        let nearby_start = index.saturating_sub(6);
+        let nearby = &sentences[nearby_start..index];
+        let preceding: Vec<_> = nearby.iter().map(|row| known[row["id"].as_str().unwrap()]).collect();
+        current.retain(|fact| {
+            if fact.role != "status" || fact.source_needs_review {
+                return true;
+            }
+            let Some((unresolved, denial)) = source_grounding::cited_but_unsettled(&fact.text, original, &preceding) else {
+                return true;
+            };
+            let evidence = [unresolved, denial].map(|offset| nearby[offset]["id"].as_str().unwrap());
+            let mention = "此处转述尚待核实。";
+            for line in bounded_original_quotes_with_width(original, 90 - mention.chars().count()) {
+                let mut quote = ExtractedFact::review_quote(id, "status", &format!("{mention}{line}"));
+                quote.evidence.extend(evidence.map(str::to_owned));
+                verified.push(quote);
+            }
+            audit.push(json!({"sentenceId":id,"reason":"qualified-unsettled-account","evidence":evidence}));
+            false
+        });
         for fact in &mut current {
             if matches!(fact.role.as_str(), "action" | "decision" | "question")
                 || !["收费", "价格", "费用", "成本"].iter().any(|term| fact.text.contains(term))

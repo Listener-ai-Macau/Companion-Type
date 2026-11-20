@@ -491,13 +491,17 @@ fn complete_leading_excerpt(source: &str) -> Option<&str> {
 }
 
 pub(super) fn bounded_original_quotes(source: &str) -> Vec<String> {
+    bounded_original_quotes_with_width(source, 90)
+}
+
+pub(super) fn bounded_original_quotes_with_width(source: &str, limit: usize) -> Vec<String> {
     let mut remaining = source.trim();
     let label = super::super::source_resolution::split_turn_label(remaining)
         .map(|(speaker, _)| format!("{speaker}："));
     let mut excerpts = Vec::new();
     while !remaining.is_empty() {
         let prefix = if excerpts.is_empty() { "" } else { label.as_deref().unwrap_or("") };
-        let width = 90_usize.saturating_sub(prefix.chars().count()).max(12);
+        let width = limit.saturating_sub(prefix.chars().count()).max(12);
         let bound = remaining.char_indices().nth(width - 1).map(|(index, _)| index);
         if canonical_brief::line(remaining, width) {
             excerpts.push(format!("{prefix}{remaining}"));
@@ -1129,6 +1133,10 @@ mod tests {
                     assert!(at("e0190").any(|fact| fact.text.contains("责任可能") && matches!(fact.kind, Kind::Opinion)));
                     assert!(at("e0276").all(|fact| matches!(fact.kind, Kind::Opinion)));
                     assert!(at("e0229").any(|fact| fact.text.contains("待核实")));
+                    assert!(at("e0235").any(|fact| fact.text.starts_with("此处转述尚待核实")
+                        && fact.evidence.iter().any(|id| id == "e0229")
+                        && fact.evidence.iter().any(|id| id == "e0233")));
+                    assert!(at("e0235").all(|fact| fact.text.starts_with("此处转述尚待核实")));
                     assert!(!bank.facts.iter().any(|fact| fact.placement == Placement::Action));
                 }
                 "team-planning" => {

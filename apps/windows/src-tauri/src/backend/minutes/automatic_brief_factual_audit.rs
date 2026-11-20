@@ -594,6 +594,31 @@ fn separate_example_citations_are_required_to_remove_a_false_link() {
     assert!(repair_separately_cited_examples(&[issue], &[claim], &source).is_none());
 }
 
+fn verified_owner_from_repair(issue: &Value, text: &str, source: &[Sentence]) -> Option<String> {
+    use std::sync::LazyLock;
+    static ASSIGNED: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r#"(?:执行主体|承接方|负责人)(?:应为|为|是)[“「"](?P<owner>[\p{Han}]{2,18})[”」"]"#
+    ).unwrap());
+    if issue["status"] != "unsupported" || issue["placementUnsupported"] != false
+        || !issue["path"].as_str()?.starts_with("actionItems[")
+    {
+        return None;
+    }
+    let captured = ASSIGNED.captures(issue["reason"].as_str()?)?;
+    let owner = captured.name("owner")?.as_str();
+    let owner = owner.strip_suffix('儿').unwrap_or(owner);
+    if !text.contains(owner) {
+        return None;
+    }
+    let witnesses = issue["evidence"].as_array()?;
+    source.iter().any(|sentence| witnesses.iter().any(|id| id == sentence.id.as_str())
+        && sentence.text.match_indices(owner).any(|(start, label)| {
+            let instruction: String = sentence.text[start + label.len()..].chars().take(14).collect();
+            ["要", "得", "需要", "负责"].iter().any(|word| instruction.contains(word))
+        }))
+        .then(|| owner.to_owned())
+}
+
 fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence]) -> (String, usize) {
     let original = || (raw.to_owned(), 0);
     let Ok(mut reply) = serde_json::from_str::<Value>(super::super::strip_code_fences(raw).trim()) else {
@@ -606,6 +631,11 @@ fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence]) -> (
         let Some(path) = body.get("path").and_then(Value::as_str) else { continue; };
         let Some(issue) = issues.iter().find(|issue| issue["path"] == path) else { continue; };
         let Some(text) = body.get("text").and_then(Value::as_str) else { continue; };
+        if let Some(owner) = verified_owner_from_repair(issue, text, source) {
+            body.insert("owner".into(), json!(owner));
+            count += 1;
+            continue;
+        }
         let fix = if text.trim() == "remove" && issue["placementUnsupported"] == true && independent_path(path) {
             Some(("remove", json!(true)))
         } else if let Some(deletions) = text.trim().strip_prefix("delete:").filter(|_| issue["status"] == "unclear") {
@@ -659,6 +689,23 @@ fn repair_reply_keeps_typed_deletions_inside_the_audited_scope() {
     assert_eq!(normalized["changes"][0], json!({"path":"decisions[0]","remove":true}));
     assert_eq!(normalized["changes"][1], json!({"path":"questions[0]","delete":["可疑表述"]}));
     assert_eq!(normalized["changes"][2], reply["changes"][2]);
+}
+
+#[cfg(test)]
+#[test]
+fn an_audited_assignee_is_applied_to_the_action_owner_field() {
+    let path = "actionItems[1]";
+    let report = json!({"path":path, "status":"unsupported", "placementUnsupported":false,
+        "reason":"任务有据，但要求者与执行主体为“质检这边儿”不符。","evidence":["e0003"]});
+    let text = "主持人要求质检这边完成入库检查。";
+    let source = [Sentence {id:"e0003".into(),source:"u000".into(),
+        text:"主持人：质检这边儿要完成入库检查。".into()}];
+    assert_eq!(verified_owner_from_repair(&report, text, &source).as_deref(), Some("质检这边"));
+    assert_eq!(verified_owner_from_repair(&report, "主持人要求完成入库检查。", &source), None);
+    let raw = json!({"changes":[{"path":path,"text":text}]}).to_string();
+    let (normalized, count) = normalize_repair_reply(&raw, &[report], &source);
+    assert_eq!(count, 1);
+    assert_eq!(serde_json::from_str::<Value>(&normalized).unwrap()["changes"][0]["owner"], "质检这边");
 }
 
 #[cfg(test)]

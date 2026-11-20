@@ -141,6 +141,36 @@ pub(super) fn explicit_source_uncertainty(source: &str) -> bool {
         .iter().any(|cue| source.contains(cue))
 }
 
+pub(super) fn cited_but_unsettled(claim: &str, anchor: &str, preceding: &[&str]) -> Option<(usize, usize)> {
+    // A speaker can deny that an event occurred and then describe an intention
+    // involving the same event. A nearby explicit warning keeps that account
+    // from becoming a settled status.
+    static NEGATED: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:还没有|并没有|没有|并未|尚未|暂未)(?P<event>[\p{Han}]{3,8})"
+    ).unwrap());
+    let unresolved = preceding.iter().rposition(|text| explicit_source_uncertainty(text))?;
+    if preceding[unresolved + 1..].iter().any(|text| {
+        ["核实后确认", "现已核实", "最终确认", "核对后确定"].iter().any(|cue| text.contains(cue))
+    }) {
+        return None;
+    }
+    let (speaker, original) = super::super::source_resolution::split_turn_label(anchor)?;
+    preceding.iter().enumerate().skip((unresolved + 1).max(preceding.len().saturating_sub(3)))
+        .rev().find_map(|(offset, text)| {
+            let (previous_speaker, previous_text) = super::super::source_resolution::split_turn_label(text)?;
+            if previous_speaker != speaker {
+                return None;
+            }
+            NEGATED.captures_iter(previous_text).find_map(|capture| {
+                let event = capture.name("event")?.as_str();
+                let at = original.find(event)?;
+                let before = original[..at].trim_end();
+                (claim.contains(event) && ["要", "要进行", "拟", "计划", "准备", "想"]
+                    .iter().any(|cue| before.ends_with(cue))).then_some((unresolved, offset))
+            })
+        })
+}
+
 pub(super) fn context_only_fragment(source:&str)->bool{
     let text=source.trim().trim_end_matches(['。','！','？','；',',','，','…','.']);
     matches!(text.trim(),""|"嗯"|"呃"|"对"|"然后"|"所以"|"所以说"|"实际上"|"实际上在"|"问题"|"关于这个"|"也就是说"|"怎么说呢")
