@@ -1121,15 +1121,15 @@ mod tests {
                 }
                 "legal-qa" => {
                     assert!(!at("e0085").any(|fact| fact.text.contains("属于猥亵")));
-                    assert!(at("e0086").any(|fact| fact.text.contains("强迫") && fact.kind == Kind::Opinion));
-                    assert!(at("e0190").any(|fact| fact.text.contains("责任可能") && fact.kind == Kind::Opinion));
-                    assert!(at("e0276").all(|fact| fact.kind == Kind::Opinion));
+                    assert!(at("e0086").any(|fact| fact.text.contains("强迫") && matches!(fact.kind, Kind::Opinion)));
+                    assert!(at("e0190").any(|fact| fact.text.contains("责任可能") && matches!(fact.kind, Kind::Opinion)));
+                    assert!(at("e0276").all(|fact| matches!(fact.kind, Kind::Opinion)));
                     assert!(!bank.facts.iter().any(|fact| fact.placement == Placement::Action));
                 }
                 "team-planning" => {
-                    assert!(at("e0029").any(|fact| fact.text.contains("我们这个部门") && fact.kind == Kind::Recommendation));
+                    assert!(at("e0029").any(|fact| fact.text.contains("我们这个部门") && matches!(fact.kind, Kind::Recommendation)));
                     assert!(!at("e0029").any(|fact| fact.text.contains("仅代表我们各部门")));
-                    assert!(at("e0303").any(|fact| fact.text.contains("好像是两天到三天") && fact.kind == Kind::Forecast));
+                    assert!(at("e0303").any(|fact| fact.text.contains("好像是两天到三天") && matches!(fact.kind, Kind::Forecast)));
                     assert!(owns("e0343", "各部门"));
                     assert!(owns("e0349", "总监"));
                 }
