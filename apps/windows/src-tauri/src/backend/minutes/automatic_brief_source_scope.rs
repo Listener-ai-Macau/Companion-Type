@@ -313,6 +313,32 @@ fn verified_topic(
     (!ranked.get(1).is_some_and(|candidate| candidate.0 == *best)).then(|| (*title).clone())
 }
 
+fn previous_case_answer(
+    doc: &Document,
+    verified: &VerifiedBrief,
+    check: &Value,
+    text: &str,
+    evidence: &[String],
+) -> Option<String> {
+    if check["kind"] != "caseApplicability" || !text.contains("追究") {
+        return None;
+    }
+    let previous = factual_audit::claims(&verified.document);
+    let mut candidates = factual_audit::claims(doc).into_iter().filter_map(|claim| {
+        let path = claim["path"].as_str()?;
+        let approved = verified.evidence.get(path)?;
+        (path.starts_with("topics[")
+            && claim.get("sources").is_some()
+            && claim["text"].as_str()?.contains("追究")
+            && !approved.is_empty()
+            && approved.iter().all(|id| evidence.contains(id))
+            && previous.contains(&claim))
+        .then(|| path.to_owned())
+    });
+    let path = candidates.next()?;
+    candidates.next().is_none().then_some(path)
+}
+
 fn apply_scope(
     mut doc: Document,
     raw: &str,
@@ -377,7 +403,11 @@ fn apply_scope(
         if check["kind"] == "narrowedConclusion" && !has_condition(&fact.text) {
             return Err(fail());
         }
-        if let Some(path) = check["claim"]["path"].as_str() {
+        let path = check["claim"]["path"]
+            .as_str()
+            .map(str::to_owned)
+            .or_else(|| previous_case_answer(&doc, verified, check, &fact.text, &fact.evidence));
+        if let Some(path) = path {
             let mut seen = HashSet::new();
             let sources = fact
                 .evidence
@@ -387,7 +417,7 @@ fn apply_scope(
                 .map(str::to_owned)
                 .collect();
             replacements.push((
-                path.to_owned(),
+                path,
                 Entry {
                     text: fact.text,
                     sources,
