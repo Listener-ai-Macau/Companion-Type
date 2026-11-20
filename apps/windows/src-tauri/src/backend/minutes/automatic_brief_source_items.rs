@@ -56,16 +56,16 @@ impl Role {
 
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
-struct SourceItem {
+pub(super) struct SourceItem {
     role: Role,
     text: String,
     evidence: Vec<String>,
-    owner: Option<String>,
-    due: Option<String>,
+    pub(super) owner: Option<String>,
+    pub(super) due: Option<String>,
 }
 
 impl SourceItem {
-    fn bind(self, known: &HashMap<&str, &Value>, known_ids: &HashSet<&str>) -> Result<Fact, String> {
+    pub(super) fn bind(self, known: &HashMap<&str, &Value>, known_ids: &HashSet<&str>) -> Result<Fact, String> {
         let (kind, placement) = self.role.category();
         if !line(&self.text, 90) || self.evidence.is_empty() || self.evidence.len() > 8 {
             return Err("纪要事项格式不完整，已有纪要和原文保留。".into());
@@ -374,7 +374,7 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
         .map(|assembled| (assembled.document, projection))
 }
 
-fn omission_topic(doc: &Document, sources: &[String], units: &[Unit]) -> Option<usize> {
+pub(super) fn omission_topic(doc: &Document, sources: &[String], units: &[Unit]) -> Option<usize> {
     let order: HashMap<_, _> = units.iter().enumerate().map(|(index, unit)| (unit.id.as_str(), index)).collect();
     let anchors: Vec<_> = sources.iter().filter_map(|id| order.get(id.as_str())).copied().collect();
     doc.topics.iter().enumerate().filter(|(_, topic)| topic.details.len() < DETAILS_LIMIT)

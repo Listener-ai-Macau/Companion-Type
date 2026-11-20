@@ -16,6 +16,8 @@ mod coverage;
 pub(super) mod answer_layout;
 #[path="automatic_brief_source_items.rs"]
 mod source_items;
+#[path="automatic_brief_commitments.rs"]
+mod commitments;
 #[derive(Default,Deserialize)]
 enum ResponseFormatMarker {#[default] #[serde(skip)] Absent,#[serde(rename="json_object")] Present}
 
@@ -256,7 +258,9 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         let mut doc=if let Some(facts)=source_facts {
             let checked=source_items::fill_omissions(endpoint,model,key,client,doc,&facts,&units,start,&mut trace)?;
             traced_document=Some(checked.doc.clone());
-            factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&checked.doc,&units,&checked.conflicts,start,&mut trace)?
+            let verified = factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&checked.doc,&units,&checked.conflicts,start,&mut trace)?;
+            traced_document=Some(verified.document.clone());
+            commitments::review(endpoint,model,key,client,verified,&units,start,&mut trace)?
         }else if coverage::enabled(){
             let(audited,prepared,omissions,calls)=parallel_reviews(endpoint,model,key,client,&doc,&units,start);trace.extend(calls);check_current()?;
             let doc=audited?;traced_document=Some(doc.clone());

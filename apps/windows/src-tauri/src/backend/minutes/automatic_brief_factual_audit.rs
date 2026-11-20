@@ -667,14 +667,19 @@ fn unverified_claims(doc:&Document,verified:Option<&Document>)->Vec<Value> {
 // this invocation. Unchanged claims retain that evidence; new/changed claims
 // still see the complete original source, never a model inventory.
 pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
-    review(endpoint,model,key,client,doc,units,verified,&[],start,trace)
+    review(endpoint,model,key,client,doc,units,verified,&[],start,trace).map(|result| result.document)
 }
 
 fn same_assertion(left: &Value, right: &Value) -> bool {
     ["text", "owner", "due"].iter().all(|field| left[*field] == right[*field])
 }
 
-pub(super) fn review_and_repair_with_conflicts(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
+pub(super) struct VerifiedBrief {
+    pub(super) document: Document,
+    pub(super) evidence: HashMap<String, Vec<String>>,
+}
+
+pub(super) fn review_and_repair_with_conflicts(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<VerifiedBrief,String> {
     review(endpoint,model,key,client,doc,units,None,conflicts,start,trace)
 }
 
@@ -705,16 +710,20 @@ fn a_requested_move_respects_the_topic_detail_limit() {
     assert_eq!(doc["topics"][1]["details"][0]["text"], "备选的交付方式。");
 }
 
-fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
+fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<VerifiedBrief,String> {
     let source=sentences(units);
     let wire=json!(units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>());
     let mut current=doc.clone();let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let mut attempted_phrases:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
     let mut unclear_history:HashMap<String,Vec<String>>=HashMap::new();let mut recovered_display=false;
     let mut verified_claims=verified.map(claims).unwrap_or_default().into_iter().map(|c|(c["path"].as_str().unwrap().to_string(),c)).collect::<HashMap<_,_>>();
+    let mut evidence = HashMap::new();
     let mut supported_conflicts = HashSet::new();
     for round in 0..=2 {
         let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
-        if expected.is_empty(){return finish_conflicts(current, conflicts, &supported_conflicts);}
+        if expected.is_empty(){
+            let document=finish_conflicts(current,conflicts,&supported_conflicts)?;
+            return Ok(VerifiedBrief {document,evidence});
+        }
         emphasize_source_scope(&mut expected,&source);
         for claim in &mut expected {
             let competing: Vec<_> = conflicts.iter().filter(|conflict| same_assertion(claim, &conflict["claim"]))
@@ -739,6 +748,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
         for verdict in audit.claim_audit.iter().filter(|c|c.status=="supported") {
             if let Some(claim)=audited_claims.iter().find(|c|c["path"].as_str()==Some(verdict.path.as_str())){
                 verified_claims.insert(verdict.path.clone(),claim.clone());
+                evidence.insert(verdict.path.clone(),verdict.evidence.clone());
                 for (index, conflict) in conflicts.iter().enumerate().filter(|(_, conflict)| same_assertion(claim, &conflict["claim"])) {
                     if verdict.evidence.iter().any(|id| conflict["evidence"].as_str() == Some(id.as_str())) {
                         supported_conflicts.insert(index);
@@ -753,7 +763,10 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             if let Some(misplaced)=c.placement_unsupported{issue["placementUnsupported"]=json!(misplaced);}
             issue
         }).collect::<Vec<_>>();
-        if issues.is_empty(){return finish_conflicts(current, conflicts, &supported_conflicts);}
+        if issues.is_empty(){
+            let document=finish_conflicts(current,conflicts,&supported_conflicts)?;
+            return Ok(VerifiedBrief {document,evidence});
+        }
         let allowed=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|c.path.clone()).collect::<HashSet<_>>();
         let misplaced=audit.claim_audit.iter().filter(|c|super::source_items::enabled()&&c.placement_unsupported==Some(true))
             .map(|c|c.path.clone()).collect::<HashSet<_>>();
