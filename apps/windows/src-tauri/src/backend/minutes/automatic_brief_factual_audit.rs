@@ -324,8 +324,20 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     }).collect::<Vec<_>>();
     let history=claims.iter().filter(|c|source_wording_unclear(c)).map(|c|{
         let mut ids=c.evidence.iter().filter_map(|id|source.iter().find(|s|&s.id==id).map(|s|s.source.clone())).collect::<HashSet<_>>();
-        if let Some(original)=expected.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str())){if let Some(refs)=original["sources"].as_array(){ids.extend(refs.iter().filter_map(Value::as_str).map(str::to_string));}}
-        json!({"path":c.path,"phrase":c.unclear_text,"sourceIds":ids})
+        let original = expected.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str()));
+        if let Some(refs) = original.and_then(|claim| claim["sources"].as_array()) {
+            ids.extend(refs.iter().filter_map(Value::as_str).map(str::to_string));
+        }
+        let mut record = json!({"path":c.path,"phrase":c.unclear_text,"sourceIds":ids});
+        if super::source_items::enabled() && c.evidence.len() == 2 && disputed_relation(&c.reason) {
+            if let Some(tail) = c.unclear_text.as_deref().filter(|phrase| !phrase.is_empty())
+                .and_then(|phrase| original?.get("text")?.as_str()?.split_once(phrase))
+                .map(|(_, tail)| tail).filter(|tail| tail.chars().count() >= 6)
+            {
+                record["relationTail"] = json!(tail);
+            }
+        }
+        record
     }).collect::<Vec<_>>();
     // An uncertain interpretation can differ from the raw ASR wording (for
     // example a guessed condition). Carry its exact source sentences as well,
@@ -347,6 +359,18 @@ fn apply_historical_veto(audit:&mut Audit,expected:&[Value],history:&[Value],sou
         let found=history.iter().find_map(|record|{
             let phrase=record["phrase"].as_str().filter(|s|!s.is_empty())?;let ids=record["sourceIds"].as_array()?;
             (ids.is_empty()||ids.iter().filter_map(Value::as_str).any(|id|context.contains(id))).then_some(())?;
+            if let Some(relation) = record["relationTail"].as_str() {
+                // A separately supported mention does not repeat a disputed
+                // relationship. Keep the veto on the old predicate, and let
+                // the independent verdict handle other claims about the term.
+                let text = claim["text"].as_str()?;
+                let tail: Vec<_> = relation.chars().collect();
+                if !tail.windows(4).any(|part| part.iter().all(|ch| matches!(*ch, '\u{3400}'..='\u{9fff}'))
+                    && text.contains(&part.iter().collect::<String>()))
+                {
+                    return None;
+                }
+            }
             ["text","owner","due"].iter().any(|field|claim[*field].as_str().is_some_and(|text|text.contains(phrase))).then_some(phrase)
         });
         if let Some(phrase)=found{
@@ -505,6 +529,32 @@ fn unresolved_action_fields(target: &Value, text: &str, rejected: &[String]) -> 
     }).collect()
 }
 
+fn disputed_relation(reason: &str) -> bool {
+    reason.contains("未明确") && reason.contains("则")
+        && ["关系", "也可", "同时", "也能"].iter().any(|cue| reason.contains(cue))
+}
+
+fn remove_fused_example(text: &str, issue: &Value, source: &[Sentence]) -> Option<String> {
+    use std::sync::LazyLock;
+    static EXAMPLE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:比如|例如|如)(?P<example>[\p{Han}]{2,8})等(?P<group>[\p{Han}]{2,8}(?:城市|地区|省份|口岸|区县))"
+    ).unwrap());
+    if issue["status"] != "overstated" {
+        return None;
+    }
+    let matched = EXAMPLE.captures(text)?;
+    let example = matched.name("example")?.as_str();
+    let group = matched.name("group")?.as_str();
+    let evidence: Vec<_> = issue["evidence"].as_array()?.iter().filter_map(|id| {
+        source.iter().find(|sentence| id == sentence.id.as_str()).map(|sentence| sentence.text.as_str())
+    }).collect();
+    let example_witness = evidence.iter().any(|source| source.contains(example));
+    let category_witness = evidence.iter().any(|source| source.contains(group));
+    let linked = evidence.iter().any(|source| source.contains(example) && source.contains(group));
+    (example_witness && category_witness && !linked)
+        .then(|| text.replacen(matched.get(0).unwrap().as_str(), "", 1))
+}
+
 fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence]) -> (String, usize) {
     let original = || (raw.to_owned(), 0);
     let Ok(mut reply) = serde_json::from_str::<Value>(super::super::strip_code_fences(raw).trim()) else {
@@ -521,12 +571,13 @@ fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence]) -> (
             Some(("remove", json!(true)))
         } else if let Some(deletions) = text.trim().strip_prefix("delete:").filter(|_| issue["status"] == "unclear") {
             serde_json::from_str::<Vec<String>>(deletions.trim()).ok().map(|parts| ("delete", json!(parts)))
+        } else if let Some(corrected) = remove_fused_example(text, issue, source) {
+            Some(("text", json!(corrected)))
         } else {
             let term = issue["unclearText"].as_str();
             let explanation = issue["reason"].as_str().unwrap_or_default();
             if issue["status"] != "unclear" || !term.is_some_and(|term| text.contains(term))
-                || !explanation.contains("未明确") || !explanation.contains("则")
-                || !["关系", "也可", "同时", "也能"].iter().any(|cue| explanation.contains(cue))
+                || !disputed_relation(explanation)
             {
                 continue;
             }
@@ -571,6 +622,23 @@ fn repair_reply_keeps_typed_deletions_inside_the_audited_scope() {
     assert_eq!(normalized["changes"][0], json!({"path":"decisions[0]","remove":true}));
     assert_eq!(normalized["changes"][1], json!({"path":"questions[0]","delete":["可疑表述"]}));
     assert_eq!(normalized["changes"][2], reply["changes"][2]);
+}
+
+#[cfg(test)]
+#[test]
+fn a_disputed_location_does_not_invalidate_the_original_device_mention() {
+    let claims = [
+        json!({"path":"topics[0].details[0]","text":"提到了自动售卖设备。","sources":["u000"]}),
+        json!({"path":"topics[0].details[1]","text":"把自动售卖设备放在前台结账处。","sources":["u000"]}),
+    ];
+    let history = [json!({"phrase":"自动售卖设备","relationTail":"也可放在前台结账处","sourceIds":["u000"]})];
+    let mut audit: Audit = serde_json::from_value(json!({"claimAudit": [
+        {"path":"topics[0].details[0]","status":"supported","reason":"已有对应原话。","evidence":[]},
+        {"path":"topics[0].details[1]","status":"supported","reason":"接收了援引。","evidence":[]},
+    ]})).unwrap();
+    assert_eq!(apply_historical_veto(&mut audit, &claims, &history, &[]), ["topics[0].details[1]"]);
+    assert_eq!(audit.claim_audit[0].status, "supported");
+    assert_eq!(audit.claim_audit[1].status, "unclear");
 }
 
 fn apply_repair(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,
