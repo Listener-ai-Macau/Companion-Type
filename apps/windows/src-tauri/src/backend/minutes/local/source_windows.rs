@@ -372,6 +372,10 @@ impl SourceWindows {
                     continue;
                 }
                 let cited = fact.evidence.iter().map(|id| offered[id.as_str()]).collect::<Vec<_>>().join("\n");
+                if source_grounding::crosses_negated_cost_comparison(&fact.text, original) {
+                    source_quote_origin = Some("comparison-source-quote");
+                    continue;
+                }
                 if !canonical_brief::local_document::identifiers_bound(&fact.text, &cited) {
                     source_quote_origin = Some("identifier-source-quote");
                     continue;
@@ -397,14 +401,24 @@ impl SourceWindows {
             }
             if unmatched.is_empty() && !rejected_causal_claim {
                 let origin = if let Some(reason) = source_quote_origin {
-                    let original = text(source);
-                    let role = policy.literal_topic_role(original)
+                    let role = policy.safe_topic_role()
                         .ok_or("会议原话未能支持这条改写，完整转写与已有纪要保留。")?;
-                    let quote = ExtractedFact::review_quote(anchor, role, original);
-                    if !accepted.iter().any(|fact| fact.text == quote.text) {
-                        accepted.push(quote);
+                    let quote = if accepted.is_empty() || reason == "comparison-source-quote" {
+                        complete_leading_excerpt(original)
+                    } else {
+                        canonical_brief::line(original.trim(), 90).then_some(original.trim())
+                    };
+                    if let Some(original) = quote {
+                        let quote = ExtractedFact::review_quote(anchor, role, original);
+                        if !accepted.iter().any(|fact| fact.text == quote.text) {
+                            accepted.push(quote);
+                        }
+                        reason
+                    } else if accepted.is_empty() {
+                        return Err("会议原话未能支持这条改写，完整转写与已有纪要保留。".into());
+                    } else {
+                        "independently-supported-claims"
                     }
-                    reason
                 } else {
                     "model"
                 };
@@ -412,16 +426,23 @@ impl SourceWindows {
             } else {
                 // Keep independently checked claims from this anchor. The original
                 // quote represents the disputed wording without publishing it.
-                let role = policy.literal_topic_role(original)
+                let role = policy.safe_topic_role()
                     .ok_or("会议原话未能支持提取的数量或因果关系，完整转写与已有纪要保留。")?;
-                let (quote, origin) = if unmatched.is_empty() {
-                    (ExtractedFact::verbatim(anchor, role, original), "causal-source-quote")
+                let origin = if let Some(original) = complete_leading_excerpt(original) {
+                    let (quote, origin) = if unmatched.is_empty() {
+                        (ExtractedFact::review_quote(anchor, role, original), "causal-source-quote")
+                    } else {
+                        (ExtractedFact::quantity_quote(anchor, role, original), "quantity-source-quote")
+                    };
+                    if !accepted.iter().any(|fact| fact.text == quote.text) {
+                        accepted.push(quote);
+                    }
+                    origin
+                } else if accepted.is_empty() {
+                    return Err("会议原话未能支持提取的数量或因果关系，完整转写与已有纪要保留。".into());
                 } else {
-                    (ExtractedFact::quantity_quote(anchor, role, original), "quantity-source-quote")
+                    "independently-supported-claims"
                 };
-                if !accepted.iter().any(|fact| fact.text == quote.text) {
-                    accepted.push(quote);
-                }
                 reviewed.push(json!({"sentenceId":anchor,"factCount":accepted.len(),"origin":origin,"unmatched":unmatched}));
             }
             facts.extend(accepted);
@@ -429,6 +450,27 @@ impl SourceWindows {
         if !answers.is_empty() { return Err(fail()); }
         Ok(CheckedWindow { facts, reviewed })
     }
+}
+
+fn complete_leading_excerpt(source: &str) -> Option<&str> {
+    let source = source.trim();
+    if canonical_brief::line(source, 90) {
+        return Some(source);
+    }
+    // A review excerpt keeps the speaker and an original clause together.
+    // Prefer a real break to clipping the sentence at the display limit.
+    ["但是", "不过", "然而"].into_iter().filter_map(|word| source.find(word))
+        .filter_map(|index| {
+            let head = source[..index].trim_end_matches(['，', ',', ' ']);
+            (head.chars().count() >= 18 && canonical_brief::line(head, 90)).then_some(head)
+        }).max_by_key(|head| head.len())
+        .or_else(|| source.char_indices().take(90).filter_map(|(index, ch)| {
+            if matches!(ch, '。' | '；' | '！' | '？' | '，' | ',') {
+                let head = source[..index].trim();
+                return (head.chars().count() >= 18 && canonical_brief::line(head, 90)).then_some(head);
+            }
+            None
+        }).last())
 }
 
 // The explicit follow-on belongs to the same spoken passage. Both sentences
@@ -960,6 +1002,31 @@ mod tests {
         assert!(!source_grounding::adjacent_cost_support(claim, "这个供应商更换了方案。", negated));
         let compatible = "如果供应商更换方案，成本会降低。";
         assert!(source_grounding::adjacent_cost_support(claim, "这个供应商更换了方案。", compatible));
+    }
+
+    #[test]
+    #[ignore = "replay the three real 4B whole-meeting baseline receipts"]
+    fn local_minutes_replay_three_aborted_meetings() {
+        let root = std::path::PathBuf::from(std::env::var_os("COMPANION_TEST_LOCAL_PAIR_BASELINE").unwrap());
+        let cases = [
+            ("training-business", "没有这个现场讲课价钱价格更高", "网络课价格高于现场课"),
+            ("legal-qa", "路人乙死亡", "只受了轻伤"),
+            ("team-planning", "狗拉雪橇", "北极旅游适合年轻人或中年人"),
+        ];
+        for (case, expected, rejected) in cases {
+            let receipt: Value = serde_json::from_slice(&std::fs::read(root.join(case).join("completed.json")).unwrap()).unwrap();
+            assert_eq!(receipt["newCloudCalls"], 0);
+            let source = std::fs::read_to_string(receipt["sourceFile"].as_str().unwrap()).unwrap();
+            let windows = SourceWindows::new(&source).unwrap();
+            let trace = &receipt["receipt"];
+            let index = trace["sourceWindow"]["current"].as_u64().unwrap() as usize - 1;
+            let last = trace["calls"].as_array().unwrap().last().unwrap();
+            let raw = last["output"].as_str().unwrap();
+            let checked = windows.check_encoded(index, raw, SourceEncoding::DirectSingleRole).unwrap();
+            assert!(checked.facts.iter().any(|fact| fact.text.contains(expected)), "{case} {:?}", checked.reviewed);
+            assert!(!checked.facts.iter().any(|fact| fact.text.contains(rejected)), "{case}");
+            println!("{case}: {}", serde_json::to_string(&checked.reviewed).unwrap());
+        }
     }
 
     // Replay an existing real native candidate receipt in the engineering

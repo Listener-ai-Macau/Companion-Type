@@ -12,14 +12,39 @@ static HISTORICAL_YEAR: LazyLock<regex::Regex> = LazyLock::new(|| {
         .expect("valid historical year expression")
 });
 
-const OPEN_QUANTITY: &[&str] = &["有没有可能", "是否有可能", "能不能", "能否", "是否", "可不可以", "尚未确认", "还没确定"];
+const OPEN_QUANTITY: &[&str] = &["有没有可能", "是否有可能", "能不能", "能否", "是否", "可不可以", "尚未确认", "还没确定", "待核实", "待核对"];
 
 pub(super) fn quantity_question(source: &str) -> bool {
-    has_open_qualifier(source) && MEASUREMENT.is_match(source)
+    has_open_qualifier(source) && (
+        source.split(['，', '。', '；', '！', '？', ',', ';']).any(|clause| {
+            has_open_qualifier(clause) && MEASUREMENT.is_match(clause)
+        }) || MEASUREMENT.find_iter(source).any(|span| {
+            let calendar_context = span.as_str() == "半年"
+                && (source[..span.start()].ends_with(['上', '下'])
+                    || (source[..span.start()].ends_with('这')
+                        && source[span.end()..].starts_with(['里', '中'])));
+            !calendar_context
+        })
+    )
 }
 
 pub(super) fn has_open_qualifier(text: &str) -> bool {
     OPEN_QUANTITY.iter().any(|cue| text.contains(cue))
+}
+
+pub(super) fn crosses_negated_cost_comparison(claim: &str, source: &str) -> bool {
+    static NEGATED: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:没有|不比|并不)[^，。；,;]{0,22}(?:更高|高于|贵于)"
+    ).unwrap());
+    static POSITIVE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:更高|高于|贵于)"
+    ).unwrap());
+    const COST_LABELS: &[&str] = &["价格", "价钱", "费用", "成本", "收费", "报价"];
+    COST_LABELS.iter().any(|term| claim.contains(term))
+        && COST_LABELS.iter().any(|term| source.contains(term))
+        && POSITIVE.is_match(claim) && !NEGATED.is_match(claim)
+        && !claim.contains("不高于") && !claim.contains("不贵于")
+        && NEGATED.is_match(source)
 }
 
 pub(super) fn has_historical_year(source: &str) -> bool {

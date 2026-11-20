@@ -124,8 +124,14 @@ impl Authority {
     }
 
     pub(super) fn literal_topic_role(&self, source: &str) -> Option<&'static str> {
-        if !canonical_brief::line(source.trim(), 90)
-            || self.allowed.iter().any(|role| matches!(*role, "decision" | "action" | "question")) {
+        if !canonical_brief::line(source.trim(), 90) {
+            return None;
+        }
+        self.safe_topic_role()
+    }
+
+    pub(super) fn safe_topic_role(&self) -> Option<&'static str> {
+        if self.allowed.iter().any(|role| matches!(*role, "decision" | "action" | "question")) {
             return None;
         }
         ["recommendation", "forecast", "opinion", "status"]
