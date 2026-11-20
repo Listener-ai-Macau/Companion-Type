@@ -413,9 +413,6 @@ fn append_missing(additions: Vec<MissingItem>, mut doc: Document, units: &[Unit]
             .filter(|id| selected.insert(*id)).map(str::to_owned).collect();
         let key = normalized(&fact.text);
         if fact.placement == Placement::Action {
-            if addition.topic.is_some() {
-                return Err("补充交办的栏目无效，已有纪要保留。".into());
-            }
             if !doc.action_items.iter().any(|action| normalized(&action.text) == key
                 && action.owner == fact.owner && action.due == fact.due)
             {
@@ -427,19 +424,19 @@ fn append_missing(additions: Vec<MissingItem>, mut doc: Document, units: &[Unit]
             continue;
         }
         let entry = Entry {text:fact.text, sources, quantity_needs_review:false};
-        match (fact.placement, addition.topic) {
-            (Placement::Topic, title) => {
+        match fact.placement {
+            Placement::Topic => {
                 // The fact and its evidence have already been checked for
                 // shape. A missing display hint does not erase an entire reply.
                 let fail = || "补充事项没有对应的原议题，已有纪要保留。".to_string();
-                let requested = title.as_ref().and_then(|title| doc.topics.iter().position(|topic| &topic.title == title));
+                let requested = addition.topic.as_ref().and_then(|title| doc.topics.iter().position(|topic| &topic.title == title));
                 let index = requested.filter(|index| doc.topics[*index].details.len() < DETAILS_LIMIT)
                     .or_else(|| omission_topic(&doc, &entry.sources, units)).ok_or_else(fail)?;
                 doc.topics[index].details.push(entry);
             }
-            (Placement::Decision, None) => doc.decisions.push(entry),
-            (Placement::Question, None) => doc.questions.push(entry),
-            _ => return Err("补充事项的栏目无效，已有纪要保留。".into()),
+            Placement::Decision => doc.decisions.push(entry),
+            Placement::Question => doc.questions.push(entry),
+            Placement::Action => unreachable!("handled above"),
         }
     }
     super::validate(&doc, units)?;
