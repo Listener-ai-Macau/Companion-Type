@@ -494,7 +494,11 @@ fn measures(text: &str) -> impl Iterator<Item = (f64, &str)> {
         r"([0-9０-９]+(?:[.．][0-9０-９]+)?[万亿]?|[零〇一二两三四五六七八九十百千万亿半]+)\s*(美元|块钱|元|个月|季度|工作日|小时|分钟|周|天|年|%|％)"
     ).expect("constant measure expression"));
     MEASURE.captures_iter(text).filter_map(|capture| {
-        let unit = capture.get(2)?.as_str();
+        let unit_match = capture.get(2)?;
+        let unit = unit_match.as_str();
+        if unit == "年" && text[unit_match.end()..].starts_with('级') {
+            return None;
+        }
         let quantity = number_value(capture.get(1)?.as_str(), unit == "年")?;
         let unit = match unit { "块钱" => "元", "％" => "%", _ => unit };
         Some((quantity, unit))
@@ -554,7 +558,41 @@ fn measure_has_witness(span: &str, claim: &Value) -> bool {
         .any(|(found, found_unit)| unit == found_unit && (found - quantity).abs() < 1e-8)
 }
 
-fn disputed_measures(missing: &MissingItems, cues: &[SourceCue], doc: &Document) -> Vec<Value> {
+fn contextual_measure_witness(span: &str, claim: &Value, source: &str) -> bool {
+    if measure_has_witness(span, claim) { return true; }
+    let Some((value, "年")) = measures(span).next() else { return false; };
+    let occurrences: Vec<_> = source.match_indices(span).map(|(start, word)| {
+        (&source[..start], &source[start + word.len()..])
+    }).collect();
+    if !occurrences.is_empty() && occurrences.iter().all(|(_, after)| after.starts_with('级')) {
+        // A grade in a school example is not a duration.
+        return true;
+    }
+    if value != 1.0 { return false; }
+    // A once-per-year denominator and a calendar year or one-year contract
+    // are distinct. Compare the frequency (including its numerator) instead.
+    static RATE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"^(?:有|要|做|需|每|\s|，|,)*([0-9０-９]+|[一二两三四五六七八九十]+)(?:个)?(季|次|批|轮)"
+    ).expect("constant yearly rate expression"));
+    let rate = |text: &str| {
+        let capture = RATE.captures(text)?;
+        let value = capture.get(1)?.as_str();
+        let mut chars = value.chars();
+        let first = chars.next()?;
+        let spoken = if !first.is_ascii() && chars.next() == Some(first) && chars.next().is_none() {
+            &value[..first.len_utf8()]
+        } else { value };
+        Some((number_value(spoken, false)?, capture.get(2)?.as_str().to_owned()))
+    };
+    let spoken_rates: Vec<_> = occurrences.iter()
+        .filter(|(_, after)| !after.starts_with('级')).filter_map(|(_, after)| rate(after)).collect();
+    claim["text"].as_str().is_some_and(|text| {
+        text.match_indices("每年").filter_map(|(start, term)| rate(&text[start + term.len()..]))
+            .any(|written| spoken_rates.contains(&written))
+    })
+}
+
+fn disputed_measures(missing: &MissingItems, cues: &[SourceCue], doc: &Document, evidence: &[Value]) -> Vec<Value> {
     let claims = factual_audit::claims(doc);
     let by_path: HashMap<_, _> = claims.iter().map(|claim| (claim["path"].as_str().unwrap(), claim)).collect();
     let by_id: HashMap<_, _> = cues.iter().map(|cue| (cue.id.as_str(), cue)).collect();
@@ -562,7 +600,9 @@ fn disputed_measures(missing: &MissingItems, cues: &[SourceCue], doc: &Document)
         let SourceCheck::Covered { id, claim } = check else { return None; };
         let cue = by_id.get(id.as_str())?;
         let statement = by_path.get(claim.as_str())?;
-        (!measure_has_witness(&cue.span, statement)).then(|| json!({"cue":cue,"claimedWitness":statement}))
+        let sentence = evidence.iter().find(|row| row["id"].as_str() == Some(cue.evidence.as_str()))?;
+        (!contextual_measure_witness(&cue.span, statement, sentence["text"].as_str()?))
+            .then(|| json!({"cue":cue,"claimedWitness":statement}))
     }).collect()
 }
 
@@ -586,7 +626,7 @@ fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, 
         match check {
             SourceCheck::Covered { claim, .. } => {
                 let existing = by_path.get(claim.as_str()).ok_or_else(fail)?;
-                if !measure_has_witness(&cue.span, existing) { return Err(fail()); }
+                if !contextual_measure_witness(&cue.span, existing, known[cue.evidence.as_str()]) { return Err(fail()); }
             }
             SourceCheck::Conflict { claim, .. } => {
                 let existing = by_path.get(claim.as_str()).ok_or_else(fail)?;
@@ -648,7 +688,7 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     let scan_index = trace.len() - 1;
     trace[scan_index]["omissionCues"] = json!(cues);
     let mut checked: MissingItems = parse(&raw)?;
-    let disputed = disputed_measures(&checked, &cues, &doc);
+    let disputed = disputed_measures(&checked, &cues, &doc, &evidence);
     if !disputed.is_empty() && disputed.len() <= 4 && checked.checks.len() == cues.len() {
         let selected: HashSet<_> = disputed.iter().map(|case| case["cue"]["id"].as_str().unwrap()).collect();
         let neighborhoods: HashSet<_> = disputed.iter().flat_map(|case| {
@@ -867,11 +907,16 @@ mod tests {
         assert_eq!(json!(cues), json!([{"id":"v000","evidence":"e0000","span":"三个月"}]));
         assert!(checked_additions(parse(r#"{"additions":[]}"#).unwrap(), &cues, &doc, &facts, &evidence).is_err());
         let false_coverage = parse(r#"{"checks":[{"id":"v000","status":"covered","claim":"topics[0].points[0]"}],"additions":[]}"#).unwrap();
-        assert_eq!(disputed_measures(&false_coverage, &cues, &doc).len(), 1);
+        assert_eq!(disputed_measures(&false_coverage, &cues, &doc, &evidence).len(), 1);
         assert!(checked_additions(false_coverage, &cues, &doc, &facts, &evidence).is_err());
         assert!(measure_has_witness("三个月", &json!({"text":"3个月假期"})));
         assert!(!measure_has_witness("三个月", &json!({"text":"13个月假期"})));
         assert!(measure_has_witness("六万块钱", &json!({"text":"前期投入约６万元"})));
+        let yearly = "对方每年一年两两季都要设计服装，不能从一年级穿到六年级。";
+        assert!(contextual_measure_witness("一年", &json!({"text":"对方每年两季要设计服装。"}), yearly));
+        assert!(contextual_measure_witness("六年", &json!({"text":"随学生年级变化重新设计。"}), yearly));
+        assert!(!contextual_measure_witness("一年", &json!({"text":"每年做三季。"}), "一年两季要重做。"));
+        assert!(!contextual_measure_witness("一年", &json!({"text":"每年两季。"}), "合同暂签一年。"));
         let reply = json!({"checks":[{"id":"v000","status":"missing","addition":{
                 "topic":"客流","item":{"role":"status","text":"学校约有三个月假期。","evidence":["e0000"]}}}],
             "additions":[{"topic":"客流","item":{"role":"status","text":"附近学生是主要顾客。","evidence":["e0000"]}}]});

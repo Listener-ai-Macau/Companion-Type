@@ -14,6 +14,15 @@ struct Audit {claim_audit:Vec<Claim>,#[serde(rename="type")]format_kind:Option<S
 #[derive(Debug,Deserialize)]
 struct Claim {path:String,status:String,reason:String,evidence:Vec<String>,clarity:Option<String>,#[serde(rename="unclearText")]unclear_text:Option<String>,#[serde(rename="placementUnsupported")]placement_unsupported:Option<bool>,#[serde(flatten)]echoed:HashMap<String,Value>}
 
+fn source_wording_unclear(claim: &Claim) -> bool {
+    if super::source_items::enabled() {
+        // Clarity flags can identify a missing subject or a misleading title.
+        // Only source uncertainty forbids reusing the exact words.
+        return claim.status == "unclear";
+    }
+    claim.clarity.as_deref() == Some("unclear")
+}
+
 fn independent_path(path:&str)->bool {
     ["decisions[","actionItems[","questions["].iter().any(|prefix|path.starts_with(prefix))
 }
@@ -181,6 +190,31 @@ fn incomplete_audit(raw:&str,expected:&[Value],source:&[Sentence])->Option<(Audi
     let missing=expected.iter().filter(|c|!paths.contains(c["path"].as_str().unwrap())).cloned().collect::<Vec<_>>();
     Some((audit,missing))
 }
+
+fn batch_audit_reply<'a>(raw: &'a str, expected: &[Value]) -> (std::borrow::Cow<'a, str>, usize) {
+    let Ok(mut result) = serde_json::from_str::<Value>(super::super::strip_code_fences(raw).trim()) else {
+        return (raw.into(), 0);
+    };
+    let Some(rows) = result["claimAudit"].as_array_mut() else { return (raw.into(), 0); };
+    let paths: HashSet<_> = expected.iter().filter_map(|claim| claim["path"].as_str()).collect();
+    let before = rows.len();
+    // Only this request's verdicts can influence this batch. Missing,
+    // duplicate and invalid requested rows still go through the strict decoder.
+    rows.retain(|row| row["path"].as_str().is_none_or(|path| paths.contains(path)));
+    let ignored = before - rows.len();
+    if ignored == 0 { (raw.into(), 0) } else { (result.to_string().into(), ignored) }
+}
+
+#[cfg(test)]
+#[test]
+fn batch_projection_keeps_required_duplicates_visible_to_the_decoder() {
+    let raw = r#"{"claimAudit":[{"path":"purpose"},{"path":"decisions[0]"},{"path":"purpose"}]}"#;
+    let (scoped, ignored) = batch_audit_reply(raw, &[json!({"path":"purpose"})]);
+    assert_eq!(ignored, 1);
+    let scoped: Value = serde_json::from_str(&scoped).unwrap();
+    assert_eq!(scoped["claimAudit"], json!([{"path":"purpose"},{"path":"purpose"}]));
+}
+
 fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,wire:&Value,expected:&[Value],source:&[Sentence],stage:&str,start:Instant,trace:&mut Vec<Value>,recovered_format:&AtomicBool)->Result<Audit,String>{
     // Each independent batch still sees the complete immutable source and
     // document. Bound concurrency to three; every claim needs a verdict.
@@ -225,6 +259,14 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
                     let payload=json!({"sourceUnits":wire,"document":doc,"checkClaims":claims});
                     let raw=super::request(endpoint,model,key,client,prompt,payload.clone(),true,start,&mut calls,&stage)?;
                     check_cancellation(token.as_ref())?;
+                    let (raw, ignored) = if super::source_items::enabled() && batches > 1 {
+                        batch_audit_reply(&raw, claims)
+                    } else { (raw.as_str().into(), 0) };
+                    if ignored > 0 {
+                        if let Some(call) = calls.last_mut() {
+                            call["ignoredOutOfBatchVerdicts"] = json!(ignored);
+                        }
+                    }
                     let incomplete=super::coverage::enabled().then(||incomplete_audit(&raw,claims,source)).flatten();
                     match decode(&raw,claims,source){
                         Ok(audit)=>Ok(audit),
@@ -270,12 +312,12 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     if claims.len()!=expected.len(){return Err("纪要审核未覆盖全部陈述，已有结果保留。".into());}
     // Carry only exact, source-bound ambiguous spans into later coverage
     // comparison. They cannot certify an answer or suppress a whole question.
-    let uncertain=claims.iter().filter(|c|c.clarity.as_deref()==Some("unclear")).flat_map(|c|{
+    let uncertain=claims.iter().filter(|c|source_wording_unclear(c)).flat_map(|c|{
         let phrase=c.unclear_text.as_deref().unwrap_or("");
         source.iter().filter(move|s|!phrase.is_empty()&&c.evidence.contains(&s.id)&&s.text.contains(phrase))
             .map(move|s|json!({"source":s.source,"sentenceId":s.id,"text":phrase}))
     }).collect::<Vec<_>>();
-    let history=claims.iter().filter(|c|c.clarity.as_deref()==Some("unclear")).map(|c|{
+    let history=claims.iter().filter(|c|source_wording_unclear(c)).map(|c|{
         let mut ids=c.evidence.iter().filter_map(|id|source.iter().find(|s|&s.id==id).map(|s|s.source.clone())).collect::<HashSet<_>>();
         if let Some(original)=expected.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str())){if let Some(refs)=original["sources"].as_array(){ids.extend(refs.iter().filter_map(Value::as_str).map(str::to_string));}}
         json!({"path":c.path,"phrase":c.unclear_text,"sourceIds":ids})
@@ -283,7 +325,7 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     // An uncertain interpretation can differ from the raw ASR wording (for
     // example a guessed condition). Carry its exact source sentences as well,
     // so a coverage reviewer cannot demand that same guess as a missing fact.
-    let interpretations=claims.iter().filter(|c|c.clarity.as_deref()==Some("unclear")).map(|c|{
+    let interpretations=claims.iter().filter(|c|source_wording_unclear(c)).map(|c|{
         let evidence=c.evidence.iter().filter_map(|id|source.iter().find(|s|&s.id==id))
             .map(|s|json!({"source":s.source,"sentenceId":s.id,"quote":s.text})).collect::<Vec<_>>();
         json!({"interpretation":c.unclear_text,"reason":c.reason,"sourceEvidence":evidence})
@@ -322,12 +364,23 @@ fn mask_unclear_quote(corrected: &str, phrases: &[String]) -> String {
         if corrected.trim_end_matches(['。', '.']).ends_with("含义待核对") {
             result = result.replace(&format!("“{phrase}”"), "一处含混表述");
         }
-        for marker in ["含义待核对", "具体所指待核对", "具体名称待核对", "原话待核实"] {
-            for (open, close) in [('（', '）'), ('(', ')')] {
-                for quoted in [phrase.clone(), format!("“{phrase}”")] {
-                    let tagged = format!("{quoted}{open}{marker}{close}");
-                    result = result.replace(&tagged, &format!("含混表述{open}{marker}{close}"));
-                }
+        for quoted in [phrase.clone(), format!("“{phrase}”")] {
+            let positions = result.match_indices(&quoted).filter_map(|(start, token)| {
+                let end = start + token.len();
+                let suffix = &result[end..];
+                let (open, close) = match suffix.chars().next()? {
+                    '（' => ('（', '）'),
+                    '(' => ('(', ')'),
+                    _ => return None,
+                };
+                let (marker, _) = suffix.strip_prefix(open)?.split_once(close)?;
+                let valid = super::line(marker, 48) && !marker.contains(['（', '）', '(', ')'])
+                    && !["无需", "不必", "不待", "不是", "不再"].iter().any(|word| marker.contains(word))
+                    && (marker.ends_with("待核对") || marker.ends_with("待核实"));
+                valid.then_some(start..end)
+            }).collect::<Vec<_>>();
+            for range in positions.into_iter().rev() {
+                result.replace_range(range, "含混表述");
             }
         }
     }
@@ -347,6 +400,10 @@ fn review_masks_only_an_exact_quote_marked_as_unresolved() {
         "门店只能租，并提到含混表述（具体所指待核对）。");
     assert_eq!(mask_unclear_quote("租赁城市已定，门店名称（具体所指待核对）。", &phrases),
         "租赁城市已定，门店名称（具体所指待核对）。");
+    assert_eq!(mask_unclear_quote("说话人4回应称租赁城市（该表述原话含混，具体含义待核对）。", &phrases),
+        "说话人4回应称含混表述（该表述原话含混，具体含义待核对）。");
+    assert_eq!(mask_unclear_quote("租赁城市（已确认，不待核对）。", &phrases),
+        "租赁城市（已确认，不待核对）。");
 }
 
 fn demote_item(value: &mut Value, pointer: &str, units: &[Unit], preferred: Option<usize>) -> Option<()> {
@@ -629,17 +686,17 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
         // unclear span after the earlier span was actually removed, can use
         // the remaining second repair. Neither the cap nor history resets.
         let repeated=audit.claim_audit.iter().filter(|c|c.status!="supported").any(|c|{
-            let distinct_ambiguity=c.clarity.as_deref()==Some("unclear")&&audited_claims.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str())).is_some_and(|claim|newly_exposed_ambiguity(attempted_phrases.get(&c.path).map(String::as_str),c.unclear_text.as_deref(),claim));
-            attempted.get(&c.path).is_some_and(|old|!(allow_conservative&&(changed_failure_axis(old,&c.status,c.status=="unclear"||c.clarity.as_deref()==Some("unclear"))||distinct_ambiguity)))
+            let distinct_ambiguity=source_wording_unclear(c)&&audited_claims.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str())).is_some_and(|claim|newly_exposed_ambiguity(attempted_phrases.get(&c.path).map(String::as_str),c.unclear_text.as_deref(),claim));
+            attempted.get(&c.path).is_some_and(|old|!(allow_conservative&&(changed_failure_axis(old,&c.status,c.status=="unclear"||source_wording_unclear(c))||distinct_ambiguity)))
         });
         if round==2||repeated {
             return Err(format!("纪要复审仍有{}处未解决表述，已有结果保留。",issues.len()));
         }
-        let unclear=audit.claim_audit.iter().filter(|c|c.status=="unclear"||c.clarity.as_deref()==Some("unclear")).map(|c|c.path.clone()).collect::<HashSet<_>>();
-        if allow_conservative{for issue in audit.claim_audit.iter().filter(|c|c.clarity.as_deref()==Some("unclear")){
+        let unclear=audit.claim_audit.iter().filter(|c|c.status=="unclear"||source_wording_unclear(c)).map(|c|c.path.clone()).collect::<HashSet<_>>();
+        if allow_conservative{for issue in audit.claim_audit.iter().filter(|c|source_wording_unclear(c)){
             if let Some(phrase)=&issue.unclear_text{let terms=unclear_history.entry(issue.path.clone()).or_default();if !terms.contains(phrase){terms.push(phrase.clone());}}
         }}
-        let conservative=if allow_conservative{audit.claim_audit.iter().filter(|c|c.clarity.as_deref()==Some("unclear")).filter_map(|c|{
+        let conservative=if allow_conservative{audit.claim_audit.iter().filter(|c|source_wording_unclear(c)).filter_map(|c|{
             let phrase=c.unclear_text.as_ref()?;
             audited_claims.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str()))?
                 .get("text")?.as_str()?.contains(phrase).then(||(c.path.clone(),vec![phrase.clone()]))
@@ -671,7 +728,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
         };
         preserves_unclear_history(&next,&unclear_history)?;current=next;
         for issue in audit.claim_audit.iter().filter(|c|c.status!="supported"){
-            attempted.insert(issue.path.clone(),(issue.status.clone(),issue.status=="unclear"||issue.clarity.as_deref()==Some("unclear")));
+            attempted.insert(issue.path.clone(),(issue.status.clone(),issue.status=="unclear"||source_wording_unclear(issue)));
             if let Some(phrase)=&issue.unclear_text{attempted_phrases.insert(issue.path.clone(),phrase.clone());}
         }
     }
