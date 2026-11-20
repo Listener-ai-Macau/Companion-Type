@@ -34,6 +34,13 @@ fn provider(endpoint: String) -> VolcengineSaucAsr {
 fn fixture(
     frames: Vec<Vec<u8>>,
 ) -> Result<(String, std::thread::JoinHandle<Result<(), String>>), String> {
+    fixture_with_audio(frames, None)
+}
+
+fn fixture_with_audio(
+    frames: Vec<Vec<u8>>,
+    expected: Option<(Vec<u8>, Vec<usize>)>,
+) -> Result<(String, std::thread::JoinHandle<Result<(), String>>), String> {
     let listener =
         std::net::TcpListener::bind("127.0.0.1:0").map_err(|_| "WS fixture bind failed")?;
     let endpoint = format!(
@@ -62,6 +69,9 @@ fn fixture(
                 .map_err(|_| "WS fixture handshake failed")?;
             // Wait for the client's real end-of-audio framing before sending
             // results, so a test close cannot race its remaining uploads.
+            let mut pcm = Vec::new();
+            let mut packet_lengths = Vec::new();
+            let mut next_sequence = 2;
             loop {
                 let message = tokio::time::timeout(Duration::from_secs(3), ws.next())
                     .await
@@ -70,11 +80,27 @@ fn fixture(
                     .map_err(|_| "WS fixture read failed")?;
                 if let Message::Binary(bytes) = message {
                     let parsed = frame_parse(&bytes).ok_or("WS fixture invalid request")?;
-                    if parsed.message_type == Some(MessageType::AudioOnlyRequest)
-                        && parsed.is_final()
-                    {
-                        break;
+                    if parsed.message_type == Some(MessageType::AudioOnlyRequest) {
+                        if expected.is_some() {
+                            let sequence = if parsed.is_final() { -next_sequence } else { next_sequence };
+                            if parsed.sequence != Some(sequence) {
+                                return Err("WS fixture unexpected saved-meeting sequence".into());
+                            }
+                            next_sequence += 1;
+                            if !parsed.payload.is_empty() {
+                                packet_lengths.push(parsed.payload.len());
+                                pcm.extend_from_slice(&parsed.payload);
+                            }
+                        }
+                        if parsed.is_final() {
+                            break;
+                        }
                     }
+                }
+            }
+            if let Some((expected_pcm, expected_lengths)) = expected {
+                if pcm != expected_pcm || packet_lengths != expected_lengths {
+                    return Err("WS fixture saved-meeting audio differs".into());
                 }
             }
             for frame in frames {
@@ -306,5 +332,28 @@ mod tests {
     #[test]
     fn production_websocket_paths_reject_incomplete_and_unsafe_results() {
         assert_eq!(super::verify().unwrap().len(), 12);
+    }
+
+    #[test]
+    fn saved_hourly_meeting_sends_larger_packets_without_changing_pcm() {
+        use super::*;
+
+        let pcm: Vec<u8> = (0..13_800).map(|index| (index % 251) as u8).collect();
+        for (saved, expected_lengths) in [
+            (true, vec![6_400, 6_400, 1_000]),
+            (false, vec![3_200, 3_200, 3_200, 3_200, 1_000]),
+        ] {
+            let final_frame = server_frame(r#"{"result":{"text":"Controlled final"}}"#, true);
+            let (endpoint, worker) = fixture_with_audio(vec![final_frame], Some((pcm.clone(), expected_lengths))).unwrap();
+            let mut client = provider(endpoint);
+            client.credentials.resource_id = "volc.bigasr.sauc.duration".into();
+            let result = if saved {
+                client.transcribe_saved_meeting_pcm_bytes(&pcm)
+            } else {
+                client.transcribe_pcm_bytes(&pcm)
+            };
+            worker.join().unwrap().unwrap();
+            assert_eq!(result.unwrap().0, "Controlled final");
+        }
     }
 }

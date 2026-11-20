@@ -34,6 +34,8 @@ const SAUC_ENDPOINT_ASYNC: &str = "wss://openspeech.bytedance.com/api/v3/sauc/bi
 const SAUC_ENDPOINT_NOSTREAM: &str = "wss://openspeech.bytedance.com/api/v3/sauc/bigmodel_nostream";
 /// 100 ms of 16 kHz / 16-bit / mono PCM.
 const TARGET_AUDIO_CHUNK_BYTES: usize = 3_200;
+const SAVED_MEETING_AUDIO_CHUNK_BYTES: usize = 6_400;
+const MAX_ACCELERATED_MEETING_PCM_BYTES: usize = 30 * 32_000;
 const FINAL_RESULT_TIMEOUT: Duration = Duration::from_secs(30);
 const WEBSOCKET_SEND_TIMEOUT: Duration = Duration::from_millis(2_000);
 const WEBSOCKET_CONNECT_TIMEOUT: Duration = Duration::from_secs(8);
@@ -309,7 +311,10 @@ impl VolcengineSaucAsr {
             .enable_all().build().map_err(|_| "build connection test runtime")?;
         runtime.block_on(async {
             let silence = vec![0u8; 32_000];
-            tokio::time::timeout(Duration::from_secs(25), self.transcribe_pcm_inner(&silence, true)).await
+            tokio::time::timeout(
+                Duration::from_secs(25),
+                self.transcribe_pcm_inner(&silence, true, TARGET_AUDIO_CHUNK_BYTES),
+            ).await
                 .map_err(|_| "connection test timed out".to_string())?
                 .map(|_| ())
         })
@@ -568,9 +573,24 @@ impl VolcengineSaucAsr {
         self.transcribe_pcm_bytes(&pcm)
     }
 
-    /// Also used by the cache boundary: hash and transcribe the exact same PCM
-    /// snapshot even if the source file is later replaced.
     pub(crate) fn transcribe_pcm_bytes(&self, pcm: &[u8]) -> Result<(String, Vec<Utterance>), String> {
+        self.transcribe_pcm_with_packet_bytes(pcm, TARGET_AUDIO_CHUNK_BYTES)
+    }
+
+    /// Pace each owned saved-meeting chunk at the verified rate. Cached audio
+    /// identity and recognition parameters are independent of packet size.
+    pub(crate) fn transcribe_saved_meeting_pcm_bytes(&self, pcm: &[u8]) -> Result<(String, Vec<Utterance>), String> {
+        let packet_bytes = if self.credentials.resource_id.eq_ignore_ascii_case("volc.bigasr.sauc.duration")
+            && pcm.len() <= MAX_ACCELERATED_MEETING_PCM_BYTES
+        {
+            SAVED_MEETING_AUDIO_CHUNK_BYTES
+        } else {
+            TARGET_AUDIO_CHUNK_BYTES
+        };
+        self.transcribe_pcm_with_packet_bytes(pcm, packet_bytes)
+    }
+
+    fn transcribe_pcm_with_packet_bytes(&self, pcm: &[u8], packet_bytes: usize) -> Result<(String, Vec<Utterance>), String> {
         let deadline = Duration::from_secs((pcm.len() as u64 / 32_000).saturating_add(60)).min(BATCH_REQUEST_MAX_DURATION);
         // The transcription path is normally reached from a Tauri
         // spawn_blocking thread (no runtime context). Be defensive anyway: if
@@ -578,7 +598,7 @@ impl VolcengineSaucAsr {
         // instead of panicking on nested runtime creation.
         if let Ok(handle) = tokio::runtime::Handle::try_current() {
             return tokio::task::block_in_place(move || handle.block_on(async {
-                tokio::time::timeout(deadline, self.transcribe_pcm(pcm)).await
+                tokio::time::timeout(deadline, self.transcribe_pcm_inner(pcm, false, packet_bytes)).await
                     .map_err(|_| "Volcengine request timed out".to_string())?
             }));
         }
@@ -587,15 +607,11 @@ impl VolcengineSaucAsr {
             .enable_all()
             .build()
             .map_err(|e| format!("build tokio runtime: {e}"))?;
-        runtime.block_on(async { tokio::time::timeout(deadline, self.transcribe_pcm(pcm)).await
+        runtime.block_on(async { tokio::time::timeout(deadline, self.transcribe_pcm_inner(pcm, false, packet_bytes)).await
             .map_err(|_| "Volcengine request timed out".to_string())? })
     }
 
-    async fn transcribe_pcm(&self, pcm: &[u8]) -> Result<(String, Vec<Utterance>), String> {
-        self.transcribe_pcm_inner(pcm, false).await
-    }
-
-    async fn transcribe_pcm_inner(&self, pcm: &[u8], probe: bool) -> Result<(String, Vec<Utterance>), String> {
+    async fn transcribe_pcm_inner(&self, pcm: &[u8], probe: bool, packet_bytes: usize) -> Result<(String, Vec<Utterance>), String> {
         if pcm.is_empty() {
             return Err("Volcengine ASR received empty PCM".to_string());
         }
@@ -670,9 +686,9 @@ impl VolcengineSaucAsr {
             let _ = final_tx.send(outcome);
         }));
 
-        // 3. Stream PCM in 100 ms AudioOnlyRequest frames (positive sequence).
+        // 3. Stream PCM in consecutive AudioOnlyRequest frames.
         let mut seq: i32 = 2; // seq=1 was consumed by the config frame.
-        let chunks: Vec<&[u8]> = pcm.chunks(TARGET_AUDIO_CHUNK_BYTES).collect();
+        let chunks: Vec<&[u8]> = pcm.chunks(packet_bytes).collect();
         for (index, chunk) in chunks.iter().enumerate() {
             let seed_last = seed_v2 && index + 1 == chunks.len();
             if seed_last {
@@ -695,11 +711,8 @@ impl VolcengineSaucAsr {
                 .await
                 .map_err(|error| safe_ws_error(error).to_string())?;
             seq = seq.wrapping_add(1);
-            // Pace near real-time (~100 ms per 3200-byte frame). The SAUC
-            // bigmodel_async server ends the session if it does not receive the
-            // next audio packet within ~8 s; fast-bursting a long recording
-            // starves its VAD timeline and aborts with "timeout waiting next
-            // packet". Short clips survive a burst, long ones do not.
+            // Keep a 100 ms cadence even for larger saved-meeting packets.
+            // Unpaced upload has previously caused incomplete cloud results.
             tokio::time::sleep(Duration::from_millis(100)).await;
         }
 

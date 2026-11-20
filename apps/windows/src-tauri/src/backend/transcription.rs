@@ -843,7 +843,7 @@ fn volcengine_transcribe_cached(path: &Path) -> Result<(String, Vec<CollectedUtt
     let asr = volcengine_client()?;
     let pcm = diarization::read_pcm16k_mono_wav(path)?;
     let key = chunk_cache::Key::new(&pcm, chunk_cache::Profile::from_configuration(&asr.cache_configuration())?)?;
-    let (text, utterances) = chunk_cache::ownership::resolve(&cache_root, &key, path, || asr.transcribe_pcm_bytes(&pcm))?;
+    let (text, utterances) = chunk_cache::ownership::resolve(&cache_root, &key, path, || asr.transcribe_saved_meeting_pcm_bytes(&pcm))?;
     let collected = collect_utterance_embeddings(path, &utterances);
     Ok((text, collected))
 }
