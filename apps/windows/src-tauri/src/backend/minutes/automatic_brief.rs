@@ -147,7 +147,22 @@ fn reconcile_citations(doc: &mut Document, source: &Source<'_>) {
     }
     doc.decisions = decisions;
 }
+fn json_format_prompt(prompt: &str) -> std::borrow::Cow<'_, str> {
+    if prompt.to_ascii_lowercase().contains("json") {
+        return prompt.into();
+    }
+    format!("{prompt}\n只返回有效的 JSON 对象。").into()
+}
+
+#[cfg(test)]
+#[test]
+fn json_format_prompt_preserves_explicit_prompts_and_supplies_missing_instruction() {
+    assert_eq!(json_format_prompt("只输出 JSON。"), "只输出 JSON。");
+    assert!(json_format_prompt("按原编号复核。").contains("JSON"));
+}
+
 fn request(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,prompt:&str,input:Value,review:bool,start:Instant,trace:&mut Vec<Value>,stage:&str)->Result<String,String> {
+    let prompt = json_format_prompt(prompt);
     if prompt.len()+input.to_string().len()>MAX_REQUEST_BYTES{return Err("本场完整输入超出自动纪要上下文预算，原文保留。".into());}
     let remaining=wall_budget().saturating_sub(start.elapsed());if remaining<Duration::from_secs(5){return Err("自动纪要本次处理已到期限，已有结果保留。".into());}
     check_current()?;
