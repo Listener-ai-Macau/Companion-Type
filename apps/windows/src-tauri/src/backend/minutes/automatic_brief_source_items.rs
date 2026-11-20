@@ -265,8 +265,66 @@ fn seal_items(mut facts: Vec<Fact>, units: &[Unit]) -> Result<Vec<Fact>, String>
     Ok(facts)
 }
 
-fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<Document, String> {
-    let layout: Layout = parse(raw)?;
+fn complete_layout(layout: &mut Layout, facts: &[Fact]) -> Result<Value, String> {
+    let fail = || "纪要组稿超出可恢复的事项范围，已有纪要保留。".to_string();
+    let order: HashMap<_, _> = facts.iter().enumerate().filter(|(_, fact)| fact.placement == Placement::Topic)
+        .map(|(index, fact)| (fact.id.as_str(), index)).collect();
+    if layout.topics.is_empty() || layout.topics.len() > 8 {
+        return Err(fail());
+    }
+    let mut used = HashSet::new();
+    let mut moved = Vec::new();
+    for topic in &mut layout.topics {
+        if topic.points.iter().chain(&topic.details).any(|id| !order.contains_key(id.as_str())) {
+            return Err(fail());
+        }
+        topic.points.retain(|id| used.insert(id.clone()));
+        topic.details.retain(|id| used.insert(id.clone()));
+        if topic.points.len() > 3 {
+            let overflow = topic.points.split_off(3);
+            moved.extend(overflow.iter().cloned());
+            topic.details.splice(0..0, overflow);
+        }
+        if topic.points.is_empty() && !topic.details.is_empty() {
+            topic.points.push(topic.details.remove(0));
+        }
+    }
+    layout.topics.retain(|topic| !topic.points.is_empty());
+    let mut main_length: usize = layout.topics.iter().flat_map(|topic| &topic.points)
+        .map(|id| facts[order[id.as_str()]].text.chars().count()).sum();
+    for topic in layout.topics.iter_mut().rev() {
+        while main_length > 1000 && topic.points.len() > 1 {
+            let id = topic.points.pop().ok_or_else(fail)?;
+            main_length -= facts[order[id.as_str()]].text.chars().count();
+            moved.push(id.clone());
+            topic.details.insert(0, id);
+        }
+    }
+    // If an offered group is full or a known item was missed, use the closest
+    // item by source order to select a group with room. Zero facts are rewritten.
+    let mut pending = Vec::new();
+    for topic in &mut layout.topics {
+        if topic.details.len() > DETAILS_LIMIT {
+            pending.extend(topic.details.split_off(DETAILS_LIMIT));
+        }
+    }
+    let restored: Vec<_> = facts.iter().filter(|fact| fact.placement == Placement::Topic && !used.contains(&fact.id))
+        .map(|fact| fact.id.clone()).collect();
+    pending.extend(restored.iter().cloned());
+    for id in pending {
+        let index = order[id.as_str()];
+        let topic = layout.topics.iter_mut().filter(|topic| topic.details.len() < DETAILS_LIMIT)
+            .min_by_key(|topic| topic.points.iter().chain(&topic.details)
+                .map(|item| order[item.as_str()].abs_diff(index)).min().unwrap_or(usize::MAX))
+            .ok_or_else(fail)?;
+        topic.details.push(id);
+    }
+    Ok(json!({"restoredTopicIds":restored,"movedToDetails":moved}))
+}
+
+fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Value), String> {
+    let mut layout: Layout = parse(raw)?;
+    let projection = complete_layout(&mut layout, facts)?;
     let topics = layout.topics.iter().map(|topic| json!({"title":topic.title,
         "points":topic.points.iter().map(|id| [id]).collect::<Vec<_>>(),
         "details":topic.details.iter().map(|id| [id]).collect::<Vec<_>>()})).collect::<Vec<_>>();
@@ -275,7 +333,7 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<Document, Strin
     let mapped = json!({"purpose":layout.purpose,"topics":topics,"decisions":placed(Placement::Decision),
         "actionItems":placed(Placement::Action),"questions":placed(Placement::Question),"excluded":[]});
     answer_layout::assemble_with_details_limit(&mapped.to_string(), facts, units, DETAILS_LIMIT, FACT_LIMIT)
-        .map(|assembled| assembled.document)
+        .map(|assembled| (assembled.document, projection))
 }
 
 fn append_missing(raw: &str, mut doc: Document, units: &[Unit], evidence: &[Value]) -> Result<Document, String> {
@@ -397,7 +455,11 @@ pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest:
     if let Some(last) = trace.last_mut() {
         last["items"] = json!(facts);
     }
-    organize(&raw, &facts, units)
+    let (doc, projection) = organize(&raw, &facts, units)?;
+    if let Some(last) = trace.last_mut() {
+        last["layoutProjection"] = projection;
+    }
+    Ok(doc)
 }
 
 #[cfg(test)]
@@ -426,7 +488,7 @@ mod tests {
         ]}]}).to_string();
         let facts = seal_items(window.decode(&raw).unwrap().facts, &units).unwrap();
         let layout = json!({"purpose":"讨论校服","topics":[{"title":"校服筹备","points":["a000"],"details":[]}]});
-        let document = organize(&layout.to_string(), &facts, &units).unwrap();
+        let (document, _) = organize(&layout.to_string(), &facts, &units).unwrap();
         assert_eq!(document.action_items.len(), 2);
         assert_eq!(document.action_items[0].owner.as_deref(), Some("采购组"));
         assert_eq!(document.action_items[1].owner.as_deref(), Some("质检组"));
@@ -476,6 +538,24 @@ mod tests {
         assert_eq!(enriched.topics[0].details[0].text, "运动服预算未通过。");
         assert_eq!(enriched.action_items[0].due.as_deref(), Some("周五前"));
         assert!(append_missing(&raw.replace("e0002","e9999"), doc, &units, &evidence).is_err());
+    }
+
+    #[test]
+    fn source_layout_keeps_omitted_and_overflowing_ids_without_rewriting() {
+        let units = vec![Unit {id:"u000".into(),text:"讨论校服。".into()}];
+        let facts: Vec<_> = (0..5).map(|index| Fact {
+            id:format!("a{index:03}"), kind:Kind::Status, placement:Placement::Topic,
+            text:format!("保留第{index}项。"), owner:None, due:None, evidence:vec!["e0000".into()],
+        }).collect();
+        let raw = json!({"purpose":"讨论校服","topics":[{"title":"校服筹备",
+            "points":["a000","a001","a002","a003"],"details":[]}]}).to_string();
+        let (assembled, projection) = organize(&raw, &facts, &units).unwrap();
+        assert_eq!(assembled.topics[0].points.len(), 3);
+        assert_eq!(projection["restoredTopicIds"], json!(["a004"]));
+        assert_eq!(projection["movedToDetails"], json!(["a003"]));
+        assert_eq!(assembled.topics[0].details[0].text, facts[3].text);
+        assert_eq!(assembled.topics[0].details[1].text, facts[4].text);
+        assert!(organize(&raw.replace("a003","a999"), &facts, &units).is_err());
     }
 
     #[test]

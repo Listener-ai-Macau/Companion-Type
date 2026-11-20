@@ -41,9 +41,17 @@ fn claims(doc:&Document)->Vec<Value> {
         for (j,p) in t.details.iter().enumerate(){out.push(json!({"path":format!("topics[{i}].details[{j}]"),"text":p.text,"sources":p.sources}));}
     }
     for (name,items) in [("decisions",&doc.decisions),("questions",&doc.questions)] {
-        for (i,p) in items.iter().enumerate(){out.push(json!({"path":format!("{name}[{i}]"),"text":p.text,"sources":p.sources}));}
+        for (i,p) in items.iter().enumerate(){
+            let mut item=json!({"path":format!("{name}[{i}]"),"text":p.text,"sources":p.sources});
+            if super::source_items::enabled(){item["kind"]=json!(if name=="decisions"{"decision"}else{"unresolved"});}
+            out.push(item);
+        }
     }
-    for (i,p) in doc.action_items.iter().enumerate(){out.push(json!({"path":format!("actionItems[{i}]"),"text":p.text,"owner":p.owner,"due":p.due,"sources":p.sources}));}
+    for (i,p) in doc.action_items.iter().enumerate(){
+        let mut item=json!({"path":format!("actionItems[{i}]"),"text":p.text,"owner":p.owner,"due":p.due,"sources":p.sources});
+        if super::source_items::enabled(){item["kind"]=json!("action");}
+        out.push(item);
+    }
     out
 }
 fn emphasize_source_scope(claims:&mut[Value],source:&[Sentence]) {
@@ -163,6 +171,13 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     // Each independent batch still sees the complete immutable source and
     // document. Bound concurrency to three; every claim needs a verdict.
     if expected.is_empty(){return Ok(Audit{claim_audit:Vec::new(),format_kind:None});}
+    let role_prompt;
+    let prompt = if super::source_items::enabled() {
+        role_prompt = format!("{PROMPT}\n独立条目的栏目本身也是待核对的主张。decision 必须是本场定案。会议目的、个人主张或计划、后续讨论与散会提示放在此栏，即使正文对，也判 overstated。action 要求实际承诺或指派，截止时间必须约束该任务，活动目标月份不能当成到期日。unresolved 需原话表明事项仍未解决，普通事实不能列为未决。");
+        role_prompt.as_str()
+    } else {
+        PROMPT
+    };
     let batches = if super::source_items::enabled() {
         // With a fuller brief, sending all claim rows duplicates enough text
         // to cross the native request ceiling. Split only the claim list,
@@ -170,7 +185,7 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
         (1..=3).find(|count| {
             expected.chunks(expected.len().div_ceil(*count)).all(|claims| {
                 let payload = json!({"sourceUnits":wire,"document":doc,"checkClaims":claims});
-                PROMPT.len() + payload.to_string().len() <= super::MAX_REQUEST_BYTES
+                prompt.len() + payload.to_string().len() <= super::MAX_REQUEST_BYTES
             })
         }).ok_or("本场完整原文和逐项审核超出上下文预算，已有纪要保留。")?
     } else if super::coverage::enabled() {
@@ -188,7 +203,7 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
                 let result=(||{
                     check_cancellation(token.as_ref())?;
                     let payload=json!({"sourceUnits":wire,"document":doc,"checkClaims":claims});
-                    let raw=super::request(endpoint,model,key,client,PROMPT,payload.clone(),true,start,&mut calls,&stage)?;
+                    let raw=super::request(endpoint,model,key,client,prompt,payload.clone(),true,start,&mut calls,&stage)?;
                     check_cancellation(token.as_ref())?;
                     let incomplete=super::coverage::enabled().then(||incomplete_audit(&raw,claims,source)).flatten();
                     match decode(&raw,claims,source){
@@ -196,7 +211,7 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
                         Err(_) if incomplete.is_some()&&recovered_format.compare_exchange(false,true,Ordering::AcqRel,Ordering::Acquire).is_ok()=>{
                             let(mut audit,missing)=incomplete.unwrap();
                             let payload=json!({"sourceUnits":wire,"document":doc,"checkClaims":missing});
-                            let fixed=super::request(endpoint,model,key,client,PROMPT,payload,true,start,&mut calls,&format!("{stage}-missing-recovery"))?;
+                            let fixed=super::request(endpoint,model,key,client,prompt,payload,true,start,&mut calls,&format!("{stage}-missing-recovery"))?;
                             check_cancellation(token.as_ref())?;
                             // Previously returned positive and negative verdicts
                             // are immutable; only absent paths are requested.
@@ -207,7 +222,7 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
                             let negative=readable_negative_paths(&raw);let mut payload=payload;
                             payload["previousMalformedAudit"]=json!(raw);payload["formatProblem"]=json!("上次JSON语法损坏。按相同完整原文和本批陈述修复JSON，不删除已指出的负面结论；仍须逐项核对本批全部陈述，不能只给passed。");
                             check_cancellation(token.as_ref())?;
-                            let fixed=super::request(endpoint,model,key,client,PROMPT,payload,true,start,&mut calls,&format!("{stage}-format-recovery"))?;
+                            let fixed=super::request(endpoint,model,key,client,prompt,payload,true,start,&mut calls,&format!("{stage}-format-recovery"))?;
                             check_cancellation(token.as_ref())?;let audit=decode(&fixed,claims,source)?;
                             if !preserves_negative_paths(&audit,&negative){return Err("纪要审核格式恢复改变了已指出的问题，已有结果保留。".into());}Ok(audit)
                         },
@@ -280,6 +295,31 @@ fn apply_historical_veto(audit:&mut Audit,expected:&[Value],history:&[Value],sou
 fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,units:&[Unit])->Result<Document,String> {
     apply_changes_with_policy(raw,doc,allowed,unclear,&HashMap::new(),units)
 }
+
+fn mask_unclear_quote(corrected: &str, phrases: &[String]) -> String {
+    let mut result = corrected.to_owned();
+    if !corrected.trim_end_matches(['。', '.']).ends_with("含义待核对") {
+        return result;
+    }
+    for phrase in phrases {
+        if !phrase.is_empty() {
+            result = result.replace(&format!("“{phrase}”"), "一处含混表述");
+        }
+    }
+    result
+}
+
+#[cfg(test)]
+#[test]
+fn review_masks_only_an_exact_quote_marked_as_unresolved() {
+    let phrases = vec!["租赁城市".to_owned()];
+    assert_eq!(mask_unclear_quote("门店只能租，并提到“租赁城市”，该说法含义待核对。", &phrases),
+        "门店只能租，并提到一处含混表述，该说法含义待核对。");
+    assert_eq!(mask_unclear_quote("已确定“租赁城市”。", &phrases), "已确定“租赁城市”。");
+    assert_eq!(mask_unclear_quote("不带引号的租赁城市，含义待核对。", &phrases),
+        "不带引号的租赁城市，含义待核对。");
+}
+
 fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,conservative:&HashMap<String,Vec<String>>,units:&[Unit])->Result<Document,String> {
     let fail=||"纪要修正没有遵守受影响范围，已有结果保留。".to_string();
     let changes:Value=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|fail())?;
@@ -324,15 +364,22 @@ fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unc
             if path=="purpose"||path.ends_with(".title"){*target=json!(shortened);}else{target.as_object_mut().ok_or_else(fail)?.insert("text".into(),json!(shortened));}
             continue;
         }
-        if unclear.contains(path)&&row.contains_key("text") {
+        let mut replacement = row.get("text").cloned();
+        if unclear.contains(path)&&replacement.is_some() {
             let phrases=conservative.get(path).filter(|phrases|!phrases.is_empty()).ok_or_else(fail)?;
             let text=row["text"].as_str().filter(|s|!s.trim().is_empty()).ok_or_else(fail)?;
             let original=if path=="purpose"||path.ends_with(".title"){target.as_str()}else{target.get("text").and_then(Value::as_str)}.ok_or_else(fail)?;
+            let text = if super::source_items::enabled() {
+                mask_unclear_quote(text, phrases)
+            } else {
+                text.to_owned()
+            };
             if row.len()!=2||phrases.iter().any(|phrase|phrase.is_empty()||!original.contains(phrase)||text.contains(phrase)){return Err(fail());}
+            replacement = Some(json!(text));
         }
-        if let Some(text)=row.get("text") {
+        if let Some(text)=replacement {
             if !text.is_string(){return Err(fail());}
-            if path=="purpose"||path.ends_with(".title"){*target=text.clone();}else{target.as_object_mut().ok_or_else(fail)?.insert("text".into(),text.clone());}
+            if path=="purpose"||path.ends_with(".title"){*target=text;}else{target.as_object_mut().ok_or_else(fail)?.insert("text".into(),text);}
         }
         for field in ["kind","owner","due"] {
             if let Some(v)=row.get(field) {
@@ -457,10 +504,11 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
             return Err(format!("纪要复审仍有{}处未解决表述，已有结果保留。",issues.len()));
         }
         let unclear=audit.claim_audit.iter().filter(|c|c.status=="unclear"||c.clarity.as_deref()==Some("unclear")).map(|c|c.path.clone()).collect::<HashSet<_>>();
-        if super::coverage::enabled(){for issue in audit.claim_audit.iter().filter(|c|c.clarity.as_deref()==Some("unclear")){
+        let allow_conservative = super::coverage::enabled() || super::source_items::enabled();
+        if allow_conservative{for issue in audit.claim_audit.iter().filter(|c|c.clarity.as_deref()==Some("unclear")){
             if let Some(phrase)=&issue.unclear_text{let terms=unclear_history.entry(issue.path.clone()).or_default();if !terms.contains(phrase){terms.push(phrase.clone());}}
         }}
-        let conservative=if super::coverage::enabled(){audit.claim_audit.iter().filter(|c|c.clarity.as_deref()==Some("unclear")).filter_map(|c|{
+        let conservative=if allow_conservative{audit.claim_audit.iter().filter(|c|c.clarity.as_deref()==Some("unclear")).filter_map(|c|{
             let phrase=c.unclear_text.as_ref()?;
             audited_claims.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str()))?
                 .get("text")?.as_str()?.contains(phrase).then(||(c.path.clone(),vec![phrase.clone()]))
