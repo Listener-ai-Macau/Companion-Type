@@ -139,6 +139,10 @@ pub(in crate::backend::minutes) fn refs(ids:&[String],known:&HashMap<&str,&str>)
     !ids.is_empty()&&ids.len()<=8&&ids.iter().all(|id|known.contains_key(id.as_str()))&&ids.iter().collect::<HashSet<_>>().len()==ids.len()
 }
 pub(in crate::backend::minutes) fn normalized(text:&str)->String {text.chars().filter(|c|!c.is_whitespace()).collect()}
+pub(in crate::backend::minutes) const SOURCE_ITEMS_DETAILS_LIMIT: usize = 24;
+pub(in crate::backend::minutes) fn question_limit(details_limit: usize) -> usize {
+    if details_limit == SOURCE_ITEMS_DETAILS_LIMIT { 32 } else { 20 }
+}
 pub(in crate::backend::minutes) fn validate_with_details_limit(doc:&Document,units:&[Unit],details_limit:usize)->Result<(),String> {
     let known=units.iter().map(|u|(u.id.as_str(),u.text.as_str())).collect::<HashMap<_,_>>();
     let mut issues=Vec::new();let mut titles=HashSet::new();let mut texts=HashSet::new();let mut chars=0;
@@ -155,7 +159,8 @@ pub(in crate::backend::minutes) fn validate_with_details_limit(doc:&Document,uni
     }
     if chars>1000{issues.push("主要回答超出1000字安全上限，须保留要义并收短".into());}
     for (name,items) in [("decisions",&doc.decisions),("questions",&doc.questions)] {
-        if items.len()>20{issues.push(format!("{name}超出20项"));}
+        let limit = if name == "questions" { question_limit(details_limit) } else { 20 };
+        if items.len()>limit{issues.push(format!("{name}超出{limit}项"));}
         for (i,p) in items.iter().enumerate(){if !line(&p.text,180)||!refs(&p.sources,&known){issues.push(format!("{name}[{i}]须为180字内单行并引用实际原id"));}}
     }
     if doc.action_items.len()>20{issues.push("actionItems超出20项".into());}

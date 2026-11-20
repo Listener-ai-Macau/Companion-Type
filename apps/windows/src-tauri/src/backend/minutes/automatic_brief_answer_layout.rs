@@ -81,7 +81,8 @@ pub(in crate::backend::minutes) fn assemble(raw:&str,facts:&[Fact],units:&[Unit]
 pub(in crate::backend::minutes) fn assemble_with_details_limit(raw:&str,facts:&[Fact],units:&[Unit],details_limit:usize,fact_limit:usize)->Result<Assembled,String>{
     let layout:Layout=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|fail())?;
     let known=bind_facts(facts,units,fact_limit)?;let mut used=HashSet::new();
-    if layout.topics.is_empty()||layout.topics.len()>8||layout.decisions.len()>20||layout.action_items.len()>20||layout.questions.len()>20{return Err(fail());}
+    if layout.topics.is_empty()||layout.topics.len()>8||layout.decisions.len()>20||layout.action_items.len()>20
+        || layout.questions.len()>super::question_limit(details_limit){return Err(fail());}
     let mut document=Document{purpose:layout.purpose,topics:Vec::new(),decisions:Vec::new(),action_items:Vec::new(),questions:Vec::new()};
     let mut bindings=Vec::new();
     for (i,topic) in layout.topics.into_iter().enumerate(){

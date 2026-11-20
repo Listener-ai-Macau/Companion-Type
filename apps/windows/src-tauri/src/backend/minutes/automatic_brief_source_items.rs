@@ -23,7 +23,7 @@ const REPAIR_COVERAGE: &str = include_str!("automatic_brief_source_coverage_repa
 const WINDOW_BYTES: usize = 13 * 1024;
 const WINDOW_WORKERS: usize = 3;
 const FACT_LIMIT: usize = 128;
-pub(super) const DETAILS_LIMIT: usize = 24;
+pub(super) const DETAILS_LIMIT: usize = super::SOURCE_ITEMS_DETAILS_LIMIT;
 
 pub(super) fn enabled() -> bool {
     std::env::var("COMPANION_TYPE_MINUTES_SOURCE_ITEMS").as_deref() == Ok("1")
@@ -32,6 +32,7 @@ pub(super) fn enabled() -> bool {
 #[derive(Deserialize)]
 #[serde(rename_all = "lowercase")]
 enum Role {
+    #[serde(alias = "condition")]
     Status,
     Opinion,
     Recommendation,
