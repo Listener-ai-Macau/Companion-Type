@@ -333,7 +333,7 @@ impl VolcengineSaucAsr {
     pub(crate) fn cache_configuration(&self) -> Value {
         // Do not put credentials or unredacted account/hotword data in a
         // persisted profile. The cache layer hashes this effective request.
-        json!({
+        let mut configuration = json!({
             "provider": "volcengine-sauc",
             // Old cached results may have discarded a words-only utterance.
             // Parser policy belongs in cache identity even when the request is unchanged.
@@ -344,7 +344,12 @@ impl VolcengineSaucAsr {
             "language": "auto",
             "account": self.credentials.app_id,
             "payload": self.payload_template,
-        })
+        });
+        if self.credentials.resource_id.eq_ignore_ascii_case(HOURLY_V1_RESOURCE) {
+            // A cached older final may have explicitly covered only part of the clip.
+            configuration["final_audio_coverage"] = json!("reported-duration-v1");
+        }
+        configuration
     }
 
     fn session_payload(&self, connect_id: &str) -> Value {
@@ -1713,6 +1718,10 @@ mod tests {
         assert_eq!(payload["request"]["ssd_version"], "200");
         let current = provider.cache_configuration();
         assert_eq!(current["payload"]["request"], payload["request"]);
+        assert_eq!(current["final_audio_coverage"], "reported-duration-v1");
+        let mut before_coverage = current.clone();
+        before_coverage.as_object_mut().unwrap().remove("final_audio_coverage");
+        assert_ne!(current, before_coverage, "old finals must use a separate cache profile");
         let mut old = current.clone();
         old["payload"]["request"]["enable_nonstream"] = serde_json::json!(false);
         old["payload"]["request"].as_object_mut().unwrap().remove("ssd_version");
