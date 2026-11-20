@@ -665,7 +665,10 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
             })) && target.and_then(|row| row["text"].as_str())
                 .is_some_and(|text| coverage_quote_is_grounded(&proof.statement_quote, text))
         });
-        let omitted_qualification = RESTRICTION.find(source_text).filter(|_| {
+        let omitted_qualification = RESTRICTION.find_iter(source_text).find(|hit| {
+            !hit.as_str().ends_with(['吗', '么', '呢'])
+                && !(hit.as_str().starts_with("没有") && source_text[..hit.start()].ends_with('有'))
+        }).filter(|_| {
             context["sourceNeedsCheck"] == true && !target.and_then(|row| row["text"].as_str())
                 .is_some_and(|text| RESTRICTION.is_match(text))
         });
