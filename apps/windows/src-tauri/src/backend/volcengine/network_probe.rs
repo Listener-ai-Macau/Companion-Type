@@ -384,4 +384,21 @@ mod tests {
             }
         }
     }
+
+    #[test]
+    fn saved_hourly_profile_accounts_for_head_speech_parameter() {
+        use super::*;
+
+        let mut client = provider("ws://127.0.0.1:9".into());
+        assert_eq!(client.saved_meeting_cache_configuration(), client.cache_configuration());
+        client.credentials.resource_id = HOURLY_V1_RESOURCE.into();
+        let baseline = client.cache_configuration();
+        let saved = client.saved_meeting_cache_configuration();
+        assert!(baseline["payload"]["request"].get("force_to_speech_time").is_none());
+        assert_eq!(saved["payload"]["request"]["force_to_speech_time"], json!(500));
+        assert!(client.session_payload("live")["request"].get("force_to_speech_time").is_none());
+        let mut wire = client.session_payload("");
+        configure_saved_meeting_head(&mut wire);
+        assert_eq!(wire["request"], saved["payload"]["request"]);
+    }
 }

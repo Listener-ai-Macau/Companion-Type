@@ -37,6 +37,7 @@ pub(super) const HOURLY_V1_RESOURCE: &str = "volc.bigasr.sauc.duration";
 const TARGET_AUDIO_CHUNK_BYTES: usize = 3_200;
 const SAVED_MEETING_AUDIO_CHUNK_BYTES: usize = 6_400;
 const MAX_ACCELERATED_MEETING_PCM_BYTES: usize = 30 * 32_000;
+const SAVED_MEETING_HEAD_SPEECH_MS: u64 = 500;
 const FINAL_RESULT_TIMEOUT: Duration = Duration::from_secs(30);
 const WEBSOCKET_SEND_TIMEOUT: Duration = Duration::from_millis(2_000);
 const WEBSOCKET_CONNECT_TIMEOUT: Duration = Duration::from_secs(8);
@@ -345,6 +346,14 @@ impl VolcengineSaucAsr {
             "account": self.credentials.app_id,
             "payload": self.payload_template,
         })
+    }
+
+    pub(super) fn saved_meeting_cache_configuration(&self) -> Value {
+        let mut configuration = self.cache_configuration();
+        if self.credentials.resource_id.eq_ignore_ascii_case(HOURLY_V1_RESOURCE) {
+            configure_saved_meeting_head(&mut configuration["payload"]);
+        }
+        configuration
     }
 
     fn session_payload(&self, connect_id: &str) -> Value {
@@ -656,6 +665,9 @@ impl VolcengineSaucAsr {
 
         // 1. First frame: FullClientRequest with session config (seq = 1).
         let mut payload = self.session_payload(&connect_id);
+        if expected_duration_ms.is_some() {
+            configure_saved_meeting_head(&mut payload);
+        }
         if probe {
             if let Some(request) = payload.get_mut("request").and_then(Value::as_object_mut) { request.remove("context"); }
         }
@@ -752,6 +764,10 @@ impl VolcengineSaucAsr {
             )),
         }
     }
+}
+
+fn configure_saved_meeting_head(payload: &mut Value) {
+    payload["request"]["force_to_speech_time"] = json!(SAVED_MEETING_HEAD_SPEECH_MS);
 }
 
 fn endpoint_for_resource(resource_id: &str) -> &'static str {
