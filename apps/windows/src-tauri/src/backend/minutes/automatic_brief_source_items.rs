@@ -818,6 +818,47 @@ fn preserves_related_cause(checks: &[SourceCheck], rejected: &[Value]) -> bool {
     })
 }
 
+fn bind_retrospective_context(item: &mut SourceItem, cue: &SourceCue, evidence: &[Value]) -> bool {
+    // A calendar question supplies context for its immediately following answer.
+    // It does not itself support the new facts stated in the answer.
+    if cue.aspect.is_some() || cue.span != "半年"
+        || !matches!(item.role, Role::Status | Role::Opinion | Role::Recommendation)
+    {
+        return false;
+    }
+    let Some(at) = evidence.iter().position(|row| row["id"] == cue.evidence.as_str()) else { return false; };
+    let source = evidence[at]["text"].as_str().unwrap();
+    let period = ["上半年", "下半年"].into_iter().find(|period| source.contains(period));
+    if !period.is_some_and(|period| item.text.contains(period))
+        || !["什么样", "如何", "怎么样"].iter().any(|phrase| source.contains(phrase))
+    {
+        return false;
+    }
+    let adjacent = evidence.iter().skip(at + 1).take(4).any(|row| {
+        let id = row["id"].as_str().unwrap();
+        item.evidence.iter().any(|given| given == id)
+            && row["source"] == evidence[at]["source"]
+    });
+    if adjacent && item.evidence.len() < 8 {
+        item.evidence.push(cue.evidence.clone());
+        return true;
+    }
+    false
+}
+
+fn retain_instruction_clause(item: &mut SourceItem, cue: &SourceCue) {
+    if cue.aspect != Some("交办后又提问") || !matches!(item.role, Role::Action) {
+        return;
+    }
+    let bound = ["随后再次询问", "随后询问", "随后问", "同时询问", "并询问", "然后再问"]
+        .iter().filter_map(|cue| item.text.find(cue)).min();
+    if let Some(prefix) = bound.map(|at| item.text[..at].trim_end_matches(['，', ',', '；', ' ', '。']))
+        .filter(|prefix| prefix.chars().count() >= 8)
+    {
+        item.text = format!("{prefix}。");
+    }
+}
+
 fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, facts: &[Fact], evidence: &[Value])
     -> Result<(Vec<MissingItem>, Vec<Value>), String>
 {
@@ -846,16 +887,19 @@ fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, 
             }
             check @ (SourceCheck::Missing { .. } | SourceCheck::NeedsReview { .. }) => {
                 let review = matches!(check, SourceCheck::NeedsReview { .. });
-                let (SourceCheck::Missing { addition, .. } | SourceCheck::NeedsReview { addition, .. }) = check else {
+                let (SourceCheck::Missing { mut addition, .. } | SourceCheck::NeedsReview { mut addition, .. }) = check else {
                     unreachable!()
                 };
-                if !addition.item.evidence.iter().any(|id| {
+                let cited = addition.item.evidence.iter().any(|id| {
                     factual_audit::canonical_sentence_reference(id, &known_ids).as_deref() == Some(cue.evidence.as_str())
-                }) || (review && (!matches!(addition.item.role, Role::Status | Role::Question)
+                });
+                let contextual = !cited && !review && bind_retrospective_context(&mut addition.item, cue, evidence);
+                if (!cited && !contextual) || (review && (!matches!(addition.item.role, Role::Status | Role::Question)
                     || !addition.item.text.starts_with("待核实")))
                 {
                     return Err(fail());
                 }
+                retain_instruction_clause(&mut addition.item, cue);
                 additions.push(addition);
             }
             SourceCheck::Background { reason, .. } => {
