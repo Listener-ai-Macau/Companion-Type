@@ -727,12 +727,12 @@ fn carry_verified_after_scoped_repair(next: &Document, current: &Document,
 fn undisputed_action_text(issues: &[Value], claims: &[Value]) -> Option<String> {
     let changes = issues.iter().map(|issue| {
         let path = issue["path"].as_str()?.strip_prefix("actionItems[")?;
-        if issue["status"] != "unclear" || issue["placementUnsupported"] != false || path.is_empty() {
+        if issue["placementUnsupported"] != false || path.is_empty() {
             return None;
         }
         let claim = claims.iter().find(|claim| claim["path"] == issue["path"])?;
         let owner = claim["owner"].as_str()?;
-        if issue["unclearText"] != owner || owner.is_empty() {
+        if owner.is_empty() {
             return None;
         }
         let body = claim["text"].as_str()?.strip_prefix(owner)?
@@ -742,7 +742,20 @@ fn undisputed_action_text(issues: &[Value], claims: &[Value]) -> Option<String> 
         }
         let body = body.trim_end_matches(['。', '！', '；', '.', ';']);
         let text = format!("{body}。负责人待核实。");
-        super::line(&text, 180).then(|| json!({"path":issue["path"],"text":text}))
+        if !super::line(&text, 180) { return None; }
+        if issue["status"] == "unclear" && issue["unclearText"] == owner {
+            return Some(json!({"path":issue["path"],"text":text}));
+        }
+        // A sourced verdict can also reject a named assignee explicitly while
+        // restating the task as a real request. Keep the task, and independently
+        // re-audit it with no substituted assignee.
+        let reason = issue["reason"].as_str()?;
+        let (confirmed_task, after_owner) = reason.split_once(&format!("不是{owner}"))?;
+        let shares_task: Vec<_> = body.chars().collect();
+        let same_task = shares_task.windows(4).any(|span| confirmed_task.contains(&span.iter().collect::<String>()));
+        (issue["status"] == "unsupported" && confirmed_task.contains("原文") && confirmed_task.contains("要求")
+            && same_task && after_owner.starts_with(['，','；','。',',',';','。']))
+            .then(|| json!({"path":issue["path"],"text":text,"owner":null}))
     }).collect::<Option<Vec<_>>>()?;
     (!changes.is_empty()).then(|| json!({"changes":changes}).to_string())
 }
