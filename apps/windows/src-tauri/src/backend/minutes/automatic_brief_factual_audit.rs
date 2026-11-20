@@ -432,13 +432,53 @@ fn demote_item(value: &mut Value, pointer: &str, units: &[Unit], preferred: Opti
     Some(())
 }
 
+fn unique_repair_rows(edits: &[Value], allow_equal_echoes: bool) -> Option<Vec<&Value>> {
+    let mut previous = HashMap::new();
+    let mut unique = Vec::new();
+    for edit in edits {
+        let path = edit["path"].as_str()?;
+        match previous.get(path) {
+            Some(prior) if allow_equal_echoes && *prior == edit => continue,
+            Some(_) => return None,
+            None => {
+                previous.insert(path, edit);
+                unique.push(edit);
+            }
+        }
+    }
+    Some(unique)
+}
+
+#[cfg(test)]
 fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,
     conservative:&HashMap<String,Vec<String>>,misplaced:&HashSet<String>,units:&[Unit])->Result<Document,String> {
+    apply_repair(raw,doc,allowed,unclear,conservative,misplaced,units).map(|repair| repair.document)
+}
+
+struct AppliedRepair {
+    document: Document,
+    corrected_statements: HashMap<String, String>,
+}
+
+fn statement_identity(path: &str, claim: &Value) -> String {
+    let section = if path == "purpose" { "purpose" }
+        else if path.ends_with(".title") { "title" }
+        else if path.contains(".points[") { "points" }
+        else if path.contains(".details[") { "details" }
+        else { path.split('[').next().unwrap_or(path) };
+    let text = claim.as_str().or_else(|| claim["text"].as_str());
+    let kind = (section == "points").then(|| claim["kind"].as_str()).flatten();
+    json!([section, text, claim["owner"].as_str(), claim["due"].as_str(), kind]).to_string()
+}
+
+fn apply_repair(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,
+    conservative:&HashMap<String,Vec<String>>,misplaced:&HashSet<String>,units:&[Unit])->Result<AppliedRepair,String> {
     let fail=||"纪要修正没有遵守受影响范围，已有结果保留。".to_string();
     let changes:Value=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|fail())?;
     let root=changes.as_object().ok_or_else(fail)?;
     if root.len()!=1{return Err(fail());}
-    let edits=root.get("changes").and_then(Value::as_array).ok_or_else(fail)?;
+    let edits=root.get("changes").and_then(Value::as_array)
+        .and_then(|edits| unique_repair_rows(edits,super::source_items::enabled())).ok_or_else(fail)?;
     if edits.is_empty()||edits.len()>allowed.len(){return Err(fail());}
     let mut value=serde_json::to_value(doc).map_err(|_|fail())?;let mut seen=HashSet::new();let mut removals=Vec::new();
     for edit in edits {
@@ -515,6 +555,19 @@ fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unc
         }
         removals.push(pointer);
     }
+    // Array indices are addresses in this reply, not identities across
+    // repairs. Keep identities of amended statements that remain in place.
+    let mut corrected_statements = HashMap::new();
+    if super::source_items::enabled() {
+        for path in seen {
+            let pointer = format!("/{}",path.replace('[',"/").replace(']',"").replace('.',"/"));
+            if !removals.contains(&pointer) {
+                if let Some(item) = value.pointer(&pointer) {
+                    corrected_statements.insert(path.clone(), statement_identity(&path, item));
+                }
+            }
+        }
+    }
     // Apply deletions after replacements and in descending array-index order.
     removals.sort_by(|a,b|{
         let (ap,ai)=a.rsplit_once('/').unwrap();let (bp,bi)=b.rsplit_once('/').unwrap();
@@ -526,7 +579,30 @@ fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unc
         if i>=list.len(){return Err(fail());}list.remove(i);
     }
     if let Some(topics)=value.get_mut("topics").and_then(Value::as_array_mut){topics.retain(|t|t.get("points").and_then(Value::as_array).is_some_and(|p|!p.is_empty()));}
-    let repaired:Document=serde_json::from_value(value).map_err(|_|fail())?;super::validate(&repaired,units)?;Ok(repaired)
+    let repaired:Document=serde_json::from_value(value).map_err(|_|fail())?;
+    super::validate(&repaired,units)?;
+    Ok(AppliedRepair {document:repaired, corrected_statements})
+}
+
+#[cfg(test)]
+#[test]
+fn repair_reply_coalesces_only_identical_repeated_edits() {
+    let patch = json!({"path":"topics[0].details[3]","text":"A同学提到大学生每年有三个月的假期。"});
+    let repeated = vec![patch.clone(), patch.clone()];
+    assert_eq!(unique_repair_rows(&repeated, true), Some(vec![&repeated[0]]));
+    assert!(unique_repair_rows(&repeated, false).is_none());
+    let conflicting = vec![patch, json!({"path":"topics[0].details[3]","text":"每年有六个月假期。"})];
+    assert!(unique_repair_rows(&conflicting, true).is_none());
+}
+
+#[cfg(test)]
+#[test]
+fn statement_identity_survives_array_compaction_without_matching_a_different_question() {
+    let issue = json!({"text":"交通安排尚未决定。"});
+    assert_eq!(statement_identity("questions[3]", &issue), statement_identity("questions[1]", &issue));
+    assert_ne!(statement_identity("questions[1]", &issue),
+               statement_identity("questions[1]", &json!({"text":"会议日期尚未决定。"})));
+    assert_ne!(statement_identity("questions[1]", &issue), statement_identity("decisions[1]", &issue));
 }
 pub(super) fn review_and_repair(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
     review_and_repair_since(endpoint,model,key,client,doc,units,None,start,trace)
@@ -686,8 +762,16 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
         // unclear span after the earlier span was actually removed, can use
         // the remaining second repair. Neither the cap nor history resets.
         let repeated=audit.claim_audit.iter().filter(|c|c.status!="supported").any(|c|{
-            let distinct_ambiguity=source_wording_unclear(c)&&audited_claims.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str())).is_some_and(|claim|newly_exposed_ambiguity(attempted_phrases.get(&c.path).map(String::as_str),c.unclear_text.as_deref(),claim));
-            attempted.get(&c.path).is_some_and(|old|!(allow_conservative&&(changed_failure_axis(old,&c.status,c.status=="unclear"||source_wording_unclear(c))||distinct_ambiguity)))
+            let Some(claim)=audited_claims.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str())) else {return false;};
+            let key = if super::source_items::enabled() { statement_identity(&c.path, claim) } else { c.path.clone() };
+            let distinct_ambiguity=source_wording_unclear(c)&&newly_exposed_ambiguity(
+                attempted_phrases.get(&key).map(String::as_str),c.unclear_text.as_deref(),claim);
+            attempted.get(&key).is_some_and(|old|{
+                let sourced_new_issue = super::source_items::enabled() && old.1 && c.status == "unsupported"
+                    && !source_wording_unclear(c) && !c.evidence.is_empty();
+                !(allow_conservative&&(changed_failure_axis(old,&c.status,c.status=="unclear"||source_wording_unclear(c))
+                    ||distinct_ambiguity||sourced_new_issue))
+            })
         });
         if round==2||repeated {
             return Err(format!("纪要复审仍有{}处未解决表述，已有结果保留。",issues.len()));
@@ -711,7 +795,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             payload["roleCorrectionContract"]=json!("placementUnsupported为true的决定、交办或未决条目将由程序移出原栏目。仍有用的内容只返回path和120字内text，写清实际是意见、现状、设想或已回答的提问；程序保留出处并放入相关主题，之后独立复审。完全无依据、散会或重复无用条目可remove:true。不要在text内继续称已定案。只有需要指定补充主题且不含糊时，才附moveToTopic的已有主题下标。");
         }
         let raw=super::request(endpoint,model,key,client,REPAIR,payload.clone(),super::coverage::enabled(),start,trace,stage)?;
-        let next=match apply_changes_with_policy(&raw,&current,&allowed,&unclear,&conservative,&misplaced,units){
+        let next=match apply_repair(&raw,&current,&allowed,&unclear,&conservative,&misplaced,units){
             Ok(doc)=>doc,
             Err(reason)if super::coverage::enabled()&&!recovered_display&&reason.contains("须为")&&!oversized_repair_texts(&raw).is_empty()=>{
                 // An oversized patch has not been applied. Recover only its
@@ -722,14 +806,18 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
                 payload["instruction"]=json!("本次只缩短formatOnlyTextPaths列出的超长text，按repairContracts保留必要条件、否定、范围、人物及不确定性，不改kind/owner/due，不补事实、不截断原句。其它有效patch由程序原样保留，不要返回。只返回changes，每项仅path和text，列出的每个path恰好一次。随后仍会完整复审。");
                 let fixed=super::request(endpoint,model,key,client,REPAIR,payload,true,start,trace,&format!("{stage}-length-recovery"))?;
                 let merged=merge_shorter_repair_texts(&raw,&fixed,&paths)?;
-                apply_changes_with_policy(&merged,&current,&allowed,&unclear,&conservative,&misplaced,units)?
+                apply_repair(&merged,&current,&allowed,&unclear,&conservative,&misplaced,units)?
             },
             Err(reason)=>return Err(reason),
         };
-        preserves_unclear_history(&next,&unclear_history)?;current=next;
+        preserves_unclear_history(&next.document,&unclear_history)?;current=next.document;
         for issue in audit.claim_audit.iter().filter(|c|c.status!="supported"){
-            attempted.insert(issue.path.clone(),(issue.status.clone(),issue.status=="unclear"||source_wording_unclear(issue)));
-            if let Some(phrase)=&issue.unclear_text{attempted_phrases.insert(issue.path.clone(),phrase.clone());}
+            let key = if super::source_items::enabled() {
+                let Some(key) = next.corrected_statements.get(&issue.path) else {continue;};
+                key.clone()
+            } else { issue.path.clone() };
+            attempted.insert(key.clone(),(issue.status.clone(),issue.status=="unclear"||source_wording_unclear(issue)));
+            if let Some(phrase)=&issue.unclear_text{attempted_phrases.insert(key,phrase.clone());}
         }
     }
     Err("纪要复审未完成，已有结果保留。".into())
