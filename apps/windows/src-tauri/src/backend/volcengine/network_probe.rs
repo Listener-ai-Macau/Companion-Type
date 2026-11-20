@@ -358,6 +358,16 @@ mod tests {
     }
 
     #[test]
+    fn saved_hourly_pacing_covers_the_verified_window_size() {
+        use super::*;
+
+        let cap = SAVED_HOURLY_WINDOW_SECONDS * 32_000;
+        assert_eq!(saved_meeting_packet_bytes(true, cap), SAVED_MEETING_AUDIO_CHUNK_BYTES);
+        assert_eq!(saved_meeting_packet_bytes(true, cap + 2), TARGET_AUDIO_CHUNK_BYTES);
+        assert_eq!(saved_meeting_packet_bytes(false, cap), TARGET_AUDIO_CHUNK_BYTES);
+    }
+
+    #[test]
     fn saved_hourly_meeting_rejects_reported_short_finals() {
         use super::*;
 

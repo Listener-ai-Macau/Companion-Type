@@ -36,7 +36,8 @@ pub(super) const HOURLY_V1_RESOURCE: &str = "volc.bigasr.sauc.duration";
 /// 100 ms of 16 kHz / 16-bit / mono PCM.
 const TARGET_AUDIO_CHUNK_BYTES: usize = 3_200;
 const SAVED_MEETING_AUDIO_CHUNK_BYTES: usize = 6_400;
-const MAX_ACCELERATED_MEETING_PCM_BYTES: usize = 30 * 32_000;
+pub(super) const SAVED_HOURLY_WINDOW_SECONDS: usize = 60;
+const MAX_ACCELERATED_MEETING_PCM_BYTES: usize = SAVED_HOURLY_WINDOW_SECONDS * 32_000;
 const FINAL_RESULT_TIMEOUT: Duration = Duration::from_secs(30);
 const WEBSOCKET_SEND_TIMEOUT: Duration = Duration::from_millis(2_000);
 const WEBSOCKET_CONNECT_TIMEOUT: Duration = Duration::from_secs(8);
@@ -587,11 +588,7 @@ impl VolcengineSaucAsr {
     /// identity and recognition parameters are independent of packet size.
     pub(crate) fn transcribe_saved_meeting_pcm_bytes(&self, pcm: &[u8]) -> Result<(String, Vec<Utterance>), String> {
         let hourly_v1 = self.credentials.resource_id.eq_ignore_ascii_case(HOURLY_V1_RESOURCE);
-        let packet_bytes = if hourly_v1 && pcm.len() <= MAX_ACCELERATED_MEETING_PCM_BYTES {
-            SAVED_MEETING_AUDIO_CHUNK_BYTES
-        } else {
-            TARGET_AUDIO_CHUNK_BYTES
-        };
+        let packet_bytes = saved_meeting_packet_bytes(hourly_v1, pcm.len());
         self.transcribe_pcm_with_packet_bytes(pcm, packet_bytes, hourly_v1.then_some(pcm.len() as u64 / 32))
     }
 
@@ -756,6 +753,14 @@ impl VolcengineSaucAsr {
                 FINAL_RESULT_TIMEOUT.as_secs()
             )),
         }
+    }
+}
+
+fn saved_meeting_packet_bytes(hourly_v1: bool, pcm_len: usize) -> usize {
+    if hourly_v1 && pcm_len <= MAX_ACCELERATED_MEETING_PCM_BYTES {
+        SAVED_MEETING_AUDIO_CHUNK_BYTES
+    } else {
+        TARGET_AUDIO_CHUNK_BYTES
     }
 }
 

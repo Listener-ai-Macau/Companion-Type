@@ -37,7 +37,7 @@ pub(super) fn fetch_pinned_model_asset(client:&reqwest::blocking::Client,url:&st
 }
 
 use super::diarization::{self, EmbeddingSegment};
-use super::volcengine::{Utterance, VolcengineCredentials, VolcengineSaucAsr, HOURLY_V1_RESOURCE};
+use super::volcengine::{Utterance, VolcengineCredentials, VolcengineSaucAsr, HOURLY_V1_RESOURCE, SAVED_HOURLY_WINDOW_SECONDS};
 use crate::companion_v1::CompanionV1UtteranceSegment;
 use denzic_host_audio_v1_core::asr::{
     normalize_transcript as platform_normalize_transcript, BatchAsrProvider,
@@ -855,28 +855,28 @@ pub(crate) fn verify_asr_cache(output: &Path) -> Result<serde_json::Value, Strin
     chunk_cache::verify(output)
 }
 
-/// Max concurrent Volcengine SAUC sessions. The Seed ASR trial instance used by
-/// Companion has a small concurrency quota, so correctness defaults to one
-/// session. Paid instances can opt in to more workers without changing the
-/// chunk layout or transcript ordering.
+fn saved_hourly_profile() -> bool {
+    configured_volcengine_resource_id().eq_ignore_ascii_case(HOURLY_V1_RESOURCE)
+}
+
+/// The tested hourly route can run two saved-meeting windows concurrently.
+/// Other routes retain the single-session default and explicit overrides.
 fn asr_parallel_worker_count() -> usize {
     let raw = std::env::var("COMPANION_TYPE_ASR_PARALLEL_CHUNKS")
         .ok()
         .and_then(|v| v.parse::<usize>().ok())
-        .unwrap_or(1);
+        .unwrap_or_else(|| if saved_hourly_profile() { 2 } else { 1 });
     raw.clamp(1, 4)
 }
 
-/// Seed SAUC connections on the current product instance have been observed to
-/// close between 68 and 98 seconds. Keep every product request comfortably
-/// below that boundary. This also makes retries local instead of restarting a
-/// ten-minute transcription.
+/// Hourly saved-meeting windows keep up to a minute of context at the
+/// verified paced upload rate. Retain shorter windows on other routes.
 fn asr_safe_chunk_seconds() -> usize {
     std::env::var("COMPANION_TYPE_ASR_CHUNK_SECONDS")
         .ok()
         .and_then(|v| v.parse::<usize>().ok())
-        .unwrap_or(30)
-        .clamp(10, 60)
+        .unwrap_or_else(|| if saved_hourly_profile() { SAVED_HOURLY_WINDOW_SECONDS } else { 30 })
+        .clamp(10, SAVED_HOURLY_WINDOW_SECONDS)
 }
 
 /// Short recordings stay on the direct path. Longer recordings are split into
@@ -1000,8 +1000,7 @@ fn quiet_volcengine_cut(pcm: &[u8], cap: usize, remaining: u64) -> usize {
 /// hourly profile, prefer a quiet cut where there is room in the same number
 /// of requests. Every sample is still included once and in original order.
 pub(super) fn split_long_wav_into_chunks(src: &Path, chunk_seconds: usize) -> Result<Vec<PathBuf>, String> {
-    let prefer_pause = chunk_seconds == 30
-        && configured_volcengine_resource_id().eq_ignore_ascii_case(HOURLY_V1_RESOURCE);
+    let prefer_pause = matches!(chunk_seconds, 30 | SAVED_HOURLY_WINDOW_SECONDS) && saved_hourly_profile();
     split_long_wav_with_pause_policy(src, chunk_seconds, prefer_pause)
 }
 
