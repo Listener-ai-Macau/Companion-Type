@@ -130,6 +130,8 @@ fn preserve_assigned_action(original: &Value, fact: &Fact) -> bool {
 }
 
 type SourceIndex<'a> = HashMap<&'a str, &'a Value>;
+const UNSUPPORTED_REPLACEMENT_BASIS: &str = "任务缺少 basis 中说明原事项的句子。承接者发言不能代替任务原话。";
+
 
 fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids: &HashSet<&str>) -> Result<Option<Fact>, &'static str> {
     let context: HashSet<_> = original["context"].as_array().unwrap().iter().filter_map(Value::as_str).collect();
@@ -144,7 +146,7 @@ fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids:
             let evidence_ids: HashSet<_> = item.evidence.iter()
                 .filter_map(|id| factual_audit::canonical_sentence_reference(id, known_ids)).collect();
             if !evidence_ids.iter().any(|id| basis.contains(id.as_str())) {
-                return Err("任务缺少 basis 中说明原事项的句子。承接者发言不能代替任务原话。");
+                return Err(UNSUPPORTED_REPLACEMENT_BASIS);
             }
             if let Some(proof) = owner_evidence {
                 let proof = allowed(&proof).ok_or("ownerEvidence 不在本条相邻原话中。")?;
@@ -221,6 +223,38 @@ fn decode_edits(candidates: &[Value], raw: &str, known: &SourceIndex<'_>, must_r
         result.rejected.push(json!({"id":id,"reason":reason,"previousAnswer":rows.first()}));
     }
     Ok(result)
+}
+
+fn retain_previously_verified_tasks(rejected: &mut Vec<Value>, requested: &[Value]) -> Vec<String> {
+    let mut retained = Vec::new();
+    rejected.retain(|issue| {
+        let preserve = issue["reason"] == UNSUPPORTED_REPLACEMENT_BASIS
+            && requested.iter().any(|row| row["id"] == issue["id"]
+                && row["claim"]["kind"] == "action"
+                && row["basis"].as_array().is_some_and(|basis| !basis.is_empty()));
+        if preserve {
+            retained.push(issue["id"].as_str().unwrap().to_owned());
+        }
+        !preserve
+    });
+    retained
+}
+
+#[cfg(test)]
+#[test]
+fn a_nearby_unrelated_replacement_keeps_the_verified_task() {
+    let requested = [
+        json!({"id":"actionItems[0]","claim":{"kind":"action"},"basis":["e0000"]}),
+        json!({"id":"actionItems[1]","claim":{"kind":"action"},"basis":[]}),
+        json!({"id":"topics[0].points[0]","claim":{"kind":"status"},"basis":["e0002"]}),
+    ];
+    let mut rejected = vec![
+        json!({"id":"actionItems[0]","reason":UNSUPPORTED_REPLACEMENT_BASIS}),
+        json!({"id":"actionItems[1]","reason":UNSUPPORTED_REPLACEMENT_BASIS}),
+        json!({"id":"topics[0].points[0]","reason":UNSUPPORTED_REPLACEMENT_BASIS}),
+    ];
+    assert_eq!(retain_previously_verified_tasks(&mut rejected, &requested), ["actionItems[0]"]);
+    assert_eq!(rejected.len(), 2);
 }
 
 fn statement_has_literal_commitment(text: &str, evidence: &Value, known: &SourceIndex<'_>) -> bool {
@@ -506,7 +540,13 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
         let requested: Vec<_> = rows.iter().filter(|row| rejected_ids.contains(row["id"].as_str().unwrap())).cloned().collect();
         let request = json!({"roleChecks":requested,"sourceSentences":quotes_for(&requested),"rejectedEdits":bound.rejected});
         let retry = super::request(endpoint,model,key,client,PROMPT,request,false,start,trace,"source-commitment-evidence")?;
-        let repaired = decode_edits(&requested, &retry, &known, true)?;
+        let mut repaired = decode_edits(&requested, &retry, &known, true)?;
+        let retained = retain_previously_verified_tasks(&mut repaired.rejected, &requested);
+        if !retained.is_empty() {
+            if let Some(call) = trace.last_mut() {
+                call["retainedOriginalCommitments"] = json!(retained);
+            }
+        }
         if !repaired.rejected.is_empty() {
             return Err(format!("仍有{}条纪要修正缺少原话证据，已有结果保留。", repaired.rejected.len()));
         }

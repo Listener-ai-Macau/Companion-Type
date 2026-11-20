@@ -639,6 +639,41 @@ fn retain_misplaced_statement(issue: &Value, claim: &Value) -> Option<String> {
     (witness && super::line(text, 120)).then(|| text.to_owned())
 }
 
+fn unsettled_assignment_quote(issue: &Value, claim: &Value, source: &[Sentence]) -> Option<String> {
+    let reason = issue["reason"].as_str()?;
+    if issue["placementUnsupported"] != true || issue["status"] != "overstated"
+        || issue["clarity"] != "clear" || claim["kind"] != "action"
+        || !reason.contains("未形成") || !reason.contains("会后")
+        || !["指派", "承诺", "交办"].iter().any(|cue| reason.contains(cue)) {
+        return None;
+    }
+    let owner = claim["owner"].as_str()?;
+    let cited = issue["evidence"].as_array()?;
+    let mut found = source.iter().filter(|sentence| cited.iter().any(|id| id == sentence.id.as_str()))
+        .filter_map(|sentence| {
+            let (speaker, utterance) = super::super::source_resolution::split_turn_label(&sentence.text)?;
+            let (aspect, phrase) = super::source_items::ordinary_source_aspect(utterance)?;
+            if aspect != "交办后又提问" {
+                return None;
+            }
+            let (before, _) = utterance.split_once(phrase)?;
+            let direction = before.rfind(owner)?;
+            let after_owner = before[direction+owner.len()..].trim_start();
+            if !["这边", "这块", "这一块", "这里"].iter().any(|cue| after_owner.starts_with(cue))
+                || after_owner.chars().count() > 55 {
+                return None;
+            }
+            let first = before[..direction].char_indices().rev()
+                .find(|(_, ch)| matches!(ch, '。' | '；' | '，' | ' '))
+                .map_or(0, |(offset, ch)| offset + ch.len_utf8());
+            let excerpt = utterance[first..before.len()+phrase.len()].trim();
+            let text = format!("{speaker}提到「{excerpt}」，是否形成会后交办待核实。");
+            (super::line(&text, 120) && !excerpt.contains(['「', '」'])).then_some(text)
+        });
+    let one = found.next()?;
+    found.next().is_none().then_some(one)
+}
+
 fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence], claims: &[Value]) -> (String, usize) {
     let original = || (raw.to_owned(), 0);
     let Ok(mut reply) = serde_json::from_str::<Value>(super::super::strip_code_fences(raw).trim()) else {
@@ -647,10 +682,19 @@ fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence], clai
     let Some(rows) = reply["changes"].as_array_mut() else { return original(); };
     let mut count = 0;
     for row in rows {
-        let Some(body) = row.as_object_mut().filter(|body| body.len() == 2) else { continue; };
+        let Some(body) = row.as_object_mut() else { continue; };
         let Some(path) = body.get("path").and_then(Value::as_str) else { continue; };
         let Some(issue) = issues.iter().find(|issue| issue["path"] == path) else { continue; };
         let Some(text) = body.get("text").and_then(Value::as_str) else { continue; };
+        let text_patch = body.len() == 2 || (body.len() == 3 && body["moveToTopic"].is_u64());
+        let sourced = claims.iter().find(|claim| text_patch && claim["path"] == path)
+            .and_then(|claim| unsettled_assignment_quote(issue, claim, source));
+        if let Some(sourced) = sourced {
+            body.insert("text".into(), json!(sourced));
+            count += 1;
+            continue;
+        }
+        if body.len() != 2 { continue; }
         if let Some(owner) = verified_owner_from_repair(issue, text, source) {
             body.insert("owner".into(), json!(owner));
             count += 1;

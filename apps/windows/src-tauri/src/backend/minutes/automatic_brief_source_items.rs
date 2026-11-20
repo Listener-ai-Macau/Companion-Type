@@ -446,7 +446,7 @@ pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, uni
     Ok(doc)
 }
 
-fn ordinary_source_aspect(text: &str) -> Option<(&'static str, &str)> {
+pub(super) fn ordinary_source_aspect(text: &str) -> Option<(&'static str, &str)> {
     static PROGRESS: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:逐步|陆续|逐渐)(?:在|进行|开始)?(?:打开|拓展|扩充|开展|推广|恢复|推进|应用|转向|转移)"
     ).unwrap());
