@@ -59,7 +59,7 @@ impl Role {
 pub(super) struct SourceItem {
     role: Role,
     text: String,
-    evidence: Vec<String>,
+    pub(super) evidence: Vec<String>,
     pub(super) owner: Option<String>,
     pub(super) due: Option<String>,
 }

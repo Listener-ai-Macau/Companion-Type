@@ -77,20 +77,21 @@ struct Revision {
     later: HashSet<String>,
 }
 
+pub(super) fn split_turn_label(line: &str) -> Option<(&str, &str)> {
+    line.split_once([':', '：']).filter(|(label, _)| {
+        !label.is_empty()
+            && label.chars().count() <= 16
+            && label.chars().all(|ch| ch.is_alphanumeric() || ch == '·')
+            && !matches!(*label, "决定" | "结论" | "问题" | "行动项" | "待办")
+    })
+}
+
 impl<'a> Source<'a> {
     pub(super) fn new(original: &'a str) -> Self {
         let mut turns = Vec::new();
         let mut roles = HashMap::new();
         for line in original.lines() {
-            let (speaker, text) = line
-                .split_once([':', '：'])
-                .filter(|(label, _)| {
-                    !label.is_empty()
-                        && label.chars().count() <= 16
-                        && label.chars().all(|ch| ch.is_alphanumeric() || ch == '·')
-                        && !matches!(*label, "决定" | "结论" | "问题" | "行动项" | "待办")
-                })
-                .unwrap_or(("", line));
+            let (speaker, text) = split_turn_label(line).unwrap_or(("", line));
             if !speaker.is_empty() {
                 if let Some(captures) = INTRODUCTION.captures(text.trim()) {
                     roles

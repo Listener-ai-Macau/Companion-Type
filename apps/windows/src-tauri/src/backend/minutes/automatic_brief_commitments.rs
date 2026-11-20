@@ -4,9 +4,30 @@ use std::{collections::{HashMap, HashSet}, sync::LazyLock, time::Instant};
 use serde::Deserialize;
 use serde_json::{Value, json};
 
-use super::{Action, Document, Entry, Kind, Unit, answer_layout::Placement, factual_audit, source_items};
+use super::{Action, Document, Entry, Kind, Unit, answer_layout::{Fact, Placement}, factual_audit, source_items};
 
 const PROMPT: &str = include_str!("automatic_brief_commitments.txt");
+const INCOMPLETE: &str = "纪要定向核对没有返回完整证据，已有结果保留。";
+
+fn with_turn_labels(source: &[Value]) -> Vec<Value> {
+    let mut label = None;
+    let mut beginning_of_line = true;
+    source.iter().map(|row| {
+        let text = row["text"].as_str().unwrap();
+        if beginning_of_line {
+            label = super::super::source_resolution::split_turn_label(text)
+                .filter(|(speaker, _)| speaker.chars().any(char::is_alphabetic))
+                .map(|(speaker, _)| (speaker, &row["id"]));
+        }
+        beginning_of_line = text.ends_with('\n');
+        let mut labelled = row.clone();
+        if let Some((speaker, evidence)) = label {
+            labelled["turnSpeaker"] = json!(speaker);
+            labelled["speakerEvidence"] = evidence.clone();
+        }
+        labelled
+    }).collect()
+}
 
 fn source_signals(quote: &str) -> Vec<&'static str> {
     static ASSIGNMENT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
@@ -50,6 +71,9 @@ fn candidates(doc: &factual_audit::VerifiedBrief, source: &[Value]) -> Vec<Value
             // identify an addressee, but it is never on its own an assignment.
             context.extend(index.saturating_sub(6)..(*index + 4).min(source.len()));
         }
+        let turn_starts: Vec<_> = context.iter().filter_map(|index| source[*index]["speakerEvidence"].as_str())
+            .filter_map(|id| positions.get(id).copied()).collect();
+        context.extend(turn_starts);
         context.sort_unstable();
         context.dedup();
         let context: Vec<_> = context.into_iter().map(|index| &source[index]["id"]).collect();
@@ -64,15 +88,18 @@ struct Response {
     #[serde(default, rename = "type")]
     _format: super::ResponseFormatMarker,
     #[serde(rename = "roleChecks")]
-    role_checks: Vec<Check>,
+    role_checks: Vec<Value>,
 }
 
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
 struct Check {
-    id: String,
+    #[serde(rename = "id")]
+    _id: String,
     replacement: Option<source_items::SourceItem>,
     clarification: Option<Clarification>,
+    #[serde(rename = "ownerEvidence")]
+    owner_evidence: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -91,7 +118,7 @@ fn spoken_department<'a>(requested: &str, snippets: impl Iterator<Item = &'a str
         .find(|form| snippets.clone().any(|text| super::normalized(text).contains(form)))
 }
 
-fn preserve_assigned_action(original: &Value, fact: &super::answer_layout::Fact) -> bool {
+fn preserve_assigned_action(original: &Value, fact: &Fact) -> bool {
     let claim = &original["claim"];
     claim["kind"] == "action" && fact.placement == Placement::Action && (
         (fact.owner.is_none() && !claim["owner"].is_null())
@@ -100,58 +127,111 @@ fn preserve_assigned_action(original: &Value, fact: &super::answer_layout::Fact)
     )
 }
 
-fn apply(doc: &Document, candidates: &[Value], source: &[Value], raw: &str, units: &[Unit]) -> Result<Document, String> {
-    let fail = || "纪要负责人或决定的定向核对没有返回完整证据，已有结果保留。".to_string();
-    let response: Response = serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_| fail())?;
-    if response.role_checks.len() != candidates.len() { return Err(fail()); }
-    let mut by_id: HashMap<_, _> = candidates.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
-    let known: HashMap<_, _> = source.iter().map(|s| (s["id"].as_str().unwrap(), s)).collect();
+type SourceIndex<'a> = HashMap<&'a str, &'a Value>;
+
+fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids: &HashSet<&str>) -> Result<Option<Fact>, &'static str> {
+    let context: HashSet<_> = original["context"].as_array().unwrap().iter().filter_map(Value::as_str).collect();
+    let basis: HashSet<_> = original["basis"].as_array().unwrap().iter().filter_map(Value::as_str).collect();
+    let allowed = |id: &str| factual_audit::canonical_sentence_reference(id, known_ids)
+        .filter(|id| context.contains(id.as_str()));
+    let fact = match (check.replacement, check.clarification, check.owner_evidence) {
+        (None, None, None) => return Ok(None),
+        (Some(mut item), None, owner_evidence) => {
+            let requested = item.owner.clone();
+            let due = item.due.clone();
+            let evidence_ids: HashSet<_> = item.evidence.iter()
+                .filter_map(|id| factual_audit::canonical_sentence_reference(id, known_ids)).collect();
+            if !evidence_ids.iter().any(|id| basis.contains(id.as_str())) {
+                return Err("任务缺少 basis 中说明原事项的句子。承接者发言不能代替任务原话。");
+            }
+            if let Some(proof) = owner_evidence {
+                let proof = allowed(&proof).ok_or("ownerEvidence 不在本条相邻原话中。")?;
+                let owner = requested.as_deref().ok_or("ownerEvidence 需要对应明确的 owner。")?;
+                let quote = known[proof.as_str()]["text"].as_str().unwrap();
+                if !super::normalized(quote).contains(&super::normalized(owner))
+                    && spoken_department(owner, std::iter::once(quote)).is_none() {
+                    return Err("ownerEvidence 未出现所填负责人。请区分承接者、主持人和附近讨论者。");
+                }
+                if !evidence_ids.contains(&proof) { item.evidence.push(proof); }
+            }
+            let mut fact = item.bind(known, known_ids).map_err(|_| "修正的文字、类型或证据编号无效。")?;
+            if fact.placement == Placement::Action {
+                if let Some(requested) = requested.filter(|_| fact.owner.is_none()) {
+                    let snippets = fact.evidence.iter().map(|id| known[id.as_str()]["text"].as_str().unwrap());
+                    fact.owner = Some(spoken_department(&requested, snippets)
+                        .ok_or("任务原话没有所填负责人。若相邻原话能确认承接者，请填写 ownerEvidence。若所指不明，请引用原话写待核实。")?);
+                }
+                if due != fact.due { return Err("没有证据说明该时间是这个任务的截止时间。"); }
+            }
+            fact
+        },
+        (None, Some(item), None) => {
+            let id = allowed(&item.evidence).ok_or("待核实证据不在本条相邻原话中。")?;
+            let quote = item.quote.trim();
+            if !super::line(quote, 66) || quote.contains(['「', '」'])
+                || !super::normalized(known[id.as_str()]["text"].as_str().unwrap()).contains(&super::normalized(quote)) {
+                return Err("待核实引语必须是给定原话中的连续片段。");
+            }
+            Fact {
+                id: String::new(), kind: Kind::Status, placement: Placement::Topic,
+                text: format!("会上提到「{quote}」，具体所指待核实。"),
+                owner: None, due: None, evidence: vec![id],
+            }
+        },
+        _ => return Err("每条只能选择一种修正或待核实方式。"),
+    };
+    if fact.evidence.iter().any(|id| !context.contains(id.as_str()))
+        || !fact.evidence.iter().any(|id| basis.contains(id.as_str())) {
+        return Err("修正必须引用本条相邻原话，且至少包含一条 basis。");
+    }
+    Ok((!preserve_assigned_action(original, &fact)).then_some(fact))
+}
+
+#[derive(Default)]
+struct BoundEdits {
+    accepted: HashMap<String, Fact>,
+    rejected: Vec<Value>,
+}
+
+fn decode_edits(candidates: &[Value], raw: &str, known: &SourceIndex<'_>, must_resolve: bool) -> Result<BoundEdits, String> {
+    let response: Response = serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_| INCOMPLETE.to_owned())?;
+    let mut by_id: HashMap<&str, Vec<&Value>> = HashMap::new();
+    for row in &response.role_checks {
+        if let Some(id) = row["id"].as_str() { by_id.entry(id).or_default().push(row); }
+    }
     let known_ids = known.keys().copied().collect();
+    let mut result = BoundEdits::default();
+    for original in candidates {
+        let id = original["id"].as_str().unwrap();
+        let rows = by_id.get(id).map_or(&[][..], Vec::as_slice);
+        let bound = match rows {
+            [row] => serde_json::from_value::<Check>((*row).clone()).map_err(|_| "返回字段不符合单条核对格式。")
+                .and_then(|check| bind_edit(check, original, known, &known_ids)),
+            [] => Err("本条未返回处理结果。"),
+            _ => Err("本条返回了多份处理结果。"),
+        };
+        let reason = match bound {
+            Ok(Some(fact)) => { result.accepted.insert(id.to_owned(), fact); continue; },
+            Ok(None) if !must_resolve => continue,
+            Ok(None) => "缺证据的条目必须给出可验证的修正，或按可确认的原话写待核实。",
+            Err(reason) => reason,
+        };
+        result.rejected.push(json!({"id":id,"reason":reason,"previousAnswer":rows.first()}));
+    }
+    Ok(result)
+}
+
+fn apply(doc: &Document, candidates: &[Value], mut edits: HashMap<String, Fact>, known: &SourceIndex<'_>, units: &[Unit]) -> Result<Document, String> {
+    let fail = || INCOMPLETE.to_owned();
     let mut work = serde_json::to_value(doc).map_err(|_| fail())?;
     let mut removals = Vec::new();
     let mut additions = Vec::new();
-    for check in response.role_checks {
-        let original = by_id.remove(check.id.as_str()).ok_or_else(fail)?;
-        let fact = match (check.replacement, check.clarification) {
-            (None, None) => continue,
-            (Some(item), None) => {
-                let requested = item.owner.clone();
-                let due = item.due.clone();
-                let mut fact = item.bind(&known, &known_ids)?;
-                if fact.placement == Placement::Action {
-                    if let Some(requested) = requested.filter(|_| fact.owner.is_none()) {
-                        let snippets: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]["text"].as_str().unwrap()).collect();
-                        fact.owner = Some(spoken_department(&requested, snippets.iter().copied()).ok_or_else(fail)?);
-                    }
-                    if due != fact.due { return Err(fail()); }
-                }
-                fact
-            },
-            (None, Some(item)) => {
-                let id = factual_audit::canonical_sentence_reference(&item.evidence, &known_ids).ok_or_else(fail)?;
-                let quote = item.quote.trim();
-                if !super::line(quote, 66) || quote.contains(['「', '」'])
-                    || !super::normalized(known[id.as_str()]["text"].as_str().unwrap()).contains(&super::normalized(quote)) {
-                    return Err(fail());
-                }
-                super::answer_layout::Fact {
-                    id: String::new(), kind: Kind::Status, placement: Placement::Topic,
-                    text: format!("会上提到「{quote}」，具体所指待核实。"),
-                    owner: None, due: None, evidence: vec![id],
-                }
-            },
-            (Some(_), Some(_)) => return Err(fail()),
-        };
-        let context: HashSet<_> = original["context"].as_array().unwrap().iter().filter_map(Value::as_str).collect();
-        if fact.evidence.iter().any(|id| !context.contains(id.as_str()))
-            || !fact.evidence.iter().any(|id| original["basis"].as_array().unwrap().iter().any(|value| value.as_str() == Some(id.as_str()))) {
-            return Err(fail());
-        }
-        if preserve_assigned_action(original, &fact) { continue; }
+    for row in candidates {
+        let path = row["id"].as_str().unwrap();
+        let Some(fact) = edits.remove(path) else { continue; };
         let mut sources: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]["source"].as_str().unwrap().to_owned()).collect();
         sources.sort_unstable();
         sources.dedup();
-        let path = &check.id;
         let pointer = format!("/{}", path.replace('[', "/").replace(']', "").replace('.', "/"));
         let topical = path.starts_with("topics[");
         let entry = Entry {text: fact.text, sources, quantity_needs_review: false};
@@ -209,20 +289,35 @@ fn apply(doc: &Document, candidates: &[Value], source: &[Value], raw: &str, unit
 pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::blocking::Client,
     verified:factual_audit::VerifiedBrief, units:&[Unit], start:Instant, trace:&mut Vec<Value>) -> Result<Document, String>
 {
-    let source = factual_audit::evidence_sentences(units);
-    let review = candidates(&verified, &source);
-    if review.is_empty() { return Ok(verified.document); }
-    let selected: HashSet<_> = review.iter().flat_map(|item| item["context"].as_array().unwrap().iter())
-        .filter_map(Value::as_str).collect();
-    let quotes: Vec<_> = source.iter().filter(|row| selected.contains(row["id"].as_str().unwrap())).collect();
-    let raw = super::request(endpoint,model,key,client,PROMPT,json!({"roleChecks":review,"sourceSentences":quotes}),
+    let source = with_turn_labels(&factual_audit::evidence_sentences(units));
+    let rows = candidates(&verified, &source);
+    if rows.is_empty() { return Ok(verified.document); }
+    let quotes_for = |rows: &[Value]| {
+        let selected: HashSet<_> = rows.iter().flat_map(|item| item["context"].as_array().unwrap().iter())
+            .filter_map(Value::as_str).collect();
+        source.iter().filter(|row| selected.contains(row["id"].as_str().unwrap())).collect::<Vec<_>>()
+    };
+    let raw = super::request(endpoint,model,key,client,PROMPT,json!({"roleChecks":rows,"sourceSentences":quotes_for(&rows)}),
         false,start,trace,"source-commitment-review")?;
     if std::env::var_os("COMPANION_TYPE_AUTOMATIC_BRIEF_TRACE_PATH").is_some() {
         if let Some(call) = trace.last_mut() {
             call["priorEvidence"] = json!(&verified.evidence);
         }
     }
-    let improved = apply(&verified.document, &review, &source, &raw, units)?;
+    let known: SourceIndex<'_> = source.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
+    let mut bound = decode_edits(&rows, &raw, &known, false)?;
+    if !bound.rejected.is_empty() {
+        let rejected_ids: HashSet<_> = bound.rejected.iter().filter_map(|issue| issue["id"].as_str()).collect();
+        let requested: Vec<_> = rows.iter().filter(|row| rejected_ids.contains(row["id"].as_str().unwrap())).cloned().collect();
+        let request = json!({"roleChecks":requested,"sourceSentences":quotes_for(&requested),"rejectedEdits":bound.rejected});
+        let retry = super::request(endpoint,model,key,client,PROMPT,request,false,start,trace,"source-commitment-evidence")?;
+        let repaired = decode_edits(&requested, &retry, &known, true)?;
+        if !repaired.rejected.is_empty() {
+            return Err(format!("仍有{}条纪要修正缺少原话证据，已有结果保留。", repaired.rejected.len()));
+        }
+        bound.accepted.extend(repaired.accepted);
+    }
+    let improved = apply(&verified.document, &rows, bound.accepted, &known, units)?;
     factual_audit::review_and_repair_since(endpoint,model,key,client,&improved,units,Some(&verified.document),start,trace)
 }
 
