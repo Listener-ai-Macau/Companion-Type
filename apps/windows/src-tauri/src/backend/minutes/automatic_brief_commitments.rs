@@ -484,7 +484,9 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
 {
     let source = with_turn_labels(&factual_audit::evidence_sentences(units));
     let rows = candidates(&verified, &source);
-    if rows.is_empty() { return Ok(verified.document); }
+    if rows.is_empty() {
+        return super::source_scope::review(endpoint,model,key,client,&verified,verified.document.clone(),units,start,trace);
+    }
     let quotes_for = |rows: &[Value]| {
         let selected: HashSet<_> = rows.iter().flat_map(|item| item["context"].as_array().unwrap().iter())
             .filter_map(Value::as_str).collect();
@@ -524,7 +526,7 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
         bound.accepted.extend(edits);
     }
     let improved = apply(&verified.document, &rows, bound.accepted, &known, units)?;
-    factual_audit::review_and_repair_since(endpoint,model,key,client,&improved,units,Some(&verified.document),start,trace)
+    super::source_scope::review(endpoint,model,key,client,&verified,improved,units,start,trace)
 }
 
 #[cfg(test)]

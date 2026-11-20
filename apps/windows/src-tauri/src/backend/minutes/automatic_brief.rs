@@ -18,6 +18,8 @@ pub(super) mod answer_layout;
 mod source_items;
 #[path="automatic_brief_commitments.rs"]
 mod commitments;
+#[path="automatic_brief_source_scope.rs"]
+mod source_scope;
 #[derive(Default,Deserialize)]
 enum ResponseFormatMarker {#[default] #[serde(skip)] Absent,#[serde(rename="json_object")] Present}
 

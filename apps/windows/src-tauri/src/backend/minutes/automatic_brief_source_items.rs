@@ -29,7 +29,7 @@ pub(super) fn enabled() -> bool {
     std::env::var("COMPANION_TYPE_MINUTES_SOURCE_ITEMS").as_deref() == Ok("1")
 }
 
-#[derive(Deserialize)]
+#[derive(Clone, Deserialize)]
 #[serde(rename_all = "lowercase")]
 enum Role {
     #[serde(alias = "condition")]
@@ -56,7 +56,7 @@ impl Role {
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Clone, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub(super) struct SourceItem {
     role: Role,
@@ -142,11 +142,11 @@ struct MissingItems {
 
 #[derive(Deserialize)]
 #[serde(deny_unknown_fields)]
-struct MissingItem {
-    item: SourceItem,
-    topic: Option<String>,
+pub(super) struct MissingItem {
+    pub(super) item: SourceItem,
+    pub(super) topic: Option<String>,
     #[serde(rename = "newAspect")]
-    new_aspect: Option<String>,
+    pub(super) new_aspect: Option<String>,
 }
 
 #[derive(Serialize, Debug)]
@@ -398,7 +398,7 @@ pub(super) fn omission_topic(doc: &Document, sources: &[String], units: &[Unit])
         .min().map(|(_, index)| index)
 }
 
-fn append_missing(additions: Vec<MissingItem>, mut doc: Document, units: &[Unit], evidence: &[Value]) -> Result<Document, String> {
+pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, units: &[Unit], evidence: &[Value]) -> Result<Document, String> {
     let known: HashMap<_, _> = evidence.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
     let known_ids = known.keys().copied().collect();
     let mut represented: HashSet<_> = doc.topics.iter().flat_map(|topic| {
@@ -564,6 +564,24 @@ fn measure_has_witness(span: &str, claim: &Value) -> bool {
 }
 
 fn contextual_measure_witness(span: &str, claim: &Value, source: &str) -> bool {
+    // A cited duration can be contextual rather than a second measurement.
+    // Do not require a rhetorical question to repeat an already named period,
+    // or treat retrospective working-year wording as a new commitment.
+    let contextual_literal = |span: &str, predicate: &dyn Fn(&str, &str) -> bool| {
+        let mut occurrences = source.match_indices(span).peekable();
+        occurrences.peek().is_some() && occurrences.all(|(start, term)| predicate(&source[..start], &source[start + term.len()..]))
+    };
+    if span == "一年" && contextual_literal(span, &|_, tail| {
+        ["工作的情况下", "的这个工作情况", "的工作情况"].iter().any(|cue| tail.starts_with(cue))
+            || (source.contains("工作") && tail.starts_with("已经")
+                && tail.chars().take(38).collect::<String>().contains("度过"))
+    }) {
+        return true;
+    }
+    if span.ends_with('天') && source.contains("为什么") && source.contains('呢')
+        && contextual_literal(span, &|lead, _| lead.ends_with('这')) {
+        return true;
+    }
     if span == "半年" {
         let mut occurrences = source.match_indices(span).peekable();
         if occurrences.peek().is_some() && occurrences.all(|(start, _)| source[..start].ends_with(['上', '下'])) {
