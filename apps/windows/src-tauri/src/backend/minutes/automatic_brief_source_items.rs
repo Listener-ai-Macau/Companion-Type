@@ -154,6 +154,8 @@ struct SourceCue {
     id: String,
     evidence: String,
     span: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    aspect: Option<&'static str>,
 }
 
 #[derive(Deserialize)]
@@ -443,6 +445,38 @@ pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, uni
     Ok(doc)
 }
 
+fn ordinary_source_aspect(text: &str) -> Option<(&'static str, &str)> {
+    static PROGRESS: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:逐步|陆续|逐渐)(?:在|进行|开始)?(?:打开|拓展|扩充|开展|推广|恢复|推进|应用|转向|转移)"
+    ).unwrap());
+    static DIRECTED: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:要|须|需要)(?:进行|开展|组织|协调|安排|核实|调查|准备)[^，,。！？；;\r\n]{2,20}"
+    ).unwrap());
+    static COLLABORATION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:各部门|各组|各团队|各单位|各小组|各方)(?:儿)?(?:都)?(?:要|务必|必须|需要)(?:互相|相互|彼此)(?:配合|协作|协调|支持)"
+    ).unwrap());
+    if let Some(requirement) = COLLABORATION.find(text) {
+        let clause = text[..requirement.start()].rsplit(['，', '。', '；', '！', '？']).next()?;
+        if !["如果", "假设", "之前", "当时", "建议", "是不是"].iter().any(|word| clause.contains(word)) {
+            return Some(("明确协作要求", requirement.as_str()));
+        }
+    }
+    let question = ["你觉得", "你看哪", "你认为哪", "我问的是", "请问"]
+        .iter().filter_map(|cue| text.find(cue)).min();
+    if let Some(before_question) = question.map(|start| &text[..start]) {
+        if let Some(directed) = DIRECTED.find_iter(before_question).last() {
+            return Some(("交办后又提问", directed.as_str().trim()));
+        }
+    }
+    let hit = PROGRESS.find(text)?;
+    let lead = &text[..hit.start()];
+    let clause = lead.rsplit(['。', '！', '？', '；']).next()?.trim();
+    if clause.chars().count() < 6 || ["是否", "能否", "能不能"].iter().any(|cue| clause.contains(cue)) {
+        return None;
+    }
+    Some(("实际进展", hit.as_str()))
+}
+
 fn omission_cues(facts: &[Fact], evidence: &[Value]) -> Vec<SourceCue> {
     static LITERAL: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:[0-9０-９]+(?:[.．][0-9０-９]+)?|[零〇一二两三四五六七八九十百千万亿半]+)\s*(?:美元|元|块钱|个月|季度|工作日|小时|分钟|周|天|年|%|％)|(?:明天|后天|[本下]周[一二三四五六日]?|下个月|本月底|周[一二三四五六日])(?:之前|以前|截止|前|为止)"
@@ -461,6 +495,7 @@ fn omission_cues(facts: &[Fact], evidence: &[Value]) -> Vec<SourceCue> {
     }
     let mut literals = Vec::new();
     let mut reversals = Vec::new();
+    let mut ordinary = Vec::new();
     for row in evidence {
         let id = row["id"].as_str().unwrap();
         let source = row["text"].as_str().unwrap();
@@ -479,6 +514,14 @@ fn omission_cues(facts: &[Fact], evidence: &[Value]) -> Vec<SourceCue> {
         if let Some(hit) = STATUS.find(text) {
             reversals.push((id, hit.as_str()));
         }
+        if let Some((aspect, span)) = ordinary_source_aspect(text) {
+            if !facts.iter().any(|fact| fact.evidence.iter().any(|e| e == id)
+                && fact.placement != Placement::Question
+                && normalized(&fact.text).contains(&normalized(span)))
+            {
+                ordinary.push((id, span, aspect));
+            }
+        }
     }
     // Reserve places for both source numbers and final-state changes when the
     // meeting has enough candidates to fill the existing review budget.
@@ -488,10 +531,32 @@ fn omission_cues(facts: &[Fact], evidence: &[Value]) -> Vec<SourceCue> {
     for (candidates, count) in [(&literals, literal_count), (&reversals, total - literal_count)] {
         for index in 0..count {
             let (evidence, span) = candidates[index * candidates.len() / count];
-            cues.push(SourceCue { id: format!("v{:03}", cues.len()), evidence: evidence.into(), span: span.into() });
+            cues.push(SourceCue { id: format!("v{:03}", cues.len()), evidence: evidence.into(), span: span.into(), aspect: None });
         }
     }
+    let ordinary_count = ordinary.len().min(6);
+    for index in 0..ordinary_count {
+        let (evidence, span, aspect) = ordinary[index * ordinary.len() / ordinary_count];
+        cues.push(SourceCue { id: format!("v{:03}", cues.len()), evidence: evidence.into(),
+            span: span.into(), aspect: Some(aspect) });
+    }
     cues
+}
+
+#[cfg(test)]
+#[test]
+fn ordinary_coverage_separates_progress_and_a_request_before_a_question() {
+    let evidence = [
+        json!({"id":"e0000","text":"说话人3：网球这方面的市场还在逐步进行打开。"}),
+        json!({"id":"e0001","text":"说话人1：这块儿要进行一个市场调查 你觉得哪个风险大？"}),
+        json!({"id":"e0002","text":"说话人1：咱们能否逐步推进这些做法？"}),
+        json!({"id":"e0003","text":"说话人1：所以你们各部门要互相配合。"}),
+        json!({"id":"e0004","text":"说话人1：如果各部门要互相配合，应该提前讨论。"}),
+    ];
+    let cues = omission_cues(&[], &evidence);
+    assert_eq!(cues.iter().map(|cue| (cue.evidence.as_str(),cue.aspect)).collect::<Vec<_>>(),
+        vec![("e0000", Some("实际进展")), ("e0001", Some("交办后又提问")),
+            ("e0003", Some("明确协作要求"))]);
 }
 
 fn measures(text: &str) -> impl Iterator<Item = (f64, &str)> {
@@ -658,9 +723,10 @@ fn disputed_coverage(missing: &MissingItems, cues: &[SourceCue], doc: &Document,
         let statement = by_path.get(claim.as_str())?;
         let sentence = evidence.iter().find(|row| row["id"].as_str() == Some(cue.evidence.as_str()))?;
         let cited = bindings.get(claim);
-        let wrong_measure = !contextual_measure_witness(&cue.span, statement, sentence["text"].as_str()?);
+        let wrong_measure = cue.aspect.is_none()
+            && !contextual_measure_witness(&cue.span, statement, sentence["text"].as_str()?);
         let different_source = !cited.is_some_and(|ids| ids.contains(&cue.evidence));
-        (wrong_measure || different_source).then(|| json!({
+        (wrong_measure || different_source || cue.aspect.is_some()).then(|| json!({
             "cue":cue, "claimedWitness":statement, "witnessEvidence":cited,
             "measureNeedsCheck":wrong_measure, "sourceNeedsCheck":different_source,
         }))
@@ -714,6 +780,12 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
             })) && target.and_then(|row| row["text"].as_str())
                 .is_some_and(|text| coverage_quote_is_grounded(&proof.statement_quote, text))
         });
+        let ordinary_proof = if let Some(aspect) = context["cue"]["aspect"].as_str() {
+            let required = context["cue"]["span"].as_str()?;
+            proof.as_ref().is_some_and(|proof| coverage_quote_is_grounded(&proof.source_quote, source_text)
+                && normalized(&proof.source_quote).contains(&normalized(required))
+                && (aspect == "实际进展" || !claim.starts_with("questions[")))
+        } else { true };
         let measure_matches = target.is_some_and(|claim| {
             contextual_measure_witness(context["cue"]["span"].as_str().unwrap(), claim, source_text)
         });
@@ -724,10 +796,12 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
             context["sourceNeedsCheck"] == true && !target.and_then(|row| row["text"].as_str())
                 .is_some_and(|text| restriction().is_match(text))
         });
-        if grounded && measure_matches && omitted_qualification.is_none() { return None; }
+        if grounded && ordinary_proof && measure_matches && omitted_qualification.is_none() { return None; }
         let mut issue = context.clone();
         issue["previousClaim"] = json!(claim);
-        issue["reason"] = json!(if !measure_matches {
+        issue["reason"] = json!(if !ordinary_proof {
+            "要覆盖线索标记的实际进展或独立交办。引文须包含该线索，不能用同段的提问或回答代替。"
+        } else if !measure_matches {
             "该正文未保留原话的同一数量或时长。若原话数字只是口语描述、例子或含混片段，应说明其性质；若关乎实际理解或执行，补入正确事实或写待核实。"
         } else if omitted_qualification.is_some() {
             "原话有明确的限制或不足，所指正文只写了其他内容，未表达这条限制。"
@@ -832,9 +906,12 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         let key = (claim["text"].as_str()?, claim["owner"].as_str(), claim["due"].as_str());
         Some((claim["path"].as_str()?.to_owned(), *evidence_by_claim.get(&key)?))
     }).collect();
+    let mut input = json!({"sourceSentences":evidence,"currentBrief":doc,"lexicalCues":cues,"claimEvidence":bindings});
+    if cues.iter().any(|cue| cue.aspect.is_some()) {
+        input["aspectInstructions"] = json!("带aspect的线索需要独立核对。实际进展要保留进展对象、已做和正在做的区别。交办后又提问时分别核对交办和提问；后来已回答的问题不抵消交办。跨团队协作若为明确要求，也要独立保留。负责人和期限只写原话明确的内容。");
+    }
     let raw = super::request(endpoint, model, key, client, FIND_MISSING,
-        json!({"sourceSentences":evidence,"currentBrief":doc,"lexicalCues":cues,"claimEvidence":bindings}),
-        false, start, trace, "source-items-omissions")?;
+        input, false, start, trace, "source-items-omissions")?;
     let scan_index = trace.len() - 1;
     trace[scan_index]["omissionCues"] = json!(cues);
     let mut checked: MissingItems = parse(&raw)?;

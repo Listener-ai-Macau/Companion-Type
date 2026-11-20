@@ -625,7 +625,21 @@ fn verified_owner_from_repair(issue: &Value, text: &str, source: &[Sentence]) ->
         .then(|| owner.to_owned())
 }
 
-fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence]) -> (String, usize) {
+fn retain_misplaced_statement(issue: &Value, claim: &Value) -> Option<String> {
+    if issue["placementUnsupported"] != true || issue["status"] != "unsupported"
+        || issue["clarity"] != "clear" || claim["kind"] != "action"
+    {
+        return None;
+    }
+    let reason = issue["reason"].as_str()?;
+    let witness = reason.starts_with("原话是")
+        && ["的现状", "已完成事项", "方向性总结"].iter().any(|cue| reason.contains(cue))
+        && ["不是会后", "而非会后", "而非具体行动"].iter().any(|cue| reason.contains(cue));
+    let text = claim["text"].as_str()?;
+    (witness && super::line(text, 120)).then(|| text.to_owned())
+}
+
+fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence], claims: &[Value]) -> (String, usize) {
     let original = || (raw.to_owned(), 0);
     let Ok(mut reply) = serde_json::from_str::<Value>(super::super::strip_code_fences(raw).trim()) else {
         return original();
@@ -643,7 +657,10 @@ fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence]) -> (
             continue;
         }
         let fix = if text.trim() == "remove" && issue["placementUnsupported"] == true && independent_path(path) {
-            Some(("remove", json!(true)))
+            let found = claims.iter().find(|claim| claim["path"] == path)
+                .and_then(|claim| retain_misplaced_statement(issue, claim));
+            if let Some(text) = found { Some(("text", json!(text))) }
+            else { Some(("remove", json!(true))) }
         } else if let Some(deletions) = text.trim().strip_prefix("delete:").filter(|_| issue["status"] == "unclear") {
             serde_json::from_str::<Vec<String>>(deletions.trim()).ok().map(|parts| ("delete", json!(parts)))
         } else {
@@ -689,12 +706,25 @@ fn repair_reply_keeps_typed_deletions_inside_the_audited_scope() {
         json!({"path":"decisions[0]","placementUnsupported":true}),
         json!({"path":"questions[0]","status":"unclear"}),
     ];
-    let (normalized, count) = normalize_repair_reply(&reply.to_string(), &issues, &[]);
+    let (normalized, count) = normalize_repair_reply(&reply.to_string(), &issues, &[], &[]);
     let normalized: Value = serde_json::from_str(&normalized).unwrap();
     assert_eq!(count, 2);
     assert_eq!(normalized["changes"][0], json!({"path":"decisions[0]","remove":true}));
     assert_eq!(normalized["changes"][1], json!({"path":"questions[0]","delete":["可疑表述"]}));
     assert_eq!(normalized["changes"][2], reply["changes"][2]);
+}
+
+#[cfg(test)]
+#[test]
+fn a_reported_status_survives_deletion_from_the_wrong_column() {
+    let path = "actionItems[0]";
+    let issue = json!({"path":path,"status":"unsupported","clarity":"clear","placementUnsupported":true,
+        "reason":"原话是负责人汇报培训和手册的现状，不是会后新指派。"});
+    let claim = json!({"path":path,"kind":"action","text":"人事正在培训和编制员工手册。"});
+    let raw = json!({"changes":[{"path":path,"text":"remove"}]}).to_string();
+    let (repaired, count) = normalize_repair_reply(&raw, &[issue], &[], &[claim.clone()]);
+    assert_eq!(count, 1);
+    assert_eq!(serde_json::from_str::<Value>(&repaired).unwrap()["changes"][0]["text"], claim["text"]);
 }
 
 #[cfg(test)]
@@ -712,7 +742,7 @@ fn an_audited_assignee_is_applied_to_the_action_owner_field() {
         text:"主持人：近期咱们质检这边儿完成入库检查。".into()}];
     assert_eq!(verified_owner_from_repair(&report, text, &collective).as_deref(), Some("质检这边"));
     let raw = json!({"changes":[{"path":path,"text":text}]}).to_string();
-    let (normalized, count) = normalize_repair_reply(&raw, &[report], &source);
+    let (normalized, count) = normalize_repair_reply(&raw, &[report], &source, &[]);
     assert_eq!(count, 1);
     assert_eq!(serde_json::from_str::<Value>(&normalized).unwrap()["changes"][0]["owner"], "质检这边");
 }
@@ -1213,7 +1243,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             None => super::request(endpoint,model,key,client,REPAIR,payload.clone(),super::coverage::enabled(),start,trace,stage)?,
         };
         let (raw, normalized) = if super::source_items::enabled() {
-            normalize_repair_reply(&raw, &issues, &source)
+            normalize_repair_reply(&raw, &issues, &source, &audited_claims)
         } else { (raw, 0) };
         if normalized > 0 {
             if let Some(call) = trace.last_mut() {
