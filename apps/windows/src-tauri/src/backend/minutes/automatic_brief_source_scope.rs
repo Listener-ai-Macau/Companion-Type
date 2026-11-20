@@ -572,6 +572,11 @@ fn review_from_verified_public_scope() {
         evidence: serde_json::from_value(fixture["priorEvidence"].clone()).unwrap(),
     };
     super::validate(&verified.document, &units).unwrap();
+    let candidate = fixture.get("candidate").map_or_else(
+        || verified.document.clone(),
+        |value| serde_json::from_value(value.clone()).unwrap(),
+    );
+    super::validate(&candidate, &units).unwrap();
     let client = reqwest::blocking::Client::builder()
         .no_proxy()
         .build()
@@ -584,7 +589,7 @@ fn review_from_verified_public_scope() {
         &setting("DEEPSEEK_API_KEY"),
         &client,
         &verified,
-        verified.document.clone(),
+        candidate,
         &units,
         start,
         &mut trace,
