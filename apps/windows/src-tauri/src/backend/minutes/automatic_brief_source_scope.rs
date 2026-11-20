@@ -182,6 +182,33 @@ struct ScopedItem {
     topic: Option<String>,
 }
 
+fn has_condition(text: &str) -> bool {
+    ["强迫", "胁迫", "违背", "不愿"]
+        .iter()
+        .any(|term| text.contains(term))
+}
+
+fn missing_conditions(raw: &str, checks: &[Value]) -> Option<(Value, Vec<Value>)> {
+    let response: Value = serde_json::from_str(super::super::strip_code_fences(raw).trim()).ok()?;
+    let replies = response["scopeChecks"].as_array()?;
+    let mut seen = HashSet::new();
+    let mut missing = Vec::new();
+    if replies.len() != checks.len() {
+        return None;
+    }
+    for row in replies {
+        let id = row["id"].as_str()?;
+        let check = checks.iter().find(|check| check["id"] == id)?;
+        if !seen.insert(id) {
+            return None;
+        }
+        if check["kind"] == "narrowedConclusion" && !has_condition(row["item"]["text"].as_str()?) {
+            missing.push(check.clone());
+        }
+    }
+    (!missing.is_empty()).then_some((response, missing))
+}
+
 fn apply_scope(
     mut doc: Document,
     raw: &str,
@@ -225,11 +252,7 @@ fn apply_scope(
         if check["kind"] == "ambiguousReference" && !fact.text.contains("待核实") {
             return Err(fail());
         }
-        if check["kind"] == "narrowedConclusion"
-            && !["强迫", "胁迫", "违背", "不愿"]
-                .iter()
-                .any(|term| fact.text.contains(term))
-        {
+        if check["kind"] == "narrowedConclusion" && !has_condition(&fact.text) {
             return Err(fail());
         }
         if let Some(path) = check["claim"]["path"].as_str() {
@@ -302,7 +325,7 @@ pub(super) fn review(
             .iter()
             .filter(|row| needed.contains(row["id"].as_str().unwrap()))
             .collect();
-        let raw = super::request(
+        let mut raw = super::request(
             endpoint,
             model,
             key,
@@ -314,6 +337,58 @@ pub(super) fn review(
             trace,
             "source-scope-review",
         )?;
+        if let Some((mut original, missing)) = missing_conditions(&raw, &checks) {
+            let ids: HashSet<_> = missing
+                .iter()
+                .flat_map(|row| row["requiredEvidence"].as_array().unwrap())
+                .filter_map(Value::as_str)
+                .collect();
+            let excerpts: Vec<_> = source
+                .iter()
+                .filter(|row| ids.contains(row["id"].as_str().unwrap()))
+                .collect();
+            let corrected = super::request(
+                endpoint,
+                model,
+                key,
+                client,
+                PROMPT,
+                json!({"scopeChecks":missing, "sourceSentences":excerpts,
+                    "scopeRecovery": "上次遗漏了断言的必要条件。只返回这些 id。以 requiredEvidence 中强迫、胁迫、违背或不愿的原话为条件，并标为该发言人的意见。删去不带条件的结论及其他话题，只引用 requiredEvidence。"}),
+                false,
+                start,
+                trace,
+                "source-scope-condition-repair",
+            )?;
+            let failure = || FAIL.to_owned();
+            let replacement: Value =
+                serde_json::from_str(super::super::strip_code_fences(&corrected).trim())
+                    .map_err(|_| failure())?;
+            let replacements = replacement["scopeChecks"].as_array().ok_or_else(failure)?;
+            if replacements.len() != missing.len() {
+                return Err(failure());
+            }
+            let replies = original["scopeChecks"].as_array_mut().ok_or_else(failure)?;
+            for check in &missing {
+                let replacement = replacements
+                    .iter()
+                    .find(|row| row["id"] == check["id"])
+                    .ok_or_else(failure)?;
+                let required = check["requiredEvidence"].as_array().unwrap();
+                if !replacement["item"]["evidence"]
+                    .as_array()
+                    .is_some_and(|evidence| evidence.iter().all(|id| required.contains(id)))
+                {
+                    return Err(failure());
+                }
+                let reply = replies
+                    .iter_mut()
+                    .find(|row| row["id"] == check["id"])
+                    .ok_or_else(failure)?;
+                *reply = replacement.clone();
+            }
+            raw = original.to_string();
+        }
         apply_scope(doc, &raw, &checks, units, &source)?
     };
     factual_audit::review_and_repair_since(

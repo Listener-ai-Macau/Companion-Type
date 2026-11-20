@@ -369,6 +369,19 @@ fn mask_unclear_quote(corrected: &str, phrases: &[String]) -> String {
         if corrected.trim_end_matches(['。', '.']).ends_with("含义待核对") {
             result = result.replace(&format!("“{phrase}”"), "一处含混表述");
         }
+        let quoted = format!("“{phrase}”");
+        if let Some((_, qualification)) = result.split_once(&quoted) {
+            let qualification = qualification.trim_end_matches(['。', '.']);
+            let explicitly_unresolved = ["，但未明确", "，但无法确认", "，但不能确定"]
+                .iter().any(|start| qualification.starts_with(start))
+                && ["待核实", "待核对"].iter().any(|end| qualification.ends_with(end))
+                && !qualification.contains(['。', '；', ';'])
+                && !["不待", "不必", "无需", "已明确", "已确认"]
+                    .iter().any(|term| qualification.contains(term));
+            if explicitly_unresolved && result.matches(&quoted).count() == 1 {
+                result = result.replacen(&quoted, "一处含混表述", 1);
+            }
+        }
         for quoted in [phrase.clone(), format!("“{phrase}”")] {
             let positions = result.match_indices(&quoted).filter_map(|(start, token)| {
                 let end = start + token.len();
@@ -395,6 +408,11 @@ fn mask_unclear_quote(corrected: &str, phrases: &[String]) -> String {
 #[cfg(test)]
 #[test]
 fn review_masks_only_an_exact_quote_marked_as_unresolved() {
+    let ambiguous_due = vec!["可以这两天".to_owned()];
+    assert_eq!(mask_unclear_quote("说话人回应“可以这两天”，但未明确时间，具体待核对。", &ambiguous_due),
+        "说话人回应一处含混表述，但未明确时间，具体待核对。");
+    assert_eq!(mask_unclear_quote("说话人回应“可以这两天”，但未明确时间。另一个话题待核对。", &ambiguous_due),
+        "说话人回应“可以这两天”，但未明确时间。另一个话题待核对。");
     let phrases = vec!["租赁城市".to_owned()];
     assert_eq!(mask_unclear_quote("门店只能租，并提到“租赁城市”，该说法含义待核对。", &phrases),
         "门店只能租，并提到一处含混表述，该说法含义待核对。");
@@ -967,7 +985,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             Err(reason)=>return Err(reason),
         };
         preserves_unclear_history(&next.document,&unclear_history)?;
-        if super::source_items::enabled() && verified.is_some() {
+        if super::source_items::enabled() {
             carry_verified_after_scoped_repair(&next.document, &current, &mut verified_claims, &mut evidence);
         }
         current=next.document;
