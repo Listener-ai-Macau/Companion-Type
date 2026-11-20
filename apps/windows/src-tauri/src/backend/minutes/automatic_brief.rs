@@ -59,7 +59,9 @@ pub(super) fn eligible(session:&CompanionV1HostSession,template:Option<&MinutesT
             ||coverage::enabled()&&!session.transcript_text.trim().is_empty())
         && session.transcript_text.len()+DRAFT.len()+REVIEW.len()+32_768<MAX_REQUEST_BYTES
 }
-fn topic_details_limit()->usize {if coverage::enabled()||source_items::enabled(){8}else{3}}
+fn topic_details_limit()->usize {
+    if source_items::enabled() {source_items::DETAILS_LIMIT} else if coverage::enabled(){8}else{3}
+}
 fn validate(doc:&Document,units:&[Unit])->Result<(),String> {
     validate_with_details_limit(doc,units,topic_details_limit())
 }

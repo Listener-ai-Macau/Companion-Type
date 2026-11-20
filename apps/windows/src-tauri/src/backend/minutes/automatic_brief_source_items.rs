@@ -19,7 +19,7 @@ const ORGANIZE: &str = include_str!("automatic_brief_source_item_layout.txt");
 const WINDOW_BYTES: usize = 13 * 1024;
 const WINDOW_WORKERS: usize = 3;
 const FACT_LIMIT: usize = 128;
-const DETAILS_LIMIT: usize = 8;
+pub(super) const DETAILS_LIMIT: usize = 24;
 
 pub(super) fn enabled() -> bool {
     std::env::var("COMPANION_TYPE_MINUTES_SOURCE_ITEMS").as_deref() == Ok("1")
@@ -118,6 +118,13 @@ struct Window<'a> {
     evidence: &'a [Value],
 }
 
+struct CheckedWindow {
+    facts: Vec<Fact>,
+    ignored_neighbors: usize,
+    ignored_neighbor_only_items: usize,
+    normalized_topic_metadata: usize,
+}
+
 impl Window<'_> {
     fn input(&self) -> Value {
         let units = self.offered.iter().map(|unit| {
@@ -129,46 +136,77 @@ impl Window<'_> {
         json!({"sourceUnits":units})
     }
 
-    fn decode(&self, raw: &str) -> Result<Vec<Fact>, String> {
+    fn decode(&self, raw: &str) -> Result<CheckedWindow, String> {
         let extraction: Extraction = parse(raw)?;
-        if !extraction.units.iter().map(|answer| answer.id.as_str())
-            .eq(self.core.iter().map(|unit| unit.id.as_str()))
-        {
-            return Err("原话分段的核对记录不完整，已有纪要和原文保留。".into());
-        }
         let unit_ids: HashSet<_> = self.offered.iter().map(|unit| unit.id.as_str()).collect();
+        let primary: HashSet<_> = self.core.iter().map(|unit| unit.id.as_str()).collect();
+        let missing = || "原话分段的核对记录不完整，已有纪要和原文保留。".to_string();
+        let mut by_id = HashMap::new();
+        let mut ignored_neighbors = 0;
+        for answer in extraction.units {
+            if !unit_ids.contains(answer.id.as_str()) {
+                return Err(missing());
+            }
+            if !primary.contains(answer.id.as_str()) {
+                // This unit has its own primary request. The context copy
+                // cannot produce a second set of competing facts.
+                ignored_neighbors += 1;
+                continue;
+            }
+            if by_id.insert(answer.id, answer.items).is_some() {
+                return Err(missing());
+            }
+        }
         let known: HashMap<_, _> = self.evidence.iter()
             .filter(|row| unit_ids.contains(row["source"].as_str().unwrap()))
             .map(|row| (row["id"].as_str().unwrap(), row)).collect();
         let known_ids = known.keys().copied().collect();
         let mut facts = Vec::new();
-        for answer in extraction.units {
-            for item in answer.items {
+        let mut ignored_neighbor_only_items = 0;
+        let mut normalized_topic_metadata = 0;
+        for unit in self.core {
+            for item in by_id.remove(&unit.id).ok_or_else(missing)? {
                 let (kind, placement) = item.role.category();
-                if !line(&item.text, 90) || item.evidence.is_empty() || item.evidence.len() > 8
-                    || placement != Placement::Action && (item.owner.is_some() || item.due.is_some())
-                {
+                if !line(&item.text, 90) || item.evidence.is_empty() || item.evidence.len() > 8 {
                     return Err("纪要事项格式不完整，已有纪要和原文保留。".into());
                 }
                 let evidence = item.evidence.iter().map(|id| {
                     factual_audit::canonical_sentence_reference(id, &known_ids)
                         .ok_or_else(|| "纪要事项引用了未提供的原话。".to_string())
                 }).collect::<Result<Vec<_>, _>>()?;
-                if !evidence.iter().any(|id| known[id.as_str()]["source"] == answer.id) {
-                    return Err("纪要事项缺少本段主要依据，已有纪要和原文保留。".into());
+                if !evidence.iter().any(|id| primary.contains(known[id.as_str()]["source"].as_str().unwrap())) {
+                    ignored_neighbor_only_items += 1;
+                    continue;
                 }
                 let snippets: Vec<_> = evidence.iter().map(|id| known[id.as_str()]["text"].as_str().unwrap()).collect();
+                let has_metadata = item.owner.is_some() || item.due.is_some();
                 let owner = item.owner.filter(|owner| line(owner, 80) && snippets.iter()
                     .any(|text| normalized(text).contains(&normalized(owner))));
                 let due = item.due.filter(|due| line(due, 80) && snippets.iter()
                     .any(|text| due_is_bound(text, due)));
-                facts.push(Fact {id: String::new(), kind, placement, text: item.text, owner, due, evidence});
+                let (text, owner, due) = if placement == Placement::Action {
+                    (item.text, owner, due)
+                } else {
+                    if has_metadata {
+                        normalized_topic_metadata += 1;
+                    }
+                    // A speaker label is not a work assignment. Preserve an
+                    // exact speaking label as attribution where it is absent.
+                    let text = owner.as_deref().filter(|name| matches!(kind, Kind::Opinion | Kind::Recommendation | Kind::Forecast)
+                        && !item.text.contains(name)
+                        && snippets.iter().any(|source| source.split_once([':', '：'])
+                            .is_some_and(|(label, _)| label.trim() == *name)))
+                        .map(|name| format!("{name}表示，{}", item.text));
+                    let text = text.filter(|text| line(text, 90)).unwrap_or(item.text);
+                    (text, None, None)
+                };
+                facts.push(Fact {id: String::new(), kind, placement, text, owner, due, evidence});
                 if facts.len() > FACT_LIMIT {
                     return Err("纪要分段返回的事项超过整理容量，完整原文保留。".into());
                 }
             }
         }
-        Ok(facts)
+        Ok(CheckedWindow { facts, ignored_neighbors, ignored_neighbor_only_items, normalized_topic_metadata })
     }
 }
 
@@ -235,7 +273,16 @@ pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest:
                     let result = super::with_parent_job(cancellation, || {
                         let raw = super::request(endpoint, model, key, client, EXTRACT, window.input(),
                             false, start, &mut calls, &stage)?;
-                        window.decode(&raw)
+                        let checked = window.decode(&raw)?;
+                        if let Some(call) = calls.last_mut() {
+                            call["sourceProjection"] = json!({
+                                "acceptedItems":checked.facts.len(),
+                                "ignoredContextUnits":checked.ignored_neighbors,
+                                "ignoredContextOnlyItems":checked.ignored_neighbor_only_items,
+                                "normalizedTopicMetadata":checked.normalized_topic_metadata
+                            });
+                        }
+                        Ok(checked.facts)
                     });
                     (result, calls)
                 })
@@ -294,7 +341,7 @@ mod tests {
             {"role":"action","text":"提交材料清单。","owner":"采购组","due":"周五前","evidence":["e0001"]},
             {"role":"action","text":"提交检验清单。","owner":"质检组","due":"周五前","evidence":["e0002"]}
         ]}]}).to_string();
-        let facts = seal_items(window.decode(&raw).unwrap(), &units).unwrap();
+        let facts = seal_items(window.decode(&raw).unwrap().facts, &units).unwrap();
         let layout = json!({"purpose":"讨论校服","topics":[{"title":"校服筹备","points":["a000"],"details":[]}]});
         let document = organize(&layout.to_string(), &facts, &units).unwrap();
         assert_eq!(document.action_items.len(), 2);
@@ -303,6 +350,28 @@ mod tests {
         assert!(organize(&layout.to_string().replace("a000","a001"), &facts, &units).is_err());
         assert!(window.decode(&raw.replace("e0002","e9999")).is_err());
         assert!(window.decode(r#"{"units":[]}"#).is_err());
+    }
+
+    #[test]
+    fn echoes_of_a_neighbor_do_not_discard_the_primary_review() {
+        let units = vec![
+            Unit { id:"u000".into(), text:"说话人1：讨论校服。".into() },
+            Unit { id:"u001".into(), text:"说话人2：我认为面料要透气。".into() },
+        ];
+        let evidence = factual_audit::evidence_sentences(&units);
+        let window = Window { core: &units[1..], offered: &units, evidence: &evidence };
+        let raw = json!({"units":[{"id":"u000","items":[]},{"id":"u001","items":[
+            {"role":"opinion","text":"面料要透气。","owner":"说话人2","evidence":["e0001"]},
+            {"role":"status","text":"讨论校服。","evidence":["e0000"]}
+        ]}]}).to_string();
+        let result = window.decode(&raw).unwrap();
+        assert_eq!(result.ignored_neighbors, 1);
+        assert_eq!(result.ignored_neighbor_only_items, 1);
+        assert_eq!(result.normalized_topic_metadata, 1);
+        assert_eq!(result.facts.len(), 1);
+        assert_eq!(result.facts[0].text, "说话人2表示，面料要透气。");
+        assert!(result.facts[0].owner.is_none());
+        assert!(window.decode(&raw.replace("u001","u999")).is_err());
     }
 
     #[test]

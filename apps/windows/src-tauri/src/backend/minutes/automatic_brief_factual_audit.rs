@@ -275,10 +275,22 @@ fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unc
     let mut value=serde_json::to_value(doc).map_err(|_|fail())?;let mut seen=HashSet::new();let mut removals=Vec::new();
     for edit in edits {
         let row=edit.as_object().ok_or_else(fail)?;
-        if row.keys().any(|k|!matches!(k.as_str(),"path"|"text"|"remove"|"kind"|"owner"|"due"|"delete")){return Err(fail());}
+        if row.keys().any(|k|!matches!(k.as_str(),"path"|"text"|"remove"|"kind"|"owner"|"due"|"delete"|"moveToTopic")){return Err(fail());}
         let path=row.get("path").and_then(Value::as_str).ok_or_else(fail)?;
         if !allowed.contains(path)||!seen.insert(path.to_string()){return Err(fail());}
         let pointer=format!("/{}",path.replace('[',"/").replace(']',"").replace('.',"/"));
+        if let Some(topic)=row.get("moveToTopic") {
+            if !super::source_items::enabled()||unclear.contains(path)||row.len()!=3
+                ||!(path.starts_with("decisions[")||path.starts_with("actionItems[")){return Err(fail());}
+            let index=topic.as_u64().and_then(|index|usize::try_from(index).ok()).ok_or_else(fail)?;
+            let text=row.get("text").and_then(Value::as_str).filter(|text|super::line(text,120)).ok_or_else(fail)?;
+            let sources=value.pointer(&pointer).and_then(|item|item.get("sources")).cloned().ok_or_else(fail)?;
+            let details=value.get_mut("topics").and_then(|topics|topics.get_mut(index))
+                .and_then(|topic|topic.get_mut("details")).and_then(Value::as_array_mut).ok_or_else(fail)?;
+            details.push(json!({"text":text,"sources":sources}));
+            removals.push(pointer);
+            continue;
+        }
         if row.get("remove")==Some(&json!(true)) {
             if row.len()!=2||path=="purpose"||path.ends_with(".title")||value.pointer(&pointer).is_none(){return Err(fail());}
             removals.push(pointer);continue;
@@ -442,6 +454,9 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
         let repair_contracts=allowed.iter().map(|path|json!({"path":path,"maxCharacters":repair_text_limit(path),"textOnlyConservative":conservative.contains_key(path)})).collect::<Vec<_>>();
         let stage=if round==0{"source-factual-repair"}else{"source-factual-repair-2"};
         let mut payload=json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,"deletionOnlyPaths":deletion_only,"conservativeRewritePaths":conservative,"knownUnclearPhrases":unclear_history,"repairContracts":repair_contracts});
+        if super::source_items::enabled() {
+            payload["roleCorrectionContract"]=json!("只对已判有问题且不在deletionOnlyPaths/含糊名单中的decisions或actionItems：若原话仅支持现状、建议或计划，同时仍值得保留，可把该条移到相关已有主题的补充。操作恰好包含path、moveToTopic（previousDocument.topics从0开始的编号）、text（120字内，明写建议、设想或已有状态及其范围）。程序移除原决定或任务，保留出处，随后重新审核。不能用此操作新增或提升决定、任务。完全无依据的仍remove。");
+        }
         let raw=super::request(endpoint,model,key,client,REPAIR,payload.clone(),super::coverage::enabled(),start,trace,stage)?;
         let next=match apply_changes_with_policy(&raw,&current,&allowed,&unclear,&conservative,units){
             Ok(doc)=>doc,
