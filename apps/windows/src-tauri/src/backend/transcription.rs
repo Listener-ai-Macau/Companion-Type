@@ -230,7 +230,12 @@ impl CompanionTranscriptionManager {
         // diarize GLOBALLY across all chunks so speaker ids stay consistent —
         // per-chunk diarization would renumber the same person in each chunk.
         if !self.local_only && volcengine_provider_configured() {
-            return volcengine_multi_file_transcript_with(&real_paths, &transcribe_long_meeting_chunk);
+            let cache = saved_meeting_chunk_cache();
+            return volcengine_multi_file_transcript_with(
+                &real_paths,
+                cache.as_ref(),
+                &transcribe_long_meeting_chunk,
+            );
         }
 
         let local = self.local_selected();
@@ -1071,11 +1076,47 @@ fn split_long_wav_with_pause_policy(src: &Path, chunk_seconds: usize, prefer_pau
 /// still merged by source index, never completion order. The conservative
 /// default is one worker because the current Seed ASR instance rejects larger
 /// bursts; deployments with a larger quota can opt in through the environment.
+struct SavedMeetingChunkCache {
+    root: PathBuf,
+    profile: chunk_cache::Profile,
+}
+
+fn saved_meeting_chunk_cache() -> Option<SavedMeetingChunkCache> {
+    let root = asr_chunk_cache_root();
+    if !root.exists() {
+        return None;
+    }
+    let asr = volcengine_client().ok()?;
+    let profile = chunk_cache::Profile::from_configuration(&asr.cache_configuration()).ok()?;
+    Some(SavedMeetingChunkCache { root, profile })
+}
+
+impl SavedMeetingChunkCache {
+    fn reuse(&self, path: &Path, index: u64) -> Option<ChunkTranscription> {
+        let _usage = super::audio_artifacts::usage(path).ok()?;
+        let pcm = diarization::read_pcm16k_mono_wav(path).ok()?;
+        let key = chunk_cache::Key::new(&pcm, self.profile.clone()).ok()?;
+        let (text, utterances) = chunk_cache::ownership::reuse(&self.root, &key, path)?;
+        let mut collected = collect_utterance_embeddings(path, &utterances);
+        set_provider_request(&mut collected, index);
+        Some((text, collected))
+    }
+}
+
 fn volcengine_multi_chunk_transcript(
     paths: &[PathBuf],
     continuous_source: Option<&Path>,
 ) -> Result<CompanionTranscript, String> {
-    volcengine_multi_chunk_transcript_with(paths, continuous_source, &transcribe_long_meeting_chunk)
+    let cache = saved_meeting_chunk_cache();
+    let reuse = |path: &Path, index| cache.as_ref()?.reuse(path, index);
+    volcengine_multi_chunk_transcript_with_optional_silence(
+        paths,
+        continuous_source,
+        None,
+        asr_parallel_worker_count(),
+        &reuse,
+        &transcribe_long_meeting_chunk,
+    )
 }
 
 // Each independent file may itself exceed the provider's safe request
@@ -1090,7 +1131,11 @@ impl Drop for ProviderChunks {
         }
     }
 }
-fn volcengine_multi_file_transcript_with<F>(paths:&[PathBuf],transcribe:&F)->Result<CompanionTranscript,String>
+fn volcengine_multi_file_transcript_with<F>(
+    paths: &[PathBuf],
+    cache: Option<&SavedMeetingChunkCache>,
+    transcribe: &F,
+) -> Result<CompanionTranscript, String>
 where F: Fn(&Path,u64)->Result<ChunkTranscription,String> + Sync {
     let mut prepared=ProviderChunks{paths:Vec::new(),temporary:Vec::new(),continuous_parts:Vec::new()};
     for (source_index,source) in paths.iter().enumerate() {
@@ -1104,21 +1149,39 @@ where F: Fn(&Path,u64)->Result<ChunkTranscription,String> + Sync {
             prepared.paths.push(path);prepared.continuous_parts.push(if split {Some(source_index)} else {None});
         }
     }
-    volcengine_multi_chunk_transcript_with_optional_silence(&prepared.paths,None,Some(&prepared.continuous_parts),transcribe)
+    let reuse = |path: &Path, index| cache?.reuse(path, index);
+    volcengine_multi_chunk_transcript_with_optional_silence(
+        &prepared.paths,
+        None,
+        Some(&prepared.continuous_parts),
+        asr_parallel_worker_count(),
+        &reuse,
+        transcribe,
+    )
 }
 
+#[cfg(test)]
 fn volcengine_multi_chunk_transcript_with<F>(
     paths: &[PathBuf],
     continuous_source: Option<&Path>,
     transcribe: &F,
 ) -> Result<CompanionTranscript, String>
 where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
-    volcengine_multi_chunk_transcript_with_optional_silence(paths,continuous_source,None,transcribe)
+    volcengine_multi_chunk_transcript_with_optional_silence(
+        paths,
+        continuous_source,
+        None,
+        asr_parallel_worker_count(),
+        &|_, _| None,
+        transcribe,
+    )
 }
 fn volcengine_multi_chunk_transcript_with_optional_silence<F>(
     paths: &[PathBuf],
     continuous_source: Option<&Path>,
     continuous_parts: Option<&[Option<usize>]>,
+    workers: usize,
+    reuse: &dyn Fn(&Path, u64) -> Option<ChunkTranscription>,
     transcribe: &F,
 ) -> Result<CompanionTranscript, String>
 where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
@@ -1135,13 +1198,24 @@ where F: Fn(&Path, u64) -> Result<ChunkTranscription, String> + Sync {
     // failure, None if the worker panicked.
     let mut results: Vec<Option<Result<(String, Vec<CollectedUtterance>), String>>> =
         (0..n).map(|_| None).collect();
-    let workers = asr_parallel_worker_count().min(n.max(1));
-    for batch_start in (0..n).step_by(workers) {
+    // Completed results preserve their original order without taking an
+    // upload slot. On resume, even nonadjacent misses can share a batch.
+    let mut pending = Vec::new();
+    for (i, path) in paths.iter().enumerate() {
+        super::meeting_processing_job::check_current()?;
+        if let Some(chunk) = reuse(path, i as u64) {
+            results[i] = Some(Ok(chunk));
+        } else {
+            pending.push(i);
+        }
+    }
+    for batch in pending.chunks(workers) {
         super::meeting_processing_job::check_current()?;
         let cancellation = super::meeting_processing_job::current();
-        let batch_end = (batch_start + workers).min(n);
         std::thread::scope(|scope| {
-            let handles: Vec<_> = (batch_start..batch_end)
+            let handles: Vec<_> = batch
+                .iter()
+                .copied()
                 .map(|i| {
                     let path = &paths[i];
                     let cancellation = cancellation.clone();
@@ -1427,15 +1501,19 @@ fn continuous_tail_may_be_empty(source: Option<&Path>, _tail: &Path, error: &str
 fn transcribe_long_meeting_chunk(path: &Path, request: u64) -> Result<(String, Vec<CollectedUtterance>), String> {
     let _usage = super::audio_artifacts::usage(path)?;
     let (text, mut embeds) = volcengine_transcribe_cached(path)?;
+    set_provider_request(&mut embeds, request);
+    Ok((text, embeds))
+}
+
+fn set_provider_request(utterances: &mut [CollectedUtterance], request: u64) {
     // Provider speaker ids restart at zero for each independent SAUC
     // websocket. They are authoritative for a single request but cannot be
     // compared across long-meeting chunks. Preserve the labels with their
     // request namespace so global reconciliation retains within-request
     // distinctions without equating unrelated reused labels across chunks.
-    for utterance in &mut embeds {
+    for utterance in utterances {
         utterance.provider_request = Some(request);
     }
-    Ok((text, embeds))
 }
 
 pub(super) fn wav_pcm_bytes(path: &Path) -> Result<u64, String> {
@@ -2213,7 +2291,7 @@ mod tests {
         write_pcm16k_mono_wav(&short,&vec![0x16;3*PCM_BYTES_PER_SECOND]).unwrap();
         let before=(fs::read(&long).unwrap(),fs::read(&short).unwrap());
         let original=vec![long.clone(),short.clone()];
-        let actual=volcengine_multi_file_transcript_with(&original,&|path,index| {
+        let actual=volcengine_multi_file_transcript_with(&original,None,&|path,index| {
             if wav_pcm_bytes(path)? > (30*PCM_BYTES_PER_SECOND) as u64 {
                 // A non-retryable fake failure keeps this test offline and fast.
                 return Err("Volcengine auth rejected (HTTP 401): fake service rejected long request".into());
@@ -2226,17 +2304,44 @@ mod tests {
         assert!(actual.text.contains("第一段。") && actual.text.contains("继续讨论。") && actual.text.contains("独立录音。"));
         assert_eq!(actual.utterances.iter().map(|u|u.start_ms).collect::<Vec<_>>(),vec![0,60_000,65_100]);
         assert_eq!(fs::read(&long).unwrap(),before.0);assert_eq!(fs::read(&short).unwrap(),before.1);
-        let empty_long=volcengine_multi_file_transcript_with(&original,&|_,index| {
+        let empty_long=volcengine_multi_file_transcript_with(&original,None,&|_,index| {
             if index<3 {Err(super::super::volcengine::NO_SPEECH_ERROR.into())}
             else {Ok(("另一场录音。".into(),Vec::new()))}
         });
         assert!(empty_long.is_err(),"a whole silent long source must not be hidden by another file's words");
         let only_short=vec![short.clone(),short.with_file_name("other.wav")];fs::copy(&short,&only_short[1]).unwrap();
-        let independent=volcengine_multi_file_transcript_with(&only_short,&|_,index| {
+        let independent=volcengine_multi_file_transcript_with(&only_short,None,&|_,index| {
             if index==0 {Err(super::super::volcengine::NO_SPEECH_ERROR.into())}
             else {Ok(("独立文字。".into(),Vec::new()))}
         });
         assert!(independent.is_err(),"a whole independent file must not be silently skipped");
+    }
+
+    #[test]
+    fn resumed_cloud_batch_uses_both_upload_slots_and_keeps_audio_order() {
+        use std::sync::atomic::{AtomicUsize, Ordering::SeqCst};
+        let paths = (0..4).map(|i| PathBuf::from(format!("segment-{i}.wav"))).collect::<Vec<_>>();
+        let entrants = AtomicUsize::new(0);
+        let result = volcengine_multi_chunk_transcript_with_optional_silence(
+            &paths,
+            None,
+            None,
+            2,
+            &|_, index| (index % 2 == 0).then(|| (format!("cached segment {index}"), Vec::new())),
+            &|_, index| {
+                assert!(index % 2 == 1);
+                entrants.fetch_add(1, SeqCst);
+                // The other missing segment must be able to start before this one finishes.
+                let until = std::time::Instant::now() + Duration::from_secs(2);
+                while entrants.load(SeqCst) < 2 && std::time::Instant::now() < until {
+                    std::thread::sleep(Duration::from_millis(5));
+                }
+                assert_eq!(entrants.load(SeqCst), 2, "cache hits must leave upload slots available");
+                Ok((format!("new segment {index}"), Vec::new()))
+            },
+        )
+        .unwrap();
+        assert_eq!(result.text, "cached segment 0\nnew segment 1\ncached segment 2\nnew segment 3");
     }
 
     #[test]
@@ -2247,7 +2352,7 @@ mod tests {
         fs::create_dir_all(&dir).unwrap();let first=dir.join("first.wav");let second=dir.join("second.wav");
         write_pcm16k_mono_wav(&first,&[0u8;2]).unwrap();write_pcm16k_mono_wav(&second,&[0u8;2]).unwrap();
         let paths=vec![first.clone(),second.clone()];let attempts=AtomicUsize::new(0);let limit=asr_chunk_retry_count();
-        let result=volcengine_multi_chunk_transcript_with_optional_silence(&paths,None,Some(&[Some(0),Some(0)]),&|_,index| {
+        let result=volcengine_multi_chunk_transcript_with_optional_silence(&paths,None,Some(&[Some(0),Some(0)]),1,&|_,_| None,&|_,index| {
             if index==0 {
                 if attempts.fetch_add(1,Ordering::SeqCst)<limit {return Err("simulated temporary connection failure".into());}
                 return Err(super::super::volcengine::NO_SPEECH_ERROR.into());

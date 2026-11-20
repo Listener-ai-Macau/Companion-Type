@@ -248,6 +248,16 @@ fn publish(
         .retain(|r| r.phase == Phase::Deleting || root.join(&r.file).exists());
     save(root, &data)
 }
+/// Reuse a verified final result and bind it to the current audio source.
+pub(in crate::backend::transcription) fn reuse(
+    root: &Path,
+    key: &Key,
+    source: &Path,
+) -> Option<(String, Vec<Utterance>)> {
+    let sources = super::super::super::audio_artifacts::source_references(source).ok()?;
+    hit(root, key, &sources).ok().flatten()
+}
+
 pub(in crate::backend::transcription) fn resolve<F>(
     root: &Path,
     key: &Key,
