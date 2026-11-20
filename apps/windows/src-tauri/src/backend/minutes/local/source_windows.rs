@@ -299,7 +299,7 @@ impl SourceWindows {
             };
             let mut accepted=Vec::new();
             let mut unmatched=Vec::new();
-            let mut unsupported_cause = false;
+            let mut rejected_causal_claim = false;
             let mut source_quote_origin = None;
             for mut fact in entries {
                 if !policy.allowed.contains(&fact.role.as_str()){return Err(fail());}
@@ -323,9 +323,9 @@ impl SourceWindows {
                 });
                 fact.evidence.insert(0, anchor.to_owned());
                 let sources:Vec<_>=fact.evidence.iter().map(|id|offered[id.as_str()]).collect();
-                unmatched.extend(source_grounding::unsupported_quantities(&fact.text,&sources));
+                let mut disputed_quantities = source_grounding::unsupported_quantities(&fact.text, &sources);
                 if source_grounding::quantity_question(text(source)) && !source_grounding::has_open_qualifier(&fact.text) {
-                    unmatched.push("原话仍待确认".to_owned());
+                    disputed_quantities.push("原话仍待确认".to_owned());
                 }
                 let referential=["它","这个","这种","这些","他们","上述","前面"].iter().any(|cue|text(source).contains(cue));
                 if referential&&fact.evidence.len()<8&&matches!(fact.role.as_str(),"status"|"opinion"|"forecast"|"recommendation"){
@@ -353,6 +353,7 @@ impl SourceWindows {
                     fact.evidence.extend(support);
                 }
                 let support: Vec<_> = fact.evidence.iter().map(|id| offered[id.as_str()]).collect();
+                let mut unsupported_cause = false;
                 if source_grounding::cost_cause_needs_source(&fact.text, &support) {
                     let previous = i.checked_sub(1).filter(|previous| self.offered(index).contains(previous));
                     let linked = previous.map(|index| &self.sentences[index]).filter(|previous| {
@@ -364,6 +365,11 @@ impl SourceWindows {
                     } else {
                         unsupported_cause = true;
                     }
+                }
+                if !disputed_quantities.is_empty() || unsupported_cause {
+                    unmatched.extend(disputed_quantities);
+                    rejected_causal_claim |= unsupported_cause;
+                    continue;
                 }
                 let cited = fact.evidence.iter().map(|id| offered[id.as_str()]).collect::<Vec<_>>().join("\n");
                 if !canonical_brief::local_document::identifiers_bound(&fact.text, &cited) {
@@ -389,7 +395,7 @@ impl SourceWindows {
                 }
                 accepted.push(fact);
             }
-            if unmatched.is_empty() && !unsupported_cause {
+            if unmatched.is_empty() && !rejected_causal_claim {
                 let origin = if let Some(reason) = source_quote_origin {
                     let original = text(source);
                     let role = policy.literal_topic_role(original)
@@ -403,22 +409,22 @@ impl SourceWindows {
                     "model"
                 };
                 reviewed.push(json!({"sentenceId":anchor,"factCount":accepted.len(),"origin":origin}));
-                facts.extend(accepted);
             } else {
-                // Replace the disputed paraphrases with the exact anchor.
-                // Generating a second paraphrase can copy a nearby claim over it.
-                let original = text(source);
+                // Keep independently checked claims from this anchor. The original
+                // quote represents the disputed wording without publishing it.
                 let role = policy.literal_topic_role(original)
                     .ok_or("会议原话未能支持提取的数量或因果关系，完整转写与已有纪要保留。")?;
-                let origin = if unmatched.is_empty() {
-                    facts.push(ExtractedFact::verbatim(anchor, role, original));
-                    "causal-source-quote"
+                let (quote, origin) = if unmatched.is_empty() {
+                    (ExtractedFact::verbatim(anchor, role, original), "causal-source-quote")
                 } else {
-                    facts.push(ExtractedFact::quantity_quote(anchor, role, original));
-                    "quantity-source-quote"
+                    (ExtractedFact::quantity_quote(anchor, role, original), "quantity-source-quote")
                 };
-                reviewed.push(json!({"sentenceId":anchor,"factCount":1,"origin":origin,"unmatched":unmatched}));
+                if !accepted.iter().any(|fact| fact.text == quote.text) {
+                    accepted.push(quote);
+                }
+                reviewed.push(json!({"sentenceId":anchor,"factCount":accepted.len(),"origin":origin,"unmatched":unmatched}));
             }
+            facts.extend(accepted);
         }
         if !answers.is_empty() { return Err(fail()); }
         Ok(CheckedWindow { facts, reviewed })
@@ -594,6 +600,39 @@ mod tests {
         assert_eq!(action.due.as_deref(), Some("周五前"));
         assert_eq!(action.evidence, ["e0000"]);
         assert_eq!(bank.facts[1].evidence, ["e0001"]);
+    }
+
+    #[test]
+    fn quantity_rejection_keeps_independently_checked_sibling_fact() {
+        let source = "备件已经到仓，库存还要盘点。";
+        let windows = SourceWindows::new(source).unwrap();
+        let supported = json!({"r":"status","t":"备件已经到仓。"});
+        let disputed = json!({"r":"status","t":"库存还要盘点，现有库存三百台。"});
+        for entries in [
+            [supported.clone(), disputed.clone()],
+            [disputed.clone(), supported.clone()],
+        ] {
+            let (facts, coverage) = windows.decode(0, &json!({"e0000": entries}).to_string()).unwrap();
+            assert_eq!(coverage["sentences"][0]["origin"], "quantity-source-quote");
+            assert_eq!(coverage["sentences"][0]["factCount"], 2);
+            assert_eq!(facts[0].text, "备件已经到仓。");
+            assert_eq!(facts[0].evidence, ["e0000"]);
+            assert_eq!(facts[1].text, source);
+            assert_eq!(facts[1].evidence, ["e0000"]);
+            let bank = super::super::atomic_document::build_bank(facts, source).unwrap();
+            let session = crate::backend::minutes::tests::session_with_text(source);
+            let base = crate::backend::minutes::rules_l0_minutes(&session, "replay");
+            let layout = json!({
+                "purposeFact": "a000",
+                "topics": {"t1":"仓储情况","t2":null,"t3":null,"t4":null,"t5":null,"t6":null,"t7":null,"t8":null},
+                "assignments": {"a000":"m1","a001":"t1"}
+            });
+            let parsed = super::super::atomic_document::organize(&layout.to_string(), &bank, &session, &base).unwrap();
+            assert_eq!(parsed.receipt["retainedFactIds"], json!(["a000", "a001"]));
+            assert_eq!(parsed.receipt["quantityQuoteFactIds"], json!(["a001"]));
+            assert!(parsed.minutes.markdown.contains("备件已经到仓。"));
+            assert!(!parsed.minutes.markdown.contains("三百台"));
+        }
     }
 
     #[test]
