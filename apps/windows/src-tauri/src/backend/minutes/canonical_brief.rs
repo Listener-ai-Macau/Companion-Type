@@ -179,7 +179,10 @@ pub(in crate::backend::minutes) fn render(doc:&Document,units:&[Unit],speaker:Op
     for topic in &doc.topics {
         md.push_str(&format!("### {}\n\n",topic.title.trim()));
         for p in &topic.points {
-            md.push_str(&format!("- {}：{}\n", p.kind.label(), review_label(p.text.trim(), p.quantity_needs_review)));
+            let caption = if matches!(p.kind, Kind::Status)
+                && super::source_resolution::split_turn_label(p.text.trim()).is_some()
+            { "发言" } else { p.kind.label() };
+            md.push_str(&format!("- {caption}：{}\n", review_label(p.text.trim(), p.quantity_needs_review)));
         }
         for p in &topic.details {
             md.push_str(&format!("- 补充：{}\n", review_label(p.text.trim(), p.quantity_needs_review)));

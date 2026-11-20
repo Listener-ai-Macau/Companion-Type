@@ -452,15 +452,6 @@ fn ordinary_source_aspect(text: &str) -> Option<(&'static str, &str)> {
     static DIRECTED: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:要|须|需要)(?:进行|开展|组织|协调|安排|核实|调查|准备)[^，,。！？；;\r\n]{2,20}"
     ).unwrap());
-    static COLLABORATION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
-        r"(?:各部门|各组|各团队|各单位|各小组|各方)(?:儿)?(?:都)?(?:要|务必|必须|需要)(?:互相|相互|彼此)(?:配合|协作|协调|支持)"
-    ).unwrap());
-    if let Some(requirement) = COLLABORATION.find(text) {
-        let clause = text[..requirement.start()].rsplit(['，', '。', '；', '！', '？']).next()?;
-        if !["如果", "假设", "之前", "当时", "建议", "是不是"].iter().any(|word| clause.contains(word)) {
-            return Some(("明确协作要求", requirement.as_str()));
-        }
-    }
     let question = ["你觉得", "你看哪", "你认为哪", "我问的是", "请问"]
         .iter().filter_map(|cue| text.find(cue)).min();
     if let Some(before_question) = question.map(|start| &text[..start]) {
@@ -550,13 +541,10 @@ fn ordinary_coverage_separates_progress_and_a_request_before_a_question() {
         json!({"id":"e0000","text":"说话人3：网球这方面的市场还在逐步进行打开。"}),
         json!({"id":"e0001","text":"说话人1：这块儿要进行一个市场调查 你觉得哪个风险大？"}),
         json!({"id":"e0002","text":"说话人1：咱们能否逐步推进这些做法？"}),
-        json!({"id":"e0003","text":"说话人1：所以你们各部门要互相配合。"}),
-        json!({"id":"e0004","text":"说话人1：如果各部门要互相配合，应该提前讨论。"}),
     ];
     let cues = omission_cues(&[], &evidence);
     assert_eq!(cues.iter().map(|cue| (cue.evidence.as_str(),cue.aspect)).collect::<Vec<_>>(),
-        vec![("e0000", Some("实际进展")), ("e0001", Some("交办后又提问")),
-            ("e0003", Some("明确协作要求"))]);
+        vec![("e0000", Some("实际进展")), ("e0001", Some("交办后又提问"))]);
 }
 
 fn measures(text: &str) -> impl Iterator<Item = (f64, &str)> {
@@ -908,7 +896,7 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     }).collect();
     let mut input = json!({"sourceSentences":evidence,"currentBrief":doc,"lexicalCues":cues,"claimEvidence":bindings});
     if cues.iter().any(|cue| cue.aspect.is_some()) {
-        input["aspectInstructions"] = json!("带aspect的线索需要独立核对。实际进展要保留进展对象、已做和正在做的区别。交办后又提问时分别核对交办和提问；后来已回答的问题不抵消交办。跨团队协作若为明确要求，也要独立保留。负责人和期限只写原话明确的内容。");
+        input["aspectInstructions"] = json!("带aspect的线索需要独立核对。实际进展要保留进展对象、已做和正在做的区别。交办后又提问时分别核对交办和提问；后来已回答的问题不抵消交办，负责人和期限只写原话明确的内容。");
     }
     let raw = super::request(endpoint, model, key, client, FIND_MISSING,
         input, false, start, trace, "source-items-omissions")?;
