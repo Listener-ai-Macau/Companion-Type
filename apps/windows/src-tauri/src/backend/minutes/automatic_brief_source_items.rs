@@ -434,8 +434,10 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
 {
     let evidence = factual_audit::evidence_sentences(units);
     let cues = omission_cues(&doc, &evidence);
+    // This pass locates at most four source relations. The separate factual
+    // audit remains responsible for judging them before publication.
     let raw = super::request(endpoint, model, key, client, FIND_MISSING,
-        json!({"sourceSentences":evidence,"currentBrief":doc,"lexicalCues":cues}), true, start, trace, "source-items-omissions")?;
+        json!({"sourceSentences":evidence,"currentBrief":doc,"lexicalCues":cues}), false, start, trace, "source-items-omissions")?;
     if let Some(call) = trace.last_mut() {
         call["omissionCues"] = json!(cues);
     }
