@@ -14,6 +14,8 @@ mod coverage;
 // the existing cloud writer and its release behavior remain independent.
 #[path="automatic_brief_answer_layout.rs"]
 pub(super) mod answer_layout;
+#[path="automatic_brief_source_items.rs"]
+mod source_items;
 #[derive(Default,Deserialize)]
 enum ResponseFormatMarker {#[default] #[serde(skip)] Absent,#[serde(rename="json_object")] Present}
 
@@ -57,7 +59,7 @@ pub(super) fn eligible(session:&CompanionV1HostSession,template:Option<&MinutesT
             ||coverage::enabled()&&!session.transcript_text.trim().is_empty())
         && session.transcript_text.len()+DRAFT.len()+REVIEW.len()+32_768<MAX_REQUEST_BYTES
 }
-fn topic_details_limit()->usize {if coverage::enabled(){8}else{3}}
+fn topic_details_limit()->usize {if coverage::enabled()||source_items::enabled(){8}else{3}}
 fn validate(doc:&Document,units:&[Unit])->Result<(),String> {
     validate_with_details_limit(doc,units,topic_details_limit())
 }
@@ -183,6 +185,10 @@ fn parallel_reviews(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking:
 pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,client:&reqwest::blocking::Client)->Result<CompanionV1MeetingMinutes,String> {
     let start=Instant::now();let units=source_units(&session.transcript_text);let anchors=constraints(&units);let mut trace=Vec::new();let mut traced_document=None;
     let outcome=(|| {
+        let source = Source::new(&session.transcript_text);
+        let doc = if source_items::enabled() {
+            source_items::generate(endpoint, model, key, client, &units, start, &mut trace)?
+        } else {
         let reading_budget=json!({"mainCharacterBudget":if units.iter().map(|u|u.text.chars().count()).sum::<usize>()>8000{900}else{600},"pointsPerTopicMaximum":3});
         let draft=request(endpoint,model,key,client,DRAFT,json!({"sourceUnits":units,"readingBudget":reading_budget}),coverage::enabled(),start,&mut trace,"draft")?;
         let mut doc=if coverage::enabled() {
@@ -223,12 +229,13 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         let doc=reviewed.document;traced_document=Some(doc.clone());
             doc
         };
-        let source = Source::new(&session.transcript_text);
         if let Ok(original) = serde_json::from_str::<Document>(super::strip_code_fences(&draft).trim()) {
             restore_cited_assignments(&mut doc, &original, &units, &source);
         }
+        doc
+        };
         traced_document=Some(doc.clone());
-        let mut doc=if coverage::enabled(){
+        let mut doc=if coverage::enabled()&&!source_items::enabled(){
             let(audited,prepared,omissions,calls)=parallel_reviews(endpoint,model,key,client,&doc,&units,start);trace.extend(calls);check_current()?;
             let doc=audited?;traced_document=Some(doc.clone());
             let prepared=coverage::combine_omissions(prepared?,omissions?)?;
@@ -249,7 +256,11 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
     })();
     if let Ok(path)=std::env::var("COMPANION_TYPE_AUTOMATIC_BRIEF_TRACE_PATH") {
         if !path.is_empty(){if let Ok(mut f)=std::fs::OpenOptions::new().write(true).create_new(true).open(path) {
-            use std::io::Write;let _=serde_json::to_vec_pretty(&json!({"flow":if coverage::enabled(){"source-only draft, independent factual audit and grounded question coverage"}else{"source-only draft then reviewed canonical brief"},"calls":trace,"acceptedStructure":outcome.is_ok(),"document":traced_document,"error":outcome.as_ref().err(),"sourceUnitCount":units.len(),"constraintCount":anchors.len(),"sourceConstraints":anchors,"seconds":start.elapsed().as_secs_f64(),"thinkingContentStored":false,"semanticAccuracyCertificate":false})).map(|v|f.write_all(&v));
+            use std::io::Write;
+            let flow=if source_items::enabled(){"windowed source items, ID-only organization, independent factual audit"}
+                else if coverage::enabled(){"source-only draft, independent factual audit and grounded question coverage"}
+                else{"source-only draft then reviewed canonical brief"};
+            let _=serde_json::to_vec_pretty(&json!({"flow":flow,"calls":trace,"acceptedStructure":outcome.is_ok(),"document":traced_document,"error":outcome.as_ref().err(),"sourceUnitCount":units.len(),"constraintCount":anchors.len(),"sourceConstraints":anchors,"seconds":start.elapsed().as_secs_f64(),"thinkingContentStored":false,"semanticAccuracyCertificate":false})).map(|v|f.write_all(&v));
         }}
     }
     outcome

@@ -4,7 +4,7 @@ use std::collections::{HashMap,HashSet};
 use serde::{Deserialize,Serialize};
 use super::{Action,Document,Entry,Kind,Point,Topic,Unit};
 
-#[derive(Debug,Clone,Copy,Deserialize,Serialize,PartialEq,Eq)]
+#[derive(Debug,Clone,Copy,Deserialize,Serialize,PartialEq,Eq,Hash)]
 #[serde(rename_all="lowercase")]
 pub(in crate::backend::minutes) enum Placement {Topic,Decision,Action,Question}
 
