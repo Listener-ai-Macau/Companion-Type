@@ -167,6 +167,8 @@ fn check_cancellation(token:Option<&super::super::super::meeting_processing_job:
 fn bind_supported_sources(doc:&Document,audit:&Audit,source:&[Sentence],units:&[Unit])->Result<Document,String>{
     let fail=||"纪要原话关联未完成，已有结果保留。".to_string();
     let known=source.iter().map(|s|(s.id.as_str(),s.source.as_str())).collect::<HashMap<_,_>>();
+    let unit_text = units.iter().map(|unit| (unit.id.as_str(), super::normalized(&unit.text)))
+        .collect::<HashMap<_, _>>();
     let mut value=serde_json::to_value(doc).map_err(|_|fail())?;
     for claim in audit.claim_audit.iter().filter(|c|c.status=="supported"){
         let pointer=format!("/{}",claim.path.replace('[',"/").replace(']',"").replace('.',"/"));
@@ -174,8 +176,23 @@ fn bind_supported_sources(doc:&Document,audit:&Audit,source:&[Sentence],units:&[
         if target.get("sources").is_none(){continue;}
         let mut refs=Vec::new();
         for id in &claim.evidence{let source=known.get(id.as_str()).ok_or_else(fail)?;if !refs.contains(source){refs.push(*source);}}
+        if claim.path.starts_with("actionItems[") {
+            // A factual verdict can cite the execution phrase alone. A
+            // different source unit may already bind its owner or deadline.
+            for field in ["owner", "due"].into_iter().filter_map(|key| target[key].as_str()) {
+                let field = super::normalized(field);
+                let supports = |id: &str| unit_text.get(id).is_some_and(|text| text.contains(&field));
+                if refs.iter().any(|id| supports(id)) {
+                    continue;
+                }
+                let anchor = target["sources"].as_array().ok_or_else(fail)?.iter()
+                    .filter_map(Value::as_str).find(|id| supports(id)).ok_or_else(fail)?;
+                refs.push(anchor);
+            }
+        }
         if refs.is_empty()||refs.len()>8{return Err(fail());}
-        target.as_object_mut().ok_or_else(fail)?.insert("sources".into(),json!(refs));
+        let bound_refs = json!(refs);
+        target.as_object_mut().ok_or_else(fail)?.insert("sources".into(),bound_refs);
     }
     let bound:Document=serde_json::from_value(value).map_err(|_|fail())?;super::validate(&bound,units)?;Ok(bound)
 }
@@ -1454,6 +1471,26 @@ mod tests {
         raw["claimAudit"][0]["status"]=json!("unclear");let negative:Audit=serde_json::from_value(raw).unwrap();
         assert_eq!(bind_supported_sources(&doc,&negative,&sentences(&units),&units).unwrap().topics[0].points[0].sources,doc.topics[0].points[0].sources);
     }
+    #[test]
+    fn an_audited_task_keeps_the_distinct_source_for_its_owner_and_due_date() {
+        let units = vec![
+            Unit{id:"u000".into(),text:"说话人1：我是质检组。".into()},
+            Unit{id:"u001".into(),text:"我们会安排入库检查。".into()},
+            Unit{id:"u002".into(),text:"检查周五前完成。".into()},
+        ];
+        let doc: Document = serde_json::from_value(json!({"purpose":"落实入库检查",
+            "topics":[{"title":"入库检查","points":[{"kind":"status","text":"安排入库检查。","sources":["u001"]}],"details":[]}],
+            "decisions":[],"questions":[],"actionItems":[{"text":"安排入库检查。","owner":"质检组","due":"周五前",
+                "sources":["u000","u001","u002"]}]})).unwrap();
+        let audit: Audit = serde_json::from_value(json!({"claimAudit":[{"path":"actionItems[0]",
+            "status":"supported","reason":"入库检查安排已经确认","evidence":["e0001"]}]})).unwrap();
+        let actual = bind_supported_sources(&doc,&audit,&sentences(&units),&units).unwrap();
+        let task = &actual.action_items[0];
+        assert_eq!(task.sources,["u001","u000","u002"]);
+        assert_eq!(task.owner.as_deref(),Some("质检组"));
+        assert_eq!(task.due.as_deref(),Some("周五前"));
+    }
+
     #[test]
     fn automatic_brief_literal_support_cannot_override_an_unclear_meaning(){
         let units=vec![Unit{id:"u000".into(),text:"希望有一个牵牛单位或联盟来组织。".into()}];
