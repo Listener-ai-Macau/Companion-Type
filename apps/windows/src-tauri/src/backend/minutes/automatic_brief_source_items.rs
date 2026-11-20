@@ -35,6 +35,7 @@ enum Role {
     #[serde(alias = "condition")]
     Status,
     Opinion,
+    #[serde(alias = "suggestion")]
     Recommendation,
     Forecast,
     Decision,
@@ -456,7 +457,10 @@ fn ordinary_source_aspect(text: &str) -> Option<(&'static str, &str)> {
         .iter().filter_map(|cue| text.find(cue)).min();
     if let Some(before_question) = question.map(|start| &text[..start]) {
         if let Some(directed) = DIRECTED.find_iter(before_question).last() {
-            return Some(("交办后又提问", directed.as_str().trim()));
+            let before = &before_question[..directed.start()];
+            if !before.trim_end().ends_with(['不', '没', '勿']) {
+                return Some(("交办后又提问", directed.as_str().trim()));
+            }
         }
     }
     let hit = PROGRESS.find(text)?;
@@ -846,7 +850,28 @@ fn bind_retrospective_context(item: &mut SourceItem, cue: &SourceCue, evidence: 
     false
 }
 
-fn retain_instruction_clause(item: &mut SourceItem, cue: &SourceCue) {
+fn named_instruction_owner<'a>(cue: &SourceCue, original: &str, evidence: &'a [Value]) -> Option<&'a str> {
+    let (before, _) = original.split_once(cue.span.as_str())?;
+    let mut owners = evidence.iter().take(24).filter_map(|row| {
+        let text = row["text"].as_str()?.trim();
+        let (_, introduction) = super::super::source_resolution::split_turn_label(text)?;
+        let (_, name) = introduction.split_once("我是")?;
+        let name = name.trim().trim_end_matches(['。', '，', ',', '！']);
+        if !(2..=14).contains(&name.chars().count()) || !name.chars().all(|ch| ('㐀'..='鿿').contains(&ch)) {
+            return None;
+        }
+        let (_, after) = before.rsplit_once(name)?;
+        let after = after.trim_start();
+        (["这边", "这块", "这一块", "这里"].iter().any(|cue| after.starts_with(cue))
+            && after.chars().count() <= 55 && !after.contains(['。', '；', '\n'])
+            && !["不需要", "不用", "建议", "是否", "不必"].iter().any(|cue| after.contains(cue)))
+            .then_some(name)
+    });
+    let one = owners.next()?;
+    owners.all(|candidate| candidate == one).then_some(one)
+}
+
+fn retain_instruction_clause(item: &mut SourceItem, cue: &SourceCue, original: &str, evidence: &[Value]) {
     if cue.aspect != Some("交办后又提问") || !matches!(item.role, Role::Action) {
         return;
     }
@@ -857,6 +882,38 @@ fn retain_instruction_clause(item: &mut SourceItem, cue: &SourceCue) {
     {
         item.text = format!("{prefix}。");
     }
+    if item.owner.is_some() {
+        return;
+    }
+    let Some(owner) = named_instruction_owner(cue, original, evidence) else { return; };
+    let mut actions = ["调查", "核实", "核对", "核查", "整理", "审查", "准备", "检查", "协调", "提交"]
+        .into_iter().filter(|verb| cue.span.contains(verb));
+    let Some(action) = actions.next().filter(|_| actions.next().is_none()) else { return; };
+    let mut clauses = item.text.split(['，', ',', '；']).filter(|clause| clause.contains(action));
+    if let Some(clause) = clauses.next().filter(|_| clauses.next().is_none()) {
+        let clause = clause.trim();
+        if line(clause, 90) && !clause.starts_with(['不', '没', '勿']) {
+            item.text = clause.to_owned();
+            item.owner = Some(owner.to_owned());
+        }
+    }
+}
+
+#[cfg(test)]
+#[test]
+fn a_named_group_owns_only_the_directed_clause_before_a_question() {
+    let evidence = [
+        json!({"id":"e0000","text":"说话人4: 零二四我是质量部"}),
+        json!({"id":"e0001","text":"说话人2: 零二七我是供应部"}),
+    ];
+    let original = "说话人1: 维持照常发货，质量部这一块儿对设备异常要进行一次调查 你觉得有哪些情况？";
+    let (_, span) = ordinary_source_aspect(original).unwrap();
+    let cue = SourceCue { id:"v000".into(),evidence:"e0002".into(),span:span.into(),aspect:Some("交办后又提问") };
+    let mut item: SourceItem = serde_json::from_value(json!({"role":"action","text":"维持照常发货，对设备异常进行调查，随后询问还有哪些情况。","evidence":["e0002"]})).unwrap();
+    retain_instruction_clause(&mut item,&cue,original,&evidence);
+    assert_eq!(item.owner.as_deref(),Some("质量部"));
+    assert_eq!(item.text,"对设备异常进行调查。");
+    assert!(ordinary_source_aspect("说话人1: 质量部不要进行调查 你觉得还有什么问题？").is_none());
 }
 
 fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, facts: &[Fact], evidence: &[Value])
@@ -899,7 +956,7 @@ fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, 
                 {
                     return Err(fail());
                 }
-                retain_instruction_clause(&mut addition.item, cue);
+                retain_instruction_clause(&mut addition.item, cue, known[cue.evidence.as_str()], evidence);
                 additions.push(addition);
             }
             SourceCheck::Background { reason, .. } => {
@@ -1126,6 +1183,13 @@ mod tests {
         assert_eq!(result.facts[0].text, "说话人2表示，面料要透气。");
         assert!(result.facts[0].owner.is_none());
         assert!(window.decode(&raw.replace("u001","u999")).is_err());
+    }
+
+    #[test]
+    fn provider_suggestion_alias_remains_a_recommendation() {
+        let parsed: Role = serde_json::from_value(json!("suggestion")).unwrap();
+        assert!(matches!(parsed.category(), (Kind::Recommendation, Placement::Topic)));
+        assert!(serde_json::from_value::<Role>(json!("maybe_decision")).is_err());
     }
 
     #[test]

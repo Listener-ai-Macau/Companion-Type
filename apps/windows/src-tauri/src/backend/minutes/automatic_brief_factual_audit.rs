@@ -128,7 +128,7 @@ fn decode_contract(raw:&str,expected:&[Value],source:&[Sentence],require_clarity
         }
         // A reviewer may echo supplied claim metadata. Accept only exact
         // echoes, including null owner/due; unknown or changed fields fail.
-        if claim.echoed.iter().any(|(key,value)|!matches!(key.as_str(),"kind"|"text"|"sources"|"owner"|"due")||original.get(key)!=Some(value)) {
+        if claim.echoed.iter().any(|(key,value)|!matches!(key.as_str(),"kind"|"text"|"sources"|"owner"|"due"|"sourceScopeEvidence")||original.get(key)!=Some(value)) {
             return Err("纪要审核的陈述元数据不匹配，已有结果保留。".into());
         }
         match claim.clarity.as_deref(){
@@ -1487,10 +1487,11 @@ mod tests {
     }
     #[test]
     fn automatic_brief_fact_echo_keeps_action_owner_due_and_unknown_fields_strict(){
-        let expected=vec![json!({"path":"actionItems[0]","text":"提交报告。","owner":"李敏","due":null,"sources":["u000"]})];
-        let good=json!({"claimAudit":[{"path":"actionItems[0]","status":"supported","reason":"受控协议响应","evidence":["e0000"],"text":"提交报告。","owner":"李敏","due":null,"sources":["u000"]}]});
+        let scope=json!([{"id":"e0000","text":"李敏：预算尚未审批。"}]);
+        let expected=vec![json!({"path":"actionItems[0]","text":"提交报告。","owner":"李敏","due":null,"sources":["u000"],"sourceScopeEvidence":scope})];
+        let good=json!({"claimAudit":[{"path":"actionItems[0]","status":"supported","reason":"受控协议响应","evidence":["e0000"],"text":"提交报告。","owner":"李敏","due":null,"sources":["u000"],"sourceScopeEvidence":scope}]});
         let source=sentences(&source());assert!(decode(&good.to_string(),&expected,&source).is_ok());
-        for(key,value)in[("owner",json!("李明")),("owner",Value::Null),("due",json!("周五")),("text",json!("批准报告。")),("sources",json!(["u999"])),("passed",json!(true))]{
+        for(key,value)in[("owner",json!("李明")),("owner",Value::Null),("due",json!("周五")),("text",json!("批准报告。")),("sources",json!(["u999"])),("sourceScopeEvidence",json!([{"id":"e0000","text":"预算已审批。"}])),("passed",json!(true))]{
             let mut bad=good.clone();bad["claimAudit"][0][key]=value;assert!(decode(&bad.to_string(),&expected,&source).is_err());
         }
     }
