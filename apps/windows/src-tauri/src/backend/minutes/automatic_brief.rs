@@ -16,6 +16,8 @@ mod coverage;
 pub(super) mod answer_layout;
 #[path="automatic_brief_source_items.rs"]
 mod source_items;
+#[path="automatic_brief_source_bindings.rs"]
+mod source_bindings;
 #[path="automatic_brief_commitments.rs"]
 mod commitments;
 #[path="automatic_brief_source_scope.rs"]

@@ -11,7 +11,7 @@ const STANCE_PROMPT: &str = include_str!("automatic_brief_commitment_stance.txt"
 const EXECUTION_PROMPT: &str = include_str!("automatic_brief_execution_scope.txt");
 const INCOMPLETE: &str = "纪要定向核对没有返回完整证据，已有结果保留。";
 
-fn with_turn_labels(source: &[Value]) -> Vec<Value> {
+pub(super) fn with_turn_labels(source: &[Value]) -> Vec<Value> {
     let mut label = None;
     let mut beginning_of_line = true;
     source.iter().map(|row| {
@@ -49,11 +49,17 @@ fn source_signals(quote: &str) -> Vec<&'static str> {
 fn candidates(doc: &factual_audit::VerifiedBrief, source: &[Value]) -> Vec<Value> {
     let positions: HashMap<_, _> = source.iter().enumerate()
         .map(|(index, row)| (row["id"].as_str().unwrap(), index)).collect();
+    let bindings = super::source_bindings::SourceBindings::new(source);
     let mut candidates = Vec::new();
     for claim in factual_audit::claims(&doc.document) {
         let path = claim["path"].as_str().unwrap();
         if claim.get("sources").is_none() || path.starts_with("questions[") { continue; }
         let Some(ids) = doc.evidence.get(path) else { continue; };
+        // A checked clause naming its own team cannot be replaced with the
+        // addressee of the other clause in the same turn.
+        if path.starts_with("actionItems[") && bindings.is_separate_assignment(&claim, ids) {
+            continue;
+        }
         let signals: Vec<_> = ids.iter().filter_map(|id| {
             let index = *positions.get(id.as_str())?;
             let checks = source_signals(source[index]["text"].as_str().unwrap());

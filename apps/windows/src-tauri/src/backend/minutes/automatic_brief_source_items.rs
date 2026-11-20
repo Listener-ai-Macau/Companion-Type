@@ -372,9 +372,45 @@ fn complete_layout(layout: &mut Layout, facts: &[Fact]) -> Result<Value, String>
     Ok(json!({"restoredTopicIds":restored,"movedToDetails":moved}))
 }
 
-fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Value), String> {
+fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Value, Vec<Fact>), String> {
     let mut layout: Layout = parse(raw)?;
-    let projection = complete_layout(&mut layout, facts)?;
+    let evidence = super::commitments::with_turn_labels(&factual_audit::evidence_sentences(units));
+    let bindings = super::source_bindings::SourceBindings::new(&evidence);
+    let mut facts = facts.to_vec();
+    let renamed: Vec<_> = facts.iter_mut().filter_map(|fact| {
+        bindings.correct_attribution(fact).map(|(before, after)| (fact.id.clone(), before, after))
+    }).collect();
+    let split = bindings.split_assignments(&mut facts);
+    let mut projection = complete_layout(&mut layout, &facts)?;
+    let mut moved = Vec::new();
+    for (id, before, after) in &renamed {
+        let current = layout.topics.iter().position(|topic| {
+            topic.title.contains(before) && topic.points.iter().chain(&topic.details).any(|item| item == id)
+        });
+        let correct = layout.topics.iter().position(|topic| topic.title.contains(after) && topic.details.len() < DETAILS_LIMIT);
+        let (Some(current), Some(correct)) = (current, correct) else { continue; };
+        if current == correct {
+            continue;
+        }
+        let topic = &mut layout.topics[current];
+        topic.points.retain(|item| item != id);
+        topic.details.retain(|item| item != id);
+        if topic.points.is_empty() && !topic.details.is_empty() {
+            topic.points.push(topic.details.remove(0));
+        }
+        layout.topics[correct].details.push(id.clone());
+        moved.push(id.clone());
+    }
+    layout.topics.retain(|topic| !topic.points.is_empty());
+    let details: HashSet<_> = layout.topics.iter().flat_map(|topic| &topic.details).collect();
+    let mut marked = Vec::new();
+    for fact in &mut facts {
+        if details.contains(&fact.id) && super::source_bindings::mark_proposal(fact) {
+            marked.push(fact.id.clone());
+        }
+    }
+    projection["sourceBindings"] = json!({"correctedAttributions":renamed,"movedToSpeakerTopic":moved,
+        "priorProposalsMarked":marked,"splitAssignmentEvidence":split});
     let topics = layout.topics.iter().map(|topic| json!({"title":topic.title,
         "points":topic.points.iter().map(|id| [id]).collect::<Vec<_>>(),
         "details":topic.details.iter().map(|id| [id]).collect::<Vec<_>>()})).collect::<Vec<_>>();
@@ -382,8 +418,8 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
         .map(|fact| [&fact.id]).collect::<Vec<_>>();
     let mapped = json!({"purpose":layout.purpose,"topics":topics,"decisions":placed(Placement::Decision),
         "actionItems":placed(Placement::Action),"questions":placed(Placement::Question),"excluded":[]});
-    answer_layout::assemble_with_details_limit(&mapped.to_string(), facts, units, DETAILS_LIMIT, FACT_LIMIT)
-        .map(|assembled| (assembled.document, projection))
+    answer_layout::assemble_with_details_limit(&mapped.to_string(), &facts, units, DETAILS_LIMIT, FACT_LIMIT)
+        .map(|assembled| (assembled.document, projection, facts))
 }
 
 pub(super) fn omission_topic(doc: &Document, sources: &[String], units: &[Unit]) -> Option<usize> {
@@ -410,7 +446,10 @@ pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, uni
     }).chain(doc.decisions.iter().map(|entry| normalized(&entry.text)))
         .chain(doc.questions.iter().map(|entry| normalized(&entry.text))).collect();
     for addition in additions {
-        let fact = addition.item.bind(&known, &known_ids)?;
+        let mut fact = addition.item.bind(&known, &known_ids)?;
+        if fact.placement == Placement::Topic {
+            super::source_bindings::mark_proposal(&mut fact);
+        }
         let mut selected = HashSet::new();
         let sources: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]["source"].as_str().unwrap())
             .filter(|id| selected.insert(*id)).map(str::to_owned).collect();
@@ -1112,7 +1151,7 @@ pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest:
     if let Some(last) = trace.last_mut() {
         last["items"] = json!(facts);
     }
-    let (doc, projection) = organize(&raw, &facts, units)?;
+    let (doc, projection, facts) = organize(&raw, &facts, units)?;
     if let Some(last) = trace.last_mut() {
         last["layoutProjection"] = projection;
     }
@@ -1154,7 +1193,7 @@ mod tests {
         ]}]}).to_string();
         let facts = seal_items(window.decode(&raw).unwrap().facts, &units).unwrap();
         let layout = json!({"purpose":"讨论校服","topics":[{"title":"校服筹备","points":["a000"],"details":[]}]});
-        let (document, _) = organize(&layout.to_string(), &facts, &units).unwrap();
+        let (document, _, _) = organize(&layout.to_string(), &facts, &units).unwrap();
         assert_eq!(document.action_items.len(), 2);
         assert_eq!(document.action_items[0].owner.as_deref(), Some("采购组"));
         assert_eq!(document.action_items[1].owner.as_deref(), Some("质检组"));
@@ -1224,7 +1263,7 @@ mod tests {
         }).collect();
         let raw = json!({"purpose":"讨论校服","topics":[{"title":"校服筹备",
             "points":["a000","a001","a002","a003"],"details":[]}]}).to_string();
-        let (assembled, projection) = organize(&raw, &facts, &units).unwrap();
+        let (assembled, projection, _) = organize(&raw, &facts, &units).unwrap();
         assert_eq!(assembled.topics[0].points.len(), 3);
         assert_eq!(projection["restoredTopicIds"], json!(["a004"]));
         assert_eq!(projection["movedToDetails"], json!(["a003"]));
