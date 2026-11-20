@@ -337,6 +337,21 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
         .map(|assembled| (assembled.document, projection))
 }
 
+fn omission_topic(doc: &Document, sources: &[String], units: &[Unit]) -> Option<usize> {
+    let order: HashMap<_, _> = units.iter().enumerate().map(|(index, unit)| (unit.id.as_str(), index)).collect();
+    let anchors: Vec<_> = sources.iter().filter_map(|id| order.get(id.as_str())).copied().collect();
+    doc.topics.iter().enumerate().filter(|(_, topic)| topic.details.len() < DETAILS_LIMIT)
+        .filter_map(|(index, topic)| {
+            let distance = topic.points.iter().flat_map(|point| &point.sources)
+                .chain(topic.details.iter().flat_map(|entry| &entry.sources))
+                .filter_map(|id| order.get(id.as_str()))
+                .flat_map(|offset| anchors.iter().map(move |anchor| offset.abs_diff(*anchor)))
+                .min()?;
+            Some((distance, index))
+        })
+        .min().map(|(_, index)| index)
+}
+
 fn append_missing(raw: &str, mut doc: Document, units: &[Unit], evidence: &[Value]) -> Result<Document, String> {
     let missing: MissingItems = parse(raw)?;
     if missing.additions.len() > 4 {
@@ -371,10 +386,14 @@ fn append_missing(raw: &str, mut doc: Document, units: &[Unit], evidence: &[Valu
         }
         let entry = Entry {text:fact.text, sources, quantity_needs_review:false};
         match (fact.placement, addition.topic) {
-            (Placement::Topic, Some(title)) => {
-                let topic = doc.topics.iter_mut().find(|topic| topic.title == title)
-                    .ok_or("补充事项没有对应的原议题，已有纪要保留。")?;
-                topic.details.push(entry);
+            (Placement::Topic, title) => {
+                // The fact and its evidence have already been checked for
+                // shape. A missing display hint does not erase an entire reply.
+                let index = match title {
+                    Some(title) => doc.topics.iter().position(|topic| topic.title == title),
+                    None => omission_topic(&doc, &entry.sources, units),
+                }.ok_or("补充事项没有对应的原议题，已有纪要保留。")?;
+                doc.topics[index].details.push(entry);
             }
             (Placement::Decision, None) => doc.decisions.push(entry),
             (Placement::Question, None) => doc.questions.push(entry),

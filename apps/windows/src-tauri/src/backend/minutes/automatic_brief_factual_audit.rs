@@ -312,12 +312,17 @@ fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSe
 
 fn mask_unclear_quote(corrected: &str, phrases: &[String]) -> String {
     let mut result = corrected.to_owned();
-    if !corrected.trim_end_matches(['。', '.']).ends_with("含义待核对") {
-        return result;
-    }
-    for phrase in phrases {
-        if !phrase.is_empty() {
+    for phrase in phrases.iter().filter(|phrase| !phrase.is_empty()) {
+        if corrected.trim_end_matches(['。', '.']).ends_with("含义待核对") {
             result = result.replace(&format!("“{phrase}”"), "一处含混表述");
+        }
+        for marker in ["含义待核对", "具体所指待核对", "具体名称待核对", "原话待核实"] {
+            for (open, close) in [('（', '）'), ('(', ')')] {
+                for quoted in [phrase.clone(), format!("“{phrase}”")] {
+                    let tagged = format!("{quoted}{open}{marker}{close}");
+                    result = result.replace(&tagged, &format!("含混表述{open}{marker}{close}"));
+                }
+            }
         }
     }
     result
@@ -332,6 +337,10 @@ fn review_masks_only_an_exact_quote_marked_as_unresolved() {
     assert_eq!(mask_unclear_quote("已确定“租赁城市”。", &phrases), "已确定“租赁城市”。");
     assert_eq!(mask_unclear_quote("不带引号的租赁城市，含义待核对。", &phrases),
         "不带引号的租赁城市，含义待核对。");
+    assert_eq!(mask_unclear_quote("门店只能租，并提到租赁城市（具体所指待核对）。", &phrases),
+        "门店只能租，并提到含混表述（具体所指待核对）。");
+    assert_eq!(mask_unclear_quote("租赁城市已定，门店名称（具体所指待核对）。", &phrases),
+        "租赁城市已定，门店名称（具体所指待核对）。");
 }
 
 fn demote_item(value: &mut Value, pointer: &str, units: &[Unit]) -> Option<()> {
