@@ -2,6 +2,7 @@
 use std::{
     collections::{HashMap, HashSet},
     ops::Range,
+    sync::LazyLock,
     time::Instant,
 };
 
@@ -384,12 +385,60 @@ fn append_missing(raw: &str, mut doc: Document, units: &[Unit], evidence: &[Valu
     Ok(doc)
 }
 
+fn omission_cues(doc: &Document, evidence: &[Value]) -> Vec<Value> {
+    static LITERAL: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:[0-9０-９]+(?:[.．][0-9０-９]+)?|[零〇一二两三四五六七八九十百千万亿半]+)\s*(?:美元|元|块钱|个月|季度|工作日|小时|分钟|周|天|年|%|％)|(?:明天|后天|下周|本周|下个月|本月底|周[一二三四五六日])(?:之前|以前|截止|前|为止)"
+    ).expect("constant omission cue expression"));
+    let mut displayed: HashMap<String, String> = HashMap::new();
+    let mut include = |sources: &[String], text: &str| {
+        for source in sources {
+            displayed.entry(source.clone()).or_default().push_str(&normalized(text));
+        }
+    };
+    for topic in &doc.topics {
+        for point in &topic.points {
+            include(&point.sources, &point.text);
+        }
+        for detail in &topic.details {
+            include(&detail.sources, &detail.text);
+        }
+    }
+    for entry in doc.decisions.iter().chain(&doc.questions) {
+        include(&entry.sources, &entry.text);
+    }
+    for action in &doc.action_items {
+        include(&action.sources, &action.text);
+        if let Some(due) = &action.due {
+            include(&action.sources, due);
+        }
+    }
+    let mut seen = HashSet::new();
+    let candidates: Vec<_> = evidence.iter().filter_map(|row| {
+        let unit = row["source"].as_str()?;
+        let text = row["text"].as_str()?;
+        let text = text.split_once([':', '：']).filter(|(head, _)| head.starts_with("说话人"))
+            .map_or(text, |(_, rest)| rest);
+        let span = LITERAL.find_iter(text).find(|item| {
+            let value = normalized(item.as_str());
+            !displayed.get(unit).is_some_and(|current| current.contains(&value))
+                && seen.insert((unit, value))
+        })?;
+        Some(json!({"id":row["id"],"span":span.as_str()}))
+    }).collect();
+    let count = candidates.len().min(24);
+    (0..count).map(|index| candidates[index*candidates.len()/count].clone()).collect()
+}
+
 pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &reqwest::blocking::Client,
     doc: Document, units: &[Unit], start: Instant, trace: &mut Vec<Value>) -> Result<Document, String>
 {
     let evidence = factual_audit::evidence_sentences(units);
+    let cues = omission_cues(&doc, &evidence);
     let raw = super::request(endpoint, model, key, client, FIND_MISSING,
-        json!({"sourceSentences":evidence,"currentBrief":doc}), true, start, trace, "source-items-omissions")?;
+        json!({"sourceSentences":evidence,"currentBrief":doc,"lexicalCues":cues}), true, start, trace, "source-items-omissions")?;
+    if let Some(call) = trace.last_mut() {
+        call["omissionCues"] = json!(cues);
+    }
     append_missing(&raw, doc, units, &evidence)
 }
 
@@ -556,6 +605,16 @@ mod tests {
         assert_eq!(assembled.topics[0].details[0].text, facts[3].text);
         assert_eq!(assembled.topics[0].details[1].text, facts[4].text);
         assert!(organize(&raw.replace("a003","a999"), &facts, &units).is_err());
+    }
+
+    #[test]
+    fn omission_cue_finds_an_unwritten_duration_in_an_already_cited_sentence() {
+        let units = vec![Unit{id:"u000".into(),text:"客户来自学校，学校每年有三个月的假期。".into()}];
+        let evidence = factual_audit::evidence_sentences(&units);
+        let doc: Document = serde_json::from_value(json!({"purpose":"餐饮讨论",
+            "topics":[{"title":"客流","points":[{"kind":"status","text":"客户来自学校。","sources":["u000"]}]}],
+            "decisions":[],"actionItems":[],"questions":[]})).unwrap();
+        assert_eq!(omission_cues(&doc,&evidence),json!([{"id":"e0000","span":"三个月"}]).as_array().unwrap().clone());
     }
 
     #[test]

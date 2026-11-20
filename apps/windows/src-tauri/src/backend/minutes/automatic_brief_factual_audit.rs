@@ -12,7 +12,11 @@ struct Sentence {id:String,source:String,text:String}
 #[serde(rename_all="camelCase",deny_unknown_fields)]
 struct Audit {claim_audit:Vec<Claim>,#[serde(rename="type")]format_kind:Option<String>}
 #[derive(Debug,Deserialize)]
-struct Claim {path:String,status:String,reason:String,evidence:Vec<String>,clarity:Option<String>,#[serde(rename="unclearText")]unclear_text:Option<String>,#[serde(flatten)]echoed:HashMap<String,Value>}
+struct Claim {path:String,status:String,reason:String,evidence:Vec<String>,clarity:Option<String>,#[serde(rename="unclearText")]unclear_text:Option<String>,#[serde(rename="placementUnsupported")]placement_unsupported:Option<bool>,#[serde(flatten)]echoed:HashMap<String,Value>}
+
+fn independent_path(path:&str)->bool {
+    ["decisions[","actionItems[","questions["].iter().any(|prefix|path.starts_with(prefix))
+}
 
 fn sentences(units:&[Unit])->Vec<Sentence> {
     let mut out:Vec<Sentence>=Vec::new();
@@ -72,7 +76,13 @@ fn emphasize_source_scope(claims:&mut[Value],source:&[Sentence]) {
     }
 }
 fn decode(raw:&str,expected:&[Value],source:&[Sentence])->Result<Audit,String> {
-    decode_contract(raw,expected,source,super::coverage::enabled())
+    let audit = decode_contract(raw,expected,source,super::coverage::enabled())?;
+    if super::source_items::enabled() && audit.claim_audit.iter().any(|claim| {
+        independent_path(&claim.path) && claim.placement_unsupported.is_none()
+    }) {
+        return Err("纪要审查缺少决定、交办或未决栏目的独立判定，已有结果保留。".into());
+    }
+    Ok(audit)
 }
 pub(super) fn canonical_sentence_reference(id:&str,known:&HashSet<&str>)->Option<String>{
     if known.contains(id){return Some(id.into());}
@@ -95,6 +105,10 @@ fn decode_contract(raw:&str,expected:&[Value],source:&[Sentence],require_clarity
     let mut seen=HashSet::new();let mut issues=0;
     for claim in &mut audit.claim_audit {
         let Some(original)=paths.get(claim.path.as_str())else{return Err("纪要审核引用了不存在的陈述，已有结果保留。".into());};
+        if claim.placement_unsupported==Some(true)
+            && (!independent_path(&claim.path)||claim.status=="supported") {
+            return Err("纪要审查的栏目判定与事实判定不一致，已有结果保留。".into());
+        }
         if require_clarity{for id in &mut claim.evidence{if let Some(canonical)=canonical_sentence_reference(id,&evidence){*id=canonical;}}}
         if !seen.insert(&claim.path)||claim.reason.trim().is_empty()||claim.reason.chars().count()>300
             ||!matches!(claim.status.as_str(),"supported"|"overstated"|"unsupported"|"unclear")
@@ -173,7 +187,7 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     if expected.is_empty(){return Ok(Audit{claim_audit:Vec::new(),format_kind:None});}
     let role_prompt;
     let prompt = if super::source_items::enabled() {
-        role_prompt = format!("{PROMPT}\n独立条目的栏目本身也是待核对的主张。decision 必须是本场定案。会议目的、个人主张或计划、后续讨论与散会提示放在此栏，即使正文对，也判 overstated。action 要求实际承诺或指派，截止时间必须约束该任务，活动目标月份不能当成到期日。unresolved 需原话表明事项仍未解决，普通事实不能列为未决。");
+        role_prompt = format!("{PROMPT}\n栏目本身也是需要单独核对的主张。对decisions、actionItems、questions的每一条，另外返回placementUnsupported布尔值。真有本场定案、会后承诺或指派、尚未解决的问题时填false；当其实只是开场目的、个人设想、举例、建议、现场已经回答的疑问或散会提示时填true，并将status判为overstated、unsupported或unclear。文字有原话不代表栏目正确。只写错截止日期、责任人或数值但栏目确实成立时填false，按独立事实问题判status。其他栏目无须此字段。");
         role_prompt.as_str()
     } else {
         PROMPT
@@ -293,7 +307,7 @@ fn apply_historical_veto(audit:&mut Audit,expected:&[Value],history:&[Value],sou
 }
 #[cfg(test)]
 fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,units:&[Unit])->Result<Document,String> {
-    apply_changes_with_policy(raw,doc,allowed,unclear,&HashMap::new(),units)
+    apply_changes_with_policy(raw,doc,allowed,unclear,&HashMap::new(),&HashSet::new(),units)
 }
 
 fn mask_unclear_quote(corrected: &str, phrases: &[String]) -> String {
@@ -320,7 +334,30 @@ fn review_masks_only_an_exact_quote_marked_as_unresolved() {
         "不带引号的租赁城市，含义待核对。");
 }
 
-fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,conservative:&HashMap<String,Vec<String>>,units:&[Unit])->Result<Document,String> {
+fn demote_item(value: &mut Value, pointer: &str, units: &[Unit]) -> Option<()> {
+    let item = value.pointer(pointer)?;
+    let text = item["text"].as_str()?.to_owned();
+    if !super::line(&text, 120) {
+        return None;
+    }
+    let sources = item["sources"].as_array()?.clone();
+    let offsets: HashMap<_, _> = units.iter().enumerate().map(|(index, unit)|(unit.id.as_str(),index)).collect();
+    let anchors: Vec<_> = sources.iter().filter_map(|id| offsets.get(id.as_str()?)).copied().collect();
+    let topics = value["topics"].as_array_mut()?;
+    let target = topics.iter_mut().filter(|topic| topic["details"].as_array()
+        .is_some_and(|details| details.len() < super::topic_details_limit())).min_by_key(|topic| {
+        topic["points"].as_array().into_iter().flatten().chain(topic["details"].as_array().into_iter().flatten())
+            .flat_map(|entry| entry["sources"].as_array().into_iter().flatten())
+            .filter_map(|id| offsets.get(id.as_str()?))
+            .flat_map(|offset| anchors.iter().map(move |anchor| offset.abs_diff(*anchor)))
+            .min().unwrap_or(usize::MAX)
+    })?;
+    target["details"].as_array_mut()?.push(json!({"text":text,"sources":sources}));
+    Some(())
+}
+
+fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,
+    conservative:&HashMap<String,Vec<String>>,misplaced:&HashSet<String>,units:&[Unit])->Result<Document,String> {
     let fail=||"纪要修正没有遵守受影响范围，已有结果保留。".to_string();
     let changes:Value=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|fail())?;
     let root=changes.as_object().ok_or_else(fail)?;
@@ -335,8 +372,8 @@ fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unc
         if !allowed.contains(path)||!seen.insert(path.to_string()){return Err(fail());}
         let pointer=format!("/{}",path.replace('[',"/").replace(']',"").replace('.',"/"));
         if let Some(topic)=row.get("moveToTopic") {
-            if !super::source_items::enabled()||unclear.contains(path)||row.len()!=3
-                ||!(path.starts_with("decisions[")||path.starts_with("actionItems[")){return Err(fail());}
+            if !super::source_items::enabled()||!misplaced.contains(path)||unclear.contains(path)||row.len()!=3
+                ||!independent_path(path){return Err(fail());}
             let index=topic.as_u64().and_then(|index|usize::try_from(index).ok()).ok_or_else(fail)?;
             let text=row.get("text").and_then(Value::as_str).filter(|text|super::line(text,120)).ok_or_else(fail)?;
             let sources=value.pointer(&pointer).and_then(|item|item.get("sources")).cloned().ok_or_else(fail)?;
@@ -388,6 +425,20 @@ fn apply_changes_with_policy(raw:&str,doc:&Document,allowed:&HashSet<String>,unc
             }
         }
         if !row.contains_key("text")&&!row.contains_key("kind")&&!row.contains_key("owner")&&!row.contains_key("due"){return Err(fail());}
+    }
+    // The audit certifies that the original column is wrong. Text-only
+    // repairs at those paths cannot keep the old decision/task/question role.
+    let mut relocations: Vec<_> = misplaced.iter().collect();
+    relocations.sort();
+    for path in relocations {
+        let pointer = format!("/{}",path.replace('[',"/").replace(']',"").replace('.',"/"));
+        if removals.contains(&pointer) {
+            continue;
+        }
+        if !seen.contains(path.as_str()) || !independent_path(path) || demote_item(&mut value,&pointer,units).is_none() {
+            return Err(fail());
+        }
+        removals.push(pointer);
     }
     // Apply deletions after replacements and in descending array-index order.
     removals.sort_by(|a,b|{
@@ -490,21 +541,27 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
         for verdict in audit.claim_audit.iter().filter(|c|c.status=="supported") {
             if let Some(claim)=audited_claims.iter().find(|c|c["path"].as_str()==Some(verdict.path.as_str())){verified_claims.insert(verdict.path.clone(),claim.clone());}
         }
-        let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|json!({"path":c.path,"status":c.status,"clarity":c.clarity,"unclearText":c.unclear_text,"reason":c.reason,"evidence":c.evidence})).collect::<Vec<_>>();
+        let issues=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|{
+            let mut issue=json!({"path":c.path,"status":c.status,"clarity":c.clarity,"unclearText":c.unclear_text,"reason":c.reason,"evidence":c.evidence});
+            if let Some(misplaced)=c.placement_unsupported{issue["placementUnsupported"]=json!(misplaced);}
+            issue
+        }).collect::<Vec<_>>();
         if issues.is_empty(){return Ok(current);}
         let allowed=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|c.path.clone()).collect::<HashSet<_>>();
+        let misplaced=audit.claim_audit.iter().filter(|c|super::source_items::enabled()&&c.placement_unsupported==Some(true))
+            .map(|c|c.path.clone()).collect::<HashSet<_>>();
+        let allow_conservative = super::coverage::enabled() || super::source_items::enabled();
         // Repeated feedback stops. A changed failure axis, or a different
         // unclear span after the earlier span was actually removed, can use
         // the remaining second repair. Neither the cap nor history resets.
         let repeated=audit.claim_audit.iter().filter(|c|c.status!="supported").any(|c|{
             let distinct_ambiguity=c.clarity.as_deref()==Some("unclear")&&audited_claims.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str())).is_some_and(|claim|newly_exposed_ambiguity(attempted_phrases.get(&c.path).map(String::as_str),c.unclear_text.as_deref(),claim));
-            attempted.get(&c.path).is_some_and(|old|!(super::coverage::enabled()&&(changed_failure_axis(old,&c.status,c.status=="unclear"||c.clarity.as_deref()==Some("unclear"))||distinct_ambiguity)))
+            attempted.get(&c.path).is_some_and(|old|!(allow_conservative&&(changed_failure_axis(old,&c.status,c.status=="unclear"||c.clarity.as_deref()==Some("unclear"))||distinct_ambiguity)))
         });
         if round==2||repeated {
             return Err(format!("纪要复审仍有{}处未解决表述，已有结果保留。",issues.len()));
         }
         let unclear=audit.claim_audit.iter().filter(|c|c.status=="unclear"||c.clarity.as_deref()==Some("unclear")).map(|c|c.path.clone()).collect::<HashSet<_>>();
-        let allow_conservative = super::coverage::enabled() || super::source_items::enabled();
         if allow_conservative{for issue in audit.claim_audit.iter().filter(|c|c.clarity.as_deref()==Some("unclear")){
             if let Some(phrase)=&issue.unclear_text{let terms=unclear_history.entry(issue.path.clone()).or_default();if !terms.contains(phrase){terms.push(phrase.clone());}}
         }}
@@ -514,14 +571,16 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
                 .get("text")?.as_str()?.contains(phrase).then(||(c.path.clone(),vec![phrase.clone()]))
         }).collect::<HashMap<_,_>>()}else{HashMap::new()};
         let deletion_only=unclear.iter().filter(|path|!conservative.contains_key(*path)).cloned().collect::<HashSet<_>>();
-        let repair_contracts=allowed.iter().map(|path|json!({"path":path,"maxCharacters":repair_text_limit(path),"textOnlyConservative":conservative.contains_key(path)})).collect::<Vec<_>>();
+        let repair_contracts=allowed.iter().map(|path|
+            json!({"path":path,"maxCharacters":if misplaced.contains(path){120}else{repair_text_limit(path)},
+            "textOnlyConservative":conservative.contains_key(path)})).collect::<Vec<_>>();
         let stage=if round==0{"source-factual-repair"}else{"source-factual-repair-2"};
         let mut payload=json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,"deletionOnlyPaths":deletion_only,"conservativeRewritePaths":conservative,"knownUnclearPhrases":unclear_history,"repairContracts":repair_contracts});
         if super::source_items::enabled() {
-            payload["roleCorrectionContract"]=json!("只对已判有问题且不在deletionOnlyPaths/含糊名单中的decisions或actionItems：若原话仅支持现状、建议或计划，同时仍值得保留，可把该条移到相关已有主题的补充。操作恰好包含path、moveToTopic（previousDocument.topics从0开始的编号）、text（120字内，明写建议、设想或已有状态及其范围）。程序移除原决定或任务，保留出处，随后重新审核。不能用此操作新增或提升决定、任务。完全无依据的仍remove。");
+            payload["roleCorrectionContract"]=json!("placementUnsupported为true的决定、交办或未决条目将由程序移出原栏目。仍有用的内容只返回path和120字内text，写清实际是意见、现状、设想或已回答的提问；程序保留出处并放入相关主题，之后独立复审。完全无依据、散会或重复无用条目可remove:true。不要在text内继续称已定案。只有需要指定补充主题且不含糊时，才附moveToTopic的已有主题下标。");
         }
         let raw=super::request(endpoint,model,key,client,REPAIR,payload.clone(),super::coverage::enabled(),start,trace,stage)?;
-        let next=match apply_changes_with_policy(&raw,&current,&allowed,&unclear,&conservative,units){
+        let next=match apply_changes_with_policy(&raw,&current,&allowed,&unclear,&conservative,&misplaced,units){
             Ok(doc)=>doc,
             Err(reason)if super::coverage::enabled()&&!recovered_display&&reason.contains("须为")&&!oversized_repair_texts(&raw).is_empty()=>{
                 // An oversized patch has not been applied. Recover only its
@@ -532,7 +591,7 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
                 payload["instruction"]=json!("本次只缩短formatOnlyTextPaths列出的超长text，按repairContracts保留必要条件、否定、范围、人物及不确定性，不改kind/owner/due，不补事实、不截断原句。其它有效patch由程序原样保留，不要返回。只返回changes，每项仅path和text，列出的每个path恰好一次。随后仍会完整复审。");
                 let fixed=super::request(endpoint,model,key,client,REPAIR,payload,true,start,trace,&format!("{stage}-length-recovery"))?;
                 let merged=merge_shorter_repair_texts(&raw,&fixed,&paths)?;
-                apply_changes_with_policy(&merged,&current,&allowed,&unclear,&conservative,units)?
+                apply_changes_with_policy(&merged,&current,&allowed,&unclear,&conservative,&misplaced,units)?
             },
             Err(reason)=>return Err(reason),
         };
@@ -548,6 +607,21 @@ pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn audited_wrong_columns_cannot_survive_a_text_only_correction() {
+        let units=vec![Unit{id:"u000".into(),text:"建议延后采购，现场已答复。".into()}];
+        let doc:Document=serde_json::from_value(json!({"purpose":"讨论采购",
+            "topics":[{"title":"采购","points":[{"kind":"status","text":"讨论采购","sources":["u000"]}],"details":[]}],
+            "decisions":[{"text":"确定延后采购。","sources":["u000"]}],"actionItems":[],
+            "questions":[{"text":"采购何时开始？","sources":["u000"]}]})).unwrap();
+        let misplaced=HashSet::from(["decisions[0]".to_owned(),"questions[0]".to_owned()]);
+        let patch=json!({"changes":[{"path":"decisions[0]","text":"有人建议延后采购。"},{"path":"questions[0]","remove":true}]});
+        let repaired=apply_changes_with_policy(&patch.to_string(),&doc,&misplaced,&HashSet::new(),&HashMap::new(),&misplaced,&units).unwrap();
+        assert!(repaired.decisions.is_empty()&&repaired.questions.is_empty());
+        assert_eq!(repaired.topics[0].details[0].text,"有人建议延后采购。");
+        assert_eq!(repaired.topics[0].details[0].sources,["u000"]);
+    }
+
     #[test]
     fn automatic_brief_evidence_padding_aliases_resolve_only_real_unique_ids(){
         let source=vec![Sentence{id:"e0001".into(),source:"u000".into(),text:"预算未审批。".into()}];let expected=vec![json!({"path":"purpose","text":"预算未审批"})];
@@ -723,15 +797,15 @@ mod tests {
         let path="topics[0].points[0]";let allowed=HashSet::from([path.to_string()]);
         let policy=HashMap::from([(path.to_string(),vec!["牵牛单位".to_string()])]);
         let patch=json!({"changes":[{"path":path,"text":"有发言建议由一个组织或产业联盟开展协作。"}]});
-        let fixed=apply_changes_with_policy(&patch.to_string(),&doc,&allowed,&allowed,&policy,&units).unwrap();
+        let fixed=apply_changes_with_policy(&patch.to_string(),&doc,&allowed,&allowed,&policy,&HashSet::new(),&units).unwrap();
         let mut expected=doc.clone();expected.topics[0].points[0].text=fixed.topics[0].points[0].text.clone();
         assert_eq!(serde_json::to_value(fixed).unwrap(),serde_json::to_value(expected).unwrap());
         assert!(apply_changes(&patch.to_string(),&doc,&allowed,&allowed,&units).is_err());
         for bad in [json!({"changes":[{"path":path,"text":"牵牛单位仍负责协作。"}]}),json!({"changes":[{"path":path,"text":"开展协作。","kind":"decision"}]}),json!({"changes":[{"path":"purpose","text":"改整场主题"}]})]{
-            assert!(apply_changes_with_policy(&bad.to_string(),&doc,&allowed,&allowed,&policy,&units).is_err());
+            assert!(apply_changes_with_policy(&bad.to_string(),&doc,&allowed,&allowed,&policy,&HashSet::new(),&units).is_err());
         }
         let invalid_policy=HashMap::from([(path.to_string(),vec!["原句里没有".to_string()])]);
-        assert!(apply_changes_with_policy(&patch.to_string(),&doc,&allowed,&allowed,&invalid_policy,&units).is_err());
+        assert!(apply_changes_with_policy(&patch.to_string(),&doc,&allowed,&allowed,&invalid_policy,&HashSet::new(),&units).is_err());
     }
     #[test]
     fn automatic_brief_exact_deletion_can_remove_an_empty_optional_detail(){
