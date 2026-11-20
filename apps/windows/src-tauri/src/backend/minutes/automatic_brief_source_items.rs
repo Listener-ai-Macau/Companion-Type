@@ -431,8 +431,7 @@ fn append_missing(additions: Vec<MissingItem>, mut doc: Document, units: &[Unit]
                 // The fact and its evidence have already been checked for
                 // shape. A missing display hint does not erase an entire reply.
                 let fail = || "补充事项没有对应的原议题，已有纪要保留。".to_string();
-                let requested = title.as_ref().map(|title| doc.topics.iter().position(|topic| &topic.title == title)
-                    .ok_or_else(fail)).transpose()?;
+                let requested = title.as_ref().and_then(|title| doc.topics.iter().position(|topic| &topic.title == title));
                 let index = requested.filter(|index| doc.topics[*index].details.len() < DETAILS_LIMIT)
                     .or_else(|| omission_topic(&doc, &entry.sources, units)).ok_or_else(fail)?;
                 doc.topics[index].details.push(entry);
@@ -644,12 +643,33 @@ fn coverage_quote_is_grounded(quote: &str, text: &str) -> bool {
         && normalized(text).contains(&normalized(quote))
 }
 
+fn restriction() -> &'static regex::Regex {
+    static RESTRICTION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:不是(?:特别|很|太|那么的?)|不(?:够|太|能|得|允许)|没有|尚未|仍未|不得)([\p{Han}]{2,10})"
+    ).unwrap());
+    &RESTRICTION
+}
+
+fn related_causal_evidence(evidence: &[Value], source: &Value, phrase: &str) -> Vec<String> {
+    let Some((speaker, _)) = super::super::source_resolution::split_turn_label(source["text"].as_str().unwrap()) else {
+        return Vec::new();
+    };
+    let Some(predicate) = restriction().captures(phrase).and_then(|captures| captures.get(1)) else {
+        return Vec::new();
+    };
+    evidence.iter().skip_while(|row| row["id"] != source["id"]).skip(1).take(12).filter_map(|row| {
+        let (actual, text) = super::super::source_resolution::split_turn_label(row["text"].as_str()?)?;
+        if actual != speaker || !["因为", "因此", "导致", "所以"].iter().any(|cue| text.contains(cue)) {
+            return None;
+        }
+        restriction().captures_iter(text).any(|captures| captures.get(1).is_some_and(|m| m.as_str() == predicate.as_str()))
+            .then(|| row["id"].as_str().unwrap().to_owned())
+    }).collect()
+}
+
 fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document, evidence: &[Value],
     bindings: &HashMap<String, &Vec<String>>,
 ) -> Vec<Value> {
-    static RESTRICTION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
-        r"(?:不是(?:特别|很|太|那么)|不(?:够|太|能|得|允许)|没有|尚未|仍未|不得)[\p{Han}]{2,10}"
-    ).unwrap());
     let clauses = factual_audit::claims(doc);
     checks.iter().filter_map(|check| {
         let SourceCheck::Covered { id, claim, proof } = check else { return None; };
@@ -665,12 +685,12 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
             })) && target.and_then(|row| row["text"].as_str())
                 .is_some_and(|text| coverage_quote_is_grounded(&proof.statement_quote, text))
         });
-        let omitted_qualification = RESTRICTION.find_iter(source_text).find(|hit| {
+        let omitted_qualification = restriction().find_iter(source_text).find(|hit| {
             !hit.as_str().ends_with(['吗', '么', '呢'])
                 && !(hit.as_str().starts_with("没有") && source_text[..hit.start()].ends_with('有'))
         }).filter(|_| {
             context["sourceNeedsCheck"] == true && !target.and_then(|row| row["text"].as_str())
-                .is_some_and(|text| RESTRICTION.is_match(text))
+                .is_some_and(|text| restriction().is_match(text))
         });
         if grounded && omitted_qualification.is_none() { return None; }
         let mut issue = context.clone();
@@ -680,9 +700,26 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
         } else { "必须分别提供原话与现有正文实际出现的同一事实短句。" });
         if let Some(qualification) = omitted_qualification {
             issue["unrepresentedSourceQuote"] = json!(qualification.as_str());
+            let related = related_causal_evidence(evidence, source, qualification.as_str());
+            if !related.is_empty() {
+                issue["relatedCausalEvidence"] = json!(related);
+            }
         }
         Some(issue)
     }).collect()
+}
+
+fn preserves_related_cause(checks: &[SourceCheck], rejected: &[Value]) -> bool {
+    checks.iter().all(|check| {
+        let Some(related) = rejected.iter().find(|row| row["cue"]["id"] == check.id())
+            .and_then(|row| row["relatedCausalEvidence"].as_array()) else { return true; };
+        match check {
+            SourceCheck::Missing { addition, .. } | SourceCheck::NeedsReview { addition, .. } => related.iter()
+                .all(|id| addition.item.evidence.iter().any(|evidence| id == evidence.as_str())),
+            SourceCheck::Covered { .. } | SourceCheck::Conflict { .. } => true,
+            SourceCheck::Background { .. } => false,
+        }
+    })
 }
 
 fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, facts: &[Fact], evidence: &[Value])
@@ -797,7 +834,8 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
             let repair: MissingItems = parse(&raw)?;
             let returned: HashSet<_> = repair.checks.iter().map(SourceCheck::id).collect();
             if returned != ids || repair.checks.len() != ids.len() || !repair.additions.is_empty()
-                || !rejected_coverage(&repair.checks, &rejected, &doc, &evidence, &bindings).is_empty() {
+                || !rejected_coverage(&repair.checks, &rejected, &doc, &evidence, &bindings).is_empty()
+                || !preserves_related_cause(&repair.checks, &rejected) {
                 return Err("纪要存在未完成的关键原话覆盖复核，已有结果保留。".into());
             }
             fixed.checks.retain(|row| !ids.contains(row.id()));
