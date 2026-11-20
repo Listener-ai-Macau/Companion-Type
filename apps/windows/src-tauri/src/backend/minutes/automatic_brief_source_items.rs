@@ -157,11 +157,18 @@ struct SourceCue {
 #[derive(Deserialize)]
 #[serde(tag = "status", rename_all = "camelCase")]
 enum SourceCheck {
-    Covered { id: String, claim: String },
+    Covered { id: String, claim: String, #[serde(default)] proof: Option<CoverageProof> },
     Missing { id: String, addition: MissingItem },
     NeedsReview { id: String, addition: MissingItem },
     Conflict { id: String, claim: String },
     Background { id: String, reason: String },
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct CoverageProof {
+    source_quote: String,
+    statement_quote: String,
 }
 
 impl SourceCheck {
@@ -610,18 +617,43 @@ fn period_half_year_is_distinct_from_a_stated_duration() {
     assert!(!contextual_measure_witness("半年", &claim, "计划至少学习半年。"));
 }
 
-fn disputed_measures(missing: &MissingItems, cues: &[SourceCue], doc: &Document, evidence: &[Value]) -> Vec<Value> {
+fn disputed_coverage(missing: &MissingItems, cues: &[SourceCue], doc: &Document, evidence: &[Value],
+    bindings: &HashMap<String, &Vec<String>>,
+) -> Vec<Value> {
     let claims = factual_audit::claims(doc);
     let by_path: HashMap<_, _> = claims.iter().map(|claim| (claim["path"].as_str().unwrap(), claim)).collect();
     let by_id: HashMap<_, _> = cues.iter().map(|cue| (cue.id.as_str(), cue)).collect();
     missing.checks.iter().filter_map(|check| {
-        let SourceCheck::Covered { id, claim } = check else { return None; };
+        let SourceCheck::Covered { id, claim, .. } = check else { return None; };
         let cue = by_id.get(id.as_str())?;
         let statement = by_path.get(claim.as_str())?;
         let sentence = evidence.iter().find(|row| row["id"].as_str() == Some(cue.evidence.as_str()))?;
-        (!contextual_measure_witness(&cue.span, statement, sentence["text"].as_str()?))
-            .then(|| json!({"cue":cue,"claimedWitness":statement}))
+        let cited = bindings.get(claim);
+        let wrong_measure = !contextual_measure_witness(&cue.span, statement, sentence["text"].as_str()?);
+        let different_source = !cited.is_some_and(|ids| ids.contains(&cue.evidence));
+        (wrong_measure || different_source).then(|| json!({
+            "cue":cue, "claimedWitness":statement, "witnessEvidence":cited,
+            "measureNeedsCheck":wrong_measure, "sourceNeedsCheck":different_source,
+        }))
     }).collect()
+}
+
+fn coverage_quote_is_grounded(quote: &str, text: &str) -> bool {
+    line(quote, 180) && quote.chars().filter(|ch| ch.is_alphanumeric()).count() >= 5
+        && normalized(text).contains(&normalized(quote))
+}
+
+fn rechecked_coverage_is_grounded(checks: &[SourceCheck], disputed: &[Value], doc: &Document, evidence: &[Value]) -> bool {
+    let clauses = factual_audit::claims(doc);
+    checks.iter().all(|check| {
+        let SourceCheck::Covered { id, claim, proof } = check else { return true; };
+        let Some(context) = disputed.iter().find(|row| row["cue"]["id"] == id.as_str()) else { return false; };
+        let Some(proof) = proof else { return false; };
+        let source = evidence.iter().find(|row| row["id"] == context["cue"]["evidence"]);
+        let target = clauses.iter().find(|row| row["path"] == claim.as_str());
+        source.and_then(|row| row["text"].as_str()).is_some_and(|text| coverage_quote_is_grounded(&proof.source_quote, text))
+            && target.and_then(|row| row["text"].as_str()).is_some_and(|text| coverage_quote_is_grounded(&proof.statement_quote, text))
+    })
 }
 
 fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, facts: &[Fact], evidence: &[Value])
@@ -706,21 +738,27 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     let scan_index = trace.len() - 1;
     trace[scan_index]["omissionCues"] = json!(cues);
     let mut checked: MissingItems = parse(&raw)?;
-    let disputed = disputed_measures(&checked, &cues, &doc, &evidence);
-    if !disputed.is_empty() && disputed.len() <= 4 && checked.checks.len() == cues.len() {
+    let disputed = disputed_coverage(&checked, &cues, &doc, &evidence, &bindings);
+    if !disputed.is_empty() && checked.checks.len() == cues.len() {
         let selected: HashSet<_> = disputed.iter().map(|case| case["cue"]["id"].as_str().unwrap()).collect();
         let neighborhoods: HashSet<_> = disputed.iter().flat_map(|case| {
             let id = case["cue"]["evidence"].as_str().unwrap();
             let position = evidence.iter().position(|row| row["id"].as_str() == Some(id)).unwrap();
-            position.saturating_sub(2)..(position + 3).min(evidence.len())
+            let after = if case["sourceNeedsCheck"] == true { 13 } else { 3 };
+            position.saturating_sub(2)..(position + after).min(evidence.len())
         }).collect();
-        let context: Vec<_> = evidence.iter().enumerate().filter_map(|(index, row)| neighborhoods.contains(&index).then_some(row)).collect();
+        let cited: HashSet<_> = disputed.iter().filter_map(|case| case["witnessEvidence"].as_array())
+            .flatten().filter_map(Value::as_str).collect();
+        let context: Vec<_> = evidence.iter().enumerate().filter_map(|(index, row)| {
+            (neighborhoods.contains(&index) || cited.contains(row["id"].as_str().unwrap())).then_some(row)
+        }).collect();
         let raw = super::request(endpoint,model,key,client,RECHECK_MEASURES,
             json!({"sourceSentences":context,"sourceCheckRecheck":disputed,"currentBrief":doc}),false,start,trace,"source-items-omissions-recheck")?;
         let fixed: MissingItems = parse(&raw)?;
         let returned: HashSet<_> = fixed.checks.iter().map(SourceCheck::id).collect();
-        if returned != selected || fixed.checks.len() != selected.len() || !fixed.additions.is_empty() {
-            return Err("纪要关键数值复核不完整，已有结果保留。".into());
+        if returned != selected || fixed.checks.len() != selected.len() || !fixed.additions.is_empty()
+            || !rechecked_coverage_is_grounded(&fixed.checks, &disputed, &doc, &evidence) {
+            return Err("纪要存在未完成的关键原话覆盖复核，已有结果保留。".into());
         }
         checked.checks.retain(|check| !selected.contains(check.id()));
         checked.checks.extend(fixed.checks);
@@ -925,7 +963,7 @@ mod tests {
         assert_eq!(json!(cues), json!([{"id":"v000","evidence":"e0000","span":"三个月"}]));
         assert!(checked_additions(parse(r#"{"additions":[]}"#).unwrap(), &cues, &doc, &facts, &evidence).is_err());
         let false_coverage = parse(r#"{"checks":[{"id":"v000","status":"covered","claim":"topics[0].points[0]"}],"additions":[]}"#).unwrap();
-        assert_eq!(disputed_measures(&false_coverage, &cues, &doc, &evidence).len(), 1);
+        assert_eq!(disputed_coverage(&false_coverage, &cues, &doc, &evidence, &HashMap::new()).len(), 1);
         assert!(checked_additions(false_coverage, &cues, &doc, &facts, &evidence).is_err());
         assert!(measure_has_witness("三个月", &json!({"text":"3个月假期"})));
         assert!(!measure_has_witness("三个月", &json!({"text":"13个月假期"})));
