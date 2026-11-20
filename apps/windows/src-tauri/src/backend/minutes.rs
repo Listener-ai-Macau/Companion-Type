@@ -15,6 +15,7 @@ mod short_evidence;
 mod topic_outline;
 mod topic_outline_candidate;
 mod canonical_brief;
+mod source_resolution;
 mod automatic_brief;
 #[cfg(windows)]
 pub(crate) mod local;
@@ -236,6 +237,9 @@ fn finalize_minutes_with_evidence(result:Result<CompanionV1MeetingMinutes,String
             // source-unit validation. Intent is judged across all selected
             // material by the existing provider, rather than a verb whitelist.
             let validated_context=upgraded.source=="llm_deepseek" && context_plan::eligible(session);
+            let recheck_source = upgraded.source == "llm_deepseek" && !validated_context
+                && session.meeting_notes.is_empty();
+            let raw_actions = recheck_source.then(|| upgraded.action_items.clone());
             let context_actions=(!validated_context && !session.meeting_notes.is_empty() && short_memo::actions(session).is_some())
                 .then(||short_memo::context_actions(session));
             let mut evidence=l0.clone();
@@ -246,6 +250,8 @@ fn finalize_minutes_with_evidence(result:Result<CompanionV1MeetingMinutes,String
             let independent_actions_restored = short_memo::merge_independent_actions(&mut upgraded.action_items, session);
             let conditional_actions_restored = session.meeting_notes.is_empty()
                 && merge_literal_conditional_followups(&mut upgraded.action_items, session);
+            let source_reconciled = raw_actions.is_some_and(|actions|
+                source_resolution::Source::new(&session.transcript_text).reconcile(&mut upgraded, &actions));
             let context_actions_restored=if let Some(Some(actions))=context_actions {
                 upgraded.action_items=actions; true
             } else {false};
@@ -254,7 +260,7 @@ fn finalize_minutes_with_evidence(result:Result<CompanionV1MeetingMinutes,String
             // original-only anchors here could revive a cancelled/conditional
             // plan as an unqualified current fact.
             let source_excerpts = if validated_context {Vec::new()}else{missing_source_facts(&upgraded, &l0.summary)};
-            if upgraded.markdown.trim().is_empty() || !source_excerpts.is_empty() || actions_changed || assigned_added || memo_actions_restored || independent_actions_restored || conditional_actions_restored || context_actions_restored || !session.meeting_notes.is_empty() || has_unresolved_speaker(session) {
+            if source_reconciled || upgraded.markdown.trim().is_empty() || !source_excerpts.is_empty() || actions_changed || assigned_added || memo_actions_restored || independent_actions_restored || conditional_actions_restored || context_actions_restored || !session.meeting_notes.is_empty() || has_unresolved_speaker(session) {
                 // Keep actions and the structured summary aligned with the
                 // rendered document; original excerpts are appended separately.
                 upgraded.markdown = render_minutes_markdown(session, &upgraded);

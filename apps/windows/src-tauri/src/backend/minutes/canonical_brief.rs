@@ -81,7 +81,7 @@ pub(in crate::backend::minutes) fn constraint_anchors(units:&[Unit])->Vec<(Const
             if !matches!(c,'。'|'！'|'？'|'；'|'\n'){continue;}
             let part=sentence.trim().to_string();sentence.clear();
             if part.is_empty(){continue;}
-            if KEYS.iter().any(|key|part.contains(key)) {
+            if KEYS.iter().any(|key|part.contains(key)) || coordination_requirement(&part).is_some() {
                 let quote=if previous.chars().count()+part.chars().count()<=300 {format!("{previous} {part}").trim().to_string()}else{part.clone()};
                 if quote.chars().count()<=300&&seen.insert(quote.clone()) {
                     out.push((Constraint{id:format!("c{:03}",out.len()),source:unit.id.clone(),quote},offset.min(unit.text.len())));
@@ -92,6 +92,48 @@ pub(in crate::backend::minutes) fn constraint_anchors(units:&[Unit])->Vec<(Const
     }
     out
 }
+
+fn coordination_requirement(text: &str) -> Option<(&str, &str)> {
+    static OBLIGATION: std::sync::LazyLock<regex::Regex> = std::sync::LazyLock::new(|| {
+        regex::Regex::new(r"(?P<actor>各(?:部门|小组|团队|单位|岗位|班组)|所有(?:部门|团队|单位)|全体(?:部门|团队|单位))\s*(?:都|一起)?\s*(?:要|应当|应|须|必须|务必)\s*(?:做好|加强|保持)?\s*(?:(?:互相|相互|彼此|协调)\s*)?(?:配合|协作|协同|联动)").expect("constant coordination requirement")
+    });
+    for matched in OBLIGATION.captures_iter(text) {
+        let phrase = matched.get(0)?;
+        let left = text[..phrase.start()].rsplit(['。', '；', '！', '？', '\n']).next().unwrap_or("");
+        if ["如果", "假如", "建议", "是否", "例子", "比如", "并非", "不是", "能不能"]
+            .iter().any(|marker| left.contains(marker)) {
+            continue;
+        }
+        return Some((matched.name("actor")?.as_str(), phrase.as_str()));
+    }
+    None
+}
+
+pub(in crate::backend::minutes) fn retained_coordination(doc: &Document, units: &[Unit]) -> Vec<String> {
+    let represented = std::iter::once(doc.purpose.as_str())
+        .chain(doc.topics.iter().flat_map(|topic| topic.points.iter().map(|item| item.text.as_str())
+            .chain(topic.details.iter().map(|item| item.text.as_str()))))
+        .chain(doc.decisions.iter().map(|item| item.text.as_str()))
+        .chain(doc.action_items.iter().map(|item| item.text.as_str()))
+        .filter_map(coordination_requirement)
+        .map(|(actor, _)| normalized(actor))
+        .collect::<HashSet<_>>();
+    let mut unique = HashSet::new();
+    units.iter().flat_map(|unit| unit.text.split(['。', '；', '\n']))
+        .filter_map(|sentence| {
+            let (actor, phrase) = coordination_requirement(sentence)?;
+            let continuation = sentence.split_once(phrase)?.1.trim();
+            let scoped = if continuation.starts_with(['，', ',']) && continuation.chars().count() <= 64 {
+                format!("{phrase}{continuation}")
+            } else {
+                phrase.to_string()
+            };
+            Some((actor, scoped))
+        })
+        .filter(|(actor, phrase)| !represented.contains(&normalized(actor)) && unique.insert(normalized(phrase)))
+        .take(8).map(|(_, phrase)| phrase).collect()
+}
+
 pub(in crate::backend::minutes) fn line(text:&str,max:usize)->bool {!text.trim().is_empty()&&text.chars().count()<=max&&!text.contains(['\n','\r'])}
 pub(in crate::backend::minutes) fn refs(ids:&[String],known:&HashMap<&str,&str>)->bool {
     !ids.is_empty()&&ids.len()<=8&&ids.iter().all(|id|known.contains_key(id.as_str()))&&ids.iter().collect::<HashSet<_>>().len()==ids.len()
@@ -139,6 +181,12 @@ pub(in crate::backend::minutes) fn render(doc:&Document,units:&[Unit],speaker:Op
         }
         md.push('\n');
     }
+    let coordination = retained_coordination(doc, units);
+    if !coordination.is_empty() {
+        md.push_str("## 协作要求\n\n");
+        for requirement in coordination { md.push_str(&format!("- {requirement}\n")); }
+        md.push('\n');
+    }
     if !doc.decisions.is_empty(){md.push_str("## Decisions\n\n");for p in &doc.decisions{md.push_str(&format!("- {}\n",p.text));}md.push('\n');}
     if !doc.action_items.is_empty(){md.push_str("## Action Items\n\n");for a in &doc.action_items {
         md.push_str(&format!("- {}",a.text));let mut meta=Vec::new();
@@ -163,4 +211,21 @@ pub(in crate::backend::minutes) fn source_first_input(input:&Value)->String {
     for key in priority {if let Some(value)=object.get(key){fields.push(format!("{}:{}",json!(key),value));}}
     for(key,value)in object {if !priority.contains(&key.as_str()){fields.push(format!("{}:{}",json!(key),value));}}
     format!("{{{}}}",fields.join(","))
+}
+
+#[cfg(test)]
+mod coordination_tests {
+    use super::*;
+
+    #[test]
+    fn preserves_spoken_coordination_in_the_minutes_and_ignores_hypotheticals() {
+        let units = source_units("说话人1：所以你们各部门要互相配合。\n如果批准，各小组要配合。\n建议所有单位要协同。");
+        let mut doc = Document { purpose: "讨论新工作".into(), topics: vec![], decisions: vec![],
+            action_items: vec![], questions: vec![] };
+        assert_eq!(retained_coordination(&doc, &units), ["各部门要互相配合"]);
+        assert!(constraints(&units).iter().any(|c| c.quote.contains("各部门要互相配合")));
+        assert!(render(&doc, &units, None).contains("## 协作要求\n\n- 各部门要互相配合"));
+        doc.purpose = "各部门应相互协作".into();
+        assert!(retained_coordination(&doc, &units).is_empty());
+    }
 }

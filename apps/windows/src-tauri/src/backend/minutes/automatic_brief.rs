@@ -4,6 +4,7 @@ use std::{collections::{HashMap,HashSet},time::{Duration,Instant}};
 use serde::{Deserialize,Serialize};
 use serde_json::{json,Value};
 use super::canonical_brief::*;
+use super::source_resolution::Source;
 use crate::companion_v1::{CompanionV1ActionItem,CompanionV1HostSession,CompanionV1MeetingMinutes,MinutesTemplate};
 #[path="automatic_brief_factual_audit.rs"]
 pub(super) mod factual_audit;
@@ -76,6 +77,72 @@ fn replace_purpose(raw:&str,doc:&Document,units:&[Unit])->Result<Document,String
     let patch:PurposePatch=serde_json::from_str(super::strip_code_fences(raw).trim()).map_err(|_|"会议主线格式修正未完成，原文保留。")?;
     let mut fixed=doc.clone();fixed.purpose=patch.purpose;validate(&fixed,units)?;Ok(fixed)
 }
+
+fn restore_cited_assignments(doc: &mut Document, draft: &Document, units: &[Unit], source: &Source<'_>) {
+    let known = units.iter().map(|unit| (unit.id.as_str(), unit.text.as_str())).collect::<HashMap<_, _>>();
+    for action in &draft.action_items {
+        if doc.action_items.len() >= 20 {
+            break;
+        }
+        if !line(&action.text, 180) || !refs(&action.sources, &known)
+            || doc.action_items.iter().any(|present| normalized(&present.text) == normalized(&action.text)) {
+            continue;
+        }
+        let passages: Vec<_> = action.sources.iter().map(|id| known[id.as_str()]).collect();
+        let requested = CompanionV1ActionItem {
+            text: action.text.clone(), owner: action.owner.clone(), due: action.due.clone()
+        };
+        if source.action_in(&requested, Some(&passages))
+            .is_some_and(|bound| bound.owner == requested.owner && bound.due == requested.due) {
+            let mut candidate = doc.clone();
+            candidate.action_items.push(action.clone());
+            if validate(&candidate, units).is_ok() {
+                doc.action_items.push(action.clone());
+            }
+        }
+    }
+}
+
+fn reconcile_citations(doc: &mut Document, source: &Source<'_>) {
+    fn revise(item: &mut String, maximum: usize, source: &Source<'_>) {
+        let corrected = source.reconcile_text(item);
+        if line(&corrected, maximum) {
+            *item = corrected;
+        }
+    }
+    revise(&mut doc.purpose, 80, source);
+    for topic in &mut doc.topics {
+        for point in &mut topic.points {
+            if source.mixed_requirements(&point.text) && matches!(&point.kind, Kind::Decision) {
+                point.kind = Kind::Status;
+            }
+            revise(&mut point.text, 90, source);
+        }
+        for detail in &mut topic.details {
+            revise(&mut detail.text, 120, source);
+        }
+    }
+    let mut decisions = Vec::with_capacity(doc.decisions.len());
+    for mut decision in std::mem::take(&mut doc.decisions) {
+        if source.mixed_requirements(&decision.text) {
+            let explained = doc.topics.iter().flat_map(|topic| topic.points.iter()
+                .map(|item| item.text.as_str()).chain(topic.details.iter().map(|item| item.text.as_str())))
+                .chain(doc.questions.iter().map(|item| item.text.as_str()))
+                .any(|text| source.explains_requirement_change(text, &decision.text));
+            if !explained && doc.questions.len() < 20 {
+                revise(&mut decision.text, 180, source);
+                if !decision.text.contains("前段提议") && !decision.text.contains("先后口径待核实") {
+                    decision.text = "会中先后有不同要求，现行口径待核实。".into();
+                }
+                doc.questions.push(decision);
+            }
+        } else {
+            revise(&mut decision.text, 180, source);
+            decisions.push(decision);
+        }
+    }
+    doc.decisions = decisions;
+}
 fn request(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,prompt:&str,input:Value,review:bool,start:Instant,trace:&mut Vec<Value>,stage:&str)->Result<String,String> {
     if prompt.len()+input.to_string().len()>MAX_REQUEST_BYTES{return Err("本场完整输入超出自动纪要上下文预算，原文保留。".into());}
     let remaining=wall_budget().saturating_sub(start.elapsed());if remaining<Duration::from_secs(5){return Err("自动纪要本次处理已到期限，已有结果保留。".into());}
@@ -118,7 +185,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
     let outcome=(|| {
         let reading_budget=json!({"mainCharacterBudget":if units.iter().map(|u|u.text.chars().count()).sum::<usize>()>8000{900}else{600},"pointsPerTopicMaximum":3});
         let draft=request(endpoint,model,key,client,DRAFT,json!({"sourceUnits":units,"readingBudget":reading_budget}),coverage::enabled(),start,&mut trace,"draft")?;
-        let doc=if coverage::enabled() {
+        let mut doc=if coverage::enabled() {
             // The factual and coverage roles are independent semantic checks.
             // A redundant model rewrite before them added latency and new claims.
             let decoded=serde_json::from_str::<Document>(super::strip_code_fences(&draft).trim());
@@ -156,17 +223,24 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         let doc=reviewed.document;traced_document=Some(doc.clone());
             doc
         };
+        let source = Source::new(&session.transcript_text);
+        if let Ok(original) = serde_json::from_str::<Document>(super::strip_code_fences(&draft).trim()) {
+            restore_cited_assignments(&mut doc, &original, &units, &source);
+        }
         traced_document=Some(doc.clone());
-        let doc=if coverage::enabled(){
+        let mut doc=if coverage::enabled(){
             let(audited,prepared,omissions,calls)=parallel_reviews(endpoint,model,key,client,&doc,&units,start);trace.extend(calls);check_current()?;
             let doc=audited?;traced_document=Some(doc.clone());
             let prepared=coverage::combine_omissions(prepared?,omissions?)?;
             coverage::complete_prepared(endpoint,model,key,client,&doc,&units,prepared,start,&mut trace)?
         }else{factual_audit::review_and_repair(endpoint,model,key,client,&doc,&units,start,&mut trace)?};
+        reconcile_citations(&mut doc, &source);
+        validate(&doc, &units)?;
         traced_document=Some(doc.clone());
         let mut minutes=base.clone();
         minutes.source="llm_deepseek".into();minutes.quality="final".into();minutes.processing=None;minutes.llm_note=None;
         minutes.summary=doc.topics.iter().flat_map(|t|t.points.iter().map(|p|p.text.clone())).collect();
+        minutes.summary.extend(super::canonical_brief::retained_coordination(&doc,&units));
         minutes.decisions=doc.decisions.iter().map(|p|p.text.clone()).collect();
         minutes.action_items=doc.action_items.iter().map(|a|CompanionV1ActionItem{text:a.text.clone(),owner:a.owner.clone(),due:a.due.clone()}).collect();
         minutes.questions=doc.questions.iter().map(|p|p.text.clone()).collect();minutes.keywords=doc.topics.iter().map(|t|t.title.clone()).collect();
@@ -186,6 +260,43 @@ mod tests {
     use super::*;
     fn units()->Vec<Unit>{vec![Unit{id:"u000".into(),text:"李敏承诺周五下班前完成权限测试，未通过不能上线。预算暂定10000元，尚未审批。".into()}]}
     fn valid()->Value {json!({"review":{"fixes":[],"blockingIssues":[]},"document":{"purpose":"验证权限后再评估上线。","topics":[{"title":"上线前提","points":[{"kind":"decision","text":"权限测试未通过不能上线。","sources":["u000"]}],"details":[]}],"decisions":[],"actionItems":[{"text":"完成权限测试。","owner":"李敏","due":"周五下班前","sources":["u000"]}],"questions":[]}})}
+    #[test]
+    fn canonical_does_not_reinstate_an_action_from_a_different_passage() {
+        let first = "说话人1：我是主持人\n说话人2：我是场地组\n说话人3：我是研发部";
+        let binding = "请场地组会后做西门通行检查方案。\n说话人3：建议研发部会后做照明计划。";
+        let full = format!("{first}\n{binding}");
+        let units = vec![Unit{id:"u000".into(),text:first.into()},Unit{id:"u001".into(),text:binding.into()}];
+        let mut proposed: Document = serde_json::from_value(valid()["document"].clone()).unwrap();
+        proposed.action_items = vec![
+            Action{text:"做西门通行检查方案。".into(),owner:Some("场地组".into()),due:None,sources:vec!["u000".into()]},
+            Action{text:"做西门通行检查方案。".into(),owner:Some("场地组".into()),due:None,sources:vec!["u001".into()]},
+            Action{text:"做照明计划。".into(),owner:Some("研发部".into()),due:None,sources:vec!["u001".into()]},
+        ];
+        let mut reviewed = proposed.clone();
+        reviewed.action_items.clear();
+        restore_cited_assignments(&mut reviewed,&proposed,&units,&Source::new(&full));
+        assert_eq!(reviewed.action_items.len(),1);
+        assert_eq!(reviewed.action_items[0].sources,["u001"]);
+    }
+    #[test]
+    fn canonical_distinguishes_the_earlier_condition_from_the_later_explanation() {
+        let same = "说话人2：只有完成消防培训，咱们才可以成为值班人员。\n\
+            说话人1：刚才提的消防培训，值班人员这一块我们再说明。\n说话人1：只要核对资格证书就可以。";
+        let different = "说话人2：只有完成消防培训，咱们才可以成为值班人员。\n\
+            说话人1：刚才说的入场登记，来访人员这一块我们再说明。\n说话人1：只要核对资格证书就可以。";
+        let joined = "值班人员必须完成消防培训；核对资格证书即可上岗。";
+        let source = Source::new(same);
+        assert!(source.mixed_requirements(joined));
+        assert!(!Source::new(different).mixed_requirements(joined));
+        let mut doc: Document = serde_json::from_value(valid()["document"].clone()).unwrap();
+        doc.topics[0].points[0].text = joined.into();
+        doc.decisions.push(Entry{text:joined.into(),sources:vec!["u000".into()],quantity_needs_review:false});
+        reconcile_citations(&mut doc,&source);
+        assert!(doc.topics[0].points[0].text.contains("前段提议"));
+        assert!(matches!(&doc.topics[0].points[0].kind, Kind::Status));
+        assert!(doc.decisions.is_empty());
+        assert!(doc.questions.is_empty());
+    }
     #[test]
     fn automatic_brief_rejects_invented_ids_owners_and_dates(){
         assert!(parse_review(&valid().to_string(),&units()).is_ok());
