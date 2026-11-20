@@ -264,7 +264,7 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
                     let payload=json!({"sourceUnits":wire,"document":doc,"checkClaims":claims});
                     let raw=super::request(endpoint,model,key,client,prompt,payload.clone(),true,start,&mut calls,&stage)?;
                     check_cancellation(token.as_ref())?;
-                    let (raw, ignored) = if super::source_items::enabled() && batches > 1 {
+                    let (raw, ignored) = if super::source_items::enabled() {
                         batch_audit_reply(&raw, claims)
                     } else { (raw.as_str().into(), 0) };
                     if ignored > 0 {
@@ -476,6 +476,16 @@ fn statement_identity(path: &str, claim: &Value) -> String {
     json!([section, text, claim["owner"].as_str(), claim["due"].as_str(), kind]).to_string()
 }
 
+fn unresolved_action_fields(target: &Value, text: &str, rejected: &[String]) -> Vec<&'static str> {
+    [
+        ("owner", &["负责人待核实", "负责人待核对", "承接人待核实", "承接人待核对"][..]),
+        ("due", &["截止时间待核实", "截止时间待核对", "完成期限待核实", "完成期限待核对"][..]),
+    ].into_iter().filter_map(|(field, cues)| {
+        let previous = target[field].as_str()?;
+        (rejected.iter().any(|phrase| phrase == previous) && cues.iter().any(|cue| text.contains(cue))).then_some(field)
+    }).collect()
+}
+
 fn apply_repair(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet<String>,
     conservative:&HashMap<String,Vec<String>>,misplaced:&HashSet<String>,units:&[Unit])->Result<AppliedRepair,String> {
     let fail=||"纪要修正没有遵守受影响范围，已有结果保留。".to_string();
@@ -522,21 +532,27 @@ fn apply_repair(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet
             continue;
         }
         let mut replacement = row.get("text").cloned();
+        let mut clear_fields = Vec::new();
         if unclear.contains(path)&&replacement.is_some() {
             let phrases=conservative.get(path).filter(|phrases|!phrases.is_empty()).ok_or_else(fail)?;
             let text=row["text"].as_str().filter(|s|!s.trim().is_empty()).ok_or_else(fail)?;
             let original=if path=="purpose"||path.ends_with(".title"){target.as_str()}else{target.get("text").and_then(Value::as_str)}.ok_or_else(fail)?;
             let text = if super::source_items::enabled() {
+                if path.starts_with("actionItems[") { clear_fields = unresolved_action_fields(target, text, phrases); }
                 mask_unclear_quote(text, phrases)
             } else {
                 text.to_owned()
             };
-            if row.len()!=2||phrases.iter().any(|phrase|phrase.is_empty()||!original.contains(phrase)||text.contains(phrase)){return Err(fail());}
+            let explicit_nulls = clear_fields.iter().filter(|field| row.get(**field).is_some_and(Value::is_null)).count();
+            if row.len()!=2+explicit_nulls||phrases.iter().any(|phrase|phrase.is_empty()||!original.contains(phrase)||text.contains(phrase)){return Err(fail());}
             replacement = Some(json!(text));
         }
         if let Some(text)=replacement {
             if !text.is_string(){return Err(fail());}
             if path=="purpose"||path.ends_with(".title"){*target=text;}else{target.as_object_mut().ok_or_else(fail)?.insert("text".into(),text);}
+        }
+        for field in clear_fields {
+            target.as_object_mut().ok_or_else(fail)?.insert(field.into(),Value::Null);
         }
         for field in ["kind","owner","due"] {
             if let Some(v)=row.get(field) {
