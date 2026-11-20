@@ -226,6 +226,23 @@ mod coordination_tests {
     use super::*;
 
     #[test]
+    #[ignore = "requires an already generated native local legal draft"]
+    fn qm06_replay_candidate_renders_an_attributed_statement_as_speech() {
+        let path = std::env::var_os("COMPANION_TEST_QM06_LOCAL_LAW_RENDER").unwrap();
+        let saved: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+        let receipt = &saved["receipt"]["documentReceipt"];
+        let doc: Document = serde_json::from_value(receipt["document"].clone()).unwrap();
+        let units = receipt["sourceUnits"].as_array().unwrap().iter().map(|unit| {
+            Unit { id: unit["id"].as_str().unwrap().into(), text: unit["text"].as_str().unwrap().into() }
+        }).collect::<Vec<_>>();
+        let actual = render(&doc, &units, None);
+        assert!(actual.contains("发言：说话人7: 就是违规的，只有路人甲一个人"));
+        assert!(!actual.contains("现状：说话人7: 就是违规的，只有路人甲一个人"));
+        assert_eq!(actual.matches("此处转述尚待核实").count(), 3);
+        println!("legal: the real saved draft renders each disputed account with its original attribution");
+    }
+
+    #[test]
     fn preserves_spoken_coordination_in_the_minutes_and_ignores_hypotheticals() {
         let units = source_units("说话人1：所以你们各部门要互相配合。\n如果批准，各小组要配合。\n建议所有单位要协同。");
         let mut doc = Document { purpose: "讨论新工作".into(), topics: vec![], decisions: vec![],

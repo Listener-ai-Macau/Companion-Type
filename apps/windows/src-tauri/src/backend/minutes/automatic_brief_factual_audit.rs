@@ -749,6 +749,39 @@ fn an_audited_assignee_is_applied_to_the_action_owner_field() {
 
 #[cfg(test)]
 #[test]
+#[ignore = "requires previously paid, frozen audit and repair responses"]
+fn qm06_replay_candidate_keeps_original_facts_during_role_removal() {
+    let input = std::env::var_os("COMPANION_TEST_QM06_SPORTS_REPAIR_INPUT").unwrap();
+    let trace = std::env::var_os("COMPANION_TEST_QM06_SPORTS_REPAIR_TRACE").unwrap();
+    let read = |path| -> Value { serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap() };
+    let input = read(input);
+    let trace = read(trace);
+    let raw = trace["calls"].as_array().unwrap().iter()
+        .find(|row| row["stage"] == "source-factual-repair").unwrap()["response"].as_str().unwrap();
+    let mut original = Vec::new();
+    for (index, source) in input["previousDocument"]["actionItems"].as_array().unwrap().iter().enumerate() {
+        original.push(json!({"path":format!("actionItems[{index}]"),"kind":"action","text":source["text"]}));
+    }
+    let source: Vec<_> = input["sourceUnits"].as_array().unwrap().iter().flat_map(|unit| {
+        unit["sentences"].as_array().unwrap().iter().map(|sentence| Sentence {
+            id: sentence["id"].as_str().unwrap().into(),
+            source: unit["id"].as_str().unwrap().into(),
+            text: sentence["text"].as_str().unwrap().into(),
+        })
+    }).collect();
+    let reply = normalize_repair_reply(raw, input["auditProblems"].as_array().unwrap(), &source, &original).0;
+    let output: Value = serde_json::from_str(&reply).unwrap();
+    let rows = output["changes"].as_array().unwrap();
+    for (path, literal) in [("actionItems[9]", "员工手册"), ("actionItems[13]", "正常运行")] {
+        let fix = rows.iter().find(|row| row["path"] == path).unwrap();
+        assert!(fix["text"].as_str().unwrap().contains(literal), "{fix}");
+        assert!(fix.get("remove").is_none());
+    }
+    println!("sports: actual archived corrections retained the staffing and closing statements");
+}
+
+#[cfg(test)]
+#[test]
 fn a_disputed_location_does_not_invalidate_the_original_device_mention() {
     let claims = [
         json!({"path":"topics[0].details[0]","text":"提到了自动售卖设备。","sources":["u000"]}),
