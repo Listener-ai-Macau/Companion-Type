@@ -209,12 +209,66 @@ fn missing_conditions(raw: &str, checks: &[Value]) -> Option<(Value, Vec<Value>)
     (!missing.is_empty()).then_some((response, missing))
 }
 
+fn verified_topic(
+    verified: &VerifiedBrief,
+    doc: &Document,
+    check: &Value,
+    source: &[Value],
+) -> Option<String> {
+    let order: HashMap<_, _> = source
+        .iter()
+        .enumerate()
+        .filter_map(|(index, row)| row["id"].as_str().map(|id| (id, index)))
+        .collect();
+    let anchors: Vec<_> = check["requiredEvidence"]
+        .as_array()?
+        .iter()
+        .filter_map(|id| order.get(id.as_str()?).copied())
+        .collect();
+    let last = anchors.iter().copied().max()?;
+    let mut ranked: Vec<_> = verified
+        .document
+        .topics
+        .iter()
+        .enumerate()
+        .filter_map(|(index, topic)| {
+            let current = doc
+                .topics
+                .iter()
+                .find(|current| current.title == topic.title)?;
+            if current.details.len() >= source_items::DETAILS_LIMIT {
+                return None;
+            }
+            let prefix = format!("topics[{index}].");
+            let score = verified
+                .evidence
+                .iter()
+                .filter(|(path, _)| path.starts_with(&prefix))
+                .flat_map(|(_, ids)| ids)
+                .filter_map(|id| order.get(id.as_str()))
+                .flat_map(|position| {
+                    anchors.iter().map(move |anchor| {
+                        // A reported case can be followed by the first named discussion.
+                        let backwards = check["kind"] == "caseNarrative" && *position < last;
+                        (position.abs_diff(*anchor), backwards)
+                    })
+                })
+                .min()?;
+            Some((score, &current.title))
+        })
+        .collect();
+    ranked.sort();
+    let (best, title) = ranked.first()?;
+    (!ranked.get(1).is_some_and(|candidate| candidate.0 == *best)).then(|| (*title).clone())
+}
+
 fn apply_scope(
     mut doc: Document,
     raw: &str,
     checks: &[Value],
     units: &[Unit],
     source: &[Value],
+    verified: &VerifiedBrief,
 ) -> Result<Document, String> {
     let fail = || FAIL.to_owned();
     let response: Response =
@@ -275,7 +329,7 @@ fn apply_scope(
         } else {
             additions.push(MissingItem {
                 item: reply.item,
-                topic: reply.topic,
+                topic: verified_topic(verified, &doc, check, source).or(reply.topic),
                 new_aspect: None,
             });
         }
@@ -389,7 +443,7 @@ pub(super) fn review(
             }
             raw = original.to_string();
         }
-        apply_scope(doc, &raw, &checks, units, &source)?
+        apply_scope(doc, &raw, &checks, units, &source, verified)?
     };
     factual_audit::review_and_repair_since(
         endpoint,

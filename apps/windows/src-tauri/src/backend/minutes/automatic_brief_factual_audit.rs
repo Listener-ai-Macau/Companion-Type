@@ -859,6 +859,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
     let source=sentences(units);
     let wire=json!(units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>());
     let mut current=doc.clone();let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let mut attempted_phrases:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
+    let mut attribution_repairs = HashSet::new();
     let mut unclear_history:HashMap<String,Vec<String>>=HashMap::new();let mut recovered_display=false;
     let mut verified_claims = match verified {
         Some(verified) if super::source_items::enabled() => unchanged_source_assertions(doc, verified),
@@ -931,8 +932,14 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             attempted.get(&key).is_some_and(|old|{
                 let sourced_new_issue = super::source_items::enabled() && old.1 && c.status == "unsupported"
                     && !source_wording_unclear(c) && !c.evidence.is_empty();
+                let modality_after_attribution = super::source_items::enabled()
+                    && attribution_repairs.contains(&key) && c.status == "overstated"
+                    && ["疑问", "试探", "推测"].iter().any(|term| c.reason.contains(term))
+                    && source.iter().any(|sentence| c.evidence.contains(&sentence.id)
+                        && ["会不会", "是不是", "能不能", "是否", "可能"]
+                            .iter().any(|term| sentence.text.contains(term)));
                 !(allow_conservative&&(changed_failure_axis(old,&c.status,c.status=="unclear"||source_wording_unclear(c))
-                    ||distinct_ambiguity||sourced_new_issue))
+                    ||distinct_ambiguity||sourced_new_issue||modality_after_attribution))
             })
         });
         if round==2||repeated {
@@ -994,6 +1001,9 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
                 let Some(key) = next.corrected_statements.get(&issue.path) else {continue;};
                 key.clone()
             } else { issue.path.clone() };
+            if ["不能归", "不能并入", "不能整体归", "归属错误", "归错"].iter().any(|term| issue.reason.contains(term)) {
+                attribution_repairs.insert(key.clone());
+            }
             attempted.insert(key.clone(),(issue.status.clone(),issue.status=="unclear"||source_wording_unclear(issue)));
             if let Some(phrase)=&issue.unclear_text{attempted_phrases.insert(key,phrase.clone());}
         }
