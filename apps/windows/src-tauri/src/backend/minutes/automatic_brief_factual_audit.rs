@@ -848,6 +848,79 @@ fn cited_claim_speech<'a>(
     })
 }
 
+fn repair_introduced_speaker(issues: &[Value], claims: &[Value], source: &[Sentence]) -> Option<String> {
+    use std::sync::LazyLock;
+    static SELF_LABEL: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"^(?:(?:[0-9零〇一二三四五六七八九幺]{2,8})\s*(?:我是)?|我是)(?P<name>[\p{Han}]{2,10}[A-Z])$"
+    ).unwrap());
+    let changes = issues.iter().map(|issue| {
+        let path = issue["path"].as_str()?;
+        if !path.contains(".details[") && !path.contains(".points[") { return None; }
+        if issue["status"] != "unsupported" || issue["clarity"] != "clear" { return None; }
+        let claim = claims.iter().find(|claim| claim["path"] == path)?;
+        let old = claim["text"].as_str()?;
+        let reason = issue["reason"].as_str()?;
+        let cited = issue["evidence"].as_array()?;
+        let split = |sentence: &Sentence| cited.iter().any(|id| id == sentence.id.as_str());
+        let introductions: Vec<_> = source.iter().take(24).filter_map(|sentence| {
+            let (speaker, intro) = super::super::source_resolution::split_turn_label(sentence.text.trim())?;
+            let name = SELF_LABEL.captures(intro.trim().trim_end_matches(['。', '！']))?.name("name")?.as_str();
+            Some((sentence, speaker, name))
+        }).collect();
+        let (_, _, wrong) = introductions.iter().find(|(sentence, _, name)| {
+            split(sentence) && old.starts_with(*name) && reason.contains(&format!("并非{name}"))
+        })?;
+        let (intro, actual_speaker, right) = introductions.iter().find(|(sentence, _, name)| {
+            split(sentence) && name != wrong && reason.contains(*name)
+        })?;
+        if introductions.iter().any(|(_, speaker, name)| {
+            (speaker == actual_speaker) != (name == right)
+        }) {
+            return None;
+        }
+        let body_spoken = source.iter().any(|sentence| sentence.id != intro.id && split(sentence)
+            && claim["sources"].as_array().is_some_and(|ids| ids.iter().any(|id| id == sentence.source.as_str()))
+            && super::super::source_resolution::split_turn_label(sentence.text.trim()).is_some_and(|(speaker, text)| {
+                speaker == *actual_speaker && !text.contains(*wrong)
+            }));
+        if !body_spoken { return None; }
+        let suffix = old.strip_prefix(*wrong)?;
+        let text = format!("{right}{suffix}");
+        super::line(&text, repair_text_limit(path)).then(|| json!({"path":path,"text":text}))
+    }).collect::<Option<Vec<_>>>()?;
+    (!changes.is_empty()).then(|| json!({"changes":changes}).to_string())
+}
+
+fn retain_informal_reference(issues: &[Value], claims: &[Value], source: &[Sentence]) -> Option<String> {
+    let changes = issues.iter().map(|issue| {
+        let path = issue["path"].as_str()?;
+        let claim = claims.iter().find(|claim| claim["path"] == path)?;
+        let noun = issue["unclearText"].as_str()?;
+        let reason = issue["reason"].as_str()?;
+        if !path.starts_with("actionItems[") || issue["status"] != "overstated"
+            || issue["placementUnsupported"] != true || !claim["owner"].is_null() || !claim["due"].is_null()
+            || !matches!(noun, "列表" | "清单" | "名单")
+            || !claim["text"].as_str()?.contains(&format!("{noun}所指待核实"))
+            || !["未明确会后执行", "未明确执行", "没有明确会后执行"].iter().any(|cue| reason.contains(cue))
+        {
+            return None;
+        }
+        let reference = format!("这个{noun}");
+        let mut utterances = cited_claim_speech(issue, claim, source).filter(|speech| {
+            speech.contains(&reference) && ["安排专员", "安排专人"].iter().any(|action| speech.contains(action))
+                && !["不要安排", "不用安排", "不必安排"].iter().any(|negation| speech.contains(negation))
+        });
+        let utterance = utterances.next()?;
+        if utterances.next().is_some() || !super::line(utterance, 78) || utterance.contains(['「', '」']) {
+            return None;
+        }
+        // The literal remark remains in the source. The brief records the discussion
+        // without assigning the unconfirmed action or expanding its referent.
+        Some(json!({"path":path,"text":"会上提到安排专人跟进，具体对象及是否执行待核实。"}))
+    }).collect::<Option<Vec<_>>>()?;
+    (!changes.is_empty()).then(|| json!({"changes":changes}).to_string())
+}
+
 fn retain_answered_condition(issue: &Value, claim: &Value, source: &[Sentence]) -> Option<String> {
     use std::sync::LazyLock;
     static CONDITION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
@@ -1987,6 +2060,10 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
                     .map(|raw| (raw, "localQuestionModalityRepair")))
                 .or_else(|| retain_mentioned_comparison(&issues, &audited_claims, &source, &attempted)
                     .map(|raw| (raw, "localMentionedComparisonRepair")))
+                .or_else(|| repair_introduced_speaker(&issues, &audited_claims, &source)
+                    .map(|raw| (raw, "localIntroducedSpeakerRepair")))
+                .or_else(|| retain_informal_reference(&issues, &audited_claims, &source)
+                    .map(|raw| (raw, "localInformalReferenceRepair")))
         } else { None };
         if round==2||(repeated && bounded_repair.is_none()) {
             return Err(format!("纪要复审仍有{}处未解决表述，已有结果保留。",issues.len()));

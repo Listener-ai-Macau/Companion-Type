@@ -678,11 +678,24 @@ fn decode_stance(candidates: &[Value], raw: &str, known: &SourceIndex<'_>) -> Re
             let proof: Clarification = serde_json::from_value(proof.ok_or_else(fail)?).map_err(|_| fail())?;
             let source = known.get(proof.evidence.as_str()).ok_or_else(fail)?;
             let context = candidate["context"].as_array().unwrap();
+            let statement = candidate["claim"]["text"].as_str().unwrap();
             if !super::line(&proof.quote, 80) || !context.contains(&json!(proof.evidence))
                 || !source["text"].as_str().unwrap().contains(&proof.quote)
-                || !explicit_stance(&proof.quote, candidate["claim"]["text"].as_str().unwrap()) {
+            {
                 return Err(fail());
             }
+            let agreeing = proof.quote.trim().starts_with('对')
+                && !["不对", "不赞同", "不能", "不可以", "我建议", "如果"].iter().any(|term| proof.quote.contains(term));
+            let ordinal = |id: &str| id.strip_prefix('e')?.parse::<usize>().ok();
+            let exact_basis = agreeing && candidate["basis"].as_array().unwrap().iter().filter_map(Value::as_str)
+                .any(|id| {
+                    let basis = known[id];
+                    let near = ordinal(&proof.evidence).zip(ordinal(id))
+                        .is_some_and(|(response, prior)| (1..=2).contains(&response.saturating_sub(prior)));
+                    near && basis["source"] == source["source"] && context.contains(&json!(id))
+                        && explicit_stance(basis["text"].as_str().unwrap(), statement)
+                });
+            if !explicit_stance(&proof.quote, statement) && !exact_basis { return Err(fail()); }
         } else {
             if proof.is_some() { return Err(fail()); }
             if let Some(edit) = row["replacement"].as_object() {

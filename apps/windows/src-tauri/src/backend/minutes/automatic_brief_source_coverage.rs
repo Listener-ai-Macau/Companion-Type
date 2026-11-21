@@ -284,6 +284,89 @@ pub(super) fn material_cues(facts: &[Fact], evidence: &[Value]) -> Vec<(String, 
     chosen
 }
 
+pub(super) struct SourceFacet<'a> {
+    pub(super) label: &'static str,
+    pub(super) quote: &'a str,
+    pub(super) witnesses: Vec<&'a str>,
+}
+
+impl SourceFacet<'_> {
+    pub(super) fn represented_by(&self, statement: &str) -> bool {
+        let stated = normalized(statement);
+        if stated.contains(&normalized(self.quote)) {
+            return true;
+        }
+        self.witnesses.iter().all(|required| stated.contains(&normalized(required)))
+            && (self.label != "设例" || ["例", "假设", "如果", "问", "情境"].iter().any(|cue| stated.contains(cue)))
+            && (self.label != "分开讨论的情形" || self.witnesses.last().is_some_and(|required| {
+                ["没有", "没", "不", "未能", "未"].iter().any(|negation| stated.contains(&format!("{negation}{required}")))
+            }))
+    }
+}
+
+pub(super) fn independent_source_facets(text: &str) -> Vec<SourceFacet<'_>> {
+    static RULE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:叫|依据|原则(?:是)?|口径(?:是)?|标准(?:是)?)[^，。；！？\n]{0,16}?(?P<quote>从[\p{Han}]{1,2}兼从[\p{Han}]{1,2}|以[\p{Han}]{2,16}为准)"
+    ).unwrap());
+    static PROCEDURE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<quote>只要[^，。；！？\n]{0,16}?(?P<gate>鉴定|审批|核验|验证|检测|验收)(?:只要|且|并)(?P<condition>[^，。；！？\n]{3,17}?)(?:那么|那(?:他|她)?|就|则)[^，。；！？\n\s]{3,23})"
+    ).unwrap());
+    static BRANCH: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<quote>第[一二三四五]种(?:情况)?(?:如果|要是|若)是(?P<subject>[\p{Han}]{2,12}?)的情况[^。；！？\n]{0,8}?(?:没有|未能|未|不)(?P<condition>[\p{Han}]{2,12})[，,][^，。；！？]{4,36})"
+    ).unwrap());
+    static CHOICE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<quote>(?P<setup>[^\n，。；！？、]{5,22})[，,]\s*(?:你|他|我们|大家)(?:是|会|要|该|应该)?(?:先|选)[^，。；！？]{1,12}还是[^，。；！？]{1,12})"
+    ).unwrap());
+    let body = source_body(text);
+    let mut facets = Vec::new();
+    for (label, pattern, required) in [
+        ("适用原则", &*RULE, &["quote"][..]),
+        ("适用条件", &*PROCEDURE, &["gate", "condition"][..]),
+        ("分开讨论的情形", &*BRANCH, &["subject", "condition"][..]),
+        ("设例", &*CHOICE, &["setup"][..]),
+    ] {
+        for found in pattern.captures_iter(body) {
+            let Some(span) = found.name("quote") else { continue; };
+            if label == "设例" && !["这个问题", "举个例", "举例", "比如", "假设"]
+                .iter().any(|cue| body[..span.start()].contains(cue))
+            {
+                continue;
+            }
+            if !line(span.as_str(), 67) || span.as_str().contains(['「', '」']) { continue; }
+            let witnesses = required.iter().filter_map(|name| found.name(name)).map(|part| {
+                let raw = part.as_str();
+                if label == "适用条件" && part.start() != span.start() && raw.chars().count() > 4 {
+                    // ASR often keeps the verb and its particle in the condition.
+                    // Its value must still be witnessed alongside the procedure.
+                    raw.char_indices().rev().nth(1).map_or(raw, |(at, _)| &raw[at..])
+                } else {
+                    raw
+                }
+            }).collect();
+            facets.push(SourceFacet { label, quote: span.as_str(), witnesses });
+        }
+    }
+    facets
+}
+
+pub(super) fn answered_hypothesis<'a>(question: &'a str, reply: &'a str) -> Option<(SourceFacet<'a>, &'a str)> {
+    static PREMISE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:如果说|假如说|假设|要是)(?P<scenario>[^。！？；\n]{9,44})"
+    ).unwrap());
+    let question = source_body(question);
+    let reply = source_body(reply);
+    if !["那是不是也算", "那是不是算", "那这算", "那这就", "这属于", "这就属于"]
+        .iter().any(|cue| reply.starts_with(cue)) || !line(reply, 25)
+    {
+        return None;
+    }
+    let scenario = PREMISE.captures_iter(question).last()?.name("scenario")?.as_str().trim();
+    let witness = scenario.char_indices().rev().nth(4).map_or(scenario, |(at, _)| &scenario[at..]);
+    (!scenario.contains(['「', '」']) && !reply.contains(['「', '」'])
+        && !["谁", "怎么", "什么时候", "是否完成", "能不能", "要不要"].iter().any(|cue| scenario.contains(cue)))
+        .then_some((SourceFacet { label:"设例", quote:scenario, witnesses:vec![witness] }, reply))
+}
+
 fn literal_overlap(claim: &str, before: &str) -> bool {
     let claim = normalized(claim).chars().collect::<Vec<_>>();
     claim.windows(5).filter(|chunk| chunk.iter().all(|ch| ch.is_alphanumeric()))
@@ -472,6 +555,35 @@ mod tests {
         assert!(facet_has_witness(Focus::CalendarScope.label(), "一直到九月份儿", "status", "防暑安排延续到9月。"));
         assert!(!facet_has_witness(Focus::CalendarScope.label(), "一直到九月份儿", "status", "防暑安排延续到9月底。"));
         assert!(!facet_has_witness(Focus::AcceptedProposal.label(), "行就装点儿空调", "recommendation", "建议给工人装空调。"));
+    }
+
+    #[test]
+    fn independent_clauses_require_their_own_content_in_the_body() {
+        let result = independent_source_facets("说话人2: 法律追诉叫 从轻兼那个从旧兼从轻");
+        assert_eq!(result[0].quote, "从旧兼从轻");
+        assert!(!result[0].represented_by("律师说明不能等到十八岁再处理。"));
+        assert!(result[0].represented_by("律师介绍从旧兼从轻的口径。"));
+        let result = independent_source_facets("说话人8: 只要经过独立检测且确认达到合格等级就可以交付");
+        assert_eq!(result[0].label, "适用条件");
+        assert!(!result[0].represented_by("只要达到合格等级便可交付。"));
+        assert!(result[0].represented_by("经过检测并达到合格等级才可以交付。"));
+        let result = independent_source_facets("说话人3: 第一种如果是过期证件的情况下他没有补办，不能发放。另一种继续核对。");
+        assert_eq!(result[0].label, "分开讨论的情形");
+        assert!(!result[0].represented_by("过期证件要补办。"));
+        assert!(result[0].represented_by("过期证件未补办则不能发放。"));
+    }
+
+    #[test]
+    fn hypotheses_and_real_decisions_have_separate_source_shapes() {
+        let example = independent_source_facets("说话人2: 我举例问一个问题，两份方案都延期了，你是先改单还是先通知对方？");
+        assert_eq!(example[0].label, "设例");
+        assert!(independent_source_facets("说话人2: 两份方案都延期了，你是先改单还是先通知对方？").is_empty());
+        let reply = answered_hypothesis("说话人7: 如果说就是为了得到遗产把他兄弟毒死了",
+            "说话人2: 那是不是也算是故意杀人罪了").unwrap();
+        assert!(reply.0.quote.contains("得到遗产"));
+        assert!(reply.1.contains("也算"));
+        assert!(answered_hypothesis("说话人7: 如果说你来安排是能不能及时完成",
+            "说话人2: 那这就算了").is_none());
     }
 
     #[test]

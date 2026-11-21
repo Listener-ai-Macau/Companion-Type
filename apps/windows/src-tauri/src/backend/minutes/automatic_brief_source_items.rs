@@ -69,6 +69,10 @@ pub(super) struct SourceItem {
 }
 
 impl SourceItem {
+    pub(super) fn attributed_opinion(text: String, evidence: Vec<String>) -> Self {
+        Self { role: Role::Opinion, text, evidence, owner: None, due: None }
+    }
+
     pub(super) fn is_action(&self) -> bool { matches!(self.role, Role::Action) }
 
     pub(super) fn bind(self, known: &HashMap<&str, &Value>, known_ids: &HashSet<&str>) -> Result<Fact, String> {

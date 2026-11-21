@@ -473,6 +473,69 @@ fn apply_scope(
     source_items::append_missing(additions, doc, units, source)
 }
 
+fn restore_source_facets(
+    doc: Document, verified: &VerifiedBrief, units: &[Unit], source: &[Value], trace: &mut Vec<Value>,
+) -> Result<Document, String> {
+    let claims = factual_audit::claims(&doc);
+    let count = claims.iter().filter(|claim| claim.get("sources").is_some()).count();
+    let budget = super::SOURCE_ITEMS_FACT_LIMIT.saturating_sub(count).min(7);
+    if budget == 0 { return Ok(doc); }
+    let mut added = Vec::new();
+    let mut seen = HashSet::new();
+    for (index, row) in source.iter().enumerate() {
+        let Some(speaker) = row["turnSpeaker"].as_str() else { continue; };
+        let Some(source_text) = row["text"].as_str() else { continue; };
+        let mut facets: Vec<_> = super::source_coverage::independent_source_facets(source_text)
+            .into_iter().map(|facet| (facet, None)).collect();
+        if let Some(next) = source.get(index + 1).filter(|other| other["turnSpeaker"].as_str().is_some_and(|s| s != speaker)) {
+            if let Some((facet, response)) = super::source_coverage::answered_hypothesis(
+                source_text, next["text"].as_str().unwrap(),
+            ) {
+                facets.push((facet, Some((next, response))));
+            }
+        }
+        for (facet, answer) in facets {
+            let related = |claim: &&Value| claim["sources"].as_array()
+                .is_some_and(|ids| ids.contains(&row["source"]));
+            if claims.iter().filter(related).any(|claim| claim["text"].as_str()
+                .is_some_and(|text| facet.represented_by(text)))
+            {
+                continue;
+            }
+            let mut references = vec![index];
+            let attribution = match answer {
+                Some((next, response)) => {
+                    references.push(index + 1);
+                    format!("{speaker}举例「{}」。{}回应「{response}」。", facet.quote, next["turnSpeaker"].as_str().unwrap())
+                }
+                None if facet.label == "设例" => format!("{speaker}举例提问「{}」。", facet.quote),
+                None => format!("{speaker}在讨论{}时提到「{}」。", facet.label, facet.quote),
+            };
+            let measure = packet(source, index, "sourceFacet", references.clone(), None);
+            let Some(topic) = verified_topic(verified, &doc, &measure, source) else { continue; };
+            let room = doc.topics.iter().find(|entry| entry.title == topic)
+                .map(|entry| source_items::DETAILS_LIMIT.saturating_sub(entry.details.len())).unwrap_or(0);
+            if added.iter().filter(|entry: &&MissingItem| entry.topic.as_deref() == Some(topic.as_str())).count() >= room
+                || !super::line(&attribution, 90) || !seen.insert(super::normalized(facet.quote))
+            {
+                continue;
+            }
+            added.push(MissingItem {
+                item: SourceItem::attributed_opinion(attribution, references.into_iter()
+                    .map(|offset| source[offset]["id"].as_str().unwrap().to_owned()).collect()),
+                topic: Some(topic), new_aspect: None,
+            });
+            if added.len() == budget { break; }
+        }
+        if added.len() == budget { break; }
+    }
+    if added.is_empty() { return Ok(doc); }
+    trace.push(json!({"stage":"source-independent-clause-recovery","additions":added.iter()
+        .map(|entry| json!({"text":entry.item.text,"evidence":entry.item.evidence,"topic":entry.topic}))
+        .collect::<Vec<_>>()}));
+    source_items::append_missing(added, doc, units, source)
+}
+
 pub(super) fn review(
     endpoint: &str,
     model: &str,
@@ -565,6 +628,7 @@ pub(super) fn review(
         }
         apply_scope(doc, &raw, &checks, units, &source, verified)?
     };
+    let doc = restore_source_facets(doc, verified, units, &source, trace)?;
     factual_audit::review_and_repair_since(
         endpoint,
         model,
