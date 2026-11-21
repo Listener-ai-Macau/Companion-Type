@@ -700,8 +700,14 @@ fn decode_stance(candidates: &[Value], raw: &str, known: &SourceIndex<'_>) -> Re
             if proof.is_some() { return Err(fail()); }
             if let Some(edit) = row["replacement"].as_object() {
                 let text = edit["text"].as_str().ok_or_else(fail)?;
+                let tentative = ["建议","考虑","可","拟","设想","待定","尚未","待核实"]
+                    .iter().any(|term| text.contains(term));
+                let attributed_description = edit["role"] == "status"
+                    && ["会上仅说明", "会上仅介绍", "会上说明", "会上介绍", "会上有人说明"]
+                        .iter().any(|term| text.starts_with(term))
+                    && ["不构成新决定", "未形成新的决定", "仍待确认"].iter().any(|term| text.contains(term));
                 if !matches!(edit["role"].as_str(), Some("recommendation" | "status"))
-                    || !["建议","考虑","可","拟","设想","待定","尚未","待核实"].iter().any(|term| text.contains(term)) {
+                    || !(tentative || attributed_description) {
                     return Err(fail());
                 }
             }
@@ -887,6 +893,33 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
     let improved = apply(&verified.document, &rows, bound.accepted, &known, units)?;
     // Source-scope review independently audits all changed assertions once.
     super::source_scope::review(endpoint,model,key,client,&verified,improved,units,start,trace)
+}
+
+#[cfg(test)]
+#[test]
+fn an_attributed_description_and_a_bound_acknowledgment_are_distinct_outcomes() {
+    let source = [
+        json!({"id":"e0187","source":"u012","text":"前台对于一些固定的客户赠送。"}),
+        json!({"id":"e0253","source":"u016","text":"对咱这走的不是自助那种形式，咱这种不必要限时嗯"}),
+        json!({"id":"e0254","source":"u016","text":"对不用限可以啊"}),
+    ];
+    let known: SourceIndex<'_> = source.iter().map(|row| (row["id"].as_str().unwrap(),row)).collect();
+    let candidates = [
+        json!({"id":"decisions[2]","basis":["e0187"],"context":["e0187"],
+            "claim":{"kind":"decision","text":"前台饮品面向固定客户赠送。"}}),
+        json!({"id":"decisions[3]","basis":["e0253","e0254"],"context":["e0253","e0254"],
+            "claim":{"kind":"decision","text":"明确不对顾客限时，因火锅不同于自助餐。"}}),
+    ];
+    let mut reply = json!({"roleChecks":[
+        {"id":"decisions[2]","replacement":{"role":"status","text":"会上仅说明前台饮品面向固定客户赠送，此现状说明不构成新决定。",
+            "owner":null,"due":null,"evidence":["e0187"]}},
+        {"id":"decisions[3]","replacement":null,"confirmation":{"evidence":"e0254","quote":"对不用限可以啊"}}
+    ]});
+    let result = decode_stance(&candidates,&reply.to_string(),&known).unwrap();
+    assert_eq!(result["decisions[2]"].placement,Placement::Topic);
+    assert!(!result.contains_key("decisions[3]"));
+    reply["roleChecks"][1]["confirmation"]["quote"] = json!("对肯定限时");
+    assert!(decode_stance(&candidates,&reply.to_string(),&known).is_err());
 }
 
 #[cfg(test)]

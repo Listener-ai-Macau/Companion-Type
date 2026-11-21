@@ -483,15 +483,16 @@ fn restore_source_facets(
     let mut added = Vec::new();
     let mut seen = HashSet::new();
     for (index, row) in source.iter().enumerate() {
-        let Some(speaker) = row["turnSpeaker"].as_str() else { continue; };
         let Some(source_text) = row["text"].as_str() else { continue; };
+        let Some((speaker, _)) = super::super::source_resolution::split_turn_label(source_text) else { continue; };
         let mut facets: Vec<_> = super::source_coverage::independent_source_facets(source_text)
             .into_iter().map(|facet| (facet, None)).collect();
-        if let Some(next) = source.get(index + 1).filter(|other| other["turnSpeaker"].as_str().is_some_and(|s| s != speaker)) {
-            if let Some((facet, response)) = super::source_coverage::answered_hypothesis(
-                source_text, next["text"].as_str().unwrap(),
-            ) {
-                facets.push((facet, Some((next, response))));
+        if let Some((responder, reply)) = source.get(index + 1).and_then(|other| other["text"].as_str())
+            .and_then(super::super::source_resolution::split_turn_label)
+            .filter(|(responder, _)| *responder != speaker)
+        {
+            if let Some((facet, response)) = super::source_coverage::answered_hypothesis(source_text, reply) {
+                facets.push((facet, Some((responder, response))));
             }
         }
         for (facet, answer) in facets {
@@ -504,9 +505,9 @@ fn restore_source_facets(
             }
             let mut references = vec![index];
             let attribution = match answer {
-                Some((next, response)) => {
+                Some((responder, response)) => {
                     references.push(index + 1);
-                    format!("{speaker}举例「{}」。{}回应「{response}」。", facet.quote, next["turnSpeaker"].as_str().unwrap())
+                    format!("{speaker}举例「{}」。{responder}回应「{response}」。", facet.quote)
                 }
                 None if facet.label == "设例" => format!("{speaker}举例提问「{}」。", facet.quote),
                 None => format!("{speaker}在讨论{}时提到「{}」。", facet.label, facet.quote),
@@ -534,6 +535,29 @@ fn restore_source_facets(
         .map(|entry| json!({"text":entry.item.text,"evidence":entry.item.evidence,"topic":entry.topic}))
         .collect::<Vec<_>>()}));
     source_items::append_missing(added, doc, units, source)
+}
+
+#[cfg(test)]
+#[test]
+fn a_source_clause_survives_a_different_claim_with_the_same_reference() {
+    let units = vec![Unit { id:"u000".into(),
+        text:"说话人2: 待讨论的验收标准是以送审清单为准，现场只是初筛。".into() }];
+    let doc: Document = serde_json::from_value(json!({"purpose":"讨论验收",
+        "topics":[{"title":"验收流程","points":[{"kind":"status","text":"现场只是初筛。","sources":["u000"]}],"details":[]}],
+        "decisions":[],"questions":[],"actionItems":[]})).unwrap();
+    let source = factual_audit::evidence_sentences(&units);
+    assert!(source[0].get("turnSpeaker").is_none());
+    let verified = VerifiedBrief{document:doc.clone(),evidence:HashMap::from([
+        ("topics[0].points[0]".into(),vec!["e0000".into()])]),pending_quotes:Vec::new()};
+    let mut trace = Vec::new();
+    let repaired = restore_source_facets(doc,&verified,&units,&source,&mut trace).unwrap();
+    assert_eq!(repaired.topics[0].points[0].text,"现场只是初筛。");
+    let detail = &repaired.topics[0].details[0];
+    assert_eq!(detail.sources, ["u000"]);
+    assert!(detail.text.contains("说话人2"));
+    assert!(detail.text.contains("以送审清单为准"));
+    let repeated = restore_source_facets(repaired,&verified,&units,&source,&mut trace).unwrap();
+    assert_eq!(repeated.topics[0].details.len(),1);
 }
 
 pub(super) fn review(
