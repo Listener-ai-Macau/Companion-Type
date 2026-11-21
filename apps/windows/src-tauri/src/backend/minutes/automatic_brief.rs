@@ -460,6 +460,12 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
                 trace.push(json!({"stage":"source-disputed-status","changes":changes}));
             }
         }
+        if source_items::enabled() {
+            let changed = source_corrections::restore_reported_decision_boundary(&mut doc, &units);
+            if !changed.is_empty() {
+                trace.push(json!({"stage":"source-reported-decision-boundary","changes":changed}));
+            }
+        }
         validate(&doc, &units)?;
         if source_items::enabled() && reconcile_overview_decisions(&mut doc) {
             trace.push(json!({"stage":"source-overview-decision-reconciliation"}));

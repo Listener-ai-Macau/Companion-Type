@@ -333,6 +333,86 @@ fn age_pending_text(values: [u8; 2]) -> String {
     format!("待核实：年龄上限提到{}岁和{}岁，实际范围尚未确认。", values[0], values[1])
 }
 
+fn unresolved_assignment_discussion(fact: &Fact, cited: &[&Value]) -> bool {
+    if fact.placement != Placement::Action || fact.owner.is_some() || fact.due.is_some() {
+        return false;
+    }
+    let text = normalized(&fact.text);
+    let discusses = ["讨论", "询问", "征询", "会上讨论", "会上征询"].iter().any(|cue| text.starts_with(cue));
+    let unassigned = ["未明确分派", "尚未分派", "承接方尚未确定", "承担尚未确定", "未确定负责人"]
+        .iter().any(|cue| text.contains(cue));
+    if !discusses || !unassigned || ["会后", "下次会议", "拟定名单", "待提交"].iter().any(|cue| text.contains(cue)) {
+        return false;
+    }
+    cited.iter().any(|row| {
+        let quote = normalized(row["text"].as_str().unwrap_or_default());
+        ["哪个部门", "哪个团队", "哪一方", "由谁负责", "交给谁"].iter().any(|cue| quote.contains(cue))
+            && !["请在", "必须", "务必", "回去以后"].iter().any(|cue| quote.contains(cue))
+    })
+}
+
+fn retain_opening_period(purpose: &mut String, evidence: &[Value]) -> Option<Value> {
+    static REVIEW: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<period>上(?:个|一)?季度|上个?月|上半年)的?(?P<scope>销售情况|经营情况|运营情况|工作情况|收入情况|业绩情况|项目进展)(?:哈|啊)?(?:咱们|我们)?(?:来|要)?(?:开(?:一)?(?:场|个)会议|进行复盘|做总结)"
+    ).unwrap());
+    if ["上个季度", "上一季度", "上季度", "本季度", "上个月", "上月", "本月", "上半年", "下半年"]
+        .iter().any(|cue| purpose.contains(cue))
+    {
+        return None;
+    }
+    let mut reviewed = evidence.iter().take(18).filter_map(|row| {
+        let speech = normalized(row["text"].as_str()?);
+        if !["今天", "本次会议", "各部门", "大家"].iter().any(|cue| speech.contains(cue)) {
+            return None;
+        }
+        let fragment = REVIEW.captures(&speech)?;
+        let period = match &fragment["period"] {
+            "上个季度" | "上一季度" => "上季度",
+            "上个月" => "上月",
+            _ => &fragment["period"],
+        };
+        let prefix = format!("回顾{period}{}。", &fragment["scope"]);
+        Some((row["id"].as_str()?, prefix))
+    });
+    let (id, prefix) = reviewed.next()?;
+    if reviewed.next().is_some() { return None; }
+    let revised = format!("{prefix}{purpose}");
+    if !line(&revised, 120) { return None; }
+    *purpose = revised;
+    Some(json!({"id":"purpose","evidence":id,"state":"reportedOpeningScope"}))
+}
+
+pub(super) fn restore_reported_decision_boundary(doc: &mut super::Document, units: &[super::Unit]) -> Vec<Value> {
+    let mut moved = Vec::new();
+    let mut pending = Vec::new();
+    for (index, candidate) in doc.decisions.iter().enumerate() {
+        let Some(proposed) = ["会上提出", "会上建议", "会上提议"].into_iter()
+            .find_map(|prefix| candidate.text.strip_prefix(prefix)) else { continue; };
+        let core = proposed.split(['，','。','；','、']).next().unwrap_or_default();
+        if !line(core, 28) || core.chars().count() < 6 { continue; }
+        if let Some(later) = doc.decisions.iter().skip(index + 1).find(|decision| {
+            decision.text.starts_with("决定") && decision.text.contains(core)
+                && decision.sources.iter().any(|id| candidate.sources.contains(id))
+        }) {
+            if let Some(topic) = super::source_items::omission_topic(doc, &candidate.sources, units) {
+                pending.push((index, topic, later.text.clone()));
+            }
+        }
+    }
+    for (index, topic, kept) in pending.into_iter().rev() {
+        let ordinary = &mut doc.topics[topic];
+        if ordinary.details.len() >= super::topic_details_limit() { continue; }
+        let item = doc.decisions.remove(index);
+        moved.push(json!({"proposal":item.text,"retainedDecision":kept,"sources":item.sources}));
+        if !ordinary.points.iter().any(|row| row.text == item.text)
+            && !ordinary.details.iter().any(|row| row.text == item.text)
+        {
+            ordinary.details.push(item);
+        }
+    }
+    moved
+}
+
 pub(super) fn retain_spoken_state(facts: &mut [Fact], evidence: &[Value], purpose: Option<&mut String>) -> Vec<Value> {
     let source: HashMap<_, _> = evidence.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
     let mut changes = Vec::new();
@@ -370,6 +450,11 @@ pub(super) fn retain_spoken_state(facts: &mut [Fact], evidence: &[Value], purpos
                 }
             }
         }
+        if unresolved_assignment_discussion(fact, &cited) {
+            fact.placement = Placement::Question;
+            fact.kind = Kind::Status;
+            changes.push(json!({"id":fact.id,"evidence":fact.evidence,"state":"unassignedDiscussion"}));
+        }
         if fact.placement == Placement::Action {
             let quotes: Vec<_> = cited.iter().filter_map(|row| row["text"].as_str()).collect();
             if let Some(text) = super::final_bindings::retain_source_timing(&fact.text, &quotes) {
@@ -380,7 +465,8 @@ pub(super) fn retain_spoken_state(facts: &mut [Fact], evidence: &[Value], purpos
     }
     corrected_labels.sort_unstable();
     corrected_labels.dedup();
-    if let (Some(purpose), [(former, corrected, anchor)]) = (purpose, corrected_labels.as_slice()) {
+    let mut purpose = purpose;
+    if let (Some(purpose), [(former, corrected, anchor)]) = (purpose.as_deref_mut(), corrected_labels.as_slice()) {
         let unrelated = facts.iter().any(|fact| !fact.evidence.iter().any(|id| id == *anchor) && fact.text.contains(former));
         if !unrelated && purpose.matches(former).count() == 1 {
             let revised = purpose.replacen(former, corrected, 1);
@@ -389,6 +475,9 @@ pub(super) fn retain_spoken_state(facts: &mut [Fact], evidence: &[Value], purpos
                 changes.push(json!({"id":"purpose","evidence":anchor,"state":"explicitAffiliationCorrection"}));
             }
         }
+    }
+    if let Some(change) = purpose.and_then(|text| retain_opening_period(text, evidence)) {
+        changes.push(change);
     }
     changes
 }
@@ -482,6 +571,41 @@ mod tests {
         assert_eq!(retain_spoken_state(&mut fixed,&source,None).len(),1);
         assert_eq!(fixed[0].placement,Placement::Decision);
         assert!(fixed[1].text.contains("18到45岁"));
+    }
+
+    #[test]
+    fn a_retrospective_opening_and_unassigned_discussion_keep_their_actual_roles() {
+        let evidence = [
+            json!({"id":"e0007","source":"u000","text":"说话人3: 今天咱们开就是就上个季度的销售情况咱们来开一场会议。"}),
+            json!({"id":"e0245","source":"u018","text":"说话人1: 我们交给哪个部门儿去承担这个接待工作行吧。"}),
+        ];
+        let mut facts = [
+            source_fact("a010","讨论接待工作由哪个部门承担，会上征询，未明确分派。",&["e0245"],Placement::Action),
+            source_fact("a011","各部门下去做接待计划书并报总经理。",&["e0245"],Placement::Action),
+        ];
+        let mut purpose = "围绕安保、卫生与促销交流。".to_string();
+        let changes = retain_spoken_state(&mut facts,&evidence,Some(&mut purpose));
+        assert_eq!(changes.len(),2);
+        assert_eq!(purpose,"回顾上季度销售情况。围绕安保、卫生与促销交流。");
+        assert_eq!(facts[0].placement,Placement::Question);
+        assert_eq!(facts[1].placement,Placement::Action);
+    }
+
+    #[test]
+    fn a_reported_proposal_does_not_remain_a_second_decision() {
+        let units = [super::super::Unit{id:"u004".into(),text:"这些措施属于门店安全管理。".into()}];
+        let mut doc: super::super::Document=serde_json::from_value(json!({
+            "purpose":"谈门店安全。","topics":[{"title":"门店安全","points":[{
+                "kind":"status","text":"有巡逻安排。","sources":["u004"]
+            }],"details":[]}],"decisions":[
+              {"text":"会上提出加大店内巡逻，发现异常及时报警。","sources":["u004"]},
+              {"text":"决定保安加大店内巡逻力度并联络警察。","sources":["u004"]}
+            ],"questions":[],"actionItems":[]
+        })).unwrap();
+        assert_eq!(restore_reported_decision_boundary(&mut doc,&units).len(),1);
+        assert_eq!(doc.decisions.len(),1);
+        assert!(doc.decisions[0].text.starts_with("决定"));
+        assert!(doc.topics[0].details[0].text.starts_with("会上提出"));
     }
 
     #[test]
