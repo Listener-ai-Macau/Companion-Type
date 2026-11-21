@@ -510,7 +510,8 @@ fn remove_surplus_check_brace(raw: &str) -> Option<String> {
 }
 
 fn move_last_check_brace(raw: &str) -> Option<String> {
-    let body = super::super::strip_code_fences(raw).trim();
+    let unfenced = super::super::strip_code_fences(raw);
+    let body = unfenced.trim();
     let error = serde_json::from_str::<Value>(body).err()?;
     if !error.is_syntax() { return None; }
     let line_offset = body.split_inclusive('\n').take(error.line().checked_sub(1)?)
