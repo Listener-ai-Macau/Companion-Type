@@ -166,6 +166,25 @@ pub(super) fn facet_has_witness(aspect: &str, span: &str, kind: &str, claim: &st
     true
 }
 
+fn nonassertive_restriction(before: &str, fragment: &str, after: &str) -> bool {
+    if [("能", "不能"), ("得", "不得"), ("许", "不许"), ("允许", "不允许")]
+        .iter().any(|(yes, no)| before.trim_end().ends_with(yes) && fragment.starts_with(no))
+    {
+        return true;
+    }
+    let rule = ["规定", "明令", "明确要求", "必须"].iter().any(|cue| before.contains(cue));
+    if rule { return false; }
+    let conversational_question = fragment.contains(['吗', '嘛', '么']);
+    let unfinished_relation = after.is_empty()
+        && ["考虑到", "想到", "提及到", "了解到"].iter().any(|verb| fragment.ends_with(verb));
+    let personal_reasoning = before.trim_end().ends_with('我')
+        && (fragment.contains("我就") || fragment.starts_with("不能还没") || after.starts_with("，那我"));
+    let analogy_tail: String = after.chars().take(18).collect();
+    let analogy = fragment.starts_with("不能像")
+        && ["就像", "相当于", "好比"].iter().any(|cue| analogy_tail.contains(cue));
+    conversational_question || unfinished_relation || personal_reasoning || analogy
+}
+
 fn material_spans(text: &str) -> Vec<(Focus, &str)> {
     static CONTRAST: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?P<limit>[\p{Han}]{2,16}(?:时|时候|情况下)可以[嗯呃\s]*不[\p{Han}]{1,14})[，,]\s*但(?:是)?[^。；？！]{2,45}(?:必须|一定要|不得)"
@@ -194,10 +213,8 @@ fn material_spans(text: &str) -> Vec<(Focus, &str)> {
         for found in pattern.captures_iter(text).filter_map(|captures| captures.name(name)) {
             let before = text[..found.start()].rsplit(['。', '；', '，', '！', '？']).next().unwrap_or("");
             let after = text[found.end()..].trim_start();
-            let in_alternative_question = focus == Focus::Restriction
-                && [("能", "不能"), ("得", "不得"), ("许", "不许"), ("允许", "不允许")]
-                    .iter().any(|(yes, no)| before.trim_end().ends_with(yes) && found.as_str().starts_with(no));
-            let questioned = in_alternative_question || after.starts_with(['吗', '么', '?', '？'])
+            let questioned = (focus == Focus::Restriction && nonassertive_restriction(before, found.as_str(), after))
+                || after.starts_with(['吗', '么', '?', '？'])
                 || ["是否", "是不是", "能不能", "会不会", "假如"].iter().any(|cue| before.contains(cue));
             let contrary = focus == Focus::Restriction && (before.trim_end().ends_with(['不', '没']) || before.trim_end().ends_with("不会"));
             let proposed = focus == Focus::CompletedChange
@@ -1105,6 +1122,16 @@ mod tests {
             .map(|(_, quote)| *quote).collect::<Vec<_>>(), ["不允许进入机房"]);
         assert!(material_spans("他们能不能在这周交付没有反馈")
             .iter().all(|(focus, _)| *focus != Focus::Restriction));
+        for conversation in [
+            "就是你人与人之间都会有这样的问题，你不能考虑到",
+            "我是要先看了之后才能操作啊，我不能还没没有看我就去操作，那我可能什么都不会。",
+            "那之前不得有了解嘛了解了才能实践嘛",
+            "从小教大，你不能像小公司大公司你教学生也一样，就像大公司扔一摞书让你自己学。",
+        ] {
+            assert!(material_spans(conversation).iter().all(|(focus, _)| *focus != Focus::Restriction), "{conversation}");
+        }
+        let actual = material_spans("规定外部人员不得擅自进入机房嘛。");
+        assert!(actual.iter().any(|(focus, _)| *focus == Focus::Restriction));
     }
 
     #[test]
