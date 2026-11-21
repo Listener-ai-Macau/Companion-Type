@@ -456,6 +456,12 @@ fn mask_unclear_quote(corrected: &str, phrases: &[String]) -> String {
                 result = result.replacen(&quoted, "一处含混表述", 1);
             }
         }
+        for qualified in [format!("{phrase}，具体所指待核对"), format!("{phrase}，具体所指待核实")] {
+            let sentence = result.trim_end_matches(['。', '.']);
+            if sentence.ends_with(&qualified) && result.matches(phrase.as_str()).count() == 1 {
+                result = result.replacen(phrase.as_str(), "含混表述", 1);
+            }
+        }
         for quoted in [phrase.clone(), format!("“{phrase}”")] {
             let positions = result.match_indices(&quoted).filter_map(|(start, token)| {
                 let end = start + token.len();
@@ -491,6 +497,10 @@ fn review_masks_only_an_exact_quote_marked_as_unresolved() {
     assert_eq!(mask_unclear_quote("门店只能租，并提到“租赁城市”，该说法含义待核对。", &phrases),
         "门店只能租，并提到一处含混表述，该说法含义待核对。");
     assert_eq!(mask_unclear_quote("已确定“租赁城市”。", &phrases), "已确定“租赁城市”。");
+    assert_eq!(mask_unclear_quote("说话人只提到租赁城市，具体所指待核对。", &phrases),
+        "说话人只提到含混表述，具体所指待核对。");
+    assert_eq!(mask_unclear_quote("租赁城市已定，另一处租赁城市，具体所指待核对。", &phrases),
+        "租赁城市已定，另一处租赁城市，具体所指待核对。");
     assert_eq!(mask_unclear_quote("不带引号的租赁城市，含义待核对。", &phrases),
         "不带引号的租赁城市，含义待核对。");
     assert_eq!(mask_unclear_quote("门店只能租，并提到租赁城市（具体所指待核对）。", &phrases),
