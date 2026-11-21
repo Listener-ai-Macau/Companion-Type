@@ -995,6 +995,120 @@ pub(super) fn omission_topic(doc: &Document, sources: &[String], units: &[Unit])
         .min().map(|(_, index)| index)
 }
 
+fn action_clauses(text: &str, owner_name: Option<&str>, has_prerequisite: bool) -> Vec<String> {
+    text.split(['，', ',', '。', '；', ';']).filter_map(|part| {
+        let compact = normalized(part).replace('和', "与");
+        let mut content = compact.as_str();
+        if let Some(name) = owner_name {
+            let short = name.strip_suffix('部').unwrap_or(name);
+            if let Some(without_role) = [name, short].into_iter().filter_map(|role| content.strip_prefix(role))
+                .find(|tail| tail.starts_with('拟'))
+            {
+                content = without_role;
+            }
+        }
+        content = content.strip_prefix('拟').unwrap_or(content);
+        if has_prerequisite {
+            content = content.strip_prefix('再').unwrap_or(content);
+        }
+        (!content.is_empty()).then(|| content.to_owned())
+    }).collect()
+}
+
+fn action_clause_is_retained(incoming: &str, retained: &str) -> bool {
+    static QUANTITY: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"[0-9０-９一二两三四五六七八九十百千万亿.：:]+(?:个月|分钟|小时|万|亿|元|块|天|周|月|日|号|次|人|份|个|项|套|家|%|％)?"
+    ).unwrap());
+    if incoming == retained { return true; }
+    let length = incoming.chars().count();
+    let extra = retained.chars().count().saturating_sub(length);
+    if length < 9 || extra > 8 || ["不", "未", "仅", "只", "如果", "除非", "否则"].iter()
+        .any(|word| incoming.contains(word) || retained.contains(word))
+        || QUANTITY.find_iter(incoming).any(|amount| !QUANTITY.find_iter(retained).any(|old| old.as_str() == amount.as_str()))
+    {
+        return false;
+    }
+    // A shorter wording may omit qualifiers from the retained item. Require
+    // every remaining character in order and a shared verb/object span.
+    let mut remainder = retained.chars();
+    if !incoming.chars().all(|character| remainder.by_ref().any(|old| old == character)) {
+        return false;
+    }
+    let characters: Vec<_> = incoming.chars().collect();
+    characters.windows(6).any(|part| retained.contains(&part.iter().collect::<String>()))
+}
+
+fn covered_action_omission(added: &Fact, prior: &Fact, owner_name: Option<&str>) -> bool {
+    if added.owner.is_none() || added.owner != prior.owner
+        || added.due.is_some() && added.due != prior.due
+        || added.text.contains("先") && !prior.text.contains("先")
+    {
+        return false;
+    }
+    let prerequisite = added.text.contains("先") && prior.text.contains("先");
+    let incoming = action_clauses(&added.text, owner_name, prerequisite);
+    let retained = action_clauses(&prior.text, owner_name, prerequisite);
+    if incoming.len() < 2 || incoming.len() != retained.len() {
+        return false;
+    }
+    let mut matched = HashSet::new();
+    incoming.iter().all(|clause| {
+        let mut bindings = retained.iter().enumerate().filter(|(_, existing)| {
+            action_clause_is_retained(clause, existing)
+        });
+        let Some((index, _)) = bindings.next() else { return false; };
+        bindings.next().is_none() && matched.insert(index)
+    })
+}
+
+fn forecast_action_echo(text: &str) -> String {
+    normalized(text).replace(['，', ',', '。', '；'], "")
+        .replace("将与", "与").replace("这边儿", "").replace("这边", "")
+        .replace("联合进行", "进行")
+}
+
+fn covered_omission_actions(additions: &mut Vec<MissingItem>, doc: &Document, facts: &[Fact], evidence: &[Value]) -> Vec<Value> {
+    let label_rows = super::commitments::with_turn_labels(evidence);
+    let identities = super::source_bindings::SourceBindings::new(&label_rows);
+    let known: HashMap<_, _> = label_rows.iter()
+        .map(|row| (row["id"].as_str().unwrap(), row)).collect();
+    let known_ids = known.keys().copied().collect();
+    let mut reconciled = Vec::new();
+    additions.retain(|addition| {
+        if !addition.item.is_action() { return true; }
+        let Ok(incoming) = addition.item.clone().bind(&known, &known_ids) else { return true; };
+        let owner = incoming.owner.as_deref().and_then(|label| identities.introduction(label));
+        let mut same = facts.iter().filter_map(|prior| {
+            if !prior.evidence.iter().all(|id| incoming.evidence.contains(id))
+                || !incoming.evidence.iter().all(|id| prior.evidence.iter().any(|anchor| {
+                    known[id.as_str()]["source"] == known[anchor.as_str()]["source"]
+                }))
+            {
+                return None;
+            }
+            if prior.placement == Placement::Action && doc.action_items.iter().any(|existing| {
+                existing.text == prior.text && existing.owner == prior.owner && existing.due == prior.due
+            }) && covered_action_omission(&incoming, prior, owner.map(|(name, _)| name)) {
+                return Some((prior, "existingAction"));
+            }
+            let same_forecast = matches!(prior.kind, Kind::Forecast) && prior.placement == Placement::Topic
+                && incoming.owner.is_none() && incoming.due.is_none()
+                && incoming.evidence.len() == prior.evidence.len()
+                && forecast_action_echo(&prior.text) == forecast_action_echo(&incoming.text)
+                && doc.topics.iter().any(|topic| topic.points.iter().any(|point| point.text == prior.text)
+                    || topic.details.iter().any(|entry| entry.text == prior.text));
+            same_forecast.then_some((prior, "existingForecast"))
+        });
+        if let Some((prior, role)) = same.next().filter(|_| same.next().is_none()) {
+            reconciled.push(json!({"retainedId":prior.id,"placement":role,"existing":prior.text,
+                "addition":incoming.text,"evidence":incoming.evidence}));
+            return false;
+        }
+        true
+    });
+    reconciled
+}
+
 pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, units: &[Unit], evidence: &[Value]) -> Result<Document, String> {
     let known: HashMap<_, _> = evidence.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
     let known_ids = known.keys().copied().collect();
@@ -2924,6 +3038,10 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         trace[scan_index]["boundAdjacentLoanQuestions"] = json!(answered_amounts);
     }
     let (mut additions, conflicts) = checked_additions(checked, &cues, &doc, facts, &evidence, &verified_coverage)?;
+    if additions.iter().any(|addition| addition.item.is_action()) {
+        let reconciled = covered_omission_actions(&mut additions, &doc, facts, &evidence);
+        if !reconciled.is_empty() { trace[scan_index]["coveredOmissionActions"] = json!(reconciled); }
+    }
     let decisions: Vec<_> = doc.decisions.iter().map(|item| item.text.as_str()).collect();
     let mut removed = 0;
     let mut separated = 0;
@@ -3021,6 +3139,55 @@ pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest:
         last["layoutProjection"] = projection;
     }
     Ok((doc, facts))
+}
+
+#[cfg(test)]
+#[test]
+fn source_bound_omissions_keep_a_deadline_and_do_not_duplicate_a_forecast() {
+    let current = json!({"purpose":"安排物料与安全准备","topics":[{"title":"安全准备","points":[{
+        "kind":"forecast","text":"新生开学后，将与安保这边进行消防演练，提前检查设备能否使用。","sources":["u001"]
+    }],"details":[]}],"decisions":[],"actionItems":[
+        {"text":"在开学前向服装生产厂家定制军训服装，需先和招生办协商好名单。","owner":"说话人2","due":null,"sources":["u002"]},
+        {"text":"提前向学生查询身高体重及服装尺寸。","owner":"招生办","due":null,"sources":["u002"]}
+    ],"questions":[]});
+    let doc: Document = serde_json::from_value(current).unwrap();
+    let fact = |id: &str, text: &str, owner: Option<&str>, ids: &[&str], kind: Kind, placement: Placement| Fact {
+        id:id.into(),text:text.into(),owner:owner.map(str::to_owned),due:None,
+        evidence:ids.iter().map(|id| (*id).to_owned()).collect(),kind,placement
+    };
+    let prior = [
+        fact("a050",&doc.topics[0].points[0].text,None,&["e0100"],Kind::Forecast,Placement::Topic),
+        fact("a070",&doc.action_items[0].text,Some("说话人2"),&["e0130","e0132"],Kind::Decision,Placement::Action),
+        fact("a069",&doc.action_items[1].text,Some("招生办"),&["e0130"],Kind::Decision,Placement::Action),
+    ];
+    let evidence = [
+        json!({"id":"e0001","text":"说话人2: 我是财务部","source":"u000"}),
+        json!({"id":"e0100","text":"说话人5: 新生开学后我们会与安保进行消防演练，提前看看还能不能使用。","source":"u001"}),
+        json!({"id":"e0130","text":"说话人2: 我需要提前在开学之前向服装生产厂家定制军训服装。","source":"u002"}),
+        json!({"id":"e0131","text":"说话人2: 和招生办先协商好名单。","source":"u002"}),
+        json!({"id":"e0132","text":"说话人2: 要好名单然后我再向这个厂家。","source":"u002"}),
+        json!({"id":"e0133","text":"说话人2: 还需要一种新的服装。","source":"u003"}),
+    ];
+    let candidate = |text: &str, owner: Option<&str>, refs: &[&str]| MissingItem {
+        item: SourceItem {role:Role::Action,text:text.into(),owner:owner.map(str::to_owned),due:None,
+            evidence:refs.iter().map(|id| (*id).to_owned()).collect()},
+        topic:None,new_aspect:None
+    };
+    let order = "财务拟先与招生办协商好名单，再向服装厂家定制军训服装。";
+    let mut additions = vec![
+        candidate(order, Some("说话人2"), &["e0130","e0131","e0132"]),
+        candidate("新生开学后与安保联合进行消防演练，提前检查设备能否使用。",None,&["e0100"]),
+        candidate(order,Some("说话人2"),&["e0130","e0132","e0133"]),
+        candidate(&order.replace("再向","再于9月15日向"),Some("说话人2"),&["e0130","e0131","e0132"]),
+        candidate(&order.replace("军训服装","工装"),Some("说话人2"),&["e0130","e0131","e0132"]),
+    ];
+    let reconciled = covered_omission_actions(&mut additions,&doc,&prior,&evidence);
+    assert_eq!(reconciled.iter().map(|x| x["placement"].as_str().unwrap()).collect::<Vec<_>>(),
+        ["existingAction","existingForecast"]);
+    assert_eq!(additions.len(),3);
+    assert!(doc.action_items[0].text.contains("开学前"));
+    assert!(doc.action_items[1].text.contains("尺寸"));
+    assert!(!action_clause_is_retained("提前向采购厂家交付3份合约","提前向采购厂家交付30份合约"));
 }
 
 #[cfg(test)]
