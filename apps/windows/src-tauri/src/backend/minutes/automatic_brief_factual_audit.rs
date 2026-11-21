@@ -328,10 +328,10 @@ fn audit_batches(expected: &[Value], count: usize, balance_roles: bool) -> Vec<V
     result
 }
 
-fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,wire:&Value,expected:&[Value],source:&[Sentence],stage:&str,start:Instant,trace:&mut Vec<Value>,recovered_format:&AtomicBool)->Result<Audit,String>{
+fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,wire:&Value,expected:&[Value],source:&[Sentence],stage:&str,start:Instant,trace:&mut Vec<Value>,recovered_format:&AtomicBool)->Result<(Audit,Option<String>),String>{
     // Each independent batch still sees the complete immutable source and
     // document. Bound concurrency to three; every claim needs a verdict.
-    if expected.is_empty(){return Ok(Audit{claim_audit:Vec::new(),format_kind:None});}
+    if expected.is_empty(){return Ok((Audit{claim_audit:Vec::new(),format_kind:None},None));}
     let mut role_prompt;
     let prompt = if super::source_items::enabled() {
         role_prompt = format!("{PROMPT}\n栏目本身也是需要单独核对的主张。对decisions、actionItems、questions的每一条，另外返回placementUnsupported布尔值。真有本场定案、会后承诺或指派、尚未解决的问题时填false；当其实只是开场目的、个人设想、举例、建议、现场已经回答的疑问或散会提示时填true，并将status判为overstated、unsupported或unclear。文字有原话不代表栏目正确。只写错截止日期、责任人或数值但栏目确实成立时填false，按独立事实问题判status。其他栏目无须此字段。");
@@ -439,8 +439,15 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     let mut claims=Vec::new();let mut error=None;
     for(result,calls)in results{trace.extend(calls);match result{Ok(audit)=>claims.extend(audit.claim_audit),Err(e)=>if error.is_none(){error=Some(e);}}}
     check_cancellation(token.as_ref())?;
-    if let Some(error)=error{return Err(error);}
-    if claims.len()!=expected.len(){return Err("纪要审核未覆盖全部陈述，已有结果保留。".into());}
+    if let Some(reason) = &error {
+        if !super::source_items::enabled() || claims.is_empty() { return Err(reason.clone()); }
+        let returned: HashSet<_> = claims.iter().map(|claim| claim.path.as_str()).collect();
+        let missing: Vec<_> = expected.iter().filter_map(|claim| claim["path"].as_str())
+            .filter(|path| !returned.contains(path)).collect();
+        trace.push(json!({"stage":"source-factual-incomplete","unreviewedPaths":missing,"reason":reason}));
+    } else if claims.len()!=expected.len(){
+        return Err("纪要审核未覆盖全部陈述，已有结果保留。".into());
+    }
     if reordered {
         let order: HashMap<_,_> = expected.iter().enumerate()
             .filter_map(|(index, claim)| Some((claim["path"].as_str()?, index))).collect();
@@ -479,7 +486,7 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
         json!({"interpretation":c.unclear_text,"reason":c.reason,"sourceEvidence":evidence})
     }).collect::<Vec<_>>();
     if let Some(call)=trace.last_mut(){if !uncertain.is_empty(){call["sourceUncertainties"]=json!(uncertain);}if !history.is_empty(){call["unclearClaimHistory"]=json!(history);}if !interpretations.is_empty(){call["sourceInterpretationUncertainties"]=json!(interpretations);}}
-    Ok(Audit{claim_audit:claims,format_kind:None})
+    Ok((Audit{claim_audit:claims,format_kind:None},error))
 }
 const PENDING_PROPOSAL_PREFIX: &str = "会上讨论「";
 const PENDING_PROPOSAL_SUFFIX: &str = "」。其中具体用语待核实。";
@@ -2569,7 +2576,7 @@ fn unchanged_source_assertion_keeps_evidence_after_a_neighbor_is_removed() {
 // this invocation. Unchanged claims retain that evidence; new/changed claims
 // still see the complete original source, never a model inventory.
 pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
-    let mut draft = FactualDraft { document: doc.clone(), pending_quotes: Vec::new() };
+    let mut draft = FactualDraft { document: doc.clone(), pending_quotes: Vec::new(), adverse_claims: Vec::new() };
     review(endpoint,model,key,client,&mut draft,units,verified,&[],start,trace).map(|result| result.document)
 }
 
@@ -2586,6 +2593,8 @@ pub(super) struct VerifiedBrief {
 pub(super) struct FactualDraft {
     pub(super) document: Document,
     pub(super) pending_quotes: Vec<String>,
+    // Exact statements found doubtful even when a later request cannot finish.
+    pub(super) adverse_claims: Vec<Value>,
 }
 
 pub(super) fn review_and_repair_with_conflicts(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,draft:&mut FactualDraft,units:&[Unit],conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<VerifiedBrief,String> {
@@ -2619,10 +2628,39 @@ fn a_requested_move_respects_the_topic_detail_limit() {
     assert_eq!(doc["topics"][1]["details"][0]["text"], "备选的交付方式。");
 }
 
+fn retain_adverse_claims(held: &mut Vec<Value>, audit: &Audit, claims: &[Value]) {
+    let by_path: HashMap<_, _> = claims.iter().filter_map(|claim| Some((claim["path"].as_str()?,claim))).collect();
+    for verdict in &audit.claim_audit {
+        let Some(claim) = by_path.get(verdict.path.as_str()) else { continue; };
+        held.retain(|previous| !same_assertion(&previous["claim"], claim));
+        if verdict.status != "supported" {
+            held.push(json!({"claim":claim,"evidence":verdict.evidence.first()}));
+        }
+    }
+}
+
+#[cfg(test)]
+#[test]
+fn a_partial_audit_keeps_its_adverse_claims_until_the_same_statement_is_verified() {
+    let rows = [
+        json!({"path":"topics[0].points[0]","text":"初步预算已经批准。","sources":["u001"]}),
+        json!({"path":"topics[0].points[1]","text":"方案由技术组提交。","sources":["u002"]}),
+    ];
+    let audit = |path: &str, status: &str, evidence: &str| serde_json::from_value(json!({"claimAudit":[
+        {"path":path,"status":status,"reason":"依据来源逐项核对。","evidence":[evidence]}
+    ]})).unwrap();
+    let mut held = Vec::new();
+    retain_adverse_claims(&mut held, &audit("topics[0].points[0]","overstated","e0018"), &rows);
+    retain_adverse_claims(&mut held, &audit("topics[0].points[1]","supported","e0020"), &rows);
+    assert_eq!(held, [json!({"claim":rows[0],"evidence":"e0018"})]);
+    retain_adverse_claims(&mut held, &audit("topics[0].points[0]","supported","e0019"), &rows);
+    assert!(held.is_empty());
+}
+
 fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,draft:&mut FactualDraft,units:&[Unit],verified:Option<&Document>,conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<VerifiedBrief,String> {
     let source=sentences(units);
     let wire=json!(units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>());
-    let FactualDraft { document: current, pending_quotes } = draft;
+    let FactualDraft { document: current, pending_quotes, adverse_claims } = draft;
     let mut attempted: HashMap<String, Claim> = HashMap::new();
     let recovered_format = AtomicBool::new(false);
     let mut attribution_repairs = HashSet::new();
@@ -2663,7 +2701,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
         // Only earlier completed verdicts constrain new/changed claims. Do not
         // retroactively rewrite other claims in this same independent batch.
         let history=trace.iter().filter_map(|c|c.get("unclearClaimHistory").and_then(Value::as_array)).flatten().cloned().collect::<Vec<_>>();
-        let mut audit=partitioned_audit(endpoint,model,key,client,&current,&wire,&expected,&source,stage,start,trace,&recovered_format)?;
+        let (mut audit, incomplete)=partitioned_audit(endpoint,model,key,client,&current,&wire,&expected,&source,stage,start,trace,&recovered_format)?;
         if super::source_items::enabled() {
             reject_unresolved_settlement(&mut audit, &expected);
         }
@@ -2673,6 +2711,12 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
         // rather than retaining an earlier writer's incomplete source list.
         *current=bind_supported_sources(current,&audit,&source,units)?;
         let audited_claims=claims(&current);
+        if super::source_items::enabled() {
+            retain_adverse_claims(adverse_claims, &audit, &audited_claims);
+        }
+        if let Some(reason) = incomplete {
+            return Err(format!("部分事实已核对，另有陈述未核对。{reason}"));
+        }
         // Retain only exact in-call positive claims. Changed text, kind,
         // refs, owner/due, or shifted array positions are automatically audited.
         for verdict in audit.claim_audit.iter().filter(|c|c.status=="supported") {

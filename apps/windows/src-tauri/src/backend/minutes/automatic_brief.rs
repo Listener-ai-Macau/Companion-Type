@@ -262,14 +262,17 @@ fn project_review_draft(doc: &Document, facts: &[answer_layout::Fact], units: &[
 ) -> CompanionV1MeetingMinutes {
     let mut marked = doc.clone();
     let mut disputed_ids = HashSet::new();
-    let mut mark = |text: &mut String, owner: Option<&str>, due: Option<&str>, pending_by_default: bool| {
-        let matches: Vec<_> = conflicts.iter().filter(|conflict| {
+    let mut mark = |text: &mut String, sources: &[String], owner: Option<&str>, due: Option<&str>, pending_by_default: bool| {
+        let mut matches = conflicts.iter().filter(|conflict| {
             let claim = &conflict["claim"];
             claim["text"].as_str() == Some(text.as_str())
                 && claim["owner"].as_str() == owner && claim["due"].as_str() == due
-        }).filter_map(|conflict| conflict["evidence"].as_str()).collect();
-        if !matches.is_empty() {
-            disputed_ids.extend(matches);
+                && claim["sources"].as_array().is_none_or(|ids| {
+                    ids.len() == sources.len() && ids.iter().all(|id| sources.iter().any(|source| id == source.as_str()))
+                })
+        }).peekable();
+        if matches.peek().is_some() {
+            disputed_ids.extend(matches.filter_map(|conflict| conflict["evidence"].as_str()));
             if !text.starts_with(DRAFT_CONFLICT_PREFIX) {
                 text.insert_str(0, DRAFT_CONFLICT_PREFIX);
             }
@@ -277,21 +280,23 @@ fn project_review_draft(doc: &Document, facts: &[answer_layout::Fact], units: &[
             text.insert_str(0, "待核对：");
         }
     };
+    mark(&mut marked.purpose, &[], None, None, false);
     for topic in &mut marked.topics {
-        for row in topic.points.iter_mut().map(|row| &mut row.text)
-            .chain(topic.details.iter_mut().map(|row| &mut row.text))
+        mark(&mut topic.title, &[], None, None, false);
+        for (text,sources) in topic.points.iter_mut().map(|row| (&mut row.text, &row.sources))
+            .chain(topic.details.iter_mut().map(|row| (&mut row.text, &row.sources)))
         {
-            mark(row, None, None, false);
+            mark(text, sources, None, None, false);
         }
     }
     for decision in &mut marked.decisions {
-        mark(&mut decision.text, None, None, true);
+        mark(&mut decision.text, &decision.sources, None, None, true);
     }
     for action in &mut marked.action_items {
-        mark(&mut action.text, action.owner.as_deref(), action.due.as_deref(), true);
+        mark(&mut action.text, &action.sources, action.owner.as_deref(), action.due.as_deref(), true);
     }
     for question in &mut marked.questions {
-        mark(&mut question.text, None, None, false);
+        mark(&mut question.text, &question.sources, None, None, false);
     }
     let source = factual_audit::evidence_sentences(units);
     source_corrections::preserve_published_discussion(&mut marked, facts, &source);
@@ -403,19 +408,27 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
                 Err(reason) => return reviewable(&doc, reason, &[], &[]),
             };
             traced_document=Some(checked.doc.clone());
-            if !checked.pending_coverage_quotes.is_empty() {
-                return reviewable(&checked.doc, "部分原话覆盖仍待核对，已保留其它通过原话核对的补充。".into(),
-                    &checked.conflicts, &checked.pending_coverage_quotes);
-            }
-            let mut factual_draft = factual_audit::FactualDraft { document: checked.doc, pending_quotes: Vec::new() };
+            let coverage_note = "部分原话覆盖仍待核对。";
+            let incomplete_coverage = !checked.pending_coverage_quotes.is_empty();
+            let mut factual_draft = factual_audit::FactualDraft {
+                document: checked.doc, pending_quotes: checked.pending_coverage_quotes, adverse_claims: Vec::new(),
+            };
             let mut verified = match factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&mut factual_draft,&units,&checked.conflicts,start,&mut trace) {
                 Ok(verified) => verified,
                 Err(reason) => {
                     traced_document=Some(factual_draft.document.clone());
-                    return reviewable(&factual_draft.document, reason, &checked.conflicts, &factual_draft.pending_quotes);
+                    let mut held = checked.conflicts;
+                    held.extend(factual_draft.adverse_claims);
+                    let reason = if incomplete_coverage { format!("{coverage_note}{reason}") } else { reason };
+                    return reviewable(&factual_draft.document, reason, &held, &factual_draft.pending_quotes);
                 }
             };
             pending_quotes = std::mem::take(&mut verified.pending_quotes);
+            if incomplete_coverage {
+                traced_document=Some(verified.document.clone());
+                return reviewable(&verified.document, format!("{coverage_note}已保留其它内容的事实核对结果。"),
+                    &[], &pending_quotes);
+            }
             conditional_speakers = final_bindings::conditional_speakers(&verified, &units);
             unresolved_timings = final_bindings::unresolved_timings(&verified, &units);
             let reviewed = verified.document.clone();

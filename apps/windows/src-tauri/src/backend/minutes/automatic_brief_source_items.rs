@@ -1009,12 +1009,27 @@ fn complete_layout(layout: &mut Layout, facts: &[Fact]) -> Result<Value, String>
     if layout.topics.is_empty() || layout.topics.len() > 8 {
         return Err(fail());
     }
+    let elsewhere: HashSet<_> = facts.iter().filter(|fact| fact.placement != Placement::Topic)
+        .map(|fact| fact.id.as_str()).collect();
     let mut used = HashSet::new();
     let mut moved = Vec::new();
+    let mut misplaced = Vec::new();
     for topic in &mut layout.topics {
-        if topic.points.iter().chain(&topic.details).any(|id| !order.contains_key(id.as_str())) {
+        if topic.points.iter().chain(&topic.details).any(|id| {
+            !order.contains_key(id.as_str()) && !elsewhere.contains(id.as_str())
+        }) {
             return Err(fail());
         }
+        // The organized body selects only topic IDs. An ID already bound to
+        // an independent section stays in that section through normal assembly.
+        let title = &topic.title;
+        let mut keep_topic = |id: &String| {
+            if order.contains_key(id.as_str()) { return true; }
+            misplaced.push(json!({"id":id,"topic":title}));
+            false
+        };
+        topic.points.retain(&mut keep_topic);
+        topic.details.retain(&mut keep_topic);
         topic.points.retain(|id| used.insert(id.clone()));
         topic.details.retain(|id| used.insert(id.clone()));
         if topic.points.len() > 3 {
@@ -1049,7 +1064,32 @@ fn complete_layout(layout: &mut Layout, facts: &[Fact]) -> Result<Value, String>
             .ok_or_else(fail)?;
         topic.details.push(id.clone());
     }
-    Ok(json!({"restoredTopicIds":restored,"movedToDetails":moved}))
+    let mut result = json!({"restoredTopicIds":restored,"movedToDetails":moved});
+    if !misplaced.is_empty() { result["misplacedIndependentReferences"] = json!(misplaced); }
+    Ok(result)
+}
+
+#[cfg(test)]
+#[test]
+fn layout_keeps_known_actions_out_of_topics_and_still_rejects_unknown_ids() {
+    let mut layout: Layout = parse(r#"{"purpose":"讨论场地安排","topics":[
+        {"title":"场地","points":["a000"],"details":["a001","a002","a002"]}
+    ]}"#).unwrap();
+    let facts = [
+        Fact {id:"a000".into(),kind:Kind::Status,placement:Placement::Topic,text:"介绍场地安排。".into(),
+            owner:None,due:None,evidence:vec!["e0000".into()]},
+        Fact {id:"a001".into(),kind:Kind::Decision,placement:Placement::Action,text:"联系场地负责人。".into(),
+            owner:Some("说话人1".into()),due:None,evidence:vec!["e0001".into()]},
+        Fact {id:"a002".into(),kind:Kind::Status,placement:Placement::Topic,text:"场地周末开放。".into(),
+            owner:None,due:None,evidence:vec!["e0002".into()]},
+    ];
+    let record = complete_layout(&mut layout, &facts).unwrap();
+    assert_eq!(layout.topics[0].details, ["a002"]);
+    assert_eq!(record["misplacedIndependentReferences"],json!([{"id":"a001","topic":"场地"}]));
+    assert_eq!(facts[1].evidence,["e0001"]);
+    assert!(facts[1].placement==Placement::Action);
+    layout.topics[0].details.push("a099".into());
+    assert!(complete_layout(&mut layout, &facts).is_err());
 }
 
 fn organize(raw: &str, facts: &[Fact], units: &[Unit], context: &[Fact]) -> Result<(Document, Value, Vec<Fact>), String> {
