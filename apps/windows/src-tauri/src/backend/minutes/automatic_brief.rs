@@ -18,6 +18,8 @@ pub(super) mod answer_layout;
 mod source_items;
 #[path="automatic_brief_source_bindings.rs"]
 mod source_bindings;
+#[path="automatic_brief_source_coverage.rs"]
+mod source_coverage;
 #[path="automatic_brief_commitments.rs"]
 mod commitments;
 #[path="automatic_brief_source_scope.rs"]

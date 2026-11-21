@@ -138,7 +138,7 @@ fn spoken_collective(requested: &str, quote: &str) -> Option<String> {
         .find(|utterance| quote.contains(utterance))
 }
 
-fn owner_as_spoken(requested: &str, row: &Value) -> Option<String> {
+pub(super) fn owner_as_spoken(requested: &str, row: &Value) -> Option<String> {
     let quote = row["text"].as_str()?;
     if super::normalized(quote).contains(&super::normalized(requested)) {
         return Some(requested.to_owned());

@@ -80,9 +80,13 @@ impl SourceItem {
         let mut seen = HashSet::new();
         let evidence: Vec<_> = evidence.into_iter().filter(|id| seen.insert(id.clone())).collect();
         let snippets: Vec<_> = evidence.iter().map(|id| known[id.as_str()]["text"].as_str().unwrap()).collect();
-        let owner = self.owner.filter(|owner| line(owner, 80) && snippets.iter()
-            .any(|text| normalized(text).contains(&normalized(owner))));
+        let owner = self.owner.as_ref().filter(|owner| line(owner, 80) && snippets.iter()
+            .any(|text| normalized(text).contains(&normalized(owner)))).cloned();
         let (text, owner, due) = if placement == Placement::Action {
+            let owner = owner.or_else(|| self.owner.as_deref().filter(|owner| line(owner, 80))
+                .and_then(|owner| evidence.iter().find_map(|id| {
+                    super::commitments::owner_as_spoken(owner, known[id.as_str()])
+                })));
             let due = self.due.filter(|due| line(due, 80) && snippets.iter()
                 .any(|text| due_is_bound(text, due)));
             (self.text, owner, due)
@@ -381,6 +385,9 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
         bindings.correct_attribution(fact).map(|(before, after)| (fact.id.clone(), before, after))
     }).collect();
     let split = bindings.split_assignments(&mut facts);
+    let roles = super::source_coverage::preserve_spoken_roles(&mut facts, &evidence);
+    let separated = retain_requests_before_questions(&mut facts, &evidence);
+    let limits = super::source_coverage::restore_cited_limits(&mut facts, &evidence);
     let mut projection = complete_layout(&mut layout, &facts)?;
     let mut moved = Vec::new();
     for (id, before, after) in &renamed {
@@ -410,7 +417,8 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
         }
     }
     projection["sourceBindings"] = json!({"correctedAttributions":renamed,"movedToSpeakerTopic":moved,
-        "priorProposalsMarked":marked,"splitAssignmentEvidence":split});
+        "priorProposalsMarked":marked,"splitAssignmentEvidence":split,
+        "restoredSourceRoles":roles,"separateRequests":separated,"retainedLiteralLimits":limits});
     let topics = layout.topics.iter().map(|topic| json!({"title":topic.title,
         "points":topic.points.iter().map(|id| [id]).collect::<Vec<_>>(),
         "details":topic.details.iter().map(|id| [id]).collect::<Vec<_>>()})).collect::<Vec<_>>();
@@ -573,6 +581,11 @@ fn omission_cues(facts: &[Fact], evidence: &[Value]) -> Vec<SourceCue> {
         let (evidence, span, aspect) = ordinary[index * ordinary.len() / ordinary_count];
         cues.push(SourceCue { id: format!("v{:03}", cues.len()), evidence: evidence.into(),
             span: span.into(), aspect: Some(aspect) });
+    }
+    for (evidence, span, aspect) in super::source_coverage::material_cues(facts, evidence) {
+        if !cues.iter().any(|cue| cue.evidence == evidence && cue.span == span) {
+            cues.push(SourceCue { id: format!("v{:03}", cues.len()), evidence, span, aspect: Some(aspect) });
+        }
     }
     cues
 }
@@ -815,7 +828,7 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
             let required = context["cue"]["span"].as_str()?;
             proof.as_ref().is_some_and(|proof| coverage_quote_is_grounded(&proof.source_quote, source_text)
                 && normalized(&proof.source_quote).contains(&normalized(required))
-                && (aspect == "实际进展" || !claim.starts_with("questions[")))
+                && (!matches!(aspect, "交办后又提问" | "交办的内容范围") || !claim.starts_with("questions[")))
         } else { true };
         let measure_matches = target.is_some_and(|claim| {
             contextual_measure_witness(context["cue"]["span"].as_str().unwrap(), claim, source_text)
@@ -908,6 +921,42 @@ fn named_instruction_owner<'a>(cue: &SourceCue, original: &str, evidence: &'a [V
     });
     let one = owners.next()?;
     owners.all(|candidate| candidate == one).then_some(one)
+}
+
+fn retain_requests_before_questions(facts: &mut Vec<Fact>, evidence: &[Value]) -> Vec<String> {
+    let by_id: HashMap<_, _> = evidence.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
+    let mut additions = Vec::new();
+    let mut covered: HashSet<_> = facts.iter().filter(|fact| fact.placement == Placement::Action)
+        .flat_map(|fact| fact.evidence.iter().cloned()).collect();
+    for fact in facts.iter().filter(|fact| fact.placement == Placement::Question) {
+        if facts.len() + additions.len() == FACT_LIMIT {
+            break;
+        }
+        let candidate = fact.evidence.iter().filter(|id| !covered.contains(*id)).find_map(|id| {
+            let original = by_id.get(id.as_str())?["text"].as_str()?;
+            let (aspect, span) = ordinary_source_aspect(original)?;
+            if aspect != "交办后又提问" || ["如果", "假如", "是否", "建议先", "要不要", "打算"]
+                .iter().any(|term| original.contains(term)) {
+                return None;
+            }
+            let cue = SourceCue { id:String::new(), evidence:id.clone(), span:span.to_owned(), aspect:Some(aspect) };
+            let owner = named_instruction_owner(&cue, original, evidence)?;
+            let (before, _) = original.split_once(span)?;
+            let (_, qualifier) = before.rsplit_once(owner)?;
+            let text = format!("{owner}{qualifier}{span}。");
+            line(&text, 90).then_some(Fact {
+                id:format!("{}-request",fact.id), kind:Kind::Decision, placement:Placement::Action,
+                text, owner:Some(owner.to_owned()), due:None, evidence:vec![id.clone()],
+            })
+        });
+        if let Some(action) = candidate {
+            covered.extend(action.evidence.iter().cloned());
+            additions.push(action);
+        }
+    }
+    let ids = additions.iter().map(|fact| fact.id.clone()).collect();
+    facts.extend(additions);
+    ids
 }
 
 fn retain_instruction_clause(item: &mut SourceItem, cue: &SourceCue, original: &str, evidence: &[Value]) {
@@ -1036,7 +1085,7 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     }).collect();
     let mut input = json!({"sourceSentences":evidence,"currentBrief":doc,"lexicalCues":cues,"claimEvidence":bindings});
     if cues.iter().any(|cue| cue.aspect.is_some()) {
-        input["aspectInstructions"] = json!("带aspect的线索需要独立核对。实际进展要保留进展对象、已做和正在做的区别。交办后又提问时分别核对交办和提问；后来已回答的问题不抵消交办，负责人和期限只写原话明确的内容。");
+        input["aspectInstructions"] = json!("每条 aspect 核对的是引用中单独的含义。实际进展区分已做与正在做；交办和提问分开。限定和例外要保留适用情形；已发生的处置不能改成建议；交办范围要与相应待办相连。负责人和期限只写原话明确的内容。");
     }
     let raw = super::request(endpoint, model, key, client, FIND_MISSING,
         input, false, start, trace, "source-items-omissions")?;
