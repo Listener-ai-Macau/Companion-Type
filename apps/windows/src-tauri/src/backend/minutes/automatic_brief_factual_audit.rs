@@ -1958,6 +1958,52 @@ fn vague_assignment_quote(issue: &Value, claim: &Value, text: &str, source: &[Se
     quotes.next().is_none().then(|| quote.to_owned())
 }
 
+fn separate_unclear_example_name(
+    issue: &Value, claim: &Value, proposed: &str, source: &[Sentence],
+) -> Option<(String, String)> {
+    let path = issue["path"].as_str()?;
+    if !path.starts_with("topics[") || !path.contains(".details[") || issue["status"] != "unclear" {
+        return None;
+    }
+    let name = issue["unclearText"].as_str()?;
+    let original = claim["text"].as_str()?;
+    if !(2..=24).contains(&name.chars().count()) || !name.chars().all(char::is_alphanumeric)
+        || original.matches(name).count() != 1
+        || !["名称待核对的", "名称待核实的"].iter().any(|prefix| proposed == original.replacen(name, &format!("{prefix}{name}"), 1))
+    {
+        return None;
+    }
+    let (lead, tail) = original.split_once(name)?;
+    let lead = ["，例如", "，比如", "，如"].into_iter().find_map(|intro| lead.strip_suffix(intro))?;
+    if !tail.starts_with(['及', '和', '与']) { return None; }
+    let [id] = issue["evidence"].as_array()?.as_slice() else { return None; };
+    let quote = source.iter().find(|row| id == row.id.as_str() && row.text.contains(name)
+        && claim["sources"].as_array().is_some_and(|ids| ids.iter().any(|id| id == &row.source)))?.text.trim();
+    let kept = format!("{lead}{}。其中一个例子的名称待核对。", tail.trim_end_matches(['。', '.']));
+    super::line(&kept, repair_text_limit(path)).then(|| (kept, quote.to_owned()))
+}
+
+#[cfg(test)]
+#[test]
+fn a_qualified_example_name_keeps_other_places_and_the_literal_quote() {
+    let path = "topics[7].details[9]";
+    let claim = json!({"path":path,"text":"会上曾建议：可带游客参观寺庙，如三塔寺及西双版纳的佛教景点。","sources":["u016"]});
+    let issue = json!({"path":path,"status":"unclear","unclearText":"三塔寺","evidence":["e0279"]});
+    let source = [Sentence{id:"e0279".into(),source:"u016".into(),
+        text:"我们还可以带你去一些寺庙啊，比如说那个重生的三塔寺啊。".into()}];
+    let proposed = "会上曾建议：可带游客参观寺庙，如名称待核对的三塔寺及西双版纳的佛教景点。";
+    let reply = json!({"changes":[{"path":path,"text":proposed}]}).to_string();
+    let (updated, pending) = hold_unresolved_source(&reply, &[issue.clone()], &[claim.clone()], &source,
+        &HashMap::new(), false).unwrap();
+    let updated: Value = serde_json::from_str(&updated).unwrap();
+    assert_eq!(updated["changes"][0]["text"],
+        "会上曾建议：可带游客参观寺庙及西双版纳的佛教景点。其中一个例子的名称待核对。");
+    assert_eq!(pending, [source[0].text.as_str()]);
+    assert!(separate_unclear_example_name(&issue,&claim,&proposed.replace("可带","已确定带"),&source).is_none());
+    let wrong_source = [Sentence{source:"u017".into(),..source[0].clone()}];
+    assert!(separate_unclear_example_name(&issue,&claim,proposed,&wrong_source).is_none());
+}
+
 fn hold_unresolved_source(
     raw: &str, issues: &[Value], claims: &[Value], source: &[Sentence],
     history: &HashMap<String, Vec<String>>, allow_repeated_detail: bool,
@@ -1972,6 +2018,13 @@ fn hold_unresolved_source(
         let Some(path) = row["path"].as_str() else { continue; };
         let Some(issue) = issues.iter().find(|issue| issue["path"] == path && issue["status"] == "unclear")
         else { continue; };
+        if let Some((kept, quote)) = claims.iter().find(|claim| claim["path"] == path)
+            .and_then(|claim| separate_unclear_example_name(issue, claim, text, source))
+        {
+            pending.push(quote);
+            *row = json!({"path":path,"text":kept});
+            continue;
+        }
         if path.starts_with("actionItems[") {
             if let Some(quote) = claims.iter().find(|claim| claim["path"] == path)
                 .and_then(|claim| vague_assignment_quote(issue, claim, text, source))

@@ -237,6 +237,40 @@ fn live_request_topic(fact: &Fact, evidence: &[Value]) -> Option<String> {
     line(&text, 90).then_some(text)
 }
 
+fn answered_question(summary: &str, cited: &[&Value]) -> bool {
+    static EXCHANGE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:询问|追问|质疑|问)(?P<question>[^。！？]{2,}?)\s*(?:回答|答称|答道|答因|回应|确认|认为|解释|说明|答)(?P<answer>[^。！？；]+)"
+    ).unwrap());
+    const STILL_OPEN: &[&str] = &[
+        "待确认", "待核实", "待核对", "待决定", "待答复", "未确定", "未确认", "不确定", "没确定",
+        "未回答", "尚未", "暂不能", "还不清楚", "需进一步", "仍需", "还需", "核实后", "确认后", "会后再",
+    ];
+    let Some(exchange) = EXCHANGE.captures(summary) else { return false; };
+    if STILL_OPEN.iter().any(|word| summary.contains(word)) { return false; }
+    let overlaps = |part: &str, quote: &str, width: usize| {
+        let part: Vec<_> = normalized(part).chars().collect();
+        let quote = normalized(quote);
+        part.windows(width).any(|segment| segment.iter().all(|ch| ch.is_alphanumeric())
+            && quote.contains(&segment.iter().collect::<String>()))
+    };
+    let turns: Vec<_> = cited.iter().filter_map(|row| {
+        let text = row["text"].as_str()?;
+        let (label, words) = super::super::source_resolution::split_turn_label(text)
+            .or_else(|| row["turnSpeaker"].as_str().map(|speaker| (speaker, text)))?;
+        Some((row["id"].as_str()?, label, words.trim()))
+    }).collect();
+    turns.iter().any(|(asked_id, asked_by, question)| {
+        let interrogative = question.contains(['?', '？'])
+            || ["为什么", "为何", "有没有", "是不是", "是否", "怎么", "有什么", "哪些"].iter().any(|word| question.contains(word));
+        interrogative && overlaps(&exchange["question"], question, 2)
+            && turns.iter().any(|(answered_id, answered_by, reply)| {
+                asked_id < answered_id && asked_by != answered_by && !reply.ends_with(['?', '？'])
+                    && !STILL_OPEN.iter().any(|word| reply.contains(word))
+                    && overlaps(&exchange["answer"], reply, 4)
+            })
+    })
+}
+
 fn reconcile_spoken_scope(facts: &mut [Fact], evidence: &[Value]) -> Vec<String> {
     let by_id: HashMap<_, _> = evidence.iter().filter_map(|row|
         Some((row["id"].as_str()?, row))).collect();
@@ -250,6 +284,7 @@ fn reconcile_spoken_scope(facts: &mut [Fact], evidence: &[Value]) -> Vec<String>
             Placement::Action => live_request_topic(fact, evidence).map(|text| (Kind::Opinion, Some(text))),
             Placement::Decision if contingent_closing(&fact.text, &quotes) =>
                 Some((Kind::Recommendation, None)),
+            Placement::Question if answered_question(&fact.text, &rows) => Some((Kind::Opinion, None)),
             Placement::Topic if matches!(fact.kind, Kind::Status | Kind::Opinion) =>
                 reported_context(&fact.text, &rows).map(|text| (Kind::Opinion, Some(text))),
             _ => None,
@@ -794,6 +829,13 @@ pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, uni
         .chain(doc.questions.iter().map(|entry| normalized(&entry.text))).collect();
     for addition in additions {
         let mut fact = addition.item.bind(&known, &known_ids)?;
+        if fact.placement == Placement::Question {
+            let rows: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]).collect();
+            if answered_question(&fact.text, &rows) {
+                fact.kind = Kind::Opinion;
+                fact.placement = Placement::Topic;
+            }
+        }
         let sources = fact.evidence.iter().map(|id| known[id.as_str()]["text"].as_str().unwrap());
         if let Some(corrected) = retain_payment_extent(&fact.text, sources.clone()) {
             fact.text = corrected;
@@ -2661,6 +2703,36 @@ mod tests {
         assert_eq!(reconcile_spoken_scope(std::slice::from_mut(&mut item), &evidence), ["a000"]);
         assert_eq!(item.placement, Placement::Topic);
         assert!(item.text.contains("想嗯想让他科普一下儿常识"));
+    }
+
+    #[test]
+    fn only_an_answer_supported_by_a_different_turn_moves_a_question_to_discussion() {
+        let evidence = [
+            json!({"id":"e0012","source":"u000","text":"主持人：嗯现在是在线上？"}),
+            json!({"id":"e0014","source":"u000","text":"教务：嗯是咱们这儿是线上教学呃"}),
+        ];
+        let report = "校长询问目前线上教学情况，教务确认已改线上教学。";
+        let mut fact = Fact {id:"a003".into(), kind:Kind::Status, placement:Placement::Question,
+            text:report.into(), owner:None, due:None, evidence:vec!["e0012".into(),"e0014".into()]};
+        assert_eq!(reconcile_spoken_scope(std::slice::from_mut(&mut fact), &evidence), ["a003"]);
+        assert_eq!(fact.placement, Placement::Topic);
+        assert_eq!(fact.text, report);
+
+        let cited = evidence.iter().collect::<Vec<_>>();
+        assert!(!answered_question(report, &cited[..1]));
+        assert!(!answered_question("校长询问目前线上教学情况，教务确认已改线上教学，最终安排仍需确认。", &cited));
+        let unrelated = json!({"id":"e0014","source":"u000","text":"教务：下一节讨论排课。"});
+        assert!(!answered_question(report, &[&evidence[0], &unrelated]));
+
+        let doc: Document = serde_json::from_value(json!({"purpose":"教学安排", "topics":[{
+            "title":"教学安排","points":[{"kind":"status","text":"本周检查教学安排。","sources":["u000"]}]
+        }],"decisions":[],"actionItems":[],"questions":[]})).unwrap();
+        let addition = parse(&json!({"topic":"教学安排","item":{"role":"question","text":report,
+            "evidence":["e0012","e0014"],"owner":null,"due":null}}).to_string()).unwrap();
+        let units = [Unit{id:"u000".into(),text:"主持人：嗯现在是在线上？\n教务：嗯是咱们这儿是线上教学呃".into()}];
+        let after = append_missing(vec![addition], doc, &units, &evidence).unwrap();
+        assert!(after.questions.is_empty());
+        assert_eq!(after.topics[0].details[0].text, report);
     }
 
     #[test]
