@@ -499,7 +499,7 @@ fn apply_scope(
             return Err(fail());
         }
         let hypothetical_answer = check["kind"] == "hypotheticalAnswer";
-        if hypothetical_answer && (fact.kind != super::Kind::Opinion
+        if hypothetical_answer && (!matches!(fact.kind, super::Kind::Opinion)
             || !["设例", "假设", "例子"].iter().any(|cue| fact.text.contains(cue))
             || check["requiredSpeakers"].as_array().into_iter().flatten().filter_map(Value::as_str)
                 .any(|speaker| !fact.text.contains(speaker)))
@@ -692,7 +692,7 @@ fn a_hypothetical_answer_requires_attribution_to_the_actual_responders() {
         "item":{"role":"opinion","text":"在这一设例中，说话人2主张先修甲机，说话人1认为也许还需判断同批仪器。",
             "evidence":["e0000","e0001","e0002"],"owner":null,"due":null}}]});
     let result = apply_scope(doc.clone(),&reply.to_string(),&checks,&units,&source,&verified).unwrap();
-    assert_eq!(result.topics[0].points[0].kind,super::Kind::Opinion);
+    assert!(matches!(result.topics[0].points[0].kind,super::Kind::Opinion));
     assert_eq!(result.topics[0].points[1].text,"周五完成例行巡检。");
     reply["scopeChecks"][0]["item"]["text"] = json!("在这一设例中，说话人2主张先修甲机并检查同批仪器。");
     assert!(apply_scope(doc,&reply.to_string(),&checks,&units,&source,&verified).is_err());
