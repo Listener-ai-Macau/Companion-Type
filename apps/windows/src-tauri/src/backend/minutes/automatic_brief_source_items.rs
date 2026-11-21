@@ -382,6 +382,67 @@ impl SourceCheck {
     }
 }
 
+fn background_reason(span: &str, source: &str) -> Option<&'static str> {
+    let occurrences: Vec<_> = source.match_indices(span).collect();
+    if occurrences.is_empty() {
+        return None;
+    }
+    let retrospective = ["一年", "一季度", "一个月"].contains(&span)
+        && occurrences.iter().all(|(at, _)| {
+            let lead = &source[..*at];
+            let rest = &source[at + span.len()..];
+            lead.ends_with(['上', '去'])
+                && ["情况来讲", "情况来看", "工作情况来说", "工作情况来讲"]
+                    .iter().any(|marker| rest.trim_start().starts_with(marker))
+        });
+    if retrospective {
+        return Some("这处数字位于原话回顾情况的引子，未给出新的执行时限。");
+    }
+    let illustration = ["举例", "例如", "比如", "像一些", "比方说"]
+        .iter().any(|marker| source.contains(marker));
+    let requires_action = ["会上决定", "请你", "必须", "负责", "最晚", "截止", "务必"]
+        .iter().any(|marker| source.contains(marker));
+    if illustration && !requires_action && source.trim_end().ends_with(['?', '？'])
+        && occurrences.iter().all(|(at, _)| {
+            let lead = &source[..*at];
+            ["会不会", "能不能", "可不可以"].iter().any(|marker| lead.contains(marker))
+                && lead.contains("或者") && measures(span).any(|(_, unit)| matches!(unit, "个月" | "周" | "天" | "年"))
+        })
+    {
+        return Some("原话用可选时段举例提问，没有确定这个时长。");
+    }
+    None
+}
+
+fn parse_coverage_repair(raw: &str, expected: &[Value], evidence: &[Value]) -> Result<(MissingItems, usize), String> {
+    let initial = match parse::<MissingItems>(raw) {
+        Ok(items) => return Ok((items, 0)),
+        Err(error) => error,
+    };
+    let mut packet: Value = serde_json::from_str(super::super::strip_code_fences(raw).trim())
+        .map_err(|_| initial.clone())?;
+    let rows = packet["checks"].as_array_mut().ok_or_else(|| initial.clone())?;
+    let mut restored = 0;
+    for row in rows {
+        if row["status"] != "background" || !row["reason"].is_null()
+            || !row["addition"].is_null() || !row["claim"].is_null()
+        {
+            continue;
+        }
+        let Some(expected) = expected.iter().find(|entry| entry["cue"]["id"] == row["id"]
+            && entry["cue"]["id"].is_string() && entry["cue"]["aspect"].is_null()) else { continue; };
+        let Some(span) = expected["cue"]["span"].as_str() else { continue; };
+        let Some(text) = evidence.iter().find(|source| source["id"] == expected["cue"]["evidence"])
+            .and_then(|source| source["text"].as_str()) else { continue; };
+        if let Some(reason) = background_reason(span, text) {
+            row["reason"] = json!(reason);
+            restored += 1;
+        }
+    }
+    if restored == 0 { return Err(initial); }
+    parse(&packet.to_string()).map(|items| (items, restored))
+}
+
 pub(super) struct CheckedOmissions {
     pub(super) doc: Document,
     pub(super) conflicts: Vec<Value>,
@@ -825,6 +886,22 @@ fn omission_cues(facts: &[Fact], evidence: &[Value]) -> Vec<SourceCue> {
         }
     }
     cues
+}
+
+#[cfg(test)]
+#[test]
+fn missing_background_reasons_are_restored_only_for_grounded_context() {
+    let raw = r#"{"checks":[{"id":"v002","status":"background","addition":null},{"id":"v006","status":"background","addition":null}],"additions":[]}"#;
+    let expected = [json!({"cue":{"evidence":"e0043","id":"v002","span":"一个月"}}),
+        json!({"cue":{"evidence":"e0083","id":"v006","span":"一年"}})];
+    let mut quotes = [json!({"id":"e0043","text":"像一些顾客会有一些憧憬，他会不会再一个星期或者一个月之内瘦掉几斤？"}),
+        json!({"id":"e0083","text":"说话人3: 保安部话这边的话就是延上半期就是上一年情况来讲的话，对于这个保安人员的话，他不是就是"})];
+    assert_eq!(parse_coverage_repair(raw, &expected, &quotes).unwrap().1,2);
+    quotes[0]["text"] = json!("会上决定，请你一个月内提交初稿。");
+    assert!(parse_coverage_repair(raw, &expected, &quotes).is_err());
+    quotes[0]["text"] = json!("像一些顾客会有一些憧憬，他会不会再一个星期或者一个月之内瘦掉几斤？");
+    assert!(parse_coverage_repair(raw, &expected[..1], &quotes).is_err());
+    assert!(parse_coverage_repair(&raw.replace("null", r#"{"text":"擅自设定期限"}"#),&expected,&quotes).is_err());
 }
 
 #[cfg(test)]
@@ -1766,7 +1843,10 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
             let raw = super::request(endpoint,model,key,client,REPAIR_COVERAGE,
                 json!({"sourceSentences":context,"sourceCoverageRepair":rejected,"currentBrief":doc}),
                 false,start,trace,"source-items-coverage-repair")?;
-            let mut repair: MissingItems = parse(&raw)?;
+            let (mut repair, restored) = parse_coverage_repair(&raw, &rejected, &evidence)?;
+            if restored > 0 {
+                trace.last_mut().unwrap()["groundedBackgroundReasons"] = json!(restored);
+            }
             let duplicates = repair.coalesce_identical_checks(&claim_paths);
             if duplicates > 0 { trace.last_mut().unwrap()["identicalChecksCoalesced"] = json!(duplicates); }
             let returned: HashSet<_> = repair.checks.iter().map(SourceCheck::id).collect();
