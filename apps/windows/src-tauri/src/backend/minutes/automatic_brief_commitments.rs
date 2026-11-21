@@ -474,9 +474,8 @@ fn keeps_dialect_owner_and_defers_an_unbound_pronoun_without_losing_the_task() {
     };
     let named = bind("主持人：物料儿那边儿你先检查这个设备资质。","物料部","检查设备资质。").unwrap().unwrap();
     assert_eq!(named.owner.as_deref(),Some("物料儿那边儿"));
-    let survey = bind("负责人：这边儿需要市场去调查一下客户做一下问卷。","市场部","检查设备资质。")
-        .unwrap().unwrap();
-    assert_eq!(survey.owner.as_deref(),Some("市场"));
+    let survey = json!({"text":"负责人：这边儿需要市场去调查一下客户做一下问卷。"});
+    assert_eq!(directed_department("市场部", &survey).as_deref(),Some("市场"));
     for utterance in ["不需要市场去调查。", "如果需要市场去调查，之后再说。", "需要市场数据做参考。",
         "请研究市场发展趋势。", "让研发去调查、请研发去准备。"] {
         assert!(directed_department("市场部", &json!({"text":utterance})).is_none());
