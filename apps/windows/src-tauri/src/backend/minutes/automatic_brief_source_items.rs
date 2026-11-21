@@ -36,6 +36,7 @@ enum Role {
     Status,
     Requirement,
     Opinion,
+    Example,
     #[serde(alias = "suggestion")]
     Recommendation,
     Forecast,
@@ -48,7 +49,7 @@ impl Role {
     fn category(self) -> (Kind, Placement) {
         match self {
             Self::Status | Self::Requirement => (Kind::Status, Placement::Topic),
-            Self::Opinion => (Kind::Opinion, Placement::Topic),
+            Self::Opinion | Self::Example => (Kind::Opinion, Placement::Topic),
             Self::Recommendation => (Kind::Recommendation, Placement::Topic),
             Self::Forecast => (Kind::Forecast, Placement::Topic),
             Self::Decision => (Kind::Decision, Placement::Decision),
@@ -77,6 +78,7 @@ impl SourceItem {
 
     pub(super) fn bind(self, known: &HashMap<&str, &Value>, known_ids: &HashSet<&str>) -> Result<Fact, String> {
         let stated_requirement = matches!(self.role, Role::Requirement);
+        let illustration = matches!(self.role, Role::Example);
         let (kind, placement) = self.role.category();
         if !line(&self.text, 90) || self.evidence.is_empty() || self.evidence.len() > 8 {
             return Err("纪要事项格式不完整，已有纪要和原文保留。".into());
@@ -108,7 +110,21 @@ impl SourceItem {
                 .map(|name| format!("{name}表示，{}", self.text));
             (text.filter(|text| line(text, 90)).unwrap_or(self.text), None, None)
         };
-        let text = if stated_requirement && !text.starts_with("会上") {
+        let text = if illustration {
+            let markers = ["举例", "比如", "例如", "设例", "假如", "假设", "如果"];
+            if !snippets.iter().any(|quote| markers.iter().any(|marker| quote.contains(marker))) {
+                return Err("纪要例子缺少原话支持，已有结果保留。".into());
+            }
+            let text = if markers.iter().any(|marker| text.contains(marker)) {
+                text
+            } else {
+                format!("会上举例，{text}")
+            };
+            if !line(&text, 90) {
+                return Err("纪要例子格式不完整，已有结果保留。".into());
+            }
+            text
+        } else if stated_requirement && !text.starts_with("会上") {
             let reported = format!("会上提出：{text}");
             if !line(&reported, 90) {
                 return Err("纪要事项格式不完整，已有纪要和原文保留。".into());
@@ -416,6 +432,45 @@ fn background_reason(span: &str, source: &str) -> Option<&'static str> {
         return Some("原话用可选时段举例提问，没有确定这个时长。");
     }
     None
+}
+
+fn remove_surplus_check_brace(raw: &str) -> Option<String> {
+    let body = super::super::strip_code_fences(raw).trim();
+    let bytes = body.as_bytes();
+    let mut containers = Vec::new();
+    let mut in_string = false;
+    let mut escape = false;
+    let mut surplus = None;
+    for (at, byte) in bytes.iter().copied().enumerate() {
+        if in_string {
+            if escape { escape = false; }
+            else if byte == b'\' { escape = true; }
+            else if byte == b'"' { in_string = false; }
+            continue;
+        }
+        match byte {
+            b'"' => in_string = true,
+            b'{' | b'[' => containers.push(byte),
+            b']' => { if containers.pop() != Some(b'[') { return None; } },
+            b'}' if containers.last() == Some(&b'{') => { containers.pop(); },
+            b'}' if containers.last() == Some(&b'[') => {
+                let prior = bytes[..at].iter().rev().find(|byte| !byte.is_ascii_whitespace());
+                let next = bytes[at + 1..].iter().find(|byte| !byte.is_ascii_whitespace());
+                if prior != Some(&b'}') || !matches!(next, Some(b']' | b','))
+                    || surplus.replace(at).is_some()
+                {
+                    return None;
+                }
+            },
+            b'}' => return None,
+            _ => (),
+        }
+    }
+    let at = surplus?;
+    if in_string || !containers.is_empty() { return None; }
+    let repaired = format!("{}{}", &body[..at], &body[at + 1..]);
+    let syntax: Value = serde_json::from_str(&repaired).ok()?;
+    syntax["checks"].is_array().then_some(repaired)
 }
 
 fn parse_coverage_repair(raw: &str, expected: &[Value], evidence: &[Value]) -> Result<(MissingItems, usize), String> {
@@ -1639,6 +1694,114 @@ fn preserves_related_cause(checks: &[SourceCheck], rejected: &[Value]) -> bool {
     })
 }
 
+fn repeated_delay_witness(
+    cue: &SourceCue, addition: &MissingItem, claims: &[Value], evidence: &[Value],
+    bindings: &HashMap<String, &Vec<String>>,
+) -> Option<String> {
+    static REFERENCE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"^(?P<range>[0-9零〇一二两三四五六七八九十]{1,4}\s*(?:到|至)\s*[0-9零〇一二两三四五六七八九十]{1,4}\s*(?:天|小时|周|月))(?:这(?:一)?块(?:儿)?|这段时间|这个时长)"
+    ).unwrap());
+    if cue.aspect.is_some() || !matches!(addition.item.role, Role::Recommendation) {
+        return None;
+    }
+    let at = evidence.iter().position(|row| row["id"] == cue.evidence)?;
+    let raw = evidence[at]["text"].as_str()?.trim();
+    let speech = super::super::source_resolution::split_turn_label(raw).map_or(raw, |(_, rest)| rest.trim());
+    let range = normalized(REFERENCE.captures(speech)?.name("range")?.as_str());
+    if !range.contains(&normalized(&cue.span))
+        || !addition.item.text.contains("提前") && !addition.item.text.contains(&format!("前{}", cue.span))
+    {
+        return None;
+    }
+    let unprefixed = |text: &str| {
+        let text = text.trim_start_matches("会上曾建议：").trim_start_matches("会上建议：");
+        normalized(text)
+    };
+    let addition_text = unprefixed(&addition.item.text);
+    let duplicate = claims.iter().any(|claim| {
+        let Some(path) = claim["path"].as_str() else { return false; };
+        let Some(witness) = bindings.get(path) else { return false; };
+        let Some(text) = claim["text"].as_str() else { return false; };
+        let target = unprefixed(text);
+        let same = addition_text == target || (text.starts_with("会上曾建议：")
+            && addition_text.replacen("需在", "在", 1) == target);
+        same && !addition.item.evidence.is_empty() && addition.item.evidence.iter().all(|id| witness.contains(id))
+    });
+    if !duplicate { return None; }
+    let mut candidates = claims.iter().filter_map(|claim| {
+        let path = claim["path"].as_str()?;
+        let ids = bindings.get(path)?;
+        let text = normalized(claim["text"].as_str()?);
+        ["推迟", "延期", "延后"].into_iter().any(|verb| {
+            let phrase = format!("{verb}{range}");
+            let asserted = |text: &str| text.match_indices(&phrase).any(|(offset, _)| {
+                !["不", "不能", "不要", "不得", "不会", "没有", "没", "未", "别"]
+                    .iter().any(|negative| text[..offset].ends_with(negative))
+            });
+            asserted(&text) && evidence[at.saturating_sub(4)..at].iter().any(|earlier| {
+                earlier["source"] == evidence[at]["source"]
+                    && ids.iter().any(|id| earlier["id"] == id.as_str())
+                    && earlier["text"].as_str().is_some_and(|raw| asserted(&normalized(raw)))
+            })
+        }).then_some(path)
+    });
+    let path = candidates.next()?;
+    candidates.next().is_none().then(|| path.to_owned())
+}
+
+#[cfg(test)]
+#[test]
+fn a_repeated_delay_uses_the_prior_time_range_instead_of_the_forecast_lead_time() {
+    let evidence = [
+        json!({"id":"e0307","source":"u011","text":"说话人4: 如果路况受阻可以往后推迟一到两天。"}),
+        json!({"id":"e0310","source":"u011","text":"说话人1: 一到两天这一块儿，要跟各部门沟通。"}),
+        json!({"id":"e0313","source":"u011","text":"说话人3: 大堂在会议前两天联系或观察天气。"}),
+    ];
+    let delay = vec!["e0307".into()];
+    let weather = vec!["e0313".into()];
+    let bindings = HashMap::from([("topics[0].points[0]".into(),&delay),("topics[0].details[0]".into(),&weather)]);
+    let mut claims = [
+        json!({"path":"topics[0].points[0]","text":"如果路况受阻可推迟一到两天。"}),
+        json!({"path":"topics[0].details[0]","text":"会上曾建议：大堂在会议前两天联系或观察天气。"}),
+    ];
+    let cue = SourceCue{id:"v006".into(),evidence:"e0310".into(),span:"两天".into(),aspect:None};
+    let mut correction: MissingItem = serde_json::from_value(json!({"topic":null,"item":{"role":"recommendation",
+        "text":"大堂需在会议前两天联系或观察天气。","evidence":["e0313"],"owner":null,"due":null}})).unwrap();
+    assert_eq!(repeated_delay_witness(&cue,&correction,&claims,&evidence,&bindings).as_deref(),Some("topics[0].points[0]"));
+    claims[0]["text"] = json!("不能推迟一到两天。");
+    assert!(repeated_delay_witness(&cue,&correction,&claims,&evidence,&bindings).is_none());
+    claims[0]["text"] = json!("如路况受阻，可推迟一到两天。");
+    correction.item.text = "大堂需在会议前两天联系或观察天气，并通知客户。".into();
+    assert!(repeated_delay_witness(&cue,&correction,&claims,&evidence,&bindings).is_none());
+}
+
+#[cfg(test)]
+#[test]
+fn a_structural_extra_brace_does_not_change_quoted_text_or_other_checks() {
+    let raw = r#"{"checks":[{"id":"v001","status":"background","reason":"示例中的 } 和 ] 属于原话。"}},{"id":"v002","status":"background","reason":"两分钟只是举例。"}],"additions":[]}"#;
+    let fixed = remove_surplus_check_brace(raw).unwrap();
+    let json: Value = serde_json::from_str(&fixed).unwrap();
+    assert_eq!(json["checks"][0]["reason"], "示例中的 } 和 ] 属于原话。");
+    assert_eq!(json["checks"][1]["id"], "v002");
+    assert!(remove_surplus_check_brace(&fixed).is_none());
+    let two = raw.replace("两分钟只是举例。"}", "两分钟只是举例。"}}");
+    assert!(remove_surplus_check_brace(&two).is_none());
+}
+
+#[cfg(test)]
+#[test]
+fn a_source_example_can_only_be_a_discussion_item() {
+    let mut source = json!({"text":"说话人2: 比如价值十万元的车可以拍卖。","source":"u000"});
+    let decode = || serde_json::from_value::<SourceItem>(json!({"role":"example",
+        "text":"律师举例：车辆可拍卖。","evidence":["e0001"],"owner":null,"due":null})).unwrap();
+    let known_ids = HashSet::from(["e0001"]);
+    let fact = decode().bind(&HashMap::from([("e0001",&source)]),&known_ids).unwrap();
+    assert_eq!(fact.placement,Placement::Topic);
+    assert!(fact.text.contains("举例"));
+    source["text"] = json!("本次会议已决定购买这辆车。");
+    assert!(decode().bind(&HashMap::from([("e0001",&source)]),&known_ids).is_err());
+}
+
 fn bind_retrospective_context(item: &mut SourceItem, cue: &SourceCue, evidence: &[Value]) -> bool {
     // A calendar question supplies context for its immediately following answer.
     // It does not itself support the new facts stated in the answer.
@@ -1914,7 +2077,11 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
             let raw = super::request(endpoint,model,key,client,REPAIR_COVERAGE,
                 json!({"sourceSentences":context,"sourceCoverageRepair":rejected,"currentBrief":doc}),
                 false,start,trace,"source-items-coverage-repair")?;
-            let (mut repair, restored) = parse_coverage_repair(&raw, &rejected, &evidence)?;
+            let syntax_repaired = remove_surplus_check_brace(&raw);
+            let (mut repair, restored) = parse_coverage_repair(syntax_repaired.as_deref().unwrap_or(&raw), &rejected, &evidence)?;
+            if syntax_repaired.is_some() {
+                trace.last_mut().unwrap()["removedSurplusCheckBrace"] = json!(true);
+            }
             if restored > 0 {
                 trace.last_mut().unwrap()["groundedBackgroundReasons"] = json!(restored);
             }
@@ -1942,6 +2109,19 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         }));
         checked.checks.retain(|check| !selected.contains(check.id()));
         checked.checks.extend(fixed.checks);
+    }
+    let mut rebound = Vec::new();
+    for check in &mut checked.checks {
+        let SourceCheck::Missing { id, addition } = check else { continue; };
+        let Some(cue) = cues.iter().find(|cue| cue.id == *id) else { continue; };
+        let Some(claim) = repeated_delay_witness(cue, addition, &claim_values, &evidence, &bindings)
+        else { continue; };
+        verified_coverage.insert(id.clone());
+        rebound.push(json!({"cue":id,"claim":claim}));
+        *check = SourceCheck::Covered { id:id.clone(), claim, proof:None };
+    }
+    if !rebound.is_empty() {
+        trace[scan_index]["reboundRepeatedDelayReferences"] = json!(rebound);
     }
     let (additions, conflicts) = checked_additions(checked, &cues, &doc, facts, &evidence, &verified_coverage)?;
     trace[scan_index]["boundAdditions"] = json!(additions.len());
