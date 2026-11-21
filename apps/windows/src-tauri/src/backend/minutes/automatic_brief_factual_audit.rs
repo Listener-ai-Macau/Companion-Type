@@ -806,7 +806,18 @@ fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence], clai
         let Some(path) = body.get("path").and_then(Value::as_str) else { continue; };
         let Some(issue) = issues.iter().find(|issue| issue["path"] == path) else { continue; };
         let Some(text) = body.get("text").and_then(Value::as_str) else { continue; };
-        let text_patch = body.len() == 2 || (body.len() == 3 && body["moveToTopic"].is_u64());
+        if body.len() == 3 && body.get("remove").and_then(Value::as_bool) == Some(true)
+            && issue["placementUnsupported"] == true && issue["clarity"] == "clear"
+            && issue["status"] == "overstated" && independent_path(path) && super::line(text, 120)
+        {
+            // The original role is unsupported, while the replacement can
+            // still describe a real discussion. The usual demotion and
+            // independent factual recheck apply before it is publishable.
+            body.remove("remove");
+            count += 1;
+            continue;
+        }
+        let text_patch = body.len() == 2 || (body.len() == 3 && body.get("moveToTopic").is_some_and(Value::is_u64));
         let sourced = claims.iter().find(|claim| text_patch && claim["path"] == path)
             .and_then(|claim| unsettled_assignment_quote(issue, claim, source));
         if let Some(sourced) = sourced {
@@ -861,6 +872,24 @@ fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence], clai
         }
     }
     if count > 0 { (reply.to_string(), count) } else { original() }
+}
+
+#[cfg(test)]
+#[test]
+fn repair_with_replacement_and_remove_keeps_audited_role_correction_without_panicking() {
+    let reply = json!({"changes":[
+        {"path":"actionItems[0]","text":"讨论是否投资。","remove":true},
+        {"path":"actionItems[1]","text":"确认投资。","remove":true},
+    ]});
+    let issues = [
+        json!({"path":"actionItems[0]","placementUnsupported":true,"status":"overstated","clarity":"clear"}),
+        json!({"path":"actionItems[1]","status":"unsupported","clarity":"clear"}),
+    ];
+    let (normalized, count) = normalize_repair_reply(&reply.to_string(), &issues, &[], &[]);
+    let normalized: Value = serde_json::from_str(&normalized).unwrap();
+    assert_eq!(count, 1);
+    assert_eq!(normalized["changes"][0], json!({"path":"actionItems[0]","text":"讨论是否投资。"}));
+    assert_eq!(normalized["changes"][1], reply["changes"][1]);
 }
 
 #[cfg(test)]

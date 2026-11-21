@@ -172,7 +172,7 @@ pub(super) fn apply(doc: &mut Document, units: &[Unit], reported: Vec<ReportedCo
     }
     let total_facts = doc.topics.iter().map(|topic| topic.points.len()+topic.details.len()).sum::<usize>()
         + doc.action_items.len() + doc.decisions.len() + doc.questions.len();
-    let mut room = (20usize.saturating_sub(doc.action_items.len())).min(SOURCE_ITEMS_FACT_LIMIT.saturating_sub(total_facts));
+    let mut room = SOURCE_ITEMS_FACT_LIMIT.saturating_sub(total_facts);
     if room == 0 { return (attributed, 0); }
     let turns = commitments::with_turn_labels(&factual_audit::evidence_sentences(units));
     let mut split = 0;

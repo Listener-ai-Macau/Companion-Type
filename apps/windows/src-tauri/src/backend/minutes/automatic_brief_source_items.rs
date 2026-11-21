@@ -964,6 +964,57 @@ fn coverage_quote_is_grounded(quote: &str, text: &str) -> bool {
         && normalized(text).contains(&normalized(quote))
 }
 
+fn relative_quarter_witness(span: &str, source: &str, source_quote: &str, statement_quote: &str) -> bool {
+    if span != "一季度" { return false; }
+    for direction in ['上', '下'] {
+        let with_number = format!("{direction}{span}");
+        let mut occurrences = source.match_indices(span).peekable();
+        if occurrences.peek().is_none()
+            || !occurrences.all(|(start, _)| source[..start].ends_with(direction))
+            || !source_quote.contains(&with_number)
+        {
+            continue;
+        }
+        return ["季度", "一季度", "个季度", "一个季度"].iter()
+            .any(|term| statement_quote.contains(&format!("{direction}{term}")));
+    }
+    false
+}
+
+fn daily_frequency_witness(span: &str, question: &str, answer_quote: &str, statement_quote: &str) -> bool {
+    static QUESTION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"一天([\p{Han}]{2,8}?)几次"
+    ).expect("constant daily frequency question"));
+    if span != "一天" { return false; }
+    let Some(activity) = QUESTION.captures(question).and_then(|phrase| phrase.get(1)) else {
+        return false;
+    };
+    let rate = regex::Regex::new(&format!(
+        r"(早上|上午|中午|下午|傍晚|晚上|夜间|白天)?(?:会去|会|要|需)?{}\s*([0-9０-９]+|[一二两三四五六七八九十百]+)次",
+        regex::escape(activity.as_str()),
+    )).expect("frequency expression with escaped activity");
+    let rates = |quote: &str| {
+        rate.captures_iter(quote).filter_map(|hit| {
+            let scope = hit.get(1).map_or("", |scope| match scope.as_str() {
+                "上午" => "早上",
+                "晚上" => "夜间",
+                other => other,
+            });
+            Some((scope.to_owned(), number_value(hit.get(2)?.as_str(), false)?))
+        }).collect::<Vec<_>>()
+    };
+    let daily_rates = |quote: &str| {
+        if ["不用", "不能", "没有", "不会", "不再", "不必", "几次", "待定"].iter().any(|cue| quote.contains(cue)) {
+            return None;
+        }
+        quote.find("每天").or_else(|| quote.find("每日")).map(|start| rates(&quote[start..]))
+    };
+    match (daily_rates(answer_quote), daily_rates(statement_quote)) {
+        (Some(answer), Some(statement)) => !answer.is_empty() && answer == statement,
+        _ => false,
+    }
+}
+
 fn restriction() -> &'static regex::Regex {
     static RESTRICTION: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:不是(?:特别|很|太|那么的?)|不(?:够|太|能|得|允许)|没有|尚未|仍未|不得)([\p{Han}]{2,10})"
@@ -1035,9 +1086,19 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
                     aspect, required, statement["kind"].as_str().unwrap_or(""),
                     statement["text"].as_str().unwrap_or(""))))
         } else { true };
-        let measure_matches = context["cue"]["aspect"].is_string() || target.is_some_and(|claim| {
-            contextual_measure_witness(context["cue"]["span"].as_str().unwrap(), claim, source_text)
+        let span = context["cue"]["span"].as_str()?;
+        let alternate_measure = grounded && proof.as_ref().is_some_and(|proof| {
+            (coverage_quote_is_grounded(&proof.source_quote, source_text)
+                && relative_quarter_witness(span, source_text, &proof.source_quote, &proof.statement_quote))
+                || evidence.iter().skip_while(|row| row["id"] != source["id"]).skip(1).take(8).any(|answer| {
+                    answer["source"] == source["source"]
+                        && answer["id"].as_str().is_some_and(|id| cited.is_some_and(|ids| ids.iter().any(|cited| cited == id)))
+                        && answer["text"].as_str().is_some_and(|text| coverage_quote_is_grounded(&proof.source_quote, text))
+                        && daily_frequency_witness(span, source_text, &proof.source_quote, &proof.statement_quote)
+                })
         });
+        let measure_matches = context["cue"]["aspect"].is_string() || alternate_measure
+            || target.is_some_and(|claim| contextual_measure_witness(span, claim, source_text));
         let omitted_qualification = restriction().find_iter(source_text).find(|hit| {
             !hit.as_str().ends_with(['吗', '么', '呢'])
                 && !(hit.as_str().starts_with("没有") && source_text[..hit.start()].ends_with('有'))
@@ -1079,6 +1140,19 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
         }
         Some(issue)
     }).collect()
+}
+
+#[cfg(test)]
+#[test]
+fn coverage_supports_relative_periods_and_a_cited_answer_to_a_frequency_question() {
+    assert!(relative_quarter_witness("一季度", "上一季度已找回。", "上一季度已找回", "上季度已找回"));
+    assert!(!relative_quarter_witness("一季度", "第一季度已找回。", "第一季度已找回", "上季度已找回"));
+    assert!(!relative_quarter_witness("一季度", "上一季度已找回。", "上一季度已找回", "下季度已找回"));
+    let question = "咱们现在大概是一天巡逻几次";
+    let answer = "他们每天早上会去巡逻三次，下午巡逻两次。";
+    assert!(daily_frequency_witness("一天", question, answer, "每天上午巡逻3次、下午巡逻2次。"));
+    assert!(!daily_frequency_witness("一天", question, answer, "每天上午巡逻2次、下午巡逻3次。"));
+    assert!(!daily_frequency_witness("一天", "有一天巡逻了几次", answer, "每天上午巡逻3次、下午巡逻2次。"));
 }
 
 fn retain_acknowledgment(issue: &Value, evidence: &[Value]) -> Option<SourceCheck> {

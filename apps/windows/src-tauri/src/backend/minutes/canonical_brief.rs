@@ -144,6 +144,9 @@ pub(in crate::backend::minutes) const SOURCE_ITEMS_DETAILS_LIMIT: usize = SOURCE
 pub(in crate::backend::minutes) fn question_limit(details_limit: usize) -> usize {
     if details_limit == SOURCE_ITEMS_DETAILS_LIMIT { 32 } else { 20 }
 }
+pub(in crate::backend::minutes) fn action_limit(details_limit: usize) -> usize {
+    if details_limit == SOURCE_ITEMS_DETAILS_LIMIT { SOURCE_ITEMS_FACT_LIMIT } else { 20 }
+}
 pub(in crate::backend::minutes) fn validate_with_details_limit(doc:&Document,units:&[Unit],details_limit:usize)->Result<(),String> {
     let known=units.iter().map(|u|(u.id.as_str(),u.text.as_str())).collect::<HashMap<_,_>>();
     let mut issues=Vec::new();let mut titles=HashSet::new();let mut texts=HashSet::new();let mut chars=0;
@@ -170,7 +173,8 @@ pub(in crate::backend::minutes) fn validate_with_details_limit(doc:&Document,uni
         if items.len()>limit{issues.push(format!("{name}超出{limit}项"));}
         for (i,p) in items.iter().enumerate(){if !line(&p.text,180)||!refs(&p.sources,&known){issues.push(format!("{name}[{i}]须为180字内单行并引用实际原id"));}}
     }
-    if doc.action_items.len()>20{issues.push("actionItems超出20项".into());}
+    let action_limit = action_limit(details_limit);
+    if doc.action_items.len()>action_limit{issues.push(format!("actionItems超出{action_limit}项"));}
     for (i,a) in doc.action_items.iter().enumerate() {
         if !line(&a.text,180)||!refs(&a.sources,&known){issues.push(format!("actionItems[{i}]须为180字内单行并引用实际原id"));continue;}
         let original=normalized(&a.sources.iter().map(|id|known[id.as_str()]).collect::<Vec<_>>().join("\n"));

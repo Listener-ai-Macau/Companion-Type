@@ -81,7 +81,7 @@ pub(in crate::backend::minutes) fn assemble(raw:&str,facts:&[Fact],units:&[Unit]
 pub(in crate::backend::minutes) fn assemble_with_details_limit(raw:&str,facts:&[Fact],units:&[Unit],details_limit:usize,fact_limit:usize)->Result<Assembled,String>{
     let layout:Layout=serde_json::from_str(super::super::strip_code_fences(raw).trim()).map_err(|_|fail())?;
     let known=bind_facts(facts,units,fact_limit)?;let mut used=HashSet::new();
-    if layout.topics.is_empty()||layout.topics.len()>8||layout.decisions.len()>20||layout.action_items.len()>20
+    if layout.topics.is_empty()||layout.topics.len()>8||layout.decisions.len()>20||layout.action_items.len()>super::action_limit(details_limit)
         || layout.questions.len()>super::question_limit(details_limit){return Err(fail());}
     let mut document=Document{purpose:layout.purpose,topics:Vec::new(),decisions:Vec::new(),action_items:Vec::new(),questions:Vec::new()};
     let mut bindings=Vec::new();
@@ -138,6 +138,25 @@ mod tests{
         assert_eq!(actual.document.action_items[0].owner,Some("李敏".into()));
         assert_eq!(actual.document.action_items[0].due,Some("周五".into()));
         assert_eq!(actual.retained_ids,vec!["a000","a001"]);assert!(actual.excluded.is_empty());
+    }
+    #[test]
+    fn source_item_layout_keeps_more_than_twenty_action_candidates_for_review() {
+        let mut all = facts();
+        let mut actions = vec![vec![all[1].id.clone()]];
+        for index in 2..=21 {
+            let mut fact = all[1].clone();
+            fact.id = format!("a{index:03}");
+            fact.text = format!("李敏周五完成第{index}项权限测试。");
+            actions.push(vec![fact.id.clone()]);
+            all.push(fact);
+        }
+        let mut layout = layout();
+        layout["actionItems"] = json!(actions);
+        let raw = layout.to_string();
+        let limit = super::super::SOURCE_ITEMS_FACT_LIMIT;
+        let assembled = assemble_with_details_limit(&raw, &all, &units(), limit, limit).unwrap();
+        assert_eq!(assembled.document.action_items.len(), 21);
+        assert!(assemble(&raw, &all, &units()).is_err());
     }
     #[test]
     fn automatic_brief_id_layout_rejects_omitted_invented_repeated_or_rewritten_facts(){
