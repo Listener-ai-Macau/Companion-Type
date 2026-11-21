@@ -14,7 +14,7 @@ pub(super) fn conditional_speakers(brief: &factual_audit::VerifiedBrief, units: 
     let mut reported = Vec::new();
     for (i, topic) in brief.document.topics.iter().enumerate() {
         for (j, point) in topic.points.iter().enumerate() {
-            if !matches!(point.kind, Kind::Status)
+            if !matches!(point.kind, Kind::Status | Kind::Opinion)
                 || !["如果", "假如", "倘若"].iter().any(|cue| point.text.starts_with(cue))
             {
                 continue;
@@ -83,7 +83,7 @@ fn bound_scope(action: &Action, turns: &[Value]) -> Option<[Action; 2]> {
 pub(super) fn apply(doc: &mut Document, units: &[Unit], reported: Vec<ReportedCondition>) -> (usize, usize) {
     let mut attributed = 0;
     for point in doc.topics.iter_mut().flat_map(|topic| &mut topic.points) {
-        if !matches!(point.kind, Kind::Status) { continue; }
+        if !matches!(point.kind, Kind::Status | Kind::Opinion) { continue; }
         if let Some(claim) = reported.iter().find(|claim| claim.text == point.text && claim.sources == point.sources) {
             let text = format!("{}：{}", claim.speaker, point.text);
             if line(&text, 90) {
@@ -133,4 +133,23 @@ fn splits_accepted_personal_step_from_the_cited_collective_task() {
     let mut dated = task;
     dated.due = Some("周三".into());
     assert!(bound_scope(&dated, &turns).is_none());
+}
+
+#[cfg(test)]
+#[test]
+fn retains_the_speaker_for_an_opinion_on_the_same_turn() {
+    use serde_json::json;
+    let units = vec![Unit{id:"u000".into(),text:"说话人2：这是我的看法。如果货架太低，就不适合存放这些货。\n".into()}];
+    let doc: Document = serde_json::from_value(json!({
+        "purpose":"讨论货架",
+        "topics":[{"title":"货架高度","points":[{"kind":"opinion","text":"如果货架太低，就不适合存放这些货。","sources":["u000"]}]}],
+        "actionItems":[],"decisions":[],"questions":[]
+    })).unwrap();
+    let brief = factual_audit::VerifiedBrief{document:doc.clone(),
+        evidence:std::collections::HashMap::from([("topics[0].points[0]".into(),vec!["e0001".into()])]),
+        pending_quotes:Vec::new()};
+    let mut published = doc;
+    let speakers = conditional_speakers(&brief, &units);
+    assert_eq!(apply(&mut published, &units, speakers), (1,0));
+    assert_eq!(published.topics[0].points[0].text, "说话人2：如果货架太低，就不适合存放这些货。");
 }
