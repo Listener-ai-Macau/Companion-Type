@@ -2,8 +2,8 @@
 //! The selected original is never modified; the caller owns its preserved copy.
 use std::{fs::{self,File,OpenOptions}, io::{ErrorKind,Read,Seek,SeekFrom,Write}, path::{Path,PathBuf}, sync::atomic::{AtomicBool,Ordering}};
 use sha2::{Digest,Sha256};
-use symphonia::core::{audio::{AudioBufferRef, SampleBuffer, Signal}, codecs::DecoderOptions, errors::Error,
-    formats::FormatOptions, io::MediaSourceStream, meta::MetadataOptions, probe::Hint};
+use symphonia::core::{audio::{AudioBufferRef, SampleBuffer, Signal}, codecs::{DecoderOptions, CODEC_TYPE_MP3}, errors::Error,
+    formats::{util::trim_packet, FormatOptions}, io::MediaSourceStream, meta::MetadataOptions, probe::Hint};
 use super::{audio_artifacts::{self, Purpose, WriteLease}, host_recording::RatioResampler,
     host_segmented_capture::{HostAudioPart, RollingHostWav}};
 
@@ -94,11 +94,21 @@ pub(super) fn decode_to_speech_wav(input:&Path,anchor:&Path)->Result<Vec<HostAud
     file.seek(SeekFrom::Start(0)).map_err(|e|format!("无法读取所选音频：{e}"))?;
     let stream=MediaSourceStream::new(Box::new(file),Default::default());
     let mut hint=Hint::new();if let Some(ext)=input.extension().and_then(|x|x.to_str()){hint.with_extension(ext);}
-    let options = FormatOptions { enable_gapless: true, ..Default::default() };
-    let mut format=symphonia::default::get_probe().format(&hint,stream,&options,&MetadataOptions::default())
+    let mut format=symphonia::default::get_probe().format(&hint,stream,&FormatOptions::default(),&MetadataOptions::default())
         .map_err(|e|format!("无法读取音频格式：{e}"))?.format;
     let track=format.default_track().ok_or("文件中没有可用音轨。")?;
     let track_id=track.id;
+    // Without encoder metadata the MPEG reader may estimate n_frames from an
+    // initial bitrate. Never use that estimate to truncate an untagged file.
+    let params = &track.codec_params;
+    let mp3_boundaries = match (params.codec, params.delay, params.padding, params.n_frames) {
+        (CODEC_TYPE_MP3, Some(delay), Some(padding), Some(frames))
+            if frames > u64::from(delay) + u64::from(padding) =>
+        {
+            Some((delay, frames - u64::from(delay) - u64::from(padding)))
+        }
+        _ => None,
+    };
     let mut decoder=symphonia::default::get_codecs().make(&track.codec_params,&DecoderOptions::default())
         .map_err(|e|format!("暂不支持这个音频编码：{e}"))?;
     let mut leases:Vec<WriteLease>=Vec::new();
@@ -108,12 +118,15 @@ pub(super) fn decode_to_speech_wav(input:&Path,anchor:&Path)->Result<Vec<HostAud
         let mut samples_written=0u64;
         loop {
             check_cancel()?;
-            let packet=match format.next_packet() {
+            let mut packet=match format.next_packet() {
                 Ok(packet)=>packet,
                 Err(Error::IoError(e)) if e.kind()==ErrorKind::UnexpectedEof=>break,
                 Err(e)=>return Err(format!("读取音频未完成，原文件未改变：{e}")),
             };
             if packet.track_id()!=track_id {continue;}
+            if let Some((delay, frames)) = mp3_boundaries {
+                trim_packet(&mut packet, delay, Some(frames));
+            }
             let audio=decoder.decode(&packet).map_err(|e|format!("音频解码未完成，原文件未改变：{e}"))?;
             let spec=*audio.spec();let channels=spec.channels.count();
             if converter.is_none() { converter=Some(SpeechConverter::new(spec.rate,channels)?); }
