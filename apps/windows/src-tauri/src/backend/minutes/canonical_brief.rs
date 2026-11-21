@@ -139,7 +139,8 @@ pub(in crate::backend::minutes) fn refs(ids:&[String],known:&HashMap<&str,&str>)
     !ids.is_empty()&&ids.len()<=8&&ids.iter().all(|id|known.contains_key(id.as_str()))&&ids.iter().collect::<HashSet<_>>().len()==ids.len()
 }
 pub(in crate::backend::minutes) fn normalized(text:&str)->String {text.chars().filter(|c|!c.is_whitespace()).collect()}
-pub(in crate::backend::minutes) const SOURCE_ITEMS_DETAILS_LIMIT: usize = 24;
+pub(in crate::backend::minutes) const SOURCE_ITEMS_FACT_LIMIT: usize = 128;
+pub(in crate::backend::minutes) const SOURCE_ITEMS_DETAILS_LIMIT: usize = SOURCE_ITEMS_FACT_LIMIT;
 pub(in crate::backend::minutes) fn question_limit(details_limit: usize) -> usize {
     if details_limit == SOURCE_ITEMS_DETAILS_LIMIT { 32 } else { 20 }
 }
@@ -158,6 +159,12 @@ pub(in crate::backend::minutes) fn validate_with_details_limit(doc:&Document,uni
         for (j,p) in t.details.iter().enumerate() {if !line(&p.text,120)||!refs(&p.sources,&known){issues.push(format!("topics[{i}].details[{j}]须为120字内单行并引用实际原id"));}}
     }
     if chars>1000{issues.push("主要回答超出1000字安全上限，须保留要义并收短".into());}
+    if details_limit == SOURCE_ITEMS_DETAILS_LIMIT {
+        let topic_facts = doc.topics.iter().map(|topic| topic.points.len() + topic.details.len()).sum::<usize>();
+        if topic_facts + doc.decisions.len() + doc.action_items.len() + doc.questions.len() > SOURCE_ITEMS_FACT_LIMIT {
+            issues.push(format!("全篇事项数超出{SOURCE_ITEMS_FACT_LIMIT}项安全上限"));
+        }
+    }
     for (name,items) in [("decisions",&doc.decisions),("questions",&doc.questions)] {
         let limit = if name == "questions" { question_limit(details_limit) } else { 20 };
         if items.len()>limit{issues.push(format!("{name}超出{limit}项"));}

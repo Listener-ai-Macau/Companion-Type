@@ -22,7 +22,7 @@ const RECHECK_MEASURES: &str = include_str!("automatic_brief_source_item_recheck
 const REPAIR_COVERAGE: &str = include_str!("automatic_brief_source_coverage_repair.txt");
 const WINDOW_BYTES: usize = 13 * 1024;
 const WINDOW_WORKERS: usize = 3;
-const FACT_LIMIT: usize = 128;
+const FACT_LIMIT: usize = super::SOURCE_ITEMS_FACT_LIMIT;
 pub(super) const DETAILS_LIMIT: usize = super::SOURCE_ITEMS_DETAILS_LIMIT;
 
 pub(super) fn enabled() -> bool {
@@ -366,24 +366,17 @@ fn complete_layout(layout: &mut Layout, facts: &[Fact]) -> Result<Value, String>
             topic.details.insert(0, id);
         }
     }
-    // If an offered group is full or a known item was missed, use the closest
-    // item by source order to select a group with room. Zero facts are rewritten.
-    let mut pending = Vec::new();
-    for topic in &mut layout.topics {
-        if topic.details.len() > DETAILS_LIMIT {
-            pending.extend(topic.details.split_off(DETAILS_LIMIT));
-        }
-    }
+    // Keep assigned details in their original section under the global fact
+    // budget. Estimate a topic only for facts the organizer left unassigned.
     let restored: Vec<_> = facts.iter().filter(|fact| fact.placement == Placement::Topic && !used.contains(&fact.id))
         .map(|fact| fact.id.clone()).collect();
-    pending.extend(restored.iter().cloned());
-    for id in pending {
+    for id in &restored {
         let index = order[id.as_str()];
         let topic = layout.topics.iter_mut().filter(|topic| topic.details.len() < DETAILS_LIMIT)
             .min_by_key(|topic| topic.points.iter().chain(&topic.details)
                 .map(|item| order[item.as_str()].abs_diff(index)).min().unwrap_or(usize::MAX))
             .ok_or_else(fail)?;
-        topic.details.push(id);
+        topic.details.push(id.clone());
     }
     Ok(json!({"restoredTopicIds":restored,"movedToDetails":moved}))
 }
@@ -1517,6 +1510,24 @@ mod tests {
         assert_eq!(assembled.topics[0].details[0].text, facts[3].text);
         assert_eq!(assembled.topics[0].details[1].text, facts[4].text);
         assert!(organize(&raw.replace("a003","a999"), &facts, &units).is_err());
+    }
+
+    #[test]
+    fn crowded_topic_keeps_its_assigned_details_under_the_document_budget() {
+        let units = vec![Unit {id:"u000".into(),text:"讨论供货安排。".into()}];
+        let facts: Vec<_> = (0..28).map(|index| Fact {
+            id:format!("a{index:03}"),kind:Kind::Status,placement:Placement::Topic,
+            text:format!("原话条目{index}。"),owner:None,due:None,evidence:vec!["e0000".into()],
+        }).collect();
+        let selected: Vec<_> = facts[1..27].iter().map(|fact| &fact.id).collect();
+        let raw = json!({"purpose":"讨论供货","topics":[
+            {"title":"供货安排","points":["a000"],"details":selected},
+            {"title":"费用审批","points":["a027"],"details":[]}
+        ]});
+        let (doc, _, _) = organize(&raw.to_string(), &facts, &units).unwrap();
+        assert_eq!(doc.topics[0].details.len(), 26);
+        assert_eq!(doc.topics[0].details.last().unwrap().text, facts[26].text);
+        assert!(doc.topics[1].details.is_empty());
     }
 
     #[test]
