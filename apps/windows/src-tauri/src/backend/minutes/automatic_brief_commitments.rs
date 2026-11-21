@@ -393,6 +393,60 @@ fn unchanged_action_with_unbound_owner(original: &Value, item: &mut source_items
     true
 }
 
+fn verified_source_baseline(
+    original: &Value, item: &source_items::SourceItem, owner_proof: Option<&str>,
+    known: &SourceIndex<'_>, known_ids: &HashSet<&str>,
+) -> Option<Fact> {
+    let claim = &original["claim"];
+    let text = claim["text"].as_str()?;
+    let basis = original["basis"].as_array()?;
+    let evidence = basis.iter().map(|row| row.as_str().map(str::to_owned)).collect::<Option<Vec<_>>>()?;
+    // This protects the audited form from another interpretation of the same
+    // evidence. A newly cited witness goes through the ordinary binding and the
+    // downstream factual review. Unknown evidence is never treated as old.
+    let already_reviewed = |id: &str| factual_audit::canonical_sentence_reference(id, known_ids)
+        .is_some_and(|id| evidence.contains(&id));
+    if !item.is_action() || item.evidence.is_empty()
+        || !item.evidence.iter().all(|id| already_reviewed(id))
+        || !owner_proof.is_none_or(already_reviewed)
+    {
+        return None;
+    }
+    let unresolved_subject = text.split(['。', '；', ';']).any(|part| {
+        ["名称", "所指", "对象", "指代"].iter().any(|field| part.contains(field))
+            && ["待核对", "待核实", "待确认"].iter().any(|status| part.trim_end_matches(['。', '）', ')']).ends_with(status))
+    });
+    if claim["kind"] == "action" && unresolved_subject && item.text != text {
+        return Some(Fact {
+            id: String::new(), kind: Kind::Status, placement: Placement::Action, text: text.to_owned(),
+            owner: claim["owner"].as_str().map(str::to_owned), due: claim["due"].as_str().map(str::to_owned), evidence,
+        });
+    }
+    if !original["id"].as_str().is_some_and(|path| path.starts_with("topics[")) {
+        return None;
+    }
+    let existing_routine = evidence.iter().any(|id| {
+        let Some(quote) = known[id.as_str()]["text"].as_str() else { return false; };
+        let quote = super::normalized(quote);
+        ["每天", "每日", "每周", "每月", "定期"].iter().any(|period| {
+            quote.find(period).is_some_and(|at| {
+                let end = at + period.len();
+                let tail: String = quote[end..].chars().take(40).collect();
+                ["都会", "一向", "通常", "一直", "平时", "例行"].iter().any(|cue| tail.contains(cue))
+                    && super::source_coverage::shared_literal(text, &tail, 3)
+                    && !["以后", "从今", "从明", "下周起", "下月起", "即日起", "决定", "改为", "要求", "必须"]
+                        .iter().any(|cue| quote[..end].contains(cue))
+            })
+        })
+    });
+    if !existing_routine { return None; }
+    let text = if text.starts_with("日常流程中，") { text.to_owned() } else { format!("日常流程中，{text}") };
+    super::line(&text, 90).then_some(Fact {
+        id: String::new(), kind: Kind::Status, placement: Placement::Topic, text,
+        owner: None, due: None, evidence,
+    })
+}
+
 fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids: &HashSet<&str>) -> Result<Option<Fact>, &'static str> {
     let context: HashSet<_> = original["context"].as_array().unwrap().iter().filter_map(Value::as_str).collect();
     let basis: HashSet<_> = original["basis"].as_array().unwrap().iter().filter_map(Value::as_str).collect();
@@ -401,6 +455,9 @@ fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids:
     let fact = match (check.replacement, check.clarification, check.owner_evidence) {
         (None, None, None) => return Ok(None),
         (Some(mut item), None, owner_evidence) => {
+            if let Some(retained) = verified_source_baseline(original, &item, owner_evidence.as_deref(), known, known_ids) {
+                return Ok(Some(retained));
+            }
             let mut requested = item.owner.clone();
             let due = item.due.clone();
             let evidence_ids: HashSet<_> = item.evidence.iter()
@@ -514,6 +571,54 @@ fn keeps_dialect_owner_and_defers_an_unbound_pronoun_without_losing_the_task() {
     assert_eq!(requester.text, "检查设备资质（负责人待核实）。");
     let volunteer = bind("主持人：我会检查设备资质。","主持人","检查设备资质。").unwrap().unwrap();
     assert_eq!(volunteer.owner.as_deref(), Some("主持人"));
+}
+
+#[cfg(test)]
+#[test]
+fn commitment_checks_keep_an_unclear_counterparty_and_distinguish_existing_routines() {
+    let original = json!({
+        "id":"actionItems[3]", "basis":["e0204","e0206"], "context":["e0204","e0206","e0207"],
+        "claim":{"kind":"action","owner":null,"due":null,"text":"向相关电网机构索取项目图；具体机构名称待核对。"}
+    });
+    let mut proposal = json!({"id":"actionItems[3]","ownerEvidence":"e0204","replacement":{
+        "role":"action","text":"向国家电网索取项目图。","owner":"说话人2","due":null,"evidence":["e0204","e0206"]
+    }});
+    let rows = [
+        json!({"text":"说话人2: 我们会跟这个电网中国家电网去找他们要一些。","turnSpeaker":"说话人2"}),
+        json!({"text":"说话人2: 对对找一些项目图和图纸。","turnSpeaker":"说话人2"}),
+        json!({"text":"说话人3: 确认是国家电网，我来负责向他们索取图纸。","turnSpeaker":"说话人3"}),
+    ];
+    let known = SourceIndex::from([("e0204",&rows[0]),("e0206",&rows[1]),("e0207",&rows[2])]);
+    let ids = known.keys().copied().collect();
+    let kept = bind_edit(serde_json::from_value(proposal.clone()).unwrap(), &original, &known, &ids).unwrap().unwrap();
+    assert_eq!(kept.text,"向相关电网机构索取项目图；具体机构名称待核对。");
+    assert_eq!(kept.owner,None);
+    assert_eq!(kept.evidence,["e0204","e0206"]);
+    proposal["ownerEvidence"] = json!("e0207");
+    proposal["replacement"]["owner"] = json!("说话人3");
+    proposal["replacement"]["evidence"] = json!(["e0204","e0207"]);
+    let updated = bind_edit(serde_json::from_value(proposal).unwrap(), &original, &known, &ids).unwrap().unwrap();
+    assert_eq!(updated.owner.as_deref(),Some("说话人3"));
+    assert_eq!(updated.text,"向国家电网索取项目图。");
+
+    let original = json!({"id":"topics[0].details[0]","basis":["e0004"],"context":["e0004"],
+        "claim":{"text":"业务员当天下午下班前写日志并报告。"}});
+    let proposal = json!({"id":"topics[0].details[0]","replacement":{"role":"action",
+        "text":"业务员每天下班前写日志并报告。","owner":"业务员","due":null,"evidence":["e0004"]}});
+    for (quote, placement) in [
+        ("业务员每天快下班的时候都会写日志报告。",Placement::Topic),
+        ("从明天起业务员每天快下班的时候都会写日志报告。",Placement::Action),
+    ] {
+        let row = json!({"text":quote});
+        let known = SourceIndex::from([("e0004",&row)]);
+        let ids = HashSet::from(["e0004"]);
+        let fact = bind_edit(serde_json::from_value(proposal.clone()).unwrap(), &original, &known, &ids).unwrap().unwrap();
+        assert!(fact.placement == placement);
+        if placement == Placement::Topic {
+            assert_eq!(fact.text,"日常流程中，业务员当天下午下班前写日志并报告。");
+            assert_eq!(fact.owner,None);
+        }
+    }
 }
 
 #[derive(Default)]
