@@ -693,6 +693,8 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
     }).collect();
     let split = bindings.split_assignments(&mut facts);
     let roles = super::source_coverage::preserve_spoken_roles(&mut facts, &evidence);
+    let bridged_assignments = super::source_coverage::bind_nearby_assignment(&mut facts, &evidence);
+    let cited_details = super::source_coverage::retain_cited_details(&mut facts, &evidence);
     let separated = retain_requests_before_questions(&mut facts, &evidence);
     let source_by_id: HashMap<_, _> = evidence.iter().map(|row| {
         (row["id"].as_str().unwrap(), row["text"].as_str().unwrap())
@@ -740,6 +742,12 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
         "retainedDeliveryScopes":delivery_scopes,"spokenScopeCorrections":spoken_scope});
     if !payment_ranges.is_empty() {
         projection["sourceBindings"]["retainedPaymentRanges"] = json!(payment_ranges);
+    }
+    if !bridged_assignments.is_empty() {
+        projection["sourceBindings"]["bridgedAssignments"] = json!(bridged_assignments);
+    }
+    if !cited_details.is_empty() {
+        projection["sourceBindings"]["retainedCitedDetails"] = json!(cited_details);
     }
     let topics = layout.topics.iter().map(|topic| json!({"title":topic.title,
         "points":topic.points.iter().map(|id| [id]).collect::<Vec<_>>(),

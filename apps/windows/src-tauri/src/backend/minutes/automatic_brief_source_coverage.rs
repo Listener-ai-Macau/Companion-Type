@@ -368,9 +368,13 @@ pub(super) fn answered_hypothesis<'a>(question: &'a str, reply: &'a str) -> Opti
 }
 
 fn literal_overlap(claim: &str, before: &str) -> bool {
+    shared_literal(claim, before, 5)
+}
+
+fn shared_literal(claim: &str, source: &str, width: usize) -> bool {
     let claim = normalized(claim).chars().collect::<Vec<_>>();
-    claim.windows(5).filter(|chunk| chunk.iter().all(|ch| ch.is_alphanumeric()))
-        .any(|chunk| before.contains(&chunk.iter().collect::<String>()))
+    claim.windows(width).filter(|chunk| chunk.iter().all(|ch| ch.is_alphanumeric()))
+        .any(|chunk| source.contains(&chunk.iter().collect::<String>()))
 }
 
 pub(super) fn restore_cited_limits(facts: &mut [Fact], evidence: &[Value]) -> Vec<String> {
@@ -400,6 +404,160 @@ pub(super) fn restore_cited_limits(facts: &mut [Fact], evidence: &[Value]) -> Ve
         }
     }
     retained
+}
+
+fn retain_recruitment_count(claim: &str, raw: &str) -> Option<String> {
+    static COUNTED: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<verb>抽调|选派|招聘|增派|安排|找)(?P<count>[一二两三四五六七八九十0-9]{1,4}[个名位])(?P<skill>有经验|有资质|持证|熟悉[^，,。；？！\s]{2,9}|有[^，,。；？！\s]{2,9}经验)"
+    ).unwrap());
+    let source = source_body(raw);
+    let matched = COUNTED.captures(source)?;
+    if COUNTED.captures_iter(source).nth(1).is_some() {
+        return None;
+    }
+    let all = matched.get(0)?;
+    let skill = matched.name("skill")?.as_str();
+    let tail = source[all.end()..].split(['。', '；', '！', '？']).next()?;
+    let tail = tail.chars().take(32).collect::<String>();
+    if !["人", "同事", "员工", "专员"].iter().any(|noun| tail.contains(noun))
+        || ["如果", "假如", "是不是", "要不要"].iter().any(|cue| source[..all.start()].contains(cue))
+        || ["不", "未", "没", "不要", "不能", "不必", "禁止", "不许", "无需"]
+            .iter().any(|cue| source[..all.start()].trim_end().ends_with(cue))
+    {
+        return None;
+    }
+    let verb = matched.name("verb")?.as_str();
+    let label = format!("{verb}{skill}");
+    let mut claims = claim.match_indices(&label);
+    let (start, _) = claims.next()?;
+    if claims.next().is_some() || claim[..start].ends_with(['不', '没', '未']) {
+        return None;
+    }
+    let mut corrected = claim.to_owned();
+    corrected.insert_str(start + verb.len(), matched.name("count")?.as_str());
+    line(&corrected, 90).then_some(corrected)
+}
+
+fn retain_additional_cause(claim: &str, raw: &str) -> Option<String> {
+    static CHAIN: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:又加上|再加上|还由于|另一个原因是)(?P<cause>[^。；？！\r\n]{10,58}?)(?:所以|因此|从而|导致|使得)(?P<outcome>[^。；？！\r\n]{4,35})"
+    ).unwrap());
+    let source = source_body(raw);
+    let matched = CHAIN.captures(source)?;
+    let lead = &source[..matched.get(0)?.start()];
+    if ["如果", "假如", "比方", "假设", "要不要", "是否"].iter().any(|cue| lead.contains(cue)) {
+        return None;
+    }
+    let cause = matched.name("cause")?.as_str().trim();
+    let outcome = normalized(matched.name("outcome")?.as_str());
+    if cause.contains(['「', '」'])
+        || !["费用", "成本", "支出", "投入", "工期", "经费", "预算", "损失", "风险", "人手"]
+            .iter().any(|term| cause.contains(term))
+        || !shared_literal(claim, &outcome, 4)
+        || literal_overlap(claim, &normalized(cause))
+    {
+        return None;
+    }
+    let claim = claim.trim_end_matches('。');
+    let corrected = format!("{claim}。另提到「{cause}」。");
+    line(&corrected, 90).then_some(corrected)
+}
+
+pub(super) fn retain_cited_details(facts: &mut [Fact], evidence: &[Value]) -> Vec<Value> {
+    let source: HashMap<_, _> = evidence.iter().map(|row| {
+        (row["id"].as_str().unwrap(), row["text"].as_str().unwrap())
+    }).collect();
+    let repairs: [(&str, fn(&str, &str) -> Option<String>); 2] = [
+        ("headcount", retain_recruitment_count), ("additionalCause", retain_additional_cause),
+    ];
+    let mut changes = Vec::new();
+    for fact in facts.iter_mut().filter(|fact| fact.placement == Placement::Topic) {
+        for (detail, restore) in repairs {
+            let mut matches = fact.evidence.iter().filter_map(|id| {
+                restore(&fact.text, source.get(id.as_str())?).map(|text| (id, text))
+            });
+            if let Some((id, text)) = matches.next() {
+                if matches.all(|(_, other)| text == other) {
+                    fact.text = text;
+                    changes.push(serde_json::json!({"id":fact.id,"evidence":id,"detail":detail}));
+                }
+            }
+        }
+    }
+    changes
+}
+
+fn addressed_assignment(source: &str, continuation: &str, statement: &str) -> Option<String> {
+    static DIRECT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:^|刚才|[，。；\s])(?P<team>[\p{Han}]{2,10}?)(?:这一块儿?|那一块儿?|这边儿?|那边儿?)[\s，,]*(?:一定要|务必|必须|你们先|你们要)(?P<subject>[^。；？！\r\n]{4,36})"
+    ).unwrap());
+    let source = source_body(source);
+    let assignment = DIRECT.captures(source)?;
+    let team = assignment.name("team")?.as_str().rsplit("刚才").next()?.trim_start_matches(['嗯', '啊', '呃']);
+    if team.chars().count() < 2 || team.contains(['你', '我', '他', '您'])
+        || ["如果", "假如", "建议", "考虑", "要不要"].iter().any(|cue| source.contains(cue))
+        || !["你要", "你们", "还要", "落实", "安排", "完成", "处理", "提交"].iter().any(|cue| continuation.contains(cue))
+    {
+        return None;
+    }
+    let subject = normalized(assignment.name("subject")?.as_str());
+    let object = subject.char_indices().rev().nth(1).map(|(at, _)| &subject[at..])?;
+    let generic = ["这个", "那个", "一下", "事项", "工作", "情况", "安排", "落实", "做好", "完成", "下去", "一下儿"];
+    if generic.contains(&object) || !object.chars().all(|ch| ch.is_alphabetic())
+        || !normalized(statement).contains(object) || !normalized(continuation).contains(object)
+    {
+        return None;
+    }
+    Some(team.to_owned())
+}
+
+fn brief_interruption(text: &str, statement: &str) -> bool {
+    let text = normalized(source_body(text));
+    text.chars().count() <= 5 && (text.chars().all(|ch| ['嗯', '哦', '对', '是', '好'].contains(&ch))
+        || ["落实", "确定", "执行", "安排", "检查", "处理", "完成", "提交"].iter().any(|verb| {
+            text.starts_with(verb) && statement.contains(verb)
+        }))
+}
+
+pub(super) fn bind_nearby_assignment(facts: &mut [Fact], evidence: &[Value]) -> Vec<Value> {
+    let positions: HashMap<_, _> = evidence.iter().enumerate()
+        .map(|(position, row)| (row["id"].as_str().unwrap(), position)).collect();
+    let mut changes = Vec::new();
+    for fact in facts.iter_mut().filter(|fact| fact.placement == Placement::Action
+        && fact.owner.is_none() && fact.evidence.len() < 8)
+    {
+        let mut options = Vec::new();
+        for &position in fact.evidence.iter().filter_map(|id| positions.get(id.as_str())) {
+            let continuation = &evidence[position];
+            let Some(speaker) = continuation["turnSpeaker"].as_str() else { continue; };
+            let continuation_text = source_body(continuation["text"].as_str().unwrap());
+            for earlier in position.saturating_sub(4)..position {
+                let row = &evidence[earlier];
+                if row["turnSpeaker"] != speaker || row["source"] != continuation["source"]
+                    || evidence[earlier + 1..position].iter().any(|middle| {
+                        let text = middle["text"].as_str().unwrap();
+                        !brief_interruption(text, &fact.text) && !(middle["turnSpeaker"] == speaker
+                            && ["这个", "这个呃", "那个", "那个呃"].contains(&normalized(source_body(text)).as_str()))
+                    })
+                {
+                    continue;
+                }
+                if let Some(team) = addressed_assignment(row["text"].as_str().unwrap(), continuation_text, &fact.text) {
+                    options.push((team, row["id"].as_str().unwrap()));
+                }
+            }
+        }
+        options.sort_unstable();
+        options.dedup();
+        if let [(team, id)] = options.as_slice() {
+            fact.owner = Some(team.clone());
+            if !fact.evidence.iter().any(|existing| existing.as_str() == *id) {
+                fact.evidence.insert(0, (*id).to_owned());
+            }
+            changes.push(serde_json::json!({"id":fact.id,"evidence":id,"owner":team}));
+        }
+    }
+    changes
 }
 
 fn assignment_owner<'a>(statement: &str, source: &'a str) -> Option<&'a str> {
@@ -540,6 +698,51 @@ pub(super) fn preserve_spoken_roles(facts: &mut [Fact], evidence: &[Value]) -> V
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn cited_details_restore_only_the_count_and_cause_of_the_same_statement() {
+        let draft = "运营部计划先找有经验的人做大概计划，再与财务对预算。";
+        let counted = "说话人5: 准备首先先是多找两个有经验，然后有过做过特别好规划的人，然后先做一下大概的计划。";
+        assert_eq!(retain_recruitment_count(draft, counted).as_deref(),
+            Some("运营部计划先找两个有经验的人做大概计划，再与财务对预算。"));
+        assert!(retain_recruitment_count(draft, "建议安排三位有经验的员工。").is_none());
+        assert!(retain_recruitment_count(draft, "不能找两个有经验的员工。").is_none());
+        assert!(retain_recruitment_count("先找三位有经验的员工。", counted).is_none());
+
+        let claim = "与智能公司的合作项目因疫情耽误，财务状况不乐观。";
+        let source = "说话人6: 对因为呃上半年咱们和别人的呃这些联合项目因为疫情嘛情况所以我们很难进行下去这方面合作就有了一些耽误 然后又加上呃这个各部门什么产品需要什么费用呃我们已经开发出来的这些产品然后呃又后续进行了一些拓展 所以升级呃我们这个财务状况其实不太乐观现在";
+        let restored = retain_additional_cause(claim, source).unwrap();
+        assert!(restored.contains("费用") && restored.contains("进行了一些拓展"));
+        assert!(retain_additional_cause(&restored, source).is_none());
+        assert!(retain_additional_cause("对方未能按时交货。", source).is_none());
+        assert!(retain_additional_cause(claim, &format!("如果{source}")).is_none());
+    }
+
+    #[test]
+    fn a_short_interruption_can_keep_the_nearby_assignment_while_a_new_turn_cannot() {
+        let evidence = [
+            json!({"id":"e0432","source":"u015","turnSpeaker":"说话人1",
+                   "text":"说话人1: 嗯 啊还有就是刚才运营这一块儿，一定要把大堂这个刚才说这个蛋糕"}),
+            json!({"id":"e0433","source":"u015","turnSpeaker":"说话人5","text":"说话人5: 好"}),
+            json!({"id":"e0434","source":"u015","turnSpeaker":"说话人1","text":"说话人1: 这个呃"}),
+            json!({"id":"e0435","source":"u015","turnSpeaker":"说话人4","text":"说话人4: 落实下来"}),
+            json!({"id":"e0436","source":"u015","turnSpeaker":"说话人1",
+                   "text":"说话人1: 这个蛋糕还有优惠啊就是你要落实下去，与市场相结合宣传。"}),
+        ];
+        let action = Fact {id:"a000".into(),kind:Kind::Decision,placement:Placement::Action,
+            text:"落实蛋糕及赠送给客人的优惠，并与市场相结合做好宣传。".into(),
+            owner:None,due:None,evidence:vec!["e0436".into()]};
+        let mut facts = [action.clone()];
+        assert_eq!(bind_nearby_assignment(&mut facts, &evidence).len(), 1);
+        assert_eq!(facts[0].owner.as_deref(), Some("运营"));
+        assert_eq!(facts[0].evidence, ["e0432", "e0436"]);
+        let mut interrupted = evidence.clone();
+        interrupted[3]["text"] = json!("说话人4: 关于下一次发布会，财务要把报表报上去。");
+        assert!(bind_nearby_assignment(&mut [action.clone()], &interrupted).is_empty());
+        let mut new_speaker = evidence.clone();
+        new_speaker[4]["turnSpeaker"] = json!("说话人2");
+        assert!(bind_nearby_assignment(&mut [action], &new_speaker).is_empty());
+    }
 
     #[test]
     fn uncited_schedule_scope_and_acceptance_become_independent_checks() {
