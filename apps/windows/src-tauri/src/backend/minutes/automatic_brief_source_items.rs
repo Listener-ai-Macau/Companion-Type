@@ -34,6 +34,7 @@ pub(super) fn enabled() -> bool {
 enum Role {
     #[serde(alias = "condition")]
     Status,
+    Requirement,
     Opinion,
     #[serde(alias = "suggestion")]
     Recommendation,
@@ -46,7 +47,7 @@ enum Role {
 impl Role {
     fn category(self) -> (Kind, Placement) {
         match self {
-            Self::Status => (Kind::Status, Placement::Topic),
+            Self::Status | Self::Requirement => (Kind::Status, Placement::Topic),
             Self::Opinion => (Kind::Opinion, Placement::Topic),
             Self::Recommendation => (Kind::Recommendation, Placement::Topic),
             Self::Forecast => (Kind::Forecast, Placement::Topic),
@@ -71,6 +72,7 @@ impl SourceItem {
     pub(super) fn is_action(&self) -> bool { matches!(self.role, Role::Action) }
 
     pub(super) fn bind(self, known: &HashMap<&str, &Value>, known_ids: &HashSet<&str>) -> Result<Fact, String> {
+        let stated_requirement = matches!(self.role, Role::Requirement);
         let (kind, placement) = self.role.category();
         if !line(&self.text, 90) || self.evidence.is_empty() || self.evidence.len() > 8 {
             return Err("纪要事项格式不完整，已有纪要和原文保留。".into());
@@ -102,6 +104,13 @@ impl SourceItem {
                 .map(|name| format!("{name}表示，{}", self.text));
             (text.filter(|text| line(text, 90)).unwrap_or(self.text), None, None)
         };
+        let text = if stated_requirement && !text.starts_with("会上") {
+            let reported = format!("会上提出：{text}");
+            if !line(&reported, 90) {
+                return Err("纪要事项格式不完整，已有纪要和原文保留。".into());
+            }
+            reported
+        } else { text };
         Ok(Fact {id: String::new(), kind, placement, text, owner, due, evidence})
     }
 }
@@ -168,11 +177,23 @@ struct SourceCue {
 #[derive(Deserialize)]
 #[serde(tag = "status", rename_all = "camelCase")]
 enum SourceCheck {
-    Covered { id: String, claim: String, #[serde(default)] proof: Option<CoverageProof> },
+    Covered { id: String, #[serde(deserialize_with = "claim_path")] claim: String, #[serde(default)] proof: Option<CoverageProof> },
     Missing { id: String, addition: MissingItem },
     NeedsReview { id: String, addition: MissingItem },
-    Conflict { id: String, claim: String },
+    Conflict { id: String, #[serde(deserialize_with = "claim_path")] claim: String },
     Background { id: String, reason: String },
+}
+
+fn claim_path<'de, D: serde::Deserializer<'de>>(decoder: D) -> Result<String, D::Error> {
+    #[derive(Deserialize)]
+    #[serde(untagged)]
+    enum Locator {
+        Path(String),
+        Claim { path: String },
+    }
+    Ok(match Locator::deserialize(decoder)? {
+        Locator::Path(path) | Locator::Claim { path } => path,
+    })
 }
 
 #[derive(Deserialize)]
@@ -1031,6 +1052,9 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
         issue["previousClaim"] = json!(claim);
         if let Some(target) = target {
             issue["rejectedWitness"] = target.clone();
+            if context["cue"]["aspect"] == "明确确认的进展或方案" {
+                issue["rejectedWitnessEvidence"] = json!(cited);
+            }
         }
         issue["reason"] = json!(if target.is_none() {
             "事项编号与现有稿不匹配。请原样复制现有事项的 path；无法对应时说明缺失、背景或待核实。"
@@ -1055,6 +1079,31 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
         }
         Some(issue)
     }).collect()
+}
+
+fn retain_acknowledgment(issue: &Value, evidence: &[Value]) -> Option<SourceCheck> {
+    let cue = &issue["cue"];
+    let anchor = cue["evidence"].as_str()?;
+    let span = cue["span"].as_str()?;
+    if cue["aspect"] != "明确确认的进展或方案"
+        || issue["rejectedWitness"]["kind"] != "recommendation"
+        || !issue["rejectedWitnessEvidence"].as_array()?.iter().any(|id| id == anchor)
+    {
+        return None;
+    }
+    let original = evidence.iter().find(|row| row["id"] == anchor)?["text"].as_str()?;
+    let quote = super::source_coverage::verbatim_acceptance(original, span)?;
+    let speaker = super::super::source_resolution::split_turn_label(original)
+        .map_or("会上", |(speaker, _)| speaker);
+    let text = format!("{speaker}回应「{quote}」。");
+    line(&text, 90).then(|| SourceCheck::Missing {
+        id: cue["id"].as_str().unwrap().to_owned(),
+        addition: MissingItem {
+            topic: None, new_aspect: None,
+            item: SourceItem { role: Role::Status, text, evidence: vec![anchor.to_owned()],
+                owner: None, due: None },
+        },
+    })
 }
 
 fn preserves_related_cause(checks: &[SourceCheck], rejected: &[Value]) -> bool {
@@ -1319,7 +1368,15 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         if returned != selected || fixed.checks.len() != selected.len() || !fixed.additions.is_empty() {
             return Err("纪要存在未完成的关键原话覆盖复核，已有结果保留。".into());
         }
-        let rejected = rejected_coverage(&fixed.checks, &disputed, &doc, &evidence, &bindings);
+        let mut rejected = rejected_coverage(&fixed.checks, &disputed, &doc, &evidence, &bindings);
+        let acknowledgments: Vec<_> = rejected.iter().filter_map(|issue| retain_acknowledgment(issue, &evidence)).collect();
+        if !acknowledgments.is_empty() {
+            let retained: HashSet<_> = acknowledgments.iter().map(SourceCheck::id).collect();
+            rejected.retain(|issue| !issue["cue"]["id"].as_str().is_some_and(|id| retained.contains(id)));
+            fixed.checks.retain(|check| !retained.contains(check.id()));
+            trace.last_mut().unwrap()["retainedAcknowledgments"] = json!(retained);
+            fixed.checks.extend(acknowledgments);
+        }
         if !rejected.is_empty() {
             let ids: HashSet<_> = rejected.iter().filter_map(|row| row["cue"]["id"].as_str()).collect();
             let raw = super::request(endpoint,model,key,client,REPAIR_COVERAGE,
@@ -1418,6 +1475,29 @@ pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest:
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn repair_can_read_provider_claim_objects_and_report_requirements() {
+        let check: SourceCheck = parse(r#"{"status":"covered","id":"v001","claim":{"path":"topics[0].points[0]","text":"任意回显"}}"#).unwrap();
+        assert!(matches!(check, SourceCheck::Covered { claim, .. } if claim == "topics[0].points[0]"));
+        let original = json!({"id":"e0011","text":"主持人：请保留原票，报销还需要票据。"});
+        let item: SourceItem = parse(r#"{"role":"requirement","text":"报销还需要票据。","evidence":["e0011"]}"#).unwrap();
+        let bound = item.bind(&HashMap::from([("e0011", &original)]), &HashSet::from(["e0011"])).unwrap();
+        assert_eq!(bound.placement, Placement::Topic);
+        assert_eq!(bound.text, "会上提出：报销还需要票据。");
+    }
+
+    #[test]
+    fn acknowledged_plan_preserves_the_direct_quote_when_its_point_only_says_suggested() {
+        let evidence = [json!({"id":"e0020","text":"经理：行就保留打印版。"})];
+        let reason = json!({"cue":{"id":"v001","aspect":"明确确认的进展或方案","evidence":"e0020","span":"行就保留打印版"},
+            "rejectedWitness":{"kind":"recommendation"},"rejectedWitnessEvidence":["e0020"]});
+        let result = retain_acknowledgment(&reason, &evidence);
+        assert!(matches!(result, Some(SourceCheck::Missing { addition, .. }) if addition.item.text == "经理回应「行就保留打印版」。"));
+        let mut unrelated = reason;
+        unrelated["rejectedWitnessEvidence"] = json!(["e9999"]);
+        assert!(retain_acknowledgment(&unrelated, &evidence).is_none());
+    }
 
     #[test]
     fn background_recheck_accepts_explanatory_metadata_and_keeps_required_fields() {

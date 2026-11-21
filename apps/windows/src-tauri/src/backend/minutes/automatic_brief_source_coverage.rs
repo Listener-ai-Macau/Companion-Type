@@ -150,6 +150,13 @@ fn material_spans(text: &str) -> Vec<(Focus, &str)> {
     hits
 }
 
+pub(super) fn verbatim_acceptance<'a>(source: &'a str, expected: &str) -> Option<&'a str> {
+    material_spans(source).into_iter().find_map(|(focus, quote)| {
+        (focus == Focus::AcceptedProposal && quote == expected && !quote.contains(['「', '」']))
+            .then_some(quote)
+    })
+}
+
 pub(super) fn material_cues(facts: &[Fact], evidence: &[Value]) -> Vec<(String, String, &'static str)> {
     let mut cited = HashMap::<&str, Vec<&Fact>>::new();
     for fact in facts {
