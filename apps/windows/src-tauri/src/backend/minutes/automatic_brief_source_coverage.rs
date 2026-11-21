@@ -391,7 +391,7 @@ fn literal_overlap(claim: &str, before: &str) -> bool {
     shared_literal(claim, before, 5)
 }
 
-fn shared_literal(claim: &str, source: &str, width: usize) -> bool {
+pub(super) fn shared_literal(claim: &str, source: &str, width: usize) -> bool {
     let claim = normalized(claim).chars().collect::<Vec<_>>();
     claim.windows(width).filter(|chunk| chunk.iter().all(|ch| ch.is_alphanumeric()))
         .any(|chunk| source.contains(&chunk.iter().collect::<String>()))

@@ -733,6 +733,33 @@ struct MeetingProcedureRepair {
     host: Option<(String, String)>,
 }
 
+fn answered_open_floor(text: &str, cited: &[Value], claims: &[Value], source: &[Sentence]) -> bool {
+    use super::super::source_resolution::split_turn_label;
+    const INVITATIONS: &[&str] = &["还有什么问题", "还有其他问题", "还有什么意见", "还有其他意见"];
+    let plain = super::normalized(text).replace(['嗯', '呃'], "");
+    if !INVITATIONS.iter().any(|cue| plain.contains(cue)) {
+        return false;
+    }
+    let cited_turns: Vec<_> = source.iter().enumerate().filter_map(|(at, sentence)| {
+        if !cited.iter().any(|id| id == &sentence.id) { return None; }
+        let (speaker, words) = split_turn_label(sentence.text.trim())?;
+        Some((at, sentence, speaker, words))
+    }).collect();
+    let [(at, _, asker, question), (reply_at, reply, respondent, answer)] = cited_turns.as_slice()
+        else { return false; };
+    if asker == respondent || reply_at - at > 3 {
+        return false;
+    }
+    let asked = super::normalized(question).replace(['嗯', '呃'], "");
+    INVITATIONS.iter().any(|cue| plain.contains(cue) && asked.contains(cue))
+        && claims.iter().any(|claim| {
+            claim["path"].as_str().is_some_and(|path| path.starts_with("topics["))
+                && claim["sources"].as_array().is_some_and(|ids| ids.iter().any(|id| id == &reply.source))
+                && claim["text"].as_str().is_some_and(|text|
+                    super::source_coverage::shared_literal(text, answer, 4))
+        })
+}
+
 fn route_meeting_procedure(
     raw: &str, issues: &[Value], claims: &[Value], source: &[Sentence], purpose: &str,
 ) -> Option<MeetingProcedureRepair> {
@@ -773,13 +800,23 @@ fn route_meeting_procedure(
         let already_in_purpose = ["上半年", "下半年", "计划"].iter().all(|term| {
             text.contains(term) && purpose.contains(term)
         }) && text.contains("总结会") && spoken(&["今天", "总结", "下半年", "计划"]);
-        let closed = text.contains("散会") && text.contains("会议结束") &&
-            (spoken(&["会议", "结束", "散会"]) || spoken(&["到此结束", "散会"]));
+        let closing_text = super::normalized(text);
+        let literal_close = matches!(closing_text.trim_end_matches(['。', '！', '.']), "会议结束" | "本次会议结束" | "散会")
+            && source.iter().filter(|row| ids.iter().any(|id| id == &row.id)).any(|row| {
+                let raw = row.text.trim();
+                let words = super::super::source_resolution::split_turn_label(raw).map_or(raw, |(_, words)| words);
+                matches!(super::normalized(words).trim_end_matches(['。', '！', '.']),
+                    "散会" | "今天到此结束" | "本次会议结束")
+            });
+        let closed = literal_close || text.contains("散会") && text.contains("会议结束")
+            && (spoken(&["会议", "结束", "散会"]) || spoken(&["到此结束", "散会"]));
+        let answered_invitation = path.starts_with("questions[") && issue["status"] == "unsupported"
+            && edit["remove"] == true && answered_open_floor(text, ids, claims, source);
         let reporting_order = text.contains("按顺序汇报") && text.contains('从') && text.contains("开始")
             && spoken(&["下面", "汇报"]) && spoken(&["从", "开始"]);
         let reporting_length = text.contains("一两句话") && text.contains("概括")
             && spoken(&["一两句话", "概括"]);
-        if !(already_in_purpose || closed || reporting_order || reporting_length) {
+        if !(already_in_purpose || closed || answered_invitation || reporting_order || reporting_length) {
             if purpose_edited || host.is_some() {
                 continue;
             }
@@ -805,6 +842,41 @@ fn route_meeting_procedure(
         return None;
     }
     Some(MeetingProcedureRepair { reply: packet.to_string(), paths, host })
+}
+
+#[cfg(test)]
+#[test]
+fn explicit_removals_preserve_a_cited_reply_but_not_the_opening_prompt_or_closing() {
+    let claims = [
+        json!({"path":"decisions[2]","text":"会议结束。","sources":["u019"]}),
+        json!({"path":"questions[4]","text":"询问目前施工这边还有什么问题。","sources":["u013"]}),
+        json!({"path":"topics[4].points[2]","text":"施工队说，安全措施较好，需防范高处坠落。","sources":["u014"]}),
+        json!({"path":"actionItems[0]","text":"会议结束后提交验收材料。","sources":["u019"]}),
+    ];
+    let issues = [
+        json!({"path":"decisions[2]","placementUnsupported":true,"status":"unsupported","evidence":["e0461","e0463"]}),
+        json!({"path":"questions[4]","placementUnsupported":true,"status":"unsupported","evidence":["e0328","e0330"]}),
+        json!({"path":"actionItems[0]","placementUnsupported":true,"status":"unsupported","evidence":["e0461","e0463"]}),
+    ];
+    let source = [
+        Sentence{id:"e0328".into(),source:"u013".into(),text:"说话人1: 施工这边儿还有什么嗯问题吗？".into()},
+        Sentence{id:"e0330".into(),source:"u014".into(),text:"说话人3: 施工安全措施比较好，也要防范高处坠落。".into()},
+        Sentence{id:"e0461".into(),source:"u019".into(),text:"说话人1: 今天就先到这儿吧。".into()},
+        Sentence{id:"e0463".into(),source:"u019".into(),text:"说话人1: 散会。".into()},
+    ];
+    let raw = json!({"changes":[
+        {"path":"decisions[2]","remove":true,"text":"主持人宣布散会。"},
+        {"path":"questions[4]","remove":true,"text":"询问施工是否还有问题，随后有了解答。"},
+        {"path":"actionItems[0]","remove":true,"text":"会后提交验收材料。"}
+    ]}).to_string();
+    let fixed = route_meeting_procedure(&raw,&issues,&claims,&source,"施工例会。").unwrap();
+    assert_eq!(fixed.paths, ["decisions[2]", "questions[4]"]);
+    let edits: Value = serde_json::from_str(&fixed.reply).unwrap();
+    assert_eq!(edits["changes"][0], json!({"path":"decisions[2]","remove":true}));
+    assert_eq!(edits["changes"][1], json!({"path":"questions[4]","remove":true}));
+    assert_eq!(edits["changes"][2]["text"], "会后提交验收材料。");
+    let without_reply = route_meeting_procedure(&raw, &issues, &claims[..2], &source, "施工例会。").unwrap();
+    assert_eq!(without_reply.paths, ["decisions[2]"]);
 }
 
 #[cfg(test)]
