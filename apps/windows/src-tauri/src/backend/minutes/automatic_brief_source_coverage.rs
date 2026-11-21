@@ -7,6 +7,7 @@ use super::{Kind, answer_layout::{Fact, Placement}, line, normalized};
 #[derive(Clone, Copy, Eq, Hash, PartialEq)]
 enum Focus {
     Contrast,
+    ParallelObjects,
     Restriction,
     CompletedChange,
     PlanScope,
@@ -16,14 +17,15 @@ enum Focus {
 }
 
 impl Focus {
-    const ORDER: [Self; 7] = [
+    const ORDER: [Self; 8] = [
         Self::Contrast, Self::CompletedChange, Self::PlanScope, Self::Restriction,
-        Self::Practice, Self::CalendarScope, Self::AcceptedProposal,
+        Self::Practice, Self::CalendarScope, Self::AcceptedProposal, Self::ParallelObjects,
     ];
 
     fn label(self) -> &'static str {
         match self {
             Self::Contrast => "不同情形的限定",
+            Self::ParallelObjects => PARALLEL_OBJECTS,
             Self::Restriction => "明确限制",
             Self::CompletedChange => "已发生的变更或处置",
             Self::PlanScope => "交办的内容范围",
@@ -154,6 +156,11 @@ fn month_end(text: &str) -> Option<(u8, &str)> {
 }
 
 pub(super) fn facet_has_witness(aspect: &str, span: &str, kind: &str, claim: &str) -> bool {
+    if aspect == PARALLEL_OBJECTS {
+        let claim = normalized(claim);
+        return spoken_comparison(span)
+            .is_some_and(|comparison| comparison.subjects.iter().all(|subject| claim.contains(subject)));
+    }
     if aspect == Focus::CalendarScope.label() {
         return month_end(span).is_some_and(|end| month_end(claim) == Some(end));
     }
@@ -262,6 +269,60 @@ pub(super) fn verbatim_acceptance<'a>(source: &'a str, expected: &str) -> Option
     })
 }
 
+pub(super) const PARALLEL_OBJECTS: &str = "同句的不同对象及各自特征";
+
+struct SpokenComparison<'a> {
+    span: &'a str,
+    subjects: [&'a str; 2],
+    attributes: [&'a str; 2],
+}
+
+impl SpokenComparison<'_> {
+    fn already_in(&self, statement: &str) -> bool {
+        let statement = normalized(statement);
+        self.subjects.iter().zip(self.attributes).all(|(subject, attribute)| {
+            statement.match_indices(subject).any(|(offset, _)| {
+                let after = &statement[offset + subject.len()..];
+                let clause = after.split(['，', ',', '；', '。']).next().unwrap_or_default();
+                clause.chars().take(18).any(|part| attribute.contains(part))
+                    && !["不", "没", "未"].iter().any(|no| clause.contains(&format!("{no}{attribute}")))
+            })
+        })
+    }
+}
+
+fn spoken_comparison(text: &str) -> Option<SpokenComparison<'_>> {
+    static TOPICS: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:^|[，,。；！？])\s*(?P<span>(?P<left>[\p{Han}]{2,8}?)(?:这(?:边儿?|儿|一?块|方面)|方面)(?:吧|呢)?(?P<first>[^。；？！
+]{6,67}?)[，,]\s*(?:而|但(?:是)?)?\s*(?P<right>[\p{Han}]{2,8}?)(?:这(?:边儿?|儿|一?块|方面)|方面|就是|则|却)(?P<second>[^。；？！
+]{4,41}))"
+    ).unwrap());
+    static RELATIVE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:比较|相对(?:来说)?|稍微|偏|更)[\p{Han}\s]{0,7}?(?P<attribute>[快慢多少高低强弱难易紧松宽严长短])"
+    ).unwrap());
+    static PROPERTY: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:就是|是)\s*(?P<attribute>[快慢多少高低强弱难易紧松宽严长短])(?:一点儿?|一些|嘛|吧)?(?:[，,]|$)"
+    ).unwrap());
+
+    TOPICS.captures_iter(source_body(text)).find_map(|captures| {
+        let span = captures.name("span")?.as_str().trim_end();
+        let left = captures.name("left")?.as_str();
+        let right = captures.name("right")?.as_str();
+        let first = captures.name("first")?.as_str();
+        let second = captures.name("second")?.as_str();
+        if left.contains(right) || right.contains(left)
+            || ["是否", "有没有", "什么看法", "会不会", "是不是", "吗", "呢怎么办", "如果", "假如"]
+                .iter().any(|cue| span.contains(cue))
+            || !line(span, 110)
+        {
+            return None;
+        }
+        let left_attribute = RELATIVE.captures_iter(first).last()?.name("attribute")?.as_str();
+        let right_attribute = RELATIVE.captures(second).or_else(|| PROPERTY.captures(second))?.name("attribute")?.as_str();
+        Some(SpokenComparison { span, subjects: [left, right], attributes: [left_attribute, right_attribute] })
+    })
+}
+
 pub(super) fn material_cues(facts: &[Fact], evidence: &[Value]) -> Vec<(String, String, &'static str)> {
     let mut cited = HashMap::<&str, Vec<&Fact>>::new();
     for fact in facts {
@@ -272,7 +333,17 @@ pub(super) fn material_cues(facts: &[Fact], evidence: &[Value]) -> Vec<(String, 
     let mut pool = HashMap::<Focus, Vec<(&str, &str)>>::new();
     for source in evidence {
         let id = source["id"].as_str().unwrap();
-        for (focus, span) in material_spans(source["text"].as_str().unwrap()) {
+        let text = source["text"].as_str().unwrap();
+        if let Some(comparison) = spoken_comparison(text) {
+            if cited.get(id).is_some_and(|draft| {
+                draft.iter().any(|fact| {
+                    comparison.subjects.iter().any(|subject| fact.text.contains(subject))
+                }) && !draft.iter().any(|fact| comparison.already_in(&fact.text))
+            }) {
+                pool.entry(Focus::ParallelObjects).or_default().push((id, comparison.span));
+            }
+        }
+        for (focus, span) in material_spans(text) {
             if !cited.get(id).is_some_and(|draft| draft.iter().any(|fact| {
                 let text = normalized(&fact.text);
                 if focus == Focus::CalendarScope {
@@ -292,7 +363,7 @@ pub(super) fn material_cues(facts: &[Fact], evidence: &[Value]) -> Vec<(String, 
         let Some(entries) = pool.get(&focus) else { continue; };
         let max = match focus {
             Focus::Restriction => 4,
-            Focus::CalendarScope | Focus::AcceptedProposal => 2,
+            Focus::CalendarScope | Focus::AcceptedProposal | Focus::ParallelObjects => 2,
             _ => 3,
         };
         let count = entries.len().min(max);
@@ -302,6 +373,37 @@ pub(super) fn material_cues(facts: &[Fact], evidence: &[Value]) -> Vec<(String, 
         }
     }
     chosen
+}
+
+#[cfg(test)]
+#[test]
+fn partial_same_sentence_comparisons_are_checked_for_both_objects() {
+    let source = [
+        serde_json::json!({"id":"e0009","text":"不太好，女装这儿吧，毕竟是呃都爱女的都爱灌嘛 逛街购物嘛，跟时代也比较快，尤其这个潮流的更新比较快，男装就是嗯就是那那几样儿，就是少嘛，对吧？"}),
+        serde_json::json!({"id":"e0139","text":"化妆品这方面咱们可以相对来说比重低一点儿，但是护肤这方面可以男生护肤，可以相对提高一点儿"}),
+        serde_json::json!({"id":"e0770","text":"说话人1：设备维护这边比较及时，比较缺人，你认为班组这边比较轻松吗？"}),
+        serde_json::json!({"id":"e0771","text":"说话人1：设备这边情况比较复杂，设备这边现在也比较紧张。"}),
+    ];
+    let mut facts: Vec<_> = [
+        ("e0009", "男装不好销售，要商量提升。"),
+        ("e0139", "建议可适当降低化妆品投入。"),
+        ("e0770", "现有设备维护比较及时。"),
+        ("e0771", "讨论了设备问题。"),
+    ].into_iter().enumerate().map(|(i, (id, text))| Fact {
+        id: format!("a{i:03}"), placement: Placement::Topic, kind: Kind::Opinion,
+        text: text.to_owned(), owner: None, due: None, evidence: vec![id.to_owned()],
+    }).collect();
+    let selected = |facts: &[Fact]| material_cues(facts, &source).into_iter()
+        .filter(|row| row.2 == PARALLEL_OBJECTS).collect::<Vec<_>>();
+    let initial = selected(&facts);
+    assert_eq!(initial.iter().map(|row| row.0.as_str()).collect::<Vec<_>>(), ["e0009", "e0139"]);
+    assert!(!facet_has_witness(PARALLEL_OBJECTS, &initial[0].1, "", "男装品类少。"));
+    assert!(facet_has_witness(PARALLEL_OBJECTS, &initial[0].1, "", "女装更新快，男装选择少。"));
+    facts[0].text = "讨论女装与男装。".into();
+    assert_eq!(selected(&facts).len(), 2);
+    facts[0].text = "女装潮流更新快，男装品类少。".into();
+    facts[1].text = "化妆品投入比重低一些，护肤可提高一点。".into();
+    assert!(selected(&facts).is_empty());
 }
 
 pub(super) struct SourceFacet<'a> {

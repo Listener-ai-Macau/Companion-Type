@@ -3247,7 +3247,11 @@ fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, 
                     factual_audit::canonical_sentence_reference(id, &known_ids).as_deref() == Some(cue.evidence.as_str())
                 });
                 let contextual = !cited && !review && bind_retrospective_context(&mut addition.item, cue, evidence);
-                if (!cited && !contextual) || (review && (!matches!(addition.item.role, Role::Status | Role::Question)
+                let invalid_comparison = cue.aspect.as_deref() == Some(super::source_coverage::PARALLEL_OBJECTS) && !review
+                    && (!matches!(addition.item.role, Role::Status | Role::Opinion | Role::Recommendation | Role::Forecast)
+                        || !super::source_coverage::facet_has_witness(
+                            super::source_coverage::PARALLEL_OBJECTS, &cue.span, "", &addition.item.text));
+                if invalid_comparison || (!cited && !contextual) || (review && (!matches!(addition.item.role, Role::Status | Role::Question)
                     || !addition.item.text.starts_with("待核实")))
                 {
                     return Err(fail());
@@ -3401,6 +3405,12 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         input["aspectInstructions"] = if scoped {
             json!(format!("{common}会议安排的时间范围要和其议题一起保留，不能当成任务的完成日期。明确确认的进展或方案应保留谁确认了什么和实际状态；连续提议、客套回应或假设仍按原话处理。"))
         } else { json!(common) };
+        if cues.iter().any(|cue| cue.aspect.as_deref() == Some(super::source_coverage::PARALLEL_OBJECTS)) {
+            let instructions = input["aspectInstructions"].as_str().unwrap();
+            input["aspectInstructions"] = json!(format!(
+                "{instructions}同句对比依次核对两个对象及各自的特征。只写一个对象或只复用同一证据编号不能算覆盖。确实缺失时把两边放在同一条主题补充，保留原说话人的看法、限定和不确定性，不写成决定或会后交办。"
+            ));
+        }
     }
     let raw = super::request(endpoint, model, key, client, FIND_MISSING,
         input, false, start, trace, "source-items-omissions")?;
