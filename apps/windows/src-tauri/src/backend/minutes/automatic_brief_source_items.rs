@@ -2836,7 +2836,29 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     if !answered_amounts.is_empty() {
         trace[scan_index]["boundAdjacentLoanQuestions"] = json!(answered_amounts);
     }
-    let (additions, conflicts) = checked_additions(checked, &cues, &doc, facts, &evidence, &verified_coverage)?;
+    let (mut additions, conflicts) = checked_additions(checked, &cues, &doc, facts, &evidence, &verified_coverage)?;
+    let decisions: Vec<_> = doc.decisions.iter().map(|item| item.text.as_str()).collect();
+    let mut removed = 0;
+    let mut separated = 0;
+    if !decisions.is_empty() && additions.iter().any(|row| row.item.text.contains("超过")) {
+        let labelled = super::commitments::with_turn_labels(&evidence);
+        additions.retain_mut(|row| {
+            use super::source_corrections::{disposal_echo, DisposalEcho};
+            match disposal_echo(&row.item.text, &row.item.evidence, &decisions, &labelled) {
+                Some(DisposalEcho::Drop) => { removed += 1; false }
+                Some(DisposalEcho::RetainSeparateClause(text, refs)) => {
+                    row.item.text = text;
+                    row.item.evidence = refs;
+                    separated += 1;
+                    true
+                }
+                None => true,
+            }
+        });
+    }
+    if removed + separated != 0 {
+        trace[scan_index]["disposalDuplicatesReconciled"] = json!({"removed":removed,"separated":separated});
+    }
     trace[scan_index]["boundAdditions"] = json!(additions.len());
     trace[scan_index]["conflictingClaims"] = json!(conflicts);
     Ok(CheckedOmissions { doc: append_missing(additions, doc, units, &evidence)?, conflicts })

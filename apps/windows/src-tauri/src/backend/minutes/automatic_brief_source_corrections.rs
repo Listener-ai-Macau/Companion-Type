@@ -186,6 +186,51 @@ pub(super) fn widens_verified_disposal(
     })
 }
 
+pub(super) enum DisposalEcho {
+    Drop,
+    RetainSeparateClause(String, Vec<String>),
+}
+
+pub(super) fn disposal_echo(
+    statement: &str, refs: &[String], kept_decisions: &[&str], evidence: &[Value],
+) -> Option<DisposalEcho> {
+    if !statement.contains("超过") || kept_decisions.is_empty() {
+        return None;
+    }
+    for id in refs {
+        let Some(position) = evidence.iter().position(|row| row["id"] == id.as_str()) else { continue; };
+        let Some((prior, _)) = verification_before_disposal(statement, position, evidence) else { continue; };
+        if !kept_decisions.iter().any(|kept| normalized(kept) == normalized(&prior)) {
+            continue;
+        }
+        let separate: Vec<_> = statement.split(['；', ';']).filter(|clause| {
+            !clause.trim().is_empty() && verification_before_disposal(clause, position, evidence).is_none()
+        }).collect();
+        if separate.is_empty() {
+            return Some(DisposalEcho::Drop);
+        }
+        let refs: Vec<_> = refs.iter().filter(|other| *other != id).cloned().collect();
+        return if refs.is_empty() { None }
+            else { Some(DisposalEcho::RetainSeparateClause(separate.join("；"), refs)) };
+    }
+
+    static CHECK_ECHO: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"^对(?:停放)?超过(?P<period>[零一二两三四五六七八九十百0-9]{1,5}(?:天|小时|个?月))的[\p{Han}]{2,12}?必须(?:核查|核实|查清|确认)(?:，不允许超过[^。；！？]{2,8})?。?$"
+    ).unwrap());
+    let [id] = refs else { return None; };
+    let statement = normalized(statement);
+    let repeated = CHECK_ECHO.captures(&statement)?;
+    let period = repeated.name("period")?.as_str();
+    let anchor = normalized(evidence.iter().find(|row| row["id"] == id.as_str())?["text"].as_str()?);
+    if !anchor.contains(&format!("超过{period}")) || !anchor.contains("必须核查") {
+        return None;
+    }
+    let checked = kept_decisions.iter().find(|kept|
+        kept.starts_with(&format!("对超过{period}的")) && kept.contains("先核查"))?;
+    let (subject, _) = checked.strip_prefix(&format!("对超过{period}的"))?.split_once("先核查")?;
+    anchor.contains(subject).then_some(DisposalEcho::Drop)
+}
+
 pub(super) fn correct(facts: &mut [Fact], evidence: &[Value]) -> Vec<Value> {
     let positions: HashMap<_, _> = evidence.iter().enumerate()
         .filter_map(|(index, row)| Some((row["id"].as_str()?, index))).collect();
@@ -299,6 +344,17 @@ mod tests {
         assert!(!widens_verified_disposal(&rows[0].text, &verified, &negative, &evidence));
         later_proposal.evidence.push("e0190".into());
         assert!(!widens_verified_disposal(&rows[0].text, &verified, &later_proposal, &evidence));
+        let kept = [rows[0].text.as_str()];
+        let broad = "车辆停放超过一天即须清理，不能停放半个月。";
+        assert!(matches!(disposal_echo(broad, &["e0164".into()], &kept, &evidence), Some(DisposalEcho::Drop)));
+        let combined = "外部人员登记须记录来意和何时走；超过一天的就要清理，而不是半个月。";
+        let result = disposal_echo(combined, &["e0163".into(),"e0164".into()], &kept, &evidence).unwrap();
+        let DisposalEcho::RetainSeparateClause(text, ids) = result else { panic!("registration must survive"); };
+        assert_eq!(text, "外部人员登记须记录来意和何时走");
+        assert_eq!(ids, ["e0163"]);
+        let check_echo = "对停放超过一天的车辆必须核查，不允许超过一天。";
+        assert!(matches!(disposal_echo(check_echo, &["e0180".into()], &kept, &evidence), Some(DisposalEcho::Drop)));
+        assert!(disposal_echo(broad, &["e0164".into()], &[], &evidence).is_none());
         for (position, field, replacement) in [
             (2,"turnSpeaker","说话人1"),
             (0,"text","说话人在讨论物料报废。"),
