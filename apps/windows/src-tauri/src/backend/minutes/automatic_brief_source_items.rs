@@ -1547,6 +1547,198 @@ fn retain_opening_scope(checks: &mut [SourceCheck], disputed: &[Value], doc: &Do
     count
 }
 
+fn explicit_yuan_amount(span: &str) -> Option<f64> {
+    let mut found = measures(span);
+    let (amount, unit) = found.next()?;
+    (unit == "元" && found.next().is_none()).then_some(amount)
+}
+
+fn same_court_award(span: &str, amount: f64, utterance: &str, quote: &str) -> bool {
+    if !coverage_quote_is_grounded(quote, utterance) {
+        return false;
+    }
+    let quote = normalized(quote);
+    let span = normalized(span);
+    if !quote.match_indices(&span).any(|(at, _)| {
+        ["判赔", "赔偿", "赔付"].iter().any(|term| quote[..at].ends_with(term))
+    }) {
+        return false;
+    }
+    let utterance = normalized(utterance);
+    utterance.match_indices(&span).any(|(at, _)| {
+        let lead: String = utterance[..at].chars().rev().take(42).collect::<Vec<_>>().into_iter().rev().collect();
+        ["法院", "判决", "判赔"].iter().any(|term| lead.contains(term))
+            && !["可能赔偿", "拟赔偿", "要求涨到"].iter().any(|term| lead.ends_with(term))
+            && explicit_yuan_amount(&span) == Some(amount)
+    })
+}
+
+fn bare_award_witness(quote: &str, amount: f64) -> bool {
+    static AWARD: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(&format!(
+        r"(?:判赔|判决赔偿|判令赔偿)(?P<amount>{QUANTITY})(?P<tail>元|块钱|但|而|并|[，。；、！。]|$)"
+    )).expect("court award amount pattern"));
+    let text = normalized(quote);
+    AWARD.captures_iter(&text).any(|row| {
+        row.name("amount").and_then(|value| number_value(value.as_str(), false)) == Some(amount)
+    })
+}
+
+fn monetary_example(span: &str, source: &str, proof: &CoverageProof) -> Option<String> {
+    if !coverage_quote_is_grounded(&proof.source_quote, source)
+        || !proof.source_quote.contains(span) || source.matches(span).count() != 1
+    {
+        return None;
+    }
+    let (speaker, speech) = super::super::source_resolution::split_turn_label(source.trim())
+        .map_or(("会上", source.trim()), |(speaker, speech)| (speaker, speech));
+    let at = speech.find(span)?;
+    let start = ["比如说", "例如", "举个例子", "假设"].iter()
+        .filter_map(|term| speech[..at].rfind(term)).max()?;
+    let preceded = &speech[start..at];
+    if preceded.chars().count() > 36 || preceded.contains(['。','；','！','？','\n']) {
+        return None;
+    }
+    let end = at + span.len();
+    let after = speech[end..].trim_start();
+    if !["那么", "的话", "，那么", "，这时", "，这个时候"].iter().any(|term| after.starts_with(term)) {
+        return None;
+    }
+    let excerpt = speech[start..end].trim();
+    let text = format!("{speaker}举例「{excerpt}」。");
+    (line(&text, 90) && !excerpt.contains(['「', '」'])).then_some(text)
+}
+
+fn recover_monetary_coverage(
+    checks: &mut [SourceCheck], disputed: &[Value], doc: &Document, evidence: &[Value],
+    bindings: &HashMap<String, &Vec<String>>,
+) -> Vec<Value> {
+    let clauses = factual_audit::claims(doc);
+    let mut recovered = Vec::new();
+    for check in checks {
+        let SourceCheck::Covered { id, claim, proof: Some(proof) } = check else { continue; };
+        let Some(context) = disputed.iter().find(|entry| entry["cue"]["id"] == id.as_str()) else { continue; };
+        if context["cue"]["aspect"].is_string() || context.get("unrepresentedSourceQuote").is_some()
+            || context.get("eligibleWitnesses").is_some()
+        {
+            continue;
+        }
+        let Some(span) = context["cue"]["span"].as_str() else { continue; };
+        let Some(amount) = explicit_yuan_amount(span) else { continue; };
+        let anchor = context["cue"]["evidence"].as_str().unwrap_or_default();
+        let Some(position) = evidence.iter().position(|row| row["id"] == anchor) else { continue; };
+        let original = &evidence[position];
+        let Some(source) = original["text"].as_str() else { continue; };
+        let witnesses = || clauses.iter().filter(|item| item.get("sources").is_some()
+            && item["text"].as_str().is_some_and(|text| coverage_quote_is_grounded(&proof.statement_quote, text)));
+
+        if same_court_award(span, amount, source, &proof.source_quote)
+            && bare_award_witness(&proof.statement_quote, amount)
+        {
+            let mut eligible = witnesses().filter(|item| {
+                let path = item["path"].as_str().unwrap();
+                let Some(ids) = bindings.get(path) else { return false; };
+                if ids.iter().any(|id| id == anchor) { return true; }
+                let start = position.saturating_sub(6);
+                evidence[start..position].iter().enumerate().any(|(offset, row)| {
+                    if row["source"] != original["source"]
+                        || !row["id"].as_str().is_some_and(|id| ids.iter().any(|one| one == id))
+                    { return false; }
+                    let text = row["text"].as_str().unwrap_or_default();
+                    let same = measures(text).any(|(amount_here, unit)| unit == "元" && amount_here == amount)
+                        && (text.contains("法院") || text.contains("判决")) && text.contains("赔偿");
+                    same && evidence[start + offset + 1..position].iter().all(|row| {
+                        let text = row["text"].as_str().unwrap_or_default();
+                        !["另一个案", "另一笔", "下一个问题", "换一个"].iter().any(|cue| text.contains(cue))
+                    })
+                })
+            });
+            let Some(witness) = eligible.next() else { continue; };
+            if eligible.next().is_some() { continue; }
+            let path = witness["path"].as_str().unwrap();
+            recovered.push(json!({"id":id,"kind":"courtAward","previousClaim":claim,"claim":path}));
+            *claim = path.to_owned();
+        } else if let Some(text) = monetary_example(span, source, proof) {
+            let Some(witness) = witnesses().find(|item| item["path"] == claim.as_str()) else { continue; };
+            let path = witness["path"].as_str().unwrap();
+            if !bindings.get(path).is_some_and(|ids| ids.iter().any(|id| id == anchor)) {
+                continue;
+            }
+            let topic = path.strip_prefix("topics[").and_then(|path| path.split_once(']'))
+                .and_then(|(index, _)| index.parse::<usize>().ok()).and_then(|index| doc.topics.get(index))
+                .map(|topic| topic.title.clone());
+            let id = id.clone();
+            recovered.push(json!({"id":id,"kind":"sourceExample","claim":path}));
+            *check = SourceCheck::Missing { id, addition: MissingItem {
+                item: SourceItem { role: Role::Example, text, evidence: vec![anchor.to_owned()], owner: None, due: None },
+                topic, new_aspect: None,
+            }};
+        }
+    }
+    recovered
+}
+
+#[cfg(test)]
+#[test]
+fn an_award_is_not_interchangeable_with_payment_or_another_currency() {
+    assert!(bare_award_witness("法院判赔四万但仅赔四千后拒赔", 40_000.0));
+    assert!(!bare_award_witness("法院判赔四万多，仍拒赔", 40_000.0));
+    assert!(!bare_award_witness("法院判赔四万美元，尚未支付", 40_000.0));
+    assert!(!bare_award_witness("法院判赔五万但被告已赔四万。", 40_000.0));
+    assert!(!same_court_award("四万元",40_000.0,"法院另案判赔五万元。实际赔偿四万元。",
+        "法院另案判赔五万元"));
+    assert!(!same_court_award("四万元",40_000.0,"法院当时要求给受害人赔偿四万元。",
+        "向受害人赔偿四万元"));
+    assert!(same_court_award("四万元",40_000.0,"法院当时要求给受害人赔偿四万元。",
+        "给受害人赔偿四万元"));
+}
+
+#[cfg(test)]
+#[test]
+fn only_a_unique_witness_can_rebind_a_repeated_award_and_keep_the_example() {
+    let doc: Document = serde_json::from_value(json!({
+        "purpose":"核对申请执行的事例","topics":[{"title":"情况","points":[
+            {"kind":"opinion","text":"例中房屋经婚前公证，离婚时不会分给另一方。","sources":["u003"]},
+            {"kind":"opinion","text":"另讨论能否保留案底。","sources":["u005"]}
+        ],"details":[]}],"questions":[
+            {"text":"法院判赔四万但仅赔四千后拒赔，怎么处理？","sources":["u004"]}
+        ],"actionItems":[],"decisions":[]
+    })).unwrap();
+    let evidence = [
+        json!({"id":"e0062","source":"u003","text":"说话人2：比如说结婚之前已有一套房子和十万块钱，那么离婚不会分给别人。"}),
+        json!({"id":"e0090","source":"u004","text":"说话人5：法院当时要求给受害人赔偿四万元。"}),
+        json!({"id":"e0092","source":"u004","text":"说话人5：赔偿四千多之后就没有再赔偿。"}),
+        json!({"id":"e0095","source":"u004","text":"说话人2：一审已经判决赔偿四万块钱。"}),
+    ];
+    let original_home = vec!["e0062".into()];
+    let original_award = vec!["e0090".into(),"e0092".into()];
+    let unrelated = vec!["e0100".into()];
+    let bindings = HashMap::from([("topics[0].points[0]".into(),&original_home),
+        ("topics[0].points[1]".into(),&unrelated),("questions[0]".into(),&original_award)]);
+    let disputed = [
+        json!({"cue":{"id":"v011","evidence":"e0062","span":"十万块钱"}}),
+        json!({"cue":{"id":"v012","evidence":"e0090","span":"四万元"}}),
+        json!({"cue":{"id":"v014","evidence":"e0095","span":"四万块钱"}}),
+    ];
+    let raw = r#"{"checks":[
+        {"id":"v011","status":"covered","claim":"topics[0].points[0]",
+         "proof":{"sourceQuote":"结婚之前已有一套房子和十万块钱","statementQuote":"婚前公证，离婚时不会分给另一方"}},
+        {"id":"v012","status":"covered","claim":"questions[0]",
+         "proof":{"sourceQuote":"给受害人赔偿四万元","statementQuote":"法院判赔四万但仅赔四千后拒赔"}},
+        {"id":"v014","status":"covered","claim":"topics[0].points[1]",
+         "proof":{"sourceQuote":"判决赔偿四万块钱","statementQuote":"法院判赔四万但仅赔四千后拒赔"}}
+        ],"additions":[]}"#;
+    let mut fresh: MissingItems = parse(raw).unwrap();
+    let repaired = recover_monetary_coverage(&mut fresh.checks,&disputed,&doc,&evidence,&bindings);
+    assert_eq!(repaired.len(),3);
+    assert!(matches!(&fresh.checks[0],SourceCheck::Missing { addition, .. }
+        if addition.item.role == Role::Example && addition.item.text.contains("十万块钱")));
+    assert!(matches!(&fresh.checks[2],SourceCheck::Covered {claim,..} if claim=="questions[0]"));
+    let mut separate_case = evidence.clone();
+    separate_case[2]["text"]=json!("下一个问题涉及已付四千多。");
+    let mut negative: MissingItems = parse(raw).unwrap();
+    assert_eq!(recover_monetary_coverage(&mut negative.checks,&disputed,&doc,&separate_case,&bindings).len(),2);
+}
+
 fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document, evidence: &[Value],
     bindings: &HashMap<String, &Vec<String>>,
 ) -> Vec<Value> {
@@ -2092,8 +2284,13 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
             if opening > 0 {
                 trace.last_mut().unwrap()["openingScopeRetainedInPurpose"] = json!(opening);
             }
+            let money = recover_monetary_coverage(&mut repair.checks, &rejected, &doc, &evidence, &bindings);
+            if !money.is_empty() {
+                trace.last_mut().unwrap()["resolvedMonetaryCoverage"] = json!(money);
+            }
             let returned: HashSet<_> = repair.checks.iter().map(SourceCheck::id).collect();
-            let unresolved = rejected_coverage(&repair.checks, &rejected, &doc, &evidence, &bindings);
+            let mut unresolved = rejected_coverage(&repair.checks, &rejected, &doc, &evidence, &bindings);
+            unresolved.retain(|issue| !money.iter().any(|resolved| resolved["id"] == issue["cue"]["id"]));
             trace.last_mut().unwrap()["unresolvedCoverage"] = json!(unresolved);
             if returned != ids || repair.checks.len() != ids.len() || !repair.additions.is_empty()
                 || !unresolved.is_empty() || !preserves_related_cause(&repair.checks, &rejected) {
