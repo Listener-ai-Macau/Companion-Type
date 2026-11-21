@@ -220,6 +220,65 @@ fn parallel_reviews(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking:
     });
     let(factual,mut calls)=factual;let(coverage,other)=coverage;calls.extend(other);let(omissions,other)=omissions;calls.extend(other);(factual,coverage,omissions,calls)
 }
+fn project_cloud_minutes(doc: &Document, units: &[Unit], session: &CompanionV1HostSession,
+    base: &CompanionV1MeetingMinutes) -> CompanionV1MeetingMinutes
+{
+    let mut minutes = base.clone();
+    minutes.source = "llm_deepseek".into();
+    minutes.quality = "final".into();
+    minutes.processing = None;
+    minutes.llm_note = None;
+    minutes.summary = doc.topics.iter().flat_map(|topic| topic.points.iter().map(|point| point.text.clone())).collect();
+    minutes.summary.extend(retained_coordination(doc, units));
+    minutes.decisions = doc.decisions.iter().map(|entry| entry.text.clone()).collect();
+    minutes.action_items = doc.action_items.iter().map(|action| CompanionV1ActionItem {
+        text: action.text.clone(), owner: action.owner.clone(), due: action.due.clone(),
+    }).collect();
+    minutes.questions = doc.questions.iter().map(|entry| entry.text.clone()).collect();
+    minutes.keywords = doc.topics.iter().map(|topic| topic.title.clone()).collect();
+    let speaker = super::render_speaker_section_named(&session.transcript_text, &super::reviewed_speaker_names(session));
+    minutes.markdown = render(doc, units, speaker.as_deref());
+    minutes
+}
+
+fn project_review_draft(doc: &Document, facts: &[answer_layout::Fact], units: &[Unit],
+    session: &CompanionV1HostSession, base: &CompanionV1MeetingMinutes, reason: &str,
+) -> CompanionV1MeetingMinutes {
+    let mut marked = doc.clone();
+    for decision in &mut marked.decisions {
+        decision.text = format!("待核对：{}", decision.text);
+    }
+    for action in &mut marked.action_items {
+        action.text = format!("待核对：{}", action.text);
+    }
+    let mut minutes = project_cloud_minutes(&marked, units, session, base);
+    minutes.quality = "draft".into();
+    minutes.llm_note = Some(format!("{}。{reason}", super::CLOUD_REVIEW_DRAFT_REASON));
+    minutes.markdown.insert_str(0, "> 纪要初稿待核对。请对照原话确认关键结论和后续安排。\n\n");
+    let source = factual_audit::evidence_sentences(units);
+    let mut quotes = Vec::new();
+    for (placement, field, rows) in [
+        (answer_layout::Placement::Decision, "decisions",
+            doc.decisions.iter().map(|row| (row.text.as_str(), None, None)).collect::<Vec<_>>()),
+        (answer_layout::Placement::Action, "actionItems",
+            doc.action_items.iter().map(|row| (row.text.as_str(), row.owner.as_deref(), row.due.as_deref())).collect()),
+    ] {
+        for (index, (text, owner, due)) in rows.into_iter().enumerate() {
+            let Some(fact) = facts.iter().find(|fact| fact.placement == placement && fact.text == text
+                && fact.owner.as_deref() == owner && fact.due.as_deref() == due) else { continue; };
+            for id in fact.evidence.iter().take(3) {
+                if let Some(quote) = source.iter().find(|item| item["id"] == id.as_str())
+                    .and_then(|item| item["text"].as_str()).map(str::trim) {
+                    quotes.push(json!({"field":field,"index":index,"quote":quote}));
+                }
+            }
+        }
+    }
+    let entries = super::short_evidence::capture(&json!({"evidence":quotes}), &minutes, &session.transcript_text);
+    super::short_evidence::append(&mut minutes, &entries);
+    minutes
+}
+
 pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1HostSession,base:&CompanionV1MeetingMinutes,client:&reqwest::blocking::Client)->Result<CompanionV1MeetingMinutes,String> {
     let start=Instant::now();let units=source_units(&session.transcript_text);let anchors=constraints(&units);let mut trace=Vec::new();let mut traced_document=None;
     let outcome=(|| {
@@ -275,7 +334,14 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         };
         traced_document=Some(doc.clone());
         let mut doc=if let Some(facts)=source_facts {
-            let checked=source_items::fill_omissions(endpoint,model,key,client,doc,&facts,&units,start,&mut trace)?;
+            let checked = match source_items::fill_omissions(endpoint, model, key, client, doc.clone(), &facts, &units, start, &mut trace) {
+                Ok(checked) => checked,
+                Err(reason) => {
+                    check_current()?;
+                    validate(&doc, &units)?;
+                    return Ok(project_review_draft(&doc, &facts, &units, session, base, &reason));
+                }
+            };
             traced_document=Some(checked.doc.clone());
             let verified = factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&checked.doc,&units,&checked.conflicts,start,&mut trace)?;
             traced_document=Some(verified.document.clone());
@@ -290,15 +356,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         reconcile_citations(&mut doc, &source);
         validate(&doc, &units)?;
         traced_document=Some(doc.clone());
-        let mut minutes=base.clone();
-        minutes.source="llm_deepseek".into();minutes.quality="final".into();minutes.processing=None;minutes.llm_note=None;
-        minutes.summary=doc.topics.iter().flat_map(|t|t.points.iter().map(|p|p.text.clone())).collect();
-        minutes.summary.extend(super::canonical_brief::retained_coordination(&doc,&units));
-        minutes.decisions=doc.decisions.iter().map(|p|p.text.clone()).collect();
-        minutes.action_items=doc.action_items.iter().map(|a|CompanionV1ActionItem{text:a.text.clone(),owner:a.owner.clone(),due:a.due.clone()}).collect();
-        minutes.questions=doc.questions.iter().map(|p|p.text.clone()).collect();minutes.keywords=doc.topics.iter().map(|t|t.title.clone()).collect();
-        let speaker=super::render_speaker_section_named(&session.transcript_text,&super::reviewed_speaker_names(session));
-        minutes.markdown=render(&doc,&units,speaker.as_deref());Ok(minutes)
+        Ok(project_cloud_minutes(&doc, &units, session, base))
     })();
     if let Ok(path)=std::env::var("COMPANION_TYPE_AUTOMATIC_BRIEF_TRACE_PATH") {
         if !path.is_empty(){if let Ok(mut f)=std::fs::OpenOptions::new().write(true).create_new(true).open(path) {
@@ -306,7 +364,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             let flow=if source_items::enabled(){"windowed source items, ID-only organization, direct source omission scan, independent factual audit"}
                 else if coverage::enabled(){"source-only draft, independent factual audit and grounded question coverage"}
                 else{"source-only draft then reviewed canonical brief"};
-            let _=serde_json::to_vec_pretty(&json!({"flow":flow,"calls":trace,"acceptedStructure":outcome.is_ok(),"document":traced_document,"error":outcome.as_ref().err(),"sourceUnitCount":units.len(),"constraintCount":anchors.len(),"sourceConstraints":anchors,"seconds":start.elapsed().as_secs_f64(),"thinkingContentStored":false,"semanticAccuracyCertificate":false})).map(|v|f.write_all(&v));
+            let _=serde_json::to_vec_pretty(&json!({"flow":flow,"calls":trace,"acceptedStructure":outcome.as_ref().is_ok_and(|minutes| minutes.quality == "final"),"document":traced_document,"error":outcome.as_ref().err(),"reviewDraftNote":outcome.as_ref().ok().and_then(|minutes|minutes.llm_note.as_deref()),"sourceUnitCount":units.len(),"constraintCount":anchors.len(),"sourceConstraints":anchors,"seconds":start.elapsed().as_secs_f64(),"thinkingContentStored":false,"semanticAccuracyCertificate":false})).map(|v|f.write_all(&v));
         }}
     }
     outcome

@@ -277,7 +277,7 @@ fn recovery_error_is_permanent(error: &str) -> bool {
     [
         "credential", "not configured", "missing", "invalid wav", "unsupported",
         "authentication", "unauthorized", "forbidden", "does not exist",
-        "录音缺段", "录音分段重复", "长录音分段未完成", "truncated wav", "riff header",
+        "录音缺段", "录音分段重复", "长录音分段未完成", "truncated wav", "riff header", minutes::CLOUD_REVIEW_DRAFT_REASON,
     ]
     .iter()
     .any(|needle| error.contains(needle))
@@ -427,7 +427,17 @@ where F: FnMut(&CompanionV1HostSession) -> crate::companion_v1::CompanionV1Meeti
             else { session.minutes_by_mode.offline_store.clone() }
             .or_else(|| (mode == session.meeting_mode).then(|| session.minutes.as_ref().map(|m| minutes_variant(m, 0))).flatten());
         if generated.llm_note.is_some(){
-            if let Some(mut retained)=previous.as_ref().filter(|p|!p.markdown.trim().is_empty()).cloned(){
+            let reviewable = minutes::is_cloud_review_draft(&variant.source, &variant.quality, variant.processing.is_some());
+            if let Some(mut retained) = previous.as_ref().filter(|p| !p.markdown.trim().is_empty()
+                && !(reviewable && p.source == "rules_l0" && p.quality == "draft")).cloned() {
+                if reviewable && retained.markdown != variant.markdown
+                    && !session.minutes_by_mode.history.iter().any(|item| item.mode == mode
+                        && item.variant.source_review_revision == variant.source_review_revision
+                        && item.variant.markdown == variant.markdown) {
+                    session.minutes_by_mode.history.push(crate::companion_v1::CompanionV1MinutesHistory {
+                        mode: mode.clone(), archived_at: generated_at.into(), variant: variant.clone(),
+                    });
+                }
                 // A failed new attempt is not a replacement or a saved version.
                 // Keep the active readable product/export and retry only this
                 // mode; the session's recovery state stores the actual error.

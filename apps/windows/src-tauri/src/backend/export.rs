@@ -316,6 +316,15 @@ pub fn prepare_meeting_export_selected(session:&CompanionV1HostSession,meeting_m
     let mut calendar_items=None;
     let content = match format {
         MeetingExportFormat::Todo | MeetingExportFormat::TodoText | MeetingExportFormat::Ics | MeetingExportFormat::Calendar | MeetingExportFormat::CalendarReminder | MeetingExportFormat::CalendarReminder30 | MeetingExportFormat::CalendarReminder60 => {
+            let review_draft = match minutes_variant_for_mode(session, meeting_mode) {
+                Some(variant) => super::minutes::is_cloud_review_draft(&variant.source, &variant.quality, variant.processing.is_some()),
+                None => session.minutes.as_ref().is_some_and(|minutes| {
+                    super::minutes::is_cloud_review_draft(&minutes.source, &minutes.quality, minutes.processing.is_some())
+                }),
+            };
+            if review_draft {
+                return Err("这版纪要仍待核对，请先完成整理再导出待办或日历。可以导出草稿文字。".into());
+            }
             let processing = minutes_variant_for_mode(session, meeting_mode).and_then(|v| v.processing.as_ref())
                 .or_else(|| if minutes_variant_for_mode(session, meeting_mode).is_none() {
                     session.minutes.as_ref().and_then(|m| m.processing.as_ref())
@@ -1127,6 +1136,20 @@ mod tests {
         assert!(online.contains("第二模式任务")); assert!(!online.contains("新任务"));
         s.minutes_by_mode.offline_store.as_mut().unwrap().markdown = "## 行动项\n- 无".into();
         assert!(prepare_meeting_export(&s, "offlineStore", MeetingExportFormat::Ics).unwrap_err().contains("没有可导出"));
+    }
+
+    #[test]
+    fn reviewable_cloud_draft_exports_as_document_only() {
+        let mut s = session("final transcript", vec![], Some(minutes()));
+        let draft = s.minutes.as_mut().unwrap();
+        draft.source = "llm_deepseek".into();
+        draft.quality = "draft".into();
+        draft.markdown = "## 行动项\n- 待核对：按原话核对方案 (due: 2026-10-29)".into();
+        let markdown = saved_minutes_markdown_for_mode(&s, "offlineStore").unwrap();
+        assert!(markdown.contains("草稿") && markdown.contains("按原话核对方案"));
+        for format in [MeetingExportFormat::Todo, MeetingExportFormat::TodoText, MeetingExportFormat::Ics, MeetingExportFormat::Calendar] {
+            assert!(prepare_meeting_export(&s, "offlineStore", format).unwrap_err().contains("仍待核对"));
+        }
     }
 
     #[test]

@@ -181,6 +181,16 @@ struct CoverageProof {
 }
 
 impl SourceCheck {
+    fn normalize_claim_path(&mut self, claims: &HashSet<&str>) {
+        let (Self::Covered { claim, .. } | Self::Conflict { claim, .. }) = self else { return; };
+        if claims.contains(claim.as_str()) {
+            return;
+        }
+        if let Some(base) = claim.strip_suffix(".text").filter(|base| claims.contains(base)) {
+            *claim = base.to_owned();
+        }
+    }
+
     fn id(&self) -> &str {
         match self {
             Self::Covered { id, .. } | Self::Missing { id, .. } | Self::NeedsReview { id, .. }
@@ -674,7 +684,53 @@ fn measure_has_witness(span: &str, claim: &Value) -> bool {
         .any(|(found, found_unit)| unit == found_unit && (found - quantity).abs() < 1e-8)
 }
 
+fn duration_ranges(text: &str) -> Vec<(std::ops::Range<usize>, f64, f64, &str)> {
+    static EXPLICIT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"([0-9０-９一二两三四五六七八九十百]+)\s*(?:到|至|[-–—~～])\s*([0-9０-９一二两三四五六七八九十百]+)\s*(个月|小时|分钟|年|周|天)"
+    ).unwrap());
+    static SPOKEN: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"([一二两三四五六七八九])([一二两三四五六七八九])(个月|小时|分钟|年|周|天)"
+    ).unwrap());
+    let mut ranges = Vec::new();
+    for regex in [&*EXPLICIT, &*SPOKEN] {
+        for matched in regex.captures_iter(text) {
+            let Some(from) = number_value(&matched[1], false) else { continue; };
+            let Some(to) = number_value(&matched[2], false) else { continue; };
+            let whole = matched.get(0).unwrap();
+            let joined_digits = text[..whole.start()].chars().next_back().is_some_and(|ch| {
+                "零〇一二两三四五六七八九十百千万亿0123456789０１２３４５６７８９".contains(ch)
+            });
+            if joined_digits || from >= to || (regex.as_str() == SPOKEN.as_str() && to - from != 1.0) {
+                continue;
+            }
+            ranges.push((whole.range(), from, to, matched.get(3).unwrap().as_str()));
+        }
+    }
+    ranges
+}
+
+fn cited_duration_range_matches(span: &str, claim: &Value, source: &str) -> Option<bool> {
+    let ranges = duration_ranges(source);
+    let mut spans = source.match_indices(span).peekable();
+    spans.peek()?;
+    let mut expected = None;
+    for (offset, _) in spans {
+        let (_, from, to, unit) = ranges.iter()
+            .find(|(range, ..)| range.start <= offset && offset + span.len() <= range.end)?;
+        let value = (*from, *to, *unit);
+        if expected.replace(value).is_some_and(|old| old != value) {
+            return Some(false);
+        }
+    }
+    let expected = expected?;
+    let text = claim["text"].as_str()?;
+    Some(duration_ranges(text).iter().any(|(_, from, to, unit)| (*from, *to, *unit) == expected))
+}
+
 fn contextual_measure_witness(span: &str, claim: &Value, source: &str) -> bool {
+    if let Some(matches) = cited_duration_range_matches(span, claim, source) {
+        return matches;
+    }
     // A cited duration can be contextual rather than a second measurement.
     // Do not require a rhetorical question to repeat an already named period,
     // or treat retrospective working-year wording as a new commitment.
@@ -707,9 +763,13 @@ fn contextual_measure_witness(span: &str, claim: &Value, source: &str) -> bool {
             return true;
         }
     }
-    if span == "半个月" && claim["kind"] != "action" && claim["kind"] != "decision"
-        && (source.contains("如果") || source.contains("大约") || source.contains("大概"))
-        && measure_has_witness("十五天", claim) {
+    let explicit_half_month = ["半个月历时十五天", "十五天半个月", "半个月（十五天）", "半个月也就是十五天"]
+        .iter().any(|syntax| normalized(source).contains(syntax));
+    if span == "半个月" && measure_has_witness("十五天", claim) && (
+        (explicit_half_month && claim["due"].is_null()
+            && !["截止", "最晚", "之前", "到期", "前交"].iter().any(|term| source.contains(term)))
+        || (claim["kind"] != "action" && claim["kind"] != "decision"
+            && ["如果", "大约", "大概"].iter().any(|term| source.contains(term)))) {
         // Conversational estimates can use half a month or fifteen days.
         // A deadline or a finalized arrangement still needs its own wording.
         return true;
@@ -745,6 +805,21 @@ fn contextual_measure_witness(span: &str, claim: &Value, source: &str) -> bool {
         text.match_indices("每年").filter_map(|(start, term)| rate(&text[start + term.len()..]))
             .any(|written| spoken_rates.contains(&written))
     })
+}
+
+#[cfg(test)]
+#[test]
+fn compares_both_boundaries_of_a_spoken_duration() {
+    let range = json!({"text":"入职过渡约一两年。"});
+    let endpoint = json!({"text":"入职过渡两年。"});
+    assert!(contextual_measure_witness("两年", &range, "在一到两年的工作期间"));
+    assert!(!contextual_measure_witness("两年", &endpoint, "在一到两年的工作期间"));
+    assert!(!contextual_measure_witness("十年", &range, "第一家公司并不会工作十年二十年"));
+    assert!(contextual_measure_witness("半个月", &json!({"text":"准备十五天行程。","kind":"action"}),
+        "十五天半个月的时间准备带人家去哪里"));
+    assert!(!contextual_measure_witness("半个月", &json!({"text":"准备十五天行程。","kind":"action","due":"十五天"}),
+        "半个月内最晚交计划。"));
+    assert!(duration_ranges("等十五六年").is_empty());
 }
 
 #[cfg(test)]
@@ -832,7 +907,7 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
                 && normalized(&proof.source_quote).contains(&normalized(required))
                 && (!matches!(aspect, "交办后又提问" | "交办的内容范围") || !claim.starts_with("questions[")))
         } else { true };
-        let measure_matches = target.is_some_and(|claim| {
+        let measure_matches = context["cue"]["aspect"].is_string() || target.is_some_and(|claim| {
             contextual_measure_witness(context["cue"]["span"].as_str().unwrap(), claim, source_text)
         });
         let omitted_qualification = restriction().find_iter(source_text).find(|hit| {
@@ -845,7 +920,9 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
         if grounded && ordinary_proof && measure_matches && omitted_qualification.is_none() { return None; }
         let mut issue = context.clone();
         issue["previousClaim"] = json!(claim);
-        issue["reason"] = json!(if !ordinary_proof {
+        issue["reason"] = json!(if target.is_none() {
+            "事项编号与现有稿不匹配。请原样复制现有事项的 path；无法对应时说明缺失、背景或待核实。"
+        } else if !ordinary_proof {
             "要覆盖线索标记的实际进展或独立交办。引文须包含该线索，不能用同段的提问或回答代替。"
         } else if !measure_matches {
             "该正文未保留原话的同一数量或时长。若原话数字只是口语描述、例子或含混片段，应说明其性质；若关乎实际理解或执行，补入正确事实或写待核实。"
@@ -1026,7 +1103,7 @@ fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, 
         match check {
             SourceCheck::Covered { claim, .. } => {
                 let existing = by_path.get(claim.as_str()).ok_or_else(fail)?;
-                if !contextual_measure_witness(&cue.span, existing, known[cue.evidence.as_str()]) { return Err(fail()); }
+                if cue.aspect.is_none() && !contextual_measure_witness(&cue.span, existing, known[cue.evidence.as_str()]) { return Err(fail()); }
             }
             SourceCheck::Conflict { claim, .. } => {
                 let existing = by_path.get(claim.as_str()).ok_or_else(fail)?;
@@ -1093,7 +1170,11 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         input, false, start, trace, "source-items-omissions")?;
     let scan_index = trace.len() - 1;
     trace[scan_index]["omissionCues"] = json!(cues);
+    let claim_values = factual_audit::claims(&doc);
+    let claim_paths: HashSet<_> = claim_values.iter().filter(|value| value.get("sources").is_some())
+        .filter_map(|value| value["path"].as_str()).collect();
     let mut checked: MissingItems = parse(&raw)?;
+    for check in &mut checked.checks { check.normalize_claim_path(&claim_paths); }
     let disputed = disputed_coverage(&checked, &cues, &doc, &evidence, &bindings);
     if !disputed.is_empty() && checked.checks.len() == cues.len() {
         let selected: HashSet<_> = disputed.iter().map(|case| case["cue"]["id"].as_str().unwrap()).collect();
@@ -1111,6 +1192,7 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         let raw = super::request(endpoint,model,key,client,RECHECK_MEASURES,
             json!({"sourceSentences":context,"sourceCheckRecheck":disputed,"currentBrief":doc}),false,start,trace,"source-items-omissions-recheck")?;
         let mut fixed: MissingItems = parse(&raw)?;
+        for check in &mut fixed.checks { check.normalize_claim_path(&claim_paths); }
         let returned: HashSet<_> = fixed.checks.iter().map(SourceCheck::id).collect();
         if returned != selected || fixed.checks.len() != selected.len() || !fixed.additions.is_empty() {
             return Err("纪要存在未完成的关键原话覆盖复核，已有结果保留。".into());
@@ -1121,11 +1203,13 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
             let raw = super::request(endpoint,model,key,client,REPAIR_COVERAGE,
                 json!({"sourceSentences":context,"sourceCoverageRepair":rejected,"currentBrief":doc}),
                 false,start,trace,"source-items-coverage-repair")?;
-            let repair: MissingItems = parse(&raw)?;
+            let mut repair: MissingItems = parse(&raw)?;
+            for check in &mut repair.checks { check.normalize_claim_path(&claim_paths); }
             let returned: HashSet<_> = repair.checks.iter().map(SourceCheck::id).collect();
+            let unresolved = rejected_coverage(&repair.checks, &rejected, &doc, &evidence, &bindings);
+            trace.last_mut().unwrap()["unresolvedCoverage"] = json!(unresolved);
             if returned != ids || repair.checks.len() != ids.len() || !repair.additions.is_empty()
-                || !rejected_coverage(&repair.checks, &rejected, &doc, &evidence, &bindings).is_empty()
-                || !preserves_related_cause(&repair.checks, &rejected) {
+                || !unresolved.is_empty() || !preserves_related_cause(&repair.checks, &rejected) {
                 return Err("纪要存在未完成的关键原话覆盖复核，已有结果保留。".into());
             }
             fixed.checks.retain(|row| !ids.contains(row.id()));

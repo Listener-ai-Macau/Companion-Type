@@ -119,7 +119,11 @@ pub fn edit_session(session: &mut CompanionV1HostSession, request: &MeetingEditR
         } else {
             let mut updated = variant.clone();
             updated.markdown = markdown.trim().to_string();
-            if updated.source != "userAuthored" { updated.source = "userEdited".into(); }
+            // Editing prose keeps the cloud review boundary until a later final generation.
+            if updated.source != "userAuthored"
+                && !super::minutes::is_cloud_review_draft(&updated.source, &updated.quality, updated.processing.is_some()) {
+                updated.source = "userEdited".into();
+            }
             updated.source_review_revision = super::transcript_review::active_revision(session);
             updated.generated_at = Some(now.into());
             updated

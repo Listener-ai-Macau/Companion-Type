@@ -198,6 +198,12 @@ pub fn rules_l0_minutes(
     minutes
 }
 
+pub(super) const CLOUD_REVIEW_DRAFT_REASON: &str = "纪要初稿待核对";
+
+pub(super) fn is_cloud_review_draft(source: &str, quality: &str, has_processing: bool) -> bool {
+    source == "llm_deepseek" && quality == "draft" && !has_processing
+}
+
 /// Promote an L1 result to final on Ok, or fall back to L0 with the failure
 /// reason recorded in `llm_note` so the UI can surface *why* final minutes
 /// weren't produced (previously the error was silently dropped).
