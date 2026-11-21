@@ -851,6 +851,7 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
     let limits = super::source_coverage::restore_cited_limits(&mut facts, &evidence);
     let delivery_scopes = super::source_coverage::restore_delivery_scope(&mut facts, &evidence);
     let spoken_scope = reconcile_spoken_scope(&mut facts, &evidence);
+    let corrected_scope = super::source_corrections::correct(&mut facts, &evidence);
     let mut projection = complete_layout(&mut layout, &facts)?;
     let mut moved = Vec::new();
     for (id, before, after) in &renamed {
@@ -885,6 +886,9 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
         "retainedDeliveryScopes":delivery_scopes,"spokenScopeCorrections":spoken_scope});
     if !payment_ranges.is_empty() {
         projection["sourceBindings"]["retainedPaymentRanges"] = json!(payment_ranges);
+    }
+    if !corrected_scope.is_empty() {
+        projection["sourceBindings"]["correctedExecutionAndRefundScope"] = json!(corrected_scope);
     }
     if !tentative_dates.is_empty() {
         projection["sourceBindings"]["retainedTentativeDates"] = json!(tentative_dates);

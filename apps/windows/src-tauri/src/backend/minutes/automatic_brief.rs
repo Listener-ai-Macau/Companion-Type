@@ -20,6 +20,8 @@ mod source_items;
 mod source_bindings;
 #[path="automatic_brief_source_coverage.rs"]
 mod source_coverage;
+#[path="automatic_brief_source_corrections.rs"]
+mod source_corrections;
 #[path="automatic_brief_commitments.rs"]
 mod commitments;
 #[path="automatic_brief_source_scope.rs"]
