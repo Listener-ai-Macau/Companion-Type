@@ -419,8 +419,7 @@ fn durable_retry_only_submits_unfinished_chunks_and_preserves_tail_and_source() 
 fn cancelled_long_minutes_keep_completed_chapters_and_resume_without_resending() {
     use crate::backend::meeting_processing_job::{self,Kind,MINUTES_CANCELLED};
     let root=root();let text=format!("{}最后结论：保留原音并等待实板验收。", "讨论内容用于分段压力，不包含新的决定或任务。\n".repeat(1400));
-    let mut source=session(&text);let total=plan(&text).unwrap().len();assert!(total>3);
-    source.id = "chapter-cancel-and-resume".into();
+    let source=session(&text);let total=plan(&text).unwrap().len();assert!(total>3);
     let mut calls=Vec::new();
     let stopped=meeting_processing_job::run(&source.id,"minutes-job",Kind::Minutes,||
         run_with(&root,"https://fixture.invalid","model","private",&source,"first",|index,_,part,_|{

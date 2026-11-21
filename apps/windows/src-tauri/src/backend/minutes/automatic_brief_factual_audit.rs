@@ -1331,7 +1331,11 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             let document=finish_conflicts(current,conflicts,&supported_conflicts)?;
             return Ok(VerifiedBrief {document,evidence,pending_quotes});
         }
-        emphasize_source_scope(&mut expected,&source);
+        // Late review gets the full immutable source and the changed statements.
+        // Whole-unit qualifier matches can highlight unrelated nearby content.
+        if !super::source_items::enabled() || (verified.is_none() && round < 2) {
+            emphasize_source_scope(&mut expected,&source);
+        }
         for claim in &mut expected {
             let competing: Vec<_> = conflicts.iter().filter(|conflict| same_assertion(claim, &conflict["claim"]))
                 .map(|conflict| &conflict["evidence"]).collect();
