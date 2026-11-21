@@ -73,7 +73,7 @@ impl SourceItem {
 
     pub(super) fn bind(self, known: &HashMap<&str, &Value>, known_ids: &HashSet<&str>) -> Result<Fact, String> {
         let stated_requirement = matches!(self.role, Role::Requirement);
-        let (mut kind, mut placement) = self.role.category();
+        let (kind, placement) = self.role.category();
         if !line(&self.text, 90) || self.evidence.is_empty() || self.evidence.len() > 8 {
             return Err("纪要事项格式不完整，已有纪要和原文保留。".into());
         }
@@ -84,14 +84,6 @@ impl SourceItem {
         let mut seen = HashSet::new();
         let evidence: Vec<_> = evidence.into_iter().filter(|id| seen.insert(id.clone())).collect();
         let snippets: Vec<_> = evidence.iter().map(|id| known[id.as_str()]["text"].as_str().unwrap()).collect();
-        if placement == Placement::Action && self.due.is_none()
-            && completed_report(&self.text, &snippets)
-        {
-            (kind, placement) = (Kind::Status, Placement::Topic);
-        }
-        if placement == Placement::Decision && contingent_closing(&self.text, &snippets) {
-            (kind, placement) = (Kind::Recommendation, Placement::Topic);
-        }
         let owner = self.owner.as_ref().filter(|owner| line(owner, 80) && snippets.iter()
             .any(|text| normalized(text).contains(&normalized(owner)))).cloned();
         let (text, owner, due) = if placement == Placement::Action {
@@ -112,17 +104,6 @@ impl SourceItem {
                 .map(|name| format!("{name}表示，{}", self.text));
             (text.filter(|text| line(text, 90)).unwrap_or(self.text), None, None)
         };
-        let text = if placement == Placement::Topic
-            && matches!(kind, Kind::Status | Kind::Opinion)
-        {
-            let rows: Vec<_> = evidence.iter().map(|id| known[id.as_str()]).collect();
-            if let Some(qualified) = reported_context(&text, &rows) {
-                kind = Kind::Opinion;
-                qualified
-            } else {
-                text
-            }
-        } else { text };
         let text = if stated_requirement && !text.starts_with("会上") {
             let reported = format!("会上提出：{text}");
             if !line(&reported, 90) {
@@ -173,8 +154,8 @@ fn reported_context(summary: &str, evidence: &[&Value]) -> Option<String> {
     let speaker = |row: &Value| row["turnSpeaker"].as_str().map(str::to_owned)
         .or_else(|| row["text"].as_str().and_then(super::super::source_resolution::split_turn_label)
             .map(|(who, _)| who.to_owned()));
-    let opening: String = summary.chars().take(14).collect();
-    let attributed = ["表示", "认为", "说明", "解释", "举例", "提到", "称"]
+    let opening: String = summary.split(['，', '。', '；']).next()?.chars().take(32).collect();
+    let attributed = ["表示", "认为", "说明", "解释", "举例", "指出", "提到", "担心", "倾向", "称"]
         .iter().any(|cue| opening.contains(cue));
     for row in evidence {
         let source = row["text"].as_str().unwrap_or_default();
@@ -186,7 +167,9 @@ fn reported_context(summary: &str, evidence: &[&Value]) -> Option<String> {
             return Some(combined.filter(|text| line(text, 90)).unwrap_or(quote));
         }
     }
-    if attributed || !evidence.iter().any(|row| {
+    let interpreted = ["构成", "属于", "责任", "最高判", "以为", "规定", "依据", "违法", "判定"]
+        .iter().any(|cue| summary.contains(cue));
+    if attributed || !interpreted || !evidence.iter().any(|row| {
         ["我举个例子", "比如说", "假如说", "如果说", "我觉得", "我认为", "给大家普及", "法条上写"]
             .iter().any(|cue| row["text"].as_str().is_some_and(|text| text.contains(cue)))
     }) {
@@ -202,11 +185,11 @@ fn reported_context(summary: &str, evidence: &[&Value]) -> Option<String> {
     line(&text, 90).then_some(text)
 }
 
-fn retain_live_request(item: &mut SourceItem, evidence: &[Value]) {
-    if !item.is_action() || item.due.is_some() || item.owner.is_some() || item.evidence.len() != 1 {
-        return;
+fn live_request_topic(fact: &Fact, evidence: &[Value]) -> Option<String> {
+    if fact.due.is_some() || fact.owner.is_some() || fact.evidence.len() != 1 {
+        return None;
     }
-    let Some(index) = evidence.iter().position(|row| row["id"] == item.evidence[0]) else { return; };
+    let index = evidence.iter().position(|row| row["id"] == fact.evidence[0].as_str())?;
     let mut nearby = evidence[index..].iter().take(3);
     let question = nearby.next().and_then(|row| row["text"].as_str()).unwrap_or_default();
     let question = super::super::source_resolution::split_turn_label(question)
@@ -217,24 +200,49 @@ fn retain_live_request(item: &mut SourceItem, evidence: &[Value]) {
             .iter().any(|cue| question.contains(cue))
         || question.contains(['「', '」'])
     {
-        return;
+        return None;
     }
     let same_explanation = [
         (["科普", "普及"], ["科普", "普及"]),
         (["解释", "讲解"], ["解释", "讲解"]),
         (["说一下", "说明"], ["说一下", "说明"]),
     ].iter().any(|(asked, answered)| {
-        asked.iter().any(|cue| question.contains(cue) && item.text.contains(cue))
+        asked.iter().any(|cue| question.contains(cue)) && asked.iter().any(|cue| fact.text.contains(cue))
             && nearby.clone().filter_map(|row| row["text"].as_str()).any(|text|
                 answered.iter().any(|cue| text.contains(cue))
                     && ["我来", "给大家", "给你", "我先", "是这样"].iter().any(|cue| text.contains(cue)))
     });
-    if !same_explanation { return; }
+    if !same_explanation { return None; }
     let text = format!("会上有人请发言人说明，原话为「{}」。", question.trim_end_matches(['。', '？', '！']));
-    if line(&text, 90) {
-        item.role = Role::Opinion;
-        item.text = text;
+    line(&text, 90).then_some(text)
+}
+
+fn reconcile_spoken_scope(facts: &mut [Fact], evidence: &[Value]) -> Vec<String> {
+    let by_id: HashMap<_, _> = evidence.iter().filter_map(|row|
+        Some((row["id"].as_str()?, row))).collect();
+    let mut changed = Vec::new();
+    for fact in facts {
+        let rows: Vec<_> = fact.evidence.iter().filter_map(|id| by_id.get(id.as_str()).copied()).collect();
+        let quotes: Vec<_> = rows.iter().filter_map(|row| row["text"].as_str()).collect();
+        let result = match fact.placement {
+            Placement::Action if fact.due.is_none() && completed_report(&fact.text, &quotes) =>
+                Some((Kind::Status, None)),
+            Placement::Action => live_request_topic(fact, evidence).map(|text| (Kind::Opinion, Some(text))),
+            Placement::Decision if contingent_closing(&fact.text, &quotes) =>
+                Some((Kind::Recommendation, None)),
+            Placement::Topic if matches!(fact.kind, Kind::Status | Kind::Opinion) =>
+                reported_context(&fact.text, &rows).map(|text| (Kind::Opinion, Some(text))),
+            _ => None,
+        };
+        let Some((kind, text)) = result else { continue; };
+        fact.kind = kind;
+        fact.placement = Placement::Topic;
+        fact.owner = None;
+        fact.due = None;
+        if let Some(text) = text { fact.text = text; }
+        changed.push(fact.id.clone());
     }
+    changed
 }
 
 #[derive(Deserialize)]
@@ -455,8 +463,7 @@ impl Window<'_> {
         let mut ignored_neighbor_only_items = 0;
         let mut normalized_topic_metadata = 0;
         for unit in self.core {
-            for mut item in by_id.remove(&unit.id).ok_or_else(missing)? {
-                retain_live_request(&mut item, self.evidence);
+            for item in by_id.remove(&unit.id).ok_or_else(missing)? {
                 let has_metadata = item.owner.is_some() || item.due.is_some();
                 let fact = item.bind(&known, &known_ids)?;
                 if !fact.evidence.iter().any(|id| primary.contains(known[id.as_str()]["source"].as_str().unwrap())) {
@@ -568,6 +575,7 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
     let separated = retain_requests_before_questions(&mut facts, &evidence);
     let limits = super::source_coverage::restore_cited_limits(&mut facts, &evidence);
     let delivery_scopes = super::source_coverage::restore_delivery_scope(&mut facts, &evidence);
+    let spoken_scope = reconcile_spoken_scope(&mut facts, &evidence);
     let mut projection = complete_layout(&mut layout, &facts)?;
     let mut moved = Vec::new();
     for (id, before, after) in &renamed {
@@ -599,7 +607,7 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
     projection["sourceBindings"] = json!({"correctedAttributions":renamed,"movedToSpeakerTopic":moved,
         "priorProposalsMarked":marked,"splitAssignmentEvidence":split,
         "restoredSourceRoles":roles,"separateRequests":separated,"retainedLiteralLimits":limits,
-        "retainedDeliveryScopes":delivery_scopes});
+        "retainedDeliveryScopes":delivery_scopes,"spokenScopeCorrections":spoken_scope});
     let topics = layout.topics.iter().map(|topic| json!({"title":topic.title,
         "points":topic.points.iter().map(|id| [id]).collect::<Vec<_>>(),
         "details":topic.details.iter().map(|id| [id]).collect::<Vec<_>>()})).collect::<Vec<_>>();
@@ -825,7 +833,7 @@ fn age_and_recurring_context_do_not_become_durations() {
     let source = "说话人1：十三周岁能不能参加，十八周岁是成人组，报名限一周。";
     let evidence = [json!({"id":"e0000","text":source})];
     let cues = omission_cues(&[], &evidence);
-    assert_eq!(cues.iter().map(|cue| cue.span.as_str()).collect::<Vec<_>>(),
+    assert_eq!(cues.iter().filter(|cue| cue.aspect.is_none()).map(|cue| cue.span.as_str()).collect::<Vec<_>>(),
         ["十三周岁", "十八周岁", "一周"]);
     assert!(measure_has_witness("十八周岁", &json!({"text":"成人组限18岁。"})));
     assert!(!measure_has_witness("十八周岁", &json!({"text":"训练十八周。"})));
@@ -1789,7 +1797,7 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
 pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest::blocking::Client,
     units: &[Unit], start: Instant, trace: &mut Vec<Value>) -> Result<(Document, Vec<Fact>), String>
 {
-    let evidence = super::commitments::with_turn_labels(&factual_audit::evidence_sentences(units));
+    let evidence = factual_audit::evidence_sentences(units);
     let mut facts = Vec::new();
     let ranges = windows(units);
     let cancellation = super::current_cancellation();
@@ -1867,13 +1875,13 @@ mod tests {
         assert!(!completed_report("教练部已专门开会，要求教练了解孩子情况。", &["我没开了会。"]));
         assert!(contingent_closing("有机会再请专家交流。", &["那今天先到这儿，有机会再请专家，散会。"]));
         assert!(!contingent_closing("有机会再请专家交流。", &["今天先到这儿，有机会再请专家。会后由我约。"]));
-        let mut item: SourceItem = parse(r#"{"role":"action","text":"应要求科普生活中的法律常识。","evidence":["e0000"]}"#).unwrap();
+        let mut item = Fact { id:"a000".into(),kind:Kind::Decision,placement:Placement::Action,
+            text:"应要求科普生活中的法律常识。".into(),owner:None,due:None,evidence:vec!["e0000".into()] };
         let evidence = [json!({"id":"e0000","text":"说话人5: 想嗯想让他科普一下儿常识。"}),
             json!({"id":"e0001","text":"说话人2: 对给大家普及一个知识。"})];
-        retain_live_request(&mut item, &evidence[..1]);
-        assert!(item.is_action());
-        retain_live_request(&mut item, &evidence);
-        assert!(!item.is_action());
+        assert!(reconcile_spoken_scope(std::slice::from_mut(&mut item), &evidence[..1]).is_empty());
+        assert_eq!(reconcile_spoken_scope(std::slice::from_mut(&mut item), &evidence), ["a000"]);
+        assert_eq!(item.placement, Placement::Topic);
         assert!(item.text.contains("想嗯想让他科普一下儿常识"));
     }
 
@@ -1885,11 +1893,11 @@ mod tests {
         assert!(corrected.contains("我们先冻结存量，然后立即恢复，实际上就是应急方案"));
         assert!(corrected.contains("另一种是测试流程"));
         assert!(reported_context("发言人举例：冻结存量后立即恢复属于应急方案。", &[&source]).is_none());
-        assert!(reported_context("未核实的数据还会再确认。", &[&source]).unwrap().starts_with("说话人2称"));
+        assert!(reported_context("未核实的数据还会再确认。", &[&source]).is_none());
         let question = json!({"text":"说话人1: 是不是七年，对不对"});
-        let answer = json!({"text":"说话人2: 我觉得七年，之后不续约"});
-        assert_eq!(reported_context("七年后不续约。", &[&question,&answer]).as_deref(),
-            Some("说话人2称，七年后不续约。"));
+        let answer = json!({"text":"说话人2: 我觉得七年，之后不承担责任"});
+        assert_eq!(reported_context("七年后不承担责任。", &[&question,&answer]).as_deref(),
+            Some("说话人2称，七年后不承担责任。"));
     }
 
     #[test]
