@@ -1346,11 +1346,19 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
                 .get("text")?.as_str()?.contains(phrase).then(||(c.path.clone(),vec![phrase.clone()]))
         }).collect::<HashMap<_,_>>()}else{HashMap::new()};
         let deletion_only=unclear.iter().filter(|path|!conservative.contains_key(*path)).cloned().collect::<HashSet<_>>();
-        let repair_contracts=allowed.iter().map(|path|
+        // Keep semantically identical scoped requests byte-identical for
+        // receipt reuse. Hash-backed membership checks do not define wire order.
+        let mut repair_paths: Vec<_> = allowed.iter().collect();
+        repair_paths.sort_unstable();
+        let repair_contracts=repair_paths.into_iter().map(|path|
             json!({"path":path,"maxCharacters":if misplaced.contains(path){120}else{repair_text_limit(path)},
             "textOnlyConservative":conservative.contains_key(path)})).collect::<Vec<_>>();
+        let mut deletion_paths: Vec<_> = deletion_only.iter().collect();
+        deletion_paths.sort_unstable();
         let stage=if round==0{"source-factual-repair"}else{"source-factual-repair-2"};
-        let mut payload=json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,"deletionOnlyPaths":deletion_only,"conservativeRewritePaths":conservative,"knownUnclearPhrases":unclear_history,"repairContracts":repair_contracts});
+        let mut payload=json!({"sourceUnits":wire,"previousDocument":current,"auditProblems":issues,
+            "deletionOnlyPaths":deletion_paths,"conservativeRewritePaths":conservative.iter().collect::<std::collections::BTreeMap<_,_>>(),
+            "knownUnclearPhrases":unclear_history.iter().collect::<std::collections::BTreeMap<_,_>>(),"repairContracts":repair_contracts});
         if super::source_items::enabled() {
             payload["roleCorrectionContract"]=json!("placementUnsupported为true的决定、交办或未决条目将由程序移出原栏目。仍有用的内容只返回path和120字内text，写清实际是意见、现状、设想或已回答的提问；程序保留出处并放入相关主题，之后独立复审。完全无依据、散会或重复无用条目可remove:true。不要在text内继续称已定案。只有需要指定补充主题且不含糊时，才附moveToTopic的已有主题下标。");
         }
