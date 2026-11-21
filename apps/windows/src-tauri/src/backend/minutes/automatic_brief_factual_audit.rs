@@ -298,6 +298,36 @@ fn audit_indices_only_close_to_supplied_paths_without_discarding_conflicts() {
     assert_eq!(reply["claimAudit"][2]["path"], "topics[2].details[1]");
 }
 
+fn audit_batches(expected: &[Value], count: usize, balance_roles: bool) -> Vec<Vec<Value>> {
+    let size = expected.len().div_ceil(count);
+    let contiguous: Vec<_> = expected.chunks(size).map(<[Value]>::to_vec).collect();
+    let count = contiguous.len();
+    if !balance_roles || count <= 1 { return contiguous; }
+    let needs_role = |claim: &Value| claim["path"].as_str().is_some_and(independent_path);
+    let role_counts: Vec<_> = contiguous.iter().map(|group| group.iter().filter(|claim| needs_role(claim)).count()).collect();
+    let roles = role_counts.iter().sum::<usize>();
+    if roles < count * 2 || role_counts.iter().max().unwrap() - role_counts.iter().min().unwrap() <= 1 {
+        return contiguous;
+    }
+    // The tail of the document otherwise concentrates all decision/task/
+    // question checks in one worker. Keep the whole transcript and remit;
+    // distribute only the independently audited claim rows.
+    let mut assignments = vec![None; expected.len()];
+    let mut remaining: Vec<_> = (0..count).map(|i| expected.len() / count + usize::from(i < expected.len() % count)).collect();
+    for (i, (original, _)) in expected.iter().enumerate().filter(|(_, claim)| needs_role(claim)).enumerate() {
+        let group = i % count;
+        assignments[original] = Some(group);
+        remaining[group] -= 1;
+    }
+    let mut available = remaining.into_iter().enumerate().flat_map(|(i, places)| std::iter::repeat_n(i, places));
+    let mut result = vec![Vec::new(); count];
+    for (claim, group) in expected.iter().zip(assignments) {
+        let group = group.unwrap_or_else(|| available.next().unwrap());
+        result[group].push(claim.clone());
+    }
+    result
+}
+
 fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,wire:&Value,expected:&[Value],source:&[Sentence],stage:&str,start:Instant,trace:&mut Vec<Value>,recovered_format:&AtomicBool)->Result<Audit,String>{
     // Each independent batch still sees the complete immutable source and
     // document. Bound concurrency to three; every claim needs a verdict.
@@ -320,28 +350,29 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     } else {
         PROMPT
     };
-    let batches = if super::source_items::enabled() {
+    let groups = if super::source_items::enabled() {
         // With a fuller brief, sending all claim rows duplicates enough text
         // to cross the native request ceiling. Split only the claim list,
         // keeping the same complete source and document in every request.
         // The provider's output ceiling includes reasoning tokens. A request
         // fitting the input budget can still truncate a long verdict list.
         let first = expected.len().div_ceil(32).clamp(1, 3);
-        (first..=3).find(|count| {
-            expected.chunks(expected.len().div_ceil(*count)).all(|claims| {
+        (first..=3).map(|count| audit_batches(expected, count, true)).find(|groups| {
+            groups.iter().all(|claims| {
                 let payload = json!({"sourceUnits":wire,"document":doc,"checkClaims":claims});
                 prompt.len() + payload.to_string().len() <= super::MAX_REQUEST_BYTES
             })
         }).ok_or("本场完整原文和逐项审核超出上下文预算，已有纪要保留。")?
     } else if super::coverage::enabled() {
-        expected.len().div_ceil(4).clamp(1,3)
+        audit_batches(expected, expected.len().div_ceil(4).clamp(1,3), false)
     } else {
-        1
+        vec![expected.to_vec()]
     };
-    let size=expected.len().div_ceil(batches);
+    let batches = groups.len();
+    let reordered = !groups.iter().flatten().eq(expected);
     let token=super::current_cancellation();check_cancellation(token.as_ref())?;
     let results=std::thread::scope(|scope|{
-        let workers=expected.chunks(size).enumerate().map(|(i,claims)|{
+        let workers=groups.iter().map(Vec::as_slice).enumerate().map(|(i,claims)|{
             let token=token.clone();let stage=if batches==1{stage.to_string()}else{format!("{stage}-batch-{i}")};
             scope.spawn(move||{
                 let mut calls=Vec::new();
@@ -385,7 +416,13 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
                         Err(error)=>Err(error),
                     }
                 })();
-                for call in &mut calls{call["parallelAuditBatchCount"]=json!(batches);}
+                for call in &mut calls{
+                    call["parallelAuditBatchCount"]=json!(batches);
+                    if reordered {
+                        call["batchIndependentRoles"] = json!(claims.iter()
+                            .filter(|claim| claim["path"].as_str().is_some_and(independent_path)).count());
+                    }
+                }
                 (result,calls)
             })
         }).collect::<Vec<_>>();
@@ -404,6 +441,11 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     check_cancellation(token.as_ref())?;
     if let Some(error)=error{return Err(error);}
     if claims.len()!=expected.len(){return Err("纪要审核未覆盖全部陈述，已有结果保留。".into());}
+    if reordered {
+        let order: HashMap<_,_> = expected.iter().enumerate()
+            .filter_map(|(index, claim)| Some((claim["path"].as_str()?, index))).collect();
+        claims.sort_by_key(|claim| order[claim.path.as_str()]);
+    }
     // Carry only exact, source-bound ambiguous spans into later coverage
     // comparison. They cannot certify an answer or suppress a whole question.
     let uncertain=claims.iter().filter(|c|source_wording_unclear(c)).flat_map(|c|{
@@ -2511,6 +2553,22 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn three_audit_batches_share_the_independent_roles_without_losing_claims() {
+        let mut expected: Vec<_> = (0..94).map(|i| json!({"path":format!("topics[0].details[{i}]")})).collect();
+        for (section, count) in [("decisions", 6), ("questions", 11), ("actionItems", 12)] {
+            expected.extend((0..count).map(|i| json!({"path":format!("{section}[{i}]")})));
+        }
+        let groups = audit_batches(&expected, 3, true);
+        assert_eq!(groups.iter().map(Vec::len).collect::<Vec<_>>(), [41, 41, 41]);
+        let independent = groups.iter().map(|group| group.iter()
+            .filter(|claim| independent_path(claim["path"].as_str().unwrap())).count()).collect::<Vec<_>>();
+        assert_eq!(independent, [10, 10, 9]);
+        let paths = |claims: &[Value]| claims.iter().map(|claim| claim["path"].as_str().unwrap().to_owned()).collect::<HashSet<_>>();
+        assert_eq!(paths(&groups.into_iter().flatten().collect::<Vec<_>>()), paths(&expected));
+        assert_eq!(audit_batches(&expected, 1, true), vec![expected]);
+    }
 
     #[test]
     fn a_supported_column_can_be_disproved_by_a_later_cited_verdict() {

@@ -509,6 +509,67 @@ fn remove_surplus_check_brace(raw: &str) -> Option<String> {
     syntax["checks"].is_array().then_some(repaired)
 }
 
+fn move_last_check_brace(raw: &str) -> Option<String> {
+    let body = super::super::strip_code_fences(raw).trim();
+    let error = serde_json::from_str::<Value>(body).err()?;
+    if !error.is_syntax() { return None; }
+    let line_offset = body.split_inclusive('\n').take(error.line().checked_sub(1)?)
+        .map(str::len).sum::<usize>();
+    let at = line_offset + error.column().checked_sub(1)?;
+    // A fully present final row can have its closing brace placed just
+    // outside the checks array. No text, IDs or verdicts may be synthesized.
+    if !body.get(..at)?.trim_end().ends_with('}') { return None; }
+    let suffix = body.get(at..)?.strip_prefix(']')?.trim_start().strip_prefix('}')?;
+    let following = suffix.trim_start().strip_prefix(',')?.trim_start();
+    if !following.starts_with("\"additions\"") { return None; }
+    let repaired = format!("{}}}]{suffix}", &body[..at]);
+    let packet: Value = serde_json::from_str(&repaired).ok()?;
+    let expected_shape = packet["checks"].as_array()?.last()?;
+    matches!(expected_shape["status"].as_str(), Some("missing" | "needsReview"))
+        .then_some(repaired)
+}
+
+fn normalize_check_delimiter(raw: &str) -> Option<(String, &'static str)> {
+    move_last_check_brace(raw).map(|value| (value, "movedLastCheckBrace"))
+        .or_else(|| remove_surplus_check_brace(raw).map(|value| (value, "removedSurplusCheckBrace")))
+}
+
+fn parse_source_check_packet(
+    raw: &str, expected: &HashSet<&str>, call: &mut Value,
+) -> Result<MissingItems, String> {
+    let error = match parse(raw) {
+        Ok(items) => return Ok(items),
+        Err(error) => error,
+    };
+    let Some((candidate, operation)) = normalize_check_delimiter(raw) else { return Err(error); };
+    let items: MissingItems = parse(&candidate).map_err(|_| error.clone())?;
+    let returned: HashSet<_> = items.checks.iter().map(SourceCheck::id).collect();
+    if &returned != expected || items.checks.len() != expected.len() {
+        return Err(error);
+    }
+    call[operation] = json!(true);
+    Ok(items)
+}
+
+#[cfg(test)]
+#[test]
+fn source_scan_moves_only_the_last_present_checks_close() {
+    let raw = r#"{
+        "checks":[{"id":"v000","status":"missing","addition":{"topic":null,
+        "item":{"role":"status","text":"消防设备已检修。","evidence":["e0018"],"owner":null,"due":null}}]},
+        "additions":[]
+    }"#;
+    let mut trace = json!({});
+    let expected = HashSet::from(["v000"]);
+    let repaired = parse_source_check_packet(raw, &expected, &mut trace).unwrap();
+    assert_eq!(trace["movedLastCheckBrace"], true);
+    assert!(matches!(&repaired.checks[0], SourceCheck::Missing { addition, .. }
+        if addition.item.text == "消防设备已检修。" && addition.item.evidence == ["e0018"]));
+    assert!(parse_source_check_packet(raw, &HashSet::from(["v001"]), &mut json!({})).is_err());
+    assert!(parse_source_check_packet(&raw.replace("}}]},", "}]},"),
+        &expected, &mut json!({})).is_err());
+}
+
 fn parse_coverage_repair(raw: &str, expected: &[Value], evidence: &[Value]) -> Result<(MissingItems, usize), String> {
     let initial = match parse::<MissingItems>(raw) {
         Ok(items) => return Ok((items, 0)),
@@ -1416,8 +1477,37 @@ fn past_period_frames_question(span: &str, claim: &Value, source: &str) -> bool 
             question.contains(cue) && summary.contains(cue))
 }
 
+fn annual_activity_witness(span: &str, claim: &Value, source: &str) -> Option<bool> {
+    if span != "一年" { return None; }
+    const ACTIVITIES: &str = "检查|审查|巡检|盘点|演练|体检|评审|评估|培训|复核|审核|考核";
+    static SPOKEN: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(&format!(
+        r"^一度(?:的|这个|这项|开展|组织|进行|\s)*(?P<activity>{ACTIVITIES})"
+    )).unwrap());
+    static WRITTEN: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(&format!(
+        r"(?:年度|每年(?:一次|例行)?(?:的|开展|组织|进行)?)(?P<activity>{ACTIVITIES})|(?P<inspection>年检)"
+    )).unwrap());
+    let mut activities = source.match_indices(span).map(|(at, _)| {
+        SPOKEN.captures(&source[at + span.len()..]).map(|hit| hit.name("activity").unwrap().as_str())
+    });
+    let activity = activities.next().flatten()?;
+    if !activities.all(|found| found == Some(activity)) { return Some(false); }
+    let text = claim["text"].as_str()?;
+    if !claim["due"].is_null() || ["action", "unresolved"].contains(&claim["kind"].as_str().unwrap_or(""))
+        || ["取消", "不再", "停办", "是否", "待确认", "每两年"].iter().any(|marker| text.contains(marker))
+    {
+        return Some(false);
+    }
+    Some(WRITTEN.captures_iter(text).any(|hit| {
+        let written = hit.name("activity").map_or("检查", |name| name.as_str());
+        written == activity
+    }))
+}
+
 fn contextual_measure_witness(span: &str, claim: &Value, source: &str) -> bool {
     if let Some(matches) = cited_duration_range_matches(span, claim, source) {
+        return matches;
+    }
+    if let Some(matches) = annual_activity_witness(span, claim, source) {
         return matches;
     }
     if span == "半个月" && same_half_month_context(claim, source) {
@@ -2062,6 +2152,19 @@ fn coverage_supports_relative_periods_and_a_cited_answer_to_a_frequency_question
 
 #[cfg(test)]
 #[test]
+fn coverage_compares_the_annual_cycle_of_the_same_activity() {
+    let source = "我们食堂部前几天接受检查，一年一度这个检查，等级还是B级。";
+    let witness = |text: &str| json!({"text":text,"kind":"status"});
+    assert!(contextual_measure_witness("一年", &witness("卫生局年度检查后食堂仍为B级。"), source));
+    assert!(contextual_measure_witness("一年", &witness("食堂年检仍为B级。"), source));
+    assert!(!contextual_measure_witness("一年", &witness("食堂年度培训通过。"), source));
+    assert!(!contextual_measure_witness("一年", &witness("食堂取消年度检查。"), source));
+    assert!(!contextual_measure_witness("一年", &witness("卫生局一年内执行检查。"), source));
+    assert!(!contextual_measure_witness("一年", &witness("食堂按年度检查。"), "食堂整改期为一年。"));
+}
+
+#[cfg(test)]
+#[test]
 fn annual_payment_alias_requires_the_source_to_name_the_same_academic_cycle() {
     let witness = "因为我们交了是一年度吗";
     let original = "因为我们交了是一年度吗，交的是一一一学年的。";
@@ -2503,7 +2606,8 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     let claim_values = factual_audit::claims(&doc);
     let claim_paths: HashSet<_> = claim_values.iter().filter(|value| value.get("sources").is_some())
         .filter_map(|value| value["path"].as_str()).collect();
-    let mut checked: MissingItems = parse(&raw)?;
+    let expected_ids = cues.iter().map(|cue| cue.id.as_str()).collect();
+    let mut checked = parse_source_check_packet(&raw, &expected_ids, &mut trace[scan_index])?;
     let duplicates = checked.coalesce_identical_checks(&claim_paths);
     if duplicates > 0 { trace[scan_index]["identicalChecksCoalesced"] = json!(duplicates); }
     restore_source_context_for_coverage(&mut checked.checks, &cues, &claim_values, &evidence, &bindings);
@@ -2524,7 +2628,7 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         }).collect();
         let raw = super::request(endpoint,model,key,client,RECHECK_MEASURES,
             json!({"sourceSentences":context,"sourceCheckRecheck":disputed,"currentBrief":doc}),false,start,trace,"source-items-omissions-recheck")?;
-        let mut fixed: MissingItems = parse(&raw)?;
+        let mut fixed = parse_source_check_packet(&raw, &selected, trace.last_mut().unwrap())?;
         let duplicates = fixed.coalesce_identical_checks(&claim_paths);
         if duplicates > 0 { trace.last_mut().unwrap()["identicalChecksCoalesced"] = json!(duplicates); }
         let returned: HashSet<_> = fixed.checks.iter().map(SourceCheck::id).collect();
@@ -2549,10 +2653,11 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
             let raw = super::request(endpoint,model,key,client,REPAIR_COVERAGE,
                 json!({"sourceSentences":context,"sourceCoverageRepair":rejected,"currentBrief":doc}),
                 false,start,trace,"source-items-coverage-repair")?;
-            let syntax_repaired = remove_surplus_check_brace(&raw);
-            let (mut repair, restored) = parse_coverage_repair(syntax_repaired.as_deref().unwrap_or(&raw), &rejected, &evidence)?;
-            if syntax_repaired.is_some() {
-                trace.last_mut().unwrap()["removedSurplusCheckBrace"] = json!(true);
+            let syntax_repaired = normalize_check_delimiter(&raw);
+            let body = syntax_repaired.as_ref().map_or(raw.as_str(), |(body, _)| body.as_str());
+            let (mut repair, restored) = parse_coverage_repair(body, &rejected, &evidence)?;
+            if let Some((_, operation)) = syntax_repaired {
+                trace.last_mut().unwrap()[operation] = json!(true);
             }
             if restored > 0 {
                 trace.last_mut().unwrap()["groundedBackgroundReasons"] = json!(restored);
