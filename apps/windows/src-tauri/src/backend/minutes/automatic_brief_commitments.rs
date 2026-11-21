@@ -117,17 +117,24 @@ struct Clarification {
     quote: String,
 }
 
-fn spoken_department<'a>(requested: &str, snippets: impl Iterator<Item = &'a str> + Clone) -> Option<String> {
+fn department_stem(requested: &str) -> Option<&str> {
     let stem = requested.strip_suffix("部门").or_else(|| requested.strip_suffix('部'))?;
-    if !(2..=18).contains(&stem.chars().count()) || !stem.chars().all(|c| ('\u{3400}'..='\u{9fff}').contains(&c)) {
-        return None;
-    }
-    let direct = ["的部门", "这边"].into_iter().map(|ending| format!("{stem}{ending}"))
-        .find(|form| snippets.clone().any(|text| super::normalized(text).contains(form)));
-    direct.or_else(|| ["儿那边儿", "儿这边儿", "那边儿", "儿那边", "儿这边", "那边"].into_iter()
+    ((2..=18).contains(&stem.chars().count()) && stem.chars().all(|ch| ('㐀'..='鿿').contains(&ch))).then_some(stem)
+}
+
+fn spoken_department<'a>(requested: &str, snippets: impl Iterator<Item = &'a str> + Clone) -> Option<String> {
+    let stem = department_stem(requested)?;
+    ["的部门", "这边"].into_iter().map(|ending| format!("{stem}{ending}"))
+        .find(|form| snippets.clone().any(|text| super::normalized(text).contains(form)))
+}
+
+fn directed_department(requested: &str, proof: &Value) -> Option<String> {
+    let stem = department_stem(requested)?;
+    let quote = super::normalized(proof["text"].as_str()?);
+    ["儿那边儿", "儿这边儿", "那边儿", "儿那边", "儿这边", "那边"].into_iter()
         .map(|ending| format!("{stem}{ending}"))
-        .find(|form| snippets.clone().any(|text| super::normalized(text).split_once(form)
-            .is_some_and(|(_, after)| after.starts_with(['你', '您', '要', '先', '得'])))))
+        .find(|form| quote.split_once(form).is_some_and(|(_, after)|
+            after.starts_with(['你', '您', '要', '先', '得'])))
 }
 
 fn spoken_collective(requested: &str, quote: &str) -> Option<String> {
@@ -303,7 +310,10 @@ fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids:
             if let Some(proof) = owner_evidence {
                 let mut proof = allowed(&proof).ok_or("ownerEvidence 不在本条相邻原话中。")?;
                 let owner = requested.as_deref().ok_or("ownerEvidence 需要对应明确的 owner。")?;
-                let literal = if let Some(literal) = owner_as_spoken(owner, known[proof.as_str()]) {
+                let witness = known[proof.as_str()];
+                let literal = if let Some(literal) = owner_as_spoken(owner, witness)
+                    .or_else(|| directed_department(owner, witness))
+                {
                     literal
                 } else if let Some(recovered) = recover_collective_owner(original, &mut item, owner, &proof, known) {
                     proof = recovered;
