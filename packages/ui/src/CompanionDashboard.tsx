@@ -987,8 +987,10 @@ export function CompanionDashboard({
     && (!companionMinutesMatchTranscript(selectedSession, (selectedMinutesVariant || legacyMinutes)?.sourceReviewRevision)
       || !companionMinutesNotesCurrent(selectedSession,(selectedMinutesVariant || legacyMinutes)?.sourceNoteContext)));
   const minutesMarkdown = selectedMinutesVariant?.markdown || legacyMinutes?.markdown || '';
-  const minutesProcessing = (selectedMinutesVariant || legacyMinutes)?.processing;
-  const minutesIncomplete = Boolean(minutesProcessing && !companionMinutesProcessingComplete(minutesProcessing));
+  const displayedMinutes = selectedMinutesVariant ?? legacyMinutes;
+  const minutesProcessing = displayedMinutes?.processing;
+  const minutesReviewDraft = displayedMinutes?.source === 'llm_deepseek' && displayedMinutes.quality === 'draft' && !minutesProcessing;
+  const minutesIncomplete = minutesReviewDraft || Boolean(minutesProcessing && !companionMinutesProcessingComplete(minutesProcessing));
   const manualMinutes = (selectedMinutesVariant || legacyMinutes)?.source === 'userAuthored';
   const minutesDisplayContext = manualMinutes ? undefined : (selectedMinutesVariant || legacyMinutes)?.sourceNoteContext;
   const recordingMode = selectedSession?.meetingMode === 'onlineLive' ? 'onlineLive' : 'offlineStore';
@@ -1373,7 +1375,7 @@ export function CompanionDashboard({
                 sourceFallbackLabel={manualMinutes?(selectedSession.meetingNotes?.length?'查看原话与补充':'查看原话'):undefined}
                 savedMarkdown={minutesMarkdown} noteContext={minutesDisplayContext}
                 onToggleAction={onSaveMeeting?(lineIndex,completed)=>void markAction(lineIndex,completed):undefined}
-                actionsBlocked={recordingControlBusy||selectedRecordingBeingCaptured||storageBlocked||selectedMinutesStale||Boolean(minutesProcessing&&!companionMinutesProcessingComplete(minutesProcessing))
+                actionsBlocked={recordingControlBusy||selectedRecordingBeingCaptured||storageBlocked||selectedMinutesStale||minutesIncomplete
                   ||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||unimportedTranscriptDraft}
                 sources={selectedMinutesStale || transcriptReviewUnsaved ? [] : transcriptSources}
                 blocked={controlsBusy} onOpenSource={source=>{setTranscriptLookup(null);openTranscriptSource(source);}}
@@ -1735,7 +1737,7 @@ export function CompanionDashboard({
   };
   const markAction = async (lineIndex:number,completed:boolean) => {
     if(!selectedSession||!onSaveMeeting||actionSaveActive.current||recordingControlBusy||selectedRecordingBeingCaptured
-      ||storageBlocked||selectedMinutesStale||Boolean(minutesProcessing&&!companionMinutesProcessingComplete(minutesProcessing))||editingMinutes||minutesDirty||titleDirty
+      ||storageBlocked||selectedMinutesStale||minutesIncomplete||editingMinutes||minutesDirty||titleDirty
       ||noteUnsaved||transcriptReviewUnsaved||unimportedTranscriptDraft)return;
     const original=minutesMarkdown;
     const updated=markSavedAction(original,lineIndex,completed);
@@ -2436,6 +2438,9 @@ export function CompanionDashboard({
                   disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || !finalTranscript || transcriptReviewUnsaved || editingMinutes || selectedMinutesStale}
                   onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>继续整理当前纪要</button>}
               </div> : null}
+              {minutesReviewDraft ? <div className="ct-step-warn" role="status">
+                这版纪要待核对，可导出全文。待办和日历在整理完成后开放。
+              </div> : null}
               {selectedMinutesStale ? <div className="ct-step-warn" role="status">转写或本次使用的补充已变化。这版结果已保留，请重新整理后使用。
                 <button type="button" className="ct-action" disabled={controlsBusy || oobeBlockedByRecording || storageBlocked || transcriptReviewUnsaved || editingMinutes}
                   onClick={() => runOrganizationControl({ action: 'meetingGenerateMinutes', sessionId: selectedSession.id, meetingMode: minutesViewMode })}>重新选择内容并整理</button>
@@ -2447,7 +2452,7 @@ export function CompanionDashboard({
                 <summary>查看以前的整理结果</summary>
                 <p className="ct-step-meta">重新整理前的内容保存在这里。切换版本不会删除当前内容；旧版本可能基于之前的转写。</p>
                 {(selectedSession.minutesByMode?.history ?? []).map((item,index)=>({item,index})).reverse().filter(({item})=>item.mode===minutesViewMode).map(({item,index})=><details key={`${item.archivedAt}-${index}`}>
-                  <summary>{item.variant.template?.name || (item.variant.source==='userEdited'||item.variant.source==='userAuthored'?'人工修改':'整理结果')} · {item.variant.generatedAt || item.archivedAt}</summary>
+                  <summary><span>{item.variant.template?.name || (item.variant.source==='userEdited'||item.variant.source==='userAuthored'?'人工修改':'整理结果')}</span>{item.variant.quality==='draft'?' · 待核草稿':''} · {item.variant.generatedAt || item.archivedAt}</summary>
                   <pre style={{whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{item.variant.markdown}</pre>
                   <button type="button" className="ct-action" disabled={!onSaveMeeting||saveMeetingBusy||recordingControlBusy||selectedRecordingBeingCaptured||storageBlocked||minutesDirty||titleDirty||noteUnsaved||transcriptReviewUnsaved||editingMinutes}
                     onClick={()=>void restoreMinutesHistory(index,item.archivedAt,item.variant.markdown)}>使用这个版本</button>
@@ -2466,7 +2471,7 @@ export function CompanionDashboard({
                 {!editingMinutes && hasMinutes ? <button type="button" className="ct-action"
                   disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale}
                   onClick={()=>void exportMeeting(!minutesIncomplete && savedActions(minutesMarkdown).length>0?'todotxt':'markdown')}><Download size={15}/>
-                  {minutesIncomplete?'保存部分纪要':savedActions(minutesMarkdown).length>0?'导出待办 TXT':'导出整理'}</button> : null}
+                  {minutesReviewDraft?'导出待核草稿':minutesIncomplete?'保存部分纪要':savedActions(minutesMarkdown).length>0?'导出待办 TXT':'导出整理'}</button> : null}
                 {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <button type="button" className="ct-text-button" disabled={controlsBusy||oobeBlockedByRecording} onClick={openContentExport}>预览并导出完整内容</button> : null}
                 {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <button type="button" className="ct-action"
                   disabled={controlsBusy||oobeBlockedByRecording||!onExportMeeting||selectedMinutesStale||minutesIncomplete}
@@ -2474,7 +2479,7 @@ export function CompanionDashboard({
                   onClick={()=>void exportMeeting('calendar')}>导出到日历</button> : null}
 
               </div>
-              {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">{minutesIncomplete ? '可先保存已整理的部分；整场待办和日历导出需等待整理完成。' : '待办 TXT 只包含清单事项。要带上摘要、讨论安排、待确认内容或 AI 材料，可选择“预览并导出完整内容”。清单不自动提醒；需要时导出到日历。'}</p> : null}
+              {!editingMinutes && hasMinutes && savedActions(minutesMarkdown).length>0 ? <p className="ct-step-meta">{minutesReviewDraft ? '可导出待核草稿和原话。' : minutesIncomplete ? '可先保存已整理的部分；整场待办和日历导出需等待整理完成。' : '待办 TXT 只包含清单事项。要带上摘要、讨论安排、待确认内容或 AI 材料，可选择“预览并导出完整内容”。清单不自动提醒；需要时导出到日历。'}</p> : null}
               </details>
               {phoneResult?.sessionId===selectedSession.id&&phoneResult.sourceKey===copySourceKey&&!editingMinutes
                 ? <CompanionChecklistPhone result={phoneResult} onClose={closePhoneChecklist}/> : null}
