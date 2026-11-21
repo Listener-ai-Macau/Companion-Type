@@ -1068,6 +1068,127 @@ fn explicit_response_speaker(text: &str, issue: &Value, source: &[Sentence]) -> 
     Some(revised)
 }
 
+fn answered_question_speaker(text: &str, issue: &Value, claim: &Value, source: &[Sentence]) -> Option<String> {
+    use std::sync::LazyLock;
+    use super::super::source_resolution::{self_introduced_identity, split_turn_label};
+
+    static ANSWER: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"[；;]\s*(?:随后|接着|然后)?(?P<speaker>[\p{Han}A-Za-z0-9·]{2,14}?)(?:回应|回答|答复|答称|答道)[，,：:]?(?P<answer>[^；;。！？]+)[。！？]?$"
+    ).unwrap());
+
+    if !issue["path"].as_str()?.starts_with("questions[") || issue["placementUnsupported"] != true
+        || issue["clarity"] != "clear" || !matches!(issue["status"].as_str(), Some("unsupported" | "overstated"))
+    {
+        return None;
+    }
+    let cited = issue["evidence"].as_array()?;
+    let turns: Vec<_> = source.iter().filter(|row| cited.iter().any(|id| id == &row.id)).collect();
+    let [asked, replied] = turns.as_slice() else { return None; };
+    let (asking_speaker, question) = split_turn_label(asked.text.trim())?;
+    let (replying_speaker, answer) = split_turn_label(replied.text.trim())?;
+    if asking_speaker == replying_speaker || !claim["sources"].as_array()?
+        .iter().any(|id| id == &asked.source)
+        || !["？", "?", "还是", "怎么", "是否", "有没有", "为什么", "哪种"].iter().any(|cue| question.contains(cue))
+        || answer.trim_end().ends_with(['？', '?'])
+    {
+        return None;
+    }
+
+    let replacement = ANSWER.captures(text)?;
+    let reported = replacement.name("speaker")?;
+    let overlaps = |summary: &str, witness: &str, width: usize| {
+        let normalized: Vec<_> = super::normalized(summary).chars().collect();
+        let witness = super::normalized(witness);
+        normalized.windows(width).any(|fragment| fragment.iter().all(|c| c.is_alphanumeric())
+            && witness.contains(&fragment.iter().collect::<String>()))
+    };
+    if !overlaps(claim["text"].as_str()?, question, 4)
+        || !overlaps(replacement.name("answer")?.as_str(), answer, 3)
+    {
+        return None;
+    }
+
+    // A location mentioned in an audit explanation isn't evidence of who
+    // answered. Bind only an unambiguous self-introduction on the cited turn's
+    // label, and require evidence that the reported identity is another speaker.
+    let mut labeled = source.iter().filter_map(|row| split_turn_label(row.text.trim()));
+    let introductions: Vec<_> = labeled.clone().filter_map(|(label, speech)| {
+        Some((label, self_introduced_identity(speech)?))
+    }).collect();
+    let mut identities = introductions.iter()
+        .filter(|(label, _)| *label == replying_speaker).map(|(_, identity)| *identity);
+    let actual = identities.next().or_else(|| {
+        (!replying_speaker.starts_with("说话人")).then_some(replying_speaker)
+    })?;
+    let equivalent = |first: &str, second: &str| {
+        first == second || first.strip_suffix(['部', '处', '组']) == Some(second)
+            || second.strip_suffix(['部', '处', '组']) == Some(first)
+    };
+    let is_other = |label: &str, identity: &str| label != replying_speaker
+        && equivalent(reported.as_str(), identity);
+    if identities.any(|other| !equivalent(other, actual)) || equivalent(reported.as_str(), actual)
+        || !(introductions.iter().any(|(label, identity)| is_other(label, identity))
+            || labeled.any(|(label, _)| is_other(label, label)))
+    {
+        return None;
+    }
+    let mut text = text.to_owned();
+    text.replace_range(reported.range(), actual);
+    super::line(&text, 120).then_some(text)
+}
+
+#[cfg(test)]
+#[test]
+fn answered_question_keeps_the_department_from_the_cited_reply() {
+    let source: Vec<_> = [
+        "说话人5: 零二三，我是咨询处。",
+        "说话人6: 零二四，我是市场。",
+        "说话人7: 不考虑工资花销，你觉得大公司好还是小公司好？",
+        "说话人5: 还是应该去大公司先见识一下，熟悉管理模式。",
+        "说话人2: 咨询部意见说完了，那市场部有什么意见？",
+        "说话人6: 我会考虑公司的福利，尤其是五险一金。",
+    ].into_iter().enumerate().map(|(i, text)| Sentence {
+        id: format!("e{i:04}"), source: "u010".into(), text: text.into(),
+    }).collect();
+    let claim = json!({"path":"questions[7]","text":"不考虑工资花销，应选大公司还是小公司。","sources":["u010"]});
+    let issue = json!({"path":"questions[7]","status":"unsupported","clarity":"clear",
+        "placementUnsupported":true,"reason":"市场部已回答，不应留在未决。","evidence":["e0002","e0003"]});
+    let incorrect = "会上有人问不考虑工资花销时应选大公司还是小公司；市场部回应倾向大公司。";
+    let correct = "会上有人问不考虑工资花销时应选大公司还是小公司；咨询处回应倾向大公司。";
+    let raw = json!({"changes":[{"path":"questions[7]","text":incorrect}]}).to_string();
+    let (fixed, count) = normalize_repair_reply(&raw, &[issue.clone()], &source, &[claim.clone()]);
+    assert_eq!(count, 1);
+    assert_eq!(serde_json::from_str::<Value>(&fixed).unwrap()["changes"][0]["text"], correct);
+    assert!(answered_question_speaker(correct, &issue, &claim, &source).is_none());
+
+    let mut ambiguous = issue.clone();
+    ambiguous["evidence"] = json!(["e0002","e0003","e0005"]);
+    assert!(answered_question_speaker(incorrect, &ambiguous, &claim, &source).is_none());
+    let wrong_turn = "会上有人问不考虑工资花销时应选大公司还是小公司；市场部回应重视五险一金。";
+    assert!(answered_question_speaker(wrong_turn, &issue, &claim, &source).is_none());
+    let mut still_open = issue;
+    still_open["placementUnsupported"] = json!(false);
+    assert!(answered_question_speaker(incorrect, &still_open, &claim, &source).is_none());
+}
+
+#[cfg(test)]
+#[test]
+fn answered_question_can_use_a_named_turn_when_no_introduction_exists() {
+    let source: Vec<_> = [
+        "主持: 破损箱子先检查还是直接退回？",
+        "仓储组: 先检查，拍照登记后再通知供货商。",
+        "客服组: 我们处理客户侧投诉。",
+    ].into_iter().enumerate().map(|(i, text)| Sentence {
+        id: format!("e{i:04}"), source: "u000".into(), text: text.into(),
+    }).collect();
+    let claim = json!({"text":"破损箱子先检查还是直接退回？","sources":["u000"]});
+    let issue = json!({"path":"questions[0]","status":"overstated","clarity":"clear",
+        "placementUnsupported":true,"evidence":["e0000","e0001"]});
+    let text = "会上问破损箱子如何处理；随后客服组答称先检查，拍照登记。";
+    assert_eq!(answered_question_speaker(text, &issue, &claim, &source).as_deref(),
+        Some("会上问破损箱子如何处理；随后仓储组答称先检查，拍照登记。"));
+}
+
 #[cfg(test)]
 #[test]
 fn response_speaker_comes_from_a_different_cited_turn() {
@@ -1298,6 +1419,13 @@ fn normalize_scoped_repair_reply(
             continue;
         }
         let text_patch = body.len() == 2 || (body.len() == 3 && body.get("moveToTopic").is_some_and(Value::is_u64));
+        if let Some(revised) = claim.filter(|_| text_patch)
+            .and_then(|claim| answered_question_speaker(text, issue, claim, source))
+        {
+            body.insert("text".into(), json!(revised));
+            count += 1;
+            continue;
+        }
         let sourced = claims.iter().find(|claim| text_patch && claim["path"] == path)
             .and_then(|claim| unsettled_assignment_quote(issue, claim, source));
         if let Some(sourced) = sourced {

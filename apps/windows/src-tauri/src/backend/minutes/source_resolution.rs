@@ -9,7 +9,7 @@ use regex::Regex;
 use super::{split_segments, CompanionV1ActionItem, CompanionV1MeetingMinutes};
 
 static INTRODUCTION: LazyLock<Regex> = LazyLock::new(|| {
-    Regex::new(r"^[零〇一二三四五六七八九十幺0-9 、]*(?:我叫|我是)\s*([\p{Han}A-Za-z·]{2,14})$")
+    Regex::new(r"^[零〇一二三四五六七八九十幺0-9 、，,]*(?:我叫|我是)\s*([\p{Han}A-Za-z·]{2,14})$")
         .unwrap()
 });
 static ASSIGN: LazyLock<Regex> = LazyLock::new(|| {
@@ -86,6 +86,11 @@ pub(super) fn split_turn_label(line: &str) -> Option<(&str, &str)> {
     })
 }
 
+pub(super) fn self_introduced_identity(text: &str) -> Option<&str> {
+    let text = text.trim().trim_end_matches(['。', '！', '.', '!']);
+    Some(INTRODUCTION.captures(text)?.get(1)?.as_str())
+}
+
 impl<'a> Source<'a> {
     pub(super) fn new(original: &'a str) -> Self {
         let mut turns = Vec::new();
@@ -93,10 +98,10 @@ impl<'a> Source<'a> {
         for line in original.lines() {
             let (speaker, text) = split_turn_label(line).unwrap_or(("", line));
             if !speaker.is_empty() {
-                if let Some(captures) = INTRODUCTION.captures(text.trim()) {
+                if let Some(identity) = self_introduced_identity(text) {
                     roles
                         .entry(speaker.to_string())
-                        .or_insert_with(|| captures[1].to_string());
+                        .or_insert_with(|| identity.to_string());
                 } else if !speaker.starts_with("说话人") {
                     roles
                         .entry(speaker.to_string())
