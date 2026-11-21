@@ -1290,18 +1290,21 @@ fn covered_omission_actions(additions: &mut Vec<MissingItem>, doc: &Document, fa
 fn expanded_question(existing: &str, incoming: &str, cites: &[&str]) -> bool {
     let existing = normalized(existing);
     let incoming = normalized(incoming);
-    let Some((head, request)) = existing.rsplit_once(['，', ',']) else { return false; };
-    if head.chars().count() < 10 || request.chars().count() < 6
-        || !["谁", "如何", "怎么", "哪", "是否", "能否"].iter().any(|marker| request.contains(marker))
-    {
-        return false;
-    }
-    let Some(extra) = incoming.strip_prefix(head).and_then(|rest| rest.strip_suffix(request))
-        .map(|text| text.trim_matches(['，', ',', '。', '；', ';'])) else { return false; };
-    extra.chars().count() >= 6 && cites.iter().any(|quote| {
-        let quote = normalized(quote);
-        super::source_coverage::shared_literal(extra, &quote, 5)
-            && measures(extra).all(|measure| measures(&quote).any(|witness| witness == measure))
+    existing.match_indices(['，', ',']).any(|(at, separator)| {
+        let head = &existing[..at];
+        let request = &existing[at + separator.len()..];
+        if head.chars().count() < 10 || request.chars().count() < 6
+            || !["谁", "如何", "怎么", "哪", "是否", "能否"].iter().any(|marker| request.contains(marker))
+        {
+            return false;
+        }
+        let Some(extra) = incoming.strip_prefix(head).and_then(|rest| rest.strip_suffix(request))
+            .map(|text| text.trim_matches(['，', ',', '。', '；', ';'])) else { return false; };
+        extra.chars().count() >= 6 && cites.iter().any(|quote| {
+            let quote = normalized(quote);
+            super::source_coverage::shared_literal(extra, &quote, 5)
+                && measures(extra).all(|measure| measures(&quote).any(|witness| witness == measure))
+        })
     })
 }
 
