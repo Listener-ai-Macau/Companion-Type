@@ -92,10 +92,21 @@ pub(super) fn unresolved_timings(brief: &factual_audit::VerifiedBrief, units: &[
     }).collect()
 }
 
+fn same_timing_list(before: &str, after: &str, field: &str) -> bool {
+    fn rest(text: &str, field: &str) -> Option<(String, String)> {
+        let (prefix, suffix) = text.split_once(field)?;
+        let suffix = suffix.trim_start_matches(['，', ',', '、', ' ']);
+        let suffix = ["以及", "及"].iter().find_map(|join| suffix.strip_prefix(join)).unwrap_or(suffix);
+        Some((super::normalized(prefix), super::normalized(suffix)))
+    }
+    rest(before, field).is_some_and(|left| rest(after, field).as_ref() == Some(&left))
+}
+
 pub(super) fn preserve_unresolved_timings(doc: &mut Document, unresolved: &[UnresolvedTiming]) -> usize {
     let mut retained = 0;
     for action in &mut doc.action_items {
-        let Some(entry) = unresolved.iter().find(|item| action.text == item.action && action.sources == item.sources)
+        let Some(entry) = unresolved.iter().find(|item| action.sources == item.sources
+            && (action.text == item.action || same_timing_list(&item.action, &action.text, &item.phrase)))
         else { continue; };
         let body = action.text.replacen(&entry.phrase, &format!("「{}」（具体对象待核实）", entry.quote), 1);
         let body = if body.starts_with("待核对：") { body } else { format!("待核对：{body}") };
@@ -211,6 +222,24 @@ fn bound_timing_keeps_exact_unresolved_words_and_other_task_fields() {
     assert_eq!(doc.action_items[0].text,"待核对：列出折扣、「这批东西交付的时间」（具体对象待核实）、出厂参数。");
     assert_eq!(doc.action_items[0].owner, action.owner);
     assert_eq!(doc.action_items[0].due, action.due);
+}
+
+#[cfg(test)]
+#[test]
+fn same_source_timing_survives_a_list_punctuation_change() {
+    let earlier = "在方案中列出最低折扣、产品出品时间，以及各平台促销力度或可达效益。";
+    let revised = "在方案中列出最低折扣、产品出品时间及各平台促销力度或可达效益。";
+    let evidence = UnresolvedTiming{action:earlier.into(),sources:vec!["u014".into()],
+        phrase:"产品出品时间".into(),quote:"咱们的东西出来的时间".into()};
+    let mut doc = Document{purpose:"讨论交付安排。".into(),topics:Vec::new(),decisions:Vec::new(),questions:Vec::new(),
+        action_items:vec![
+            Action{text:revised.into(),owner:None,due:None,sources:vec!["u014".into()]},
+            Action{text:revised.into(),owner:None,due:None,sources:vec!["u015".into()]},
+            Action{text:revised.replace("最低","最高"),owner:None,due:None,sources:vec!["u014".into()]},
+        ]};
+    assert_eq!(preserve_unresolved_timings(&mut doc,&[evidence]),1);
+    assert!(doc.action_items[0].text.contains("「咱们的东西出来的时间」（具体对象待核实）"));
+    assert!(doc.action_items[1..].iter().all(|action| action.text.contains("产品出品时间")));
 }
 
 #[cfg(test)]

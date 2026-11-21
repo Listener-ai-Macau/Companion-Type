@@ -321,7 +321,9 @@ fn verified_topic(
                     anchors.iter().map(move |anchor| {
                         // A reported case can be followed by the first named discussion.
                         let backwards = check["kind"] == "caseNarrative" && *position < last;
-                        (position.abs_diff(*anchor), backwards)
+                        let outside_scenario = check["kind"] == "sourceScenario"
+                            && (*position < *anchor || source[*position]["source"] != source[*anchor]["source"]);
+                        (outside_scenario, position.abs_diff(*anchor), backwards)
                     })
                 })
                 .min()?;
@@ -510,9 +512,11 @@ fn restore_source_facets(
                     format!("{speaker}举例「{}」。{responder}回应「{response}」。", facet.quote)
                 }
                 None if facet.label == "设例" => format!("{speaker}举例提问「{}」。", facet.quote),
+                None if facet.label == "分开讨论的情形" => format!("{speaker}区分了不同情形，其中提到「{}」。", facet.quote),
                 None => format!("{speaker}在讨论{}时提到「{}」。", facet.label, facet.quote),
             };
-            let measure = packet(source, index, "sourceFacet", references.clone(), None);
+            let kind = if facet.label == "设例" && references.len() == 1 { "sourceScenario" } else { "sourceFacet" };
+            let measure = packet(source, index, kind, references.clone(), None);
             let Some(topic) = verified_topic(verified, &doc, &measure, source) else { continue; };
             let room = doc.topics.iter().find(|entry| entry.title == topic)
                 .map(|entry| source_items::DETAILS_LIMIT.saturating_sub(entry.details.len())).unwrap_or(0);
@@ -558,6 +562,24 @@ fn a_source_clause_survives_a_different_claim_with_the_same_reference() {
     assert!(detail.text.contains("以送审清单为准"));
     let repeated = restore_source_facets(repaired,&verified,&units,&source,&mut trace).unwrap();
     assert_eq!(repeated.topics[0].details.len(),1);
+}
+
+#[cfg(test)]
+#[test]
+fn a_setup_goes_with_the_following_explanation_in_its_own_source_unit() {
+    let units = vec![Unit { id:"u000".into(),text:"说话人3: 先确认器材。".into() },
+        Unit { id:"u001".into(),text:"说话人2: 举个例子，两份资料都丢了，你是先找原件还是先问负责人？暂且看看讨论。稍后说一下回答。".into() }];
+    let doc: Document = serde_json::from_value(json!({"purpose":"确认流程", "topics":[
+        {"title":"器材","points":[{"kind":"status","text":"先确认器材。","sources":["u000"]}],"details":[]},
+        {"title":"找回资料","points":[{"kind":"status","text":"之后会讨论回答。","sources":["u001"]}],"details":[]}],
+        "decisions":[],"actionItems":[],"questions":[]})).unwrap();
+    let source = factual_audit::evidence_sentences(&units);
+    let verified = VerifiedBrief{document:doc.clone(),evidence:HashMap::from([
+        ("topics[0].points[0]".into(),vec!["e0000".into()]),
+        ("topics[1].points[0]".into(),vec!["e0003".into()])]),pending_quotes:Vec::new()};
+    let repaired = restore_source_facets(doc,&verified,&units,&source,&mut Vec::new()).unwrap();
+    assert!(repaired.topics[0].details.is_empty());
+    assert!(repaired.topics[1].details[0].text.contains("两份资料都丢了"));
 }
 
 pub(super) fn review(
