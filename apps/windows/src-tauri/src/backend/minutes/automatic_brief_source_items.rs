@@ -705,6 +705,12 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
         fact.text = corrected;
         Some(fact.id.clone())
     }).collect::<Vec<_>>();
+    let tentative_dates = facts.iter_mut().filter_map(|fact| {
+        let sources = fact.evidence.iter().map(|id| source_by_id[id.as_str()]);
+        let corrected = super::source_coverage::preserve_tentative_date(&fact.text, sources)?;
+        fact.text = corrected;
+        Some(fact.id.clone())
+    }).collect::<Vec<_>>();
     let limits = super::source_coverage::restore_cited_limits(&mut facts, &evidence);
     let delivery_scopes = super::source_coverage::restore_delivery_scope(&mut facts, &evidence);
     let spoken_scope = reconcile_spoken_scope(&mut facts, &evidence);
@@ -742,6 +748,9 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit]) -> Result<(Document, Valu
         "retainedDeliveryScopes":delivery_scopes,"spokenScopeCorrections":spoken_scope});
     if !payment_ranges.is_empty() {
         projection["sourceBindings"]["retainedPaymentRanges"] = json!(payment_ranges);
+    }
+    if !tentative_dates.is_empty() {
+        projection["sourceBindings"]["retainedTentativeDates"] = json!(tentative_dates);
     }
     if !bridged_assignments.is_empty() {
         projection["sourceBindings"]["bridgedAssignments"] = json!(bridged_assignments);
@@ -786,7 +795,10 @@ pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, uni
     for addition in additions {
         let mut fact = addition.item.bind(&known, &known_ids)?;
         let sources = fact.evidence.iter().map(|id| known[id.as_str()]["text"].as_str().unwrap());
-        if let Some(corrected) = retain_payment_extent(&fact.text, sources) {
+        if let Some(corrected) = retain_payment_extent(&fact.text, sources.clone()) {
+            fact.text = corrected;
+        }
+        if let Some(corrected) = super::source_coverage::preserve_tentative_date(&fact.text, sources) {
             fact.text = corrected;
         }
         if fact.placement == Placement::Topic {
@@ -1068,7 +1080,7 @@ pub(super) fn measures(text: &str) -> impl Iterator<Item = (f64, &str)> {
     })
 }
 
-fn number_value(text: &str, year: bool) -> Option<f64> {
+pub(super) fn number_value(text: &str, year: bool) -> Option<f64> {
     let text: String = text.chars().map(|ch| match ch {
         '０'..='９' => char::from_u32(ch as u32 - '０' as u32 + '0' as u32).unwrap(),
         '．' => '.',
@@ -1254,27 +1266,42 @@ fn measure_has_witness(span: &str, claim: &Value) -> bool {
 
 fn duration_ranges(text: &str) -> Vec<(std::ops::Range<usize>, f64, f64, &str)> {
     static EXPLICIT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
-        r"([0-9０-９一二两三四五六七八九十百]+)\s*(?:到|至|[-–—~～])\s*([0-9０-９一二两三四五六七八九十百]+)\s*(个月|小时|分钟|年|周|天)"
+        r"(?P<from>[0-9０-９一二两三四五六七八九十百]+)\s*(?P<firstUnit>个月|小时|分钟|年|周|天)?\s*(?:到|至|[-–—~～])\s*(?P<to>[0-9０-９一二两三四五六七八九十百]+)\s*(?P<unit>个月|小时|分钟|年|周|天)"
     ).unwrap());
     static SPOKEN: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
-        r"([一二两三四五六七八九])([一二两三四五六七八九])(个月|小时|分钟|年|周|天)"
+        r"(?P<from>[一二两三四五六七八九])(?P<to>[一二两三四五六七八九])(?P<unit>个月|小时|分钟|年|周|天)"
     ).unwrap());
     let mut ranges = Vec::new();
-    for regex in [&*EXPLICIT, &*SPOKEN] {
+    for (regex, spoken) in [(&*EXPLICIT, false), (&*SPOKEN, true)] {
         for matched in regex.captures_iter(text) {
-            let Some(from) = number_value(&matched[1], false) else { continue; };
-            let Some(to) = number_value(&matched[2], false) else { continue; };
+            let Some(from) = number_value(&matched["from"], false) else { continue; };
+            let Some(to) = number_value(&matched["to"], false) else { continue; };
+            let unit = matched.name("unit").unwrap().as_str();
+            if matched.name("firstUnit").is_some_and(|first| first.as_str() != unit) {
+                continue;
+            }
             let whole = matched.get(0).unwrap();
             let joined_digits = text[..whole.start()].chars().next_back().is_some_and(|ch| {
                 "零〇一二两三四五六七八九十百千万亿0123456789０１２３４５６７８９".contains(ch)
             });
-            if joined_digits || from >= to || (regex.as_str() == SPOKEN.as_str() && to - from != 1.0) {
+            if joined_digits || from >= to || (spoken && to - from != 1.0) {
                 continue;
             }
-            ranges.push((whole.range(), from, to, matched.get(3).unwrap().as_str()));
+            ranges.push((whole.range(), from, to, unit));
         }
     }
     ranges
+}
+
+#[cfg(test)]
+#[test]
+fn duration_bounds_can_repeat_the_same_unit_without_changing_meaning() {
+    let source = "冬天两天到三天换一次水。";
+    let compact = json!({"text":"冬天两到三天换一次水。"});
+    assert_eq!(cited_duration_range_matches("两天", &compact, source), Some(true));
+    assert_eq!(cited_duration_range_matches("两天", &json!({"text":"冬天两天就换。"}), source), Some(false));
+    assert!(duration_ranges("两周到三天").is_empty());
+    assert_eq!(duration_ranges("两周至三周")[0].3, "周");
 }
 
 fn cited_duration_range_matches(span: &str, claim: &Value, source: &str) -> Option<bool> {

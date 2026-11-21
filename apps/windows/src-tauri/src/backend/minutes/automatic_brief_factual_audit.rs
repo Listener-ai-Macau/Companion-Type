@@ -508,10 +508,29 @@ fn neutralize_qualified_department(corrected: &str, phrase: &str) -> Option<Stri
     super::line(&text, 120).then_some(text)
 }
 
+fn neutralize_deferred_deadline(corrected: &str, phrase: &str) -> Option<String> {
+    if corrected.matches(phrase).count() != 1
+        || !["个工作日", "个月", "周", "天", "小时", "分钟", "日内", "年底", "月底"]
+            .iter().any(|unit| phrase.contains(unit))
+        || phrase.contains(['，', '。', '；', '\n'])
+    {
+        return None;
+    }
+    let (before, question) = corrected.trim_end_matches(['。', '.']).rsplit_once('，')?;
+    let understood = question.strip_prefix("是否为")?;
+    let extent = understood.strip_suffix("待核对").or_else(|| understood.strip_suffix("待核实"))?.trim();
+    if extent != phrase {
+        return None;
+    }
+    Some(format!("{before}，具体时限待核对。"))
+}
+
 fn mask_unclear_quote(corrected: &str, phrases: &[String]) -> String {
     let mut result = corrected.to_owned();
     for phrase in phrases.iter().filter(|phrase| !phrase.is_empty()) {
-        if let Some(text) = neutralize_qualified_department(&result, phrase) {
+        if let Some(text) = neutralize_qualified_department(&result, phrase)
+            .or_else(|| neutralize_deferred_deadline(&result, phrase))
+        {
             result = text;
             continue;
         }
@@ -1438,6 +1457,143 @@ fn apply_repair(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSet
     Ok(AppliedRepair {document:repaired, corrected_statements})
 }
 
+struct ProtectedRepair {
+    applied: AppliedRepair,
+    pending_quotes: Vec<String>,
+    withheld_paths: Vec<String>,
+}
+
+fn recover_protected_repairs(
+    raw: &str, doc: &Document, allowed: &HashSet<String>, unclear: &HashSet<String>,
+    conservative: &HashMap<String, Vec<String>>, misplaced: &HashSet<String>, units: &[Unit],
+    source_first: bool, issues: &[Value], source: &[Sentence],
+) -> Option<ProtectedRepair> {
+    let input: Value = serde_json::from_str(super::super::strip_code_fences(raw).trim()).ok()?;
+    if input.as_object()?.len() != 1 {
+        return None;
+    }
+    let edits = unique_repair_rows(input.get("changes")?.as_array()?, true)?;
+    if edits.is_empty() || edits.len() > allowed.len()
+        || edits.iter().any(|row| row["path"].as_str().is_none_or(|path| !allowed.contains(path)))
+    {
+        return None;
+    }
+    let original_claims = claims(doc);
+    let mut safe = Vec::new();
+    let mut pending_quotes = Vec::new();
+    let mut withheld_paths = Vec::new();
+    let mut validated = 0;
+    for issue in issues {
+        let path = issue["path"].as_str()?;
+        if !allowed.contains(path) {
+            return None;
+        }
+        if let Some(edit) = edits.iter().find(|row| row["path"] == path) {
+            let subset = HashSet::from([path.to_owned()]);
+            let relocation = misplaced.intersection(&subset).cloned().collect();
+            let trial = json!({"changes":[*edit]}).to_string();
+            if apply_repair(&trial, doc, &subset, unclear, conservative, &relocation, units, source_first).is_ok() {
+                safe.push((*edit).clone());
+                validated += 1;
+                continue;
+            }
+        }
+        // Withhold a rejected item only when its own evidence can still be
+        // shown verbatim. Required headings cannot be held this way.
+        if !independent_path(path) && !path.contains(".details[") {
+            return None;
+        }
+        let original = original_claims.iter().find(|claim| claim["path"] == path)?;
+        let quoted = issue["evidence"].as_array()?.iter().filter_map(|id| {
+            let sentence = source.iter().find(|sentence| id.as_str() == Some(sentence.id.as_str()))?;
+            let quote = sentence.text.trim();
+            (original["sources"].as_array()?.iter().any(|source| source.as_str() == Some(sentence.source.as_str()))
+                && super::line(quote, 180)).then_some(quote.to_owned())
+        }).collect::<Vec<_>>();
+        if quoted.is_empty() {
+            return None;
+        }
+        pending_quotes.extend(quoted);
+        withheld_paths.push(path.to_owned());
+        safe.push(json!({"path":path,"remove":true}));
+    }
+    if validated == 0 || withheld_paths.is_empty() {
+        return None;
+    }
+    let raw = json!({"changes":safe}).to_string();
+    let applied = apply_repair(&raw, doc, allowed, unclear, conservative, misplaced, units, source_first).ok()?;
+    Some(ProtectedRepair { applied, pending_quotes, withheld_paths })
+}
+
+#[cfg(test)]
+#[test]
+fn an_explicitly_pending_deadline_is_neutralized_without_asserting_it() {
+    let phrase = "进校一个月内";
+    let text = "学生进入学校后进行考试，并召开动员大会；原话含“一个月”但语序含混，是否为进校一个月内待核对。";
+    let clean = "学生进入学校后进行考试，并召开动员大会；原话含“一个月”但语序含混，具体时限待核对。";
+    assert_eq!(mask_unclear_quote(text, &[phrase.into()]), clean);
+    let asserted = "学生要在进校一个月内考试，具体日期待核对。";
+    assert_eq!(mask_unclear_quote(asserted, &[phrase.into()]), asserted);
+    assert!(neutralize_deferred_deadline("机构的称谓含混，是否为财政部待核对。", "财政部").is_none());
+}
+
+#[cfg(test)]
+#[test]
+fn a_rejected_repair_can_stay_as_its_own_pending_quote_while_a_peer_is_retained() {
+    let units = [Unit{id:"u000".into(),text:"建议下周开工。".into()},Unit{id:"u001".into(),text:"期限这块儿先复核。".into()}];
+    let doc: Document = serde_json::from_value(json!({"purpose":"讨论项目",
+        "topics":[{"title":"项目","points":[{"kind":"status","text":"讨论项目","sources":["u000"]}],"details":[]}],
+        "decisions":[{"text":"三天内结束。","sources":["u001"]}],
+        "actionItems":[],"questions":[]})).unwrap();
+    let allowed = HashSet::from(["topics[0].points[0]".into(), "decisions[0]".into()]);
+    let unclear = HashSet::from(["decisions[0]".into()]);
+    let conservative = HashMap::from([("decisions[0]".into(), vec!["三天内".into()])]);
+    let good = json!({"path":"topics[0].points[0]","text":"会上建议下周开工。"});
+    let bad = json!({"path":"decisions[0]","text":"确定三天内结束。"});
+    let raw = json!({"changes":[good,bad]}).to_string();
+    let issues = [json!({"path":"topics[0].points[0]","evidence":["e0000"]}),
+        json!({"path":"decisions[0]","evidence":["e0001"]})];
+    let source = sentences(&units);
+    let empty = HashSet::new();
+    assert!(apply_repair(&raw, &doc, &allowed, &unclear, &conservative, &empty, &units, false).is_err());
+    let repaired = recover_protected_repairs(&raw,&doc,&allowed,&unclear,&conservative,&empty,&units,false,&issues,&source).unwrap();
+    assert_eq!(repaired.applied.document.topics[0].points[0].text,"会上建议下周开工。");
+    assert!(repaired.applied.document.decisions.is_empty());
+    assert_eq!(repaired.pending_quotes,["期限这块儿先复核。"]);
+    assert_eq!(repaired.withheld_paths,["decisions[0]"]);
+    let unrelated = [issues[0].clone(),json!({"path":"decisions[0]","evidence":["e0000"]})];
+    assert!(recover_protected_repairs(&raw,&doc,&allowed,&unclear,&conservative,&empty,&units,false,&unrelated,&source).is_none());
+}
+
+#[cfg(test)]
+#[test]
+#[ignore = "requires the saved school factual-repair receipt"]
+fn qm06_replay_archived_school_repair_contract() {
+    let path = std::env::var_os("COMPANION_TEST_SCHOOL_REPAIR_RECEIPT").unwrap();
+    let receipt: Value = serde_json::from_slice(&std::fs::read(path).unwrap()).unwrap();
+    let wire = &receipt["wire"];
+    let doc: Document = serde_json::from_value(wire["previousDocument"].clone()).unwrap();
+    let units = wire["sourceUnits"].as_array().unwrap().iter().map(|unit| Unit {
+        id: unit["id"].as_str().unwrap().into(),
+        text: unit["sentences"].as_array().unwrap().iter().map(|row| row["text"].as_str().unwrap()).collect(),
+    }).collect::<Vec<_>>();
+    let source = sentences(&units);
+    let issues = wire["auditProblems"].as_array().unwrap();
+    let paths = |accept: fn(&Value) -> bool| issues.iter().filter(|issue| accept(issue))
+        .map(|issue| issue["path"].as_str().unwrap().to_owned()).collect::<HashSet<_>>();
+    let allowed = paths(|_| true);
+    let unclear = paths(|issue| issue["status"] == "unclear");
+    let misplaced = paths(|issue| issue["placementUnsupported"] == true);
+    let conservative: HashMap<String, Vec<String>> = serde_json::from_value(wire["conservativeRewritePaths"].clone()).unwrap();
+    let original_claims = claims(&doc);
+    let (raw, _) = normalize_scoped_repair_reply(receipt["reply"].as_str().unwrap(),issues,&source,&original_claims,&[]);
+    let (raw, _) = hold_unresolved_source(&raw,issues,&original_claims,&source,&HashMap::new(),false).unwrap_or((raw,Vec::new()));
+    let patched = apply_repair(&raw,&doc,&allowed,&unclear,&conservative,&misplaced,&units,false).unwrap();
+    assert!(patched.document.decisions.iter().any(|row| row.text.contains("动员大会") && row.text.contains("时限待核对")));
+    assert!(patched.document.decisions.iter().all(|row| !row.text.contains("进校一个月内")));
+    assert!(patched.document.action_items.iter().all(|row| row.text != "后勤负责老师服装更换事宜。"));
+}
+
 #[cfg(test)]
 #[test]
 fn repair_reply_coalesces_only_identical_repeated_edits() {
@@ -2036,9 +2192,12 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
     let mut evidence = HashMap::new();
     let mut supported_conflicts = HashSet::new();
     let mut related = HashMap::new();
+    let mut withheld_for_review = false;
+    let withheld_note = "部分修订已保留，另有条目需核对原话。";
     for round in 0..=2 {
         let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
         if expected.is_empty(){
+            if withheld_for_review { return Err(withheld_note.into()); }
             let document=finish_conflicts(current.clone(),conflicts,&supported_conflicts)?;
             return Ok(VerifiedBrief {document,evidence,pending_quotes: std::mem::take(pending_quotes)});
         }
@@ -2092,6 +2251,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
             issue
         }).collect::<Vec<_>>();
         if issues.is_empty(){
+            if withheld_for_review { return Err(withheld_note.into()); }
             let document=finish_conflicts(current.clone(),conflicts,&supported_conflicts)?;
             return Ok(VerifiedBrief {document,evidence,pending_quotes: std::mem::take(pending_quotes)});
         }
@@ -2198,20 +2358,39 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
         } else {
             (raw, Vec::new())
         };
-        let next=match apply_repair(&raw,&current,&allowed,&unclear,&conservative,&misplaced,units,scoped){
-            Ok(doc)=>doc,
-            Err(reason)if super::coverage::enabled()&&!recovered_display&&reason.contains("须为")&&!oversized_repair_texts(&raw).is_empty()=>{
-                // An oversized patch has not been applied. Recover only its
-                // text once, keep valid patches exact, then use every original
-                // scope/history/shape guard and independently audit all changes.
-                recovered_display=true;let paths=oversized_repair_texts(&raw);
-                payload["previousResult"]=json!(raw);payload["formatOnlyTextPaths"]=json!(paths);payload["formatProblems"]=json!([reason]);
-                payload["instruction"]=json!("本次只缩短formatOnlyTextPaths列出的超长text，按repairContracts保留必要条件、否定、范围、人物及不确定性，不改kind/owner/due，不补事实、不截断原句。其它有效patch由程序原样保留，不要返回。只返回changes，每项仅path和text，列出的每个path恰好一次。随后仍会完整复审。");
-                let fixed=super::request(endpoint,model,key,client,REPAIR,payload,true,start,trace,&format!("{stage}-length-recovery"))?;
-                let merged=merge_shorter_repair_texts(&raw,&fixed,&paths)?;
-                apply_repair(&merged,&current,&allowed,&unclear,&conservative,&misplaced,units,scoped)?
+        let mut raw = raw;
+        let apply = |raw: &str| apply_repair(raw,current,&allowed,&unclear,&conservative,&misplaced,units,scoped);
+        let mut revision = apply(&raw);
+        if let Err(reason) = &revision {
+            if super::coverage::enabled() && !recovered_display && reason.contains("须为") {
+                let paths = oversized_repair_texts(&raw);
+                if !paths.is_empty() {
+                    // Repair display length once while retaining all scope checks.
+                    recovered_display = true;
+                    payload["previousResult"] = json!(raw);
+                    payload["formatOnlyTextPaths"] = json!(paths);
+                    payload["formatProblems"] = json!([reason]);
+                    payload["instruction"] = json!("本次只缩短formatOnlyTextPaths列出的超长text，按repairContracts保留必要条件、否定、范围、人物及不确定性，不改kind/owner/due，不补事实、不截断原句。其它有效patch由程序原样保留，不要返回。只返回changes，每项仅path和text，列出的每个path恰好一次。随后仍会完整复审。");
+                    let fixed = super::request(endpoint,model,key,client,REPAIR,payload,true,start,trace,&format!("{stage}-length-recovery"))?;
+                    raw = merge_shorter_repair_texts(&raw,&fixed,&paths)?;
+                    revision = apply(&raw);
+                }
+            }
+        }
+        let next = match revision {
+            Ok(doc) => doc,
+            Err(reason) => {
+                let recovered = super::source_items::enabled().then(|| recover_protected_repairs(
+                    &raw,current,&allowed,&unclear,&conservative,&misplaced,units,scoped,&issues,&source,
+                )).flatten().ok_or(reason)?;
+                preserves_unclear_history(&recovered.applied.document,&unclear_history)?;
+                withheld_for_review = true;
+                pending_quotes.extend(recovered.pending_quotes);
+                if let Some(call) = trace.last_mut() {
+                    call["withheldRepairPaths"] = json!(recovered.withheld_paths);
+                }
+                recovered.applied
             },
-            Err(reason)=>return Err(reason),
         };
         preserves_unclear_history(&next.document,&unclear_history)?;
         if !newly_pending.is_empty() {

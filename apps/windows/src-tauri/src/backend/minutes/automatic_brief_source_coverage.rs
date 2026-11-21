@@ -406,6 +406,79 @@ pub(super) fn restore_cited_limits(facts: &mut [Fact], evidence: &[Value]) -> Ve
     retained
 }
 
+#[derive(Clone, Copy, PartialEq)]
+struct CalendarDate(u8, u8);
+
+fn calendar_dates(text: &str) -> impl Iterator<Item = (regex::Match<'_>, CalendarDate, Option<CalendarDate>)> {
+    static DATE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<month>[0-9０-９一二三四五六七八九十]{1,3})月(?P<day>[0-9０-９一二三四五六七八九十]{1,3})[日号](?:[\s]*(?:至|到|和|及|、|[-–—~～])[\s]*(?:(?P<endMonth>[0-9０-９一二三四五六七八九十]{1,3})月)?(?P<endDay>[0-9０-９一二三四五六七八九十]{1,3})[日号])?"
+    ).unwrap());
+    DATE.captures_iter(text).filter_map(|row| {
+        let number = |part: &str, limit: u8| {
+            let value = super::source_items::number_value(part, false)?;
+            (value >= 1.0 && value <= f64::from(limit) && value.fract() == 0.0).then_some(value as u8)
+        };
+        let date = CalendarDate(number(&row["month"], 12)?, number(&row["day"], 31)?);
+        let end = if let Some(day) = row.name("endDay") {
+            let month = match row.name("endMonth") {
+                Some(month) => number(month.as_str(), 12)?,
+                None => date.0,
+            };
+            Some(CalendarDate(month, number(day.as_str(), 31)?))
+        } else {
+            None
+        };
+        Some((row.get(0)?, date, end))
+    })
+}
+
+pub(super) fn preserve_tentative_date<'a>(
+    claim: &str, sources: impl Iterator<Item = &'a str>,
+) -> Option<String> {
+    static CONFIRMED: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<marker>已(?:经)?(?:确定|定下|定在|定于|定)|正式确定|确定为|确定在|敲定|定于)(?P<bridge>[^。，,；？！\r\n]{0,16})$"
+    ).unwrap());
+    static TENTATIVE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:大概|大致|大约|预计|暂定|暂拟|初步|可能)[在是为于这个\s呃啊嗯的]{0,9}$"
+    ).unwrap());
+    let mut dates = calendar_dates(claim);
+    let (date, first, last) = dates.next()?;
+    if dates.next().is_some() || claim.contains(['「', '」', '“', '”']) {
+        return None;
+    }
+    let prefix = &claim[..date.start()];
+    let definite = CONFIRMED.captures(prefix)?;
+    let marker = definite.name("marker")?;
+    let bridge = definite.name("bridge")?.as_str();
+    if prefix[..marker.start()].ends_with(['未', '不', '没']) || TENTATIVE.is_match(prefix) {
+        return None;
+    }
+
+    let mut found_estimate = false;
+    for source in sources.map(source_body) {
+        for (mentioned, _, _) in calendar_dates(source).filter(|(_, from, to)| (*from, *to) == (first, last)) {
+            let before = source[..mentioned.start()].trim_end();
+            if TENTATIVE.is_match(before) {
+                found_estimate = true;
+            } else if CONFIRMED.is_match(before) {
+                return None;
+            }
+        }
+    }
+    if !found_estimate {
+        return None;
+    }
+
+    let mut text = claim.to_owned();
+    let replacement = if bridge.trim().is_empty() && marker.as_str().ends_with('在') {
+        "预计在"
+    } else {
+        "预计"
+    };
+    text.replace_range(marker.range(), replacement);
+    line(&text, 90).then_some(text)
+}
+
 fn retain_recruitment_count(claim: &str, raw: &str) -> Option<String> {
     static COUNTED: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?P<verb>抽调|选派|招聘|增派|安排|找)(?P<count>[一二两三四五六七八九十0-9]{1,4}[个名位])(?P<skill>有经验|有资质|持证|熟悉[^，,。；？！\s]{2,9}|有[^，,。；？！\s]{2,9}经验)"
@@ -698,6 +771,20 @@ pub(super) fn preserve_spoken_roles(facts: &mut [Fact], evidence: &[Value]) -> V
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn direct_date_qualifier_survives_confirmation_without_concrete_dates() {
+        let sources = [
+            "说话人2: 教务处已经把期末考时间定下来了。",
+            "说话人2: 然后呃嗯大概是在七月六号和七月七号嗯考两天。",
+        ];
+        assert_eq!(preserve_tentative_date("教务处已定期末考时间为7月6日至7日，考两天。", sources.into_iter()).as_deref(),
+            Some("教务处预计期末考时间为7月6日至7日，考两天。"));
+        assert!(preserve_tentative_date("期末考已定七月六号。", sources.into_iter()).is_none());
+        assert!(preserve_tentative_date("未确定考试时间为七月六号至七号。", sources.into_iter()).is_none());
+        assert!(preserve_tentative_date("教务处已定期末考时间为七月六号至七号。",
+            sources.into_iter().chain(["后来确定在七月六号至七号。"])).is_none());
+    }
 
     #[test]
     fn cited_details_restore_only_the_count_and_cause_of_the_same_statement() {
