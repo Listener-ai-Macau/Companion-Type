@@ -898,19 +898,21 @@ fn restore_source_context_for_coverage(
         if source_body != cue.span {
             continue;
         }
-        let next = evidence.get(position + 1)
-            .filter(|row| row["source"] == original["source"]);
-        let Some(next) = next else { continue; };
-        let next_source = next["text"].as_str().unwrap();
-        if !["半个月历时十五天", "半个月也就是十五天"].iter().any(|word| normalized(next_source).contains(word)) {
-            continue;
-        }
-        let next_id = next["id"].as_str().unwrap();
-        let same_duration = claims.iter().any(|value| {
-            value["path"].as_str().and_then(|path| bindings.get(path))
-                .is_some_and(|ids| ids.iter().any(|id| id == next_id))
-                && value["due"].is_null() && measure_has_witness("十五天", value)
-        });
+        let same_duration = [position.checked_sub(1), Some(position + 1)].into_iter().flatten()
+            .filter_map(|i| evidence.get(i))
+            .filter(|row| row["source"] == original["source"])
+            .filter(|row| {
+                let text = normalized(row["text"].as_str().unwrap());
+                ["半个月历时十五天", "半个月也就是十五天"].iter().any(|word| text.contains(word))
+            })
+            .any(|row| {
+                let adjacent_id = row["id"].as_str().unwrap();
+                claims.iter().any(|value| {
+                    value["path"].as_str().and_then(|path| bindings.get(path))
+                        .is_some_and(|ids| ids.iter().any(|id| id == adjacent_id))
+                        && value["due"].is_null() && measure_has_witness("十五天", value)
+                })
+            });
         if same_duration {
             *check = SourceCheck::Background {
                 id: id.clone(), reason: "相邻原话已重复相同时长并换算，当前事项保留了该时长。".into(),
@@ -970,6 +972,26 @@ fn related_causal_evidence(evidence: &[Value], source: &Value, phrase: &str) -> 
     }).collect()
 }
 
+fn aspect_quote_covers_clause(quote: &str, required: &str, aspect: &str) -> bool {
+    let quote = normalized(quote);
+    let required = normalized(required);
+    if quote.contains(&required) {
+        return true;
+    }
+    if aspect != "明确限制" {
+        return false;
+    }
+    // A question of the form "不得先了解嘛，了解了才能实践" repeats
+    // the prerequisite affirmatively. An independent prohibition cannot be
+    // replaced by any follow-up clause mentioning a different condition.
+    let Some((question, answer)) = required.strip_prefix("不得")
+        .and_then(|text| text.split_once(['嘛', '吗'])) else { return false; };
+    let prerequisite = question.trim_start_matches(['有', '先']).trim();
+    let answer = answer.trim_start_matches(['，', ',', '、']).trim_end_matches(['嘛', '吗']);
+    prerequisite.chars().count() >= 2 && answer.starts_with(prerequisite)
+        && answer.contains("才能") && quote.contains(answer)
+}
+
 fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document, evidence: &[Value],
     bindings: &HashMap<String, &Vec<String>>,
 ) -> Vec<Value> {
@@ -991,7 +1013,7 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
         let ordinary_proof = if let Some(aspect) = context["cue"]["aspect"].as_str() {
             let required = context["cue"]["span"].as_str()?;
             proof.as_ref().is_some_and(|proof| coverage_quote_is_grounded(&proof.source_quote, source_text)
-                && normalized(&proof.source_quote).contains(&normalized(required))
+                && aspect_quote_covers_clause(&proof.source_quote, required, aspect)
                 && (!matches!(aspect, "交办后又提问" | "交办的内容范围") || !claim.starts_with("questions[")))
         } else { true };
         let measure_matches = context["cue"]["aspect"].is_string() || target.is_some_and(|claim| {
