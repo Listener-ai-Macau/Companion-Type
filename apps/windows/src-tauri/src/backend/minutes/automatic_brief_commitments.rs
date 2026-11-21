@@ -145,7 +145,7 @@ fn spoken_collective(requested: &str, quote: &str) -> Option<String> {
     if !(2..=14).contains(&group.chars().count()) || !group.chars().all(|ch| ('㐀'..='鿿').contains(&ch)) {
         return None;
     }
-    ["每个", "每一个", "每位", "每一位"].into_iter().map(|prefix| format!("{prefix}{group}"))
+    ["各自", "每个", "每一个", "每位", "每一位"].into_iter().map(|prefix| format!("{prefix}{group}"))
         .find(|utterance| quote.contains(utterance))
 }
 
@@ -170,6 +170,7 @@ pub(super) fn owner_as_spoken(requested: &str, row: &Value) -> Option<String> {
 #[test]
 fn checks_literal_collectives_and_first_person_attribution() {
     assert_eq!(owner_as_spoken("各园长", &json!({"text":"每个园长在园里开会时都要强调。"})).as_deref(),Some("每个园长"));
+    assert_eq!(owner_as_spoken("各部门", &json!({"text":"各自部门儿回去之后把这个方案都赶紧做出来。"})).as_deref(),Some("各自部门"));
     assert_eq!(owner_as_spoken("各园", &json!({"text":"各院把计划发给我。"})).as_deref(),Some("各院"));
     let first_person = json!({"turnSpeaker":"说话人2","text":"说话人2: 我会给下面的老师吩咐。我们一幼讲究创新。"});
     assert_eq!(owner_as_spoken("一幼园长", &first_person).as_deref(),Some("说话人2"));
@@ -341,7 +342,13 @@ fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids:
                     fact.owner = Some(spoken_department(&requested, snippets)
                         .ok_or("任务原话没有所填负责人。若相邻原话能确认承接者，请填写 ownerEvidence。若所指不明，请引用原话写待核实。")?);
                 }
-                if due != fact.due { return Err("没有证据说明该时间是这个任务的截止时间。"); }
+                if due != fact.due {
+                    let claim = &original["claim"];
+                    let unchanged_action = claim["kind"] == "action" && claim["due"].is_null()
+                        && fact.due.is_none()
+                        && claim["text"].as_str().is_some_and(|text| super::normalized(text) == super::normalized(&fact.text));
+                    if !unchanged_action { return Err("没有证据说明该时间是这个任务的截止时间。"); }
+                }
             }
             fact
         },
@@ -755,4 +762,23 @@ fn review_from_verified_public_minutes() {
         "accepted":output.is_ok(),"document":output.as_ref().ok(),"error":output.as_ref().err(),
         "calls":trace,"seconds":start.elapsed().as_secs_f64()
     })).unwrap()).unwrap();
+}
+
+
+#[cfg(test)]
+#[test]
+fn a_second_meeting_time_does_not_become_an_existing_tasks_deadline() {
+    let evidence = [
+        json!({"id":"e0010","text":"回去赶紧出方案。"}),
+        json!({"id":"e0011","text":"然后下周二的时候我们再具体确定一下。"}),
+    ];
+    let known: HashMap<_, _> = evidence.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
+    let ids = known.keys().copied().collect();
+    let original = json!({"claim":{"kind":"action","text":"回去赶紧出方案，下周二再具体确定。","owner":null,"due":null},
+        "basis":["e0010","e0011"],"context":["e0010","e0011"]});
+    let proposal = |text| serde_json::from_value(json!({"id":"actionItems[0]","replacement":{"role":"action",
+        "text":text,"owner":null,"due":"下周二","evidence":["e0010","e0011"]}})).unwrap();
+    let kept = bind_edit(proposal("回去赶紧出方案，下周二再具体确定。"), &original, &known, &ids).unwrap().unwrap();
+    assert_eq!(kept.due, None);
+    assert!(bind_edit(proposal("回去赶紧出合同，下周二再具体确定。"), &original, &known, &ids).is_err());
 }
