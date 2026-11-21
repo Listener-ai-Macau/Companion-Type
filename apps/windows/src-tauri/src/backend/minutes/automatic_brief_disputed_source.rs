@@ -10,9 +10,12 @@ struct Dispute<'a> {
 }
 
 fn reported_polarity(text: &str) -> Option<(&str, String)> {
-    let (first, second) = text.split_once(['；', ';'])?;
-    let (_, positive) = second.split_once("否认")?;
-    let positive = positive.trim().trim_end_matches(['。', '！', '？']);
+    let (first, positive) = ["否认", "回应", "反驳"].into_iter().find_map(|verb| {
+        let (earlier, later) = text.split_once(verb)?;
+        let clause = later.trim().split(['，', '；', '：', '、', '。', '！', '？', ',', ';']).next()?;
+        let positive = if verb == "否认" { clause } else { clause.strip_prefix(['不', '没'])? };
+        earlier.contains(positive).then_some((earlier, positive))
+    })?;
     if !super::line(positive, 20) || positive.chars().count() < 3
         || positive.contains(['，', '；', '：', '、', '。', '！', '？'])
         || !first.contains(positive)
@@ -132,6 +135,9 @@ fn only_grounded_unresolved_opposition_qualifies_the_literal_duplicate() {
     let mut closed = units.clone();
     closed.push(Unit{id:"u002".into(),text:"说话人1：经核实临时仓库不会积水。".into()});
     assert!(mark_pending(&mut doc.clone(), &closed).is_empty());
+    let mut reply = doc.clone();
+    reply.topics[0].details[1].text = "说话人2称临时仓库会积水，另一方当场回应不会积水、通风正常。".into();
+    assert_eq!(mark_pending(&mut reply, &units).len(), 1);
     assert_eq!(mark_pending(&mut doc, &units).len(), 1);
     assert_eq!(doc.topics[0].details[0].text, "临时仓库通风，是否会积水待核实；库存待盘点。");
     assert_eq!(doc.topics[0].details[0].sources, ["u001","u000"]);

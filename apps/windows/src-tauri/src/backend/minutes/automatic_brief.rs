@@ -26,6 +26,8 @@ mod commitments;
 mod source_scope;
 #[path="automatic_brief_disputed_source.rs"]
 mod disputed_source;
+#[path="automatic_brief_final_bindings.rs"]
+mod final_bindings;
 #[derive(Default,Deserialize)]
 enum ResponseFormatMarker {#[default] #[serde(skip)] Absent,#[serde(rename="json_object")] Present}
 
@@ -345,6 +347,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         };
         traced_document=Some(doc.clone());
         let mut pending_quotes = Vec::new();
+        let mut conditional_speakers = Vec::new();
         let mut doc=if let Some(facts)=source_facts {
             let reviewable = |draft: &Document, reason: String| {
                 check_current()?;
@@ -361,6 +364,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
                 Err(reason) => return reviewable(&checked.doc, reason),
             };
             pending_quotes = std::mem::take(&mut verified.pending_quotes);
+            conditional_speakers = final_bindings::conditional_speakers(&verified, &units);
             let reviewed = verified.document.clone();
             traced_document=Some(reviewed.clone());
             match commitments::review(endpoint,model,key,client,verified,&units,start,&mut trace) {
@@ -377,7 +381,13 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             let prepared=coverage::combine_omissions(prepared?,omissions?)?;
             coverage::complete_prepared(endpoint,model,key,client,&doc,&units,prepared,start,&mut trace)?
         }else{factual_audit::review_and_repair(endpoint,model,key,client,&doc,&units,start,&mut trace)?};
-        if source_items::enabled() { clean_question_annotations(&mut doc); }
+        if source_items::enabled() {
+            clean_question_annotations(&mut doc);
+            let bindings = final_bindings::apply(&mut doc, &units, conditional_speakers);
+            if bindings != (0, 0) {
+                trace.push(json!({"stage":"source-final-bindings","conditionalSpeakers":bindings.0,"scopedAssignments":bindings.1}));
+            }
+        }
         reconcile_citations(&mut doc, &source);
         if source_items::enabled() {
             let changes = disputed_source::mark_pending(&mut doc, &units);
