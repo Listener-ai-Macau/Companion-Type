@@ -403,6 +403,43 @@ fn partitioned_audit(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking
     if let Some(call)=trace.last_mut(){if !uncertain.is_empty(){call["sourceUncertainties"]=json!(uncertain);}if !history.is_empty(){call["unclearClaimHistory"]=json!(history);}if !interpretations.is_empty(){call["sourceInterpretationUncertainties"]=json!(interpretations);}}
     Ok(Audit{claim_audit:claims,format_kind:None})
 }
+const PENDING_PROPOSAL_PREFIX: &str = "会上讨论「";
+const PENDING_PROPOSAL_SUFFIX: &str = "」。其中具体用语待核实。";
+
+fn verified_pending_proposal(text: &str, phrase: &str, verdict: &Claim, source: &[Sentence]) -> bool {
+    if verdict.status != "supported" || !verdict.path.starts_with("topics[") {
+        return false;
+    }
+    let Some(quote) = text.strip_prefix(PENDING_PROPOSAL_PREFIX)
+        .and_then(|text| text.strip_suffix(PENDING_PROPOSAL_SUFFIX))
+    else { return false; };
+    quote.contains(phrase) && source.iter().any(|sentence| {
+        verdict.evidence.contains(&sentence.id)
+            && super::super::source_resolution::split_turn_label(&sentence.text)
+                .map_or(sentence.text.as_str(), |(_, speech)| speech).trim() == quote
+    })
+}
+
+#[cfg(test)]
+#[test]
+fn historical_veto_distinguishes_a_verbatim_pending_quote_from_an_assertion() {
+    let path = "topics[2].details[6]";
+    let source = [Sentence{id:"e0107".into(),source:"u005".into(),
+        text:"说话人2: 设备工程部可以向财务部申请报表儿，可以加装几个抽水泵。".into()}];
+    let history = [json!({"phrase":"申请报表","sourceIds":["u005"]})];
+    let verdict = json!({"claimAudit":[{"path":path,"status":"supported","reason":"引用了原话","evidence":["e0107"],"clarity":"clear"}]});
+    for (text, vetoed) in [
+        ("会上讨论「设备工程部可以向财务部申请报表儿，可以加装几个抽水泵。」。其中具体用语待核实。", false),
+        ("设备工程部应当申请报表。", true),
+        ("会上讨论「设备工程部应立即申请报表儿」。其中具体用语待核实。", true),
+        ("会上讨论「设备工程部可以向财务部申请报表儿，可以加装几个抽水泵。」。报名手续已确认。", true),
+    ] {
+        let mut audit: Audit = serde_json::from_value(verdict.clone()).unwrap();
+        let claim = json!({"path":path,"text":text,"sources":["u005"]});
+        assert_eq!(!apply_historical_veto(&mut audit, &[claim], &history, &source).is_empty(), vetoed);
+    }
+}
+
 fn apply_historical_veto(audit:&mut Audit,expected:&[Value],history:&[Value],source:&[Sentence])->Vec<String>{
     let mut vetoed=Vec::new();
     for verdict in &mut audit.claim_audit{
@@ -424,7 +461,12 @@ fn apply_historical_veto(audit:&mut Audit,expected:&[Value],history:&[Value],sou
                     return None;
                 }
             }
-            ["text","owner","due"].iter().any(|field|claim[*field].as_str().is_some_and(|text|text.contains(phrase))).then_some(phrase)
+            let asserted = claim["text"].as_str().is_some_and(|text| {
+                text.contains(phrase) && !verified_pending_proposal(text, phrase, verdict, source)
+            });
+            (asserted || ["owner", "due"].iter().any(|field| {
+                claim[*field].as_str().is_some_and(|text| text.contains(phrase))
+            })).then_some(phrase)
         });
         if let Some(phrase)=found{
             if verdict.clarity.as_deref()==Some("unclear")&&verdict.unclear_text.as_deref()==Some(phrase){continue;}
@@ -1292,7 +1334,7 @@ fn unclear_optional_action_as_quote(issues: &[Value], claims: &[Value], source: 
         }
         // Independent re-audit rejected the task role and the replacement
         // term. Keep the complete source proposal and its pending status.
-        Some(json!({"path":path,"text":format!("会上讨论「{quote}」。其中具体用语待核实。")}))
+        Some(json!({"path":path,"text":format!("{PENDING_PROPOSAL_PREFIX}{quote}{PENDING_PROPOSAL_SUFFIX}")}))
     }).collect::<Option<Vec<_>>>()?;
     (!changes.is_empty()).then(|| json!({"changes":changes}).to_string())
 }

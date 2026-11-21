@@ -1018,8 +1018,10 @@ fn academic_billing_period_witness(span: &str, source: &str, source_quote: &str,
     static ACADEMIC_PAYMENT: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:交|缴)(?:了|的是|纳)?(?:是)?一{1,3}学年"
     ).expect("constant academic payment expression"));
-    if span != "一年" || !ANNUAL_PAYMENT.is_match(&normalized(source_quote))
-        || !ACADEMIC_PAYMENT.is_match(&normalized(source))
+    let source = normalized(source);
+    let quote = normalized(source_quote);
+    if span != "一年" || !ANNUAL_PAYMENT.is_match(&source) || !ACADEMIC_PAYMENT.is_match(&source)
+        || !(ANNUAL_PAYMENT.is_match(&quote) || ACADEMIC_PAYMENT.is_match(&quote))
     {
         return false;
     }
@@ -1215,6 +1217,7 @@ fn annual_payment_alias_requires_the_source_to_name_the_same_academic_cycle() {
     let witness = "因为我们交了是一年度吗";
     let original = "因为我们交了是一年度吗，交的是一一一学年的。";
     assert!(academic_billing_period_witness("一年", original, witness, "因按学年缴费且只退本学期部分"));
+    assert!(academic_billing_period_witness("一年", original, "交的是一一一学年的", "因按学年缴费且只退本学期部分"));
     assert!(!academic_billing_period_witness("一年", witness, witness, "因按学年缴费且只退本学期部分"));
     assert!(!academic_billing_period_witness("一年", original, witness, "因按学期缴费且只退本学期部分"));
     assert!(!academic_billing_period_witness("一年", original, witness, "并非按学年缴费"));
