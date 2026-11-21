@@ -727,9 +727,43 @@ fn cited_duration_range_matches(span: &str, claim: &Value, source: &str) -> Opti
     Some(duration_ranges(text).iter().any(|(_, from, to, unit)| (*from, *to, *unit) == expected))
 }
 
+fn same_half_month_context(claim: &Value, source: &str) -> bool {
+    let Some(text) = claim["text"].as_str() else { return false; };
+    if !claim["due"].is_null() {
+        return false;
+    }
+    let literal = |value: &str| normalized(value).replace("半个月", "半月");
+    let source = literal(source);
+    let text = literal(text);
+    ["为期半月", "历时半月"].iter().any(|marker| source.contains(marker) && text.contains(marker))
+        && (!source.contains("近半月") || text.contains("近半月"))
+}
+
+fn contextual_duration_example(span: &str, claim: &Value, source: &str) -> bool {
+    static PARALLEL: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:不可能说|不可能一直)[^。？！；]{0,44}?(?P<example>[一二两三四五六七八九十百0-9]{1,4}年[一二两三四五六七八九十百0-9]{1,4}年)\s*[，,]\s*所以"
+    ).unwrap());
+    let Some(example) = PARALLEL.captures(source).and_then(|matched| matched.name("example")) else {
+        return false;
+    };
+    // Only an exact paired example contrasted with the stated duration is
+    // contextual here. Independent factual review still gets the full turn.
+    let already_cited = claim["text"].as_str().is_some_and(|text| {
+        let after = &source[example.end()..];
+        duration_ranges(after).iter().any(|(_, from, to, unit)| duration_ranges(text).iter()
+            .any(|(_, other_from, other_to, other_unit)| (from, to, unit) == (other_from, other_to, other_unit)))
+    });
+    already_cited && source.match_indices(span).all(|(start, _)| {
+        example.start() <= start && start + span.len() <= example.end()
+    }) && example.as_str().contains(span)
+}
+
 fn contextual_measure_witness(span: &str, claim: &Value, source: &str) -> bool {
     if let Some(matches) = cited_duration_range_matches(span, claim, source) {
         return matches;
+    }
+    if span == "半个月" && same_half_month_context(claim, source) {
+        return true;
     }
     // A cited duration can be contextual rather than a second measurement.
     // Do not require a rhetorical question to repeat an already named period,
@@ -830,6 +864,59 @@ fn period_half_year_is_distinct_from_a_stated_duration() {
     assert!(contextual_measure_witness("半年", &claim, "下半年还有上半年的安排。"));
     assert!(!contextual_measure_witness("半年", &claim, "上半年讨论了半年的学习安排。"));
     assert!(!contextual_measure_witness("半年", &claim, "计划至少学习半年。"));
+}
+
+fn restore_source_context_for_coverage(
+    checks: &mut [SourceCheck], cues: &[SourceCue], claims: &[Value], evidence: &[Value],
+    bindings: &HashMap<String, &Vec<String>>,
+) {
+    for check in checks {
+        let SourceCheck::Covered { id, claim, proof } = check else { continue; };
+        let Some(cue) = cues.iter().find(|cue| cue.id == *id && cue.aspect.is_none()) else { continue; };
+        let Some((position, original)) = evidence.iter().enumerate().find(|(_, row)| row["id"] == cue.evidence.as_str())
+            else { continue; };
+        let source = original["text"].as_str().unwrap();
+        let candidates = claims.iter().filter(|value| {
+            value["path"].as_str().and_then(|path| bindings.get(path)).is_some_and(|ids| ids.contains(&cue.evidence))
+        });
+        if candidates.clone().any(|value| contextual_duration_example(&cue.span, value, source)) {
+            *check = SourceCheck::Background {
+                id: id.clone(), reason: "对照原话，这段连续时长是反例。同一发言的实际过渡时长已保留。".into(),
+            };
+            continue;
+        }
+        if cue.span != "半个月" {
+            continue;
+        }
+        if let Some(witness) = candidates.into_iter().find(|value| same_half_month_context(value, source)) {
+            *claim = witness["path"].as_str().unwrap().to_owned();
+            *proof = None;
+            continue;
+        }
+        let source_body = super::super::source_resolution::split_turn_label(source)
+            .map_or(source, |(_, content)| content).trim().trim_end_matches(['。', '！']);
+        if source_body != cue.span {
+            continue;
+        }
+        let next = evidence.get(position + 1)
+            .filter(|row| row["source"] == original["source"]);
+        let Some(next) = next else { continue; };
+        let next_source = next["text"].as_str().unwrap();
+        if !["半个月历时十五天", "半个月也就是十五天"].iter().any(|word| normalized(next_source).contains(word)) {
+            continue;
+        }
+        let next_id = next["id"].as_str().unwrap();
+        let same_duration = claims.iter().any(|value| {
+            value["path"].as_str().and_then(|path| bindings.get(path))
+                .is_some_and(|ids| ids.iter().any(|id| id == next_id))
+                && value["due"].is_null() && measure_has_witness("十五天", value)
+        });
+        if same_duration {
+            *check = SourceCheck::Background {
+                id: id.clone(), reason: "相邻原话已重复相同时长并换算，当前事项保留了该时长。".into(),
+            };
+        }
+    }
 }
 
 fn disputed_coverage(missing: &MissingItems, cues: &[SourceCue], doc: &Document, evidence: &[Value],
@@ -1175,6 +1262,7 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         .filter_map(|value| value["path"].as_str()).collect();
     let mut checked: MissingItems = parse(&raw)?;
     for check in &mut checked.checks { check.normalize_claim_path(&claim_paths); }
+    restore_source_context_for_coverage(&mut checked.checks, &cues, &claim_values, &evidence, &bindings);
     let disputed = disputed_coverage(&checked, &cues, &doc, &evidence, &bindings);
     if !disputed.is_empty() && checked.checks.len() == cues.len() {
         let selected: HashSet<_> = disputed.iter().map(|case| case["cue"]["id"].as_str().unwrap()).collect();
