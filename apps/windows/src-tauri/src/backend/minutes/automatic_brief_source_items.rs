@@ -564,6 +564,32 @@ fn background_reason(span: &str, source: &str) -> Option<&'static str> {
     None
 }
 
+fn definition_only_background(span: &str, source: &str) -> Option<&'static str> {
+    let speech = super::super::source_resolution::split_turn_label(source.trim())
+        .map_or(source.trim(), |(_, words)| words.trim());
+    let (before, after) = speech.split_once(span)?;
+    let after = after.trim_end_matches(['。', '；', '！', '？']);
+    let definitional = before.starts_with("罪就是") || before.starts_with("本条所称");
+    (definitional
+        && ["条文里", "条文中", "规定里", "条款中"].iter().any(|cue| before.contains(cue))
+        && ["不允许的", "不准的", "不得做的"].iter().any(|cue| span.starts_with(cue))
+        && ["行为", "做法"].iter().any(|noun| span.ends_with(noun))
+        && !after.contains(['。', '；', '！', '？']) && !after.contains("必须"))
+        .then_some("此处是不允许行为的词义说明，原话没有提出一项新的禁令或执行条件。")
+}
+
+fn personal_school_age_background(span: &str, source: &str) -> bool {
+    let Some((_, "岁")) = measures(span).next() else { return false; };
+    let mut hits = source.match_indices(span);
+    let Some((at, _)) = hits.next() else { return false; };
+    if hits.next().is_some() { return false; }
+    let before = &source[..at];
+    ["我还没", "我现在还没", "我还不到", "我今年还不到"].iter()
+        .any(|cue| before.trim_end().ends_with(*cue))
+        && ["上大", "读大", "上高", "读高"].iter().any(|cue| before.contains(cue))
+        && !["规定", "必须", "资格", "年龄条件", "报名", "办理"].iter().any(|cue| source.contains(cue))
+}
+
 fn remove_surplus_check_brace(raw: &str) -> Option<String> {
     let unfenced = super::super::strip_code_fences(raw);
     let body = unfenced.trim();
@@ -684,11 +710,16 @@ fn parse_coverage_repair(raw: &str, expected: &[Value], evidence: &[Value]) -> R
             .map(|entry| &entry["cue"]).ok_or_else(|| initial.clone())?;
         if !seen.insert(id.clone()) { return Err(initial); }
         if row["status"] == "background" && row["reason"].is_null()
-            && row["addition"].is_null() && row["claim"].is_null() && cue["aspect"].is_null()
+            && row["addition"].is_null() && row["claim"].is_null()
         {
             let reason = cue["span"].as_str().and_then(|span| {
                 let anchor = evidence.iter().find(|source| source["id"] == cue["evidence"])?;
-                background_reason(span, anchor["text"].as_str()?)
+                let source = anchor["text"].as_str()?;
+                match cue["aspect"].as_str() {
+                    None => background_reason(span, source),
+                    Some("明确限制") => definition_only_background(span, source),
+                    _ => None,
+                }
             });
             if let Some(reason) = reason {
                 row["reason"] = json!(reason);
@@ -1412,6 +1443,19 @@ fn missing_background_reasons_are_restored_only_for_grounded_context() {
 
 #[cfg(test)]
 #[test]
+fn definition_and_personal_age_stay_separate_from_binding_conditions() {
+    let definition = "说话人3: 罪就是你犯了条文里边儿的这个违这个不允许的这个行为，就是罪责，就是你有承担这个责任的能力。";
+    let clue = "不允许的这个行为";
+    assert!(definition_only_background(clue, definition).is_some());
+    assert!(definition_only_background(clue, "今天开始要避免不允许的这个行为，必须核验。").is_none());
+    assert!(personal_school_age_background("二十周岁",
+        "说话人4：我现在该上大三了我还没二十周岁。"));
+    assert!(!personal_school_age_background("二十周岁",
+        "我现在该上大三了我还没二十周岁，报名必须先办理审批。"));
+}
+
+#[cfg(test)]
+#[test]
 fn age_and_recurring_context_do_not_become_durations() {
     let source = "说话人1：十三周岁能不能参加，十八周岁是成人组，报名限一周。";
     let evidence = [json!({"id":"e0000","text":source})];
@@ -1647,6 +1691,85 @@ fn measure_has_witness(span: &str, claim: &Value) -> bool {
     let Some((quantity, unit)) = measures(span).next() else { return true; };
     ["text", "due"].into_iter().filter_map(|key| claim[key].as_str()).flat_map(measures)
         .any(|(found, found_unit)| unit == found_unit && (found - quantity).abs() < 1e-8)
+}
+
+fn colloquial_yuan_witness(span: &str, claim: &Value, source: &str) -> bool {
+    static BARE_YUAN: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(&format!(
+        r"(?P<value>{QUANTITY})\s*块"
+    )).expect("constant colloquial yuan expression"));
+    let Some(amount) = explicit_yuan_amount(span) else { return false; };
+    let Some(summary) = claim["text"].as_str() else { return false; };
+    let related = ["面试", "报名费", "费用", "学费", "退款", "赔偿", "租金", "工资", "押金", "货款", "支出", "付款", "支付"];
+    BARE_YUAN.captures_iter(summary).any(|hit| {
+        let whole = hit.get(0).unwrap();
+        let after = summary[whole.end()..].trim_start();
+        let before = &summary[..whole.start()];
+        if number_value(&hit["value"], false) != Some(amount)
+            || !after.starts_with(['换', '买', '付', '退', '给', '赔', '，', '。', '；', '、', '（', '.']) && !after.is_empty()
+            || before.trim_end().ends_with(['约', '近'])
+        {
+            return false;
+        }
+        let clause_start = before.rfind(['。', '；', '！', '？', '\n']).map_or(0, |at| {
+            at + summary[at..].chars().next().unwrap().len_utf8()
+        });
+        let clause_end = after.find(['。', '；', '！', '？', '\n']).unwrap_or(after.len());
+        let earlier = &before[clause_start..];
+        let later = &after[..clause_end];
+        source.match_indices(span).any(|(at, _)| {
+            let lead = source[..at].rsplit(['。','；','！','？','\n']).next().unwrap_or("");
+            let tail = source[at + span.len()..].split(['。','；','！','？','\n']).next().unwrap_or("");
+            related.iter().any(|cue| {
+                (earlier.contains(cue) || later.contains(cue)) && (lead.contains(cue) || tail.contains(cue))
+            })
+        })
+    })
+}
+
+fn cited_age_range_witness(span: &str, claim: &Value, source: &str) -> Option<bool> {
+    static AGE_RANGE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?P<from>[0-9０-９一二两三四五六七八九十百]+)(?:周?岁)?\s*(?:到|至|[-–—~～])\s*(?P<to>[0-9０-９一二两三四五六七八九十百]+)周?岁"
+    ).expect("constant age range expression"));
+    let (quantity, "岁") = measures(span).next()? else { return None; };
+    let values = |hit: &regex::Captures<'_>| {
+        let from = number_value(&hit["from"], false)?;
+        let to = number_value(&hit["to"], false)?;
+        (from < to && to <= 130.0).then_some((from, to))
+    };
+    let mut expected = None;
+    for hit in AGE_RANGE.captures_iter(source) {
+        let Some((from, to)) = values(&hit) else { continue; };
+        let range = hit.get(0)?.range();
+        let refers_to_same_age = source.match_indices(span).any(|(at, _)| {
+            (range.start <= at && at + span.len() <= range.end)
+                || (from == quantity && range.end <= at && source[range.end..at].chars().count() <= 24
+                    && source[..at].ends_with("年满") && !source[range.end..at].contains(['。', '；', '！', '？']))
+        });
+        if refers_to_same_age && (from == quantity || to == quantity)
+            && expected.replace((from, to)).is_some_and(|other| other != (from, to))
+        {
+            return Some(false);
+        }
+    }
+    let exact = expected?;
+    let text = claim["text"].as_str()?;
+    Some(AGE_RANGE.captures_iter(text).any(|hit| values(&hit) == Some(exact)))
+}
+
+#[cfg(test)]
+#[test]
+fn colloquial_currency_and_age_bounds_require_the_same_cited_meaning() {
+    let source = "不可能说五万块钱就给你一个面试的机会";
+    assert!(colloquial_yuan_witness("五万块钱", &json!({"text":"银行五万块换面试机会不可信。"}), source));
+    assert!(!colloquial_yuan_witness("五万块钱", &json!({"text":"银行四万块换面试机会不可信。"}), source));
+    assert!(!colloquial_yuan_witness("五万块钱", &json!({"text":"地址：面试地点后面码了五万块砖。"}), source));
+    assert!(!colloquial_yuan_witness("五万块钱", &json!({"text":"这场面试的报名费五万块。"}), "购置设备花了五万块钱。"));
+
+    let age = "八岁至十八岁里还有一个阶段，就是十六岁到十八周岁之间，如果说已年满十六周岁。";
+    let statement = json!({"text":"十六至十八周岁能自己养活自己的。"});
+    assert_eq!(cited_age_range_witness("十六周岁", &statement, age), Some(true));
+    assert_eq!(cited_age_range_witness("十六周岁", &json!({"text":"十六至十九周岁。"}), age), Some(false));
+    assert_eq!(cited_age_range_witness("十六周岁", &statement, "年满十六周岁才可办理。"), None);
 }
 
 fn duration_ranges(text: &str) -> Vec<(std::ops::Range<usize>, f64, f64, &str)> {
@@ -2426,7 +2549,14 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
         let alternate_measure = grounded && proof.as_ref().is_some_and(|proof| {
             (coverage_quote_is_grounded(&proof.source_quote, source_text)
                 && (relative_quarter_witness(span, source_text, &proof.source_quote, &proof.statement_quote)
-                    || academic_billing_period_witness(span, source_text, &proof.source_quote, &proof.statement_quote)))
+                    || academic_billing_period_witness(span, source_text, &proof.source_quote, &proof.statement_quote)
+                    || (proof.source_quote.contains(span) && cited.is_some_and(|ids| {
+                        context["cue"]["evidence"].as_str().is_some_and(|anchor| ids.iter().any(|id| id == anchor))
+                    }) && {
+                        let quoted_claim = json!({"text":proof.statement_quote});
+                        colloquial_yuan_witness(span, &quoted_claim, source_text)
+                            || cited_age_range_witness(span, &quoted_claim, source_text) == Some(true)
+                    })))
                 || evidence.iter().skip_while(|row| row["id"] != source["id"]).skip(1).take(8).any(|answer| {
                     answer["source"] == source["source"]
                         && answer["id"].as_str().is_some_and(|id| cited.is_some_and(|ids| ids.iter().any(|cited| cited == id)))
@@ -3207,9 +3337,22 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     }
     let mut rebound = Vec::new();
     let mut answered_amounts = Vec::new();
+    let mut personal_age = Vec::new();
     for check in &mut checked.checks {
         let SourceCheck::Missing { id, addition } = check else { continue; };
         let Some(cue) = cues.iter().find(|cue| cue.id == *id) else { continue; };
+        if !addition.item.evidence.iter().any(|id| id == &cue.evidence)
+            && evidence.iter().find(|row| row["id"] == cue.evidence)
+                .and_then(|row| row["text"].as_str())
+                .is_some_and(|source| personal_school_age_background(&cue.span, source))
+        {
+            personal_age.push(json!({"cue":id,"original":cue.evidence,"nearby":addition.item.evidence}));
+            *check = SourceCheck::Background {
+                id: id.clone(),
+                reason: "该处是发言人用自己的在读年级和年龄举例，相邻句不能替代这段自述或写成规则。".into(),
+            };
+            continue;
+        }
         if bind_answered_loan_amount(&mut addition.item, cue, &evidence) {
             answered_amounts.push(json!({"cue":id,"evidence":addition.item.evidence}));
             continue;
@@ -3225,6 +3368,9 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     }
     if !answered_amounts.is_empty() {
         trace[scan_index]["boundAdjacentLoanQuestions"] = json!(answered_amounts);
+    }
+    if !personal_age.is_empty() {
+        trace[scan_index]["separatedPersonalAgeExamples"] = json!(personal_age);
     }
     let mut preserved_durations = Vec::new();
     for check in &mut checked.checks {
