@@ -764,20 +764,49 @@ fn decode_coverage_evidence_recovery(
         let mut returned = rows.iter().filter(|row| row["id"] == cue["id"]);
         let Some(row) = returned.next() else { continue; };
         if returned.next().is_some() { continue; }
-        if row["status"] == "background" {
-            let grounded = row["sourceQuote"].as_str().is_some_and(|quote| {
-                cue["evidence"].as_str().and_then(|id| evidence_text.get(id)).is_some_and(|source| {
-                    coverage_quote_is_grounded(quote, source)
-                        && cue["span"].as_str().is_some_and(|span| quote.contains(span))
-                })
-            });
-            if !grounded || !row["reason"].as_str().is_some_and(|reason| line(reason, 100))
-                || !row["claim"].is_null() || !row["addition"].is_null()
-            {
-                continue;
-            }
+        let same_original_quote = |quote: &str| cue["evidence"].as_str().and_then(|id| evidence_text.get(id))
+            .is_some_and(|source| coverage_quote_is_grounded(quote, source)
+                && cue["span"].as_str().is_some_and(|span| quote.contains(span)));
+        if row["status"] == "background" && (!row["sourceQuote"].as_str().is_some_and(same_original_quote)
+            || !row["reason"].as_str().is_some_and(|reason| line(reason, 100))
+            || !row["claim"].is_null() || !row["addition"].is_null())
+        {
+            continue;
         }
-        if let Ok(check) = serde_json::from_value::<SourceCheck>(row.clone()) {
+        let mut row = row.clone();
+        // Some replies put the correct type's fields one level too high.
+        // Restore the envelope without taking unsupported owner/time or
+        // treating an unconfirmed source quote as a confirmed claim.
+        match row["status"].as_str() {
+            Some("missing") if row["addition"].is_null() && row["item"].is_object()
+                && row["claim"].is_null() && row["proof"].is_null() => {
+                let mut item = row["item"].clone();
+                if item["role"] == "detail" && item["owner"].is_null() && item["due"].is_null() {
+                    item["role"] = json!("status");
+                }
+                row["addition"] = json!({"topic":row["topic"],"item":item});
+            }
+            Some("needsReview") if row["addition"].is_null() && row["item"].is_null()
+                && row["owner"].is_null() && row["due"].is_null() => {
+                if let Some(quote) = row["sourceQuote"].as_str().filter(|quote| {
+                    line(quote, 66) && !quote.contains(['「', '」']) && same_original_quote(quote)
+                }) {
+                    row["addition"] = json!({"topic":null,"item":{
+                        "role":"status","text":format!("待核实：原话提到「{quote}」。"),
+                        "evidence":[cue["evidence"].clone()],"owner":null,"due":null,
+                    }});
+                }
+            }
+            Some("covered") if row["proof"].is_null() => {
+                if let (Some(source), Some(statement)) =
+                    (row["sourceQuote"].as_str(), row["statementQuote"].as_str())
+                {
+                    row["proof"] = json!({"sourceQuote":source,"statementQuote":statement});
+                }
+            }
+            _ => {}
+        }
+        if let Ok(check) = serde_json::from_value::<SourceCheck>(row) {
             checks.push(check);
         }
     }
@@ -808,6 +837,27 @@ fn missing_coverage_reasons_recover_per_item_with_the_original_source() {
     let duplicate = raw.replace("unrequested", "v003");
     let recovered = decode_coverage_evidence_recovery(&duplicate, &expected, &source).unwrap();
     assert_eq!(recovered.iter().map(SourceCheck::id).collect::<Vec<_>>(), ["v002"]);
+
+    let flat = json!({"checks":[
+        {"id":"v001","status":"needsReview","sourceQuote":"在案例中第二天对方又联系了顾问","claim":"顾问已决定采取行动。","owner":null,"due":null},
+        {"id":"v002","status":"missing","topic":"培训安排","item":{"role":"detail",
+            "text":"说话人5提到先培训三个月、再实习。","evidence":["e0010"],"owner":null,"due":null}},
+        {"id":"v003","status":"covered","claim":"topics[0].points[0]",
+            "sourceQuote":"有一天狗又来偷鸡食","statementQuote":"一天又有狗来偷鸡食"}
+    ],"additions":[]});
+    let recovered = decode_coverage_evidence_recovery(&flat.to_string(), &expected, &source).unwrap();
+    assert!(matches!(&recovered[0], SourceCheck::NeedsReview { addition, .. }
+        if addition.item.text == "待核实：原话提到「在案例中第二天对方又联系了顾问」。"
+            && addition.item.evidence == ["e0009"]));
+    assert!(matches!(&recovered[1], SourceCheck::Missing { addition, .. }
+        if matches!(addition.item.role, Role::Status) && addition.topic.as_deref()==Some("培训安排")));
+    assert!(matches!(&recovered[2], SourceCheck::Covered { proof:Some(proof), .. }
+        if proof.source_quote=="有一天狗又来偷鸡食"));
+    let mut bad = flat;
+    bad["checks"][0]["sourceQuote"] = json!("说话人5: 先培训三个月，然后再实习。");
+    bad["checks"][1]["item"]["owner"] = json!("说话人5");
+    let recovered = decode_coverage_evidence_recovery(&bad.to_string(), &expected, &source).unwrap();
+    assert_eq!(recovered.iter().map(SourceCheck::id).collect::<Vec<_>>(), ["v003"]);
 }
 
 pub(super) struct CheckedOmissions {
