@@ -1323,7 +1323,8 @@ fn a_named_group_owns_only_the_directed_clause_before_a_question() {
     assert!(ordinary_source_aspect("说话人1: 质量部不要进行调查 你觉得还有什么问题？").is_none());
 }
 
-fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, facts: &[Fact], evidence: &[Value])
+fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, facts: &[Fact], evidence: &[Value],
+    verified_coverage: &HashSet<String>)
     -> Result<(Vec<MissingItem>, Vec<Value>), String>
 {
     let fail = || "纪要关键原话核对不完整，已有结果保留。".to_string();
@@ -1343,7 +1344,11 @@ fn checked_additions(missing: MissingItems, cues: &[SourceCue], doc: &Document, 
         match check {
             SourceCheck::Covered { claim, .. } => {
                 let existing = by_path.get(claim.as_str()).ok_or_else(fail)?;
-                if cue.aspect.is_none() && !contextual_measure_witness(&cue.span, existing, known[cue.evidence.as_str()]) { return Err(fail()); }
+                if cue.aspect.is_none() && !verified_coverage.contains(&cue.id)
+                    && !contextual_measure_witness(&cue.span, existing, known[cue.evidence.as_str()])
+                {
+                    return Err(fail());
+                }
             }
             SourceCheck::Conflict { claim, .. } => {
                 let existing = by_path.get(claim.as_str()).ok_or_else(fail)?;
@@ -1421,6 +1426,7 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     for check in &mut checked.checks { check.normalize_claim_path(&claim_paths); }
     restore_source_context_for_coverage(&mut checked.checks, &cues, &claim_values, &evidence, &bindings);
     let disputed = disputed_coverage(&checked, &cues, &doc, &evidence, &bindings);
+    let mut verified_coverage = HashSet::new();
     if !disputed.is_empty() && checked.checks.len() == cues.len() {
         let selected: HashSet<_> = disputed.iter().map(|case| case["cue"]["id"].as_str().unwrap()).collect();
         let neighborhoods: HashSet<_> = disputed.iter().flat_map(|case| {
@@ -1468,10 +1474,16 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
             fixed.checks.retain(|row| !ids.contains(row.id()));
             fixed.checks.extend(repair.checks);
         }
+        // Pass the successful quoted recheck into final assembly. Looking only
+        // at the original numeric span here would discard the accepted proof.
+        verified_coverage.extend(fixed.checks.iter().filter_map(|check| match check {
+            SourceCheck::Covered { id, .. } => Some(id.clone()),
+            _ => None,
+        }));
         checked.checks.retain(|check| !selected.contains(check.id()));
         checked.checks.extend(fixed.checks);
     }
-    let (additions, conflicts) = checked_additions(checked, &cues, &doc, facts, &evidence)?;
+    let (additions, conflicts) = checked_additions(checked, &cues, &doc, facts, &evidence, &verified_coverage)?;
     trace[scan_index]["boundAdditions"] = json!(additions.len());
     trace[scan_index]["conflictingClaims"] = json!(conflicts);
     Ok(CheckedOmissions { doc: append_missing(additions, doc, units, &evidence)?, conflicts })
@@ -1717,10 +1729,10 @@ mod tests {
             "decisions":[],"actionItems":[],"questions":[]})).unwrap();
         let cues = omission_cues(&facts, &evidence);
         assert_eq!(json!(cues), json!([{"id":"v000","evidence":"e0000","span":"三个月"}]));
-        assert!(checked_additions(parse(r#"{"additions":[]}"#).unwrap(), &cues, &doc, &facts, &evidence).is_err());
+        assert!(checked_additions(parse(r#"{"additions":[]}"#).unwrap(), &cues, &doc, &facts, &evidence, &HashSet::new()).is_err());
         let false_coverage = parse(r#"{"checks":[{"id":"v000","status":"covered","claim":"topics[0].points[0]"}],"additions":[]}"#).unwrap();
         assert_eq!(disputed_coverage(&false_coverage, &cues, &doc, &evidence, &HashMap::new()).len(), 1);
-        assert!(checked_additions(false_coverage, &cues, &doc, &facts, &evidence).is_err());
+        assert!(checked_additions(false_coverage, &cues, &doc, &facts, &evidence, &HashSet::new()).is_err());
         assert!(measure_has_witness("三个月", &json!({"text":"3个月假期"})));
         assert!(!measure_has_witness("三个月", &json!({"text":"13个月假期"})));
         assert!(measure_has_witness("六万块钱", &json!({"text":"前期投入约６万元"})));
@@ -1732,7 +1744,7 @@ mod tests {
         let reply = json!({"checks":[{"id":"v000","status":"missing","addition":{
                 "topic":"客流","item":{"role":"status","text":"学校约有三个月假期。","evidence":["e0000"]}}}],
             "additions":[{"topic":"客流","item":{"role":"status","text":"附近学生是主要顾客。","evidence":["e0000"]}}]});
-        let (additions, conflicts) = checked_additions(parse(&reply.to_string()).unwrap(), &cues, &doc, &facts, &evidence).unwrap();
+        let (additions, conflicts) = checked_additions(parse(&reply.to_string()).unwrap(), &cues, &doc, &facts, &evidence, &HashSet::new()).unwrap();
         assert!(conflicts.is_empty());
         assert_eq!(additions.len(), 1);
         let checked = append_missing(additions, doc, &units, &evidence).unwrap();

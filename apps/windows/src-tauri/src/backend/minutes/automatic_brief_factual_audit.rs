@@ -1273,9 +1273,37 @@ fn preserves_unclear_history(doc:&Document,history:&HashMap<String,Vec<String>>)
     }
     Ok(())
 }
-fn hold_unclear_detail(
+
+fn vague_assignment_quote(issue: &Value, claim: &Value, text: &str, source: &[Sentence]) -> Option<String> {
+    if issue["placementUnsupported"] != true || claim["kind"] != "action" || !claim["due"].is_null() {
+        return None;
+    }
+    let term = issue["unclearText"].as_str()?.trim();
+    let owner = claim["owner"].as_str()?.trim();
+    let original = claim["text"].as_str()?.trim();
+    let inserted = text.trim().trim_end_matches(['。', '！', '？', '.']);
+    if term.is_empty() || owner.is_empty() || !inserted.contains(term)
+        || !["待核对", "待核实"].iter().any(|suffix| inserted.ends_with(suffix))
+        || original.strip_prefix(owner)?.trim_start_matches([' ', '：', ':', '，', ','])
+            .trim_end_matches(['。', '！', '？', '.']) != term
+    {
+        return None;
+    }
+    let cited = issue["evidence"].as_array()?;
+    let units = claim["sources"].as_array()?;
+    let mut quotes = source.iter().filter(|sentence| {
+        cited.iter().any(|id| id == sentence.id.as_str())
+            && units.iter().any(|unit| unit == sentence.source.as_str())
+    }).map(|sentence| sentence.text.trim()).filter(|quote| {
+        super::line(quote, 180) && quote.contains(owner)
+    });
+    let quote = quotes.next()?;
+    quotes.next().is_none().then(|| quote.to_owned())
+}
+
+fn hold_unresolved_source(
     raw: &str, issues: &[Value], claims: &[Value], source: &[Sentence],
-    history: &HashMap<String, Vec<String>>,
+    history: &HashMap<String, Vec<String>>, allow_repeated_detail: bool,
 ) -> Option<(String, Vec<String>)> {
     let mut reply: Value = serde_json::from_str(super::super::strip_code_fences(raw).trim()).ok()?;
     let rows = reply.get_mut("changes")?.as_array_mut()?;
@@ -1284,10 +1312,21 @@ fn hold_unclear_detail(
     for row in rows {
         let Some(text) = row["text"].as_str().filter(|_| row.as_object().is_some_and(|edit| edit.len() == 2))
         else { continue; };
-        let Some(path) = row["path"].as_str().filter(|path| path.starts_with("topics[") && path.contains(".details["))
-        else { continue; };
+        let Some(path) = row["path"].as_str() else { continue; };
         let Some(issue) = issues.iter().find(|issue| issue["path"] == path && issue["status"] == "unclear")
         else { continue; };
+        if path.starts_with("actionItems[") {
+            if let Some(quote) = claims.iter().find(|claim| claim["path"] == path)
+                .and_then(|claim| vague_assignment_quote(issue, claim, text, source))
+            {
+                pending.push(quote);
+                *row = json!({"path":path,"remove":true});
+            }
+            continue;
+        }
+        if !allow_repeated_detail || !path.starts_with("topics[") || !path.contains(".details[") {
+            continue;
+        }
         // The opaque placeholder was introduced by the earlier conservative edit.
         // Only a continued failure of this detail can fall back to a literal quote.
         let Some(phrase) = issue["unclearText"].as_str().filter(|term| *term == "含混表述")
@@ -1322,14 +1361,35 @@ fn known_unclear_detail_is_held_without_rewriting_an_independent_edit() {
     let claim = json!({"path":path,"text":"提到含混表述，具体所指待核对。","sources":["u001"]});
     let history = HashMap::from([(path.to_owned(),vec!["老站交接".into(),"含混表述".into()])]);
     let source = [Sentence {id:"e0001".into(),source:"u001".into(),text:"原话提到那个站的交接。".into()}];
-    let (patch, quotes) = hold_unclear_detail(&proposal.to_string(), &issues, &[claim.clone()], &source, &history).unwrap();
+    let (patch, quotes) = hold_unresolved_source(&proposal.to_string(), &issues, &[claim.clone()], &source, &history, true).unwrap();
     assert_eq!(serde_json::from_str::<Value>(&patch).unwrap(),
         json!({"changes":[{"path":path,"remove":true},peer]}));
     assert_eq!(quotes, ["原话提到那个站的交接。"]);
 
     let wrong_source = [Sentence {source:"u002".into(),..source[0].clone()}];
-    assert!(hold_unclear_detail(&proposal.to_string(), &issues, &[claim.clone()], &wrong_source, &history).is_none());
-    assert!(hold_unclear_detail(&proposal.to_string(), &issues, &[claim], &source, &HashMap::new()).is_none());
+    assert!(hold_unresolved_source(&proposal.to_string(), &issues, &[claim.clone()], &wrong_source, &history, true).is_none());
+    assert!(hold_unresolved_source(&proposal.to_string(), &issues, &[claim], &source, &HashMap::new(), true).is_none());
+}
+
+#[cfg(test)]
+#[test]
+fn wholly_vague_action_is_kept_as_a_source_quote_without_removing_a_concrete_task() {
+    let path = "actionItems[0]";
+    let issue = json!({"path":path,"status":"unclear","placementUnsupported":true,
+        "unclearText":"做好相关安排","evidence":["e0001","e0002"]});
+    let claim = json!({"path":path,"kind":"action","owner":"负责人","due":null,
+        "text":"负责人做好相关安排。","sources":["u001"]});
+    let patch = json!({"changes":[{"path":path,"text":"提醒负责人做好相关安排，具体任务待核对。"}]}).to_string();
+    let source = [
+        Sentence{id:"e0001".into(),source:"u001".into(),text:"负责人这边做好这个相关的安排。".into()},
+        Sentence{id:"e0002".into(),source:"u001".into(),text:"然后就散会。".into()},
+    ];
+    let (repair, pending) = hold_unresolved_source(&patch, &[issue.clone()], &[claim.clone()], &source, &HashMap::new(), false).unwrap();
+    assert_eq!(serde_json::from_str::<Value>(&repair).unwrap()["changes"][0], json!({"path":path,"remove":true}));
+    assert_eq!(pending, [source[0].text.as_str()]);
+    let mut concrete = claim;
+    concrete["text"] = json!("负责人送出验收报告并做好相关安排。");
+    assert!(hold_unresolved_source(&patch, &[issue], &[concrete], &source, &HashMap::new(), false).is_none());
 }
 
 fn unverified_claims(doc:&Document,verified:Option<&Document>)->Vec<Value> {
@@ -1445,7 +1505,8 @@ fn unchanged_source_assertion_keeps_evidence_after_a_neighbor_is_removed() {
 // this invocation. Unchanged claims retain that evidence; new/changed claims
 // still see the complete original source, never a model inventory.
 pub(super) fn review_and_repair_since(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
-    review(endpoint,model,key,client,doc,units,verified,&[],start,trace).map(|result| result.document)
+    let mut draft = FactualDraft { document: doc.clone(), pending_quotes: Vec::new() };
+    review(endpoint,model,key,client,&mut draft,units,verified,&[],start,trace).map(|result| result.document)
 }
 
 fn same_assertion(left: &Value, right: &Value) -> bool {
@@ -1458,8 +1519,13 @@ pub(super) struct VerifiedBrief {
     pub(super) pending_quotes: Vec<String>,
 }
 
-pub(super) fn review_and_repair_with_conflicts(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<VerifiedBrief,String> {
-    review(endpoint,model,key,client,doc,units,None,conflicts,start,trace)
+pub(super) struct FactualDraft {
+    pub(super) document: Document,
+    pub(super) pending_quotes: Vec<String>,
+}
+
+pub(super) fn review_and_repair_with_conflicts(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,draft:&mut FactualDraft,units:&[Unit],conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<VerifiedBrief,String> {
+    review(endpoint,model,key,client,draft,units,None,conflicts,start,trace)
 }
 
 fn finish_conflicts(doc: Document, conflicts: &[Value], supported: &HashSet<usize>) -> Result<Document,String> {
@@ -1489,10 +1555,11 @@ fn a_requested_move_respects_the_topic_detail_limit() {
     assert_eq!(doc["topics"][1]["details"][0]["text"], "备选的交付方式。");
 }
 
-fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],verified:Option<&Document>,conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<VerifiedBrief,String> {
+fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,draft:&mut FactualDraft,units:&[Unit],verified:Option<&Document>,conflicts:&[Value],start:Instant,trace:&mut Vec<Value>)->Result<VerifiedBrief,String> {
     let source=sentences(units);
     let wire=json!(units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>());
-    let mut current=doc.clone();let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let mut attempted_phrases:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
+    let FactualDraft { document: current, pending_quotes } = draft;
+    let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let mut attempted_phrases:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
     let mut attribution_repairs = HashSet::new();
     let mut unclear_history:HashMap<String,Vec<String>>=HashMap::new();let mut recovered_display=false;
     let mut verified_claims = match verified {
@@ -1502,13 +1569,12 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
     };
     let mut evidence = HashMap::new();
     let mut supported_conflicts = HashSet::new();
-    let mut pending_quotes = Vec::new();
     let mut related = HashMap::new();
     for round in 0..=2 {
         let mut expected=claims(&current).into_iter().filter(|c|verified_claims.get(c["path"].as_str().unwrap())!=Some(c)).collect::<Vec<_>>();
         if expected.is_empty(){
-            let document=finish_conflicts(current,conflicts,&supported_conflicts)?;
-            return Ok(VerifiedBrief {document,evidence,pending_quotes});
+            let document=finish_conflicts(current.clone(),conflicts,&supported_conflicts)?;
+            return Ok(VerifiedBrief {document,evidence,pending_quotes: std::mem::take(pending_quotes)});
         }
         // Late review gets the full immutable source and the changed statements.
         // Whole-unit qualifier matches can highlight unrelated nearby content.
@@ -1537,7 +1603,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
         if !vetoed.is_empty(){if let Some(call)=trace.last_mut(){call["historicalUnclearVetoes"]=json!(vetoed);}}
         // Bind original jumps to the exact immutable evidence actually checked,
         // rather than retaining an earlier writer's incomplete source list.
-        current=bind_supported_sources(&current,&audit,&source,units)?;
+        *current=bind_supported_sources(current,&audit,&source,units)?;
         let audited_claims=claims(&current);
         // Retain only exact in-call positive claims. Changed text, kind,
         // refs, owner/due, or shifted array positions are automatically audited.
@@ -1560,8 +1626,8 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             issue
         }).collect::<Vec<_>>();
         if issues.is_empty(){
-            let document=finish_conflicts(current,conflicts,&supported_conflicts)?;
-            return Ok(VerifiedBrief {document,evidence,pending_quotes});
+            let document=finish_conflicts(current.clone(),conflicts,&supported_conflicts)?;
+            return Ok(VerifiedBrief {document,evidence,pending_quotes: std::mem::take(pending_quotes)});
         }
         let allowed=audit.claim_audit.iter().filter(|c|c.status!="supported").map(|c|c.path.clone()).collect::<HashSet<_>>();
         let misplaced=audit.claim_audit.iter().filter(|c|super::source_items::enabled()&&c.placement_unsupported==Some(true))
@@ -1648,8 +1714,8 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
                 call["sourceBoundRepairNormalization"] = json!(normalized);
             }
         }
-        let (raw, newly_pending) = if round == 1 && super::source_items::enabled() {
-            hold_unclear_detail(&raw, &issues, &audited_claims, &source, &unclear_history)
+        let (raw, newly_pending) = if super::source_items::enabled() {
+            hold_unresolved_source(&raw, &issues, &audited_claims, &source, &unclear_history, round == 1)
                 .unwrap_or((raw, Vec::new()))
         } else {
             (raw, Vec::new())
@@ -1681,7 +1747,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
             }
             carry_verified_after_scoped_repair(&next.document, &current, &mut verified_claims, &mut evidence);
         }
-        current=next.document;
+        *current=next.document;
         for issue in audit.claim_audit.iter().filter(|c|c.status!="supported"){
             let key = if super::source_items::enabled() {
                 let Some(key) = next.corrected_statements.get(&issue.path) else {continue;};

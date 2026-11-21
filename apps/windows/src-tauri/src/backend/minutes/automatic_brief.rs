@@ -360,9 +360,15 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
                 Err(reason) => return reviewable(&doc, reason),
             };
             traced_document=Some(checked.doc.clone());
-            let mut verified = match factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&checked.doc,&units,&checked.conflicts,start,&mut trace) {
+            let mut factual_draft = factual_audit::FactualDraft { document: checked.doc, pending_quotes: Vec::new() };
+            let mut verified = match factual_audit::review_and_repair_with_conflicts(endpoint,model,key,client,&mut factual_draft,&units,&checked.conflicts,start,&mut trace) {
                 Ok(verified) => verified,
-                Err(reason) => return reviewable(&checked.doc, reason),
+                Err(reason) => {
+                    traced_document=Some(factual_draft.document.clone());
+                    let mut draft = reviewable(&factual_draft.document, reason)?;
+                    append_pending_quotes(&mut draft, &factual_draft.pending_quotes);
+                    return Ok(draft);
+                }
             };
             pending_quotes = std::mem::take(&mut verified.pending_quotes);
             conditional_speakers = final_bindings::conditional_speakers(&verified, &units);
