@@ -5,8 +5,8 @@ import {CompanionDashboard} from '../packages/ui/src/CompanionDashboard';
 import {applyCompanionV1ControlFixture,createCompanionV1Fixture} from '../packages/core/src/companionV1';
 
 const storage=new Map<string,string>();
-(globalThis as any).window={localStorage:{getItem:(k:string)=>storage.get(k)??null,setItem:(k:string,v:string)=>storage.set(k,v),
-  removeItem:(k:string)=>storage.delete(k),key:(i:number)=>[...storage.keys()][i]??null,get length(){return storage.size;}}};
+Object.assign((globalThis as any).window,{requestAnimationFrame:()=>0,localStorage:{getItem:(k:string)=>storage.get(k)??null,setItem:(k:string,v:string)=>storage.set(k,v),
+  removeItem:(k:string)=>storage.delete(k),key:(i:number)=>[...storage.keys()][i]??null,get length(){return storage.size;}}});
 (globalThis as any).document={getElementById:()=>({scrollIntoView:()=>{}})};
 let snapshot=applyCompanionV1ControlFixture(createCompanionV1Fixture(),{action:'meetingLoadDemo'});
 snapshot.host.persistence={status:'ready'};snapshot.meeting.active=false;
@@ -37,4 +37,13 @@ assert.match(savedNote.text,/单段重新转写参考/);assert.match(savedNote.t
 assert.equal(row.transcriptText,'');assert.equal(row.transcriptFinal,false);
 player.currentTime=298;await act(async()=>{await retry.props.onClick();});
 assert.deepEqual(captured.range,{startMs:298000,endMs:300000},'the final interval ends at the original duration');
-act(()=>tree.unmount());console.log('PASS selected short range when the full recording has no transcript; original text remains untouched');
+await act(async()=>{await button('关闭结果').props.onClick();});
+snapshot=structuredClone(snapshot);
+Object.assign(snapshot.host.sessions[0],{status:'transcribed',transcriptText:'已有转写',transcriptFinal:true});
+act(()=>tree.update(<CompanionDashboard {...props()}/>));
+const review=button('复转当前位置起最多 15 秒');
+assert.ok(review); assert.equal(review.props.disabled,false);
+player.currentTime=25;await act(async()=>{await review.props.onClick();});
+assert.deepEqual(captured,{id:row.id,range:{startMs:25000,endMs:40000,reviewFromPlayback:true}});
+assert.equal(snapshot.host.sessions[0].transcriptText,'已有转写');
+act(()=>tree.unmount());console.log('PASS short playback ranges on both empty and completed transcripts; original text remains untouched');

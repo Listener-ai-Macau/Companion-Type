@@ -317,7 +317,7 @@ export interface CompanionDashboardProps {
   onSaveMeeting?: (request: CompanionMeetingSaveRequest) => Promise<CompanionV1Snapshot>;
   onRefineSpeakers?: (sessionId:string) => Promise<CompanionV1Snapshot>;
   onPreviewRetranscription?: (sessionId:string) => Promise<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>;
-  onPreviewGap?: (sessionId:string,range:{startMs:number;endMs:number}) => Promise<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>;
+  onPreviewGap?: (sessionId:string,range:{startMs:number;endMs:number;reviewFromPlayback?:boolean}) => Promise<{text:string;unrecognized:{startMs:number;endMs:number;source?:string|null}[]}>;
   onSaveBookmark?: (request:CompanionBookmarkRequest) => Promise<CompanionV1Snapshot>;
   onAddImageNote?:(request:import('@companion-type/core').CompanionMeetingImageNoteRequest)=>Promise<CompanionV1Snapshot|null>;
   onPreviewNoteImage?:(sessionId:string,noteId:string)=>Promise<string>;
@@ -2371,7 +2371,7 @@ export function CompanionDashboard({
               }} />)
               : <button type="button" className="ct-action" disabled={Boolean(audioBlockedReason) || audioBusy}
                 title={audioBlockedReason ?? undefined} onClick={() => void prepareAudio()}>{audioBusy ? '正在准备…' : '重试回听'}</button>}
-            {onPreviewGap && !finalTranscript && selectedSession.source!=='hostMeeting' && preparedAudio
+            {onPreviewGap && selectedSession.source!=='hostMeeting' && preparedAudio
               && !(preparedAudio.parts && preparedAudio.parts.length>1) ? <div className="ct-audio-tools">
               <button type="button" className="ct-action" disabled={controlsBusy||oobeBlockedByRecording||storageBlocked||!canTranscribe||!hasOriginalAudio||Boolean(gapPreview)}
                 onClick={async()=>{
@@ -2384,10 +2384,11 @@ export function CompanionDashboard({
                   if(endMs<=startMs){setGapMessage({sessionId,text:'已到录音末尾，请先移动回听位置。'});return;}
                   const sourceText=selectedSession.transcriptText,sourceReview=JSON.stringify(selectedSession.transcriptReview??null);
                   setGapMessage(null);
-                  try {const result=await onPreviewGap(sessionId,{startMs,endMs});
+                  if(finalTranscript)revealMeetingTool('ct-recording-text');
+                  try {const result=await onPreviewGap(sessionId,finalTranscript ? {startMs,endMs,reviewFromPlayback:true} : {startMs,endMs});
                     setGapPreview({sessionId,startMs,endMs,text:result.text,partial:result.unrecognized.length>0,sourceText,sourceReview});}
                   catch(error){setGapMessage({sessionId,text:`单段转写未完成：${operationErrorText(error,'general')}`});}
-                }}>转写当前位置起最多 15 秒</button>
+                }}>{finalTranscript ? '复转当前位置起最多 15 秒' : '转写当前位置起最多 15 秒'}</button>
               <p className="ct-step-meta">{productSettings?.asrProvider==='local-paraformer'
                 ? '使用当前本地模型，不上传录音。相同音频可能得到相同结果。'
                 : '使用当前转写服务，仅发送所选片段，可能产生费用。'}结果供回听核对，不覆盖原文字。</p>

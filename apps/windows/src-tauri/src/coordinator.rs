@@ -505,7 +505,7 @@ impl CompanionCoordinator {
     }
     pub fn refine_meeting_speakers(&self,id:&str)->Result<CompanionV1Snapshot,String> {self.backend.refine_meeting_speakers(id)}
     pub fn preview_meeting_transcription(&self,id:&str,job_id:&str)->Result<crate::backend::transcription::TranscriptionPreview,String> {self.backend.preview_meeting_transcription(id,job_id)}
-    pub fn preview_meeting_gap(&self,id:&str,job_id:&str,range:crate::backend::transcription::TranscriptionRange)->Result<crate::backend::transcription::TranscriptionPreview,String> {self.backend.preview_meeting_gap(id,job_id,range)}
+    pub fn preview_meeting_gap(&self,id:&str,job_id:&str,range:crate::backend::transcription::TranscriptionRange,review_from_playback:bool)->Result<crate::backend::transcription::TranscriptionPreview,String> {self.backend.preview_meeting_gap(id,job_id,range,review_from_playback)}
 
     pub fn change_document_context(&self,request:crate::backend::document_context::Request)->Result<crate::backend::document_context::View,String>{
         if self.device_operation.load(Ordering::Acquire)==11{return Err("软件正在更新，请稍后保存文档。".into());}self.backend.change_document_context(request)

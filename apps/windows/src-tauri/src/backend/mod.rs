@@ -825,7 +825,7 @@ pub trait CompanionBackend: Send + Sync {
     fn save_meeting_edit(&self, request: meeting_workspace::MeetingEditRequest) -> Result<CompanionV1Snapshot, String>;
     fn refine_meeting_speakers(&self,_id:&str)->Result<CompanionV1Snapshot,String> {Err("当前环境未提供本地说话人区分。".into())}
     fn preview_meeting_transcription(&self,_id:&str,_job_id:&str)->Result<transcription::TranscriptionPreview,String> {Err("当前环境不支持重新转写。".into())}
-    fn preview_meeting_gap(&self,_id:&str,_job_id:&str,_range:transcription::TranscriptionRange)->Result<transcription::TranscriptionPreview,String> {Err("当前环境不支持单段重新转写。".into())}
+    fn preview_meeting_gap(&self,_id:&str,_job_id:&str,_range:transcription::TranscriptionRange,_review_from_playback:bool)->Result<transcription::TranscriptionPreview,String> {Err("当前环境不支持单段重新转写。".into())}
     fn capabilities(&self) -> CompanionBackendCapabilities;
     fn ble_bridge_status(&self) -> CompanionBleBridgeStatus;
     fn snapshot(&self) -> Result<CompanionV1Snapshot, String>;
@@ -1801,8 +1801,11 @@ impl CompanionBackend for FixtureCompanionBackend {
             }))?;
         result
     }
-    fn preview_meeting_gap(&self,id:&str,job_id:&str,range:transcription::TranscriptionRange)->Result<transcription::TranscriptionPreview,String> {
+    fn preview_meeting_gap(&self,id:&str,job_id:&str,range:transcription::TranscriptionRange,review_from_playback:bool)->Result<transcription::TranscriptionPreview,String> {
         if id.is_empty() || !job_id.starts_with("__meeting_job__") {return Err("转写任务身份无效。".into());}
+        if review_from_playback && !range.end_ms.checked_sub(range.start_ms).is_some_and(|length| (1..=15_000).contains(&length)) {
+            return Err("请从原音选取不超过15秒的有效片段。".into());
+        }
         let _processing=self.meeting_processing.lock().map_err(|_|"会议处理队列暂时不可用。")?;
         if lifecycle::PROCESS.requested() {return Err(lifecycle::CLOSING.into());}
         let snapshot=self.snapshot.lock().map_err(|_|"会议库暂时不可用。")?;
@@ -1812,11 +1815,11 @@ impl CompanionBackend for FixtureCompanionBackend {
         let final_text=transcript_review::final_transcript_available(row);
         let marked_gap=transcript_review::effective_unrecognized(row).iter().any(|gap|gap.source.is_none()
             && gap.start_ms==range.start_ms && gap.end_ms==range.end_ms);
-        // With no final text there are no saved gap markers. An explicitly
-        // chosen playback range is still useful when the whole recording was
-        // unrecognized. It only produces a preview and never replaces text.
+        // A short, explicitly selected playback interval also lets the
+        // listener check errors inside a successfully transcribed stretch.
+        // Both modes produce a preview; neither replaces the transcript.
         if row.source=="hostMeeting" || row.status=="recording" || host_audio_unconfirmed(row)
-            || (final_text && !marked_gap) {
+            || (final_text && !marked_gap && !review_from_playback) {
             return Err("所选未识别时段已变化，请刷新后重新选择。".into());
         }
         if matches!(row.pending_reason.as_deref(),Some("needs_local_audio"|"needs_segments")) {
@@ -5090,7 +5093,7 @@ mod tests {
          let row=&mut snapshot.host.sessions[0];row.source="controlledLocalAudioFixture".into();row.status="transcribed".into();
          row.transcript_final=true;row.transcript_text="原转写保留".into();row.transcript_unrecognized=vec![crate::companion_v1::CompanionV1UnrecognizedAudio{start_ms:16600,end_ms:31400,source:None}];}
         let before=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
-        let outcome=backend.preview_meeting_gap("authorized-gap","__meeting_job__weak",transcription::TranscriptionRange{start_ms:16600,end_ms:31400});
+        let outcome=backend.preview_meeting_gap("authorized-gap","__meeting_job__weak",transcription::TranscriptionRange{start_ms:16600,end_ms:31400},false);
         match outcome {Ok(result)=>println!("Authorized weak gap local preview returned {} characters; no audio or text uploaded",result.text.chars().count()),
             Err(error)=>{assert_eq!(error,transcription::LOCAL_NO_SPEECH);println!("Authorized weak gap still has no recognized words; no audio uploaded");}}
         assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before);assert_eq!(digest(&audio),original);
@@ -5112,13 +5115,13 @@ mod tests {
          let row=&mut snapshot.host.sessions[0];row.source="controlledLocalAudioFixture".into();row.status="transcribed".into();
          row.transcript_final=true;row.transcript_text="原转写保留".into();row.transcript_unrecognized=vec![crate::companion_v1::CompanionV1UnrecognizedAudio{start_ms:10000,end_ms:25000,source:None}];}
         let before=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
-        let result=backend.preview_meeting_gap("public-gap","__meeting_job__public",transcription::TranscriptionRange{start_ms:10000,end_ms:25000}).unwrap();
+        let result=backend.preview_meeting_gap("public-gap","__meeting_job__public",transcription::TranscriptionRange{start_ms:10000,end_ms:25000},false).unwrap();
         assert!(result.text.chars().count()>10);assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before);
         assert_eq!(std::fs::read(&audio).unwrap(),before_audio);
         {let mut snapshot=backend.snapshot.lock().unwrap();let row=&mut snapshot.host.sessions[0];
          row.transcript_final=false;row.transcript_text.clear();row.transcript_unrecognized.clear();row.status="needsTranscription".into();}
         let empty_before=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
-        let retry=backend.preview_meeting_gap("public-gap","__meeting_job__public-empty",transcription::TranscriptionRange{start_ms:10000,end_ms:25000}).unwrap();
+        let retry=backend.preview_meeting_gap("public-gap","__meeting_job__public-empty",transcription::TranscriptionRange{start_ms:10000,end_ms:25000},false).unwrap();
         assert!(retry.text.chars().count()>10);assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),empty_before);
         assert_eq!(std::fs::read(&audio).unwrap(),before_audio);
         println!("Public speech gap preview: {} characters from selected 15 seconds; source audio and session unchanged",result.text.chars().count());
@@ -5142,8 +5145,10 @@ mod tests {
          row.transcript_final=true;row.transcript_text="旧转写".into();row.transcript_unrecognized=vec![crate::companion_v1::CompanionV1UnrecognizedAudio{start_ms:200,end_ms:800,source:None}];}
         let before=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
         let range=transcription::TranscriptionRange{start_ms:200,end_ms:800};
-        assert_eq!(backend.preview_meeting_gap("gap-meeting","__meeting_job__gap",range).unwrap().text,"这段新识别");
-        assert!(backend.preview_meeting_gap("gap-meeting","__meeting_job__wrong",transcription::TranscriptionRange{start_ms:201,end_ms:800}).is_err());
+        assert_eq!(backend.preview_meeting_gap("gap-meeting","__meeting_job__gap",range,false).unwrap().text,"这段新识别");
+        assert!(backend.preview_meeting_gap("gap-meeting","__meeting_job__wrong",transcription::TranscriptionRange{start_ms:201,end_ms:800},false).is_err());
+        assert_eq!(backend.preview_meeting_gap("gap-meeting","__meeting_job__review",transcription::TranscriptionRange{start_ms:201,end_ms:800},true).unwrap().text,"这段新识别");
+        assert!(backend.preview_meeting_gap("gap-meeting","__meeting_job__review-too-long",transcription::TranscriptionRange{start_ms:200,end_ms:15201},true).unwrap_err().contains("15秒"));
         assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before);assert_eq!(std::fs::read(&audio).unwrap(),wav);
         assert!(!std::fs::read_dir(root.join("recordings")).unwrap().any(|e|e.unwrap().file_name().to_string_lossy().contains("-range.wav")));
         // No transcript means no saved gap markers. An explicitly chosen
@@ -5152,8 +5157,8 @@ mod tests {
         {let mut snapshot=backend.snapshot.lock().unwrap();let row=&mut snapshot.host.sessions[0];
          row.transcript_final=false;row.transcript_text.clear();row.transcript_unrecognized.clear();row.status="needsTranscription".into();}
         let before_empty=serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap();
-        assert_eq!(backend.preview_meeting_gap("gap-meeting","__meeting_job__chosen",transcription::TranscriptionRange{start_ms:201,end_ms:800}).unwrap().text,"这段新识别");
-        assert!(backend.preview_meeting_gap("gap-meeting","__meeting_job__out-of-range",transcription::TranscriptionRange{start_ms:900,end_ms:2000}).is_err());
+        assert_eq!(backend.preview_meeting_gap("gap-meeting","__meeting_job__chosen",transcription::TranscriptionRange{start_ms:201,end_ms:800},false).unwrap().text,"这段新识别");
+        assert!(backend.preview_meeting_gap("gap-meeting","__meeting_job__out-of-range",transcription::TranscriptionRange{start_ms:900,end_ms:2000},false).is_err());
         assert_eq!(serde_json::to_value(&*backend.snapshot.lock().unwrap()).unwrap(),before_empty);
         assert_eq!(std::fs::read(&audio).unwrap(),wav);
     }

@@ -213,9 +213,9 @@ pub async fn preview_companion_meeting_transcription(coordinator:CompanionCoordi
 }
 
 #[tauri::command]
-pub async fn preview_companion_meeting_gap(coordinator:CompanionCoordinatorState<'_>,session_id:String,job_id:String,range:crate::backend::transcription::TranscriptionRange)->Result<crate::backend::transcription::TranscriptionPreview,String> {
+pub async fn preview_companion_meeting_gap(coordinator:CompanionCoordinatorState<'_>,session_id:String,job_id:String,range:crate::backend::transcription::TranscriptionRange,review_from_playback:Option<bool>)->Result<crate::backend::transcription::TranscriptionPreview,String> {
     let coordinator=coordinator.inner().clone();
-    tauri::async_runtime::spawn_blocking(move||coordinator.preview_meeting_gap(&session_id,&job_id,range))
+    tauri::async_runtime::spawn_blocking(move||coordinator.preview_meeting_gap(&session_id,&job_id,range,review_from_playback.unwrap_or(false)))
         .await.map_err(|_|"单段转写未完成，原录音保留。".to_string())?
 }
 
