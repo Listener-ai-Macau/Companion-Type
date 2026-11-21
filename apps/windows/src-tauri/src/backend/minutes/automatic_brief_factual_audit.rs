@@ -1333,7 +1333,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,do
         }
         // Late review gets the full immutable source and the changed statements.
         // Whole-unit qualifier matches can highlight unrelated nearby content.
-        if !super::source_items::enabled() || (verified.is_none() && round < 2) {
+        if !super::source_items::enabled() || verified.is_none() {
             emphasize_source_scope(&mut expected,&source);
         }
         for claim in &mut expected {
