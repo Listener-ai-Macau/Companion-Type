@@ -39,6 +39,35 @@ fn source_body(text: &str) -> &str {
         .map_or(text, |(_, body)| body).trim()
 }
 
+pub(super) fn corrected_example(source: &str, summary: &str) -> Option<String> {
+    static CORRECTION: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:举个例子|举一个例子|举例)[，,：:\s]*(?P<announced>[\p{Han}]{3,12}?)(?:就是|是)[\s，,]*(?P<case>[^。！？；\n]{5,76}?)(?:实际上|其实)(?:就是|是)(?P<conclusion>[\p{Han}]{3,12}?)(?:\s|[，,。；！？]|$)"
+    ).unwrap());
+    let example = CORRECTION.captures(source_body(source))?;
+    let announced = example.name("announced")?.as_str();
+    let conclusion = example.name("conclusion")?;
+    if announced == conclusion.as_str()
+        || announced.ends_with(conclusion.as_str()) || conclusion.as_str().ends_with(announced)
+    {
+        return None;
+    }
+    // Only the opening assertion is qualified. A different conclusion in a
+    // second example does not repair an inversion in this example.
+    let statement = summary.split(['；', ';', '。']).next()?;
+    if !["算", "属", "为", "是"].iter().any(|word| {
+        let assertion = format!("{word}{announced}");
+        statement.match_indices(&assertion).any(|(at, _)| {
+            !statement[..at].ends_with(['不', '非', '未'])
+        })
+    }) {
+        return None;
+    }
+    let from = example.name("case")?.start();
+    let source = source_body(source);
+    let quote = source[from..conclusion.end()].trim();
+    (quote.chars().count() <= 65).then(|| quote.to_owned())
+}
+
 pub(super) fn omitted_reported_step<'a>(source: &'a str, summary: &str) -> Option<&'a str> {
     static REPORTED: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:我们|咱们)(?P<lead>(?:就是|是|会|先|通常|一般|经常|实际|还|也|都|[ \t]){1,5})(?P<step>(?:进行|采取|开展|办理)[\p{Han}]{4,28})"

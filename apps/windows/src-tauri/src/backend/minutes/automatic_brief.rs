@@ -345,6 +345,13 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         }
         (doc, None)
         };
+        let mut doc = doc;
+        if source_facts.is_some() {
+            let changes = disputed_source::mark_financial_pending(&mut doc, &units);
+            if !changes.is_empty() {
+                trace.push(json!({"stage":"source-unreconciled-financial-report","changes":changes}));
+            }
+        }
         traced_document=Some(doc.clone());
         let mut pending_quotes = Vec::new();
         let mut conditional_speakers = Vec::new();

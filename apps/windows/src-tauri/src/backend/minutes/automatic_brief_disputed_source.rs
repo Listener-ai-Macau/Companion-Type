@@ -1,4 +1,5 @@
 //! A source-bound disagreement can qualify a duplicate assertion in the rendered minutes.
+use std::sync::LazyLock;
 use serde_json::{json, Value};
 
 use super::{factual_audit, Document, Unit};
@@ -99,6 +100,55 @@ fn qualify(
     changes
 }
 
+fn reported_financial_values(text: &str) -> Option<[f64; 3]> {
+    static FIELDS: LazyLock<[regex::Regex; 3]> = LazyLock::new(|| {
+        ["营业利润", "营业外(?:支)?净支出", "净利润"].map(|field| regex::Regex::new(&format!(
+            r"{field}[\s为是约在实现共计合计大概有：:]{{0,7}}(?P<value>[-－]?[零〇一二两三四五六七八九十百千万亿半0-9０-９.．]+(?:元|块钱|美元))"
+        )).unwrap())
+    });
+    if ["所得税", "税后调整", "另有", "冲回", "更正为", "修正为", "净收益"].iter()
+        .any(|cue| text.contains(cue))
+    {
+        return None;
+    }
+    let mut totals = [0.0; 3];
+    for (rule, total) in FIELDS.iter().zip(&mut totals) {
+        let mut hits = rule.captures_iter(text);
+        let amount = hits.next()?.name("value")?.as_str();
+        if hits.next().is_some() || amount.starts_with(['-', '－']) { return None; }
+        let (quantity, unit) = super::source_items::measures(amount).next()?;
+        if unit != "元" { return None; }
+        *total = quantity;
+    }
+    Some(totals)
+}
+
+pub(super) fn mark_financial_pending(doc: &mut Document, units: &[Unit]) -> Vec<Value> {
+    const NOTE: &str = "三项财务口述数字之间的关系待核实";
+    let evidence = factual_audit::evidence_sentences(units);
+    let reports: Vec<_> = evidence.iter().filter_map(|row| {
+        let values = reported_financial_values(row["text"].as_str()?)?;
+        // Keep the reported amounts. When the implied intermediate balance
+        // cannot explain the stated net figure, expose the open reconciliation.
+        (values[2] > values[0] - values[1] + 0.01).then_some((row, values))
+    }).collect();
+    let mut changes = Vec::new();
+    let mut qualify = |text: &mut String, cited: &[String], limit| {
+        if text.contains("待核实") { return; }
+        let Some((matched, _)) = reports.iter().find(|(row, amounts)| cited.iter().any(|id| row["source"] == id.as_str())
+            && reported_financial_values(text) == Some(*amounts)) else { return; };
+        let revised = format!("{}。{NOTE}。", text.trim_end_matches(['。', '！', '？']));
+        if !super::line(&revised, limit) { return; }
+        *text = revised;
+        changes.push(json!({"evidence":matched["id"],"text":text}));
+    };
+    for topic in &mut doc.topics {
+        for point in &mut topic.points { qualify(&mut point.text, &point.sources, 90); }
+        for entry in &mut topic.details { qualify(&mut entry.text, &entry.sources, 120); }
+    }
+    changes
+}
+
 pub(super) fn mark_pending(doc: &mut Document, units: &[Unit]) -> Vec<Value> {
     let evidence = factual_audit::evidence_sentences(units);
     let mut changes = Vec::new();
@@ -113,6 +163,26 @@ pub(super) fn mark_pending(doc: &mut Document, units: &[Unit]) -> Vec<Value> {
         }
     }
     changes
+}
+
+#[cfg(test)]
+#[test]
+fn oral_financial_comparison_preserves_amounts_and_stays_grounded() {
+    let brief = |unit: &str| serde_json::from_value::<Document>(json!({
+        "purpose":"复盘经营",
+        "topics":[{"title":"财务","points":[{"kind":"status","sources":[unit],
+          "text":"主营收入约100万元，营业利润80万元，营业外净支出70万元，净利润50万元。"}],"details":[]}],
+        "decisions":[],"actionItems":[],"questions":[]
+    })).unwrap();
+    let unit = Unit { id:"u000".into(), text:"说话人5: 上半年主营业务收入约一百万元，营业利润是在八十万元 营业外支净支出是七十万元 咱们总共实现净利润为五十万元".into() };
+    let mut doc = brief("u000");
+    assert_eq!(mark_financial_pending(&mut doc,&[unit]).len(),1);
+    assert_eq!(doc.topics[0].points[0].text,
+        "主营收入约100万元，营业利润80万元，营业外净支出70万元，净利润50万元。三项财务口述数字之间的关系待核实。");
+    let other = Unit { id:"u000".into(), text:"营业利润八十万元，营业外净支出七十万元，另有专项减免，净利润五十万元。".into() };
+    assert!(mark_financial_pending(&mut brief("u000"), &[other]).is_empty());
+    let other = Unit { id:"u001".into(), text:"营业利润八十万元，营业外净支出七十万元，净利润五十万元。".into() };
+    assert!(mark_financial_pending(&mut brief("u000"), &[other]).is_empty());
 }
 
 #[cfg(test)]

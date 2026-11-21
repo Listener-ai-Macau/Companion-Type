@@ -73,7 +73,7 @@ impl SourceItem {
 
     pub(super) fn bind(self, known: &HashMap<&str, &Value>, known_ids: &HashSet<&str>) -> Result<Fact, String> {
         let stated_requirement = matches!(self.role, Role::Requirement);
-        let (kind, placement) = self.role.category();
+        let (mut kind, mut placement) = self.role.category();
         if !line(&self.text, 90) || self.evidence.is_empty() || self.evidence.len() > 8 {
             return Err("纪要事项格式不完整，已有纪要和原文保留。".into());
         }
@@ -84,6 +84,14 @@ impl SourceItem {
         let mut seen = HashSet::new();
         let evidence: Vec<_> = evidence.into_iter().filter(|id| seen.insert(id.clone())).collect();
         let snippets: Vec<_> = evidence.iter().map(|id| known[id.as_str()]["text"].as_str().unwrap()).collect();
+        if placement == Placement::Action && self.due.is_none()
+            && completed_report(&self.text, &snippets)
+        {
+            (kind, placement) = (Kind::Status, Placement::Topic);
+        }
+        if placement == Placement::Decision && contingent_closing(&self.text, &snippets) {
+            (kind, placement) = (Kind::Recommendation, Placement::Topic);
+        }
         let owner = self.owner.as_ref().filter(|owner| line(owner, 80) && snippets.iter()
             .any(|text| normalized(text).contains(&normalized(owner)))).cloned();
         let (text, owner, due) = if placement == Placement::Action {
@@ -104,6 +112,17 @@ impl SourceItem {
                 .map(|name| format!("{name}表示，{}", self.text));
             (text.filter(|text| line(text, 90)).unwrap_or(self.text), None, None)
         };
+        let text = if placement == Placement::Topic
+            && matches!(kind, Kind::Status | Kind::Opinion)
+        {
+            let rows: Vec<_> = evidence.iter().map(|id| known[id.as_str()]).collect();
+            if let Some(qualified) = reported_context(&text, &rows) {
+                kind = Kind::Opinion;
+                qualified
+            } else {
+                text
+            }
+        } else { text };
         let text = if stated_requirement && !text.starts_with("会上") {
             let reported = format!("会上提出：{text}");
             if !line(&reported, 90) {
@@ -112,6 +131,109 @@ impl SourceItem {
             reported
         } else { text };
         Ok(Fact {id: String::new(), kind, placement, text, owner, due, evidence})
+    }
+}
+
+fn completed_report(summary: &str, snippets: &[&str]) -> bool {
+    static REPORTED: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:已(?:经)?|此前已|曾经)(?:专门|统一|共同|集中|正式|顺利|及时)?(?P<work>开会|召开|完成|提交|发放|交付|安装|通知|培训)"
+    ).unwrap());
+    static FINISHED: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:开会|召开|完成|提交|发放|交付|安装|通知|培训)了|开{1,3}了(?:一|个|场|次|专|[\s，,]){0,12}[^。！？；\n]{0,8}会"
+    ).unwrap());
+    let head = summary.split(['，', ',', '；', '。']).next().unwrap_or_default();
+    let head = normalized(head);
+    let Some(work) = REPORTED.captures(&head).and_then(|matched| matched.name("work")) else { return false; };
+    if ["会后", "后续", "接下来", "下一步", "以后", "下周", "继续", "还要", "另需", "另行"]
+        .iter().any(|marker| summary.contains(marker)) {
+        return false;
+    }
+    snippets.iter().any(|text| {
+        let text = normalized(text);
+        REPORTED.captures_iter(&text).any(|matched| matched.name("work").is_some_and(|found| found.as_str() == work.as_str()))
+            || FINISHED.find_iter(&text).any(|found| {
+                let position = found.start();
+                let prefix = &text[..position];
+                !prefix.ends_with(['不', '没', '未'])
+                    && (found.as_str().starts_with(work.as_str())
+                        || (matches!(work.as_str(), "开会" | "召开") && found.as_str().starts_with('开')))
+            })
+    })
+}
+
+fn contingent_closing(summary: &str, snippets: &[&str]) -> bool {
+    summary.contains("有机会再")
+        && snippets.iter().any(|text| text.contains("有机会再")
+            && ["散会", "先到这儿", "先到这里"].iter().any(|closing| text.contains(closing)))
+        && !snippets.iter().any(|text| ["会后由", "明确安排", "定在", "确定在", "务必"]
+            .iter().any(|cue| text.contains(cue)))
+}
+
+fn reported_context(summary: &str, evidence: &[&Value]) -> Option<String> {
+    let speaker = |row: &Value| row["turnSpeaker"].as_str().map(str::to_owned)
+        .or_else(|| row["text"].as_str().and_then(super::super::source_resolution::split_turn_label)
+            .map(|(who, _)| who.to_owned()));
+    let opening: String = summary.chars().take(14).collect();
+    let attributed = ["表示", "认为", "说明", "解释", "举例", "提到", "称"]
+        .iter().any(|cue| opening.contains(cue));
+    for row in evidence {
+        let source = row["text"].as_str().unwrap_or_default();
+        if let Some(example) = super::source_coverage::corrected_example(source, summary) {
+            let who = speaker(row).unwrap_or_else(|| "发言人".into());
+            let quote = format!("{who}举例时说「{example}」，该示例口径待核实。");
+            if !line(&quote, 90) { continue; }
+            let combined = summary.split_once('；').map(|(_, other)| format!("{quote}{other}"));
+            return Some(combined.filter(|text| line(text, 90)).unwrap_or(quote));
+        }
+    }
+    if attributed || !evidence.iter().any(|row| {
+        ["我举个例子", "比如说", "假如说", "如果说", "我觉得", "我认为", "给大家普及", "法条上写"]
+            .iter().any(|cue| row["text"].as_str().is_some_and(|text| text.contains(cue)))
+    }) {
+        return None;
+    }
+    let mut speakers = evidence.iter().filter(|row| {
+        !["是不是", "对不对", "你觉得", "？", "?"].iter()
+            .any(|cue| row["text"].as_str().is_some_and(|text| text.trim_end().ends_with(cue)))
+    }).filter_map(|row| speaker(row));
+    let who = speakers.next()?;
+    if speakers.any(|other| other != who) || summary.starts_with(&who) { return None; }
+    let text = format!("{who}称，{summary}");
+    line(&text, 90).then_some(text)
+}
+
+fn retain_live_request(item: &mut SourceItem, evidence: &[Value]) {
+    if !item.is_action() || item.due.is_some() || item.owner.is_some() || item.evidence.len() != 1 {
+        return;
+    }
+    let Some(index) = evidence.iter().position(|row| row["id"] == item.evidence[0]) else { return; };
+    let mut nearby = evidence[index..].iter().take(3);
+    let question = nearby.next().and_then(|row| row["text"].as_str()).unwrap_or_default();
+    let question = super::super::source_resolution::split_turn_label(question)
+        .map_or(question, |(_, words)| words).trim();
+    let ask = question.replace(['嗯', '呃', '啊', ' '], "");
+    if !["想让", "想请", "我想问", "能不能", "可不可以"].iter().any(|cue| ask.contains(cue))
+        || ["会后", "以后", "回去", "下周", "接下来", "下一次", "另约", "到时候"]
+            .iter().any(|cue| question.contains(cue))
+        || question.contains(['「', '」'])
+    {
+        return;
+    }
+    let same_explanation = [
+        (["科普", "普及"], ["科普", "普及"]),
+        (["解释", "讲解"], ["解释", "讲解"]),
+        (["说一下", "说明"], ["说一下", "说明"]),
+    ].iter().any(|(asked, answered)| {
+        asked.iter().any(|cue| question.contains(cue) && item.text.contains(cue))
+            && nearby.clone().filter_map(|row| row["text"].as_str()).any(|text|
+                answered.iter().any(|cue| text.contains(cue))
+                    && ["我来", "给大家", "给你", "我先", "是这样"].iter().any(|cue| text.contains(cue)))
+    });
+    if !same_explanation { return; }
+    let text = format!("会上有人请发言人说明，原话为「{}」。", question.trim_end_matches(['。', '？', '！']));
+    if line(&text, 90) {
+        item.role = Role::Opinion;
+        item.text = text;
     }
 }
 
@@ -333,7 +455,8 @@ impl Window<'_> {
         let mut ignored_neighbor_only_items = 0;
         let mut normalized_topic_metadata = 0;
         for unit in self.core {
-            for item in by_id.remove(&unit.id).ok_or_else(missing)? {
+            for mut item in by_id.remove(&unit.id).ok_or_else(missing)? {
+                retain_live_request(&mut item, self.evidence);
                 let has_metadata = item.owner.is_some() || item.due.is_some();
                 let fact = item.bind(&known, &known_ids)?;
                 if !fact.evidence.iter().any(|id| primary.contains(known[id.as_str()]["source"].as_str().unwrap())) {
@@ -622,10 +745,13 @@ pub(super) fn ordinary_source_aspect(text: &str) -> Option<(&'static str, &str)>
     Some(("实际进展", hit.as_str()))
 }
 
+const QUANTITY: &str = r"[0-9０-９]+(?:[.．][0-9０-９]+)?[万亿]?|[零〇一二两三四五六七八九十百千万亿半]+";
+const QUANTITY_UNIT: &str = r"美元|块钱|元|个月|季度|工作日|小时|分钟|周岁|岁|周|天|年|%|％";
+
 fn omission_cues(facts: &[Fact], evidence: &[Value]) -> Vec<SourceCue> {
-    static LITERAL: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
-        r"(?:[0-9０-９]+(?:[.．][0-9０-９]+)?|[零〇一二两三四五六七八九十百千万亿半]+)\s*(?:美元|元|块钱|个月|季度|工作日|小时|分钟|周|天|年|%|％)|(?:明天|后天|[本下]周[一二三四五六日]?|下个月|本月底|周[一二三四五六日])(?:之前|以前|截止|前|为止)"
-    ).expect("constant omission cue expression"));
+    static LITERAL: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(&format!(
+        r"(?:{QUANTITY})\s*(?:{QUANTITY_UNIT})|(?:明天|后天|[本下]周[一二三四五六日]?|下个月|本月底|周[一二三四五六日])(?:之前|以前|截止|前|为止)"
+    )).expect("constant omission cue expression"));
     static STATUS: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"不是主+打|不(?:再|用|需要|得|能)?(?:同时推|主推|推销|签字|放行|上线|下单|开工|发货|执行)|未(?:批准|通过|定案|决定)|暂不(?:批准|签字|执行|上线)|取消(?:原定|计划|订单|审批)|改(?:为|到|成)|以.{1,18}为准|除非|只有.{1,18}(?:才|才能)|.{1,14}为前提"
     ).expect("constant status cue expression"));
@@ -695,6 +821,32 @@ fn omission_cues(facts: &[Fact], evidence: &[Value]) -> Vec<SourceCue> {
 
 #[cfg(test)]
 #[test]
+fn age_and_recurring_context_do_not_become_durations() {
+    let source = "说话人1：十三周岁能不能参加，十八周岁是成人组，报名限一周。";
+    let evidence = [json!({"id":"e0000","text":source})];
+    let cues = omission_cues(&[], &evidence);
+    assert_eq!(cues.iter().map(|cue| cue.span.as_str()).collect::<Vec<_>>(),
+        ["十三周岁", "十八周岁", "一周"]);
+    assert!(measure_has_witness("十八周岁", &json!({"text":"成人组限18岁。"})));
+    assert!(!measure_has_witness("十八周岁", &json!({"text":"训练十八周。"})));
+    assert!(!measure_has_witness("十八周岁", &json!({"text":"成人组限19岁。"})));
+    assert!(contextual_measure_witness("一天", &json!({"text":"前台每天加强训练。"}),
+        "前台每一天都在加强训练。"));
+    assert!(!contextual_measure_witness("一天", &json!({"text":"前台每天加强训练。"}),
+        "这个培训持续一天。"));
+    assert!(!contextual_measure_witness("一天", &json!({"text":"前台每周加强训练。"}),
+        "前台每一天都在加强训练。"));
+    let question = json!({"kind":"unresolved", "text":"各部门对下半年有什么计划，待汇报。"});
+    assert!(contextual_measure_witness("一季度", &question,
+        "针对上一季度的这个工作情况，我想问一下各部门对下半年有什么计划？"));
+    assert!(!contextual_measure_witness("一季度", &question,
+        "针对上一季度的工作情况，我想问一下各部门下半年是否能在一季度内完成计划？"));
+    assert!(!contextual_measure_witness("一季度", &question,
+        "确定在一季度内改善工作情况，我想问一下各部门对下半年有什么计划？"));
+}
+
+#[cfg(test)]
+#[test]
 fn ordinary_coverage_separates_progress_and_a_request_before_a_question() {
     let evidence = [
         json!({"id":"e0000","text":"说话人3：网球这方面的市场还在逐步进行打开。"}),
@@ -706,10 +858,10 @@ fn ordinary_coverage_separates_progress_and_a_request_before_a_question() {
         vec![("e0000", Some("实际进展")), ("e0001", Some("交办后又提问"))]);
 }
 
-fn measures(text: &str) -> impl Iterator<Item = (f64, &str)> {
-    static MEASURE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
-        r"([0-9０-９]+(?:[.．][0-9０-９]+)?[万亿]?|[零〇一二两三四五六七八九十百千万亿半]+)\s*(美元|块钱|元|个月|季度|工作日|小时|分钟|周|天|年|%|％)"
-    ).expect("constant measure expression"));
+pub(super) fn measures(text: &str) -> impl Iterator<Item = (f64, &str)> {
+    static MEASURE: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(&format!(
+        r"({QUANTITY})\s*({QUANTITY_UNIT})"
+    )).expect("constant measure expression"));
     MEASURE.captures_iter(text).filter_map(|capture| {
         let unit_match = capture.get(2)?;
         let unit = unit_match.as_str();
@@ -717,7 +869,7 @@ fn measures(text: &str) -> impl Iterator<Item = (f64, &str)> {
             return None;
         }
         let quantity = number_value(capture.get(1)?.as_str(), unit == "年")?;
-        let unit = match unit { "块钱" => "元", "％" => "%", _ => unit };
+        let unit = match unit { "块钱" => "元", "周岁" => "岁", "％" => "%", _ => unit };
         Some((quantity, unit))
     })
 }
@@ -849,6 +1001,27 @@ fn contextual_duration_example(span: &str, claim: &Value, source: &str) -> bool 
     }) && example.as_str().contains(span)
 }
 
+fn past_period_frames_question(span: &str, claim: &Value, source: &str) -> bool {
+    if !matches!(span, "一季度" | "一月" | "一年") || claim["kind"] != "unresolved" {
+        return false;
+    }
+    let Some((background, question)) = source.split_once("我想问一下")
+        .or_else(|| source.split_once("想请问")) else { return false; };
+    let mut hits = background.match_indices(span).peekable();
+    if hits.peek().is_none() || question.contains(span) || !hits.all(|(at, _)| {
+        let prefix = &background[..at];
+        prefix.ends_with('上') && ["针对", "回顾", "回看"].iter().any(|cue| prefix.contains(cue))
+            && background[at + span.len()..].contains("工作情况")
+    }) {
+        return false;
+    }
+    let summary = claim["text"].as_str().unwrap_or_default();
+    ["下半年", "下季度", "下月", "明年"].iter().any(|period|
+        question.contains(period) && summary.contains(period))
+        && ["计划", "目标", "安排"].iter().any(|cue|
+            question.contains(cue) && summary.contains(cue))
+}
+
 fn contextual_measure_witness(span: &str, claim: &Value, source: &str) -> bool {
     if let Some(matches) = cited_duration_range_matches(span, claim, source) {
         return matches;
@@ -872,6 +1045,13 @@ fn contextual_measure_witness(span: &str, claim: &Value, source: &str) -> bool {
     }
     if span.ends_with('天') && source.contains("为什么") && source.contains('呢')
         && contextual_literal(span, &|lead, _| lead.ends_with('这')) {
+        return true;
+    }
+    if span == "一天" && contextual_literal(span, &|lead, _| lead.ends_with('每')) {
+        return claim["text"].as_str().is_some_and(|text| ["每天", "每日", "每一天"]
+            .iter().any(|period| text.contains(period)));
+    }
+    if past_period_frames_question(span, claim, source) {
         return true;
     }
     if span == "半年" {
@@ -1609,7 +1789,7 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
 pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest::blocking::Client,
     units: &[Unit], start: Instant, trace: &mut Vec<Value>) -> Result<(Document, Vec<Fact>), String>
 {
-    let evidence = factual_audit::evidence_sentences(units);
+    let evidence = super::commitments::with_turn_labels(&factual_audit::evidence_sentences(units));
     let mut facts = Vec::new();
     let ranges = windows(units);
     let cancellation = super::current_cancellation();
@@ -1678,6 +1858,39 @@ pub(super) fn generate(endpoint: &str, model: &str, key: &str, client: &reqwest:
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn completion_and_courtesy_closing_do_not_become_assignments() {
+        let report = "我给教练这些人开了一个专门儿开开了一个会，就是告诉对方要了解情况。";
+        assert!(completed_report("教练部已专门开会，要求教练了解孩子情况。", &[report]));
+        assert!(!completed_report("教练部已专门开会，后续继续培训。", &[report]));
+        assert!(!completed_report("教练部已专门开会，要求教练了解孩子情况。", &["我没开了会。"]));
+        assert!(contingent_closing("有机会再请专家交流。", &["那今天先到这儿，有机会再请专家，散会。"]));
+        assert!(!contingent_closing("有机会再请专家交流。", &["今天先到这儿，有机会再请专家。会后由我约。"]));
+        let mut item: SourceItem = parse(r#"{"role":"action","text":"应要求科普生活中的法律常识。","evidence":["e0000"]}"#).unwrap();
+        let evidence = [json!({"id":"e0000","text":"说话人5: 想嗯想让他科普一下儿常识。"}),
+            json!({"id":"e0001","text":"说话人2: 对给大家普及一个知识。"})];
+        retain_live_request(&mut item, &evidence[..1]);
+        assert!(item.is_action());
+        retain_live_request(&mut item, &evidence);
+        assert!(!item.is_action());
+        assert!(item.text.contains("想嗯想让他科普一下儿常识"));
+    }
+
+    #[test]
+    fn example_correction_keeps_literal_words_and_nearby_reporting() {
+        let source = json!({"id":"e0000","turnSpeaker":"说话人2",
+            "text":"说话人2: 我举个例子，常规方案就是 我们先冻结存量，然后立即恢复，实际上就是应急方案 就是第二种"});
+        let corrected = reported_context("发言人举例：冻结存量后立即恢复属常规方案；另一种是测试流程。", &[&source]).unwrap();
+        assert!(corrected.contains("我们先冻结存量，然后立即恢复，实际上就是应急方案"));
+        assert!(corrected.contains("另一种是测试流程"));
+        assert!(reported_context("发言人举例：冻结存量后立即恢复属于应急方案。", &[&source]).is_none());
+        assert!(reported_context("未核实的数据还会再确认。", &[&source]).unwrap().starts_with("说话人2称"));
+        let question = json!({"text":"说话人1: 是不是七年，对不对"});
+        let answer = json!({"text":"说话人2: 我觉得七年，之后不续约"});
+        assert_eq!(reported_context("七年后不续约。", &[&question,&answer]).as_deref(),
+            Some("说话人2称，七年后不续约。"));
+    }
 
     #[test]
     fn repair_can_read_provider_claim_objects_and_report_requirements() {

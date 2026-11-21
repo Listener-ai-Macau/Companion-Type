@@ -7,6 +7,7 @@ use serde_json::{Value, json};
 use super::{Action, Document, Entry, Kind, Unit, answer_layout::{Fact, Placement}, factual_audit, source_items};
 
 const PROMPT: &str = include_str!("automatic_brief_commitments.txt");
+const DECISION_ORDER: &str = "laterEvidence 指向这项决定可能相关的后段原话。比较实际议题、执行对象、适用条件及顺序。后段明确确认同一事项的新口径时，replacement 引入后段明确口径，并同时引用 basis 和后段原话。各有适用对象时分别保留。未解决冲突时用 clarification 留原话待核。后段的设想、客套话、同名的其他项目不能覆盖早前已确认事项。";
 const STANCE_PROMPT: &str = include_str!("automatic_brief_commitment_stance.txt");
 const EXECUTION_PROMPT: &str = include_str!("automatic_brief_execution_scope.txt");
 const INCOMPLETE: &str = "纪要定向核对没有返回完整证据，已有结果保留。";
@@ -46,12 +47,55 @@ fn source_signals(quote: &str) -> Vec<&'static str> {
     ].into_iter().filter_map(|(name, matched)| matched.then_some(name)).collect()
 }
 
+fn later_decision_evidence(
+    statement: &str, basis: &[String], source: &[Value],
+    positions: &HashMap<&str, usize>, verified_claims: &[Value],
+    verified_evidence: &HashMap<String, Vec<String>>,
+) -> Vec<usize> {
+    static FINAL_WORDING: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:我们|咱们)?(?:刚刚|刚才|现在|最后)?(?:已经|已|最终|正式)(?:确定|决定|定下|议定|拍板|确认)"
+    ).unwrap());
+    let latest = basis.iter().filter_map(|id| positions.get(id.as_str()).copied()).max();
+    let Some(latest) = latest else { return Vec::new(); };
+    let original: Vec<_> = basis.iter().filter_map(|id| positions.get(id.as_str()))
+        .filter_map(|index| source[*index]["text"].as_str()).map(super::normalized).collect();
+    let statement = super::normalized(statement);
+    verified_claims.iter().filter(|claim| {
+        claim["path"].as_str().is_some_and(|path| path.starts_with("topics["))
+            && claim["text"].as_str().is_some_and(|text| FINAL_WORDING.is_match(text))
+    }).filter_map(|claim| {
+        let text = claim["text"].as_str()?;
+        let verified = super::normalized(text);
+        if verified == statement { return None; }
+        let ids = verified_evidence.get(claim["path"].as_str()?)?;
+        ids.iter().filter_map(|id| positions.get(id.as_str()).copied()).filter(|index| *index > latest)
+            .find(|index| {
+                let quote = source[*index]["text"].as_str().unwrap_or_default();
+                FINAL_WORDING.find_iter(quote).any(|marker| {
+                    let earlier = &quote[..marker.start()];
+                    if earlier.trim_end().ends_with(['没', '不', '未']) || earlier.trim_end().ends_with("没有") {
+                        return false;
+                    }
+                    let clause = earlier.rsplit(['。', '；', '？', '！', '\n']).next().unwrap_or_default();
+                    let recent: Vec<_> = clause.chars().rev().take(16).collect();
+                    recent.windows(3).any(|part| {
+                        let literal: String = part.iter().rev().collect();
+                        literal.chars().all(char::is_alphanumeric)
+                            && statement.contains(&literal) && verified.contains(&literal)
+                            && original.iter().any(|quote| quote.contains(&literal))
+                    })
+                })
+            })
+    }).take(4).collect()
+}
+
 fn candidates(doc: &factual_audit::VerifiedBrief, source: &[Value]) -> Vec<Value> {
     let positions: HashMap<_, _> = source.iter().enumerate()
         .map(|(index, row)| (row["id"].as_str().unwrap(), index)).collect();
     let bindings = super::source_bindings::SourceBindings::new(source);
     let mut candidates = Vec::new();
-    for claim in factual_audit::claims(&doc.document) {
+    let claims = factual_audit::claims(&doc.document);
+    for claim in &claims {
         let path = claim["path"].as_str().unwrap();
         if claim.get("sources").is_none() || path.starts_with("questions[") { continue; }
         let Some(ids) = doc.evidence.get(path) else { continue; };
@@ -79,13 +123,25 @@ fn candidates(doc: &factual_audit::VerifiedBrief, source: &[Value]) -> Vec<Value
             // identify an addressee, but it is never on its own an assignment.
             context.extend(index.saturating_sub(6)..(*index + 4).min(source.len()));
         }
+        let later = if path.starts_with("decisions[") {
+            later_decision_evidence(text, ids, source, &positions, &claims, &doc.evidence)
+        } else {
+            Vec::new()
+        };
+        for index in &later {
+            context.extend(index.saturating_sub(1)..(*index + 2).min(source.len()));
+        }
         let turn_starts: Vec<_> = context.iter().filter_map(|index| source[*index]["speakerEvidence"].as_str())
             .filter_map(|id| positions.get(id).copied()).collect();
         context.extend(turn_starts);
         context.sort_unstable();
         context.dedup();
         let context: Vec<_> = context.into_iter().map(|index| &source[index]["id"]).collect();
-        candidates.push(json!({"id":path,"claim":claim,"basis":ids,"context":context,"sourceSignals":signals}));
+        let mut candidate = json!({"id":path,"claim":claim,"basis":ids,"context":context,"sourceSignals":signals});
+        if !later.is_empty() {
+            candidate["laterEvidence"] = json!(later.iter().map(|index| &source[*index]["id"]).collect::<Vec<_>>());
+        }
+        candidates.push(candidate);
     }
     candidates
 }
@@ -585,7 +641,20 @@ fn explicit_stance(quote: &str, statement: &str) -> bool {
     let optional = ["可以", "如果", "建议", "是否", "可能", "考虑", "没决定", "未确定", "没有确定", "尚未决定", "不一定", "待确认"];
     let chars: Vec<_> = statement.chars().collect();
     let relevant = chars.windows(4).any(|window| quote.contains(&window.iter().collect::<String>()));
-    relevant && definite.iter().any(|term| quote.contains(term)) && !optional.iter().any(|term| quote.contains(term))
+    if optional.iter().any(|term| quote.contains(term)) { return false; }
+    if relevant && definite.iter().any(|term| quote.contains(term)) { return true; }
+    // An affirmative decision not to impose a restriction can use ordinary
+    // negative phrasing. Bind that phrasing to the same short restriction.
+    let said_no = ["不必要", "不必", "无需"].iter().find_map(|term| {
+        let (before, after) = quote.split_once(term)?;
+        ["咱", "我们", "本次", "现在"].iter().any(|marker| before.contains(marker))
+            .then_some(after)
+    });
+    said_no.is_some_and(|after| {
+        let task: String = after.chars().take_while(|ch| ch.is_alphanumeric()).take(2).collect();
+        task.chars().count() == 2
+            && statement.find(&task).is_some_and(|at| statement[..at].contains('不'))
+    })
 }
 
 fn decode_stance(candidates: &[Value], raw: &str, known: &SourceIndex<'_>) -> Result<HashMap<String, Fact>, String> {
@@ -700,7 +769,10 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
             .filter_map(Value::as_str).collect();
         source.iter().filter(|row| selected.contains(row["id"].as_str().unwrap())).collect::<Vec<_>>()
     };
-    let raw = super::request(endpoint,model,key,client,PROMPT,json!({"roleChecks":rows,"sourceSentences":quotes_for(&rows)}),
+    let order_prompt = rows.iter().any(|row| row.get("laterEvidence").is_some())
+        .then(|| format!("{PROMPT}\n{DECISION_ORDER}"));
+    let prompt = order_prompt.as_deref().unwrap_or(PROMPT);
+    let raw = super::request(endpoint,model,key,client,prompt,json!({"roleChecks":rows,"sourceSentences":quotes_for(&rows)}),
         false,start,trace,"source-commitment-review")?;
     if std::env::var_os("COMPANION_TYPE_AUTOMATIC_BRIEF_TRACE_PATH").is_some() {
         if let Some(call) = trace.last_mut() {
@@ -713,7 +785,7 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
         let rejected_ids: HashSet<_> = bound.rejected.iter().filter_map(|issue| issue["id"].as_str()).collect();
         let requested: Vec<_> = rows.iter().filter(|row| rejected_ids.contains(row["id"].as_str().unwrap())).cloned().collect();
         let request = json!({"roleChecks":requested,"sourceSentences":quotes_for(&requested),"rejectedEdits":bound.rejected});
-        let retry = super::request(endpoint,model,key,client,PROMPT,request,false,start,trace,"source-commitment-evidence")?;
+        let retry = super::request(endpoint,model,key,client,prompt,request,false,start,trace,"source-commitment-evidence")?;
         let repaired = decode_edits(&requested, &retry, &known, true)?;
         if !repaired.rejected.is_empty() {
             return Err(format!("仍有{}条纪要修正缺少原话证据，已有结果保留。", repaired.rejected.len()));
@@ -733,8 +805,45 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
         let edits = decode_execution(&execution, &raw, &known, &bound.accepted)?;
         bound.accepted.extend(edits);
     }
+    let revised_decision = rows.iter().any(|row| {
+        row["laterEvidence"].as_array().is_some_and(|later| bound.accepted.get(row["id"].as_str().unwrap())
+            .is_some_and(|edit| later.iter().any(|id| id.as_str().is_some_and(|id| edit.evidence.iter().any(|e| e == id)))))
+    });
     let improved = apply(&verified.document, &rows, bound.accepted, &known, units)?;
+    let improved = if revised_decision {
+        // Check the newly chosen wording against the full original order.
+        // The decision-role judgment is independent of factual support.
+        factual_audit::review_and_repair_since(
+            endpoint, model, key, client, &improved, units, Some(&verified.document), start, trace,
+        )?
+    } else {
+        improved
+    };
     super::source_scope::review(endpoint,model,key,client,&verified,improved,units,start,trace)
+}
+
+#[cfg(test)]
+#[test]
+fn later_confirmation_keeps_the_original_subject_and_source_order() {
+    let source = vec![
+        json!({"id":"e0000","text":"说话人1: 主色调当时定红色。"}),
+        json!({"id":"e0001","text":"说话人1: 主色调现在可以考虑蓝色。"}),
+        json!({"id":"e0002","text":"说话人2: 有关休息区地板我们已经确定用浅灰。"}),
+        json!({"id":"e0003","text":"说话人1: 这个主色调我们刚刚已经确定了，是棕色加些红色。"}),
+    ];
+    let positions = source.iter().enumerate().map(|(i,row)| (row["id"].as_str().unwrap(),i)).collect();
+    let claims = [json!({"path":"topics[0].points[0]","text":"主色调可考虑蓝色。"}),
+        json!({"path":"topics[0].points[1]","text":"地板已确定浅灰。"}),
+        json!({"path":"topics[0].points[2]","text":"已确定主色调为棕色加一些红色。"})];
+    let bound = HashMap::from([("topics[0].points[0]".into(),vec!["e0001".into()]),
+        ("topics[0].points[1]".into(),vec!["e0002".into()]),
+        ("topics[0].points[2]".into(),vec!["e0003".into()])]);
+    assert_eq!(later_decision_evidence("先确定主色调为红色。",&["e0000".into()],&source,&positions,&claims,&bound),[3]);
+    assert!(later_decision_evidence("确定主色调棕色加红色。",&["e0003".into()],&source,&positions,&claims,&bound).is_empty());
+    assert!(explicit_stance("咱这种不必要限时", "明确不对顾客限时"));
+    assert!(!explicit_stance("咱这种不必要限时", "同意开始限时"));
+    assert!(!explicit_stance("咱这种也可以不必要限时", "明确不对顾客限时"));
+    assert!(!explicit_stance("咱这种不必要限时", "确认不要降价"));
 }
 
 #[cfg(test)]
