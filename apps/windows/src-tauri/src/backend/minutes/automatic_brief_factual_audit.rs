@@ -1461,6 +1461,11 @@ fn statement_identity_survives_array_compaction_without_matching_a_different_que
 pub(super) fn review_and_repair(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,doc:&Document,units:&[Unit],start:Instant,trace:&mut Vec<Value>)->Result<Document,String> {
     review_and_repair_since(endpoint,model,key,client,doc,units,None,start,trace)
 }
+fn newly_disproved_placement(previously_accepted: bool, current: &Claim) -> bool {
+    previously_accepted && independent_path(&current.path)
+        && current.placement_unsupported == Some(true) && !current.evidence.is_empty()
+}
+
 fn changed_failure_axis(previous:&(String,bool),status:&str,unclear:bool)->bool{
     // One existing repair opportunity may address a newly exposed ambiguity,
     // or a distinct scope error after ambiguity was actually removed. Repeated
@@ -2003,6 +2008,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
     let FactualDraft { document: current, pending_quotes } = draft;
     let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let mut attempted_phrases:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
     let mut attribution_repairs = HashSet::new();
+    let mut previously_accepted_placements = HashSet::new();
     let mut unclear_history:HashMap<String,Vec<String>>=HashMap::new();let mut recovered_display=false;
     let mut verified_claims = match verified {
         Some(verified) if super::source_items::enabled() => unchanged_source_assertions(current, verified),
@@ -2093,7 +2099,8 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
                         && ["会不会", "是不是", "能不能", "是否", "可能"]
                             .iter().any(|term| sentence.text.contains(term)));
                 !(allow_conservative&&(changed_failure_axis(old,&c.status,c.status=="unclear"||source_wording_unclear(c))
-                    ||distinct_ambiguity||sourced_new_issue||modality_after_attribution))
+                    ||distinct_ambiguity||sourced_new_issue||modality_after_attribution
+                    ||newly_disproved_placement(super::source_items::enabled() && previously_accepted_placements.contains(&key), c)))
             })
         });
         // A re-audit can identify a different defect after attribution was fixed.
@@ -2207,6 +2214,9 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
             if ["不能归", "不能并入", "不能整体归", "归属错误", "归错"].iter().any(|term| issue.reason.contains(term)) {
                 attribution_repairs.insert(key.clone());
             }
+            if issue.placement_unsupported == Some(false) {
+                previously_accepted_placements.insert(key.clone());
+            }
             attempted.insert(key.clone(),(issue.status.clone(),issue.status=="unclear"||source_wording_unclear(issue)));
             if let Some(phrase)=&issue.unclear_text{attempted_phrases.insert(key,phrase.clone());}
         }
@@ -2217,6 +2227,19 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn a_supported_column_can_be_disproved_by_a_later_cited_verdict() {
+        let mut verdict: Claim = serde_json::from_value(json!({"path":"questions[0]","status":"overstated",
+            "reason":"现场已经回答。","evidence":["e0105"],"clarity":"clear","placementUnsupported":true})).unwrap();
+        assert!(newly_disproved_placement(true,&verdict));
+        assert!(!newly_disproved_placement(false,&verdict));
+        verdict.placement_unsupported=Some(false);
+        assert!(!newly_disproved_placement(true,&verdict));
+        verdict.placement_unsupported=Some(true);
+        verdict.evidence.clear();
+        assert!(!newly_disproved_placement(true,&verdict));
+    }
     #[test]
     fn audited_wrong_columns_cannot_survive_a_text_only_correction() {
         let units=vec![Unit{id:"u000".into(),text:"建议延后采购，现场已答复。".into()}];
