@@ -6,7 +6,15 @@ use serde_json::{json, Value};
 
 use super::{answer_layout::{Fact, Placement}, line, normalized};
 
-fn refund_period(statement: &str, source: &str) -> Option<String> {
+fn half_refund<'a>(source: &'a str, fee: &str) -> Option<&'a str> {
+    source.match_indices(fee).find_map(|(at, _)| {
+        let tail = &source[at + fee.len()..];
+        ["返还了一半", "返还一半", "退还了一半", "退还一半", "退回了一半", "退了一半", "退一半"]
+            .iter().find_map(|word| tail.strip_prefix(*word))
+    })
+}
+
+fn refund_period<'a>(statement: &'a str, source: &str) -> Option<(String, &'a str)> {
     static SHORT_BASE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?P<period>半个?学年|半年|一个学期|一学期|六个月)(?P<fee>[\p{Han}]{2,7}费)(?:的)?(?:一半|50[%％])"
     ).unwrap());
@@ -30,21 +38,44 @@ fn refund_period(statement: &str, source: &str) -> Option<String> {
     }
     let source = normalized(source);
     let fee = hit.name("fee")?.as_str();
-    let same_fee = source.match_indices(fee).any(|(at, _)| {
-        let tail = &source[at + fee.len()..];
-        ["返还了一半", "返还一半", "退还了一半", "退还一半", "退回了一半", "退了一半", "退一半"]
-            .iter().any(|word| tail.starts_with(word))
-    });
+    half_refund(&source, fee)?;
     let mut billed_terms = PAID_TERM.captures_iter(&source).filter_map(|hit| hit.name("term"));
     let first = billed_terms.next()?.as_str();
-    if !same_fee || !RETURNED_TERM.is_match(&source) {
+    if !RETURNED_TERM.is_match(&source) {
         return None;
     }
     let academic = first.contains("学年") || billed_terms.any(|term| term.as_str().contains("学年"));
     let replacement = if academic { "一学年" } else { "一年" };
     let mut corrected = statement.to_owned();
     corrected.replace_range(whole.range(), &format!("{replacement}{fee}的一半（一个学期）"));
-    line(&corrected, 90).then_some(corrected)
+    line(&corrected, 90).then_some((corrected, fee))
+}
+
+fn refund_absence(fee: &str, origin: usize, evidence: &[Value]) -> Option<(String, [String; 2])> {
+    static ABSENCE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"^(?:呃|嗯)*(?:没有|没){1,3}(?:那[个些]|这[个些])?(?P<occupant>学生|学员|住户|租户)(?:来住|入住|住宿)"
+    ).unwrap());
+    let speaker = evidence[origin]["turnSpeaker"].as_str()?;
+    let mut candidates = evidence.iter().enumerate().skip(origin + 1).take(100).filter_map(|(at, row)| {
+        if row["turnSpeaker"].as_str()? != speaker {
+            return None;
+        }
+        let text = normalized(row["text"].as_str()?);
+        let cause = half_refund(&text, fee)?.trim_start_matches('儿').strip_prefix("因为")?;
+        if !cause.contains("半年") || !(cause.ends_with("没有") || cause.ends_with('没')) {
+            return None;
+        }
+        let following = evidence.iter().skip(at + 1).take(3).find(|other| {
+            other["source"] == row["source"] && other["turnSpeaker"] == row["turnSpeaker"]
+        })?;
+        let (_, body) = super::super::source_resolution::split_turn_label(following["text"].as_str()?)?;
+        let body = normalized(body);
+        let occupant = ABSENCE.captures(&body)?.name("occupant")?.as_str();
+        Some((format!("原因是这半年{occupant}未实际住宿。"),
+              [row["id"].as_str()?.to_owned(), following["id"].as_str()?.to_owned()]))
+    });
+    let candidate = candidates.next()?;
+    candidates.next().is_none().then_some(candidate)
 }
 
 fn verification_before_disposal(fact: &Fact, origin: usize, evidence: &[Value]) -> Option<(String, Vec<String>)> {
@@ -108,8 +139,18 @@ pub(super) fn correct(facts: &mut [Fact], evidence: &[Value]) -> Vec<Value> {
     for fact in facts {
         let mut proposals = fact.evidence.iter().filter_map(|id| {
             let origin = *positions.get(id.as_str())?;
-            if let Some(reworded) = refund_period(&fact.text, evidence[origin]["text"].as_str()?) {
-                return Some((reworded, fact.evidence.clone()));
+            if let Some((mut reworded, fee)) = refund_period(&fact.text, evidence[origin]["text"].as_str()?) {
+                let mut sources = fact.evidence.clone();
+                if let Some((cause, ids)) = refund_absence(fee, origin, evidence) {
+                    let with_cause = format!("{reworded}{cause}");
+                    if line(&with_cause, 90) && sources.len() + ids.len() <= 8 {
+                        reworded = with_cause;
+                        for id in ids {
+                            if !sources.contains(&id) { sources.push(id); }
+                        }
+                    }
+                }
+                return Some((reworded, sources));
             }
             if fact.placement == Placement::Decision {
                 return verification_before_disposal(fact, origin, evidence);
@@ -136,12 +177,33 @@ mod tests {
     fn refund_uses_the_billed_period_when_the_same_fee_and_refunded_period_are_explicit() {
         let draft = "住宿费、学费、书费中目前只退了半年住宿费的一半。";
         let source = "说话人2: 只有这个住宿费返还了一半，因为我们交了是一年度吗，他是从上个上半季度开始交了交的是一一一学年的，咱们只是把这半这一个学期的住宿费退款。";
-        assert_eq!(refund_period(draft, source).as_deref(),
+        assert_eq!(refund_period(draft, source).map(|(text, _)| text).as_deref(),
             Some("住宿费、学费、书费中目前只退了一学年住宿费的一半（一个学期）。"));
         assert!(refund_period(draft, &source.replace("一个学期", "一个月")).is_none());
         assert!(refund_period(draft, &source.replace("住宿费返还了", "书费返还了")).is_none());
         assert!(refund_period("若退了半年住宿费的一半。", "只说交了一学年的住宿费。").is_none());
         assert!(refund_period("住宿费退了全年住宿费的一半。", source).is_none());
+    }
+
+    #[test]
+    fn a_repeated_refund_keeps_the_stated_reason_with_the_billing_scope() {
+        let mut evidence = [
+            json!({"id":"e0021","source":"u001","turnSpeaker":"说话人2","text":"住宿费返还了一半，交的是一学年的，只是把这一个学期的住宿费退款。"}),
+            json!({"id":"e0101","source":"u005","turnSpeaker":"说话人2","text":"说话人2: 对住宿费退一半儿因为这学年这半年这个这半个学年没有"}),
+            json!({"id":"e0102","source":"u005","turnSpeaker":"说话人1","text":"说话人1: 那个住宿费退一半儿"}),
+            json!({"id":"e0103","source":"u005","turnSpeaker":"说话人2","text":"说话人2: 没有没有那个学生来住有反馈啊"}),
+        ];
+        let old = Fact {id:"a044".into(), placement:Placement::Topic, kind:Kind::Status,
+            text:"目前只退了半年住宿费的一半。".into(), owner:None, due:None,
+            evidence:vec!["e0021".into()]};
+        let mut facts = [old.clone()];
+        assert_eq!(correct(&mut facts, &evidence).len(), 1);
+        assert_eq!(facts[0].text, "目前只退了一学年住宿费的一半（一个学期）。原因是这半年学生未实际住宿。");
+        assert_eq!(facts[0].evidence,["e0021","e0101","e0103"]);
+        evidence[3]["turnSpeaker"] = json!("说话人1");
+        let mut facts = [old];
+        assert_eq!(correct(&mut facts, &evidence).len(), 1);
+        assert_eq!(facts[0].evidence,["e0021"]);
     }
 
     #[test]
