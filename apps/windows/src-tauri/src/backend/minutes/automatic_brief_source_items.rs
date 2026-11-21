@@ -1995,6 +1995,61 @@ fn a_source_example_can_only_be_a_discussion_item() {
     assert!(decode().bind(&HashMap::from([("e0001",&source)]),&known_ids).is_err());
 }
 
+fn bind_answered_loan_amount(item: &mut SourceItem, cue: &SourceCue, evidence: &[Value]) -> bool {
+    if cue.aspect.is_some() || !matches!(item.role, Role::Opinion | Role::Status)
+        || item.evidence.len() >= 8 || item.evidence.contains(&cue.evidence)
+    {
+        return false;
+    }
+    let Some(amount) = explicit_yuan_amount(&cue.span) else { return false; };
+    if !measures(&item.text).any(|(value, unit)| value == amount && unit == "元")
+        || !item.text.contains("借") || !item.text.contains("成立")
+        || ["不成立", "未成立", "能否成立", "是否成立", "成立吗"].iter().any(|term| item.text.contains(term))
+    {
+        return false;
+    }
+    let Some(position) = evidence.iter().position(|row| row["id"] == cue.evidence) else { return false; };
+    let Some(reply) = evidence.get(position + 1).filter(|row| row["source"] == evidence[position]["source"])
+    else { return false; };
+    let split = |row: &Value| row["text"].as_str()
+        .and_then(super::super::source_resolution::split_turn_label)
+        .map(|(speaker, text)| (speaker.to_owned(),text.trim().to_owned()));
+    let (Some((asked_by, question)),Some((answered_by, answer))) = (split(&evidence[position]),split(reply))
+    else { return false; };
+    let question = question.trim_end_matches(['？','?','。']);
+    if answered_by == asked_by || !question.contains("借")
+        || !question.strip_suffix("成立吗").is_some_and(|body| body.trim_end().ends_with(&cue.span))
+        || !answer.strip_prefix("成立").is_some_and(|rest| rest.is_empty()
+            || rest.starts_with([' ', '，','。','！','	']))
+    {
+        return false;
+    }
+    let Some(reply_at) = item.evidence.iter().position(|id| reply["id"] == id.as_str()) else { return false; };
+    item.evidence.insert(reply_at,cue.evidence.clone());
+    true
+}
+
+#[cfg(test)]
+#[test]
+fn the_amount_in_an_answered_loan_question_retains_both_speaking_turns() {
+    let evidence = [
+        json!({"id":"e0039","source":"u001","text":"说话人2: 没有最大额度"}),
+        json!({"id":"e0040","source":"u001","text":"说话人3: 他借了我两万块钱成立吗"}),
+        json!({"id":"e0041","source":"u001","text":"说话人2: 成立 这属于如果他不还可以向法院起诉"}),
+    ];
+    let cue=SourceCue{id:"v002".into(),evidence:"e0040".into(),span:"两万块钱".into(),aspect:None};
+    let item:SourceItem=serde_json::from_value(json!({"role":"status",
+        "text":"有人回答借两万块钱也成立，并说明没有最大额度。","evidence":["e0039","e0041"],"owner":null,"due":null})).unwrap();
+    let mut fixed=item.clone();
+    assert!(bind_answered_loan_amount(&mut fixed,&cue,&evidence));
+    assert_eq!(fixed.evidence,["e0039","e0040","e0041"]);
+    let mut disputed=evidence.clone();
+    disputed[2]["text"]=json!("说话人2: 不成立。");
+    assert!(!bind_answered_loan_amount(&mut item.clone(),&cue,&disputed));
+    disputed[2]["text"]=json!("说话人3: 成立。");
+    assert!(!bind_answered_loan_amount(&mut item.clone(),&cue,&disputed));
+}
+
 fn bind_retrospective_context(item: &mut SourceItem, cue: &SourceCue, evidence: &[Value]) -> bool {
     // A calendar question supplies context for its immediately following answer.
     // It does not itself support the new facts stated in the answer.
@@ -2309,9 +2364,14 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         checked.checks.extend(fixed.checks);
     }
     let mut rebound = Vec::new();
+    let mut answered_amounts = Vec::new();
     for check in &mut checked.checks {
         let SourceCheck::Missing { id, addition } = check else { continue; };
         let Some(cue) = cues.iter().find(|cue| cue.id == *id) else { continue; };
+        if bind_answered_loan_amount(&mut addition.item, cue, &evidence) {
+            answered_amounts.push(json!({"cue":id,"evidence":addition.item.evidence}));
+            continue;
+        }
         let Some(claim) = repeated_delay_witness(cue, addition, &claim_values, &evidence, &bindings)
         else { continue; };
         verified_coverage.insert(id.clone());
@@ -2320,6 +2380,9 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     }
     if !rebound.is_empty() {
         trace[scan_index]["reboundRepeatedDelayReferences"] = json!(rebound);
+    }
+    if !answered_amounts.is_empty() {
+        trace[scan_index]["boundAdjacentLoanQuestions"] = json!(answered_amounts);
     }
     let (additions, conflicts) = checked_additions(checked, &cues, &doc, facts, &evidence, &verified_coverage)?;
     trace[scan_index]["boundAdditions"] = json!(additions.len());
