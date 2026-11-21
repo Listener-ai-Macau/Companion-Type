@@ -727,6 +727,118 @@ fn demote_item(value: &mut Value, pointer: &str, units: &[Unit], preferred: Opti
     Some(())
 }
 
+struct MeetingProcedureRepair {
+    reply: String,
+    paths: Vec<String>,
+    host: Option<(String, String)>,
+}
+
+fn route_meeting_procedure(
+    raw: &str, issues: &[Value], claims: &[Value], source: &[Sentence], purpose: &str,
+) -> Option<MeetingProcedureRepair> {
+    use std::sync::LazyLock;
+    static HOST: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"(?:本次|本场|这次)(?:会议|会)由(?P<role>[\p{Han}]{2,10}?)主持"
+    ).unwrap());
+    let mut packet: Value = serde_json::from_str(super::super::strip_code_fences(raw).trim()).ok()?;
+    if packet.as_object()?.len() != 1 {
+        return None;
+    }
+    let edits = packet["changes"].as_array_mut()?;
+    unique_repair_rows(edits, true)?;
+    let purpose_edited = edits.iter().any(|row| row["path"] == "purpose");
+    let mut paths = Vec::new();
+    let mut host = None;
+    for edit in edits {
+        let Some(path) = edit["path"].as_str() else { continue; };
+        if !independent_path(path) || !edit.as_object().is_some_and(|object| {
+            object.keys().all(|key| matches!(key.as_str(), "path" | "text" | "remove" | "moveToTopic"))
+        }) {
+            continue;
+        }
+        let Some(issue) = issues.iter().find(|row| row["path"] == path && row["placementUnsupported"] == true)
+        else { continue; };
+        let Some(text) = claims.iter().find(|row| row["path"] == path)
+            .and_then(|row| row["text"].as_str()) else { continue; };
+        let Some(ids) = issue["evidence"].as_array() else { continue; };
+        let quotes: Vec<_> = source.iter().filter(|row| ids.iter().any(|id| id.as_str() == Some(row.id.as_str())))
+            .map(|row| super::normalized(&row.text)).collect();
+        if quotes.is_empty() || ["会后", "散会后", "结束后", "下次会议", "每周", "每天", "从今天开始", "截止", "交付",
+            "落实", "并决定", "达成一致"]
+            .iter().any(|term| text.contains(term))
+        {
+            continue;
+        }
+        let spoken = |terms: &[&str]| quotes.iter().any(|quote| terms.iter().all(|term| quote.contains(term)));
+        let already_in_purpose = ["上半年", "下半年", "计划"].iter().all(|term| {
+            text.contains(term) && purpose.contains(term)
+        }) && text.contains("总结会") && spoken(&["今天", "总结", "下半年", "计划"]);
+        let closed = text.contains("散会") && text.contains("会议结束") &&
+            (spoken(&["会议", "结束", "散会"]) || spoken(&["到此结束", "散会"]));
+        let reporting_order = text.contains("按顺序汇报") && text.contains('从') && text.contains("开始")
+            && spoken(&["下面", "汇报"]) && spoken(&["从", "开始"]);
+        let reporting_length = text.contains("一两句话") && text.contains("概括")
+            && spoken(&["一两句话", "概括"]);
+        if !(already_in_purpose || closed || reporting_order || reporting_length) {
+            if purpose_edited || host.is_some() {
+                continue;
+            }
+            let Some(role) = HOST.captures(text).and_then(|capture| capture.name("role")) else { continue; };
+            let host_role = role.as_str();
+            if !spoken(&["请", host_role, "主持", "会议"]) {
+                continue;
+            }
+            let amended = if purpose.contains(host_role) && purpose.contains("主持") {
+                purpose.to_owned()
+            } else {
+                format!("{}。会上请{host_role}主持。", purpose.trim_end_matches(['。', '！', '？']))
+            };
+            if !super::line(&amended, 80) {
+                continue;
+            }
+            host = Some((path.to_owned(), amended));
+        }
+        paths.push(path.to_owned());
+        *edit = json!({"path":path,"remove":true});
+    }
+    if paths.is_empty() {
+        return None;
+    }
+    Some(MeetingProcedureRepair { reply: packet.to_string(), paths, host })
+}
+
+#[cfg(test)]
+#[test]
+fn audited_meeting_procedure_is_preserved_as_context_not_assigned_to_a_work_topic() {
+    let claims = [
+        json!({"path":"decisions[0]","text":"本次会议由主管主持。"}),
+        json!({"path":"actionItems[0]","text":"各岗位按顺序汇报，从车棚开始。"}),
+        json!({"path":"actionItems[1]","text":"会后各岗位按顺序汇报，从车棚开始。"}),
+        json!({"path":"decisions[1]","text":"本次会议由技术主管主持。"}),
+    ];
+    let issues = [
+        json!({"path":"decisions[0]","placementUnsupported":true,"evidence":["e0008"]}),
+        json!({"path":"actionItems[0]","placementUnsupported":true,"evidence":["e0018","e0019"]}),
+        json!({"path":"actionItems[1]","placementUnsupported":true,"evidence":["e0018","e0019"]}),
+        json!({"path":"decisions[1]","placementUnsupported":true,"evidence":["e0008"]}),
+    ];
+    let source = [
+        ("e0008", "今天有请咱们这个主管来主持这场会议。"),
+        ("e0018", "下面各岗位汇报一下自己上半年的情况。"),
+        ("e0019", "从车棚那开始。"),
+    ].map(|(id, text)| Sentence { id:id.into(), source:"u000".into(), text:text.into() });
+    let raw = json!({"changes": claims.iter().map(|claim|
+        json!({"path":claim["path"],"text":claim["text"]})).collect::<Vec<_>>()}).to_string();
+    let result = route_meeting_procedure(&raw, &issues, &claims, &source, "复盘工作。").unwrap();
+    assert_eq!(result.paths, ["decisions[0]", "actionItems[0]"]);
+    assert_eq!(result.host, Some(("decisions[0]".into(),"复盘工作。会上请主管主持。".into())));
+    let reply: Value = serde_json::from_str(&result.reply).unwrap();
+    assert_eq!(reply["changes"][0]["remove"], true);
+    assert_eq!(reply["changes"][1]["remove"], true);
+    assert_eq!(reply["changes"][2]["text"], claims[2]["text"]);
+    assert_eq!(reply["changes"][3]["text"], claims[3]["text"]);
+}
+
 fn unique_repair_rows(edits: &[Value], allow_equal_echoes: bool) -> Option<Vec<&Value>> {
     let mut previous = HashMap::new();
     let mut unique = Vec::new();
@@ -2489,7 +2601,10 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
         } else {
             (raw, Vec::new())
         };
-        let mut raw = raw;
+        let procedure = super::source_items::enabled().then(|| {
+            route_meeting_procedure(&raw, &issues, &audited_claims, &source, &current.purpose)
+        }).flatten();
+        let mut raw = procedure.as_ref().map(|routed| routed.reply.clone()).unwrap_or(raw);
         let apply = |raw: &str| apply_repair(raw,current,&allowed,&unclear,&conservative,&misplaced,units,scoped);
         let mut revision = apply(&raw);
         if let Err(reason) = &revision {
@@ -2508,7 +2623,8 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
                 }
             }
         }
-        let next = match revision {
+        let mut withheld_procedure = Vec::new();
+        let mut next = match revision {
             Ok(doc) => doc,
             Err(reason) => {
                 let recovered = super::source_items::enabled().then(|| recover_protected_repairs(
@@ -2517,12 +2633,27 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
                 preserves_unclear_history(&recovered.applied.document,&unclear_history)?;
                 withheld_for_review = true;
                 pending_quotes.extend(recovered.pending_quotes);
+                if procedure.is_some() {
+                    withheld_procedure.clone_from(&recovered.withheld_paths);
+                }
                 if let Some(call) = trace.last_mut() {
                     call["withheldRepairPaths"] = json!(recovered.withheld_paths);
                 }
                 recovered.applied
             },
         };
+        if let Some(procedure) = procedure {
+            if let Some((path, purpose)) = procedure.host {
+                if !withheld_procedure.contains(&path) {
+                    next.document.purpose = purpose;
+                    super::validate(&next.document, units)?;
+                }
+            }
+            if let Some(call) = trace.last_mut() {
+                call["meetingProcedureRouted"] = json!(procedure.paths.iter()
+                    .filter(|path| !withheld_procedure.contains(path)).collect::<Vec<_>>());
+            }
+        }
         preserves_unclear_history(&next.document,&unclear_history)?;
         if !newly_pending.is_empty() {
             if let Some(call) = trace.last_mut() { call["sourceWordingPending"] = json!(&newly_pending); }

@@ -14,15 +14,30 @@ fn half_refund<'a>(source: &'a str, fee: &str) -> Option<&'a str> {
     })
 }
 
-fn refund_period<'a>(statement: &'a str, source: &str) -> Option<(String, &'a str)> {
-    static SHORT_BASE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
-        r"(?P<period>半个?学年|半年|一个学期|一学期|六个月)(?P<fee>[\p{Han}]{2,7}费)(?:的)?(?:一半|50[%％])"
-    ).unwrap());
+fn paid_term() -> &'static Regex {
     static PAID_TERM: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:交的是|交了|缴纳的是|缴了|缴费按|已交|已缴|收的是|收了|收取|按)[^，。；;！？\n]{0,9}?(?P<term>一学年|整学年|一年度|整年|全年|一年)"
     ).unwrap());
+    &PAID_TERM
+}
+
+fn billed_annual_refund(source: &str, fee: &str) -> Option<&'static str> {
     static RETURNED_TERM: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:只(?:是)?把[^，。；;！？\n]{0,12}?(?:一个学期|一学期)[^，。；;！？\n]{0,12}?(?:退款|退回|退还|返还)|(?:退还|返还|退回|退)(?:了)?[^，。；;！？\n]{0,7}?(?:一个学期|一学期))"
+    ).unwrap());
+    half_refund(source, fee)?;
+    let mut periods = paid_term().captures_iter(source).filter_map(|hit| hit.name("term"));
+    let first = periods.next()?.as_str();
+    if !RETURNED_TERM.is_match(source) {
+        return None;
+    }
+    let academic = first.contains("学年") || periods.any(|term| term.as_str().contains("学年"));
+    Some(if academic { "一学年" } else { "一年" })
+}
+
+fn refund_period<'a>(statement: &'a str, source: &str) -> Option<(String, &'a str)> {
+    static SHORT_BASE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:半个?学年|半年|一个学期|一学期|六个月)(?P<fee>[\p{Han}]{2,7}费)(?:的)?(?:一半|50[%％])"
     ).unwrap());
     let mut hits = SHORT_BASE.captures_iter(statement);
     let hit = hits.next()?;
@@ -38,17 +53,38 @@ fn refund_period<'a>(statement: &'a str, source: &str) -> Option<(String, &'a st
     }
     let source = normalized(source);
     let fee = hit.name("fee")?.as_str();
-    half_refund(&source, fee)?;
-    let mut billed_terms = PAID_TERM.captures_iter(&source).filter_map(|hit| hit.name("term"));
-    let first = billed_terms.next()?.as_str();
-    if !RETURNED_TERM.is_match(&source) {
-        return None;
-    }
-    let academic = first.contains("学年") || billed_terms.any(|term| term.as_str().contains("学年"));
-    let replacement = if academic { "一学年" } else { "一年" };
+    let replacement = billed_annual_refund(&source, fee)?;
     let mut corrected = statement.to_owned();
     corrected.replace_range(whole.range(), &format!("{replacement}{fee}的一半（一个学期）"));
     line(&corrected, 90).then_some((corrected, fee))
+}
+
+pub(super) fn retained_refund_measure(span: &str, statement: &str, source: &str) -> bool {
+    if !matches!(span, "一年" | "半季度") {
+        return false;
+    }
+    static REFUND: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:退了|退还了|退回了|返还了)(?P<cycle>一学年|一年)(?P<fee>[\p{Han}]{2,7}费)的一半（一个学期）"
+    ).unwrap());
+    let statement = normalized(statement);
+    let source = normalized(source);
+    let Some(refund) = REFUND.captures(&statement) else { return false; };
+    if billed_annual_refund(&source, &refund["fee"]) != Some(&refund["cycle"]) {
+        return false;
+    }
+    let mut occurrences = source.match_indices(span).peekable();
+    occurrences.peek().is_some() && occurrences.all(|(start, word)| {
+        let end = start + word.len();
+        if span == "一年" {
+            return paid_term().captures_iter(&source).any(|match_| {
+                match_.name("term").is_some_and(|term| term.start() == start && term.end() >= end)
+            });
+        }
+        let before = source[..start].rsplit(['，', ',', '。', '；']).next().unwrap_or("");
+        let after = &source[end..];
+        before.contains('从') && ["开始交", "开始缴"].iter().any(|word| after.starts_with(word))
+            && paid_term().is_match(after.split(['。', '；']).next().unwrap_or(""))
+    })
 }
 
 fn refund_absence(fee: &str, origin: usize, evidence: &[Value]) -> Option<(String, [String; 2])> {
@@ -183,6 +219,18 @@ mod tests {
         assert!(refund_period(draft, &source.replace("住宿费返还了", "书费返还了")).is_none());
         assert!(refund_period("若退了半年住宿费的一半。", "只说交了一学年的住宿费。").is_none());
         assert!(refund_period("住宿费退了全年住宿费的一半。", source).is_none());
+    }
+
+    #[test]
+    fn only_the_same_billing_period_or_its_start_satisfies_the_refund_cue() {
+        let source = "只有住宿费返还了一半，交了是一年度，从上半季度开始交，交的是一学年，只把一个学期的住宿费退款。";
+        let statement = "退了一学年住宿费的一半（一个学期）。";
+        assert!(retained_refund_measure("一年", statement, source));
+        assert!(retained_refund_measure("半季度", statement, source));
+        assert!(!retained_refund_measure("半季度", statement, &format!("{source}半季度后要付下一笔。")));
+        assert!(!retained_refund_measure("一年", statement, &format!("{source}一年后再退。")));
+        assert!(!retained_refund_measure("一年", "退了一学年伙食费的一半（一个学期）。", source));
+        assert!(!retained_refund_measure("半年", statement, source));
     }
 
     #[test]

@@ -2729,6 +2729,40 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
             trace.last_mut().unwrap()["openingScopeRetainedInPurpose"] = json!(opening);
         }
         let mut rejected = rejected_coverage(&fixed.checks, &disputed, &doc, &evidence, &bindings);
+        let mut refund_witnesses = Vec::new();
+        rejected.retain(|issue| {
+            let cue = &issue["cue"];
+            let (Some(id), Some(anchor), Some(span)) =
+                (cue["id"].as_str(), cue["evidence"].as_str(), cue["span"].as_str()) else { return true; };
+            if !matches!(span, "一年" | "半季度") ||
+                !fixed.checks.iter().any(|check| matches!(check, SourceCheck::Covered { id: covered, .. } if covered == id))
+            {
+                return true;
+            }
+            let Some(source) = evidence.iter().find(|row| row["id"] == anchor)
+                .and_then(|row| row["text"].as_str()) else { return true; };
+            let mut matches = claim_values.iter().filter_map(|claim| {
+                let path = claim["path"].as_str()?;
+                let text = claim["text"].as_str()?;
+                (bindings.get(path).is_some_and(|ids| ids.iter().any(|id| id == anchor))
+                    && super::source_corrections::retained_refund_measure(span, text, source)).then_some(path)
+            });
+            let Some(path) = matches.next() else { return true; };
+            if matches.next().is_some() { return true; }
+            refund_witnesses.push((id.to_owned(), path.to_owned()));
+            false
+        });
+        if !refund_witnesses.is_empty() {
+            for (id, path) in &refund_witnesses {
+                if let Some(SourceCheck::Covered { claim, proof, .. }) =
+                    fixed.checks.iter_mut().find(|check| check.id() == id)
+                {
+                    *claim = path.clone();
+                    *proof = None;
+                }
+            }
+            trace.last_mut().unwrap()["refundPeriodCoverage"] = json!(refund_witnesses);
+        }
         let acknowledgments: Vec<_> = rejected.iter().filter_map(|issue| retain_acknowledgment(issue, &evidence)).collect();
         if !acknowledgments.is_empty() {
             let retained: HashSet<_> = acknowledgments.iter().map(SourceCheck::id).collect();
