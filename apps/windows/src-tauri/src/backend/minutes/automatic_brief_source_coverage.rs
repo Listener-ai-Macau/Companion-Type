@@ -39,6 +39,62 @@ fn source_body(text: &str) -> &str {
         .map_or(text, |(_, body)| body).trim()
 }
 
+pub(super) fn omitted_reported_step<'a>(source: &'a str, summary: &str) -> Option<&'a str> {
+    static REPORTED: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:我们|咱们)(?P<lead>(?:就是|是|会|先|通常|一般|经常|实际|还|也|都|[ \t]){1,5})(?P<step>(?:进行|采取|开展|办理)[\p{Han}]{4,28})"
+    ).unwrap());
+    static TRANSITION: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"然后|接着|随后|再(?:去|由|请|把|查|联系|记录|复核|通知)"
+    ).unwrap());
+    let body = source_body(source);
+    let capture = REPORTED.captures(body)?;
+    let reported = capture.get(0)?;
+    let lead = body[..reported.start()].rsplit(['，', '。', '！', '？', '；']).next()?;
+    if ["可以", "建议", "打算", "如果", "假设", "比如", "比方", "没有", "不是"]
+        .iter().any(|marker| lead.contains(marker))
+        || body[..reported.start()].trim_end().ends_with(['不', '没'])
+    {
+        return None;
+    }
+    let found = capture.name("step")?;
+    let step = TRANSITION.split(found.as_str()).next()?;
+    let tail = &body[found.start() + step.len()..];
+    if (step == found.as_str() && tail.starts_with(char::is_alphanumeric))
+        || (!tail.contains('先') && !capture.name("lead")?.as_str().contains('先'))
+    {
+        return None;
+    }
+    let meaning = normalized(step).replace("就是进行", "").replace("就是", "");
+    let meaning = meaning.trim_start_matches("进行").trim_start_matches("采取")
+        .trim_start_matches("开展").trim_start_matches("办理");
+    if meaning.chars().count() < 4 || normalized(summary).contains(meaning) {
+        return None;
+    }
+    // Require separate anchors from the ordered clauses. A single shared
+    // word in a nearby discussion does not establish a partly retained process.
+    let summary = normalized(summary);
+    let witnessed: std::collections::HashSet<_> = TRANSITION.split(tail).filter_map(|clause| {
+        let letters: Vec<_> = normalized(clause).chars().collect();
+        letters.windows(3).filter(|part| part.iter().all(|ch| ch.is_alphanumeric()))
+            .map(|part| part.iter().collect::<String>())
+            .find(|part| summary.contains(part))
+    }).collect();
+    (witnessed.len() >= 2).then_some(step)
+}
+
+#[cfg(test)]
+#[test]
+fn reported_steps_require_a_partially_represented_process_and_literal_source() {
+    let source = "说话人7: 对这个工作啊是我们就是进行上门就是进行调解纠纷 就是举报以后，我们是先通过查监控然后了解业主，然后咱们就是可以通过给他打电话，请他注意。";
+    assert_eq!(omitted_reported_step(source, "物业应对投诉的流程是：查监控了解涉事业主，打电话提醒注意。"),
+        Some("进行上门就是进行调解纠纷"));
+    assert!(omitted_reported_step(source, "物业先查监控、打电话，也会上门调解纠纷。").is_none());
+    assert!(omitted_reported_step(source, "物业发现视频记录问题。").is_none());
+    let delivery = "我们通常先进行现场确认，然后记录编号，接着通知值班员。";
+    assert_eq!(omitted_reported_step(delivery, "记录编号并通知值班员。"), Some("进行现场确认"));
+    assert!(omitted_reported_step("如果我们通常先进行现场确认，然后记录编号，接着通知值班员。", "记录编号并通知值班员。").is_none());
+}
+
 fn calendar_end() -> &'static Regex {
     static PERIOD: LazyLock<Regex> = LazyLock::new(|| Regex::new(
         r"(?:一直到|持续到|延续到|截至|截止到|截止|到|至)[\s嗯呃]*(?P<month>1[012]|[1-9]|十一|十二|十|[一二三四五六七八九])\s*月(?:份儿?)?(?P<part>月底|底|初|上旬|中旬|下旬)?"

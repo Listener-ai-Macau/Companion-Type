@@ -551,6 +551,51 @@ pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, uni
     Ok(doc)
 }
 
+pub(super) fn restore_reported_steps(
+    doc: &Document, facts: &[Fact], units: &[Unit], trace: &mut Vec<Value>,
+) -> Result<Option<Document>, String> {
+    let retained = doc.topics.iter().map(|topic| topic.points.len() + topic.details.len()).sum::<usize>()
+        + doc.decisions.len() + doc.action_items.len() + doc.questions.len();
+    let limit = FACT_LIMIT.saturating_sub(retained).min(3);
+    if limit == 0 { return Ok(None); }
+
+    let evidence = factual_audit::evidence_sentences(units);
+    let by_id: HashMap<_, _> = evidence.iter()
+        .filter_map(|row| Some((row["id"].as_str()?, row))).collect();
+    let mut seen = HashSet::new();
+    let mut steps = Vec::new();
+    'facts: for fact in facts.iter().filter(|fact| fact.placement == Placement::Topic && matches!(fact.kind, Kind::Status)) {
+        let Some(topic) = doc.topics.iter().find(|topic| {
+            topic.points.iter().any(|point| point.text == fact.text)
+                || topic.details.iter().any(|entry| entry.text == fact.text)
+        }) else { continue; };
+        for id in &fact.evidence {
+            let Some(source) = by_id.get(id.as_str()).and_then(|row| row["text"].as_str()) else { continue; };
+            let Some(step) = super::source_coverage::omitted_reported_step(source, &fact.text)
+                else { continue; };
+            if steps.len() == limit { break 'facts; }
+            let compact = normalized(step).replace("就是进行", "").replace("就是", "");
+            let meaning = compact.trim_start_matches("进行").trim_start_matches("采取")
+                .trim_start_matches("开展").trim_start_matches("办理");
+            if !seen.insert((id, step))
+                || topic.points.iter().any(|entry| normalized(&entry.text).contains(meaning))
+                || topic.details.iter().any(|entry| normalized(&entry.text).contains(meaning))
+            {
+                continue;
+            }
+            steps.push(MissingItem {
+                item: SourceItem { role: Role::Status, text: format!("同一流程还提到「{step}」。"),
+                    evidence: vec![id.clone()], owner: None, due: None },
+                topic: Some(topic.title.clone()), new_aspect: None,
+            });
+        }
+    }
+    if steps.is_empty() { return Ok(None); }
+    trace.push(json!({"stage":"source-reported-procedure-recovery","added":steps.iter()
+        .map(|step| (&step.item.evidence, &step.item.text)).collect::<Vec<_>>() }));
+    append_missing(steps, doc.clone(), units, &evidence).map(Some)
+}
+
 pub(super) fn ordinary_source_aspect(text: &str) -> Option<(&'static str, &str)> {
     static PROGRESS: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
         r"(?:逐步|陆续|逐渐)(?:在|进行|开始)?(?:打开|拓展|扩充|开展|推广|恢复|推进|应用|转向|转移)"

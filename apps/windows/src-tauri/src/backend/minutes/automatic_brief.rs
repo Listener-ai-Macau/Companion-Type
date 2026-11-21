@@ -375,10 +375,32 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             unresolved_timings = final_bindings::unresolved_timings(&verified, &units);
             let reviewed = verified.document.clone();
             traced_document=Some(reviewed.clone());
-            match commitments::review(endpoint,model,key,client,verified,&units,start,&mut trace) {
+            let document = match commitments::review(endpoint,model,key,client,verified,&units,start,&mut trace) {
                 Ok(document) => document,
                 Err(reason) => {
                     let mut draft = reviewable(&reviewed, reason)?;
+                    append_pending_quotes(&mut draft, &pending_quotes);
+                    return Ok(draft);
+                }
+            };
+            match source_items::restore_reported_steps(&document, &facts, &units, &mut trace) {
+                Ok(Some(supplemented)) => {
+                    traced_document = Some(supplemented.clone());
+                    match factual_audit::review_and_repair_since(
+                        endpoint, model, key, client, &supplemented, &units, Some(&document), start, &mut trace,
+                    ) {
+                        Ok(verified) => verified,
+                        Err(reason) => {
+                            let mut draft = reviewable(&supplemented, reason)?;
+                            append_pending_quotes(&mut draft, &pending_quotes);
+                            return Ok(draft);
+                        }
+                    }
+                }
+                Ok(None) => document,
+                Err(reason) => {
+                    traced_document = Some(document.clone());
+                    let mut draft = reviewable(&document, reason)?;
                     append_pending_quotes(&mut draft, &pending_quotes);
                     return Ok(draft);
                 }
@@ -406,6 +428,9 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             }
         }
         validate(&doc, &units)?;
+        if source_items::enabled() && reconcile_overview_decisions(&mut doc) {
+            trace.push(json!({"stage":"source-overview-decision-reconciliation"}));
+        }
         traced_document=Some(doc.clone());
         let mut minutes = project_cloud_minutes(&doc, &units, session, base);
         append_pending_quotes(&mut minutes, &pending_quotes);
@@ -421,6 +446,40 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         }}
     }
     outcome
+}
+
+fn reconcile_overview_decisions(doc: &mut Document) -> bool {
+    if doc.decisions.is_empty() { return false; }
+    let purpose = doc.purpose.trim().trim_end_matches(['。', '！', '.']);
+    let Some((before, tail)) = purpose.rsplit_once(['，', ',', '；', ';', '。']) else { return false; };
+    let summary = before.rsplit(['，', ',', '；', ';', '。']).next().unwrap_or("").trim();
+    let blanket = match tail.trim() {
+        "本次会议未形成决定" | "本次会议未作出决定" | "全会没有形成决定" => true,
+        "未形成决定" | "未形成决议" | "尚未形成决定" | "没有形成决定" => {
+            ["多数为建议", "多为建议", "多数是建议", "多数仍为建议", "多为提议"].contains(&summary)
+        }
+        _ => false,
+    };
+    if !blanket || before.trim().is_empty() { return false; }
+    doc.purpose = format!("{}。", before.trim_end());
+    true
+}
+
+#[cfg(test)]
+#[test]
+fn verified_decisions_remove_only_a_meeting_wide_denial() {
+    let mut doc: Document = serde_json::from_value(json!({
+        "purpose":"汇报上季度投诉与整改情况，讨论门禁、防汛及停车，多数为建议，未形成决定。",
+        "topics":[], "decisions":[{"text":"明确不能向业主罚款。","sources":["u001"]}],
+        "actionItems":[], "questions":[]
+    })).unwrap();
+    assert!(reconcile_overview_decisions(&mut doc));
+    assert_eq!(doc.purpose, "汇报上季度投诉与整改情况，讨论门禁、防汛及停车，多数为建议。");
+    doc.purpose = "明确开幕时间，预算未形成决定。".into();
+    assert!(!reconcile_overview_decisions(&mut doc));
+    doc.purpose = "汇报上季度投诉，多数为建议，未形成决定。".into();
+    doc.decisions.clear();
+    assert!(!reconcile_overview_decisions(&mut doc));
 }
 
 #[cfg(test)]
