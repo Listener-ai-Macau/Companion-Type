@@ -1304,6 +1304,72 @@ fn unsupported_confirmation(issues: &[Value], claims: &[Value], source: &[Senten
     (!changes.is_empty()).then(|| json!({"changes":changes}).to_string())
 }
 
+fn retain_mentioned_comparison(
+    issues: &[Value], claims: &[Value], source: &[Sentence], attempted: &HashMap<String, (String, bool)>,
+) -> Option<String> {
+    const QUALIFIERS: &[&str] = &["也高", "也低", "也很高", "也很低", "同样高", "同样低"];
+    let changes = issues.iter().map(|issue| {
+        let path = issue["path"].as_str()?;
+        if issue["status"] != "overstated" || issue["clarity"] != "unclear"
+            || !path.starts_with("topics[") || path.ends_with(".title")
+        {
+            return None;
+        }
+        let claim = claims.iter().find(|claim| claim["path"] == path)?;
+        let (previous, unclear) = attempted.get(&statement_identity(path, claim))?;
+        if previous != "overstated" || *unclear { return None; }
+        let original = claim["text"].as_str()?;
+        let unclear = issue["unclearText"].as_str()?;
+        let name = QUALIFIERS.iter().find_map(|suffix| unclear.strip_suffix(suffix))?;
+        if !(2..=14).contains(&name.chars().count()) || !name.chars().all(char::is_alphanumeric)
+            || original.matches(unclear).count() != 1
+        {
+            return None;
+        }
+        let (before, after) = original.split_once(unclear)?;
+        if !before.ends_with(['、','，',',','；']) || !after.starts_with(['。','，','；',',',';']) {
+            return None;
+        }
+        let previous_clause = before.trim_end_matches(['、','，',',','；']);
+        let reason = issue["reason"].as_str()?;
+        let reported = issue["evidence"].as_array()?;
+        if !["未明确", "未说明", "没有说明", "没有确认"].iter().any(|cue| reason.contains(cue))
+            || !["可能", "或许", "大约"].iter().any(|cue| previous_clause.contains(cue))
+            || !source.iter().any(|sentence| reported.iter().any(|id| id == sentence.id.as_str())
+                && sentence.text.contains(name))
+            || source.iter().any(|sentence| reported.iter().any(|id| id == sentence.id.as_str())
+                && (sentence.text.contains(unclear) || sentence.text.match_indices(name).any(|(at, _)| {
+                    let rest = &sentence.text[at + name.len()..];
+                    let clause = rest.split(['，','。','；','\n']).next().unwrap_or_default();
+                    QUALIFIERS.iter().any(|cue| clause.contains(cue))
+                })))
+        {
+            return None;
+        }
+        let edited = format!("{previous_clause}，另提到「{name}」（具体情况待核实）{after}");
+        super::line(&edited, repair_text_limit(path)).then(|| json!({"path":path,"text":edited}))
+    }).collect::<Option<Vec<_>>>()?;
+    (!changes.is_empty()).then(|| json!({"changes":changes}).to_string())
+}
+
+#[cfg(test)]
+#[test]
+fn a_second_review_can_qualify_one_independent_comparison() {
+    let path = "topics[2].details[2]";
+    let claim = json!({"path":path,"text":"建议按每日活跃人数选平台，提到甲站日活可能超过3亿、乙站也高。"});
+    let issue = json!({"path":path,"status":"overstated","clarity":"unclear","unclearText":"乙站也高",
+        "reason":"原话提到乙站日活，未明确说乙站也高。","evidence":["e0001","e0002"]});
+    let mut source = vec![Sentence{id:"e0001".into(),source:"u000".into(),text:"按每日活跃人数，甲站可能有".into()},
+        Sentence{id:"e0002".into(),source:"u000".into(),text:"超过3亿嘛，还有乙站这种日活。".into()}];
+    let prior = HashMap::from([(statement_identity(path,&claim),("overstated".into(),false))]);
+    let actual = retain_mentioned_comparison(&[issue.clone()],&[claim.clone()],&source,&prior).unwrap();
+    assert_eq!(serde_json::from_str::<Value>(&actual).unwrap()["changes"][0]["text"],
+        "建议按每日活跃人数选平台，提到甲站日活可能超过3亿，另提到「乙站」（具体情况待核实）。");
+    assert!(retain_mentioned_comparison(&[issue.clone()],&[claim.clone()],&source,&HashMap::new()).is_none());
+    source[1].text = "超过3亿嘛；乙站日活也很高。".into();
+    assert!(retain_mentioned_comparison(&[issue],&[claim],&source,&prior).is_none());
+}
+
 fn unclear_optional_action_as_quote(issues: &[Value], claims: &[Value], source: &[Sentence]) -> Option<String> {
     let changes = issues.iter().map(|issue| {
         let path = issue["path"].as_str()?;
@@ -1755,6 +1821,8 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
                 .map(|raw| (raw, "localSeparateExampleRepair"))
                 .or_else(|| unsupported_confirmation(&issues, &audited_claims, &source)
                     .map(|raw| (raw, "localQuestionModalityRepair")))
+                .or_else(|| retain_mentioned_comparison(&issues, &audited_claims, &source, &attempted)
+                    .map(|raw| (raw, "localMentionedComparisonRepair")))
         } else { None };
         if round==2||(repeated && bounded_repair.is_none()) {
             return Err(format!("纪要复审仍有{}处未解决表述，已有结果保留。",issues.len()));

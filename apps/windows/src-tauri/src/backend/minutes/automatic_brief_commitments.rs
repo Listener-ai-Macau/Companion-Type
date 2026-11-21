@@ -691,6 +691,60 @@ fn decode_stance(candidates: &[Value], raw: &str, known: &SourceIndex<'_>) -> Re
     Ok(bound.accepted)
 }
 
+fn explicit_setting(text: &str) -> Option<(&str, &str, &str)> {
+    let first = text.split(['，', '。', '；', ',', ';']).next()?.trim();
+    let head = ["本次会议", "会议", "会上"].iter().find_map(|prefix| first.strip_prefix(prefix)).unwrap_or(first);
+    let head = ["先", "最初", "原先", "当时", "当前"].iter().find_map(|prefix| head.strip_prefix(prefix)).unwrap_or(head);
+    let setting = ["最终确定", "已经确定", "已确定", "已明确", "已确认", "确定", "定下"]
+        .iter().find_map(|prefix| head.strip_prefix(prefix))?;
+    let (subject, value) = setting.split_once('为')?;
+    let subject = subject.strip_prefix("最基本的").unwrap_or(subject).trim();
+    if !(3..=22).contains(&subject.chars().count()) || !subject.chars().all(char::is_alphanumeric)
+        || !super::line(value, 36) || ["可以", "考虑", "待核", "如果", "可能", "拟"]
+            .iter().any(|marker| value.contains(marker))
+    {
+        return None;
+    }
+    Some((subject, value.trim(), first))
+}
+
+fn retain_verified_later_settings(
+    verified: &factual_audit::VerifiedBrief, rows: &[Value], known: &SourceIndex<'_>,
+    edits: &mut HashMap<String, Fact>,
+) -> Vec<Value> {
+    let claims = factual_audit::claims(&verified.document);
+    let mut used = Vec::new();
+    for row in rows {
+        let Some(path) = row["id"].as_str().filter(|path| path.starts_with("decisions[")) else { continue; };
+        let Some([id]) = row["laterEvidence"].as_array().map(Vec::as_slice) else { continue; };
+        let Some(id) = id.as_str() else { continue; };
+        let Some(edit) = edits.get_mut(path).filter(|edit|
+            edit.placement == Placement::Decision && edit.evidence.iter().any(|e| e == id))
+        else { continue; };
+        let Some(before) = row["claim"]["text"].as_str().and_then(explicit_setting) else { continue; };
+        let Some(proposed) = explicit_setting(&edit.text) else { continue; };
+        if before.0 != proposed.0 || before.1 != proposed.1 { continue; }
+        let Some(quote) = known.get(id).and_then(|row| row["text"].as_str()) else { continue; };
+        if !quote.contains(before.0) || ["另一个", "另一家", "另一套", "其他门店"]
+            .iter().any(|cue| quote.contains(cue)) {
+            continue;
+        }
+        let candidates: HashSet<_> = claims.iter().filter_map(|claim| {
+            let path = claim["path"].as_str().filter(|path| path.starts_with("topics["))?;
+            let evidence = verified.evidence.get(path)?;
+            if !evidence.iter().any(|e| e == id) { return None; }
+            let (subject, value, text) = explicit_setting(claim["text"].as_str()?)?;
+            (subject == before.0 && value != before.1).then_some(text)
+        }).collect();
+        if candidates.len() != 1 { continue; }
+        let text = *candidates.iter().next().unwrap();
+        let next = format!("{}。", text.trim_end_matches('。'));
+        used.push(json!({"path":path,"laterEvidence":id,"previousText":edit.text,"confirmedText":next}));
+        edit.text = next;
+    }
+    used
+}
+
 fn apply(doc: &Document, candidates: &[Value], mut edits: HashMap<String, Fact>, known: &SourceIndex<'_>, units: &[Unit]) -> Result<Document, String> {
     let fail = || INCOMPLETE.to_owned();
     let mut work = serde_json::to_value(doc).map_err(|_| fail())?;
@@ -805,21 +859,44 @@ pub(super) fn review(endpoint:&str, model:&str, key:&str, client:&reqwest::block
         let edits = decode_execution(&execution, &raw, &known, &bound.accepted)?;
         bound.accepted.extend(edits);
     }
-    let revised_decision = rows.iter().any(|row| {
-        row["laterEvidence"].as_array().is_some_and(|later| bound.accepted.get(row["id"].as_str().unwrap())
-            .is_some_and(|edit| later.iter().any(|id| id.as_str().is_some_and(|id| edit.evidence.iter().any(|e| e == id)))))
-    });
+    let carried = retain_verified_later_settings(&verified, &rows, &known, &mut bound.accepted);
+    if !carried.is_empty() {
+        trace.push(json!({"stage":"source-verified-later-settings","changes":carried}));
+    }
     let improved = apply(&verified.document, &rows, bound.accepted, &known, units)?;
-    let improved = if revised_decision {
-        // Check the newly chosen wording against the full original order.
-        // The decision-role judgment is independent of factual support.
-        factual_audit::review_and_repair_since(
-            endpoint, model, key, client, &improved, units, Some(&verified.document), start, trace,
-        )?
-    } else {
-        improved
-    };
+    // Source-scope review independently audits all changed assertions once.
     super::source_scope::review(endpoint,model,key,client,&verified,improved,units,start,trace)
+}
+
+#[cfg(test)]
+#[test]
+fn a_revision_cannot_cite_the_later_value_and_keep_the_earlier_setting() {
+    let document: Document = serde_json::from_value(json!({"purpose":"讨论装修",
+        "topics":[{"title":"装修颜色","points":[{"kind":"status","text":"已确定主色调为棕色加一些红色，灯光用暖色调。","sources":["u002"]}],"details":[]}],
+        "decisions":[{"text":"会议先定下最基本的主色调为红色，可画黄色或白色涂鸦。","sources":["u000"]}],
+        "questions":[],"actionItems":[]})).unwrap();
+    let verified = factual_audit::VerifiedBrief {
+        document, evidence: HashMap::from([("topics[0].points[0]".into(),vec!["e0002".into()])]),
+        pending_quotes: Vec::new(),
+    };
+    let original = "会议先定下最基本的主色调为红色，可画黄色或白色涂鸦。";
+    let item = Fact {id:String::new(),kind:Kind::Decision,placement:Placement::Decision,
+        text:"先定下最基本的主色调为红色，可画黄色或白色涂鸦。".into(),owner:None,due:None,
+        evidence:vec!["e0000".into(),"e0002".into()]};
+    let mut edits = HashMap::from([("decisions[0]".into(),item.clone())]);
+    let row = json!({"id":"decisions[0]","claim":{"text":original},"laterEvidence":["e0002"]});
+    let other = json!({"text":"另一家店主色调我们已经确定是棕色加一些红色。"});
+    assert!(retain_verified_later_settings(
+        &verified,std::slice::from_ref(&row),&HashMap::from([("e0002",&other)]),&mut edits).is_empty());
+    let same = json!({"text":"这个主色调我们刚刚已经确定啦，就是棕色，然后加一些红色。"});
+    let known = HashMap::from([("e0002",&same)]);
+    assert_eq!(retain_verified_later_settings(
+        &verified,std::slice::from_ref(&row),&known,&mut edits).len(),1);
+    assert_eq!(edits["decisions[0]"].text,"已确定主色调为棕色加一些红色。");
+    assert_eq!(edits["decisions[0]"].evidence,["e0000","e0002"]);
+    let mut edits = HashMap::from([("decisions[0]".into(),item)]);
+    edits.get_mut("decisions[0]").unwrap().evidence.pop();
+    assert!(retain_verified_later_settings(&verified,&[row],&known,&mut edits).is_empty());
 }
 
 #[cfg(test)]
