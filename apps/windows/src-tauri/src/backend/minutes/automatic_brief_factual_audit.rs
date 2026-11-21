@@ -1466,11 +1466,27 @@ fn newly_disproved_placement(previously_accepted: bool, current: &Claim) -> bool
         && current.placement_unsupported == Some(true) && !current.evidence.is_empty()
 }
 
-fn changed_failure_axis(previous:&(String,bool),status:&str,unclear:bool)->bool{
+fn newly_exposed_scope(previous: &Claim, current: &Claim) -> bool {
+    if current.status != "overstated"
+        || !current.path.starts_with("topics[") || current.path.ends_with(".title")
+        || current.clarity.as_deref() != Some("clear") || source_wording_unclear(previous)
+    {
+        return false;
+    }
+    let repaired_unsupported_assertion = previous.status == "unsupported"
+        && (previous.path.starts_with("topics[") || independent_path(&previous.path));
+    let relocated_statement = previous.placement_unsupported == Some(true)
+        && independent_path(&previous.path);
+    (repaired_unsupported_assertion || relocated_statement)
+        && current.evidence.iter().any(|id| previous.evidence.contains(id))
+        && current.evidence.iter().any(|id| !previous.evidence.contains(id))
+}
+
+fn changed_failure_axis(previous_unclear: bool, status: &str, unclear: bool) -> bool {
     // One existing repair opportunity may address a newly exposed ambiguity,
     // or a distinct scope error after ambiguity was actually removed. Repeated
     // ambiguity/scope and newly unsupported claims still stop immediately.
-    (!previous.1&&unclear)||(previous.1&&!unclear&&status=="overstated")
+    (!previous_unclear && unclear) || (previous_unclear && !unclear && status == "overstated")
 }
 fn newly_exposed_ambiguity(previous:Option<&str>,next:Option<&str>,claim:&Value)->bool{
     // A path may contain several independently unclear expressions. Progress
@@ -1592,7 +1608,7 @@ fn unsupported_confirmation(issues: &[Value], claims: &[Value], source: &[Senten
 }
 
 fn retain_mentioned_comparison(
-    issues: &[Value], claims: &[Value], source: &[Sentence], attempted: &HashMap<String, (String, bool)>,
+    issues: &[Value], claims: &[Value], source: &[Sentence], attempted: &HashMap<String, Claim>,
 ) -> Option<String> {
     const QUALIFIERS: &[&str] = &["也高", "也低", "也很高", "也很低", "同样高", "同样低"];
     let changes = issues.iter().map(|issue| {
@@ -1603,8 +1619,8 @@ fn retain_mentioned_comparison(
             return None;
         }
         let claim = claims.iter().find(|claim| claim["path"] == path)?;
-        let (previous, unclear) = attempted.get(&statement_identity(path, claim))?;
-        if previous != "overstated" || *unclear { return None; }
+        let previous = attempted.get(&statement_identity(path, claim))?;
+        if previous.status != "overstated" || source_wording_unclear(previous) { return None; }
         let original = claim["text"].as_str()?;
         let unclear = issue["unclearText"].as_str()?;
         let name = QUALIFIERS.iter().find_map(|suffix| unclear.strip_suffix(suffix))?;
@@ -1648,7 +1664,9 @@ fn a_second_review_can_qualify_one_independent_comparison() {
         "reason":"原话提到乙站日活，未明确说乙站也高。","evidence":["e0001","e0002"]});
     let mut source = vec![Sentence{id:"e0001".into(),source:"u000".into(),text:"按每日活跃人数，甲站可能有".into()},
         Sentence{id:"e0002".into(),source:"u000".into(),text:"超过3亿嘛，还有乙站这种日活。".into()}];
-    let prior = HashMap::from([(statement_identity(path,&claim),("overstated".into(),false))]);
+    let prior_verdict = serde_json::from_value(json!({"path":path,"status":"overstated",
+        "reason":"未区分日活范围。","evidence":["e0001"],"clarity":"clear"})).unwrap();
+    let prior = HashMap::from([(statement_identity(path,&claim),prior_verdict)]);
     let actual = retain_mentioned_comparison(&[issue.clone()],&[claim.clone()],&source,&prior).unwrap();
     assert_eq!(serde_json::from_str::<Value>(&actual).unwrap()["changes"][0]["text"],
         "建议按每日活跃人数选平台，提到甲站日活可能超过3亿，另提到「乙站」（具体情况待核实）。");
@@ -2006,9 +2024,9 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
     let source=sentences(units);
     let wire=json!(units.iter().map(|u|json!({"id":u.id,"sentences":source.iter().filter(|s|s.source==u.id).map(|s|json!({"id":s.id,"text":s.text})).collect::<Vec<_>>()})).collect::<Vec<_>>());
     let FactualDraft { document: current, pending_quotes } = draft;
-    let mut attempted:HashMap<String,(String,bool)>=HashMap::new();let mut attempted_phrases:HashMap<String,String>=HashMap::new();let recovered_format=AtomicBool::new(false);
+    let mut attempted: HashMap<String, Claim> = HashMap::new();
+    let recovered_format = AtomicBool::new(false);
     let mut attribution_repairs = HashSet::new();
-    let mut previously_accepted_placements = HashSet::new();
     let mut unclear_history:HashMap<String,Vec<String>>=HashMap::new();let mut recovered_display=false;
     let mut verified_claims = match verified {
         Some(verified) if super::source_items::enabled() => unchanged_source_assertions(current, verified),
@@ -2087,10 +2105,11 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
         let repeated=audit.claim_audit.iter().filter(|c|c.status!="supported").any(|c|{
             let Some(claim)=audited_claims.iter().find(|claim|claim["path"].as_str()==Some(c.path.as_str())) else {return false;};
             let key = if super::source_items::enabled() { statement_identity(&c.path, claim) } else { c.path.clone() };
-            let distinct_ambiguity=source_wording_unclear(c)&&newly_exposed_ambiguity(
-                attempted_phrases.get(&key).map(String::as_str),c.unclear_text.as_deref(),claim);
             attempted.get(&key).is_some_and(|old|{
-                let sourced_new_issue = super::source_items::enabled() && old.1 && c.status == "unsupported"
+                let old_unclear = old.status == "unclear" || source_wording_unclear(old);
+                let distinct_ambiguity = source_wording_unclear(c)
+                    && newly_exposed_ambiguity(old.unclear_text.as_deref(), c.unclear_text.as_deref(), claim);
+                let sourced_new_issue = super::source_items::enabled() && old_unclear && c.status == "unsupported"
                     && !source_wording_unclear(c) && !c.evidence.is_empty();
                 let modality_after_attribution = super::source_items::enabled()
                     && attribution_repairs.contains(&key) && c.status == "overstated"
@@ -2098,9 +2117,10 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
                     && source.iter().any(|sentence| c.evidence.contains(&sentence.id)
                         && ["会不会", "是不是", "能不能", "是否", "可能"]
                             .iter().any(|term| sentence.text.contains(term)));
-                !(allow_conservative&&(changed_failure_axis(old,&c.status,c.status=="unclear"||source_wording_unclear(c))
+                !(allow_conservative&&(changed_failure_axis(old_unclear, &c.status, c.status == "unclear" || source_wording_unclear(c))
                     ||distinct_ambiguity||sourced_new_issue||modality_after_attribution
-                    ||newly_disproved_placement(super::source_items::enabled() && previously_accepted_placements.contains(&key), c)))
+                    ||newly_disproved_placement(super::source_items::enabled() && old.placement_unsupported == Some(false), c)
+                    ||(super::source_items::enabled() && newly_exposed_scope(old, c))))
             })
         });
         // A re-audit can identify a different defect after attribution was fixed.
@@ -2206,7 +2226,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
             carry_verified_after_scoped_repair(&next.document, &current, &mut verified_claims, &mut evidence);
         }
         *current=next.document;
-        for issue in audit.claim_audit.iter().filter(|c|c.status!="supported"){
+        for issue in audit.claim_audit.into_iter().filter(|c| c.status != "supported") {
             let key = if super::source_items::enabled() {
                 let Some(key) = next.corrected_statements.get(&issue.path) else {continue;};
                 key.clone()
@@ -2214,11 +2234,7 @@ fn review(endpoint:&str,model:&str,key:&str,client:&reqwest::blocking::Client,dr
             if ["不能归", "不能并入", "不能整体归", "归属错误", "归错"].iter().any(|term| issue.reason.contains(term)) {
                 attribution_repairs.insert(key.clone());
             }
-            if issue.placement_unsupported == Some(false) {
-                previously_accepted_placements.insert(key.clone());
-            }
-            attempted.insert(key.clone(),(issue.status.clone(),issue.status=="unclear"||source_wording_unclear(issue)));
-            if let Some(phrase)=&issue.unclear_text{attempted_phrases.insert(key,phrase.clone());}
+            attempted.insert(key, issue);
         }
     }
     Err("纪要复审未完成，已有结果保留。".into())
@@ -2240,6 +2256,29 @@ mod tests {
         verdict.evidence.clear();
         assert!(!newly_disproved_placement(true,&verdict));
     }
+    #[test]
+    fn a_second_scope_repair_needs_related_new_evidence_after_an_actual_correction() {
+        let previous: Claim = serde_json::from_value(json!({"path":"questions[1]","status":"overstated",
+            "reason":"现场已有回应。","evidence":["e0010","e0011"],"clarity":"clear","placementUnsupported":true})).unwrap();
+        let current: Claim = serde_json::from_value(json!({"path":"topics[1].details[19]","status":"overstated",
+            "reason":"答复里只有提前协商。","evidence":["e0011","e0012"],"clarity":"clear"})).unwrap();
+        assert!(newly_exposed_scope(&previous, &current));
+        let mut previous = previous;
+        previous.path = current.path.clone();
+        previous.placement_unsupported = None;
+        assert!(!newly_exposed_scope(&previous, &current));
+        previous.status = "unsupported".into();
+        assert!(newly_exposed_scope(&previous, &current));
+        let mut current = current;
+        current.evidence = vec!["e0011".into()];
+        assert!(!newly_exposed_scope(&previous, &current));
+        current.evidence = vec!["e0089".into()];
+        assert!(!newly_exposed_scope(&previous, &current));
+        current.evidence.push("e0011".into());
+        current.path = "topics[0].title".into();
+        assert!(!newly_exposed_scope(&previous, &current));
+    }
+
     #[test]
     fn audited_wrong_columns_cannot_survive_a_text_only_correction() {
         let units=vec![Unit{id:"u000".into(),text:"建议延后采购，现场已答复。".into()}];
@@ -2285,12 +2324,12 @@ mod tests {
     }
     #[test]
     fn automatic_brief_second_repair_requires_a_distinct_failure_axis(){
-        assert!(changed_failure_axis(&("overstated".into(),false),"unclear",true));
-        assert!(changed_failure_axis(&("unclear".into(),true),"overstated",false));
-        assert!(changed_failure_axis(&("overstated".into(),true),"overstated",false));
-        assert!(!changed_failure_axis(&("unclear".into(),true),"unclear",true));
-        assert!(!changed_failure_axis(&("overstated".into(),false),"overstated",false));
-        assert!(!changed_failure_axis(&("unclear".into(),true),"unsupported",false));
+        assert!(changed_failure_axis(false, "unclear", true));
+        assert!(changed_failure_axis(true, "overstated", false));
+        assert!(changed_failure_axis(true, "overstated", false));
+        assert!(!changed_failure_axis(true, "unclear", true));
+        assert!(!changed_failure_axis(false, "overstated", false));
+        assert!(!changed_failure_axis(true, "unsupported", false));
     }
     #[test]
     fn automatic_brief_scope_repair_cannot_revive_previously_rejected_unclear_terms(){
