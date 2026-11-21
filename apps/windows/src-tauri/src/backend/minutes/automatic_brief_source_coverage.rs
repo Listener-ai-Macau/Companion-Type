@@ -167,7 +167,7 @@ pub(super) fn material_cues(facts: &[Fact], evidence: &[Value]) -> Vec<(String, 
                     return facet_has_witness(focus.label(), span, "", &text);
                 }
                 text.contains(&normalized(span)) && (focus != Focus::AcceptedProposal
-                    || fact.placement == Placement::Decision || fact.kind == Kind::Status)
+                    || fact.placement == Placement::Decision || matches!(fact.kind, Kind::Status))
             })) {
                 pool.entry(focus).or_default().push((id, span));
             }
