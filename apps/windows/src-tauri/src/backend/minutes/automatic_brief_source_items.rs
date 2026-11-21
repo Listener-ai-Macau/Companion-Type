@@ -1009,7 +1009,10 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
             let required = context["cue"]["span"].as_str()?;
             proof.as_ref().is_some_and(|proof| coverage_quote_is_grounded(&proof.source_quote, source_text)
                 && aspect_quote_covers_clause(&proof.source_quote, required, aspect)
-                && (!matches!(aspect, "交办后又提问" | "交办的内容范围") || !claim.starts_with("questions[")))
+                && (!matches!(aspect, "交办后又提问" | "交办的内容范围") || !claim.starts_with("questions["))
+                && target.is_some_and(|statement| super::source_coverage::facet_has_witness(
+                    aspect, required, statement["kind"].as_str().unwrap_or(""),
+                    statement["text"].as_str().unwrap_or(""))))
         } else { true };
         let measure_matches = context["cue"]["aspect"].is_string() || target.is_some_and(|claim| {
             contextual_measure_witness(context["cue"]["span"].as_str().unwrap(), claim, source_text)
@@ -1021,13 +1024,18 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
             context["sourceNeedsCheck"] == true && !target.and_then(|row| row["text"].as_str())
                 .is_some_and(|text| restriction().is_match(text))
         });
-        if grounded && ordinary_proof && measure_matches && omitted_qualification.is_none() { return None; }
+        let linked = context["eligibleWitnesses"].as_array()
+            .is_none_or(|candidates| candidates.iter().any(|entry| entry["path"] == claim.as_str()));
+        if grounded && ordinary_proof && measure_matches && omitted_qualification.is_none() && linked { return None; }
         let mut issue = context.clone();
         issue["previousClaim"] = json!(claim);
+        if let Some(target) = target {
+            issue["rejectedWitness"] = target.clone();
+        }
         issue["reason"] = json!(if target.is_none() {
             "事项编号与现有稿不匹配。请原样复制现有事项的 path；无法对应时说明缺失、背景或待核实。"
         } else if !ordinary_proof {
-            "要覆盖线索标记的实际进展或独立交办。引文须包含该线索，不能用同段的提问或回答代替。"
+             "引文须覆盖线索标记的独立事实以及相应状态，例如时间范围、明确确认或交办。与该事实有关的提问、建议和其他阶段的事项不足以证明已写。"
         } else if !measure_matches {
             "该正文未保留原话的同一数量或时长。若原话数字只是口语描述、例子或含混片段，应说明其性质；若关乎实际理解或执行，补入正确事实或写待核实。"
         } else if omitted_qualification.is_some() {
@@ -1035,6 +1043,11 @@ fn rejected_coverage(checks: &[SourceCheck], disputed: &[Value], doc: &Document,
         } else { "必须分别提供原话与现有正文实际出现的同一事实短句。" });
         if let Some(qualification) = omitted_qualification {
             issue["unrepresentedSourceQuote"] = json!(qualification.as_str());
+            let anchor = context["cue"]["evidence"].as_str()?;
+            issue["eligibleWitnesses"] = json!(clauses.iter().filter(|entry| {
+                let Some(path) = entry["path"].as_str() else { return false; };
+                path != claim && bindings.get(path).is_some_and(|ids| ids.iter().any(|id| id == anchor))
+            }).collect::<Vec<_>>());
             let related = related_causal_evidence(evidence, source, qualification.as_str());
             if !related.is_empty() {
                 issue["relatedCausalEvidence"] = json!(related);
@@ -1268,7 +1281,11 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     }).collect();
     let mut input = json!({"sourceSentences":evidence,"currentBrief":doc,"lexicalCues":cues,"claimEvidence":bindings});
     if cues.iter().any(|cue| cue.aspect.is_some()) {
-        input["aspectInstructions"] = json!("每条 aspect 核对的是引用中单独的含义。实际进展区分已做与正在做；交办和提问分开。限定和例外要保留适用情形；已发生的处置不能改成建议；交办范围要与相应待办相连。负责人和期限只写原话明确的内容。");
+        let common = "每条 aspect 核对的是引用中单独的含义。实际进展区分已做与正在做；交办和提问分开。限定和例外要保留适用情形；已发生的处置不能改成建议；交办范围要与相应待办相连。负责人和期限只写原话明确的内容。";
+        let scoped = cues.iter().any(|cue| matches!(cue.aspect.as_deref(), Some("会议安排的时间范围" | "明确确认的进展或方案")));
+        input["aspectInstructions"] = if scoped {
+            json!(format!("{common}会议安排的时间范围要和其议题一起保留，不能当成任务的完成日期。明确确认的进展或方案应保留谁确认了什么和实际状态；连续提议、客套回应或假设仍按原话处理。"))
+        } else { json!(common) };
     }
     let raw = super::request(endpoint, model, key, client, FIND_MISSING,
         input, false, start, trace, "source-items-omissions")?;
