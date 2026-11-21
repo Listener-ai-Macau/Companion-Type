@@ -482,9 +482,39 @@ fn apply_changes(raw:&str,doc:&Document,allowed:&HashSet<String>,unclear:&HashSe
     apply_changes_with_policy(raw,doc,allowed,unclear,&HashMap::new(),&HashSet::new(),units)
 }
 
+fn neutralize_qualified_department(corrected: &str, phrase: &str) -> Option<String> {
+    if !(2..=14).contains(&phrase.chars().count())
+        || !["部", "处", "科", "室", "中心", "小组"].iter().any(|suffix| phrase.ends_with(suffix))
+        || corrected.matches(phrase).count() != 1
+    {
+        return None;
+    }
+    let quoted = format!("“{phrase}”");
+    let (before, after) = corrected.split_once(&quoted)?;
+    let report = ["说话中所称", "发言中所称", "原话所称"].iter().find_map(|term| before.strip_suffix(term))?;
+    if !["建议：", "提议：", "讨论："].iter().any(|term| report.ends_with(term)) {
+        return None;
+    }
+    let (proposal, tail) = after.trim_end_matches(['。', '.']).rsplit_once('，')?;
+    if !["该称谓具体所指待核对", "该称谓具体所指待核实", "其部门名称待核对", "其部门名称待核实"]
+            .contains(&tail)
+        || !proposal.starts_with('可')
+        || proposal.contains(['。','；','！','？','\n'])
+        || ["已经批准", "已经确定", "已决定", "必须", "肯定"].iter().any(|term| proposal.contains(term))
+    {
+        return None;
+    }
+    let text = format!("{report}某部门（具体名称待核对）{proposal}。");
+    super::line(&text, 120).then_some(text)
+}
+
 fn mask_unclear_quote(corrected: &str, phrases: &[String]) -> String {
     let mut result = corrected.to_owned();
     for phrase in phrases.iter().filter(|phrase| !phrase.is_empty()) {
+        if let Some(text) = neutralize_qualified_department(&result, phrase) {
+            result = text;
+            continue;
+        }
         if corrected.trim_end_matches(['。', '.']).ends_with("含义待核对") {
             result = result.replace(&format!("“{phrase}”"), "一处含混表述");
         }
@@ -528,6 +558,21 @@ fn mask_unclear_quote(corrected: &str, phrases: &[String]) -> String {
         }
     }
     result
+}
+
+#[cfg(test)]
+#[test]
+fn a_reported_department_can_stay_pending_without_asserting_its_name() {
+    let text = "会上曾建议：说话中所称“财政部”可多出一部分资金给市场部和运营部，该称谓具体所指待核对。";
+    let terms = vec!["财政部".to_owned()];
+    assert_eq!(mask_unclear_quote(text,&terms),
+        "会上曾建议：某部门（具体名称待核对）可多出一部分资金给市场部和运营部。");
+    let approved = text.replace("可多出","已决定多出");
+    assert_eq!(mask_unclear_quote(&approved,&terms),approved);
+    let no_flag = text.replace("具体所指待核对","已经确定");
+    assert_eq!(mask_unclear_quote(&no_flag,&terms),no_flag);
+    let two = text.replace("市场部和运营部","市场部和财政部");
+    assert_eq!(mask_unclear_quote(&two,&terms),two);
 }
 
 #[cfg(test)]
