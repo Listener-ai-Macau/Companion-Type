@@ -184,8 +184,79 @@ fn source_scope(verified: &VerifiedBrief, doc: &Document, source: &[Value]) -> V
             ));
         }
     }
+    for answer in hypothetical_answer_checks(verified, doc, source, &positions, &current) {
+        if !checks.iter().any(|check| check["claim"]["path"] == answer["claim"]["path"]) {
+            checks.push(answer);
+        }
+    }
     for (index, check) in checks.iter_mut().enumerate() {
         check["id"] = json!(format!("s{index:03}"));
+    }
+    checks
+}
+
+fn hypothetical_answer_checks(
+    verified: &VerifiedBrief,
+    doc: &Document,
+    source: &[Value],
+    positions: &HashMap<&str, usize>,
+    claims: &[Value],
+) -> Vec<Value> {
+    let labeled = super::commitments::with_turn_labels(source);
+    let mut checks = Vec::new();
+    for (index, row) in source.iter().enumerate() {
+        let raw = row["text"].as_str().unwrap();
+        let Some(setup) = super::source_coverage::independent_source_facets(raw).into_iter()
+            .find(|facet| facet.label == "设例") else { continue; };
+        let scenario = packet(source, index, "sourceScenario", vec![index], None);
+        let Some(title) = verified_topic(verified, doc, &scenario, source) else { continue; };
+        let Some(topic) = verified.document.topics.iter().position(|topic| topic.title == title) else { continue; };
+        let prefix = format!("topics[{topic}].points[");
+        for claim in claims.iter().filter(|claim| {
+            claim["kind"] == "status" && claim["path"].as_str().is_some_and(|path| path.starts_with(&prefix))
+                && claim["text"].as_str().is_some_and(|text| {
+                    ["法律要求", "法律规定", "法规规定", "依法必须"].iter().any(|head| text.starts_with(head))
+                })
+        }) {
+            let path = claim["path"].as_str().unwrap();
+            let Some(point) = path.strip_prefix(&prefix).and_then(|value| value.trim_end_matches(']').parse::<usize>().ok())
+                .and_then(|point| verified.document.topics[topic].points.get(point))
+            else { continue; };
+            if claim["text"] != point.text || claim["sources"] != json!(point.sources)
+                || checks.iter().any(|check: &Value| check["claim"]["path"] == path)
+            {
+                continue;
+            }
+            let Some(accepted) = verified.evidence.get(path) else { continue; };
+            if accepted.is_empty() || accepted.len() > 7 { continue; }
+            let Some(offsets) = accepted.iter().map(|id| positions.get(id.as_str()).copied()).collect::<Option<Vec<_>>>()
+            else { continue; };
+            if offsets.iter().any(|offset| *offset <= index || *offset > index + 36 || source[*offset]["source"] != row["source"]) {
+                continue;
+            }
+            let speakers: HashSet<_> = offsets.iter().filter_map(|offset| {
+                let quoted = &labeled[*offset];
+                let raw = quoted["text"].as_str()?;
+                let (_, body) = super::super::source_resolution::split_turn_label(raw).unwrap_or(("", raw));
+                (body.trim().chars().count() > 5).then(|| quoted["turnSpeaker"].as_str()).flatten()
+            }).collect();
+            if speakers.is_empty() { continue; }
+            let mut names: Vec<_> = speakers.into_iter().collect();
+            names.sort_unstable();
+            let mut required = vec![index];
+            required.extend(offsets);
+            let mut check = packet(source, index, "hypotheticalAnswer", required.clone(), Some(claim));
+            let mut nearby: Vec<_> = required.iter().flat_map(|offset| {
+                offset.saturating_sub(1)..(*offset + 2).min(source.len())
+            }).collect();
+            nearby.sort_unstable();
+            nearby.dedup();
+            check["context"] = json!(nearby.into_iter().map(|offset| &source[offset]["id"]).collect::<Vec<_>>());
+            check["scenarioQuote"] = json!(setup.quote);
+            check["requiredSpeakers"] = json!(names);
+            check["instruction"] = json!("把原文设例与答复写在同一条观点中。用“在这一设例中”或“在这个假设中”限定适用场景。明确标出requiredSpeakers中每位说话人的编号及各自作出的具体判断；有人只是赞同另一人的说法时，保留赞同与首提的区别。不要代会议确认普遍法条或定罪，保留已经审核的关系、判断和分歧。使用opinion，证据包括全部requiredEvidence。");
+            checks.push(check);
+        }
     }
     checks
 }
@@ -427,6 +498,14 @@ fn apply_scope(
         if check["kind"] == "narrowedConclusion" && !has_condition(&fact.text) {
             return Err(fail());
         }
+        let hypothetical_answer = check["kind"] == "hypotheticalAnswer";
+        if hypothetical_answer && (fact.kind != super::Kind::Opinion
+            || !["设例", "假设", "例子"].iter().any(|cue| fact.text.contains(cue))
+            || check["requiredSpeakers"].as_array().into_iter().flatten().filter_map(Value::as_str)
+                .any(|speaker| !fact.text.contains(speaker)))
+        {
+            return Err(fail());
+        }
         let path = check["claim"]["path"]
             .as_str()
             .map(str::to_owned)
@@ -447,6 +526,7 @@ fn apply_scope(
                     sources,
                     quantity_needs_review: false,
                 },
+                hypothetical_answer,
             ));
         } else {
             additions.push(MissingItem {
@@ -461,7 +541,7 @@ fn apply_scope(
     }
     if !replacements.is_empty() {
         let mut value = serde_json::to_value(doc).map_err(|_| fail())?;
-        for (path, entry) in replacements {
+        for (path, entry, hypothetical_answer) in replacements {
             let pointer = format!(
                 "/{}",
                 path.replace('[', "/").replace(']', "").replace('.', "/")
@@ -469,6 +549,9 @@ fn apply_scope(
             let target = value.pointer_mut(&pointer).ok_or_else(fail)?;
             target["text"] = json!(entry.text);
             target["sources"] = json!(entry.sources);
+            if hypothetical_answer {
+                target["kind"] = json!(super::Kind::Opinion);
+            }
         }
         doc = serde_json::from_value(value).map_err(|_| fail())?;
     }
@@ -580,6 +663,39 @@ fn a_setup_goes_with_the_following_explanation_in_its_own_source_unit() {
     let repaired = restore_source_facets(doc,&verified,&units,&source,&mut Vec::new()).unwrap();
     assert!(repaired.topics[0].details.is_empty());
     assert!(repaired.topics[1].details[0].text.contains("两份资料都丢了"));
+}
+
+#[cfg(test)]
+#[test]
+fn a_hypothetical_answer_requires_attribution_to_the_actual_responders() {
+    let units = vec![Unit{id:"u000".into(),text:concat!(
+        "说话人2: 举个例子，两台仪器都损坏了，你是先修甲机还是先换乙机？
+",
+        "说话人2: 这个情况下只修甲机，乙机没有必要换。
+",
+        "说话人1: 也许还要检查同一批仪器。"
+    ).into()}];
+    let doc: Document = serde_json::from_value(json!({"purpose":"交流设备处置",
+        "topics":[{"title":"维修问答","points":[
+            {"kind":"status","text":"法规规定应先修甲机，可继续检查同批仪器。","sources":["u000"]},
+            {"kind":"status","text":"周五完成例行巡检。","sources":["u000"]}
+        ],"details":[]}],"decisions":[],"questions":[],"actionItems":[]})).unwrap();
+    let verified = VerifiedBrief{document:doc.clone(),evidence:HashMap::from([
+        ("topics[0].points[0]".into(),vec!["e0001".into(),"e0002".into()])
+    ]),pending_quotes:Vec::new()};
+    let source = factual_audit::evidence_sentences(&units);
+    let checks = source_scope(&verified,&doc,&source);
+    assert_eq!(checks.len(),1);
+    assert_eq!(checks[0]["requiredSpeakers"],json!(["说话人1","说话人2"]));
+    assert_eq!(checks[0]["requiredEvidence"],json!(["e0000","e0001","e0002"]));
+    let mut reply = json!({"scopeChecks":[{"id":"s000","topic":null,
+        "item":{"role":"opinion","text":"在这一设例中，说话人2主张先修甲机，说话人1认为也许还需判断同批仪器。",
+            "evidence":["e0000","e0001","e0002"],"owner":null,"due":null}}]});
+    let result = apply_scope(doc.clone(),&reply.to_string(),&checks,&units,&source,&verified).unwrap();
+    assert_eq!(result.topics[0].points[0].kind,super::Kind::Opinion);
+    assert_eq!(result.topics[0].points[1].text,"周五完成例行巡检。");
+    reply["scopeChecks"][0]["item"]["text"] = json!("在这一设例中，说话人2主张先修甲机并检查同批仪器。");
+    assert!(apply_scope(doc,&reply.to_string(),&checks,&units,&source,&verified).is_err());
 }
 
 pub(super) fn review(
