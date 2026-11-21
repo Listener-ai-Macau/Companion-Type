@@ -68,6 +68,8 @@ pub(super) struct SourceItem {
 }
 
 impl SourceItem {
+    pub(super) fn is_action(&self) -> bool { matches!(self.role, Role::Action) }
+
     pub(super) fn bind(self, known: &HashMap<&str, &Value>, known_ids: &HashSet<&str>) -> Result<Fact, String> {
         let (kind, placement) = self.role.category();
         if !line(&self.text, 90) || self.evidence.is_empty() || self.evidence.len() > 8 {

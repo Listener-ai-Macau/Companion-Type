@@ -178,6 +178,79 @@ fn preserve_assigned_action(original: &Value, fact: &Fact) -> bool {
 
 type SourceIndex<'a> = HashMap<&'a str, &'a Value>;
 
+fn recover_collective_owner(
+    original: &Value, item: &mut source_items::SourceItem, requested: &str, bad_proof: &str,
+    known: &SourceIndex<'_>,
+) -> Option<String> {
+    let claim = &original["claim"];
+    let text = claim["text"].as_str()?;
+    let original_prefix = text.trim_end_matches(['。', '！', '？']);
+    let original_modified = item.text.strip_prefix(original_prefix)?;
+    let basis = original["basis"].as_array()?;
+    let context = original["context"].as_array()?;
+    if claim["kind"] != "action" || !claim["owner"].is_null() || !item.is_action()
+        || claim["due"].as_str() != item.due.as_deref()
+        || !requested.starts_with('各')
+        || !["要求", "交给", "请", "由", "让"].iter().any(|cue| text.contains(&format!("{cue}{requested}")))
+        || !original_modified.is_empty() && !original_modified.starts_with(['。', '，', '；', '、', ',', ';'])
+        || !basis.iter().any(|id| id == bad_proof)
+    {
+        return None;
+    }
+    let sentence_number = |id: &str| id.strip_prefix('e')?.parse::<u32>().ok();
+    let anchor = sentence_number(bad_proof)?;
+    let speaker = known[bad_proof]["turnSpeaker"].as_str()?;
+    let addresses = [format!("你们{requested}"), format!("咱们{requested}")];
+    let mut witnesses = item.evidence.iter().filter_map(|id| {
+        let quote = known.get(id.as_str())?;
+        let distance = sentence_number(id)?.checked_sub(anchor)?;
+        (distance > 0 && distance <= 3 && quote["turnSpeaker"] == speaker
+            && context.iter().any(|entry| entry == id)
+            && addresses.iter().any(|form| quote["text"].as_str().is_some_and(|text| text.contains(form))))
+            .then_some(id.as_str())
+    });
+    let proof = witnesses.next()?.to_owned();
+    if witnesses.any(|id| id != proof) { return None; }
+
+    // Keep the already audited task text. A nearby witness may fill owner,
+    // but it cannot merge another operation into the original task.
+    item.text = text.to_owned();
+    item.evidence = basis.iter().filter_map(Value::as_str).map(str::to_owned).collect();
+    Some(proof)
+}
+
+#[cfg(test)]
+#[test]
+fn collective_owner_rebinds_only_from_nearby_audited_assignment() {
+    let original = json!({
+        "claim":{"kind":"action","text":"主持人要求各组整理清单。","owner":null,"due":null},
+        "basis":["e0041","e0042"],"context":["e0041","e0042","e0043"]
+    });
+    let proposed = json!({
+        "id":"actionItems[0]",
+        "replacement":{"role":"action","text":"主持人要求各组整理清单，然后发给经理。","owner":"各组","due":null,
+            "evidence":["e0041","e0042","e0043"]},"ownerEvidence":"e0041"
+    });
+    let source = [
+        json!({"id":"e0041","text":"主持人：请大家整理一下。","turnSpeaker":"主持人"}),
+        json!({"id":"e0042","text":"整理成一份清单。","turnSpeaker":"主持人"}),
+        json!({"id":"e0043","text":"主持人：你们各组的清单随后发给经理。","turnSpeaker":"主持人"}),
+    ];
+    let run = |rows: &[Value], claim: &Value| {
+        let known: SourceIndex<'_> = rows.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
+        let ids = known.keys().copied().collect();
+        bind_edit(serde_json::from_value(proposed.clone()).unwrap(), claim, &known, &ids)
+    };
+    let edit = run(&source, &original).unwrap().unwrap();
+    assert_eq!(edit.text, "主持人要求各组整理清单。");
+    assert_eq!(edit.owner.as_deref(), Some("各组"));
+    assert_eq!(edit.evidence, ["e0041","e0042","e0043"]);
+
+    let mut unrelated = source;
+    unrelated[2]["turnSpeaker"] = json!("其他发言");
+    assert!(run(&unrelated, &original).is_err());
+}
+
 fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids: &HashSet<&str>) -> Result<Option<Fact>, &'static str> {
     let context: HashSet<_> = original["context"].as_array().unwrap().iter().filter_map(Value::as_str).collect();
     let basis: HashSet<_> = original["basis"].as_array().unwrap().iter().filter_map(Value::as_str).collect();
@@ -194,15 +267,24 @@ fn bind_edit(check: Check, original: &Value, known: &SourceIndex<'_>, known_ids:
                 return Err("任务缺少 basis 中说明原事项的句子。承接者发言不能代替任务原话。");
             }
             if let Some(proof) = owner_evidence {
-                let proof = allowed(&proof).ok_or("ownerEvidence 不在本条相邻原话中。")?;
+                let mut proof = allowed(&proof).ok_or("ownerEvidence 不在本条相邻原话中。")?;
                 let owner = requested.as_deref().ok_or("ownerEvidence 需要对应明确的 owner。")?;
-                let literal = owner_as_spoken(owner, known[proof.as_str()])
-                    .ok_or("ownerEvidence 未出现所填负责人。请区分承接者、主持人和附近讨论者。")?;
+                let literal = if let Some(literal) = owner_as_spoken(owner, known[proof.as_str()]) {
+                    literal
+                } else {
+                    proof = recover_collective_owner(original, &mut item, owner, &proof, known)
+                        .ok_or("ownerEvidence 未出现所填负责人。请区分承接者、主持人和附近讨论者。")?;
+                    owner.to_owned()
+                };
                 // Store the words the source actually supports, including a
                 // collective alias or the label of an explicit self-commitment.
                 item.owner = Some(literal.clone());
                 requested = Some(literal);
-                if !evidence_ids.contains(&proof) { item.evidence.push(proof); }
+                if !item.evidence.iter().any(|id|
+                    factual_audit::canonical_sentence_reference(id, known_ids).as_deref() == Some(proof.as_str()))
+                {
+                    item.evidence.push(proof);
+                }
             }
             let mut fact = item.bind(known, known_ids).map_err(|_| "修正的文字、类型或证据编号无效。")?;
             if fact.placement == Placement::Action {
