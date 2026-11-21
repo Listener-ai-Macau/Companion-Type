@@ -1234,6 +1234,18 @@ fn an_agenda_period_can_be_kept_in_the_purpose_without_a_title_as_evidence() {
     let mut supplied: MissingItems = parse(&raw.to_string()).unwrap();
     let amount = [json!({"cue":{"id":"v000","evidence":"e0008","span":"二万元"}})];
     assert_eq!(retain_opening_scope(&mut supplied.checks,&amount,&doc,&evidence),0);
+
+    let source = "咱们今天把各部门儿叫过来，开个咱上半年的总结会议，接下来由副院长主持。";
+    let mut doc = doc;
+    doc.purpose = "院长召集会议并交由副院长主持。会议回顾上半年网课与经费情况。".into();
+    let raw = json!({"checks":[{"id":"v000","status":"covered","claim":"purpose",
+        "proof":{"sourceQuote":source,"statementQuote":"院长召集会议并交由副院长主持"}}]});
+    let mut supplied: MissingItems = parse(&raw.to_string()).unwrap();
+    let evidence = [json!({"id":"e0008","text":source})];
+    assert_eq!(retain_opening_scope(&mut supplied.checks,&expected,&doc,&evidence),1);
+    let mut supplied: MissingItems = parse(&raw.to_string()).unwrap();
+    doc.purpose = doc.purpose.replace("回顾上半年","回顾下半年");
+    assert_eq!(retain_opening_scope(&mut supplied.checks,&expected,&doc,&evidence),0);
 }
 
 #[cfg(test)]
@@ -1961,15 +1973,18 @@ fn opening_scope_is_retained(source: &str, quote: &str, purpose: &str) -> bool {
             source[..index].ends_with(period.trim_end_matches("半年"))
         })
     });
-    same_period && ["汇报", "总结", "复盘"]
-        .iter().any(|action| quote.contains(action) && purpose.contains(action))
+    let recap = ["总结", "复盘", "回顾"];
+    let same_activity = quote.contains("汇报") && purpose.contains("汇报")
+        || recap.iter().any(|action| quote.contains(action)) && recap.iter().any(|action| purpose.contains(action));
+    same_period && same_activity
 }
 
 fn retain_opening_scope(checks: &mut [SourceCheck], disputed: &[Value], doc: &Document, evidence: &[Value]) -> usize {
     let mut count = 0;
     for check in checks {
         let SourceCheck::Covered { id, claim, proof: Some(proof) } = check else { continue; };
-        if !claim.ends_with("].title") { continue; }
+        let purpose_proven = claim == "purpose" && coverage_quote_is_grounded(&proof.statement_quote, &doc.purpose);
+        if !purpose_proven && !claim.ends_with("].title") { continue; }
         let Some(cue) = disputed.iter().map(|row| &row["cue"])
             .find(|cue| cue["id"] == id.as_str() && cue["span"] == "半年" && cue["aspect"].is_null())
         else { continue; };
