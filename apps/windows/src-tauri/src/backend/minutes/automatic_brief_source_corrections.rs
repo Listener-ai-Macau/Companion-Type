@@ -4,7 +4,7 @@ use std::{collections::HashMap, sync::LazyLock};
 use regex::Regex;
 use serde_json::{json, Value};
 
-use super::{answer_layout::{Fact, Placement}, line, normalized, Kind};
+use super::{answer_layout::{Fact, Placement}, line, normalized, Document, Entry, Kind};
 
 fn half_refund<'a>(source: &'a str, fee: &str) -> Option<&'a str> {
     source.match_indices(fee).find_map(|(at, _)| {
@@ -411,6 +411,141 @@ pub(super) fn restore_reported_decision_boundary(doc: &mut super::Document, unit
         }
     }
     moved
+}
+
+fn same_or_adjacent_unit(a: &str, b: &str) -> bool {
+    fn position(id: &str) -> Option<usize> { id.strip_prefix('u')?.parse().ok() }
+    a == b || position(a).zip(position(b)).is_some_and(|(a,b)| a.abs_diff(b) == 1)
+}
+
+fn example_context(text: &str, fact: &Fact, evidence: &[Value], positions: &HashMap<&str, usize>) -> bool {
+    let text = normalized(text);
+    let framing = ["举个例子", "举一个例子", "举例", "设例", "比方说", "比如说", "假设", "假如"];
+    if framing.iter().any(|marker| text.contains(marker)) || text.starts_with("待核") {
+        return false;
+    }
+    fact.evidence.iter().filter_map(|id| positions.get(id.as_str()).copied()).any(|at| {
+        let span = at.saturating_sub(12)..=at;
+        span.rev().take_while(|index| {
+            evidence[*index]["source"].as_str().zip(evidence[at]["source"].as_str())
+                .is_some_and(|(a,b)| same_or_adjacent_unit(a,b))
+        }).any(|index| {
+            let raw = evidence[index]["text"].as_str().unwrap_or_default();
+            let (_, content) = super::super::source_resolution::split_turn_label(raw).unwrap_or(("", raw));
+            let example = normalized(content);
+            if !framing.iter().any(|marker| example.contains(marker)) {
+                return false;
+            }
+            // A nearby example qualifies only the same subject. Sharing the
+            // generic words for hypothetical speech is insufficient.
+            let predicate = framing.iter().fold(example, |words, marker| words.replace(marker, ""));
+            super::source_coverage::shared_literal(&text, &predicate, 4)
+        })
+    })
+}
+
+fn narrated_chain(text: &str) -> Option<(&str, Vec<&str>)> {
+    let (_, narration) = ["案子是", "案例是", "事情经过是", "事件经过是"].iter()
+        .find_map(|marker| text.split_once(marker))?;
+    let end = ["的案子", "，就是", "。", "；"].iter().filter_map(|marker| narration.find(marker)).min()?;
+    let narration = narration[..end].trim();
+    let links: Vec<_> = narration.split(['，', ',']).map(str::trim).collect();
+    if !(3..=5).contains(&links.len())
+        || !links.iter().all(|link| (3..=12).contains(&link.chars().count())
+            && link.chars().all(char::is_alphanumeric))
+        || !links.windows(2).all(|pair| {
+            (1..=3).any(|count| {
+                let subject: String = pair[1].chars().take(count).collect();
+                pair[0].ends_with(&subject)
+            })
+        })
+    {
+        return None;
+    }
+    Some((narration, links))
+}
+
+pub(super) fn preserve_published_discussion(doc: &mut Document, facts: &[Fact], evidence: &[Value]) -> Vec<Value> {
+    let positions: HashMap<_, _> = evidence.iter().enumerate().filter_map(|(at,row)| Some((row["id"].as_str()?,at))).collect();
+    let mut changes = Vec::new();
+    for topic in &mut doc.topics {
+        let qualify = |text: &mut String| {
+            let original = text.trim_start_matches(super::DRAFT_CONFLICT_PREFIX);
+            let Some(fact) = facts.iter().find(|fact| fact.text == original && fact.placement == Placement::Topic) else {
+                return false;
+            };
+            if !example_context(original, fact, evidence, &positions) { return false; }
+            let revised = text.replacen(original, &format!("会上举例讨论，{original}"), 1);
+            if !line(&revised, 90) { return false; }
+            *text = revised;
+            true
+        };
+        for item in &mut topic.points {
+            if matches!(item.kind, Kind::Status | Kind::Opinion) && qualify(&mut item.text) {
+                item.kind = Kind::Opinion;
+                changes.push(json!({"kind":"exampleContext","sources":item.sources}));
+            }
+        }
+        for item in &mut topic.details {
+            if qualify(&mut item.text) { changes.push(json!({"kind":"exampleContext","sources":item.sources})); }
+        }
+    }
+    for row in evidence {
+        let Some(source) = row["source"].as_str() else { continue; };
+        let Some((narration, links)) = row["text"].as_str().and_then(narrated_chain) else { continue; };
+        let Some(head) = links.first() else { continue; };
+        let Some(tail) = links.last() else { continue; };
+        let mut topics = doc.topics.iter_mut().filter(|topic| {
+            let cited: Vec<_> = topic.points.iter().map(|item| (&item.text, &item.sources))
+                .chain(topic.details.iter().map(|item| (&item.text, &item.sources)))
+                .filter(|(_, ids)| ids.iter().any(|id| same_or_adjacent_unit(id, source))).map(|(text,_)| normalized(text)).collect();
+            cited.iter().any(|text| super::source_coverage::shared_literal(head, text, 2))
+                && cited.iter().any(|text| super::source_coverage::shared_literal(tail, text, 2))
+                && links[1..links.len()-1].iter().any(|link| !cited.iter().any(|text| text.contains(*link)))
+        });
+        let Some(topic) = topics.next() else { continue; };
+        if topics.next().is_some() || topic.details.len() >= super::topic_details_limit() { continue; }
+        let text = format!("会上讲述的案例经过是「{narration}」。");
+        if line(&text, 90) {
+            topic.details.push(Entry {text, sources:vec![source.to_owned()], quantity_needs_review:false});
+            changes.push(json!({"kind":"narratedChain","evidence":row["id"]}));
+        }
+    }
+    changes
+}
+
+#[cfg(test)]
+#[test]
+fn published_discussion_distinguishes_a_linked_example_and_restores_a_cited_chain() {
+    let mut doc: Document = serde_json::from_value(json!({
+        "purpose":"复盘设备事件与处置",
+        "topics":[{
+            "title":"故障复盘",
+            "points":[
+                {"kind":"status","text":"主机误报时可以继续工作。","sources":["u001"]},
+                {"kind":"status","text":"周五继续例行检查。","sources":["u001"]},
+                {"kind":"status","text":"进水导致停机，停机又导致延误。","sources":["u001"]}
+            ],
+            "details":[]
+        }],"decisions":[],"questions":[],"actionItems":[]
+    })).unwrap();
+    let raw = [
+        json!({"id":"e0000","source":"u000","text":"说话人1：我举个例子，主机误报时怎么办？"}),
+        json!({"id":"e0001","source":"u001","text":"说话人2：在这个例子里，可以继续工作。"}),
+        json!({"id":"e0002","source":"u001","text":"说话人3：周五继续例行检查。"}),
+        json!({"id":"e0003","source":"u001","text":"说话人3：事情经过是箱体进水，进水致断电，断电致停机，停机致延误。"}),
+    ];
+    let facts: Vec<_> = doc.topics[0].points.iter().enumerate().map(|(i,item)| Fact {
+        id:format!("a{i:03}"),kind:Kind::Status,placement:Placement::Topic,text:item.text.clone(),
+        owner:None,due:None,evidence:vec![format!("e{:04}",i+1)],
+    }).collect();
+    let changes = preserve_published_discussion(&mut doc, &facts, &raw);
+    assert_eq!(changes.len(),2);
+    assert!(matches!(doc.topics[0].points[0].kind, Kind::Opinion));
+    assert_eq!(doc.topics[0].points[1].text,"周五继续例行检查。");
+    assert!(doc.topics[0].details[0].text.contains("进水致断电"));
+    assert!(preserve_published_discussion(&mut doc, &facts, &raw).is_empty());
+    assert!(narrated_chain("事情经过是有人报告，另一人猜测，之后再统计。").is_none());
 }
 
 pub(super) fn retain_spoken_state(facts: &mut [Fact], evidence: &[Value], purpose: Option<&mut String>) -> Vec<Value> {

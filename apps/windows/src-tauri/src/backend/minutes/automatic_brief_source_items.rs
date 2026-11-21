@@ -1287,6 +1287,35 @@ fn covered_omission_actions(additions: &mut Vec<MissingItem>, doc: &Document, fa
     reconciled
 }
 
+fn expanded_question(existing: &str, incoming: &str, cites: &[&str]) -> bool {
+    let existing = normalized(existing);
+    let incoming = normalized(incoming);
+    let Some((head, request)) = existing.rsplit_once(['，', ',']) else { return false; };
+    if head.chars().count() < 10 || request.chars().count() < 6
+        || !["谁", "如何", "怎么", "哪", "是否", "能否"].iter().any(|marker| request.contains(marker))
+    {
+        return false;
+    }
+    let Some(extra) = incoming.strip_prefix(head).and_then(|rest| rest.strip_suffix(request))
+        .map(|text| text.trim_matches(['，', ',', '。', '；', ';'])) else { return false; };
+    extra.chars().count() >= 6 && cites.iter().any(|quote| {
+        let quote = normalized(quote);
+        super::source_coverage::shared_literal(extra, &quote, 5)
+            && measures(extra).all(|measure| measures(&quote).any(|witness| witness == measure))
+    })
+}
+
+#[cfg(test)]
+#[test]
+fn an_expanded_question_keeps_the_same_request_and_cites_the_new_measure() {
+    let prior = "招聘需要先交学费才能开始培训，若工资未达到，谁来保护求职者利益。";
+    let expanded = "招聘需要先交学费才能开始培训，最初半年到九个月基本不挣钱，若工资未达到，谁来保护求职者利益。";
+    let quotes = ["这半年到九个月，你基本上是不挣钱的。"];
+    assert!(expanded_question(prior, expanded, &quotes));
+    assert!(!expanded_question(prior, &expanded.replace("九个月","两个月"), &quotes));
+    assert!(!expanded_question(prior, &expanded.replace("谁来保护求职者利益","谁来检查培训资质"), &quotes));
+}
+
 pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, units: &[Unit], evidence: &[Value]) -> Result<Document, String> {
     let known: HashMap<_, _> = evidence.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
     let known_ids = known.keys().copied().collect();
@@ -1340,6 +1369,16 @@ pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, uni
             continue;
         }
         let entry = Entry {text:fact.text, sources, quantity_needs_review:false};
+        if fact.placement == Placement::Question {
+            let quotes: Vec<_> = fact.evidence.iter().filter_map(|id| known[id.as_str()]["text"].as_str()).collect();
+            let mut same = doc.questions.iter_mut().filter(|previous| {
+                previous.sources == entry.sources && expanded_question(&previous.text, &entry.text, &quotes)
+            });
+            if let Some(previous) = same.next().filter(|_| same.next().is_none()) {
+                *previous = entry;
+                continue;
+            }
+        }
         match fact.placement {
             Placement::Topic => {
                 // The fact and its evidence have already been checked for

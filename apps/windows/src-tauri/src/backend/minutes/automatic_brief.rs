@@ -293,11 +293,12 @@ fn project_review_draft(doc: &Document, facts: &[answer_layout::Fact], units: &[
     for question in &mut marked.questions {
         mark(&mut question.text, None, None, false);
     }
+    let source = factual_audit::evidence_sentences(units);
+    source_corrections::preserve_published_discussion(&mut marked, facts, &source);
     let mut minutes = project_cloud_minutes(&marked, units, session, base);
     minutes.quality = "draft".into();
     minutes.llm_note = Some(format!("{}。{reason}", super::CLOUD_REVIEW_DRAFT_REASON));
     minutes.markdown.insert_str(0, "> 纪要初稿待核对。请对照原话确认关键结论和后续安排。\n\n");
-    let source = factual_audit::evidence_sentences(units);
     let mut quotes = Vec::new();
     for (placement, field, rows) in [
         (answer_layout::Placement::Decision, "decisions",
@@ -390,6 +391,7 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         let mut pending_quotes = Vec::new();
         let mut conditional_speakers = Vec::new();
         let mut unresolved_timings = Vec::new();
+        let publication_facts = source_facts.clone();
         let mut doc=if let Some(facts)=source_facts {
             let reviewable = |draft: &Document, reason: String, conflicts: &[Value], quotes: &[String]| {
                 check_current()?;
@@ -468,6 +470,13 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
             let changed = source_corrections::restore_reported_decision_boundary(&mut doc, &units);
             if !changed.is_empty() {
                 trace.push(json!({"stage":"source-reported-decision-boundary","changes":changed}));
+            }
+        }
+        if let Some(facts) = publication_facts {
+            let evidence = factual_audit::evidence_sentences(&units);
+            let changed = source_corrections::preserve_published_discussion(&mut doc, &facts, &evidence);
+            if !changed.is_empty() {
+                trace.push(json!({"stage":"source-published-discussion-context","changes":changed}));
             }
         }
         validate(&doc, &units)?;
