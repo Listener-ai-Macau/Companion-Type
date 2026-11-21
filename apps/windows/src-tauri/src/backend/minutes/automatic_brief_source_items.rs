@@ -913,6 +913,7 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit], context: &[Fact]) -> Resu
     let delivery_scopes = super::source_coverage::restore_delivery_scope(&mut facts, &evidence);
     let spoken_scope = reconcile_spoken_scope(&mut facts, &evidence);
     let corrected_scope = super::source_corrections::correct(&mut facts, &evidence);
+    let source_states = super::source_corrections::retain_spoken_state(&mut facts, &evidence, Some(&mut layout.purpose));
     let mut projection = complete_layout(&mut layout, &facts)?;
     let mut moved = Vec::new();
     for (id, before, after) in &renamed {
@@ -950,6 +951,9 @@ fn organize(raw: &str, facts: &[Fact], units: &[Unit], context: &[Fact]) -> Resu
     }
     if !corrected_scope.is_empty() {
         projection["sourceBindings"]["correctedExecutionAndRefundScope"] = json!(corrected_scope);
+    }
+    if !source_states.is_empty() {
+        projection["sourceBindings"]["sourceStates"] = json!(source_states);
     }
     if !tentative_dates.is_empty() {
         projection["sourceBindings"]["retainedTentativeDates"] = json!(tentative_dates);
@@ -1145,6 +1149,7 @@ pub(super) fn append_missing(additions: Vec<MissingItem>, mut doc: Document, uni
         if fact.placement == Placement::Topic {
             super::source_bindings::mark_proposal(&mut fact);
         }
+        super::source_corrections::retain_spoken_state(std::slice::from_mut(&mut fact), evidence, None);
         let mut selected = HashSet::new();
         let sources: Vec<_> = fact.evidence.iter().map(|id| known[id.as_str()]["source"].as_str().unwrap())
             .filter(|id| selected.insert(*id)).map(str::to_owned).collect();

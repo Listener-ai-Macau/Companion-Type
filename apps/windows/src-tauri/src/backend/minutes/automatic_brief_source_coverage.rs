@@ -194,7 +194,10 @@ fn material_spans(text: &str) -> Vec<(Focus, &str)> {
         for found in pattern.captures_iter(text).filter_map(|captures| captures.name(name)) {
             let before = text[..found.start()].rsplit(['。', '；', '，', '！', '？']).next().unwrap_or("");
             let after = text[found.end()..].trim_start();
-            let questioned = after.starts_with(['吗', '么', '?', '？'])
+            let in_alternative_question = focus == Focus::Restriction
+                && [("能", "不能"), ("得", "不得"), ("许", "不许"), ("允许", "不允许")]
+                    .iter().any(|(yes, no)| before.trim_end().ends_with(yes) && found.as_str().starts_with(no));
+            let questioned = in_alternative_question || after.starts_with(['吗', '么', '?', '？'])
                 || ["是否", "是不是", "能不能", "会不会", "假如"].iter().any(|cue| before.contains(cue));
             let contrary = focus == Focus::Restriction && (before.trim_end().ends_with(['不', '没']) || before.trim_end().ends_with("不会"));
             let proposed = focus == Focus::CompletedChange
@@ -1092,6 +1095,16 @@ mod tests {
         assert!(fact[0].text.contains("老师需要去就餐"));
         let planning = "食堂开设的窗口儿比较少，如果有老师需要去就餐。";
         assert!(retain_service_audience("食堂上学期仅开三个窗口。",planning).is_none());
+    }
+
+    #[test]
+    fn alternative_questions_do_not_signal_a_restriction() {
+        let source = "毕业学生能不能很快的适应这个问题，然后非本组人员不允许进入机房。";
+        let spans = material_spans(source);
+        assert_eq!(spans.iter().filter(|(focus, _)| *focus == Focus::Restriction)
+            .map(|(_, quote)| *quote).collect::<Vec<_>>(), ["不允许进入机房"]);
+        assert!(material_spans("他们能不能在这周交付没有反馈")
+            .iter().all(|(focus, _)| *focus != Focus::Restriction));
     }
 
     #[test]

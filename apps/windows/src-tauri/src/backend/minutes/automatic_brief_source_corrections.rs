@@ -4,7 +4,7 @@ use std::{collections::HashMap, sync::LazyLock};
 use regex::Regex;
 use serde_json::{json, Value};
 
-use super::{answer_layout::{Fact, Placement}, line, normalized};
+use super::{answer_layout::{Fact, Placement}, line, normalized, Kind};
 
 fn half_refund<'a>(source: &'a str, fee: &str) -> Option<&'a str> {
     source.match_indices(fee).find_map(|(at, _)| {
@@ -231,6 +231,168 @@ pub(super) fn disposal_echo(
     anchor.contains(subject).then_some(DisposalEcho::Drop)
 }
 
+fn explicit_affiliation_correction(claim: &str, source: &str) -> Option<(String, String, String)> {
+    static CORRECTION: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?:其实是|准确(地)?说(?:是)?|更正为|说反了[：:，,]?)(?:一个|一家|一所)?\s*(?P<parent>[\p{Han}]{2,8}?)(?P<org>公司|集团|机构|单位|企业)\s*(?:的|旗下)?(?:一个|一家|一所)?\s*(?P<region>[\p{Han}]{2,8}?)(?P<branch>分部|分公司|子公司|办事处)"
+    ).unwrap());
+    let mut repairs = CORRECTION.captures_iter(source).filter_map(|row| {
+        let parent = &row["parent"];
+        let region = &row["region"];
+        let organisation = &row["org"];
+        let branch = &row["branch"];
+        if parent == region { return None; }
+        let earlier = &source[..row.get(0)?.start()];
+        let original_org = format!("{region}{organisation}");
+        if !earlier.contains(&original_org) && !earlier.contains(&format!("{region}的{organisation}")) {
+            return None;
+        }
+        // Apply the later wording only to the exact inverse affiliation.
+        let invalid = [format!("{original_org}的{parent}{branch}"),
+            format!("{original_org}{parent}{branch}"), format!("{region}的{organisation}的{parent}{branch}")];
+        let wrong = invalid.iter().find(|text| claim.matches(text.as_str()).count() == 1)?;
+        let corrected_org = format!("{parent}{organisation}的{region}{branch}");
+        let revised = claim.replacen(wrong, &corrected_org, 1);
+        line(&revised, 90).then_some((revised, original_org, corrected_org))
+    });
+    let original = repairs.next()?;
+    repairs.all(|other| other == original).then_some(original)
+}
+
+fn age_range(text: &str) -> Option<(regex::Match<'_>, u8)> {
+    static RANGE: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"[0-9０-９一二三四五六七八九十]{1,3}(?:到|至|[-–—~～])[0-9０-９一二三四五六七八九十]{1,3}(?:周)?岁"
+    ).unwrap());
+    static UPPER: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<age>[0-9０-９一二三四五六七八九十]{1,3})(?:周)?岁"
+    ).unwrap());
+    let mut matches = RANGE.find_iter(text);
+    let span = matches.next()?;
+    if matches.next().is_some() { return None; }
+    let upper = UPPER.captures(span.as_str())?.name("age")?.as_str();
+    Some((span, age_years(upper)?))
+}
+
+fn age_years(raw: &str) -> Option<u8> {
+    let number = super::source_items::number_value(raw, false)?;
+    (number.fract() == 0.0 && (1.0..=130.0).contains(&number)).then_some(number as u8)
+}
+
+fn alternative_age_limits(text: &str) -> Option<[u8; 2]> {
+    static LIMIT: LazyLock<Regex> = LazyLock::new(|| Regex::new(
+        r"(?P<age>[0-9０-９一二三四五六七八九十]{1,3})(?:周)?岁(?:之间|以内|上下)"
+    ).unwrap());
+    if ["分别", "男性", "女性", "男生", "女生", "各组", "已经确定", "最终确定"]
+        .iter().any(|cue| text.contains(cue))
+        || !["可以", "或者", "对吧", "备选"].iter().any(|cue| text.contains(cue))
+    {
+        return None;
+    }
+    let mut ages = LIMIT.captures_iter(text).filter_map(|row| age_years(&row["age"]));
+    let values = [ages.next()?, ages.next()?];
+    (ages.next().is_none() && values[0] != values[1]).then_some(values)
+}
+
+fn cited_age_alternatives<'a>(
+    text: &str, evidence: &'a [&'a Value], universe: &'a [Value], near: usize,
+) -> Option<(&'a Value, [u8; 2])> {
+    let (_, upper) = age_range(text)?;
+    if !["年龄", "人群", "岁对应的", "岁之间"].iter().any(|cue| text.contains(cue)) {
+        return None;
+    }
+    let mut witnesses = universe.iter().enumerate().filter_map(|(index, row)| {
+        let alternatives = alternative_age_limits(row["text"].as_str()?)?;
+        if !alternatives.contains(&upper)
+            || !universe[index.saturating_sub(near)..(index + near + 1).min(universe.len())].iter()
+                .any(|nearby| evidence.iter().any(|anchor| anchor["id"] == nearby["id"] && anchor["source"] == row["source"]))
+        {
+            return None;
+        }
+        let settled = universe.iter().skip(index + 1).take(6).any(|later| {
+            let source = later["text"].as_str().unwrap_or_default();
+            later["source"] == row["source"] && ["最终确定", "已经定为", "正式定为", "已确定"]
+                .iter().any(|cue| source.contains(cue))
+                && ["年龄", "人群"].iter().any(|cue| source.contains(cue)) && age_range(source).is_some()
+        });
+        (!settled).then_some((row, alternatives))
+    });
+    let one = witnesses.next()?;
+    witnesses.next().is_none().then_some(one)
+}
+
+fn retain_age_dependency(text: &str) -> Option<String> {
+    let (span, _) = age_range(text)?;
+    let rest = &text[span.end()..];
+    let independent = rest.strip_prefix("对应的")
+        .or_else(|| rest.strip_prefix("人群的")).or_else(|| rest.strip_prefix("年龄组的"))?;
+    let revised = format!("{}目标人群的{}（年龄范围待核实）。", &text[..span.start()],
+        independent.trim_end_matches(['。', '！', '？']));
+    line(&revised, 90).then_some(revised)
+}
+
+fn age_pending_text(values: [u8; 2]) -> String {
+    format!("待核实：年龄上限提到{}岁和{}岁，实际范围尚未确认。", values[0], values[1])
+}
+
+pub(super) fn retain_spoken_state(facts: &mut [Fact], evidence: &[Value], purpose: Option<&mut String>) -> Vec<Value> {
+    let source: HashMap<_, _> = evidence.iter().map(|row| (row["id"].as_str().unwrap(), row)).collect();
+    let mut changes = Vec::new();
+    let mut corrected_labels = Vec::new();
+    for fact in facts.iter_mut() {
+        let cited: Vec<_> = fact.evidence.iter().filter_map(|id| source.get(id.as_str()).copied()).collect();
+        let mut affiliations = cited.iter().filter_map(|row| {
+            explicit_affiliation_correction(&fact.text, row["text"].as_str()?).map(|change| (*row, change))
+        });
+        if let Some((row, (text, former, corrected))) = affiliations.next() {
+            if affiliations.all(|(_, other)| other.0 == text) {
+                fact.text = text;
+                changes.push(json!({"id":fact.id,"evidence":row["id"],"state":"explicitAffiliationCorrection"}));
+                corrected_labels.push((former, corrected, row["id"].as_str().unwrap()));
+            }
+        }
+        if matches!(fact.placement, Placement::Action | Placement::Decision) {
+            if let Some((witness, values)) = cited_age_alternatives(&fact.text, &cited, evidence, 4) {
+                let revised = if fact.placement == Placement::Decision {
+                    fact.placement = Placement::Question;
+                    fact.kind = Kind::Status;
+                    fact.owner = None;
+                    fact.due = None;
+                    Some(age_pending_text(values))
+                } else {
+                    retain_age_dependency(&fact.text)
+                };
+                if let Some(text) = revised {
+                    fact.text = text;
+                    let anchor = witness["id"].as_str().unwrap();
+                    if fact.evidence.len() < 8 && !fact.evidence.iter().any(|id| id == anchor) {
+                        fact.evidence.push(anchor.to_owned());
+                    }
+                    changes.push(json!({"id":fact.id,"evidence":anchor,"state":"unresolvedAgeScope"}));
+                }
+            }
+        }
+        if fact.placement == Placement::Action {
+            let quotes: Vec<_> = cited.iter().filter_map(|row| row["text"].as_str()).collect();
+            if let Some(text) = super::final_bindings::retain_source_timing(&fact.text, &quotes) {
+                fact.text = text;
+                changes.push(json!({"id":fact.id,"evidence":fact.evidence,"state":"unresolvedTimingObject"}));
+            }
+        }
+    }
+    corrected_labels.sort_unstable();
+    corrected_labels.dedup();
+    if let (Some(purpose), [(former, corrected, anchor)]) = (purpose, corrected_labels.as_slice()) {
+        let unrelated = facts.iter().any(|fact| !fact.evidence.iter().any(|id| id == *anchor) && fact.text.contains(former));
+        if !unrelated && purpose.matches(former).count() == 1 {
+            let revised = purpose.replacen(former, corrected, 1);
+            if line(&revised, 120) {
+                *purpose = revised;
+                changes.push(json!({"id":"purpose","evidence":anchor,"state":"explicitAffiliationCorrection"}));
+            }
+        }
+    }
+    changes
+}
+
 pub(super) fn correct(facts: &mut [Fact], evidence: &[Value]) -> Vec<Value> {
     let positions: HashMap<_, _> = evidence.iter().enumerate()
         .filter_map(|(index, row)| Some((row["id"].as_str()?, index))).collect();
@@ -270,7 +432,57 @@ pub(super) fn correct(facts: &mut [Fact], evidence: &[Value]) -> Vec<Value> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use super::super::Kind;
+
+    fn source_fact(id: &str, text: &str, evidence: &[&str], placement: Placement) -> Fact {
+        Fact {id:id.into(),text:text.into(),evidence:evidence.iter().map(|id| (*id).to_owned()).collect(),
+            owner:None,due:None,kind:Kind::Status,placement}
+    }
+
+    #[test]
+    fn explicit_affiliation_correction_applies_to_the_claim_and_its_overview() {
+        let mut facts = [source_fact("a001","美国公司的中国分部约五十人团建。",&["e0010"],Placement::Topic)];
+        let mut purpose = "讨论美国公司半月团建接待。".to_string();
+        let evidence = [json!({"id":"e0010","source":"u000",
+            "text":"一个美国的公司，呃它其实是一个中国公司一个美国分部，然后他们那儿有一个团建活动。"})];
+        assert_eq!(retain_spoken_state(&mut facts,&evidence,Some(&mut purpose)).len(),2);
+        assert_eq!(facts[0].text,"中国公司的美国分部约五十人团建。");
+        assert_eq!(purpose,"讨论中国公司的美国分部半月团建接待。");
+        assert!(explicit_affiliation_correction("美国公司的法国分部团建。",evidence[0]["text"].as_str().unwrap()).is_none());
+        assert!(explicit_affiliation_correction("美国公司的中国分部团建。","一个美国公司的中国分部，另一个是中国公司美国分部。").is_none());
+    }
+
+    #[test]
+    fn unconfirmed_age_does_not_override_dependent_work_or_a_later_clear_agreement() {
+        let initial = [
+            source_fact("a004","年龄段可定为18到45岁之间，跨度不用特别大。",&["e0030","e0031"],Placement::Decision),
+            source_fact("a005","后续再确定18到45岁对应的色彩元素和颜色。",&["e0033","e0034"],Placement::Action),
+            source_fact("elsewhere","赞助另一个项目的年龄段可定为18到45岁之间。",&["e0200"],Placement::Decision),
+            source_fact("time","在方案中列出最低折扣、产品出品时间，以及各平台促销力度。",&["e0316"],Placement::Action),
+        ];
+        let mut facts = initial.clone();
+        let mut source = vec![
+            json!({"id":"e0030","source":"u001","text":"跨度不用特别大。"}),
+            json!({"id":"e0031","source":"u001","text":"18~3~35岁之间大家我觉得可以啊45岁之间都可以对吧对对对"}),
+            json!({"id":"e0033","source":"u001","text":"后续再定一下这个就是。"}),
+            json!({"id":"e0034","source":"u001","text":"咱们到时候确定颜色。"}),
+            json!({"id":"e0200","source":"u009","text":"另一个项目前面已经定了。"}),
+            json!({"id":"e0316","source":"u014","text":"看那个最低能够给到几折，还有看咱们的东西出来的时间。"}),
+        ];
+        assert_eq!(retain_spoken_state(&mut facts,&source,None).len(),3);
+        assert_eq!(facts[0].placement,Placement::Question);
+        assert!(facts[0].text.contains("35岁和45岁"));
+        assert_eq!(facts[1].placement,Placement::Action);
+        assert!(facts[1].text.contains("颜色（年龄范围待核实）"));
+        assert!(!facts[1].text.contains("45岁"));
+        assert_eq!(facts[2].text,initial[2].text);
+        assert!(facts[3].text.contains("「咱们的东西出来的时间」（具体对象待核实）"));
+        assert!(!facts[3].text.contains("产品出品时间"));
+        source.insert(4,json!({"id":"e0035","source":"u001","text":"最终确定年龄范围为18到45岁。"}));
+        let mut fixed = initial;
+        assert_eq!(retain_spoken_state(&mut fixed,&source,None).len(),1);
+        assert_eq!(fixed[0].placement,Placement::Decision);
+        assert!(fixed[1].text.contains("18到45岁"));
+    }
 
     #[test]
     fn refund_uses_the_billed_period_when_the_same_fee_and_refunded_period_are_explicit() {

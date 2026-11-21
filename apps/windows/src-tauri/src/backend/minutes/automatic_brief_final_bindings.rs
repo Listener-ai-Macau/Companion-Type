@@ -64,8 +64,8 @@ fn same_event(first: &str, second: &str) -> bool {
     first == second || ["出品", "出来"].contains(&first) && ["出品", "出来"].contains(&second)
 }
 
-fn anchored_opaque_time(action: &Action, turns: &[&str]) -> Option<(String, String)> {
-    let (phrase, event) = timing_phrase(&action.text)?;
+fn anchored_opaque_time(action: &str, turns: &[&str]) -> Option<(String, String)> {
+    let (phrase, event) = timing_phrase(action)?;
     let field = phrase.replace("的时间", "时间");
     if turns.iter().any(|text| text.replace("的时间", "时间").contains(&field)) {
         return None;
@@ -87,9 +87,16 @@ pub(super) fn unresolved_timings(brief: &factual_audit::VerifiedBrief, units: &[
         {
             evidence.push(content(row));
         }
-        let (phrase, quote) = anchored_opaque_time(action, &evidence)?;
+        let (phrase, quote) = anchored_opaque_time(&action.text, &evidence)?;
         Some(UnresolvedTiming {action:action.text.clone(),sources:action.sources.clone(),phrase,quote})
     }).collect()
+}
+
+// The draft may be the only result when the next request times out.
+pub(super) fn retain_source_timing(text: &str, turns: &[&str]) -> Option<String> {
+    let (phrase, quote) = anchored_opaque_time(text, turns)?;
+    let revised = text.replacen(&phrase, &format!("「{quote}」（具体对象待核实）"), 1);
+    line(&revised, 90).then_some(revised)
 }
 
 fn same_timing_list(before: &str, after: &str, field: &str) -> bool {
@@ -209,11 +216,11 @@ fn bound_timing_keeps_exact_unresolved_words_and_other_task_fields() {
     let action = Action{text:"列出折扣、设备交付时间、出厂参数。".into(), owner:Some("采购组".into()),
         due:Some("周五之前".into()), sources:vec!["u002".into()]};
     let evidence = ["同时写折扣，再看这批东西交付的时间。"];
-    let (phrase, quote) = anchored_opaque_time(&action, &evidence).unwrap();
+    let (phrase, quote) = anchored_opaque_time(&action.text, &evidence).unwrap();
     assert_eq!(phrase, "设备交付时间");
     assert_eq!(quote, "这批东西交付的时间");
-    assert!(anchored_opaque_time(&action, &[evidence[0], "就是设备交付的时间。"]).is_none());
-    assert!(anchored_opaque_time(&action, &["等待这批东西上线的时间。"]).is_none());
+    assert!(anchored_opaque_time(&action.text, &[evidence[0], "就是设备交付的时间。"]).is_none());
+    assert!(anchored_opaque_time(&action.text, &["等待这批东西上线的时间。"]).is_none());
     let mut doc = Document{purpose:"讨论交付安排。".into(),topics:Vec::new(),decisions:Vec::new(),
         action_items:vec![action.clone()],questions:Vec::new()};
     let retained = preserve_unresolved_timings(&mut doc, &[UnresolvedTiming{
