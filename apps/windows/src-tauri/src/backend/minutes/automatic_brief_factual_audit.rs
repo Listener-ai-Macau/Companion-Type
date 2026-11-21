@@ -734,6 +734,63 @@ fn unsettled_assignment_quote(issue: &Value, claim: &Value, source: &[Sentence])
     found.next().is_none().then_some(one)
 }
 
+fn explicit_response_speaker(text: &str, issue: &Value, source: &[Sentence]) -> Option<String> {
+    use std::sync::LazyLock;
+    static HANDOFF: LazyLock<regex::Regex> = LazyLock::new(|| regex::Regex::new(
+        r"^(?P<speaker>说话人[0-9]+)[^；;。]+[；;]\s*(?:随后|接着|然后)?(?P<request>请)(?P<group>[^，。；;！？]{2,24}?)(?:发表看法|给出意见|作出回应|回应|回答)[。！？]?$"
+    ).unwrap());
+    if issue["status"] != "unsupported" || !issue["path"].as_str()?.contains(".details[") {
+        return None;
+    }
+    if !["归属", "归错", "误归", "转请"].iter().any(|term| issue["reason"].as_str().unwrap_or("").contains(term)) {
+        return None;
+    }
+    let handoff = HANDOFF.captures(text)?;
+    let initial_speaker = handoff.name("speaker")?.as_str();
+    let destination = handoff.name("group")?.as_str();
+    let request = handoff.name("request")?;
+    let evidence = issue["evidence"].as_array()?;
+    let turns: Vec<_> = source.iter().enumerate()
+        .filter(|(_, sentence)| evidence.iter().any(|id| id == sentence.id.as_str()))
+        .filter_map(|(index, sentence)| {
+            super::super::source_resolution::split_turn_label(sentence.text.trim())
+                .map(|(label, content)| (index, label, content))
+        }).collect();
+    let first = turns.iter().position(|(_, label, _)| *label == initial_speaker)?;
+    let mut responders = turns.into_iter().skip(first + 1).filter_map(|(_, label, content)| {
+        let (_, request) = content.split_once(destination)?;
+        (label != initial_speaker && ["有什么看法", "怎么看", "请回应", "请回答", "发表看法", "有什么意见"]
+            .iter().any(|cue| request.contains(cue))).then_some(label)
+    });
+    let responder = responders.next()?;
+    if responders.any(|label| label != responder) { return None; }
+    let mut revised = text.to_owned();
+    revised.insert_str(request.start(), responder);
+    Some(revised)
+}
+
+#[cfg(test)]
+#[test]
+fn response_speaker_comes_from_a_different_cited_turn() {
+    let mut issue = json!({"path":"topics[0].details[0]","status":"unsupported",
+        "reason":"前者发问，后者只是转请两个小组发言，归属错误。","evidence":["e0000","e0002"]});
+    let oral = [
+        "说话人7：希望只考虑个人经验，该怎么选？",
+        "说话人3：运营组和售后组你们怎么看？",
+        "说话人2：刚才说了管理组的看法，那运营组和售后组有什么看法吗？",
+    ];
+    let source: Vec<_> = oral.into_iter().enumerate().map(|(i, text)| Sentence {
+        id:format!("e{i:04}"),source:"u000".into(),text:text.into(),
+    }).collect();
+    let text = "说话人7询问只考虑个人经验时该怎么选；随后请运营组和售后组发表看法。";
+    assert_eq!(explicit_response_speaker(text, &issue, &source).as_deref(),
+        Some("说话人7询问只考虑个人经验时该怎么选；随后说话人2请运营组和售后组发表看法。"));
+    issue["evidence"] = json!(["e0000","e0001","e0002"]);
+    assert!(explicit_response_speaker(text, &issue, &source).is_none());
+    issue["evidence"] = json!(["e0002"]);
+    assert!(explicit_response_speaker(text, &issue, &source).is_none());
+}
+
 fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence], claims: &[Value]) -> (String, usize) {
     let original = || (raw.to_owned(), 0);
     let Ok(mut reply) = serde_json::from_str::<Value>(super::super::strip_code_fences(raw).trim()) else {
@@ -755,6 +812,11 @@ fn normalize_repair_reply(raw: &str, issues: &[Value], source: &[Sentence], clai
             continue;
         }
         if body.len() != 2 { continue; }
+        if let Some(revised) = explicit_response_speaker(text, issue, source) {
+            body.insert("text".into(), json!(revised));
+            count += 1;
+            continue;
+        }
         if let Some(owner) = verified_owner_from_repair(issue, text, source) {
             body.insert("owner".into(), json!(owner));
             count += 1;

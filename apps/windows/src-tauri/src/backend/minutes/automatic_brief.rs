@@ -24,6 +24,8 @@ mod source_coverage;
 mod commitments;
 #[path="automatic_brief_source_scope.rs"]
 mod source_scope;
+#[path="automatic_brief_disputed_source.rs"]
+mod disputed_source;
 #[derive(Default,Deserialize)]
 enum ResponseFormatMarker {#[default] #[serde(skip)] Absent,#[serde(rename="json_object")] Present}
 
@@ -377,6 +379,12 @@ pub(super) fn generate(endpoint:&str,model:&str,key:&str,session:&CompanionV1Hos
         }else{factual_audit::review_and_repair(endpoint,model,key,client,&doc,&units,start,&mut trace)?};
         if source_items::enabled() { clean_question_annotations(&mut doc); }
         reconcile_citations(&mut doc, &source);
+        if source_items::enabled() {
+            let changes = disputed_source::mark_pending(&mut doc, &units);
+            if !changes.is_empty() {
+                trace.push(json!({"stage":"source-disputed-status","changes":changes}));
+            }
+        }
         validate(&doc, &units)?;
         traced_document=Some(doc.clone());
         let mut minutes = project_cloud_minutes(&doc, &units, session, base);
