@@ -29,7 +29,7 @@ pub(super) fn enabled() -> bool {
     std::env::var("COMPANION_TYPE_MINUTES_SOURCE_ITEMS").as_deref() == Ok("1")
 }
 
-#[derive(Clone, Deserialize)]
+#[derive(Clone, Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 enum Role {
     #[serde(alias = "condition")]
@@ -58,7 +58,7 @@ impl Role {
     }
 }
 
-#[derive(Clone, Deserialize)]
+#[derive(Clone, Deserialize, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub(super) struct SourceItem {
     role: Role,
@@ -156,7 +156,37 @@ struct MissingItems {
     additions: Vec<MissingItem>,
 }
 
-#[derive(Deserialize)]
+impl MissingItems {
+    fn coalesce_identical_checks(&mut self, claim_paths: &HashSet<&str>) -> usize {
+        let count = self.checks.len();
+        let mut unique = Vec::with_capacity(count);
+        for mut check in self.checks.drain(..) {
+            check.normalize_claim_path(claim_paths);
+            // Equal repeats contribute no new evidence. Unequal verdicts
+            // for one ID stay separate and fail the existing scope checks.
+            if !unique.contains(&check) {
+                unique.push(check);
+            }
+        }
+        self.checks = unique;
+        count - self.checks.len()
+    }
+}
+
+#[cfg(test)]
+#[test]
+fn identical_source_checks_are_idempotent_but_conflicting_verdicts_stay_separate() {
+    let addition = json!({"id":"v013","status":"missing","addition":{"topic":null,
+        "item":{"role":"action","text":"演练前先检查消防设备。","evidence":["e0164"],"owner":"安保部","due":null}}});
+    let contrary = json!({"id":"v013","status":"background","reason":"原话没有具体行动。"});
+    let raw = json!({"checks":[addition.clone(),addition,contrary]}).to_string();
+    let mut results: MissingItems = parse(&raw).unwrap();
+    assert_eq!(results.coalesce_identical_checks(&HashSet::new()), 1);
+    assert_eq!(results.checks.len(), 2);
+    assert_eq!(results.checks[0].id(), results.checks[1].id());
+}
+
+#[derive(Deserialize, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub(super) struct MissingItem {
     pub(super) item: SourceItem,
@@ -174,7 +204,7 @@ struct SourceCue {
     aspect: Option<&'static str>,
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, PartialEq)]
 #[serde(tag = "status", rename_all = "camelCase")]
 enum SourceCheck {
     Covered { id: String, #[serde(deserialize_with = "claim_path")] claim: String, #[serde(default)] proof: Option<CoverageProof> },
@@ -196,7 +226,7 @@ fn claim_path<'de, D: serde::Deserializer<'de>>(decoder: D) -> Result<String, D:
     })
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct CoverageProof {
     source_quote: String,
@@ -1423,7 +1453,8 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
     let claim_paths: HashSet<_> = claim_values.iter().filter(|value| value.get("sources").is_some())
         .filter_map(|value| value["path"].as_str()).collect();
     let mut checked: MissingItems = parse(&raw)?;
-    for check in &mut checked.checks { check.normalize_claim_path(&claim_paths); }
+    let duplicates = checked.coalesce_identical_checks(&claim_paths);
+    if duplicates > 0 { trace[scan_index]["identicalChecksCoalesced"] = json!(duplicates); }
     restore_source_context_for_coverage(&mut checked.checks, &cues, &claim_values, &evidence, &bindings);
     let disputed = disputed_coverage(&checked, &cues, &doc, &evidence, &bindings);
     let mut verified_coverage = HashSet::new();
@@ -1443,7 +1474,8 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
         let raw = super::request(endpoint,model,key,client,RECHECK_MEASURES,
             json!({"sourceSentences":context,"sourceCheckRecheck":disputed,"currentBrief":doc}),false,start,trace,"source-items-omissions-recheck")?;
         let mut fixed: MissingItems = parse(&raw)?;
-        for check in &mut fixed.checks { check.normalize_claim_path(&claim_paths); }
+        let duplicates = fixed.coalesce_identical_checks(&claim_paths);
+        if duplicates > 0 { trace.last_mut().unwrap()["identicalChecksCoalesced"] = json!(duplicates); }
         let returned: HashSet<_> = fixed.checks.iter().map(SourceCheck::id).collect();
         if returned != selected || fixed.checks.len() != selected.len() || !fixed.additions.is_empty() {
             return Err("纪要存在未完成的关键原话覆盖复核，已有结果保留。".into());
@@ -1463,7 +1495,8 @@ pub(super) fn fill_omissions(endpoint: &str, model: &str, key: &str, client: &re
                 json!({"sourceSentences":context,"sourceCoverageRepair":rejected,"currentBrief":doc}),
                 false,start,trace,"source-items-coverage-repair")?;
             let mut repair: MissingItems = parse(&raw)?;
-            for check in &mut repair.checks { check.normalize_claim_path(&claim_paths); }
+            let duplicates = repair.coalesce_identical_checks(&claim_paths);
+            if duplicates > 0 { trace.last_mut().unwrap()["identicalChecksCoalesced"] = json!(duplicates); }
             let returned: HashSet<_> = repair.checks.iter().map(SourceCheck::id).collect();
             let unresolved = rejected_coverage(&repair.checks, &rejected, &doc, &evidence, &bindings);
             trace.last_mut().unwrap()["unresolvedCoverage"] = json!(unresolved);
