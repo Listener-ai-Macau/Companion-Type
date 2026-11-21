@@ -435,7 +435,8 @@ fn background_reason(span: &str, source: &str) -> Option<&'static str> {
 }
 
 fn remove_surplus_check_brace(raw: &str) -> Option<String> {
-    let body = super::super::strip_code_fences(raw).trim();
+    let unfenced = super::super::strip_code_fences(raw);
+    let body = unfenced.trim();
     let bytes = body.as_bytes();
     let mut containers = Vec::new();
     let mut in_string = false;
