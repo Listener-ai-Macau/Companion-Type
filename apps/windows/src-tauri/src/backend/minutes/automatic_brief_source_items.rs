@@ -444,7 +444,7 @@ fn remove_surplus_check_brace(raw: &str) -> Option<String> {
     for (at, byte) in bytes.iter().copied().enumerate() {
         if in_string {
             if escape { escape = false; }
-            else if byte == b'\' { escape = true; }
+            else if byte == b'\\' { escape = true; }
             else if byte == b'"' { in_string = false; }
             continue;
         }
