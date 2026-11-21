@@ -13,7 +13,7 @@ fn reported_polarity(text: &str) -> Option<(&str, String)> {
     let (first, second) = text.split_once(['；', ';'])?;
     let (_, positive) = second.split_once("否认")?;
     let positive = positive.trim().trim_end_matches(['。', '！', '？']);
-    if !super::line(positive, 20) || positive.chars().count() < 4
+    if !super::line(positive, 20) || positive.chars().count() < 3
         || positive.contains(['，', '；', '：', '、', '。', '！', '？'])
         || !first.contains(positive)
         || !["称", "质疑", "认为", "据"].iter().any(|cue| first.contains(cue))
@@ -54,8 +54,9 @@ fn dispute<'a>(report: &'a str, sources: &[String], evidence: &'a [Value]) -> Op
             }
             let resolved = evidence[index + offset + 2..].iter().any(|row| {
                 let text = row["text"].as_str().unwrap_or("");
-                text.contains(positive) && ["已核实", "已确认", "经核实", "现已查明", "核对结果", "最终确定"]
-                    .iter().any(|cue| text.contains(cue))
+                text.split_once(positive).is_some_and(|(prefix, _)| shared_referent(first_prefix, prefix, report))
+                    && ["已核实", "已确认", "经核实", "现已查明", "核对结果", "最终确定"]
+                        .iter().any(|cue| text.contains(cue))
             });
             if !resolved { return Some(Dispute { positive, negative, witnesses: [first, second] }); }
         }
